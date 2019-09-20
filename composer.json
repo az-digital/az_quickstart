@@ -1,0 +1,27 @@
+{
+    "name": "az-digital/quickstart",
+    "description": "Arizona Quickstart",
+    "type": "drupal-profile",
+    "license": "GPL-2.0-only",
+    "authors": [
+        {
+            "name": "Arizona Digital",
+            "homepage": "http://uadigital.arizona.edu/",
+            "role": "Team"
+        }
+    ],
+    "support": {
+        "docs": "https://quickstart.arizona.edu/help"
+    },
+    "require": {
+        "php": ">=7.0",
+        "composer/installers": "^1.2",
+        "cweagans/composer-patches": "^1.6.5",
+        "drupal/core": "8.7.7",
+        "drush/drush": "^9.0.0"
+    },
+    "extra": {
+      "patches": {
+      }
+    }
+}
