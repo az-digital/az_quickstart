@@ -1,0 +1,144 @@
+# Schema for the configuration files of the Bootstrap Barrio Subtheme.
+
+arizona_barrio.settings:
+  type: theme_settings
+  label: 'Arizona Barrio Subtheme settings'
+  mapping:
+    bootstrap_barrio_sidebar_position:
+      type: text
+      label: 'Sidebar Position'
+    bootstrap_barrio_content_offset:
+      type: integer
+      label: 'Offset'
+    bootstrap_barrio_sidebar_first_width:
+      type: integer
+      label: 'Width'
+    bootstrap_barrio_sidebar_first_offset:
+      type: integer
+      label: 'Offset'
+    bootstrap_barrio_sidebar_second_width:
+      type: integer
+      label: 'Width'
+    bootstrap_barrio_sidebar_second_offset:
+      type: integer
+      label: 'Offset'
+    bootstrap_barrio_footer_layout:
+      type: text
+      label: 'Layout'
+    bootstrap_barrio_fluid_container:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_button_size:
+      type: text
+      label: 'Size'
+    bootstrap_barrio_button_outline:
+      type: integer
+      label: 'Button outline'
+    bootstrap_barrio_navbar_top_position:
+      type: text
+      label: 'Position'
+    bootstrap_barrio_navbar_top_color:
+      type: text
+      label: 'Color'
+    bootstrap_barrio_navbar_top_background:
+      type: text
+      label: 'Background'
+    bootstrap_barrio_navbar_position:
+      type: text
+      label: 'Position'
+    bootstrap_barrio_navbar_color:
+      type: text
+      label: 'Color'
+    bootstrap_barrio_navbar_background:
+      type: text
+      label: 'Background'
+    bootstrap_barrio_anchors_fix:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_anchors_smooth_scrolling:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_forms_required_has_error:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_forms_has_error_value_toggle:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_forms_smart_descriptions:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_forms_smart_descriptions_limit:
+      type: integer
+      label: 'Limit'
+    bootstrap_barrio_forms_smart_descriptions_allowed_tags:
+      type: text
+      label: 'Allowed tags'
+    bootstrap_barrio_popover_enabled:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_popover_animation:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_popover_html:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_popover_placement:
+      type: text
+      label: 'Placement'
+    bootstrap_barrio_popover_selector:
+      type: text
+      label: 'Selector'
+    bootstrap_barrio_popover_trigger_autoclose:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_popover_delay:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_popover_trigger:
+      type: mapping
+      mapping:
+        hover:
+          type: integer
+          label: 'Hover'
+    bootstrap_barrio_tooltip_enabled:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_tooltip_descriptions:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_tooltip_descriptions_length:
+      type: integer
+      label: 'Length'
+    bootstrap_barrio_tooltip_animation:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_tooltip_html:
+      type: integer
+      label: 'Length'
+    bootstrap_barrio_tooltip_delay:
+      type: integer
+      label: 'Enabled'
+    bootstrap_barrio_popover_title:
+      type: text
+      label: 'Title'
+    bootstrap_barrio_popover_content:
+      type: text
+      label: 'Content'
+    bootstrap_barrio_tooltip_placement:
+      type: text
+      label: 'Placement'
+    bootstrap_barrio_tooltip_container:
+      type: text
+      label: 'Container'
+    bootstrap_barrio_tooltip_selector:
+      type: text
+      label: 'Selector'
+    bootstrap_barrio_tooltip_trigger:
+      type: mapping
+      mapping:
+        hover:
+          type: text
+          label: 'Hover'
+    bootstrap_barrio_popover_container:
+      type: text
+      label: 'Container'

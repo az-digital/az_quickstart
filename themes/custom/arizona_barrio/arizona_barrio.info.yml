@@ -1,0 +1,47 @@
+name: Arizona Barrio
+type: theme
+description: 'Basic structure for a Bootstrap Barrio SubTheme.'
+# version: VERSION
+# core: 8.x
+base theme: bootstrap_barrio
+logo: arizona_barrio/logo.png
+footer_logo: arizona_barrio/footer_logo.png
+block_default_region: 'content'
+
+libraries:
+  - arizona_barrio/bootstrap_cdn
+  - arizona_barrio/global-styling
+
+regions:
+  alert: Alert
+  header_ua_utilities: 'UA header utilities'
+  header: 'Header 1'
+  header_2: 'Header 2'
+  navigation: 'Navigation bar'
+  content_featured: 'Featured content'
+  sidebar_first: 'Sidebar first'
+  sidebar_second: 'Sidebar second'
+  highlighted: Highlighted
+  content_top: 'Content top'
+  breadcrumb: Breadcrumb
+  content: Content
+  content_2_col_1: 'Content 2-column stacked(1)'
+  content_2_col_2: 'Content 2-column stacked(2)'
+  content_3_col_1: 'Content 3-column stacked(1)'
+  content_3_col_2: 'Content 3-column stacked(2)'
+  content_3_col_3: 'Content 3-column stacked(3)'
+  full_width_content_bottom: 'Full width content bottom'
+  content_4_col_1: 'Content 4-column stacked(1)'
+  content_4_col_2: 'Content 4-column stacked(2)'
+  content_4_col_3: 'Content 4-column stacked(3)'
+  content_4_col_4: 'Content 4-column stacked(4)'
+  content_bottom: 'Content bottom'
+  footer: Footer
+  footer_sub: 'Footer sub'
+  page_bottom: 'Page bottom'
+
+# Information added by Drupal.org packaging script on 2019-02-28
+version: '8.x-4.22'
+core: '8.x'
+project: 'bootstrap_barrio'
+datestamp: 1551325396

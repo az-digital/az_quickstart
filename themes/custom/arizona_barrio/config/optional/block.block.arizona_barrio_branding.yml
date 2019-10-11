@@ -1,0 +1,22 @@
+langcode: en
+status: false
+dependencies:
+  module:
+    - system
+  theme:
+    - arizona_barrio
+id: arizona_barrio_branding
+theme: arizona_barrio
+region: header
+weight: -6
+provider: null
+plugin: system_branding_block
+settings:
+  id: system_branding_block
+  label: 'Site branding'
+  provider: system
+  label_display: '0'
+  use_site_logo: true
+  use_site_name: true
+  use_site_slogan: true
+visibility: {  }
