@@ -1,0 +1,14 @@
+azqs_core.settings:
+  type: config_object
+  label: 'AZQS Core settings'
+  mapping:
+    monitoring_page:
+      type: mapping
+      label: 'Monitoring page'
+      mapping:
+        enabled:
+          type: boolean
+          label: 'Monitoring page enabled'
+        path:
+          type: string
+          label: 'Monitoring page path'

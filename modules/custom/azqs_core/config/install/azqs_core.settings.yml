@@ -1,0 +1,4 @@
+monitoring_page:
+  enabled: false
+  path: ''
+

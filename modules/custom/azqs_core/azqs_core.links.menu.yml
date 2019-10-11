@@ -1,0 +1,11 @@
+azqs_core.azqs:
+  route_name: azqs_core.azqs
+  parent: system.admin_config
+  title: 'Arizona Quickstart'
+  description: 'Settings provided by Arizona Quickstart modules.'
+
+azqs_core.azqs_settings:
+  route_name: azqs_core.azqs_settings
+  parent: azqs_core.azqs
+  title: 'Arizona Quickstart Settings'
+  description: 'Settings provided by AZQS Core and various other Arizona Quickstart modules.'

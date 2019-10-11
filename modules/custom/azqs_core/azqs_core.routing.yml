@@ -1,0 +1,18 @@
+azqs_core.azqs:
+  path: '/admin/config/azqs'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Arizona Quickstart'
+  requirements:
+    _permission: 'access administration pages'
+
+azqs_core.azqs_settings:
+  path: '/admin/config/azqs/settings'
+  defaults:
+    _form: '\Drupal\azqs_core\Form\QuickstartCoreSettingsForm'
+    _title: 'Arizona Quickstart Settings'
+  requirements:
+    _permission: 'access administration pages'
+
+route_callbacks:
+  - '\Drupal\azqs_core\Routing\Routes::routes'

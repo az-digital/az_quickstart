@@ -1,0 +1,5 @@
+azqs_core.azqs_settings_azqs_tab:
+  route_name: azqs_core.azqs
+  title: 'AZQS Core'
+  base_route: azqs_core.azqs
+  weight: -10
