@@ -1,6 +1,6 @@
-azqs_core.settings:
+az_core.settings:
   type: config_object
-  label: 'AZQS Core settings'
+  label: 'Quickstart Core settings'
   mapping:
     monitoring_page:
       type: mapping

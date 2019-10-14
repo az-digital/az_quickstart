@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\azqs_core\Routing;
+namespace Drupal\az_core\Routing;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -41,13 +41,13 @@ class Routes implements ContainerInjectionInterface {
   public function routes() {
     $routes = [];
 
-    $config = $this->configFactory->get('azqs_core.settings');
+    $config = $this->configFactory->get('az_core.settings');
     if ($config->get('monitoring_page.enabled')) {
       $path = $config->get('monitoring_page.path');
-      $routes['azqs_core.monitoring_page'] = new Route(
+      $routes['az_core.monitoring_page'] = new Route(
         $path,
         [
-          '_controller' => 'Drupal\azqs_core\Controller\MonitoringPageController::deliver',
+          '_controller' => 'Drupal\az_core\Controller\MonitoringPageController::deliver',
           '_title' => 'Monitoring Page',
         ],
         [

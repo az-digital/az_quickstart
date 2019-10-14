@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains azqs_core.module.
+ * Contains az_core.module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -10,10 +10,10 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function azqs_core_help($route_name, RouteMatchInterface $route_match) {
+function az_core_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-    // Main module help for the azqs_core module.
-    case 'help.page.azqs_core':
+    // Main module help for the az_core module.
+    case 'help.page.az_core':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Settings and configuration common to other Quickstart componenets..') . '</p>';

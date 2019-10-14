@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\azqs_core\Form;
+namespace Drupal\az_core\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
@@ -60,21 +60,21 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'azqs_core_settings';
+    return 'az_core_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['azqs_core.settings', 'system.site'];
+    return ['az_core.settings', 'system.site'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $az_core_config = $this->config('azqs_core.settings');
+    $az_core_config = $this->config('az_core.settings');
     $site_config = $this->config('system.site');
 
     $form['clear_cache'] = [
@@ -161,7 +161,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       ->set('name', $form_state->getValue('site_name'))
       ->save();
 
-    $this->config('azqs_core.settings')
+    $this->config('az_core.settings')
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
       ->save();

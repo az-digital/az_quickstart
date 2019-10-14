@@ -1,12 +1,12 @@
 <?php
 
-namespace Drupal\azqs_core\Tests;
+namespace Drupal\az_core\Tests;
 
 use Drupal\simpletest\WebTestBase;
 use Drupal\Core\PageCache\ResponsePolicyInterface;
 
 /**
- * Provides automated tests for the azqs_core module.
+ * Provides automated tests for the az_core module.
  */
 class MonitoringPageControllerTest extends WebTestBase {
 
@@ -23,8 +23,8 @@ class MonitoringPageControllerTest extends WebTestBase {
    */
   public static function getInfo() {
     return [
-      'name' => "azqs_core MonitoringPageController's controller functionality",
-      'description' => 'Test Unit for module azqs_core and controller MonitoringPageController.',
+      'name' => "az_core MonitoringPageController's controller functionality",
+      'description' => 'Test Unit for module az_core and controller MonitoringPageController.',
       'group' => 'Other',
     ];
   }
@@ -37,10 +37,10 @@ class MonitoringPageControllerTest extends WebTestBase {
   }
 
   /**
-   * Tests azqs_core functionality.
+   * Tests az_core functionality.
    */
   public function testMonitoringPageController() {
-    // Check that the basic functions of module azqs_core.
+    // Check that the basic functions of module az_core.
     $this->assertEquals(TRUE, TRUE, 'Test Unit Generated via Drupal Console.');
   }
 

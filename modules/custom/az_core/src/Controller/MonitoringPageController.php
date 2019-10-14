@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\azqs_core\Controller;
+namespace Drupal\az_core\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;

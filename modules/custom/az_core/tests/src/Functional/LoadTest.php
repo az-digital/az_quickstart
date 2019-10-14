@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\azqs_core\Functional;
+namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
@@ -8,7 +8,7 @@ use Drupal\Tests\BrowserTestBase;
 /**
  * Simple test to ensure that main page loads with module enabled.
  *
- * @group azqs_core
+ * @group az_core
  */
 class LoadTest extends BrowserTestBase {
 
@@ -17,7 +17,7 @@ class LoadTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['azqs_core'];
+  public static $modules = ['az_core'];
 
   /**
    * A user with permission to administer site configuration.
