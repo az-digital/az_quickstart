@@ -6,6 +6,9 @@ core: 8.x
 
 distribution:
   name: Arizona Quickstart
+  install:
+    theme: az_barrio
+
 install:
   - node
   - history
@@ -43,5 +46,5 @@ install:
   - tour
   - automated_cron
 themes:
-  - bartik
+  - az_barrio
   - seven
