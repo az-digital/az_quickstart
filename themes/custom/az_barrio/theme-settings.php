@@ -21,7 +21,7 @@ use Drupal\Core\Render\Markup;
  * Example on how to alter theme settings form
  *
  */
-function arizona_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
   $form['footer_logo']['#open'] = FALSE;
 
   // AZ Barrio settings.
@@ -144,8 +144,8 @@ function arizona_barrio_form_system_theme_settings_alter(&$form, FormStateInterf
     '#type' => 'radios',
     '#title' => t('AZ Bootstrap CDN version'),
     '#options' => array(
-      'stable' => t('Stable version: This option has undergone the most testing within the arizona_barrio theme. Currently: %stableversion (Recommended).', array('%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION)),
-      'latest' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of arizona_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
+      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', array('%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION)),
+      'latest' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
       'master' => t('Latest dev version. This is the tip of the master branch of AZ Bootstrap. Please do not use on production unless you are following the ua-bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ),
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),

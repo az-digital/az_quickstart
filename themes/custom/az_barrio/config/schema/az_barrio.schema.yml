@@ -1,6 +1,6 @@
 # Schema for the configuration files of the Bootstrap Barrio Subtheme.
 
-arizona_barrio.settings:
+az_barrio.settings:
   type: theme_settings
   label: 'Arizona Barrio Subtheme settings'
   mapping:

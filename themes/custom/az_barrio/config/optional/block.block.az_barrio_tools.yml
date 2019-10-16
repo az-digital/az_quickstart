@@ -6,9 +6,9 @@ dependencies:
   module:
     - system
   theme:
-    - arizona_barrio
-id: arizona_barrio_tools
-theme: arizona_barrio
+    - az_barrio
+id: az_barrio_tools
+theme: az_barrio
 region: sidebar_first
 weight: -6
 provider: null

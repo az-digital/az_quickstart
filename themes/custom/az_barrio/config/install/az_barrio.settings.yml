@@ -63,7 +63,7 @@ external_links: 1
 sticky_footer: 1
 
 logo:
-  path: 'themes/arizona_barrio/logo.png'
+  path: 'themes/az_barrio/logo.png'
   use_default: false
 
 primary_logo_alt_text: '[site:name] | Home'
@@ -71,5 +71,4 @@ primary_logo_title_text: '[site:name] | Home'
 footer_logo_link_destination: '<front>'
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
-footer_logo: 'themes/arizona_barrio/footer_logo.png'
-
+footer_logo: 'themes/az_barrio/footer_logo.png'

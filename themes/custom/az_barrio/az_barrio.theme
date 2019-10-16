@@ -16,7 +16,7 @@ use Drupal\Component\Utility\Html;
  *
  * Adds body classes if certain regions have content.
  */
-function arizona_barrio_preprocess_html(&$variables) {
+function az_barrio_preprocess_html(&$variables) {
   if (theme_get_setting('sticky_footer')) {
     $variables['html_attributes']->addClass('sticky-footer');
   }
@@ -34,7 +34,7 @@ function arizona_barrio_preprocess_html(&$variables) {
 /**
  * Implements hook_preprocess_HOOK() for page templates.
  */
-function arizona_barrio_preprocess_page(&$variables) {
+function az_barrio_preprocess_page(&$variables) {
 
   // Allow hiding of title of front page node
   if (theme_get_setting('az_hide_front_title') == 1 && \Drupal::service('path.matcher')->isFrontPage()) {
@@ -56,10 +56,10 @@ function arizona_barrio_preprocess_page(&$variables) {
     $copyright_notice = sprintf($copyright_notice_format, 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.');
   }
 
-  $variables['logo'] = arizona_barrio_primary_logo();
+  $variables['logo'] = az_barrio_primary_logo();
   $variables['info_security_privacy'] = Markup::create($info_security_privacy);
   $variables['copyright_notice'] = Markup::create($copyright_notice);
-  $variables['footer_logo'] = arizona_barrio_footer_logo();
+  $variables['footer_logo'] = az_barrio_footer_logo();
 
   // Allow wordmark to be disabled
   $variables['wordmark'] = (theme_get_setting('wordmark')) ? TRUE : FALSE;
@@ -68,7 +68,7 @@ function arizona_barrio_preprocess_page(&$variables) {
 /**
  * Implements hook_preprocess_HOOK() for image styles.
  */
-function arizona_barrio_preprocess_image_style(&$variables) {
+function az_barrio_preprocess_image_style(&$variables) {
   if(!\Drupal::moduleHandler()->moduleExists('image_class')) {
     $variables['image']['#attributes']['class'][] = 'img-fluid';
   }
@@ -77,7 +77,7 @@ function arizona_barrio_preprocess_image_style(&$variables) {
 /**
  * Implements hook_css_alter().
  */
-function arizona_barrio_css_alter(&$css) {
+function az_barrio_css_alter(&$css) {
   /* Exclude specified CSS files from theme.
   $excludes = ua_zen_get_theme_info(NULL, 'exclude][css');
   if (!empty($excludes)) {
@@ -85,7 +85,7 @@ function arizona_barrio_css_alter(&$css) {
   }*/
 
   // Add AZ Bootstrap CSS based on theme settings.
-  $az_bootstrap_path = arizona_barrio_az_bootstrap_assets_path('css');
+  $az_bootstrap_path = az_barrio_az_bootstrap_assets_path('css');
   if (!$az_bootstrap_path) {
     return;
   }
@@ -123,7 +123,7 @@ function arizona_barrio_css_alter(&$css) {
   \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_path . $az_bootstrap_token);
 
   // Add UA Brand Icons CSS based on theme settings.
-  $az_brand_icons_path = arizona_barrio_brand_icons_assets_path('css');
+  $az_brand_icons_path = az_barrio_brand_icons_assets_path('css');
 
   $az_brand_icons_css_info = array(
     'every_page' => TRUE,
@@ -152,9 +152,9 @@ function arizona_barrio_css_alter(&$css) {
 /**
  * Implements hook_js_alter().
  */
-function arizona_barrio_js_alter(&$js) {
+function az_barrio_js_alter(&$js) {
   // Add AZ Bootstrap JS based on theme settings.
-  $az_bootstrap_path = arizona_barrio_az_bootstrap_assets_path('js');
+  $az_bootstrap_path = az_barrio_az_bootstrap_assets_path('js');
   if (!$az_bootstrap_path) {
     return;
   }
@@ -186,7 +186,7 @@ function arizona_barrio_js_alter(&$js) {
 /**
  * Helper function for constructing UA Bootstrap asset paths.
  */
-function arizona_barrio_az_bootstrap_assets_path($type) {
+function az_barrio_az_bootstrap_assets_path($type) {
   if (empty($type)) {
     return FALSE;
   }
@@ -202,7 +202,7 @@ function arizona_barrio_az_bootstrap_assets_path($type) {
     $az_bootstrap_path = 'https://cdn.uadigital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
   }
   else {
-    $az_bootstrap_path = drupal_get_path('theme', 'arizona_barrio') . '/arizona-bootstrap';
+    $az_bootstrap_path = drupal_get_path('theme', 'az_barrio') . '/arizona-bootstrap';
   }
 
   $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
@@ -218,7 +218,7 @@ function arizona_barrio_az_bootstrap_assets_path($type) {
 /**
  * Helper function for constructing UA Brand Icons asset paths.
  */
-function arizona_barrio_brand_icons_assets_path($type) {
+function az_barrio_brand_icons_assets_path($type) {
   $az_brand_icons_path = '';
 
   // AZ Brand Icons source.
@@ -226,7 +226,7 @@ function arizona_barrio_brand_icons_assets_path($type) {
     $az_brand_icons_path = 'https://cdn.uadigital.arizona.edu/lib/ua-brand-icons/' . AZ_BRAND_ICONS_STABLE_VERSION . '/ua-brand-icons.min.css';
   }
   else {
-    $az_brand_icons_path = drupal_get_path('theme', 'arizona_barrio') . '/ua-brand-icons/ua-brand-icons.min.css';
+    $az_brand_icons_path = drupal_get_path('theme', 'az_barrio') . '/ua-brand-icons/ua-brand-icons.min.css';
   }
 
   return $az_brand_icons_path;
@@ -235,7 +235,7 @@ function arizona_barrio_brand_icons_assets_path($type) {
 /**
  * Helper function for the primary logo.
  */
-function arizona_barrio_primary_logo() {
+function az_barrio_primary_logo() {
   $return = '';
   $primary_logo_path = theme_get_setting('logo');
   $primary_alt_text = Html::escape(theme_get_setting('primary_logo_alt_text'));
@@ -270,7 +270,7 @@ function arizona_barrio_primary_logo() {
 /**
  * Helper function for the secondary footer logo option.
  */
-function arizona_barrio_footer_logo() {
+function az_barrio_footer_logo() {
   $return = '';
   $footer_logo_path = theme_get_setting('footer_logo');
   $footer_link_destination = theme_get_setting('footer_logo_link_destination');
@@ -301,7 +301,7 @@ function arizona_barrio_footer_logo() {
   }
   // Fallback to primary logo when footer logo settings are not configured.
   else {
-    $return = arizona_barrio_primary_logo();
+    $return = az_barrio_primary_logo();
   }
 
   return $return;

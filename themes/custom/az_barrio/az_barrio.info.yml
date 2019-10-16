@@ -4,13 +4,13 @@ description: 'Basic structure for a Bootstrap Barrio SubTheme.'
 # version: VERSION
 # core: 8.x
 base theme: bootstrap_barrio
-logo: arizona_barrio/logo.png
-footer_logo: arizona_barrio/footer_logo.png
+logo: az_barrio/logo.png
+footer_logo: az_barrio/footer_logo.png
 block_default_region: 'content'
 
 libraries:
-  - arizona_barrio/bootstrap_cdn
-  - arizona_barrio/global-styling
+  - az_barrio/bootstrap_cdn
+  - az_barrio/global-styling
 
 regions:
   alert: Alert

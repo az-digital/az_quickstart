@@ -4,9 +4,9 @@ dependencies:
   module:
     - system
   theme:
-    - arizona_barrio
-id: arizona_barrio_branding
-theme: arizona_barrio
+    - az_barrio
+id: az_barrio_branding
+theme: az_barrio
 region: header
 weight: -6
 provider: null

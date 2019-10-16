@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   theme:
-    - arizona_barrio
-id: arizona_barrio_local_tasks
-theme: arizona_barrio
+    - az_barrio
+id: az_barrio_local_tasks
+theme: az_barrio
 region: content
 weight: -40
 provider: null

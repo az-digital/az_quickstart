@@ -7,7 +7,7 @@
 
   'use strict';
 
-  Drupal.behaviors.arizona_barrio = {
+  Drupal.behaviors.az_barrio = {
     attach: function (context, settings) {
 
     }

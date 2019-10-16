@@ -4,9 +4,9 @@ dependencies:
   module:
     - search
   theme:
-    - arizona_barrio
-id: arizona_barrio_search
-theme: arizona_barrio
+    - az_barrio
+id: az_barrio_search
+theme: az_barrio
 region: sidebar_first
 weight: -5
 provider: null

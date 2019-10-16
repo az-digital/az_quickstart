@@ -4,9 +4,9 @@ dependencies:
   module:
     - help
   theme:
-    - arizona_barrio
-id: arizona_barrio_help
-theme: arizona_barrio
+    - az_barrio
+id: az_barrio_help
+theme: az_barrio
 region: content
 weight: -30
 provider: null

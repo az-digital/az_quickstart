@@ -5,11 +5,11 @@ dependencies:
   module:
     - system
   theme:
-    - arizona_barrio
+    - az_barrio
 _core:
   default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
-id: arizona_barrio_breadcrumbs
-theme: arizona_barrio
+id: az_barrio_breadcrumbs
+theme: az_barrio
 region: breadcrumb
 weight: 0
 provider: null
