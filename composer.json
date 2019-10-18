@@ -1,7 +1,7 @@
 {
-    "name": "az-digital/quickstart",
+    "name": "az-digital/az_quickstart",
     "description": "Arizona Quickstart",
-    "type": "drupal-profile",
+    "type": "drupal-custom-profile",
     "license": "GPL-2.0-only",
     "authors": [
         {
@@ -15,10 +15,11 @@
     },
     "require": {
         "php": ">=7.0",
-        "composer/installers": "^1.2",
+        "composer/installers": "^1.7",
         "cweagans/composer-patches": "^1.6.5",
         "drupal/core": "8.7.7",
-        "drush/drush": "^9.0.0"
+        "drush/drush": "^9.0.0",
+        "drupal/bootstrap_barrio": "^4.22"
     },
     "extra": {
       "patches": {

@@ -1,4 +1,4 @@
-quickstart.front_page:
+az_quickstart.front_page:
   title: 'Home'
   route_name: '<front>'
   menu_name: main

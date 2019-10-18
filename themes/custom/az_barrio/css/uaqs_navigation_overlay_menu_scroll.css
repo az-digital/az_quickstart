@@ -1,0 +1,369 @@
+.overlay-menu-scroll.collapse {
+  display: block;
+  height: auto;
+}
+
+.overlay-menu-scroll .navbar-nav li.dropdown .caret {
+  margin-left: -2px;
+}
+
+.overlay-menu-scroll-show .overlay-menu-scroll .nav li>a,
+.overlay-menu-scroll-hide .overlay-menu-scroll .nav li>a {
+  padding: 1.285rem 0.809rem;
+}
+
+.overlay-menu-scroll-show .overlay-menu-scroll .nav li ul.dropdown-menu>li>a,
+.overlay-menu-scroll-hide .overlay-menu-scroll .nav li ul.dropdown-menu>li>a {
+  padding: 3px 20px;
+}
+
+@media (min-width: 0px) and (max-width: 991px) {
+  /*
+   * Menu State: Shown
+   * Menu Component: Menu.
+   **/
+  .overlay-menu-scroll-show .navbar-default {
+    z-index: 11;
+  }
+
+  .overlay-menu-scroll-show {
+    overflow: hidden !important;
+  }
+
+  .overlay-menu-scroll-show #nav-container {
+    padding: 0;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll {
+    background-color: #001C48;
+    border: none;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    min-height: 100%;
+    overflow: hidden;
+    padding: 0;
+    position: fixed;
+    -webkit-transform: translateX(0px);
+    -moz-transform: translateX(0px);
+    transform: translateX(0px);
+    -webkit-transition: -webkit-transform 0.3s, width 0.3s;
+    -moz-transition: -moz-transform 0.3s, width 0.3s;
+    transition: transform 0.3s, width 0.3s;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-scroller {
+    width: 130%;
+    position: absolute;
+    overflow-y: scroll;
+    height: 100%;
+    background-color: #001C48;
+    padding-right: 30%;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav {
+    white-space: nowrap;
+    float: none;
+    max-height: 8em;
+    height: 4em;
+    padding: 0 16px;
+    margin: 0;
+    padding-top: 5em;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li {
+    float: none;
+  }
+
+  .overlay-menu-scroll-show #main_nav .dropdown-menu:before {
+    position: absolute;
+    top: 0;
+    left: 8.9%;
+    width: 0;
+    height: 0;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    content: '';
+  }
+
+  .overlay-menu-scroll-show #main_nav .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li.open>a.active,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li.open>a,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul>li.open>a.active,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul>li.open>a,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul>li>a.active,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul>li>a {
+    padding: 0;
+    line-height: 3.3em;
+    border-top: 1px solid #1E5288;
+    color: #fff;
+    font-size: 20px;
+    transition: color .3s;
+    user-select: none;
+    border-bottom: 1px solid #1E5288;
+    white-space: normal;
+    word-wrap: normal;
+    height: auto;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .nav li>a {
+    padding: 0;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .nav li ul.dropdown-menu>li>a {
+    padding: 0;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll li:last-child ul.dropdown-menu li:first-child>a,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.dropdown-menu li:last-child>a {
+    border-top: 0;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll li:last-child,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.dropdown-menu li:last-child>a {
+    border-bottom: 0;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll li>a.active {
+    color: #fff;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav .open .dropdown-menu>.active>a:hover,
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav .open .dropdown-menu>li>a:hover,
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav .open .dropdown-menu>li>a:focus,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.dropdown-menu li>a:hover,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.dropdown-menu li>a:focus,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li.open>a:hover,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li.open>a:focus,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li>a:hover {
+    color: #378DBD;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav li>a.active,
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav li>a.active:hover {
+    background-color: transparent;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav .open .dropdown-menu>.active>a,
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav li.open a {
+    background-color: transparent;
+    color: #fff;
+    line-height: 32px;
+    padding: 0;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .caret {
+    height: 3.25em;
+    width: 3.25em;
+    background-color: #1c2c58;
+    border: 0;
+    float: right;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .caret:after {
+    content: '';
+    display: block;
+    border-left: 0.45em solid #fff;
+    border-bottom: 0.45em solid transparent;
+    border-top: 0.45em solid transparent;
+    border-right: 0;
+    width: auto;
+    height: 0;
+    margin: 1.2em 1.5em;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll li.open .caret:after {
+      border-top-color: white;
+      border-left: 0.45em solid transparent;
+      border-right: 0.45em solid transparent;
+      margin: 1.3em 1.2em;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll ul li.open ul.dropdown-menu {
+    padding-top: 0;
+    padding-bottom: 0;
+    display: block;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav .open .dropdown-menu>.active>a,
+  .overlay-menu-scroll-show .overlay-menu-scroll ul li.open ul.dropdown-menu li a {
+    font-size: 20px;
+    font-weight: lighter;
+    text-transform: uppercase;
+    border-top: 1px solid #1E5288;
+    padding: 15px;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li:last-child a {
+    border-bottom: 1px solid #1E5288;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li:last-child ul li a {
+    border-bottom: 0;
+  }
+
+
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li:last-child ul li:last-child a {
+    border-bottom: 1px solid #1E5288;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li ul li:last-child a {
+    border-bottom: 1px solid #1E5288;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll-toggle .navbar-toggle {
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: transparent;
+    border-color: transparent;
+    display: block;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll-toggle .navbar-toggle .text {
+    color: transparent;
+  }
+
+  .overlay-menu-scroll-show .overlay-menu-scroll-toggle .navbar-toggle:after {
+    content: "\00d7";
+    display: block;
+    font-size: 53px;
+    color: #fff;
+    font-weight: bold;
+    z-index: 2;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #001c48;
+    background-color: rgba(0, 28, 72, .9);
+    text-align: right;
+    padding: 0 0.6em;
+  }
+
+  /*
+   * Menu State: Hidden
+   * Menu Component: Toggle button.
+   **/
+  .overlay-menu-scroll-hide .navbar-toggle .text {
+    color: transparent;
+  }
+
+  .overlay-menu-scroll-hide .overlay-menu-scroll-toggle .navbar-toggle {
+    position: absolute;
+    display: inline-block !important;
+    background-color: #0c234b;
+    text-indent: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    top: 0;
+    right: 0;
+    height: 4em;
+    width: 2.8em;
+    margin: 0;
+    padding: 0;
+    z-index: 3;
+  }
+
+  .overlay-menu-scroll-hide .overlay-menu-scroll-toggle .navbar-toggle:before {
+    content: 'MENU';
+    display: block;
+    color: #fff;
+    position: absolute;
+    top: 0.5em;
+    height: 1em;
+    width: 100%;
+    text-indent: 0;
+    font-weight: bold;
+    font-size: 0.75em;
+  }
+
+  .overlay-menu-scroll-hide .overlay-menu-scroll-toggle .hamburger {
+    box-sizing: content-box;
+    content: "";
+    position: absolute;
+    overflow: hidden;
+    width: 2em;
+    height: 0.25em;
+    border-top: 0.84em double #fff;
+    border-bottom: 0.28em solid #fff;
+    bottom: 0.5em;
+    left: 0.35em;
+  }
+
+  /*
+   * Menu State: Hidden
+   * Menu Component: Sliding Window with inline menu.
+   **/
+   .overlay-menu-scroll-hide #main_nav {
+     max-height: 67px;
+     height: 67px;
+     overflow-y: hidden;
+     border-top: 1px solid #eee;
+     border-bottom: 1px solid #eee;
+   }
+
+  .overlay-menu-scroll-hide .overlay-menu-scroll.collapse,
+  .overlay-menu-scroll-hide .overlay-menu-scroll {
+    overflow: hidden !important;
+    max-width: 100%;
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    padding: 0;
+  }
+
+  .overlay-menu-scroll-hide .overlay-menu-scroll .dropdown:hover .dropdown-menu,
+  .overlay-menu-scroll-hide .overlay-menu-scroll .open>.dropdown-menu {
+    display: none;
+  }
+
+  .overlay-menu-scroll-hide .navbar-scroller {
+    overflow-x: scroll;
+    white-space: nowrap;
+    /*This padding pushes the scroll bar outside of the visible area.*/
+    padding-bottom: 4em;
+    max-width: calc(100% - 46px);
+  }
+
+  .overlay-menu-scroll-hide .navbar-nav {
+    margin: 0;
+  }
+
+  .overlay-menu-scroll-hide .overlay-menu-scroll .nav>li {
+    display: inline-block;
+    float: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .overlay-menu-scroll-show .overlay-menu-scroll .dropdown .dropdown-menu {
+    display: none;
+  }
+}
+
+/* padding adjusts depending on breakpoint to prevent line break */
+@media (min-width: 992px) {
+  .overlay-menu-scroll-hide .overlay-menu-scroll .navbar-nav > li > a {
+    padding: 1.285rem 0.52rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .overlay-menu-scroll-hide .overlay-menu-scroll .navbar-nav > li > a {
+    padding: 1.285rem 0.809rem;
+  }
+}

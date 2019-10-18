@@ -2,20 +2,20 @@ langcode: en
 status: true
 dependencies:
   config:
-    - system.menu.account
+    - system.menu.main
   module:
     - system
   theme:
-    - bartik
-id: bartik_account_menu
-theme: bartik
-region: secondary_menu
-weight: 0
+    - az_barrio
+id: az_barrio_main_menu
+theme: az_barrio
+region: navigation
+weight: -6
 provider: null
-plugin: 'system_menu_block:account'
+plugin: 'system_menu_block:main'
 settings:
-  id: 'system_menu_block:account'
-  label: 'User account menu'
+  id: 'system_menu_block:main'
+  label: 'Main navigation'
   provider: system
   label_display: '0'
   level: 1

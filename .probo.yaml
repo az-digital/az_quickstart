@@ -1,0 +1,18 @@
+image: proboci/ubuntu-16.04-lamp:php-7.2
+steps:
+  - name: Build Arizona Quickstart
+    plugin: Script
+    script:
+      - composer global require hirak/prestissimo
+      - if [ $(git ls-remote --heads https://bitbucket.org/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH=master; fi
+      - git clone --branch $SCAFFOLD_BRANCH https://bitbucket.org/az-digital/az-quickstart-scaffolding.git
+      - cd az-quickstart-scaffolding
+      - composer require az-digital/az_quickstart:dev-${BRANCH_NAME}
+      - composer install -o
+  - name: Install Arizona Quickstart
+    plugin: Drupal
+    drupalVersion: 8
+    subDirectory: az-quickstart-scaffolding/web
+    runInstall: true
+    profileName: az_quickstart
+    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=probo --verbose"

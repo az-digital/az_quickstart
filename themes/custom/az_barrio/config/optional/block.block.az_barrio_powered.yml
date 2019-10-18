@@ -1,14 +1,14 @@
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
   theme:
-    - bartik
-id: bartik_powered
-theme: bartik
-region: footer_fifth
-weight: 10
+    - az_barrio
+id: az_barrio_powered
+theme: az_barrio
+region: footer
+weight: -5
 provider: null
 plugin: system_powered_by_block
 settings:

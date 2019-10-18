@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   theme:
-    - bartik
-id: bartik_local_tasks
-theme: bartik
+    - az_barrio
+id: az_barrio_local_tasks
+theme: az_barrio
 region: content
 weight: -40
 provider: null

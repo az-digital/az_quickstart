@@ -1,16 +1,16 @@
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - system.menu.footer
   module:
     - system
   theme:
-    - bartik
-id: bartik_footer
-theme: bartik
-region: footer_fifth
-weight: 0
+    - az_barrio
+id: az_barrio_footer
+theme: az_barrio
+region: footer
+weight: -6
 provider: null
 plugin: 'system_menu_block:footer'
 settings:

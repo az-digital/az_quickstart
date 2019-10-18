@@ -1,14 +1,14 @@
 langcode: en
-status: true
+status: false
 dependencies:
   module:
     - system
   theme:
-    - bartik
-id: bartik_branding
-theme: bartik
+    - az_barrio
+id: az_barrio_branding
+theme: az_barrio
 region: header
-weight: 0
+weight: -6
 provider: null
 plugin: system_branding_block
 settings:

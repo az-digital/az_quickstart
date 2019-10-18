@@ -4,9 +4,9 @@ dependencies:
   module:
     - help
   theme:
-    - bartik
-id: bartik_help
-theme: bartik
+    - az_barrio
+id: az_barrio_help
+theme: az_barrio
 region: content
 weight: -30
 provider: null

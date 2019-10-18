@@ -4,16 +4,16 @@ dependencies:
   module:
     - system
   theme:
-    - bartik
-id: bartik_content
-theme: bartik
-region: content
+    - az_barrio
+id: az_barrio_messages
+theme: az_barrio
+region: highlighted
 weight: 0
 provider: null
-plugin: system_main_block
+plugin: system_messages_block
 settings:
-  id: system_main_block
-  label: 'Main page content'
+  id: system_messages_block
+  label: 'Status messages'
   provider: system
   label_display: '0'
 visibility: {  }

@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the quickstart installation profile.
+ * Install, update and uninstall functions for the az_quickstart installation profile.
  */
 
 use Drupal\user\Entity\User;
@@ -15,7 +15,7 @@ use Drupal\shortcut\Entity\Shortcut;
  *
  * @see system_install()
  */
-function quickstart_install() {
+function az_quickstart_install() {
   // Assign user 1 the "administrator" role.
   $user = User::load(1);
   $user->roles[] = 'administrator';

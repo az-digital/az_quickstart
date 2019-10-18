@@ -4,11 +4,11 @@ dependencies:
   module:
     - search
   theme:
-    - bartik
-id: bartik_search
-theme: bartik
+    - az_barrio
+id: az_barrio_search
+theme: az_barrio
 region: sidebar_first
-weight: -1
+weight: -5
 provider: null
 plugin: search_form_block
 settings:

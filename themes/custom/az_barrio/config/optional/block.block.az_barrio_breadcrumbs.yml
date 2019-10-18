@@ -1,12 +1,15 @@
+uuid: 43798839-41e8-4b37-b4de-0258d022db99
 langcode: en
 status: true
 dependencies:
   module:
     - system
   theme:
-    - bartik
-id: bartik_breadcrumbs
-theme: bartik
+    - az_barrio
+_core:
+  default_config_hash: oXUb3JZR2WW5VOdw4HrhRicCsq51mCgLfRyvheG68ck
+id: az_barrio_breadcrumbs
+theme: az_barrio
 region: breadcrumb
 weight: 0
 provider: null
