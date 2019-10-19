@@ -1,0 +1,6 @@
+services:
+  az_core.page_cache_request_policy.deny_monitoring_page:
+    class: Drupal\az_core\PageCache\DenyMonitoringPage
+    arguments: ['@current_route_match']
+    tags:
+      - { name: page_cache_response_policy }
