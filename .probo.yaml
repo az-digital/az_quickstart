@@ -9,6 +9,13 @@ steps:
       - cd az-quickstart-scaffolding
       - composer require az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
+  - name: Run PHPUnit Tests
+    plugin: Script
+    script:
+      - export SIMPLETEST_BASE_URL="http://localhost"
+      - export SIMPLETEST_DB="mysql://${DATABASE_USER}:${DATABASE_PASS}@localhost/${DATABASE_NAME}"
+      - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
+      - ../../../../vendor/bin/phpunit --colors="always" --verbose
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8
