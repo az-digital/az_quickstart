@@ -20,6 +20,11 @@ class MonitoringPageTest extends BrowserTestBase {
   protected $profile = 'az_quickstart';
 
   /**
+   * @var bool
+   */
+  protected $strictConfigSchema = FALSE;
+
+  /**
    * Tests the monitoring page functionality.
    */
   public function testMonitoringPage() {

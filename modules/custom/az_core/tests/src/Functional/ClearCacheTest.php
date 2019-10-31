@@ -20,6 +20,11 @@ class ClearCacheTest extends BrowserTestBase {
   protected $profile = 'az_quickstart';
 
   /**
+   * @var bool
+   */
+  protected $strictConfigSchema = FALSE;
+
+  /**
    * Tests the clear cache button on the Quickstart settings page.
    */
   public function testClearCache() {
