@@ -25,6 +25,11 @@ class MonitoringPageTest extends BrowserTestBase {
   protected $strictConfigSchema = FALSE;
 
   /**
+   * @var string
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Tests the monitoring page functionality.
    */
   public function testMonitoringPage() {

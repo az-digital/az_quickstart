@@ -25,6 +25,11 @@ class ClearCacheTest extends BrowserTestBase {
   protected $strictConfigSchema = FALSE;
 
   /**
+   * @var string
+   */
+  protected $defaultTheme = 'seven';
+
+  /**
    * Tests the clear cache button on the Quickstart settings page.
    */
   public function testClearCache() {
