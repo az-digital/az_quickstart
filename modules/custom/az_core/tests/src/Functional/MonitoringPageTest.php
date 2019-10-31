@@ -62,7 +62,7 @@ class MonitoringPageTest extends BrowserTestBase {
 
     // Verify front page is cache-able.
     $this->drupalGet(Url::fromRoute('<front>'));
-    $assert->responseHeaderEquals('Cache-Control', 'max-age=300, public');
+    $assert->responseHeaderEquals('Cache-Control', 'max-age=3600, public');
 
     // Verify page is not cache-able or index-able.
     $this->drupalGet(Url::fromRoute('az_core.monitoring_page'));
