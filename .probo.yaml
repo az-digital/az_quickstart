@@ -1,4 +1,6 @@
 image: proboci/ubuntu-16.04-lamp:php-7.2
+assets:
+  - credentials.sh
 steps:
   - name: Build Arizona Quickstart
     plugin: Script
@@ -16,3 +18,13 @@ steps:
     runInstall: true
     profileName: az_quickstart
     installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=probo --verbose"
+  - name: Run PHPUnit Tests
+    plugin: Script
+    script:
+      - mkdir -p /var/www/html/sites/simpletest
+      - chown www-data:www-data -R /var/www/html/sites/simpletest
+      - source $ASSET_DIR/credentials.sh
+      - export SIMPLETEST_BASE_URL="http://localhost"
+      - export SIMPLETEST_DB="mysql://${DATABASE_USER}:${DATABASE_PASS}@localhost/${DATABASE_NAME}"
+      - cd /var/www/html/profiles/custom/az_quickstart
+      - sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit --colors="always" --verbose

@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Contains az_core.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_core_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_core module.
+    case 'help.page.az_core':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Settings and configuration common to other Quickstart componenets..') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
