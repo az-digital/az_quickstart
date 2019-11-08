@@ -11,6 +11,20 @@ steps:
       - cd az-quickstart-scaffolding
       - composer require az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
+  - name: Drupal 8 Coding Standards
+    plugin: Script
+    script:
+      - cd $SRC_DIR/az-quickstart-scaffolding
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpcs --colors $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart || exit 1
+  - name: Run ESLint
+    plugin: Script
+    script:
+      - sudo npm cache clean -f --silent --no-progress
+      - sudo npm install -g --no-progress n
+      - sudo n 8.10.0
+      - npm install --no-progress --global eslint-config-drupal-bundle
+      - cd $SRC_DIR/az-quickstart-scaffolding/web
+      - eslint --color $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8
