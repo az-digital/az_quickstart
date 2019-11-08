@@ -25,6 +25,10 @@ steps:
       - npm install --no-progress --global eslint-config-drupal-bundle
       - cd $SRC_DIR/az-quickstart-scaffolding/web
       - eslint --color $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
+  - name: Check For Deprecated Code
+    plugin: Script
+      - cd $SRC_DIR/az-quickstart-scaffolding
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles web/modules web/themes
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8
