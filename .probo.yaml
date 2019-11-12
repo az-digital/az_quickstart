@@ -27,6 +27,7 @@ steps:
       - eslint --color $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
   - name: Check For Deprecated Code
     plugin: Script
+    script:
       - cd $SRC_DIR/az-quickstart-scaffolding
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles web/modules web/themes
   - name: Install Arizona Quickstart
