@@ -29,7 +29,7 @@ steps:
     plugin: Script
     script:
       - cd $SRC_DIR/az-quickstart-scaffolding
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles web/modules web/themes
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check -ad web/profiles web/modules web/themes
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8
