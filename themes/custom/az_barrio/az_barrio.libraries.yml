@@ -1,7 +1,5 @@
 global-styling:
   version: 1.x
-  js:
-    js/global.js: {}
   css:
     component:
       css/style.css: {}

@@ -35,7 +35,7 @@
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll {
-    background-color: #001C48;
+    background-color: #001c48;
     border: none;
     bottom: 0;
     width: 100%;
@@ -57,7 +57,7 @@
     position: absolute;
     overflow-y: scroll;
     height: 100%;
-    background-color: #001C48;
+    background-color: #001c48;
     padding-right: 30%;
   }
 
@@ -106,12 +106,12 @@
   .overlay-menu-scroll-show .overlay-menu-scroll ul>li>a {
     padding: 0;
     line-height: 3.3em;
-    border-top: 1px solid #1E5288;
+    border-top: 1px solid #1e5288;
     color: #fff;
     font-size: 20px;
     transition: color .3s;
     user-select: none;
-    border-bottom: 1px solid #1E5288;
+    border-bottom: 1px solid #1e5288;
     white-space: normal;
     word-wrap: normal;
     height: auto;
@@ -147,7 +147,7 @@
   .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li.open>a:hover,
   .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li.open>a:focus,
   .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav>li>a:hover {
-    color: #378DBD;
+    color: #378dbd;
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll .navbar-nav li>a.active,
@@ -184,10 +184,10 @@
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll li.open .caret:after {
-      border-top-color: white;
-      border-left: 0.45em solid transparent;
-      border-right: 0.45em solid transparent;
-      margin: 1.3em 1.2em;
+    border-top-color: white;
+    border-left: 0.45em solid transparent;
+    border-right: 0.45em solid transparent;
+    margin: 1.3em 1.2em;
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll ul li.open ul.dropdown-menu {
@@ -201,12 +201,12 @@
     font-size: 20px;
     font-weight: lighter;
     text-transform: uppercase;
-    border-top: 1px solid #1E5288;
+    border-top: 1px solid #1e5288;
     padding: 15px;
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li:last-child a {
-    border-bottom: 1px solid #1E5288;
+    border-bottom: 1px solid #1e5288;
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li:last-child ul li a {
@@ -215,11 +215,11 @@
 
 
   .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li:last-child ul li:last-child a {
-    border-bottom: 1px solid #1E5288;
+    border-bottom: 1px solid #1e5288;
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll ul.navbar-nav li ul li:last-child a {
-    border-bottom: 1px solid #1E5288;
+    border-bottom: 1px solid #1e5288;
   }
 
   .overlay-menu-scroll-show .overlay-menu-scroll-toggle .navbar-toggle {
@@ -308,13 +308,13 @@
    * Menu State: Hidden
    * Menu Component: Sliding Window with inline menu.
    **/
-   .overlay-menu-scroll-hide #main_nav {
-     max-height: 67px;
-     height: 67px;
-     overflow-y: hidden;
-     border-top: 1px solid #eee;
-     border-bottom: 1px solid #eee;
-   }
+  .overlay-menu-scroll-hide #main_nav {
+    max-height: 67px;
+    height: 67px;
+    overflow-y: hidden;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+  }
 
   .overlay-menu-scroll-hide .overlay-menu-scroll.collapse,
   .overlay-menu-scroll-hide .overlay-menu-scroll {

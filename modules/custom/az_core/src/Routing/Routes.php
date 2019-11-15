@@ -7,6 +7,9 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 
+/**
+ * Defines dynamic routes.
+ */
 class Routes implements ContainerInjectionInterface {
 
   /**

@@ -55,7 +55,8 @@ audio:not([controls]) {
 }
 
 /* Turns off the element-invisible effect. */
-.element-focusable:active, .element-focusable:focus {
+.element-focusable:active,
+.element-focusable:focus {
   position: static !important;
   clip: auto;
   height: auto;
@@ -140,7 +141,8 @@ span.field-label {
 .pager-previous,
 .pager-next,
 .pager-last,
-.pager-ellipsis, .pager-current {
+.pager-ellipsis,
+.pager-current {
   display: inline;
   padding: 0 8px;
   padding: 0 0.5rem;
@@ -322,7 +324,9 @@ a.nolink + ul .sf-clone-parent {
   background: #002147;
 }
 
-.dl-menuwrapper button:hover, .dl-menuwrapper button.dl-active, .dl-menuwrapper ul {
+.dl-menuwrapper button:hover,
+.dl-menuwrapper button.dl-active,
+.dl-menuwrapper ul {
   background: #002147;
 }
 
@@ -539,7 +543,8 @@ a.search-input-link:hover {
   min-height: 1px;
 }
 
-.webform-grid .radio, .webform-grid .checkbox {
+.webform-grid .radio,
+.webform-grid .checkbox {
   display: table-cell;
   text-align: center;
   width: 142px;

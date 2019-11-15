@@ -12,10 +12,8 @@ steps:
       - composer require az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
   - name: Drupal 8 Coding Standards
-    plugin: Script
-    script:
-      - cd $SRC_DIR/az-quickstart-scaffolding
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpcs --colors $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart || exit 1
+    plugin: Shell
+    command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -p --colors web/profiles/custom/az_quickstart'
   - name: Run ESLint
     plugin: Script
     script:

@@ -129,15 +129,15 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   /**
    * Validates the monitoring page path.
    *
-   * @param $element
+   * @param array $element
    *   An associative array containing the properties and children of the
    *   generic form element.
-   * @param $form_state
+   * @param Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    * @param array $complete_form
    *   The complete form structure.
    */
-  public function monitoringPagePathValidate(&$element, FormStateInterface $form_state, &$complete_form) {
+  public function monitoringPagePathValidate(array &$element, FormStateInterface $form_state, array &$complete_form) {
     if ($form_state->getValue('monitoring_page_enabled')) {
       $submitted_value = $form_state->getValue('monitoring_page_path');
       if (empty($submitted_value)) {

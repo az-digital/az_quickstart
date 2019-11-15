@@ -1,14 +1,14 @@
 <?php
+
 /**
  * @file
  * Functions to support theming in the Arizona Barrio theme.
  */
+
 include_once dirname(__FILE__) . '/includes/common.inc';
 
 use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
-use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 
 /**
@@ -36,23 +36,24 @@ function az_barrio_preprocess_html(&$variables) {
  */
 function az_barrio_preprocess_page(&$variables) {
 
-  // Allow hiding of title of front page node
+  // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') == 1 && \Drupal::service('path.matcher')->isFrontPage()) {
-    //$variables['title'] = FALSE;
+    // $variables['title'] = FALSE;
   }
 
-  // Check if information security policy should be displayed
+  // Check if information security policy should be displayed.
   $info_security_privacy = '';
   if (theme_get_setting('info_security_privacy')) {
     $info_security_privacy = '<p class="small"><a href="https://www.arizona.edu/information-security-privacy" target="_blank">University Information Security and Privacy</a></p>';
   }
 
-  // Determine what copyright notice to display
+  // Determine what copyright notice to display.
   $copyright_notice = theme_get_setting('copyright_notice');
   $copyright_notice_format = '<p class="small">&copy; ' . date('Y') . ' %s</p>';
   if (!empty($copyright_notice)) {
     $copyright_notice = sprintf($copyright_notice_format, $copyright_notice);
-  } else {
+  }
+  else {
     $copyright_notice = sprintf($copyright_notice_format, 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.');
   }
 
@@ -61,7 +62,7 @@ function az_barrio_preprocess_page(&$variables) {
   $variables['copyright_notice'] = Markup::create($copyright_notice);
   $variables['footer_logo'] = az_barrio_footer_logo();
 
-  // Allow wordmark to be disabled
+  // Allow wordmark to be disabled.
   $variables['wordmark'] = (theme_get_setting('wordmark')) ? TRUE : FALSE;
 }
 
@@ -69,7 +70,7 @@ function az_barrio_preprocess_page(&$variables) {
  * Implements hook_preprocess_HOOK() for image styles.
  */
 function az_barrio_preprocess_image_style(&$variables) {
-  if(!\Drupal::moduleHandler()->moduleExists('image_class')) {
+  if (!\Drupal::moduleHandler()->moduleExists('image_class')) {
     $variables['image']['#attributes']['class'][] = 'img-fluid';
   }
 }
@@ -81,7 +82,7 @@ function az_barrio_css_alter(&$css) {
   /* Exclude specified CSS files from theme.
   $excludes = ua_zen_get_theme_info(NULL, 'exclude][css');
   if (!empty($excludes)) {
-    $css = array_diff_key($css, drupal_map_assoc($excludes));
+  $css = array_diff_key($css, drupal_map_assoc($excludes));
   }*/
 
   // Add AZ Bootstrap CSS based on theme settings.
@@ -91,23 +92,23 @@ function az_barrio_css_alter(&$css) {
   }
 
   $az_bootstrap_token = '';
-  $az_bootstrap_css_info = array(
+  $az_bootstrap_css_info = [
     'every_page' => TRUE,
     'media' => 'all',
     'preprocess' => FALSE,
     'group' => CSS_LAYOUT,
-    'browsers' => array(
+    'browsers' => [
       'IE' => TRUE,
       '!IE' => TRUE,
-    ),
+    ],
     'weight' => -2,
-  );
+  ];
 
   // AZ Bootstrap source.
   if (theme_get_setting('az_bootstrap_source') == 'cdn') {
     // AZ Bootstrap CDN version.
     if (theme_get_setting('az_bootstrap_cdn_version') != 'stable') {
-      $az_bootstrap_token = '?=' . variable_get('css_js_query_string', '0');
+      $az_bootstrap_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
     }
 
     $az_bootstrap_css_info['type'] = 'external';
@@ -125,17 +126,17 @@ function az_barrio_css_alter(&$css) {
   // Add UA Brand Icons CSS based on theme settings.
   $az_brand_icons_path = az_barrio_brand_icons_assets_path('css');
 
-  $az_brand_icons_css_info = array(
+  $az_brand_icons_css_info = [
     'every_page' => TRUE,
     'media' => 'all',
     'preprocess' => FALSE,
     'group' => CSS_LAYOUT,
-    'browsers' => array(
+    'browsers' => [
       'IE' => TRUE,
       '!IE' => TRUE,
-    ),
+    ],
     'weight' => -2,
-  );
+  ];
 
   // AZ Brand Icons source.
   if (theme_get_setting('az_brand_icons_source') == 'cdn') {
@@ -160,17 +161,17 @@ function az_barrio_js_alter(&$js) {
   }
 
   $az_bootstrap_token = '';
-  $az_bootstrap_js_info = array(
+  $az_bootstrap_js_info = [
     'group' => JS_THEME,
     'weight' => 3,
     'scope' => 'footer',
-  );
+  ];
 
   // AZ Bootstrap source.
   if (theme_get_setting('az_bootstrap_source') == 'cdn') {
     // AZ Bootstrap CDN version.
     if (theme_get_setting('az_bootstrap_cdn_version') != 'stable') {
-      $az_bootstrap_token = '?=' . variable_get('css_js_query_string', '0');
+      $az_bootstrap_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
     }
     $az_bootstrap_js_info['type'] = 'external';
   }
@@ -254,13 +255,13 @@ function az_barrio_primary_logo() {
     $rendered_image = render($image);
     $image_markup = Markup::create($rendered_image);
 
-    $return = Link::createFromRoute($image_markup, '<front>', array(), array(
-        'attributes' => array(
-          'title' => $primary_title_text,
-          'class' => array('header_logo'),
-          'rel' => 'home',
-        )
-      )
+    $return = Link::createFromRoute($image_markup, '<front>', [], [
+      'attributes' => [
+        'title' => $primary_title_text,
+        'class' => ['header_logo'],
+        'rel' => 'home',
+      ],
+    ]
     );
   }
 
@@ -291,12 +292,12 @@ function az_barrio_footer_logo() {
     $image_markup = Markup::create($rendered_image);
 
     $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
-    $return = Link::createFromRoute($image_markup, $footer_link_destination, array(), array(
-        'attributes' => array(
-          'title' => $footer_title_text,
-          'rel' => 'home',
-        )
-      )
+    $return = Link::createFromRoute($image_markup, $footer_link_destination, [], [
+      'attributes' => [
+        'title' => $footer_title_text,
+        'rel' => 'home',
+      ],
+    ]
     );
   }
   // Fallback to primary logo when footer logo settings are not configured.

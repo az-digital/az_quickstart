@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Enables modules and site configuration for an az_quickstart site installation.
+ * az_quickstart.profile
  */
 
 use Drupal\contact\Entity\ContactForm;

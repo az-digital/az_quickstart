@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the az_quickstart installation profile.
+ * Install, update and uninstall functions for az_quickstart install profile.
  */
 
 use Drupal\user\Entity\User;
