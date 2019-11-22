@@ -6,3 +6,13 @@ global-styling:
 bootstrap_cdn:
   js:
     //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js: {}
+arizona-bootstrap:
+  css:
+    theme:
+      libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
+  js:
+    libraries/arizona-bootstrap/css/arizona-bootstrap.min.js: {}
+az-brand-icons:
+  css:
+    theme:
+      libraries/ua-brand-icons/ua-brand-icons.min.css: {}

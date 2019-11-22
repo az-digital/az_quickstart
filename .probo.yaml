@@ -5,10 +5,12 @@ steps:
   - name: Build Arizona Quickstart
     plugin: Script
     script:
+      - composer self-update
       - composer global require hirak/prestissimo
       - if [ $(git ls-remote --heads https://bitbucket.org/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH=master; fi
       - git clone --branch $SCAFFOLD_BRANCH https://bitbucket.org/az-digital/az-quickstart-scaffolding.git
       - cd az-quickstart-scaffolding
+      - composer config repositories.az_quickstart vcs https://bitbucket.org/az-digital/az_quickstart.git
       - composer require az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
   - name: Drupal 8 Coding Standards
