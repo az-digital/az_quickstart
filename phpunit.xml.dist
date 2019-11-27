@@ -10,12 +10,14 @@
     <testsuite name="AZ Quickstart Unit">
       <directory>./tests</directory>
       <directory>./modules</directory>
+      <directory>./themes</directory>
     </testsuite>
   </testsuites>
   <!-- Filter for coverage reports. -->
   <filter>
     <whitelist processUncoveredFilesFromWhitelist="true">
       <directory>./modules</directory>
+      <directory>./themes</directory>
       <!-- By definition test classes have no tests. -->
       <exclude>
         <directory suffix="Test.php">./</directory>
