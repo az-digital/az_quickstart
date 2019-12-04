@@ -1,8 +1,7 @@
 name: Arizona Barrio
 type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
-# version: VERSION
-# core: 8.x
+core_version_requirement: ^8.8 || ^9
 base theme: bootstrap_barrio
 logo: az_barrio/logo.png
 footer_logo: az_barrio/footer_logo.png
@@ -39,9 +38,3 @@ regions:
   footer: Footer
   footer_sub: 'Footer sub'
   page_bottom: 'Page bottom'
-
-# Information added by Drupal.org packaging script on 2019-02-28
-version: '8.x-4.22'
-core: '8.x'
-project: 'bootstrap_barrio'
-datestamp: 1551325396
