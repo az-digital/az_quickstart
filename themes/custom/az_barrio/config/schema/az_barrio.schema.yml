@@ -4,6 +4,9 @@ az_barrio.settings:
   type: theme_settings
   label: 'Arizona Barrio Subtheme settings'
   mapping:
+    bootstrap_barrio_library:
+      type: text
+      label: 'Library'
     bootstrap_barrio_sidebar_position:
       type: text
       label: 'Sidebar Position'
@@ -28,6 +31,9 @@ az_barrio.settings:
     bootstrap_barrio_fluid_container:
       type: integer
       label: 'Enabled'
+    bootstrap_barrio_button:
+      type: integer
+      label: 'Convert submit to button'
     bootstrap_barrio_button_size:
       type: text
       label: 'Size'
@@ -52,6 +58,15 @@ az_barrio.settings:
     bootstrap_barrio_navbar_background:
       type: text
       label: 'Background'
+    bootstrap_barrio_navbar_toggle:
+      type: integer
+      label: 'Enable'
+    bootstrap_barrio_navbar_container:
+      type: text
+      label: 'Container'
+    bootstrap_barrio_table_hover:
+      type: integer
+      label: 'Enable Table Hover'
     bootstrap_barrio_anchors_fix:
       type: integer
       label: 'Enabled'
@@ -142,3 +157,93 @@ az_barrio.settings:
     bootstrap_barrio_popover_container:
       type: text
       label: 'Container'
+    bootstrap_barrio_region_clean_alert:
+      type: integer
+      label: 'Enable clean wrapper for alert region'
+    bootstrap_barrio_region_class_alert:
+      type: text
+      label: 'Classes for alert region'
+    bootstrap_barrio_region_clean_content_featured:
+      type: integer
+      label: 'Enable clean wrapper for content featured region'
+    bootstrap_barrio_region_class_content_featured:
+      type: text
+      label: 'Classes for content featured region'
+    bootstrap_barrio_region_clean_full_width_content_bottom:
+      type: integer
+      label: 'Enable clean wrapper for content bottom region'
+    bootstrap_barrio_region_class_full_width_content_bottom:
+      type: text
+      label: 'Classes for content bottom region'
+    bootstrap_barrio_region_clean_footer:
+      type: integer
+      label: 'Enable clean wrapper for footer region'
+    bootstrap_barrio_region_class_footer:
+      type: text
+      label: 'Classes for footer region'
+    bootstrap_barrio_region_clean_footer_sub:
+      type: integer
+      label: 'Enable clean wrapper for footer sub region'
+    bootstrap_barrio_region_class_footer_sub:
+      type: text
+      label: 'Classes for footer sub region'
+    wordmark:
+      type: boolean
+      label: 'Enable wordmark logo'
+    az_main_menu_style:
+      type: string
+      label: 'Main menu style'
+    az_bs_overlay_menu_scroll:
+      type: boolean
+      label: 'Enable overlay menu scroll'
+    info_security_privacy:
+      type: boolean
+      label: 'Enable privacy link'
+    copyright_notice:
+      type: text
+      label: 'Copyright notice'
+    az_hide_front_title:
+      type: boolean
+      label: 'Enable hide front page title'
+    az_back_to_top:
+      type: boolean
+      label: 'Enable ''Back to Top'' button'
+    az_bootstrap_source:
+      type: string
+      label: 'AZ Bootstrap source'
+    az_bootstrap_cdn_version:
+      type: string
+      label: 'AZ Bootstrap CDN version'
+    az_bootstrap_minified:
+      type: boolean
+      label: 'Enable AZ Bootstrap minification'
+    az_brand_icons_source:
+      type: string
+      label: 'AZ Brand Icons source'
+    az_brand_icons_class:
+      type: boolean
+      label: 'Enable AZ Brand Icons class'
+    external_links:
+      type: boolean
+      label: 'Enable AZ Bootstrap external links styling'
+    sticky_footer:
+      type: boolean
+      label: 'Enable AZ Bootstrap sticky footer template'
+    primary_logo_alt_text:
+      type: string
+      label: 'Primary logo alt text'
+    primary_logo_title_text:
+      type: string
+      label: 'Primary logo title text'
+    footer_logo_link_destination:
+      type: string
+      label: 'Footer logo link destination'
+    footer_logo_alt_text:
+      type: string
+      label: 'Footer logo alt text'
+    footer_logo_title_text:
+      type: string
+      label: 'Footer logo title text'
+    footer_logo_path:
+      type: path
+      label: 'Footer logo path'

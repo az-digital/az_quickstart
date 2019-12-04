@@ -23,6 +23,9 @@
     },
     "extra": {
       "patches": {
+          "drupal/bootstrap_barrio": {
+              "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
+          }
       }
     }
 }
