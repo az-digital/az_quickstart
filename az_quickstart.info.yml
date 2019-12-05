@@ -8,7 +8,6 @@ distribution:
   name: Arizona Quickstart
 
 install:
-  - az_core
   - node
   - history
   - block
@@ -16,6 +15,7 @@ install:
   - ckeditor
   - color
   - config
+  - config_distro
   - comment
   - contextual
   - contact
@@ -44,6 +44,8 @@ install:
   - views_ui
   - tour
   - automated_cron
+  - az_core
+  - az_cas
 themes:
   - az_barrio
   - claro
