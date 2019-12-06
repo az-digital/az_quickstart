@@ -61,7 +61,7 @@ class ArizonaBootstrapTest extends BrowserTestBase {
     $library_service = \Drupal::service('library.discovery');
     $assert->assert($library_service, 'Found the library.discovery service.');
 
-    // Try to locate the library information of the arizona-boostrap library.
+    // Try to locate the library information of the arizona-bootstrap library.
     $library = $library_service->getLibraryByName('az_barrio', 'arizona-bootstrap');
     $assert->assert($library, 'Found information for the arizona-bootstrap library.');
 
