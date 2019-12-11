@@ -11,7 +11,7 @@ steps:
       - git clone --branch $SCAFFOLD_BRANCH https://bitbucket.org/az-digital/az-quickstart-scaffolding.git
       - cd az-quickstart-scaffolding
       - composer config repositories.az_quickstart vcs https://bitbucket.org/az-digital/az_quickstart.git
-      - composer require az-digital/az_quickstart:dev-${BRANCH_NAME}
+      - composer require --no-update az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
   - name: Drupal 8 Coding Standards
     plugin: Shell
