@@ -13,6 +13,12 @@
     "support": {
         "docs": "https://quickstart.arizona.edu/help"
     },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        }
+    ],
     "require": {
         "php": ">=7.0",
         "composer/installers": "1.7.0",
