@@ -15,7 +15,6 @@ install:
   - ckeditor
   - color
   - config
-  - config_distro
   - comment
   - contextual
   - contact

@@ -27,8 +27,7 @@
         "drush/drush": "9.7.1",
         "drupal/bootstrap_barrio": "4.22",
         "drupal/cas": "1.5.0",
-        "drupal/externalauth": "1.2.0",
-        "drupal/config_distro": "1.0.0-alpha3"
+        "drupal/externalauth": "1.2.0"
     },
     "extra": {
       "patches": {
