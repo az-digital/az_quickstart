@@ -1,0 +1,9 @@
+name: 'Quickstart Config'
+type: module
+description: 'Configuration management customizations for Quickstart components.'
+core_version_requirement: ^8.8 || ^9
+package: 'The University of Arizona'
+dependencies:
+  - az_core
+  - config_distro
+  - config_sync

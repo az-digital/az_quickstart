@@ -1,0 +1,5 @@
+az_config.import:
+  title: 'Arizona Quickstart Updates'
+  description: 'Import configuration changes from extension updates.'
+  route_name: az_config.import
+  parent: az_core.az_quickstart

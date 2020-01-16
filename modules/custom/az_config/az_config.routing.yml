@@ -1,0 +1,7 @@
+az_config.import:
+  path: '/admin/config/az-quickstart/updates'
+  defaults:
+    _form: '\Drupal\config_distro\Form\ConfigDistroImportForm'
+    _title: 'Arizona Quickstart Updates'
+  requirements:
+    _permission: 'synchronize distro configuration'

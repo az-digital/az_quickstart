@@ -1,0 +1,6 @@
+services:
+  az_config.config.installer:
+    class: Drupal\az_config\QuickstartConfigInstaller
+    decorates: config.installer
+    decoration_priority: 9
+    arguments: ['@config.factory', '@config.storage', '@config.typed', '@config.manager', '@event_dispatcher', '%install_profile%']

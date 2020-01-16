@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_core;
+namespace Drupal\az_config;
 
 use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Config\ConfigInstaller;

@@ -25,7 +25,8 @@
         "cweagans/composer-patches": "1.6.7",
         "drupal/core-recommended": "8.8.1",
         "drush/drush": "9.7.1",
-        "drupal/bootstrap_barrio": "4.22"
+        "drupal/bootstrap_barrio": "4.22",
+        "drupal/config_sync": "2.0-beta5"
     },
     "extra": {
       "patches": {
