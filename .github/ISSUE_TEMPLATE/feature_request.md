@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Do not disclose security vulnerabilities here. Email us here: 
+**Do not disclose security vulnerabilities here, please email us instead: 
 az-digital@web.arizona.edu**
 
 **Is your feature request related to a problem? Please describe.**
