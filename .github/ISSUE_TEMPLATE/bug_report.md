@@ -7,8 +7,8 @@ assignees: ''
 
 ---
 
-**Do not disclose security vulnerabilities here. Create a security vulnerability
-issue and follow the given instructions.**
+**Do not disclose security vulnerabilities here. Email us here: 
+az-digital@web.arizona.edu**
 
 **Describe the bug**
 A clear and concise description of what the bug is.
