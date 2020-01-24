@@ -27,8 +27,8 @@ If you found a security vulnerability and it's related to Drupal core or a
 Drupal contrib module, please follow 
 [these](https://www.drupal.org/drupal-security-team/security-team-procedures/drupal-security-team-disclosure-policy-for-security) instructions.
 
-If it's a security issue related to `az_quickstart` code, create a [security 
-vulnerability](https://github.com/az-digital/az_quickstart/issues/new?assignees=&labels=&template=security_vulnerability.md&title=) issue.
+If it's a security issue related to `az_quickstart` code, please email us here:
+az-digital@web.arizona.edu
 
 ### General bug/new feature request
 
@@ -57,7 +57,7 @@ Follow the pull request template and use proper formatting for commit messages:
 ```
 Add new feature X...<at most 72 characters>
 
-Closes #123 by creating y and z. This can be a paragraph of explanatin.
+Closes #123 by creating y and z. This can be a paragraph of explanation.
 ```
 
 ## Local development
