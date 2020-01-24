@@ -47,6 +47,9 @@ We follow Drupal
 
 First, make sure there is an issue associated with your pull request.
 
+Create a draft pull request if you'd like to run automated tests and/or get 
+feedback before your pull request is completely ready for review.
+
 Follow the pull request template and use proper formatting for commit messages:
  * Use the present tense ("Add feature" not "Added feature")
  * Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
