@@ -47,6 +47,12 @@ We follow Drupal
 
 First, make sure there is an issue associated with your pull request.
 
+Use proper branch naming conventions based on your issue type:
+ * `feature/<issue-number>`
+ * `bug/<issue-number>`
+
+So, bug fix for issue #123 would be on branch `bug/123`
+
 Create a draft pull request if you'd like to run automated tests and/or get 
 feedback before your pull request is completely ready for review.
 
