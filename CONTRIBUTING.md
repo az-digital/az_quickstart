@@ -28,7 +28,7 @@ Drupal contrib module, please follow
 [these](https://www.drupal.org/drupal-security-team/security-team-procedures/drupal-security-team-disclosure-policy-for-security) instructions.
 
 If it's a security issue related to `az_quickstart` code, please email us here:
-az-digital@web.arizona.edu
+az-digital-security@list.arizona.edu
 
 ### General bug/new feature request
 
