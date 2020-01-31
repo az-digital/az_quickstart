@@ -8,7 +8,7 @@ assignees: ''
 ---
 
 **Do not disclose security vulnerabilities here, please email us instead: 
-az-digital@web.arizona.edu**
+az-digital-security@list.arizona.edu**
 
 **Describe the bug**
 A clear and concise description of what the bug is.
