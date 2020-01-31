@@ -12,7 +12,8 @@ use Drupal\Core\Config\UnmetDependenciesException;
 /**
  * Class for customizing the test for pre existing configuration.
  *
- * Decorates the ConfigInstaller with findPreExistingConfiguration() modified.
+ * Decorates the ConfigInstaller with checkConfigurationToInstall() modified.
+ * Additionally adds checkAllowedOverrides() to parse yaml-specified overrides.
  */
 class QuickstartConfigInstaller extends ConfigInstaller {
 
