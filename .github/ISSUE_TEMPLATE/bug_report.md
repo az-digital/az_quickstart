@@ -10,10 +10,13 @@ assignees: ''
 **Do not disclose security vulnerabilities here, please email us instead: 
 az-digital-security@list.arizona.edu**
 
-## Describe the bug
+## Problem/Motivation
+Why the issue was filed, steps to reproduce the problem, etc.
+
+### Describe the bug
 A clear and concise description of what the bug is.
 
-## To Reproduce
+### To Reproduce
 Steps to reproduce the behavior:
 
 <!--- Edit and replace examples below. Add or remove as needed  -->
@@ -23,7 +26,10 @@ Steps to reproduce the behavior:
 3. Scroll down to '....'
 4. See error
 
-## Expected behavior
+## Proposed resolution
+Description of the proposed solution, the rationale behind it, and workarounds for people who cannot use the patch.
+
+### Expected behavior
 
 <!--- Edit and replace examples below. Add or remove as needed  -->
 
