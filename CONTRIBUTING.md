@@ -33,7 +33,9 @@ az-digital-security@list.arizona.edu
 ### General bug/new feature request
 
 We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
-keep track of issues and bugs. If you don't see the specific issue or bug after looking at the 
+keep track of issues and bugs. 
+
+If you don't see the specific issue or bug after looking at the 
 [AZ Quickstart Project](https://github.com/orgs/az-digital/projects/1), please
 create a new issue with proper description of bug or details related to new 
 feature request.
