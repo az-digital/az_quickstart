@@ -1,9 +1,10 @@
 # How to contribute
 
-First off, thanks for taking the time to contribute to AZ Quickstart! 
+First off, thanks for taking the time to contribute to AZ Quickstart!
 
 AZ Quickstart is created by [Arizona Digital](https://digital.arizona.edu/), a
-team of web-focused volunteers that meet weekly to create projects like [Arizona Bootstrap](https://digital.arizona.edu/ua-bootstrap) and 
+team of web-focused volunteers that meet weekly to create projects like
+[Arizona Bootstrap](https://digital.arizona.edu/ua-bootstrap) and
 [Arizona Quickstart](https://quickstart.arizona.edu/).
 
 ## Things you'll need to get started
@@ -12,7 +13,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
   * [Slack](https://uarizona.slack.com) is our main source of communications.
     * Use the `#ua-quickstart-d8` channel for questions/comments related to this
       project.
-    * Use the `#friday-meetings` channel to ask questions or get updates related 
+    * Use the `#friday-meetings` channel to ask questions or get updates related
       to Arizona Digital meetings, both physical and via Zoom.
     * Use the `#uadigital-general` channel to ask general questions related to
       Arizona Digital.
@@ -23,8 +24,8 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
 
 ### Security Issues
 
-If you found a security vulnerability and it's related to Drupal core or a 
-Drupal contrib module, please follow 
+If you found a security vulnerability and it's related to Drupal core or a
+Drupal contrib module, please follow
 [these](https://www.drupal.org/drupal-security-team/security-team-procedures/drupal-security-team-disclosure-policy-for-security) instructions.
 
 If it's a security issue related to `az_quickstart` code, please email us here:
@@ -33,14 +34,14 @@ az-digital-security@list.arizona.edu
 ### General bug/new feature request
 
 We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
-keep track of issues and bugs. If you don't see the specific issue or bug after looking at the 
+keep track of issues and bugs. If you don't see the specific issue or bug after looking at the
 [AZ Quickstart Project](https://github.com/orgs/az-digital/projects/1), please
-create a new issue with proper description of bug or details related to new 
+create a new issue with proper description of bug or details related to new
 feature request.
 
 ## Coding Standards
 
-We follow Drupal 
+We follow Drupal
 [coding standards](https://www.drupal.org/docs/develop/standards).
 
 ## Pull requests
@@ -53,7 +54,7 @@ Use proper branch naming conventions based on your issue type:
 
 So, bug fix for issue #123 would be on branch `bug/123`
 
-Create a draft pull request if you'd like to run automated tests and/or get 
+Create a draft pull request if you'd like to run automated tests and/or get
 feedback before your pull request is completely ready for review.
 
 Follow the pull request template and use proper formatting for commit messages:
