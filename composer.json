@@ -37,9 +37,6 @@
           "drupal/bootstrap_barrio": {
               "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
           },
-          "drupal/ds": {
-              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-04-28/3042636-8.patch"
-          },
           "drupal/layout_builder_styles": {
               "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch"
           }
