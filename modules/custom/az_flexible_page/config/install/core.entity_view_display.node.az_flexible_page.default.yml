@@ -1,0 +1,72 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_flexible_page.layout_builder__layout
+    - node.type.az_flexible_page
+  module:
+    - layout_builder
+    - layout_builder_restrictions
+    - layout_discovery
+    - user
+third_party_settings:
+  layout_builder:
+    allow_custom: true
+    enabled: true
+    sections:
+      -
+        layout_id: layout_onecol
+        layout_settings:
+          label: ''
+        components:
+          0ac263bb-9b7c-4a80-99c5-53782242f281:
+            uuid: 0ac263bb-9b7c-4a80-99c5-53782242f281
+            region: content
+            configuration:
+              label_display: '0'
+              context_mapping:
+                entity: layout_builder.entity
+              id: 'extra_field_block:node:az_flexible_page:links'
+            additional: {  }
+            weight: 0
+        third_party_settings: {  }
+  layout_builder_restrictions:
+    entity_view_mode_restriction:
+      allowed_blocks:
+        'Chaos Tools': {  }
+        'Content fields': {  }
+        'Custom block types': {  }
+        'Custom blocks': {  }
+        Forms: {  }
+        Help: {  }
+        'Inline blocks':
+          - 'inline_block:reg_accordion'
+          - 'inline_block:reg_background_image'
+          - 'inline_block:reg_background_wrapper_body'
+          - 'inline_block:reg_card_body'
+          - 'inline_block:reg_image'
+          - 'inline_block:reg_text_area'
+        'Lists (Views)': {  }
+        Menus: {  }
+        System: {  }
+        User: {  }
+        'User fields': {  }
+        core: {  }
+      allowed_layouts:
+        - ds_1col
+        - ds_2col
+        - ds_3col
+        - ds_3col_equal_width
+        - ds_4col
+id: node.az_flexible_page.default
+targetEntityType: node
+bundle: az_flexible_page
+mode: default
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  layout_builder__layout: true

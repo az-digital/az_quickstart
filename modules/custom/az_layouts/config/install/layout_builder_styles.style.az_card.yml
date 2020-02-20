@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+id: card
+label: Card
+classes: az_card
+type: component
+block_restrictions:
+  - 'inline_block:az_card_body'
+  - 'inline_block:az_text_area'

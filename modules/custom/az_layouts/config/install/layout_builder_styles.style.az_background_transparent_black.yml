@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_background_transparent_black
+label: 'Background - Transparent Black'
+classes: bg-transparent-black
+type: component
+block_restrictions:
+  - 'inline_block:az_text_area'

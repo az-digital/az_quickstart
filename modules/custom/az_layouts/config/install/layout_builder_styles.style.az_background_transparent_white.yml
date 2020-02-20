@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_background_transparent_white
+label: 'Background - Transparent White'
+classes: bg-transparent-white
+type: component
+block_restrictions:
+  - 'inline_block:az_text_area'

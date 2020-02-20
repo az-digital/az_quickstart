@@ -1,0 +1,22 @@
+uuid: 33fb8d72-2278-461f-a614-e167862e9a9a
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_text_area
+    - field.field.block_content.az_text_area.field_az_adv_content
+  module:
+    - text
+id: block_content.az_text_area.default
+targetEntityType: block_content
+bundle: az_text_area
+mode: default
+content:
+  field_az_adv_content:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

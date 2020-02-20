@@ -1,0 +1,7 @@
+name: Quickstart Layouts
+type: module
+description: Layout plugins and contrib modules to enhance core Layout Builder.
+core: 8.x
+package: The University of Arizona
+dependencies:
+  - layout_builder_styles

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_card_deck
+label: 'Card Deck'
+classes: card-deck
+type: section
+block_restrictions: {  }

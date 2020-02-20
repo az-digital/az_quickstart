@@ -1,0 +1,72 @@
+uuid: b5b30f3e-8322-4d13-8fc6-bd8747ff0e47
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_card_body
+    - field.field.block_content.az_card_body.field_az_card_body
+  module:
+    - ds
+    - field_group
+    - text
+third_party_settings:
+  field_group:
+    group_card_body:
+      children:
+        - field_az_card_body
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: card-body
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Card Body'
+id: block_content.az_card_body.default
+targetEntityType: block_content
+bundle: az_card_body
+mode: default
+content:
+  field_az_card_body:
+    weight: 1
+    label: hidden
+    settings: {  }
+    third_party_settings:
+      ds:
+        ft:
+          id: expert
+          settings:
+            lb: ''
+            prefix: ''
+            lbw-el: ''
+            lbw-cl: ''
+            lbw-at: ''
+            ow: true
+            ow-el: div
+            ow-cl: card-body
+            ow-at: ''
+            fis-el: ''
+            fis-cl: ''
+            fis-at: ''
+            fi-el: ''
+            fi-cl: ''
+            fi-at: ''
+            suffix: ''
+            lbw: false
+            lb-col: false
+            ow-def-at: false
+            ow-def-cl: false
+            fis: false
+            fis-def-at: false
+            fi: false
+            fi-def-at: false
+    type: text_default
+    region: content
+hidden: {  }
