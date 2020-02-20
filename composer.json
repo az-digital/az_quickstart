@@ -26,8 +26,8 @@
         "drupal/core-recommended": "8.8.2",
         "drush/drush": "9.7.1",
         "drupal/bootstrap_barrio": "4.22",
-        "drupal/layout-builder-restrictions": "2.5",
-        "drupal/layout-builder-styles": "1.0-beta1"
+        "drupal/layout_builder_restrictions": "2.5",
+        "drupal/layout_builder_styles": "1.0-beta1"
     },
     "extra": {
       "patches": {
