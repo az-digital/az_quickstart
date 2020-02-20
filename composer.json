@@ -25,7 +25,10 @@
         "cweagans/composer-patches": "1.6.7",
         "drupal/core-recommended": "8.8.2",
         "drush/drush": "9.7.1",
+        "drupal/background_image_formatter": "1.4",
         "drupal/bootstrap_barrio": "4.22",
+        "drupal/ds": "3.5",
+        "drupal/field_group": "3.0",
         "drupal/layout_builder_restrictions": "2.5",
         "drupal/layout_builder_styles": "1.0-beta1"
     },
