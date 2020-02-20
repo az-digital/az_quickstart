@@ -9,6 +9,7 @@ distribution:
 
 install:
   - az_core
+  - az_flexible_page
   - node
   - history
   - block
