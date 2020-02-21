@@ -6,13 +6,7 @@ dependencies:
     - field.field.media.image.field_media_image
     - media.type.image
   module:
-    - ds
     - image
-    - layout_builder
-third_party_settings:
-  layout_builder:
-    allow_custom: false
-    enabled: false
 id: media.image.az_natural_size
 targetEntityType: media
 bundle: image
@@ -23,14 +17,7 @@ content:
     settings:
       image_style: ''
       image_link: ''
-    third_party_settings:
-      ds:
-        ft:
-          id: default
-          settings:
-            lb: ''
-            lb-col: false
-            classes: {  }
+    third_party_settings: {  }
     type: image
     weight: 1
     region: content
