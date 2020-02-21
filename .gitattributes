@@ -1,0 +1,12 @@
+# Reclassify various Drupal files as PHP.
+*.install linguist-language=PHP
+*.module linguist-language=PHP
+*.profile linguist-language=PHP
+*.theme linguist-language=PHP
+
+# Reclassify az_barrio libraries folder as vendor code.
+themes/custom/az_barrio/libraries/* linguist-vendored
+
+# Reclassify az_barrio minified files as generated code.
+themes/custom/az_barrio/libraries/*.min.css linguist-generated=true
+themes/custom/az_barrio/libraries/*.min.js linguist-generated=true
