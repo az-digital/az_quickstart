@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_background_azurite
+label: 'Background - Azurite'
+classes: bg-azurite
+type: component
+block_restrictions:
+  - 'inline_block:az_background_wrapper_body'
+  - 'inline_block:az_card_body'

@@ -1,0 +1,12 @@
+name: Quickstart Blocks
+type: module
+description: Custom block types.
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - background_image_formatter
+  - block_content
+  - ds
+  - field_group
+  - media
+  - media_library

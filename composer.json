@@ -25,12 +25,23 @@
         "cweagans/composer-patches": "1.6.7",
         "drupal/core-recommended": "8.8.2",
         "drush/drush": "9.7.1",
-        "drupal/bootstrap_barrio": "4.22"
+        "drupal/background_image_formatter": "1.4",
+        "drupal/bootstrap_barrio": "4.22",
+        "drupal/ds": "3.5",
+        "drupal/field_group": "3.0",
+        "drupal/layout_builder_restrictions": "2.5",
+        "drupal/layout_builder_styles": "1.0-beta1"
     },
     "extra": {
       "patches": {
           "drupal/bootstrap_barrio": {
               "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
+          },
+          "drupal/ds": {
+              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch"
+          },
+          "drupal/layout_builder_styles": {
+              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch"
           }
       }
     }

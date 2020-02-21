@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_background_image
+label: 'Background Image'
+revision: 1
+description: 'Use this block to add a background image to your section'

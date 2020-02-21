@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_accordion
+    - field.storage.block_content.field_az_accordion_title
+id: block_content.az_accordion.field_az_accordion_title
+field_name: field_az_accordion_title
+entity_type: block_content
+bundle: az_accordion
+label: Title
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_bg_red
+label: 'Background - Red'
+classes: bg-red
+type: component
+block_restrictions:
+  - 'inline_block:az_background_wrapper_body'
+  - 'inline_block:az_card_body'

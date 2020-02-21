@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_bg_triangles_top_left
+label: 'Background Triangles - Top Left'
+classes: bg-triangles-top-left
+type: component
+block_restrictions:
+  - 'inline_block:az_card_body'

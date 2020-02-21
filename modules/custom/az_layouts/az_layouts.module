@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains az_layouts.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_layouts_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_layouts module.
+    case 'help.page.az_layouts':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Layout plugins and contrib modules to enhance core Layout Builder.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_align_content_right
+label: 'Align Content - Right'
+classes: "d-flex\r\njustify-content-md-end"
+type: section
+block_restrictions: {  }

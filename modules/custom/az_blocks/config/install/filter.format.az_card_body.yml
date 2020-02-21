@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Card Body'
+format: az_card_body
+weight: -9
+filters:
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
+    settings: {  }
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <sup> <sub> <a href hreflang class="btn btn-red btn-outline-red btn-blue btn-outline-blue btn-success btn-outline-success btn-info btn-outline-info btn-outline-white"> <p class="lead"> <span class="sans text-uppercase text-red text-blue text-midnight text-azurite text-oasis text-sky text-leaf text-river text-white text-ash text-black h1 h2 h3 h4 h5 h6">'
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: 0
+    settings:
+      filter_url_length: 72

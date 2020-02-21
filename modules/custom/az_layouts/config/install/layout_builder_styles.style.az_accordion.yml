@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_accordion
+label: 'Accordion Group'
+classes: accordion
+type: section
+block_restrictions: {  }
