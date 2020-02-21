@@ -38,7 +38,8 @@
               "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
           },
           "drupal/ds": {
-              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch"
+              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch",
+              "Remove broken drush commands": "https://git.drupalcode.org/project/ds/commit/c8db6ed6f5f2a543f9fe50d440a5dd94a1f13fae.diff"
           },
           "drupal/layout_builder_styles": {
               "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch"
