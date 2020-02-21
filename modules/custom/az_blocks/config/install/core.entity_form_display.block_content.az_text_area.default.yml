@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_text_area
+    - field.field.block_content.az_text_area.field_az_adv_content
+  module:
+    - text
+id: block_content.az_text_area.default
+targetEntityType: block_content
+bundle: az_text_area
+mode: default
+content:
+  field_az_adv_content:
+    weight: 27
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  info:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }
