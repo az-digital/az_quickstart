@@ -4,9 +4,8 @@ description: Custom block types.
 core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
+  - az_media
   - background_image_formatter
   - block_content
   - ds
   - field_group
-  - media
-  - media_library
