@@ -9,3 +9,4 @@ dependencies:
   - ds
   - field_group
   - media
+  - media_library
