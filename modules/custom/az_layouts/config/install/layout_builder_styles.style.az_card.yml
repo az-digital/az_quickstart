@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: card
+id: az_card
 label: Card
 classes: az_card
 type: component
