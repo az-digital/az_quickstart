@@ -40,12 +40,12 @@ third_party_settings:
         Forms: {  }
         Help: {  }
         'Inline blocks':
-          - 'inline_block:reg_accordion'
-          - 'inline_block:reg_background_image'
-          - 'inline_block:reg_background_wrapper_body'
-          - 'inline_block:reg_card_body'
-          - 'inline_block:reg_image'
-          - 'inline_block:reg_text_area'
+          - 'inline_block:az_accordion'
+          - 'inline_block:az_background_image'
+          - 'inline_block:az_background_wrapper_body'
+          - 'inline_block:az_card_body'
+          - 'inline_block:az_image'
+          - 'inline_block:az_text_area'
         'Lists (Views)': {  }
         Menus: {  }
         System: {  }
