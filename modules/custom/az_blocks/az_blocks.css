@@ -1,0 +1,153 @@
+.ds-1col, 
+.ds-2col,
+.ds-3col,
+.ds-3col-equal,
+.ds-4col {
+  /*
+  *  Make columns position relative to ensure background images
+  *  respond properly to their "parent" container.
+  *
+  *  FUTURE IMPROVEMENT: Include this with our custom layouts.
+  */
+  position: relative;
+}
+
+.component-w-50 {
+  /* 
+  *  Make component's width 50%. Different from AZ Bootstrap's .w-50
+  *  because it includes media queries for mobile.
+  */
+  width: 100%;
+}
+
+.full-width-wrapper {
+  /* 
+  *  Make component 100% of viewport width, and translate it left
+  *  to keep it within the viewport.
+  */
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.full-width-wrapper .block-inline-blockaz-background-wrapper-body {
+  /* 
+  *  Set padding for full-width background wrappers, to account for 
+  *  the included background color.
+  */
+  padding: 5rem 0;
+}
+
+
+/* 
+*  ACCORDIONS
+*
+*  Specificity overrides from AZ Bootstrap, to ensure they look correct in Drupal.
+*/
+.accordion .card {
+  overflow: hidden;
+}
+.accordion .card:first-of-type {
+  border-bottom: 0;
+}
+.accordion .card .card-header {
+  margin-bottom: -1px;
+}
+
+/* BACKGROUND IMAGES */
+.block-inline-blockaz-background-image {
+  /* Place block behind other components. */
+  position: absolute;
+  top: 0;
+  height: 100%;
+  min-width: 100%;
+  z-index: -1;
+}
+div[class^="background_image_"]{
+  /* Set default background image behavior. */
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-size: cover;
+  background-position: center center;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* CARDS */
+.card-deck .card-body {
+  /* 
+  *  Provide default padding to account for cards with background colors. 
+  *
+  *  FUTURE IMPROVEMENT: allow different padding options for cards.
+  */
+  padding: 1.5rem;
+}
+.card-deck .card p:last-child {
+  /* 
+  *  Remove extra whitespace.
+  *
+  *  NOTE: Consider adding this to Bootstrap instead? */
+  margin: 0;
+}
+
+/* IMAGE */
+.block-inline-blockaz-image img {
+  /*
+  *  Prevent image from extending past container.
+  * 
+  *  NOTE: We should switch to using the following Bootstrap classes on the img tag:
+  *        .mw-100.h-auto
+  */
+  width: 100%;
+  height: auto;
+}
+
+/* TEXT AREA */
+.text-area-w-50 {
+  /* Set mobile-friendly behavior. */
+  width: 100%;
+}
+.block-inline-blockaz-text-area[class^="bg-"] {
+  /* If text area has a background color, add padding. */
+  padding: 1rem;
+}
+
+
+
+
+/* MEDIA QUERIES */
+
+/* @min-width 576px */
+@media (min-width: 576px) {
+  .card-deck { 
+    flex-flow: column;
+  }
+  .card-deck .card {
+  	margin-bottom: 15px;
+  }
+  .block-inline-blockaz-text-area[class^="bg-"] {
+	  padding: 3rem;
+	}
+	.card-deck .card-body {
+	  padding: 2.5rem;
+	}
+}
+
+/* @min-width 768px */
+@media (min-width: 768px) {
+	.component-w-50 {
+    width: 65%;
+  }
+}
+
+/* @min-width 992px */
+@media (min-width: 992px) {
+  .card-deck { 
+    flex-flow: row wrap;
+  }
+	.component-w-50 {
+    width: 50%;
+  }
+}
