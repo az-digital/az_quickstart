@@ -1,4 +1,4 @@
-.ds-1col, 
+.ds-1col,
 .ds-2col,
 .ds-3col,
 .ds-3col-equal,
@@ -13,7 +13,7 @@
 }
 
 .component-w-50 {
-  /* 
+  /*
   *  Make component's width 50%. Different from AZ Bootstrap's .w-50
   *  because it includes media queries for mobile.
   */
@@ -21,7 +21,7 @@
 }
 
 .full-width-wrapper {
-  /* 
+  /*
   *  Make component 100% of viewport width, and translate it left
   *  to keep it within the viewport.
   */
@@ -31,15 +31,15 @@
   transform: translateX(-50%);
 }
 .full-width-wrapper .block-inline-blockaz-background-wrapper-body {
-  /* 
-  *  Set padding for full-width background wrappers, to account for 
+  /*
+  *  Set padding for full-width background wrappers, to account for
   *  the included background color.
   */
   padding: 5rem 0;
 }
 
 
-/* 
+/*
 *  ACCORDIONS
 *
 *  Specificity overrides from AZ Bootstrap, to ensure they look correct in Drupal.
@@ -63,7 +63,7 @@
   min-width: 100%;
   z-index: -1;
 }
-div[class^="background_image_"]{
+div[class^="background_image_"] {
   /* Set default background image behavior. */
   position: absolute;
   top: 0px;
@@ -77,15 +77,15 @@ div[class^="background_image_"]{
 
 /* CARDS */
 .card-deck .card-body {
-  /* 
-  *  Provide default padding to account for cards with background colors. 
+  /*
+  *  Provide default padding to account for cards with background colors.
   *
   *  FUTURE IMPROVEMENT: allow different padding options for cards.
   */
   padding: 1.5rem;
 }
 .card-deck .card p:last-child {
-  /* 
+  /*
   *  Remove extra whitespace.
   *
   *  NOTE: Consider adding this to Bootstrap instead? */
@@ -96,7 +96,7 @@ div[class^="background_image_"]{
 .block-inline-blockaz-image img {
   /*
   *  Prevent image from extending past container.
-  * 
+  *
   *  NOTE: We should switch to using the following Bootstrap classes on the img tag:
   *        .mw-100.h-auto
   */
@@ -114,40 +114,37 @@ div[class^="background_image_"]{
   padding: 1rem;
 }
 
-
-
-
 /* MEDIA QUERIES */
 
 /* @min-width 576px */
 @media (min-width: 576px) {
-  .card-deck { 
+  .card-deck {
     flex-flow: column;
   }
   .card-deck .card {
-  	margin-bottom: 15px;
+    margin-bottom: 15px;
   }
   .block-inline-blockaz-text-area[class^="bg-"] {
-	  padding: 3rem;
-	}
-	.card-deck .card-body {
-	  padding: 2.5rem;
-	}
+    padding: 3rem;
+  }
+  .card-deck .card-body {
+    padding: 2.5rem;
+  }
 }
 
 /* @min-width 768px */
 @media (min-width: 768px) {
-	.component-w-50 {
+  .component-w-50 {
     width: 65%;
   }
 }
 
 /* @min-width 992px */
 @media (min-width: 992px) {
-  .card-deck { 
+  .card-deck {
     flex-flow: row wrap;
   }
-	.component-w-50 {
+  .component-w-50 {
     width: 50%;
   }
 }

@@ -17,18 +17,22 @@
   border-width: 2px;
   border-radius: 0;
 }
+
 #drupal-off-canvas .button + .button {
   /* Provide left spacing between sibling buttons. */
   margin-left: .5rem;
 }
+
 #drupal-off-canvas .button.dialog-cancel {
   /* Provide visual distinction between different buttons. */
   background-color: #dee2e6;
   color: #001c48;
 }
+
 #drupal-off-canvas .form-actions {
   display: flex;
 }
+
 #drupal-off-canvas label {
   display: inline;
 }
