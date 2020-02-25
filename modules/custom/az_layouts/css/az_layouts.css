@@ -1,0 +1,17 @@
+
+#layout-builder .layout-builder__link--configure {
+  /* Ensure "configure" link never gets hidden behind components. */
+  position: relative;
+  z-index: 5;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: rgba(255,255,255,.7);
+}
+
+.layout-builder__section {
+  /*
+  *  Ensure sections with background images are interactable in
+  *  the event they're the only component in the section.
+  */
+  min-height: 250px;
+}
