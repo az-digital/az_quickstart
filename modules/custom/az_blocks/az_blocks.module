@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_help().
@@ -20,5 +21,28 @@ function az_blocks_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_blocks_form_node_az_flexible_page_layout_builder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Attach block libraries for flexible page layout builder pages.
+  $form['#attached']['library'][] = 'az_blocks/az_blocks.layout';
+  $form['#attached']['library'][] = 'az_blocks/az_blocks.blocks';
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function az_blocks_preprocess_node(&$variables) {
+
+  $node = $variables['node'];
+  // Check whether the node is a flexible page.
+  if ($node->getType() === 'az_flexible_page') {
+    // Attach blocks library for flexible pages.
+    $variables['#attached']['library'][] = 'az_blocks/az_blocks.blocks';
   }
 }

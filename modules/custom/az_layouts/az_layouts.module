@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_help().
@@ -21,4 +22,45 @@ function az_layouts_help($route_name, RouteMatchInterface $route_match) {
 
     default:
   }
+}
+
+/**
+ * Alter Element plugin definitions for LayoutBuilder to use a subclass.
+ *
+ * @param array $definitions
+ *   An array of Element plugin definitions.
+ *
+ * @see \Drupal\Core\Render\ElementInfoManager
+ * @see \Drupal\Core\Render\Element\ElementInterface
+ */
+function az_layouts_element_plugin_alter(array &$definitions) {
+  // Use a custom class for the LayoutBuilder element.
+  $definitions['layout_builder']['class'] = '\Drupal\az_layouts\Element\AZLayoutBuilder';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_layouts_form_layout_builder_add_block_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Attach library for offscreen block configuration dialog.
+  $form['#attached']['library'][] = 'az_layouts/az_layouts.dialog';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_layouts_form_layout_builder_update_block_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Attach library for offscreen block configuration dialog.
+  $form['#attached']['library'][] = 'az_layouts/az_layouts.dialog';
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_layouts_form_node_az_flexible_page_layout_builder_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Attach library for the layout builder section interface.
+  $form['#attached']['library'][] = 'az_layouts/az_layouts.layouts';
 }
