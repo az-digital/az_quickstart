@@ -95,3 +95,4 @@ ddev config --project-type php
 ddev start
 ddev install
 ```
+Note: Use `ddev pause` and `ddev start` to restart the container. Using `ddev restart` will require a re-install with `ddev install`.

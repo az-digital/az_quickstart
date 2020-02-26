@@ -1,6 +1,6 @@
 #!/bin/sh
 
-## Description: Run the az_quickstart installation inside the web container.
+## Description: Create a new quickstart project and use the installation profile as a non-packagist repository using the matching scaffolding branch if available.
 ## Usage: install
 ## Example: "ddev install"
 
