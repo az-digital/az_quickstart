@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.az_file.field_media_az_file
-    - media.type.az_file
+    - field.field.media.az_document.field_media_az_document
+    - media.type.az_document
   module:
     - file
-id: media.az_file.default
+id: media.az_document.default
 targetEntityType: media
-bundle: az_file
+bundle: az_document
 mode: default
 content:
-  field_media_az_file:
+  field_media_az_document:
     label: visually_hidden
     settings: {  }
     third_party_settings: {  }
