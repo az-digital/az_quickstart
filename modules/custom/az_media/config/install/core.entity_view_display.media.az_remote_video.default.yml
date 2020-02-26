@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.remote_video.field_media_oembed_video
-    - media.type.remote_video
+    - field.field.media.az_remote_video.field_media_az_oembed_video
+    - media.type.az_remote_video
   module:
     - media
-id: media.remote_video.default
+id: media.az_remote_video.default
 targetEntityType: media
-bundle: remote_video
+bundle: az_remote_video
 mode: default
 content:
-  field_media_oembed_video:
+  field_media_az_oembed_video:
     type: oembed
     weight: 0
     label: hidden

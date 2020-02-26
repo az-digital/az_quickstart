@@ -2,23 +2,20 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.video.field_media_video_file
-    - media.type.video
+    - field.field.media.az_audio.field_media_az_audio_file
+    - media.type.az_audio
   module:
     - file
-id: media.video.default
+id: media.az_audio.default
 targetEntityType: media
-bundle: video
+bundle: az_audio
 mode: default
 content:
-  field_media_video_file:
-    type: file_video
+  field_media_az_audio_file:
+    type: file_audio
     weight: 0
     label: visually_hidden
     settings:
-      muted: false
-      width: 640
-      height: 480
       controls: true
       autoplay: false
       loop: false

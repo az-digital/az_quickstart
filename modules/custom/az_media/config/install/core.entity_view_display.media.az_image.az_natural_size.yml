@@ -2,27 +2,27 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.image.field_media_image
-    - image.style.medium
-    - media.type.image
+    - core.entity_view_mode.media.az_natural_size
+    - field.field.media.az_image.field_media_az_image
+    - media.type.az_image
   module:
     - image
-id: media.image.default
+id: media.az_image.az_natural_size
 targetEntityType: media
-bundle: image
-mode: default
+bundle: az_image
+mode: az_natural_size
 content:
-  field_media_image:
+  field_media_az_image:
     label: visually_hidden
     settings:
       image_style: ''
-      image_link: file
+      image_link: ''
     third_party_settings: {  }
     type: image
     weight: 1
     region: content
 hidden:
   created: true
+  name: true
   thumbnail: true
   uid: true
-  name: true

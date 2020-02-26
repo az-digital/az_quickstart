@@ -1,13 +1,13 @@
 langcode: en
 status: true
 dependencies: {  }
-id: image
-label: Image
-description: "Use local images for reusable media."
-source: image
+id: az_audio
+label: Audio
+description: 'A locally hosted audio file.'
+source: audio_file
 queue_thumbnail_downloads: false
 new_revision: true
 source_configuration:
-  source_field: field_media_image
+  source_field: field_media_az_audio_file
 field_map:
   name: name

@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_media_file
-    - media.type.file
+    - field.storage.media.field_media_az_file
+    - media.type.az_file
   enforced:
     module:
       - media
   module:
     - file
-id: media.file.field_media_file
-field_name: field_media_file
+id: media.az_file.field_media_az_file
+field_name: field_media_az_file
 entity_type: media
-bundle: file
+bundle: az_file
 label: File
 description: ''
 required: true

@@ -4,8 +4,8 @@ dependencies:
   module:
     - file
     - media
-id: media.field_media_audio_file
-field_name: field_media_audio_file
+id: media.field_media_az_audio_file
+field_name: field_media_az_audio_file
 entity_type: media
 type: file
 settings:

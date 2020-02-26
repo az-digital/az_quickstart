@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_media_video_file
-    - media.type.video
+    - field.storage.media.field_media_az_video_file
+    - media.type.az_video
   module:
     - file
-id: media.video.field_media_video_file
-field_name: field_media_video_file
+id: media.az_video.field_media_az_video_file
+field_name: field_media_az_video_file
 entity_type: media
-bundle: video
+bundle: az_video
 label: 'Video file'
 description: ''
 required: true

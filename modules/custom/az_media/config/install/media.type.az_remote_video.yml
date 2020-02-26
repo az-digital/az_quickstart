@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: remote_video
+id: az_remote_video
 label: 'Remote video'
 description: 'A remotely hosted video from YouTube or Vimeo.'
 source: 'oembed:video'
@@ -12,6 +12,6 @@ source_configuration:
   providers:
     - YouTube
     - Vimeo
-  source_field: field_media_oembed_video
+  source_field: field_media_az_oembed_video
 field_map:
   title: name

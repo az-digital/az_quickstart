@@ -4,7 +4,7 @@ dependencies:
   config:
     - block_content.type.az_image
     - field.storage.block_content.field_az_media
-    - media.type.image
+    - media.type.az_image
 id: block_content.az_image.field_az_media
 field_name: field_az_media
 entity_type: block_content

@@ -2,13 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.file.field_media_file
-    - media.type.file
+    - field.field.media.az_audio.field_media_az_audio_file
+    - media.type.az_audio
   module:
     - file
-id: media.file.default
+    - path
+id: media.az_audio.default
 targetEntityType: media
-bundle: file
+bundle: az_audio
 mode: default
 content:
   created:
@@ -17,13 +18,19 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_file:
+  field_media_az_audio_file:
+    weight: 0
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
-    weight: 0
     region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:

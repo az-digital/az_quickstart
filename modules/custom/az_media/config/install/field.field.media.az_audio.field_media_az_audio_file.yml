@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.media.field_media_audio_file
-    - media.type.audio
+    - field.storage.media.field_media_az_audio_file
+    - media.type.az_audio
   module:
     - file
-id: media.audio.field_media_audio_file
-field_name: field_media_audio_file
+id: media.az_audio.field_media_az_audio_file
+field_name: field_media_az_audio_file
 entity_type: media
-bundle: audio
+bundle: az_audio
 label: 'Audio file'
 description: ''
 required: true

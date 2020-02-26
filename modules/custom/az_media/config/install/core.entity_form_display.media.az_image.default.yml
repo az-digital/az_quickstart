@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.image.field_media_image
+    - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
-    - media.type.image
+    - media.type.az_image
   module:
     - image
-id: media.image.default
+id: media.az_image.default
 targetEntityType: media
-bundle: image
+bundle: az_image
 mode: default
 content:
   created:
@@ -18,7 +18,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_image:
+  field_media_az_image:
     settings:
       progress_indicator: throbber
       preview_image_style: thumbnail

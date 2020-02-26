@@ -2,14 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.video.field_media_video_file
-    - media.type.video
+    - field.field.media.az_file.field_media_az_file
+    - media.type.az_file
   module:
     - file
-    - path
-id: media.video.default
+id: media.az_file.default
 targetEntityType: media
-bundle: video
+bundle: az_file
 mode: default
 content:
   created:
@@ -18,19 +17,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_video_file:
-    weight: 0
+  field_media_az_file:
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
+    weight: 0
     region: content
-  path:
-    type: path
-    weight: 30
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:

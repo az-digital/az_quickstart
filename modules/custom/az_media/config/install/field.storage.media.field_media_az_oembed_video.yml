@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - media
-id: media.field_media_oembed_video
-field_name: field_media_oembed_video
+id: media.field_media_az_oembed_video
+field_name: field_media_az_oembed_video
 entity_type: media
 type: string
 settings:

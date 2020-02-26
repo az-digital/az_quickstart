@@ -2,20 +2,23 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.file.field_media_file
-    - media.type.file
+    - field.field.media.az_image.field_media_az_image
+    - image.style.large
+    - media.type.az_image
   module:
-    - file
-id: media.file.default
+    - image
+id: media.az_image.default
 targetEntityType: media
-bundle: file
+bundle: az_image
 mode: default
 content:
-  field_media_file:
+  field_media_az_image:
     label: visually_hidden
-    settings: {  }
+    settings:
+      image_style: 'large'
+      image_link: ''
     third_party_settings: {  }
-    type: file_default
+    type: image
     weight: 1
     region: content
 hidden:
