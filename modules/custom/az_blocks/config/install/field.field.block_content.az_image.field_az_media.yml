@@ -19,7 +19,7 @@ settings:
   handler: 'default:media'
   handler_settings:
     target_bundles:
-      image: image
+      az_image: az_image
     sort:
       field: name
       direction: ASC
