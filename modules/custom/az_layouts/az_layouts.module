@@ -63,4 +63,15 @@ function az_layouts_form_node_az_flexible_page_layout_builder_form_alter(&$form,
 
   // Attach library for the layout builder section interface.
   $form['#attached']['library'][] = 'az_layouts/az_layouts.layouts';
+
+  // Hide the initial "You are editing the layout..." message.
+  if (isset($form['layout_builder_message'])) {
+    unset($form['layout_builder_message']);
+  }
+
+  // Render the submit buttons in their natural order.
+  if (isset($form['actions']['#weight'])) {
+    unset($form['actions']['#weight']);
+  }
+
 }
