@@ -1,0 +1,2 @@
+# Ignore generated DDEV config
+/.ddev/config.y*ml
