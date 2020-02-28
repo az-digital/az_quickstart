@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.media_library
+    - field.field.media.az_remote_video.field_media_az_oembed_video
+    - image.style.medium
+    - media.type.az_remote_video
+  module:
+    - image
+id: media.az_remote_video.media_library
+targetEntityType: media
+bundle: az_remote_video
+mode: media_library
+content:
+  thumbnail:
+    type: image
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      image_style: medium
+      image_link: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  field_media_az_oembed_video: true
+  name: true
+  uid: true

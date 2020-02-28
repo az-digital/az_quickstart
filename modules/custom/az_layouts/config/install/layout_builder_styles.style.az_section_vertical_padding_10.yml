@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_section_vertical_padding_10
+label: 'Section - Vertical Padding - 10'
+classes: py-10
+type: section
+block_restrictions: {  }

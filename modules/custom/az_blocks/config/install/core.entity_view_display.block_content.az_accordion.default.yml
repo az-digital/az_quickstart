@@ -1,0 +1,161 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_accordion
+    - field.field.block_content.az_accordion.field_az_accordion_title
+    - field.field.block_content.az_accordion.field_az_adv_content
+  module:
+    - ds
+    - field_group
+    - text
+third_party_settings:
+  ds:
+    layout:
+      id: ds_1col
+      library: null
+      disable_css: false
+      entity_classes: no_classes
+      settings:
+        label: ''
+        wrappers:
+          ds_content: div
+        outer_wrapper: div
+        attributes: ''
+        link_attribute: ''
+        link_custom: ''
+        classes:
+          layout_class: {  }
+          ds_content: {  }
+    regions:
+      ds_content:
+        - group_accordion
+        - group_card
+        - group_card_header
+        - field_az_accordion_title
+        - group_collapse_content
+        - field_az_adv_content
+        - group_card_body
+  field_group:
+    group_card:
+      children:
+        - group_card_header
+        - group_collapse_content
+      parent_name: ''
+      weight: 1
+      format_type: html_element
+      region: ds_content
+      format_settings:
+        id: ''
+        classes: card
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Card
+    group_card_header:
+      children:
+        - field_az_accordion_title
+      parent_name: group_card
+      weight: 8
+      format_type: html_element
+      region: ds_content
+      format_settings:
+        id: ''
+        classes: card-header
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Card Header'
+    group_collapse_content:
+      children:
+        - group_card_body
+      parent_name: group_card
+      weight: 9
+      format_type: html_element
+      region: ds_content
+      format_settings:
+        id: ''
+        classes: collapse
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Collapse Content'
+    group_card_body:
+      children:
+        - field_az_adv_content
+      parent_name: group_collapse_content
+      weight: 20
+      format_type: html_element
+      region: ds_content
+      format_settings:
+        id: ''
+        classes: card-body
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Card Body'
+id: block_content.az_accordion.default
+targetEntityType: block_content
+bundle: az_accordion
+mode: default
+content:
+  field_az_accordion_title:
+    weight: 9
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings:
+      ds:
+        ft:
+          id: expert
+          settings:
+            lb: ''
+            prefix: '<h3 class="mb-0">'
+            lbw-el: ''
+            lbw-cl: ''
+            lbw-at: ''
+            ow: true
+            ow-el: button
+            ow-cl: 'btn btn-link'
+            ow-at: ''
+            fis-el: ''
+            fis-cl: ''
+            fis-at: ''
+            fi-el: ''
+            fi-cl: ''
+            fi-at: ''
+            suffix: '</h3>'
+            lbw: false
+            lb-col: false
+            ow-def-at: false
+            ow-def-cl: false
+            fis: false
+            fis-def-at: false
+            fi: false
+            fi-def-at: false
+    type: string
+    region: ds_content
+  field_az_adv_content:
+    weight: 10
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: ds_content
+hidden: {  }

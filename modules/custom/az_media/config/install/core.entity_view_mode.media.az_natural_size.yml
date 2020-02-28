@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.az_natural_size
+label: 'Natural Size'
+targetEntityType: media
+cache: true

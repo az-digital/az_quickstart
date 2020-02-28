@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_card_body
+label: Card
+revision: 1
+description: 'Use this block to add a card effect to your block'

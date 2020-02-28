@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_media_az_oembed_video
+    - media.type.az_remote_video
+id: media.az_remote_video.field_media_az_oembed_video
+field_name: field_media_az_oembed_video
+entity_type: media
+bundle: az_remote_video
+label: 'Video URL'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

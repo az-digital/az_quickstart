@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_background_transparent_sky
+label: 'Background - Transparent Sky'
+classes: bg-transparent-sky
+type: component
+block_restrictions:
+  - 'inline_block:az_text_area'
