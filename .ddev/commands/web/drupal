@@ -1,0 +1,7 @@
+#!/bin/sh
+
+## Description: Provide Drupal console tooling to automatically know the Drupal root.
+## Usage: drupal [flags] [args]
+## Example: "ddev drupal --version"
+
+vendor/bin/drupal $@
