@@ -5,5 +5,6 @@ id: az_bg_triangles_centered
 label: 'Background Triangles - Centered'
 classes: bg-triangles-centered
 type: component
+weight: '-6'
 block_restrictions:
   - 'inline_block:az_card_body'

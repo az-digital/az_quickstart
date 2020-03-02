@@ -5,6 +5,7 @@ id: az_vertical_padding_10
 label: 'Vertical Padding - 10'
 classes: py-10
 type: component
+weight: '11'
 block_restrictions:
   - 'inline_block:az_background_wrapper_body'
   - 'inline_block:az_text_area'

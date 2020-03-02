@@ -5,6 +5,7 @@ id: az_margin_bottom_5
 label: 'Margin Bottom - 5'
 classes: mb-5
 type: component
+weight: '5'
 block_restrictions:
   - 'inline_block:az_background_wrapper_body'
   - 'inline_block:az_card_body'
