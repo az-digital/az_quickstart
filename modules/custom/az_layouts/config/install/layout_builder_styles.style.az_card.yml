@@ -2,9 +2,10 @@ langcode: en
 status: true
 dependencies: {  }
 id: az_card
-label: Card
+label: 'Bootstrap - Card'
 classes: az_card
 type: component
+weight: '-1'
 block_restrictions:
   - 'inline_block:az_card_body'
   - 'inline_block:az_text_area'

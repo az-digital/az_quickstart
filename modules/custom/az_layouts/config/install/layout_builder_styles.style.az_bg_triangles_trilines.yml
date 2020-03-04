@@ -5,5 +5,6 @@ id: az_bg_triangles_trilines
 label: 'Background Triangles - Trilines'
 classes: bg-trilines
 type: component
+weight: '-3'
 block_restrictions:
   - 'inline_block:az_card_body'
