@@ -1,0 +1,9 @@
+name: Quickstart Media
+type: module
+description: Media entity types & image styles.
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - image
+  - media
+  - media_library

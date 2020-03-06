@@ -5,6 +5,7 @@ id: az_width_50
 label: 'Width - 50%'
 classes: component-w-50
 type: component
+weight: '12'
 block_restrictions:
   - 'inline_block:az_image'
   - 'inline_block:az_text_area'

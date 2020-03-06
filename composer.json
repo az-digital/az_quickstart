@@ -41,7 +41,8 @@
               "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch"
           },
           "drupal/layout_builder_styles": {
-              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch"
+              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch",
+              "Style ordering": "https://www.drupal.org/files/issues/2020-03-02/3080384-9.patch"
           }
       }
     }

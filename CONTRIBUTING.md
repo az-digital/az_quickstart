@@ -8,7 +8,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
 
 ## Things you'll need to get started
 
-  * A GitHub [account](https://github.com/join).
+  * A [GitHub account](https://github.com/join).
   * [Slack](https://uarizona.slack.com) is our main source of communications.
     * Use the `#ua-quickstart-d8` channel for questions/comments related to this
       project.
@@ -16,8 +16,8 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
       to Arizona Digital meetings, both physical and via Zoom.
     * Use the `#uadigital-general` channel to ask general questions related to
       Arizona Digital.
-  * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-  * [Lando](https://docs.lando.dev/basics/installation.html) for local development
+  * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
+  * [Lando](https://docs.lando.dev/basics/installation.html) or [DDEV](https://www.ddev.com/get-started/) for local development.
 
 ## Submitting a bug/issue/feature request
 
@@ -74,7 +74,12 @@ Closes #123 by creating y and z. This can be a paragraph of explanation.
 ## Local development
 
 To create a local copy of az_quickstart and build a working Drupal 8 site from
-it, do the following:
+it, use the following commands.
+
+**Note:** The Drupal code base will only be created inside the lando/ddev container,
+so if you want to see the code use `lando ssh` or  `ddev ssh` to ssh into the container.
+
+### Lando
 ```
 git clone https://github.com/az-digital/az_quickstart.git foldername
 cd foldername
@@ -82,5 +87,12 @@ lando start
 lando install
 ```
 
-**Note:** The Drupal code base will only be created inside the lando container,
-so if you want to see the code use `lando ssh` to ssh into the container.
+### DDEV
+```
+git clone https://github.com/az-digital/az_quickstart.git foldername
+cd foldername
+ddev config --project-type php
+ddev start
+ddev install
+```
+Note: Use `ddev pause` and `ddev start` to restart the container. Using `ddev restart` will require a re-install with `ddev install`.
