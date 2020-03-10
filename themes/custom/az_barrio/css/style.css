@@ -477,18 +477,56 @@ a.search-input-link:hover {
 }
 
 /* Prevents search bar and search btn from floating around. */
-.region-header-2 .block-search,
-.region-header .block-search {
+.region-header-2 .search-block-form,
+.region-header .search-block-form {
   clear: both;
   position: relative;
 }
 
 /* ua-bootstrap overrides for search form */
-.btn-search {
-  width: 2.3em;
-  height: 2.3em;
+.header .search-block-form {
+  float: none;
+  position: relative;
+  margin: auto auto 1.5em auto;
+  width: 272px;
+  width: 17rem;
+}
+
+@media (min-width: 768px) {
+  .header .search-block-form {
+    float: right;
+    margin-top: 16px;
+    margin-top: 1rem;
+  }
+}
+
+.header .search-block-form #search-block-form {
+  padding: 0;
+}
+
+.header .search-block-form .form-type-search {
+  width: 100%;
+}
+
+.header .search-block-form .form-actions {
+  padding: 0;
+}
+
+.header .search-block-form .form-actions .form-submit {
+  text-indent: -9999em;
+  top: 0;
+  right: 0;
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 0;
+  background-repeat: no-repeat;
   background-size: 1em 1em;
   background-position: right 0.6em top 0.6em;
+  outline: 0;
+  position: absolute;
+  z-index: 0;
+  background-image: url("../images/search-chili.svg");
+  background-color: transparent;
 }
 
 .region-header-ua-utilities .search-form {
@@ -497,9 +535,9 @@ a.search-input-link:hover {
   margin: 0.72em 0;
 }
 
-.search-form {
+/*.search-block-form {
   height: initial;
-}
+}*/
 
 .bg-cochineal-red .form-control,
 .bg-red .form-control,
@@ -509,24 +547,9 @@ a.search-input-link:hover {
 
 .bg-cochineal-red a.search-input-link,
 .bg-red a.search-input-link {
-  background-image: url("../images/search-white-web.svg");
+  background-image: url("https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.26/img/search-chili.svg");
 }
 
-#block-search-form {
-  width: 272px;
-  width: 17rem;
-  float: none;
-  position: relative;
-  margin: auto auto 1.5em auto;
-}
-
-@media (min-width: 768px) {
-  #block-search-form {
-    float: right;
-    margin-top: 16px;
-    margin-top: 1rem;
-  }
-}
 .region-sidebar-first .block,
 .region-sidebar-second .block {
   margin-bottom: 24px !important;
