@@ -8,6 +8,7 @@ az_blocks.blocks:
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
+    - core/jquery
 az_blocks.layout:
   version: VERSION
   css:
