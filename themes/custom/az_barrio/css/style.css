@@ -500,7 +500,9 @@ a.search-input-link:hover {
   }
 }
 
-.header .search-block-form #search-block-form {
+.header .search-block-form #search-block-form,
+.header .search-block-form #search-block-form fieldset {
+  margin: 0;
   padding: 0;
 }
 
@@ -510,6 +512,7 @@ a.search-input-link:hover {
 
 .header .search-block-form .form-actions {
   padding: 0;
+  align-self: unset;
 }
 
 .header .search-block-form .form-actions .form-submit {
@@ -529,11 +532,15 @@ a.search-input-link:hover {
   background-color: transparent;
 }
 
-.region-header-ua-utilities .search-form {
+.region-header-ua-utilities {
+  flex-grow: 1;
+}
+
+/*.region-header-ua-utilities .search-form {
   position: relative;
   height: 38px;
   margin: 0.72em 0;
-}
+}*/
 
 /*.search-block-form {
   height: initial;
@@ -547,7 +554,7 @@ a.search-input-link:hover {
 
 .bg-cochineal-red a.search-input-link,
 .bg-red a.search-input-link {
-  background-image: url("https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.26/img/search-chili.svg");
+  background-image: url("../images/search-chili.svg");
 }
 
 .region-sidebar-first .block,
