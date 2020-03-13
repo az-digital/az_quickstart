@@ -45,6 +45,7 @@ function az_layouts_form_layout_builder_add_block_alter(&$form, FormStateInterfa
 
   // Attach library for offscreen block configuration dialog.
   $form['#attached']['library'][] = 'az_layouts/az_layouts.dialog';
+  \Drupal::service("az_layouts.customize_inline_block_form")->alterForm($form, $form_state, $form_id);
 }
 
 /**
@@ -54,6 +55,7 @@ function az_layouts_form_layout_builder_update_block_alter(&$form, FormStateInte
 
   // Attach library for offscreen block configuration dialog.
   $form['#attached']['library'][] = 'az_layouts/az_layouts.dialog';
+  \Drupal::service("az_layouts.customize_inline_block_form")->alterForm($form, $form_state, $form_id);
 }
 
 /**
