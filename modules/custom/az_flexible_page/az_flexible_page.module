@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains az_blocks.module.
+ * Contains az_flexible_page.module.
  */
 
 use Drupal\Core\Form\FormStateInterface;
