@@ -8,6 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Class InlineBlockFormCustomizations.
+ *
+ * Customizes the inline block forms for use with layout builder.
  */
 class InlineBlockFormCustomizations {
 
@@ -30,6 +32,7 @@ class InlineBlockFormCustomizations {
    */
   public function alterForm(&$form, FormStateInterface $form_state, $form_id) {
 
+    // Check if this is a BlockContent form before altering anything.
     if (isset($form['settings']['block_form']['#block']) && $form['settings']['block_form']['#block'] instanceof BlockContent) {
 
       // Get bundle label of the block, for generating the placeholder value.
