@@ -6,6 +6,26 @@
  * of these @include files will be combined into a single file.
  */
 
+/* Sticky footer */
+html.sticky-footer #page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+}
+
+html.sticky-footer #main-wrapper {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
 /* Correct `inline-block` display not defined in IE 8/9. */
 audio,
 canvas,
