@@ -23,7 +23,7 @@
         "php": ">=7.0",
         "composer/installers": "1.7.0",
         "cweagans/composer-patches": "1.6.7",
-        "drupal/core-recommended": "8.8.2",
+        "drupal/core-recommended": "8.8.4",
         "drush/drush": "9.7.1",
         "drupal/background_image_formatter": "1.4",
         "drupal/bootstrap_barrio": "4.22",
@@ -43,7 +43,7 @@
           },
           "drupal/layout_builder_styles": {
               "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch",
-              "Style ordering": "https://www.drupal.org/files/issues/2020-03-02/3080384-9.patch"
+              "Style ordering": "https://www.drupal.org/files/issues/2020-03-03/3080384-15.patch"
           }
       }
     }
