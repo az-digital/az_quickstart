@@ -16,6 +16,9 @@ use Drupal\layout_builder\SectionStorageInterface;
  */
 class AZLayoutBuilder extends LayoutBuilder {
 
+  // Value to use for LayoutBuilder forms that need expanded width.
+  const BUILDER_WIDTH = 500;
+
   /**
    * Pre-render callback: Renders the Layout Builder UI.
    */

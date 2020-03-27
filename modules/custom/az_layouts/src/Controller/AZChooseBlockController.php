@@ -37,23 +37,4 @@ class AZChooseBlockController extends ChooseBlockController {
     return $build;
   }
 
-  /**
-   * Get dialog attributes if an ajax request.
-   *
-   * @return array
-   *   The attributes array.
-   */
-  protected function getAjaxAttributes() {
-    if ($this->isAjax()) {
-      return [
-        'class' => ['use-ajax'],
-        'data-dialog-type' => 'dialog',
-        'data-dialog-renderer' => 'off_canvas',
-        // Change from the default width.
-        'data-dialog-options' => '{"width": 800}',
-      ];
-    }
-    return [];
-  }
-
 }
