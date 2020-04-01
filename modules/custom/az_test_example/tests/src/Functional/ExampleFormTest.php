@@ -48,7 +48,7 @@ class ExampleFormTest extends BrowserTestBase {
   }
 
   /**
-   * Tests that the home page loads with a 200 response.
+   * Tests an example configuration form's ability to save its configuration.
    */
   public function testExampleConfigForm() {
 
