@@ -138,4 +138,3 @@ Notes: Visual Studio Code has git integration, so you can use that to create new
 branches and push up to github.
 Visual Studio Code can automatically add the app folder to your workspace
 through Attached Container Configuration Files.
-
