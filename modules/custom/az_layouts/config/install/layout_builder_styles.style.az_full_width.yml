@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_full_width
+label: 'Width - Full-width'
+classes: full-width-wrapper
+type: component
+weight: '13'
+block_restrictions:
+  - 'inline_block:az_background_image'
+  - 'inline_block:az_background_wrapper_body'

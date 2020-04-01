@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_bg_triangles_top_right
+label: 'Background Triangles - Top Right'
+classes: bg-triangles-top-right
+type: component
+weight: '-4'
+block_restrictions:
+  - 'inline_block:az_card_body'

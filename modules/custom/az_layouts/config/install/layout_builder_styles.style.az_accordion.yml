@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_accordion
+label: 'Bootstrap - Accordion Group'
+classes: accordion
+type: section
+weight: '-2'
+block_restrictions: {  }

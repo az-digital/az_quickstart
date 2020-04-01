@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.az_flexible_page.layout_builder__layout
+    - node.type.az_flexible_page
+  module:
+    - user
+id: node.az_flexible_page.teaser
+targetEntityType: node
+bundle: az_flexible_page
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  layout_builder__layout: true

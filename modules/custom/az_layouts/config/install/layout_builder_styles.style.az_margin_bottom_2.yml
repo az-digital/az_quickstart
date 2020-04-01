@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_margin_bottom_2
+label: 'Margin Bottom - 2'
+classes: mb-2
+type: component
+weight: '2'
+block_restrictions:
+  - 'inline_block:az_background_wrapper_body'
+  - 'inline_block:az_card_body'
+  - 'inline_block:az_text_area'

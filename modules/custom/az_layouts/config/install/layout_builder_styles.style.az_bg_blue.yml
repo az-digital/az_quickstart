@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_bg_blue
+label: 'Background - Blue'
+classes: bg-blue
+type: component
+weight: '-12'
+block_restrictions:
+  - 'inline_block:az_background_wrapper_body'
+  - 'inline_block:az_card_body'

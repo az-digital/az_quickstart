@@ -1,0 +1,7 @@
+#!/bin/sh
+
+## Description: Provide drupal-check tooling to check for deprecated code.
+## Usage: drupal-check [flags] [args]
+## Example: "ddev drupal-check --version"
+
+vendor/bin/drupal-check web/profiles web/modules web/themes $@

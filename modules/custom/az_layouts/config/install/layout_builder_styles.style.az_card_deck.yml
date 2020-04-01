@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_card_deck
+label: 'Bootstrap - Card Deck'
+classes: card-deck
+type: section
+weight: 0
+block_restrictions: {  }

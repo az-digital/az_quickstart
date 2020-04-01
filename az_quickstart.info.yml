@@ -8,6 +8,9 @@ distribution:
   name: Arizona Quickstart
 
 install:
+  - az_cas
+  - az_core
+  - az_flexible_page
   - node
   - history
   - block
@@ -43,8 +46,6 @@ install:
   - views_ui
   - tour
   - automated_cron
-  - az_core
-  - az_cas
 themes:
   - az_barrio
   - claro
