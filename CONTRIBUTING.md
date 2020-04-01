@@ -21,7 +21,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
     * [Lando](https://docs.lando.dev/basics/installation.html)
     * [DDev](https://docs.lando.dev/basics/installation.html)
   * An IDE with the capability to attach to a remote codeserver or docker
-    container. [Visual Studio](https://visualstudio.microsoft.com) allows for this.
+    container. [Visual Studio Code](https://visualstudio.microsoft.com) allows for this.
     * Generic [instructions for connecting to a docker container with Visual
     Studio]( https://code.visualstudio.com/docs/remote/containers#_attached-container-config-reference)
     or see [instructions below](#user-content-visual-studio-code-integration).
@@ -121,13 +121,13 @@ Setup:
   2. Install the Visual Studio Code [Visual Studio Code Remote Development Extension Pack
 ](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
   3. In the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette),
-    type `Remote-containers: Attach to Running Container...` and click on the
-    result to bring up a list of running containers on your computer.
+     which can be found in View menu or (⌘⇧P on Mac) type `Remote-containers: Attach to Running Container...`
+     and click on the result to bring up a list of running containers on your computer.
   4. If using lando, find the container whose name ends with `_appserver_1` and click
     it to attach to that container.
   5. The last thing you'll have to do is add a folder from within the container
     to your workspace.  To do this, use the file menu within Visual Studio Code,
-    to Add Folder to Workspace.  Then add the app folder and you are ready to
+    to Add Folder to Workspace.  Then replace `/root` with the `/app` folder, and you are ready to
     begin development.
 
 Notes: Visual Studio Code has git integration, so you can use that to create new
