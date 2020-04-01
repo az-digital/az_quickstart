@@ -1,0 +1,9 @@
+az_test_example.settings:
+  path: '/admin/config/az_test_example/settings'
+  defaults:
+    _form: '\Drupal\az_test_example\Form\QuickstartTestExampleForm'
+    _title: 'Quickstart Test Example Form'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE

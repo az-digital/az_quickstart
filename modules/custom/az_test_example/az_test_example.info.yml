@@ -1,0 +1,5 @@
+name: 'Quickstart Test Example'
+type: module
+description: 'Example tests.'
+core: 8.x
+package: 'The University of Arizona'

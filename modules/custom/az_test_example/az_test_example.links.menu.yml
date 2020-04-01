@@ -1,0 +1,5 @@
+az_test_example.settings:
+  route_name: az_test_example.settings
+  parent: az_core.az_quickstart
+  title: 'Arizona Quickstart Test Example Settings'
+  description: 'Example Test Settings'

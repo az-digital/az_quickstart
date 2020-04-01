@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains az_test_example.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_test_example_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_test_example module.
+    case 'help.page.az_test_example':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Example tests.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
