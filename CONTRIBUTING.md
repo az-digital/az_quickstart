@@ -24,7 +24,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
     container. [Visual Studio](https://visualstudio.microsoft.com) allows for this.
     * Generic [instructions for connecting to a docker container with Visual
     Studio]( https://code.visualstudio.com/docs/remote/containers#_attached-container-config-reference)
-    or see [instructions below](#visual-studio).
+    or see [instructions below](#user-content-visual-studio-code-integration).
 
 ## Submitting a bug/issue/feature request
 
@@ -83,8 +83,10 @@ Closes #123 by creating y and z. This can be a paragraph of explanation.
 To create a local copy of az_quickstart and build a working Drupal 8 site from
 it, use the following commands.
 
-**Important:** The Drupal code base will only be created inside the lando/ddev container,
-so if you want to see the code use `lando ssh` or  `ddev ssh` to ssh into the container.
+**Important:** The Drupal code base will only be created inside the lando/ddev
+container, so if you want to see the code use `lando ssh` or  `ddev ssh` to ssh
+into the container, or follow the [instructions below for accessing code via
+Visual Studio Code](#user-content-visual-studio-code-integration).
 
 ### Lando
 ```
@@ -115,26 +117,21 @@ the docker container 100 times.
 Note: These instructions may not work for DDEV.
 
 Setup:
-  - Install the Visual Studio Code [Visual Studio Code Remote Development Extension Pack
+  1. Make sure you have [Visual Studio Code installed](https://code.visualstudio.com/docs/introvideos/basics),
+  2. Install the Visual Studio Code [Visual Studio Code Remote Development Extension Pack
 ](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
-Once installed, and your local development environment is running (Lando or DDev),
-There should now be a little green section at the bottom right of your Visual
-Studio Code window, see image:
-![Visual Studio Code successful install of Remote Development Extension Pack](https://microsoft.github.io/vscode-remote-release/images/ssh-readme.gif)
-
-If you click the green area, a drop-down menu should appear with
-`Remote-containers: Attach to Running Container...` available as an option.
-Click it to bring up a list of running containers.
-
-If using lando, find the container whose name ends with `_appserver_1` and click
-it to attach to that container.
-
-The last thing you'll have to do is add a folder from within the container to
-your workspace.  To do this, user the file menu for Visual Studio Code, to Add
-Folder to Workspace.  Then add the app folder and you are ready to begin
-development.
+  3. In the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette),
+    type `Remote-containers: Attach to Running Container...` and click on the
+    result to bring up a list of running containers on your computer.
+  4. If using lando, find the container whose name ends with `_appserver_1` and click
+    it to attach to that container.
+  5. The last thing you'll have to do is add a folder from within the container
+    to your workspace.  To do this, use the file menu within Visual Studio Code,
+    to Add Folder to Workspace.  Then add the app folder and you are ready to
+    begin development.
 
 Notes: Visual Studio Code has git integration, so you can use that to create new
 branches and push up to github.
 Visual Studio Code can automatically add the app folder to your workspace
-through Attached Container Configuration Files.
+through [Attached Container Configuration Files](https://code.visualstudio.com/docs/remote/containers#_attached-container-configuration-files),
+which are created for you automatically by VSCode.
