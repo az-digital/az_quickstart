@@ -1,0 +1,51 @@
+az_blocks.az_accordion:
+  version: VERSION
+  css:
+    theme:
+      css/az_blocks_az_accordion.css: {}
+  js:
+    js/az_blocks_az_accordion.js: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
+    - core/jquery
+az_blocks.az_card_body:
+  version: VERSION
+  css:
+    theme:
+      css/az_blocks_az_card_body.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
+az_blocks.az_background_image:
+  version: VERSION
+  css:
+    theme:
+      css/az_blocks_az_background_image.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
+az_blocks.az_background_wrapper_body:
+  version: VERSION
+  css:
+    theme:
+      css/az_blocks_az_background_wrapper_body.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
+az_blocks.az_image:
+  version: VERSION
+  css:
+    theme:
+      css/az_blocks_az_image.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
+az_blocks.az_text_area:
+  version: VERSION
+  css:
+    theme:
+      css/az_blocks_az_text_area.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
