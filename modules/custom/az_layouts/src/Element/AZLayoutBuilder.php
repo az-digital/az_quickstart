@@ -30,6 +30,12 @@ class AZLayoutBuilder extends LayoutBuilder {
     $section = $section_storage->getSection($delta);
     $layout = $section->getLayout();
     $layout_definition = $layout->getPluginDefinition();
+    $entity = $section_storage->getContextValue('entity');
+    $bundle = ($entity) ? $entity->bundle() : '';
+
+    if ($bundle !== 'az_flexible_page') {
+      return $build;
+    }
 
     // Override the existing route by using az_layouts.choose_inline_block,
     // which skips directly to custom block selection.
