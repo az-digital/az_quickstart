@@ -25,7 +25,7 @@ See our [contributing](./CONTRIBUTING.md) document for detailed instructions on
 how to contribute including:
 
 * What you'll need to [get started](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#things-youll-need-to-get-started)
-* How to [submit a request](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#submitting-a-bugissuefeature-request)
+* How to [submit a feature or bug request](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#submitting-a-bugissuefeature-request)
 * How to [submit a pull request](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#pull-requests)
 * [Local development](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#local-development)
 
