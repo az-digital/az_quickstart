@@ -37,8 +37,8 @@
     "extra": {
       "patches": {
           "drupal/cas": {
-              "update-deprecated-setExpectedException-method-in-tests": "https://www.drupal.org/files/issues/2020-04-01/3124245-update-deprecated-setExpectedException-method-in-tests.patch",
               "declare-default-theme-in-functional-tests": "https://www.drupal.org/files/issues/2020-04-02/3124254-5-declare-default-theme-in-functional-tests.patch",
+              "update-deprecated-setExpectedException-method-in-tests": "https://www.drupal.org/files/issues/2020-04-01/3124245-update-deprecated-setExpectedException-method-in-tests.patch",
               "local-username-argument": "https://www.drupal.org/files/issues/2020-04-02/3124256-local-username-argument.patch",
               "forward-compatibility-drupal-check": "https://www.drupal.org/files/issues/2020-04-02/3110204-6-forward-compatibility-drupal-check.patch"
           },
