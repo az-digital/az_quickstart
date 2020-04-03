@@ -27,9 +27,8 @@
         "drush/drush": "9.7.1",
         "drupal/bootstrap_barrio": "4.22",
         "drupal/cas": "1.5.0",
-        "drupal/externalauth": "1.2.0"
+        "drupal/externalauth": "1.2.0",
         "drupal/background_image_formatter": "1.4",
-        "drupal/bootstrap_barrio": "4.22",
         "drupal/ds": "3.x-dev#f73614254bb7baa311b99886b0393e2ab738d5f7",
         "drupal/field_group": "3.0",
         "drupal/layout_builder_restrictions": "2.5",
@@ -37,6 +36,12 @@
     },
     "extra": {
       "patches": {
+          "drupal/cas": {
+              "update-deprecated-setExpectedException-method-in-tests": "https://www.drupal.org/files/issues/2020-04-01/3124245-update-deprecated-setExpectedException-method-in-tests.patch",
+              "declare-default-theme-in-functional-tests": "https://www.drupal.org/files/issues/2020-04-02/3124254-5-declare-default-theme-in-functional-tests.patch",
+              "local-username-argument": "https://www.drupal.org/files/issues/2020-04-02/3124256-local-username-argument.patch",
+              "forward-compatibility-drupal-check": "https://www.drupal.org/files/issues/2020-04-02/3110204-6-forward-compatibility-drupal-check.patch"
+          },
           "drupal/bootstrap_barrio": {
               "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
           },
@@ -48,9 +53,9 @@
               "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch",
               "Style ordering": "https://www.drupal.org/files/issues/2020-03-03/3080384-15.patch"
           }
-      },
-      "installer-paths": {
-        "modules/contrib/{$name}": ["type:drupal-module"]
       }
+    },
+    "require-dev": {
+        "drupal/cas_mock_server": "1.0-alpha3"
     }
 }
