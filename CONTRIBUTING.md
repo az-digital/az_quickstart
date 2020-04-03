@@ -21,7 +21,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
     * [Lando](https://docs.lando.dev/basics/installation.html)
     * [DDev](https://docs.lando.dev/basics/installation.html)
   * An IDE with the capability to attach to a remote codeserver or docker
-    container. [Visual Studio Code](https://visualstudio.microsoft.com) allows for this.
+    container. [Visual Studio Code](https://code.visualstudio.com) allows for this.
     * Generic [instructions for connecting to a docker container with Visual
     Studio]( https://code.visualstudio.com/docs/remote/containers#_attached-container-config-reference)
     or see [instructions below](#user-content-visual-studio-code-integration).
