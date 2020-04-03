@@ -1,0 +1,16 @@
+/* TEXT AREA */
+.text-area-w-50 {
+  /* Set mobile-friendly behavior. */
+  width: 100%;
+}
+.block-inline-blockaz-text-area[class^="bg-"] {
+  /* If text area has a background color, add padding. */
+  padding: 1rem;
+}
+
+/* @min-width 576px */
+@media (min-width: 576px) {
+  .block-inline-blockaz-text-area[class^="bg-"] {
+    padding: 3rem;
+  }
+}
