@@ -6,8 +6,6 @@ config:
   webroot: web
   database: mysql:5.7
   xdebug: false
-  env_file:
-  - env/lando.env
 services:
   appserver:
     composer:
