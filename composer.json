@@ -34,6 +34,9 @@
     },
     "extra": {
       "patches": {
+          "drupal/core": {
+              "ajax css load order issue": "https://www.drupal.org/files/issues/2020-02-12/1461322-20.patch"
+          },
           "drupal/ds": {
               "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch",
               "Remove drush plugin": "https://git.drupalcode.org/project/ds/commit/c8db6ed6f5f2a543f9fe50d440a5dd94a1f13fae.diff"
