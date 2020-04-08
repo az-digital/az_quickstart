@@ -19,7 +19,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
   * Local containerized (Docker) development environment tool either lando or ddev
     * [Lando](https://docs.lando.dev/basics/installation.html)
-    * [DDev](https://docs.lando.dev/basics/installation.html)
+    * [DDev](https://www.ddev.com/get-started/)
   * An IDE with the capability to attach to a remote codeserver or docker
     container. [Visual Studio Code](https://code.visualstudio.com) allows for this.
     * Generic [instructions for connecting to a docker container with Visual
@@ -118,7 +118,7 @@ Note: These instructions may not work for DDEV.
 
 Setup:
   1. Make sure you have [Visual Studio Code installed](https://code.visualstudio.com/docs/introvideos/basics),
-  2. Install the Visual Studio Code [Visual Studio Code Remote Development Extension Pack
+  2. Install the [Visual Studio Code Remote Development Extension Pack
 ](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
   3. In the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette),
      which can be found in View menu or (⌘⇧P on Mac) type `Remote-containers: Attach to Running Container...`
