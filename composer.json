@@ -26,7 +26,7 @@
         "drupal/core-recommended": "8.8.4",
         "drush/drush": "9.7.1",
         "drupal/background_image_formatter": "1.4",
-        "drupal/bootstrap_barrio": "4.22",
+        "drupal/bootstrap_barrio": "4.23",
         "drupal/ds": "3.x-dev#f73614254bb7baa311b99886b0393e2ab738d5f7",
         "drupal/field_group": "3.0",
         "drupal/layout_builder_restrictions": "2.5",
@@ -34,9 +34,6 @@
     },
     "extra": {
       "patches": {
-          "drupal/bootstrap_barrio": {
-              "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
-          },
           "drupal/core": {
               "ajax css load order issue": "https://www.drupal.org/files/issues/2020-02-12/1461322-20.patch"
           },
