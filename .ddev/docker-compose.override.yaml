@@ -12,10 +12,7 @@ services:
       - type: bind
         source: ../
         target: /usr/local/quickstart-install-profile
-
         consistency: cached
-
       - ".:/mnt/ddev_config:ro"
       - ddev-global-cache:/mnt/ddev-global-cache
-
       - ddev-ssh-agent_socket_dir:/home/.ssh-agent
