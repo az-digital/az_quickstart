@@ -23,7 +23,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
   * An IDE with the capability to attach to a remote codeserver or docker
     container. [Visual Studio Code](https://code.visualstudio.com) allows for this.
     * Generic [instructions for connecting to a docker container with Visual
-    Studio]( https://code.visualstudio.com/docs/remote/containers#_attached-container-config-reference)
+    Studio Code]( https://code.visualstudio.com/docs/remote/containers#_attached-container-config-reference)
     or see [instructions below](#user-content-visual-studio-code-integration).
 
 ## Submitting a bug/issue/feature request
@@ -134,4 +134,4 @@ Notes: Visual Studio Code has git integration, so you can use that to create new
 branches and push up to github.
 Visual Studio Code can automatically add the app folder to your workspace
 through [Attached Container Configuration Files](https://code.visualstudio.com/docs/remote/containers#_attached-container-configuration-files),
-which are created for you automatically by VSCode.
+which are created for you automatically by Visual Studio Code.
