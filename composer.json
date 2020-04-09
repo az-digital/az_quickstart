@@ -35,7 +35,8 @@
     "extra": {
       "patches": {
           "drupal/core": {
-              "ajax css load order issue": "https://www.drupal.org/files/issues/2020-02-12/1461322-20.patch"
+              "ajax css load order issue": "https://www.drupal.org/files/issues/2020-02-12/1461322-20.patch",
+              "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch"
           },
           "drupal/ds": {
               "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch",
