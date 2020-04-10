@@ -11,11 +11,14 @@ services:
     composer:
       hirak/prestissimo: ^0.3.9
     overrides:
+      environment:
+        SIMPLETEST_DB: 'mysql://drupal8:drupal8@database/drupal8'
+        SIMPLETEST_BASE_URL: 'http://localhost'
       volumes:
         # Don't share our host working directory as /app. We want /app empty for composer.
         - /app
         # Instead share our host working directory as a standalone package.
-        - .:/usr/local/quickstart-install-profile
+        - ./:/usr/local/quickstart-install-profile
     build:
       # Create a new quickstart project and use the installation profile as a non-packagist repository.
       # Use the matching scaffolding branch if available.
@@ -55,3 +58,4 @@ tooling:
       # Now issue a composer update/install for the scaffolding folder to pull in new dependencies.
       # "true" command consumes passed Lando arguments that were only intended to be passed to the previous call.
       - composer --working-dir=/app --no-scripts update && composer --working-dir=/app install && true
+

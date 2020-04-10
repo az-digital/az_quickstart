@@ -1,61 +1,58 @@
 {
-    "name": "az-digital/az_quickstart",
-    "description": "Arizona Quickstart",
-    "type": "drupal-custom-profile",
-    "license": "GPL-2.0-only",
-    "authors": [
-        {
-            "name": "Arizona Digital",
-            "homepage": "https://digital.arizona.edu",
-            "role": "Team"
-        }
-    ],
-    "support": {
-        "docs": "https://quickstart.arizona.edu/help"
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages.drupal.org/8"
-        }
-    ],
-    "require": {
-        "php": ">=7.0",
-        "composer/installers": "1.7.0",
-        "cweagans/composer-patches": "1.6.7",
-        "drupal/core-recommended": "8.8.4",
-        "drush/drush": "9.7.1",
-        "drupal/bootstrap_barrio": "4.22",
-        "drupal/cas": "1.6.0",
-        "drupal/externalauth": "1.2.0",
-        "drupal/background_image_formatter": "1.4",
-        "drupal/ds": "3.x-dev#f73614254bb7baa311b99886b0393e2ab738d5f7",
-        "drupal/field_group": "3.0",
-        "drupal/layout_builder_restrictions": "2.5",
-        "drupal/layout_builder_styles": "1.0-beta1"
-    },
-    "extra": {
-      "patches": {
-          "drupal/cas": {
-              "declare-default-theme-in-functional-tests": "https://www.drupal.org/files/issues/2020-04-06/3124254-v1-6%237-declare-default-theme-in-functional-test.patch",
-              "update-deprecated-setExpectedException-method-in-tests": "https://www.drupal.org/files/issues/2020-04-01/3124245-update-deprecated-setExpectedException-method-in-tests.patch",
-              "local-username-argument": "https://www.drupal.org/files/issues/2020-04-02/3124256-local-username-argument.patch",
-              "forward-compatibility-drupal-check": "https://www.drupal.org/files/issues/2020-04-02/3110204-6-forward-compatibility-drupal-check.patch"
-          },
-          "drupal/bootstrap_barrio": {
-              "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
-          },
-          "drupal/ds": {
-              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch",
-              "Remove drush plugin": "https://git.drupalcode.org/project/ds/commit/c8db6ed6f5f2a543f9fe50d440a5dd94a1f13fae.diff"
-          },
-          "drupal/layout_builder_styles": {
-              "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch",
-              "Style ordering": "https://www.drupal.org/files/issues/2020-03-03/3080384-15.patch"
-          }
-      }
-    },
-    "require-dev": {
-        "drupal/cas_mock_server": "1.0-alpha3"
+  "name": "az-digital/az_quickstart",
+  "description": "Arizona Quickstart",
+  "type": "drupal-custom-profile",
+  "license": "GPL-2.0-only",
+  "authors": [
+    {
+      "name": "Arizona Digital",
+      "homepage": "https://digital.arizona.edu",
+      "role": "Team"
     }
+  ],
+  "support": {
+    "docs": "https://quickstart.arizona.edu/help"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  ],
+  "require": {
+    "php": ">=7.0",
+    "composer/installers": "1.7.0",
+    "cweagans/composer-patches": "1.6.7",
+    "drupal/background_image_formatter": "1.4",
+    "drupal/bootstrap_barrio": "4.22",
+    "drupal/cas": "1.6.0",
+    "drupal/core-recommended": "8.8.4",
+    "drush/drush": "9.7.1",
+    "drupal/ds": "3.x-dev#f73614254bb7baa311b99886b0393e2ab738d5f7",
+    "drupal/externalauth": "1.2.0",
+    "drupal/field_group": "3.0",
+    "drupal/layout_builder_restrictions": "2.5",
+    "drupal/layout_builder_styles": "1.0-beta1"
+  },
+  "extra": {
+    "patches": {
+      "drupal/cas": {
+        "declare-default-theme-in-functional-tests": "https://www.drupal.org/files/issues/2020-04-06/3124254-v1-6%237-declare-default-theme-in-functional-test.patch",
+        "update-deprecated-setExpectedException-method-in-tests": "https://www.drupal.org/files/issues/2020-04-01/3124245-update-deprecated-setExpectedException-method-in-tests.patch",
+        "local-username-argument": "https://www.drupal.org/files/issues/2020-04-02/3124256-local-username-argument.patch",
+        "forward-compatibility-drupal-check": "https://www.drupal.org/files/issues/2020-04-02/3110204-6-forward-compatibility-drupal-check.patch"
+      },
+      "drupal/bootstrap_barrio": {
+        "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
+      },
+      "drupal/ds": {
+        "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch",
+        "Remove drush plugin": "https://git.drupalcode.org/project/ds/commit/c8db6ed6f5f2a543f9fe50d440a5dd94a1f13fae.diff"
+      },
+      "drupal/layout_builder_styles": {
+        "D9 deprecation fixes": "https://www.drupal.org/files/issues/2019-11-06/deprecated-3092650-2.patch",
+        "Style ordering": "https://www.drupal.org/files/issues/2020-03-03/3080384-15.patch"
+      }
+    }
+  }
 }

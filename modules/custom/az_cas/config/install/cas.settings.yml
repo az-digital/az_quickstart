@@ -31,7 +31,7 @@ user_accounts:
   prevent_normal_login: true
   auto_register: false
   email_assignment_strategy: 0
-  email_hostname: ''
+  email_hostname: 'arizon.edu'
   email_attribute: ''
   auto_assigned_roles: {  }
   restrict_password_management: true
@@ -48,5 +48,5 @@ advanced:
   debug_log: false
   connection_timeout: 10
 login_link_enabled: false
-login_link_label: 'CAS Login'
-login_success_message: ''
+login_link_label: 'Log in using University of Arizona WebAuth'
+login_success_message: 'Logged in via University of Arizona WebAuth as %cas_username.'
