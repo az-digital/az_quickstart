@@ -10,7 +10,7 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group az_cas
  */
-class AzCasTests extends BrowserTestBase {
+class AzCasTest extends BrowserTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -46,7 +46,7 @@ class AzCasTests extends BrowserTestBase {
     $this->adminUser = $this->drupalCreateUser([
       'administer site configuration',
       'access administration pages',
-      'administer account settings'
+      'administer account settings',
     ]);
     $this->drupalLogin($this->adminUser);
   }
@@ -260,4 +260,5 @@ class AzCasTests extends BrowserTestBase {
       $config->get('login_success_message')
     );
   }
+
 }
