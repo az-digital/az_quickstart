@@ -18,7 +18,7 @@ services:
         # Don't share our host working directory as /app. We want /app empty for composer.
         - /app
         # Instead share our host working directory as a standalone package.
-        - ./:/usr/local/quickstart-install-profile
+        - .:/usr/local/quickstart-install-profile
     build:
       # Create a new quickstart project and use the installation profile as a non-packagist repository.
       # Use the matching scaffolding branch if available.
