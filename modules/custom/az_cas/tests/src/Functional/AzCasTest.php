@@ -183,12 +183,11 @@ class AzCasTest extends BrowserTestBase {
       // This is the az_cas overridden value.
       $config->get('user_accounts.email_attribute')
     );
-    // $this->assertSession()->fieldValueEquals(
-    // 'user_accounts[auto_assigned_roles][]',
-    // This is the az_cas overridden value.
-    // $config->get('user_accounts.auto_assigned_roles')
-    // ''
-    // );
+     $this->assertSession()->assertOptionSelected(
+     'user_accounts[auto_assigned_roles][]',
+     // This is the az_cas overridden value.
+     '_none' // No option shoule be selected.
+     );
     $this->assertSession()->fieldValueEquals(
       'user_accounts[restrict_password_management]',
       // This is the az_cas overridden value.
