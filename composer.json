@@ -42,8 +42,8 @@
         "local-username-argument": "https://www.drupal.org/files/issues/2020-04-02/3124256-local-username-argument.patch",
         "forward-compatibility-drupal-check": "https://www.drupal.org/files/issues/2020-04-02/3110204-6-forward-compatibility-drupal-check.patch"
       },
-      "drupal/bootstrap_barrio": {
-        "missing theme config schema": "https://www.drupal.org/files/issues/2019-11-15/improve-theme-settings-remove-deprecated-code-3037780-22.patch"
+      "drupal/core": {
+        "ajax css load order issue": "https://www.drupal.org/files/issues/2020-02-12/1461322-20.patch"
       },
       "drupal/ds": {
         "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch",

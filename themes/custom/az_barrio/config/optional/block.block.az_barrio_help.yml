@@ -16,4 +16,9 @@ settings:
   label: Help
   provider: help
   label_display: '0'
-visibility: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '/node/*/layout'
+    negate: true
+    context_mapping: {  }

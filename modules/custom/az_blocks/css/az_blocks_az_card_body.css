@@ -1,0 +1,9 @@
+/* CARDS */
+.card-deck .card-body {
+  /*
+  *  Provide default padding to account for cards with background colors.
+  *
+  *  FUTURE IMPROVEMENT: allow different padding options for cards.
+  */
+  padding: 1.5rem;
+}

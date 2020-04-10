@@ -1,0 +1,43 @@
+/*
+*  LAYOUT BUILDER - BLOCK EDIT FORM
+*
+*  Overrides to improve the editor UX and fix weird quirks with regards to
+*  the different components. Especially with regards to Background Images.
+*/
+#node-az-flexible-page-layout-builder-form .layout-builder-block {
+  /* Set z-index for components, to ensure they stay above background images. */
+  z-index: 1;
+}
+
+#node-az-flexible-page-layout-builder-form .layout-builder-block.block-inline-blockaz-background-image {
+  /* Reset z-index so component is interactable. */
+  z-index: 0;
+  min-height: 250px;
+}
+
+#node-az-flexible-page-layout-builder-form .block-inline-blockaz-background-image:not(".full-width-wrapper") {
+  /* Keep background Image component aligned properly. */
+  left: 0;
+}
+
+#node-az-flexible-page-layout-builder-form .layout-builder__layout.justify-content-md-end {
+  /*
+  *  Prevent overlap of "add block" and "configure" link for justified right sections.
+  *  Necessary for the Bckground Image component.
+  */
+  align-items: center;
+}
+
+#node-az-flexible-page-layout-builder-form .layout-builder__layout:not([class*="py-"]),
+#node-az-flexible-page-layout-builder-form .layout-builder__layout:not(".justify-content-md-end") {
+  /*
+  *  Target sections with no vertical padding, and add right padding.
+  *  Prevents non-full-width Background Images' "configure" link from being obstructed.
+  */
+  padding-right: 7rem;
+}
+
+#node-az-flexible-page-layout-builder-form .block-inline-blockaz-accordion {
+  /* Increase padding between Accordions to make editing easier. */
+  padding: .5em 1.5em;
+}

@@ -1,0 +1,7 @@
+services:
+  logger.channel.az_layouts:
+    parent: logger.channel_base
+    arguments: ['az_layouts']
+  az_layouts.customize_inline_block_form:
+    class: Drupal\az_layouts\InlineBlockFormCustomizations
+    arguments: ['@entity_type.manager']
