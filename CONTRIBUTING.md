@@ -163,11 +163,12 @@ they need to modify that value to be `/app/web/core/tests/bootstrap.php`.
 
 Steps for modifying `phpunit.xml.dist` and running phpunit tests on the
 Quickstart installation profile.
-
-`lando ssh`
-`cd /app/web/profiles/custom/az_quickstart`
-`sed 's/<phpunit bootstrap="..\/..\/..\/core\/tests\/bootstrap.php" colors="true">/<phpunit bootstrap="\/app\/web\/core\/tests\/bootstrap.php" colors="true">/' phpunit.xml.dist`
-`phpunit`
+```
+lando ssh
+cd /app/web/profiles/custom/az_quickstart
+sed 's/<phpunit bootstrap="..\/..\/..\/core\/tests\/bootstrap.php" colors="true">/<phpunit bootstrap="\/app\/web\/core\/tests\/bootstrap.php" colors="true">/' phpunit.xml.dist
+phpunit
+```
 
 ### Local testing on DDev
 
