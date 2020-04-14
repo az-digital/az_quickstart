@@ -166,7 +166,7 @@ Quickstart installation profile.
 ```
 lando ssh
 cd /app/web/profiles/custom/az_quickstart
-sed 's/<phpunit bootstrap="..\/..\/..\/core\/tests\/bootstrap.php" colors="true">/<phpunit bootstrap="\/app\/web\/core\/tests\/bootstrap.php" colors="true">/' phpunit.xml.dist
+sed -i 's/<phpunit bootstrap="..\/..\/..\/core\/tests\/bootstrap.php" colors="true">/<phpunit bootstrap="\/app\/web\/core\/tests\/bootstrap.php" colors="true">/' phpunit.xml.dist
 phpunit
 ```
 
