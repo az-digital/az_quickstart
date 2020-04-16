@@ -4,8 +4,8 @@ Pre-configures the contrib Drupal [CAS module](https://www.drupal.org/project/ca
 
 ## Requirements
 
-### UA WebAuth
-In order to use UA WebAuth with your Drupal website, you must first [request WebAuth website access](https://apps.iam.arizona.edu/?&tab=webauthtab).
+### University of Arizona WebAuth
+In order to use UArizona WebAuth with your Drupal website, you must first [request WebAuth website access](https://apps.iam.arizona.edu/?&tab=webauthtab).
 
 ### Dependencies
 This module requires the following modules and libraries to be available.
