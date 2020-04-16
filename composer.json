@@ -26,7 +26,7 @@
         "drupal/background_image_formatter": "1.4",
         "drupal/bootstrap_barrio": "4.23",
         "drupal/cas": "1.6.0",
-        "drupal/core-recommended": "8.8.4",
+        "drupal/core-recommended": "8.8.5",
         "drush/drush": "9.7.1",
         "drupal/ds": "3.x-dev#f73614254bb7baa311b99886b0393e2ab738d5f7",
         "drupal/externalauth": "1.2.0",
