@@ -11,7 +11,5 @@ In order to use UA WebAuth with your Drupal website, you must first [request Web
 This module requires the following modules and libraries to be available.
 
 #### Packaged Dependencies
-When this module is used as part of a Drupal distribution (such as [Arizona Quickstart](https://github.com/az-digital/az_quickstart)), the following dependencies will be automatically packaged with the distribution via drush make.
-
 - [CAS module](https://www.drupal.org/project/cas)
 - [External Authentication module](https://www.drupal.org/project/externalauth)
