@@ -19,6 +19,10 @@ QuickStart is the distribution that provides many of the features specific to
 the University of Arizona, and rather than an empty site, initially shows some
 demonstration content (which can nevertheless be turned off instantly).
 
+## Included modular functionality
+ - [Quickstart CAS](/modules/custom/az_cas) - Preconfigures integration with the
+   Univeristy of Arizona webauth system.
+
 ## How to contribute
 
 See our [contributing](./CONTRIBUTING.md) document for detailed instructions on

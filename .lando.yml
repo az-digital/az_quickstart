@@ -58,3 +58,4 @@ tooling:
       # Now issue a composer update/install for the scaffolding folder to pull in new dependencies.
       # "true" command consumes passed Lando arguments that were only intended to be passed to the previous call.
       - composer --working-dir=/app --no-scripts update && composer --working-dir=/app install && true
+
