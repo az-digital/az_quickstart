@@ -1,6 +1,6 @@
 ---
 name: Task
-about: Work that doesn't require a pull request.
+about: Work that needs to be done.
 title: ''
 labels: ''
 assignees: ''
