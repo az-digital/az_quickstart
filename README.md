@@ -31,4 +31,3 @@ how to contribute.
 ## Security Information
 
 More info coming soon
-
