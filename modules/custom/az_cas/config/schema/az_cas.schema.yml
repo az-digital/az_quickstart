@@ -1,0 +1,7 @@
+az_cas.settings:
+  type: config_object
+  label: 'AZ CAS settings'
+  mapping:
+    disable_password_recovery_link:
+      type: boolean
+      label: 'Disable password recovery link'

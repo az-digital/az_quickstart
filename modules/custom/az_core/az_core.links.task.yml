@@ -1,5 +1,5 @@
 az_core.az_settings_az_tab:
-  route_name: az_core.az_quickstart
+  route_name: az_core.az_settings
   title: 'Quickstart Core'
-  base_route: az_core.az_quickstart
+  base_route: az_core.az_settings
   weight: -10
