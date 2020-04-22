@@ -229,6 +229,16 @@ class AzCasTest extends BrowserTestBase {
       $config->get('error_handling.message_username_already_exists')
     );
     $this->assertSession()->fieldValueEquals(
+      'error_handling[messages][message_prevent_normal_login]',
+      // This is the az_cas overridden value.
+      $config->get('error_handling.message_prevent_normal_login')
+    );
+    $this->assertSession()->fieldValueEquals(
+      'error_handling[messages][message_restrict_password_management]',
+      // This is the az_cas overridden value.
+      $config->get('error_handling.message_restrict_password_management')
+    );
+    $this->assertSession()->fieldValueEquals(
       'advanced[debug_log]',
       // This is the az_cas overridden value.
       $config->get('advanced.debug_log')
