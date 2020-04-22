@@ -1,0 +1,7 @@
+az_cas.settings:
+  path: '/admin/config/az-quickstart/settings/az-cas'
+  defaults:
+    _form: '\Drupal\az_cas\Form\AzCasSettingsForm'
+    _title: 'AZ CAS Settings'
+  requirements:
+    _permission: 'administer account settings'
