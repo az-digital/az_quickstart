@@ -10,6 +10,7 @@ permissions:
   - 'access taxonomy overview'
   - 'administer book outlines'
   - 'administer nodes'
+  - 'administer quickstart configuration'
   - 'administer taxonomy'
   - 'bypass node access'
   - 'create content translations'
