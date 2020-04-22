@@ -556,16 +556,6 @@ a.search-input-link:hover {
   flex-grow: 1;
 }
 
-/*.region-header-ua-utilities .search-form {
-  position: relative;
-  height: 38px;
-  margin: 0.72em 0;
-}*/
-
-/*.search-block-form {
-  height: initial;
-}*/
-
 .bg-cochineal-red .form-control,
 .bg-red .form-control,
 .bg-red a.search-input-link {
