@@ -154,20 +154,11 @@ can still be a bit complicated.
 With lando running and quickstart installed and the branch with the changes you
 want to run tests on checked out.
 
-In our `phpunit.xml.dist` configuration file we current specify these top level
-attributes:
-`<phpunit bootstrap="../../../core/tests/bootstrap.php" colors="true">`
-The path provided for the bootstrap script was based on what worked for ProboCI.
-Unfortunately, in order for someone to run our PHPUnit tests with lando or ddev,
-they need to modify that value to be `/app/web/core/tests/bootstrap.php`.
-
-Steps for modifying `phpunit.xml.dist` and running phpunit tests on the
+Steps for running phpunit tests on the
 Quickstart installation profile.
 ```
-lando ssh
-cd /app/web/profiles/custom/az_quickstart
-sed -i 's/<phpunit bootstrap="..\/..\/..\/core\/tests\/bootstrap.php" colors="true">/<phpunit bootstrap="\/app\/web\/core\/tests\/bootstrap.php" colors="true">/' phpunit.xml.dist
-phpunit
+lando start
+lando phpunit
 ```
 
 ### Local testing on DDev
@@ -175,10 +166,8 @@ phpunit
 ```
 git clone https://github.com/az-digital/az_quickstart.git azqs-71
 cd azqs-71
-git checkout feature/65-add-simpletest-env-vars
+git checkout feature/71
 ddev config --project-type php
 ddev start
-ddev install
-ddev exec vendor/bin/phpunit -c web/core web/core/modules/action
-ddev exec vendor/bin/phpunit -c web/core /usr/local/quickstart-install-profile/modules/custom/az_core
+ddev phpunit
 ```
