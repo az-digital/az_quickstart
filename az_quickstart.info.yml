@@ -8,6 +8,7 @@ distribution:
   name: Arizona Quickstart
 
 install:
+  - az_cas
   - az_core
   - az_flexible_page
   - node

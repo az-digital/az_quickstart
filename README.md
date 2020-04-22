@@ -19,10 +19,19 @@ QuickStart is the distribution that provides many of the features specific to
 the University of Arizona, and rather than an empty site, initially shows some
 demonstration content (which can nevertheless be turned off instantly).
 
+## Included modular functionality
+ - [Quickstart CAS](/modules/custom/az_cas) - Preconfigures integration with the
+   Univeristy of Arizona webauth system.
+
 ## How to contribute
 
 See our [contributing](./CONTRIBUTING.md) document for detailed instructions on
-how to contribute.
+how to contribute including:
+
+* What you'll need to [get started](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#things-youll-need-to-get-started)
+* How to [report a bug or request a new feature](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#submitting-a-bugissuefeature-request)
+* How to [submit a pull request](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#pull-requests)
+* [Local development](https://github.com/az-digital/az_quickstart/blob/master/CONTRIBUTING.md#local-development)
 
 ## Security Information
 
