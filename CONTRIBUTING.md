@@ -154,9 +154,11 @@ can still be a bit complicated.
 With lando running and quickstart installed and the branch with the changes you
 want to run tests on checked out.
 
-Steps for running phpunit tests on the
-Quickstart installation profile.
+Steps for running phpunit tests on the Quickstart installation profile.
 ```
+git clone https://github.com/az-digital/az_quickstart.git azqs-71
+cd azqs-71
+git checkout -b feature/71
 lando start
 lando phpunit
 ```
@@ -166,7 +168,7 @@ lando phpunit
 ```
 git clone https://github.com/az-digital/az_quickstart.git azqs-71
 cd azqs-71
-git checkout feature/71
+git checkout -b feature/71
 ddev config --project-type php
 ddev start
 ddev phpunit
