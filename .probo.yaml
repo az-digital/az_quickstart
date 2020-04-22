@@ -41,11 +41,11 @@ steps:
   - name: Add Test User Accounts
     plugin: Script
     script:
-      - drush user:create azcontenteditor --password="probo"
-      - drush user:role:add az_content_editor azcontenteditor
-      - drush user:create azcontentadmin --password="probo"
-      - drush user:role:add az_content_editor azcontentadmin
-      - drush user:role:add az_content_admin azcontentadmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="probo"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="probo"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontentadmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azcontentadmin
   - name: Run PHPUnit Tests
     plugin: Script
     script:
