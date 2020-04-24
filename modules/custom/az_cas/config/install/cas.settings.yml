@@ -44,6 +44,8 @@ error_handling:
   message_account_blocked: 'Your account is blocked or has not been activated. Please contact a site administrator.'
   message_subscriber_denied_login: 'You do not have access to log in to this website. Please contact a site administrator if you believe you should have access.'
   message_username_already_exists: 'An account on this website with your username already exists. Please contact a site administrator.'
+  message_prevent_normal_login: 'This account must log in using <a href="[cas:login-url]">University of Arizona WebAuth</a>.'
+  message_restrict_password_management: 'The requested account is associated with University of Arizona WebAuth and its password cannot be managed from this website.'
 advanced:
   debug_log: false
   connection_timeout: 10
