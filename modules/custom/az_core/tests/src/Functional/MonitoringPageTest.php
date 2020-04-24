@@ -33,7 +33,7 @@ class MonitoringPageTest extends BrowserTestBase {
    * Tests the monitoring page functionality.
    */
   public function testMonitoringPage() {
-    $user = $this->drupalCreateUser(['administer site configuration', 'access administration pages']);
+    $user = $this->drupalCreateUser(['administer site configuration', 'administer quickstart configuration']);
     $this->drupalLogin($user);
     $assert = $this->assertSession();
 
