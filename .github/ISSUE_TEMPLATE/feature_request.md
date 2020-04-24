@@ -26,11 +26,11 @@ A clear and concise description of any alternative solutions or features you've 
 
 ### Roles and Permissions considerations
 A clear and concise description of how each of the following roles would be impacted by this change:
-- Anonymous users
-- Authenticated users
-- Content editors
-- Content administrators
-- Administrators
+- Anonymous user
+- Authenticated user
+- Content editor
+- Content administrator
+- Administrator
 
 ## Additional context
 Add any other context or screenshots about the feature request here.
