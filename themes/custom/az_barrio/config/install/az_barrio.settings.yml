@@ -34,7 +34,7 @@ bootstrap_barrio_button_outline: 0
 # Navbar
 # --------------
 bootstrap_barrio_navbar_toggle: 1
-bootstrap_barrio_navbar_container: 'navbar-toggleable-md'
+bootstrap_barrio_navbar_container: true
 bootstrap_barrio_navbar_top_position: ''
 bootstrap_barrio_navbar_top_color: 'navbar-light'
 bootstrap_barrio_navbar_position: ''
