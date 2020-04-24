@@ -28,7 +28,7 @@
         "drupal/cas": "1.6.0",
         "drupal/core-recommended": "8.8.5",
         "drush/drush": "9.7.1",
-        "drupal/ds": "3.x-dev#f73614254bb7baa311b99886b0393e2ab738d5f7",
+        "drupal/ds": "3.x-dev#170540060a644102ab3524cd1d31de408d492186",
         "drupal/externalauth": "1.2.0",
         "drupal/field_group": "3.0",
         "drupal/layout_builder_restrictions": "2.5",
@@ -46,7 +46,6 @@
                 "ajax css load order issue": "https://www.drupal.org/files/issues/2020-02-12/1461322-20.patch"
             },
             "drupal/ds": {
-                "D9 deprecation fixes": "https://www.drupal.org/files/issues/2020-02-07/ds-deprecated-code-3110306-2.patch",
                 "Remove drush plugin": "https://git.drupalcode.org/project/ds/commit/c8db6ed6f5f2a543f9fe50d440a5dd94a1f13fae.diff"
             },
             "drupal/layout_builder_styles": {
