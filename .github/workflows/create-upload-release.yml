@@ -23,7 +23,7 @@ jobs:
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
           composer require --no-update az-digital/az_quickstart:${AZ_TRIMMED_REF}
-          composer install -o
+          composer install --no-dev -o
       - name: Zip Assets
         run: |
           zip -r -x\*.git* az_quickstart.zip az-quickstart-scaffolding
