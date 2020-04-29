@@ -40,6 +40,10 @@ bootstrap_barrio_navbar_top_color: 'navbar-light'
 bootstrap_barrio_navbar_position: ''
 bootstrap_barrio_navbar_color: 'navbar-light'
 
+# Messages.
+# ----------------------------
+bootstrap_barrio_messages_widget: 'default'
+
 # Colors
 # --------------
 bootstrap_barrio_table_hover: 1
