@@ -1,0 +1,7 @@
+#!/bin/sh
+
+## Description: Provide phpunit tooling to run unit tests.
+## Usage: phpunit [flags] [args]
+## Example: "ddev phpunit --version"
+
+vendor/bin/phpunit --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart $@

@@ -45,6 +45,10 @@ tooling:
   phpcs:
     service: appserver
     cmd: /app/vendor/bin/phpcs --colors web/profiles/custom/az_quickstart
+  # Provide phpunit tooling to run unit tests.
+  phpunit:
+    service: appserver
+    cmd: /app/vendor/bin/phpunit --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
   # Provide drupal-check tooling to check for deprecated code.
   drupal-check:
     service: appserver
