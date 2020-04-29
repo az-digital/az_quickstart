@@ -36,7 +36,7 @@ jobs:
           draft: false
           prerelease: false
       - name: Upload Zip Assets
-        id: upload-release-asset
+        id: upload-zip-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -46,7 +46,7 @@ jobs:
           asset_name: azqs.zip
           asset_content_type: application/zip
       - name: Upload Tar Asset
-        id: upload-release-asset
+        id: upload-tar-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
