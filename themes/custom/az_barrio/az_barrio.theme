@@ -179,7 +179,7 @@ function az_barrio_az_bootstrap_assets_path($type) {
     if ($az_bootstrap_cdn_version == 'stable') {
       $az_bootstrap_cdn_version = AZ_BOOTSTRAP_STABLE_VERSION;
     }
-    $az_bootstrap_path = 'https://cdn.uadigital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
+    $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
   }
   else {
     $az_bootstrap_path = 'libraries/arizona-bootstrap';
