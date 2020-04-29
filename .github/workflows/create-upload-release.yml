@@ -24,8 +24,12 @@ jobs:
           composer config use-github-api false
           composer require --no-update az-digital/az_quickstart:${AZ_TRIMMED_REF}
           composer install -o
-          zip -r -x\*.git* "az_quickstart-${AZ_TRIMMED_REF}.zip" *
-          tar --exclude .gitignore --exclude .git -c -z -f "az_quickstart-${AZ_TRIMMED_REF}.tar.gz" *
+      - name: Zip Assets
+        run: |
+          zip -r -x\*.git* az_quickstart.zip az-quickstart-scaffolding
+      - name: Tar Assets
+        run: |
+          tar --exclude .gitignore --exclude .git -c -z -f az_quickstart.tar.gz az-quickstart-scaffolding
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -43,8 +47,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./az_quickstart-${AZ_TRIMMED_REF}.zip
-          asset_name: az_quickstart-${AZ_TRIMMED_REF}.zip
+          asset_path: ./az_quickstart.zip
+          asset_name: az_quickstart.zip
           asset_content_type: application/zip
       - name: Upload Tar Asset
         id: upload-tar-asset
@@ -53,6 +57,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./az_quickstart-${AZ_TRIMMED_REF}.tar.gz
-          asset_name: az_quickstart-${AZ_TRIMMED_REF}.tar.gz
+          asset_path: ./az_quickstart.tar.gz
+          asset_name: az_quickstart.tar.gz
           asset_content_type: application/x-gzip
