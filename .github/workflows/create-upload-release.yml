@@ -9,7 +9,7 @@ name: Upload Release Asset
 jobs:
   build:
     name: Upload Release Asset
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -26,10 +26,10 @@ jobs:
           composer install --no-dev -o
       - name: Zip Assets
         run: |
-          zip -r -x\*.git* az_quickstart.zip az_quickstart
+          zip -r -x '*.git*' az_quickstart.zip az_quickstart
       - name: Tar Assets
         run: |
-          tar --exclude .gitignore --exclude .git -c -z -f az_quickstart.tar.gz az_quickstart
+          tar --exclude '*.git*' -c -z -f az_quickstart.tar.gz az_quickstart
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
