@@ -13,6 +13,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Build Variables
+        run: echo "::set-env - name=AZ_TRIMMED_REF::${GITHUB_REF#refs/*/}"
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           composer global require hirak/prestissimo
@@ -20,7 +22,7 @@ jobs:
           cd az-quickstart-scaffolding
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
-          composer require --no-update az-digital/az_quickstart:${{ github.ref }}
+          composer require --no-update az-digital/az_quickstart:${AZ_TRIMMED_REF}
           composer install -o
           zip azqs.zip *
           tar zcf azqs.tar.gz *
