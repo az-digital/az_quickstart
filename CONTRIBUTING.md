@@ -17,7 +17,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
     * Use the `#uadigital-general` channel to ask general questions related to
       Arizona Digital.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
-  * Local containerized (Docker) development environment tool either lando or ddev
+  * Local containerized (Docker) dev environment tool either lando or ddev
     * [Lando](https://docs.lando.dev/basics/installation.html)
     * [DDev](https://www.ddev.com/get-started/)
   * An IDE with the capability to attach to a remote codeserver or docker
@@ -105,7 +105,8 @@ ddev start
 ddev install
 ```
 
-Note: Use `ddev pause` and `ddev start` to restart the container. Using `ddev restart` will require a re-install with `ddev install`.
+Note: Use `ddev pause` and `ddev start` to restart the container. 
+Using `ddev restart` will require a re-install with `ddev install`.
 
 ### Visual Studio Code integration
 
@@ -121,14 +122,17 @@ Setup:
   2. Install the [Visual Studio Code Remote Development Extension Pack
 ](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
   3. In the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette),
-     which can be found in View menu or (⌘⇧P on Mac) type `Remote-containers: Attach to Running Container...`
-     and click on the result to bring up a list of running containers on your computer.
-  4. If using lando, find the container whose name ends with `_appserver_1` and click
-    it to attach to that container.
+     which can be found in View menu or (⌘⇧P on Mac) type 
+     `Remote-containers: Attach to Running Container...`
+     and click on the result to bring up a list of running containers.
+  4. If using lando, find the container whose name ends with `_appserver_1`.
+  Click it to attach to that container.
   5. The last thing you'll have to do is add a folder from within the container
-    to your workspace.  To do this, use the file menu within Visual Studio Code,
-    to Add Folder to Workspace.  Then replace `/root` with the `/app` folder, and you are ready to
-    begin development.
+    to your workspace.  
+    To do this, use the file menu within Visual Studio Code,
+    to Add Folder to Workspace.  
+    Then replace `/root` with the `/app` folder.
+  6. You are ready to begin development.
 
 Notes: Visual Studio Code has git integration, so you can use that to create new
 branches and push up to github.

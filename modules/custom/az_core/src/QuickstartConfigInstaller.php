@@ -53,7 +53,7 @@ class QuickstartConfigInstaller extends ConfigInstaller {
 
     // Install profiles can not have config clashes. Configuration that
     // has the same name as a module's configuration will be used instead.
-    if ($name != $this
+    if ($name !== $this
       ->drupalGetProfile()) {
 
       // Throw an exception if the module being installed contains configuration
