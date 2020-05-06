@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-utility-links
+label: 'Utility Links'
+description: 'The utility links menu contains secondary navigation links that are not part of the main menu.'
+locked: false
