@@ -24,7 +24,7 @@
         "composer/installers": "1.7.0",
         "cweagans/composer-patches": "1.6.7",
         "drupal/background_image_formatter": "1.4",
-        "drupal/bootstrap_barrio": "4.23",
+        "drupal/bootstrap_barrio": "4.27",
         "drupal/cas": "1.6.0",
         "drupal/core-recommended": "8.8.5",
         "drush/drush": "9.7.1",
