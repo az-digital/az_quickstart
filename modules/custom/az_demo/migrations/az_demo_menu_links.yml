@@ -72,7 +72,7 @@ process:
     source:
       - parent_link_id
       - '@menu_name'
-      - parent_name
+      - ''
 destination:
   plugin: entity:menu_link_content
   no_stub: true
