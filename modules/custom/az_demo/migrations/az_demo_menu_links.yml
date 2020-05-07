@@ -57,7 +57,7 @@ process:
   'link/uri':
     plugin: link_uri
     source:
-      - url
+      - urlpath
   route_name: '@route/route_name'
   route_parameters: '@route/route_parameters'
   url: '@route/url'
