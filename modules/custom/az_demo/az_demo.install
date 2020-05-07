@@ -12,7 +12,7 @@ use Drupal\migrate\MigrateMessage;
  * Implements hook_install().
  */
 function az_demo_install() {
-  $tag = 'az_demo_content';
+  $tag = 'Quickstart Demo Content';
 
   // Run the migrations that are tagged as demo content.
   $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
@@ -26,7 +26,7 @@ function az_demo_install() {
  * Implements hook_uninstall().
  */
 function az_demo_uninstall() {
-  $tag = 'az_demo_content';
+  $tag = 'Quickstart Demo Content';
 
   // Rollback the migrations that are tagged as demo content.
   $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);

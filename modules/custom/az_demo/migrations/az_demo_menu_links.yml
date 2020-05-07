@@ -1,7 +1,8 @@
 id: az_demo_menu_links
 label: AZ Quickstart Demo Menu Links
 migration_tags:
-  - az_demo_content
+  - Quickstart Demo Content
+  - Content
 source:
   plugin: url
   data_fetcher_plugin: file
