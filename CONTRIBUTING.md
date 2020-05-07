@@ -88,6 +88,9 @@ container, so if you want to see the code use `lando ssh` or  `ddev ssh` to ssh
 into the container, or follow the [instructions below for accessing code via
 Visual Studio Code](#user-content-visual-studio-code-integration).
 
+**Note:** The Lando and DDEV installs create an admin Drupal user, `azadmin`, 
+with password `lando`/`ddev`, depending on which was used.
+
 ### Lando
 ```
 git clone https://github.com/az-digital/az_quickstart.git foldername
