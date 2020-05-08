@@ -1,0 +1,86 @@
+id: az_demo_menu_links
+label: AZ Quickstart Demo Menu Links
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_menu_links.json
+  item_selector: menu_links
+  fields:
+    -
+      name: link_id
+      label: 'Menu Link ID'
+      selector: link_id
+    -
+      name: parent_link_id
+      label: 'Parent Menu Link ID (source)'
+      selector: parent_link_id
+    -
+      name: title
+      label: 'Link Title'
+      selector: title
+    -
+      name: menu
+      label: 'Parent Menu'
+      selector: menu
+    -
+      name: urlpath
+      label: 'URL or path'
+      selector: urlpath
+    -
+      name: external
+      label: 'External'
+      selector: external
+    -
+      name: expanded
+      label: 'Expanded'
+      selector: expanded
+    -
+      name: enabled
+      label: 'Enabled'
+      selector: enabled
+    -
+      name: weight
+      label: 'Weight'
+      selector: weight
+  ids:
+    link_id:
+      type: integer
+process:
+  bundle: menu_link_content
+  title: title
+  menu_name: menu
+  # Handle external urls or url aliases.
+  'link/uri':
+    plugin: link_uri
+    source:
+      - urlpath
+  route_name: '@route/route_name'
+  route_parameters: '@route/route_parameters'
+  url: '@route/url'
+  options: '@route/options'
+  external: external
+  weight: weight
+  expanded: expanded
+  enabled: enabled
+  # Handle mapping of parent menu links. Refers to SOURCE id numbers.
+  parent:
+    plugin: menu_link_parent
+    source:
+      - parent_link_id
+      - '@menu_name'
+      - ''
+destination:
+  plugin: entity:menu_link_content
+  no_stub: true
+migration_dependencies: {  }
+dependencies:
+  enforced:
+    module:
+      - migrate
+      - migrate_plus
+      - migrate_tools

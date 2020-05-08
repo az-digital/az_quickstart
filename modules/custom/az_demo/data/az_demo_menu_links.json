@@ -1,0 +1,26 @@
+{
+  "menu_links": [
+    {
+      "link_id": "1",
+      "parent_link_id": "0",
+      "menu": "az-utility-links",
+      "title": "Utility 1",
+      "urlpath": "https://quickstart.arizona.edu/",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "1"
+    },
+    {
+      "link_id": "2",
+      "parent_link_id": "0",
+      "menu": "az-utility-links",
+      "title": "Utility 2",
+      "urlpath": "https://brand.arizona.edu/",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "2"
+    }
+  ]
+}
