@@ -32,7 +32,7 @@ tooling:
   # in a race condition if Drupal is installed during the run phase.
   install:
     service: appserver
-    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=lando --db-url=mysql://drupal8:drupal8@database:3306/drupal8 -y --verbose
+    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal8:drupal8@database:3306/drupal8 -y --verbose
   # Provide Drush tooling to automatically know the Drupal root.
   drush:
     service: appserver

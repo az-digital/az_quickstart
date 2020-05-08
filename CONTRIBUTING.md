@@ -65,6 +65,9 @@ So, bug fix for issue #123 would be on branch `bug/123`
 Create a draft pull request if you'd like to run automated tests and/or get
 feedback before your pull request is completely ready for review.
 
+**Note:** Probo will build a Drupal site with the committed changes and an admin
+user with username and password `azadmin`.
+
 Follow the pull request template and use proper formatting for commit messages:
  * Use the present tense ("Add feature" not "Added feature")
  * Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
@@ -87,6 +90,9 @@ it, use the following commands.
 container, so if you want to see the code use `lando ssh` or  `ddev ssh` to ssh
 into the container, or follow the [instructions below for accessing code via
 Visual Studio Code](#user-content-visual-studio-code-integration).
+
+**Note:** The Lando and DDEV installs create an admin Drupal user with username 
+and password `azadmin`.
 
 ### Lando
 ```
