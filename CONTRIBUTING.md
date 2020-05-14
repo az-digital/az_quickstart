@@ -215,12 +215,15 @@ ddev yarn watch
 ## ESLint in Local Development
 
 You may run eslint to lint javascript in local development with one of the
-following two commands
+following two commands.
 
+All files:
 ```
 lando eslint .
 ddev eslint .
-OR
+```
+Single file:
+```
 lando eslint myfile.js
 ddev eslint myfile.js
 ```
