@@ -9,9 +9,9 @@ bootstrap_cdn:
 arizona-bootstrap:
   css:
     theme:
-      libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
+      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
   js:
-    libraries/arizona-bootstrap/css/arizona-bootstrap.min.js: {}
+    /libraries/arizona-bootstrap/css/arizona-bootstrap.min.js: {}
 az-brand-icons:
   css:
     theme:
