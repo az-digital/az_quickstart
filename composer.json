@@ -26,7 +26,7 @@
         "drupal/background_image_formatter": "1.4",
         "drupal/bootstrap_barrio": "4.23",
         "drupal/cas": "1.6.0",
-        "drupal/core-recommended": "8.8.5",
+        "drupal/core-recommended": "8.8.6",
         "drush/drush": "9.7.1",
         "drupal/ds": "3.x-dev#170540060a644102ab3524cd1d31de408d492186",
         "drupal/externalauth": "1.2.0",
@@ -42,7 +42,8 @@
                 "declare-default-theme-in-functional-tests": "https://www.drupal.org/files/issues/2020-04-06/3124254-v1-6%237-declare-default-theme-in-functional-test.patch",
                 "update-deprecated-setExpectedException-method-in-tests": "https://www.drupal.org/files/issues/2020-04-01/3124245-update-deprecated-setExpectedException-method-in-tests.patch",
                 "local-username-argument": "https://www.drupal.org/files/issues/2020-04-02/3124256-local-username-argument.patch",
-                "forward-compatibility-drupal-check": "https://www.drupal.org/files/issues/2020-04-02/3110204-6-forward-compatibility-drupal-check.patch"
+                "forward-compatibility-drupal-check": "https://www.drupal.org/files/issues/2020-04-02/3110204-6-forward-compatibility-drupal-check.patch",
+                "getstorage-deprecation": "https://www.drupal.org/files/issues/2020-05-20/3138426-2.patch"
             },
             "drupal/core": {
                 "ajax css load order issue": "https://www.drupal.org/files/issues/2020-02-12/1461322-20.patch",
