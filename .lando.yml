@@ -25,6 +25,12 @@ services:
       - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="master"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
       - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:\>\=8.5.0 zaporylie/composer-drupal-optimizations:1.1.1 az-digital/az_quickstart:\*@dev
       - composer install
+  node:
+    type: node:12.16
+    build:
+      - yarn install
+    globals:
+      eslint-config-drupal-bundle: 1.0.2
 tooling:
   # Provide a command to install Drupal.
   # Current versions of the Bitnami MySQL container sometimes signal
@@ -53,6 +59,12 @@ tooling:
   drupal-check:
     service: appserver
     cmd: /app/vendor/bin/drupal-check web/profiles web/modules web/themes
+  yarn:
+    service: node
+    cmd: yarn
+  eslint:
+    service: node
+    cmd: eslint --color
   # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
   composer:
     service: appserver
@@ -62,4 +74,3 @@ tooling:
       # Now issue a composer update/install for the scaffolding folder to pull in new dependencies.
       # "true" command consumes passed Lando arguments that were only intended to be passed to the previous call.
       - composer --working-dir=/app --no-scripts update && composer --working-dir=/app install && true
-

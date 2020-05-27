@@ -24,8 +24,7 @@ steps:
       - sudo npm install -g --no-progress n
       - sudo n 8.10.0
       - npm install --no-progress --global eslint-config-drupal-bundle
-      - cd $SRC_DIR/az-quickstart-scaffolding/web
-      - eslint --color $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
+      - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart && eslint --color .
   - name: Check For Deprecated Code
     plugin: Script
     script:

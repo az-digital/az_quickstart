@@ -91,7 +91,7 @@ container, so if you want to see the code use `lando ssh` or  `ddev ssh` to ssh
 into the container, or follow the [instructions below for accessing code via
 Visual Studio Code](#user-content-visual-studio-code-integration).
 
-**Note:** The Lando and DDEV installs create an admin Drupal user with username 
+**Note:** The Lando and DDEV installs create an admin Drupal user with username
 and password `azadmin`.
 
 ### Lando
@@ -111,7 +111,7 @@ ddev start
 ddev install
 ```
 
-Note: Use `ddev pause` and `ddev start` to restart the container. 
+Note: Use `ddev pause` and `ddev start` to restart the container.
 Using `ddev restart` will require a re-install with `ddev install`.
 
 ### Visual Studio Code integration
@@ -128,7 +128,7 @@ Setup:
   2. Install the [Visual Studio Code Remote Development Extension Pack
 ](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.vscode-remote-extensionpack)
   3. In the [Command Palette](https://code.visualstudio.com/docs/getstarted/userinterface#_command-palette),
-     which can be found in View menu or (⌘⇧P on Mac) type 
+     which can be found in View menu or (⌘⇧P on Mac) type
      `Remote-containers: Attach to Running Container...`
      and click on the result to bring up a list of running containers.
   4. If using lando, find the container whose name ends with `_appserver_1`.
@@ -182,4 +182,48 @@ git checkout -b feature/71
 ddev config --project-type php
 ddev start
 ddev phpunit
+```
+
+## Compiling Javascript in Local Development
+
+This project uses an ES6 to ES5 transpile process
+[similar to Drupal core](https://www.drupal.org/node/2815083).
+
+This means that you should only update `.js` files named `.es6.js` and should
+never manually edit files named `.js` as these are machine-generated.
+
+This can be done on demand with `yarn build`, or in response to changes
+with `yarn watch`. When in watch mode, javascript files will be transpiled as
+they are updated.
+
+### ES6 Transpiling on Lando
+
+```
+lando yarn build
+OR
+lando yarn watch
+```
+
+### ES6 Transpiling on Dev
+
+```
+ddev yarn build
+OR
+ddev yarn watch
+```
+
+## ESLint in Local Development
+
+You may run eslint to lint javascript in local development with one of the
+following two commands.
+
+All files:
+```
+lando eslint .
+ddev eslint .
+```
+Single file:
+```
+lando eslint myfile.js
+ddev eslint myfile.js
 ```
