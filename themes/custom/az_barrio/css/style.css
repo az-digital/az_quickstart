@@ -512,7 +512,7 @@ a.search-input-link:hover {
   width: 17rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 576px) {
   .header .search-block-form {
     float: right;
     margin-top: 16px;
