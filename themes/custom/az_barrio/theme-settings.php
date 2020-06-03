@@ -186,6 +186,19 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
 
+  // Material Design Icons
+  $form['material_design_icon_settings'] = [
+    '#type' => 'details',
+    '#title' => t('Material Design Icons'),
+    '#group' => 'bootstrap',
+    '#weight' => -8,
+  ];
+  $form['material_design_icon_settings']['settings']['material_design_icons']['use_material_design_sharp_icons'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use Material Design Sharp Icons'),
+    '#default_value' => theme_get_setting('use_material_design_sharp_icons'),
+  ];
+
   // Components.
   $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = [
     'bg-primary' => t('Primary'),
