@@ -39,6 +39,7 @@ install:
   - dblog
   - search
   - shortcut
+  - token
   - toolbar
   - field_ui
   - file

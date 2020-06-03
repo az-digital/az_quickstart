@@ -34,7 +34,8 @@
         "drupal/layout_builder_restrictions": "2.5",
         "drupal/layout_builder_styles": "1.0-beta1",
         "drupal/migrate_plus": "5.1",
-        "drupal/migrate_tools": "5.0"
+        "drupal/migrate_tools": "5.0",
+        "drupal/token": "1.7"
     },
     "extra": {
         "patches": {
