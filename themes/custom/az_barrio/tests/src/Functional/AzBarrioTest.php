@@ -46,7 +46,7 @@ class AzBarrioTest extends BrowserTestBase {
     // Create a test user.
     $this->adminUser = $this->drupalCreateUser([
       'access administration pages',
-      'administer themes'
+      'administer themes',
     ]);
     $this->drupalLogin($this->adminUser);
   }

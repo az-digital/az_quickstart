@@ -229,7 +229,7 @@ az_barrio.settings:
     sticky_footer:
       type: boolean
       label: 'Enable AZ Bootstrap sticky footer template'
-    use_materiause_material_design_sharp_icons:
+    use_material_design_sharp_icons:
       type: boolean
       label: 'Enable Material Design Sharp Icons'
     primary_logo_alt_text:
