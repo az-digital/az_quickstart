@@ -24,6 +24,13 @@ class AzBarrioTest extends BrowserTestBase {
   protected $defaultTheme = 'az_barrio';
 
   /**
+   * Disable strict schema cheking.
+   *
+   * @var bool
+   */
+  protected $strictConfigSchema = FALSE;
+
+  /**
    * The created user.
    *
    * @var User
