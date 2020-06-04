@@ -65,7 +65,8 @@ az_brand_icons_source: 'cdn'
 az_brand_icons_class: true
 external_links: true
 sticky_footer: true
-material-icons-sharp: true
+
+use_material_design_sharp_icons: true
 
 logo:
   path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/logo.png'
