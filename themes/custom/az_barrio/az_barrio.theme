@@ -45,7 +45,7 @@ function az_barrio_preprocess_page(&$variables) {
   }
 
   // Add Material Design icons.
-  if (theme_get_setting('use_material_design_sharp_icons') === 1) {
+  if (theme_get_setting('use_material_design_sharp_icons') === TRUE) {
     $variables['#attached']['library'][] = 'az_barrio/material-design-icons-sharp';
   }
 
