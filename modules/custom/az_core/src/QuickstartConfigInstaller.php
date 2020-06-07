@@ -30,7 +30,7 @@ class QuickstartConfigInstaller extends ConfigInstaller {
     }
     $config_install_path = $this
       ->getDefaultConfigDirectory($type, $name);
-    if (!is_dir($config_install_path)) {
+    if (stream_resolve_include_path($config_install_path) === FALSE) {
       return;
     }
     $storage = new FileStorage($config_install_path, StorageInterface::DEFAULT_COLLECTION);
@@ -99,7 +99,7 @@ class QuickstartConfigInstaller extends ConfigInstaller {
     $app_root = \Drupal::root();
     $filename = $app_root . '/' . drupal_get_path($type, $name) . '/' . $name . '.az_config_overrides.yml';
 
-    if (file_exists($filename)) {
+    if (stream_resolve_include_path($filename)) {
       // If an override file exists, parse it for overrides.
       $yaml = Yaml::decode(file_get_contents($filename));
       if (!empty($yaml['overrides'])) {

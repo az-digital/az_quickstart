@@ -5,7 +5,7 @@
  * Functions to support theming in the Arizona Barrio theme.
  */
 
-include_once dirname(__FILE__) . '/includes/common.inc';
+include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
