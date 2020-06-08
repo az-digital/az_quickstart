@@ -19,7 +19,6 @@ install:
   - ckeditor
   - color
   - config
-  - comment
   - contextual
   - contact
   - menu_link_content
