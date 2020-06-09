@@ -17,6 +17,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/joeparsons/az-quickstart-dev.git"
         }
     ],
     "require": {
@@ -38,11 +42,7 @@
         "drupal/token": "1.7"
     },
     "require-dev": {
-        "dealerdirect/phpcodesniffer-composer-installer": "0.5.0",
-        "drupal/core-dev-pinned": "*",
-        "mglaman/drupal-check": "1.1.1",
-        "pheromone/phpcs-security-audit": "dev-master#1b8a61d4ac8f4f1554bcbf67865f8e1c1b213bdd",
-        "sensiolabs/security-checker": "6.0.3"
+        "az-digital/az-quickstart-dev": "dev-master"
     },
     "extra": {
         "patches": {
