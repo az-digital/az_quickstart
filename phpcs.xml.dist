@@ -2,7 +2,7 @@
 <ruleset name="az-quickstart">
   <description>PHPCS configuration for AZ QuickStart</description>
   <!-- Check all files within the AZ QuickStart installation profile. -->
-  <file>./web/profiles/custom/az_quickstart</file>
+  <file>.</file>
   <arg name="extensions" value="php,install,module,profile,inc"/>
 
   <arg name="cache" value=".phpcs-cache"/>
