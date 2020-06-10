@@ -16,11 +16,16 @@ jobs:
       - name: Install dependencies
         run: |
           composer global require hirak/prestissimo
-          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then PROFILE_BRANCH="$AZ_TRIMMED_REF"; else PROFILE_BRANCH=master; fi
-          composer require --no-update az-digital/az_quickstart:dev-${PROFILE_BRANCH}
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=master; fi
+          git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
+          cd az-quickstart-scaffolding
+          composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
+          composer config use-github-api false
+          composer require --no-update az-digital/az_quickstart:dev-${AZ_TRIMMED_REF}
           composer install -o
       - name: Check dependencies for vulnerabilities
         run: |
+          cd az-quickstart-scaffolding
           composer security-check
   code-check:
     name: Static Code Check
@@ -32,9 +37,14 @@ jobs:
       - name: Install dependencies
         run: |
           composer global require hirak/prestissimo
-          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then PROFILE_BRANCH="$AZ_TRIMMED_REF"; else PROFILE_BRANCH=master; fi
-          composer require --no-update az-digital/az_quickstart:dev-${PROFILE_BRANCH}
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=master; fi
+          git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
+          cd az-quickstart-scaffolding
+          composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
+          composer config use-github-api false
+          composer require --no-update az-digital/az_quickstart:dev-${AZ_TRIMMED_REF}
           composer install -o
       - name: Run static code analysis
         run: |
+          cd az-quickstart-scaffolding
           composer phpcs
