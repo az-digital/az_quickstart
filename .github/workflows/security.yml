@@ -1,0 +1,40 @@
+name: Security workflow
+
+on:
+  push:
+  schedule:
+    - cron:  '0 13 * * *'
+
+jobs:
+  dependency-audit:
+    name: Dependency Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: echo "::set-env name=AZ_TRIMMED_REF::${GITHUB_REF#refs/*/}"
+      - name: Install dependencies
+        run: |
+          composer global require hirak/prestissimo
+          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then PROFILE_BRANCH="$AZ_TRIMMED_REF"; else PROFILE_BRANCH=master; fi
+          composer require --no-update az-digital/az_quickstart:dev-${PROFILE_BRANCH}
+          composer install -o
+      - name: Check dependencies for vulnerabilities
+        run: |
+          composer security-check
+  code-check:
+    name: Static Code Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: echo "::set-env name=AZ_TRIMMED_REF::${GITHUB_REF#refs/*/}"
+      - name: Install dependencies
+        run: |
+          composer global require hirak/prestissimo
+          if [ $(git ls-remote --heads https://github.com/az-digital/az_quickstart.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then PROFILE_BRANCH="$AZ_TRIMMED_REF"; else PROFILE_BRANCH=master; fi
+          composer require --no-update az-digital/az_quickstart:dev-${PROFILE_BRANCH}
+          composer install -o
+      - name: Run static code analysis
+        run: |
+          composer phpcs
