@@ -17,10 +17,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/joeparsons/az-quickstart-dev.git"
         }
     ],
     "require": {
