@@ -10,6 +10,8 @@
 include_once dirname(__FILE__) . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -184,6 +186,21 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
+  ];
+
+  // Material Design icons.
+  $form['material_design_icon_settings'] = [
+    '#type' => 'details',
+    '#title' => t('Material Design Icons'),
+    '#group' => 'bootstrap',
+    '#weight' => -8,
+  ];
+  $form['material_design_icon_settings']['settings']['material_design_icons']['use_material_design_sharp_icons'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use Material Design Sharp Icons'),
+    '#default_value' => theme_get_setting('use_material_design_sharp_icons'),
+    '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_icons_docs_link CSS.',
+    ['@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString()]),
   ];
 
   // Components.

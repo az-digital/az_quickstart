@@ -57,7 +57,6 @@ info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
 az_hide_front_title: false
 az_back_to_top: true
-
 az_bootstrap_source: 'cdn'
 az_bootstrap_cdn_version: 'stable'
 az_bootstrap_minified: true
@@ -65,11 +64,10 @@ az_brand_icons_source: 'cdn'
 az_brand_icons_class: true
 external_links: true
 sticky_footer: true
-
+use_material_design_sharp_icons: true
 logo:
   path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/logo.png'
   use_default: false
-
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
 footer_logo_link_destination: '<front>'

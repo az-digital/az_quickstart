@@ -44,6 +44,11 @@ function az_barrio_preprocess_page(&$variables) {
     // $variables['title'] = FALSE;
   }
 
+  // Add Material Design icons.
+  if (theme_get_setting('use_material_design_sharp_icons') === TRUE) {
+    $variables['#attached']['library'][] = 'az_barrio/material-design-icons-sharp';
+  }
+
   // Check if information security policy should be displayed.
   $info_security_privacy = '';
   if (theme_get_setting('info_security_privacy')) {
