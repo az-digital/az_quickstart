@@ -47,8 +47,7 @@
       <li{{ item.attributes.addClass(classes) }}>
         {%
           set link_classes = [
-            not menu_level ? 'nav-link',
-            menu_level ? 'dropdown-item',
+            menu_level ? 'dropdown-item' : 'nav-link',
             item.in_active_trail ? 'active',
             item.below ? 'dropdown-toggle',
             item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(' '),
