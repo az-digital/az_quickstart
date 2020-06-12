@@ -1,0 +1,14 @@
+uuid: b7845445-07a1-42fd-890b-a8a5bfdafb05
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: default
+label: Default
+type: 'canonical_entities:node'
+pattern: '[node:menu-link:parents:join-path]/[node:menu-link]'
+selection_criteria: {  }
+selection_logic: and
+weight: 0
+relationships: {  }
