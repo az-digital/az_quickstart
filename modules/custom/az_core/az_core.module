@@ -8,6 +8,7 @@
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\pathauto\PathautoPatternInterface;
 
 /**
  * Implements hook_help().
@@ -31,14 +32,14 @@ function az_core_help($route_name, RouteMatchInterface $route_match) {
  * Define and configure default url path patterns.
  * Provide a fallback if the current node pattern generated nothing.
  */
-function az_core_pathauto_pattern_alter(\Drupal\pathauto\PathautoPatternInterface $pattern, array $context) {
+function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array $context) {
   // Only create fallback if we're using the predefined AZQS pattern.
   $azqs_pattern = '[node:menu-link:parents:join-path]/[node:menu-link]';
 
   // Run a test of token replacement for the pattern to see if it is empty.
-  if (isset($context['module']) && $context['module'] == 'node' && $pattern->getPattern() == $azqs_pattern) {
+  if (isset($context['module']) && $context['module'] === 'node' && $pattern->getPattern() === $azqs_pattern) {
     $langcode = $context['language'];
-    if (!isset ($langcode) || $langcode == LanguageInterface::LANGCODE_NOT_APPLICABLE) {
+    if (!isset($langcode) || $langcode === LanguageInterface::LANGCODE_NOT_APPLICABLE) {
       $langcode = LanguageInterface::LANGCODE_NOT_SPECIFIED;
     }
 
@@ -53,7 +54,7 @@ function az_core_pathauto_pattern_alter(\Drupal\pathauto\PathautoPatternInterfac
     $alias = \Drupal::service('pathauto.alias_cleaner')->cleanAlias($alias);
 
     // If the pattern generated nothing, fallback on the node title pattern.
-    if (empty($alias) || $alias == '/') {
+    if (empty($alias) || $alias === '/') {
       $pattern->setPattern('[node:title]');
     }
   }
