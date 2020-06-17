@@ -37,6 +37,9 @@
         "drupal/migrate_tools": "5.0",
         "drupal/token": "1.7"
     },
+    "require-dev": {
+        "az-digital/az-quickstart-dev": "dev-master"
+    },
     "extra": {
         "patches": {
             "drupal/cas": {
