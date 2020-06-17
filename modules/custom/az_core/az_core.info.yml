@@ -3,3 +3,7 @@ type: module
 description: 'Settings and configuration common to other Quickstart componenets.'
 core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
+dependencies:
+  - config_distro
+  - config_provider
+  - config_sync
