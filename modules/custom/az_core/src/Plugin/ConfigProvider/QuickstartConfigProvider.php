@@ -5,7 +5,6 @@ namespace Drupal\az_core\Plugin\ConfigProvider;
 use Drupal\config_provider\Plugin\ConfigProviderBase;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageInterface;
-use Drupal\Core\Extension\Exception\UnknownExtensionException;
 
 /**
  * Class for providing configuration from a quickstart default directory.
