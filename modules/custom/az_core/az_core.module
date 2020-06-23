@@ -28,7 +28,7 @@ function az_core_help($route_name, RouteMatchInterface $route_match) {
  * Implements hook_pathauto_pattern_alter().
  *
  * Provide a fallback if the current node is not in a menu.
- * Reference: https://drupal.stackexchange.com/a/179220/92636
+ * Reference: https://www.drupal.org/project/pathauto/issues/2904757#comment-13421490
  */
 function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array $context) {
   // Manually specify default AZQS pattern.
