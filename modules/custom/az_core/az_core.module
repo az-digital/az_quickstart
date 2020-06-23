@@ -6,8 +6,6 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Language\LanguageInterface;
-use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\pathauto\PathautoPatternInterface;
 
 /**
@@ -29,32 +27,19 @@ function az_core_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_pathauto_pattern_alter().
  *
- * Define and configure default url path patterns.
- * Provide a fallback if the current node pattern generated nothing.
+ * Provide a fallback if the current node is not in a menu.
+ * Reference: https://drupal.stackexchange.com/a/179220/92636
  */
 function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array $context) {
-  // Only create fallback if we're using the predefined AZQS pattern.
+  // Manually specify default AZQS pattern.
   $azqs_pattern = '[node:menu-link:parents:join-path]/[node:menu-link]';
 
-  // Run a test of token replacement for the pattern to see if it is empty.
-  if (isset($context['module']) && $context['module'] === 'node' && $pattern->getPattern() === $azqs_pattern) {
-    $langcode = $context['language'];
-    if (!isset($langcode) || $langcode === LanguageInterface::LANGCODE_NOT_APPLICABLE) {
-      $langcode = LanguageInterface::LANGCODE_NOT_SPECIFIED;
-    }
+  // Check if context is node and pattern is the AZQS default.
+  if ($context['module'] === 'node' && $pattern->getPattern() === $azqs_pattern) {
+    $menu = $context['data']['node']->__get('menu');
 
-    $alias = \Drupal::service('token')->replace($pattern->getPattern(), $context['data'], [
-      'clear' => TRUE,
-      'callback' => \Drupal::service('pathauto.alias_cleaner')->cleanAlias,
-      'langcode' => $langcode,
-      'pathauto' => TRUE,
-    ], new BubbleableMetadata());
-
-    // Trim leading or trailing separators.
-    $alias = \Drupal::service('pathauto.alias_cleaner')->cleanAlias($alias);
-
-    // If the pattern generated nothing, fallback on the node title pattern.
-    if (empty($alias) || $alias === '/') {
+    // Set pattern to fallback if menu is not enabled.
+    if ($menu['enabled'] === 0) {
       $pattern->setPattern('[node:title]');
     }
   }
