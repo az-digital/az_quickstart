@@ -4,7 +4,3 @@ services:
     arguments: ['@current_route_match']
     tags:
       - { name: page_cache_response_policy }
-  az_core.route_subscriber:
-    class: Drupal\az_core\Routing\RouteSubscriber
-    tags:
-      - { name: event_subscriber }
