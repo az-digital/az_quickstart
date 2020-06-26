@@ -5,3 +5,4 @@
 ## Example: "ddev phpunit --version"
 
 vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart $@
+
