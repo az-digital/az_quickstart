@@ -6,4 +6,5 @@ package: The University of Arizona
 dependencies:
   - layout_builder_styles
   - layout_builder
+  - media_library_theme_reset
   - az_flexible_page
