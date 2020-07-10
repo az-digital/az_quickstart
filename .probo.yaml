@@ -1,4 +1,4 @@
-image: proboci/ubuntu-16.04-lamp:php-7.2
+image: proboci/ubuntu:18.04-php7.3
 assets:
   - credentials.sh
 steps:
@@ -12,7 +12,7 @@ steps:
       - cd az-quickstart-scaffolding
       - composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
       - composer config use-github-api false
-      - composer require --no-update az-digital/az_quickstart:dev-${BRANCH_NAME}
+      - composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
   - name: Drupal 8 Coding Standards
     plugin: Shell
@@ -36,7 +36,7 @@ steps:
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
-    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose"
+    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose --yes -n"
   - name: Add Test User Accounts
     plugin: Script
     script:
