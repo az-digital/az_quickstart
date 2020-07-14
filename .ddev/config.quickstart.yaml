@@ -1,8 +1,7 @@
 # Recipe for AZ Quickstart local development
-APIVersion: v1.13.0
 type: php
 docroot: web
-php_version: "7.2"
+php_version: "7.3"
 webserver_type: nginx-fpm
 
 # Default application ports
@@ -16,7 +15,17 @@ nfs_mount_enabled: false
 xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
-mariadb_version: "10.2"
+mariadb_version: "10.3"
 provider: default
 use_dns_when_possible: true
 timezone: ""
+
+# Create a new quickstart project and use the installation profile as a non-packagist repository using the matching scaffolding branch if available.
+hooks:
+  post-start:
+    - exec: rm -rf /var/www/html/docroot && rm /var/www/html/index.html
+    - exec: rm -rf .git && git init && BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="master"; fi; git remote add origin https://github.com/az-digital/az-quickstart-scaffolding.git && git fetch && git checkout -t origin/$SCAFFOLD_BRANCH
+    - exec: composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
+    - exec: composer install
+    - exec: yarn --cwd /usr/local/quickstart-install-profile install
+    - exec: npm install --no-progress --global eslint-config-drupal-bundle
