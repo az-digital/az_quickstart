@@ -57,8 +57,7 @@ process:
   # Handle external urls or url aliases.
   'link/uri':
     plugin: link_uri
-    source:
-      - urlpath
+    source: urlpath
   route_name: '@route/route_name'
   route_parameters: '@route/route_parameters'
   url: '@route/url'
