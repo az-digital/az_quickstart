@@ -30,6 +30,7 @@ install:
   - menu_ui
   - options
   - path
+  - pathauto
   - page_cache
   - dynamic_page_cache
   - big_pipe
