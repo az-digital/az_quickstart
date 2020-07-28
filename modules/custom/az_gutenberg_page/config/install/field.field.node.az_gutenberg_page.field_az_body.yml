@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_body
+    - node.type.az_gutenberg_page
+  module:
+    - text
+id: node.az_gutenberg_page.field_az_body
+field_name: field_az_body
+entity_type: node
+bundle: az_gutenberg_page
+label: Content
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: true
+  required_summary: false
+field_type: text_with_summary

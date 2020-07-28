@@ -1,0 +1,14 @@
+name: 'Quickstart Gutenberg Page'
+description: 'A content type using the Gutenberg page editor for autoring.'
+type: module
+core_version_requirement: ^8.8 || ^9
+package: 'The University of Arizona'
+dependencies:
+  - field
+  - gutenberg
+  - layout_builder
+  - menu_ui
+  - node
+  - path
+  - text
+  - user

@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.az_gutenberg_page.field_az_body
+    - node.type.az_gutenberg_page
+  module:
+    - user
+id: node.az_gutenberg_page.teaser
+targetEntityType: node
+bundle: az_gutenberg_page
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_az_body: true

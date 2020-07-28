@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_gutenberg_page.field_az_body
+    - node.type.az_gutenberg_page
+  module:
+    - text
+    - user
+id: node.az_gutenberg_page.default
+targetEntityType: node
+bundle: az_gutenberg_page
+mode: default
+content:
+  field_az_body:
+    weight: 102
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }
