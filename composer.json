@@ -52,6 +52,9 @@
             },
             "drupal/ds": {
                 "Remove drush plugin": "https://git.drupalcode.org/project/ds/commit/c8db6ed6f5f2a543f9fe50d440a5dd94a1f13fae.diff"
+            },
+            "drupal/easy_breadcrumb": {
+                "Easy_breadcrumb schema issue": "https://www.drupal.org/files/issues/2020-07-27/missing_schema_keys-3161765-4.patch"
             }
         }
     }
