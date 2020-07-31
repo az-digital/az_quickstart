@@ -12,7 +12,7 @@ absolute_paths: false
 hide_single_home_item: false
 title_from_page_when_available: false
 capitalizator_mode: ucwords
-capitalizator_ignored_words: ''
+capitalizator_ignored_words: 'of and or de del y o a'
 capitalizator_forced_words_first_letter: 0
 capitalizator_forced_words_case_sensitivity: 1
 add_structured_data_jsonld: false
