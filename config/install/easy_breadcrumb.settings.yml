@@ -17,12 +17,6 @@ capitalizator_forced_words_first_letter: 0
 capitalizator_forced_words_case_sensitivity: 1
 add_structured_data_jsonld: false
 use_site_title: false
-dependencies:
-  module:
-    - easy_breadcrumb
-  enforced:
-    module:
-      - easy_breadcrumb
 include_invalid_paths: false
 add_structured_data_json_ld: 0
 excluded_paths: ''
