@@ -51,4 +51,4 @@ advanced:
   connection_timeout: 10
 login_link_enabled: false
 login_link_label: 'Log in using University of Arizona WebAuth'
-login_success_message: 'Logged in via University of Arizona WebAuth as %cas_username.'
+login_success_message: 'Logged in via University of Arizona WebAuth as [cas:username].'
