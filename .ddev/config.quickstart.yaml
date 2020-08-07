@@ -1,5 +1,5 @@
 # Recipe for AZ Quickstart local development
-type: php
+type: drupal8
 docroot: web
 php_version: "7.3"
 webserver_type: nginx-fpm
