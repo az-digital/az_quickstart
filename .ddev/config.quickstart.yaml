@@ -1,8 +1,7 @@
 # Recipe for AZ Quickstart local development
-APIVersion: v1.13.0
-type: php
+type: drupal8
 docroot: web
-php_version: "7.2"
+php_version: "7.3"
 webserver_type: nginx-fpm
 
 # Default application ports
@@ -16,7 +15,7 @@ nfs_mount_enabled: false
 xdebug_enabled: false
 additional_hostnames: []
 additional_fqdns: []
-mariadb_version: "10.2"
+mariadb_version: "10.3"
 provider: default
 use_dns_when_possible: true
 timezone: ""
