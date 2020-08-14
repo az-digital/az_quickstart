@@ -103,7 +103,7 @@ class AZLayoutsUITest extends BrowserTestBase {
     $page->clickLink('One column layout');
 
     // Add the section.
-    $page->clickLink('Add section');
+    $page->pressButton('Add section');
 
     // Check for proper title. If our route override worked correctly,
     // we should have skipped directly to the add custom block screen.
