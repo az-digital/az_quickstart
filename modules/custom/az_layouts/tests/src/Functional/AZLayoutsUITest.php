@@ -105,7 +105,7 @@ class AZLayoutsUITest extends BrowserTestBase {
     // Choose a known layout option.
     $page->clickLink('One column layout');
 
-    // Add the section
+    // Add the section.
     $page->clickLink('Add section');
 
     // Check for proper title. If our route override worked correctly,
