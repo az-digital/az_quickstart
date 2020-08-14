@@ -105,6 +105,9 @@ class AZLayoutsUITest extends BrowserTestBase {
     // Add the section.
     $page->pressButton('Add section');
 
+    // Enter the add block interface.
+    $page->clickLink('Add block');
+
     // Check for proper title. If our route override worked correctly,
     // we should have skipped directly to the add custom block screen.
     $assert->pageTextContains('Add Flexible Content');
