@@ -7,3 +7,23 @@
   */
   padding: 1.5rem;
 }
+
+.card-deck .card-img-top .field--type-image {
+  float: none;
+  margin: 0;
+}
+.card-deck .card-img-top img {
+  flex-shrink: 0;
+  width: 100%;
+  height: auto;
+}
+
+
+/* CARD ACCESSIBILITY
+* Might want to consider adding this to Bootstrap
+*/
+.card.bg-blue a:not(.btn),
+.card.bg-azurite a:not(.btn),
+.card.bg-midnight a:not(.btn) {
+  color: #ffffff;
+}

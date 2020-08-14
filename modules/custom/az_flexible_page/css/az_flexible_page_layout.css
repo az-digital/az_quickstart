@@ -41,3 +41,20 @@
   /* Increase padding between Accordions to make editing easier. */
   padding: .5em 1.5em;
 }
+
+#node-az-flexible-page-layout-builder-form .layout-builder__link--configure {
+  position: relative;
+  z-index: 5;
+  box-sizing: border-box;
+  padding: 5px;
+  background-color: rgba(255,255,255,.7);
+}
+
+#node-az-flexible-page-layout-builder-form .layout-builder__section {
+  min-height: 250px;
+}
+
+#node-az-flexible-page-layout-builder-form .layout-builder-block:not([class*="bg-"]) {
+  /* prevent floated images from "disappearing" behind white background of sibling components */
+  background-color: initial;
+}

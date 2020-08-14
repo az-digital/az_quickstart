@@ -1,0 +1,28 @@
+uuid: e65058c7-7568-4abb-b283-39a65cf636c6
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_card_body
+    - field.storage.block_content.field_az_card_image
+    - media.type.az_image
+id: block_content.az_card_body.field_az_card_image
+field_name: field_az_card_image
+entity_type: block_content
+bundle: az_card_body
+label: 'Card Image'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_image: az_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

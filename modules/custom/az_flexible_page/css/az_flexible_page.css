@@ -49,6 +49,9 @@
   .card-deck .card {
     margin-bottom: 15px;
   }
+  .block-inline-blockaz-text-area[class^="bg-"] {
+    padding: 3rem;
+  }
   .card-deck .card-body {
     padding: 2.5rem;
   }
@@ -68,5 +71,12 @@
   }
   .component-w-50 {
     width: 50%;
+  }
+}
+
+/* @min-width 576px */
+@media (min-width: 576px) {
+  .card-deck .card {
+    margin-bottom: 25px;
   }
 }
