@@ -96,8 +96,17 @@ class AZLayoutsUITest extends BrowserTestBase {
     // Enter the layout editor.
     $page->clickLink('Layout');
 
-    // Enter the add block interface.
-    $page->clickLink('Add block');
+    // Enter the add section interface.
+    $page->clickLink('Add section');
+
+    // Enter the add section interface.
+    $page->clickLink('Add section');
+
+    // Choose a known layout option.
+    $page->clickLink('One column layout');
+
+    // Add the section
+    $page->clickLink('Add section');
 
     // Check for proper title. If our route override worked correctly,
     // we should have skipped directly to the add custom block screen.
