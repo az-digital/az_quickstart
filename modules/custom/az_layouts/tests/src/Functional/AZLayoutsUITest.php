@@ -96,6 +96,15 @@ class AZLayoutsUITest extends BrowserTestBase {
     // Enter the layout editor.
     $page->clickLink('Layout');
 
+    // Enter the add section interface.
+    $page->clickLink('Add section');
+
+    // Choose a known layout option.
+    $page->clickLink('One column layout');
+
+    // Add the section.
+    $page->pressButton('Add section');
+
     // Enter the add block interface.
     $page->clickLink('Add block');
 

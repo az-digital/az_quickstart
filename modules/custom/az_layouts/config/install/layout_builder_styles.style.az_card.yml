@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 id: az_card
 label: 'Bootstrap - Card'
-classes: az_card
+classes: card
 type: component
 weight: '-1'
 block_restrictions:

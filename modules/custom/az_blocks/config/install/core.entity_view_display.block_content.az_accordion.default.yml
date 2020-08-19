@@ -32,7 +32,6 @@ third_party_settings:
         - group_card_header
         - group_collapse_content
         - field_az_adv_content
-        - group_card_header_button
         - group_card_body
         - field_az_accordion_title
   field_group:
@@ -57,7 +56,7 @@ third_party_settings:
       label: Card
     group_card_header:
       children:
-        - group_card_header_button
+        - field_az_accordion_title
       parent_name: group_card
       weight: 8
       format_type: html_element
@@ -109,24 +108,6 @@ third_party_settings:
         effect: none
         speed: fast
       label: 'Card Body'
-    group_card_header_button:
-      children:
-        - field_az_accordion_title
-      parent_name: group_card_header
-      weight: 20
-      format_type: html_element
-      region: ds_content
-      format_settings:
-        element: button
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: 'btn btn-link'
-      label: 'Card Header Button'
 id: block_content.az_accordion.default
 targetEntityType: block_content
 bundle: az_accordion
@@ -143,7 +124,7 @@ content:
           id: expert
           settings:
             lb: ''
-            prefix: '<h3 class="mb-0">'
+            prefix: '<h3 class="m-0">'
             lbw-el: ''
             lbw-cl: ''
             lbw-at: ''

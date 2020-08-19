@@ -7,7 +7,6 @@ dependencies:
   module:
     - layout_builder
     - layout_builder_restrictions
-    - layout_discovery
     - user
 third_party_settings:
   layout_builder:
@@ -15,20 +14,10 @@ third_party_settings:
     enabled: true
     sections:
       -
-        layout_id: layout_onecol
+        layout_id: layout_builder_blank
         layout_settings:
           label: ''
-        components:
-          0ac263bb-9b7c-4a80-99c5-53782242f281:
-            uuid: 0ac263bb-9b7c-4a80-99c5-53782242f281
-            region: content
-            configuration:
-              label_display: '0'
-              context_mapping:
-                entity: layout_builder.entity
-              id: 'extra_field_block:node:az_flexible_page:links'
-            additional: {  }
-            weight: 0
+        components: {  }
         third_party_settings: {  }
   layout_builder_restrictions:
     entity_view_mode_restriction:
