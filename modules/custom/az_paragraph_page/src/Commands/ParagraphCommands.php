@@ -17,11 +17,11 @@ class ParagraphCommands extends DrushCommands {
   /**
    * Drush command that generates paragraphs.
    *
-   * @param integer $numNodes
+   * @param int $numNodes
    *   Argument with number of nodes to create.
-   * @param integer $numParagraphs
+   * @param int $numParagraphs
    *   Argument with number of paragraphs to generate.
-   * @param integer $numRevisions
+   * @param int $numRevisions
    *   Argument with number of revisions to generate.
    * @command az_paragraph_page:generate
    * @aliases paragraph-experiment
@@ -33,17 +33,20 @@ class ParagraphCommands extends DrushCommands {
     $lipsum = new LoremIpsum();
 
     // Create nodes.
-    for($i=0; $i < $numNodes; $i++) {
+    for ($i = 0; $i < $numNodes; $i++) {
       $node = Node::create([
         'type'        => 'az_paragraph_page',
         'title'       => $lipsum->words(5),
       ]);
       $paragraphs = [];
       // Create paragraph entities and assemble the field value.
-      for($j=0; $j < $numParagraphs; $j++) {
+      for ($j = 0; $j < $numParagraphs; $j++) {
         $paragraph = Paragraph::create([
           'type' => 'az_text_area',
-          'field_body' => ['value' => $lipsum->paragraphs(1, 'p'), 'format' => 'full_html'],
+          'field_body' => [
+            'value' => $lipsum->paragraphs(1, 'p'),
+            'format' => 'full_html',
+          ],
         ]);
         $paragraph->save();
         $paragraphs[] = [
@@ -58,11 +61,11 @@ class ParagraphCommands extends DrushCommands {
     }
 
     // Create some revisions.
-    for($k=0; $k < $numRevisions; $k++) {
-      foreach($nodes as $node) {
-        foreach($node->field_az_flexible_content->referencedEntities() as $paragraph) {
+    for ($k = 0; $k < $numRevisions; $k++) {
+      foreach ($nodes as $node) {
+        foreach ($node->field_az_flexible_content->referencedEntities() as $paragraph) {
           // Update SOME paragraphs.
-          if (rand(0,10) < 4) {
+          if (rand(0, 10) < 4) {
             $paragraph->field_body->value = $lipsum->paragraphs(1, 'p');
             $paragraph->save();
           }
