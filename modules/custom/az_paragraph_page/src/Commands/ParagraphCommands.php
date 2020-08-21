@@ -57,6 +57,8 @@ class ParagraphCommands extends DrushCommands {
       // Assign paragraphs.
       $node->set('field_az_flexible_content', $paragraphs);
       $node->save();
+      $id = $node->id();
+      $this->output()->writeln("Created node $id.");
       $nodes[] = $node;
     }
 
@@ -74,6 +76,9 @@ class ParagraphCommands extends DrushCommands {
         $node->setNewRevision(TRUE);
         $node->setRevisionLogMessage($lipsum->words(7));
         $node->save();
+        $id = $node->id();
+        $rid = $node->getRevisionId();
+        $this->output()->writeln("Added revision id $rid for node $id.");
       }
     }
   }
