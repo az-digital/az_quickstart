@@ -12,6 +12,7 @@ install:
   - az_core
   - az_flexible_page
   - az_demo
+  - az_paragraph_page
   - node
   - history
   - block

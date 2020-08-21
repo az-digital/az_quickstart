@@ -1,0 +1,5 @@
+services:
+  az_paragraph_page.commands:
+    class: \Drupal\az_paragraph_page\Commands\ParagraphCommands
+    tags:
+      - { name: drush.command }

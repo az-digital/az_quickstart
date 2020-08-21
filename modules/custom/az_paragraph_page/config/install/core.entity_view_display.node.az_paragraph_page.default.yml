@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_paragraph_page.field_az_flexible_content
+    - node.type.az_paragraph_page
+  module:
+    - entity_reference_revisions
+    - user
+id: node.az_paragraph_page.default
+targetEntityType: node
+bundle: az_paragraph_page
+mode: default
+content:
+  field_az_flexible_content:
+    type: entity_reference_revisions_entity_view
+    weight: 101
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

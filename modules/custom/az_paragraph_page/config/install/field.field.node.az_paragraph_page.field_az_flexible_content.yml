@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_flexible_content
+    - node.type.az_paragraph_page
+    - paragraphs.paragraphs_type.az_text_area
+  module:
+    - entity_reference_revisions
+id: node.az_paragraph_page.field_az_flexible_content
+field_name: field_az_flexible_content
+entity_type: node
+bundle: az_paragraph_page
+label: 'Flexible Content'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      az_text_area: az_text_area
+    target_bundles_drag_drop:
+      az_text_area:
+        enabled: true
+        weight: 2
+field_type: entity_reference_revisions

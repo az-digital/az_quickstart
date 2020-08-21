@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_text_area.field_body
+    - paragraphs.paragraphs_type.az_text_area
+  module:
+    - text
+id: paragraph.az_text_area.default
+targetEntityType: paragraph
+bundle: az_text_area
+mode: default
+content:
+  field_body:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }

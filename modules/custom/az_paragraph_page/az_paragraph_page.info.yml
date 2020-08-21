@@ -1,0 +1,16 @@
+name: 'Quickstart Paragraph Page Experiment'
+type: module
+core: 8.x
+dependencies:
+  - entity_reference_revisions
+  - field
+  - layout_builder
+  - menu_ui
+  - node
+  - paragraphs
+  - path
+  - text
+  - user
+  - views
+version: 8.x-1.0-alpha1
+package: Quickstart

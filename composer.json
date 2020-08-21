@@ -38,7 +38,9 @@
         "drupal/migrate_plus": "5.1",
         "drupal/migrate_tools": "5.0",
         "drupal/pathauto": "1.8",
-        "drupal/token": "1.7"
+        "drupal/token": "1.7",
+        "drupal/paragraphs": "1.12",
+        "joshtronic/php-loremipsum": "1.0.6"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "dev-master"

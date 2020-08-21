@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_body
+    - paragraphs.paragraphs_type.az_text_area
+  module:
+    - text
+id: paragraph.az_text_area.field_body
+field_name: field_body
+entity_type: paragraph
+bundle: az_text_area
+label: Body
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
