@@ -14,7 +14,7 @@ steps:
       - composer config use-github-api false
       - composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
-  - name: Drupal 8 Coding Standards
+  - name: Drupal Coding Standards
     plugin: Shell
     command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -p --colors web/profiles/custom/az_quickstart'
   - name: Run ESLint
