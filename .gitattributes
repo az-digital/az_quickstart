@@ -13,6 +13,7 @@ themes/custom/az_barrio/libraries/*.min.js linguist-generated=true
 
 # Set DDEV command files to lf
 .ddev/commands/web/install text eol=lf
+.ddev/commands/web/drupal text eol=lf
 .ddev/commands/web/drupal-check text eol=lf
 .ddev/commands/web/drush text eol=lf
 .ddev/commands/web/phpcs text eol=lf

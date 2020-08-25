@@ -43,6 +43,10 @@ tooling:
   drush:
     service: appserver
     cmd: /app/vendor/bin/drush --root=/app/web
+  # Provide Drupal console tooling to automatically know the Drupal root.
+  drupal:
+    service: appserver
+    cmd: /app/vendor/bin/drupal --root=/app/web
   # Provide phpcs tooling to check coding standards.
   phpcs:
     service: appserver
