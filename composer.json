@@ -51,7 +51,8 @@
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch"
             },
             "drupal/ctools": {
-                "d9 test failures": "https://www.drupal.org/files/issues/2020-04-16/3128339-11.patch"
+                "3127358 - remove versions from submodules": "https://git.drupalcode.org/project/ctools/-/commit/bf634e544c65c6d226edf4035180f7d738e59163.diff",
+                "3128339 - d9 test failures": "https://www.drupal.org/files/issues/2020-04-16/3128339-11.patch"
             },
             "drupal/ds": {
                 "Remove drush plugin": "https://git.drupalcode.org/project/ds/commit/c8db6ed6f5f2a543f9fe50d440a5dd94a1f13fae.diff"
