@@ -18,7 +18,7 @@ content:
     settings:
       image_style: ''
       background_image_output_type: inline
-      background_image_selector: background_wrapper
+      background_image_selector: background_image
     third_party_settings:
       ds:
         ft:

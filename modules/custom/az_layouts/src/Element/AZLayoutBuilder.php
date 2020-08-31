@@ -5,6 +5,7 @@ namespace Drupal\az_layouts\Element;
 use Drupal\layout_builder\Element\LayoutBuilder;
 use Drupal\Core\Url;
 use Drupal\layout_builder\SectionStorageInterface;
+use Drupal\Component\Plugin\Exception\ContextException;
 
 /**
  * Defines a render element for building the Layout Builder UI.
@@ -30,8 +31,16 @@ class AZLayoutBuilder extends LayoutBuilder {
     $section = $section_storage->getSection($delta);
     $layout = $section->getLayout();
     $layout_definition = $layout->getPluginDefinition();
-    $entity = $section_storage->getContextValue('entity');
-    $bundle = ($entity) ? $entity->bundle() : '';
+
+    // Try to find the entity context of where this section is being used.
+    try {
+      $entity = $section_storage->getContextValue('entity');
+      $bundle = ($entity) ? $entity->bundle() : '';
+    }
+    catch (ContextException $e) {
+      // There was no entity context, e.g. probably the default layout.
+      return $build;
+    }
 
     if ($bundle !== 'az_flexible_page') {
       return $build;

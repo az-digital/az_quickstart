@@ -4,6 +4,7 @@ dependencies:
   config:
     - block_content.type.az_card_body
     - field.field.block_content.az_card_body.field_az_card_body
+    - field.field.block_content.az_card_body.field_az_card_image
   module:
     - ds
     - field_group
@@ -14,7 +15,7 @@ third_party_settings:
       children:
         - field_az_card_body
       parent_name: ''
-      weight: 0
+      weight: 2
       format_type: html_element
       region: content
       format_settings:
@@ -28,6 +29,24 @@ third_party_settings:
         effect: none
         speed: fast
       label: 'Card Body'
+    group_card_image:
+      children:
+        - field_az_card_image
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: card-img-top
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Card Image'
 id: block_content.az_card_body.default
 targetEntityType: block_content
 bundle: az_card_body
@@ -40,32 +59,27 @@ content:
     third_party_settings:
       ds:
         ft:
-          id: expert
+          id: default
           settings:
             lb: ''
-            prefix: ''
-            lbw-el: ''
-            lbw-cl: ''
-            lbw-at: ''
-            ow: true
-            ow-el: div
-            ow-cl: card-body
-            ow-at: ''
-            fis-el: ''
-            fis-cl: ''
-            fis-at: ''
-            fi-el: ''
-            fi-cl: ''
-            fi-at: ''
-            suffix: ''
-            lbw: false
             lb-col: false
-            ow-def-at: false
-            ow-def-cl: false
-            fis: false
-            fis-def-at: false
-            fi: false
-            fi-def-at: false
+            classes: {  }
     type: text_default
+    region: content
+  field_az_card_image:
+    type: entity_reference_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings:
+      ds:
+        ft:
+          id: default
+          settings:
+            lb: ''
+            lb-col: false
+            classes: {  }
     region: content
 hidden: {  }

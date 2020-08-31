@@ -9,6 +9,7 @@ permissions:
   - 'access news feeds'
   - 'access taxonomy overview'
   - 'administer book outlines'
+  - 'administer easy breadcrumb'
   - 'administer nodes'
   - 'administer quickstart configuration'
   - 'administer taxonomy'
