@@ -1,0 +1,8 @@
+az_content_chunks.az_text:
+  version: VERSION
+  css:
+    theme:
+      css/az_content_chunks_az_text.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap

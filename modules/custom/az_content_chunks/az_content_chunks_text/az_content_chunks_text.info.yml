@@ -1,0 +1,8 @@
+name: 'Quickstart Content Chunks - Plain Text'
+type: module
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - field
+  - paragraphs
+  - text
+package: 'The University of Arizona'

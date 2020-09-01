@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains az_content_chunks.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_content_chunks_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_content_chunks module.
+    case 'help.page.az_content_chunks':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides custom paragraph types.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_preprocess_paragraph().
+ */
+function az_content_chunks_preprocess_paragraph(&$variables) {
+
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+  // Get the parent bundle.
+  $bundle = $paragraph->bundle();
+  $name = 'az_content_chunks.' . $bundle;
+
+  // Check if az_content_chunks implements a library for the  paragraph bundle.
+  $library = \Drupal::service('library.discovery')->getLibraryByName('az_content_chunks', $name);
+
+  // If we found a library, attach it to the block.
+  if ($library) {
+    $variables['#attached']['library'][] = 'az_content_chunks/' . $name;
+  }
+
+}

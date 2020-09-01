@@ -9,6 +9,8 @@ distribution:
 
 install:
   - az_cas
+  - az_content_chunks
+  - az_content_chunks_text
   - az_core
   - az_flexible_page
   - az_demo

@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: az_text_area
-label: 'Text Area'
-revision: 1
-description: 'Use this block to add a variety of textual content'
