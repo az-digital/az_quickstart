@@ -55,10 +55,14 @@ tooling:
   phpunit:
     service: appserver
     cmd: /app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
-  # Provide drupal-check tooling to check for deprecated code.
+  # Provide drupal-check tooling to check for deprecated custom code.
   drupal-check:
     service: appserver
-    cmd: /app/vendor/bin/drupal-check web/profiles web/modules web/themes
+    cmd: /app/vendor/bin/drupal-check web/profiles
+  # Provide phpstan tooling to check for deprecated contrib module/theme code.
+  phpstan:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/modules web/themes
   yarn:
     service: node
     cmd: yarn
