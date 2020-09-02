@@ -14,7 +14,7 @@ steps:
       - composer config use-github-api false
       - composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
-  - name: Drupal 8 Coding Standards
+  - name: Drupal Coding Standards
     plugin: Shell
     command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -p --colors web/profiles/custom/az_quickstart'
   - name: Run ESLint
@@ -22,14 +22,15 @@ steps:
     script:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress n
-      - sudo n 8.10.0
+      - sudo n 12.18.1
       - npm install --no-progress --global eslint-config-drupal-bundle
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart && eslint --color .
   - name: Check For Deprecated Code
     plugin: Script
     script:
       - cd $SRC_DIR/az-quickstart-scaffolding
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles web/modules web/themes
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/modules web/themes
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8
