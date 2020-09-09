@@ -24,7 +24,7 @@ class AZParagraphCustomizations {
   }
 
   /**
-   * Counts the number of items in the provided array.
+   * Applies modifications to a paragraph being rendered.
    *
    * @param mixed[] $variables
    *   Array variables from hook_preprocess_paragraph.
