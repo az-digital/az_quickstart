@@ -28,18 +28,7 @@ function az_content_chunks_help($route_name, RouteMatchInterface $route_match) {
  */
 function az_content_chunks_preprocess_paragraph(&$variables) {
 
-  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
-  $paragraph = $variables['paragraph'];
-  // Get the parent bundle.
-  $bundle = $paragraph->bundle();
-  $name = 'az_content_chunks.' . $bundle;
-
-  // Check if az_content_chunks implements a library for the  paragraph bundle.
-  $library = \Drupal::service('library.discovery')->getLibraryByName('az_content_chunks', $name);
-
-  // If we found a library, attach it to the block.
-  if ($library) {
-    $variables['#attached']['library'][] = 'az_content_chunks/' . $name;
-  }
+  // Apply paragraph preprocessing.
+  \Drupal::service('az_content_chunks.paragraph_customizations')->preprocessParagraph($variables);
 
 }
