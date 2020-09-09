@@ -8,4 +8,4 @@ dependencies:
   - node
   - path
   - user
-  - az_content_chunks
+  - az_paragraphs

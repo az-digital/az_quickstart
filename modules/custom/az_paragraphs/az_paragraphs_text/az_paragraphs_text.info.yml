@@ -1,8 +1,8 @@
-name: 'Quickstart Content Chunks - Plain Text'
+name: 'Quickstart Paragraphs - Plain Text'
 type: module
 core_version_requirement: ^8.8 || ^9
 dependencies:
-  - az_content_chunks
+  - az_paragraphs
   - field
   - paragraphs
   - text

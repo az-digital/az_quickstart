@@ -1,15 +1,15 @@
 <?php
 
-namespace Drupal\Tests\az_content_chunks\Functional;
+namespace Drupal\Tests\az_paragraphs\Functional;
 
 use Drupal\Tests\BrowserTestBase;
 
 /**
  * Run tests of paragraph bundles.
  *
- * @ingroup az_content_chunks
+ * @ingroup az_paragraphs
  *
- * @group az_content_chunks
+ * @group az_paragraphs
  */
 class AZParagraphsTest extends BrowserTestBase {
 
@@ -31,8 +31,8 @@ class AZParagraphsTest extends BrowserTestBase {
    * @var array
    */
   public static $modules = [
-    'az_content_chunks',
-    'az_content_chunks_text',
+    'az_paragraphs',
+    'az_paragraphs_text',
     'az_flexible_page',
     'node',
   ];

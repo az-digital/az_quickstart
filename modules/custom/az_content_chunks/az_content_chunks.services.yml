@@ -1,4 +1,0 @@
-services:
-  az_content_chunks.paragraph_customizations:
-    class: Drupal\az_content_chunks\AZParagraphCustomizations
-    arguments: ['@library.discovery']

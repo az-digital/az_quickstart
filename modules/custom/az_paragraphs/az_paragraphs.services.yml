@@ -1,0 +1,4 @@
+services:
+  az_paragraphs.paragraph_customizations:
+    class: Drupal\az_paragraphs\AZParagraphCustomizations
+    arguments: ['@library.discovery']

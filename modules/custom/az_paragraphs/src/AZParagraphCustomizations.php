@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_content_chunks;
+namespace Drupal\az_paragraphs;
 
 use Drupal\Core\Asset\LibraryDiscoveryInterface;
 
@@ -35,14 +35,14 @@ class AZParagraphCustomizations {
     $paragraph = $variables['paragraph'];
     // Get the parent bundle.
     $bundle = $paragraph->bundle();
-    $name = 'az_content_chunks.' . $bundle;
+    $name = 'az_paragraphs.' . $bundle;
 
-    // Check if az_content_chunks implements library for the  paragraph bundle.
-    $library = $this->libraryDiscovery->getLibraryByName('az_content_chunks', $name);
+    // Check if az_paragraphs implements library for the  paragraph bundle.
+    $library = $this->libraryDiscovery->getLibraryByName('az_paragraphs', $name);
 
     // If we found a library, attach it to the block.
     if ($library) {
-      $variables['#attached']['library'][] = 'az_content_chunks/' . $name;
+      $variables['#attached']['library'][] = 'az_paragraphs/' . $name;
     }
 
   }
