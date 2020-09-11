@@ -2,9 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.az_flexible_page.layout_builder__layout
+    - field.field.node.az_flexible_page.field_az_main_content
     - node.type.az_flexible_page
   module:
+    - paragraphs
     - path
 id: node.az_flexible_page.default
 targetEntityType: node
@@ -17,6 +18,25 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_az_main_content:
+    type: paragraphs
+    weight: 121
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: all
+      closed_mode_threshold: 0
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings: {  }
+    region: content
   path:
     type: path
     weight: 30
@@ -62,5 +82,4 @@ content:
       match_limit: 10
     region: content
     third_party_settings: {  }
-hidden:
-  layout_builder__layout: true
+hidden: {  }

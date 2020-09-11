@@ -9,6 +9,8 @@ distribution:
 
 install:
   - az_cas
+  - az_paragraphs
+  - az_paragraphs_text
   - az_core
   - az_flexible_page
   - az_demo
