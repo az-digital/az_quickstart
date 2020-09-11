@@ -10,7 +10,7 @@ id: paragraph.az_text.field_az_text_area
 field_name: field_az_text_area
 entity_type: paragraph
 bundle: az_text
-label: 'AZ Text Area'
+label: 'Text'
 description: ''
 required: true
 translatable: false
