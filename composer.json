@@ -39,9 +39,12 @@
         "drupal/paragraphs": "1.12"
     },
     "require-dev": {
-        "az-digital/az-quickstart-dev": "dev-master"
+        "az-digital/az-quickstart-dev": "dev-main"
     },
     "extra": {
+        "branch-alias": {
+            "dev-main": "2.x-dev"
+        },
         "patches": {
             "drupal/core": {
                 "ajax css load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
