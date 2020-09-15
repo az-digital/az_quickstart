@@ -39,7 +39,7 @@
         "drupal/paragraphs": "1.12"
     },
     "require-dev": {
-        "az-digital/az-quickstart-dev": "^1"
+        "az-digital/az-quickstart-dev": "~1"
     },
     "extra": {
         "branch-alias": {
