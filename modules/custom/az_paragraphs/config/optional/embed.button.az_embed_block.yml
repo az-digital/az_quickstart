@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - block
+    - entity_embed
+label: 'Embed Block'
+id: az_embed_block
+type_id: entity
+type_settings:
+  entity_type: block
+  bundles: {  }
+  display_plugins:
+    - 'entity_reference:entity_reference_entity_view'
+  entity_browser: ''
+  entity_browser_settings: {  }
+icon: {  }
+icon_uuid: null

@@ -36,7 +36,9 @@
         "drupal/migrate_tools": "5.0",
         "drupal/pathauto": "1.8",
         "drupal/token": "1.7",
-        "drupal/paragraphs": "1.12"
+        "drupal/paragraphs": "1.12",
+        "drupal/entity_embed": "1.1",
+        "drupal/embed": "1.4"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "dev-master"
