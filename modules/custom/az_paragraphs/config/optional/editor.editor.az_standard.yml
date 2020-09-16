@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.az_advanced_text
+    - filter.format.az_standard
   module:
     - ckeditor
-format: az_advanced_text
+format: az_standard
 editor: ckeditor
 settings:
   toolbar:
@@ -56,6 +56,12 @@ settings:
             - PasteFromWord
             - RemoveFormat
             - Maximize
+        -
+          name: Embed
+          items:
+            - az_embed_content
+            - DrupalMediaLibrary
+            - az_embed_block
   plugins:
     language:
       language_list: un
