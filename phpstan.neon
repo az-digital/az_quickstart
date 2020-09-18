@@ -7,13 +7,19 @@ parameters:
 		- '#Plugin definitions cannot be altered.#'
 		- '#Missing cache backend declaration for performance.#'
 		- '#Plugin manager has cache backend specified but does not declare cache tags.#'
-		# Ignore Symfony 4.3 Symfony\Component\EventDispatcher\Event deprecation errors (not fixable in Drupal 8.x).
+		# Ignore Symfony 4.3 deprecation errors (not fixable in Drupal 8.x).
 		- '#.*extends deprecated class Symfony\\Component\\EventDispatcher\\Event.*#'
 		- '#.*Fetching class constant class of deprecated class Symfony\\Component\\EventDispatcher\\Event.*#'
-		- '#.*has typehint with deprecated class Symfony\\[a-zA-Z0-9\\_]+\\Event.*#'
-		# Ignore certain PHPUnit 8 deprecation errors not fixable in Drupal 8.x.
+		- '#.*has typehint with deprecated (interface Symfony\\Component\\HttpFoundation\\File\\MimeType\\MimeTypeGuesserInterface|class Symfony\\[a-zA-Z0-9\\_]+\\Event).*#'
+		- '#Instantiation of deprecated class Symfony\\Component\\EventDispatcher\\Event.*#'
+		# Ignore certain PHPUnit 8 deprecation errors (not fixable in Drupal 8.x).
 		- '#Call to deprecated method setMethods\(\) of class PHPUnit\\Framework\\MockObject\\MockBuilder.*#'
 		- '#Call to deprecated method expectExceptionMessageRegExp\(\) of class PHPUnit\\Framework\\TestCase.*#'
+		- '#Call to deprecated method readAttribute\(\) of class PHPUnit\\Framework\\Assert.*#'
+		# Ignore missing classes from optional module dependencies.
+		- '#Class Drupal\\(Tests\\)?(diff|entity_browser|feeds).*not found#'
+		# Ignore entitiy_embed cache tag warning (see https://www.drupal.org/project/entity_embed/issues/3087572#comment-13307163).
+		- '#config:entity_view_mode_list cache tag might be unclear and does not contain the cache key in it.#'
 includes:
 	- %currentWorkingDirectory%/vendor/mglaman/phpstan-drupal/extension.neon
 	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon
