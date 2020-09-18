@@ -1,0 +1,9 @@
+name: 'Quickstart Paragraphs'
+type: module
+description: 'Provides custom paragraph types.'
+core_version_requirement: ^8.8 || ^9
+package: 'The University of Arizona'
+dependencies:
+  - az_media
+  - entity_embed
+  - paragraphs

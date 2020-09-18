@@ -5,7 +5,8 @@
  * Functions to support theming in the Arizona Barrio theme.
  */
 
-include_once dirname(__FILE__) . '/includes/common.inc';
+//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
+include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
@@ -42,6 +43,11 @@ function az_barrio_preprocess_page(&$variables) {
   // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
     // $variables['title'] = FALSE;
+  }
+
+  // Add Material Design icons.
+  if (theme_get_setting('use_material_design_sharp_icons') === TRUE) {
+    $variables['#attached']['library'][] = 'az_barrio/material-design-icons-sharp';
   }
 
   // Check if information security policy should be displayed.
@@ -85,6 +91,13 @@ function az_barrio_preprocess_input(&$variables) {
   if ($variables['attributes']['type'] === 'search') {
     $variables['attributes']['placeholder'] = $variables['element']['#title'];
   }
+}
+
+/**
+ * Implements template_preprocess_maintenance_page().
+ */
+function az_barrio_preprocess_maintenance_page(&$variables) {
+  $variables['logo'] = az_barrio_primary_logo();
 }
 
 /**

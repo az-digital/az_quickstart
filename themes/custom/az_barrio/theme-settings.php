@@ -7,9 +7,12 @@
  * Provides theme settings for Arizona Barrio.
  */
 
-include_once dirname(__FILE__) . '/includes/common.inc';
+//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
+include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -143,7 +146,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#options' => [
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
       'latest' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      'master' => t('Latest dev version. This is the tip of the master branch of AZ Bootstrap. Please do not use on production unless you are following the ua-bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      'main' => t('Latest dev version. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the ua-bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),
   ];
@@ -184,6 +187,21 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
+  ];
+
+  // Material Design icons.
+  $form['material_design_icon_settings'] = [
+    '#type' => 'details',
+    '#title' => t('Material Design Icons'),
+    '#group' => 'bootstrap',
+    '#weight' => -8,
+  ];
+  $form['material_design_icon_settings']['settings']['material_design_icons']['use_material_design_sharp_icons'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use Material Design Sharp Icons'),
+    '#default_value' => theme_get_setting('use_material_design_sharp_icons'),
+    '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_icons_docs_link CSS.',
+    ['@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString()]),
   ];
 
   // Components.

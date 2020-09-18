@@ -1,0 +1,69 @@
+{
+  "name": "az_quickstart",
+  "license": "GPL-2.0",
+  "private": true,
+  "engines": {
+    "yarn": ">= 1.6",
+    "node": ">= 12.0"
+  },
+  "scripts": {
+    "build": "yarn build:js",
+    "watch": "yarn watch:js",
+    "build:js": "cross-env BABEL_ENV=quickstart node ./scripts/js/babel-es6-build.js",
+    "watch:js": "cross-env BABEL_ENV=quickstart node ./scripts/js/babel-es6-watch.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/register": "^7.7.7",
+    "autoprefixer": "^9.6.1",
+    "babel-plugin-add-header-comment": "^1.0.3",
+    "chalk": "^3.0.0",
+    "chokidar": "^3.3.1",
+    "chromedriver": "^79.0.0",
+    "cross-env": "^6.0.3",
+    "dotenv-safe": "^8.2.0",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.13.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.10.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "glob": "^7.1.2",
+    "minimist": "^1.2.2",
+    "mkdirp": "^0.5.1",
+    "nightwatch": "^1.2.1",
+    "prettier": "^1.14.0",
+    "terser": "^4.4.3"
+  },
+  "babel": {
+    "env": {
+      "quickstart": {
+        "presets": [
+          [
+            "@babel/preset-env",
+            {
+              "modules": false
+            }
+          ]
+        ]
+      }
+    }
+  },
+  "browserslist": [
+    "last 2 Chrome major versions",
+    "last 2 Firefox major versions",
+    "last 2 Safari major versions",
+    "last 2 Edge major versions",
+    "last 2 Opera versions",
+    "last 2 iOS major versions",
+    "last 1 Explorer major version",
+    "last 1 ChromeAndroid version",
+    "last 1 UCAndroid version",
+    "last 1 Samsung version",
+    "last 1 OperaMini version",
+    "Firefox ESR"
+  ]
+}

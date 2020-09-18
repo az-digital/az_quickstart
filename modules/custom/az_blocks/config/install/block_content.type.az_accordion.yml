@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: az_accordion
-label: Accordion
-revision: 1
-description: 'Use this block to add collapsible content to your section'

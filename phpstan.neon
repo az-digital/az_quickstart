@@ -1,0 +1,19 @@
+parameters:
+	customRulesetUsed: true
+	reportUnmatchedIgnoredErrors: false
+	ignoreErrors:
+		# Ignore phpstan-drupal extension's rules.
+		- '#\Drupal calls should be avoided in classes, use dependency injection instead#'
+		- '#Plugin definitions cannot be altered.#'
+		- '#Missing cache backend declaration for performance.#'
+		- '#Plugin manager has cache backend specified but does not declare cache tags.#'
+		# Ignore Symfony 4.3 Symfony\Component\EventDispatcher\Event deprecation errors (not fixable in Drupal 8.x).
+		- '#.*extends deprecated class Symfony\\Component\\EventDispatcher\\Event.*#'
+		- '#.*Fetching class constant class of deprecated class Symfony\\Component\\EventDispatcher\\Event.*#'
+		- '#.*has typehint with deprecated class Symfony\\[a-zA-Z0-9\\_]+\\Event.*#'
+		# Ignore certain PHPUnit 8 deprecation errors not fixable in Drupal 8.x.
+		- '#Call to deprecated method setMethods\(\) of class PHPUnit\\Framework\\MockObject\\MockBuilder.*#'
+		- '#Call to deprecated method expectExceptionMessageRegExp\(\) of class PHPUnit\\Framework\\TestCase.*#'
+includes:
+	- %currentWorkingDirectory%/vendor/mglaman/phpstan-drupal/extension.neon
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon

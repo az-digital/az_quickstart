@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: az_section_align_items_center
-label: 'Section - Align Items - Center'
-classes: align-items-center
-type: section
-weight: '6'
-block_restrictions: {  }

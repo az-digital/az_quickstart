@@ -1,6 +1,6 @@
 #!/bin/sh
 
-## Description: Provide drupal-check tooling to check for deprecated code.
+## Description: Provide drupal-check tooling to check for deprecated custom code.
 ## Usage: drupal-check [flags] [args]
 ## Example: "ddev drupal-check --version"
 

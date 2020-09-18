@@ -1,4 +1,4 @@
-image: proboci/ubuntu-16.04-lamp:php-7.2
+image: proboci/ubuntu:18.04-php7.3
 assets:
   - credentials.sh
 steps:
@@ -7,14 +7,14 @@ steps:
     script:
       - composer self-update
       - composer global require hirak/prestissimo
-      - if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH=master; fi
+      - if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH=main; fi
       - git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
       - cd az-quickstart-scaffolding
       - composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
       - composer config use-github-api false
-      - composer require --no-update az-digital/az_quickstart:dev-${BRANCH_NAME}
+      - composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
-  - name: Drupal 8 Coding Standards
+  - name: Drupal Coding Standards
     plugin: Shell
     command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -p --colors web/profiles/custom/az_quickstart'
   - name: Run ESLint
@@ -22,23 +22,23 @@ steps:
     script:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress n
-      - sudo n 8.10.0
+      - sudo n 12.18.1
       - npm install --no-progress --global eslint-config-drupal-bundle
-      - cd $SRC_DIR/az-quickstart-scaffolding/web
-      - eslint --color $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
+      - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart && eslint --color .
   - name: Check For Deprecated Code
     plugin: Script
     script:
       - cd $SRC_DIR/az-quickstart-scaffolding
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles web/modules web/themes
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/modules web/themes
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
-    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose"
-  - name: Add Test User Accounts
+    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose --yes -n"
+  - name: Post-Installation Steps
     plugin: Script
     script:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor"
@@ -46,6 +46,7 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontentadmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azcontentadmin
+      - chown www-data:www-data -R /var/www/html/sites/default/files
   - name: Run PHPUnit Tests
     plugin: Script
     script:
