@@ -204,7 +204,7 @@ function az_barrio_az_bootstrap_assets_path($type) {
     $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
   }
   else {
-    $az_bootstrap_path = 'libraries/arizona-bootstrap';
+    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
   }
 
   $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
