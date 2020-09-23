@@ -305,4 +305,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#maxlength' => 40,
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
   ];
+  $form['#submit'][] = 'az_barrio_form_system_theme_settings_submit';
+}
+
+/**
+ * Submit handler for az_barrio_form_settings
+ */
+function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
+  // Clear cached library definitions so updated Bootstrap settings take effect immmediately.
+  \Drupal::service('library.discovery')->clearCachedDefinitions();
 }
