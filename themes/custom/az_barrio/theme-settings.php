@@ -309,7 +309,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
 }
 
 /**
- * Submit handler for az_barrio_form_settings
+ * Submit handler for az_barrio_form_settings.
  */
 function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
   // Clear cached library definitions so updated Bootstrap settings take effect immmediately.
