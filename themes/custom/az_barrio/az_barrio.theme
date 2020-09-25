@@ -209,6 +209,11 @@ function az_barrio_az_bootstrap_assets_path($type) {
 
   $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
 
+  // Use AZ Bootstrap Javascript bundle (contains Popper.js).
+  if ($type === 'js') {
+    $az_bootstrap_path .= '.bundle';
+  }
+
   // AZ Bootstrap minified.
   if (theme_get_setting('az_bootstrap_minified')) {
     $az_bootstrap_path .= '.min';
