@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_form_mode.media.media_library
+    - field.field.media.az_video.field_media_az_video_file
+    - media.type.az_video
+id: media.az_video.media_library
+targetEntityType: media
+bundle: az_video
+mode: media_library
+content: {  }
+hidden:
+  created: true
+  field_media_az_video_file: true
+  name: true
+  path: true
+  status: true
+  uid: true

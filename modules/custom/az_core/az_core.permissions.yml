@@ -1,0 +1,4 @@
+administer quickstart configuration:
+  title: 'Administer Quickstart configuration'
+  description: 'Administer Quickstart settings for AZQS modules.'
+  restrict access: FALSE

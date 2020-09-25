@@ -144,111 +144,102 @@
 {% endblock %}
 
 {% block content %}
-	<div id="main" role="main">
-	  {% if page.content_featured %}
-	  <section id="content_featured">
-	    {{ page.content_featured }}
-	  </section>
-	  {% endif %}
-	  {% if page.highlighted %}
-	  <div class="{{ container }}">
-	    <div class="row">
-	      <div class="col">
-	      {{ page.highlighted }}
-	      </div>
-	    </div>
-	  </div>
-	  {% endif %}
-	  {% if page.breadcrumb or page.content_top %}
-	  <div class="{{ container }}">
-	    <div class="row">
-	      <div class="col" aria-label="breadcrumb">
-		{{ page.breadcrumb }}
-		{{ page.content_top }}
-	      </div>
-	    </div>
-	  </div>
-	  {% endif %}
-	  <div class="{{ container }}">
-	    <div class="row row-offcanvas row-offcanvas-left clearfix">
-	      <main{{ content_attributes }}>
-		<section class="section">
-		  <a id="main-content" tabindex="-1"></a>
-		  {{ page.content }}
-		</section>
-	      </main>
-	      {% if page.sidebar_first %}
-	      <div{{ sidebar_first_attributes }}>
-		<aside class="section" role="complementary">
-		  {{ page.sidebar_first }}
-		</aside>
-	      </div>
-	      {% endif %}
-	      {% if page.sidebar_second %}
-	      <div{{ sidebar_second_attributes }}>
-		<aside class="section" role="complementary">
-		  {{ page.sidebar_second }}
-		</aside>
-	      </div>
-	      {% endif %}
-	    </div>
-	  </div>
-	  {{ page.full_width_content_bottom }}
-	  {% if page.content_2_col_1 or page.content_2_col_2 %}
-	  <div class="{{ container }}">
-	    <div class="row">
-	      <div class="col-md-6">
-		{{ page.content_2_col_1 }}
-	      </div>
-	      <div class="col-md-6">
-		{{ page.content_2_col_2 }}
-	      </div>
-	    </div>
-	  </div>
-	  {% endif %}
-	  {% if page.content_3_col_1 or page.content_3_col_2 or page.content_3_col_3 %}
-	  <div class="{{ container }}">
-	    <div class="row">
-	      <div class="col-md-4">
-		{{ page.content_3_col_1 }}
-	      </div>
-	      <div class="col-md-4">
-		{{ page.content_3_col_2 }}
-	      </div>
-	      <div class="col-md-4">
-		{{ page.content_3_col_3 }}
-	      </div>
-	    </div>
-	  </div>
-	  {% endif %}
-	  {% if page.content_bottom %}
-	  <div class="{{ container }}">
-	    <div class="row">
-	      <div class="col">
-		{{ page.content_bottom }}
-	      </div>
-	    </div>
-	  </div>
-	  {% endif %}
-	  {% if page.content_4_col_1 or page.content_4_col_2 or page.content_4_col_3 or page.content_4_col_4 %}
-	  <div class="{{ container }}">
-	    <div class="row">
-	      <div class="col-md-3">
-		{{ page.content_4_col_1 }}
-	      </div>
-	      <div class="col-md-3">
-		{{ page.content_4_col_2 }}
-	      </div>
-	      <div class="col-md-3">
-		{{ page.content_4_col_3 }}
-	      </div>
-	      <div class="col-md-3">
-		{{ page.content_4_col_4 }}
-	      </div>
-	    </div>
-	  </div>
-	  {% endif %}
-	</div>
+        <div id="main" role="main">
+          {% if page.content_featured %}
+          <section id="content_featured">
+            {{ page.content_featured }}
+          </section>
+          {% endif %}
+          {% if page.breadcrumb or page.content_top %}
+          <div class="{{ container }}">
+            <div class="row">
+              <div class="col" aria-label="breadcrumb">
+                {{ page.breadcrumb }}
+                {{ page.content_top }}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          <div class="{{ container }}">
+            <div class="row row-offcanvas row-offcanvas-left clearfix">
+              <main{{ content_attributes }}>
+                <section class="section">
+                  <a id="main-content" tabindex="-1"></a>
+                  {{ page.content }}
+                </section>
+              </main>
+              {% if page.sidebar_first %}
+              <div{{ sidebar_first_attributes }}>
+                <aside class="section" role="complementary">
+                  {{ page.sidebar_first }}
+                </aside>
+              </div>
+              {% endif %}
+              {% if page.sidebar_second %}
+              <div{{ sidebar_second_attributes }}>
+                <aside class="section" role="complementary">
+                  {{ page.sidebar_second }}
+                </aside>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+          {{ page.full_width_content_bottom }}
+          {% if page.content_2_col_1 or page.content_2_col_2 %}
+          <div class="{{ container }}">
+            <div class="row">
+              <div class="col-md-6">
+                {{ page.content_2_col_1 }}
+              </div>
+              <div class="col-md-6">
+                {{ page.content_2_col_2 }}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% if page.content_3_col_1 or page.content_3_col_2 or page.content_3_col_3 %}
+          <div class="{{ container }}">
+            <div class="row">
+              <div class="col-md-4">
+                {{ page.content_3_col_1 }}
+              </div>
+              <div class="col-md-4">
+                {{ page.content_3_col_2 }}
+              </div>
+              <div class="col-md-4">
+                {{ page.content_3_col_3 }}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% if page.content_bottom %}
+          <div class="{{ container }}">
+            <div class="row">
+              <div class="col">
+                {{ page.content_bottom }}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% if page.content_4_col_1 or page.content_4_col_2 or page.content_4_col_3 or page.content_4_col_4 %}
+          <div class="{{ container }}">
+            <div class="row">
+              <div class="col-md-3">
+                {{ page.content_4_col_1 }}
+              </div>
+              <div class="col-md-3">
+                {{ page.content_4_col_2 }}
+              </div>
+              <div class="col-md-3">
+                {{ page.content_4_col_3 }}
+              </div>
+              <div class="col-md-3">
+                {{ page.content_4_col_4 }}
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
 {% endblock %}
 
 {% block footer %}

@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains az_demo.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_demo_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_demo module.
+    case 'help.page.az_demo':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides sample content to demonstrate various features of the AZ Quickstart distribution.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

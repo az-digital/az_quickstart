@@ -1,0 +1,11 @@
+name: 'Quickstart Flexible Page'
+type: module
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - field
+  - menu_ui
+  - node
+  - path
+  - user
+  - az_paragraphs

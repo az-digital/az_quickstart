@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Contains az_demo.install.
+ */
+
+use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate\MigrateMessage;
+
+/**
+ * Implements hook_install().
+ */
+function az_demo_install() {
+  $tag = 'Quickstart Demo Content';
+
+  // Run the migrations that are tagged as demo content.
+  $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+  foreach ($migrations as $migration) {
+    $executable = new MigrateExecutable($migration, new MigrateMessage());
+    $executable->import();
+  }
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function az_demo_uninstall() {
+  $tag = 'Quickstart Demo Content';
+
+  // Rollback the migrations that are tagged as demo content.
+  $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+  foreach ($migrations as $migration) {
+    $executable = new MigrateExecutable($migration, new MigrateMessage());
+    $executable->rollback();
+  }
+}

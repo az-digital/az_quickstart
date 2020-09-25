@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.full
+    - core.entity_view_mode.node.teaser
+    - node.type.az_flexible_page
+  module:
+    - entity_embed
+    - node
+label: 'Embed Content'
+id: az_embed_content
+type_id: entity
+type_settings:
+  entity_type: node
+  bundles:
+    - az_flexible_page
+  display_plugins:
+    - 'view_mode:node.full'
+    - 'view_mode:node.teaser'
+  entity_browser: ''
+  entity_browser_settings: {  }
+icon: {  }
+icon_uuid: null

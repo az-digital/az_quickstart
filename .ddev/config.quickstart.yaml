@@ -1,0 +1,21 @@
+# Recipe for AZ Quickstart local development
+type: php
+docroot: web
+php_version: "7.3"
+webserver_type: nginx-fpm
+
+# Default application ports
+router_http_port: "80"
+router_https_port: "443"
+
+# Optional, enable for greater windows performance
+nfs_mount_enabled: false
+
+# Other configuration
+xdebug_enabled: false
+additional_hostnames: []
+additional_fqdns: []
+mariadb_version: "10.3"
+provider: default
+use_dns_when_possible: true
+timezone: ""

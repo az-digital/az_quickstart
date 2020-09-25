@@ -11,6 +11,9 @@ services:
     composer:
       hirak/prestissimo: ^0.3.9
     overrides:
+      environment:
+        SIMPLETEST_DB: 'mysql://drupal8:drupal8@database/drupal8'
+        SIMPLETEST_BASE_URL: 'http://localhost'
       volumes:
         # Don't share our host working directory as /app. We want /app empty for composer.
         - /app
@@ -19,9 +22,15 @@ services:
     build:
       # Create a new quickstart project and use the installation profile as a non-packagist repository.
       # Use the matching scaffolding branch if available.
-      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://bitbucket.org/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="master"; fi; git clone --branch $SCAFFOLD_BRANCH https://bitbucket.org/az-digital/az-quickstart-scaffolding.git /app
-      - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:\>\=8.5.0 zaporylie/composer-drupal-optimizations:1.1.1 az-digital/az_quickstart:\*@dev
+      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
       - composer install
+  node:
+    type: node:12.16
+    build:
+      - yarn install
+    globals:
+      eslint-config-drupal-bundle: 1.0.2
 tooling:
   # Provide a command to install Drupal.
   # Current versions of the Bitnami MySQL container sometimes signal
@@ -29,7 +38,7 @@ tooling:
   # in a race condition if Drupal is installed during the run phase.
   install:
     service: appserver
-    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=lando --db-url=mysql://drupal8:drupal8@database:3306/drupal8 -y --verbose
+    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal8:drupal8@database:3306/drupal8 -y --verbose
   # Provide Drush tooling to automatically know the Drupal root.
   drush:
     service: appserver
@@ -41,11 +50,25 @@ tooling:
   # Provide phpcs tooling to check coding standards.
   phpcs:
     service: appserver
-    cmd: /app/vendor/bin/phpcs --colors web/profiles/custom/az_quickstart
-  # Provide drupal-check tooling to check for deprecated code.
+    cmd: /app/vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
+  # Provide phpunit tooling to run unit tests.
+  phpunit:
+    service: appserver
+    cmd: /app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
+  # Provide drupal-check tooling to check for deprecated custom code.
   drupal-check:
     service: appserver
-    cmd: /app/vendor/bin/drupal-check web/profiles web/modules web/themes
+    cmd: /app/vendor/bin/drupal-check web/profiles
+  # Provide phpstan tooling to check for deprecated contrib module/theme code.
+  phpstan:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/modules web/themes
+  yarn:
+    service: node
+    cmd: yarn
+  eslint:
+    service: node
+    cmd: eslint --color
   # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
   composer:
     service: appserver

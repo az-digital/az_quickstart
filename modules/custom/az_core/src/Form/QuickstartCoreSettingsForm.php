@@ -145,7 +145,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       }
 
       $path = strtolower(trim(trim($submitted_value), " \\/"));
-      if (!empty($path) && $submitted_value != $element['#default_value']) {
+      if (!empty($path) && $submitted_value !== $element['#default_value']) {
         if ($this->routeProvider->getRoutesByPattern($path)->count()) {
           $form_state->setError($element, t('The path is already in use.'));
         }

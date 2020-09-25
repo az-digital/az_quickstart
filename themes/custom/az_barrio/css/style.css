@@ -6,6 +6,26 @@
  * of these @include files will be combined into a single file.
  */
 
+/* Sticky footer */
+html.sticky-footer #page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  min-height: 100vh;
+  height: 100%;
+}
+
+html.sticky-footer #main-wrapper {
+  -webkit-box-flex: 1;
+  -ms-flex: 1 0 auto;
+  flex: 1 0 auto;
+  width: 100%;
+}
+
 /* Correct `inline-block` display not defined in IE 8/9. */
 audio,
 canvas,
@@ -477,28 +497,63 @@ a.search-input-link:hover {
 }
 
 /* Prevents search bar and search btn from floating around. */
-.region-header-2 .block-search,
-.region-header .block-search {
+.region-header-2 .search-block-form,
+.region-header .search-block-form {
   clear: both;
   position: relative;
 }
 
 /* ua-bootstrap overrides for search form */
-.btn-search {
-  width: 2.3em;
-  height: 2.3em;
+.header .search-block-form {
+  float: none;
+  position: relative;
+  margin: auto auto 1.5em auto;
+  width: 272px;
+  width: 17rem;
+}
+
+@media (min-width: 576px) {
+  .header .search-block-form {
+    float: right;
+    margin-top: 16px;
+    margin-top: 1rem;
+  }
+}
+
+.header .search-block-form #search-block-form,
+.header .search-block-form #search-block-form fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+.header .search-block-form .form-type-search {
+  width: 100%;
+}
+
+.header .search-block-form .form-actions {
+  padding: 0;
+  align-self: unset;
+}
+
+.header .search-block-form .form-actions .form-submit {
+  text-indent: -9999em;
+  top: 0;
+  right: 0;
+  width: 2.3rem;
+  height: 2.3rem;
+  border: 0;
+  background-repeat: no-repeat;
   background-size: 1em 1em;
   background-position: right 0.6em top 0.6em;
+  outline: 0;
+  position: absolute;
+  z-index: 0;
+  background-image: url("../images/search-chili.svg");
+  background-color: transparent;
 }
 
-.region-header-ua-utilities .search-form {
-  position: relative;
-  height: 38px;
-  margin: 0.72em 0;
-}
-
-.search-form {
-  height: initial;
+.region-header-ua-utilities {
+  flex-grow: 1;
 }
 
 .bg-cochineal-red .form-control,
@@ -509,24 +564,9 @@ a.search-input-link:hover {
 
 .bg-cochineal-red a.search-input-link,
 .bg-red a.search-input-link {
-  background-image: url("../images/search-white-web.svg");
+  background-image: url("../images/search-chili.svg");
 }
 
-#block-search-form {
-  width: 272px;
-  width: 17rem;
-  float: none;
-  position: relative;
-  margin: auto auto 1.5em auto;
-}
-
-@media (min-width: 768px) {
-  #block-search-form {
-    float: right;
-    margin-top: 16px;
-    margin-top: 1rem;
-  }
-}
 .region-sidebar-first .block,
 .region-sidebar-second .block {
   margin-bottom: 24px !important;

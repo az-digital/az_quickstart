@@ -8,7 +8,12 @@ distribution:
   name: Arizona Quickstart
 
 install:
+  - az_cas
+  - az_paragraphs
+  - az_paragraphs_text
   - az_core
+  - az_flexible_page
+  - az_demo
   - node
   - history
   - block
@@ -16,9 +21,7 @@ install:
   - ckeditor
   - color
   - config
-  - comment
   - contextual
-  - contact
   - menu_link_content
   - datetime
   - block_content
@@ -29,6 +32,8 @@ install:
   - menu_ui
   - options
   - path
+  - pathauto
+  - easy_breadcrumb
   - page_cache
   - dynamic_page_cache
   - big_pipe
@@ -36,6 +41,7 @@ install:
   - dblog
   - search
   - shortcut
+  - token
   - toolbar
   - field_ui
   - file

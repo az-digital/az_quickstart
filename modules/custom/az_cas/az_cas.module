@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains az_cas.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_cas_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_cas module.
+    case 'help.page.az_cas':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Pre-configures contrib CAS module to work with University of Arizona WebAuth.') . '</p>';
+      return $output;
+
+    default:
+  }
+}

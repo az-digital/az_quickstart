@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.az_audio.field_media_az_audio_file
+    - media.type.az_audio
+  module:
+    - file
+id: media.az_audio.default
+targetEntityType: media
+bundle: az_audio
+mode: default
+content:
+  field_media_az_audio_file:
+    type: file_audio
+    weight: 0
+    label: visually_hidden
+    settings:
+      controls: true
+      autoplay: false
+      loop: false
+      multiple_file_display_type: tags
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true

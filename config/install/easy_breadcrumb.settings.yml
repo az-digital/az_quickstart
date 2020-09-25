@@ -1,0 +1,26 @@
+applies_admin_routes: false
+include_home_segment: false
+home_segment_title: Home
+home_segment_keep: false
+include_title_segment: false
+language_path_prefix_as_segment: false
+use_menu_title_as_fallback: true
+use_page_title_as_menu_title_fallback: true
+remove_repeated_segments: true
+term_hierarchy: false
+absolute_paths: false
+hide_single_home_item: false
+title_from_page_when_available: false
+capitalizator_mode: ucwords
+capitalizator_ignored_words: 'of and or de del y o a'
+capitalizator_forced_words_first_letter: 0
+capitalizator_forced_words_case_sensitivity: 1
+add_structured_data_jsonld: false
+use_site_title: false
+include_invalid_paths: false
+add_structured_data_json_ld: 0
+excluded_paths: ''
+replaced_titles: ''
+custom_paths: ''
+title_segment_as_link: false
+capitalizator_forced_words: ''

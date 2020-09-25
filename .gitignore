@@ -1,0 +1,8 @@
+# Ignore generated DDEV config
+/.ddev/config.y*ml
+
+# Ignore node-related files
+/node_modules/
+/node_modules/*
+/yarn.lock
+/yarn-error.log

@@ -1,0 +1,7 @@
+#!/bin/sh
+
+## Description: Run yarn inside the web container
+## Usage: yarn [args]
+## Example: "yarn" or "yarn build" or "yarn watch"
+
+cd /usr/local/quickstart-install-profile && yarn $@

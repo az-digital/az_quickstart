@@ -1,0 +1,7 @@
+#!/bin/sh
+
+## Description: Provide phpcs tooling to check coding standards.
+## Usage: phpcs [flags] [args]
+## Example: "ddev phpcs --version"
+
+vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart $@

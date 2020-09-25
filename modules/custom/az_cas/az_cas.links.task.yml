@@ -1,0 +1,5 @@
+az_cas.az_cas_settings_tab:
+  route_name: az_cas.settings
+  title: 'AZ CAS'
+  base_route: az_core.az_settings
+  weight: 0
