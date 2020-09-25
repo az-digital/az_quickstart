@@ -76,233 +76,230 @@
 #}
 
 {% block head %}
-        {% if page.alert %}
-        <div class="{{ container }}">
-          <div class="row">
-            <div class="col">
-              {{ page.alert }}
-            </div>
-          </div>
-        </div>
-        {% endif %}
-        <div class="bg-red">
-          <section class="{{ container }}">
-            <div class="row">
-              <div class="col-10 col-sm-3 pr-0">
-                {% if wordmark %}
-                <a href="https://www.arizona.edu" title="The University of Arizona homepage">
-                  <img alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.uadigital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" class="pt-4 pb-3 pl-2">
-                </a>
-                {% endif %}
-              </div>
-              {% if page.header_ua_utilities %}
-              <div class="col-2 col-sm-9">
-                <div class="row">
-                  {{ page.header_ua_utilities }}
-                </div>
-              </div>
-              {% endif %}
-            </div>
-          </section>
-        </div>
-        <div class="header page-row" id="header_site" role="banner">
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="col-12 col-sm-6 col-lg-4">
-                {{ logo }}
-              </div>
-              <div class="col-12 col-sm-6 col-lg-8">
-                <div class="row">
-                  <div class="col">
-                    {{ page.header }}
-                  </div>
-                </div>
-                {% if page.header_2 %}
-                <div class="row">
-                  {{ page.header_2 }}
-                </div>
-                {% endif %}
-              </div>
-            </div> <!-- /.row -->
-          </div> <!-- /.container -->
+	{% if page.alert %}
+	<div class="{{ container }}">
+	  <div class="row">
+	    <div class="col">
+	      {{ page.alert }}
+	    </div>
+	  </div>
+	</div>
+	{% endif %}
+	<div class="bg-red">
+	  <section class="{{ container }}">
+	    <div class="row">
+	      <div class="col-10 col-sm-3 pr-0">
+		{% if wordmark %}
+		<a href="https://www.arizona.edu" title="The University of Arizona homepage">
+		  <img alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.uadigital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" class="pt-4 pb-3 pl-2">
+		</a>
+		{% endif %}
+	      </div>
+	      {% if page.navigation %}
+	      <div class="col-2 col-sm-9 pr-0">
+                <button data-toggle="offcanvas" type="button" data-target="{{ navbar_attributes.id }}" aria-controls="{{ navbar_attributes.id }}" class="btn btn-red">
+                  <span class="material-icons"> menu </span>
+                </button>
+	      </div>
+	      {% endif %}
+	    </div>
+	  </section>
+	</div>
+	<div class="header page-row" id="header_site" role="banner">
+	  <div class="{{ container }}">
+	    <div class="row">
+	      <div class="col-12 col-sm-6 col-lg-4">
+		{{ logo }}
+	      </div>
+	      <div class="col-12 col-sm-6 col-lg-8">
+		<div class="row">
+		  <div class="col">
+		    {{ page.header }}
+		  </div>
+		</div>
+		{% if page.header_2 %}
+		<div class="row">
+		  {{ page.header_2 }}
+		</div>
+		{% endif %}
+	      </div>
+	    </div> <!-- /.row -->
+	  </div> <!-- /.container -->
 
-          {% if container_navbar %}
-          <div class="{{ container }}">
-            <nav{{ navbar_attributes }}>
-              {% endif %}
-              {% if page.navigation %}
-              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#CollapsingNavbar" aria-controls="CollapsingNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-              <div class="collapse navbar-collapse" id="CollapsingNavbar">
-                {{ page.navigation }}
-              </div>
-              {% endif %}
-              {% if sidebar_collapse %}
-              <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#CollapsingLeft" aria-controls="CollapsingLeft" aria-expanded="false" aria-label="Toggle navigation"></button>
-              {% endif %}
-              {% if container_navbar %}
-            </nav>
-          </div>
-          {% endif %}
-        </div>
+	  {% if container_navbar %}
+	  <div class="{{ container }}">
+	    <nav{{ navbar_attributes }}>
+	      {% endif %}
+	      {% if page.navigation %}
+		{{ page.navigation }}
+	      {% endif %}
+	      {% if sidebar_collapse %}
+	      <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#CollapsingLeft" aria-controls="CollapsingLeft" aria-expanded="false" aria-label="Toggle navigation"></button>
+	      {% endif %}
+	      {% if container_navbar %}
+	    </nav>
+	  </div>
+	  {% endif %}
+	</div>
 {% endblock %}
 
 {% block content %}
-        <div id="main" role="main">
-          {% if page.content_featured %}
-          <section id="content_featured">
-            {{ page.content_featured }}
-          </section>
-          {% endif %}
-          {% if page.highlighted %}
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="col">
-              {{ page.highlighted }}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          {% if page.breadcrumb or page.content_top %}
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="col" aria-label="breadcrumb">
-                {{ page.breadcrumb }}
-                {{ page.content_top }}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          <div class="{{ container }}">
-            <div class="row row-offcanvas row-offcanvas-left clearfix">
-              <main{{ content_attributes }}>
-                <section class="section">
-                  <a id="main-content" tabindex="-1"></a>
-                  {{ page.content }}
-                </section>
-              </main>
-              {% if page.sidebar_first %}
-              <div{{ sidebar_first_attributes }}>
-                <aside class="section" role="complementary">
-                  {{ page.sidebar_first }}
-                </aside>
-              </div>
-              {% endif %}
-              {% if page.sidebar_second %}
-              <div{{ sidebar_second_attributes }}>
-                <aside class="section" role="complementary">
-                  {{ page.sidebar_second }}
-                </aside>
-              </div>
-              {% endif %}
-            </div>
-          </div>
-          {{ page.full_width_content_bottom }}
-          {% if page.content_2_col_1 or page.content_2_col_2 %}
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="col-md-6">
-                {{ page.content_2_col_1 }}
-              </div>
-              <div class="col-md-6">
-                {{ page.content_2_col_2 }}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          {% if page.content_3_col_1 or page.content_3_col_2 or page.content_3_col_3 %}
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="col-md-4">
-                {{ page.content_3_col_1 }}
-              </div>
-              <div class="col-md-4">
-                {{ page.content_3_col_2 }}
-              </div>
-              <div class="col-md-4">
-                {{ page.content_3_col_3 }}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          {% if page.content_bottom %}
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="col">
-                {{ page.content_bottom }}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          {% if page.content_4_col_1 or page.content_4_col_2 or page.content_4_col_3 or page.content_4_col_4 %}
-          <div class="{{ container }}">
-            <div class="row">
-              <div class="col-md-3">
-                {{ page.content_4_col_1 }}
-              </div>
-              <div class="col-md-3">
-                {{ page.content_4_col_2 }}
-              </div>
-              <div class="col-md-3">
-                {{ page.content_4_col_3 }}
-              </div>
-              <div class="col-md-3">
-                {{ page.content_4_col_4 }}
-              </div>
-            </div>
-          </div>
-          {% endif %}
-        </div>
+	<div id="main" role="main">
+	  {% if page.content_featured %}
+	  <section id="content_featured">
+	    {{ page.content_featured }}
+	  </section>
+	  {% endif %}
+	  {% if page.highlighted %}
+	  <div class="{{ container }}">
+	    <div class="row">
+	      <div class="col">
+	      {{ page.highlighted }}
+	      </div>
+	    </div>
+	  </div>
+	  {% endif %}
+	  {% if page.breadcrumb or page.content_top %}
+	  <div class="{{ container }}">
+	    <div class="row">
+	      <div class="col" aria-label="breadcrumb">
+		{{ page.breadcrumb }}
+		{{ page.content_top }}
+	      </div>
+	    </div>
+	  </div>
+	  {% endif %}
+	  <div class="{{ container }}">
+	    <div class="row row-offcanvas row-offcanvas-left clearfix">
+	      <main{{ content_attributes }}>
+		<section class="section">
+		  <a id="main-content" tabindex="-1"></a>
+		  {{ page.content }}
+		</section>
+	      </main>
+	      {% if page.sidebar_first %}
+	      <div{{ sidebar_first_attributes }}>
+		<aside class="section" role="complementary">
+		  {{ page.sidebar_first }}
+		</aside>
+	      </div>
+	      {% endif %}
+	      {% if page.sidebar_second %}
+	      <div{{ sidebar_second_attributes }}>
+		<aside class="section" role="complementary">
+		  {{ page.sidebar_second }}
+		</aside>
+	      </div>
+	      {% endif %}
+	    </div>
+	  </div>
+	  {{ page.full_width_content_bottom }}
+	  {% if page.content_2_col_1 or page.content_2_col_2 %}
+	  <div class="{{ container }}">
+	    <div class="row">
+	      <div class="col-md-6">
+		{{ page.content_2_col_1 }}
+	      </div>
+	      <div class="col-md-6">
+		{{ page.content_2_col_2 }}
+	      </div>
+	    </div>
+	  </div>
+	  {% endif %}
+	  {% if page.content_3_col_1 or page.content_3_col_2 or page.content_3_col_3 %}
+	  <div class="{{ container }}">
+	    <div class="row">
+	      <div class="col-md-4">
+		{{ page.content_3_col_1 }}
+	      </div>
+	      <div class="col-md-4">
+		{{ page.content_3_col_2 }}
+	      </div>
+	      <div class="col-md-4">
+		{{ page.content_3_col_3 }}
+	      </div>
+	    </div>
+	  </div>
+	  {% endif %}
+	  {% if page.content_bottom %}
+	  <div class="{{ container }}">
+	    <div class="row">
+	      <div class="col">
+		{{ page.content_bottom }}
+	      </div>
+	    </div>
+	  </div>
+	  {% endif %}
+	  {% if page.content_4_col_1 or page.content_4_col_2 or page.content_4_col_3 or page.content_4_col_4 %}
+	  <div class="{{ container }}">
+	    <div class="row">
+	      <div class="col-md-3">
+		{{ page.content_4_col_1 }}
+	      </div>
+	      <div class="col-md-3">
+		{{ page.content_4_col_2 }}
+	      </div>
+	      <div class="col-md-3">
+		{{ page.content_4_col_3 }}
+	      </div>
+	      <div class="col-md-3">
+		{{ page.content_4_col_4 }}
+	      </div>
+	    </div>
+	  </div>
+	  {% endif %}
+	</div>
 {% endblock %}
 
 {% block footer %}
-        {% if page.footer or page.footer_sub or footer_logo %}
-        <div class="bg-warm-gray py-5" role="contentinfo">
-          {% if page.footer or footer_logo %}
-          <section{{ attributes.addClass(classes) }}>
-            <div class="container">
-              <div class="row">
-                {% if footer_logo %}
-                  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-left-not-xs">
-                    <div class="row bottom-buffer-30">
-                      <div class="col">
-                        {{ footer_logo }}
-                      </div>
-                    </div>
-                  </div>
-                {% endif %}
-                {% if page.footer %}
-                  <!-- Add the extra clearfix for only the required viewport -->
-                  <div class="clearfix visible-xs-block"></div>
-                  <div class="col-12 col-sm-7 col-md-8 col-lg-8">
-                    {{ page.footer }}
-                  </div>
-                {% endif %}
-                <div class="col-12">
-                  <hr>
-                </div>
-              </div>
-            </div>
-          </section>
-          {% endif %}
-          {% if page.footer_sub or info_security_privacy or copyright_notice %}
-          <div id="footer_sub"{{ attributes.addClass(classes) }}>
-            <div class="container">
-              <div class="row">
-                {{ page.footer_sub }}
-              </div>
-              <div class="row">
-                <div class="col text-center">
-                  {% if page.footer_sub %}
-                  <hr>
-                  {% endif %}
-                  {{ info_security_privacy }}
-                  {{ copyright_notice }}
-                </div>
-              </div>
-            </div>
-          </div>
-          {% endif %}
-          {{ page.footer_sub }}
-        </div>
-        {% endif %}
+	{% if page.footer or page.footer_sub or footer_logo %}
+	<div class="bg-warm-gray py-5" role="contentinfo">
+	  {% if page.footer or footer_logo %}
+	  <section{{ attributes.addClass(classes) }}>
+	    <div class="container">
+	      <div class="row">
+		{% if footer_logo %}
+		  <div class="col-12 col-sm-5 col-md-4 col-lg-4 text-center-xs text-left-not-xs">
+		    <div class="row bottom-buffer-30">
+		      <div class="col">
+			{{ footer_logo }}
+		      </div>
+		    </div>
+		  </div>
+		{% endif %}
+		{% if page.footer %}
+		  <!-- Add the extra clearfix for only the required viewport -->
+		  <div class="clearfix visible-xs-block"></div>
+		  <div class="col-12 col-sm-7 col-md-8 col-lg-8">
+		    {{ page.footer }}
+		  </div>
+		{% endif %}
+		<div class="col-12">
+		  <hr>
+		</div>
+	      </div>
+	    </div>
+	  </section>
+	  {% endif %}
+	  {% if page.footer_sub or info_security_privacy or copyright_notice %}
+	  <div id="footer_sub"{{ attributes.addClass(classes) }}>
+	    <div class="container">
+	      <div class="row">
+		{{ page.footer_sub }}
+	      </div>
+	      <div class="row">
+		<div class="col text-center">
+		  {% if page.footer_sub %}
+		  <hr>
+		  {% endif %}
+		  {{ info_security_privacy }}
+		  {{ copyright_notice }}
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  {% endif %}
+	  {{ page.footer_sub }}
+	</div>
+	{% endif %}
 {% endblock %}
