@@ -35,15 +35,11 @@ function az_barrio_preprocess_html(&$variables) {
 /**
  * Implements hook_preprocess_HOOK() for page templates.
  */
-function az_barrio_preprocess_page(&$variables) {
-  // Define default classes for containers
-  $variables['navbar_top_attributes'] = [
-    'class' => [ 'navbar' ],
-	  'id' => ['navbar-top' ],
-  ];
-  $variables['navbar_attributes'] = [
+function az_barrio_preprocess_page(&$variables, $hook) {
+  $variables['navbar_offcanvas'] = (theme_get_setting('navbar_offcanvas')) ? TRUE : FALSE;
+  $variables['navbar_offcanvas_attributes'] = [
     'class' => [ 'navbar-offcanvas' ],
-	  'id' => [ 'navbar-main' ],
+       'id' => 'navbar-top',
   ];
   // Attach Arizona Bootstrap & Brand icon assets.
   $variables['#attached']['library'][] = 'az_barrio/arizona-bootstrap';

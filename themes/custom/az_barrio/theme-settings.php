@@ -8,7 +8,6 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -205,23 +204,18 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
 
   // Components.
-  $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = [
-    'bg-primary' => t('Primary'),
-    'bg-secondary' => t('Secondary'),
-    'bg-light' => t('Light'),
-    'bg-dark' => t('Dark'),
-    'bg-white' => t('White'),
-    'bg-transparent' => t('Transparent'),
+  $form['components']['navbar_offcanvas'] = [
+    '#type' => 'details',
+    '#title' => t('Navbar Off Canvas'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
   ];
-  $form['components']['navbar']['bootstrap_barrio_navbar_background']['#options'] = [
-    'bg-primary' => t('Primary'),
-    'bg-secondary' => t('Secondary'),
-    'bg-light' => t('Light'),
-    'bg-dark' => t('Dark'),
-    'bg-white' => t('White'),
-    'bg-transparent' => t('Transparent'),
+  $form['components']['navbar_offcanvas']['az_barrio_navbar_offcanvas'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use Navbar Off Canvas'),
+    '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
   ];
-
   // Primary logo.
   $form['logo']['primary_logo_alt_text'] = [
     '#type' => 'textfield',

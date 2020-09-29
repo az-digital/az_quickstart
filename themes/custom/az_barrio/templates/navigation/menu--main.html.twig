@@ -30,9 +30,9 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav navbar-nav') }}>
+      <ul{{ attributes.addClass('nav navbar-nav flex-lg-row') }}>
     {% else %}
-      <ul class="dropdown-menu">
+      <div class="dropdown-menu">
     {% endif %}
     {% for item in items %}
       {%
@@ -41,7 +41,7 @@
           item.is_expanded ? 'menu-item--expanded',
           item.is_collapsed ? 'menu-item--collapsed',
           item.in_active_trail ? 'active',
-          item.below ? 'dropdown',
+          item.below ? 'dropdown nav-item nav-item-parent keep-open',
         ]
       %}
       <li{{ item.attributes.addClass(classes) }}>
@@ -61,6 +61,10 @@
         {% endif %}
       </li>
     {% endfor %}
-    </ul>
+    {% if menu_level == 0 %}
+      </ul>
+    {% else %}
+      </div>
+    {% endif %}
   {% endif %}
 {% endmacro %}
