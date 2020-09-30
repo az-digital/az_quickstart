@@ -184,6 +184,31 @@ ddev start
 ddev phpunit
 ```
 
+## Paragraph Styles
+
+Much of the content editor experience for pages in Quickstart consists
+of constructing pages using paragraph items as content building blocks. In
+crafting new paragraph types, it will often be necessary to include settings
+that are tracked as part of individual paragraph items that control the
+display of the related paragraph item. The recommended approach for including
+this sort of setting is with
+[Paragraph Behavior Plugins](https://www.drupal.org/project/paragraphs/issues/2832884).
+
+This allows developers to attach [Form API](https://www.drupal.org/docs/drupal-apis/form-api)
+elements to the paragraph form and handles saving this configuration on a
+per-paragraph basis.
+
+The interface for Paragraph Behavior Plugins is
+[located here](https://git.drupalcode.org/project/paragraphs/-/blob/8.x-1.12/src/ParagraphsBehaviorInterface.php).
+
+If you wish your Behavior Plugin to also incldue the standard Quickstart
+paragraph behaviors, extend **AZDefaultParagraphBehavior**.
+
+Note that by default, Behavior form elements are shown on a **Behavior** tab
+on the paragraph. This can be avoided currently by
+[a workaround](https://www.drupal.org/project/paragraphs/issues/2928759).
+There will likely be a more official paragraphs API for this in the future.
+
 ## Compiling Javascript in Local Development
 
 This project uses an ES6 to ES5 transpile process
