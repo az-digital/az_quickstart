@@ -22,13 +22,3 @@ function az_paragraphs_help($route_name, RouteMatchInterface $route_match) {
     default:
   }
 }
-
-/**
- * Implements hook_preprocess_paragraph().
- */
-function az_paragraphs_preprocess_paragraph(&$variables) {
-
-  // Apply paragraph preprocessing.
-  \Drupal::service('az_paragraphs.paragraph_customizations')->preprocessParagraph($variables);
-
-}

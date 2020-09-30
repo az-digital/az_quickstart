@@ -62,6 +62,7 @@ class AZParagraphsTest extends BrowserTestBase {
       'administer site configuration',
       'create az_flexible_page content',
       'edit any az_flexible_page content',
+      'edit behavior plugin settings',
       'edit own az_flexible_page content',
     ]);
 
@@ -99,11 +100,17 @@ class AZParagraphsTest extends BrowserTestBase {
     // Fill out the text field.
     $page->fillField('field_az_main_content[0][subform][field_az_text_area][0][value]', 'Wilbur Wildcat was here.');
 
+    // Fill out the bottom padding option with a test value.
+    $page->fillField('field_az_main_content[0][behavior_plugins][az_default_paragraph_behavior][az_display_settings][az_bottom_spacing]', 'mb-8');
+
     // Save the node.
     $page->pressButton('Save');
 
     // Check for our addition to the node.
     $assert->pageTextContains('Wilbur Wildcat was here.');
+
+    // Check for applied bottom spacing.
+    $assert->elementExists('css', '.paragraph.mb-8');
   }
 
 }
