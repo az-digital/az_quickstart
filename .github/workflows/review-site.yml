@@ -53,4 +53,4 @@ jobs:
 
       - name: Clear caches
         run: |
-          echo "clearing caches"
+          echo terminus env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
