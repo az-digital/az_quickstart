@@ -101,7 +101,7 @@ class AZParagraphsTest extends BrowserTestBase {
     $page->fillField('field_az_main_content[0][subform][field_az_text_area][0][value]', 'Wilbur Wildcat was here.');
 
     // Fill out the bottom padding option with a test value.
-    $page->fillField('field_az_main_content[0][behavior_plugins][az_default_paragraph_behavior][az_display_settings][az_bottom_spacing]', 'mb-8');
+    $page->fillField('field_az_main_content[0][behavior_plugins][az_default_paragraph_behavior][az_display_settings][bottom_spacing]', 'mb-8');
 
     // Save the node.
     $page->pressButton('Save');

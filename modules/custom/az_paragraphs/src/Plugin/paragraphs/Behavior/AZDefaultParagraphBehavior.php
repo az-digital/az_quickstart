@@ -74,6 +74,7 @@ class AZDefaultParagraphBehavior extends ParagraphsBehaviorBase {
     // Get stored plugin configuration for this paragraph.
     $config = $this->getSettings($paragraph);
 
+    // Provide detail container for default settings.
     $form['az_display_settings'] = [
       '#type' => 'details',
       '#title' => t('Additional options'),
@@ -81,11 +82,11 @@ class AZDefaultParagraphBehavior extends ParagraphsBehaviorBase {
     ];
 
     // Use saved bottom spacing if available.
-    $default_bottom_spacing = (!empty($config['az_display_settings']['az_bottom_spacing'])) ?
-      $config['az_display_settings']['az_bottom_spacing'] : 'mb-0';
+    $default_bottom_spacing = (!empty($config['az_display_settings']['bottom_spacing'])) ?
+      $config['az_display_settings']['bottom_spacing'] : 'mb-0';
 
     // Default Bottom Spacing settings.
-    $form['az_display_settings']['az_bottom_spacing'] = [
+    $form['az_display_settings']['bottom_spacing'] = [
       '#title' => $this->t('Bottom Spacing'),
       '#type' => 'select',
       '#options' => [
@@ -145,8 +146,8 @@ class AZDefaultParagraphBehavior extends ParagraphsBehaviorBase {
     $config = $this->getSettings($paragraph);
 
     // Apply bottom spacing if set.
-    if (!empty($config['az_display_settings']['az_bottom_spacing'])) {
-      $build['#attributes']['class'] = $config['az_display_settings']['az_bottom_spacing'];
+    if (!empty($config['az_display_settings']['bottom_spacing'])) {
+      $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
     }
 
   }
