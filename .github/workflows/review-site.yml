@@ -38,6 +38,10 @@ jobs:
           pwd
           ls -al
 
+      - name: Wipe existing site
+        run: |
+          echo terminus env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
+
       - name: Install site
         run: |
           echo terminus -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
