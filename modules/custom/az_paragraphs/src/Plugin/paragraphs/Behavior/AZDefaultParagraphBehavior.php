@@ -106,7 +106,7 @@ class AZDefaultParagraphBehavior extends ParagraphsBehaviorBase {
     // Provide detail container for default settings.
     $form['az_display_settings'] = [
       '#type' => 'details',
-      '#title' => t('Additional options'),
+      '#title' => $this->t('Additional options'),
       '#open' => FALSE,
     ];
 
