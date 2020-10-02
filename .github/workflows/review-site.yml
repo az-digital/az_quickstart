@@ -28,6 +28,10 @@ jobs:
           composer require pantheon-systems/terminus:^2
           echo "::add-path::$(pwd)/vendor/bin"
 
+      - name: Set up terminus
+        run: |
+          echo terminus auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+
       - name: Sync code to pantheon
         run: |
           terminus art
