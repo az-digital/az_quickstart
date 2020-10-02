@@ -1,6 +1,5 @@
 name: Build & deploy review site
 on:
-  pull_request:
   push:
     branches:
       - kitten
