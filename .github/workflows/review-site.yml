@@ -25,7 +25,7 @@ jobs:
 
       - name: Install terminus
         run: |
-          composer require pantheon-systems:terminus:^2
+          composer require pantheon-systems/terminus:^2
           echo "::add-path::$(pwd)/vendor/bin"
 
       - name: Sync code to pantheon
