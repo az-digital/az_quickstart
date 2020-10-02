@@ -1,0 +1,41 @@
+name: Build & deploy review site
+on:
+  pull_request:
+  push:
+    branches:
+      - kitten
+
+jobs:
+  review-site:
+    name: Build & deploy review site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout scaffolding
+        uses: actions/checkout@v2
+        with:
+          repo: az-digital/az-quickstart-scaffolding
+          path: az-quickstart-scaffolding
+
+      - name: Build Arizona Quickstart
+        run: |
+          (
+            cd az-quickstart-scaffolding
+            composer install
+          )
+
+      - name: Install terminus
+        run: |
+          composer install pantheon-systems:terminus:^2
+          echo "::add-path::$(pwd)/vendor/bin"
+
+      - name: Sync code to pantheon
+        run: |
+          echo "syncing"
+
+      - name: Install site
+        run: |
+          echo "installing"
+
+      - name: Clear caches
+        run: |
+          echo "clearing caches"
