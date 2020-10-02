@@ -132,7 +132,7 @@ class AZDefaultParagraphBehavior extends ParagraphsBehaviorBase {
         'mb-10' => $this->t('10 (8.0rem | ~128px)'),
       ],
       '#default_value' => $default_bottom_spacing,
-      '#description' => $this->t('More detail on spacing can be found in the AZ Bootstrap documentation.'),
+      '#description' => $this->t('More detail on spacing can be found in the <a href="https://digital.arizona.edu/arizona-bootstrap/docs/2.0/utilities/spacing/" target="_blank">AZ Bootstrap documentation</a>.'),
     ];
 
     // This places the form fields on the content tab rather than behavior tab.
