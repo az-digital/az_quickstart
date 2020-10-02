@@ -53,11 +53,13 @@ jobs:
       - name: Install site
         run: |
           echo terminus -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
-          site-install az_quickstart az_quickstart_install_options_form.uaqs_verbosity=1 install_configure_form.update_status_module='array(FALSE,FALSE)' \
-          --account-name="uaqs_admin" --account-mail="noreply@email.arizona.edu" \
+          site-install az_quickstart install_configure_form.update_status_module='array(FALSE,FALSE)' \
+          --account-name="azadmin" \
+          --account-mail="noreply@email.arizona.edu" \
           --site-mail="noreply@email.arizona.edu" \
           --site-name="Kitten" \
-          # --yes --verbose
+          --yes
+          # --verbose
 
       - name: Clear caches
         run: |
