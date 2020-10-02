@@ -23,7 +23,7 @@ use Drupal\Core\Asset\LibraryDiscoveryInterface;
  *   weight = 0
  * )
  */
-class AZDefaultParagraphBehavior extends ParagraphsBehaviorBase {
+class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
 
   /**
    * Drupal\Core\Entity\EntityDisplayRepositoryInterface definition.

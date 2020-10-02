@@ -202,7 +202,7 @@ The interface for Paragraph Behavior Plugins is
 [located here](https://git.drupalcode.org/project/paragraphs/-/blob/8.x-1.12/src/ParagraphsBehaviorInterface.php).
 
 If you wish your Behavior Plugin to also incldue the standard Quickstart
-paragraph behaviors, extend **AZDefaultParagraphBehavior**.
+paragraph behaviors, extend **AZDefaultParagraphsBehavior**.
 
 Note that by default, Behavior form elements are shown on a **Behavior** tab
 on the paragraph. This can be avoided currently by
