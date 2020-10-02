@@ -13,7 +13,7 @@ jobs:
       - name: Checkout scaffolding
         uses: actions/checkout@v2
         with:
-          repo: az-digital/az-quickstart-scaffolding
+          repository: az-digital/az-quickstart-scaffolding
           path: az-quickstart-scaffolding
 
       - name: Build Arizona Quickstart
