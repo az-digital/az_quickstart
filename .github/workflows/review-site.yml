@@ -30,7 +30,7 @@ jobs:
 
       - name: Sync code to pantheon
         run: |
-          echo "syncing"
+          terminus art
 
       - name: Install site
         run: |
