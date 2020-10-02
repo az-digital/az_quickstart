@@ -8,6 +8,10 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\paragraphs\ParagraphsBehaviorBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Entity\EntityDisplayRepositoryInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Asset\LibraryDiscoveryInterface;
 
 /**
  * Provides a base behavior for Quickstart Paragraph Defaults.
@@ -43,16 +47,41 @@ class AZDefaultParagraphBehavior extends ParagraphsBehaviorBase {
   protected $libraryDiscovery;
 
   /**
+   * Constructs a ParagraphsBehaviorBase object.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Entity\EntityDisplayRepositoryInterface $entity_display_repository
+   *   The entity display repository.
+   * @param \Drupal\Core\Entity\EntityFieldManagerInterface $entity_field_manager
+   *   The entity field manager.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
+   * @param \Drupal\Core\Asset\LibraryDiscoveryInterface $library_discovery
+   *   The library discovery service.
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityDisplayRepositoryInterface $entity_display_repository, EntityFieldManagerInterface $entity_field_manager, EntityTypeManagerInterface $entity_type_manager, LibraryDiscoveryInterface $library_discovery) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition, $entity_field_manager);
+
+    $this->entityDisplayRepository = $entity_display_repository;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->libraryDiscovery = $library_discovery;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static($configuration, $plugin_id, $plugin_definition,
-      $container->get('entity_field.manager')
+    return new static($configuration, $plugin_id, $plugin_definition,
+      $container->get('entity_display.repository'),
+      $container->get('entity_field.manager'),
+      $container->get('entity_type.manager'),
+      $container->get('library.discovery')
     );
-    $instance->libraryDiscovery = $container->get('library.discovery');
-    $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->entityDisplayRepository = $container->get('entity_display.repository');
-    return $instance;
   }
 
   /**
