@@ -31,6 +31,8 @@ jobs:
       - name: Sync code to pantheon
         run: |
           terminus art
+          pwd
+          ls -al
 
       - name: Install site
         run: |
