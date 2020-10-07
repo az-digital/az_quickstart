@@ -16,6 +16,7 @@ use Drupal\Core\TypedData\MapDataDefinition;
  *
  * @FieldType(
  *   id = "az_card",
+ *   category = @Translation("Arizona Digital"),
  *   label = @Translation("Card"),
  *   description = @Translation("Composite card field type"),
  *   default_widget = "az_card_default",
