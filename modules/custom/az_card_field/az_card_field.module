@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * @file
+ * Contains az_card_field.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_card_field_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_card_field module.
+    case 'help.page.az_card_field':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom composite Field API card implementation.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_card_field_theme() {
+  return [
+    'az_card_field' => [
+      'render element' => 'children',
+    ],
+  ];
+}

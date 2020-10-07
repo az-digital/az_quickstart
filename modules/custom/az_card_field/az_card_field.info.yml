@@ -1,0 +1,5 @@
+name: 'AZ Card Field'
+type: module
+description: 'Custom composite Field API card implementation.'
+core_version_requirement: ^8.8 || ^9
+package: 'The University of Arizona'
