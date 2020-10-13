@@ -22,8 +22,8 @@ services:
     build:
       # Create a new quickstart project and use the installation profile as a non-packagist repository.
       # Use the matching scaffolding branch if available.
-      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="master"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
-      - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:\>\=8.5.0 zaporylie/composer-drupal-optimizations:1.1.1 az-digital/az_quickstart:\*@dev
+      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
       - composer install
   node:
     type: node:12.16
@@ -55,10 +55,14 @@ tooling:
   phpunit:
     service: appserver
     cmd: /app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
-  # Provide drupal-check tooling to check for deprecated code.
-  drupal-check:
+  # Provide phpstan tooling to check for code quality and deprecated code.
+  phpstan:
     service: appserver
-    cmd: /app/vendor/bin/drupal-check web/profiles web/modules web/themes
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
+  # Provide phpstan tooling to check for deprecated contrib module/theme code.
+  phpstan-contrib:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan-contrib.neon web/modules web/themes
   yarn:
     service: node
     cmd: yarn

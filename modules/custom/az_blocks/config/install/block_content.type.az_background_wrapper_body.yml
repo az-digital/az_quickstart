@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: az_background_wrapper_body
-label: 'Background Wrapper'
-revision: 1
-description: 'Use this block to add a background wrapper to your section'

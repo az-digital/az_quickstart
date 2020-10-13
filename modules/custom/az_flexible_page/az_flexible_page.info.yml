@@ -4,12 +4,8 @@ core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
   - field
-  - layout_builder
-  - layout_builder_restrictions
-  - layout_discovery
   - menu_ui
   - node
   - path
   - user
-  - az_blocks
-  - az_layouts
+  - az_paragraphs

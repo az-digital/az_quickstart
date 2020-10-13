@@ -1,0 +1,6 @@
+parameters:
+	customRulesetUsed: true
+	reportUnmatchedIgnoredErrors: false
+includes:
+	- %currentWorkingDirectory%/vendor/mglaman/phpstan-drupal/extension.neon
+	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon

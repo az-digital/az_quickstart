@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: az_section_margin_bottom_3
-label: 'Section - Margin Bottom - 3'
-classes: mb-3
-type: section
-weight: '7'
-block_restrictions: {  }
