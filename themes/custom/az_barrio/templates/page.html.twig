@@ -94,10 +94,15 @@
                   <img alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.uadigital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" class="pt-4 pb-3 pl-2">
                 </a>
                 {% endif %}
+	      </div>
+              <div class="col-2 col-sm-9 pr-0 d-lg-none d-flex justify-content-end">
+                <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-red">
+                  <span class="material-icons-sharp"> menu </span>
+                </button>
               </div>
               {% if page.header_ua_utilities %}
               <div class="col-2 col-sm-9">
-                <div class="row">
+		<div class="row">
                   {{ page.header_ua_utilities }}
                 </div>
               </div>
@@ -126,23 +131,34 @@
             </div> <!-- /.row -->
           </div> <!-- /.container -->
 
-          {% if container_navbar %}
-          <div class="{{ container }}">
-            <nav{{ navbar_attributes }}>
-              {% endif %}
+          <div class="container">
+            <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
+              <div class="navbar-offcanvas-header">
+                <div class="bg-chili d-flex justify-content-between align-items-center">
+                  <a href="/" class="navbar-offcanvas-home d-flex flex-column align-items-center btn btn-red">
+                    <span class="material-icons-sharp material-icons">home</span>
+                    <span>HOME</span>
+                  </a>
+                  <button id="navbarOffcanvasDemoClose" data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="d-flex flex-column align-items-center btn btn-red">
+                    <span class="material-icons-sharp material-icons">close</span>
+                    <span>CLOSE</span>
+                  </button>
+                </div>
+               <form class="navbar-offcanvas-search bg-white pr-3">
+                 <div class="input-group">
+                   <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                   <div class="input-group-append">
+                     <button class="btn" type="submit"><span class="material-icons-sharp material-icons">search</span></button>
+                   </div>
+                 </div>
+               </form>
+             </div>
+ 
               {% if page.navigation %}
-              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#CollapsingNavbar" aria-controls="CollapsingNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-              <div class="collapse navbar-collapse" id="CollapsingNavbar">
                 {{ page.navigation }}
-              </div>
               {% endif %}
-              {% if sidebar_collapse %}
-              <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#CollapsingLeft" aria-controls="CollapsingLeft" aria-expanded="false" aria-label="Toggle navigation"></button>
-              {% endif %}
-              {% if container_navbar %}
             </nav>
           </div>
-          {% endif %}
         </div>
 {% endblock %}
 
