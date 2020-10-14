@@ -3,15 +3,12 @@ global-styling:
   css:
     component:
       css/style.css: {}
-bootstrap_cdn:
-  js:
-    //cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js: {}
 arizona-bootstrap:
   css:
     theme:
-      libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
+      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
   js:
-    libraries/arizona-bootstrap/css/arizona-bootstrap.min.js: {}
+    /libraries/arizona-bootstrap/css/arizona-bootstrap.bundle.min.js: {}
 az-brand-icons:
   css:
     theme:

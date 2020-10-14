@@ -8,7 +8,6 @@ footer_logo: az_barrio/footer_logo.png
 block_default_region: 'content'
 
 libraries:
-  - az_barrio/bootstrap_cdn
   - az_barrio/global-styling
 
 regions:
