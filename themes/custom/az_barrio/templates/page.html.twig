@@ -144,16 +144,10 @@
                     <span>CLOSE</span>
                   </button>
                 </div>
-               <form class="navbar-offcanvas-search bg-white pr-3">
-                 <div class="input-group">
-                   <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                   <div class="input-group-append">
-                     <button class="btn" type="submit"><span class="material-icons-sharp material-icons">search</span></button>
-                   </div>
-                 </div>
-               </form>
              </div>
- 
+              {% if page.navigation_offcanvas %}
+                {{ page.navigation_offcanvas }}
+              {% endif %}
               {% if page.navigation %}
                 {{ page.navigation }}
               {% endif %}

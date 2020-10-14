@@ -11,6 +11,7 @@ include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Component\Utility\Html;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Implements hook_preprocess_HOOK() for HTML document templates.
@@ -95,7 +96,35 @@ function az_barrio_preprocess_image_style(&$variables) {
 function az_barrio_preprocess_input(&$variables) {
   if ($variables['attributes']['type'] === 'search') {
     $variables['attributes']['placeholder'] = $variables['element']['#title'];
+    $variables['attributes']['aria-label'] = $variables['element']['#title'];
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_barrio_theme($existing, $type, $theme, $path) {
+  $info = [
+    'input--search_block_button' => [
+      'type' => 'theme',
+      'render element' => 'input',
+      'path' => drupal_get_path('theme', 'az_barrio') . '/templates',
+    ],
+  ];
+  return $info;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_barrio_form_search_block_form_alter(array &$form, FormStateInterface &$form_state) {
+  if($form['#id'] == 'search-block-form--2') {
+    $form['#attributes']['class'][] = 'pr-3';
+    $form['#attributes']['class'][] = 'bg-white';
+    $form['#attributes']['class'][] = 'navbar-offcanvas-search';
+  }
+  \Drupal::logger('az_barrio')->warning(print_r($form,TRUE));
+  
 }
 
 /**

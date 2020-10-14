@@ -17,6 +17,7 @@ regions:
   header: 'Header 1'
   header_2: 'Header 2'
   navigation: 'Navigation bar'
+  navigation_offcanvas: 'Off canvas content associated with the mobile off canvas navbar'
   content_featured: 'Featured content'
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'
