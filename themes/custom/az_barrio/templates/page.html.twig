@@ -85,7 +85,7 @@
           </div>
         </div>
         {% endif %}
-        <div class="bg-red">
+        <div class="bg-red position-relative">
           <section class="{{ container }}">
             <div class="row">
               <div class="col-10 col-sm-3 pr-0">
@@ -95,7 +95,7 @@
                 </a>
                 {% endif %}
 	      </div>
-              <div class="col-2 col-sm-9 pr-0 d-lg-none d-flex justify-content-end">
+              <div class="d-lg-none position-absolute" style="top:0;right:0;">
                 <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-red">
                   <span class="material-icons-sharp"> menu </span>
                 </button>
@@ -144,10 +144,10 @@
                     <span>CLOSE</span>
                   </button>
                 </div>
+                {% if page.navigation_offcanvas %}
+                  {{ page.navigation_offcanvas }}
+                {% endif %}
              </div>
-              {% if page.navigation_offcanvas %}
-                {{ page.navigation_offcanvas }}
-              {% endif %}
               {% if page.navigation %}
                 {{ page.navigation }}
               {% endif %}

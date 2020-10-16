@@ -9,6 +9,10 @@ arizona-bootstrap:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
   js:
     /libraries/arizona-bootstrap/css/arizona-bootstrap.bundle.min.js: {}
+  dependencies:
+    - az_barrio/material-design-icons-sharp
+    - az_barrio/az-brand-icons
+    - core/jquery
 az-brand-icons:
   css:
     theme:

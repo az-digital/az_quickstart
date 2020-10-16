@@ -6,6 +6,9 @@ bootstrap_barrio_library: 'production'
 # --------------=
 bootstrap_barrio_region_clean_alert: 1
 bootstrap_barrio_region_class_alert: ''
+bootstrap_barrio_region_class_navigation: ''
+bootstrap_barrio_region_clean_navigation_offcanvas: 0
+bootstrap_barrio_region_class_navigation_offcanvas: ''
 bootstrap_barrio_region_clean_content_featured: 1
 bootstrap_barrio_region_class_content_featured: ''
 bootstrap_barrio_region_clean_full_width_content_bottom: 1

@@ -5,10 +5,10 @@ dependencies:
     - search
   theme:
     - az_barrio
-id: az_barrio_search
+id: offcanvas_searchform
 theme: az_barrio
-region: header
-weight: -5
+region: navigation_offcanvas
+weight: 0
 provider: null
 plugin: search_form_block
 settings:
@@ -18,3 +18,4 @@ settings:
   label_display: '0'
   page_id: ''
 visibility: {  }
+
