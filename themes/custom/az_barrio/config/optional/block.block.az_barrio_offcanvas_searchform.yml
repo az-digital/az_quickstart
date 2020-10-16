@@ -5,7 +5,7 @@ dependencies:
     - search
   theme:
     - az_barrio
-id: offcanvas_searchform
+id: az_barrio_offcanvas_searchform
 theme: az_barrio
 region: navigation_offcanvas
 weight: 0
