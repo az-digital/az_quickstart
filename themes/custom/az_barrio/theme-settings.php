@@ -8,7 +8,6 @@
  */
 
 include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
-//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
