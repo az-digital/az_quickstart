@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_full_html_area
+    - paragraphs.paragraphs_type.az_full_html
+  module:
+    - text
+id: paragraph.az_full_html.field_az_full_html_area
+field_name: field_az_full_html_area
+entity_type: paragraph
+bundle: az_full_html
+label: 'Markup'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long
