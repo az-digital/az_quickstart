@@ -292,6 +292,8 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
   if ($extension === 'az_barrio' && isset($libraries['az-brand-icons'])) {
     // Add UA Brand Icons CSS based on theme settings.
     $az_brand_icons_path = az_barrio_brand_icons_assets_path('css');
+    // Ensure icons are loaded before arizona bootstrap.
+    $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-brand-icons';
 
     $az_brand_icons_css_info = [
       'media' => 'all',
@@ -315,9 +317,6 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       $az_brand_icons_path => $az_brand_icons_css_info,
     ];
      
-    if (theme_get_setting('az_brand_icons_class') === true) {
-      $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-brand-icons';
-    }
     if (theme_get_setting('use_material_design_sharp_icons') === true) {
     $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
     }
