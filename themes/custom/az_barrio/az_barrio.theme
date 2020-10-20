@@ -134,11 +134,6 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     // $variables['title'] = FALSE;
   }
 
-  // Add Material Design icons.
-  if (theme_get_setting('use_material_design_sharp_icons') === TRUE) {
-    $variables['#attached']['library'][] = 'az_barrio/material-design-icons-sharp';
-  }
-
   // Check if information security policy should be displayed.
   $info_security_privacy = '';
   if (theme_get_setting('info_security_privacy')) {
@@ -319,6 +314,13 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     $libraries['az-brand-icons']['css']['theme'] = [
       $az_brand_icons_path => $az_brand_icons_css_info,
     ];
+     
+    if (theme_get_setting('az_brand_icons_class') === true) {
+      $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-brand-icons';
+    }
+    if (theme_get_setting('use_material_design_sharp_icons') === true) {
+    $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
+    }
   }
 }
 
