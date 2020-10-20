@@ -6,8 +6,8 @@
  *
  * Provides theme settings for Arizona Barrio.
  */
-include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';	
-//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
+
+include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -170,7 +170,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
-  $form['components']['navbar'] = []; 
+  $form['components']['navbar'] = [];
   // Components.
   $form['components']['navbar_offcanvas'] = [
     '#type' => 'details',
