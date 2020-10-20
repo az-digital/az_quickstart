@@ -18,6 +18,8 @@
  * - logged_in: A flag indicating if the user is registered and signed in.
  * - is_admin: A flag indicating if the user has permission to access
  *   administration pages.
+ * - az_barrio_navbar_offcanvas: A flag indicating if the offcanvas nav is 
+ *   enabled.
  *
  * Site identity:
  * - front_page: The URL of the front page. Use this instead of base_path when
@@ -95,11 +97,13 @@
                 </a>
                 {% endif %}
 	      </div>
+              {% if az_barrio_navbar_offcanvas %}
               <div class="d-lg-none position-absolute" style="top:0;right:0;">
                 <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-red">
                   <span class="material-icons-sharp"> menu </span>
                 </button>
               </div>
+              {% endif %}
               {% if page.header_ua_utilities %}
               <div class="col-2 col-sm-9">
 		<div class="row">
@@ -132,6 +136,7 @@
           </div> <!-- /.container -->
 
           <div class="container">
+            {% if az_barrio_navbar_offcanvas %}
             <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
               <div class="navbar-offcanvas-header">
                 <div class="bg-chili d-flex justify-content-between align-items-center">
@@ -148,10 +153,13 @@
                   {{ page.navigation_offcanvas }}
                 {% endif %}
              </div>
+            {% endif %}
               {% if page.navigation %}
                 {{ page.navigation }}
               {% endif %}
+            {% if az_barrio_navbar_offcanvas %}
             </nav>
+            {% endif %}
           </div>
         </div>
 {% endblock %}
