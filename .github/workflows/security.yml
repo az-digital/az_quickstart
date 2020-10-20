@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: echo "::set-env name=AZ_TRIMMED_REF::${GITHUB_REF#refs/*/}"
+      - run: echo "::set-env name=AZ_TRIMMED_REF::${GITHUB_REF##*/}"
       - name: Install dependencies
         run: |
           composer global require hirak/prestissimo
