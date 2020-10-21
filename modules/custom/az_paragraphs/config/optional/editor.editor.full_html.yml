@@ -1,0 +1,26 @@
+uuid: 24e6a1e7-c453-451f-ab8f-26eb996a6afc
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+  module:
+    - ace_editor
+format: full_html
+editor: ace_editor
+settings:
+  theme_list:
+    solarized_dark: 'Solarized Dark'
+  theme: cobalt
+  syntax_list:
+    html: HTML
+  syntax: html
+  height: 300px
+  width: 100%
+  font_size: 12pt
+  line_numbers: true
+  show_invisibles: false
+  print_margins: true
+  auto_complete: true
+  use_wrap_mode: true
+image_upload: {  }
