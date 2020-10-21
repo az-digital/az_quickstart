@@ -12,12 +12,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: echo "::set-env name=AZ_TRIMMED_REF::${GITHUB_REF#refs/*/}"
+      - name: Set variables
+        run: |
+          export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
+          echo "AZ_TRIMMED_REF=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          else
+            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          fi
+      - name: Clone scaffolding repo
+        uses: actions/checkout@v2
+        with:
+          repository: az-digital/az-quickstart-scaffolding
+          path: az-quickstart-scaffolding
+          ref: ${{ env.SCAFFOLD_BRANCH }}
       - name: Install dependencies
         run: |
           composer global require hirak/prestissimo
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi
-          git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
           cd az-quickstart-scaffolding
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
