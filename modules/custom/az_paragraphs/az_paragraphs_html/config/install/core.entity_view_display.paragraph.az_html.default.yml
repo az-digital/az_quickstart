@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.az_full_html.field_az_full_html_area
-    - paragraphs.paragraphs_type.az_full_html
+    - field.field.paragraph.az_html.field_az_markup
+    - paragraphs.paragraphs_type.az_html
   module:
     - text
-id: paragraph.az_full_html.default
+id: paragraph.az_html.default
 targetEntityType: paragraph
-bundle: az_full_html
+bundle: az_html
 mode: default
 content:
-  field_az_full_html_area:
+  field_az_markup:
     weight: 0
     label: hidden
     settings: {  }
