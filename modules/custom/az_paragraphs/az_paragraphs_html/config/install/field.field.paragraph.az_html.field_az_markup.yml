@@ -10,11 +10,13 @@ id: paragraph.az_html.field_az_markup
 field_name: field_az_markup
 entity_type: paragraph
 bundle: az_html
-label: 'Markup'
+label: Markup
 description: ''
 required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats:
+    - full_html
 field_type: text_long
