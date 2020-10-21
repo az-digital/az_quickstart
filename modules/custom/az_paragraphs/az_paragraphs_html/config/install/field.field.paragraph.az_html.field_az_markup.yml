@@ -1,19 +1,20 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - field.storage.paragraph.field_az_markup
+    - paragraphs.paragraphs_type.az_html
   module:
-    - paragraphs
     - text
-id: paragraph.field_az_markup
+id: paragraph.az_html.field_az_markup
 field_name: field_az_markup
 entity_type: paragraph
-type: text_long
+bundle: az_html
+label: 'HTML'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
 settings: {  }
-module: text
-locked: false
-cardinality: 1
-translatable: true
-indexes: {  }
-persist_with_no_fields: false
-custom_storage: false
-
+field_type: text_long
