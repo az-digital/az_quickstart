@@ -46,8 +46,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Set variables
-        run: |
-          echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Install dependencies
         run: |
           composer global require hirak/prestissimo
