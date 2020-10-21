@@ -30,7 +30,7 @@ class AZParagraphsTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'az_paragraphs',
     'az_paragraphs_text',
     'az_flexible_page',
