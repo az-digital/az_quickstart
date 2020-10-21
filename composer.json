@@ -51,9 +51,10 @@
         },
         "patches": {
             "drupal/core": {
-                "ajax css load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
+                "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch"
+                "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
+		"Set allowed text formats": "https://www.drupal.org/files/issues/2020-03-15/784672-164.patch"
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
