@@ -11,7 +11,7 @@ CKEDITOR.plugins.add( 'ace', {
 	// Initialize the plugin
 	init : function( editor ) {
 		
-		//console.log('initializing ACE plugin');
+		console.log('initializing ACE plugin');
 			
 		// When the event "mode" is called in CKEditor it means someone clicked the "source" button.
 		editor.on( 'mode', function() {

@@ -14,11 +14,17 @@ use Drupal\editor\Entity\Editor;
  *
  * @CKEditorPlugin(
  *   id = "ace",
- *   label = @Translation("CKEditor ACEEditor plugin")
+ *   label = @Translation("Replace CKEditor source with Ace Editor.")
  * )
  */
-class CKEditorACEEditorPlugin extends CKEditorPluginBase {
+class Ace extends CKEditorPluginBase {
 
+  /**
+   * {@inheritdoc}
+   */
+  public function getButtons() {
+    return [];
+  }
 
   /**
    * {@inheritdoc}
@@ -26,7 +32,14 @@ class CKEditorACEEditorPlugin extends CKEditorPluginBase {
   public function getFile() {
     // Make sure that the path to the plugin.js matches the file structure of
     // the CKEditor plugin you are implementing.
-    return drupal_get_path('module', 'az_paragraphs_html') . '/js/plugins/ace/plugin.js';
+    return drupal_get_path('module', 'az_paragraphs_html') . '/libraries/ace/plugin.js';
+  }
+  
+  /**
+   * {@inheritdoc}
+   */
+  public function getDependencies(Editor $editor) {
+    return ['sourcearea'];
   }
 
   /**
@@ -34,13 +47,6 @@ class CKEditorACEEditorPlugin extends CKEditorPluginBase {
    */
   public function isInternal() {
     return FALSE;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getDependencies(Editor $editor) {
-    return [];
   }
 
   /**
@@ -54,7 +60,11 @@ class CKEditorACEEditorPlugin extends CKEditorPluginBase {
    * {@inheritdoc}
    */
   public function getConfig(Editor $editor) {
-    return [];
+    $config = array();
+    $settings = $editor->getSettings();
+    $config['extraPlugins'] = 'ace';
+    return $config;
   }
 
 }
+
