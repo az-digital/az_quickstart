@@ -1,0 +1,3 @@
+ace:
+  js:
+    /libraries/ace-builds/src-min-noconflict/ace.js {}
