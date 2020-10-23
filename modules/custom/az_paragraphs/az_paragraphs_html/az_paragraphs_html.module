@@ -11,4 +11,3 @@
 function az_paragraphs_html_page_attachments(array &$attachments) {
   $attachments['#attached']['library'][] = 'az_paragraphs_html/ace';
 }
-
