@@ -96,7 +96,7 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
       '#type' => 'checkbox',
       '#title' => $this->t('Start editor in "Source" view.'),
       '#description' => $this->t('Starts editor off in "View Source" mode.'),
-      '#default_value' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : TRUE,
+      '#default_value' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : FALSE,
     ];
 
     return $form;

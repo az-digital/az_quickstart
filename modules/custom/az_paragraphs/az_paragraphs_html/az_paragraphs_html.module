@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * This module holds functions and hooks useful for the module.
+ */
+
+/**
+ * Implements hook_page_attachments().
+ */
+function az_paragraphs_html_page_attachments(array &$attachments) {
+  $attachments['#attached']['library'][] = 'az_paragraphs_html/ace';
+}
+
