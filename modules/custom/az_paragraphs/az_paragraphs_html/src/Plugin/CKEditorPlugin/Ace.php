@@ -58,7 +58,7 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
    * {@inheritdoc}
    */
   public function isInternal() {
-    return false;
+    return FALSE;
   }
 
   /**
@@ -82,11 +82,11 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
   public function settingsForm(array $form, FormStateInterface $form_state, Editor $editor) {
     $settings = $editor->getSettings();
 
-    $form['enable'] = array(
+    $form['enable'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable replacing source plugin with Ace editor.'),
-      '#default_value' => !empty($settings['plugins']['ace']['enable']) ? $settings['plugins']['ace']['enable'] : false,
-    );
+      '#default_value' => !empty($settings['plugins']['ace']['enable']) ? $settings['plugins']['ace']['enable'] : FALSE,
+    ];
 
     return $form;
   }
