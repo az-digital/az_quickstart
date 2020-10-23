@@ -14,9 +14,9 @@ CKEDITOR.plugins.add( 'ace', {
 		console.log('initializing ACE plugin');
 			
 		// When the event "mode" is called in CKEditor it means someone clicked the "source" button.
-		editor.on( 'mode', function() {
+		//editor.on( 'mode', function() {
 			
-			//console.log('editor mode: ' + editor.mode);
+			console.log('editor mode: ' + editor.mode);
 			
 			// if the user selected the "source" view
 			if ( editor.mode == 'source' ) {
@@ -166,7 +166,7 @@ CKEDITOR.plugins.add( 'ace', {
 				
 			}
 			
-		});
+		//});
 	
 	
 		// If we are sending them back to the WYSIWYG editor.
