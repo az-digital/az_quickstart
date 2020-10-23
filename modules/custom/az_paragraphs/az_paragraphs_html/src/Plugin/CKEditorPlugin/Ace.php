@@ -46,12 +46,12 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
     // the CKEditor plugin you are implementing.
     return drupal_get_path('module', 'az_paragraphs_html') . '/libraries/ace/plugin.js';
   }
-  
+ 
   /**
    * {@inheritdoc}
    */
   public function getDependencies(Editor $editor) {
-    return ['internal'];
+    return [];
   }
 
   /**
@@ -65,7 +65,11 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
    * {@inheritdoc}
    */
   public function getConfig(Editor $editor) {
-    return []; 
+    $settings = $editor->getSettings();
+    
+    return [
+      'startupMode' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : false
+    ];
   }
 
   /**
@@ -86,6 +90,13 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
       '#type' => 'checkbox',
       '#title' => $this->t('Enable replacing source plugin with Ace editor.'),
       '#default_value' => !empty($settings['plugins']['ace']['enable']) ? $settings['plugins']['ace']['enable'] : false,
+    );
+
+    $form['startup_mode'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Start editor in "Source" view.'),
+      '#description' => $this->t('Starts editor off in "View Source" mode.'),
+      '#default_value' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : true,
     );
 
     return $form;
