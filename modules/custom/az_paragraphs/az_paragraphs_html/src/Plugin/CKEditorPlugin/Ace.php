@@ -3,6 +3,9 @@
 namespace Drupal\az_paragraphs_html\Plugin\CKEditorPlugin;
 
 use Drupal\ckeditor\CKEditorPluginBase;
+use Drupal\ckeditor\CKEditorPluginConfigurableInterface;
+use Drupal\ckeditor\CKEditorPluginContextualInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\editor\Entity\Editor;
 
 /**
@@ -17,13 +20,22 @@ use Drupal\editor\Entity\Editor;
  *   label = @Translation("Replace CKEditor source with Ace Editor.")
  * )
  */
-class Ace extends CKEditorPluginBase {
+class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterface, CKEditorPluginContextualInterface {
 
   /**
    * {@inheritdoc}
    */
   public function getButtons() {
     return [];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getLibraries(Editor $editor) {
+    return [
+      'libraries/ace_editor',
+    ];
   }
 
   /**
@@ -39,7 +51,7 @@ class Ace extends CKEditorPluginBase {
    * {@inheritdoc}
    */
   public function getDependencies(Editor $editor) {
-    return ['sourcearea'];
+    return ['internal'];
   }
 
   /**
@@ -52,18 +64,31 @@ class Ace extends CKEditorPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function getLibraries(Editor $editor) {
-    return [];
+  public function getConfig(Editor $editor) {
+    return []; 
   }
 
   /**
    * {@inheritdoc}
    */
-  public function getConfig(Editor $editor) {
-    $config = array();
+  public function isEnabled(Editor $editor) {
     $settings = $editor->getSettings();
-    $config['extraPlugins'] = 'ace';
-    return $config;
+    return isset($settings['plugins']['ace']) ? $settings['plugins']['ace']['enable'] : FALSE;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state, Editor $editor) {
+    $settings = $editor->getSettings();
+
+    $form['enable'] = array(
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable replacing source plugin with Ace editor.'),
+      '#default_value' => !empty($settings['plugins']['ace']['enable']) ? $settings['plugins']['ace']['enable'] : false,
+    );
+
+    return $form;
   }
 
 }
