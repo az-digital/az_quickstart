@@ -18,5 +18,5 @@ default_value: {  }
 default_value_callback: ''
 settings:
   allowed_formats:
-    - full_html
+    - az_markup
 field_type: text_long
