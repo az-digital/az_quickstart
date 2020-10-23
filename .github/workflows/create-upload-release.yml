@@ -14,7 +14,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build Variables
-        run: echo "::set-env name=AZ_TRIMMED_REF::${GITHUB_REF#refs/*/}"
+        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           composer global require hirak/prestissimo
