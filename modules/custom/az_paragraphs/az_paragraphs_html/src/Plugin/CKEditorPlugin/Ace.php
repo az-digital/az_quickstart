@@ -66,9 +66,9 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
    */
   public function getConfig(Editor $editor) {
     $settings = $editor->getSettings();
-    
+
     return [
-      'startupMode' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : false
+      'startupMode' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : FALSE,
     ];
   }
 
@@ -92,12 +92,12 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
       '#default_value' => !empty($settings['plugins']['ace']['enable']) ? $settings['plugins']['ace']['enable'] : FALSE,
     ];
 
-    $form['startup_mode'] = array(
+    $form['startup_mode'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Start editor in "Source" view.'),
       '#description' => $this->t('Starts editor off in "View Source" mode.'),
-      '#default_value' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : true,
-    );
+      '#default_value' => !empty($settings['plugins']['ace']['startup_mode']) ? $settings['plugins']['ace']['startup_mode'] : TRUE,
+    ];
 
     return $form;
   }
