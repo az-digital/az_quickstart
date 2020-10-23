@@ -34,7 +34,7 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
    */
   public function getLibraries(Editor $editor) {
     return [
-      'libraries/ace_editor',
+      'ace/ace',
     ];
   }
 
