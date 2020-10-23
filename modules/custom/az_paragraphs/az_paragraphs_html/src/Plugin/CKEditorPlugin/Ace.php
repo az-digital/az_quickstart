@@ -46,7 +46,7 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
     // the CKEditor plugin you are implementing.
     return drupal_get_path('module', 'az_paragraphs_html') . '/libraries/ace/plugin.js';
   }
-  
+
   /**
    * {@inheritdoc}
    */
@@ -58,14 +58,14 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
    * {@inheritdoc}
    */
   public function isInternal() {
-    return FALSE;
+    return false;
   }
 
   /**
    * {@inheritdoc}
    */
   public function getConfig(Editor $editor) {
-    return []; 
+    return [];
   }
 
   /**
@@ -92,4 +92,3 @@ class Ace extends CKEditorPluginBase implements CKEditorPluginConfigurableInterf
   }
 
 }
-
