@@ -4,30 +4,19 @@ dependencies:
   config:
     - filter.format.az_markup
   module:
-    - ckeditor
+    - ace_editor
 format: az_markup
-editor: ckeditor
+editor: ace_editor
 settings:
-  toolbar:
-    rows:
-      -
-        -
-          name: Tools
-          items:
-            - Source
-  plugins:
-    ace:
-      enable: 1
-      startup_mode: 1
-    stylescombo:
-      styles: ''
-    language:
-      language_list: un
-image_upload:
-  status: false
-  scheme: public
-  directory: inline-images
-  max_size: ''
-  max_dimensions:
-    width: null
-    height: null
+  fieldset:
+    theme: solarized_dark
+    syntax: html
+    height: 1000px
+    width: 100%
+    font_size: 10pt
+    line_numbers: 1
+    print_margins: 1
+    show_invisibles: 1
+    use_wrap_mode: 1
+    auto_complete: 1
+image_upload: {  }
