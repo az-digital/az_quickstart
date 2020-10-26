@@ -22,7 +22,7 @@
     "require": {
         "php": ">=7.0",
         "az-digital/arizona-bootstrap": "2.0.2",
-        "composer/installers": "^1.7",
+        "composer/installers": "1.7",
         "cweagans/composer-patches": "^1.0",
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
