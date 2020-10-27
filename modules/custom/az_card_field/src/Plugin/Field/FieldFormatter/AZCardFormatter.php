@@ -2,51 +2,88 @@
 
 namespace Drupal\az_card_field\Plugin\Field\FieldFormatter;
 
-use Drupal\Component\Utility\Html;
-use Drupal\Core\Field\FieldItemInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\media\MediaInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_card' formatter.
  *
  * @FieldFormatter(
  *   id = "az_card",
- *   label = @Translation("Card"),
+ *   label = @Translation("Flexible card formatter"),
  *   field_types = {
  *     "az_card"
  *   }
  * )
  */
-class AZCardFormatter extends FormatterBase {
+class AZCardFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
-   * {@inheritdoc}
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  public static function defaultSettings() {
-    return [
-      // Implement default settings.
-    ] + parent::defaultSettings();
+  protected $entityTypeManager;
+
+  /**
+   * The renderer.
+   *
+   * @var \Drupal\Core\Render\RendererInterface
+   */
+  protected $renderer;
+
+  /**
+   * Constructs a FormatterBase object.
+   *
+   * @param string $plugin_id
+   *   The plugin_id for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The definition of the field to which the formatter is associated.
+   * @param array $settings
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label display setting.
+   * @param string $view_mode
+   *   The view mode.
+   * @param array $third_party_settings
+   *   Any third party settings.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer.
+   */
+  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->entityTypeManager = $entity_type_manager;
+    $this->renderer = $renderer;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
-    return [
-      // Implement settings form.
-    ] + parent::settingsForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsSummary() {
-    $summary = [];
-    // Implement settings summary.
-
-    return $summary;
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $configuration,
+      $plugin_id,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['label'],
+      $configuration['view_mode'],
+      $configuration['third_party_settings'],
+      $container->get('entity_type.manager'),
+      $container->get('renderer')
+    );
   }
 
   /**
@@ -54,27 +91,89 @@ class AZCardFormatter extends FormatterBase {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
-
+    // TODO: Image styles?
+    // // Collect cache tags to be added for each item in the field.
+    // $responsive_image_style = $this->entityTypeManager->getStorage('responsive_image_style')->load($responsive_image_style_name);
+    // $image_styles_to_load = [];
+    // $cache_tags = [];
+    // if ($responsive_image_style) {
+    //   $cache_tags = Cache::mergeTags($cache_tags, $responsive_image_style->getCacheTags());
+    //   $image_styles_to_load = $responsive_image_style->getImageStyleIds();
+    // }
+    // $image_styles = $this->entityTypeManager->getStorage('image_style')->loadMultiple($image_styles_to_load);
+    // foreach ($image_styles as $image_style) {
+    //   $cache_tags = Cache::mergeTags($cache_tags, $image_style->getCacheTags());
+    // }
     foreach ($items as $delta => $item) {
-      $elements[$delta] = ['#markup' => $this->viewValue($item)];
-    }
+      // Format title.
+      $title = $item->title ?? '';
 
+      // Media.
+      $media_render_array = [];
+      if ($media = $this->entityTypeManager->getStorage('media')->load($item->media_id)) {
+        switch ($media->bundle()) {
+          case 'az_image':
+            $media_render_array = $this->generateImageRenderArray($media);
+            break;
+        }
+      }
+      $elements[] = [
+        '#theme' => 'az_card',
+        '#media' => $media_render_array,
+        '#title' => $title,
+        '#body' => check_markup($item->body, $item->body_format),
+      ];
+
+      // TODO: Get classes from parent paragraph, field formatter settings, and field settings.
+      $elements['#items'][$delta] = new \stdClass();
+      $elements['#items'][$delta]->_attributes = [
+        'class' => ['card'],
+      ];
+      $elements['#attributes']['class'][] = 'content';
+      $elements['#attributes']['class'][] = 'h-100';
+      $elements['#attributes']['class'][] = 'pb-4';
+
+    }
+    // $elements['#attached']['library'][] = 'az_card_field/az_card';
     return $elements;
+
   }
 
   /**
-   * Generate the output appropriate for one field item.
+   * Prepare an image render array.
    *
-   * @param \Drupal\Core\Field\FieldItemInterface $item
-   *   One field item.
+   * @param \Drupal\media\MediaInterface $media
+   *   A Drupal media entity object.
    *
-   * @return string
-   *   The textual output generated.
+   * @return string[]
+   *   An image render array.
    */
-  protected function viewValue(FieldItemInterface $item) {
-    // The text value has no text format assigned to it, so the user input
-    // should equal the output, including newlines.
-    return nl2br(Html::escape($item->value));
+  private function generateImageRenderArray(MediaInterface $media) {
+    $media_render_array = [];
+    $media_attributes = $media->get('field_media_az_image')->getValue();
+    if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {
+      $image = new \stdClass();
+      $image->title = NULL;
+      $image->alt = $media_attributes[0]['alt'];
+      $image->entity = $file;
+      $image->uri = $file->getFileUri();
+      $image->width = NULL;
+      $image->height = NULL;
+
+      // TODO: replace with responsive_image_formatter, add image style(s), add cache tags, add image classes(?).
+      $media_render_array = [
+        '#theme' => 'image_formatter',
+        '#item' => $image,
+        // '#item_attributes' => [
+        //   'class' => '',
+        // ],
+        // '#url' => '',
+      ];
+      // Add the file entity to the cache dependencies.
+      // This will clear our cache when this entity updates.
+      $this->renderer->addCacheableDependency($media_render_array, $file);
+    }
+    return $media_render_array;
   }
 
 }

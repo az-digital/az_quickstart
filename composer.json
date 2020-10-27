@@ -39,7 +39,8 @@
         "drupal/token": "1.7",
         "drupal/paragraphs": "1.12",
         "drupal/entity_embed": "1.1",
-        "drupal/embed": "1.4"
+        "drupal/embed": "1.4",
+        "drupal/media_library_form_element": "2.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
