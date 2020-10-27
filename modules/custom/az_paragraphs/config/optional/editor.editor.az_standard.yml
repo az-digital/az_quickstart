@@ -15,6 +15,7 @@ settings:
           name: Formatting
           items:
             - Bold
+            - Strike
             - Italic
             - Superscript
             - Subscript
@@ -47,12 +48,13 @@ settings:
         -
           name: Media
           items:
-            - Blockquote
             - DrupalImage
         -
           name: Tools
           items:
             - Source
+            - Paste
+            - PasteText
             - PasteFromWord
             - RemoveFormat
             - Maximize
@@ -62,11 +64,20 @@ settings:
             - az_embed_content
             - DrupalMediaLibrary
             - az_embed_block
+            - node
+      -
+        -
+          name: Edit/Insert
+          items:
+            - Undo
+            - Redo
+            - SpecialChar
+            - Blockquote
   plugins:
+    stylescombo:
+      styles: "span.sans|Text sans\r\nspan.text-red|Text red\r\nspan.text-blue|Text blue\r\nspan.text-midnight|Text midnight\r\nspan.text-azurite|Text azurite\r\nspan.text-oasis|Text oasis\r\nspan.text-sky|Text sky\r\nspan.text-leaf|Text leaf\r\nspan.text-river|Text river\r\nspan.text-white|Text white\r\nspan.text-ash|Text ash\r\nspan.text-black|Text black\r\nspan.text-uppercase|Text uppercase\r\nspan.text-lowercase|Text lowercase\r\nul.ul-triangles|Triangle Bullets\r\nspan.badge.badge-red|Red Label\r\nspan.badge.badge-blue|Blue Label\r\nspan.badge.badge-success|Success Label\r\nspan.badge.badge-danger|Danger Label\r\nspan.badge.badge-warning|Warning Label\r\nspan.badge.badge-info|Info Label\r\nspan.badge.badge-light|Light Label\r\nspan.badge.badge-dark|Dark Label\r\na.btn.btn-red|Button red\r\na.btn.btn-outline-red|Button outline red\r\na.btn.btn-blue|Button blue\r\na.btn.btn-outline-blue|Button outline blue\r\na.btn.btn-success|Button success\r\na.btn.btn-outline-success|Button outline success\r\na.btn.btn-info|Button info\r\na.btn.btn-outline-info|Button outline info\r\na.btn.btn-outline-white|Button outline white\r\np.h1|H1 Heading\r\np.h2|H2 Heading\r\np.h3|H3 Heading\r\np.h4|H4 Heading\r\np.h5|H5 Heading\r\np.h6|H6 Heading\r\nspan.h1|Text size h1\r\nspan.h2|Text size h2\r\nspan.h3|Text size h3\r\nspan.h4|Text size h4\r\nspan.h5|Text size h5\r\nspan.h6|Text size h6\r\ndiv.callout.callout-red|Callout red\r\ndiv.callout.callout-chili|Callout chili\r\ndiv.callout.callout-blue|Callout blue\r\ndiv.callout.callout-azurite|Callout azurite\r\ndiv.callout.callout-leaf|Callout leaf\r\ndiv.callout.callout-river|Callout river\r\ndiv.callout.callout-black|Callout black\r\nblockquote.blockquote|Blockquote\r\np.lead|Lead paragraph"
     language:
       language_list: un
-    stylescombo:
-      styles: "span.sans|Text sans\r\nspan.text-uppercase|Text uppercase\r\nspan.text-red|Text red\r\nspan.text-blue|Text blue\r\nspan.text-midnight|Text midnight\r\nspan.text-azurite|Text azurite\r\nspan.text-oasis|Text oasis\r\nspan.text-sky|Text sky\r\nspan.text-leaf|Text leaf\r\nspan.text-river|Text river\r\nspan.text-white|Text white\r\nspan.text-ash|Text ash\r\nspan.text-black|Text black\r\na.btn.btn-red|Button red\r\na.btn.btn-outline-red|Button outline red\r\na.btn.btn-blue|Button blue\r\na.btn.btn-outline-blue|Button outline blue\r\na.btn.btn-success|Button success\r\na.btn.btn-outline-success|Button outline success\r\na.btn.btn-info|Button info\r\na.btn.btn-outline-info|Button outline info\r\na.btn.btn-outline-white|Button outline white\r\ndiv.callout.callout-red|Callout red\r\ndiv.callout.callout-chili|Callout chili\r\ndiv.callout.callout-blue|Callout blue\r\ndiv.callout.callout-azurite|Callout azurite\r\ndiv.callout.callout-leaf|Callout leaf\r\ndiv.callout.callout-river|Callout river\r\ndiv.callout.callout-black|Callout black\r\nblockquote.blockquote|Blockquote\r\np.lead|Lead paragraph\r\nspan.h1|Text size h1\r\nspan.h2|Text size h2\r\nspan.h3|Text size h3\r\nspan.h4|Text size h4\r\nspan.h5|Text size h5\r\nspan.h6|Text size h6"
 image_upload:
   status: false
   scheme: public
