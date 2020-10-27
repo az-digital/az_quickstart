@@ -6,7 +6,6 @@ steps:
     plugin: Script
     script:
       - composer self-update
-      - composer global require hirak/prestissimo
       - if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH=main; fi
       - git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
       - cd az-quickstart-scaffolding
@@ -14,9 +13,15 @@ steps:
       - composer config use-github-api false
       - composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer install -o
-  - name: Drupal Coding Standards
+  - name: Run PHP_CodeSniffer coding standards checks
     plugin: Shell
     command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -p --colors web/profiles/custom/az_quickstart'
+  - name: Run PHPStan code quality checks
+    plugin: Script
+    script:
+      - cd $SRC_DIR/az-quickstart-scaffolding
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan-contrib.neon web/modules web/themes
   - name: Run ESLint
     plugin: Script
     script:
@@ -25,12 +30,6 @@ steps:
       - sudo n 12.18.1
       - npm install --no-progress --global eslint-config-drupal-bundle
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart && eslint --color .
-  - name: Check For Deprecated Code
-    plugin: Script
-    script:
-      - cd $SRC_DIR/az-quickstart-scaffolding
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal-check web/profiles
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/modules web/themes
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8

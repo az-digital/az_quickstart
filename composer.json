@@ -22,12 +22,12 @@
     "require": {
         "php": ">=7.0",
         "az-digital/arizona-bootstrap": "2.0.2",
-        "composer/installers": "^1.7",
-        "cweagans/composer-patches": "^1.0",
+        "composer/installers": "^1.9",
+        "cweagans/composer-patches": "^1.7",
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/cas": "1.7",
-        "drupal/core-recommended": "9.0.6",
+        "drupal/core-recommended": "9.0.7",
         "drupal/ctools": "3.4",
         "drupal/easy_breadcrumb": "1.13",
         "drupal/externalauth": "1.3",
@@ -52,7 +52,8 @@
             "drupal/core": {
                 "ajax css load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch"
+                "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
+                "Document route:<button> in LinkWidget help text": "https://www.drupal.org/files/issues/2020-06-19/3153394-2.patch"
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
