@@ -30,7 +30,7 @@ class AZCard extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function propertyDefinitions(FieldStorageDefinitionInterface $field_definition) {
-    $properties['media_id'] = DataDefinition::create('integer')
+    $properties['media_id'] = DataDefinition::create('string')
       ->setLabel(t('Card media'))
       ->setRequired(FALSE);
 
@@ -42,7 +42,7 @@ class AZCard extends FieldItemBase {
       ->setLabel(t('Card body'))
       ->setRequired(FALSE);
 
-    $properties['body_format'] = DataDefinition::create('filter_format')
+    $properties['body_format'] = DataDefinition::create('string')
       ->setLabel(t('Card body text format'))
       ->setRequired(FALSE);
 
@@ -71,16 +71,19 @@ class AZCard extends FieldItemBase {
           'description' => 'Card title',
           'type' => 'varchar',
           'length' => 255,
+          'binary' => FALSE,
         ],
         'body' => [
           'description' => 'Card body',
           'type' => 'text',
-          'size' => 'big',
+          'size' => 'normal',
+          'binary' => FALSE,
         ],
         'body_format' => [
           'description' => 'Card body text format',
-          'type' => 'varchar_ascii',
+          'type' => 'varchar',
           'length' => 255,
+          'binary' => FALSE,
         ],
         'media_id' => [
           'description' => 'Card media',
@@ -90,7 +93,7 @@ class AZCard extends FieldItemBase {
         'options' => [
           'description' => 'Serialized array of options for the card.',
           'type' => 'blob',
-          'size' => 'big',
+          'size' => 'normal',
           'serialize' => TRUE,
         ],
       ],
