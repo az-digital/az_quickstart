@@ -77,7 +77,7 @@ class AZCard extends FieldItemBase {
           'type' => 'text',
           'size' => 'big',
         ],
-        'format' => [
+        'body_format' => [
           'description' => 'Card body text format',
           'type' => 'varchar_ascii',
           'length' => 255,
