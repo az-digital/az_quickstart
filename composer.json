@@ -22,13 +22,13 @@
     "require": {
         "php": ">=7.0",
         "az-digital/arizona-bootstrap": "2.0.2",
-        "composer/installers": "^1.9.0",
-        "cweagans/composer-patches": "^1.7.0",
-	"drupal/ace_editor": "1.2",
+        "composer/installers": "^1.9",
+        "cweagans/composer-patches": "^1.7",
+        "drupal/ace_editor": "1.2",
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/cas": "1.7",
-        "drupal/core-recommended": "9.0.6",
+        "drupal/core-recommended": "9.0.7",
         "drupal/ctools": "3.4",
         "drupal/drupal-library-installer-plugin": "^0.3",
         "drupal/easy_breadcrumb": "1.13",
@@ -61,6 +61,7 @@
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
+                "Document route:<button> in LinkWidget help text": "https://www.drupal.org/files/issues/2020-06-19/3153394-2.patch",
                 "Set allowed text formats": "https://www.drupal.org/files/issues/2020-03-15/784672-164.patch"
             },
             "drupal/ctools": {
