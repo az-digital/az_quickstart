@@ -14,7 +14,8 @@
         "docs": "https://quickstart.arizona.edu/help"
     },
     "replace": {
-      "npm-asset/ace-builds": "1.0"
+      "npm-asset/ace-builds": "1.0",
+      "drupal/drupal-library-installer-plugin": "1.0"
     },
     "repositories": [
         {
