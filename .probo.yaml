@@ -6,7 +6,6 @@ steps:
     plugin: Script
     script:
       - composer self-update
-      - composer global require hirak/prestissimo
       - if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH=main; fi
       - git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
       - cd az-quickstart-scaffolding
