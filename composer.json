@@ -66,9 +66,6 @@
             },
             "drupal/easy_breadcrumb": {
                 "Easy_breadcrumb schema issue": "https://www.drupal.org/files/issues/2020-07-27/missing_schema_keys-3161765-4.patch"
-            },
-            "drupal/ace_editor": {
-                "Remove asset packagist requirement": "https://www.drupal.org/files/issues/2020-10-27/3179273-remove-asset-packagist-as-requirement.patch"
             }
         }
     }
