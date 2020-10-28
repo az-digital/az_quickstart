@@ -6,8 +6,6 @@ use Drupal\Component\Utility\Random;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\MapDataDefinition;
 
@@ -47,12 +45,12 @@ class AZCard extends FieldItemBase {
       ->setRequired(FALSE);
 
     // $properties['body_processed'] = DataDefinition::create('string')
-    //   ->setLabel(t('Processed card body'))
-    //   ->setDescription(t('The card body with the text format applied.'))
-    //   ->setComputed(TRUE)
-    //   ->setClass('\Drupal\text\TextProcessed')
-    //   ->setSetting('text source', 'body')
-    //   ->setInternal(FALSE);
+    // ->setLabel(t('Processed card body'))
+    // ->setDescription(t('The card body with the text format applied.'))
+    // ->setComputed(TRUE)
+    // ->setClass('\Drupal\text\TextProcessed')
+    // ->setSetting('text source', 'body')
+    // ->setInternal(FALSE);
 
     $properties['options'] = MapDataDefinition::create()
       ->setLabel(t('Card options'))

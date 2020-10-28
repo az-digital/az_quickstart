@@ -4,9 +4,6 @@ namespace Drupal\az_card_field\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
-use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -92,18 +89,6 @@ class AZCardFormatter extends FormatterBase implements ContainerFactoryPluginInt
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $elements = [];
     // TODO: Image styles?
-    // // Collect cache tags to be added for each item in the field.
-    // $responsive_image_style = $this->entityTypeManager->getStorage('responsive_image_style')->load($responsive_image_style_name);
-    // $image_styles_to_load = [];
-    // $cache_tags = [];
-    // if ($responsive_image_style) {
-    //   $cache_tags = Cache::mergeTags($cache_tags, $responsive_image_style->getCacheTags());
-    //   $image_styles_to_load = $responsive_image_style->getImageStyleIds();
-    // }
-    // $image_styles = $this->entityTypeManager->getStorage('image_style')->loadMultiple($image_styles_to_load);
-    // foreach ($image_styles as $image_style) {
-    //   $cache_tags = Cache::mergeTags($cache_tags, $image_style->getCacheTags());
-    // }
     foreach ($items as $delta => $item) {
       // Format title.
       $title = $item->title ?? '';
@@ -124,7 +109,7 @@ class AZCardFormatter extends FormatterBase implements ContainerFactoryPluginInt
         '#body' => check_markup($item->body, $item->body_format),
       ];
 
-      // TODO: Get classes from parent paragraph, field formatter settings, and field settings.
+      // TODO: Get classes from paragraph, field formatter, and field settings.
       $elements['#items'][$delta] = new \stdClass();
       $elements['#items'][$delta]->_attributes = [
         'class' => ['card'],
@@ -160,12 +145,13 @@ class AZCardFormatter extends FormatterBase implements ContainerFactoryPluginInt
       $image->width = NULL;
       $image->height = NULL;
 
-      // TODO: replace with responsive_image_formatter, add image style(s), add cache tags, add image classes(?).
+      // TODO: replace with responsive_image_formatter (?),
+      // add image style(s), add cache tags, add image classes(?).
       $media_render_array = [
         '#theme' => 'image_formatter',
         '#item' => $image,
         // '#item_attributes' => [
-        //   'class' => '',
+        // 'class' => '',
         // ],
         // '#url' => '',
       ];

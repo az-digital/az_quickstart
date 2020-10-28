@@ -67,22 +67,6 @@ class AZCardWidget extends WidgetBase {
         // A null media value should be saved as 0.
         $value['media_id'] = 0;
       }
-      // // Options are stored as a serialized array.
-      // if (!empty($value['options'])) {
-      //   foreach ($value['options'] as $key => $option) {
-      //     if (empty($option)) {
-      //       // Remove empty options.
-      //       unset($value['options'][$key]);
-      //     }
-      //   }
-      //   // Don't serialize an empty array.
-      //   if (!empty($value['options'])) {
-      //     $value['options'] = serialize($value['options']);
-      //   }
-      //   else {
-      //     unset($value['options']);
-      //   }
-      // }
       $value['body'] = $value['body']['value'];
       $value['body_format'] = $value['body']['format'];
       $return[$delta] = $value;
