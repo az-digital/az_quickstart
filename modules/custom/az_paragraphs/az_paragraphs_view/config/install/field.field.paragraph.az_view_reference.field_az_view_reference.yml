@@ -28,9 +28,9 @@ settings:
     feed: 0
   preselect_views: {  }
   enabled_settings:
-    limit: limit
-    title: title
     argument: argument
-    pager: pager
+    limit: 0
+    title: 0
     offset: 0
+    pager: 0
 field_type: viewsreference
