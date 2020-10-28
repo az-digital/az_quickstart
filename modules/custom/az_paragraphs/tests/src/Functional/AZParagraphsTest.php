@@ -65,6 +65,7 @@ class AZParagraphsTest extends BrowserTestBase {
       'edit any az_flexible_page content',
       'edit behavior plugin settings',
       'edit own az_flexible_page content',
+      'use text format full_html',
     ]);
 
     // Create a node for testing the paragraph bundles.
