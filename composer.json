@@ -17,10 +17,6 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/az-digital/drupal-libraries-installer-plugin"
         }
     ],
     "require": {
