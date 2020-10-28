@@ -17,7 +17,12 @@ class LoadTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['az_card_field'];
+  protected static $modules = ['az_card_field'];
+
+  /**
+   * @var string
+   */
+  protected $defaultTheme = 'seven';
 
   /**
    * A user with permission to administer site configuration.
