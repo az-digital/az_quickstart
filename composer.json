@@ -44,7 +44,8 @@
         "drupal/token": "1.7",
         "drupal/paragraphs": "1.12",
         "drupal/entity_embed": "1.1",
-        "drupal/embed": "1.4"
+        "drupal/embed": "1.4",
+        "npm-asset/ace-builds": "1.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -52,6 +53,11 @@
     "extra": {
         "branch-alias": {
             "dev-main": "2.x-dev"
+        },
+        "drupal-libraries": {
+          "libraries": [
+              {"name": "ace", "package": "npm-asset/ace-builds"}
+          ]
         },
         "patches": {
             "drupal/core": {
