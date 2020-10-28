@@ -108,7 +108,7 @@ class AZParagraphsTest extends BrowserTestBase {
     $page->pressButton('Add HTML');
 
     // Fill out the text field.
-    $page->fillField('field_az_main_content[1][subform][field_az_full_html][0][value]', '<iframe width="560" height="315" src="https://www.youtube.com/embed/jRLIJkU3YaU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="iframe-video"></iframe>');
+    $page->fillField('field_az_main_content[1][subform][field_az_full_html][0][value]', '<iframe class="iframe-video" src="https://www.youtube.com/embed/jRLIJkU3YaU"></iframe>');
 
     // Save the node.
     $page->pressButton('Save');
@@ -119,8 +119,8 @@ class AZParagraphsTest extends BrowserTestBase {
     // Check for applied bottom spacing.
     $assert->elementExists('css', '.paragraph.mb-8');
 
-    // Check for applied bottom spacing.
-    $assert->elementExists('css', '.iframe-video');
+    // Check for iframe with custom class.
+    $assert->elementExists('css', '.paragraph--type--az-html .iframe-video');
   }
 
 }
