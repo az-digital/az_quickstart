@@ -44,8 +44,7 @@
         "drupal/token": "1.7",
         "drupal/paragraphs": "1.12",
         "drupal/entity_embed": "1.1",
-        "drupal/embed": "1.4",
-        "vardot/ace": "1.2.8.1"
+        "drupal/embed": "1.4"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
