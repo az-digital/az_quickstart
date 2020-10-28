@@ -1,14 +1,21 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.az_natural_size
+    - core.entity_view_mode.media.full
+    - core.entity_view_mode.media.media_library
+    - core.entity_view_mode.media.token
   module:
     - ace_editor
+    - editor
+    - entity_embed
     - media
+_core:
+  default_config_hash: TmKpLqtbANcV5IFsiwmrViHgL3avwL8PsNViqMnJ6og
 name: 'Full HTML'
 format: full_html
 weight: 2
-roles:
-  - administrator
 filters:
   filter_htmlcorrector:
     id: filter_htmlcorrector
@@ -40,10 +47,34 @@ filters:
       print_margins: '1'
       show_invisibles: '0'
       use_wrap_mode: '1'
+  editor_file_reference:
+    id: editor_file_reference
+    provider: editor
+    status: true
+    weight: 0
+    settings: {  }
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
+    status: true
+    weight: 100
+    settings: {  }
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
+  filter_caption:
+    id: filter_caption
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
   media_embed:
     id: media_embed
     provider: media
-    status: false
+    status: true
     weight: 100
     settings:
       default_view_mode: default
