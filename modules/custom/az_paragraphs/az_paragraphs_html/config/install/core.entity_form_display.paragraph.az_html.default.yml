@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.az_html.field_az_markup
+    - field.field.paragraph.az_html.field_az_full_html
     - paragraphs.paragraphs_type.az_html
   module:
     - text
@@ -11,7 +11,7 @@ targetEntityType: paragraph
 bundle: az_html
 mode: default
 content:
-  field_az_markup:
+  field_az_full_html:
     weight: 0
     settings:
       rows: 20

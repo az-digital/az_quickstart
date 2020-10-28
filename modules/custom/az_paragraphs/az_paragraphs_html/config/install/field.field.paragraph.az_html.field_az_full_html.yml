@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_az_markup
+    - field.storage.paragraph.field_az_full_html
     - paragraphs.paragraphs_type.az_html
   module:
     - text
-id: paragraph.az_html.field_az_markup
-field_name: field_az_markup
+id: paragraph.az_html.field_az_full_html
+field_name: field_az_full_html
 entity_type: paragraph
 bundle: az_html
-label: Markup
+label: Full HTML
 description: ''
 required: true
 translatable: false
@@ -18,5 +18,5 @@ default_value: {  }
 default_value_callback: ''
 settings:
   allowed_formats:
-    - az_markup
+    - full_html
 field_type: text_long

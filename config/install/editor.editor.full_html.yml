@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.az_markup
+    - filter.format.full_html
   module:
     - ace_editor
-format: az_markup
+format: full_html
 editor: ace_editor
 settings:
   fieldset:

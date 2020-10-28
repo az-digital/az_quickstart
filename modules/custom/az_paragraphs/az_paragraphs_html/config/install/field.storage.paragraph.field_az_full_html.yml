@@ -4,8 +4,8 @@ dependencies:
   module:
     - paragraphs
     - text
-id: paragraph.field_az_markup
-field_name: field_az_markup
+id: paragraph.field_az_full_html
+field_name: field_az_full_html
 entity_type: paragraph
 type: text_long
 settings: {  }
