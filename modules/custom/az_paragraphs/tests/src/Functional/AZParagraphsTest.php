@@ -108,7 +108,7 @@ class AZParagraphsTest extends BrowserTestBase {
     $page->pressButton('Add HTML');
 
     // Fill out the text field.
-    $page->fillField('field_az_main_content[0][subform][field_az_full_html][0][value]', '<iframe width="560" height="315" src="https://www.youtube.com/embed/jRLIJkU3YaU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="iframe-video"></iframe>');
+    $page->fillField('field_az_main_content[1][subform][field_az_full_html][0][value]', '<iframe width="560" height="315" src="https://www.youtube.com/embed/jRLIJkU3YaU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="iframe-video"></iframe>');
 
     // Save the node.
     $page->pressButton('Save');
