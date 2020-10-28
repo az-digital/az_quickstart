@@ -32,6 +32,7 @@ class AZParagraphsTest extends BrowserTestBase {
    */
   protected static $modules = [
     'az_paragraphs',
+    'az_paragraphs_html',
     'az_paragraphs_text',
     'az_flexible_page',
     'node',
@@ -103,6 +104,12 @@ class AZParagraphsTest extends BrowserTestBase {
     // Fill out the bottom padding option with a test value.
     $page->fillField('field_az_main_content[0][behavior_plugins][az_default_paragraph_behavior][az_display_settings][bottom_spacing]', 'mb-8');
 
+    // Add html paragraph bundle.
+    $page->pressButton('Add HTML');
+
+    // Fill out the text field.
+    $page->fillField('field_az_main_content[0][subform][field_az_full_html][0][value]', '<iframe width="560" height="315" src="https://www.youtube.com/embed/jRLIJkU3YaU" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="iframe-video"></iframe>');
+
     // Save the node.
     $page->pressButton('Save');
 
@@ -111,6 +118,9 @@ class AZParagraphsTest extends BrowserTestBase {
 
     // Check for applied bottom spacing.
     $assert->elementExists('css', '.paragraph.mb-8');
+
+    // Check for applied bottom spacing.
+    $assert->elementExists('css', '.iframe-video');
   }
 
 }
