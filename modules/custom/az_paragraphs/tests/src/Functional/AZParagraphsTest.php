@@ -105,10 +105,10 @@ class AZParagraphsTest extends BrowserTestBase {
     // Fill out the bottom padding option with a test value.
     $page->fillField('field_az_main_content[0][behavior_plugins][az_default_paragraph_behavior][az_display_settings][bottom_spacing]', 'mb-8');
 
-    // Add html paragraph bundle.
+    // Add HTML paragraph bundle.
     $page->pressButton('Add HTML');
 
-    // Fill out the text field.
+    // Fill out the HTML field with an iframe with custom class.
     $page->fillField('field_az_main_content[1][subform][field_az_full_html][0][value]', '<iframe class="iframe-video" src="https://www.youtube.com/embed/jRLIJkU3YaU"></iframe>');
 
     // Save the node.
