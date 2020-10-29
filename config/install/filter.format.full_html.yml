@@ -10,8 +10,8 @@ name: 'Full HTML'
 format: full_html
 weight: 2
 roles:
-- administrator
-- az_content_admin
+  - administrator
+  - az_content_admin
 filters:
   filter_htmlcorrector:
     id: filter_htmlcorrector
