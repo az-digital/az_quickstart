@@ -24,7 +24,6 @@
         "az-digital/arizona-bootstrap": "2.0.2",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
-        "drupal/ace_editor": "1.2",
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/cas": "1.7",
@@ -41,7 +40,6 @@
         "drupal/paragraphs": "1.12",
         "drupal/entity_embed": "1.1",
         "drupal/embed": "1.4",
-        "npm-asset/ace-builds": "~1.0",
         "drupal/viewsreference": "2.0-beta2"
     },
     "require-dev": {
@@ -50,11 +48,6 @@
     "extra": {
         "branch-alias": {
             "dev-main": "2.x-dev"
-        },
-        "drupal-libraries": {
-          "libraries": [
-              {"name": "ace", "package": "npm-asset/ace-builds"}
-          ]
         },
         "patches": {
             "drupal/core": {

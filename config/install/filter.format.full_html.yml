@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   module:
-    - ace_editor
     - editor
     - entity_embed
     - media
@@ -28,21 +27,6 @@ filters:
       allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id>'
       filter_html_help: true
       filter_html_nofollow: false
-  ace_filter:
-    id: ace_filter
-    provider: ace_editor
-    status: false
-    weight: 0
-    settings:
-      theme: cobalt
-      syntax: html
-      height: ''
-      width: 100%
-      font_size: 12pt
-      line_numbers: '1'
-      print_margins: '1'
-      show_invisibles: '0'
-      use_wrap_mode: '1'
   editor_file_reference:
     id: editor_file_reference
     provider: editor
