@@ -29,7 +29,6 @@ jobs:
           ref: ${{ env.SCAFFOLD_BRANCH }}
       - name: Install dependencies
         run: |
-          composer global require hirak/prestissimo
           cd az-quickstart-scaffolding
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
@@ -49,7 +48,6 @@ jobs:
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Install dependencies
         run: |
-          composer global require hirak/prestissimo
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi
           git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
           cd az-quickstart-scaffolding
