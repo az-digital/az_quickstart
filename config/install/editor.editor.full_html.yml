@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  config:
-    - filter.format.full_html
-format: full_html
-editor: ace_editor
-settings:
-image_upload: {  }
