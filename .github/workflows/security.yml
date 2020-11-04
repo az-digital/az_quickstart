@@ -1,10 +1,8 @@
 name: Security workflow
-
 on:
   push:
-  schedule:
-    - cron:  '0 13 * * *'
-
+    schedule:
+      - cron:  '0 13 * * *'
 jobs:
   dependency-audit:
     name: Dependency Check
@@ -59,3 +57,5 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           composer phpcs
+
+
