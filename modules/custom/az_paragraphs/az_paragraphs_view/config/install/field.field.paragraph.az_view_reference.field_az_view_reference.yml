@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_view_reference
+    - paragraphs.paragraphs_type.az_view_reference
+  module:
+    - viewsreference
+id: paragraph.az_view_reference.field_az_view_reference
+field_name: field_az_view_reference
+entity_type: paragraph
+bundle: az_view_reference
+label: View
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:view'
+  handler_settings:
+    target_bundles: null
+    auto_create: 0
+  plugin_types:
+    default: default
+    page: page
+    block: block
+    feed: 0
+  preselect_views: {  }
+  enabled_settings:
+    argument: argument
+    limit: 0
+    title: 0
+    offset: 0
+    pager: 0
+field_type: viewsreference
