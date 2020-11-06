@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_html.field_az_full_html
+    - paragraphs.paragraphs_type.az_html
+  module:
+    - text
+id: paragraph.az_html.default
+targetEntityType: paragraph
+bundle: az_html
+mode: default
+content:
+  field_az_full_html:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }
