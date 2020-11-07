@@ -1,6 +1,6 @@
-name: 'AZ Card Field'
+name: 'AZ Card'
 type: module
-description: 'Custom composite Field API card implementation and theme template for cards.'
+description: 'Custom field plugins and theme template for cards.'
 core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:

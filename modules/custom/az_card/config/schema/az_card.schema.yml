@@ -1,0 +1,33 @@
+# Default value.
+# TODO: change options to type: mapping, add card style options
+field.value.az_card:
+  type: mapping
+  label: Default value
+  mapping:
+    title:
+      type: string
+      label: Card Title
+    body:
+      type: text
+      label: Card Body
+    media:
+      type: integer
+      label: Card Media
+    link_title:
+      type: string
+      label: Card Link Title
+    link_uri:
+      type: uri
+      label: Card Link URI
+    options:
+      type: text
+      label: Card Options
+# Field formatter.
+# TODO: add card style options
+field.formatter.settings.az_card_default:
+  type: mapping
+  label: Example formatter settings
+  mapping:
+    foo:
+      type: string
+      label: Foo

@@ -1,28 +1,27 @@
 <?php
 
-namespace Drupal\az_card_field\Plugin\Field\FieldFormatter;
+namespace Drupal\az_card\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Url;
 use Drupal\media\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Plugin implementation of the 'az_card' formatter.
+ * Plugin implementation of the 'az_card_default' formatter.
  *
  * @FieldFormatter(
- *   id = "az_card",
- *   label = @Translation("Flexible card formatter"),
- *   field_types = {
- *     "az_card"
- *   }
+ *   id = "az_card_default",
+ *   label = @Translation("Default"),
+ *   field_types = {"az_card"}
  * )
  */
-class AZCardFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+class CardDefaultFormatter extends FormatterBase {
 
   /**
    * The entity type manager service.
@@ -86,42 +85,85 @@ class AZCardFormatter extends FormatterBase implements ContainerFactoryPluginInt
   /**
    * {@inheritdoc}
    */
+  public static function defaultSettings() {
+    return ['foo' => 'bar'] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $settings = $this->getSettings();
+
+    // TODO: Card style selection (based on custom config entities).
+    $element['foo'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Foo'),
+      '#default_value' => $settings['foo'],
+    ];
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $settings = $this->getSettings();
+    $summary[] = $this->t('Foo: @foo', ['@foo' => $settings['foo']]);
+    return $summary;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-    $elements = [];
-    // TODO: Image styles?
+    $element = [];
+
     foreach ($items as $delta => $item) {
+
       // Format title.
       $title = $item->title ?? '';
 
       // Media.
       $media_render_array = [];
-      if ($media = $this->entityTypeManager->getStorage('media')->load($item->media_id)) {
+      if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
         switch ($media->bundle()) {
           case 'az_image':
             $media_render_array = $this->generateImageRenderArray($media);
             break;
         }
       }
-      $elements[] = [
+
+      // Link.
+      $link_render_array = [];
+      if ($item->link_title || $item->link_uri) {
+        $link_render_array = [
+          '#type' => 'link',
+          '#title' => $item->link_title ?? '',
+          '#url' => $item->link_uri ? Url::fromUri($item->link_uri) : '#',
+        ];
+      }
+
+      $element[] = [
         '#theme' => 'az_card',
         '#media' => $media_render_array,
         '#title' => $title,
         '#body' => check_markup($item->body, $item->body_format),
+        '#link' => $link_render_array,
       ];
 
       // TODO: Get classes from paragraph, field formatter, and field settings.
-      $elements['#items'][$delta] = new \stdClass();
-      $elements['#items'][$delta]->_attributes = [
+      $element['#items'][$delta] = new \stdClass();
+      $element['#items'][$delta]->_attributes = [
         'class' => ['card'],
       ];
-      $elements['#attributes']['class'][] = 'content';
-      $elements['#attributes']['class'][] = 'h-100';
-      $elements['#attributes']['class'][] = 'pb-4';
+      $element['#attributes']['class'][] = 'content';
+      $element['#attributes']['class'][] = 'h-100';
+      $element['#attributes']['class'][] = 'pb-4';
 
     }
-    // $elements['#attached']['library'][] = 'az_card_field/az_card';
-    return $elements;
 
+    return $element;
   }
 
   /**
@@ -133,7 +175,7 @@ class AZCardFormatter extends FormatterBase implements ContainerFactoryPluginInt
    * @return string[]
    *   An image render array.
    */
-  private function generateImageRenderArray(MediaInterface $media) {
+  protected function generateImageRenderArray(MediaInterface $media) {
     $media_render_array = [];
     $media_attributes = $media->get('field_media_az_image')->getValue();
     if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {

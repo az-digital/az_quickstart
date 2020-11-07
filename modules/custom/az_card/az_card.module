@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains az_card_field.module.
+ * Contains az_card.module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -10,13 +10,13 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function az_card_field_help($route_name, RouteMatchInterface $route_match) {
+function az_card_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-    // Main module help for the az_card_field module.
-    case 'help.page.az_card_field':
+    // Main module help for the az_card module.
+    case 'help.page.az_card':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Custom composite Field API card implementation.') . '</p>';
+      $output .= '<p>' . t('Custom field plugins and theme template for cards.') . '</p>';
       return $output;
 
     default:
@@ -26,7 +26,7 @@ function az_card_field_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_theme().
  */
-function az_card_field_theme($existing, $type, $theme, $path) {
+function az_card_theme($existing, $type, $theme, $path) {
   return [
     'az_card' => [
       'variables' => [
