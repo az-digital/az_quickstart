@@ -7,6 +7,7 @@
  * Provides theme settings for Arizona Barrio.
  */
 
+//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;

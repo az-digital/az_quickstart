@@ -123,10 +123,9 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['az_barrio_navbar_offcanvas'] = (theme_get_setting('az_barrio_navbar_offcanvas')) ? TRUE : FALSE;
   $variables['navbar_offcanvas_attributes'] = [
     'class' => [ 'navbar-offcanvas' ],
-       'id' => 'navbar-top',
+    'id' => 'navbar-top',
   ];
-  // Attach Arizona Bootstrap & Brand icon assets.
-  $variables['#attached']['library'][] = 'az_barrio/az-brand-icons';
+  // Attach Arizona Bootstrap.
   $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
 
   // Allow hiding of title of front page node.
@@ -195,7 +194,6 @@ function az_barrio_theme_suggestions_container_alter(array &$suggestions, array 
   if (isset($element['#type']) && $element['#type'] === 'container' && isset($element['children']['#type'])) {
     $suggestions[] = 'container__' . $element['children']['#type'];
   }
-
   if (isset($element['#type']) && $element['#type'] === 'view') {
     $suggestions[] = 'container__view__' . $element['#name'];
     $suggestions[] = 'container__view__' . $element['#name'] . '__' . $element['#display_id'];
@@ -312,12 +310,10 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     else {
       $az_brand_icons_css_info['type'] = 'file';
     }
-
     $libraries['az-brand-icons']['css']['theme'] = [
       $az_brand_icons_path => $az_brand_icons_css_info,
     ];
-
-    if (theme_get_setting('use_material_design_sharp_icons') === true) {
+    if (theme_get_setting('use_material_design_sharp_icons') === TRUE) {
     $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
     }
   }
