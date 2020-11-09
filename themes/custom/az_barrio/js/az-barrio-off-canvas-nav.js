@@ -2,8 +2,9 @@
   Drupal.behaviors.myModuleBehavior = {
     attach: function (context, settings) {
       $('#navbarOffcanvasDemo').on('opened.az.offcanvasmenu', function (e) {
-        console.log(e);
-        //$('#myInput').trigger('focus')
+	if ($(e.target.ownerDocument.activeElement).attr('id') === 'jsAzSearch') {
+          $('#search-block-form--2 input').trigger('focus');
+	}
       });
     }
   };
