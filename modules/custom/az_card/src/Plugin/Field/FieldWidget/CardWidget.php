@@ -13,7 +13,9 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  * @FieldWidget(
  *   id = "az_card",
  *   label = @Translation("Card"),
- *   field_types = {"az_card"},
+ *   field_types = {
+ *     "az_card"
+ *   }
  * )
  */
 class CardWidget extends WidgetBase {
@@ -89,8 +91,8 @@ class CardWidget extends WidgetBase {
       if ($value['body'] === '') {
         $values[$delta]['body'] = NULL;
       }
-      if ($value['media'] === '') {
-        $values[$delta]['media'] = NULL;
+      if (empty($value['media'])) {
+        $values[$delta]['media'] = 0;
       }
       if ($value['link_title'] === '') {
         $values[$delta]['link_title'] = NULL;

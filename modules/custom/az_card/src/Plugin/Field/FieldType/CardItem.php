@@ -26,22 +26,12 @@ class CardItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public function isEmpty() {
-    if ($this->title !== NULL) {
-      return FALSE;
-    }
-    elseif ($this->body !== NULL) {
-      return FALSE;
-    }
-    elseif ($this->media !== NULL) {
-      return FALSE;
-    }
-    elseif ($this->link_title !== NULL) {
-      return FALSE;
-    }
-    elseif ($this->link_uri !== NULL) {
-      return FALSE;
-    }
-    return TRUE;
+    $title = $this->get('title')->getValue();
+    $body = $this->get('body')->getValue();
+    $media = $this->get('media')->getValue();
+    $link_title = $this->get('link_title')->getValue();
+    $link_uri = $this->get('link_uri')->getValue();
+    return empty($title) && empty($body) && empty($media) && empty($link_title) && empty($link_uri);
   }
 
   /**
