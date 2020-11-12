@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  *   }
  * )
  */
-class CardWidget extends WidgetBase {
+class AZCardWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}

@@ -20,7 +20,7 @@ use Drupal\Core\TypedData\MapDataDefinition;
  *   default_formatter = "az_card_default"
  * )
  */
-class CardItem extends FieldItemBase {
+class AZCardItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}

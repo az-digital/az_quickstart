@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-class CardDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type manager service.
