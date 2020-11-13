@@ -17,7 +17,6 @@ permissions:
   - 'create content translations'
   - 'create new books'
   - 'create terms in tags'
-  - 'delete any article content'
   - 'delete any az_audio media'
   - 'delete any az_document media'
   - 'delete any az_flexible_page content'
