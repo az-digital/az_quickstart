@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_view_reference.field_az_view_reference
+    - paragraphs.paragraphs_type.az_view_reference
+  module:
+    - viewsreference
+id: paragraph.az_view_reference.default
+targetEntityType: paragraph
+bundle: az_view_reference
+mode: default
+content:
+  field_az_view_reference:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: viewsreference_select
+    region: content
+hidden:
+  created: true
+  status: true

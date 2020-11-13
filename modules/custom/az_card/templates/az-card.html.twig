@@ -1,0 +1,34 @@
+{#
+/**
+ * @file
+ * Theme implementation to display an AZ Card.
+ *
+ * Available variables:
+ * - attributes: Card element attributes.
+ * - media: The media field of a card.
+ * - title: The title field of a card..
+ * - body: The body field of a card.
+ * - link: The link field on a card.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set attributes = attributes.addClass('card') %}
+
+<div{{ attributes }}>
+  {% if media %}
+    {{ media }}
+  {% endif %}
+  <div class="card-body">
+    {% if title %}
+      <h3 class="h5 bold mt-0">{{ title }}</h3>
+    {% endif %}
+    {% if body %}
+      <div class="card-text">{{ body }}</div>
+    {% endif %}
+    {% if link %}
+      <div class="mt-auto">{{ link }}</div>
+    {% endif %}
+  </div>
+</div>

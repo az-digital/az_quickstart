@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_paragraphs
+id: az_html
+label: HTML
+icon_uuid: null
+icon_default: null
+description: 'Add markup that can not be added with a text area or embedded media.'
+behavior_plugins:
+  az_default_paragraph_behavior:
+    enabled: false

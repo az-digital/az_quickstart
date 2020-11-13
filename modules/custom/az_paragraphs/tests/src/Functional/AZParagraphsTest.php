@@ -32,6 +32,7 @@ class AZParagraphsTest extends BrowserTestBase {
    */
   protected static $modules = [
     'az_paragraphs',
+    'az_paragraphs_html',
     'az_paragraphs_text',
     'az_flexible_page',
     'node',
@@ -64,6 +65,7 @@ class AZParagraphsTest extends BrowserTestBase {
       'edit any az_flexible_page content',
       'edit behavior plugin settings',
       'edit own az_flexible_page content',
+      'use text format full_html',
     ]);
 
     // Create a node for testing the paragraph bundles.
@@ -103,6 +105,12 @@ class AZParagraphsTest extends BrowserTestBase {
     // Fill out the bottom padding option with a test value.
     $page->fillField('field_az_main_content[0][behavior_plugins][az_default_paragraph_behavior][az_display_settings][bottom_spacing]', 'mb-8');
 
+    // Add HTML paragraph bundle.
+    $page->pressButton('Add HTML');
+
+    // Fill out the HTML field with an iframe with custom class.
+    $page->fillField('field_az_main_content[1][subform][field_az_full_html][0][value]', '<iframe class="iframe-video" src="https://www.youtube.com/embed/jRLIJkU3YaU"></iframe>');
+
     // Save the node.
     $page->pressButton('Save');
 
@@ -111,6 +119,9 @@ class AZParagraphsTest extends BrowserTestBase {
 
     // Check for applied bottom spacing.
     $assert->elementExists('css', '.paragraph.mb-8');
+
+    // Check for iframe with custom class.
+    $assert->elementExists('css', '.paragraph--type--az-html .iframe-video');
   }
 
 }
