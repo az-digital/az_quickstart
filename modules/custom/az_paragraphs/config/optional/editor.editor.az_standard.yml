@@ -44,6 +44,7 @@ settings:
         -
           name: Structure
           items:
+            - bs_grid
             - Table
             - HorizontalRule
             - Blockquote
