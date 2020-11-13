@@ -41,7 +41,8 @@
         "drupal/entity_embed": "1.1",
         "drupal/embed": "1.4",
         "drupal/viewsreference": "2.0-beta2",
-        "drupal/ckeditor_bs_grid": "2.0.3"
+        "drupal/ckeditor_bs_grid": "2.0.3",
+        "drupal/media_library_form_element": "2.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -56,7 +57,8 @@
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
                 "Document route:<button> in LinkWidget help text": "https://www.drupal.org/files/issues/2020-06-19/3153394-2.patch",
-                "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2020-03-15/784672-164.patch"
+                "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2020-03-15/784672-164.patch",
+                "Nested Paragraphs create multiple drag handles": "https://www.drupal.org/files/issues/2020-08-19/3092181-124-reroll.patch"
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"

@@ -1,0 +1,4 @@
+az_card:
+  css:
+    component:
+      css/az-card-widget.css: {}
