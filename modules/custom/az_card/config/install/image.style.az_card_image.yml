@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: az_card_image
+label: 'Card Image'
+effects:
+  676b4920-ac86-41a2-8ebc-2ca28b731d74:
+    uuid: 676b4920-ac86-41a2-8ebc-2ca28b731d74
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 568
+      height: 426
+      anchor: center-center

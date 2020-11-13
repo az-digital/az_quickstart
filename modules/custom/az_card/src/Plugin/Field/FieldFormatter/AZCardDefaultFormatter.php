@@ -12,6 +12,7 @@ use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\media\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Plugin implementation of the 'az_card_default' formatter.
@@ -144,8 +145,32 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
           '#url' => $item->link_uri ? Url::fromUri($item->link_uri) : '#',
+          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
+
+      $card_classes = 'card';
+      $column_classes = 'col-xs-12 col-sm-12 col-md-6 col-lg-4';
+      $parent = $item->getEntity();
+
+      // Get settings from parent paragraph.
+      if (!empty($parent)) {
+        if ($parent instanceof ParagraphInterface) {
+          // Get the behavior settings for the parent.
+          $parent_config = $parent->getAllBehaviorSettings();
+
+          // See if the parent behavior defines some card-specific settings.
+          if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+            $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+            $column_classes = $card_defaults['card_width'] ?? 'col-xs-12 col-sm-12 col-md-6 col-lg-4';
+            $card_classes = $card_defaults['card_border'] ?? 'card';
+          }
+
+        }
+      }
+
+      $column_classes = explode(' ', $column_classes);
+      $column_classes[] = 'pb-4';
 
       $element[] = [
         '#theme' => 'az_card',
@@ -153,17 +178,19 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#title' => $title,
         '#body' => check_markup($item->body, $item->body_format),
         '#link' => $link_render_array,
+        '#attributes' => ['class' => $card_classes],
       ];
 
-      // TODO: Get classes from paragraph, field formatter, and field settings.
       $element['#items'][$delta] = new \stdClass();
       $element['#items'][$delta]->_attributes = [
-        'class' => ['card'],
+        'class' => $column_classes,
       ];
+
       $element['#attributes']['class'][] = 'content';
       $element['#attributes']['class'][] = 'h-100';
-      $element['#attributes']['class'][] = 'pb-4';
-
+      $element['#attributes']['class'][] = 'row';
+      $element['#attributes']['class'][] = 'd-flex';
+      $element['#attributes']['class'][] = 'flex-wrap';
     }
 
     return $element;
@@ -195,6 +222,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $media_render_array = [
         '#theme' => 'image_formatter',
         '#item' => $image,
+        '#image_style' => 'az_card_image',
         // '#item_attributes' => [
         // 'class' => '',
         // ],
