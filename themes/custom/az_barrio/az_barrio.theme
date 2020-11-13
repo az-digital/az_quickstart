@@ -18,8 +18,7 @@ use Drupal\Core\Render\Element;
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_barrio_theme_suggestions_form_element_alter(&$suggestions, $variables) {
-  $suggestions = ['form_element__type__' . $variables['element']['#type']];
-  if (isset($variables['element']['#form_id'])) {
+  if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'form_element__form_id__' . $variables['element']['#form_id'];
     $suggestions[] = 'form_element__' . $variables['element']['#form_id'] . '__' . $variables['element']['#type'];
   }
@@ -29,14 +28,8 @@ function az_barrio_theme_suggestions_form_element_alter(&$suggestions, $variable
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_barrio_theme_suggestions_form_element_label_alter(&$suggestions, $variables) {
-  if (isset($variables['element']['#form_element_type'])) {
-    $suggestions[] = 'form_element_label__type__' . $variables['element']['#form_element_type'];
-  }
-  if (isset($variables['element']['#form_id'])) {
+  if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'form_element_label__form-id__' . $variables['element']['#form_id'];
-  }
-  if (isset($variables['element']['#form_element_type']) && isset($variables['element']['#form_id'])) {
-    $suggestions[] = 'form_element_label__' . $variables['element']['#form_id'] . '__' . $variables['element']['#form_element_type'];
   }
 }
 
@@ -44,13 +37,10 @@ function az_barrio_theme_suggestions_form_element_label_alter(&$suggestions, $va
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_barrio_theme_suggestions_input_alter(&$suggestions, $variables) {
-  if (isset($variables['element']['#type'])) {
-    $suggestions[] = 'input__' . $variables['element']['#type'];
-  }
-  if (isset($variables['element']['#form_id'])) {
+  if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'input__' . $variables['element']['#form_id'];
   }
-  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id'])) {
+  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'input__' . $variables['element']['#form_id'] . '__' . $variables['element']['#type'];
   }
 }
@@ -59,14 +49,8 @@ function az_barrio_theme_suggestions_input_alter(&$suggestions, $variables) {
  * Implements hook_preprocess_form_element().
  */
 function az_barrio_preprocess_form_element(array &$variables) {
-  if (!isset($variables['label'])) {
-    return;
-  }
-  if (isset($variables['element']['#form_id'])) {
+  if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $variables['label']['#form_id'] = $variables['element']['#form_id'];
-  }
-  if (isset($variables['element']['#type'])) {
-    $variables['label']['#form_element_type'] = $variables['element']['#type'];
   }
 }
 
@@ -74,7 +58,9 @@ function az_barrio_preprocess_form_element(array &$variables) {
  * Implements hook_form_alter().
  */
 function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  az_barrio_attach_form_id($form, $form_id);
+  if( $form_id === 'search_block_form') {
+    az_barrio_attach_form_id($form, $form_id);
+  }
 }
 
 /**
@@ -88,11 +74,13 @@ function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) 
  * @return array
  */
 function az_barrio_attach_form_id(&$form, $form_id) {
-  foreach (Element::children($form) as $child) {
-    if (!isset($form[$child]['#form_id'])) {
-      $form[$child]['#form_id'] = $form_id;
+  if ($form_id === 'search_block_form') {
+    foreach (Element::children($form) as $child) {
+      if (!isset($form[$child]['#form_id'])) {
+        $form[$child]['#form_id'] = $form_id;
+      }
+      az_barrio_attach_form_id($form[$child], $form_id);
     }
-    az_barrio_attach_form_id($form[$child], $form_id);
   }
 }
 
