@@ -30,6 +30,7 @@ class QuickstartConfigInstaller extends ConfigInstaller {
     }
     $config_install_path = $this
       ->getDefaultConfigDirectory($type, $name);
+    //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
     if (!is_dir($config_install_path)) {
       return;
     }
@@ -96,11 +97,14 @@ class QuickstartConfigInstaller extends ConfigInstaller {
 
     $modified_configuration = [];
     $allowed_overrides = [];
+    // @phpstan-ignore-next-line
     $app_root = \Drupal::root();
     $filename = $app_root . '/' . drupal_get_path($type, $name) . '/' . $name . '.az_config_overrides.yml';
 
+    //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
     if (file_exists($filename)) {
       // If an override file exists, parse it for overrides.
+      //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
       $yaml = Yaml::decode(file_get_contents($filename));
       if (!empty($yaml['overrides'])) {
         foreach ($yaml['overrides'] as $override) {

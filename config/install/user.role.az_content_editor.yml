@@ -46,6 +46,7 @@ permissions:
   - 'edit any az_flexible_page content'
   - 'edit any book content'
   - 'edit any page content'
+  - 'edit behavior plugin settings'
   - 'edit own article content'
   - 'edit own az_document media'
   - 'edit own az_flexible_page content'

@@ -29,7 +29,7 @@ class AZDemoContentTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = [
+  protected static $modules = [
     'az_demo',
   ];
 
