@@ -59,10 +59,6 @@
  * @see template_preprocess_node()
  */
 #}
-<div class="callout callout-bloom">
-  <p><strong>Devel debugging information</strong></p>
-  {{ devel_dump(content) }}
-</div>
 
 {{ attach_library('bootstrap_barrio/node') }}
 
@@ -79,97 +75,29 @@
 %}
 <article{{ attributes.addClass(classes) }}>
   <header>
+    {# These appear to allow edit & quickedit to display #}
     {{ title_prefix }}
-    {% if label and not page %}
-      <h2{{ title_attributes.addClass('node__title') }}>
-        <a href="{{ url }}" rel="bookmark">{{ label }}</a>
-      </h2>
-    {% endif %}
     {{ title_suffix }}
-    {% if display_submitted %}
-      <div class="node__meta">
-        {{ author_picture }}
-        {% block submitted %}
-          <em{{ author_attributes }}>
-            {% trans %}Submitted by {{ author_name }} on {{ date }}{% endtrans %}
-          </em>
-        {% endblock %}
-        {{ metadata }}
-      </div>
-    {% endif %}
   </header>
   <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
-    <div class="row">
-      <div class="col-12 d-md-none">
-        <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
+    <div class="card">
+      <img src="{{ file_url(content.field_az_photo['#items'].entity.uri.value) }}" alt="content.field_az_photo.alt" class="card-img-top" />
+      <div class="card-body">
+        <h3 class="mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h3>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
-            <span class="h4 d-block mt-0">{{ item }}</span>
+            <span class="d-block">{{ item }}</span>
           {% endfor %}
         {% endif %}
       </div>
-
-      <div class="col-12 col-md-4">
-        <div class="card">
-          <img src="{{ file_url(content.field_az_photo['#items'].entity.uri.value) }}" alt="content.field_az_photo.alt" class="card-img-top" />
-          <div class="card-body pb-0">
-            {{ content.field_az_addresses.0 }}
-          </div>
-          <ul class="list-group list-group-flush border-0 py-3">
-          {% if content.field_az_phones %}
-            {% for key, item in content.field_az_phones if key|first != '#' %}
-              <li class="list-group-item border-0 py-0">{{ item }}</li>
-            {% endfor %}
-          {% endif %}
-          <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
-          {% if content.field_az_links %}
-            {% for key, item in content.field_az_links if key|first != '#' %}
-              <li class="list-group-item border-0 py-0">{{ item }}</li>
-            {% endfor %}
-          {% endif %}
-          </ul>
-          {% if content.field_az_cv_documents %}
-          <ul class="list-group list-group-flush border-0 py-3">
-            {% for key, item in content.field_az_cv_documents if key|first != '#' %}
-              <li class="list-group-item border-0 py-0">{{ item }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-12 col-md-8">
-        <div class="d-none d-md-block">
-          <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
-          {% if content.field_az_titles[0] %}
-            {% for key, item in content.field_az_titles if key|first != '#' %}
-              <span class="h4 d-block mt-0">{{ item }}</span>
-            {% endfor %}
-          {% endif %}
-        </div>
-
-        {{ content.field_az_bio }}
-
-        {% if content.field_az_degrees[0] %}
-          <h2 class="h3">Degrees</h2>
-          <ul>
-          {% for key, item in content.field_az_degrees if key|first != '#' %}
-            <li>{{ item }}</li>
-          {% endfor %}
-          </ul>
-        {% endif %}
-
-        {% if content.field_az_person_category %}
-          {% for key, item in content.field_az_person_category if key|first != '#' %}
-            <a href="{{ item['#url'] }}" class="badge badge-light badge-link">{{ item['#title'] }}</a>
-          {% endfor %}
-        {% endif %}
-        {% if content.field_az_person_category_sec %}
-          {% for key, item in content.field_az_person_category_sec if key|first != '#' %}
-            <a href="{{ item['#url'] }}" class="badge badge-light badge-link">{{ item['#title'] }}</a>
-          {% endfor %}
-        {% endif %}
-      </div>
+      <ul class="list-group list-group-flush border-0 pb-3">
+      {% if content.field_az_phones %}
+        {% for key, item in content.field_az_phones if key|first != '#' %}
+          <li class="list-group-item border-0 py-0">{{ item }}</li>
+        {% endfor %}
+      {% endif %}
+        <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
+      </ul>
     </div>
   </div>
 </article>
