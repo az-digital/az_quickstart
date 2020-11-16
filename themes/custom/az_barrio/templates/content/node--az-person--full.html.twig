@@ -59,8 +59,8 @@
  * @see template_preprocess_node()
  */
 #}
- <div class="callout callout-bloom">
-  <p><strong>Content should be here</strong></p>
+<div class="callout callout-bloom">
+  <p><strong>Devel debugging information</strong></p>
   {{ devel_dump(content) }}
 </div>
 
@@ -98,5 +98,57 @@
       </div>
     {% endif %}
   </header>
-  <div{{ content_attributes.addClass('node__content', 'clearfix') }}></div>
+  <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
+    <div class="row">
+      <div class="col-12 d-md-none">
+        <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
+        {% if content.field_az_titles[0] %}
+          {% for key, item in content.field_az_titles if key|first != '#' %}
+            <span class="h4 d-block mt-0">{{ item }}</span>
+          {% endfor %}
+        {% endif %}
+        <span class="h4">{{ content.field_az_titles.is_multiple }}</span>
+      </div>
+
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <img src="{{ file_url(content.field_az_photo['#items'].entity.uri.value) }}" alt="content.field_az_photo.alt" class="card-img-top" />
+          <div class="card-body pb-0">
+            {{ content.field_az_addresses.0 }}
+          </div>
+          <ul class="list-group list-group-flush border-0 py-3">
+            <li class="list-group-item border-0 py-0">{{ content.field_az_phones }}</li>
+            <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
+            {% if content.field_az_links %}
+              {% for key, item in content.field_az_links if key|first != '#' %}
+                <li class="list-group-item border-0 py-0">{{ item }}</li>
+              {% endfor %}
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+      
+      <div class="col-12 col-md-8">
+        <div class="d-none d-md-block">
+          <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
+          {% if content.field_az_titles[0] %}
+            {% for key, item in content.field_az_titles if key|first != '#' %}
+              <span class="h4 d-block mt-0">{{ item }}</span>
+            {% endfor %}
+          {% endif %}
+        </div>
+
+        {{ content.field_az_bio }}
+
+        {% if content.field_az_degrees[0] %}
+          <h2 class="h3">Degrees</h2>
+          <ul>
+            {% for key, item in content.field_az_degrees if key|first != '#' %}
+              <li>{{ item }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </article>

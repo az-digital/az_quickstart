@@ -43,7 +43,8 @@
         "drupal/viewsreference": "2.0-beta2",
         "drupal/auto_entitylabel": "3.0-beta3",
         "drupal/views_bootstrap": "4.3",
-        "drupal/devel": "4.0.1"
+        "drupal/devel": "4.0.1",
+        "kint-php/kint": "^3.3"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
