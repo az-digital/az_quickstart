@@ -81,9 +81,11 @@
   </header>
   <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
     <div class="card">
-      <img src="{{ file_url(content.field_az_photo['#items'].entity.uri.value) }}" alt="content.field_az_photo.alt" class="card-img-top" />
+      <a href="{{ url }}">
+        <img src="{{ file_url(content.field_az_photo['#items'].entity.uri.value) }}" alt="content.field_az_photo.alt" class="card-img-top" />
+      </a>
       <div class="card-body">
-        <h3 class="mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h3>
+        <h3 class="h4 mt-0"><a href="{{ url }}">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</a></h3>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
             <span class="d-block">{{ item }}</span>
