@@ -97,7 +97,7 @@
   <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
     <div class="row">
       <div class="col-12 d-md-none">
-        <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
+        <h1 class="text-blue mt-0">{{ content.title }}</h1>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
             <span class="h4 d-block mt-0">{{ item }}</span>
@@ -127,7 +127,7 @@
           {% if content.field_az_cv_documents %}
           <ul class="list-group list-group-flush border-0 py-3">
             {% for key, item in content.field_az_cv_documents if key|first != '#' %}
-              <li class="list-group-item border-0 py-0">{{ item }}</li>
+              <li class="list-group-item text-break border-0 py-0">{{ item }}</li>
             {% endfor %}
           </ul>
           {% endif %}

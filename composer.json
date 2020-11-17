@@ -44,7 +44,8 @@
         "drupal/auto_entitylabel": "3.0-beta3",
         "drupal/views_bootstrap": "4.3",
         "drupal/devel": "4.0.1",
-        "kint-php/kint": "^3.3"
+        "kint-php/kint": "^3.3",
+        "drupal/draggableviews": "2.0.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -66,6 +67,9 @@
             },
             "drupal/easy_breadcrumb": {
                 "Easy_breadcrumb schema issue": "https://www.drupal.org/files/issues/2020-07-27/missing_schema_keys-3161765-4.patch"
+            },
+            "drupal/draggableviews": {
+                "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
             }
         }
     }
