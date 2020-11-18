@@ -150,7 +150,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       }
 
       $card_classes = 'card';
-      $column_classes = 'col-xs-12 col-sm-12 col-md-6 col-lg-4';
+      $column_classes = [];
+      $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
 
       // Get settings from parent paragraph.
@@ -162,13 +163,22 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           // See if the parent behavior defines some card-specific settings.
           if (!empty($parent_config['az_cards_paragraph_behavior'])) {
             $card_defaults = $parent_config['az_cards_paragraph_behavior'];
-            $column_classes = $card_defaults['card_width'] ?? 'col-xs-12 col-sm-12 col-md-6 col-lg-4';
+
+            // Set card classes according to behavior settings.
+            $column_classes = [];
+            if (!empty($card_defaults['az_display_settings'])) {
+              $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
+              $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-6';
+            }
+            $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
             $card_classes = $card_defaults['card_style'] ?? 'card';
           }
 
         }
       }
 
+      // Handle class keys that contained multiple classes.
+      $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
 
@@ -223,9 +233,10 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#theme' => 'image_formatter',
         '#item' => $image,
         '#image_style' => 'az_card_image',
-        // '#item_attributes' => [
-        // 'class' => '',
-        // ],
+        // Support images smaller than card width, eg. full width cards.
+        '#item_attributes' => [
+          'class' => ['w-100'],
+        ],
         // '#url' => '',
       ];
       // Add the file entity to the cache dependencies.
