@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * @file
+ * Contains az_person.module.
+ */
+
+function az_person_preprocess_node__az_person(&$variables) {
+  // dpm($variables);
+  $variables['#attached']['library'][] = 'az_person/az_person';
+  
+}

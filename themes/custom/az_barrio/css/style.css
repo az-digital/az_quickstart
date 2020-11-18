@@ -512,6 +512,27 @@ a.search-input-link:hover {
   width: 17rem;
 }
 
+/* overrides Bootstrap Barrio image field styles */
+@media all and (min-width: 560px) {
+  .node .field--type-image {
+    float: initial; /* LTR */
+    margin: initial; /* LTR */
+  }
+  [dir="rtl"] .node .field--type-image {
+    float: initial;
+    margin: initial;
+  }
+  .node .field--type-image + .field--type-image {
+    clear: initial;
+  }
+}
+.field--type-image img,
+.field--name-field-user-picture img {
+  margin: initial;
+}
+/* end Bootstrap Barrio image field styles */
+
+
 @media (min-width: 576px) {
   .header .search-block-form {
     float: right;

@@ -1,0 +1,8 @@
+uuid: 87bf2522-a9ed-4162-9ef1-d88180192858
+langcode: en
+status: true
+dependencies: {  }
+name: 'Person Categories'
+vid: az_person_categories
+description: 'Taxonomy for categorizing people'
+weight: 0

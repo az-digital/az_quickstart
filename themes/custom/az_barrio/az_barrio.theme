@@ -313,3 +313,16 @@ function az_barrio_footer_logo() {
 
   return $return;
 }
+
+/**
+ * Helper function for the AZ Person image.
+ */
+function az_barrio_preprocess_image(&$variables) {
+  if ($variables['style_name'] === 'large') {
+    unset($variables['attributes']['width']);
+    unset($variables['attributes']['height']);
+    $variables['attributes']['class'] = ['card-img-top'];
+  }
+  // dpm($variables);
+}
+

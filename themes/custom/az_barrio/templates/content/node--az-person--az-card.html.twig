@@ -73,7 +73,7 @@
     'clearfix',
   ]
 %}
-<article{{ attributes.addClass(classes) }}>
+<div{{ attributes.addClass(classes) }}>
   <header>
     {# These appear to allow edit & quickedit to display #}
     {{ title_prefix }}
@@ -81,11 +81,13 @@
   </header>
   <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
     <div class="card">
-      <a href="{{ url }}">
-        <img src="{{ file_url(content.field_az_photo['#items'].entity.uri.value) }}" alt="content.field_az_photo.alt" class="card-img-top" />
-      </a>
+      {% if content.field_az_media_image.0 %}
+        <a href="{{ url }}">
+          {{ content.field_az_media_image.0 }}
+        </a>
+      {% endif %}
       <div class="card-body">
-        <h3 class="h4 mt-0"><a href="{{ url }}">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</a></h3>
+        <h3 class="h5 mt-0"><a href="{{ url }}">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</a></h3>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
             <span class="d-block">{{ item }}</span>
@@ -102,4 +104,4 @@
       </ul>
     </div>
   </div>
-</article>
+</div>

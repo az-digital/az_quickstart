@@ -60,6 +60,10 @@
  */
 #}
 
+{# <div class="callout callout-bloom">
+  {{ devel_dump(content.field_az_media_image.0) }}
+</div> #}
+
 {{ attach_library('bootstrap_barrio/node') }}
 
 {%
@@ -73,7 +77,7 @@
     'clearfix',
   ]
 %}
-<article{{ attributes.addClass(classes) }}>
+<div{{ attributes.addClass(classes) }}>
   <header>
     {{ title_prefix }}
     {% if label and not page %}
@@ -97,7 +101,7 @@
   <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
     <div class="row">
       <div class="col-12 d-md-none">
-        <h1 class="text-blue mt-0">{{ content.title }}</h1>
+        <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
             <span class="h4 d-block mt-0">{{ item }}</span>
@@ -105,36 +109,7 @@
         {% endif %}
       </div>
 
-      <div class="col-12 col-md-4">
-        <div class="card">
-          <img src="{{ file_url(content.field_az_photo['#items'].entity.uri.value) }}" alt="content.field_az_photo.alt" class="card-img-top" />
-          <div class="card-body pb-0">
-            {{ content.field_az_addresses.0 }}
-          </div>
-          <ul class="list-group list-group-flush border-0 py-3">
-          {% if content.field_az_phones %}
-            {% for key, item in content.field_az_phones if key|first != '#' %}
-              <li class="list-group-item border-0 py-0">{{ item }}</li>
-            {% endfor %}
-          {% endif %}
-          <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
-          {% if content.field_az_links %}
-            {% for key, item in content.field_az_links if key|first != '#' %}
-              <li class="list-group-item border-0 py-0">{{ item }}</li>
-            {% endfor %}
-          {% endif %}
-          </ul>
-          {% if content.field_az_cv_documents %}
-          <ul class="list-group list-group-flush border-0 py-3">
-            {% for key, item in content.field_az_cv_documents if key|first != '#' %}
-              <li class="list-group-item text-break border-0 py-0">{{ item }}</li>
-            {% endfor %}
-          </ul>
-          {% endif %}
-        </div>
-      </div>
-
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-8 order-md-2">
         <div class="d-none d-md-block">
           <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
           {% if content.field_az_titles[0] %}
@@ -166,6 +141,37 @@
           {% endfor %}
         {% endif %}
       </div>
+
+      <div class="col-12 col-md-4 order-md-1">
+        <div class="card">
+        {% if content.field_az_media_image.0 %}
+          {{ content.field_az_media_image.0 }}
+        {% endif %}
+          <div class="card-body pb-0">
+            {{ content.field_az_addresses.0 }}
+          </div>
+          <ul class="list-group list-group-flush border-0 py-3">
+          {% if content.field_az_phones %}
+            {% for key, item in content.field_az_phones if key|first != '#' %}
+              <li class="list-group-item border-0 py-0">{{ item }}</li>
+            {% endfor %}
+          {% endif %}
+          <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
+          {% if content.field_az_links %}
+            {% for key, item in content.field_az_links if key|first != '#' %}
+              <li class="list-group-item border-0 py-0">{{ item }}</li>
+            {% endfor %}
+          {% endif %}
+          </ul>
+          {% if content.field_az_cv_documents %}
+          <ul class="list-group list-group-flush border-0 py-3">
+            {% for key, item in content.field_az_cv_documents if key|first != '#' %}
+              <li class="list-group-item text-break border-0 py-0">{{ item }}</li>
+            {% endfor %}
+          </ul>
+          {% endif %}
+        </div>
+      </div>
     </div>
   </div>
-</article>
+</div>

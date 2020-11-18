@@ -1,0 +1,40 @@
+uuid: 21bab03b-05a1-466f-ad99-e85a69424823
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:basic:982238fb-a0c2-4243-b9ea-ce2b4eb5e74c'
+  module:
+    - block_content
+    - system
+    - user
+  theme:
+    - az_barrio
+id: reorderpeople
+theme: az_barrio
+region: content
+weight: -2
+provider: null
+plugin: 'block_content:982238fb-a0c2-4243-b9ea-ce2b4eb5e74c'
+settings:
+  id: 'block_content:982238fb-a0c2-4243-b9ea-ce2b4eb5e74c'
+  label: 'Reorder People'
+  provider: block_content
+  label_display: '0'
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    pages: /people
+    negate: false
+  user_role:
+    id: user_role
+    roles:
+      az_content_editor: az_content_editor
+      az_content_admin: az_content_admin
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
