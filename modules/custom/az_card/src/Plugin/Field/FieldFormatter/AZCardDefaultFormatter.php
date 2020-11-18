@@ -163,7 +163,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           if (!empty($parent_config['az_cards_paragraph_behavior'])) {
             $card_defaults = $parent_config['az_cards_paragraph_behavior'];
             $column_classes = $card_defaults['card_width'] ?? 'col-xs-12 col-sm-12 col-md-6 col-lg-4';
-            $card_classes = $card_defaults['card_border'] ?? 'card';
+            $card_classes = $card_defaults['card_style'] ?? 'card';
           }
 
         }

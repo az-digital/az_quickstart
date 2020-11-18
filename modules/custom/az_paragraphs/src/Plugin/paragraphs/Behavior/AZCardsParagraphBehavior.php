@@ -37,14 +37,14 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Choose how many cards appear per row.'),
     ];
 
-    $form['card_border'] = [
+    $form['card_style'] = [
       '#title' => $this->t('Card style'),
       '#type' => 'select',
       '#options' => [
-        'card' => $this->t('Cards'),
-        'card card-borderless' => $this->t('Borderless Cards'),
+        'card' => $this->t('Bordered cards'),
+        'card card-borderless' => $this->t('Borderless cards'),
       ],
-      '#default_value' => isset($config['card_border']) ? $config['card_border'] : 'card',
+      '#default_value' => isset($config['card_style']) ? $config['card_style'] : 'card',
       '#description' => $this->t('Select a card style.'),
     ];
 
