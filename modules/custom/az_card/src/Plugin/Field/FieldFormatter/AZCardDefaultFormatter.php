@@ -235,7 +235,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#image_style' => 'az_card_image',
         // Support images smaller than card width, eg. full width cards.
         '#item_attributes' => [
-          'class' => ['w-100'],
+          'class' => ['card-img-top'],
         ],
         // '#url' => '',
       ];
