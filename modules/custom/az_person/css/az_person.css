@@ -1,12 +1,9 @@
-/*.node .field--type-image {
-	float: none;
-	margin: 0;
+.az-person-row {
+	margin: 0 0 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 2px solid hsl(180, 10%, 94%);
 }
-.field--type-image img, .field--name-field-user-picture img {
-	margin: 0;
+.az-person-row:last-child {
+	border-bottom: none;
 }
 
-.view-content.row {
-
-	display: block;
-} */
