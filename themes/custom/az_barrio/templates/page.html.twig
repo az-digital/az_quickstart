@@ -18,7 +18,7 @@
  * - logged_in: A flag indicating if the user is registered and signed in.
  * - is_admin: A flag indicating if the user has permission to access
  *   administration pages.
- * - az_barrio_navbar_offcanvas: A flag indicating if the offcanvas nav is 
+ * - az_barrio_navbar_offcanvas: A flag indicating if the offcanvas nav is
  *   enabled.
  *
  * Site identity:
@@ -87,29 +87,29 @@
           </div>
         </div>
         {% endif %}
-        <header class="bg-red arizona-header" id="header_arizona" role="banner"> 
-          <div class="{{ container }}">                                            
-            <div class="row">                                                      
-              {% if wordmark %}                                                    
+        <header class="bg-red arizona-header" id="header_arizona" role="banner">
+          <div class="{{ container }}">
+            <div class="row">
+              {% if wordmark %}
               <a class="arizona-logo" href="http://www.arizona.edu" title="The University of Arizona homepage">
                 <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"/>
-              </a>                                                                 
-              {% endif %}                                                          
-            </div> <!-- /.row -->                                                  
-          </div> <!-- /.container -->                                              
-          {% if az_barrio_navbar_offcanvas %}                                      
-          <div class="redbar-buttons d-lg-none d-flex justify-content-end">        
-            <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar" id="jsAzOffCanvasSearchButton">
-              <span class="icon material-icons-sharp"> search </span>              
-              <span class="icon-text"> search </span>                              
-            </button>                                                              
-            <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar" id="jsAzOffCanvasMenuButton">
-              <span class="icon material-icons-sharp"> menu </span>                
-              <span class="icon-text"> menu </span>                                
-            </button>                                                              
-          </div>                                                                   
-          {% endif %}                                                              
-        </header>                                                                  
+              </a>
+              {% endif %}
+            </div> <!-- /.row -->
+          </div> <!-- /.container -->
+          {% if az_barrio_navbar_offcanvas %}
+          <div class="redbar-buttons d-lg-none">
+            <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
+              <span class="icon material-icons-sharp"> search </span>
+              <span class="icon-text"> search </span>
+            </button>
+            <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
+              <span class="icon material-icons-sharp"> menu </span>
+              <span class="icon-text"> menu </span>
+            </button>
+          </div>
+          {% endif %}
+        </header>
         <div class="header page-row" id="header_site" role="banner">
           <div class="{{ container }}">
             <div class="row">
@@ -136,11 +136,11 @@
             <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
               <div class="navbar-offcanvas-header">
                 <div class="bg-chili d-flex justify-content-between align-items-center bg-">
-                  <a href="/" class="navbar-offcanvas-home d-flex flex-column align-items-center btn btn-redbar">
-                    <span class="icon material-icons-sharp"> home </span>                
-                    <span class="icon-text"> home </span>                                
+                  <a href="/" class="btn btn-redbar">
+                    <span class="icon material-icons-sharp"> home </span>
+                    <span class="icon-text"> home </span>
                   </a>
-                  <button id="navbarOffcanvasDemoClose" data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="d-flex flex-column align-items-center btn btn-redbar">
+                  <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
                     <span class="icon material-icons-sharp"> close </span>
                     <span class="icon-text"> close </span>
                   </button>

@@ -335,6 +335,32 @@ td.menu-disabled {
   }
 }
 
+a.btn.btn-redbar {
+  padding: .5rem 0 0 0;
+}
+
+.navbar-offcanvas button.btn.btn-redbar {
+  padding-bottom: 4px;
+}
+
+.bg-chili .btn.btn-redbar {
+  background-color: #8b0015;
+  border: 2px solid #8b0015;
+}
+
+.navbar-offcanvas .navbar-offcanvas-search .form-control {
+    height: 60px;
+    margin: 0;
+    border: none;
+}
+
+#block-az-barrio-offcanvas-searchform .material-icons-sharp {
+  font-size: 24px;
+}
+
+#block-az-barrio-offcanvas-searchform .btn {
+padding: 0.625rem .75rem;
+}
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
 a.nolink + ul .sf-clone-parent {
   display: none;
