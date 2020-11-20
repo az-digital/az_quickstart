@@ -44,40 +44,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('wordmark'),
   ];
 
-  // Main menu.
-  $form['az_settings']['settings']['main_menu'] = [
-    '#type' => 'fieldset',
-    '#title' => t('Main Menu Settings'),
-  ];
-  $form['az_settings']['settings']['main_menu']['az_main_menu_style'] = [
-    '#type' => 'radios',
-    '#options' => [
-      'bootstrap' => t("Render the main menu element using AZ Bootstrap's Dropdown Navbar component."),
-      'superfish' => t('Render the main menu element using Superfish (requires AZQS Navigation & Superfish modules).'),
-    ],
-    '#title' => t('Main menu style'),
-    '#default_value' => theme_get_setting('az_main_menu_style'),
-    '#prefix' => t("AZ Barrio can render the 'Main menu' page element in a number of different styles. The AZ Bootstrap Dropdown Navbar component style will be used as the fallback option if the dependencies for the other styles are missing."),
-  ];
-  $form['az_settings']['settings']['main_menu']['az_main_menu_style']['menu_style_enhancements'] = [
-    '#type' => 'fieldset',
-    '#weight' => 100,
-    '#title' => t('Menu Style Enhancements'),
-    '#collapsible' => FALSE,
-    '#collapsed' => FALSE,
-    '#states' => [
-      'visible' => [
-        ':input[name="az_main_menu_style"]' => ['value' => 'bootstrap'],
-      ],
-    ],
-  ];
-  $form['az_settings']['settings']['main_menu']['az_main_menu_style']['menu_style_enhancements']['az_bs_overlay_menu_scroll'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Overlay Menu Scroll'),
-    '#default_value' => theme_get_setting('az_bs_overlay_menu_scroll'),
-    '#description' => t('Render the main menu element using AZQS customized Bootstrap Overlay Menu Scroll Navigation.'),
-  ];
-
   // Information security and privacy link.
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',
@@ -202,25 +168,23 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_icons_docs_link CSS.',
     ['@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString()]),
   ];
-
+  // Remove Navbar options.
+  $form['affix']['navbar_top'] = [];
+  $form['affix']['navbar'] = [];
+  $form['components']['navbar'] = [];
   // Components.
-  $form['components']['navbar']['bootstrap_barrio_navbar_top_background']['#options'] = [
-    'bg-primary' => t('Primary'),
-    'bg-secondary' => t('Secondary'),
-    'bg-light' => t('Light'),
-    'bg-dark' => t('Dark'),
-    'bg-white' => t('White'),
-    'bg-transparent' => t('Transparent'),
+  $form['components']['navbar_offcanvas'] = [
+    '#type' => 'details',
+    '#title' => t('Navbar with Off Canvas Drawer for mobile devices.'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
   ];
-  $form['components']['navbar']['bootstrap_barrio_navbar_background']['#options'] = [
-    'bg-primary' => t('Primary'),
-    'bg-secondary' => t('Secondary'),
-    'bg-light' => t('Light'),
-    'bg-dark' => t('Dark'),
-    'bg-white' => t('White'),
-    'bg-transparent' => t('Transparent'),
+  $form['components']['navbar_offcanvas']['az_barrio_navbar_offcanvas'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use Navbar Off Canvas'),
+    '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
   ];
-
   // Primary logo.
   $form['logo']['primary_logo_alt_text'] = [
     '#type' => 'textfield',
