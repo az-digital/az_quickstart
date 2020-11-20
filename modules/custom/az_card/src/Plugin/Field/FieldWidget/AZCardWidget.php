@@ -64,6 +64,8 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textarea',
       '#title' => $this->t('Card Options'),
       '#default_value' => isset($items[$delta]->options) ? $items[$delta]->options : NULL,
+      // Hide element until implemented.
+      '#access' => FALSE,
     ];
 
     $element['#theme_wrappers'] = ['container', 'form_element'];

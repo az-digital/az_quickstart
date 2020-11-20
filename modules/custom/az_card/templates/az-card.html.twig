@@ -14,13 +14,13 @@
  */
 #}
 
-{% set attributes = attributes.addClass('card') %}
+{% set attributes = attributes.addClass('h-100') %}
 
 <div{{ attributes }}>
   {% if media %}
     {{ media }}
   {% endif %}
-  <div class="card-body">
+  <div class="card-body d-flex flex-column">
     {% if title %}
       <h3 class="h5 bold mt-0">{{ title }}</h3>
     {% endif %}
