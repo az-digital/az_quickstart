@@ -14,3 +14,11 @@ az_paragraphs.az_cards:
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
+az_paragraphs.preview:
+  version: VERSION
+  css:
+    theme:
+      css/az_paragraphs_preview.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
