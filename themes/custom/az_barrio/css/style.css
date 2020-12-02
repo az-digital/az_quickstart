@@ -335,6 +335,32 @@ td.menu-disabled {
   }
 }
 
+a.btn.btn-redbar {
+  padding: .5rem 0 0 0;
+}
+
+.navbar-offcanvas button.btn.btn-redbar {
+  padding-bottom: 4px;
+}
+
+.bg-chili .btn.btn-redbar {
+  background-color: #8b0015;
+  border: 2px solid #8b0015;
+}
+
+.navbar-offcanvas .navbar-offcanvas-search .form-control {
+    height: 60px;
+    margin: 0;
+    border: none;
+}
+
+#block-az-barrio-offcanvas-searchform .material-icons-sharp {
+  font-size: 24px;
+}
+
+#block-az-barrio-offcanvas-searchform .btn {
+padding: 0.625rem .75rem;
+}
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
 a.nolink + ul .sf-clone-parent {
   display: none;
@@ -476,116 +502,6 @@ a.nolink + ul .sf-clone-parent {
     color: #076873;
     text-decoration: none;
   }
-}
-/* start search */
-a.search-input-link {
-  display: none;
-  width: 2.2em;
-  height: 2.2em;
-  background-size: 1.1em;
-  background-image: url("../images/search-white-web.svg");
-  background-position-x: 0.5em;
-  background-position-y: 0.5em;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  margin: 0.65em 0;
-  border: 2px solid #cbd1e0;
-}
-
-a.search-input-link:hover {
-  opacity: .7;
-}
-
-/* Prevents search bar and search btn from floating around. */
-.region-header-2 .search-block-form,
-.region-header .search-block-form {
-  clear: both;
-  position: relative;
-}
-
-/* ua-bootstrap overrides for search form */
-.header .search-block-form {
-  float: none;
-  position: relative;
-  margin: auto auto 1.5em auto;
-  width: 272px;
-  width: 17rem;
-}
-
-/* overrides Bootstrap Barrio image field styles */
-@media all and (min-width: 560px) {
-  .node .field--type-image {
-    float: initial; /* LTR */
-    margin: initial; /* LTR */
-  }
-  [dir="rtl"] .node .field--type-image {
-    float: initial;
-    margin: initial;
-  }
-  .node .field--type-image + .field--type-image {
-    clear: initial;
-  }
-}
-.field--type-image img,
-.field--name-field-user-picture img {
-  margin: initial;
-}
-/* end Bootstrap Barrio image field styles */
-
-
-@media (min-width: 576px) {
-  .header .search-block-form {
-    float: right;
-    margin-top: 16px;
-    margin-top: 1rem;
-  }
-}
-
-.header .search-block-form #search-block-form,
-.header .search-block-form #search-block-form fieldset {
-  margin: 0;
-  padding: 0;
-}
-
-.header .search-block-form .form-type-search {
-  width: 100%;
-}
-
-.header .search-block-form .form-actions {
-  padding: 0;
-  align-self: unset;
-}
-
-.header .search-block-form .form-actions .form-submit {
-  text-indent: -9999em;
-  top: 0;
-  right: 0;
-  width: 2.3rem;
-  height: 2.3rem;
-  border: 0;
-  background-repeat: no-repeat;
-  background-size: 1em 1em;
-  background-position: right 0.6em top 0.6em;
-  outline: 0;
-  position: absolute;
-  z-index: 0;
-  background-image: url("../images/search-chili.svg");
-  background-color: transparent;
-}
-
-.region-header-ua-utilities {
-  flex-grow: 1;
-}
-
-.bg-cochineal-red .form-control,
-.bg-red .form-control,
-.bg-red a.search-input-link {
-  border-color: #ef4056;
-}
-
-.bg-cochineal-red a.search-input-link,
-.bg-red a.search-input-link {
-  background-image: url("../images/search-chili.svg");
 }
 
 .region-sidebar-first .block,

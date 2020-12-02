@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_cards.field_az_cards
+    - paragraphs.paragraphs_type.az_cards
+  module:
+    - az_card
+id: paragraph.az_cards.default
+targetEntityType: paragraph
+bundle: az_cards
+mode: default
+content:
+  field_az_cards:
+    weight: 0
+    label: hidden
+    settings:
+      foo: bar
+    third_party_settings: {  }
+    type: az_card_default
+    region: content
+hidden: {  }
