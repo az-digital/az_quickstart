@@ -1,0 +1,6 @@
+status: 1
+pattern: '[node:field_az_fname] [node:field_az_lname]'
+escape: false
+dependencies:
+  config:
+    - node.type.az_person

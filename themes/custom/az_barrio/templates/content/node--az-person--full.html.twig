@@ -99,8 +99,8 @@
     {% endif %}
   </header>
   <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
-    <div class="row">
-      <div class="col-12 d-md-none">
+    <div class="row d-md-none">
+      <div class="col-12">
         <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
@@ -108,8 +108,10 @@
           {% endfor %}
         {% endif %}
       </div>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-8 order-2">
 
-      <div class="col-12 col-md-8 order-md-2">
         <div class="d-none d-md-block">
           <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
           {% if content.field_az_titles[0] %}
@@ -142,8 +144,8 @@
         {% endif %}
       </div>
 
-      <div class="col-12 col-md-4 order-md-1">
-        <div class="card">
+      <div class="col-12 col-md-4 order-1">
+        <div class="card mb-4 mb-md-0">
         {% if content.field_az_media_image.0 %}
           {{ content.field_az_media_image.0 }}
         {% endif %}
