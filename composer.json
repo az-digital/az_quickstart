@@ -41,7 +41,7 @@
         "drupal/entity_embed": "1.1",
         "drupal/embed": "1.4",
         "drupal/viewsreference": "2.0-beta2",
-        "drupal/media_library_form_element": "2.0"
+        "drupal/media_library_form_element": "2.0",
         "drupal/auto_entitylabel": "3.0-beta3",
         "drupal/views_bootstrap": "4.3",
         "drupal/draggableviews": "2.0.0"
