@@ -3,11 +3,17 @@ type: module
 core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
+  - auto_entitylabel
+  - az_paragraphs
+  - block
+  - draggableviews
+  - entity_form_display
   - field
+  - field_group
+  - menu_ui
   - node
   - path
-  - user
-  - menu_ui
-  - field_group
+  - pathauto
   - taxonomy
-  - draggableviews
+  - user
+  - views_bootstrap
