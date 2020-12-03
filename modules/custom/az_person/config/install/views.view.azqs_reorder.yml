@@ -12,7 +12,7 @@ dependencies:
 id: azqs_reorder
 label: 'AZQS Reorder'
 module: views
-description: 'Use this view to reorder various AZQS content types'
+description: 'Use this view to reorder various Quickstart content types'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -514,9 +514,9 @@ display:
       tags:
         - 'config:field.storage.node.field_az_person_category'
         - 'config:field.storage.node.field_az_person_category_sec'
-  page_1:
+  reorder_people:
     display_plugin: page
-    id: page_1
+    id: reorder_people
     display_title: 'Reorder People'
     position: 1
     display_options:

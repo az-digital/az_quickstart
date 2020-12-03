@@ -3,3 +3,4 @@ az_person:
   css:
     theme:
       css/az_person.css: {}
+      
