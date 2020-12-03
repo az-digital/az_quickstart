@@ -27,7 +27,7 @@
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/cas": "1.7",
-        "drupal/core-recommended": "9.1.0-rc3",
+        "drupal/core-recommended": "9.1.0",
         "drupal/ctools": "3.4",
         "drupal/easy_breadcrumb": "1.13",
         "drupal/externalauth": "1.3",
