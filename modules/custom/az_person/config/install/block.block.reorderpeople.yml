@@ -7,8 +7,6 @@ dependencies:
     - block_content
     - system
     - user
-  theme:
-    - az_barrio
 id: reorderpeople
 theme: az_barrio
 region: content

@@ -15,5 +15,6 @@ dependencies:
   - path
   - pathauto
   - taxonomy
+  - telephone
   - user
   - views_bootstrap
