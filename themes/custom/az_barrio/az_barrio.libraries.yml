@@ -8,10 +8,6 @@ az-barrio-off-canvas-nav:
     js/az-barrio-off-canvas-nav.js: {}
   dependencies:
     - az_barrio/arizona-bootstrap
-az-proxima-nova:
-  css:
-    theme:
-      https://use.typekit.net/emv3zbo.css: {}
 arizona-bootstrap:
   css:
     theme:
