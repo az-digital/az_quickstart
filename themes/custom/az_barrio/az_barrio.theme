@@ -306,6 +306,12 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
     }
   }
+
+  if (theme_get_setting('az_barrio_font') === TRUE) {
+    // Add Proxima Nova CSS based on theme settings.
+    // Ensure Proxima Nova is loaded before Arizona Bootstrap.
+      $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-proxima-nova';
+  }
 }
 
 /**
