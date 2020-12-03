@@ -10,7 +10,7 @@ dependencies:
 id: az_person_reorder_notification
 theme: az_barrio
 region: content
-weight: 0
+weight: -2
 provider: null
 plugin: az_person_reorder_notice
 settings:
