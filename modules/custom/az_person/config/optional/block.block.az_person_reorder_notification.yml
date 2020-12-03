@@ -17,7 +17,7 @@ settings:
   id: az_person_reorder_notice
   label: 'Quickstart Person Reorder Notification'
   provider: az_person
-  label_display: visible
+  label_display: '0'
 visibility:
   request_path:
     id: request_path
