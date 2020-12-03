@@ -7,7 +7,6 @@ dependencies:
   - az_paragraphs
   - block
   - draggableviews
-  - entity_form_display
   - field
   - field_group
   - menu_ui
