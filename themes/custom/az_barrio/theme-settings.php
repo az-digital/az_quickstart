@@ -76,7 +76,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('az_back_to_top'),
   ];
 
-// Fonts and Icons.
+  // Fonts and Icons.
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
