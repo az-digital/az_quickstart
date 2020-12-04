@@ -41,6 +41,7 @@
         "drupal/entity_embed": "1.1",
         "drupal/embed": "1.4",
         "drupal/viewsreference": "2.0-beta2",
+        "drupal/ckeditor_bs_grid": "2.0.3",
         "drupal/media_library_form_element": "2.0"
     },
     "require-dev": {
