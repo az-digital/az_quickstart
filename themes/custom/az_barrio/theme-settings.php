@@ -76,6 +76,16 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('az_back_to_top'),
   ];
 
+// Fonts and Icons.
+  unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
+  $form['fonts']['fonts']['az_barrio_font'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
+    '#default_value' => theme_get_setting('az_barrio_font'),
+    '#description' => t('If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.',
+    ['@proxima_nova_docs_link' => Link::fromTextAndUrl('Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/'))->toString()]),
+  ];
+
   // AZ Bootstrap settings.
   $form['azbs_settings'] = [
     '#type' => 'details',
