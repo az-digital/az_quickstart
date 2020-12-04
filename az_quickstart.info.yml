@@ -53,6 +53,7 @@ install:
   - views_ui
   - tour
   - automated_cron
+  - ckeditor_bs_grid
 themes:
   - az_barrio
   - claro
