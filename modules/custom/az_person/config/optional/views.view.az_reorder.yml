@@ -11,7 +11,7 @@ dependencies:
     - draggableviews
     - node
     - user
-id: azqs_reorder
+id: az_reorder
 label: 'AZ Reorder'
 module: views
 description: 'Use this view to reorder various Quickstart content types'
