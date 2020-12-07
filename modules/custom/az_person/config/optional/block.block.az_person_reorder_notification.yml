@@ -21,7 +21,7 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: /people
+    pages: "/people\r\n/people-list"
     negate: false
   user_role:
     id: user_role
