@@ -4,9 +4,6 @@ dependencies:
   config:
     - field.storage.node.field_az_person_category
     - node.type.az_person
-    - user.role.administrator
-    - user.role.az_content_admin
-    - user.role.az_content_editor
   module:
     - draggableviews
     - node
@@ -26,12 +23,9 @@ display:
     position: 0
     display_options:
       access:
-        type: role
+        type: perm
         options:
-          role:
-            az_content_editor: az_content_editor
-            az_content_admin: az_content_admin
-            administrator: administrator
+          perm: 'access administration pages'
       cache:
         type: tag
         options: {  }
@@ -403,7 +397,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_az_person_category'
   reorder_people:
@@ -421,6 +415,6 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
       tags:
         - 'config:field.storage.node.field_az_person_category'
