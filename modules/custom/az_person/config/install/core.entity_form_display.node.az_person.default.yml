@@ -40,7 +40,7 @@ third_party_settings:
         id: ''
         classes: ''
         required_fields: false
-      label: Category
+      label: Categories
 id: node.az_person.default
 targetEntityType: node
 bundle: az_person
