@@ -18,6 +18,8 @@
  * - logged_in: A flag indicating if the user is registered and signed in.
  * - is_admin: A flag indicating if the user has permission to access
  *   administration pages.
+ * - az_barrio_navbar_offcanvas: A flag indicating if the offcanvas nav is
+ *   enabled.
  *
  * Site identity:
  * - front_page: The URL of the front page. Use this instead of base_path when
@@ -85,26 +87,29 @@
           </div>
         </div>
         {% endif %}
-        <div class="bg-red">
-          <section class="{{ container }}">
+        <header class="bg-red arizona-header" id="header_arizona" role="banner">
+          <div class="{{ container }}">
             <div class="row">
-              <div class="col-10 col-sm-3 pr-0">
-                {% if wordmark %}
-                <a href="https://www.arizona.edu" title="The University of Arizona homepage">
-                  <img alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.uadigital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" class="pt-4 pb-3 pl-2">
-                </a>
-                {% endif %}
-              </div>
-              {% if page.header_ua_utilities %}
-              <div class="col-2 col-sm-9">
-                <div class="row">
-                  {{ page.header_ua_utilities }}
-                </div>
-              </div>
+              {% if wordmark %}
+              <a class="arizona-logo" href="http://www.arizona.edu" title="The University of Arizona homepage">
+                <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"/>
+              </a>
               {% endif %}
-            </div>
-          </section>
-        </div>
+            </div> <!-- /.row -->
+          </div> <!-- /.container -->
+          {% if az_barrio_navbar_offcanvas %}
+          <div class="redbar-buttons d-lg-none">
+            <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar" id="jsAzSearch">
+              <span class="icon material-icons-sharp"> search </span>
+              <span class="icon-text"> search </span>
+            </button>
+            <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
+              <span class="icon material-icons-sharp"> menu </span>
+              <span class="icon-text"> menu </span>
+            </button>
+          </div>
+          {% endif %}
+        </header>
         <div class="header page-row" id="header_site" role="banner">
           <div class="{{ container }}">
             <div class="row">
@@ -126,23 +131,32 @@
             </div> <!-- /.row -->
           </div> <!-- /.container -->
 
-          {% if container_navbar %}
-          <div class="{{ container }}">
-            <nav{{ navbar_attributes }}>
-              {% endif %}
+          <div class="container">
+            {% if az_barrio_navbar_offcanvas %}
+            <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
+              <div class="navbar-offcanvas-header">
+                <div class="bg-chili d-flex justify-content-between align-items-center bg-">
+                  <a href="/" class="btn btn-redbar">
+                    <span class="icon material-icons-sharp"> home </span>
+                    <span class="icon-text"> home </span>
+                  </a>
+                  <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
+                    <span class="icon material-icons-sharp"> close </span>
+                    <span class="icon-text"> close </span>
+                  </button>
+                </div>
+                {% if page.navigation_offcanvas %}
+                  {{ page.navigation_offcanvas }}
+                {% endif %}
+             </div>
+            {% endif %}
               {% if page.navigation %}
-              <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#CollapsingNavbar" aria-controls="CollapsingNavbar" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-              <div class="collapse navbar-collapse" id="CollapsingNavbar">
                 {{ page.navigation }}
-              </div>
               {% endif %}
-              {% if sidebar_collapse %}
-              <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#CollapsingLeft" aria-controls="CollapsingLeft" aria-expanded="false" aria-label="Toggle navigation"></button>
-              {% endif %}
-              {% if container_navbar %}
+            {% if az_barrio_navbar_offcanvas %}
             </nav>
+            {% endif %}
           </div>
-          {% endif %}
         </div>
 {% endblock %}
 

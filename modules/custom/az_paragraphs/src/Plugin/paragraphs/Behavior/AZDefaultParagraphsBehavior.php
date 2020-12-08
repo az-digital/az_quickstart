@@ -133,6 +133,7 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
       ],
       '#default_value' => $default_bottom_spacing,
       '#description' => $this->t('More detail on spacing can be found in the <a href="https://digital.arizona.edu/arizona-bootstrap/docs/2.0/utilities/spacing/" target="_blank">AZ Bootstrap documentation</a>.'),
+      '#weight' => 10,
     ];
 
     // This places the form fields on the content tab rather than behavior tab.
@@ -147,6 +148,9 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
    */
   public function preprocess(&$variables) {
 
+    // Libraries to attach to this paragraph.
+    $libraries = [];
+
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
 
@@ -155,14 +159,25 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
 
     // Get the paragraph bundle name and compute name of potential library.
     $bundle = $paragraph->bundle();
-    $name = 'az_paragraphs.' . $bundle;
+    $libraries[] = 'az_paragraphs.' . $bundle;
 
-    // Check if az_paragraphs implements library for the  paragraph bundle.
-    $library = $this->libraryDiscovery->getLibraryByName('az_paragraphs', $name);
+    // Generate library names to check based on view mode.
+    if (!empty($variables['view_mode'])) {
+      // Potential library for paragraph view mode.
+      $libraries[] = 'az_paragraphs.' . $variables['view_mode'];
+      // Bundle-specific view mode libraries.
+      $libraries[] = 'az_paragraphs.' . $bundle . '_' . $variables['view_mode'];
+    }
 
-    // If we found a library, attach it to the paragraph.
-    if ($library) {
-      $variables['#attached']['library'][] = 'az_paragraphs/' . $name;
+    // Check if any of the potential library names actually exist.
+    foreach ($libraries as $name) {
+      // Check if library discovery service knows about the library.
+      $library = $this->libraryDiscovery->getLibraryByName('az_paragraphs', $name);
+
+      if ($library) {
+        // If we found a library, attach it to the paragraph.
+        $variables['#attached']['library'][] = 'az_paragraphs/' . $name;
+      }
     }
   }
 
