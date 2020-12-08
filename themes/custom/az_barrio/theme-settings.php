@@ -83,9 +83,56 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
     '#default_value' => theme_get_setting('az_barrio_font'),
     '#description' => t('If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.',
-    ['@proxima_nova_docs_link' => Link::fromTextAndUrl('Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/'))->toString()]),
+    ['@proxima_nova_docs_link' => Link::fromTextAndUrl('Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
+      ['attributes' => ['target' => '_blank']]
+    ))->toString()]),
   ];
-
+  $form['fonts']['bootstrap_icons'] = [
+    '#type' => 'details',
+    '#title' => t('Bootstrap icons'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  unset($form['fonts']['bootstrap_icons']['bootstrap_barrio_bootstrap_icons']);
+  unset($form['fonts']['icons']['bootstrap_barrio_icons']);
+  unset($form['fonts']['bootstrap_icons']);
+  $form['fonts']['icons'] = [
+    '#type' => 'details',
+    '#title' => t('Icons'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use Material Design Sharp Icons'),
+    '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_sharp_icons_docs_link CSS.',
+    ['@material_design_sharp_icons_docs_link' => Link::fromTextAndUrl('Material Design Sharp icons', Url::fromUri('https://material.io/resources/icons/?style=sharp', ['attributes' => ['target' => '_blank']]))->toString()]),
+    '#default_value' => theme_get_setting('az_barrio_material_design_sharp_icons'),
+  ];
+  $form['fonts']['icons']['az_barrio_icons']['az_brand_icons_source'] = [
+    '#type' => 'radios',
+    '#title' => t('AZ Brand Icons Source'),
+    '#options' => [
+      'local' => t('Use local copy of <a href="@azbrandicons">UA Brand Icons</a> packaged with AZ Barrio (%stableversion).', [
+        '@azbrandicons' => 'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons',
+        '%stableversion' => AZ_BRAND_ICONS_STABLE_VERSION,
+      ]),
+      'cdn' => t('Use external copy of <a href="@azbrandicons">UA Brand Icons</a> hosted on the CDN.', [
+        '@azbrandicons' => 'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons',
+      ]),
+    ],
+    '#default_value' => theme_get_setting('az_brand_icons_source'),
+  ];
+  $form['fonts']['icons']['az_barrio_icons']['az_brand_icons_class'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Add <code>ua-brand-icons</code> class to <code>html</code> element.'),
+    '#default_value' => theme_get_setting('az_brand_icons_class'),
+  ];
+  $form['fonts']['icons']['az_barrio_icons']['external_links'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use AZ Bootstrap external links styling.'),
+    '#default_value' => theme_get_setting('external_links'),
+  ];
   // AZ Bootstrap settings.
   $form['azbs_settings'] = [
     '#type' => 'details',
@@ -134,49 +181,10 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'fieldset',
     '#title' => t('AZ Bootstrap Style Settings'),
   ];
-  $form['azbs_settings']['settings']['az_bootstrap_style']['az_brand_icons_source'] = [
-    '#type' => 'radios',
-    '#title' => t('AZ Brand Icons Source'),
-    '#options' => [
-      'local' => t('Use local copy of <a href="@azbrandicons">UA Brand Icons</a> packaged with AZ Barrio (%stableversion).', [
-        '@azbrandicons' => 'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons',
-        '%stableversion' => AZ_BRAND_ICONS_STABLE_VERSION,
-      ]),
-      'cdn' => t('Use external copy of <a href="@azbrandicons">UA Brand Icons</a> hosted on the CDN.', [
-        '@azbrandicons' => 'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons',
-      ]),
-    ],
-    '#default_value' => theme_get_setting('az_brand_icons_source'),
-  ];
-  $form['azbs_settings']['settings']['az_bootstrap_style']['az_brand_icons_class'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Add <code>ua-brand-icons</code> class to <code>html</code> element.'),
-    '#default_value' => theme_get_setting('az_brand_icons_class'),
-  ];
-  $form['azbs_settings']['settings']['az_bootstrap_style']['external_links'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use AZ Bootstrap external links styling.'),
-    '#default_value' => theme_get_setting('external_links'),
-  ];
   $form['azbs_settings']['settings']['az_bootstrap_style']['sticky_footer'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
-  ];
-
-  // Material Design icons.
-  $form['material_design_icon_settings'] = [
-    '#type' => 'details',
-    '#title' => t('Material Design Icons'),
-    '#group' => 'bootstrap',
-    '#weight' => -8,
-  ];
-  $form['material_design_icon_settings']['settings']['material_design_icons']['use_material_design_sharp_icons'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Material Design Sharp Icons'),
-    '#default_value' => theme_get_setting('use_material_design_sharp_icons'),
-    '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_icons_docs_link CSS.',
-    ['@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString()]),
   ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
@@ -215,7 +223,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#global_types' => TRUE,
     '#click_insert' => TRUE,
   ];
-
   // Footer logo.
   $form['footer_logo'] = [
     '#type' => 'details',
