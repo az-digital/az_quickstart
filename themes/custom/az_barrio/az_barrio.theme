@@ -303,14 +303,14 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       $az_brand_icons_path => $az_brand_icons_css_info,
     ];
     $font = theme_get_setting('az_barrio_font');
-    if ($font === 1) {
+    if ($font === TRUE) {
       // Add Proxima Nova CSS based on theme settings.
       // Ensure Proxima Nova is loaded before Arizona Bootstrap.
       $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-proxima-nova';
     }
 
     $material_design_sharp_icons = theme_get_setting('az_barrio_material_design_sharp_icons');
-    if ($material_design_sharp_icons === 1) {
+    if ($material_design_sharp_icons === TRUE) {
       // Add Material Design Sharp Icon CSS based on theme settings.
       // Ensure icon CSS is loaded before Arizona Bootstrap.
       $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
