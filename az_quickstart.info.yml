@@ -54,6 +54,7 @@ install:
   - tour
   - automated_cron
   - ckeditor_bs_grid
+  - coffee
 themes:
   - az_barrio
   - claro

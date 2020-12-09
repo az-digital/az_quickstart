@@ -45,7 +45,8 @@
         "drupal/ckeditor_bs_grid": "2.0.3",
         "drupal/auto_entitylabel": "3.0-beta3",
         "drupal/views_bootstrap": "4.3",
-        "drupal/draggableviews": "2.0.0"
+        "drupal/draggableviews": "2.0.0",
+        "drupal/coffee": "1.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
