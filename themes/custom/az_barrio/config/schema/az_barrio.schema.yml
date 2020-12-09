@@ -218,8 +218,8 @@ az_barrio.settings:
       type: boolean
       label: 'Enable AZ Bootstrap minification'
    az_barrio_font:
-     type: boolean
-     label: 'Use the centrally-managed Typekit webfont, Proxima Nova'
+      type: boolean
+      label: 'Use the centrally-managed Typekit webfont, Proxima Nova'
   az_barrio_material_design_sharp_icons:
       type: boolean
       label: 'Use Material Design Sharp Icons'
