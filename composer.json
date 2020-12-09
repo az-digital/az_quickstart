@@ -72,7 +72,7 @@
             },
             "drupal/draggableviews": {
                 "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
-            }
+            },
             "drupal/coffee": {
                 "Coffee test, support for Drupal 9 core_version_requirement": "https://www.drupal.org/files/issues/2020-10-27/3174680-5-make-test-module-d9-compatible.patch"
             }
