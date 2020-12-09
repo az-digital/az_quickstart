@@ -31,6 +31,25 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   }
 
   /**
+   * Returns a list of immediate overrides available at module install time.
+   *
+   * @param \Drupal\Core\Extension\Extension[] $extensions
+   *   An associative array of Extension objects, keyed by extension name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  public function getOverrideConfig(array $extensions = []) {
+
+    // Find the direct overrides for use at module install time.
+    $storage = $this->getExtensionInstallStorage(static::ID);
+    $config_names = $this->listConfig($storage, $extensions);
+    $data = $storage->readMultiple($config_names);
+
+    return $data;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function addInstallableConfig(array $extensions = []) {

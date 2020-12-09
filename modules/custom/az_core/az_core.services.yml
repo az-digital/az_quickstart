@@ -4,3 +4,6 @@ services:
     arguments: ['@current_route_match']
     tags:
       - { name: page_cache_response_policy }
+  az_core.override_import:
+    class: Drupal\az_core\AZConfigOverride
+    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector']
