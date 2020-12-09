@@ -8,53 +8,54 @@ distribution:
   name: Arizona Quickstart
 
 install:
+  - automated_cron
   - az_cas
+  - az_core
+  - az_demo
+  - az_flexible_page
   - az_paragraphs
   - az_paragraphs_cards
   - az_paragraphs_text
   - az_paragraphs_view
-  - az_core
-  - az_flexible_page
   - az_person
-  - az_demo
-  - node
-  - history
+  - big_pipe
   - block
+  - block_content
   - breakpoint
   - ckeditor
+  - ckeditor_bs_grid
+  - coffee
   - color
   - config
   - contextual
-  - menu_link_content
   - datetime
-  - block_content
-  - quickedit
-  - editor
-  - help
-  - image
-  - menu_ui
-  - options
-  - path
-  - pathauto
-  - easy_breadcrumb
-  - page_cache
-  - dynamic_page_cache
-  - big_pipe
-  - taxonomy
   - dblog
-  - search
-  - shortcut
-  - token
-  - toolbar
+  - dynamic_page_cache
+  - easy_breadcrumb
+  - editor
   - field_ui
   - file
+  - help
+  - history
+  - image
+  - menu_link_content
+  - menu_ui
+  - node
+  - options
+  - page_cache
+  - path
+  - pathauto
+  - quickedit
   - rdf
+  - search
+  - shortcut
+  - taxonomy
+  - token
+  - toolbar
+  - tour
   - views
   - views_ui
-  - tour
-  - automated_cron
-  - ckeditor_bs_grid
-  - coffee
+
 themes:
   - az_barrio
   - claro
