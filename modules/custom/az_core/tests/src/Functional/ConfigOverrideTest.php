@@ -42,7 +42,7 @@ class ConfigOverrideTest extends BrowserTestBase {
   public function testConfigOverride() {
 
     // Check that the cas server hostname has been overridden.
-    $hostname = \Drupal::config('cas.settings')->get('server.hostname');
+    $hostname = $this->config('cas.settings')->get('server.hostname');
     $this->assertEquals('webauth.arizona.edu', $hostname);
   }
 
