@@ -446,6 +446,5 @@ function az_barrio_preprocess_image(&$variables) {
     unset($variables['attributes']['height']);
     $variables['attributes']['class'] = ['card-img-top'];
   }
-  // dpm($variables);
 }
 
