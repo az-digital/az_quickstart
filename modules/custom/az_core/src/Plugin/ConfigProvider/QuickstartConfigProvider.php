@@ -54,7 +54,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
    */
   public function addInstallableConfig(array $extensions = []) {
 
-    // Get the install configuraiton present for the specified modules.
+    // Get the install configuration present for the specified modules.
     $storage = $this->getExtensionInstallStorage(InstallStorage::CONFIG_INSTALL_DIRECTORY);
     $config_names = $this->listConfig($storage, $extensions);
     $profile_storages = $this->getProfileStorages();

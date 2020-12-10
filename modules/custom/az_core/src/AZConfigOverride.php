@@ -8,7 +8,14 @@ use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
 
 /**
- * Class AZConfigOverrideIMport.
+ * Class AZConfigOverride.
+ *
+ * This class is responsible for loading any override configuration into the
+ * active site configuration after a module is enabled. These same updates
+ * are presented as an update to the config_distro pipeline, and these
+ * configuration overrides are only applied immediately as a convenience
+ * to avoid needing to import the changes whenever an override module is
+ * enabled, e.g. az_cas.
  */
 class AZConfigOverride {
 
@@ -34,7 +41,7 @@ class AZConfigOverride {
   protected $extensionListModule;
 
   /**
-   * Constructs a new AZConfigOverrideImport object.
+   * Constructs a new AZConfigOverride object.
    */
   public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector) {
     $this->configFactory = $config_factory;
