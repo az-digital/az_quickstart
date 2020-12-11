@@ -185,6 +185,17 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
     '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
   ];
+  // Logos
+  $form['logo']['az_barrio_logo_svg_inline'] = [
+    '#type' => 'select',
+    '#title' => t('Inline SVG logo'),
+    '#options' => [
+      1 => t('On'),
+      0 => t('Off'),
+    ],
+    '#default_value' => theme_get_setting('az_barrio_logo_svg_inline') ? TRUE : FALSE,
+    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
+  ];
   // Primary logo.
   $form['logo']['primary_logo_alt_text'] = [
     '#type' => 'textfield',
