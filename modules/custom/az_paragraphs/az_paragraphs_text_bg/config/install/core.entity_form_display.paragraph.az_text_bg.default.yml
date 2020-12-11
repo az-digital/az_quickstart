@@ -1,0 +1,25 @@
+uuid: 7a881936-7f43-428e-a1e7-68c15860adec
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_text_bg.field_az_text_area
+    - paragraphs.paragraphs_type.az_text_bg
+  module:
+    - text
+id: paragraph.az_text_bg.default
+targetEntityType: paragraph
+bundle: az_text_bg
+mode: default
+content:
+  field_az_text_area:
+    weight: 0
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+hidden:
+  created: true
+  status: true

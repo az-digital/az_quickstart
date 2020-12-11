@@ -1,0 +1,16 @@
+uuid: 7ffd1ef9-35e1-4453-84ee-f76d2a210cb2
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_paragraphs
+id: az_text_bg
+label: 'Text with Background'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins:
+  az_cards_paragraph_behavior:
+    enabled: true
+  az_default_paragraph_behavior:
+    enabled: true

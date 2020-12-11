@@ -1,0 +1,22 @@
+uuid: a5d3b728-2964-47ff-8974-825ec0a7904b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_text_area
+    - paragraphs.paragraphs_type.az_text_bg
+  module:
+    - text
+id: paragraph.az_text_bg.field_az_text_area
+field_name: field_az_text_area
+entity_type: paragraph
+bundle: az_text_bg
+label: Text
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

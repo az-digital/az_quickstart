@@ -1,0 +1,10 @@
+name: 'Quickstart Paragraphs - Text with Background'
+type: module
+description: 'Provides a text with background paragraph type.'
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - az_paragraphs
+  - field
+  - paragraphs
+  - text
+package: 'The University of Arizona'

@@ -1,0 +1,22 @@
+uuid: 3be682a8-cf70-469c-8734-430d9fe9338b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_text_bg.field_az_text_area
+    - paragraphs.paragraphs_type.az_text_bg
+  module:
+    - text
+id: paragraph.az_text_bg.default
+targetEntityType: paragraph
+bundle: az_text_bg
+mode: default
+content:
+  field_az_text_area:
+    weight: 0
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+hidden: {  }
