@@ -105,6 +105,24 @@ audio:not([controls]) {
     margin: 2.5rem 0;
   }
 }
+/* Wrapping link for logo. */
+.header_logo_svg {
+  float: left;
+  width: 100%;
+  text-align: center;
+  margin: 24px 0;
+  margin: 1.5rem 0;
+  padding: 0;
+}
+
+@media (min-width: 48em) {
+  .header_logo_svg{
+    width: 100%;
+    text-align: left;
+    margin: 40px 0;
+    margin: 2.5rem 0;
+  }
+}
 
 /**
  * Inline styles.
