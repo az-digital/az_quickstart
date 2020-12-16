@@ -21,7 +21,6 @@ steps:
     script:
       - cd $SRC_DIR/az-quickstart-scaffolding
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan-contrib.neon web/modules web/themes
   - name: Run ESLint
     plugin: Script
     script:
