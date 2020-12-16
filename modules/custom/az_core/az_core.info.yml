@@ -6,4 +6,6 @@ package: 'The University of Arizona'
 dependencies:
   - config_distro
   - config_provider
+  - config_snapshot
   - config_sync
+  - config_update
