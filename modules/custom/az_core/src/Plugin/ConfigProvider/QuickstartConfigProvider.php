@@ -46,6 +46,10 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     $config_names = $this->listConfig($storage, $extensions);
     $data = $storage->readMultiple($config_names);
 
+    // Add default config hash to overrides.
+    foreach ($data as $name => &$value) {
+      $value = $this->addDefaultConfigHash($value);
+    }
     return $data;
   }
 
