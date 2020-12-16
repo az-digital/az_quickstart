@@ -6,7 +6,6 @@ label: 'Content administrator'
 weight: 3
 is_admin: false
 permissions:
-  - 'access coffee'
   - 'access news feeds'
   - 'access taxonomy overview'
   - 'administer book outlines'
