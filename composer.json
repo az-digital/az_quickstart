@@ -27,6 +27,11 @@
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/cas": "1.7",
+        "drupal/config_distro": "1.0-alpha4",
+        "drupal/config_provider": "2.0-rc4",
+        "drupal/config_snapshot": "1.0-rc2",
+        "drupal/config_sync": "2.0-beta7",
+        "drupal/config_update": "1.7",
         "drupal/core-recommended": "9.1.0",
         "drupal/ctools": "3.4",
         "drupal/easy_breadcrumb": "1.13",
@@ -41,7 +46,11 @@
         "drupal/entity_embed": "1.1",
         "drupal/embed": "1.4",
         "drupal/viewsreference": "2.0-beta2",
-        "drupal/media_library_form_element": "2.0"
+        "drupal/media_library_form_element": "2.0",
+        "drupal/ckeditor_bs_grid": "2.0.3",
+        "drupal/auto_entitylabel": "3.0-beta3",
+        "drupal/views_bootstrap": "4.3",
+        "drupal/draggableviews": "2.0.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -51,6 +60,9 @@
             "dev-main": "2.1.x-dev"
         },
         "patches": {
+            "drupal/config_sync": {
+                "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
+            },
             "drupal/core": {
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
@@ -58,11 +70,17 @@
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2020-11-14/784672-178.patch",
                 "Remove Claro tabledrag.js replacement when core issues are resolved" : "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch"
             },
+            "drupal/config_distro": {
+                "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch"
+            },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
             },
             "drupal/easy_breadcrumb": {
                 "Easy_breadcrumb schema issue": "https://www.drupal.org/files/issues/2020-07-27/missing_schema_keys-3161765-4.patch"
+            },
+            "drupal/draggableviews": {
+                "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
             }
         }
     }

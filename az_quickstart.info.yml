@@ -15,6 +15,7 @@ install:
   - az_paragraphs_view
   - az_core
   - az_flexible_page
+  - az_person
   - az_demo
   - node
   - history
@@ -52,6 +53,7 @@ install:
   - views_ui
   - tour
   - automated_cron
+  - ckeditor_bs_grid
 themes:
   - az_barrio
   - claro

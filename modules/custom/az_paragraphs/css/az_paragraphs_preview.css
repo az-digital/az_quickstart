@@ -1,0 +1,27 @@
+/* Styles for quickstart paragraph previews.  */
+
+.js .paragraph-type-label::before {
+    content: "Type: ";
+    font-weight: bold;
+}
+
+.js .paragraph-top {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 100px auto 1fr auto;
+    grid-template-columns: 100px auto 1fr auto;
+    -ms-grid-rows: auto auto;
+    grid-template-rows: auto auto;
+    grid-gap: 0 5px;
+    -webkit-box-align: baseline;
+    -webkit-align-items: baseline;
+    -ms-flex-align: baseline;
+    align-items: baseline;
+    border-bottom: 1px solid #ccc;
+}
+
+.paragraph--view-mode--preview {
+    padding-right: 1em;
+    max-height: 200px;
+    overflow: hidden;
+}
