@@ -27,6 +27,11 @@
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/cas": "1.7",
+        "drupal/config_distro": "1.0-alpha4",
+        "drupal/config_provider": "2.0-rc4",
+        "drupal/config_snapshot": "1.0-rc2",
+        "drupal/config_sync": "2.0-beta7",
+        "drupal/config_update": "1.7",
         "drupal/core-recommended": "9.0.9",
         "drupal/ctools": "3.4",
         "drupal/easy_breadcrumb": "1.13",
@@ -55,6 +60,9 @@
             "dev-main": "2.1.x-dev"
         },
         "patches": {
+            "drupal/config_sync": {
+                "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
+            },
             "drupal/core": {
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
@@ -62,6 +70,9 @@
                 "Document route:<button> in LinkWidget help text": "https://www.drupal.org/files/issues/2020-06-19/3153394-2.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2020-03-15/784672-164.patch",
                 "Nested Paragraphs create multiple drag handles": "https://www.drupal.org/files/issues/2020-08-19/3092181-124-reroll.patch"
+            },
+            "drupal/config_distro": {
+                "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch"
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
