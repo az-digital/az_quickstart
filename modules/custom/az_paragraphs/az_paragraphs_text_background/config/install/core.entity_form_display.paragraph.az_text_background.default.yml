@@ -1,15 +1,14 @@
-uuid: 7a881936-7f43-428e-a1e7-68c15860adec
 langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.az_text_bg.field_az_text_area
-    - paragraphs.paragraphs_type.az_text_bg
+    - field.field.paragraph.az_text_background.field_az_text_area
+    - paragraphs.paragraphs_type.az_text_background
   module:
     - text
-id: paragraph.az_text_bg.default
+id: paragraph.az_text_background.default
 targetEntityType: paragraph
-bundle: az_text_bg
+bundle: az_text_background
 mode: default
 content:
   field_az_text_area:
