@@ -12,3 +12,4 @@ clean_url: 0
 disable_cron_regeneration: false
 i18n_selection_mode: simple
 metatag_exclude_noindex: true
+
