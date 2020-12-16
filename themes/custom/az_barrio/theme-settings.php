@@ -166,7 +166,9 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use Material Design Sharp Icons'),
     '#default_value' => theme_get_setting('use_material_design_sharp_icons'),
     '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_icons_docs_link CSS.',
-    ['@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString()]),
+    [
+      '@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString(),
+    ]),
   ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];

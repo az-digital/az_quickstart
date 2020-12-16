@@ -57,7 +57,8 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
     $edit = [
       'disable_password_recovery_link' => $disable_password_recovery_link,
     ];
-    $this->drupalPostForm('/admin/config/az-quickstart/settings/az-cas', $edit, 'Save configuration');
+    $this->drupalGet('/admin/config/az-quickstart/settings/az-cas');
+    $this->submitForm($edit, 'Save configuration');
 
     // The menu router info needs to be rebuilt after saving this form so the
     // CAS menu alter runs again.
