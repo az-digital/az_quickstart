@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Person Categories (Secondary)'
+vid: az_person_categories_secondary
+description: 'Secondary taxonomy for categorizing people'
+weight: 0

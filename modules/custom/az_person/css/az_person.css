@@ -1,0 +1,21 @@
+.az-person-row {
+	margin: 0 0 1rem;
+	padding-bottom: 1rem;
+	border-bottom: 2px solid hsl(180, 10%, 94%);
+}
+.az-person-row:last-child {
+	border-bottom: none;
+}
+
+.az-person-grid .node--type-az-person.node--view-mode-az-card .card .contextual button {
+	/* 	Temporary fix to hide media contextual link, on the card view mode only, since 
+		it overlaps with node contextual link. This can be removed once Drupal issue
+		is committed to module. */
+	display: none;
+}
+
+.az-person-grid .node--type-az-person.node--view-mode-az-row .az-person-row-img .contextual button {
+	/* 	Hide media contextual link because it conflicts with the link that wraps the img,
+		which makes the contextual link unusable. */
+	display: none;
+}

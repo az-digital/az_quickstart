@@ -4,9 +4,6 @@ services:
     arguments: ['@current_route_match']
     tags:
       - { name: page_cache_response_policy }
-
-  az_core.config.installer:
-    class: Drupal\az_core\QuickstartConfigInstaller
-    decorates: config.installer
-    decoration_priority: 9
-    arguments: ['@config.factory', '@config.storage', '@config.typed', '@config.manager', '@event_dispatcher', '%install_profile%']
+  az_core.override_import:
+    class: Drupal\az_core\AZConfigOverride
+    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector', '@config_sync.snapshotter', '@config_update.config_list']
