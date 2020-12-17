@@ -1,0 +1,33 @@
+/* Styles for az_text_background paragraph type. */
+
+.text-on-media {
+  /* background-image: {{text-on-media.media}}; */
+  background-size: cover;
+  background-position: center;
+}
+.text-on-media-bottom img {
+  width: 100%;
+}
+.bg-fixed {
+  background-attachment: fixed;
+}
+.dark {
+  background: rgba(0,0,0,.8);
+}
+.light {
+  background: rgba(255,255,255,.8);
+}
+.transparent {
+  background: none;
+}
+.box {
+  padding: 2em;
+  margin: 3em 0;
+}
+.column {
+  padding: 5em 2em;
+}
+.bottom {
+  margin-top: -5em;
+  padding: 2em;
+}
