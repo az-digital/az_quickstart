@@ -23,8 +23,24 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
-    // text_background deck width for desktop.
-    $form['text_background_color'] = [
+    $form['text_background_title'] = [
+      '#title' => $this->t('Title'),
+      '#type' => 'textfield',
+      '#default_value' => $config['text_background_title'] ?? '',
+      '#description' => $this->t('Title of the Paragraph'),
+    ];
+
+    $form['text_background_title_centered'] = [
+      '#title' => $this->t('Centered'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['text_background_title_centered'] ?? '',
+      '#description' => $this->t('Centers the title if checked.'),
+      '#return_value' => 'text-center',
+    ];
+
+    parent::buildBehaviorForm($paragraph, $form, $form_state);
+
+    $form['az_display_settings']['text_background_color'] = [
       '#title' => $this->t('Background Color'),
       '#type' => 'select',
       '#options' => [
@@ -48,7 +64,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the <a href="http://uadigital.arizona.edu/ua-bootstrap/colors.html" target="_blank">UA Bootstrap color documentation</a>.</li><li>For guidance on using the University of Arizona color palette, visit <a href="https://brand.arizona.edu/ua-color-palette" target="_blank">brand.arizona.edu</a>.</li></ul>'),
     ];
 
-    $form['text_background_pattern'] = [
+    $form['az_display_settings']['text_background_pattern'] = [
       '#title' => $this->t('Background Pattern'),
       '#type' => 'select',
       '#options' => [
@@ -62,36 +78,11 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       '#description' => $this->t('<br><big><b>Important:</b></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the <a href="http://uadigital.arizona.edu/ua-bootstrap/components.html#background-wrappers" target="_blank">UA Bootstrap background wrapper documentation</a>.</li>'),
     ];
 
-    parent::buildBehaviorForm($paragraph, $form, $form_state);
-
-    // text_background deck width for tablets.
-    $form['az_display_settings']['text_background_width_sm'] = [
-      '#title' => $this->t('text_backgrounds per row on tablet'),
-      '#type' => 'select',
-      '#options' => [
-        'col-sm-12' => $this->t('1'),
-        'col-sm-6' => $this->t('2'),
-        'col-sm-4' => $this->t('3'),
-        'col-sm-3' => $this->t('4'),
-      ],
-      '#default_value' => $config['az_display_settings']['text_background_width_sm'] ?? 'col-sm-6',
-      '#description' => $this->t('Choose how many text_backgrounds appear per row. Additional text_backgrounds will wrap to a new row. This selection sets the text_backgrounds per row on tablets.'),
-      '#weight' => 1,
-    ];
-
-    // text_background deck width for phones.
-    $form['az_display_settings']['text_background_width_xs'] = [
-      '#title' => $this->t('text_backgrounds per row on phone'),
-      '#type' => 'select',
-      '#options' => [
-        'col-12' => $this->t('1'),
-        'col-6' => $this->t('2'),
-        'col-4' => $this->t('3'),
-        'col-3' => $this->t('4'),
-      ],
-      '#default_value' => $config['az_display_settings']['text_background_width_xs'] ?? 'col-12',
-      '#description' => $this->t('Choose how many text_backgrounds appear per row. Additional text_backgrounds will wrap to a new row. This selection sets the text_backgrounds per row on phones.'),
-      '#weight' => 2,
+    $form['az_display_settings']['text_background_full_width'] = [
+      '#title' => $this->t('Full Width'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['text_background_full_width'] ?? '',
+      '#description' => $this->t('Makes the background full width if checked.'),
     ];
 
     // This places the form fields on the content tab rather than behavior tab.
