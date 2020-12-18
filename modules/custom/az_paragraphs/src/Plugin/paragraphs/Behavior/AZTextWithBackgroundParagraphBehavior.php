@@ -24,28 +24,42 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     $config = $this->getSettings($paragraph);
 
     // text_background deck width for desktop.
-    $form['text_background_width'] = [
-      '#title' => $this->t('text_backgrounds per row on desktop'),
+    $form['text_background_color'] = [
+      '#title' => $this->t('Background Color'),
       '#type' => 'select',
       '#options' => [
-        'col-md-12 col-lg-12' => $this->t('1'),
-        'col-md-6 col-lg-6' => $this->t('2'),
-        'col-md-4 col-lg-4' => $this->t('3'),
-        'col-md-3 col-lg-3' => $this->t('4'),
+        '' => $this->t('None'),
+        'bg-red' => $this->t('Arizona Red'),
+        'bg-blue' => $this->t('Arizona Blue'),
+        'bg-sky' => $this->t('Sky'),
+        'bg-oasis' => $this->t('Oasis'),
+        'bg-azurite' => $this->t('Azurite'),
+        'bg-midnight' => $this->t('Midnight'),
+        'bg-bloom' => $this->t('Bloom'),
+        'bg-chili' => $this->t('Chili'),
+        'bg-cool-gray' => $this->t('Cool Gray'),
+        'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-leaf' => $this->t('Leaf'),
+        'bg-river' => $this->t('River'),
+        'bg-silver' => $this->t('Silver'),
+        'bg-ash' => $this->t('Ash'),
       ],
-      '#default_value' => $config['text_background_width'] ?? 'col-md-4 col-lg-4',
-      '#description' => $this->t('Choose how many text_backgrounds appear per row. Additional text_backgrounds will wrap to a new row. This selection sets the text_backgrounds per row on desktops with automatic defaults set for tablet and phone. Override text_backgrounds per row on tablet and phone in Additional options.'),
+      '#default_value' => $config['text_background_color'] ?? '',
+      '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the <a href="http://uadigital.arizona.edu/ua-bootstrap/colors.html" target="_blank">UA Bootstrap color documentation</a>.</li><li>For guidance on using the University of Arizona color palette, visit <a href="https://brand.arizona.edu/ua-color-palette" target="_blank">brand.arizona.edu</a>.</li></ul>'),
     ];
 
-    $form['text_background_style'] = [
-      '#title' => $this->t('text_background style'),
+    $form['text_background_pattern'] = [
+      '#title' => $this->t('Background Pattern'),
       '#type' => 'select',
       '#options' => [
-        'text_background' => $this->t('Bordered text_backgrounds'),
-        'text_background text_background-borderless' => $this->t('Borderless text_backgrounds'),
+        '' => $this->t('None'),
+        'bg-triangles-left' => $this->t('Triangles Left'),
+        'bg-triangles-centered' => $this->t('Triangles Centered'),
+        'bg-triangles-right' => $this->t('Triangles Right'),
+        'bg-trilines' => $this->t('Trilines'),
       ],
-      '#default_value' => isset($config['text_background_style']) ? $config['text_background_style'] : 'text_background',
-      '#description' => $this->t('Select a text_background style.'),
+      '#default_value' => isset($config['text_background_pattern']) ? $config['text_background_pattern'] : '',
+      '#description' => $this->t('<br><big><b>Important:</b></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the <a href="http://uadigital.arizona.edu/ua-bootstrap/components.html#background-wrappers" target="_blank">UA Bootstrap background wrapper documentation</a>.</li>'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);

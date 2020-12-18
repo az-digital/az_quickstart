@@ -1,33 +1,33 @@
 /* Styles for az_text_background paragraph type. */
 
-.text-on-media {
-  /* background-image: {{text-on-media.media}}; */
-  background-size: cover;
-  background-position: center;
+.text-with-background {
+  padding: 3em 0;
 }
-.text-on-media-bottom img {
-  width: 100%;
+.bg-triangles-right {
+  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/triangles-top-right.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-blend-mode: multiply;
+  background-position: top right;
 }
-.bg-fixed {
-  background-attachment: fixed;
+.bg-triangles-left {
+  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/triangles-top-left.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-blend-mode: multiply;
+  background-position: 0 0;
 }
-.dark {
-  background: rgba(0,0,0,.8);
+.bg-triangles-centered {
+  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/triangles-centered.svg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  background-blend-mode: multiply;
+  background-position: center bottom;
 }
-.light {
-  background: rgba(255,255,255,.8);
-}
-.transparent {
-  background: none;
-}
-.box {
-  padding: 2em;
-  margin: 3em 0;
-}
-.column {
-  padding: 5em 2em;
-}
-.bottom {
-  margin-top: -5em;
-  padding: 2em;
+.bg-trilines {
+  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/trilines.svg');
+  background-size: auto 305px;
+  background-blend-mode: multiply;
+  background-position: top 0 right -1em;
+  background-repeat: no-repeat;
 }
