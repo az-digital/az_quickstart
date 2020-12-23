@@ -91,4 +91,21 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     return [];
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function preprocess(&$variables) {
+
+    parent::preprocess($variables);
+
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph = $variables['paragraph'];
+
+    // Get plugin configuration and save in vars for twig to use.
+    $config = $this->getSettings($paragraph);
+    $variables['text_with_background'] = $config;
+
+    return;
+  }
+
 }
