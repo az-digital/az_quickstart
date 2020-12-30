@@ -1,0 +1,44 @@
+<?php
+
+/**
+ * @file
+ * Contains az_paragraphs_text_background.module.
+ */
+
+use \Drupal\paragraphs\Entity\Paragraph;
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_paragraphs_text_background_theme_suggestions_paragraph_alter(array &$suggestions, array $variables) {
+
+  if (array_key_exists('theme_hook_original', $variables) &&
+    $variables['theme_hook_original'] == 'paragraph') {
+
+    if (array_key_exists('elements', $variables) &&
+      array_key_exists('#paragraph', $variables['elements']) &&
+      $variables['elements']['#paragraph'] instanceof \Drupal\paragraphs\Entity\Paragraph) {
+
+      /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+      $paragraph = $variables['elements']['#paragraph'];
+
+      $settings = $paragraph->getAllBehaviorSettings();
+
+      if (array_key_exists('az_text_background_paragraph_behavior', $settings)) {
+        $config = $settings['az_text_background_paragraph_behavior'];
+
+        if (array_key_exists('az_display_settings', $config)) {
+          $az_display_settings = $config['az_display_settings'];
+
+          if (array_key_exists('text_background_full_width', $az_display_settings) &&
+            ((bool) $az_display_settings['text_background_full_width'])) {
+            $suggestions[] = 'paragraph__az_text_background_full__default';
+          }
+          else {
+            $suggestions[] = 'paragraph__az_text_background_content__default';
+          }
+        }
+      }
+    }
+  }
+}
