@@ -3,6 +3,8 @@
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -75,7 +77,10 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-trilines' => $this->t('Trilines'),
       ],
       '#default_value' => isset($config['text_background_pattern']) ? $config['text_background_pattern'] : '',
-      '#description' => $this->t('<br><big><b>Important:</b></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the <a href="http://uadigital.arizona.edu/ua-bootstrap/components.html#background-wrappers" target="_blank">UA Bootstrap background wrapper documentation</a>.</li>'),
+      '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
+        [
+          '@arizona_bootstrap_docs_bg_wrappers_link' => Link::fromTextAndUrl('UA Bootstrap background wrapper documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/components/background-wrappers'))->toString(),
+        ]),
     ];
 
     $form['az_display_settings']['text_background_full_width'] = [
