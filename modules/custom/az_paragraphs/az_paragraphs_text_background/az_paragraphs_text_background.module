@@ -5,7 +5,7 @@
  * Contains az_paragraphs_text_background.module.
  */
 
-use \Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\Entity\Paragraph;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -17,7 +17,7 @@ function az_paragraphs_text_background_theme_suggestions_paragraph_alter(array &
 
     if (array_key_exists('elements', $variables) &&
       array_key_exists('#paragraph', $variables['elements']) &&
-      $variables['elements']['#paragraph'] instanceof \Drupal\paragraphs\Entity\Paragraph) {
+      $variables['elements']['#paragraph'] instanceof Paragraph) {
 
       /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
       $paragraph = $variables['elements']['#paragraph'];
@@ -42,3 +42,4 @@ function az_paragraphs_text_background_theme_suggestions_paragraph_alter(array &
     }
   }
 }
+ß

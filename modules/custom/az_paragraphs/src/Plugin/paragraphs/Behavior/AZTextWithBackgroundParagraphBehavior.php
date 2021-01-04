@@ -69,9 +69,9 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       '#type' => 'select',
       '#options' => [
         '' => $this->t('None'),
-        'bg-triangles-left' => $this->t('Triangles Left'),
+        'bg-triangles-top-left' => $this->t('Triangles Left'),
         'bg-triangles-centered' => $this->t('Triangles Centered'),
-        'bg-triangles-right' => $this->t('Triangles Right'),
+        'bg-triangles-top-right' => $this->t('Triangles Right'),
         'bg-trilines' => $this->t('Trilines'),
       ],
       '#default_value' => isset($config['text_background_pattern']) ? $config['text_background_pattern'] : '',
