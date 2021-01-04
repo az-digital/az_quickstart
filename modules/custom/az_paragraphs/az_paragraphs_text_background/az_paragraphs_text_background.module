@@ -42,4 +42,4 @@ function az_paragraphs_text_background_theme_suggestions_paragraph_alter(array &
     }
   }
 }
-ß
+
