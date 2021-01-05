@@ -55,6 +55,7 @@ install:
   - automated_cron
   - ckeditor_bs_grid
   - coffee
+  - chosen
 
 themes:
   - az_barrio
