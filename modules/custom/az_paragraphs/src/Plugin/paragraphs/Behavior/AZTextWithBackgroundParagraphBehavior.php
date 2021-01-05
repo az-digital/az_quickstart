@@ -33,7 +33,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     ];
 
     $form['text_background_title_centered'] = [
-      '#title' => $this->t('Centered'),
+      '#title' => $this->t('Centered Title'),
       '#type' => 'checkbox',
       '#default_value' => $config['text_background_title_centered'] ?? '',
       '#description' => $this->t('Centers the title if checked.'),
@@ -62,7 +62,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-silver' => $this->t('Silver'),
         'bg-ash' => $this->t('Ash'),
       ],
-      '#default_value' => $config['text_background_color'] ?? '',
+      '#default_value' => $config['az_display_settings']['text_background_color'] ?? '',
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the <a href="http://uadigital.arizona.edu/ua-bootstrap/colors.html" target="_blank">UA Bootstrap color documentation</a>.</li><li>For guidance on using the University of Arizona color palette, visit <a href="https://brand.arizona.edu/ua-color-palette" target="_blank">brand.arizona.edu</a>.</li></ul>'),
     ];
 
@@ -76,7 +76,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-triangles-top-right' => $this->t('Triangles Right'),
         'bg-trilines' => $this->t('Trilines'),
       ],
-      '#default_value' => isset($config['text_background_pattern']) ? $config['text_background_pattern'] : '',
+      '#default_value' => $config['az_display_settings']['text_background_pattern'] ?? '',
       '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
         [
           '@arizona_bootstrap_docs_bg_wrappers_link' => Link::fromTextAndUrl('UA Bootstrap background wrapper documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/components/background-wrappers'))->toString(),
@@ -86,7 +86,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     $form['az_display_settings']['text_background_full_width'] = [
       '#title' => $this->t('Full Width'),
       '#type' => 'checkbox',
-      '#default_value' => $config['text_background_full_width'] ?? '',
+      '#default_value' => $config['az_display_settings']['text_background_full_width'] ?? '',
       '#description' => $this->t('Makes the background full width if checked.'),
     ];
 
