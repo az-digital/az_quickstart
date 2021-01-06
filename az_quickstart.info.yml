@@ -17,6 +17,7 @@ install:
   - az_flexible_page
   - az_person
   - az_demo
+  - az_seo
   - node
   - history
   - block
