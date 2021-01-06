@@ -391,7 +391,6 @@ a.nolink + ul .sf-clone-parent {
   color: #0c234b;
   font-size: 28px;
   font-size: 1.8rem;
-  font-family: MiloSerifWeb, TimesNewRoman, "Times New Roman", Times, Baskerville, Georgia, serif;
   text-transform: none;
   line-height: 1.4;
 }
@@ -664,6 +663,5 @@ fieldset.collapsed {
 
 .site-footer {
   padding-bottom: 0;
-  font-family: MiloWeb-Text, Verdana, Geneva, sans-serif;
   color: #49595e;
 }
