@@ -49,7 +49,7 @@
         "drupal/media_library_form_element": "2.0",
         "drupal/xmlsitemap": "1.0",
         "drupal/redirect": "1.6",
-        "drupal/metatag": "1.14",
+        "drupal/metatag": "1.15",
         "drupal/ckeditor_bs_grid": "2.0.3",
         "drupal/auto_entitylabel": "3.0-beta3",
         "drupal/views_bootstrap": "4.3",
