@@ -1,6 +1,5 @@
 langcode: en
 status: true
-dependencies: {  }
 name: az_square
 label: Square
 effects:
