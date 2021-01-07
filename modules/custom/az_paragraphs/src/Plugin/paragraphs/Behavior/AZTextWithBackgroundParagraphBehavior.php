@@ -40,6 +40,14 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       '#return_value' => 'text-center',
     ];
 
+    $form['text_background_full_width'] = [
+      '#title' => $this->t('Full Width'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['text_background_full_width'] ?? '',
+      '#description' => $this->t('Makes the background full width if checked.'),
+      '#return_value' => 'full-width-background',
+    ];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     $form['az_display_settings']['text_background_color'] = [
@@ -83,12 +91,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         ]),
     ];
 
-    $form['az_display_settings']['text_background_full_width'] = [
-      '#title' => $this->t('Full Width'),
-      '#type' => 'checkbox',
-      '#default_value' => $config['az_display_settings']['text_background_full_width'] ?? '',
-      '#description' => $this->t('Makes the background full width if checked.'),
-    ];
+
 
     // This places the form fields on the content tab rather than behavior tab.
     // Note that form is passed by reference.

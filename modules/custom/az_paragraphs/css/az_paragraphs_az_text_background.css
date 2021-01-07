@@ -3,31 +3,8 @@
 .text-with-background {
   padding: 3em 0;
 }
-.bg-triangles-right {
-  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/triangles-top-right.svg');
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-blend-mode: multiply;
-  background-position: top right;
-}
-.bg-triangles-left {
-  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/triangles-top-left.svg');
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-blend-mode: multiply;
-  background-position: 0 0;
-}
-.bg-triangles-centered {
-  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/triangles-centered.svg');
-  background-repeat: no-repeat;
-  background-size: auto;
-  background-blend-mode: multiply;
-  background-position: center bottom;
-}
-.bg-trilines {
-  background-image: url('https://cdn.uadigital.arizona.edu/lib/ua-bootstrap/v1.0.0-beta.29/img/trilines.svg');
-  background-size: auto 305px;
-  background-blend-mode: multiply;
-  background-position: top 0 right -1em;
-  background-repeat: no-repeat;
+
+.full-width-background {
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
 }
