@@ -11,7 +11,7 @@ use Drupal\paragraphs\Entity\Paragraph;
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_paragraphs_text_background_theme_suggestions_paragraph_alter(array &$suggestions, array $variables) {
-
+return;
   if (array_key_exists('theme_hook_original', $variables) &&
     $variables['theme_hook_original'] === 'paragraph') {
 
