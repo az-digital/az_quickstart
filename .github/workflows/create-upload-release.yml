@@ -1,8 +1,9 @@
 on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+*'
+   workflow_dispatch:
+    inputs:
+      version:
+        description: The version to tag and release
+        required: true
 
 name: Upload Release Asset
 
@@ -35,8 +36,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: ${{ github.event.inputs.version }}
           draft: false
           prerelease: false
       - name: Upload Zip Assets
