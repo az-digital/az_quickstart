@@ -4,6 +4,8 @@ bootstrap_barrio_library: 'production'
 
 # Layout
 # --------------=
+bootstrap_barrio_region_clean_header_ua_utilities: 0
+bootstrap_barrio_region_class_header_ua_utilities: 'ml-auto d-none d-lg-block d-xl-block'
 bootstrap_barrio_region_clean_alert: 1
 bootstrap_barrio_region_class_alert: ''
 bootstrap_barrio_region_class_navigation: ''
