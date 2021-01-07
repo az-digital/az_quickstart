@@ -10,6 +10,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        with:
+          php-version: '7.3'
       - name: Set variables
         run: |
           export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
