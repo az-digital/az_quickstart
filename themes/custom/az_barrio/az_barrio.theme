@@ -458,7 +458,7 @@ function az_barrio_preprocess_image(&$variables) {
  */
 function az_barrio_preprocess_block(&$variables) {
   if ($variables['attributes']['id'] === 'block-az-barrio-sidebar-menu') {
-    $blockid = str_replace(array('block-', '-'), array('', '_'), $variables['attributes']['id']);
+    $blockid = str_replace(['block-', '-'], ['', '_'], $variables['attributes']['id']);
     $variables['content']['#attributes']['block'] = $blockid;
   }
  }
