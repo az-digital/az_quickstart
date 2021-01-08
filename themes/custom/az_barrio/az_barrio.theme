@@ -220,6 +220,10 @@ function az_barrio_preprocess_maintenance_page(&$variables) {
  * Implements hook_library_info_alter().
  */
 function az_barrio_library_info_alter(&$libraries, $extension) {
+  // Remove sidebar styles.
+  if ($extension === 'bootstrap_barrio' && isset($libraries['global-styling'])) {
+    unset($libraries['global-styling']['css']['component']['css/components/sidebar.css']);
+  }
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
     if (isset($libraries['global-styling'])) {
       $libraries['global-styling']['dependencies'][] = 'az_barrio/az-barrio-off-canvas-nav';
@@ -445,6 +449,19 @@ function az_barrio_preprocess_image(&$variables) {
     unset($variables['attributes']['width']);
     unset($variables['attributes']['height']);
     $variables['attributes']['class'] = ['card-img-top'];
+  }
+
+}
+
+function az_barrio_preprocess_block(&$variables) {
+  $blockid = str_replace(array('block-', '-'), array('', '_'), $variables['attributes']['id']);
+  $variables['content']['#attributes']['block'] = $blockid;
+ }
+
+function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
+  if (isset($variables['attributes']['block'])) {
+    \Drupal::logger('majors_data')->warning(print_r($suggestions, TRUE));
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
 }
 
