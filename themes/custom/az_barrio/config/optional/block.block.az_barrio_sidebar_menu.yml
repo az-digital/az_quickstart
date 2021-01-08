@@ -18,7 +18,7 @@ settings:
   label: 'Sidebar menu'
   provider: system
   label_display: false
-  level: 1
-  depth: 2
+  level: 2
+  depth: 0
   expand_all_items: true
 visibility: {  }
