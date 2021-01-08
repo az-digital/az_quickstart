@@ -631,6 +631,26 @@ fieldset.collapsed {
   max-width: 100%;
 }
 
+/* overrides Bootstrap Barrio image field styles */
+@media all and (min-width: 560px) {
+  .node .field--type-image {
+    float: initial;
+    margin: initial;
+  }
+  [dir="rtl"] .node .field--type-image {
+    float: initial;
+    margin: initial;
+  }
+  .node .field--type-image + .field--type-image {
+    clear: initial;
+  }
+}
+.field--type-image img,
+.field--name-field-user-picture img {
+  margin: initial;
+}
+/* end Bootstrap Barrio image field styles */
+
 @media (min-width: 768px) {
   #content .form-item .form-select,
   #content .form-item .form-email,

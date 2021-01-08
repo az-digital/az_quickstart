@@ -1,0 +1,20 @@
+name: 'Quickstart Person'
+type: module
+description: 'Allows users to create and order person profiles.'
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - auto_entitylabel
+  - az_paragraphs
+  - block
+  - draggableviews
+  - field
+  - field_group
+  - menu_ui
+  - node
+  - path
+  - pathauto
+  - taxonomy
+  - telephone
+  - user
+  - views_bootstrap

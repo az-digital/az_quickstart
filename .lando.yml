@@ -8,8 +8,6 @@ config:
   xdebug: false
 services:
   appserver:
-    composer:
-      hirak/prestissimo: ^0.3.9
     overrides:
       environment:
         SIMPLETEST_DB: 'mysql://drupal8:drupal8@database/drupal8'
