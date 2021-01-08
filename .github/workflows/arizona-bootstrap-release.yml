@@ -18,7 +18,7 @@ jobs:
         run: |
           git checkout -b 'az-bootstrap-${{ github.event.client_payload.version }}'
           jq '.require."az-digital/arizona-bootstrap" |= "${{ github.event.client_payload.version }}"' composer.json > composer.json.new
-          mv composer.new.json composer.json
+          mv composer.json.new composer.json
           git add composer.json
           git commit -m 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}'
           git push --set-upstream origin 'az-bootstrap-${{ github.event.client_payload.version }}'
