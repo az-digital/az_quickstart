@@ -363,19 +363,19 @@ padding: 0.625rem .75rem;
 }
 
 .search-block-form input {
-  height: 41px;
-  .search-block-form button#edit-submit {
-    background-color: $white;
-    border: 1px solid #ced4da;
-    padding: 0 8px;
-    &:hover {
-      background-color: $chili;
-      color: white;
+  height: 43px;
+}
+.search-block-form .input-group-append button#edit-submit {
+  background-color: $white;
+  border: 1px solid #ced4da;
+  padding: 0 8px;
+  span.material-icons-sharp {
+    color: $chili;
+    font-size: 20px;
     }
-    button#edit-submit span.material-icons-sharp {
-      color: $chili;
-      font-size: 20px;
-    }
+  &:hover {
+    background-color: $chili;
+    color: white;
   }
 }
 
