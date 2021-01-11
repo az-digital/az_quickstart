@@ -369,14 +369,14 @@ padding: 0.625rem .75rem;
   background-color: $white;
   border: 1px solid #ced4da;
   padding: 0 8px;
-  span.material-icons-sharp {
-    color: $chili;
-    font-size: 20px;
-    }
   &:hover {
     background-color: $chili;
     color: white;
   }
+}
+.search-block-form .input-group-append button#edit-submit span.material-icons-sharp {
+  color: $chili;
+  font-size: 20px;
 }
 
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
