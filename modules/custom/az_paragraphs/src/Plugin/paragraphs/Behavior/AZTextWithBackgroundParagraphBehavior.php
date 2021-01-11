@@ -50,9 +50,10 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
-    $form['az_display_settings']['text_background_color'] = [
+    $form['text_background_color'] = [
       '#title' => $this->t('Background Color'),
       '#type' => 'select',
+      '#weight' => 99,
       '#options' => [
         '' => $this->t('None'),
         'bg-red' => $this->t('Arizona Red'),
@@ -70,17 +71,18 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-silver' => $this->t('Silver'),
         'bg-ash' => $this->t('Ash'),
       ],
-      '#default_value' => $config['az_display_settings']['text_background_color'] ?? '',
+      '#default_value' => $config['text_background_color'] ?? '',
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
       [
         '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
         '@ua_brand_colors_link' => Link::fromTextAndUrl('brand.arizona.edu/applying-the-brand/colors', Url::fromUri('https://brand.arizona.edu/applying-the-brand/colors', ['attributes' => ['target' => '_blank']]))->toString(),
-        ]),
+      ]),
     ];
 
-    $form['az_display_settings']['text_background_pattern'] = [
+    $form['text_background_pattern'] = [
       '#title' => $this->t('Background Pattern'),
       '#type' => 'select',
+      '#weight' => 31,
       '#options' => [
         '' => $this->t('None'),
         'bg-triangles-top-left' => $this->t('Triangles Left'),
@@ -88,14 +90,12 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-triangles-top-right' => $this->t('Triangles Right'),
         'bg-trilines' => $this->t('Trilines'),
       ],
-      '#default_value' => $config['az_display_settings']['text_background_pattern'] ?? '',
+      '#default_value' => $config['text_background_pattern'] ?? '',
       '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
         [
           '@arizona_bootstrap_docs_bg_wrappers_link' => Link::fromTextAndUrl('Arizona Bootstrap Background Wrappers documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/components/background-wrappers/', ['attributes' => ['target' => '_blank']]))->toString(),
         ]),
     ];
-
-
 
     // This places the form fields on the content tab rather than behavior tab.
     // Note that form is passed by reference.
