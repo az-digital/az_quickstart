@@ -48,12 +48,9 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       '#return_value' => 'full-width-background',
     ];
 
-    parent::buildBehaviorForm($paragraph, $form, $form_state);
-
     $form['text_background_color'] = [
       '#title' => $this->t('Background Color'),
       '#type' => 'select',
-      '#weight' => 99,
       '#options' => [
         '' => $this->t('None'),
         'bg-red' => $this->t('Arizona Red'),
@@ -82,7 +79,6 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     $form['text_background_pattern'] = [
       '#title' => $this->t('Background Pattern'),
       '#type' => 'select',
-      '#weight' => 31,
       '#options' => [
         '' => $this->t('None'),
         'bg-triangles-top-left' => $this->t('Triangles Left'),
@@ -96,6 +92,8 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
           '@arizona_bootstrap_docs_bg_wrappers_link' => Link::fromTextAndUrl('Arizona Bootstrap Background Wrappers documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/components/background-wrappers/', ['attributes' => ['target' => '_blank']]))->toString(),
         ]),
     ];
+
+    parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // This places the form fields on the content tab rather than behavior tab.
     // Note that form is passed by reference.
