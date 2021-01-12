@@ -365,17 +365,21 @@ padding: 0.625rem .75rem;
 .search-block-form input {
   height: 43px;
 }
+
 .search-block-form .input-group-append button#edit-submit {
-  background-color: $white;
+  background-color: #ffffff;
   border: 1px solid #ced4da;
   padding: 0 8px;
-  &:hover {
-    background-color: $chili;
-    color: white;
-  }
 }
+
+.search-block-form .input-group-append button#edit-submit :hover,
+.search-block-form .input-group-append button#edit-submit :focus {
+    background-color: #8B0015;
+    color: #ffffff;
+}
+
 .search-block-form .input-group-append button#edit-submit span.material-icons-sharp {
-  color: $chili;
+  color: #8B0015;
   font-size: 20px;
 }
 
