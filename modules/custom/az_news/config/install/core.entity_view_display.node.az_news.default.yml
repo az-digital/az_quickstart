@@ -1,0 +1,104 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_news.field_az_article_body
+    - field.field.node.az_news.field_az_attachments
+    - field.field.node.az_news.field_az_byline
+    - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_extra_body_cotent
+    - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_news_tags
+    - field.field.node.az_news.field_az_published
+    - field.field.node.az_news.field_az_short_title
+    - field.field.node.az_news.field_az_subheading
+    - field.field.node.az_news.field_az_summary
+    - field.field.node.az_news.field_az_summary_link
+    - node.type.az_news
+  module:
+    - datetime
+    - entity_reference_revisions
+    - file
+    - text
+    - user
+id: node.az_news.default
+targetEntityType: node
+bundle: az_news
+mode: default
+content:
+  field_az_article_body:
+    weight: 5
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_az_attachments:
+    weight: 8
+    label: hidden
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_az_byline:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_az_extra_body_cotent:
+    type: entity_reference_revisions_entity_view
+    weight: 6
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    region: content
+  field_az_media_image:
+    weight: 3
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  field_az_news_tags:
+    weight: 7
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_az_published:
+    weight: 2
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_az_subheading:
+    weight: 4
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_az_expiration_date: true
+  field_az_short_title: true
+  field_az_summary: true
+  field_az_summary_link: true

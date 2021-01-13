@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_summary_link
+    - node.type.az_news
+  module:
+    - link
+id: node.az_news.field_az_summary_link
+field_name: field_az_summary_link
+entity_type: node
+bundle: az_news
+label: 'Summary Link'
+description: 'Leave as default setting (takes to internal news story) or change to external URL (goes to external news story).'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link

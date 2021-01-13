@@ -15,6 +15,7 @@ install:
   - az_paragraphs_view
   - az_core
   - az_flexible_page
+  - az_news
   - az_person
   - az_demo
   - az_seo
