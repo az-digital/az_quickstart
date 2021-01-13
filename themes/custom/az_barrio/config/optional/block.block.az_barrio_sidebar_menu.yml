@@ -20,5 +20,5 @@ settings:
   label_display: false
   level: 2
   depth: 0
-  expand_all_items: true
+  expand_all_items: false
 visibility: {  }
