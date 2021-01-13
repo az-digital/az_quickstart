@@ -367,6 +367,8 @@ padding: 0.625rem .75rem;
 }
 
 .search-block-form .input-group-append button#edit-submit {
+  font-size: 20px;
+  color: #8B0015;
   background-color: #ffffff;
   border: 1px solid #ced4da;
   padding: 0 8px;
@@ -376,11 +378,6 @@ padding: 0.625rem .75rem;
 .search-block-form .input-group-append button#edit-submit :focus {
     background-color: #8B0015;
     color: #ffffff;
-}
-
-.search-block-form .input-group-append button#edit-submit span.material-icons-sharp {
-  color: #8B0015;
-  font-size: 20px;
 }
 
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
