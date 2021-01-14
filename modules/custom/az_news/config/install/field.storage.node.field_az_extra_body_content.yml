@@ -5,8 +5,8 @@ dependencies:
     - entity_reference_revisions
     - node
     - paragraphs
-id: node.field_az_extra_body_cotent
-field_name: field_az_extra_body_cotent
+id: node.field_az_extra_body_content
+field_name: field_az_extra_body_content
 entity_type: node
 type: entity_reference_revisions
 settings:

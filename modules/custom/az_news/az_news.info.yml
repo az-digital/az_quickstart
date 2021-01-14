@@ -23,3 +23,5 @@ dependencies:
   - az_paragraphs
   - az_paragraphs_cards
   - az_paragraphs_text
+  - smart_title
+  - date_ap_style
