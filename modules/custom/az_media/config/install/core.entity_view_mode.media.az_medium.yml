@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - media
-id: media.az_card_image
-label: 'Card Image'
+id: media.az_medium
+label: 'Medium (360px)'
 targetEntityType: media
 cache: true

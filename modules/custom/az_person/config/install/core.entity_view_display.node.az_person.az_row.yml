@@ -53,7 +53,7 @@ content:
     weight: 0
     label: above
     settings:
-      view_mode: default
+      view_mode: az_medium
       link: false
     third_party_settings: {  }
     region: content
