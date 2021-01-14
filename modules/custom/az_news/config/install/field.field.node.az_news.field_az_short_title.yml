@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_az_short_title
-    - node.type.az_new
+    - node.type.az_news
 id: node.az_news.field_az_short_title
 field_name: field_az_short_title
 entity_type: node
