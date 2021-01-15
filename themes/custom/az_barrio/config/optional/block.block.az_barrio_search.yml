@@ -7,7 +7,7 @@ dependencies:
     - az_barrio
 id: az_barrio_search
 theme: az_barrio
-region: header
+region: header_ua_utilities
 weight: -5
 provider: null
 plugin: search_form_block
