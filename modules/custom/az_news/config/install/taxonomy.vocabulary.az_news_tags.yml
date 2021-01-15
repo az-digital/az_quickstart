@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'News Tags'
+vid: az_news_tags
+description: 'Taxonomy for categorizing news'
+weight: 0

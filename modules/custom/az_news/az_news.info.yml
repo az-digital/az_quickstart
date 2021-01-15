@@ -1,0 +1,27 @@
+name: Quickstart News
+description: 'Provides News content type and related configuration. Use this content type to add news stories to your site.'
+core_version_requirement: ^8.8 || ^9
+type: module
+package: The University of Arizona
+dependencies:
+  - datetime
+  - entity_reference_revisions
+  - field
+  - field_group
+  - file
+  - link
+  - media_library
+  - menu_ui
+  - node
+  - paragraphs
+  - path
+  - taxonomy
+  - text
+  - user
+  - az_person
+  - az_flexible_page
+  - az_paragraphs
+  - az_paragraphs_cards
+  - az_paragraphs_text
+  - smart_title
+  - date_ap_style

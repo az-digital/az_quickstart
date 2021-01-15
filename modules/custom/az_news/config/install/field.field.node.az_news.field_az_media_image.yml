@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_media_image
+    - media.type.az_image
+    - node.type.az_news
+id: node.az_news.field_az_media_image
+field_name: field_az_media_image
+entity_type: node
+bundle: az_news
+label: Photo
+description: 'Minimum size: 568 x 426 pixels. Card image crop is used in the directory.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_image: az_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
