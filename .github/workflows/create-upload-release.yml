@@ -1,8 +1,9 @@
 on:
-  push:
-    # Sequence of patterns matched against refs/tags
-    tags:
-      - '[0-9]+.[0-9]+.[0-9]+*'
+   workflow_dispatch:
+    inputs:
+      version:
+        description: The version to tag and release
+        required: true
 
 name: Upload Release Asset
 
@@ -13,19 +14,27 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Build Variables
       - name: Setup PHP
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
           php-version: '7.3'
-        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.event.inputs.version }}
+          release_name: ${{ github.event.inputs.version }}
+          draft: false
+          prerelease: false
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           git clone https://github.com/az-digital/az-quickstart-scaffolding.git az_quickstart
           cd az_quickstart
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
-          composer require --no-update az-digital/az_quickstart:${AZ_TRIMMED_REF}
+          composer require --no-update az-digital/az_quickstart:${{ github.event.inputs.version }}
           composer install --no-dev -o
       - name: Zip Assets
         run: |
@@ -33,16 +42,6 @@ jobs:
       - name: Tar Assets
         run: |
           tar --exclude '*.git*' -c -z -f az_quickstart.tar.gz az_quickstart
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
       - name: Upload Zip Assets
         id: upload-zip-asset
         uses: actions/upload-release-asset@v1
