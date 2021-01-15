@@ -39,32 +39,31 @@
  */
 #}
 {%
-    set classes = [
-    'paragraph',
-    'background-wrapper',
-    'text-with-background',
-    'paragraph--type--' ~ paragraph.bundle|clean_class,
-    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished',
-    text_with_background.text_background_pattern,
-    text_with_background.text_background_color,
-    text_with_background.text_background_full_width
+  set classes = [
+  'paragraph',
+  'background-wrapper',
+  'text-with-background',
+  'paragraph--type--' ~ paragraph.bundle|clean_class,
+  view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
+  not paragraph.isPublished() ? 'paragraph--unpublished',
+  text_with_background.text_background_pattern,
+  text_with_background.text_background_color,
+  text_with_background.text_background_full_width
 ]
 %}
 {% block paragraph %}
-    <div{{ attributes.addClass(classes) }}>
-        {% block content %}
-            {# Layout for content width AND full width styles #}
-            <div class="container">
-                <div class="row">
-                    <div class="col col-xs-12">
-                        <div class="content">
-                            <h2 class="mt-0 bold {{ text_with_background.text_background_title_centered }}">{{ text_with_background.text_background_title }}</h2>
-                            {{ content }}
-                        </div>
-                    </div>
-                </div>
+  <div{{ attributes.addClass(classes) }}>
+    {% block content %}
+      {# Layout for content width AND full width styles #}
+      <div class="container">
+        <div class="row">
+          <div class="col col-xs-12">
+            <div class="content">
+              {{ content }}
             </div>
-        {% endblock %}
-    </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
 {% endblock paragraph %}
