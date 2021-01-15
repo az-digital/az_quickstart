@@ -58,6 +58,7 @@ class AzBarrioTest extends BrowserTestBase {
     $this->drupalGet('');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->responseContains('https://fonts.googleapis.com/css?family=Material+Icons+Sharp');
+    $this->assertSession()->responseContains('https://use.typekit.net/emv3zbo.css');
   }
 
   /**
