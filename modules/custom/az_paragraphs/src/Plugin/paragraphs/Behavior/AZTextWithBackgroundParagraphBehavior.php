@@ -25,21 +25,6 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
-    $form['text_background_title'] = [
-      '#title' => $this->t('Title'),
-      '#type' => 'textfield',
-      '#default_value' => $config['text_background_title'] ?? '',
-      '#description' => $this->t('Title of the Paragraph'),
-    ];
-
-    $form['text_background_title_centered'] = [
-      '#title' => $this->t('Centered Title'),
-      '#type' => 'checkbox',
-      '#default_value' => $config['text_background_title_centered'] ?? '',
-      '#description' => $this->t('Centers the title if checked.'),
-      '#return_value' => 'text-center',
-    ];
-
     $form['text_background_full_width'] = [
       '#title' => $this->t('Full Width'),
       '#type' => 'checkbox',
