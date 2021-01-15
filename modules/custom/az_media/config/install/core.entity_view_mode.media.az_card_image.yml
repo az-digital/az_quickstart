@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.az_card_image
+label: 'Card Image'
+targetEntityType: media
+cache: true
