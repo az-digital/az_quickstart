@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_extra_body_content
+    - node.type.az_news
+    - paragraphs.paragraphs_type.az_cards
+    - paragraphs.paragraphs_type.az_text
+  module:
+    - entity_reference_revisions
+id: node.az_news.field_az_extra_body_content
+field_name: field_az_extra_body_content
+entity_type: node
+bundle: az_news
+label: 'Extra Body Content'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      az_cards: az_cards
+      az_text: az_text
+    target_bundles_drag_drop:
+      az_cards:
+        enabled: true
+        weight: 4
+      az_text:
+        enabled: true
+        weight: 5
+      az_view_reference:
+        weight: 6
+        enabled: false
+field_type: entity_reference_revisions

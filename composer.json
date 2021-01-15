@@ -54,7 +54,9 @@
         "drupal/auto_entitylabel": "3.0-beta3",
         "drupal/views_bootstrap": "4.3",
         "drupal/draggableviews": "2.0.0",
-        "drupal/coffee": "1.0"
+        "drupal/coffee": "1.0",
+        "drupal/smart_title": "^1.0@beta",
+        "drupal/date_ap_style": "^1.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
