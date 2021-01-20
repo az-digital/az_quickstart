@@ -56,7 +56,9 @@
         "drupal/draggableviews": "2.0.0",
         "drupal/coffee": "1.0",
         "drupal/smart_title": "^1.0@beta",
-        "drupal/date_ap_style": "^1.0"
+        "drupal/date_ap_style": "^1.0",
+        "drupal/smart_date": "3.1",
+        "drupal/date_recur": "3.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"

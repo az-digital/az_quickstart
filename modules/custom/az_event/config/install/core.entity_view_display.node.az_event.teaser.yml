@@ -1,0 +1,39 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.az_event.field_az_attachments
+    - field.field.node.az_event.field_az_body
+    - field.field.node.az_event.field_az_date
+    - field.field.node.az_event.field_az_event_category
+    - field.field.node.az_event.field_az_link
+    - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_photos
+    - field.field.node.az_event.field_az_short_title
+    - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_summary_short
+    - node.type.az_event
+  module:
+    - user
+id: node.az_event.teaser
+targetEntityType: node
+bundle: az_event
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_az_attachments: true
+  field_az_body: true
+  field_az_date: true
+  field_az_event_category: true
+  field_az_link: true
+  field_az_location: true
+  field_az_photos: true
+  field_az_short_title: true
+  field_az_summary: true
+  field_az_summary_short: true

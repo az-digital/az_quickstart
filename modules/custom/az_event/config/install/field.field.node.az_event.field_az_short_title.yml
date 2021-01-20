@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_short_title
+    - node.type.az_event
+id: node.az_event.field_az_short_title
+field_name: field_az_short_title
+entity_type: node
+bundle: az_event
+label: 'Short Title'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
