@@ -1,0 +1,40 @@
+<?php
+/**
+ * @file
+ * Contains az_core.module.
+ */
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ *
+ * If there is a token in the short title field replace it..
+ */
+function az_news_node_view(array &$build, \Drupal\Core\Entity\EntityInterface $entity, \Drupal\Core\Entity\Display\EntityViewDisplayInterface $display, $view_mode) {
+  if ($field_config = \Drupal\field\Entity\FieldStorageConfig::loadByName('node', 'field_az_short_title')) {
+    if (isset($entity->content['field_az_short_title'])) {
+      $token_service = \Drupal::service('token');
+      $short_title =  $entity->content['field_az_short_title'][0]['#markup'];
+      if ($token_service->scan($short_title)) {
+        $short_title_replaced = $token_service->replace($short_title, array('node' => $entity));
+        $entity->content['field_az_short_title'][0]['#markup'] = $short_title_replaced;
+      }
+    }
+  }
+}
+/**
+ * Implements hook_form_BASE_FORM_ID_alter().
+ *
+ * Add token validation to the field field_uaqs_short_title.
+ */
+// function az_fields_form_node_form_alter(&$form, &$form_state, $form_id) {
+//   if (field_info_instance('node', 'field_az_short_title', $form['#node']->type)) {
+//     $form['field_az_short_title']['#element_validate'] = array('token_element_validate');
+//     $form['field_az_short_title']['#default_value'] = $form['field_az_short_title']['und'][0]['value']['#default_value'];
+//     $form['field_az_short_title']['#token_types'] = array('node');
+//     $form['field_az_short_title']['tokens'] = array(
+//       '#theme' => 'token_tree_link',
+//       '#token_types' => array('node'),
+//       '#global_types' => FALSE,
+//       '#click_insert' => TRUE,
+//     );
+//   }
+// }

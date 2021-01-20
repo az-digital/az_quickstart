@@ -1,0 +1,413 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.az_media_list
+    - field.field.node.az_news.field_az_article_body
+    - field.field.node.az_news.field_az_attachments
+    - field.field.node.az_news.field_az_byline
+    - field.field.node.az_news.field_az_caption
+    - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_extra_body_content
+    - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_news_tags
+    - field.field.node.az_news.field_az_published
+    - field.field.node.az_news.field_az_short_title
+    - field.field.node.az_news.field_az_subheading
+    - field.field.node.az_news.field_az_summary
+    - node.type.az_news
+  module:
+    - date_ap_style
+    - field_group
+    - smart_title
+    - user
+third_party_settings:
+  field_group:
+    group_row:
+      children:
+        - group_title_column
+      parent_name: ''
+      weight: 7
+      format_type: html_element
+      region: hidden
+      format_settings:
+        id: ''
+        classes: row
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Row
+    group_title_block:
+      children:
+        - field_az_byline
+        - smart_title
+      parent_name: group_title_column
+      weight: 21
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ' border-bottom align-text-top mb-4'
+      label: 'Title Block'
+    group_text_muted:
+      children:
+        - field_az_published
+      parent_name: group_media_body
+      weight: 2
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: text-muted
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Text Muted'
+    group_title_column:
+      children:
+        - group_title_block
+      parent_name: group_row
+      weight: 21
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: col-12
+      label: 'Title Column'
+    group_text_column:
+      children:
+        - field_az_article_body
+        - field_az_extra_body_content
+        - group_lead
+        - group_photo_container
+      parent_name: group_body_row
+      weight: 6
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'col-lg-8 offset-lg-2'
+      label: 'Text Column'
+    group_lead:
+      children:
+        - field_az_subheading
+      parent_name: group_text_column
+      weight: 3
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: p
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: lead
+      label: lead
+    group_body_row:
+      children:
+        - group_text_column
+      parent_name: ''
+      weight: 6
+      format_type: html_element
+      region: hidden
+      format_settings:
+        id: ''
+        classes: row
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Body Row'
+    group_photo_container:
+      children:
+        - group_fig_caption
+      parent_name: group_text_column
+      weight: 4
+      format_type: html_element
+      region: hidden
+      format_settings:
+        id: ''
+        classes: ''
+        element: figure
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Photo Container'
+    group_fig_caption:
+      children:
+        - field_az_caption
+      parent_name: group_photo_container
+      weight: 21
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: figcaption
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'border-bottom pb-3'
+      label: 'Fig Caption'
+    group_media:
+      children:
+        - group_media_body
+        - group_media_object
+      parent_name: group_link
+      weight: 1
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: media
+      label: Media
+    group_media_body:
+      children:
+        - group_heading
+        - group_text_muted
+        - field_az_summary
+        - group_read_more
+      parent_name: group_media
+      weight: 2
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: media-body
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Media Body'
+    group_heading:
+      children:
+        - group_strong_title
+      parent_name: group_media_body
+      weight: 1
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: media-heading
+        element: h4
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Heading
+    group_strong_title:
+      children:
+        - field_az_short_title
+      parent_name: group_heading
+      weight: 5
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: psuedo-link
+        element: strong
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Strong
+    group_read_more:
+      children:
+        - group_strong
+      parent_name: group_media_body
+      weight: 4
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: page-row-padding-top
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Read More'
+    group_strong:
+      children:
+        - group_span
+      parent_name: group_read_more
+      weight: 2
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: 'text-red30b psuedo-link'
+        element: strong
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Strong
+    group_span:
+      children: {  }
+      parent_name: group_strong
+      weight: 20
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        element: span
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'External link span'
+    group_media_object:
+      children:
+        - field_az_media_image
+      parent_name: group_media
+      weight: 3
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: media-right
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Media Object'
+    group_link:
+      children:
+        - group_media
+      parent_name: ''
+      weight: 0
+      format_type: link
+      region: content
+      format_settings:
+        target: entity
+        custom_uri: ''
+        target_attribute: default
+        id: ''
+        classes: list-link-block
+      label: Link
+  smart_title:
+    enabled: true
+_core:
+  default_config_hash: he6vYK4j3owcm5Bld_jcEPcuDXCysJ0f5hBwhDoVjfI
+id: node.az_news.az_media_list
+targetEntityType: node
+bundle: az_news
+mode: az_media_list
+content:
+  field_az_media_image:
+    type: entity_reference_entity_view
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      view_mode: az_square
+      link: false
+    third_party_settings: {  }
+  field_az_published:
+    type: timestamp_ap_style
+    weight: 6
+    region: content
+    label: hidden
+    settings:
+      always_display_year: '1'
+      use_today: '1'
+      cap_today: '1'
+      display_day: '1'
+      display_noon_and_midnight: '1'
+      timezone: ''
+      display_time: 0
+      time_before_date: 0
+      use_all_day: 0
+      capitalize_noon_and_midnight: 0
+    third_party_settings: {  }
+  field_az_short_title:
+    type: string
+    weight: 2
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: true
+    third_party_settings: {  }
+  field_az_summary:
+    type: basic_string
+    weight: 3
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_az_article_body: true
+  field_az_attachments: true
+  field_az_byline: true
+  field_az_caption: true
+  field_az_expiration_date: true
+  field_az_extra_body_content: true
+  field_az_news_tags: true
+  field_az_subheading: true
+  links: true
+  smart_title: true
