@@ -226,10 +226,10 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  az_media_list_page:
+  az_paged_row:
     display_plugin: page
-    id: az_media_list_page
-    display_title: 'Media List Page'
+    id: az_paged_row
+    display_title: 'Paged Row View'
     position: 1
     display_options:
       display_extenders: {  }

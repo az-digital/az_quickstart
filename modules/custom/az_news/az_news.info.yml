@@ -25,3 +25,4 @@ dependencies:
   - az_paragraphs_text
   - smart_title
   - date_ap_style
+  - field_group_link
