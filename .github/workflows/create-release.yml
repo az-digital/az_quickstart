@@ -1,11 +1,10 @@
+name: Create Release
 on:
    workflow_dispatch:
     inputs:
       version:
         description: The version to tag and release
         required: true
-
-name: Upload Release Asset
 
 jobs:
   build:
