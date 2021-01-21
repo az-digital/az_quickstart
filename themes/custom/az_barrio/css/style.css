@@ -361,6 +361,25 @@ a.btn.btn-redbar {
 #block-az-barrio-offcanvas-searchform .btn {
 padding: 0.625rem .75rem;
 }
+
+.search-block-form input {
+  height: 43px;
+}
+
+.search-block-form .input-group-append button#edit-submit {
+  font-size: 20px;
+  color: #8B0015;
+  background-color: #ffffff;
+  border: 1px solid #ced4da;
+  padding: 0 8px;
+}
+
+form.search-block-form .input-group .input-group-append button#edit-submit:hover,
+form.search-block-form .input-group .input-group-append button#edit-submit:focus {
+    background-color: #8B0015;
+    color: #ffffff;
+}
+
 /* Removing mobile duplicate menu link only if it is a no-link (https://www.drupal.org/node/2032759) */
 a.nolink + ul .sf-clone-parent {
   display: none;
