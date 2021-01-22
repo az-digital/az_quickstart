@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: 31xoUQHpKeDJVTlcsMv_EVZ33uw3aKNPcScfi1rapw8
+id: news_content_type
+label: 'News Content Type'
+type: 'canonical_entities:node'
+pattern: 'news/[node:title]'
+selection_criteria:
+  07e97b57-dc82-453f-8cc0-5495a8e14ceb:
+    id: node_type
+    bundles:
+      az_news: az_news
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 07e97b57-dc82-453f-8cc0-5495a8e14ceb
+selection_logic: and
+weight: -5
+relationships: {  }
