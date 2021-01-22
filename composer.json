@@ -57,8 +57,7 @@
         "drupal/coffee": "1.0",
         "drupal/smart_title": "^1.0@beta",
         "drupal/date_ap_style": "^1.0",
-        "drupal/smart_date": "3.1",
-        "drupal/date_recur": "3.0"
+        "drupal/smart_date": "3.1"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -83,6 +82,9 @@
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
+            },
+            "drupal/date_ap_style": {
+                "Smart date compatibility": "https://www.drupal.org/files/issues/2020-08-25/3167284-support-smartdate-2.patch"
             },
             "drupal/easy_breadcrumb": {
                 "Easy_breadcrumb schema issue": "https://www.drupal.org/files/issues/2020-07-27/missing_schema_keys-3161765-4.patch"
