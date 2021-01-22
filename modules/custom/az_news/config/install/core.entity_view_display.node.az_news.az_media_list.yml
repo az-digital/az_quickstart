@@ -101,7 +101,7 @@ third_party_settings:
       label: Media
     group_heading:
       children:
-        - group_strong_title
+        - smart_title
       parent_name: group_text_column
       weight: 5
       format_type: html_element
@@ -117,24 +117,6 @@ third_party_settings:
         id: ''
         classes: 'card-title text-midnight h4'
       label: Heading
-    group_strong_title:
-      children:
-        - smart_title
-      parent_name: group_heading
-      weight: 5
-      format_type: html_element
-      region: content
-      format_settings:
-        id: ''
-        classes: psuedo-link
-        element: strong
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: Strong
     group_read_more:
       children:
         - links
@@ -227,6 +209,8 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes: {  }
       smart_title__link: false
+_core:
+  default_config_hash: he6vYK4j3owcm5Bld_jcEPcuDXCysJ0f5hBwhDoVjfI
 id: node.az_news.az_media_list
 targetEntityType: node
 bundle: az_news

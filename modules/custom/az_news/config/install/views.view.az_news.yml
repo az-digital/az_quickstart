@@ -168,7 +168,7 @@ display:
             label: ''
           granularity: second
           plugin_id: datetime
-      title: 'News'
+      title: News
       header: {  }
       footer: {  }
       empty: {  }
