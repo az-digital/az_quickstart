@@ -3,8 +3,6 @@ status: true
 dependencies:
   module:
     - node
-_core:
-  default_config_hash: 31xoUQHpKeDJVTlcsMv_EVZ33uw3aKNPcScfi1rapw8
 id: news_content_type
 label: 'News Content Type'
 type: 'canonical_entities:node'
