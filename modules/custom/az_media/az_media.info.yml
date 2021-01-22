@@ -4,6 +4,8 @@ description: Media entity types & image styles.
 core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
+  - crop
   - image
+  - image_widget_crop
   - media
   - media_library

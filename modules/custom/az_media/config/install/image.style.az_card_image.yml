@@ -1,14 +1,24 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - crop.type.az_card_image
+  module:
+    - crop
 name: az_card_image
 label: 'Card Image'
 effects:
   676b4920-ac86-41a2-8ebc-2ca28b731d74:
     uuid: 676b4920-ac86-41a2-8ebc-2ca28b731d74
     id: image_scale_and_crop
-    weight: 1
+    weight: -9
     data:
       width: 568
       height: 426
       anchor: center-center
+  452c89d0-8efa-40f5-9a58-2392324431d0:
+    uuid: 452c89d0-8efa-40f5-9a58-2392324431d0
+    id: crop_crop
+    weight: -10
+    data:
+      crop_type: az_card_image
