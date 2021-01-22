@@ -1,10 +1,12 @@
 name: 'Quickstart Event'
 type: module
 description: 'Provides Event content type and related configuration.'
-core_version_requirement: ^8.8 || ^9
-package: The University of Arizona
+core_version_requirement: '^8.8 || ^9'
+package: 'The University of Arizona'
 dependencies:
+  - az_event
   - az_news
+  - date_ap_style
   - datetime_range
   - field
   - field_group
