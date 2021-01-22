@@ -220,8 +220,10 @@ function az_barrio_preprocess_maintenance_page(&$variables) {
  * Implements hook_library_info_alter().
  */
 function az_barrio_library_info_alter(&$libraries, $extension) {
-  // Remove site-footer styles.
   if ($extension === 'bootstrap_barrio' && isset($libraries['global-styling'])) {
+    // Remove sidebar styles.
+    unset($libraries['global-styling']['css']['component']['css/components/sidebar.css']);
+    // Remove site-footer styles.
     unset($libraries['global-styling']['css']['component']['css/components/site-footer.css']);
   }
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
@@ -451,3 +453,12 @@ function az_barrio_footer_logo() {
   return $return;
 }
 
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
+  if (isset($variables['attributes']['id'])) {
+    $blockid = str_replace(['block-', '-'], ['', '_'], $variables['attributes']['id']);
+    $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
+  }
+}
