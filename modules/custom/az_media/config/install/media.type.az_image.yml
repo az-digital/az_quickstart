@@ -1,9 +1,14 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - crop
+third_party_settings:
+  crop:
+    image_field: field_media_az_image
 id: az_image
 label: Image
-description: "Use local images for reusable media."
+description: 'Use local images for reusable media.'
 source: image
 queue_thumbnail_downloads: false
 new_revision: true
