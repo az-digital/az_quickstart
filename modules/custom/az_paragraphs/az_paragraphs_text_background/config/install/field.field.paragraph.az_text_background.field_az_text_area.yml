@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_text_area
+    - paragraphs.paragraphs_type.az_text_background
+  module:
+    - text
+id: paragraph.az_text_background.field_az_text_area
+field_name: field_az_text_area
+entity_type: paragraph
+bundle: az_text_background
+label: Text
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

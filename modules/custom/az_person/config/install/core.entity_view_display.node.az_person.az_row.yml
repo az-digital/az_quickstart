@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_row
     - field.field.node.az_person.field_az_addresses
     - field.field.node.az_person.field_az_bio
     - field.field.node.az_person.field_az_cv_documents
@@ -20,45 +20,45 @@ dependencies:
   module:
     - telephone
     - user
-id: node.az_person.az_card
+id: node.az_person.az_row
 targetEntityType: node
 bundle: az_person
-mode: az_card
+mode: az_row
 content:
   field_az_email:
-    weight: 2
+    weight: 5
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: email_mailto
     region: content
   field_az_fname:
-    type: string
-    weight: 4
-    region: content
-    label: above
+    weight: 1
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    type: string
+    region: content
   field_az_lname:
-    type: string
-    weight: 5
-    region: content
-    label: above
+    weight: 2
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    type: string
+    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     weight: 0
-    region: content
-    label: hidden
+    label: above
     settings:
-      view_mode: az_card_image
+      view_mode: az_medium
       link: false
     third_party_settings: {  }
+    region: content
   field_az_phones:
-    weight: 3
+    weight: 4
     label: hidden
     settings:
       title: ''
@@ -66,7 +66,7 @@ content:
     type: telephone_link
     region: content
   field_az_titles:
-    weight: 1
+    weight: 3
     label: hidden
     settings:
       link_to_entity: false

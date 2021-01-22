@@ -1,0 +1,13 @@
+langcode: en
+status: true
+name: az_medium
+label: 'Medium (360px wide)'
+effects:
+  a8a842a4-6670-4288-8f98-3b161f597ec9:
+    uuid: a8a842a4-6670-4288-8f98-3b161f597ec9
+    id: image_scale
+    weight: 1
+    data:
+      width: 360
+      height: null
+      upscale: true

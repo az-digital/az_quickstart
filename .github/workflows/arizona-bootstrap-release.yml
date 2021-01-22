@@ -1,0 +1,27 @@
+name: Create PR for new Arizona Bootstrap Release
+on:
+  repository_dispatch:
+    types: az_bootstrap_release
+
+jobs:
+  release:
+    name: Create PR
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        # with:
+        #   ssh-key: ${{ secrets.SELF_DEPLOY_KEY }}
+
+      - name: Create new branch and PR
+        run: |
+          git checkout -b 'az-bootstrap-${{ github.event.client_payload.version }}'
+          jq '.require."az-digital/arizona-bootstrap" |= "${{ github.event.client_payload.version }}"' composer.json > composer.json.new
+          mv composer.json.new composer.json
+          cat themes/custom/az_barrio/includes/common.inc | sed "s/^define('AZ_BOOTSTRAP_STABLE_VERSION'.*/define('AZ_BOOTSTRAP_STABLE_VERSION', '${{ github.event.client_payload.version }}');/g" > common.inc.new
+          mv common.inc.new themes/custom/az_barrio/includes/common.inc
+          git add composer.json themes/custom/az_barrio/includes/common.inc
+          git commit -m 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}'
+          git push --set-upstream origin 'az-bootstrap-${{ github.event.client_payload.version }}'
+          gh pr create --title 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}' --body ''

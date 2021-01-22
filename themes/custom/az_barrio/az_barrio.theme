@@ -220,9 +220,11 @@ function az_barrio_preprocess_maintenance_page(&$variables) {
  * Implements hook_library_info_alter().
  */
 function az_barrio_library_info_alter(&$libraries, $extension) {
-  // Remove sidebar styles.
   if ($extension === 'bootstrap_barrio' && isset($libraries['global-styling'])) {
+    // Remove sidebar styles.
     unset($libraries['global-styling']['css']['component']['css/components/sidebar.css']);
+    // Remove site-footer styles.
+    unset($libraries['global-styling']['css']['component']['css/components/site-footer.css']);
   }
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
     if (isset($libraries['global-styling'])) {
@@ -452,17 +454,6 @@ function az_barrio_footer_logo() {
 }
 
 /**
- * Helper function for the AZ Person image.
- */
-function az_barrio_preprocess_image(&$variables) {
-  if ($variables['style_name'] === 'large') {
-    unset($variables['attributes']['width']);
-    unset($variables['attributes']['height']);
-    $variables['attributes']['class'] = ['card-img-top'];
-  }
-}
-
-/**
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
@@ -471,4 +462,3 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
 }
-
