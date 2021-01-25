@@ -43,6 +43,7 @@
         "drupal/pathauto": "1.8",
         "drupal/token": "1.7",
         "drupal/paragraphs": "1.12",
+        "drupal/smtp": "1.0",
         "drupal/entity_embed": "1.1",
         "drupal/embed": "1.4",
         "drupal/viewsreference": "2.0-beta2",

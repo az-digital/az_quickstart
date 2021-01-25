@@ -1,0 +1,7 @@
+name: Quickstart Mail
+type: module
+description: Send mail via SMTP
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - smtp
