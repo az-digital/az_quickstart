@@ -8,7 +8,7 @@
 /**
  * Implements hook_mail_alter().
  */
-function uaqs_mail_mail_alter(&$message) {
+function az_mail_mail_alter(&$message) {
   $ses_message_tags = [];
   if (isset($_ENV['PANTHEON_SITE_NAME'])) {
     $message['headers']['X-Pantheon-Site-Name'] = $_ENV['PANTHEON_SITE_NAME'];
@@ -46,16 +46,16 @@ function uaqs_mail_mail_alter(&$message) {
 }
 
 /**
- * Helper function for uaqs_mail_ses_hash.
+ * Helper function for az_mail_ses_hash.
  */
-function uaqs_mail_ses_sign($key, $msg) {
+function az_mail_ses_sign($key, $msg) {
   return hash_hmac('sha256', utf8_encode($msg), $key, TRUE);
 }
 
 /**
  * Derive the SMTP password from the AWS IAM secret key.
  */
-function uaqs_mail_ses_hash($secret, $region) {
+function az_mail_ses_hash($secret, $region) {
   // Values that are required to calculate the signature. These values should
   // never change.
   $date = "11111111";
@@ -64,11 +64,11 @@ function uaqs_mail_ses_hash($secret, $region) {
   $terminal = "aws4_request";
   $version = 0x04;
 
-  $signature = uaqs_mail_ses_sign(utf8_encode("AWS4" . $secret), $date);
-  $signature = uaqs_mail_ses_sign($signature, $region);
-  $signature = uaqs_mail_ses_sign($signature, $service);
-  $signature = uaqs_mail_ses_sign($signature, $terminal);
-  $signature = uaqs_mail_ses_sign($signature, $message);
+  $signature = az_mail_ses_sign(utf8_encode("AWS4" . $secret), $date);
+  $signature = az_mail_ses_sign($signature, $region);
+  $signature = az_mail_ses_sign($signature, $service);
+  $signature = az_mail_ses_sign($signature, $terminal);
+  $signature = az_mail_ses_sign($signature, $message);
   $signature_and_version = pack("C*", $version) . $signature;
   $smtp_password = base64_encode($signature_and_version);
   return utf8_decode($smtp_password);
