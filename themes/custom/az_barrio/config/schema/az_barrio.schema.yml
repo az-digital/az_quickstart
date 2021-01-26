@@ -238,9 +238,6 @@ az_barrio.settings:
     use_material_design_sharp_icons:
       type: boolean
       label: 'Enable Material Design Sharp Icons'
-    az_barrio_logo_svg_inline:
-      type: boolean
-      label: 'Inline SVG logo'
     primary_logo_alt_text:
       type: string
       label: 'Primary logo alt text'
@@ -259,3 +256,4 @@ az_barrio.settings:
     footer_logo_path:
       type: path
       label: 'Footer logo path'
+
