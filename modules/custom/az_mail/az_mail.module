@@ -25,9 +25,9 @@ function uaqs_mail_mail_alter(&$message) {
     $tag = ['key' => 'pantheon-environment', 'value' => $_ENV['PANTHEON_ENVIRONMENT']];
     array_push($ses_message_tags, $tag);
   }
-  if ($smtp_host = variable_get('smtp_host', FALSE)) {
+  if ($smtp_host = \Drupal::config('smtp.settings')->get('smtp_host', FALSE)) {
     if (preg_match('/email-smtp\..*\.amazonaws.com/', $smtp_host)) {
-      if ($configuration_set = variable_get('uaqs_mail_ses_configuration_set', FALSE)) {
+      if ($configuration_set = \Drupal::config('az_mail.settings')->get('ses_configuration_set', FALSE)) {
         $message['headers']['X-SES-CONFIGURATION-SET'] = $configuration_set;
       }
       if (count($ses_message_tags) > 0) {
