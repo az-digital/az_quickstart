@@ -4,8 +4,8 @@ description: 'Provides sample content to demonstrate various features of the AZ 
 core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
-  - az_core
-  - az_flexible_page
-  - migrate
-  - migrate_plus
-  - migrate_tools
+  - az_core:az_core
+  - az_flexible_page:az_flexible_page
+  - migrate:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools

@@ -4,5 +4,5 @@ description: 'Pre-configures contrib CAS module to work with University of Arizo
 core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
-  - cas
-  - az_core
+  - cas:cas
+  - az_core:az_core

@@ -4,26 +4,26 @@ core_version_requirement: ^8.8 || ^9
 type: module
 package: The University of Arizona
 dependencies:
-  - datetime
-  - entity_reference_revisions
-  - field
-  - field_group
-  - file
-  - link
-  - media_library
-  - menu_ui
-  - node
-  - paragraphs
-  - path
-  - taxonomy
-  - text
-  - user
-  - az_person
-  - az_flexible_page
-  - az_paragraphs
-  - az_paragraphs_cards
-  - az_paragraphs_text
-  - smart_title
-  - date_ap_style
-  - field_group_link
+  - drupal:datetime
+  - entity_reference_revisions:entity_reference_revisions
+  - drupal:field
+  - field_group:field_group
+  - drupal:file
+  - drupal:link
+  - drupal:media_library
+  - drupal:menu_ui
+  - drupal:node
+  - paragraphs:paragraphs
+  - drupal:path
+  - drupal:taxonomy
+  - drupal:text
+  - drupal:user
+  - az_person:az_person
+  - az_flexible_page:az_flexible_page
+  - az_paragraphs:az_paragraphs
+  - az_paragraphs_cards:az_paragraphs_cards
+  - az_paragraphs_text:az_paragraphs_text
+  - smart_title:smart_title
+  - date_ap_style:date_ap_style
+  - field_group_link:field_group_link
   
