@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.az_medium
+label: 'Medium (360px)'
+targetEntityType: media
+cache: true

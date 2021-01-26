@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - ctools
+    - system
   theme:
     - az_barrio
 id: az_barrio_page_title
@@ -19,3 +22,10 @@ visibility:
     id: request_path
     pages: '/person/*'
     negate: true
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles:
+      az_news: az_news
+    negate: true
+    context_mapping:
+      node: '@node.node_route_context:node'

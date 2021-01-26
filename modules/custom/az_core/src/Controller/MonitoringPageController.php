@@ -5,7 +5,7 @@ namespace Drupal\az_core\Controller;
 use Drupal\Core\Controller\ControllerBase;
 
 /**
- * Class MonitoringPageController.
+ * Controller for custom uptime monitoring page.
  */
 class MonitoringPageController extends ControllerBase {
 

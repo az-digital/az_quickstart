@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_published
+    - node.type.az_news
+  module:
+    - datetime
+id: node.az_news.field_az_published
+field_name: field_az_published
+entity_type: node
+bundle: az_news
+label: 'Date of publication'
+description: 'Date when article was published'
+required: false
+translatable: false
+default_value:
+  -
+    default_date_type: now
+    default_date: now
+default_value_callback: ''
+settings: {  }
+field_type: datetime

@@ -9,7 +9,7 @@ use Drupal\Core\Routing\RouteBuilderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class AzCasSettingsForm.
+ * Form for custom AZ CAS module settings.
  */
 class AzCasSettingsForm extends ConfigFormBase {
 

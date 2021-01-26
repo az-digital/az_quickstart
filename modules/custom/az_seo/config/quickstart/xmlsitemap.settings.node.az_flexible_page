@@ -1,0 +1,4 @@
+status: true
+priority: !!float 1
+changefreq: 60
+

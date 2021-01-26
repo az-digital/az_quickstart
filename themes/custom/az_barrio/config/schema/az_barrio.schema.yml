@@ -217,6 +217,12 @@ az_barrio.settings:
     az_bootstrap_minified:
       type: boolean
       label: 'Enable AZ Bootstrap minification'
+    az_barrio_font:
+      type: boolean
+      label: 'Use the centrally-managed Typekit webfont, Proxima Nova'
+    az_barrio_material_design_sharp_icons:
+      type: boolean
+      label: 'Use Material Design Sharp Icons'
     az_brand_icons_source:
       type: string
       label: 'AZ Brand Icons source'

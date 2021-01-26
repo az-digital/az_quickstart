@@ -1,5 +1,5 @@
 langcode: en
-status: false
+status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_card
@@ -26,14 +26,39 @@ bundle: az_person
 mode: az_card
 content:
   field_az_email:
-    weight: 9
+    weight: 2
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: email_mailto
     region: content
+  field_az_fname:
+    type: string
+    weight: 4
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_az_lname:
+    type: string
+    weight: 5
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_az_media_image:
+    type: entity_reference_entity_view
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      view_mode: az_card_image
+      link: false
+    third_party_settings: {  }
   field_az_phones:
-    weight: 10
+    weight: 3
     label: hidden
     settings:
       title: ''
@@ -41,7 +66,7 @@ content:
     type: telephone_link
     region: content
   field_az_titles:
-    weight: 8
+    weight: 1
     label: hidden
     settings:
       link_to_entity: false
@@ -53,10 +78,7 @@ hidden:
   field_az_bio: true
   field_az_cv_documents: true
   field_az_degrees: true
-  field_az_fname: true
   field_az_links: true
-  field_az_lname: true
-  field_az_media_image: true
   field_az_person_category: true
   field_az_person_category_sec: true
   links: true
