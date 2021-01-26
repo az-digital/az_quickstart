@@ -435,7 +435,7 @@ function az_barrio_primary_logo() {
  */
 function az_barrio_footer_logo() {
   $return = '';
-  $footer_logo_path = theme_get_setting('footer_logo');
+  $footer_logo_path = theme_get_setting('footer_logo_path');
   $footer_logo_path_parts = pathinfo($footer_logo_path['path']);
   $footer_link_destination = theme_get_setting('footer_logo_link_destination');
   $footer_alt_text = Html::escape(theme_get_setting('footer_logo_alt_text'));
@@ -458,7 +458,7 @@ function az_barrio_footer_logo() {
         'attributes' => [
           'title' => $footer_title_text,
           'alt' => $footer_alt_text,
-          'class' => ['header_logo_svg'],
+          'class' => ['footer_logo_svg'],
           'rel' => 'home',
         ],
       ]);
