@@ -73,6 +73,7 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-01-26/2259567--119-allow-svg-image-upload-d9-1-x.patch",
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
