@@ -63,12 +63,13 @@ external_links: true
 sticky_footer: true
 az_barrio_material_design_sharp_icons: true
 az_barrio_logo_svg_inline: true
+az_barrio_footer_logo_svg_inline: true
 logo:
-  path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/header_logo.svg'
+  path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png'
   use_default: false
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
 footer_logo_link_destination: '<front>'
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
-footer_logo_path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/footer_logo.svg'
+footer_logo_path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png'

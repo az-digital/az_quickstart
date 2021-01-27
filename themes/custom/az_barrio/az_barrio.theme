@@ -452,7 +452,7 @@ function az_barrio_footer_logo() {
   if (!empty($footer_logo_path)) {
     $filepath = \Drupal::service('file_system')->realpath($footer_logo_path);
     // Inline SVG logo.
-    if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
+    if (theme_get_setting('az_barrio_footer_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
       $svg = file_get_contents($filepath);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);

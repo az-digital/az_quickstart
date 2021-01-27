@@ -231,24 +231,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
-  // Material Design icons.
-  $form['material_design_icon_settings'] = [
-    '#type' => 'details',
-    '#title' => t('Material Design Icons'),
-    '#group' => 'bootstrap',
-    '#weight' => -8,
-  ];
-  $form['material_design_icon_settings']['settings']['material_design_icons']['use_material_design_sharp_icons'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Material Design Sharp Icons'),
-    '#default_value' => theme_get_setting('use_material_design_sharp_icons'),
-    '#description' => t(
-        'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_icons_docs_link CSS.',
-        [
-          '@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString(),
-        ]
-    ),
-  ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
@@ -269,7 +251,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'select',
-    '#title' => t('Inline SVG logo'),
+    '#title' => t('Inline logo SVG'),
     '#options' => [
       1 => t('On'),
       0 => t('Off'),
@@ -303,6 +285,16 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Footer Logo Image'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
+  ];
+  $form['footer_logo']['az_barrio_footer_logo_svg_inline'] = [
+    '#type' => 'select',
+    '#title' => t('Inline logo SVG'),
+    '#options' => [
+      1 => t('On'),
+      0 => t('Off'),
+    ],
+    '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
+    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
   $form['footer_logo']['footer_default_logo'] = [
     '#type' => 'checkbox',
