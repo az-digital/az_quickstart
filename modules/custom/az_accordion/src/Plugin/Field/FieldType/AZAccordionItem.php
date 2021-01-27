@@ -43,7 +43,7 @@ class AZaccordionItem extends FieldItemBase {
     $properties['body_format'] = DataDefinition::create('string')
       ->setLabel(t('Accordion Item Text Format'));
     $properties['collapsed'] = DataDefinition::create('string')
-    ->setLabel(t('Collapsed by Default'));
+      ->setLabel(t('Collapsed by Default'));
 
     return $properties;
   }
@@ -83,7 +83,7 @@ class AZaccordionItem extends FieldItemBase {
     ];
 
     $schema = [
-      'columns' => $columns
+      'columns' => $columns,
     ];
 
     return $schema;
@@ -93,15 +93,10 @@ class AZaccordionItem extends FieldItemBase {
    * {@inheritdoc}
    */
   public static function generateSampleValue(FieldDefinitionInterface $field_definition) {
-
     $random = new Random();
-
     $values['title'] = $random->word(mt_rand(1, 255));
-
     $values['body'] = $random->paragraphs(5);
-
-    $values['collapsed'] = mt_rand(0,1);
-
+    $values['collapsed'] = mt_rand(0, 1);
     return $values;
   }
 

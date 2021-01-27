@@ -14,13 +14,23 @@
 
 {% set attributes = attributes.addClass('h-100') %}
 
-<div{{ attributes }}>
-  <div class="accordion-body d-flex flex-column">
-    {% if title %}
-      <h3 class="h5 bold mt-0">{{ title }}</h3>
-    {% endif %}
-    {% if body %}
-      <div class="accordion-text">{{ body }}</div>
-    {% endif %}
+<div {{ attributes }}>
+  <div class="card">
+    <div class="card-header">
+      <h3 class="my-0">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ aria_controls }}">
+          {% if title %}
+          <h3 class="h5 bold mt-0">{{ title }}</h3>
+          {% endif %}
+        </button>
+      </h3>
+    </div>
+    <div id="{{ accordion_item_id }}" class="{{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-parent="#{{ accordion_item_id }}">
+      <div class="card-body">
+        {% if body %}
+        <div class="accordion-text">{{ body }}</div>
+        {% endif %}
+      </div>
+    </div>
   </div>
 </div>
