@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Theme implementation to display an AZ Accordion.
+ *
+ * Available variables:
+ * - attributes: accordion element attributes.
+ * - title: The title field of a accordion..
+ * - body: The body field of a accordion.
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set attributes = attributes.addClass('h-100') %}
+
+<div{{ attributes }}>
+  <div class="accordion-body d-flex flex-column">
+    {% if title %}
+      <h3 class="h5 bold mt-0">{{ title }}</h3>
+    {% endif %}
+    {% if body %}
+      <div class="accordion-text">{{ body }}</div>
+    {% endif %}
+  </div>
+</div>

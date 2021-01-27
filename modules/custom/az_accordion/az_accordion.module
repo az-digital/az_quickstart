@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Contains az_accordion.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_accordion_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_accordion module.
+    case 'help.page.az_accordion':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom field plugins and theme template for accordion.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_accordion_theme($existing, $type, $theme, $path) {
+  return [
+    'az_accordion' => [
+      'variables' => [
+        'attributes' => [],
+        'title' => NULL,
+        'body' => NULL,
+      ],
+      'template' => 'az-accordion',
+    ],
+  ];
+}
