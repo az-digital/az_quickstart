@@ -3,5 +3,5 @@ status: true
 dependencies: {  }
 name: 'Event Categories'
 vid: az_event_categories
-description: ''
+description: 'Taxonomy for categorizing events'
 weight: 0
