@@ -141,15 +141,6 @@ class AZaccordionDefaultFormatter extends FormatterBase implements ContainerFact
           // See if the parent behavior defines some accordion-specific settings.
           if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
             // TODO: implement az_accordion_paragraph_behavior handling
-            //   $accordion_defaults = $parent_config['az_accordion_paragraph_behavior'];.
-            // // Set accordion classes according to behavior settings.
-            //   $column_classes = [];
-            //   if (!empty($accordion_defaults['az_display_settings'])) {
-            //     $column_classes[] = $accordion_defaults['az_display_settings']['accordion_width_xs'] ?? 'col-12';
-            //     $column_classes[] = $accordion_defaults['az_display_settings']['accordion_width_sm'] ?? 'col-sm-6';
-            //   }
-            //   $column_classes[] = $accordion_defaults['accordion_width'] ?? 'col-md-4 col-lg-4';
-            //   $accordion_classes = $accordion_defaults['accordion_style'] ?? 'accordion';.
           }
 
         }
@@ -171,21 +162,6 @@ class AZaccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#aria_controls' => Html::getUniqueId('az_accordion_aria_controls'),
       ];
 
-      // $element['#items'][$delta] = new \stdClass();
-      // $element['#items'][$delta]->_attributes = [
-      //   'class' => $column_classes,
-      // ];.
-      // $element['#attributes']['class'][] = 'content';
-      // $element['#attributes']['class'][] = 'h-100';
-      // $element['#attributes']['class'][] = 'row';
-      // $element['#attributes']['class'][] = 'd-flex';
-      // $element['#attributes']['class'][] = 'flex-wrap';.
-      // New code ==============================================================
-      // $element['#items'][$delta] = new \stdClass();
-      // $element['#items'][$delta]->_attributes = [
-      //   'class' => $item->collapse ? 'collapse' : 'collapse show'
-      // ];
-      // $element['#items'][$delta]->accordion_item_id = Html::getUniqueId('az_acordion');.
     }
 
     return $element;
