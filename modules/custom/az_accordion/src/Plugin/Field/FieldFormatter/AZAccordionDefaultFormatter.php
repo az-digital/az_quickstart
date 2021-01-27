@@ -176,6 +176,11 @@ class AZaccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $element['#attributes']['class'][] = 'row';
       $element['#attributes']['class'][] = 'd-flex';
       $element['#attributes']['class'][] = 'flex-wrap';
+
+      // new code ==============================================================
+      if ($item->collapsed) {
+        $element['#attributes']['class'][] = 'collapsed';
+      }
     }
 
     return $element;

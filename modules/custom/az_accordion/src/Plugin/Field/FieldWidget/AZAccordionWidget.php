@@ -39,7 +39,7 @@ class AZaccordionWidget extends WidgetBase {
     ];
 
     $element['collapsed'] = [
-      '#type' => 'boolean',
+      '#type' => 'checkbox',
       '#title' => $this->t('Collapsed by Default'),
       '#default_value' => isset($items[$delta]->collapsed) ? $items[$delta]->collapsed : NULL,
     ];
