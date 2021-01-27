@@ -89,7 +89,6 @@ audio:not([controls]) {
  */
 /* Wrapping link for logo. */
 .header_logo {
-  float: left;
   width: 100%;
   text-align: center;
   margin: 24px 0;

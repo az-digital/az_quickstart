@@ -397,6 +397,7 @@ function az_barrio_primary_logo() {
   // Set primary logo.
   if (!empty($primary_logo_path)) {
     $url = file_create_url($primary_logo_path['path']);
+
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $primary_logo_path_parts['extension'] === 'svg') {
       $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_path['url']);
@@ -433,10 +434,11 @@ function az_barrio_primary_logo() {
 /**
  * Helper function for the secondary footer logo option.
  */
+
 function az_barrio_footer_logo() {
   $return = '';
   $footer_logo_path = theme_get_setting('footer_logo_path');
-  $footer_logo_path_parts = pathinfo($footer_logo_path['path']);
+  $footer_logo_path_parts = pathinfo($footer_logo_path);
   $footer_link_destination = theme_get_setting('footer_logo_link_destination');
   $footer_alt_text = Html::escape(theme_get_setting('footer_logo_alt_text'));
   $footer_title_text = Html::escape(theme_get_setting('footer_logo_title_text'));
@@ -448,10 +450,12 @@ function az_barrio_footer_logo() {
 
   // Set footer logo.
   if (!empty($footer_logo_path)) {
-    $url = file_create_url($footer_logo_path['path']);
+    $url = file_create_url($footer_logo_path);
+    $stream_wrapper_manager = \Drupal::service('stream_wrapper_manager')->getViaUri($footer_logo_path);
+    $filepath = $stream_wrapper_manager->realpath();
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
-      $svg = file_get_contents(DRUPAL_ROOT . '/' . $footer_logo_path['url']);
+      $svg = file_get_contents($filepath);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
       $return = Link::createFromRoute($image_markup, '<front>', [], [
