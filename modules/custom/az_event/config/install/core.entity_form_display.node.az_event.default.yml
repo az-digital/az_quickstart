@@ -9,7 +9,6 @@ dependencies:
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
-    - field.field.node.az_event.field_az_short_title
     - field.field.node.az_event.field_az_summary
     - field.field.node.az_event.field_az_summary_short
     - node.type.az_event
@@ -116,14 +115,6 @@ content:
     settings:
       media_types: {  }
     third_party_settings: {  }
-    region: content
-  field_az_short_title:
-    weight: 26
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
     region: content
   field_az_summary:
     weight: 28

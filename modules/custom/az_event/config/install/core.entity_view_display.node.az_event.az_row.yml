@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
-    - field.field.node.az_event.field_az_short_title
     - field.field.node.az_event.field_az_summary
     - field.field.node.az_event.field_az_summary_short
     - node.type.az_event
@@ -167,7 +166,7 @@ third_party_settings:
       label: Summary
     group_heading:
       children:
-        - field_az_short_title
+        - smart_title
       parent_name: group_summary
       weight: 3
       format_type: html_element
@@ -203,6 +202,10 @@ third_party_settings:
       label: Strong
   smart_title:
     enabled: true
+    settings:
+      smart_title__tag: div
+      smart_title__classes: {  }
+      smart_title__link: false
 id: node.az_event.az_row
 targetEntityType: node
 bundle: az_event
@@ -236,14 +239,6 @@ content:
       capitalize_noon_and_midnight: 0
       display_day: null
     third_party_settings: {  }
-  field_az_short_title:
-    type: string
-    weight: 3
-    region: content
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
   field_az_summary:
     type: basic_string
     weight: 6
@@ -256,6 +251,11 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  smart_title:
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
 hidden:
   field_az_attachments: true
   field_az_body: true
@@ -264,4 +264,3 @@ hidden:
   field_az_location: true
   field_az_photos: true
   field_az_summary_short: true
-  smart_title: true

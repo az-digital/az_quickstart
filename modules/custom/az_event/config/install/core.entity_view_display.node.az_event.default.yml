@@ -9,7 +9,6 @@ dependencies:
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
-    - field.field.node.az_event.field_az_short_title
     - field.field.node.az_event.field_az_summary
     - field.field.node.az_event.field_az_summary_short
     - node.type.az_event
@@ -254,6 +253,5 @@ hidden:
   az_event_day: true
   az_event_month: true
   field_az_link: true
-  field_az_short_title: true
   field_az_summary: true
   smart_title: true
