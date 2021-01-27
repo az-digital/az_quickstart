@@ -44,32 +44,3 @@ function az_mail_mail_alter(&$message) {
     }
   }
 }
-
-/**
- * Helper function for az_mail_ses_hash.
- */
-function az_mail_ses_sign($key, $msg) {
-  return hash_hmac('sha256', utf8_encode($msg), $key, TRUE);
-}
-
-/**
- * Derive the SMTP password from the AWS IAM secret key.
- */
-function az_mail_ses_hash($secret, $region) {
-  // Values that are required to calculate the signature. These values should
-  // never change.
-  $date = "11111111";
-  $service = "ses";
-  $message = "SendRawEmail";
-  $terminal = "aws4_request";
-  $version = 0x04;
-
-  $signature = az_mail_ses_sign(utf8_encode("AWS4" . $secret), $date);
-  $signature = az_mail_ses_sign($signature, $region);
-  $signature = az_mail_ses_sign($signature, $service);
-  $signature = az_mail_ses_sign($signature, $terminal);
-  $signature = az_mail_ses_sign($signature, $message);
-  $signature_and_version = pack("C*", $version) . $signature;
-  $smtp_password = base64_encode($signature_and_version);
-  return utf8_decode($smtp_password);
-}

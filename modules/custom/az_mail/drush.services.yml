@@ -1,0 +1,5 @@
+services:
+  az_mail.commands:
+    class: \Drupal\az_mail\Commands\AZMailCommands
+    tags:
+      - { name: drush.command }
