@@ -26,13 +26,13 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
 
     $form['style'] = [
-      '#title' => $this->t('Text style'),
+      '#title' => $this->t('Style'),
       '#type' => 'select',
       '#options' => [
         'plain' => $this->t('Plain'),
-        'column' => $this->t('Column'),
-        'box' => $this->t('Box'),
-        'bottom' => $this->t('Bottom'),
+        'column' => $this->t('Column style'),
+        'box' => $this->t('Box style'),
+        'bottom' => $this->t('Bottom style'),
       ],
       '#default_value' => $config['style'] ?? '',
       '#description' => $this->t('The style of the text background'),
@@ -42,25 +42,17 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Text position'),
       '#type' => 'select',
       '#options' => [
-        'col-md-8 col-lg-6' => $this->t('Left-aligned offset'),
-        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Center-aligned offset'),
-        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Right-aligned offset'),
+        'col-md-8 col-lg-6' => $this->t('Offset left'),
+        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Offset center'),
+        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Offset right'),
         'col-xs-12' => $this->t('No offset'),
       ],
       '#default_value' => $config['position'] ?? '',
       '#description' => $this->t('The position of the text content on the background'),
     ];
 
-    $form['bg_fixed'] = [
-      '#title' => $this->t('Fixed background image attachment'),
-      '#type' => 'checkbox',
-      '#default_value' => $config['bg_fixed'] ?? '',
-      '#description' => $this->t('Apply fixed background image attachement as needed.'),
-      '#return_value' => 'bg-fixed',
-    ];
-
     $form['bg_color'] = [
-      '#title' => $this->t('Background color'),
+      '#title' => $this->t('Text background color'),
       '#type' => 'select',
       '#options' => [
         'light' => $this->t('Light'),
@@ -71,11 +63,20 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('The color of the text background'),
     ];
 
+    $form['bg_attachment'] = [
+      '#title' => $this->t('Background media attachment'),
+      '#type' => 'select',
+      '#options' => [
+        'bg-fixed' => $this->t('Fixed'),
+      ],
+      '#empty_option' => $this->t('Scroll'),
+      '#default_value' => $config['bg_attachment'] ?? '',
+    ];
+
     $form['full_width'] = [
-      '#title' => $this->t('Full width'),
+      '#title' => $this->t('Make background media full-width'),
       '#type' => 'checkbox',
       '#default_value' => $config['full_width'] ?? '',
-      '#description' => $this->t('Makes the background full width if checked.'),
       '#return_value' => 'full-width-background',
     ];
 
