@@ -417,6 +417,7 @@ function az_barrio_primary_logo() {
       $rendered_image = render($image);
       $image_markup = Markup::create($rendered_image);
       $image_markup = str_replace('', '', $image_markup);
+      $image_markup = t($image_markup);
       $return = Link::createFromRoute($image_markup, '<front>', [], [
         'attributes' => [
           'title' => $primary_title_text,
@@ -470,6 +471,7 @@ function az_barrio_footer_logo() {
       $image = '<img src="' . $url . '" alt="' . $footer_alt_text . '" class="img-fluid pb-4" />';
       $rendered_image = render($image);
       $image_markup = Markup::create($rendered_image);
+      $image_markup = t($image_markup);
 
       $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
       $return = Link::createFromRoute($image_markup, $footer_link_destination, [], [
