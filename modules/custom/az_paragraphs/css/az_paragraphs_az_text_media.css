@@ -1,7 +1,6 @@
 /* Styles for az_text_media paragraph type. */
 
 .text-on-media {
-/*  background-image: {{text-on-media.media}};*/
   background-size: cover;
   background-position: center;
 }
@@ -13,6 +12,10 @@
 }
 .dark {
   background: rgba(0,0,0,.8);
+  color: #fff;
+}
+.dark h2 {
+  color: #fff;
 }
 .light {
   background: rgba(255,255,255,.8);

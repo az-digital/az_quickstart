@@ -25,34 +25,28 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
+    $form['full_width'] = [
+      '#title' => $this->t('Full width'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['full_width'] ?? '',
+      '#description' => $this->t('Makes media full width if checked.'),
+      '#return_value' => 'full-width-background',
+    ];
+
     $form['style'] = [
-      '#title' => $this->t('Style'),
+      '#title' => $this->t('Content style'),
       '#type' => 'select',
       '#options' => [
-        'plain' => $this->t('Plain'),
         'column' => $this->t('Column style'),
         'box' => $this->t('Box style'),
         'bottom' => $this->t('Bottom style'),
       ],
       '#default_value' => $config['style'] ?? '',
-      '#description' => $this->t('The style of the text background'),
-    ];
-
-    $form['position'] = [
-      '#title' => $this->t('Text position'),
-      '#type' => 'select',
-      '#options' => [
-        'col-md-8 col-lg-6' => $this->t('Offset left'),
-        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Offset center'),
-        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Offset right'),
-        'col-xs-12' => $this->t('No offset'),
-      ],
-      '#default_value' => $config['position'] ?? '',
-      '#description' => $this->t('The position of the text content on the background'),
+      '#description' => $this->t('The style of the content background.'),
     ];
 
     $form['bg_color'] = [
-      '#title' => $this->t('Text background color'),
+      '#title' => $this->t('Content background color'),
       '#type' => 'select',
       '#options' => [
         'light' => $this->t('Light'),
@@ -60,24 +54,36 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'transparent' => $this->t('Transparent'),
       ],
       '#default_value' => $config['bg_color'] ?? '',
-      '#description' => $this->t('The color of the text background'),
+      '#description' => $this->t('The color of the content background.'),
+    ];
+
+    $form['position'] = [
+      '#title' => $this->t('Content position'),
+      '#type' => 'select',
+      '#options' => [
+        'col-md-8 col-lg-6' => $this->t('Position left'),
+        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Position center'),
+        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Position right'),
+        'col-xs-12' => $this->t('None'),
+      ],
+      '#default_value' => $config['position'] ?? '',
+      '#description' => $this->t('The position of the content on the media.'),
     ];
 
     $form['bg_attachment'] = [
-      '#title' => $this->t('Background media attachment'),
+      '#title' => $this->t('Media attachment'),
       '#type' => 'select',
       '#options' => [
         'bg-fixed' => $this->t('Fixed'),
       ],
       '#empty_option' => $this->t('Scroll'),
       '#default_value' => $config['bg_attachment'] ?? '',
-    ];
-
-    $form['full_width'] = [
-      '#title' => $this->t('Make background media full-width'),
-      '#type' => 'checkbox',
-      '#default_value' => $config['full_width'] ?? '',
-      '#return_value' => 'full-width-background',
+      '#description' => $this->t('<strong>Scroll:</strong> The media will scroll along with the page.<br> <strong>Fixed:</strong> The media will be fixed and the page will scroll over it.'),
+      '#states' => [
+        'invisible' => [
+          ':input[name="style"]' => ['value' => 'bottom'],
+        ],
+      ],
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
