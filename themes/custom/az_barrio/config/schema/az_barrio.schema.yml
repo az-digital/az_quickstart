@@ -240,7 +240,7 @@ az_barrio.settings:
       label: 'Inline logo SVG'
     az_barrio_footer_logo_svg_inline:
       type: boolean
-      label: 'Inline footer logo SVG '
+      label: 'Inline footer logo SVG'
     primary_logo_alt_text:
       type: string
       label: 'Primary logo alt text'
@@ -259,4 +259,3 @@ az_barrio.settings:
     footer_logo_path:
       type: path
       label: 'Footer logo path'
-
