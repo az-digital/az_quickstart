@@ -3,9 +3,9 @@ type: module
 description: 'Provides a view paragraph type.'
 core_version_requirement: ^8.8 || ^9
 dependencies:
-  - az_paragraphs
-  - field
-  - paragraphs
-  - views
-  - viewsreference
+  - az_paragraphs:az_paragraphs
+  - drupal:field
+  - paragraphs:paragraphs
+  - drupal:views
+  - viewsreference:viewsreference
 package: 'The University of Arizona'
