@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -25,6 +26,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
+    $style_unique_id = Html::getUniqueId('az-text-media-style');
+
     $form['full_width'] = [
       '#title' => $this->t('Full width'),
       '#type' => 'checkbox',
@@ -43,6 +46,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
       '#default_value' => $config['style'] ?? '',
       '#description' => $this->t('The style of the content background.'),
+      '#attributes' => [
+        'id' => $style_unique_id,
+      ],
     ];
 
     $form['bg_color'] = [
@@ -68,6 +74,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
       '#default_value' => $config['position'] ?? '',
       '#description' => $this->t('The position of the content on the media.'),
+      '#states' => [
+        'invisible' => [
+          ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
+        ],
+      ],
     ];
 
     $form['bg_attachment'] = [
@@ -81,7 +92,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('<strong>Scroll:</strong> The media will scroll along with the page.<br> <strong>Fixed:</strong> The media will be fixed and the page will scroll over it.'),
       '#states' => [
         'invisible' => [
-          ':input[name="style"]' => ['value' => 'bottom'],
+          ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
         ],
       ],
     ];
