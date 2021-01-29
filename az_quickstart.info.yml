@@ -9,7 +9,6 @@ distribution:
 
 install:
   - az_cas
-  - az_media
   - az_paragraphs
   - az_paragraphs_accordion
   - az_paragraphs_cards
@@ -62,7 +61,6 @@ install:
   - automated_cron
   - ckeditor_bs_grid
   - coffee
-  - entity_embed
 
 themes:
   - az_barrio

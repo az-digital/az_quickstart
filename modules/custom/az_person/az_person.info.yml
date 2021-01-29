@@ -6,7 +6,6 @@ package: The University of Arizona
 dependencies:
   - auto_entitylabel
   - az_media
-  - az_paragraphs
   - block
   - draggableviews
   - field
