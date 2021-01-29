@@ -138,9 +138,10 @@ class AZaccordionDefaultFormatter extends FormatterBase implements ContainerFact
           // Get the behavior settings for the parent.
           $parent_config = $parent->getAllBehaviorSettings();
 
-          // See if the parent behavior defines some accordion-specific settings.
+          // See if the parent behavior defines some accordion-specific
+          // settings.
           if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
-            // TODO: implement az_accordion_paragraph_behavior handling
+            // TODO: implement az_accordion_paragraph_behavior handling.
           }
 
         }

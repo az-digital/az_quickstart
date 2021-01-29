@@ -18,7 +18,7 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  *   }
  * )
  */
-class AZaccordionWidget extends WidgetBase {
+class AZAccordionWidget extends WidgetBase {
 
   /**
    * {@inheritdoc}

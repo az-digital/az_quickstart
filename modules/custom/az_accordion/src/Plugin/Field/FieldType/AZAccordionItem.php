@@ -19,7 +19,7 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_formatter = "az_accordion_default"
  * )
  */
-class AZaccordionItem extends FieldItemBase {
+class AZAccordionItem extends FieldItemBase {
 
   /**
    * {@inheritdoc}
