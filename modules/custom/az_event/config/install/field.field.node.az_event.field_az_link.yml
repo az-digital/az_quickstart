@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_link
+    - node.type.az_event
+  module:
+    - link
+id: node.az_event.field_az_link
+field_name: field_az_link
+entity_type: node
+bundle: az_event
+label: 'Link to event'
+description: 'If you want to link to this event on [site:name], leave the token in the URL field, if you want to link to the event hosted elsewhere, such as on the master calendar, replace the token with a link.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_event_day
+label: 'Event Day'
+locked: false
+pattern: d

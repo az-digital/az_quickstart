@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_location
+    - node.type.az_event
+  module:
+    - link
+id: node.az_event.field_az_location
+field_name: field_az_location
+entity_type: node
+bundle: az_event
+label: Where
+description: "Specify a URL if there is an online map for the location.<br />\r\nIf there is no map, simply fill in the location name or address in the title field.<br />\r\n<strong>Campus Map: </strong> http://map.arizona.edu<br />\r\n<strong>Google Maps: </strong> http://maps.google.com"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link
