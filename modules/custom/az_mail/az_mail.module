@@ -12,7 +12,8 @@ function az_mail_mail_alter(&$message) {
   $ses_message_tags = [];
   if (isset($_ENV['PANTHEON_SITE_NAME'])) {
     $message['headers']['X-Pantheon-Site-Name'] = $_ENV['PANTHEON_SITE_NAME'];
-    $tag = ['key' => 'pantheon-site-name', 'value' => $_ENV['PANTHEON_SITE_NAME']];
+    $tag = ['key' => 'pantheon-site-name'];
+    $tag['value'] = $_ENV['PANTHEON_SITE_NAME'];
     array_push($ses_message_tags, $tag);
   }
   if (isset($_ENV['PANTHEON_SITE'])) {
@@ -22,7 +23,8 @@ function az_mail_mail_alter(&$message) {
   }
   if (isset($_ENV['PANTHEON_ENVIRONMENT'])) {
     $message['headers']['X-Pantheon-Environment'] = $_ENV['PANTHEON_ENVIRONMENT'];
-    $tag = ['key' => 'pantheon-environment', 'value' => $_ENV['PANTHEON_ENVIRONMENT']];
+    $tag = ['key' => 'pantheon-environment'];
+    $tag['value'] = $_ENV['PANTHEON_ENVIRONMENT'];
     array_push($ses_message_tags, $tag);
   }
   if ($smtp_host = \Drupal::config('smtp.settings')->get('smtp_host', FALSE)) {
