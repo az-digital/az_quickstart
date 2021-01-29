@@ -24,7 +24,7 @@ use Drupal\Component\Utility\Html;
  *   }
  * )
  */
-class AZaccordionDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type manager service.
