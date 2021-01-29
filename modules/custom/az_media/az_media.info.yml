@@ -5,6 +5,7 @@ core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
   - crop
+  - entity_embed
   - image
   - image_widget_crop
   - media
