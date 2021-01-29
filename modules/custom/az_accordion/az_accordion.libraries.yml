@@ -1,0 +1,4 @@
+az_accordion:
+  css:
+    component:
+      css/az-accordion-widget.css: {}
