@@ -27,13 +27,13 @@ class AZAccordionWidget extends WidgetBase {
 
     $element['title'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Accordion Title'),
+      '#title' => $this->t('Accordion Item Title'),
       '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
     ];
 
     $element['body'] = [
       '#type' => 'text_format',
-      '#title' => $this->t('Accordion Item'),
+      '#title' => $this->t('Accordion Item Body'),
       '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
       '#format' => $items[$delta]->body_format ?? 'az_standard',
     ];
