@@ -8,4 +8,4 @@ dependencies:
   - drupal:node
   - drupal:path
   - drupal:user
-  - az_paragraphs:az_paragraphs
+  - az_paragraphs

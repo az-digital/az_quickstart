@@ -8,18 +8,18 @@ distribution:
   name: Arizona Quickstart
 
 install:
-  - az_cas:az_cas
-  - az_paragraphs:az_paragraphs
-  - az_paragraphs:az_paragraphs_cards
-  - az_paragraphs:az_paragraphs_text
-  - az_paragraphs:az_paragraphs_text_background
-  - az_paragraphs:az_paragraphs_view
-  - az_core:az_core
-  - az_flexible_page:az_flexible_page
-  - az_news:az_news
-  - az_person:az_person
-  - az_demo:az_demo
-  - az_seo:az_seo
+  - az_cas
+  - az_paragraphs
+  - az_paragraphs_cards
+  - az_paragraphs_text
+  - az_paragraphs_text_background
+  - az_paragraphs_view
+  - az_core
+  - az_flexible_page
+  - az_news
+  - az_person
+  - az_demo
+  - az_seo
   - drupal:node
   - drupal:history
   - drupal:block

@@ -4,6 +4,6 @@ description: 'Provides custom paragraph types.'
 core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
-  - az_media:az_media
+  - az_media
   - entity_embed:entity_embed
   - paragraphs:paragraphs
