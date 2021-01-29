@@ -1,0 +1,257 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_event.field_az_attachments
+    - field.field.node.az_event.field_az_body
+    - field.field.node.az_event.field_az_date
+    - field.field.node.az_event.field_az_event_category
+    - field.field.node.az_event.field_az_link
+    - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_photos
+    - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_summary_short
+    - node.type.az_event
+  module:
+    - date_ap_style
+    - field_group
+    - file
+    - link
+    - smart_title
+    - text
+    - user
+third_party_settings:
+  field_group:
+    group_span_subtitle:
+      children:
+        - field_az_summary_short
+      parent_name: ''
+      weight: 2
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'lead mb-3'
+      label: 'span subtitle'
+    group_category:
+      children:
+        - field_az_event_category
+      parent_name: ''
+      weight: 4
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Category Div'
+    group_row_1:
+      children:
+        - group_col_1
+        - group_col_2
+      parent_name: ''
+      weight: 6
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: row
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'row 1'
+    group_row_2:
+      children:
+        - group_col_3
+        - group_col_4
+      parent_name: ''
+      weight: 7
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: row
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'row 2'
+    group_col_1:
+      children:
+        - field_az_date
+      parent_name: group_row_1
+      weight: 13
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: col-md-6
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'column 1'
+    group_col_2:
+      children:
+        - field_az_location
+      parent_name: group_row_1
+      weight: 14
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: col-md-6
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'column 2'
+    group_col_3:
+      children: {  }
+      parent_name: group_row_2
+      weight: 11
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: col-md-6
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'column 3'
+    group_col_4:
+      children:
+        - field_az_attachments
+      parent_name: group_row_2
+      weight: 13
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: col-md-6
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'column 4'
+  smart_title:
+    enabled: false
+id: node.az_event.default
+targetEntityType: node
+bundle: az_event
+mode: default
+content:
+  field_az_attachments:
+    type: file_default
+    weight: 0
+    region: content
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+  field_az_body:
+    weight: 3
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_az_date:
+    type: daterange_ap_style
+    weight: 14
+    region: content
+    label: above
+    settings:
+      always_display_year: '1'
+      use_today: '1'
+      cap_today: '1'
+      display_time: '1'
+      time_before_date: '1'
+      use_all_day: '1'
+      capitalize_noon_and_midnight: '1'
+      separator: endash
+      timezone: ''
+      display_noon_and_midnight: 0
+      display_day: null
+    third_party_settings: {  }
+  field_az_event_category:
+    weight: 5
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_az_location:
+    type: link
+    weight: 10
+    region: content
+    label: above
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+  field_az_photos:
+    type: entity_reference_entity_view
+    weight: 1
+    label: hidden
+    settings:
+      view_mode: az_large
+      link: false
+    third_party_settings: {  }
+    region: content
+  field_az_summary_short:
+    weight: 13
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  az_event_day: true
+  az_event_month: true
+  field_az_link: true
+  field_az_summary: true
+  smart_title: true
