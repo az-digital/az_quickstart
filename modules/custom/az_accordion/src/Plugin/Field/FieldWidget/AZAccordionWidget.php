@@ -35,7 +35,7 @@ class AZAccordionWidget extends WidgetBase {
       '#type' => 'text_format',
       '#title' => $this->t('Accordion Item'),
       '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
-      '#format' => $items[$delta]->body_format ?? 'basic_html',
+      '#format' => $items[$delta]->body_format ?? 'az_standard',
     ];
 
     $element['collapsed'] = [
