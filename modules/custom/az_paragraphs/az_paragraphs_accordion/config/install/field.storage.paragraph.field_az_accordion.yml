@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_accordion
+    - paragraphs
+id: paragraph.field_az_accordion
+field_name: field_az_accordion
+entity_type: paragraph
+type: az_accordion
+settings: {  }
+module: az_accordion
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
