@@ -8,11 +8,13 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
+require_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\File\Exception\FileException;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
 
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -82,14 +84,20 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
     '#default_value' => theme_get_setting('az_barrio_font'),
-    '#description' => t('If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
-      '@proxima_nova_docs_link' => Link::fromTextAndUrl('Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
-      [
-        'attributes' => [
-          'target' => '_blank'
+    '#description' => t(
+        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
+          '@proxima_nova_docs_link' => Link::fromTextAndUrl(
+            'Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri(
+                'https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
+                [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
         ]
-      ]))->toString(),
-    ]),
+    ),
   ];
   $form['fonts']['bootstrap_icons'] = [
     '#type' => 'details',
@@ -109,34 +117,52 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
     '#type' => 'checkbox',
     '#title' => t('Use Material Design Sharp Icons'),
-    '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_sharp_icons_docs_link CSS.', [
-      '@material_design_sharp_icons_docs_link' => Link::fromTextAndUrl('Material Design Sharp icons', Url::fromUri('https://material.io/resources/icons/?style=sharp', [
-        'attributes' => [
-          'target' => '_blank'
+    '#description' => t(
+        'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_sharp_icons_docs_link CSS.', [
+          '@material_design_sharp_icons_docs_link' => Link::fromTextAndUrl(
+            'Material Design Sharp icons', Url::fromUri(
+                'https://material.io/resources/icons/?style=sharp', [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
         ]
-      ]))->toString(),
-    ]),
+    ),
     '#default_value' => theme_get_setting('az_barrio_material_design_sharp_icons'),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_brand_icons_source'] = [
     '#type' => 'radios',
     '#title' => t('AZ Brand Icons Source'),
     '#options' => [
-      'local' => t('Use local copy of @azbrandicons packaged with AZ Barrio (%stableversion).', [
-        '@azbrandicons' => Link::fromTextAndUrl('UA Brand Icons', Url::fromUri('http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons', [
-          'attributes' => [
-            'target' => '_blank'
-          ]
-        ]))->toString(),
-        '%stableversion' => AZ_BRAND_ICONS_STABLE_VERSION,
-      ]),
-      'cdn' => t('Use external copy of @azbrandicons hosted on the CDN.', [
-        '@azbrandicons' => Link::fromTextAndUrl('UA Brand Icons', Url::fromUri('http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons', [
-          'attributes' => [
-            'target' => '_blank'
-          ]
-        ]))->toString(),
-      ]),
+      'local' => t(
+        'Use local copy of @azbrandicons packaged with AZ Barrio (%stableversion).', [
+          '@azbrandicons' => Link::fromTextAndUrl(
+            'UA Brand Icons', Url::fromUri(
+                'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons', [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
+          '%stableversion' => AZ_BRAND_ICONS_STABLE_VERSION,
+        ]
+      ),
+      'cdn' => t(
+        'Use external copy of @azbrandicons hosted on the CDN.', [
+          '@azbrandicons' => Link::fromTextAndUrl(
+            'UA Brand Icons', Url::fromUri(
+                'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons', [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
+        ]
+      ),
     ],
     '#default_value' => theme_get_setting('az_brand_icons_source'),
   ];
@@ -165,9 +191,11 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       'cdn' => t('Use external copy of AZ Bootstrap hosted on the AZ Bootstrap CDN.'),
     ],
     '#default_value' => theme_get_setting('az_bootstrap_source'),
-    '#prefix' => t('AZ Barrio requires the <a href="@azbootstrap">AZ Bootstrap</a> front-end framework. AZ Bootstrap can either be loaded from the local copy packaged with AZ Barrio or from the AZ Bootstrap CDN.', [
-      '@azbootstrap' => 'http://digital.arizona.edu/arizona-bootstrap',
-    ]),
+    '#prefix' => t(
+        'AZ Barrio requires the <a href="@azbootstrap">AZ Bootstrap</a> front-end framework. AZ Bootstrap can either be loaded from the local copy packaged with AZ Barrio or from the AZ Bootstrap CDN.', [
+          '@azbootstrap' => 'http://digital.arizona.edu/arizona-bootstrap',
+        ]
+    ),
     '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> The AZ Bootstrap CDN is the preferred method for providing huge performance gains in load time.') . '</div>',
   ];
   $form['azbs_settings']['settings']['az_bootstrap_cdn'] = [
@@ -203,22 +231,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
-  // Material Design icons.
-  $form['material_design_icon_settings'] = [
-    '#type' => 'details',
-    '#title' => t('Material Design Icons'),
-    '#group' => 'bootstrap',
-    '#weight' => -8,
-  ];
-  $form['material_design_icon_settings']['settings']['material_design_icons']['use_material_design_sharp_icons'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Material Design Sharp Icons'),
-    '#default_value' => theme_get_setting('use_material_design_sharp_icons'),
-    '#description' => t('If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_icons_docs_link CSS.',
-    [
-      '@material_design_icons_docs_link' => Link::fromTextAndUrl('sharp style of Material Design icons', Url::fromUri('https://material.io/resources/icons/?style=sharp'))->toString(),
-    ]),
-  ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
@@ -235,6 +247,13 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use Navbar Off Canvas'),
     '#description' => t('Check to use the Arizona Bootstrap Off Canvas Navbar instead of the bootstrap navbar.'),
     '#default_value' => theme_get_setting('az_barrio_navbar_offcanvas'),
+  ];
+  // Logos.
+  $form['logo']['az_barrio_logo_svg_inline'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Inline logo SVG'),
+    '#default_value' => theme_get_setting('az_barrio_logo_svg_inline') ? TRUE : FALSE,
+    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
   // Primary logo.
   $form['logo']['primary_logo_alt_text'] = [
@@ -259,9 +278,15 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Footer logo.
   $form['footer_logo'] = [
     '#type' => 'details',
-    '#title' => t('Logo Footer Image'),
+    '#title' => t('Footer Logo Image'),
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
+  ];
+  $form['footer_logo']['az_barrio_footer_logo_svg_inline'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Inline footer logo SVG'),
+    '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
+    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
   $form['footer_logo']['footer_default_logo'] = [
     '#type' => 'checkbox',
@@ -310,14 +335,20 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'textfield',
     '#title' => t('Path to custom footer logo'),
     '#description' => t('The path to the file you would like to use as your footer logo file instead of the logo in the header.'),
-    '#default_value' => theme_get_setting('footer_logo'),
+    '#default_value' => theme_get_setting('footer_logo_path'),
   ];
   $form['footer_logo']['settings']['footer_logo_upload'] = [
     '#type' => 'file',
     '#title' => t('Upload footer logo image'),
     '#maxlength' => 40,
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
+    '#upload_validators' => [
+      'file_validate_extensions' => [
+        'png gif jpg jpeg apng svg',
+      ],
+    ],
   ];
+  $form['#validate'][] = 'az_barrio_form_system_theme_settings_validate';
   $form['#submit'][] = 'az_barrio_form_system_theme_settings_submit';
 }
 
@@ -325,6 +356,73 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
  * Submit handler for az_barrio_form_settings.
  */
 function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &$form_state) {
+  $config_key = $form_state->getValue('config_key');
+  $config = \Drupal::getContainer()->get('config.factory')->getEditable($config_key);
+  $values = $form_state->getValues();
+  // If the user uploaded a new logo or favicon, save it to a permanent location
+  // and use it in place of the default theme-provided file.
+  $default_scheme = \Drupal::config('system.file')->get('default_scheme');
+  try {
+    if (!empty($values['footer_logo_upload'])) {
+      $filename = \Drupal::service('file_system')->copy($values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
+      $form_state->setValue('footer_logo_path', $filename);
+      $form_state->setValue('footer_default_logo', 0);
+    }
+  }
+  catch (FileException $e) {
+    // Ignore.
+  }
+  $form_state->unsetValue('footer_logo_upload');
+  // theme_settings_convert_to_config($values, $config)->save();
   // Clear cached libraries so any Bootsrap changes take effect immmediately.
   \Drupal::service('library.discovery')->clearCachedDefinitions();
+}
+
+/**
+ * Form validator for az_barrio_form_settings.
+ */
+function az_barrio_form_system_theme_settings_validate($form, FormStateInterface &$form_state) {
+  if (isset($form['footer_logo'])) {
+    $file = _file_save_upload_from_form($form['footer_logo']['settings']['footer_logo_upload'], $form_state, 0);
+    if ($file) {
+      // Put the temporary file in form_values so we can save it on submit.
+      $form_state->setValue('footer_logo_upload', $file);
+    }
+  }
+  // If the user provided a path for a footer logo, make sure a file exists at
+  // that path.
+  if ($form_state->getValue('footer_logo_path')) {
+    // I would like to use the validatePath function from the ThemeSettingsForm Class here.
+    $path = az_barrio_validate_file_path($form_state->getValue('footer_logo_path'));
+    if (!$path) {
+      $form_state->setErrorByName('footer_logo_path', t('The custom footer logo path is invalid.'));
+    }
+  }
+}
+
+/**
+ * Helper function to determin if is a file.
+ *
+ * See: https://api.drupal.org/api/drupal/core%21modules%21system%21src%21Form%21ThemeSettingsForm.php/function/ThemeSettingsForm%3A%3AvalidatePath/8.2.x.
+ */
+function az_barrio_validate_file_path($path) {
+
+  // Absolute local file paths are invalid.
+  if (\Drupal::service('file_system')->realpath($path) == $path) {
+    return FALSE;
+  }
+
+  // A path relative to the Drupal root or a fully qualified URI is valid.
+  if (is_file($path)) {
+    return $path;
+  }
+
+  // Prepend 'public://' for relative file paths within public filesystem.
+  if (StreamWrapperManager::getScheme($path) === FALSE) {
+    $path = 'public://' . $path;
+  }
+  if (is_file($path)) {
+    return $path;
+  }
+  return FALSE;
 }
