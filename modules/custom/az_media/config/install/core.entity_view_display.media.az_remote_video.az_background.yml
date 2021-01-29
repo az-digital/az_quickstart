@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.az_background
+    - field.field.media.az_remote_video.field_media_az_oembed_video
+    - media.type.az_remote_video
+  module:
+    - media
+id: media.az_remote_video.az_background
+targetEntityType: media
+bundle: az_remote_video
+mode: az_background
+content:
+  field_media_az_oembed_video:
+    type: oembed
+    weight: 0
+    label: hidden
+    settings:
+      max_width: 0
+      max_height: 0
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
