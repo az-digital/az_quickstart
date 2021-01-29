@@ -34,7 +34,7 @@ function az_accordion_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'body' => NULL,
         'accordion_item_id' => NULL,
-        'collapsed' => 'collapse',
+        'collapsed' => TRUE,
         'aria_expanded' => 'false',
         'aria_controls' => NULL,
       ],
