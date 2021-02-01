@@ -7,6 +7,11 @@
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\pathauto\PathautoPatternInterface;
+use Drupal\az_core\AZBlockViewBuilder;
+use Drupal\block\Entity\Block;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
+
 
 /**
  * Implements hook_help().
@@ -56,3 +61,19 @@ function az_core_modules_installed($modules, $is_syncing) {
     $overrider->importOverrides($modules);
   }
 }
+
+/**
+ * Implements hook_block_access().
+ */
+ function az_core_block_access(Block $block, $operation, AccountInterface $account) {
+   if ($operation === 'view') {
+     $block = Block::load($block->id());
+     $block_content = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+    $markup = \Drupal::service('renderer')->renderRoot($block_content);
+    return AccessResult::forbiddenIf($markup === '')->addCacheableDependency($block);
+   }
+   return AccessResult::neutral();
+ }
+
