@@ -4,8 +4,8 @@ dependencies:
   module:
     - node
     - taxonomy
-id: node.field_az_news_tags
-field_name: field_az_news_tags
+id: node.field_az_tags
+field_name: field_az_tags
 entity_type: node
 type: entity_reference
 settings:

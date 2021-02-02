@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.az_news.field_az_article_body
+    - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_expiration_date
-    - field.field.node.az_news.field_az_extra_body_content
+    - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
-    - field.field.node.az_news.field_az_news_tags
+    - field.field.node.az_news.field_az_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
     - field.field.node.az_news.field_az_subheading
@@ -69,7 +69,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_az_article_body:
+  field_az_body:
     weight: 6
     settings:
       rows: 5
@@ -109,7 +109,7 @@ content:
     third_party_settings: {  }
     type: datetime_datelist
     region: content
-  field_az_extra_body_content:
+  field_az_main_content:
     type: paragraphs
     weight: 7
     settings:
@@ -135,7 +135,7 @@ content:
     third_party_settings: {  }
     type: media_library_widget
     region: content
-  field_az_news_tags:
+  field_az_tags:
     weight: 8
     settings: {  }
     third_party_settings: {  }

@@ -10,15 +10,13 @@ dependencies:
   - field_group
   - file
   - link
-  - media_library
-  - menu_ui
   - node
   - paragraphs
   - path
   - taxonomy
   - text
   - user
-  - az_person
+  - az_core
   - az_media
   - az_paragraphs
   - az_paragraphs_cards

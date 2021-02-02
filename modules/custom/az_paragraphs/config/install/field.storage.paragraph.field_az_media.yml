@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   module:
-    - media
+    - az_media
     - paragraphs
 id: paragraph.field_az_media
 field_name: field_az_media
