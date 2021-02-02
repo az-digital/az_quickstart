@@ -1,0 +1,5 @@
+name: 'Quickstart Accordion'
+type: module
+description: 'Custom field plugins and theme template for accordion.'
+core_version_requirement: ^8.8 || ^9
+package: 'The University of Arizona'

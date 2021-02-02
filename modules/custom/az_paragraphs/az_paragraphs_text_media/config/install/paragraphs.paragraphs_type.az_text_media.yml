@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_paragraphs
+id: az_text_media
+label: 'Text on Media'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins:
+  az_text_media_paragraph_behavior:
+    enabled: true

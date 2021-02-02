@@ -53,6 +53,7 @@
         "drupal/paragraphs": "1.12",
         "drupal/pathauto": "1.8",
         "drupal/redirect": "1.6",
+        "drupal/smart_date": "3.1",
         "drupal/smart_title": "^1.0@beta",
         "drupal/token": "1.7",
         "drupal/views_bootstrap": "4.3",
@@ -73,6 +74,7 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-01-26/2259567--119-allow-svg-image-upload-d9-1-x.patch",
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
@@ -84,6 +86,9 @@
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
+            },
+            "drupal/date_ap_style": {
+                "Smart date compatibility": "https://www.drupal.org/files/issues/2020-08-25/3167284-support-smartdate-2.patch"
             },
             "drupal/easy_breadcrumb": {
                 "Easy_breadcrumb schema issue": "https://www.drupal.org/files/issues/2020-07-27/missing_schema_keys-3161765-4.patch"
