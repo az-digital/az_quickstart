@@ -4,7 +4,7 @@ description: 'Provides a card paragraph type.'
 core_version_requirement: ^8.8 || ^9
 dependencies:
   - az_paragraphs
-  - field
-  - paragraphs
+  - drupal:field
+  - paragraphs:paragraphs
   - az_card
 package: 'The University of Arizona'

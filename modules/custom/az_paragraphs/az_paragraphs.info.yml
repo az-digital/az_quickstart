@@ -4,4 +4,4 @@ description: 'Provides custom paragraph types.'
 core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
-  - paragraphs
+  - paragraphs:paragraphs
