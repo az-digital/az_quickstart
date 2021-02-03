@@ -7,7 +7,7 @@ dependencies:
 id: node.field_az_body
 field_name: field_az_body
 entity_type: node
-type: text_with_summary
+type: text_long
 settings: {  }
 module: text
 locked: false
@@ -16,3 +16,4 @@ translatable: true
 indexes: {  }
 persist_with_no_fields: false
 custom_storage: false
+
