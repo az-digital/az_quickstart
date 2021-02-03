@@ -5,6 +5,6 @@ core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
   - az_media
-  - image
-  - media
-  - media_library_form_element
+  - drupal:image
+  - drupal:media
+  - media_library_form_element:media_library_form_element
