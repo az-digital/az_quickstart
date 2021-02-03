@@ -4,18 +4,18 @@ description: 'Allows users to create and order person profiles.'
 core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
-  - auto_entitylabel
+  - auto_entitylabel:auto_entitylabel
   - az_core
   - az_media
-  - block
-  - draggableviews
-  - field
-  - field_group
-  - menu_ui
-  - node
-  - path
+  - drupal:block
+  - draggableviews:draggableviews
+  - drupal:field
+  - field_group:field_group
+  - drupal:menu_ui
+  - drupal:node
+  - drupal:path
   - pathauto:pathauto
-  - taxonomy
-  - telephone
-  - user
-  - views_bootstrap
+  - drupal:taxonomy
+  - drupal:telephone
+  - drupal:user
+  - views_bootstrap:views_bootstrap
