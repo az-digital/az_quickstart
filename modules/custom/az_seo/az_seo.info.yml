@@ -9,4 +9,3 @@ dependencies:
   - metatag
   - metatag_open_graph
   - metatag_twitter_cards
-  - pathauto
