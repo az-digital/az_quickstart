@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
-    - field.field.node.az_event.field_az_date
+    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
@@ -98,7 +98,7 @@ third_party_settings:
       label: 'row 2'
     group_col_1:
       children:
-        - field_az_date
+        - field_az_event_date
       parent_name: group_row_1
       weight: 13
       format_type: html_element
@@ -189,7 +189,7 @@ content:
     third_party_settings: {  }
     type: text_default
     region: content
-  field_az_date:
+  field_az_event_date:
     type: daterange_ap_style
     weight: 14
     region: content

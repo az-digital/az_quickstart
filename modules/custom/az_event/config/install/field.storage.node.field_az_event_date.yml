@@ -4,8 +4,8 @@ dependencies:
   module:
     - node
     - smart_date
-id: node.field_az_date
-field_name: field_az_date
+id: node.field_az_event_date
+field_name: field_az_event_date
 entity_type: node
 type: smartdate
 settings: {  }

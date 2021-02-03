@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_az_date
+    - field.storage.node.field_az_event_date
     - node.type.az_event
   module:
     - smart_date
@@ -11,8 +11,8 @@ third_party_settings:
   smart_date_recur:
     allow_recurring: 1
     month_limit: '12'
-id: node.az_event.field_az_date
-field_name: field_az_date
+id: node.az_event.field_az_event_date
+field_name: field_az_event_date
 entity_type: node
 bundle: az_event
 label: When
