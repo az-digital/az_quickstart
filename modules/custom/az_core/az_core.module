@@ -65,7 +65,6 @@ function az_core_modules_installed($modules, $is_syncing) {
  */
 function az_core_block_access(Block $block, $operation, AccountInterface $account) {
   if ($operation === 'view' && $block->id() === 'az_barrio_sidebar_menu') {
-    $block = Block::load($block->id());
     $block_content = \Drupal::entityTypeManager()
       ->getViewBuilder('block')
       ->view($block);
