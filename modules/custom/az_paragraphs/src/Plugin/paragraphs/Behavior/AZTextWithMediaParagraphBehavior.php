@@ -4,6 +4,8 @@ namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**

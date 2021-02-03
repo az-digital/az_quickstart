@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   module:
-    - media
-    - paragraphs
-id: paragraph.field_az_media
-field_name: field_az_media
-entity_type: paragraph
+    - node
+    - taxonomy
+id: node.field_az_news_tags
+field_name: field_az_news_tags
+entity_type: node
 type: entity_reference
 settings:
-  target_type: media
+  target_type: taxonomy_term
 module: core
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
