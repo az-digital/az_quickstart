@@ -62,11 +62,9 @@ content:
     weight: 12
     settings:
       rows: 9
-      summary_rows: 3
       placeholder: ''
-      show_summary: false
     third_party_settings: {  }
-    type: text_textarea_with_summary
+    type: text_textarea
     region: content
   field_az_event_date:
     weight: 11
