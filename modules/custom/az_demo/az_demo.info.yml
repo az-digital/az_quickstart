@@ -6,6 +6,6 @@ package: 'The University of Arizona'
 dependencies:
   - az_core
   - az_flexible_page
-  - migrate
-  - migrate_plus
-  - migrate_tools
+  - migrate:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
