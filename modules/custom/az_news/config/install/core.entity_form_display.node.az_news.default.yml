@@ -9,7 +9,7 @@ dependencies:
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
-    - field.field.node.az_news.field_az_tags
+    - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
     - field.field.node.az_news.field_az_subheading
@@ -135,7 +135,7 @@ content:
     third_party_settings: {  }
     type: media_library_widget
     region: content
-  field_az_tags:
+  field_az_news_tags:
     weight: 8
     settings: {  }
     third_party_settings: {  }
