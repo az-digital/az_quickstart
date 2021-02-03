@@ -14,6 +14,7 @@ dependencies:
   - menu_ui
   - node
   - path
+  - pathauto:pathauto
   - taxonomy
   - telephone
   - user
