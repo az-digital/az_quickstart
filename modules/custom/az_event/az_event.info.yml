@@ -4,7 +4,8 @@ description: 'Provides Event content type and related configuration.'
 core_version_requirement: '^8.8 || ^9'
 package: 'The University of Arizona'
 dependencies:
-  - az_news
+  - az_core
+  - az_media
   - date_ap_style
   - datetime_range
   - field
@@ -16,6 +17,7 @@ dependencies:
   - menu_ui
   - node
   - path
+  - pathauto:pathauto
   - smart_date
   - smart_date_recur
   - smart_title

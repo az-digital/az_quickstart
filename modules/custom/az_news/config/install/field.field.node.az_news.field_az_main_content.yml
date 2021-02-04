@@ -2,14 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_az_extra_body_content
+    - field.storage.node.field_az_main_content
     - node.type.az_news
     - paragraphs.paragraphs_type.az_cards
     - paragraphs.paragraphs_type.az_text
   module:
     - entity_reference_revisions
-id: node.az_news.field_az_extra_body_content
-field_name: field_az_extra_body_content
+id: node.az_news.field_az_main_content
+field_name: field_az_main_content
 entity_type: node
 bundle: az_news
 label: 'Extra Body Content'

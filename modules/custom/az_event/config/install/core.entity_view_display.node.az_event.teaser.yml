@@ -5,7 +5,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
-    - field.field.node.az_event.field_az_date
+    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
@@ -30,7 +30,7 @@ hidden:
   az_event_month: true
   field_az_attachments: true
   field_az_body: true
-  field_az_date: true
+  field_az_event_date: true
   field_az_event_category: true
   field_az_link: true
   field_az_location: true

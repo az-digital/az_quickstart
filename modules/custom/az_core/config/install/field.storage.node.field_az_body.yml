@@ -3,16 +3,17 @@ status: true
 dependencies:
   module:
     - node
-    - smart_date
-id: node.field_az_date
-field_name: field_az_date
+    - text
+id: node.field_az_body
+field_name: field_az_body
 entity_type: node
-type: smartdate
+type: text_long
 settings: {  }
-module: smart_date
+module: text
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
 custom_storage: false
+

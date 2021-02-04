@@ -151,10 +151,10 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        field_az_date_value:
-          id: field_az_date_value
-          table: node__field_az_date
-          field: field_az_date_value
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
           relationship: none
           group_type: group
           admin_label: ''
@@ -197,10 +197,10 @@ display:
             group_items: {  }
           plugin_id: date
       sorts:
-        field_az_date_value:
-          id: field_az_date_value
-          table: node__field_az_date
-          field: field_az_date_value
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
           relationship: none
           group_type: group
           admin_label: ''

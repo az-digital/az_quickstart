@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
-    - field.field.node.az_event.field_az_date
+    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
@@ -62,13 +62,11 @@ content:
     weight: 12
     settings:
       rows: 9
-      summary_rows: 3
       placeholder: ''
-      show_summary: false
     third_party_settings: {  }
-    type: text_textarea_with_summary
+    type: text_textarea
     region: content
-  field_az_date:
+  field_az_event_date:
     weight: 11
     settings:
       show_extra: true

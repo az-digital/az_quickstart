@@ -5,7 +5,7 @@ dependencies:
     - core.entity_view_mode.node.az_row
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
-    - field.field.node.az_event.field_az_date
+    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
@@ -184,7 +184,7 @@ third_party_settings:
       label: Heading
     group_strong:
       children:
-        - field_az_date
+        - field_az_event_date
       parent_name: group_summary
       weight: 4
       format_type: html_element
@@ -221,7 +221,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_az_date:
+  field_az_event_date:
     type: daterange_ap_style
     weight: 5
     region: content

@@ -3,12 +3,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_media_list
-    - field.field.node.az_news.field_az_article_body
+    - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_expiration_date
-    - field.field.node.az_news.field_az_extra_body_content
+    - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
@@ -260,12 +260,12 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_az_article_body: true
+  field_az_body: true
   field_az_attachments: true
   field_az_byline: true
   field_az_caption: true
   field_az_expiration_date: true
-  field_az_extra_body_content: true
+  field_az_main_content: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
