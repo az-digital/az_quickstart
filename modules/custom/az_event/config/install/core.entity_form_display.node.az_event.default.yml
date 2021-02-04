@@ -9,8 +9,8 @@ dependencies:
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
-    - field.field.node.az_event.field_az_summary
     - field.field.node.az_event.field_az_subheading
+    - field.field.node.az_event.field_az_summary
     - node.type.az_event
   module:
     - field_group
