@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.az_person.field_az_addresses
+    - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_attachments
     - field.field.node.az_person.field_az_degrees
@@ -52,15 +52,13 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_az_addresses:
+  field_az_address:
     weight: 8
     settings:
       rows: 9
-      summary_rows: 3
       placeholder: ''
-      show_summary: false
     third_party_settings: {  }
-    type: text_textarea_with_summary
+    type: text_textarea
     region: content
   field_az_body:
     weight: 10

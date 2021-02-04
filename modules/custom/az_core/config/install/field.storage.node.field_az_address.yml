@@ -4,10 +4,10 @@ dependencies:
   module:
     - node
     - text
-id: node.field_az_addresses
-field_name: field_az_addresses
+id: node.field_az_address
+field_name: field_az_address
 entity_type: node
-type: text_with_summary
+type: text_long
 settings: {  }
 module: text
 locked: false

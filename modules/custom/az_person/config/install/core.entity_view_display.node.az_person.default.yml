@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.az_person.field_az_addresses
+    - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_attachments
     - field.field.node.az_person.field_az_degrees
@@ -27,7 +27,7 @@ targetEntityType: node
 bundle: az_person
 mode: default
 content:
-  field_az_addresses:
+  field_az_address:
     weight: 5
     label: hidden
     settings: {  }
