@@ -10,7 +10,7 @@ dependencies:
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_summary
-    - field.field.node.az_event.field_az_summary_short
+    - field.field.node.az_event.field_az_subheading
     - node.type.az_event
   module:
     - date_ap_style
@@ -24,7 +24,7 @@ third_party_settings:
   field_group:
     group_span_subtitle:
       children:
-        - field_az_summary_short
+        - field_az_subheading
       parent_name: ''
       weight: 2
       format_type: html_element
@@ -236,7 +236,7 @@ content:
       link: false
     third_party_settings: {  }
     region: content
-  field_az_summary_short:
+  field_az_subheading:
     weight: 13
     label: hidden
     settings:

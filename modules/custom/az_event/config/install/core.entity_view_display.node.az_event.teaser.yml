@@ -11,7 +11,7 @@ dependencies:
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_summary
-    - field.field.node.az_event.field_az_summary_short
+    - field.field.node.az_event.field_az_subheading
     - node.type.az_event
   module:
     - user
@@ -36,5 +36,5 @@ hidden:
   field_az_location: true
   field_az_photos: true
   field_az_summary: true
-  field_az_summary_short: true
+  field_az_subheading: true
   smart_title: true
