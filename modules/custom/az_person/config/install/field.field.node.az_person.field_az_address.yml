@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_az_address
-    - filter.format.az_standard
+    - filter.format.plain_text
     - node.type.az_person
   module:
     - text
@@ -19,5 +19,6 @@ default_value: {  }
 default_value_callback: ''
 settings:
   allowed_formats:
-    - az_standard
+    - plain_text
 field_type: text_long
+

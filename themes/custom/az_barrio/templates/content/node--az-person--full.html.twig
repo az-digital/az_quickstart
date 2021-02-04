@@ -149,9 +149,9 @@
         {% if content.field_az_media_image.0 %}
           {{ content.field_az_media_image.0 }}
         {% endif %}
-          <address class="card-body pb-0">
+          <div class="card-body pb-0">
             {{ content.field_az_address.0 }}
-          </address>
+          </div>
           <ul class="list-group list-group-flush border-0 py-3">
           {% if content.field_az_phones %}
             {% for key, item in content.field_az_phones if key|first != '#' %}
