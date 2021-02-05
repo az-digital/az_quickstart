@@ -5,7 +5,7 @@
  * Contains az_flexible_page.module.
  */
 
- /**
+/**
  * Implements hook_form_alter().
  */
 function az_flexible_page_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
