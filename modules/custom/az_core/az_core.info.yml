@@ -10,4 +10,3 @@ dependencies:
   - config_sync:config_sync
   - config_update:config_update
   - drupal:telephone
-

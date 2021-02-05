@@ -1,0 +1,4 @@
+/* Fix spacing for "Add Paragraph types" buttons on Page content type */
+input.field-add-more-submit.button {
+  margin-top: 10px;
+}

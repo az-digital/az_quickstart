@@ -7,3 +7,4 @@ dependencies:
   - paragraphs:paragraphs
   - az_card
   - az_media
+  - entity_embed:entity_embed
