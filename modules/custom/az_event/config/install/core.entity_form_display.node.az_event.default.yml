@@ -9,8 +9,8 @@ dependencies:
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
+    - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
-    - field.field.node.az_event.field_az_summary_short
     - node.type.az_event
   module:
     - field_group
@@ -122,7 +122,7 @@ content:
     third_party_settings: {  }
     type: string_textarea
     region: content
-  field_az_summary_short:
+  field_az_subheading:
     weight: 8
     settings:
       size: 60
