@@ -383,6 +383,7 @@ function az_barrio_brand_icons_assets_path($type) {
  */
 function az_barrio_primary_logo() {
   $return = '';
+  $primary_logo_link_classes = ['qs-site-logo', 'd-block'];
   $primary_logo_path = theme_get_setting('logo');
   $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
   $primary_alt_text = Html::escape(theme_get_setting('primary_logo_alt_text'));
@@ -402,10 +403,11 @@ function az_barrio_primary_logo() {
       $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_path['url']);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
+      $primary_logo_link_classes[] = 'qs-logo-svg-inline';
       $return = Link::createFromRoute($image_markup, '<front>', [], [
         'attributes' => [
           'title' => $primary_title_text,
-          'class' => ['header_logo_svg'],
+          'class' => $primary_logo_link_classes,
           'rel' => 'home',
         ],
       ]
@@ -419,7 +421,7 @@ function az_barrio_primary_logo() {
         'attributes' => [
           'title' => $primary_title_text,
           'alt' => $primary_alt_text,
-          'class' => ['header_logo'],
+          'class' => $primary_logo_link_classes,
           'rel' => 'home',
         ],
       ]);
@@ -435,7 +437,9 @@ function az_barrio_primary_logo() {
 
 function az_barrio_footer_logo() {
   $return = '';
+  $footer_logo_link_classes = ['qs-site-logo', 'd-block', 'mt-0'];
   $footer_logo_path = theme_get_setting('footer_logo_path');
+  $footer_logo_default = theme_get_setting('footer_default_logo');
   $footer_logo_path_parts = pathinfo($footer_logo_path);
   $footer_link_destination = theme_get_setting('footer_logo_link_destination');
   $footer_alt_text = Html::escape(theme_get_setting('footer_logo_alt_text'));
@@ -447,38 +451,44 @@ function az_barrio_footer_logo() {
   }
 
   // Set footer logo.
-  if (!empty($footer_logo_path)) {
+  if (!empty($footer_logo_path) && !$footer_logo_default) {
     $filepath = \Drupal::service('file_system')->realpath($footer_logo_path);
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_footer_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
       $svg = file_get_contents($filepath);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
-      $return = Link::createFromRoute($image_markup, '<front>', [], [
+      $footer_logo_link_classes[] = 'qs-logo-svg-inline';
+      $return = Link::createFromRoute($image_markup, $footer_link_destination, [], [
         'attributes' => [
           'title' => $footer_title_text,
           'alt' => $footer_alt_text,
-          'class' => ['footer_logo_svg'],
+          'class' => $footer_logo_link_classes,
           'rel' => 'home',
         ],
       ]);
     }
     else {
-      $image = '<img src=/"' . $footer_logo_path . '" alt="' . $footer_alt_text . '" class="img-fluid pb-4" />';
+      $image = '<img src="/' . $footer_logo_path . '" alt="' . $footer_alt_text . '" class="img-fluid" />';
       $rendered_image = render($image);
       $image_markup = Markup::create($rendered_image);
       $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
       $return = Link::createFromRoute($image_markup, $footer_link_destination, [], [
         'attributes' => [
           'title' => $footer_title_text,
+          'alt' => $footer_alt_text,
           'rel' => 'home',
+          'class' => $footer_logo_link_classes,
         ],
       ]);
     }
   }
   // Fallback to primary logo when footer logo settings are not configured.
   else {
-    $return = az_barrio_primary_logo();
+    $footer_logo = az_barrio_primary_logo();
+    $footer_logo = $footer_logo->toRenderable();
+    $footer_logo['#attributes']['class'][] = 'mt-0';
+    $return = $footer_logo;
   }
 
   return $return;
