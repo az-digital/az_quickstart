@@ -396,7 +396,6 @@ function az_barrio_primary_logo() {
 
   // Set primary logo.
   if (!empty($primary_logo_path)) {
-    $url = file_create_url($primary_logo_path['path']);
 
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $primary_logo_path_parts['extension'] === 'svg') {
@@ -413,7 +412,7 @@ function az_barrio_primary_logo() {
       );
     }
     else {
-      $image = '<img src="' . $url . '" alt="' . $primary_alt_text . '" class="img-fluid" />';
+      $image = '<img src="/' . $primary_logo_path['path'] . '" alt="' . $primary_alt_text . '" class="img-fluid" />';
       $rendered_image = render($image);
       $image_markup = Markup::create($rendered_image);
       $return = Link::createFromRoute($image_markup, '<front>', [], [
@@ -465,8 +464,7 @@ function az_barrio_footer_logo() {
       ]);
     }
     else {
-      $url = file_create_url($footer_logo_path);
-      $image = '<img src="' . $url . '" alt="' . $footer_alt_text . '" class="img-fluid pb-4" />';
+      $image = '<img src=/"' . $footer_logo_path . '" alt="' . $footer_alt_text . '" class="img-fluid pb-4" />';
       $rendered_image = render($image);
       $image_markup = Markup::create($rendered_image);
       $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
