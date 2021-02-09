@@ -118,13 +118,6 @@ audio:not([controls]) {
     margin: 1.938rem 0;
   }
 }
-.qs-logo-svg-inline svg{
-}
-
-@media (min-width: 48em) {
-  .qs-logo-svg-inline svg{
-  }
-}
 
 /**
  * Inline styles.
