@@ -6,6 +6,7 @@ package: The University of Arizona
 dependencies:
   - crop:crop
   - drupal:image
-  - image_widget_crop:image_widget_crop
   - drupal:media
   - drupal:media_library
+  - entity_embed:entity_embed
+  - image_widget_crop:image_widget_crop

@@ -5,8 +5,8 @@ core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
   - auto_entitylabel:auto_entitylabel
+  - az_core
   - az_media
-  - az_paragraphs
   - drupal:block
   - draggableviews:draggableviews
   - drupal:field

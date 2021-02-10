@@ -4,13 +4,13 @@ dependencies:
   config:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
-    - field.field.node.az_event.field_az_date
     - field.field.node.az_event.field_az_event_category
+    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
+    - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
-    - field.field.node.az_event.field_az_summary_short
     - node.type.az_event
   module:
     - date_ap_style
@@ -24,7 +24,7 @@ third_party_settings:
   field_group:
     group_span_subtitle:
       children:
-        - field_az_summary_short
+        - field_az_subheading
       parent_name: ''
       weight: 2
       format_type: html_element
@@ -63,7 +63,7 @@ third_party_settings:
         - group_col_1
         - group_col_2
       parent_name: ''
-      weight: 6
+      weight: 5
       format_type: html_element
       region: content
       format_settings:
@@ -82,7 +82,7 @@ third_party_settings:
         - group_col_3
         - group_col_4
       parent_name: ''
-      weight: 7
+      weight: 6
       format_type: html_element
       region: content
       format_settings:
@@ -98,7 +98,7 @@ third_party_settings:
       label: 'row 2'
     group_col_1:
       children:
-        - field_az_date
+        - field_az_event_date
       parent_name: group_row_1
       weight: 13
       format_type: html_element
@@ -189,7 +189,15 @@ content:
     third_party_settings: {  }
     type: text_default
     region: content
-  field_az_date:
+  field_az_event_category:
+    weight: 5
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
+  field_az_event_date:
     type: daterange_ap_style
     weight: 14
     region: content
@@ -207,14 +215,6 @@ content:
       display_noon_and_midnight: 0
       display_day: null
     third_party_settings: {  }
-  field_az_event_category:
-    weight: 5
-    label: hidden
-    settings:
-      link: true
-    third_party_settings: {  }
-    type: entity_reference_label
-    region: content
   field_az_location:
     type: link
     weight: 10
@@ -236,13 +236,12 @@ content:
       link: false
     third_party_settings: {  }
     region: content
-  field_az_summary_short:
-    weight: 13
+  field_az_subheading:
+    weight: 15
     label: hidden
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    type: string
+    type: text_default
     region: content
   links:
     weight: 0

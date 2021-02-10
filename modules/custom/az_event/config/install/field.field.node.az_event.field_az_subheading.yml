@@ -4,17 +4,17 @@ dependencies:
   config:
     - field.storage.node.field_az_subheading
     - filter.format.plain_text
-    - node.type.az_news
+    - node.type.az_event
   module:
     - text
-id: node.az_news.field_az_subheading
+id: node.az_event.field_az_subheading
 field_name: field_az_subheading
 entity_type: node
-bundle: az_news
-label: Subheading
-description: 'Add a subhead beneath the article title.'
+bundle: az_event
+label: Subtitle
+description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

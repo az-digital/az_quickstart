@@ -3,15 +3,13 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_az_summary_short
-field_name: field_az_summary_short
+    - text
+id: node.field_az_address
+field_name: field_az_address
 entity_type: node
-type: string
-settings:
-  max_length: 255
-  is_ascii: false
-  case_sensitive: false
-module: core
+type: text_long
+settings: {  }
+module: text
 locked: false
 cardinality: 1
 translatable: true
