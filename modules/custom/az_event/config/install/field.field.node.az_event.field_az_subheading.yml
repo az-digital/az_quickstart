@@ -3,7 +3,10 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_az_subheading
+    - filter.format.plain_text
     - node.type.az_event
+  module:
+    - text
 id: node.az_event.field_az_subheading
 field_name: field_az_subheading
 entity_type: node
@@ -11,8 +14,10 @@ bundle: az_event
 label: Subtitle
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: string
+settings:
+  allowed_formats:
+    - plain_text
+field_type: text
