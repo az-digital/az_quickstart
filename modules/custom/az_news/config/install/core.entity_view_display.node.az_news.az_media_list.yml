@@ -3,8 +3,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_media_list
-    - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_attachments
+    - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_expiration_date
@@ -20,6 +20,7 @@ dependencies:
     - date_ap_style
     - field_group
     - smart_title
+    - text
     - user
 third_party_settings:
   field_group:
@@ -209,8 +210,6 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes: {  }
       smart_title__link: false
-_core:
-  default_config_hash: he6vYK4j3owcm5Bld_jcEPcuDXCysJ0f5hBwhDoVjfI
 id: node.az_news.az_media_list
 targetEntityType: node
 bundle: az_news
@@ -243,8 +242,8 @@ content:
       capitalize_noon_and_midnight: 0
     third_party_settings: {  }
   field_az_summary:
-    type: basic_string
-    weight: 8
+    type: text_default
+    weight: 1
     region: content
     label: hidden
     settings: {  }
@@ -260,8 +259,8 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
-  field_az_body: true
   field_az_attachments: true
+  field_az_body: true
   field_az_byline: true
   field_az_caption: true
   field_az_expiration_date: true

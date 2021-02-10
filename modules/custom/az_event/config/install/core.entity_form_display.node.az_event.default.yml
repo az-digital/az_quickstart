@@ -4,8 +4,8 @@ dependencies:
   config:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
-    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_event_category
+    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
@@ -25,7 +25,6 @@ third_party_settings:
   field_group:
     group_summary:
       children:
-        - field_az_short_title
         - field_az_link
         - field_az_summary
       parent_name: ''
@@ -66,6 +65,12 @@ content:
     third_party_settings: {  }
     type: text_textarea
     region: content
+  field_az_event_category:
+    weight: 9
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_az_event_date:
     weight: 11
     settings:
@@ -84,12 +89,6 @@ content:
           MINUTELY: 0
           HOURLY: 0
     type: smartdate_default
-    region: content
-  field_az_event_category:
-    weight: 9
-    settings: {  }
-    third_party_settings: {  }
-    type: options_select
     region: content
   field_az_link:
     weight: 27
@@ -114,21 +113,21 @@ content:
       media_types: {  }
     third_party_settings: {  }
     region: content
-  field_az_summary:
-    weight: 28
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textarea
-    region: content
   field_az_subheading:
     weight: 8
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
+    type: text_textfield
+    region: content
+  field_az_summary:
+    weight: 28
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
     region: content
   path:
     type: path

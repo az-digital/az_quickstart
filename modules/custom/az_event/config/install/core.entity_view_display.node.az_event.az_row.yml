@@ -5,18 +5,19 @@ dependencies:
     - core.entity_view_mode.node.az_row
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
-    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_event_category
+    - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_photos
-    - field.field.node.az_event.field_az_summary
     - field.field.node.az_event.field_az_subheading
+    - field.field.node.az_event.field_az_summary
     - node.type.az_event
   module:
     - date_ap_style
     - field_group
     - smart_title
+    - text
     - user
 third_party_settings:
   field_group:
@@ -240,8 +241,8 @@ content:
       display_day: null
     third_party_settings: {  }
   field_az_summary:
-    type: basic_string
-    weight: 6
+    type: text_default
+    weight: 5
     region: content
     label: hidden
     settings: {  }

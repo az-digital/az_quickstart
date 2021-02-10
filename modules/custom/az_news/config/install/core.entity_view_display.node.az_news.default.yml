@@ -2,8 +2,8 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_attachments
+    - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_expiration_date
@@ -204,13 +204,6 @@ targetEntityType: node
 bundle: az_news
 mode: default
 content:
-  field_az_body:
-    weight: 7
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
-    region: content
   field_az_attachments:
     weight: 2
     label: hidden
@@ -218,6 +211,13 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
     type: file_default
+    region: content
+  field_az_body:
+    weight: 7
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
     region: content
   field_az_byline:
     weight: 7
@@ -228,11 +228,11 @@ content:
     type: string
     region: content
   field_az_caption:
-    weight: 8
+    weight: 10
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: basic_string
+    type: text_default
     region: content
   field_az_main_content:
     type: entity_reference_revisions_entity_view
@@ -270,12 +270,11 @@ content:
     type: timestamp_ap_style
     region: content
   field_az_subheading:
-    weight: 7
+    weight: 9
     label: hidden
-    settings:
-      link_to_entity: false
+    settings: {  }
     third_party_settings: {  }
-    type: string
+    type: text_default
     region: content
   links:
     weight: 3

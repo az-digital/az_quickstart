@@ -3,15 +3,14 @@ status: true
 dependencies:
   module:
     - node
+    - text
 id: node.field_az_subheading
 field_name: field_az_subheading
 entity_type: node
-type: string
+type: text
 settings:
   max_length: 255
-  is_ascii: false
-  case_sensitive: false
-module: core
+module: text
 locked: false
 cardinality: 1
 translatable: true
