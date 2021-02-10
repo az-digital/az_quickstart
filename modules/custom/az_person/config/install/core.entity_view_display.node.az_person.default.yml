@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.node.az_person.field_az_addresses
-    - field.field.node.az_person.field_az_bio
-    - field.field.node.az_person.field_az_cv_documents
+    - field.field.node.az_person.field_az_address
+    - field.field.node.az_person.field_az_body
+    - field.field.node.az_person.field_az_attachments
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
@@ -27,21 +27,21 @@ targetEntityType: node
 bundle: az_person
 mode: default
 content:
-  field_az_addresses:
+  field_az_address:
     weight: 5
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-  field_az_bio:
+  field_az_body:
     weight: 16
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-  field_az_cv_documents:
+  field_az_attachments:
     weight: 18
     label: hidden
     settings:

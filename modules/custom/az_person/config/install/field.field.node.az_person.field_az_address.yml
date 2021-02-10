@@ -2,17 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_az_subheading
+    - field.storage.node.field_az_address
     - filter.format.plain_text
-    - node.type.az_news
+    - node.type.az_person
   module:
     - text
-id: node.az_news.field_az_subheading
-field_name: field_az_subheading
+id: node.az_person.field_az_address
+field_name: field_az_address
 entity_type: node
-bundle: az_news
-label: Subheading
-description: 'Add a subhead beneath the article title.'
+bundle: az_person
+label: Address(es)
+description: 'Office location(s)'
 required: false
 translatable: false
 default_value: {  }
@@ -20,4 +20,5 @@ default_value_callback: ''
 settings:
   allowed_formats:
     - plain_text
-field_type: text
+field_type: text_long
+

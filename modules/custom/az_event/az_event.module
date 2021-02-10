@@ -57,8 +57,8 @@ function az_event_entity_extra_field_info() {
 function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   // We only know what to do with event pseudo fields if our date seems defined.
-  if ($entity->hasField('field_az_date') && !empty($entity->field_az_date->value)) {
-    $timestamp = $entity->field_az_date->value;
+  if ($entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
+    $timestamp = $entity->field_az_event_date->value;
     $formatter = \Drupal::service('date.formatter');
 
     // Use the date.formatter service.

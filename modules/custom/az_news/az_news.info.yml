@@ -11,15 +11,14 @@ dependencies:
   - drupal:file
   - drupal:link
   - drupal:media_library
-  - drupal:menu_ui
   - drupal:node
   - paragraphs:paragraphs
   - drupal:path
   - drupal:taxonomy
   - drupal:text
   - drupal:user
-  - az_person
-  - az_flexible_page
+  - az_core
+  - az_media
   - az_paragraphs
   - az_paragraphs_cards
   - az_paragraphs_text

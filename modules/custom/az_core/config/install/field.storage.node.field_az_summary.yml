@@ -4,10 +4,10 @@ dependencies:
   module:
     - node
     - text
-id: node.field_az_bio
-field_name: field_az_bio
+id: node.field_az_summary
+field_name: field_az_summary
 entity_type: node
-type: text_with_summary
+type: text_long
 settings: {  }
 module: text
 locked: false
