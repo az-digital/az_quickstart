@@ -39,7 +39,7 @@ jobs:
       - name: Check dependencies for vulnerabilities
         uses: symfonycorp/security-checker-action@038cecb1ee1bf871d1ef43e873f813d900a1125c
         with:
-          composer: az-quickstart-scaffolding
+          lock: az-quickstart-scaffolding/composer.lock
   code-check:
     name: Static Code Check
     runs-on: ubuntu-latest
