@@ -3,11 +3,24 @@
 namespace Drupal\az_mail\Commands;
 
 use Drush\Commands\DrushCommands;
+use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
  * Drush commandfile for az_mail.
  */
 class AZMailCommands extends DrushCommands {
+
+  protected $config;
+
+  /**
+   * Constructs a AZMailCommands object.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
+   *   The factory for configuration objects.
+   */
+  public function __construct(ConfigFactoryInterface $config) {
+    $this->config = $config->getEditable('smtp.settings');
+  }
 
   /**
    * Sets the SMTP password for use with AWS SES.
@@ -25,10 +38,9 @@ class AZMailCommands extends DrushCommands {
    * Converts a regular AWS IAM secret key to an SMTP password for SES.
    */
   public function setSmtpPassword($region, $secret) {
-    $smtp_password = sesHash($secret, $region);
-    $config = \Drupal::service('config.factory')->getEditable('smtp.settings');
-    $config->set('smtp_password', $smtp_password);
-    $config->save();
+    $smtp_password = $this->sesHash($secret, $region);
+    $this->config->set('smtp_password', $smtp_password);
+    $this->config->save();
   }
 
   /**
@@ -50,11 +62,11 @@ class AZMailCommands extends DrushCommands {
     $terminal = "aws4_request";
     $version = 0x04;
 
-    $signature = sesSign(utf8_encode("AWS4" . $secret), $date);
-    $signature = sesSign($signature, $region);
-    $signature = sesSign($signature, $service);
-    $signature = sesSign($signature, $terminal);
-    $signature = sesSign($signature, $message);
+    $signature = $this->sesSign(utf8_encode("AWS4" . $secret), $date);
+    $signature = $this->sesSign($signature, $region);
+    $signature = $this->sesSign($signature, $service);
+    $signature = $this->sesSign($signature, $terminal);
+    $signature = $this->sesSign($signature, $message);
     $signature_and_version = pack("C*", $version) . $signature;
     $smtp_password = base64_encode($signature_and_version);
     return utf8_decode($smtp_password);
