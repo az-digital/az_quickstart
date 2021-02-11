@@ -79,7 +79,8 @@
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2020-11-14/784672-178.patch",
-                "Remove Claro tabledrag.js replacement when core issues are resolved" : "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch"
+                "Remove Claro tabledrag.js replacement when core issues are resolved" : "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch",
+                "Editing menus user-experience issue" : "https://www.drupal.org/files/issues/2021-02-09/2957953-9.2.x-113.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch"
