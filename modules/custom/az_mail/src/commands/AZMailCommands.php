@@ -10,6 +10,11 @@ use Drupal\Core\Config\ConfigFactoryInterface;
  */
 class AZMailCommands extends DrushCommands {
 
+  /**
+   * The config for the smtp module.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
   protected $config;
 
   /**
