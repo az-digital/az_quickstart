@@ -37,9 +37,7 @@ jobs:
           composer require --no-update az-digital/az_quickstart:dev-${AZ_TRIMMED_REF}
           composer install -o
       - name: Check dependencies for vulnerabilities
-        run: |
-          cd az-quickstart-scaffolding
-          composer security-check
+        uses: symfonycorp/security-checker-action@038cecb1ee1bf871d1ef43e873f813d900a1125c
   code-check:
     name: Static Code Check
     runs-on: ubuntu-latest
@@ -65,5 +63,3 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           composer phpcs
-
-
