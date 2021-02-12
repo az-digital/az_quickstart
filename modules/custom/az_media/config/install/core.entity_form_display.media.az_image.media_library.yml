@@ -7,19 +7,27 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_image
   module:
-    - image
+    - image_widget_crop
 id: media.az_image.media_library
 targetEntityType: media
 bundle: az_image
 mode: media_library
 content:
   field_media_az_image:
-    type: image_image
+    type: image_widget_crop
     weight: 1
     region: content
     settings:
-      progress_indicator: throbber
+      show_default_crop: true
+      warn_multiple_usages: true
       preview_image_style: thumbnail
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - az_card_image
+        - az_large
+      progress_indicator: throbber
+      crop_types_required: {  }
+      show_crop_area: false
     third_party_settings: {  }
 hidden:
   created: true

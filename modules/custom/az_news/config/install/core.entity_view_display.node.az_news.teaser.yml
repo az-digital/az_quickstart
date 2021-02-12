@@ -3,12 +3,12 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.teaser
-    - field.field.node.az_news.field_az_article_body
     - field.field.node.az_news.field_az_attachments
+    - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_expiration_date
-    - field.field.node.az_news.field_az_extra_body_content
+    - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
@@ -17,7 +17,11 @@ dependencies:
     - field.field.node.az_news.field_az_summary
     - node.type.az_news
   module:
+    - smart_title
     - user
+third_party_settings:
+  smart_title:
+    enabled: false
 id: node.az_news.teaser
 targetEntityType: node
 bundle: az_news
@@ -25,16 +29,16 @@ mode: teaser
 content:
   links:
     weight: 100
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
-  field_az_article_body: true
   field_az_attachments: true
+  field_az_body: true
   field_az_byline: true
   field_az_caption: true
   field_az_expiration_date: true
-  field_az_extra_body_content: true
+  field_az_main_content: true
   field_az_media_image: true
   field_az_news_tags: true
   field_az_published: true

@@ -3,9 +3,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_row
-    - field.field.node.az_person.field_az_addresses
-    - field.field.node.az_person.field_az_bio
-    - field.field.node.az_person.field_az_cv_documents
+    - field.field.node.az_person.field_az_address
+    - field.field.node.az_person.field_az_body
+    - field.field.node.az_person.field_az_attachments
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
@@ -74,9 +74,9 @@ content:
     type: string
     region: content
 hidden:
-  field_az_addresses: true
-  field_az_bio: true
-  field_az_cv_documents: true
+  field_az_address: true
+  field_az_body: true
+  field_az_attachments: true
   field_az_degrees: true
   field_az_links: true
   field_az_person_category: true

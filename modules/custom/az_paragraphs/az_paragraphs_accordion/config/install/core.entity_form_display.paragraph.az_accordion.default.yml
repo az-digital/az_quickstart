@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_accordion.field_az_accordion
+    - paragraphs.paragraphs_type.az_accordion
+  module:
+    - az_accordion
+id: paragraph.az_accordion.default
+targetEntityType: paragraph
+bundle: az_accordion
+mode: default
+content:
+  field_az_accordion:
+    weight: 0
+    settings: {  }
+    third_party_settings: {  }
+    type: az_accordion
+    region: content
+hidden:
+  created: true
+  status: true
