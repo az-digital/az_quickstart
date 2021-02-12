@@ -57,6 +57,7 @@
         "drupal/redirect": "1.6",
         "drupal/smart_date": "3.1",
         "drupal/smart_title": "^1.0@beta",
+        "drupal/smtp": "1.0",
         "drupal/token": "1.7",
         "drupal/views_bootstrap": "4.3",
         "drupal/viewsreference": "2.0-beta2",
