@@ -16,6 +16,8 @@ jobs:
 
       - name: Create new branch and PR
         run: |
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
           git checkout -b 'az-bootstrap-${{ github.event.client_payload.version }}'
           jq '.require."az-digital/arizona-bootstrap" |= "${{ github.event.client_payload.version }}"' composer.json > composer.json.new
           mv composer.json.new composer.json
