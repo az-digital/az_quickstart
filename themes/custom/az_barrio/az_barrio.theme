@@ -424,8 +424,7 @@ function az_barrio_primary_logo() {
       ];
       $renderer = \Drupal::service('renderer');
       $renderer->addCacheableDependency($image_renderable, $config);
-      $image_rendered = $renderer->render($image_renderable);
-      $return = Link::createFromRoute($image_rendered,'<front>', [], [
+      $return = Link::createFromRoute($image_renderable,'<front>', [], [
         'attributes' => [
           'title' => $primary_title_text,
           'class' => $primary_logo_link_classes,
@@ -486,9 +485,8 @@ function az_barrio_footer_logo() {
       ];
       $renderer = \Drupal::service('renderer');
       $renderer->addCacheableDependency($image_renderable, $config);
-      $image_rendered = $renderer->render($image_renderable);
       $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
-      $return = Link::createFromRoute($image_rendered, $footer_link_destination, [], [
+      $return = Link::createFromRoute($image_renderable, $footer_link_destination, [], [
         'attributes' => [
           'title' => $footer_title_text,
           'alt' => $footer_alt_text,
