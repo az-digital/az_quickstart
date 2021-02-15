@@ -388,7 +388,7 @@ function az_barrio_primary_logo() {
   $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
   $primary_alt_text = Html::escape(theme_get_setting('primary_logo_alt_text'));
   $primary_title_text = Html::escape(theme_get_setting('primary_logo_title_text'));
-
+  $config = \Drupal::config('az_barrio.settings');
   if (\Drupal::moduleHandler()->moduleExists('token')) {
     $token_service = \Drupal::token();
     $primary_alt_text = $token_service->replace($primary_alt_text);
@@ -414,10 +414,18 @@ function az_barrio_primary_logo() {
       );
     }
     else {
-      $image = '<img src="' . file_url_transform_relative(file_create_url($primary_logo_path['path'])) . '" alt="' . $primary_alt_text . '" class="img-fluid" />';
-      $rendered_image = render($image);
-      $image_markup = Markup::create($rendered_image);
-      $return = Link::createFromRoute($image_markup, '<front>', [], [
+      $image_renderable = [
+        '#theme' => 'image',
+        '#uri' => $primary_logo_path['path'],
+        '#alt' => $primary_alt_text,
+        '#attributes' => [
+          'class' => ['img-fluid'],
+        ]
+      ];
+      $renderer = \Drupal::service('renderer');
+      $renderer->addCacheableDependency($image_renderable, $config);
+      $image_rendered = $renderer->render($image_renderable);
+      $return = Link::createFromRoute($image_rendered,'<front>', [], [
         'attributes' => [
           'title' => $primary_title_text,
           'class' => $primary_logo_link_classes,
@@ -443,6 +451,7 @@ function az_barrio_footer_logo() {
   $footer_link_destination = theme_get_setting('footer_logo_link_destination');
   $footer_alt_text = Html::escape(theme_get_setting('footer_logo_alt_text'));
   $footer_title_text = Html::escape(theme_get_setting('footer_logo_title_text'));
+  $config = \Drupal::config('az_barrio.settings');
   if (\Drupal::moduleHandler()->moduleExists('token')) {
     $token_service = \Drupal::token();
     $footer_alt_text = $token_service->replace($footer_alt_text);
@@ -467,11 +476,19 @@ function az_barrio_footer_logo() {
       ]);
     }
     else {
-      $image = '<img src="' . file_url_transform_relative(file_create_url($footer_logo_path)). '" alt="' . $footer_alt_text . '" class="img-fluid" />';
-      $rendered_image = render($image);
-      $image_markup = Markup::create($rendered_image);
+      $image_renderable = [
+        '#theme' => 'image',
+        '#uri' => $footer_logo_path,
+        '#alt' => $footer_alt_text,
+        '#attributes' => [
+          'class' => ['img-fluid'],
+        ]
+      ];
+      $renderer = \Drupal::service('renderer');
+      $renderer->addCacheableDependency($image_renderable, $config);
+      $image_rendered = $renderer->render($image_renderable);
       $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
-      $return = Link::createFromRoute($image_markup, $footer_link_destination, [], [
+      $return = Link::createFromRoute($image_rendered, $footer_link_destination, [], [
         'attributes' => [
           'title' => $footer_title_text,
           'alt' => $footer_alt_text,
