@@ -88,38 +88,34 @@ audio:not([controls]) {
  * Branding header.
  */
 /* Wrapping link for logo. */
-.header_logo {
-  width: 100%;
-  text-align: center;
-  margin: 24px 0;
-  margin: 1.5rem 0;
-  padding: 0;
+.qs-site-logo {
+  margin: 40px 0;
+  margin: 2.5rem 0;
 }
-
-@media (min-width: 48em) {
-  .header_logo {
-    width: auto;
-    text-align: left;
-    margin: 40px 0;
-    margin: 2.5rem 0;
+@media (min-width: 576px) {
+  .qs-site-logo {
+    margin: 22px 0;
+    margin: 1.375rem 0;
   }
 }
-/* Wrapping link for logo. */
-.header_logo_svg {
-  float: left;
-  width: 100%;
-  text-align: center;
-  margin: 24px 0;
-  margin: 1.5rem 0;
-  padding: 0;
+@media (min-width: 768px) {
+  .qs-site-logo {
+    margin: 31px 0;
+    margin: 1.938rem 0;
+  }
 }
 
-@media (min-width: 48em) {
-  .header_logo_svg{
-    width: 100%;
-    text-align: left;
-    margin: 40px 0;
-    margin: 2.5rem 0;
+@media (min-width: 992px) {
+  .qs-site-logo {
+    margin: 29px 0;
+    margin: 1.813rem 0;
+  }
+}
+
+@media (min-width: 1200px) {
+  .qs-site-logo {
+    margin: 31px 0;
+    margin: 1.938rem 0;
   }
 }
 
