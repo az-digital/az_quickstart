@@ -282,12 +282,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   ];
-  $form['footer_logo']['az_barrio_footer_logo_svg_inline'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Inline footer logo SVG'),
-    '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
-    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
-  ];
   $form['footer_logo']['footer_default_logo'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the default logo'),
@@ -306,30 +300,11 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       ],
     ],
   ];
-  $form['footer_logo']['footer_logo_link_destination'] = [
-    '#type' => 'textfield',
-    '#title' => t('Footer logo link destination'),
-    '#description' => t('Where should the footer logo link to. Example: &#x3C;front&#x3E;'),
-    '#default_value' => theme_get_setting('footer_logo_link_destination'),
-  ];
-  $form['footer_logo']['footer_logo_alt_text'] = [
-    '#type' => 'textfield',
-    '#title' => t('Footer logo alt text'),
-    '#description' => t('Alternative text is used by screen readers, search engines, and when the image cannot be loaded. By adding alt text you improve accessibility and search engine optimization.'),
-    '#default_value' => theme_get_setting('footer_logo_alt_text'),
-    '#element_validate' => ['token_element_validate'],
-  ];
-  $form['footer_logo']['footer_logo_title_text'] = [
-    '#type' => 'textfield',
-    '#title' => t('Footer logo title text'),
-    '#description' => t('Title text is used in the tool tip when a user hovers their mouse over the image. Adding title text makes it easier to understand the context of an image and improves usability.'),
-    '#default_value' => theme_get_setting('footer_logo_title_text'),
-    '#element_validate' => ['token_element_validate'],
-  ];
-  $form['footer_logo']['tokens'] = [
-    '#theme' => 'token_tree_link',
-    '#global_types' => TRUE,
-    '#click_insert' => TRUE,
+  $form['footer_logo']['settings']['az_barrio_footer_logo_svg_inline'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Inline footer logo SVG'),
+    '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
+    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
   $form['footer_logo']['settings']['footer_logo_path'] = [
     '#type' => 'textfield',
@@ -347,6 +322,35 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
         'png gif jpg jpeg apng svg',
       ],
     ],
+  ];
+
+  $form['footer_logo']['settings']['footer_logo_link_destination'] = [
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#title' => t('Footer logo link destination'),
+    '#description' => t('Where should the footer logo link to. Example: &#x3C;front&#x3E;'),
+    '#default_value' => theme_get_setting('footer_logo_link_destination'),
+  ];
+  $form['footer_logo']['settings']['footer_logo_alt_text'] = [
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#title' => t('Footer logo alt text'),
+    '#description' => t('Alternative text is used by screen readers, search engines, and when the image cannot be loaded. By adding alt text you improve accessibility and search engine optimization.'),
+    '#default_value' => theme_get_setting('footer_logo_alt_text'),
+    '#element_validate' => ['token_element_validate'],
+  ];
+  $form['footer_logo']['settings']['footer_logo_title_text'] = [
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#title' => t('Footer logo title text'),
+    '#description' => t('Title text is used in the tool tip when a user hovers their mouse over the image. Adding title text makes it easier to understand the context of an image and improves usability.'),
+    '#default_value' => theme_get_setting('footer_logo_title_text'),
+    '#element_validate' => ['token_element_validate'],
+  ];
+  $form['footer_logo']['settings']['tokens'] = [
+    '#theme' => 'token_tree_link',
+    '#global_types' => TRUE,
+    '#click_insert' => TRUE,
   ];
   $form['#validate'][] = 'az_barrio_form_system_theme_settings_validate';
   $form['#submit'][] = 'az_barrio_form_system_theme_settings_submit';
