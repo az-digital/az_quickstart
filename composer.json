@@ -84,7 +84,8 @@
                 "Editing menus user-experience issue" : "https://www.drupal.org/files/issues/2021-02-09/2957953-9.2.x-113.patch"
             },
             "drupal/config_distro": {
-                "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch"
+                "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
+                "missing parent class": "https://git.drupalcode.org/issue/config_distro-3199197/-/commit/c312096d486caa2f01703ca7de1abf2285b6fac8.diff"
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
