@@ -38,3 +38,8 @@ az_paragraphs.preview:
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
+az_paragraphs.az_html:
+  version: VERSION
+  header: true
+  dependencies:
+    - core/jquery
