@@ -20,7 +20,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.3",
         "az-digital/arizona-bootstrap": "2.0.6",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
