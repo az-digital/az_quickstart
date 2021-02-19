@@ -1,0 +1,7 @@
+#!/bin/sh
+
+## Description: Provide PHPCBF tooling to fix coding standards.
+## Usage: phpcbf [flags] [args]
+## Example: "ddev phpcbf --version"
+
+vendor/bin/phpcbf --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart $@
