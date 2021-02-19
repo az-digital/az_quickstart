@@ -28,7 +28,7 @@ function az_paragraphs_help($route_name, RouteMatchInterface $route_match) {
  */
 function az_paragraphs_theme_registry_alter(&$theme_registry) {
   if ($theme_registry['field_multiple_value_form']) {
-    if ($theme_registry['field_multiple_value_form']['preprocess functions']) {
+    if (isset($theme_registry['field_multiple_value_form']['preprocess functions'])) {
       $key = array_search('paragraphs_preprocess_field_multiple_value_form', $theme_registry['field_multiple_value_form']['preprocess functions'], TRUE);
       unset($theme_registry['field_multiple_value_form']['preprocess functions'][$key]);
       $theme_registry['field_multiple_value_form']['preprocess functions'][] = 'paragraphs_preprocess_field_multiple_value_form';
