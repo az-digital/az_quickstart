@@ -4,6 +4,7 @@ description: 'Custom field plugins and theme template for cards.'
 core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
-  - image
-  - media
-  - media_library_form_element
+  - az_media
+  - drupal:image
+  - drupal:media
+  - media_library_form_element:media_library_form_element

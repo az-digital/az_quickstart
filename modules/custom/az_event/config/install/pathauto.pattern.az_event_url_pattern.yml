@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: az_event_url_pattern
+label: 'Event Content Type'
+type: 'canonical_entities:node'
+pattern: 'events/[node:title]'
+selection_criteria:
+  62829e66-f973-46f9-aa96-aa6372276a42:
+    id: node_type
+    bundles:
+      az_event: az_event
+    negate: false
+    context_mapping:
+      node: node
+    uuid: 62829e66-f973-46f9-aa96-aa6372276a42
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -121,7 +121,7 @@
           {% endif %}
         </div>
 
-        {{ content.field_az_bio }}
+        {{ content.field_az_body }}
 
         {% if content.field_az_degrees[0] %}
           <h2 class="h3">Degrees</h2>
@@ -150,7 +150,7 @@
           {{ content.field_az_media_image.0 }}
         {% endif %}
           <div class="card-body pb-0">
-            {{ content.field_az_addresses.0 }}
+            {{ content.field_az_address.0 }}
           </div>
           <ul class="list-group list-group-flush border-0 py-3">
           {% if content.field_az_phones %}
@@ -165,9 +165,9 @@
             {% endfor %}
           {% endif %}
           </ul>
-          {% if content.field_az_cv_documents %}
+          {% if content.field_az_attachments %}
           <ul class="list-group list-group-flush border-0 py-3">
-            {% for key, item in content.field_az_cv_documents if key|first != '#' %}
+            {% for key, item in content.field_az_attachments if key|first != '#' %}
               <li class="list-group-item text-break border-0 py-0">{{ item }}</li>
             {% endfor %}
           </ul>

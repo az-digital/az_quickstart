@@ -1,0 +1,4 @@
+az_flexible_page_form:
+  css:
+    base:
+      css/az-flexible-page-edit-form.css: {}

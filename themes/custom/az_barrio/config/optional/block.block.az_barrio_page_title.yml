@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - system
   theme:
     - az_barrio
 id: az_barrio_page_title
@@ -17,5 +19,6 @@ settings:
 visibility:
   request_path:
     id: request_path
-    pages: '/person/*'
+    pages: "/person/*\r\n/news/*"
     negate: true
+

@@ -235,9 +235,12 @@ az_barrio.settings:
     sticky_footer:
       type: boolean
       label: 'Enable AZ Bootstrap sticky footer template'
-    use_material_design_sharp_icons:
+    az_barrio_logo_svg_inline:
       type: boolean
-      label: 'Enable Material Design Sharp Icons'
+      label: 'Inline logo SVG'
+    az_barrio_footer_logo_svg_inline:
+      type: boolean
+      label: 'Inline footer logo SVG'
     primary_logo_alt_text:
       type: string
       label: 'Primary logo alt text'
