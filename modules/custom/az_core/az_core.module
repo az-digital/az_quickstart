@@ -73,6 +73,7 @@ function az_core_block_access(Block $block, $operation, AccountInterface $accoun
   }
   return AccessResult::neutral();
 }
+
 /**
  * Implements hook_theme_registry_alter().
  */
@@ -81,4 +82,3 @@ function az_core_theme_registry_alter(&$theme_registry) {
   unset($theme_registry['field_multiple_value_form']['preprocess functions'][$key]);
   $theme_registry['field_multiple_value_form']['preprocess functions'][] = 'paragraphs_preprocess_field_multiple_value_form';
 }
-
