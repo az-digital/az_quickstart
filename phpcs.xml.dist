@@ -85,4 +85,8 @@
   <rule ref="Security.Misc.IncludeMismatch"/>
   <rule ref="Security.Misc.TypeJuggle"/>
 
+  <!-- PHPCompatibility -->
+  <rule ref="PHPCompatibility"/>
+  <config name="testVersion" value="7.3-"/>
+
 </ruleset>
