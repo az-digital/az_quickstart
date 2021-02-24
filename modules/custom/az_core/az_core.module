@@ -68,7 +68,7 @@ function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array
     $menu = $context['data']['node']->__get('menu');
 
     // Set pattern to fallback if menu is not enabled.
-    if ($menu['enabled'] === 0) {
+    if (isset($menu['enabled']) && $menu['enabled'] === 0) {
       $pattern->setPattern('[node:title]');
     }
   }

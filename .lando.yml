@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal8
 config:
-  php: '7.3'
+  php: '7.4'
   via: apache:2.4
   webroot: web
   database: mysql:5.7
