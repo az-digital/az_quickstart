@@ -31,5 +31,7 @@ tags
 # Persistent undo
 [._]*.un~
 
+# PHPCS
+.phpcs-cache
 
 .DS_Store
