@@ -52,6 +52,7 @@ class AZMailCommands extends DrushCommands {
    * Helper function for az_mail_ses_hash.
    */
   private function sesSign($key, $msg) {
+    //phpcs:ignore Security.BadFunctions.CryptoFunctions.WarnCryptoFunc
     return hash_hmac('sha256', utf8_encode($msg), $key, TRUE);
   }
 
@@ -73,6 +74,7 @@ class AZMailCommands extends DrushCommands {
     $signature = $this->sesSign($signature, $terminal);
     $signature = $this->sesSign($signature, $message);
     $signature_and_version = pack("C*", $version) . $signature;
+    //phpcs:ignore Security.BadFunctions.CryptoFunctions.WarnCryptoFunc
     $smtp_password = base64_encode($signature_and_version);
     return utf8_decode($smtp_password);
   }
