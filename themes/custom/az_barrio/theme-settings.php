@@ -251,7 +251,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
-    '#title' => t('Inline logo SVG'),
+    '#title' => t('Inline logo SVG (Experimental)'),
     '#default_value' => theme_get_setting('az_barrio_logo_svg_inline') ? TRUE : FALSE,
     '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
@@ -302,7 +302,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   $form['footer_logo']['settings']['az_barrio_footer_logo_svg_inline'] = [
     '#type' => 'checkbox',
-    '#title' => t('Inline footer logo SVG'),
+    '#title' => t('Inline footer logo SVG (Experimental)'),
     '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
     '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
