@@ -17,7 +17,7 @@ arizona-bootstrap:
     theme:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
   js:
-    /libraries/arizona-bootstrap/css/arizona-bootstrap.bundle.min.js: {}
+    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
   dependencies:
     - core/jquery
 az-brand-icons:
