@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: h34CUBhIRDub-weBaQNZHZDouMzGU6H_SXzTnrCNIg4
 id: az_content_admin
 label: 'Content administrator'
 weight: 3
@@ -57,8 +55,6 @@ permissions:
   - 'use editorial transition archived_published'
   - 'use editorial transition create_new_draft'
   - 'use editorial transition publish'
-  - 'use text format full_html'
   - 'view any unpublished content'
   - 'view latest version'
   - 'view post access counter'
-

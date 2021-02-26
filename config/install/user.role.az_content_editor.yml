@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: 2VhJwtL-CLCb578gi5ijz83vyFw5uBza3htXAEdw35o
 id: az_content_editor
 label: 'Content editor'
 weight: 2
@@ -20,6 +18,7 @@ permissions:
   - 'access toolbar'
   - 'access tour'
   - 'add content to books'
+  - 'cancel smart date recur instances'
   - 'configure editable az_flexible_page node layout overrides'
   - 'create and edit custom blocks'
   - 'create az_audio media'
@@ -62,6 +61,8 @@ permissions:
   - 'edit own az_remote_video media'
   - 'edit own az_video media'
   - 'edit own book content'
+  - 'make smart dates recur'
+  - 'reschedule smart date recur instances'
   - 'revert all revisions'
   - 'revert az_event revisions'
   - 'revert az_flexible_page revisions'
@@ -90,4 +91,3 @@ permissions:
   - 'view own unpublished media'
   - 'view post access counter'
   - 'view the administration theme'
-
