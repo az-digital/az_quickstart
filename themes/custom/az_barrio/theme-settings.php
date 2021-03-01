@@ -368,6 +368,7 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   $default_scheme = \Drupal::config('system.file')->get('default_scheme');
   try {
     if (!empty($values['footer_logo_upload'])) {
+      //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
       $filename = \Drupal::service('file_system')->copy($values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
       $form_state->setValue('footer_logo_path', $filename);
       $form_state->setValue('footer_default_logo', 0);
@@ -396,7 +397,7 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
   // If the user provided a path for a footer logo, make sure a file exists at
   // that path.
   if ($form_state->getValue('footer_logo_path')) {
-    // I would like to use the validatePath function from the ThemeSettingsForm Class here.
+    // TODO: Use the validatePath function from ThemeSettingsForm Class here?
     $path = az_barrio_validate_file_path($form_state->getValue('footer_logo_path'));
     if (!$path) {
       $form_state->setErrorByName('footer_logo_path', t('The custom footer logo path is invalid.'));
@@ -412,11 +413,13 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 function az_barrio_validate_file_path($path) {
 
   // Absolute local file paths are invalid.
-  if (\Drupal::service('file_system')->realpath($path) == $path) {
+  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
+  if (\Drupal::service('file_system')->realpath($path) === $path) {
     return FALSE;
   }
 
   // A path relative to the Drupal root or a fully qualified URI is valid.
+  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
@@ -425,6 +428,7 @@ function az_barrio_validate_file_path($path) {
   if (StreamWrapperManager::getScheme($path) === FALSE) {
     $path = 'public://' . $path;
   }
+  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
