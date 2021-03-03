@@ -1,6 +1,59 @@
 <?php
+use Drupal\media\Entity\Media;
+use Drupal\file\Entity\File;
 
 /**
  * @file
  * Contains az_paragraphs_text_media.module.
  */
+
+function az_media_preprocess_media(&$variables) {
+  if (isset($variables['media'])) {
+    $media = $variables['media'];
+    if($media instanceof \Drupal\media\Entity\Media) {
+      $bundle = $media->bundle();
+      switch ($bundle) {
+        case 'az_remote_video':
+          $variables = _az_media_remote_video($variables);
+          break;
+        case 'az_remote_video':
+          $variables = _az_media_remote_video($variables);
+          break;
+        default:
+         return $variables;
+      }
+    }
+  }
+}
+
+function _az_media_remote_video(&$variables) {
+  dpm('wirks');
+  $name ="chris";
+  $style = array('style' => [
+      '#type' => 'inline_template',
+      '#template' => "<style type='text/css'>
+      background-image: url({{filepath}});</style>",
+      '#context' => [
+        'name' => $filepath,
+      ]
+  ]);
+  return $variables;
+}
+
+function _az_media_image(&$variables) {
+//dpm($variables['media']['entity_keys']['bundle']);
+//dpm($variables['content']['field_media_az_oembed_video']['#object']);
+  $name ="chris";
+  $style = array('style' => [
+      '#type' => 'inline_template',
+      '#template' => "<style type='text/css'>
+      background-image: url({{filepath}});</style>",
+      '#context' => [
+        'name' => $filepath,
+      ]
+  ]);
+  $content = $variables['content'];
+  $content = $style + $content;
+  $variables['content'] = $content;
+  return $variables;
+}
