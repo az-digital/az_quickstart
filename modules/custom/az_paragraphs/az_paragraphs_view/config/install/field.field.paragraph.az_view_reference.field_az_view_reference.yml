@@ -29,7 +29,7 @@ settings:
   preselect_views: {  }
   enabled_settings:
     argument: argument
-    limit: 0
+    limit: limit
     title: 0
     offset: 0
     pager: 0

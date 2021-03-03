@@ -20,6 +20,7 @@ dependencies:
     - date_ap_style
     - field_group
     - smart_title
+    - text
     - user
 third_party_settings:
   smart_title:
@@ -44,7 +45,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card card-borderless card-clickable'
+        classes: 'card card-borderless card-clickable mb-4'
       label: 'Card Clickable'
       parent_name: ''
     group_link:
@@ -52,6 +53,7 @@ third_party_settings:
         - field_az_media_image
         - group_heading
         - group_text_muted
+        - group_summary
         - group_read_more
       parent_name: group_card_clickable
       weight: 4
@@ -80,7 +82,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-title text-midnight h5'
+        classes: 'card-title text-midnight h5 mb-0'
       label: Heading
     group_text_muted:
       children:
@@ -98,18 +100,16 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'text-muted font-weight-normal'
+        classes: 'text-muted font-weight-normal small mt-2'
       label: 'Text Muted'
     group_summary:
       children:
         - field_az_summary
-      parent_name: ''
-      weight: 11
+      parent_name: group_link
+      weight: 9
       format_type: html_element
-      region: hidden
+      region: content
       format_settings:
-        id: ''
-        classes: 'card-text font-weight-normal'
         element: div
         show_label: false
         label_element: h3
@@ -117,12 +117,14 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        id: ''
+        classes: 'card-text font-weight-normal mt-2'
       label: Summary
     group_read_more:
       children:
         - links
       parent_name: group_link
-      weight: 9
+      weight: 10
       format_type: html_element
       region: content
       format_settings:
@@ -134,7 +136,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: card-clickable-link
+        classes: 'card-clickable-link mt-2'
       label: 'Read more'
 id: node.az_news.az_card
 targetEntityType: node
@@ -167,6 +169,13 @@ content:
       use_all_day: 0
       capitalize_noon_and_midnight: 0
     third_party_settings: {  }
+  field_az_summary:
+    type: text_default
+    weight: 0
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   links:
     weight: 5
     region: content
@@ -187,4 +196,3 @@ hidden:
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
-  field_az_summary: true
