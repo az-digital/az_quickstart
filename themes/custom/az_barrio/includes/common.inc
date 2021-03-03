@@ -7,7 +7,7 @@
  * Contains common functionality for the entire theme.
  */
 
-define('AZ_BOOTSTRAP_STABLE_VERSION', '2.0.2');
+define('AZ_BOOTSTRAP_STABLE_VERSION', '2.0.6');
 define('AZ_BRAND_ICONS_STABLE_VERSION', 'v1.1.0');
 
 /**

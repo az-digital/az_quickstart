@@ -10,7 +10,7 @@ use Drupal\Core\Routing\RouteProviderInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class QuickstartCoreSettingsForm.
+ * Form for custom AZ Quickstart settings.
  */
 class QuickstartCoreSettingsForm extends ConfigFormBase {
 

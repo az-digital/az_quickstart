@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_large
+  module:
+    - crop
+name: az_large
+label: 'Large (scale to 1140px wide)'
+effects:
+  f15232eb-5138-483b-a186-521afabe41ae:
+    uuid: f15232eb-5138-483b-a186-521afabe41ae
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: az_large
+  4872c243-7d96-4f0f-95b1-f2f8ecff0bea:
+    uuid: 4872c243-7d96-4f0f-95b1-f2f8ecff0bea
+    id: image_scale
+    weight: 2
+    data:
+      width: 1140
+      height: null
+      upscale: true

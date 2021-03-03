@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_person_category_sec
+    - node.type.az_person
+    - taxonomy.vocabulary.az_person_categories_secondary
+id: node.az_person.field_az_person_category_sec
+field_name: field_az_person_category_sec
+entity_type: node
+bundle: az_person
+label: 'Category - Secondary'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      az_person_categories_secondary: az_person_categories_secondary
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

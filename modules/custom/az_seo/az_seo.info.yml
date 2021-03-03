@@ -1,0 +1,11 @@
+name: 'Quickstart SEO'
+type: module
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - xmlsitemap:xmlsitemap
+  - xmlsitemap:xmlsitemap_engines
+  - redirect:redirect
+  - metatag:metatag
+  - metatag:metatag_open_graph
+  - metatag:metatag_twitter_cards

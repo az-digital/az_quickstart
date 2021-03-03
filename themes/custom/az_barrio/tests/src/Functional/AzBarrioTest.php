@@ -58,6 +58,7 @@ class AzBarrioTest extends BrowserTestBase {
     $this->drupalGet('');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->responseContains('https://fonts.googleapis.com/css?family=Material+Icons+Sharp');
+    $this->assertSession()->responseContains('https://use.typekit.net/emv3zbo.css');
   }
 
   /**
@@ -69,7 +70,7 @@ class AzBarrioTest extends BrowserTestBase {
     $this->drupalGet('admin/appearance');
     $this->cssSelect('a[title="Set Bootstrap Barrio as default theme"]')[0]->click();
     $this->cssSelect('a[title="Uninstall Arizona Barrio theme"]')[0]->click();
-    $this->assertText('The Arizona Barrio theme has been uninstalled.');
+    $this->assertSession()->pageTextContains('The Arizona Barrio theme has been uninstalled.');
   }
 
 }

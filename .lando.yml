@@ -1,15 +1,13 @@
 name: az_quickstart
 recipe: drupal8
 config:
-  php: '7.3'
+  php: '7.4'
   via: apache:2.4
   webroot: web
   database: mysql:5.7
   xdebug: false
 services:
   appserver:
-    composer:
-      hirak/prestissimo: ^0.3.9
     overrides:
       environment:
         SIMPLETEST_DB: 'mysql://drupal8:drupal8@database/drupal8'
@@ -51,18 +49,22 @@ tooling:
   phpcs:
     service: appserver
     cmd: /app/vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
+  # Provide PHPCBF tooling to fix coding standards.
+  phpcbf:
+    service: appserver
+    cmd: /app/vendor/bin/phpcbf --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
   # Provide phpunit tooling to run unit tests.
   phpunit:
     service: appserver
     cmd: /app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
-  # Provide drupal-check tooling to check for deprecated custom code.
-  drupal-check:
-    service: appserver
-    cmd: /app/vendor/bin/drupal-check web/profiles
-  # Provide phpstan tooling to check for deprecated contrib module/theme code.
+  # Provide phpstan tooling to check for code quality and deprecated code.
   phpstan:
     service: appserver
-    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/modules web/themes
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
+  # Provide phpstan tooling to check for deprecated contrib module/theme code.
+  phpstan-contrib:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan-contrib.neon web/modules web/themes
   yarn:
     service: node
     cmd: yarn

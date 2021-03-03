@@ -4,8 +4,13 @@ bootstrap_barrio_library: 'production'
 
 # Layout
 # --------------=
+bootstrap_barrio_region_clean_header_ua_utilities: 0
+bootstrap_barrio_region_class_header_ua_utilities: 'ml-auto d-none d-lg-block d-xl-block'
 bootstrap_barrio_region_clean_alert: 1
 bootstrap_barrio_region_class_alert: ''
+bootstrap_barrio_region_class_navigation: ''
+bootstrap_barrio_region_clean_navigation_offcanvas: 0
+bootstrap_barrio_region_class_navigation_offcanvas: ''
 bootstrap_barrio_region_clean_content_featured: 1
 bootstrap_barrio_region_class_content_featured: ''
 bootstrap_barrio_region_clean_full_width_content_bottom: 1
@@ -31,15 +36,6 @@ bootstrap_barrio_button: 1
 bootstrap_barrio_button_size: ''
 bootstrap_barrio_button_outline: 0
 
-# Navbar
-# --------------
-bootstrap_barrio_navbar_toggle: 1
-bootstrap_barrio_navbar_container: true
-bootstrap_barrio_navbar_top_position: ''
-bootstrap_barrio_navbar_top_color: 'navbar-light'
-bootstrap_barrio_navbar_position: ''
-bootstrap_barrio_navbar_color: 'navbar-light'
-
 # Messages.
 # ----------------------------
 bootstrap_barrio_messages_widget: 'default'
@@ -51,12 +47,13 @@ bootstrap_barrio_table_hover: 1
 # Arizona
 # --------------
 wordmark: true
-az_main_menu_style: 'bootstrap'
-az_bs_overlay_menu_scroll: true
+
 info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
 az_hide_front_title: false
 az_back_to_top: true
+az_barrio_navbar_offcanvas: true
+az_barrio_font: true
 az_bootstrap_source: 'cdn'
 az_bootstrap_cdn_version: 'stable'
 az_bootstrap_minified: true
@@ -64,13 +61,15 @@ az_brand_icons_source: 'cdn'
 az_brand_icons_class: true
 external_links: true
 sticky_footer: true
-use_material_design_sharp_icons: true
+az_barrio_material_design_sharp_icons: true
+az_barrio_logo_svg_inline: true
+az_barrio_footer_logo_svg_inline: true
 logo:
-  path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/logo.png'
+  path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png'
   use_default: false
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
 footer_logo_link_destination: '<front>'
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
-footer_logo_path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/footer_logo.png'
+footer_logo_path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png'

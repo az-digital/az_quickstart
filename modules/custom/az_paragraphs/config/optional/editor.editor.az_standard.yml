@@ -12,61 +12,67 @@ settings:
     rows:
       -
         -
+          name: Undo/Redo
+          items:
+            - Undo
+            - Redo
+        -
           name: Formatting
           items:
             - Bold
+            - Strike
             - Italic
             - Superscript
             - Subscript
-        -
-          name: 'Text alignment'
-          items:
-            - JustifyLeft
-            - JustifyCenter
-            - JustifyRight
-        -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        -
-          name: Structure
-          items:
-            - Table
-            - HorizontalRule
+            - SpecialChar
         -
           name: Links
           items:
             - DrupalLink
             - DrupalUnlink
         -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Alignment
+          items:
+            - JustifyLeft
+            - JustifyCenter
+            - JustifyRight
+        -
+          name: Structure
+          items:
+            - bs_grid
+            - Table
+            - HorizontalRule
+            - Blockquote
+        -
           name: 'Text styles'
           items:
             - Format
             - Styles
-        -
-          name: Media
-          items:
-            - Blockquote
-            - DrupalImage
-        -
-          name: Tools
-          items:
-            - Source
-            - PasteFromWord
-            - RemoveFormat
-            - Maximize
         -
           name: Embed
           items:
             - az_embed_content
             - DrupalMediaLibrary
             - az_embed_block
+        -
+          name: Tools
+          items:
+            - Source
+            - Maximize
+            - RemoveFormat
   plugins:
+    stylescombo:
+      styles: "a.btn.btn-red|Button Red\r\na.btn.btn-blue|Button Blue\r\na.btn.btn-outline-red|Button Outline Red\r\na.btn.btn-outline-blue|Button Outline Blue\r\na.btn.btn-outline-white|Button Outline White\r\na.btn.btn-link|Button Link\r\nspan.text-white|Text White\r\nspan.text-sky|Text Sky\r\nspan.text-oasis|Text Oasis\r\nspan.text-azurite|Text Azurite\r\nspan.text-blue|Text Blue\r\nspan.text-midnight|Text Midnight\r\nspan.text-dark-silver|Text Dark Silver\r\nspan.text-ash|Text Ash\r\nspan.text-sans|Sanserif Text\r\nspan.text-capitalize|Capitalized Text\r\nspan.text-uppercase|UPPERCASE TEXT\r\nspan.text-lowercase|lowercase text\r\nul.ul-triangles|Triangle Bullets\r\nul.nav.nav-pills|Unordered List Pills\r\nspan.badge.badge-red|Label Red\r\nspan.badge.badge-blue|Label Blue\r\nspan.badge.badge-success|Label Green\r\nspan.badge.badge-info|Label Sky\r\nspan.badge.badge-warning|Label Warning\r\nspan.badge.badge-danger|Label Danger\r\nspan.small|Text Size Small\r\nspan.lead|Text Size Lead\r\nspan.h1|Text Size H1\r\nspan.h2|Text Size H2\r\nspan.h3|Text Size H3\r\nspan.h4|Text Size H4\r\nspan.h5|Text Size H5\r\nspan.h6|Text Size H6\r\nspan.align-top|Text Align Top\r\nspan.align-middle|Text Align Middle\r\nspan.align-bottom|Text Align Bottom\r\nspan.mt-0|Zero Margin Top\r\nspan.mb-0|Zero Margin Bottom"
     language:
       language_list: un
-    stylescombo:
-      styles: "span.sans|Text sans\r\nspan.text-uppercase|Text uppercase\r\nspan.text-red|Text red\r\nspan.text-blue|Text blue\r\nspan.text-midnight|Text midnight\r\nspan.text-azurite|Text azurite\r\nspan.text-oasis|Text oasis\r\nspan.text-sky|Text sky\r\nspan.text-leaf|Text leaf\r\nspan.text-river|Text river\r\nspan.text-white|Text white\r\nspan.text-ash|Text ash\r\nspan.text-black|Text black\r\na.btn.btn-red|Button red\r\na.btn.btn-outline-red|Button outline red\r\na.btn.btn-blue|Button blue\r\na.btn.btn-outline-blue|Button outline blue\r\na.btn.btn-success|Button success\r\na.btn.btn-outline-success|Button outline success\r\na.btn.btn-info|Button info\r\na.btn.btn-outline-info|Button outline info\r\na.btn.btn-outline-white|Button outline white\r\ndiv.callout.callout-red|Callout red\r\ndiv.callout.callout-chili|Callout chili\r\ndiv.callout.callout-blue|Callout blue\r\ndiv.callout.callout-azurite|Callout azurite\r\ndiv.callout.callout-leaf|Callout leaf\r\ndiv.callout.callout-river|Callout river\r\ndiv.callout.callout-black|Callout black\r\nblockquote.blockquote|Blockquote\r\np.lead|Lead paragraph\r\nspan.h1|Text size h1\r\nspan.h2|Text size h2\r\nspan.h3|Text size h3\r\nspan.h4|Text size h4\r\nspan.h5|Text size h5\r\nspan.h6|Text size h6"
+    bs_grid:
+      use_cdn: 0
+      cdn_url: ''
 image_upload:
   status: false
   scheme: public

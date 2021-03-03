@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - az_barrio
+id: az_barrio_offcanvas_searchform
+theme: az_barrio
+region: navigation_offcanvas
+weight: 0
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Search'
+  provider: search
+  label_display: '0'
+  page_id: ''
+visibility: {  }
+

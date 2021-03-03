@@ -6,7 +6,11 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\pathauto\PathautoPatternInterface;
+use Drupal\block\Entity\Block;
+use Drupal\Core\Access\AccessResult;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Implements hook_help().
@@ -25,10 +29,35 @@ function az_core_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements hook_toolbar().
+ */
+function az_core_toolbar() {
+  $items = [];
+
+  $items['az_quickstart'] = [
+    'type' => 'toolbar_item',
+    'tab' => [
+      '#type' => 'link',
+      '#title' => t('Quickstart 2'),
+      '#url' => Url::fromRoute('az_core.az_quickstart'),
+      '#attributes' => [
+        'title' => t('AZ Quickstart 2'),
+        'class' => [
+          'toolbar-item',
+        ],
+      ],
+    ],
+    '#weight' => 101,
+  ];
+
+  return $items;
+}
+
+/**
  * Implements hook_pathauto_pattern_alter().
  *
  * Provide a fallback if the current node is not in a menu.
- * Reference: https://www.drupal.org/project/pathauto/issues/2904757#comment-13421490
+ * Reference: https://www.drupal.org/i/2904757#comment-13421490
  */
 function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array $context) {
   // Manually specify default AZQS pattern.
@@ -39,8 +68,34 @@ function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array
     $menu = $context['data']['node']->__get('menu');
 
     // Set pattern to fallback if menu is not enabled.
-    if ($menu['enabled'] === 0) {
+    if (isset($menu['enabled']) && $menu['enabled'] === 0) {
       $pattern->setPattern('[node:title]');
     }
   }
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function az_core_modules_installed($modules, $is_syncing) {
+
+  // Import overrides that exist for the enabled modules.
+  $overrider = Drupal::service('az_core.override_import');
+  if ($overrider) {
+    $overrider->importOverrides($modules);
+  }
+}
+
+/**
+ * Implements hook_block_access().
+ */
+function az_core_block_access(Block $block, $operation, AccountInterface $account) {
+  if ($operation === 'view' && $block->id() === 'az_barrio_sidebar_menu') {
+    $block_content = \Drupal::entityTypeManager()
+      ->getViewBuilder('block')
+      ->view($block);
+    $markup = \Drupal::service('renderer')->renderRoot($block_content);
+    return AccessResult::forbiddenIf($markup === '')->addCacheableDependency($block);
+  }
+  return AccessResult::neutral();
 }

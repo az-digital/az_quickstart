@@ -4,3 +4,23 @@
  * @file
  * Contains az_flexible_page.module.
  */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityFormInterface;
+
+/**
+ * Implements hook_form_alter().
+ */
+function az_flexible_page_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var Drupal\Core\Entity\FieldableEntityInterface $entity */
+  $formObject = $form_state->getFormObject();
+  if ($formObject instanceof EntityFormInterface) {
+    $entity = $formObject->getEntity();
+    if (
+      $entity->getEntityTypeId() === 'node'
+      && in_array($entity->bundle(), ['az_flexible_page'])
+    ) {
+      $form['#attached']['library'][] = 'az_flexible_page/az_flexible_page_form';
+    }
+  }
+}

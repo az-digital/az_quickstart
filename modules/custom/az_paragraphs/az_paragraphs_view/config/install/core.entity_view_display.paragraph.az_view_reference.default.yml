@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_view_reference.field_az_view_reference
+    - paragraphs.paragraphs_type.az_view_reference
+  module:
+    - viewsreference
+id: paragraph.az_view_reference.default
+targetEntityType: paragraph
+bundle: az_view_reference
+mode: default
+content:
+  field_az_view_reference:
+    weight: 0
+    label: hidden
+    settings:
+      plugin_types:
+        default: default
+        page: page
+        block: block
+        feed: 0
+    third_party_settings: {  }
+    type: viewsreference_formatter
+    region: content
+hidden: {  }

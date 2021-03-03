@@ -1,0 +1,24 @@
+# Default value.
+# TODO: change options to type: mapping, add accordion style options
+field.value.az_accordion:
+  type: mapping
+  label: Default value
+  mapping:
+    title:
+      type: string
+      label: Accordion Title
+    body:
+      type: text
+      label: Accordion Item
+    collapsed:
+      type: boolean
+      label: Collapsed by Default
+# Field formatter.
+# TODO: add accordion style options
+field.formatter.settings.az_accordion_default:
+  type: mapping
+  label: Example formatter settings
+  mapping:
+    foo:
+      type: string
+      label: Foo

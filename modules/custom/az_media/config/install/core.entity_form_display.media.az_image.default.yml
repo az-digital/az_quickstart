@@ -6,7 +6,8 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_image
   module:
-    - image
+    - image_widget_crop
+    - path
 id: media.az_image.default
 targetEntityType: media
 bundle: az_image
@@ -20,12 +21,26 @@ content:
     third_party_settings: {  }
   field_media_az_image:
     settings:
-      progress_indicator: throbber
+      show_default_crop: true
+      warn_multiple_usages: true
       preview_image_style: thumbnail
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - az_card_image
+        - az_large
+      progress_indicator: throbber
+      crop_types_required: {  }
+      show_crop_area: false
     third_party_settings: {  }
-    type: image_image
+    type: image_widget_crop
     weight: 0
     region: content
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:

@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * @file
+ * Contains az_event.module.
+ */
+
+use Drupal\node\Entity\NodeType;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Component\Utility\Html;
+
+/**
+ * Implements hook_theme().
+ */
+function az_event_theme($existing, $type, $theme, $path) {
+  return [
+    'field__node__az_event' => [
+      'template' => 'field--node--az-event',
+      'base hook' => 'field',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function az_event_entity_extra_field_info() {
+  $extra = [];
+
+  // Check to see if our content type exists.
+  $bundle = NodeType::load('az_event');
+  if ($bundle) {
+    // Month pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_event_month'] = [
+      'label' => t('Event Month'),
+      'description' => "This is a pseudo field from az_event.",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+
+    // Day pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_event_day'] = [
+      'label' => t('Event Day'),
+      'description' => "This is a pseudo field from az_event.",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  // We only know what to do with event pseudo fields if our date seems defined.
+  if ($entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
+    $timestamp = $entity->field_az_event_date->value;
+    $formatter = \Drupal::service('date.formatter');
+
+    // Use the date.formatter service.
+    if ($formatter) {
+      // Month pseudo field.
+      if ($display->getComponent('az_event_month')) {
+        $build['az_event_month'][] = [
+          '#type' => 'markup',
+          '#markup' => Html::escape($formatter->format($timestamp, 'az_event_month')),
+        ];
+      }
+
+      // Day pseudo field.
+      if ($display->getComponent('az_event_day')) {
+        $build['az_event_day'][] = [
+          '#type' => 'markup',
+          '#markup' => Html::escape($formatter->format($timestamp, 'az_event_day')),
+        ];
+      }
+    }
+  }
+
+}

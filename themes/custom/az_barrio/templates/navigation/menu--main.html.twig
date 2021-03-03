@@ -30,10 +30,10 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav navbar-nav') }}>
-    {% else %}
-      <ul class="dropdown-menu">
-    {% endif %}
+      <ul{{ attributes.addClass('nav navbar-nav flex-lg-row') }}>
+{% else %}
+  <div class="dropdown-menu">
+{% endif %}
     {% for item in items %}
       {%
         set classes = [
@@ -41,26 +41,37 @@
           item.is_expanded ? 'menu-item--expanded',
           item.is_collapsed ? 'menu-item--collapsed',
           item.in_active_trail ? 'active',
-          item.below ? 'dropdown',
+          item.below ? 'dropdown nav-item nav-item-parent keep-open',
         ]
       %}
-      <li{{ item.attributes.addClass(classes) }}>
-        {%
-          set link_classes = [
-            menu_level ? 'dropdown-item' : 'nav-link',
-            item.in_active_trail ? 'active',
-            item.below ? 'dropdown-toggle',
-            item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(' '),
-          ]
-        %}
-        {% if item.below %}
-          {{ link(item.title, item.url, {'class': link_classes, 'data-toggle': 'dropdown', 'aria-expanded': 'false', 'aria-haspopup': 'true' }) }}
-          {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
-        {% else %}
-          {{ link(item.title, item.url, {'class': link_classes}) }}
+        {% if menu_level == 0 %}
+        <li{{ item.attributes.addClass(classes) }}>
         {% endif %}
-      </li>
+          {%
+            set link_classes = [
+              menu_level ? 'dropdown-item' : 'nav-link',
+              item.in_active_trail ? 'active',
+              item.below ? 'dropdown-toggle',
+              item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(' '),
+            ]
+          %}
+          {% if item.below %}
+	    <button{{ item.attributes.addClass(link_classes).setAttribute('data-toggle','dropdown').setAttribute('aria-expanded', 'false').setAttribute('aria-haspopup', 'true').setAttribute('data-display', 'static') }}>{{ item.title }}</button>
+            {% if item.in_active_trail %}
+{{dump(item)}}
+            {% endif %}
+            {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
+          {% else %}
+            {{ link(item.title, item.url, {'class': link_classes}) }}
+          {% endif %}
+        {% if menu_level == 0 %}
+        </li>
+        {% endif %}
     {% endfor %}
-    </ul>
+    {% if menu_level == 0 %}
+      </ul>
+    {% else %}
+      </div>
+    {% endif %}
   {% endif %}
 {% endmacro %}

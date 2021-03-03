@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.az_medium
+    - field.field.media.az_image.field_media_az_image
+    - image.style.az_medium
+    - media.type.az_image
+  module:
+    - image
+id: media.az_image.az_medium
+targetEntityType: media
+bundle: az_image
+mode: az_medium
+content:
+  field_media_az_image:
+    label: visually_hidden
+    settings:
+      image_style: az_medium
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    weight: 1
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
