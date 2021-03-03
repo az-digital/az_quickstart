@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.az_card
     - core.entity_view_mode.node.az_media_list
     - node.type.az_news
   module:
@@ -9,6 +10,7 @@ dependencies:
     - node
     - taxonomy
     - user
+    - views_bootstrap
 id: az_news
 label: 'AZ News'
 module: views
@@ -170,7 +172,12 @@ display:
           plugin_id: datetime
       title: News
       header: {  }
-      footer: {  }
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          plugin_id: text_custom
       empty: {  }
       relationships: {  }
       arguments:
@@ -242,6 +249,65 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  card_block_az_news:
+    display_plugin: block
+    id: card_block_az_news
+    display_title: 'Card Block (3 items)'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      display_description: ''
+      style:
+        type: views_bootstrap_grid
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+          col_xs: col-1
+          col_sm: col-sm-2
+          col_md: col-md-4
+          col_lg: col-lg-4
+          col_xl: col-xl-4
+      defaults:
+        style: false
+        row: false
+        pager: false
+        footer: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_card
+      block_description: 'Three column news block'
+      allow:
+        items_per_page: false
+      pager:
+        type: some
+        options:
+          items_per_page: 3
+          offset: 0
+      block_category: 'Lists (Views)'
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content: "<div class=\"text-align-center\">\r\n<a title=\"Read All Stories\" class=\"btn btn-outline-info\" href=\"./news-teasers\">Read All News</a>\r\n</div>\r\n"
+          plugin_id: text_custom
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
