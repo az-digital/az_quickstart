@@ -42,21 +42,21 @@ jobs:
 
       - name: Set up terminus
         run: |
-          terminus auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+          terminus -y auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Sync code to pantheon
         run: |
-          terminus art
+          terminus -y art
           pwd
           ls -al
 
       - name: Wipe existing site
         run: |
-          terminus env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
+          terminus -y env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
 
       - name: Install site
         run: |
-          echo terminus -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
+          echo terminus -y drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
           site-install az_quickstart install_configure_form.update_status_module='array(FALSE,FALSE)' \
           --account-name="azadmin" \
           --account-mail="noreply@email.arizona.edu" \
@@ -67,4 +67,4 @@ jobs:
 
       - name: Clear caches
         run: |
-          terminus env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
+          terminus -y env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
