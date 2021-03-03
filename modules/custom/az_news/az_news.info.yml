@@ -25,4 +25,5 @@ dependencies:
   - smart_title:smart_title
   - date_ap_style:date_ap_style
   - field_group_link:field_group_link
+  - views_bootstrap:views_bootstrap
   
