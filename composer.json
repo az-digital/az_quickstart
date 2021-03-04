@@ -54,7 +54,10 @@
         "drupal/migrate_tools": "5.0",
         "drupal/paragraphs": "1.12",
         "drupal/pathauto": "1.8",
+        "drupal/rabbit_hole": "1.0-beta10",
         "drupal/redirect": "1.6",
+        "drupal/slick": "2.2",
+        "drupal/slick_views": "2.3",
         "drupal/smart_date": "3.1.1",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
@@ -102,6 +105,9 @@
             },
             "drupal/coffee": {
                 "Coffee test, support for Drupal 9 core_version_requirement": "https://www.drupal.org/files/issues/2020-10-27/3174680-5-make-test-module-d9-compatible.patch"
+            },
+            "drupal/rabbit_hole": {
+                "Front tag not working as redirect path": "https://www.drupal.org/files/issues/2021-02-08/3196570-3.patch"
             }
         }
     },

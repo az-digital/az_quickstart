@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - node.type.az_carousel_item
+id: node_type_az_carousel_item
+entity_type_id: node_type
+entity_id: az_carousel_item
+action: page_redirect
+allow_override: 1
+redirect: '<front>'
+redirect_code: 303
+redirect_fallback_action: access_denied

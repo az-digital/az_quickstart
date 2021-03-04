@@ -48,6 +48,7 @@ permissions:
   - 'edit terms in az_person_categories'
   - 'edit terms in az_person_categories_secondary'
   - 'edit terms in tags'
+  - 'rabbit hole bypass node'
   - 'update content translations'
   - 'use advanced search'
   - 'use editorial transition archive'

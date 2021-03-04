@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus: {  }
+    parent: ''
+name: 'Carousel item'
+type: az_carousel_item
+description: 'Use this content type to add carousel items to your front/home page.'
+help: ''
+new_revision: true
+preview_mode: 1
+display_submitted: false

@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_carousel_short_summary
+    - node.type.az_carousel_item
+id: node.az_carousel_item.field_az_carousel_short_summary
+field_name: field_az_carousel_short_summary
+entity_type: node
+bundle: az_carousel_item
+label: 'Short Summary'
+description: "Optional short summary/details for your carousel slide.<br />\r\n<strong>Maximum of 255 characters.</strong>"
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

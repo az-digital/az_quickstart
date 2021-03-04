@@ -62,6 +62,7 @@ permissions:
   - 'edit own az_video media'
   - 'edit own book content'
   - 'make smart dates recur'
+  - 'rabbit hole bypass node'
   - 'reschedule smart date recur instances'
   - 'revert all revisions'
   - 'revert az_event revisions'

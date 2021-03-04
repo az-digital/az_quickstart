@@ -1,0 +1,51 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_carousel_item.field_az_carousel_short_summary
+    - field.field.node.az_carousel_item.field_az_link
+    - field.field.node.az_carousel_item.field_az_media_image
+    - node.type.az_carousel_item
+  module:
+    - link
+    - user
+id: node.az_carousel_item.default
+targetEntityType: node
+bundle: az_carousel_item
+mode: default
+content:
+  field_az_carousel_short_summary:
+    weight: 102
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_az_link:
+    weight: 103
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    type: link
+    region: content
+  field_az_media_image:
+    weight: 101
+    label: hidden
+    settings:
+      view_mode: az_carousel_item
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

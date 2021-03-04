@@ -1,0 +1,21 @@
+.az-carousel-slide {
+	position: relative;
+	z-index: 1;
+}
+
+.az-carousel-slide img {
+	position: relative;
+	display: block;
+	min-width: 100%;
+	max-width: 100%;
+	height: auto;
+	min-height: 500px;
+	z-index: -1;
+}
+
+.az-carousel-slide .az-carousel-slide-details {
+	position: absolute;
+	display: block;
+	bottom: 0;
+	left: 0;
+}
