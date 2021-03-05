@@ -6,7 +6,7 @@ label: 'Content editor'
 weight: 2
 is_admin: false
 permissions:
-   - 'access administration pages'
+  - 'access administration pages'
   - 'access any webform configuration'
   - 'access coffee'
   - 'access content overview'
