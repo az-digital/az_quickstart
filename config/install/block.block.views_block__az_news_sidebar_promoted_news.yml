@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.az_news
+  module:
+    - system
+    - views
+  theme:
+    - az_barrio
+id: views_block__az_news_sidebar_promoted_news
+theme: az_barrio
+region: sidebar_second
+weight: 0
+provider: null
+plugin: 'views_block:az_news-sidebar_promoted_news'
+settings:
+  id: 'views_block:az_news-sidebar_promoted_news'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '/news/*'
+    negate: false
