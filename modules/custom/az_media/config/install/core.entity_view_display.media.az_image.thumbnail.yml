@@ -11,7 +11,7 @@ dependencies:
 id: media.az_image.thumbnail
 targetEntityType: media
 bundle: az_image
-mode: thumbnail
+mode: az_thumbnail
 content:
   thumbnail:
     type: image
