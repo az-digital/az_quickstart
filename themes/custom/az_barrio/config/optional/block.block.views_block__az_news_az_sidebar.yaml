@@ -4,6 +4,7 @@ dependencies:
   config:
     - views.view.az_news
   module:
+    - az_news
     - system
     - views
   theme:
