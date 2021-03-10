@@ -11,7 +11,7 @@ dependencies:
 id: views_block__az_news_az_sidebar
 theme: az_barrio
 region: sidebar_second
-weight: 0
+weight: -8
 provider: null
 plugin: 'views_block:az_news-az_sidebar'
 settings:
