@@ -8,14 +8,14 @@ dependencies:
     - views
   theme:
     - az_barrio
-id: views_block__az_news_sidebar_promoted_news
+id: views_block__az_news_az_sidebar
 theme: az_barrio
 region: sidebar_second
 weight: 0
 provider: null
-plugin: 'views_block:az_news-sidebar_promoted_news'
+plugin: 'views_block:az_news-az_sidebar'
 settings:
-  id: 'views_block:az_news-sidebar_promoted_news'
+  id: 'views_block:az_news-az_sidebar'
   label: ''
   provider: views
   label_display: visible
