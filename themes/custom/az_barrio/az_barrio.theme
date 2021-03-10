@@ -10,7 +10,6 @@ include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 
@@ -386,8 +385,8 @@ function az_barrio_primary_logo() {
   $primary_logo_link_classes = ['qs-site-logo', 'd-block'];
   $primary_logo_path = theme_get_setting('logo');
   $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
-  $primary_alt_text = Html::escape(theme_get_setting('primary_logo_alt_text'));
-  $primary_title_text = Html::escape(theme_get_setting('primary_logo_title_text'));
+  $primary_alt_text = theme_get_setting('primary_logo_alt_text');
+  $primary_title_text = theme_get_setting('primary_logo_title_text');
   $config = \Drupal::config('az_barrio.settings');
   if (\Drupal::moduleHandler()->moduleExists('token')) {
     $token_service = \Drupal::token();
@@ -448,8 +447,8 @@ function az_barrio_footer_logo() {
   $footer_logo_default = theme_get_setting('footer_default_logo');
   $footer_logo_path_parts = pathinfo($footer_logo_path);
   $footer_link_destination = theme_get_setting('footer_logo_link_destination');
-  $footer_alt_text = Html::escape(theme_get_setting('footer_logo_alt_text'));
-  $footer_title_text = Html::escape(theme_get_setting('footer_logo_title_text'));
+  $footer_alt_text = theme_get_setting('footer_logo_alt_text');
+  $footer_title_text = theme_get_setting('footer_logo_title_text');
   $config = \Drupal::config('az_barrio.settings');
   if (\Drupal::moduleHandler()->moduleExists('token')) {
     $token_service = \Drupal::token();
@@ -489,7 +488,6 @@ function az_barrio_footer_logo() {
       $return = Link::createFromRoute($image_renderable, $footer_link_destination, [], [
         'attributes' => [
           'title' => $footer_title_text,
-          'alt' => $footer_alt_text,
           'rel' => 'home',
           'class' => $footer_logo_link_classes,
         ],
