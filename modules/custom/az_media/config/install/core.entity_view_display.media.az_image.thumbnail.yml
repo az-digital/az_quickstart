@@ -8,10 +8,10 @@ dependencies:
     - media.type.az_image
   module:
     - image
-id: media.az_image.thumbnail
+id: media.az_image.az_thumbnail
 targetEntityType: media
 bundle: az_image
-mode: thumbnail
+mode: az_thumbnail
 content:
   thumbnail:
     type: image
