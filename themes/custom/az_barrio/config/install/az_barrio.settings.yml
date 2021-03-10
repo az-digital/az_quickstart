@@ -62,8 +62,8 @@ az_brand_icons_class: true
 external_links: true
 sticky_footer: true
 az_barrio_material_design_sharp_icons: true
-az_barrio_logo_svg_inline: true
-az_barrio_footer_logo_svg_inline: true
+az_barrio_logo_svg_inline: false
+az_barrio_footer_logo_svg_inline: false
 logo:
   path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png'
   use_default: false
