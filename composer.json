@@ -67,6 +67,7 @@
         "drupal/token": "1.9",
         "drupal/views_bootstrap": "4.3",
         "drupal/viewsreference": "2.0-beta2",
+        "drupal/webform": "6.0.2",
         "drupal/xmlsitemap": "1.0"
     },
     "require-dev": {
