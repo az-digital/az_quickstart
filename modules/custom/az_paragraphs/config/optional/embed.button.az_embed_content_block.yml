@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   module:
-    - block
+    - block_content
     - entity_embed
-label: 'Embed Block'
-id: az_embed_block
+label: 'Embed Content Block'
+id: az_embed_content_block
 type_id: entity
 type_settings:
-  entity_type: block
+  entity_type: block_content
   bundles: {  }
   display_plugins:
-    - 'entity_reference:entity_reference_entity_view'
+    - 'view_mode:block_content.full'
   entity_browser: ''
   entity_browser_settings: {  }
 icon: {  }
