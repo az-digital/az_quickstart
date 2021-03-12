@@ -199,16 +199,6 @@ function az_barrio_theme_suggestions_container_alter(array &$suggestions, array 
 }
 
 /**
- * Implements hook_preprocess_input().
- */
-function az_barrio_preprocess_input(&$variables) {
-  if ($variables['attributes']['type'] === 'search') {
-    $variables['attributes']['placeholder'] = $variables['element']['#title'];
-    $variables['attributes']['aria-label'] = $variables['element']['#title'];
-  }
-}
-
-/**
  * Implements template_preprocess_maintenance_page().
  */
 function az_barrio_preprocess_maintenance_page(&$variables) {
