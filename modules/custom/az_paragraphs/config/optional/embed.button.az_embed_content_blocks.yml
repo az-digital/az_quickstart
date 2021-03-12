@@ -4,8 +4,8 @@ dependencies:
   module:
     - block_content
     - entity_embed
-label: 'Embed Content Blocks'
-id: az_embed_content_blocks
+label: 'Embed Content Block'
+id: az_embed_content_block
 type_id: entity
 type_settings:
   entity_type: block_content
