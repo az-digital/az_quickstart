@@ -1,0 +1,55 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_paragraphs_block
+    - field.storage.block_content.field_az_content
+    - paragraphs.paragraphs_type.az_accordion
+    - paragraphs.paragraphs_type.az_cards
+    - paragraphs.paragraphs_type.az_text
+    - paragraphs.paragraphs_type.az_text_background
+    - paragraphs.paragraphs_type.az_text_media
+    - paragraphs.paragraphs_type.az_view_reference
+  module:
+    - entity_reference_revisions
+id: block_content.az_paragraphs_block.field_az_content
+field_name: field_az_content
+entity_type: block_content
+bundle: az_paragraphs_block
+label: Content
+description: 'Content using the paragraphs module.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles:
+      az_accordion: az_accordion
+      az_cards: az_cards
+      az_text: az_text
+      az_text_background: az_text_background
+      az_text_media: az_text_media
+      az_view_reference: az_view_reference
+    target_bundles_drag_drop:
+      az_accordion:
+        enabled: true
+        weight: 7
+      az_cards:
+        enabled: true
+        weight: 8
+      az_text:
+        enabled: true
+        weight: 9
+      az_text_background:
+        enabled: true
+        weight: 10
+      az_text_media:
+        enabled: true
+        weight: 11
+      az_view_reference:
+        enabled: true
+        weight: 12
+field_type: entity_reference_revisions
