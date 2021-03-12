@@ -58,7 +58,7 @@ settings:
           items:
             - DrupalMediaLibrary
             - az_embed_content
-            - az_embed_content_blocks
+            - az_embed_content_block
         -
           name: Tools
           items:
