@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - block_content.type.az_paragraphs_block
+    - block_content.type.az_flexible_block
     - field.storage.block_content.field_az_content
     - paragraphs.paragraphs_type.az_accordion
     - paragraphs.paragraphs_type.az_cards
@@ -12,14 +12,14 @@ dependencies:
     - paragraphs.paragraphs_type.az_view_reference
   module:
     - entity_reference_revisions
-id: block_content.az_paragraphs_block.field_az_content
+id: block_content.az_flexible_block.field_az_content
 field_name: field_az_content
 entity_type: block_content
-bundle: az_paragraphs_block
+bundle: az_flexible_block
 label: Content
-description: 'Content using the paragraphs module.'
+description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

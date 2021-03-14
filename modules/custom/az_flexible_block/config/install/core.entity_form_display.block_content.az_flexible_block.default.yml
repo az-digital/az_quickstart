@@ -2,18 +2,17 @@ langcode: en
 status: true
 dependencies:
   config:
-    - block_content.type.az_paragraphs_block
-    - field.field.block_content.az_paragraphs_block.field_az_content
+    - block_content.type.az_flexible_block
+    - field.field.block_content.az_flexible_block.field_az_content
   module:
     - paragraphs
-id: block_content.az_paragraphs_block.default
+id: block_content.az_flexible_block.default
 targetEntityType: block_content
-bundle: az_paragraphs_block
+bundle: az_flexible_block
 mode: default
 content:
   field_az_content:
-    type: paragraphs
-    weight: 2
+    weight: 26
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -29,10 +28,11 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
+    type: paragraphs
     region: content
   info:
     type: string_textfield
-    weight: 0
+    weight: -5
     region: content
     settings:
       size: 60

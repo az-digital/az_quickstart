@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-id: az_paragraphs_block
-label: 'Block with paragraphs'
-revision: 0
-description: 'Create a block where you can add different paragraph types'
