@@ -62,6 +62,7 @@ install:
   - chosen:chosen
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee
+  - exclude_node_title:exclude_node_title
 
 themes:
   - az_barrio
