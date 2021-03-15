@@ -7,6 +7,9 @@ use Drupal\file\Entity\File;
  * Contains az_paragraphs_text_media.module.
  */
 
+function az_media_preprocess_teesta(&$variables) {
+
+}
 function az_media_preprocess_media(&$variables) {
   if (isset($variables['media'])) {
     $media = $variables['media'];
