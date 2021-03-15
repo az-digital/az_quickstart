@@ -2,7 +2,9 @@ langcode: en
 status: true
 dependencies:
   module:
+    - bootstrap_utilities
     - editor
+    - media
 name: 'Basic HTML'
 format: basic_html
 weight: 0
@@ -41,4 +43,10 @@ filters:
     provider: editor
     status: true
     weight: 11
+    settings: {  }
+  bootstrap_utilities_blockquote_filter:
+    id: bootstrap_utilities_blockquote_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: 0
     settings: {  }

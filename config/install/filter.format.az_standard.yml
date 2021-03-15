@@ -1,0 +1,62 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - bootstrap_utilities
+    - entity_embed
+    - media
+name: Standard
+format: az_standard
+weight: -10
+roles:
+  - az_content_editor
+filters:
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: 10
+    settings: {  }
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<em> <strong> <s> <abbr> <address> <blockquote> <br> <div class="col col-* row"> <ul type class="nav nav-* ul-*"> <ol start type> <li> <dl> <dt> <dd> <h1> <h2> <h3> <h4> <h5> <h6> <sup> <sub> <table> <caption> <tbody> <thead> <tfoot> <th> <td> <tr> <hr> <a href class="btn btn-red btn-outline-red btn-blue btn-outline-blue btn-outline-white btn-link"> <span class="text-* badge badge-* small lead h1 h2 h3 h4 h5 h6 align-* m* p*"> <img src alt data-entity-type data-entity-uuid> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align data-caption data-embed-button alt title> <drupal-media data-entity-type data-entity-uuid alt title> <div class=* data-* > <p class="text-align-left text-align-center text-align-right">'
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: 0
+    settings:
+      filter_url_length: 72
+  media_embed:
+    id: media_embed
+    provider: media
+    status: true
+    weight: 100
+    settings:
+      default_view_mode: default
+      allowed_media_types: {  }
+      allowed_view_modes: {  }
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
+    status: true
+    weight: 100
+    settings: {  }
+  bootstrap_utilities_blockquote_filter:
+    id: bootstrap_utilities_blockquote_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: 0
+    settings: {  }

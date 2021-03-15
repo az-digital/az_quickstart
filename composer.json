@@ -32,6 +32,7 @@
         "drupal/auto_entitylabel": "3.0-beta4",
         "drupal/background_image_formatter": "1.7",
         "drupal/bootstrap_barrio": "4.30",
+        "drupal/bootstrap_utilities": "^1.0",
         "drupal/cas": "1.7",
         "drupal/chosen": "3.0.1",
         "drupal/ckeditor_bs_grid": "2.0.5",
