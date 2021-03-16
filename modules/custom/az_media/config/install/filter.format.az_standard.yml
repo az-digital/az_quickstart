@@ -51,3 +51,10 @@ filters:
     status: true
     weight: 100
     settings: {  }
+  bootstrap_utilities_blockquote_filter:
+    id: bootstrap_utilities_blockquote_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: 0
+    settings: {  }
+
