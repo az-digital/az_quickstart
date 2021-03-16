@@ -59,6 +59,7 @@ install:
   - drupal:views_ui
   - drupal:tour
   - drupal:automated_cron
+  - chosen:chosen
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee
 

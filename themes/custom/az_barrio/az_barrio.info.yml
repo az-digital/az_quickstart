@@ -3,8 +3,6 @@ type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
 core_version_requirement: ^8.8 || ^9
 base theme: bootstrap_barrio
-logo: images/logo.png
-footer_logo: images/logo.png
 block_default_region: 'content'
 
 libraries:
