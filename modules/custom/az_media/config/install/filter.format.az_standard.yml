@@ -4,6 +4,7 @@ dependencies:
   module:
     - entity_embed
     - media
+    - bootstrap_utilities
 name: Standard
 format: az_standard
 weight: -10
