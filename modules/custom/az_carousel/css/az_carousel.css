@@ -1,8 +1,56 @@
+/* Node Overrides */
+.az-carousel .node__content,
+.az-carousel .field--type-entity-reference {
+	margin: 0;
+}
+
+/* Carousel Navigation/Buttons */
+.az-carousel .slick-arrow {
+	border-radius: 0;
+	background-color: rgba(30, 82, 136, .85);
+	transition: background-color .3s;
+	width: 100px;
+	height: 100px;
+	overflow: hidden;
+}
+	.az-carousel .slick-arrow::before {
+		color: #FFFFFF;
+		font-family: proxima-nova,calibri,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+		font-size: 6rem;
+
+		position: absolute;
+		top: 44%;
+		left: 50%;
+		-webkit-transform: translate(-50%,-50%);
+		transform: translate(-50%,-50%);
+	}
+	.az-carousel .slick-prev::before {
+		content: "\2039";
+		left: 44%;
+	}
+	.az-carousel .slick-next::before {
+		content: "\203a";
+		left: 56%;
+	}
+
+	.az-carousel .slick-arrow:focus,
+	.az-carousel .slick-arrow:hover {
+		background-color: rgba(30, 82, 136, 1);
+	}
+
+/* Slide */
 .az-carousel-slide {
 	position: relative;
 	z-index: 1;
 }
+.az-carousel .slick-active {
+	opacity: 1;
+}
+.az-carousel .slide:not(.slick-active) {
+	opacity: .25;
+}
 
+/* Slide Image */
 .az-carousel-slide img {
 	position: relative;
 	display: block;
@@ -10,12 +58,29 @@
 	max-width: 100%;
 	height: auto;
 	min-height: 500px;
+	object-fit: cover;
 	z-index: -1;
 }
 
-.az-carousel-slide .az-carousel-slide-details {
+/* Slide Details */
+.az-carousel-slide-details {
 	position: absolute;
 	display: block;
 	bottom: 0;
 	left: 0;
+
+	width: 100%;
 }
+	.az-carousel-slide-details a {
+		color: #81D3EB;
+		text-transform: capitalize;
+	}
+	.az-carousel-slide-details a:focus,
+	.az-carousel-slide-details a:hover, {
+		color: #FFFFFF;
+	}
+
+.az-carousel-slide-title {
+	text-transform: capitalize;
+}
+

@@ -9,7 +9,7 @@ third_party_settings:
     parent: ''
 name: 'Carousel item'
 type: az_carousel_item
-description: 'Use this content type to add carousel items to your front/home page.'
+description: 'Allows users to create and order carousel items.'
 help: ''
 new_revision: true
 preview_mode: 1

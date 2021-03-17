@@ -10,7 +10,6 @@
  */
 function az_carousel_preprocess_node(&$variables) {
 
-  \Drupal::logger('az_carousel')->notice("I'm running");
   $variables['#attached']['library'][] = 'az_carousel/az_carousel';
 
 }
