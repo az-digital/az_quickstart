@@ -36,7 +36,8 @@ third_party_settings:
       children:
         - links
         - smart_title
-        - group_text_size_lead
+        - group_text_size_h4
+        - field_az_link
       parent_name: group_carousel_item
       weight: 3
       format_type: html_element
@@ -50,19 +51,15 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'az-carousel-slide-details bg-transparent-midnight text-white p-4'
+        classes: 'az-carousel-slide-details bg-transparent-midnight text-white px-4 py-3'
       label: 'Slide Details'
     group_text_size_lead:
-      children:
-        - field_az_carousel_short_summary
-        - field_az_link
-      parent_name: group_slide_details
-      weight: 3
+      children: {  }
+      parent_name: ''
+      weight: 2
       format_type: html_element
-      region: content
+      region: hidden
       format_settings:
-        id: ''
-        classes: lead
         element: div
         show_label: false
         label_element: h3
@@ -70,7 +67,40 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'Text Size Lead'
+        id: ''
+        classes: 'btn btn-sm btn-outline-white'
+      label: Button
+    group_text_size_h4:
+      children:
+        - field_az_carousel_short_summary
+      parent_name: group_slide_details
+      weight: 2
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: 'h4 my-2'
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: 'Text Size H4'
+    group_link:
+      children: {  }
+      parent_name: ''
+      weight: 3
+      format_type: link
+      region: hidden
+      format_settings:
+        id: ''
+        classes: 'btn btn-outline-white btn-sm'
+        target: entity
+        custom_uri: ''
+        target_attribute: default
+      label: Link
   smart_title:
     enabled: true
     settings:
@@ -86,7 +116,7 @@ bundle: az_carousel_item
 mode: default
 content:
   field_az_carousel_short_summary:
-    weight: 2
+    weight: 4
     label: hidden
     settings:
       link_to_entity: false
@@ -115,12 +145,12 @@ content:
     type: entity_reference_entity_view
     region: content
   links:
-    weight: 1
+    weight: 0
     region: content
     settings: {  }
     third_party_settings: {  }
   smart_title:
-    weight: 2
+    weight: 1
     region: content
     settings: {  }
     third_party_settings: {  }

@@ -7,15 +7,17 @@ dependencies:
   - auto_entitylabel:auto_entitylabel
   - az_core
   - az_media
-  - blazy
+  - blazy:blazy
   - drupal:block
   - draggableviews:draggableviews
   - drupal:field
   - field_group:field_group
   - drupal:node
   - drupal:path
+  - link_class:link_class
   - pathauto:pathauto
-  - rabbit_hole
-  - rh_node
-  - slick
-  - slick_ui
+  - rabbit_hole:rabbit_hole
+  - rh_node:rh_node
+  - slick:slick
+  - slick_ui:slick_ui
+  - slick_views:slick_views

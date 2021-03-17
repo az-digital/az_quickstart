@@ -7,7 +7,7 @@ dependencies:
     - field.field.node.az_carousel_item.field_az_media_image
     - node.type.az_carousel_item
   module:
-    - link
+    - link_class
     - media_library
     - path
 id: node.az_carousel_item.default
@@ -34,8 +34,11 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
+      link_class_mode: force_class
+      link_class_force: 'btn btn-outline-white btn-sm'
+      link_class_select: ''
     third_party_settings: {  }
-    type: link_default
+    type: link_class_field_widget
     region: content
   field_az_media_image:
     weight: 1

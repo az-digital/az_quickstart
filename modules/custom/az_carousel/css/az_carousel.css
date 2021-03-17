@@ -7,7 +7,7 @@
 /* Carousel Navigation/Buttons */
 .az-carousel .slick-arrow {
 	border-radius: 0;
-	background-color: rgba(30, 82, 136, .85);
+	background-color: rgba(0, 28, 72, .85);
 	transition: background-color .3s;
 	width: 100px;
 	height: 100px;
@@ -35,7 +35,7 @@
 
 	.az-carousel .slick-arrow:focus,
 	.az-carousel .slick-arrow:hover {
-		background-color: rgba(30, 82, 136, 1);
+		background-color: rgba(0, 28, 72, 1);
 	}
 
 /* Slide */
@@ -71,16 +71,3 @@
 
 	width: 100%;
 }
-	.az-carousel-slide-details a {
-		color: #81D3EB;
-		text-transform: capitalize;
-	}
-	.az-carousel-slide-details a:focus,
-	.az-carousel-slide-details a:hover, {
-		color: #FFFFFF;
-	}
-
-.az-carousel-slide-title {
-	text-transform: capitalize;
-}
-

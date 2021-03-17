@@ -21,14 +21,14 @@ options:
     pauseOnHover: true
     pauseOnDotsHover: false
     pauseOnFocus: true
-    arrows: true
+    arrows: false
     prevArrow: Previous
     nextArrow: Next
     downArrow: false
     downArrowTarget: ''
     downArrowOffset: 0
     centerMode: true
-    centerPadding: 10%
+    centerPadding: 5%
     dots: true
     dotsClass: slick-dots
     appendDots: $(element)
