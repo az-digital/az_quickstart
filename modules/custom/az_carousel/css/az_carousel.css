@@ -5,6 +5,9 @@
 }
 
 /* Carousel Navigation/Buttons */
+.az-carousel .slick-dotted {
+	margin-bottom: 0;
+}
 .az-carousel .slick-arrow {
 	border-radius: 0;
 	background-color: rgba(0, 28, 72, .85);
@@ -37,6 +40,32 @@
 	.az-carousel .slick-arrow:hover {
 		background-color: rgba(0, 28, 72, 1);
 	}
+
+.az-carousel .slick-dots {
+	position: relative;
+	bottom: 0;
+	background-color: #e9ecef;
+	padding: .5rem;
+}
+	.az-carousel .slick-dots li,
+	.az-carousel .slick-dots button,
+	.az-carousel .slick-dots button::before {
+		width: 48px;
+		height: 48px;
+	}
+	.az-carousel .slick-dots li {
+		margin: 0;
+		padding: 8px;
+	}
+	.az-carousel .slick-dots button::before {
+		line-height: 48px;
+		font-size: 1.25rem;
+		color: #001C48;
+	}
+	.az-carousel .slick-dots li.slick-active button::before {
+		color: #001C48;
+	}
+
 
 /* Slide */
 .az-carousel-slide {
