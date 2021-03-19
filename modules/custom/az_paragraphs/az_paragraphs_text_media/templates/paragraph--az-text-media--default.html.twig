@@ -66,21 +66,16 @@
     text_on_media.bg_color
   ]
 %}
+{% set paragraph_id = paragraph.bundle() ~ '-' ~ paragraph.id() %}
 
 {% block paragraph %}
-  {% if text_on_media.style != 'bottom' %}
-    <style>
-      #{{ paragraph.bundle() }}-{{ paragraph.id() }} {
-        background-image: url('{{ file_url(paragraph.field_az_media.entity.field_media_az_image.entity.fileuri) }}');
-      }
-    </style>
+  {% if text_on_media.style != 'bottom'%}
+    {{ style_element }}
   {% endif %}
-  <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
+  <div{{ attributes.addClass(classes).setAttribute('id',  paragraph_id) }}>
     {% block content %}
       {% if text_on_media.style == 'bottom' %}
-        <div class="text-on-media-bottom">
-          <img src="{{ file_url(paragraph.field_az_media.entity.field_media_az_image.entity.fileuri) }}">
-        </div>
+        {{ inner_media }}
       {% endif %}
       {# Layout for content width AND full width styles #}
       <div class="container">

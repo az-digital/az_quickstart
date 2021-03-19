@@ -5,6 +5,9 @@ namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\media\MediaInterface;
+use Drupal\media\MediaSourceInterface;
+use Drupal\file\FileInterface;
 
 /**
  * Provides a behavior for text with media.
@@ -17,7 +20,6 @@ use Drupal\paragraphs\ParagraphInterface;
  * )
  */
 class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
-
   /**
    * {@inheritdoc}
    */
@@ -108,13 +110,107 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   public function preprocess(&$variables) {
     parent::preprocess($variables);
-
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
-
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
     $variables['text_on_media'] = $config;
+    if ($paragraph->hasField('field_az_media')) {
+      /** @var \Drupal\media\Entity\Media $media */
+      foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
+        $variables['text_on_media']['media_type'] = $media->bundle();
+        switch ($media->bundle()) {
+          case 'az_remote_video':
+            $this->remoteVideo($variables, $paragraph, $media);
+            break;
+          case 'az_image':
+            $this->image($variables, $paragraph, $media);
+            break;
+          default:
+            return $variables;
+        }
+      }
+    }
+  }
+
+  private function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
+    /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
+    $media_oembed = $media->getSource();
+    $provider = $media_oembed->getMetadata($media, 'provider_name');
+    $html = $media_oembed->getMetadata($media, 'html');
+    $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
+    if ($provider == 'YouTube') {
+      $source_url = $media->get('field_media_az_oembed_video')->value;
+      $video_oembed_id = $this->getYouTubeid($source_url);
+      $js['#attached']['drupalSettings']['azFieldsMedia']['bgVideos'][$video_oembed_id] = [
+        'videoId' => $video_oembed_id,
+        'start' => 0,
+      ];
+      $text_on_bottom = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#markup' => $html,
+        '#allowed_tags' => ['iframe'],
+        '#attributes' => [
+          'id' => [$video_oembed_id . '-bg-video-container'],
+        ],
+      ];
+      $variables['style_element'] = $text_on_bottom;
+      \Drupal::service('renderer')->render($js);
+      return $variables;
+    }
+  }
+
+  private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
+    $file_uri = $media->field_media_az_image->entity->getFileUri();
+    if ($variables['text_on_media']['style'] !== 'bottom') {
+      $style_element = array('style' => [
+        '#type' => 'inline_template',
+        '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
+        '#context' => [
+          'filepath' => file_create_url($file_uri),
+          'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+        ]
+      ]);
+      $variables['style_element'] = $style_element;
+    }
+    else if ($variables['text_on_media']['style'] === 'bottom') {
+      $image_renderable = [
+        '#theme' => 'image',
+        '#uri' => file_create_url($file_uri),
+        '#alt' => $media->field_media_az_image->alt,
+        '#attributes' => [
+          'class' => ['img-fluid'],
+        ],
+      ];
+      $text_on_bottom = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#value' =>  render($image_renderable),
+        '#attributes' => [
+          'class' => ['text-on-media-bottom'],
+        ],
+      ];
+      $variables['inner_media'] = $text_on_bottom;
+    }
+    return $variables;
+  }
+
+  /**
+   * This function returns a video id from a url
+   */
+  private function getYouTubeid($url) {
+    $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
+    $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
+
+    if (preg_match($longUrlRegex, $url, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+
+    if (preg_match($shortUrlRegex, $url, $matches)) {
+        $youtube_id = $matches[count($matches) - 1];
+    }
+    return $youtube_id ;
   }
 
 }

@@ -4,9 +4,6 @@
   background-size: cover;
   background-position: center;
 }
-.text-on-media-bottom img {
-  width: 100%;
-}
 .bg-fixed {
   background-attachment: fixed;
 }
