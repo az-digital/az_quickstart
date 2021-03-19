@@ -10,3 +10,4 @@ dependencies:
   - drupal:media_library
   - entity_embed:entity_embed
   - image_widget_crop:image_widget_crop
+  - bootstrap_utilities:bootstrap_utilities
