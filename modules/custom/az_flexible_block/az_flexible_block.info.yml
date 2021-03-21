@@ -5,6 +5,7 @@ package: The University of Arizona
 dependencies:
   - drupal:field
   - drupal:block_content
+  - drupal:node
   - drupal:path
   - drupal:user
   - az_paragraphs
