@@ -47,9 +47,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
-        type: none
+        type: some
         options:
-          items_per_page: null
+          items_per_page: 5
           offset: 0
       style:
         type: slick
