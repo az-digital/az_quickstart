@@ -7,7 +7,7 @@ dependencies:
     - user
   theme:
     - az_barrio
-id: az_carousel_notice
+id: az_carousel_notification
 theme: az_barrio
 region: content_featured
 weight: -9
