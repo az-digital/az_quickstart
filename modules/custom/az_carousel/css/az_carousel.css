@@ -66,11 +66,9 @@
 		color: #001C48;
 	}
 
-
 /* Slide */
 .az-carousel-slide {
 	position: relative;
-	z-index: 1;
 }
 .az-carousel .slick-active {
 	opacity: 1;
@@ -100,6 +98,5 @@
 	display: block;
 	bottom: 0;
 	left: 0;
-
 	width: 100%;
 }
