@@ -78,6 +78,9 @@
 .az-carousel .slide:not(.slick-active) {
 	opacity: .25;
 }
+.az-carousel .unslick .slide:not(.slick-active) {
+	opacity: 1;
+}
 
 /* Slide Image */
 .az-carousel-slide img {
