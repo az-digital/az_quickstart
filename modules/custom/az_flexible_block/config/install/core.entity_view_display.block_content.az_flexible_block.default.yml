@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_flexible_block
+    - field.field.block_content.az_flexible_block.field_az_content
+  module:
+    - entity_reference_revisions
+id: block_content.az_flexible_block.default
+targetEntityType: block_content
+bundle: az_flexible_block
+mode: default
+content:
+  field_az_content:
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    type: entity_reference_revisions_entity_view
+    region: content
+hidden: {  }
