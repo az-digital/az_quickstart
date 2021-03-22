@@ -18,7 +18,7 @@ third_party_settings:
         - field_az_media_image
         - group_slide_details
       parent_name: ''
-      weight: 0
+      weight: 1
       format_type: html_element
       region: content
       format_settings:
@@ -34,7 +34,6 @@ third_party_settings:
       label: 'Carousel Slide'
     group_slide_details:
       children:
-        - links
         - smart_title
         - group_text_size_h4
         - field_az_link
@@ -53,23 +52,6 @@ third_party_settings:
         id: ''
         classes: 'az-carousel-slide-details bg-transparent-midnight text-white px-4 py-3'
       label: 'Slide Details'
-    group_text_size_lead:
-      children: {  }
-      parent_name: ''
-      weight: 2
-      format_type: html_element
-      region: hidden
-      format_settings:
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: 'btn btn-sm btn-outline-white'
-      label: Button
     group_text_size_h4:
       children:
         - field_az_carousel_short_summary
@@ -78,8 +60,6 @@ third_party_settings:
       format_type: html_element
       region: content
       format_settings:
-        id: ''
-        classes: 'h4 my-2'
         element: div
         show_label: false
         label_element: h3
@@ -87,20 +67,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'Text Size H4'
-    group_link:
-      children: {  }
-      parent_name: ''
-      weight: 3
-      format_type: link
-      region: hidden
-      format_settings:
         id: ''
-        classes: 'btn btn-outline-white btn-sm'
-        target: entity
-        custom_uri: ''
-        target_attribute: default
-      label: Link
+        classes: 'h4 mt-2 mb-3'
+      label: 'Text Size H4'
   smart_title:
     enabled: true
     settings:
