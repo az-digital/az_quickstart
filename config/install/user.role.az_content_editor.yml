@@ -88,8 +88,6 @@ permissions:
   - 'revert webform revisions'
   - 'update content translations'
   - 'update media'
-  - 'use az_moderation transition az_mod_submit_for_review'
-  - 'use az_moderation transition create_new_draft'
   - 'use editorial transition archived_draft'
   - 'use editorial transition archived_published'
   - 'use editorial transition az_submit_for_review'
