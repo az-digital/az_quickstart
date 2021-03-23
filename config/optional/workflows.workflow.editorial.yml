@@ -4,48 +4,42 @@ dependencies:
   module:
     - content_moderation
 id: editorial
-label: 'Editorial'
+label: Editorial
 type: content_moderation
 type_settings:
   states:
-    archived:
-      label: Archived
-      weight: 5
+    az_needs_review:
       published: false
-      default_revision: true
+      default_revision: false
+      label: 'Needs Review'
+      weight: -1
     draft:
       label: Draft
       published: false
       default_revision: false
-      weight: -5
+      weight: -2
     published:
       label: Published
       published: true
       default_revision: true
       weight: 0
   transitions:
-    archive:
-      label: Archive
+    az_reject:
+      label: Reject
       from:
-        - published
-      to: archived
-      weight: 2
-    archived_draft:
-      label: 'Restore to Draft'
-      from:
-        - archived
+        - az_needs_review
       to: draft
-      weight: 3
-    archived_published:
-      label: Restore
+      weight: 0
+    az_submit_for_review:
+      label: 'Submit for Review'
       from:
-        - archived
-      to: published
-      weight: 4
+        - draft
+      to: az_needs_review
+      weight: -1
     create_new_draft:
       label: 'Create New Draft'
       to: draft
-      weight: 0
+      weight: -2
       from:
         - draft
         - published
@@ -54,7 +48,6 @@ type_settings:
       to: published
       weight: 1
       from:
-        - draft
-        - published
+        - az_needs_review
   entity_types: {  }
   default_moderation_state: draft
