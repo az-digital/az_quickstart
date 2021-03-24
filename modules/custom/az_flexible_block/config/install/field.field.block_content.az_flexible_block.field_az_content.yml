@@ -22,25 +22,7 @@ settings:
     negate: 0
     target_bundles: null
     target_bundles_drag_drop:
-      az_accordion:
-        enabled: true
-        weight: 7
-      az_cards:
-        enabled: true
-        weight: 8
-      az_html:
-        enabled: true
-        weight: 14
       az_text:
-        enabled: true
-        weight: 9
-      az_text_background:
-        enabled: true
-        weight: 10
-      az_text_media:
-        enabled: true
-        weight: 11
-      az_view_reference:
-        enabled: true
-        weight: 12
+        enabled: false
+        weight: 2
 field_type: entity_reference_revisions
