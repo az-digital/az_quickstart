@@ -39,11 +39,10 @@ jobs:
           $(terminus connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
           cd ${{ secrets.DEMO_SITE_NAME }}
           rm composer.lock
-          git add composer.lock
           UPSTREAM_VERSION=$(jq -r '.require."az-digital/az_quickstart"' upstream/composer.json)
-          composer require --no-update "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
-          git add composer.json
-          git commit -m 'rebuild kitten'
+          composer require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
+          git add composer.json composer.lock
+          git commit --allow-empty -m 'rebuild kitten'
           git push
 
       - name: Wipe existing site
