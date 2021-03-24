@@ -20,14 +20,7 @@ settings:
   handler: 'default:paragraph'
   handler_settings:
     negate: 0
-    target_bundles:
-      az_accordion: az_accordion
-      az_cards: az_cards
-      az_text: az_text
-      az_text_background: az_text_background
-      az_text_media: az_text_media
-      az_view_reference: az_view_reference
-      az_html: az_html
+    target_bundles: null
     target_bundles_drag_drop:
       az_accordion:
         enabled: true
