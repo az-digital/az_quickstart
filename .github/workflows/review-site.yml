@@ -51,6 +51,7 @@ jobs:
       - name: Install site
         run: |
           terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
+          sleep 10
           terminus -y drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
           site-install az_quickstart install_configure_form.update_status_module='array(FALSE,FALSE)' \
           --account-name="azadmin" \
