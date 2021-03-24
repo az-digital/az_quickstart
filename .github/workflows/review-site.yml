@@ -9,23 +9,10 @@ jobs:
     name: Build & deploy review site
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout scaffolding
-        uses: actions/checkout@v2
-        with:
-          repository: az-digital/az-quickstart-scaffolding
-          path: az-quickstart-scaffolding
-
       - name: Setup PHP
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
           php-version: '7.4'
-
-      - name: Build Arizona Quickstart
-        run: |
-          (
-            cd az-quickstart-scaffolding
-            composer install
-          )
 
       - name: Set up SSH
         run: |
@@ -46,9 +33,17 @@ jobs:
 
       - name: Sync code to pantheon
         run: |
-          terminus -y art
-          pwd
-          ls -al
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          $(terminus connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
+          cd ${{ secrets.DEMO_SITE_NAME }}
+          rm composer.lock
+          git add composer.lock
+          UPSTREAM_VERSION=$(jq -r '.require."az-digital/az_quickstart"' upstream/composer.json)
+          composer require --no-update "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
+          git add composer.json
+          git commit -m 'rebuild kitten'
+          git push
 
       - name: Wipe existing site
         run: |
