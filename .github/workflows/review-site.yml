@@ -25,7 +25,7 @@ jobs:
 
       - name: Watch workflow logs
         run: |
-          while [ -z "$(terminus workflow:watch --checks 1 kitten 2>&1 | grep 'Finished workflow' | grep 'Sync code on \"dev\"')" ]; do echo watching workflows...; done
+          while [ -z "$(terminus workflow:watch --checks 1 kitten 2>&1 | grep 'Finished workflow' | grep 'Sync code on \"dev\"')" ]; do echo 'watching workflows...'; done
 
   update-code:
     name: Build & deploy review site
@@ -70,6 +70,20 @@ jobs:
     needs: watch-workflow
     runs-on: ubuntu-latest
     steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        with:
+          php-version: '7.4'
+
+      - name: Install terminus
+        run: |
+          composer require pantheon-systems/terminus:^2
+          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
+
+      - name: Set up terminus
+        run: |
+          terminus -y auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+
       - name: Wipe existing site
         run: |
           terminus -y env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
