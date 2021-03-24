@@ -16,10 +16,9 @@ jobs:
 
       - name: Set up SSH
         run: |
-          echo foo
           mkdir ${HOME}/.ssh && chmod 700 ${HOME}/.ssh
-          echo "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
-          echo "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
+          echo -e "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
+          echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
           chmod 600 ${HOME}/.ssh/*
 
       - name: Install terminus
