@@ -6,10 +6,6 @@ dependencies:
     - core.entity_view_mode.node.az_media_list
     - core.entity_view_mode.node.full
     - core.entity_view_mode.node.teaser
-    - node.type.az_event
-    - node.type.az_flexible_page
-    - node.type.az_news
-    - node.type.az_person
   module:
     - entity_embed
     - node
@@ -18,11 +14,7 @@ id: az_embed_content
 type_id: entity
 type_settings:
   entity_type: node
-  bundles:
-    - az_event
-    - az_news
-    - az_flexible_page
-    - az_person
+  bundles: {  }
   display_plugins:
     - 'view_mode:node.az_card'
     - 'view_mode:node.az_media_list'
