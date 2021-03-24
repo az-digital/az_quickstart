@@ -50,7 +50,8 @@ jobs:
 
       - name: Install site
         run: |
-          echo terminus -y drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
+          terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
+          terminus -y drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
           site-install az_quickstart install_configure_form.update_status_module='array(FALSE,FALSE)' \
           --account-name="azadmin" \
           --account-mail="noreply@email.arizona.edu" \
@@ -58,6 +59,7 @@ jobs:
           --site-name="Kitten" \
           --yes
           # --verbose
+          terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
 
       - name: Clear caches
         run: |
