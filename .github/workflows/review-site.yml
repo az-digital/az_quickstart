@@ -32,6 +32,8 @@ jobs:
 
       - name: Sync code to pantheon
         run: |
+          terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          sleep 10
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
           $(terminus connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
