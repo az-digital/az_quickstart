@@ -52,6 +52,7 @@ jobs:
 
       - name: Install site
         run: |
+          sleep 30
           terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
           sleep 30
           terminus -y drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
