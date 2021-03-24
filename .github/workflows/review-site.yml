@@ -75,6 +75,13 @@ jobs:
         with:
           php-version: '7.4'
 
+      - name: Set up SSH
+        run: |
+          mkdir ${HOME}/.ssh && chmod 700 ${HOME}/.ssh
+          echo -e "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
+          echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
+          chmod 600 ${HOME}/.ssh/*
+
       - name: Install terminus
         run: |
           composer require pantheon-systems/terminus:^2
