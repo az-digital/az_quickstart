@@ -2,7 +2,7 @@ name: Build & deploy review site
 on:
   push:
     branches:
-      - kitten
+      - main
 
 jobs:
   watch-workflow:
