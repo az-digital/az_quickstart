@@ -39,6 +39,7 @@ install:
   - drupal:help
   - drupal:image
   - drupal:menu_ui
+  - menu_block:menu_block
   - drupal:options
   - drupal:path
   - pathauto:pathauto
