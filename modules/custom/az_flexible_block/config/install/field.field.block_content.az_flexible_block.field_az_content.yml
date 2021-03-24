@@ -27,6 +27,7 @@ settings:
       az_text_background: az_text_background
       az_text_media: az_text_media
       az_view_reference: az_view_reference
+      az_html: az_html
     target_bundles_drag_drop:
       az_accordion:
         enabled: true
@@ -34,6 +35,9 @@ settings:
       az_cards:
         enabled: true
         weight: 8
+      az_html:
+        enabled: true
+        weight: 14
       az_text:
         enabled: true
         weight: 9
