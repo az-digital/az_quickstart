@@ -28,7 +28,7 @@ jobs:
           while [ -z "$(terminus workflow:watch --checks 1 kitten 2>&1 | grep 'Finished workflow' | grep 'Sync code on \"dev\"')" ]; do echo 'watching workflows...'; done
 
   update-code:
-    name: Build & deploy review site
+    name: Update review site code
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
@@ -67,6 +67,7 @@ jobs:
           git push
 
   install-azqs:
+    name: Install AZQS
     needs: watch-workflow
     runs-on: ubuntu-latest
     steps:
