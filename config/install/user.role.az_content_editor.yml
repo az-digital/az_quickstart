@@ -77,6 +77,8 @@ permissions:
   - 'edit own webform content'
   - 'edit own webform submission'
   - 'edit webform variants'
+  - 'exclude any node title'
+  - 'exclude own node title'
   - 'make smart dates recur'
   - 'reschedule smart date recur instances'
   - 'revert all revisions'
