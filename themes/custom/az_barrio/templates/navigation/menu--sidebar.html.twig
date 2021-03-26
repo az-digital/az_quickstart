@@ -29,7 +29,7 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav').addClass('card').addClass('list-group-flush') }}>
+      <ul{{ attributes.addClass('nav').addClass('flex-column').addClass('nav-pills').addClass('list-group') }}>
     {% else %}
       <ul class="menu">
     {% endif %}
@@ -37,6 +37,8 @@
       {%
         set classes = [
           'nav-item',
+          (menu_level == 0) ? 'list-group-item',
+          'p-0',
           item.is_expanded ? 'menu-item--expanded',
           item.is_collapsed ? 'menu-item--collapsed',
           item.in_active_trail ? 'menu-item--active-trail',
@@ -46,6 +48,7 @@
         {%
           set link_classes = [
             'nav-link',
+            (menu_level > 0) ? 'pl-4',
             item.in_active_trail ? 'active',
             item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(''),
             'nav-link-' ~ item.url.toString() | clean_class,
