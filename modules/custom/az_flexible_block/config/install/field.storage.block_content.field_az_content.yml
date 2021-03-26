@@ -5,8 +5,8 @@ dependencies:
     - block_content
     - entity_reference_revisions
     - paragraphs
-id: block_content.field_az_content
-field_name: field_az_content
+id: block_content.field_az_main_content
+field_name: field_az_main_content
 entity_type: block_content
 type: entity_reference_revisions
 settings:
