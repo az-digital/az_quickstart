@@ -62,7 +62,7 @@ jobs:
           cd ${{ secrets.DEMO_SITE_NAME }}
           rm composer.lock
           UPSTREAM_VERSION=$(jq -r '.require."az-digital/az_quickstart"' upstream/composer.json)
-          composer require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
+          COMPOSER_MEMORY_LIMIT=-1 composer require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
           git add composer.json composer.lock
           git commit --allow-empty -m 'rebuild kitten'
           git push
