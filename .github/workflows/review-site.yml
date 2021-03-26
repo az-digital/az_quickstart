@@ -17,16 +17,16 @@ jobs:
 
       - name: Install terminus
         run: |
-          composer require pantheon-systems/terminus:^2
+          composer -n require pantheon-systems/terminus:^2
           echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
 
       - name: Set up terminus
         run: |
-          terminus -y auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Watch workflow logs
         run: |
-          while [ -z "$(terminus workflow:watch --checks 1 kitten 2>&1 | grep 'Finished workflow' | grep 'Sync code on \"dev\"')" ]; do echo 'watching workflows...'; done
+          while [ -z "$(terminus -y -n workflow:watch --checks 1 kitten 2>&1 | grep 'Finished workflow' | grep 'Sync code on \"dev\"')" ]; do echo 'watching workflows...'; done
 
   update-code:
     name: Update review site code
@@ -46,23 +46,23 @@ jobs:
 
       - name: Install terminus
         run: |
-          composer require pantheon-systems/terminus:^2
+          composer -n require pantheon-systems/terminus:^2
           echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
 
       - name: Set up terminus
         run: |
-          terminus -y auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Sync code to pantheon
         run: |
-          terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
-          $(terminus connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
+          $(terminus -y -n connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
           cd ${{ secrets.DEMO_SITE_NAME }}
           rm composer.lock
           UPSTREAM_VERSION=$(jq -r '.require."az-digital/az_quickstart"' upstream/composer.json)
-          COMPOSER_MEMORY_LIMIT=-1 composer require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
+          COMPOSER_MEMORY_LIMIT=-1 composer -n require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
           git add composer.json composer.lock
           git commit --allow-empty -m 'rebuild kitten'
           git push
@@ -86,30 +86,29 @@ jobs:
 
       - name: Install terminus
         run: |
-          composer require pantheon-systems/terminus:^2
+          composer -n require pantheon-systems/terminus:^2
           echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
 
       - name: Set up terminus
         run: |
-          terminus -y auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Wipe existing site
         run: |
-          terminus -y env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
+          terminus -y -n env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
 
       - name: Install site
         run: |
-          terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
-          terminus -y drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
+          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
+          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
           site-install az_quickstart install_configure_form.update_status_module='array(FALSE,FALSE)' \
           --account-name="azadmin" \
           --account-mail="noreply@email.arizona.edu" \
           --site-mail="noreply@email.arizona.edu" \
           --site-name="Kitten" \
           --yes
-          # --verbose
-          terminus -y connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
 
       - name: Clear caches
         run: |
-          terminus -y env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
+          terminus -y -n env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
