@@ -20,15 +20,14 @@ dependencies:
     - date_ap_style
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   field_group:
     group_row:
       children:
         - group_link
-      parent_name: ''
-      weight: 0
+      parent_name: group_content
+      weight: 3
       format_type: html_element
       region: content
       format_settings:
@@ -45,7 +44,7 @@ third_party_settings:
     group_title_block:
       children: {  }
       parent_name: ''
-      weight: 15
+      weight: 16
       format_type: html_element
       region: hidden
       format_settings:
@@ -63,12 +62,10 @@ third_party_settings:
       children:
         - field_az_published
       parent_name: group_link
-      weight: 5
+      weight: 4
       format_type: html_element
       region: content
       format_settings:
-        id: ''
-        classes: text-muted
         element: div
         show_label: false
         label_element: h3
@@ -76,11 +73,13 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        id: ''
+        classes: 'text-muted mb-0'
       label: 'Text Muted'
     group_title_column:
       children: {  }
       parent_name: ''
-      weight: 14
+      weight: 15
       format_type: html_element
       region: hidden
       format_settings:
@@ -97,7 +96,7 @@ third_party_settings:
     group_text_column:
       children: {  }
       parent_name: ''
-      weight: 2
+      weight: 12
       format_type: html_element
       region: hidden
       format_settings:
@@ -114,7 +113,7 @@ third_party_settings:
     group_lead:
       children: {  }
       parent_name: ''
-      weight: 13
+      weight: 14
       format_type: html_element
       region: hidden
       format_settings:
@@ -131,7 +130,7 @@ third_party_settings:
     group_body_row:
       children: {  }
       parent_name: ''
-      weight: 1
+      weight: 11
       format_type: html_element
       region: hidden
       format_settings:
@@ -166,7 +165,7 @@ third_party_settings:
     group_fig_caption:
       children: {  }
       parent_name: ''
-      weight: 3
+      weight: 13
       format_type: html_element
       region: hidden
       format_settings:
@@ -183,12 +182,11 @@ third_party_settings:
     group_link:
       children:
         - group_photo_container
-        - group_heading
         - group_text_muted
-        - group_summary
+        - group_heading
         - group_read_more
       parent_name: group_row
-      weight: 7
+      weight: 4
       format_type: link
       region: content
       format_settings:
@@ -202,7 +200,7 @@ third_party_settings:
       children:
         - smart_title
       parent_name: group_link
-      weight: 4
+      weight: 5
       format_type: html_element
       region: content
       format_settings:
@@ -214,15 +212,15 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-title text-midnight h2 mb-0'
+        classes: 'card-title text-midnight h2 mb-0 mt-0'
       label: Heading
     group_summary:
       children:
         - field_az_summary
-      parent_name: group_link
-      weight: 6
+      parent_name: ''
+      weight: 1
       format_type: html_element
-      region: content
+      region: hidden
       format_settings:
         id: ''
         classes: 'card-text font-weight-normal mt-2'
@@ -238,12 +236,10 @@ third_party_settings:
       children:
         - links
       parent_name: group_link
-      weight: 7
+      weight: 6
       format_type: html_element
       region: content
       format_settings:
-        id: ''
-        classes: 'card-clickable-link mt-2'
         element: div
         show_label: true
         label_element: div
@@ -251,7 +247,27 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'Read More'
+        id: ''
+        classes: 'card-clickable-link mt-2'
+      label: 'Read more'
+    group_content:
+      children:
+        - group_row
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+      label: Content
   smart_title:
     enabled: true
     settings:
@@ -289,20 +305,13 @@ content:
     third_party_settings: {  }
     type: timestamp_ap_style
     region: content
-  field_az_summary:
-    type: text_default
-    weight: 8
-    region: content
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
   links:
     weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
   smart_title:
-    weight: 3
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -316,3 +325,4 @@ hidden:
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
+  field_az_summary: true

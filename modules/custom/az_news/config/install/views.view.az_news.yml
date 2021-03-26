@@ -549,9 +549,9 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  block_1:
+  marquee:
     display_plugin: block
-    id: block_1
+    id: marquee
     display_title: 'Recent News Marquee'
     position: 5
     display_options:
@@ -574,7 +574,7 @@ display:
       style:
         type: default
         options:
-          row_class: col-md-7
+          row_class: ''
           default_row_class: false
           uses_fields: false
       row:
@@ -586,6 +586,8 @@ display:
       block_description: 'Recent News Marquee'
       title: ''
       css_class: row
+      allow:
+        items_per_page: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -612,7 +614,7 @@ display:
         row: false
         style_options: false
       displays:
-        block_1: block_1
+        marquee: marquee
       attachment_position: after
       inherit_arguments: true
       pager:
@@ -621,7 +623,7 @@ display:
           items_per_page: 3
           offset: 1
       pager_options: null
-      css_class: col-md-5
+      css_class: ''
       style:
         type: default
         options:

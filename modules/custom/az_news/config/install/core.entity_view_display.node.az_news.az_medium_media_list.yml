@@ -106,7 +106,7 @@ third_party_settings:
       format_type: html_element
       region: content
       format_settings:
-        element: h5
+        element: h4
         show_label: false
         label_element: h3
         label_element_classes: ''
@@ -114,7 +114,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-title text-midnight h5 mt-0'
+        classes: 'card-title text-midnight h4 mt-0'
       label: Heading
     group_read_more:
       children:
@@ -127,7 +127,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: div
-        label_element_classes: 'text-chili small mt-2 mb-4'
+        label_element_classes: 'text-chili mt-2 mb-4'
         attributes: ''
         effect: none
         speed: fast
