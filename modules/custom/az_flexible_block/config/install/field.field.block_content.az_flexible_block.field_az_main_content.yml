@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_flexible_block
+    - field.storage.block_content.field_az_main_content
+  module:
+    - entity_reference_revisions
+id: block_content.az_flexible_block.field_az_main_content
+field_name: field_az_main_content
+entity_type: block_content
+bundle: az_flexible_block
+label: Content
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    negate: 0
+    target_bundles: null
+    target_bundles_drag_drop:
+      az_text:
+        enabled: false
+        weight: 2
+field_type: entity_reference_revisions

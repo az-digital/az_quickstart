@@ -18,6 +18,7 @@ install:
   - az_paragraphs_view
   - az_core
   - az_flexible_page
+  - az_flexible_block
   - az_news
   - az_person
   - az_event
@@ -59,8 +60,11 @@ install:
   - drupal:views_ui
   - drupal:tour
   - drupal:automated_cron
+  - chosen:chosen
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee
+  - bootstrap_utilities:bootstrap_utilities
+  - exclude_node_title:exclude_node_title
 
 themes:
   - az_barrio
