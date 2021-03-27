@@ -96,7 +96,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: float-right
+        classes: col-4
       label: Media
     group_heading:
       children:
@@ -106,7 +106,7 @@ third_party_settings:
       format_type: html_element
       region: content
       format_settings:
-        element: h4
+        element: h5
         show_label: false
         label_element: h3
         label_element_classes: ''
@@ -114,7 +114,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-title text-midnight h4 mt-0'
+        classes: 'card-title text-midnight h5 mt-0 mb-0'
       label: Heading
     group_read_more:
       children:
@@ -127,7 +127,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: div
-        label_element_classes: 'text-chili mt-2 mb-4'
+        label_element_classes: 'text-chili mt-1 mb-4'
         attributes: ''
         effect: none
         speed: fast
@@ -219,7 +219,7 @@ content:
     region: content
     label: hidden
     settings:
-      view_mode: az_thumbnail
+      view_mode: az_card_image
       link: false
     third_party_settings: {  }
   field_az_published:

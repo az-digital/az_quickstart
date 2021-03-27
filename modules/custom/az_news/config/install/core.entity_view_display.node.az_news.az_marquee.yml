@@ -74,7 +74,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'text-muted mb-0'
+        classes: 'text-muted font-weight-normal mb-0'
       label: 'Text Muted'
     group_title_column:
       children: {  }
@@ -212,7 +212,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-title text-midnight h2 mb-0 mt-0'
+        classes: 'card-title text-midnight h3 mb-0 mt-0'
       label: Heading
     group_summary:
       children:
@@ -248,7 +248,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-clickable-link mt-2'
+        classes: 'card-clickable-link mt-1'
       label: 'Read more'
     group_content:
       children:
