@@ -2,13 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_row
+    - core.entity_view_mode.node.az_card
     - node.type.az_event
     - taxonomy.vocabulary.az_event_categories
   module:
     - node
     - taxonomy
     - user
+    - views_bootstrap
 id: az_events
 label: 'AZ Events'
 module: views
@@ -70,13 +71,13 @@ display:
         type: default
         options:
           row_class: ''
-          default_row_class: true
+          default_row_class: false
           uses_fields: false
       row:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_row
+          view_mode: az_card
       fields:
         title:
           id: title
@@ -272,6 +273,7 @@ display:
           entity_type: node
           plugin_id: taxonomy_index_tid_depth
       display_extenders: {  }
+      css_class: ''
     cache_metadata:
       max-age: -1
       contexts:
@@ -279,6 +281,113 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_grid:
+    display_plugin: block
+    id: az_grid
+    display_title: 'Grid View'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      title: Events
+      defaults:
+        title: false
+        style: false
+        row: false
+        style_options: false
+        pager: false
+        pager_options: false
+        footer: false
+      display_description: 'Use in a region that spans at least 12 columns.'
+      style:
+        type: views_bootstrap_grid
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+          col_xs: col-12
+          col_sm: col-sm-12
+          col_md: col-md-4
+          col_lg: col-lg-4
+          col_xl: col-xl-4
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_card
+      style_options: null
+      allow:
+        items_per_page: false
+      pager:
+        type: some
+        options:
+          items_per_page: 3
+          offset: 0
+      pager_options: null
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events on the calendar\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events on the calendar</a>\r\n</div>"
+          plugin_id: text_custom
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_sidebar:
+    display_plugin: block
+    id: az_sidebar
+    display_title: 'Grid Sidebar'
+    position: 3
+    display_options:
+      display_extenders: {  }
+      display_description: 'Use in first or second sidebar regions'
+      title: ''
+      defaults:
+        title: false
+        footer: false
+        pager: false
+        pager_options: false
+      allow:
+        items_per_page: false
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events on the calendar\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events on the calendar</a>\r\n</div>"
+          plugin_id: text_custom
+      pager:
+        type: some
+        options:
+          items_per_page: 3
+          offset: 0
+      pager_options: null
+      block_description: 'Sidebar Events Block'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
@@ -290,6 +399,9 @@ display:
     display_options:
       display_extenders: {  }
       path: calendar
+      css_class: card-group
+      defaults:
+        css_class: false
     cache_metadata:
       max-age: -1
       contexts:
