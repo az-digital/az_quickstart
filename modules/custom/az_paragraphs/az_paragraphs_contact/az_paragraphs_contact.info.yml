@@ -8,5 +8,6 @@ dependencies:
   - drupal:node
   - drupal:telephone
   - drupal:text
+  - field_group:field_group
   - paragraphs:paragraphs
 package: 'The University of Arizona'

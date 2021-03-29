@@ -237,7 +237,7 @@ content:
     region: content
   field_az_contacts:
     weight: 3
-    label: hidden
+    label: above
     settings:
       view_mode: default
       link: ''
