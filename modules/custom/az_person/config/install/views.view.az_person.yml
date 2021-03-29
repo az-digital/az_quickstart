@@ -61,14 +61,10 @@ display:
       style:
         type: views_bootstrap_grid
         options:
-          grouping:
-            -
-              field: field_az_person_category
-              rendered: true
-              rendered_strip: false
+          grouping: {  }
           row_class: ''
           default_row_class: false
-          uses_fields: true
+          uses_fields: false
           col_xs: col-12
           col_sm: col-sm-6
           col_md: col-md-4
@@ -240,10 +236,10 @@ display:
           entity_type: node
           plugin_id: node_term_data
       arguments:
-        term_node_tid_depth:
-          id: term_node_tid_depth
-          table: node_field_data
-          field: term_node_tid_depth
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
           relationship: none
           group_type: group
           admin_label: ''
@@ -252,8 +248,8 @@ display:
             value: all
             title_enable: false
             title: All
-          title_enable: false
-          title: ''
+          title_enable: true
+          title: '<none>'
           default_argument_type: fixed
           default_argument_options:
             argument: ''
@@ -278,11 +274,16 @@ display:
             operation: view
             multiple: 1
             access: false
-          depth: 1
           break_phrase: true
-          use_taxonomy_term_path: false
-          entity_type: node
-          plugin_id: taxonomy_index_tid_depth
+          add_table: false
+          require_value: false
+          reduce_duplicates: true
+          plugin_id: taxonomy_index_tid
+        tid_1:
+          id: tid_1
+          table: taxonomy_index
+          field: tid
+          plugin_id: taxonomy_index_tid
       display_extenders: {  }
       css_class: az-person-grid
     cache_metadata:
@@ -372,20 +373,9 @@ display:
         fields: false
         relationships: false
         sorts: false
+        arguments: false
       relationships: {  }
       sorts:
-        field_az_person_category_target_id:
-          id: field_az_person_category_target_id
-          table: node__field_az_person_category
-          field: field_az_person_category_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: standard
         weight:
           id: weight
           table: draggableviews_structure
@@ -424,6 +414,50 @@ display:
           expose:
             label: ''
           plugin_id: standard
+      arguments:
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: true
+          title: '<none>'
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            items_per_page: 25
+            override: false
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: ignore
+          validate_options:
+            bundles:
+              az_person_categories: az_person_categories
+              az_person_categories_secondary: az_person_categories_secondary
+            operation: view
+            multiple: 1
+            access: false
+          break_phrase: true
+          add_table: false
+          require_value: false
+          reduce_duplicates: true
+          plugin_id: taxonomy_index_tid
     cache_metadata:
       max-age: -1
       contexts:
