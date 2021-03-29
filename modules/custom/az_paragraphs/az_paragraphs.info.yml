@@ -7,4 +7,7 @@ dependencies:
   - paragraphs:paragraphs
   - az_card
   - az_media
+  - drupal:email
+  - drupal:text
+  - drupal:telephone
   - entity_embed:entity_embed

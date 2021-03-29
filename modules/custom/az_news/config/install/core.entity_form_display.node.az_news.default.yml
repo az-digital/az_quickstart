@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_caption
+    - field.field.node.az_news.field_az_contacts
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
@@ -45,6 +46,7 @@ third_party_settings:
     group_az_extra_fields:
       children:
         - field_az_attachments
+        - field_az_contacts
       parent_name: ''
       weight: 10
       format_type: details_sidebar
@@ -98,6 +100,18 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
+  field_az_contacts:
+    weight: 15
+    settings:
+      title: Contact
+      title_plural: Contacts
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: az_contact
+    third_party_settings: {  }
+    type: entity_reference_paragraphs
     region: content
   field_az_expiration_date:
     weight: 14
