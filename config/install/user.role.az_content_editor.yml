@@ -22,8 +22,6 @@ permissions:
   - 'access webform help'
   - 'access webform overview'
   - 'add content to books'
-  - 'administer menu'
-  - 'administer redirects'
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
@@ -117,4 +115,3 @@ permissions:
   - 'view webform revisions'
   - 'view webform submissions any node'
   - 'view webform submissions own node'
-  
