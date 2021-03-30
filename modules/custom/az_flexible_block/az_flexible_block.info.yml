@@ -1,0 +1,10 @@
+name: 'Quickstart Flexible Block'
+type: module
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - drupal:field
+  - drupal:block_content
+  - drupal:path
+  - drupal:user
+  - az_paragraphs
