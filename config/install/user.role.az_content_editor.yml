@@ -47,6 +47,7 @@ permissions:
   - 'delete content translations'
   - 'delete media'
   - 'delete own az_audio media'
+  - 'delete own az_carousel_item content'
   - 'delete own az_document media'
   - 'delete own az_event content'
   - 'delete own az_flexible_page content'

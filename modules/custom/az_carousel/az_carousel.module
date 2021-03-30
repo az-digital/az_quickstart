@@ -8,7 +8,7 @@
 /**
  * Implements hook_preprocess_node().
  */
-function az_carousel_preprocess_node(&$variables) {
+function az_carousel_preprocess_node__az_carousel_item(&$variables) {
 
   $variables['#attached']['library'][] = 'az_carousel/az_carousel';
 

@@ -16,8 +16,7 @@ dependencies:
   - field_group:field_group
   - link_class:link_class
   - pathauto:pathauto
-  - rabbit_hole:rabbit_hole
-  - rh_node:rh_node
+  - search_exclude:search_exclude
   - slick:slick
   - slick_ui:slick_ui
   - slick_views:slick_views
