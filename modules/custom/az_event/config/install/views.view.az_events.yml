@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_row
     - node.type.az_event
     - taxonomy.vocabulary.az_event_categories
   module:
@@ -77,7 +78,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_card
+          view_mode: az_row
       fields:
         title:
           id: title
@@ -394,14 +395,15 @@ display:
   page_1:
     display_plugin: page
     id: page_1
-    display_title: Page
+    display_title: 'Full Calendar'
     position: 1
     display_options:
       display_extenders: {  }
       path: calendar
-      css_class: card-group
+      css_class: ''
       defaults:
         css_class: false
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:
