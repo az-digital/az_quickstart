@@ -78,7 +78,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_row
+          view_mode: az_card
       fields:
         title:
           id: title
@@ -362,6 +362,7 @@ display:
         footer: false
         pager: false
         pager_options: false
+        header: false
       allow:
         items_per_page: false
       footer:
@@ -374,7 +375,7 @@ display:
           admin_label: ''
           empty: false
           tokenize: false
-          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events on the calendar\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events on the calendar</a>\r\n</div>"
+          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events</a>\r\n</div>"
           plugin_id: text_custom
       pager:
         type: some
@@ -383,6 +384,18 @@ display:
           offset: 0
       pager_options: null
       block_description: 'Sidebar Events Block'
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: false
+          tokenize: false
+          content: '<h2 class="h5 margin-align-middle text-uppercase">Upcoming Events</h2>'
+          plugin_id: text_custom
     cache_metadata:
       max-age: -1
       contexts:
@@ -403,7 +416,22 @@ display:
       css_class: ''
       defaults:
         css_class: false
+        style: false
+        row: false
+        style_options: false
       display_description: ''
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: true
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_row
+      style_options: null
     cache_metadata:
       max-age: -1
       contexts:

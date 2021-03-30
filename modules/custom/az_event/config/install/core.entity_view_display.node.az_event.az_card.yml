@@ -197,7 +197,7 @@ third_party_settings:
         custom_uri: ''
         target_attribute: default
         id: ''
-        classes: card-body
+        classes: 'card-body p-4'
       label: Link
     group_date:
       children:
@@ -215,7 +215,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'text-muted font-weight-bold mt-0 mb-0'
+        classes: 'text-muted font-weight-bold small mt-0 mb-0'
       label: Date
     group_heading:
       children:
@@ -225,7 +225,7 @@ third_party_settings:
       format_type: html_element
       region: content
       format_settings:
-        element: h5
+        element: h2
         show_label: false
         label_element: h3
         label_element_classes: ''
