@@ -364,6 +364,7 @@ display:
         pager_options: false
         header: false
         arguments: false
+        empty: false
       allow:
         items_per_page: false
       footer:
@@ -481,6 +482,7 @@ display:
           entity_type: node
           entity_field: nid
           plugin_id: node_nid
+      empty: {  }
     cache_metadata:
       max-age: -1
       contexts:
