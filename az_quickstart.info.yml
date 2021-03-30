@@ -63,6 +63,7 @@ install:
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee
   - bootstrap_utilities:bootstrap_utilities
+  - search_exclude:search_exclude
 
 themes:
   - az_barrio
