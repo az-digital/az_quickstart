@@ -4,6 +4,13 @@
 	margin: 0;
 }
 
+/* 
+* 	Slick Track
+* 	Fix problem causing the next item slide to jump down and cause taller track */
+.az-carousel .slick-track {
+	display: flex;
+}
+
 /* Carousel Navigation/Buttons */
 .az-carousel .slick-dotted {
 	margin-bottom: 0;
