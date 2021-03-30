@@ -279,11 +279,6 @@ display:
           require_value: false
           reduce_duplicates: true
           plugin_id: taxonomy_index_tid
-        tid_1:
-          id: tid_1
-          table: taxonomy_index
-          field: tid
-          plugin_id: taxonomy_index_tid
       display_extenders: {  }
       css_class: az-person-grid
     cache_metadata:
@@ -499,18 +494,6 @@ display:
           relationship: none
           view_mode: az_row
       sorts:
-        field_az_person_category_target_id:
-          id: field_az_person_category_target_id
-          table: node__field_az_person_category
-          field: field_az_person_category_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: ASC
-          exposed: false
-          expose:
-            label: ''
-          plugin_id: standard
         weight:
           id: weight
           table: draggableviews_structure
