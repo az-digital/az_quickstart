@@ -130,11 +130,13 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
       // Media.
       $media_render_array = [];
-      if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
-        switch ($media->bundle()) {
-          case 'az_image':
-            $media_render_array = $this->generateImageRenderArray($media);
-            break;
+      if (!empty($item->media)) {
+        if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
+          switch ($media->bundle()) {
+            case 'az_image':
+              $media_render_array = $this->generateImageRenderArray($media);
+              break;
+          }
         }
       }
 

@@ -94,7 +94,7 @@ class AZCardWidget extends WidgetBase {
         $values[$delta]['body'] = NULL;
       }
       if (empty($value['media'])) {
-        $values[$delta]['media'] = 0;
+        $values[$delta]['media'] = NULL;
       }
       if ($value['link_title'] === '') {
         $values[$delta]['link_title'] = NULL;
