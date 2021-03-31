@@ -9,7 +9,6 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
-use Drupal\file\Entity\File;
 
 /**
  * Defines the 'az_card' field widget.
