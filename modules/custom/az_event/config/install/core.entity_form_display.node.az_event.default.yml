@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
+    - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
@@ -17,6 +18,7 @@ dependencies:
     - file
     - link
     - media_library
+    - paragraphs
     - path
     - smart_date
     - smart_date_recur
@@ -64,6 +66,18 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
+  field_az_contacts:
+    type: entity_reference_paragraphs
+    weight: 29
+    settings:
+      title: Contact
+      title_plural: Contacts
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: '_none'
+    third_party_settings: {  }
     region: content
   field_az_event_category:
     weight: 9

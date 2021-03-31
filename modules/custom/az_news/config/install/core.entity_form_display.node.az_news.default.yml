@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_caption
+    - field.field.node.az_news.field_az_contacts
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
@@ -31,7 +32,7 @@ third_party_settings:
         - field_az_summary
         - field_az_expiration_date
       parent_name: ''
-      weight: 9
+      weight: 10
       format_type: details_sidebar
       region: content
       format_settings:
@@ -46,7 +47,7 @@ third_party_settings:
       children:
         - field_az_attachments
       parent_name: ''
-      weight: 10
+      weight: 11
       format_type: details_sidebar
       region: content
       format_settings:
@@ -64,7 +65,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 12
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -98,6 +99,18 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
+  field_az_contacts:
+    weight: 9
+    settings:
+      title: Contact
+      title_plural: Contacts
+      edit_mode: open
+      add_mode: dropdown
+      form_display_mode: default
+      default_paragraph_type: '_none'
+    third_party_settings: {  }
+    type: entity_reference_paragraphs
     region: content
   field_az_expiration_date:
     weight: 14
@@ -172,7 +185,7 @@ content:
     region: content
   path:
     type: path
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -180,21 +193,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 13
+    weight: 14
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 17
+    weight: 18
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 15
     region: content
     third_party_settings: {  }
   title:
@@ -207,7 +220,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 11
+    weight: 12
     settings:
       match_operator: CONTAINS
       size: 60
@@ -216,7 +229,7 @@ content:
     region: content
     third_party_settings: {  }
   url_redirects:
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
