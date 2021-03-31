@@ -90,27 +90,11 @@ class AZCardWidget extends WidgetBase {
     }
 
     $title_hint = isset($items[$delta]->title) ? $items[$delta]->title : ('Card ' . ($delta + 1));
-    $media_hint = isset($items[$delta]->media) ? $items[$delta]->media : NULL;
 
     if (!$status) {
       $element['title_hint'] = [
-        '#markup' => ('<h5>' . $title_hint . '</h5>'),
+        '#markup' => ('<h5 class="mb-0">' . $title_hint . '</h5>'),
       ];
-      $file = File::load($media_hint);
-      if ($file) {
-        $image = $this->imageFactory->get($file->getFileUri());
-        if ($image && $image->isValid()) {
-          $element['media_hint'] = [
-            '#prefix' => '<div>',
-            '#suffix' => '</div>',
-            '#theme' => 'image_style',
-            '#width' => $image->getWidth(),
-            '#height' => $image->getHeight(),
-            '#style_name' => 'media_library',
-            '#uri' => $file->getFileUri(),
-          ];
-        }
-      }
     }
 
     $element['title'] = [
@@ -128,22 +112,16 @@ class AZCardWidget extends WidgetBase {
       '#access' => $status,
     ];
 
+    $element['media'] = [
+      '#type' => 'media_library',
+      '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
+      '#allowed_bundles' => ['az_image'],
+      '#delta' => $delta,
+      '#cardinality' => 1,
+    ];
     if ($status) {
-      $element['media'] = [
-        '#type' => 'media_library',
-        '#title' => $this->t('Card Media'),
-        '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
-        '#allowed_bundles' => ['az_image'],
-        '#delta' => $delta,
-        '#cardinality' => 1,
-      ];
-    }
-    else {
-      // If we are collapsed, just keep record of the current media.
-      $element['media'] = [
-        '#type' => 'value',
-        '#value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
-      ];
+      // Only show the title in open mode due to its size.
+      $element['media']['#title'] = $this->t('Card Media');
     }
 
     $element['link_title'] = [

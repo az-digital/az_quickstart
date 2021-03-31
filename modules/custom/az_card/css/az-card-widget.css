@@ -1,3 +1,20 @@
 tr.odd .az-card-elements .form-item {
   margin-bottom: 8px;
 }
+
+.az-card-elements .media-library-form-element .description {
+  display: none;
+}
+
+.az-card-elements .media-library-form-element {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.az-card-elements .media-library-form-element legend {
+  display: none;
+}
+
+.az-card-elements .media-library-selection {
+  margin: 0;
+}
