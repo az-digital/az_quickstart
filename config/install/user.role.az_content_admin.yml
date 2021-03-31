@@ -13,7 +13,6 @@ permissions:
   - 'administer menu'
   - 'administer nodes'
   - 'administer quickstart configuration'
-  - 'administer redirect settings'
   - 'administer redirects'
   - 'administer taxonomy'
   - 'administer xmlsitemap'
