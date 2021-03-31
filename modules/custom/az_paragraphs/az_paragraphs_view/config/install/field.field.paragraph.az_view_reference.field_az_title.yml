@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_title
+    - paragraphs.paragraphs_type.az_view_reference
+id: paragraph.az_view_reference.field_az_title
+field_name: field_az_title
+entity_type: paragraph
+bundle: az_view_reference
+label: Title
+description: 'Add a custom title above this view.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
+

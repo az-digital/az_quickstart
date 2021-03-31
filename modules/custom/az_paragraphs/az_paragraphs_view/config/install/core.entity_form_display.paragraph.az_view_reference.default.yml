@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.paragraph.az_view_reference.field_az_title
     - field.field.paragraph.az_view_reference.field_az_view_reference
     - paragraphs.paragraphs_type.az_view_reference
   module:
@@ -11,8 +12,16 @@ targetEntityType: paragraph
 bundle: az_view_reference
 mode: default
 content:
-  field_az_view_reference:
+  field_az_title:
     weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_az_view_reference:
+    weight: 1
     settings: {  }
     third_party_settings: {  }
     type: viewsreference_select
