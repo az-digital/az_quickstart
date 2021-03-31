@@ -233,7 +233,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-title text-red h5 mt-0'
+        classes: 'card-title text-red h5 mt-0 mb-2'
       label: Heading
     group_summary:
       children:
