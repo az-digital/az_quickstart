@@ -61,33 +61,38 @@
 {% set content_attributes = create_attribute() %}
 {%
   set content_classes = [
-    'content',
-    text_on_media.style,
-    text_on_media.bg_color
+    'content'|clean_class,
+    text_on_media.style|clean_class,
+    text_on_media.bg_color|clean_class
   ]
 %}
 {% set paragraph_id = paragraph.bundle() ~ '-' ~ paragraph.id() %}
 
 {% block paragraph %}
+  <div{{ attributes.addClass(classes).setAttribute('id',  paragraph_id) }}>
   {% if text_on_media.style != 'bottom'%}
     {{ style_element }}
   {% endif %}
-  <div{{ attributes.addClass(classes).setAttribute('id',  paragraph_id) }}>
-    {% block content %}
-      {% if text_on_media.style == 'bottom' %}
-        {{ inner_media }}
-      {% endif %}
-      {# Layout for content width AND full width styles #}
-      <div class="container">
-        <div class="row">
-          <div{{ col_attributes.addClass(col_classes) }}>
-            <div{{ content_attributes.addClass(content_classes) }}>
-              <h2 class="mt-0 text-blue bold">{{ paragraph.field_az_title.value }}</h2>
-              {{ content }}
+  {% if text_on_media.override_aspect_ratio == true %}
+    <div class="shield-cover full-width-background">
+     <div class="container container-absolute">
+      <span class="row">
+  {% endif %}
+          {% block content %}
+            {% if text_on_media.style == 'bottom' %}
+              {{ inner_media }}
+            {% endif %}
+            {# Layout for content width AND full width styles #}
+            <div{{ col_attributes.addClass(col_classes) }}>
+              <div{{ content_attributes.addClass(content_classes) }}>
+                <h2 class="mt-0 text-blue bold">{{ paragraph.field_az_title.value }}</h2>
+                {{ content }}
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-    {% endblock %}
+          {% endblock %}
+  {% if text_on_media.override_aspect_ratio == true %}
+      </span>
+    </div>
   </div>
+  {% endif %}
 {% endblock paragraph %}

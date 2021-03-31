@@ -2,6 +2,8 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
@@ -20,6 +22,7 @@ use Drupal\file\FileInterface;
  * )
  */
 class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
+
   /**
    * {@inheritdoc}
    */
@@ -34,6 +37,14 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['full_width'] ?? '',
       '#description' => $this->t('Makes media full width if checked.'),
       '#return_value' => 'full-width-background',
+    ];
+
+    $form['override_aspect_ratio'] = [
+      '#title' => $this->t('Override container aspect ratio'),
+      '#type' => 'checkbox',
+      '#default_value' => $config['override_aspect_ratio'] ?? '',
+      '#description' => $this->t('When checked, changing the aspect ratio of the thumbnail will change the aspect ratio of the container.'),
+      '#return_value' => 'override-aspect-ratio',
     ];
 
     $form['style'] = [
@@ -133,31 +144,119 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
   }
 
+
+  /**
+   * {@inheritdoc}
+   */
+  public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
+
+    // Get plugin configuration.
+    $video_oembed_id = $this->getYouTubeid($source_url);
+
+    // Get plugin configuration.
+    $config = $this->getSettings($paragraph);
+
+    // Apply bottom spacing if set.
+    if (!empty($config['az_display_settings']['bottom_spacing'])) {
+      $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
+    }
+
+    // Play button pseudo field.
+    if ($display->getComponent('az_play_button')) {
+      $build['az_play_button'][] = [
+        '#type' => 'markup',
+        '#markup' => '<div id="video-play-' . $video_oembed_id . '" title="Play the video" class="bg-video-player-control bg-trans-white uaqs-video-play" aria-hidden="true">Play Video</div>',
+      ];
+    }
+
+    // Pause button pseudo field.
+    if ($display->getComponent('az_pause_button')) {
+      $build['az_pause_button'][]
+        = [
+        '#type' => 'markup',
+        '#markup' => '<div id="video-pause-' . $video_oembed_id . '" title="Pause the video" class="bg-video-player-control bg-trans-white uaqs-video-pause" aria-hidden="true">Pause Video</div>',
+
+      ];
+    }
+
+  }
+
   private function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
+    $config = $this->getSettings($paragraph);
+    $view_builder = \Drupal::EntityTypeManager()->getViewBuilder('media');
+    if ($config['override_aspect_ratio'])  {
+      $background_media = $view_builder->view($media, 'az_background_override_aspect_ratio');
+    }
+    else {
+      $background_media = $view_builder->view($media, 'az_background');
+    }
     $provider = $media_oembed->getMetadata($media, 'provider_name');
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
     if ($provider == 'YouTube') {
       $source_url = $media->get('field_media_az_oembed_video')->value;
       $video_oembed_id = $this->getYouTubeid($source_url);
-      $js['#attached']['drupalSettings']['azFieldsMedia']['bgVideos'][$video_oembed_id] = [
-        'videoId' => $video_oembed_id,
-        'start' => 0,
-      ];
-      $text_on_bottom = [
+      // Retrieve a render array for that field with the given view mode.
+      $pause_button = [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        '#markup' => $html,
-        '#allowed_tags' => ['iframe'],
+        '#attributes' => [
+          'class' => [
+            'bg-video-player-control',
+            'bg-trans-white',
+            'az-video-pause',
+            'video-pause-' . $video_oembed_id,
+          ],
+          'title' => 'Pause the Video',
+          'aria-hidden' => true,
+        ],
+        '#value' => 'Pause Video',
+      ];
+      $play_button = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => [
+            'bg-video-player-control',
+            'bg-trans-white',
+            'az-video-play',
+            'video-play-' . $video_oembed_id,
+          ],
+          'title' => 'Play the video',
+          'aria-hidden' => true,
+        ],
+        '#value' => 'Play Video',
+      ];
+      $background_video = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#allowed_tags' => ['iframe', 'img'],
         '#attributes' => [
           'id' => [$video_oembed_id . '-bg-video-container'],
+          'class' => [
+            'az-video-background',
+          ],
         ],
+        'child' =>  $background_media,
+        'pause' =>  $pause_button,
+        'play'  =>  $play_button,
+        '#attached' => [
+          'drupalSettings' => [
+            'azFieldsMedia' => [
+              'bgVideos' => [
+                $video_oembed_id => [
+                  'videoId' => $video_oembed_id,
+                  'start' => 0,
+                ]
+              ]
+            ]
+          ]
+        ]
       ];
-      $variables['style_element'] = $text_on_bottom;
-      \Drupal::service('renderer')->render($js);
-      return $variables;
+     $variables['style_element'] = $background_video;
+     return $variables;
     }
   }
 
@@ -186,7 +285,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $text_on_bottom = [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        '#value' =>  render($image_renderable),
+        'child' =>  $image_renderable,
         '#attributes' => [
           'class' => ['text-on-media-bottom'],
         ],
