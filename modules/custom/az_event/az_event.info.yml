@@ -25,3 +25,4 @@ dependencies:
   - taxonomy
   - text
   - user
+  - views_bootstrap
