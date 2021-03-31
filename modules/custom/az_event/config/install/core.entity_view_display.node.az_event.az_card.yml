@@ -215,7 +215,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'text-muted font-weight-bold small mt-0 mb-0'
+        classes: 'text-muted font-weight-bold small'
       label: Date
     group_heading:
       children:
