@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.az_news
+  module:
+    - system
+    - views
+  theme:
+    - az_barrio
+id: views_block__az_news_marquee
+theme: az_barrio
+region: content
+weight: -3
+provider: null
+plugin: 'views_block:az_news-marquee'
+settings:
+  id: 'views_block:az_news-marquee'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: /news-teasers
+    negate: false

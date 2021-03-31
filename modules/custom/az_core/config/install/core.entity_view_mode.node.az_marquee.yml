@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_marquee
+label: Marquee
+targetEntityType: node
+cache: true
