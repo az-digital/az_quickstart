@@ -31,7 +31,6 @@
         "cweagans/composer-patches": "^1.7",
         "drupal/auto_entitylabel": "3.0-beta4",
         "drupal/background_image_formatter": "1.7",
-        "drupal/blazy": "2.1",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/bootstrap_utilities": "1.0",
         "drupal/cas": "1.7",
