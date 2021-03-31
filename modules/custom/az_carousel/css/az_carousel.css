@@ -6,7 +6,8 @@
 
 /* 
 * 	Slick Track
-* 	Fix problem causing the next item slide to jump down and cause taller track */
+* 	Fix problem causing the next item slide to jump down and cause taller track
+*/
 .az-carousel .slick-track {
 	display: flex;
 }
