@@ -1,0 +1,34 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_carousel
+    - system
+    - user
+  theme:
+    - az_barrio
+id: az_carousel_notification
+theme: az_barrio
+region: content_featured
+weight: -9
+provider: null
+plugin: az_carousel_notice
+settings:
+  id: az_carousel_notice
+  label: 'Quickstart Carousel Notification Block'
+  provider: az_carousel
+  label_display: '0'
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false
+  user_role:
+    id: user_role
+    roles:
+      az_content_editor: az_content_editor
+      az_content_admin: az_content_admin
+      administrator: administrator
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
