@@ -95,7 +95,8 @@
                 "Remove Claro tabledrag.js replacement when core issues are resolved" : "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Editing menus user-experience issue" : "https://www.drupal.org/files/issues/2021-02-09/2957953-9.2.x-113.patch",
-                "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch"
+                "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
