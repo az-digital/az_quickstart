@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
+    - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
@@ -14,6 +15,7 @@ dependencies:
     - node.type.az_event
   module:
     - date_ap_style
+    - entity_reference_revisions
     - field_group
     - file
     - link
@@ -133,7 +135,8 @@ third_party_settings:
         speed: fast
       label: 'column 2'
     group_col_3:
-      children: {  }
+      children:
+        - field_az_contacts
       parent_name: group_row_2
       weight: 11
       format_type: html_element
@@ -188,6 +191,15 @@ content:
     settings: {  }
     third_party_settings: {  }
     type: text_default
+    region: content
+  field_az_contacts:
+    type: entity_reference_revisions_entity_view
+    weight: 16
+    label: above
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
     region: content
   field_az_event_category:
     weight: 5

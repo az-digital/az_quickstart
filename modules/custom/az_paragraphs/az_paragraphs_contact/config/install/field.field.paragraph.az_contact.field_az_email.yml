@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_email
+    - paragraphs.paragraphs_type.az_contact
+id: paragraph.az_contact.field_az_email
+field_name: field_az_email
+entity_type: paragraph
+bundle: az_contact
+label: 'Contact Email'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: email
