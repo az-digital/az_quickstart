@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - search_exclude
+id: content_exclude_az_content
+label: Content
+path: node
+weight: 0
+plugin: search_exclude_node_search
+configuration:
+  rankings: {  }
+  excluded_bundles:
+    az_carousel_item: az_carousel_item

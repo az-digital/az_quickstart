@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.az_carousel_item
+label: 'Carousel Item'
+targetEntityType: media
+cache: true

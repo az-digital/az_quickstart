@@ -55,6 +55,7 @@
         "drupal/field_group": "3.1",
         "drupal/field_group_link": "3.0-rc2",
         "drupal/image_widget_crop": "2.3",
+        "drupal/link_class": "2.0.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.0",
         "drupal/metatag": "1.15",
@@ -63,6 +64,9 @@
         "drupal/paragraphs": "1.12",
         "drupal/pathauto": "1.8",
         "drupal/redirect": "1.6",
+        "drupal/search_exclude": "2.0.0-beta2",
+        "drupal/slick": "2.2",
+        "drupal/slick_views": "2.3",
         "drupal/smart_date": "3.1.1",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
@@ -70,7 +74,9 @@
         "drupal/views_bootstrap": "4.3",
         "drupal/viewsreference": "2.0-beta2",
         "drupal/webform": "6.0.2",
-        "drupal/xmlsitemap": "1.0"
+        "drupal/xmlsitemap": "1.0",
+        "npm-asset/blazy": "1.8.2",
+        "npm-asset/slick-carousel": "1.8.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
