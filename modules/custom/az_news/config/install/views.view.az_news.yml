@@ -3,7 +3,9 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_marquee
     - core.entity_view_mode.node.az_media_list
+    - core.entity_view_mode.node.az_medium_media_list
     - core.entity_view_mode.node.az_minimal_media_list
     - node.type.az_news
   module:
@@ -474,6 +476,167 @@ display:
           entity_type: node
           entity_field: nid
           plugin_id: node_nid
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_teaser_grid:
+    display_plugin: page
+    id: az_teaser_grid
+    display_title: 'Teaser Grid Page'
+    position: 4
+    display_options:
+      display_extenders: {  }
+      display_description: 'Grid of teasers that appears on /news-teasers (offset by 4)'
+      style:
+        type: views_bootstrap_grid
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+          col_xs: col-12
+          col_sm: col-sm-12
+          col_md: col-md-4
+          col_lg: col-lg-4
+          col_xl: col-xl-4
+      defaults:
+        style: false
+        row: false
+        style_options: false
+        pager: false
+        pager_options: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_card
+      style_options: null
+      path: news-teasers
+      pager:
+        type: full
+        options:
+          items_per_page: 12
+          offset: 4
+          id: 0
+          total_pages: null
+          tags:
+            previous: ‹‹
+            next: ››
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      pager_options: null
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  marquee:
+    display_plugin: block
+    id: marquee
+    display_title: 'Recent News Marquee'
+    position: 5
+    display_options:
+      display_extenders: {  }
+      display_description: ''
+      pager:
+        type: some
+        options:
+          items_per_page: 1
+          offset: 0
+      defaults:
+        pager: false
+        pager_options: false
+        style: false
+        row: false
+        style_options: false
+        title: false
+        css_class: false
+      pager_options: null
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_marquee
+      style_options: null
+      block_description: 'Recent News Marquee'
+      title: ''
+      css_class: row
+      allow:
+        items_per_page: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  row_attachment:
+    display_plugin: attachment
+    id: row_attachment
+    display_title: 'Row Attachment'
+    position: 6
+    display_options:
+      display_extenders: {  }
+      title: ''
+      defaults:
+        title: false
+        pager: false
+        pager_options: false
+        css_class: false
+        style: false
+        row: false
+        style_options: false
+      displays:
+        marquee: marquee
+      attachment_position: after
+      inherit_arguments: true
+      pager:
+        type: some
+        options:
+          items_per_page: 3
+          offset: 1
+      pager_options: null
+      css_class: ''
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_medium_media_list
+      style_options: null
+      display_description: ''
     cache_metadata:
       max-age: -1
       contexts:
