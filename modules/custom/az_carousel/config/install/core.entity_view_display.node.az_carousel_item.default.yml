@@ -30,7 +30,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'az-carousel-slide d-flex flex-column justify-content-end'
+        classes: 'az-carousel-slide d-flex flex-column justify-content-start'
       label: 'Carousel Slide'
     group_slide_details:
       children:
@@ -50,7 +50,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'az-carousel-slide-details bg-transparent-midnight text-white px-4 py-3'
+        classes: 'az-carousel-slide-details px-4 py-3 d-flex flex-column justify-content-center'
       label: 'Slide Details'
     group_text_size_h4:
       children:
@@ -68,7 +68,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'h4 mt-2 mb-3'
+        classes: 'h4 mt-2 mb-3 text-white'
       label: 'Text Size H4'
   smart_title:
     enabled: true
@@ -78,6 +78,7 @@ third_party_settings:
         - h1
         - my-0
         - az-carousel-slide-title
+        - text-white
       smart_title__link: false
 id: node.az_carousel_item.default
 targetEntityType: node
