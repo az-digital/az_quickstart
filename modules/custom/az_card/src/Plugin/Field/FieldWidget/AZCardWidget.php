@@ -9,7 +9,6 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
-use Drupal\file\Entity\File;
 
 /**
  * Defines the 'az_card' field widget.
@@ -39,6 +38,13 @@ class AZCardWidget extends WidgetBase {
   protected $pathValidator;
 
   /**
+   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -51,6 +57,7 @@ class AZCardWidget extends WidgetBase {
 
     $instance->imageFactory = ($container->get('image.factory'));
     $instance->pathValidator = ($container->get('path.validator'));
+    $instance->entityTypeManager = $container->get('entity_type.manager');
     return $instance;
   }
 
@@ -127,7 +134,7 @@ class AZCardWidget extends WidgetBase {
       // Check and see if we can construct a valid image to preview.
       $media_hint = $items[$delta]->media ?? NULL;
       if ($media_hint) {
-        $file = File::load($media_hint);
+        $file = $this->entityTypeManager->getStorage('file')->load($media_hint);
         if ($file) {
           $image = $this->imageFactory->get($file->getFileUri());
           if ($image && $image->isValid()) {
