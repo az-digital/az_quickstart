@@ -248,7 +248,12 @@ class AZCardWidget extends WidgetBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Submit handler for toggle button.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
    */
   public function cardSubmit(array $form, FormStateInterface $form_state) {
 
@@ -281,9 +286,17 @@ class AZCardWidget extends WidgetBase {
   }
 
   /**
-   * {@inheritdoc}
+   * Ajax callback returning list widget container for ajax submit.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array
+   *   Ajax response as render array.
    */
-  public function cardAjax(array $form, FormStateInterface $form_state) {
+  public function cardAjax(array &$form, FormStateInterface $form_state) {
 
     // Find the widget and return it.
     $element = [];
