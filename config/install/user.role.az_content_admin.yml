@@ -8,6 +8,7 @@ is_admin: false
 permissions:
   - 'access news feeds'
   - 'access taxonomy overview'
+  - 'administer blocks'
   - 'administer book outlines'
   - 'administer easy breadcrumb'
   - 'administer menu'
@@ -28,6 +29,7 @@ permissions:
   - 'delete any az_carousel_item content'
   - 'delete any az_document media'
   - 'delete any az_event content'
+  - 'delete any az_flexible_block block content'
   - 'delete any az_flexible_page content'
   - 'delete any az_image media'
   - 'delete any az_news content'

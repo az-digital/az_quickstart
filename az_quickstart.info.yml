@@ -35,6 +35,7 @@ install:
   - drupal:menu_link_content
   - drupal:datetime
   - drupal:block_content
+  - block_content_permissions:block_content_permissions
   - drupal:quickedit
   - drupal:editor
   - drupal:help
