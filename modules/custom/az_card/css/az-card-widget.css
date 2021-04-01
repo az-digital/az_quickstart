@@ -28,6 +28,7 @@ tr.odd .az-card-elements .form-item {
 .az-card-elements.az-card-elements-closed .form-type--url,
 .az-card-elements.az-card-elements-closed .form-type--textarea,
 .az-card-elements.az-card-elements-closed .filter-wrapper,
+.az-card-elements.az-card-elements-closed .form-type--select,
 .az-card-elements.az-card-elements-closed .media-library-form-element {
   display: none;
 }

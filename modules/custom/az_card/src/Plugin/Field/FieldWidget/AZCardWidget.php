@@ -104,10 +104,8 @@ class AZCardWidget extends WidgetBase {
       // Bootstrap wrapper.
       $element['preview_container'] = [
         '#type' => 'container',
-        '#prefix' => '<div class="container"><div class="row">',
-        '#suffix' => '</div></div>',
         '#attributes' => [
-          'class' => ['col-12', 'col-sm-6', 'col-md-4', 'col-md-4', 'card-preview',
+          'class' => ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview',
           ],
         ],
       ];
@@ -121,6 +119,10 @@ class AZCardWidget extends WidgetBase {
           $items[$delta]->body_format ?? 'basic_html'),
         '#attributes' => ['class' => ['card']],
       ];
+      // Add card class from options.
+      if (!empty($items[$delta]->options['class'])) {
+        $element['preview_container']['card_preview']['#attributes']['class'][] = $items[$delta]->options['class'];
+      }
 
       // Check and see if we can construct a valid image to preview.
       $media_hint = $items[$delta]->media ?? NULL;
@@ -187,13 +189,29 @@ class AZCardWidget extends WidgetBase {
       '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
     ];
 
-    // TODO: card style(s) selection form.
     $element['options'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Card Options'),
-      '#default_value' => isset($items[$delta]->options) ? $items[$delta]->options : NULL,
-      // Hide element until implemented.
-      '#access' => FALSE,
+      '#type' => 'select',
+      '#options' => [
+        'bg-white' => $this->t('White'),
+        'bg-transparent' => $this->t('Transparent'),
+        'bg-red' => $this->t('Arizona Red'),
+        'bg-blue' => $this->t('Arizona Blue'),
+        'bg-sky' => $this->t('Sky'),
+        'bg-oasis' => $this->t('Oasis'),
+        'bg-azurite' => $this->t('Azurite'),
+        'bg-midnight' => $this->t('Midnight'),
+        'bg-bloom' => $this->t('Bloom'),
+        'bg-chili' => $this->t('Chili'),
+        'bg-cool-gray' => $this->t('Cool Gray'),
+        'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-leaf' => $this->t('Leaf'),
+        'bg-river' => $this->t('River'),
+        'bg-silver' => $this->t('Silver'),
+        'bg-ash' => $this->t('Ash'),
+      ],
+      '#required' => TRUE,
+      '#title' => $this->t('Card Background'),
+      '#default_value' => (!empty($items[$delta]->options['class'])) ? $items[$delta]->options['class'] : 'bg-white',
     ];
 
     if (!$items[$delta]->isEmpty()) {
@@ -297,8 +315,8 @@ class AZCardWidget extends WidgetBase {
       if ($value['link_uri'] === '') {
         $values[$delta]['link_uri'] = NULL;
       }
-      if ($value['options'] === '') {
-        $values[$delta]['options'] = NULL;
+      if (!empty($value['options'])) {
+        $values[$delta]['options'] = ['class' => $value['options']];
       }
       $values[$delta]['body'] = $value['body']['value'];
       $values[$delta]['body_format'] = $value['body']['format'];
