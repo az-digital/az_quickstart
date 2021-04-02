@@ -1,0 +1,5 @@
+name: Quickstart Metrics
+type: module
+description: Gather and report metrics related to Arizona Quickstart.
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
