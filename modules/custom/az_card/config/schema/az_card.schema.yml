@@ -17,7 +17,7 @@ field.value.az_card:
       type: string
       label: Card Link Title
     link_uri:
-      type: uri
+      type: string
       label: Card Link URI
     options:
       type: text

@@ -195,8 +195,10 @@ class AZCardWidget extends WidgetBase {
     ];
 
     $element['link_uri'] = [
-      '#type' => 'url',
+      // Url FAPI element does not support internal paths.
+      '#type' => 'textfield',
       '#title' => $this->t('Card Link URI'),
+      '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
     ];
 
@@ -310,6 +312,26 @@ class AZCardWidget extends WidgetBase {
     $element = NestedArray::getValue($form, $array_parents);
 
     return $element;
+  }
+
+  /**
+   * Form element validation handler for the 'link_url' field.
+   *
+   * Disallows saving inaccessible or untrusted URLs.
+   */
+  public function validateCardLink(&$element, FormStateInterface $form_state, &$complete_form) {
+
+    if (!empty($element['#value'])) {
+      // Check to make sure the path can be found.
+      if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
+        // Url is valid, no conversion required.
+        return;
+      }
+      $form_state
+        ->setError($element, t('This link does not exist or you do not have permission to link to %path.', [
+          '%path' => $element['#value'],
+        ]));
+    }
   }
 
   /**
