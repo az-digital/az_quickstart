@@ -5,49 +5,44 @@ dependencies:
     - field.field.media.az_remote_video.field_media_az_oembed_video
     - media.type.az_remote_video
   module:
+    - field_group
     - media
-    - path
+third_party_settings:
+  field_group:
+    group_16x9:
+      children:
+        - field_media_az_oembed_video
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'embed-responsive embed-responsive-16by9'
+      label: '16:9 Responsive'
 id: media.az_remote_video.default
 targetEntityType: media
 bundle: az_remote_video
 mode: default
 content:
-  created:
-    type: datetime_timestamp
-    weight: 10
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_media_az_oembed_video:
-    type: oembed_textfield
-    weight: 0
+    type: oembed
+    weight: 1
+    label: hidden
     settings:
-      size: 60
-      placeholder: ''
+      max_width: 0
+      max_height: 0
     third_party_settings: {  }
     region: content
-  path:
-    type: path
-    weight: 30
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  status:
-    type: boolean_checkbox
-    settings:
-      display_label: true
-    weight: 100
-    region: content
-    third_party_settings: {  }
-  uid:
-    type: entity_reference_autocomplete
-    weight: 5
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
-    region: content
-    third_party_settings: {  }
 hidden:
+  created: true
   name: true
+  thumbnail: true
+  uid: true
