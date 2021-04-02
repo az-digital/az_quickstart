@@ -58,6 +58,7 @@
         "drupal/link_class": "2.0.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.0",
+        "drupal/menu_block": "1.6",
         "drupal/metatag": "1.15",
         "drupal/migrate_plus": "5.1",
         "drupal/migrate_tools": "5.0",
@@ -122,6 +123,11 @@
             },
             "drupal/coffee": {
                 "Coffee test, support for Drupal 9 core_version_requirement": "https://www.drupal.org/files/issues/2020-10-27/3174680-5-make-test-module-d9-compatible.patch"
+            },
+            "drupal/menu_block": {
+                "Module test core_version_requirement": "https://www.drupal.org/files/issues/2020-11-11/3146665_7.patch",
+                "Drupal 9 core version requirement": "https://www.drupal.org/files/issues/2020-11-17/menu_block-core-info-3182983-2.patch",
+                "Add configuration options for dynamic block titles": "https://www.drupal.org/files/issues/2020-05-03/2809699-162-dynamic-block-titles.patch"
             }
         }
     },
