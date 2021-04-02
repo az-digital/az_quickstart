@@ -50,6 +50,8 @@ steps:
     script:
       - mkdir -p /var/www/html/sites/simpletest
       - chown www-data:www-data -R /var/www/html/sites/simpletest
+      - mkdir -p /var/www/html/sites/default/files/simpletest
+      - chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
       - source $ASSET_DIR/credentials.sh
       - export SIMPLETEST_BASE_URL="http://localhost"
       - export SIMPLETEST_DB="mysql://${DATABASE_USER}:${DATABASE_PASS}@localhost/${DATABASE_NAME}"
