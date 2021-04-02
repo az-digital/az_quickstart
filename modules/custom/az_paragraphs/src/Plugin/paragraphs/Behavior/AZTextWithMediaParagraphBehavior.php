@@ -151,32 +151,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
 
     // Get plugin configuration.
-    $video_oembed_id = $this->getYouTubeid($source_url);
-
-    // Get plugin configuration.
     $config = $this->getSettings($paragraph);
-
     // Apply bottom spacing if set.
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
       $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
-    }
-
-    // Play button pseudo field.
-    if ($display->getComponent('az_play_button')) {
-      $build['az_play_button'][] = [
-        '#type' => 'markup',
-        '#markup' => '<div id="video-play-' . $video_oembed_id . '" title="Play the video" class="bg-video-player-control bg-trans-white uaqs-video-play" aria-hidden="true">Play Video</div>',
-      ];
-    }
-
-    // Pause button pseudo field.
-    if ($display->getComponent('az_pause_button')) {
-      $build['az_pause_button'][]
-        = [
-        '#type' => 'markup',
-        '#markup' => '<div id="video-pause-' . $video_oembed_id . '" title="Pause the video" class="bg-video-player-control bg-trans-white uaqs-video-pause" aria-hidden="true">Pause Video</div>',
-
-      ];
     }
 
   }
@@ -196,39 +174,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
     if ($provider == 'YouTube') {
+      $variables['#attributes']['class'][] ='test';
       $source_url = $media->get('field_media_az_oembed_video')->value;
-      $video_oembed_id = $this->getYouTubeid($source_url);
-      // Retrieve a render array for that field with the given view mode.
-      $pause_button = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#attributes' => [
-          'class' => [
-            'bg-video-player-control',
-            'bg-trans-white',
-            'az-video-pause',
-            'video-pause-' . $video_oembed_id,
-          ],
-          'title' => 'Pause the Video',
-          'aria-hidden' => true,
-        ],
-        '#value' => 'Pause Video',
-      ];
-      $play_button = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#attributes' => [
-          'class' => [
-            'bg-video-player-control',
-            'bg-trans-white',
-            'az-video-play',
-            'video-play-' . $video_oembed_id,
-          ],
-          'title' => 'Play the video',
-          'aria-hidden' => true,
-        ],
-        '#value' => 'Play Video',
-      ];
+      $AzVideoEmbedHelper = \Drupal::service('az_paragraphs.az_video_embed_helper');
+      $video_oembed_id = $AzVideoEmbedHelper->getYoutubeIdFromUrl($source_url);
       $background_video = [
         '#type' => 'html_tag',
         '#tag' => 'div',
@@ -236,12 +185,14 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         '#attributes' => [
           'id' => [$video_oembed_id . '-bg-video-container'],
           'class' => [
+            'az-video-loading',
             'az-video-background',
+            'az-js-video-background',
           ],
+          'data-youtubeid' => $video_oembed_id,
+          'data-paragraphid' => $paragraph->bundle() . "-" . $paragraph->id(),
         ],
         'child' =>  $background_media,
-        'pause' =>  $pause_button,
-        'play'  =>  $play_button,
         '#attached' => [
           'drupalSettings' => [
             'azFieldsMedia' => [
@@ -293,23 +244,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $variables['inner_media'] = $text_on_bottom;
     }
     return $variables;
-  }
-
-  /**
-   * This function returns a video id from a url
-   */
-  private function getYouTubeid($url) {
-    $shortUrlRegex = '/youtu.be\/([a-zA-Z0-9_-]+)\??/i';
-    $longUrlRegex = '/youtube.com\/((?:embed)|(?:watch))((?:\?v\=)|(?:\/))([a-zA-Z0-9_-]+)/i';
-
-    if (preg_match($longUrlRegex, $url, $matches)) {
-        $youtube_id = $matches[count($matches) - 1];
-    }
-
-    if (preg_match($shortUrlRegex, $url, $matches)) {
-        $youtube_id = $matches[count($matches) - 1];
-    }
-    return $youtube_id ;
   }
 
 }

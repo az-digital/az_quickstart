@@ -8,30 +8,3 @@ use Drupal\Component\Utility\Html;
  * @file
  * Contains az_paragraphs_text_media.module.
  */
-/**
- * Implements hook_entity_extra_field_info().
- */
-function az_paragraphs_text_media_entity_extra_field_info() {
-  $extra = [];
-
-  // Check to see if our content type exists.
-  $bundle = MediaType::load('az_remote_video');
-  if ($bundle) {
-    // Play button pseudo field.
-    $extra['media'][$bundle->id()]['display']['az_play_button'] = [
-      'label' => t('Play button'),
-      'description' => "This is a pseudo field from az_paragraphs_text_media.",
-      'weight' => 50,
-      'visible' => FALSE,
-    ];
-    // Pause button pseudo field.
-    $extra['media'][$bundle->id()]['display']['az_pause_button'] = [
-      'label' => t('Pause button'),
-      'description' => "This is a pseudo field from az_paragraphs_text_media.",
-      'weight' => 50,
-      'visible' => FALSE,
-    ];
-
-    return $extra;
-  }
-}

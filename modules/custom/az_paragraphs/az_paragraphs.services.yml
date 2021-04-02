@@ -1,0 +1,3 @@
+services:
+  az_paragraphs.az_video_embed_helper:
+    class: Drupal\az_paragraphs\AZVideoEmbedHelper

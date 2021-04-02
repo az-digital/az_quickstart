@@ -60,65 +60,6 @@
   top: -1px;
   bottom: -1px;
 }
-.media-row-heading:after {
- width: 100%;
-}
-
-.marquee-bg-trans-white .media-row-heading:after {
-  color:#0b244b;
-  content: attr(data-content);
-  position: absolute;
-  top: 0;
-  left: 0;
-  text-shadow: none;
-  margin-top: calc(1.5rem + 1em);
-  margin-bottom: .5em;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-
-.marquee-bg-trans-black .media-row-text {
-  text-shadow: 0 .2em 3em #000;
-  font-size:18px;
-  color:#ffffff;
-  letter-spacing:-0.19px;
-  font-family: MiloWeb, Verdana, Geneva, sans-serif;
-  font-style: normal;
-  font-weight: normal;
-
-}
-.marquee-bg-trans-black .media-row-heading {
-  font-size:48px;
-  color:transparent;
-  letter-spacing:-0.51px;
-  line-height:46px;
-  text-shadow: 0 .2em 3em #000;
-  font-weight: bold;
-}
-.marquee-bg-trans-black .media-row-heading:after {
-  content: attr(data-content);
-  position: absolute;
-  top: 0;
-  left: 0;
-  color: #fff;
-  text-shadow: none;
-  margin-top: 1em;
-  margin-bottom: .5em;
-  margin-top: calc(1.5rem + 1em);
-  margin-bottom: .5em;
-  padding-left: 1.5rem;
-  padding-right: 1.5rem;
-}
-.paragraphs-item-az-full-width-media-row .btn {
-  text-shadow: none;
-}
-.paragraphs-item-az-full-width-media-row .marquee-bg-trans-black .btn,
-.paragraphs-item-az-full-width-media-row .marquee-bg-trans-white .btn {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-/* End temporary styles. .*/
 .shield-cover {
   z-index: 1;
   height: 100%;
@@ -168,19 +109,28 @@
 }
 .az-video-container iframe {
   z-index: -2;
+  position: absolute;
 }
-.az-video-overflow-container {
-    z-index: -1;
-    border-top-color: white;
-    border-top-style: solid;
-    border-bottom-color: white;
-    border-bottom-style: solid;
-    background: transparent;
-    position: absolute;
-    display: block;
-    width: 100%;
-    border-top-width: 367px;
+/*.az-video-overflow-container {*/
+    /*z-index: -1;*/
+    /*border-top-color: white;*/
+    /*border-top-style: solid;*/
+    /*border-bottom-color: white;*/
+    /*border-bottom-style: solid;*/
+    /*background: transparent;*/
+    /*position: absolute;*/
+    /*display: block;*/
+    /*width: 100%;*/
+    /*border-top-width: 367px;*/
 
+/*}*/
+.az-video-background {
+overflow: hidden;
+    height: 230px;
+    width: 100vw;
+    position: absolute;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
 }
 .az-video-loading .az-video-container {
   opacity: 0;
@@ -191,10 +141,6 @@
 .field--name-thumbnail * {
   visibility: visible;
 }
-.az-video-playing .field--name-thumbnail * {
-  visibility: hidden;
-}
-
 .height-100 {
   height: 100%;
 }
