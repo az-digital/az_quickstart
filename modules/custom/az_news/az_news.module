@@ -1,0 +1,18 @@
+<?php
+
+/**
+ * @file
+ * Contains az_news.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_news_theme($existing, $type, $theme, $path) {
+  return [
+    'field__node__az_news' => [
+      'template' => 'field--node--az-news',
+      'base hook' => 'field',
+    ],
+  ];
+}

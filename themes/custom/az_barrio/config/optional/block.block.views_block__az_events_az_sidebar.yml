@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.az_events
+  module:
+    - system
+    - views
+  theme:
+    - az_barrio
+id: views_block__az_events_az_sidebar
+theme: az_barrio
+region: sidebar_second
+weight: 0
+provider: null
+plugin: 'views_block:az_events-az_sidebar'
+settings:
+  id: 'views_block:az_events-az_sidebar'
+  label: ''
+  provider: views
+  label_display: visible
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    pages: '/events/*'
+    negate: false

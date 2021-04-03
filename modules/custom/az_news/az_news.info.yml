@@ -21,8 +21,9 @@ dependencies:
   - az_media
   - az_paragraphs
   - az_paragraphs_cards
+  - az_paragraphs_contact
   - az_paragraphs_text
   - smart_title:smart_title
   - date_ap_style:date_ap_style
   - field_group_link:field_group_link
-  
+  - views_bootstrap:views_bootstrap

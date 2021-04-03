@@ -251,7 +251,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   // Logos.
   $form['logo']['az_barrio_logo_svg_inline'] = [
     '#type' => 'checkbox',
-    '#title' => t('Inline logo SVG'),
+    '#title' => t('Inline logo SVG (Experimental)'),
     '#default_value' => theme_get_setting('az_barrio_logo_svg_inline') ? TRUE : FALSE,
     '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
@@ -282,12 +282,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
   ];
-  $form['footer_logo']['az_barrio_footer_logo_svg_inline'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Inline footer logo SVG'),
-    '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
-    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
-  ];
   $form['footer_logo']['footer_default_logo'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the default logo'),
@@ -306,30 +300,11 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       ],
     ],
   ];
-  $form['footer_logo']['footer_logo_link_destination'] = [
-    '#type' => 'textfield',
-    '#title' => t('Footer logo link destination'),
-    '#description' => t('Where should the footer logo link to. Example: &#x3C;front&#x3E;'),
-    '#default_value' => theme_get_setting('footer_logo_link_destination'),
-  ];
-  $form['footer_logo']['footer_logo_alt_text'] = [
-    '#type' => 'textfield',
-    '#title' => t('Footer logo alt text'),
-    '#description' => t('Alternative text is used by screen readers, search engines, and when the image cannot be loaded. By adding alt text you improve accessibility and search engine optimization.'),
-    '#default_value' => theme_get_setting('footer_logo_alt_text'),
-    '#element_validate' => ['token_element_validate'],
-  ];
-  $form['footer_logo']['footer_logo_title_text'] = [
-    '#type' => 'textfield',
-    '#title' => t('Footer logo title text'),
-    '#description' => t('Title text is used in the tool tip when a user hovers their mouse over the image. Adding title text makes it easier to understand the context of an image and improves usability.'),
-    '#default_value' => theme_get_setting('footer_logo_title_text'),
-    '#element_validate' => ['token_element_validate'],
-  ];
-  $form['footer_logo']['tokens'] = [
-    '#theme' => 'token_tree_link',
-    '#global_types' => TRUE,
-    '#click_insert' => TRUE,
+  $form['footer_logo']['settings']['az_barrio_footer_logo_svg_inline'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Inline footer logo SVG (Experimental)'),
+    '#default_value' => theme_get_setting('az_barrio_footer_logo_svg_inline') ? TRUE : FALSE,
+    '#description' => t('If logo is SVG image then inline it content in the page instead of using image tag to render it. This is useful when you need to control SVG logo with theme CSS.'),
   ];
   $form['footer_logo']['settings']['footer_logo_path'] = [
     '#type' => 'textfield',
@@ -348,6 +323,35 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       ],
     ],
   ];
+
+  $form['footer_logo']['settings']['footer_logo_link_destination'] = [
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#title' => t('Footer logo link destination'),
+    '#description' => t('Where should the footer logo link to. Example: &#x3C;front&#x3E;'),
+    '#default_value' => theme_get_setting('footer_logo_link_destination'),
+  ];
+  $form['footer_logo']['settings']['footer_logo_alt_text'] = [
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#title' => t('Footer logo alt text'),
+    '#description' => t('Alternative text is used by screen readers, search engines, and when the image cannot be loaded. By adding alt text you improve accessibility and search engine optimization.'),
+    '#default_value' => theme_get_setting('footer_logo_alt_text'),
+    '#element_validate' => ['token_element_validate'],
+  ];
+  $form['footer_logo']['settings']['footer_logo_title_text'] = [
+    '#required' => TRUE,
+    '#type' => 'textfield',
+    '#title' => t('Footer logo title text'),
+    '#description' => t('Title text is used in the tool tip when a user hovers their mouse over the image. Adding title text makes it easier to understand the context of an image and improves usability.'),
+    '#default_value' => theme_get_setting('footer_logo_title_text'),
+    '#element_validate' => ['token_element_validate'],
+  ];
+  $form['footer_logo']['settings']['tokens'] = [
+    '#theme' => 'token_tree_link',
+    '#global_types' => TRUE,
+    '#click_insert' => TRUE,
+  ];
   $form['#validate'][] = 'az_barrio_form_system_theme_settings_validate';
   $form['#submit'][] = 'az_barrio_form_system_theme_settings_submit';
 }
@@ -364,6 +368,7 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   $default_scheme = \Drupal::config('system.file')->get('default_scheme');
   try {
     if (!empty($values['footer_logo_upload'])) {
+      //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
       $filename = \Drupal::service('file_system')->copy($values['footer_logo_upload']->getFileUri(), $default_scheme . '://');
       $form_state->setValue('footer_logo_path', $filename);
       $form_state->setValue('footer_default_logo', 0);
@@ -392,7 +397,7 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
   // If the user provided a path for a footer logo, make sure a file exists at
   // that path.
   if ($form_state->getValue('footer_logo_path')) {
-    // I would like to use the validatePath function from the ThemeSettingsForm Class here.
+    // TODO: Use the validatePath function from ThemeSettingsForm Class here?
     $path = az_barrio_validate_file_path($form_state->getValue('footer_logo_path'));
     if (!$path) {
       $form_state->setErrorByName('footer_logo_path', t('The custom footer logo path is invalid.'));
@@ -408,11 +413,13 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 function az_barrio_validate_file_path($path) {
 
   // Absolute local file paths are invalid.
-  if (\Drupal::service('file_system')->realpath($path) == $path) {
+  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
+  if (\Drupal::service('file_system')->realpath($path) === $path) {
     return FALSE;
   }
 
   // A path relative to the Drupal root or a fully qualified URI is valid.
+  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
@@ -421,6 +428,7 @@ function az_barrio_validate_file_path($path) {
   if (StreamWrapperManager::getScheme($path) === FALSE) {
     $path = 'public://' . $path;
   }
+  //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
   if (is_file($path)) {
     return $path;
   }
