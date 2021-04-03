@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Contains az_metrics.install.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function az_metrics_install($is_syncing) {
+  $uuid_service = \Drupal::service('uuid');
+  $config = \Drupal::service('config.factory')->getEditable('az_metrics.settings');
+  $site_id = $uuid_service->generate();
+  $config->set('id', $site_id)->save();
+}
