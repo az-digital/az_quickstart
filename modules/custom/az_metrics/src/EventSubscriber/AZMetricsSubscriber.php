@@ -14,7 +14,7 @@ class AZMetricsSubscriber implements EventSubscriberInterface {
   /**
    * The method to store the incoming domain in the database.
    */
-  protected function logDomain(GetResponseEvent $event) {
+  public function logDomain(GetResponseEvent $event) {
     $httpHost = $event->getRequest()->getHttpHost();
     $connection = \Drupal::service('database');
     $connection->merge('az_metrics_domains')
