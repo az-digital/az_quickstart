@@ -31,9 +31,9 @@ class AZMetricsSubscriber implements EventSubscriberInterface {
    * Constructs a AZMetricsSubscriber object.
    *
    * @param \Drupal\Component\Datetime\Time $time
-   *   time object.
+   *   Time object.
    * @param \Drupal\Core\Database\Connection $database
-   *   The factory for database connection objects.
+   *   Database connection object.
    */
   public function __construct(Connection $connection, Time $time) {
     $this->connection = $connection;
