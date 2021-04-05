@@ -2,4 +2,4 @@ services:
   mymodule.event_subscriber:
     class: Drupal\az_metrics\EventSubscriber\AZMetricsSubscriber
     tags:
-      - {name: event_subscriber}
+      - { name: event_subscriber }
