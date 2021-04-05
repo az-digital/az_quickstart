@@ -45,11 +45,12 @@ class AZMetricsSubscriber implements EventSubscriberInterface {
    */
   public function logDomain(GetResponseEvent $event) {
     $httpHost = $event->getRequest()->getHttpHost();
+    $requestTime = $this->time->getRequestTime();
     $this->connection->merge('az_metrics_domains')
       ->key('domain', $httpHost)
       ->fields([
         'domain' => $httpHost,
-        'last_seen' => $this->time->getRequestTime(),
+        'last_seen' => $requestTime,
       ])->execute();
   }
 
