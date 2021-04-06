@@ -9,7 +9,9 @@ const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1';
  * Contains az_metrics.module.
  */
 
-
+/**
+ * Get all data needed for reporting.
+ */
 function az_metrics_data() {
   $site_id = \Drupal::config('az_metrics.settings')->get('site_id', FALSE);
 
