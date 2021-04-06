@@ -8,13 +8,6 @@ namespace Drupal\az_paragraphs;
 class AZVideoEmbedHelper {
 
   /**
-   * Constructs a new AZVideoEmbedHelper object.
-   */
-  public function __construct() {
-
-  }
-
-  /**
    * Get YouTube video id from URL.
    *
    * Should work with these patterns:
