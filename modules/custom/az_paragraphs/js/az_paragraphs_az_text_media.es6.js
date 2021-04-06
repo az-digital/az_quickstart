@@ -31,35 +31,33 @@
         // methods
         // set up iframe player, use global scope so YT api can talk
         window.onYouTubeIframeAPIReady = () => {
-          $.each(BgVideoParagraphs, (index, paragraph) => {
-            const parentParagraph = BgVideoParagraphs[index].parentNode;
-            const youtubeId = BgVideoParagraphs[index].dataset.youtubeid;
-            bgVideos[youtubeId] = $.extend({}, defaults, paragraph);
+          $.each(BgVideoParagraphs, index => {
+            const thisContainer = BgVideoParagraphs[index];
+            const parentParagraph = thisContainer.parentNode;
+            const youtubeId = thisContainer.dataset.youtubeid;
+            bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
 
             const options = bgVideos[youtubeId];
-            const videoPlayer = BgVideoParagraphs[index].getElementsByClassName(
+            const videoPlayer = thisContainer.getElementsByClassName(
               "az-video-player"
-            );
+            )[0];
             const YouTubePlayer = window.YT;
-            BgVideoParagraphs[index].player = new YouTubePlayer.Player(
-              videoPlayer[0],
-              {
-                width: options.width,
-                height: Math.ceil(options.width / options.ratio),
-                videoId: youtubeId,
-                playerVars: {
-                  modestbranding: 1,
-                  controls: 0,
-                  showinfo: 0,
-                  rel: 0,
-                  wmode: "transparent"
-                },
-                events: {
-                  onReady: window.onPlayerReady,
-                  onStateChange: window.onPlayerStateChange
-                }
+            thisContainer.player = new YouTubePlayer.Player(videoPlayer, {
+              width: options.width,
+              height: Math.ceil(options.width / options.ratio),
+              videoId: youtubeId,
+              playerVars: {
+                modestbranding: 1,
+                controls: 0,
+                showinfo: 0,
+                rel: 0,
+                wmode: "transparent"
+              },
+              events: {
+                onReady: window.onPlayerReady,
+                onStateChange: window.onPlayerStateChange
               }
-            );
+            });
             const PlayButton = BgVideoParagraphs[index].getElementsByClassName(
               "az-video-play"
             );
@@ -85,15 +83,15 @@
         // of player after resize/init.
         const resize = () => {
           $.each(BgVideoParagraphs, index => {
-            const parentParagraph = BgVideoParagraphs[index].parentNode;
-            const youtubeId = BgVideoParagraphs[index].dataset.youtubeid;
-            const thisPlayer = BgVideoParagraphs[index].getElementsByClassName(
+            const thisContainer = BgVideoParagraphs[index];
+            const parentParagraph = thisContainer.parentNode;
+            const youtubeId = thisContainer.dataset.youtubeid;
+            const thisPlayer = thisContainer.getElementsByClassName(
               "az-video-player"
             )[0];
 
-            const thisContainer = BgVideoParagraphs[index];
-            const width = BgVideoParagraphs[index].offsetWidth;
-            const height = BgVideoParagraphs[index].offsetHeight;
+            const width = thisContainer.offsetWidth;
+            const height = thisContainer.offsetHeight;
             const { ratio } = bgVideos[youtubeId];
             const pWidth = Math.ceil(height * ratio); // get new player width
             const pHeight = Math.ceil(width / ratio);
