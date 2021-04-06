@@ -35,9 +35,9 @@ function az_metrics_cron() {
 
   \Drupal::httpClient()
             ->post(AZ_METRICS_URL . "/metrics", [
-                'headers' => [  'X-Api-Key' => 'secret',
+                'headers' =>  [ 'X-Api-Key' => 'secret',
                                 'Content-Type' => 'application/json'
-                          ],
+                              ],
                 'body' => Json::encode($data)
               ]);
 }
