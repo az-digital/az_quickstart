@@ -6,23 +6,23 @@ dependencies:
     - field.field.media.az_remote_video.field_media_az_oembed_video
     - media.type.az_remote_video
   module:
-    - image
+    - media
 id: media.az_remote_video.az_background
 targetEntityType: media
 bundle: az_remote_video
 mode: az_background
 content:
-  thumbnail:
-    type: image_url
+  field_media_az_oembed_video:
+    type: oembed
     weight: 0
-    region: content
     label: hidden
     settings:
-      image_style: ''
+      max_width: 0
+      max_height: 0
     third_party_settings: {  }
+    region: content
 hidden:
   created: true
-  field_media_az_oembed_video: true
   name: true
+  thumbnail: true
   uid: true
-
