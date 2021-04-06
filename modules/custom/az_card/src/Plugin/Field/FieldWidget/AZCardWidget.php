@@ -66,7 +66,7 @@ class AZCardWidget extends WidgetBase {
    */
   public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL) {
 
-    // Create shared settings for widget elemeents.
+    // Create shared settings for widget elements.
     // This is necessary because wigets have to be AJAX replaced together,
     // And in general we need a place to store shared settings.
     $wrapper_id = Html::getUniqueId('az-card-wrapper');
