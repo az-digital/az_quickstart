@@ -8,8 +8,6 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\media\MediaInterface;
-use Drupal\media\MediaSourceInterface;
-use Drupal\file\FileInterface;
 
 /**
  * Provides a behavior for text with media.
@@ -122,19 +120,20 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
         $variables['text_on_media']['media_type'] = $media->bundle();
         switch ($media->bundle()) {
-        case 'az_remote_video':
-          $this->remoteVideo($variables, $paragraph, $media);
-          break;
-        case 'az_image':
-          $this->image($variables, $paragraph, $media);
-          break;
-        default:
-          return $variables;
+          case 'az_remote_video':
+            $this->remoteVideo($variables, $paragraph, $media);
+            break;
+
+          case 'az_image':
+            $this->image($variables, $paragraph, $media);
+            break;
+
+          default:
+            return $variables;
         }
       }
     }
   }
-
 
   /**
    * {@inheritdoc}
@@ -150,6 +149,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
 
   }
 
+  /**
+   * Prepare markup for remote video.
+   */
   private function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
 
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
@@ -160,18 +162,18 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $provider = $media_oembed->getMetadata($media, 'provider_name');
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
-    if ($provider == 'YouTube') {
+    if ($provider === 'YouTube') {
       $source_url = $media->get('field_media_az_oembed_video')->value;
-      $AzVideoEmbedHelper = \Drupal::service('az_paragraphs.az_video_embed_helper');
-      $video_oembed_id = $AzVideoEmbedHelper->getYoutubeIdFromUrl($source_url);
+      $azVideoEmbedHelper = \Drupal::service('az_paragraphs.az_video_embed_helper');
+      $video_oembed_id = $azVideoEmbedHelper->getYoutubeIdFromUrl($source_url);
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
           '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing {background-image: none;} </style>",
-    '#context' => [
-      'filepath' => file_create_url($thumb),
-      'id' => $paragraph->bundle() . "-" . $paragraph->id(),
-    ]
+          '#context' => [
+            'filepath' => file_create_url($thumb),
+            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+          ],
         ],
         $background_video = [
           '#type' => 'html_tag',
@@ -186,7 +188,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
             ],
             'data-youtubeid' => $video_oembed_id,
           ],
-          'child' =>  $background_media,
+          'child' => $background_media,
           '#attached' => [
             'drupalSettings' => [
               'azFieldsMedia' => [
@@ -195,36 +197,42 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
                     'videoId' => $video_oembed_id,
                     'start' => 0,
                     'config' => $config,
-                  ]
-                ]
-              ]
-            ]
-          ]
-        ]
+                  ],
+                ],
+              ],
+            ],
+          ],
+        ],
       ];
       if ($variables['text_on_media']['style'] !== 'bottom') {
         $variables['style_element'] = $style_element;
-      } else if ($variables['text_on_media']['style'] === 'bottom') {
+      }
+      elseif ($variables['text_on_media']['style'] === 'bottom') {
         $variables['text_on_bottom'] = $style_element;
       }
-    return $variables;
+      return $variables;
     }
   }
 
+  /**
+   * Prepare markup for image.
+   */
   private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
     $file_uri = $media->field_media_az_image->entity->getFileUri();
     if ($variables['text_on_media']['style'] !== 'bottom') {
-      $style_element = array('style' => [
-        '#type' => 'inline_template',
-        '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
-        '#context' => [
-          'filepath' => file_create_url($file_uri),
-          'id' => $paragraph->bundle() . "-" . $paragraph->id(),
-        ]
-      ]);
+      $style_element = [
+        'style' => [
+          '#type' => 'inline_template',
+          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
+          '#context' => [
+            'filepath' => file_create_url($file_uri),
+            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+          ],
+        ],
+      ];
       $variables['style_element'] = $style_element;
     }
-    else if ($variables['text_on_media']['style'] === 'bottom') {
+    elseif ($variables['text_on_media']['style'] === 'bottom') {
       $image_renderable = [
         '#theme' => 'image',
         '#uri' => file_create_url($file_uri),
@@ -236,7 +244,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $text_on_bottom = [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        'child' =>  $image_renderable,
+        'child' => $image_renderable,
         '#attributes' => [
           'class' => ['text-on-media-bottom'],
         ],

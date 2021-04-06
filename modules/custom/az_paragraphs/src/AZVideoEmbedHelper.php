@@ -3,7 +3,7 @@
 namespace Drupal\az_paragraphs;
 
 /**
- * Class AZVideoEmbedHelper.
+ * Class AZVideoEmbedHelper. Adds service to help get video metadata.
  */
 class AZVideoEmbedHelper {
 
@@ -27,26 +27,28 @@ class AZVideoEmbedHelper {
    * 'http://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player',
    * 'http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player'
    *
-   *
    * @param string $url
-   * @return mixed Youtube video ID or FALSE if not found
+   *   A YouTube url.
+   *
+   * @return string
+   *   Mixed Youtube video ID or FALSE if not found.
    */
   public function getYoutubeIdFromUrl($url) {
-      $parts = parse_url($url);
-      if(isset($parts['query'])){
-          parse_str($parts['query'], $qs);
-          if(isset($qs['v'])){
-              return $qs['v'];
-          }else if(isset($qs['vi'])){
-              return $qs['vi'];
-          }
+    $parts = parse_url($url);
+    if (isset($parts['query'])) {
+      parse_str($parts['query'], $qs);
+      if (isset($qs['v'])) {
+        return $qs['v'];
       }
-      if(isset($parts['path'])){
-          $path = explode('/', trim($parts['path'], '/'));
-          return $path[count($path)-1];
+      elseif (isset($qs['vi'])) {
+        return $qs['vi'];
       }
-      return false;
+    }
+    if (isset($parts['path'])) {
+      $path = explode('/', trim($parts['path'], '/'));
+      return $path[count($path) - 1];
+    }
+    return FALSE;
   }
-
 
 }

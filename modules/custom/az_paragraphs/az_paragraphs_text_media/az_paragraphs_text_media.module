@@ -1,8 +1,4 @@
 <?php
-use Drupal\media\Entity\MediaType;
-use Drupal\media\Entity\Media;
-use Drupal\Core\Entity\Entity\EntityViewDisplay;
-use Drupal\Component\Utility\Html;
 
 /**
  * @file
