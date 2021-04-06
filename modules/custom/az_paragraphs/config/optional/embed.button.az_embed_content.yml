@@ -2,9 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_media_list
     - core.entity_view_mode.node.full
     - core.entity_view_mode.node.teaser
-    - node.type.az_flexible_page
   module:
     - entity_embed
     - node
@@ -13,9 +14,10 @@ id: az_embed_content
 type_id: entity
 type_settings:
   entity_type: node
-  bundles:
-    - az_flexible_page
+  bundles: {  }
   display_plugins:
+    - 'view_mode:node.az_card'
+    - 'view_mode:node.az_media_list'
     - 'view_mode:node.full'
     - 'view_mode:node.teaser'
   entity_browser: ''

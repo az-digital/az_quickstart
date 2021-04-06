@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_flexible_block
+label: 'Flexible Block'
+revision: 1
+description: 'Create a block using Arizona Bootstrap components'

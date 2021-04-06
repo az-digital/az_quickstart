@@ -1,0 +1,22 @@
+name: 'Quickstart Carousel Item'
+type: module
+description: 'Allows users to create and order carousel items.'
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - az_core
+  - az_media
+  - blazy:blazy
+  - draggableviews:draggableviews
+  - drupal:block
+  - drupal:field
+  - drupal:node
+  - drupal:path
+  - drupal:views
+  - field_group:field_group
+  - link_class:link_class
+  - pathauto:pathauto
+  - search_exclude:search_exclude
+  - slick:slick
+  - slick_ui:slick_ui
+  - slick_views:slick_views

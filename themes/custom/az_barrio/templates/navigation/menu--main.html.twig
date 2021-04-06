@@ -30,7 +30,7 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav navbar-nav flex-lg-row') }}>
+      <ul{{ attributes.addClass('navbar-nav flex-lg-row') }}>
 {% else %}
   <div class="dropdown-menu">
 {% endif %}
@@ -58,7 +58,6 @@
           {% if item.below %}
 	    <button{{ item.attributes.addClass(link_classes).setAttribute('data-toggle','dropdown').setAttribute('aria-expanded', 'false').setAttribute('aria-haspopup', 'true').setAttribute('data-display', 'static') }}>{{ item.title }}</button>
             {% if item.in_active_trail %}
-{{dump(item)}}
             {% endif %}
             {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
           {% else %}

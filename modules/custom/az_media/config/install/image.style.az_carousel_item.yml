@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: az_carousel_item
+label: 'Carousel Item'
+effects:
+  fbc7a251-9995-4603-b286-b2864b3f5698:
+    uuid: fbc7a251-9995-4603-b286-b2864b3f5698
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 1400
+      height: 500
+      anchor: center-center
