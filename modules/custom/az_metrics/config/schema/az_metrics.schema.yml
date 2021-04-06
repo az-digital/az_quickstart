@@ -2,6 +2,6 @@ az_metrics.settings:
   type: config_object
   label: 'Quickstart Metrics settings'
   mapping:
-    id:
+    site_id:
       type: string
       label: 'Arizona Quickstart Site ID'

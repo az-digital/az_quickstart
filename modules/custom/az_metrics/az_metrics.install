@@ -12,7 +12,7 @@ function az_metrics_install($is_syncing) {
   $uuid_service = \Drupal::service('uuid');
   $site_id = $uuid_service->generate();
   $config = \Drupal::service('config.factory')->getEditable('az_metrics.settings');
-  $config->set('id', $site_id)->save();
+  $config->set('site_id', $site_id)->save();
 }
 
 /**

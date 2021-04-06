@@ -1,6 +1,41 @@
 <?php
 
+use Drupal\Component\Serialization\Json;
+
+const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1';
+
 /**
  * @file
  * Contains az_metrics.module.
  */
+
+
+function az_metrics_data() {
+  $site_id = \Drupal::config('az_metrics.settings')->get('site_id', FALSE);
+
+  $domains = \Drupal::database()
+    ->query('SELECT * from {az_metrics_domains}')
+    ->fetchAll();
+
+  $data = [
+    'site_id' => $site_id,
+    'domains' => $domains
+  ];
+
+  return $data;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function az_metrics_cron() {
+  $data = az_metrics_data();
+
+  \Drupal::httpClient()
+            ->post(AZ_METRICS_URL . "/metrics", [
+                'headers' => [  'X-Api-Key' => 'secret',
+                                'Content-Type' => 'application/json'
+                          ],
+                'body' => Json::encode($data)
+              ]);
+}
