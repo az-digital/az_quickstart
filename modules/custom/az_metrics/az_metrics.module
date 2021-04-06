@@ -1,13 +1,13 @@
 <?php
 
-use Drupal\Component\Serialization\Json;
-
-const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1';
-
 /**
  * @file
  * Contains az_metrics.module.
  */
+
+use Drupal\Component\Serialization\Json;
+
+const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1';
 
 /**
  * Get all data needed for reporting.
