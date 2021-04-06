@@ -8,6 +8,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\media\MediaInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a behavior for text with media.
@@ -20,6 +21,28 @@ use Drupal\media\MediaInterface;
  * )
  */
 class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
+
+  /**
+   * The VideoEmbedHelper.
+   *
+   * @var \Drupal\az_paragraphs\AZVideoEmbedHelper
+   */
+  protected $videoEmbedHelper;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create(
+      $container,
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+    );
+
+    $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -157,15 +180,14 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
     $config = $this->getSettings($paragraph);
-    $view_builder = \Drupal::EntityTypeManager()->getViewBuilder('media');
+    $view_builder = $this->entityTypeManager->getViewBuilder('media');
     $background_media = $view_builder->view($media, 'az_background');
     $provider = $media_oembed->getMetadata($media, 'provider_name');
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
     if ($provider === 'YouTube') {
       $source_url = $media->get('field_media_az_oembed_video')->value;
-      $azVideoEmbedHelper = \Drupal::service('az_paragraphs.az_video_embed_helper');
-      $video_oembed_id = $azVideoEmbedHelper->getYoutubeIdFromUrl($source_url);
+      $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
