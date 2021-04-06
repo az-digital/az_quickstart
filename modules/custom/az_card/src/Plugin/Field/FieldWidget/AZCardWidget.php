@@ -23,6 +23,9 @@ use Drupal\Component\Utility\NestedArray;
  */
 class AZCardWidget extends WidgetBase {
 
+  // Default initial text format for cards.
+  const AZ_CARD_DEFAULT_TEXT_FORMAT = 'az_standard';
+
   /**
    * Drupal\Core\Image\ImageFactory definition.
    *
@@ -127,7 +130,7 @@ class AZCardWidget extends WidgetBase {
         '#title' => $items[$delta]->title ?? '',
         '#body' => check_markup(
           $items[$delta]->body ?? '',
-          $items[$delta]->body_format ?? 'basic_html'),
+          $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
         '#attributes' => ['class' => ['card']],
       ];
       // Add card class from options.
@@ -176,7 +179,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'text_format',
       '#title' => $this->t('Card Body'),
       '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
-      '#format' => $items[$delta]->body_format ?? 'basic_html',
+      '#format' => $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
     ];
 
     $element['media'] = [
