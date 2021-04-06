@@ -32,14 +32,15 @@
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         window.onYouTubeIframeAPIReady = function () {
-          $.each(BgVideoParagraphs, function (index, paragraph) {
-            var parentParagraph = BgVideoParagraphs[index].parentNode;
-            var youtubeId = BgVideoParagraphs[index].dataset.youtubeid;
-            bgVideos[youtubeId] = $.extend({}, defaults, paragraph);
+          $.each(BgVideoParagraphs, function (index) {
+            var thisContainer = BgVideoParagraphs[index];
+            var parentParagraph = thisContainer.parentNode;
+            var youtubeId = thisContainer.dataset.youtubeid;
+            bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
             var options = bgVideos[youtubeId];
-            var videoPlayer = BgVideoParagraphs[index].getElementsByClassName("az-video-player");
+            var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
             var YouTubePlayer = window.YT;
-            BgVideoParagraphs[index].player = new YouTubePlayer.Player(videoPlayer[0], {
+            thisContainer.player = new YouTubePlayer.Player(videoPlayer, {
               width: options.width,
               height: Math.ceil(options.width / options.ratio),
               videoId: youtubeId,
@@ -55,15 +56,15 @@
                 onStateChange: window.onPlayerStateChange
               }
             });
-            var PlayButton = BgVideoParagraphs[index].getElementsByClassName("az-video-play");
-            PlayButton[0].addEventListener("click", function (event) {
+            var PlayButton = BgVideoParagraphs[index].getElementsByClassName("az-video-play")[0];
+            PlayButton.addEventListener("click", function (event) {
               event.preventDefault();
               BgVideoParagraphs[index].player.playVideo();
               parentParagraph.classList.remove("az-video-paused");
               parentParagraph.classList.add("az-video-playing");
             });
-            var PauseButton = BgVideoParagraphs[index].getElementsByClassName("az-video-pause");
-            PauseButton[0].addEventListener("click", function (event) {
+            var PauseButton = BgVideoParagraphs[index].getElementsByClassName("az-video-pause")[0];
+            PauseButton.addEventListener("click", function (event) {
               event.preventDefault();
               BgVideoParagraphs[index].player.pauseVideo();
               parentParagraph.classList.remove("az-video-playing");
@@ -74,12 +75,12 @@
 
         var resize = function resize() {
           $.each(BgVideoParagraphs, function (index) {
-            var parentParagraph = BgVideoParagraphs[index].parentNode;
-            var youtubeId = BgVideoParagraphs[index].dataset.youtubeid;
-            var thisPlayer = BgVideoParagraphs[index].getElementsByClassName("az-video-player")[0];
             var thisContainer = BgVideoParagraphs[index];
-            var width = BgVideoParagraphs[index].offsetWidth;
-            var height = BgVideoParagraphs[index].offsetHeight;
+            var parentParagraph = thisContainer.parentNode;
+            var youtubeId = thisContainer.dataset.youtubeid;
+            var thisPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
+            var width = thisContainer.offsetWidth;
+            var height = thisContainer.offsetHeight;
             var ratio = bgVideos[youtubeId].ratio;
             var pWidth = Math.ceil(height * ratio);
             var pHeight = Math.ceil(width / ratio);
@@ -107,27 +108,27 @@
           });
         };
 
-        window.onPlayerReady = function (e) {
-          var id = e.target.playerInfo.videoData.video_id;
+        window.onPlayerReady = function (event) {
+          var id = event.target.playerInfo.videoData.video_id;
 
           if (bgVideos[id].mute) {
-            e.target.mute();
+            event.target.mute();
           }
 
-          e.target.seekTo(bgVideos[id].start);
-          e.target.playVideo();
+          event.target.seekTo(bgVideos[id].start);
+          event.target.playVideo();
         };
 
-        window.onPlayerStateChange = function (e) {
-          var id = e.target.playerInfo.videoData.video_id;
+        window.onPlayerStateChange = function (event) {
+          var id = event.target.playerInfo.videoData.video_id;
           var stateChangeContainer = document.getElementById("".concat(id, "-bg-video-container"));
           var parentContainer = stateChangeContainer.parentNode;
 
-          if (e.data === 0 && bgVideos[id].repeat) {
+          if (event.data === 0 && bgVideos[id].repeat) {
             stateChangeContainer.player.seekTo(bgVideos[id].start);
           }
 
-          if (e.data === 1) {
+          if (event.data === 1) {
             resize();
             parentContainer.classList.add("az-video-playing");
             parentContainer.classList.remove("az-video-loading");

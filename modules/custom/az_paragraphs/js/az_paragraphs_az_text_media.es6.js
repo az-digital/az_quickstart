@@ -60,8 +60,8 @@
             });
             const PlayButton = BgVideoParagraphs[index].getElementsByClassName(
               "az-video-play"
-            );
-            PlayButton[0].addEventListener("click", event => {
+            )[0];
+            PlayButton.addEventListener("click", event => {
               event.preventDefault();
               BgVideoParagraphs[index].player.playVideo();
               parentParagraph.classList.remove("az-video-paused");
@@ -69,8 +69,8 @@
             });
             const PauseButton = BgVideoParagraphs[index].getElementsByClassName(
               "az-video-pause"
-            );
-            PauseButton[0].addEventListener("click", event => {
+            )[0];
+            PauseButton.addEventListener("click", event => {
               event.preventDefault();
               BgVideoParagraphs[index].player.pauseVideo();
               parentParagraph.classList.remove("az-video-playing");
@@ -89,7 +89,6 @@
             const thisPlayer = thisContainer.getElementsByClassName(
               "az-video-player"
             )[0];
-
             const width = thisContainer.offsetWidth;
             const height = thisContainer.offsetHeight;
             const { ratio } = bgVideos[youtubeId];
@@ -124,26 +123,26 @@
           });
         };
 
-        window.onPlayerReady = e => {
-          const id = e.target.playerInfo.videoData.video_id;
+        window.onPlayerReady = event => {
+          const id = event.target.playerInfo.videoData.video_id;
           if (bgVideos[id].mute) {
-            e.target.mute();
+            event.target.mute();
           }
-          e.target.seekTo(bgVideos[id].start);
-          e.target.playVideo();
+          event.target.seekTo(bgVideos[id].start);
+          event.target.playVideo();
         };
 
-        window.onPlayerStateChange = e => {
-          const id = e.target.playerInfo.videoData.video_id;
+        window.onPlayerStateChange = event => {
+          const id = event.target.playerInfo.videoData.video_id;
           const stateChangeContainer = document.getElementById(
             `${id}-bg-video-container`
           );
           const parentContainer = stateChangeContainer.parentNode;
-          if (e.data === 0 && bgVideos[id].repeat) {
+          if (event.data === 0 && bgVideos[id].repeat) {
             // video ended and repeat option is set true
             stateChangeContainer.player.seekTo(bgVideos[id].start); // restart
           }
-          if (e.data === 1) {
+          if (event.data === 1) {
             resize();
             parentContainer.classList.add("az-video-playing");
             parentContainer.classList.remove("az-video-loading");
