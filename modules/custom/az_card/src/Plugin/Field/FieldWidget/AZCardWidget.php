@@ -224,7 +224,7 @@ class AZCardWidget extends WidgetBase {
 
     $element['link_uri'] = [
       '#type' => 'url',
-      '#title' => $this->t('Card Link URI'),
+      '#title' => $this->t('Card Link URL'),
       '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
     ];
 
