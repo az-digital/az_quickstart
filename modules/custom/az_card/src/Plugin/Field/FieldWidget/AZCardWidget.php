@@ -116,8 +116,8 @@ class AZCardWidget extends WidgetBase {
       $element['preview_container'] = [
         '#type' => 'container',
         '#attributes' => [
-          'class' => ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview',
-          ],
+          'class' =>
+            ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview'],
         ],
       ];
 
