@@ -27,11 +27,11 @@ class AZCardWidget extends WidgetBase {
   const AZ_CARD_DEFAULT_TEXT_FORMAT = 'az_standard';
 
   /**
-   * Drupal\Core\Image\ImageFactory definition.
+   * The AZCardImageHelper service.
    *
-   * @var \Drupal\Core\Image\ImageFactory
+   * @var \Drupal\az_card\AZCardImageHelper
    */
-  protected $imageFactory;
+  protected $cardImageHelper;
 
   /**
    * Drupal\Core\Path\PathValidator definition.
@@ -58,8 +58,8 @@ class AZCardWidget extends WidgetBase {
       $plugin_definition,
     );
 
-    $instance->imageFactory = ($container->get('image.factory'));
-    $instance->pathValidator = ($container->get('path.validator'));
+    $instance->cardImageHelper = $container->get('az_card.image');
+    $instance->pathValidator = $container->get('path.validator');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     return $instance;
   }
@@ -139,20 +139,12 @@ class AZCardWidget extends WidgetBase {
       }
 
       // Check and see if we can construct a valid image to preview.
-      $media_hint = $items[$delta]->media ?? NULL;
-      if ($media_hint) {
-        $file = $this->entityTypeManager->getStorage('file')->load($media_hint);
-        if ($file) {
-          $image = $this->imageFactory->get($file->getFileUri());
-          if ($image && $image->isValid()) {
-            $element['preview_container']['card_preview']['#media'] = [
-              '#theme' => 'image_style',
-              '#style_name' => 'az_card_image',
-              '#uri' => $file->getFileUri(),
-              '#attributes' => [
-                'class' => ['card-img-top'],
-              ],
-            ];
+      $media_id = $items[$delta]->media ?? NULL;
+      if (!empty($media_id)) {
+        if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
+          $media_render_array = $this->cardImageHelper->generateImageRenderArray($media);
+          if (!empty($media_render_array)) {
+            $element['preview_container']['card_preview']['#media'] = $media_render_array;
           }
         }
       }
