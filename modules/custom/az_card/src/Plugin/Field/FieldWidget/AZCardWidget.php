@@ -169,6 +169,31 @@ class AZCardWidget extends WidgetBase {
       }
     }
 
+    $element['options'] = [
+      '#type' => 'select',
+      '#options' => [
+        'bg-white' => $this->t('White'),
+        'bg-transparent' => $this->t('Transparent'),
+        'bg-red' => $this->t('Arizona Red'),
+        'bg-blue' => $this->t('Arizona Blue'),
+        'bg-sky' => $this->t('Sky'),
+        'bg-oasis' => $this->t('Oasis'),
+        'bg-azurite' => $this->t('Azurite'),
+        'bg-midnight' => $this->t('Midnight'),
+        'bg-bloom' => $this->t('Bloom'),
+        'bg-chili' => $this->t('Chili'),
+        'bg-cool-gray' => $this->t('Cool Gray'),
+        'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-leaf' => $this->t('Leaf'),
+        'bg-river' => $this->t('River'),
+        'bg-silver' => $this->t('Silver'),
+        'bg-ash' => $this->t('Ash'),
+      ],
+      '#required' => TRUE,
+      '#title' => $this->t('Card Background'),
+      '#default_value' => (!empty($items[$delta]->options['class'])) ? $items[$delta]->options['class'] : 'bg-white',
+    ];
+
     $element['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Title'),
@@ -201,31 +226,6 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'url',
       '#title' => $this->t('Card Link URI'),
       '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
-    ];
-
-    $element['options'] = [
-      '#type' => 'select',
-      '#options' => [
-        'bg-white' => $this->t('White'),
-        'bg-transparent' => $this->t('Transparent'),
-        'bg-red' => $this->t('Arizona Red'),
-        'bg-blue' => $this->t('Arizona Blue'),
-        'bg-sky' => $this->t('Sky'),
-        'bg-oasis' => $this->t('Oasis'),
-        'bg-azurite' => $this->t('Azurite'),
-        'bg-midnight' => $this->t('Midnight'),
-        'bg-bloom' => $this->t('Bloom'),
-        'bg-chili' => $this->t('Chili'),
-        'bg-cool-gray' => $this->t('Cool Gray'),
-        'bg-warm-gray' => $this->t('Warm Gray'),
-        'bg-leaf' => $this->t('Leaf'),
-        'bg-river' => $this->t('River'),
-        'bg-silver' => $this->t('Silver'),
-        'bg-ash' => $this->t('Ash'),
-      ],
-      '#required' => TRUE,
-      '#title' => $this->t('Card Background'),
-      '#default_value' => (!empty($items[$delta]->options['class'])) ? $items[$delta]->options['class'] : 'bg-white',
     ];
 
     if (!$items[$delta]->isEmpty()) {
