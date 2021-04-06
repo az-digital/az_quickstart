@@ -194,6 +194,15 @@ class AZCardWidget extends WidgetBase {
       '#default_value' => (!empty($items[$delta]->options['class'])) ? $items[$delta]->options['class'] : 'bg-white',
     ];
 
+    $element['media'] = [
+      '#type' => 'media_library',
+      '#title' => $this->t('Card Media'),
+      '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
+      '#allowed_bundles' => ['az_image'],
+      '#delta' => $delta,
+      '#cardinality' => 1,
+    ];
+
     $element['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Title'),
@@ -205,15 +214,6 @@ class AZCardWidget extends WidgetBase {
       '#title' => $this->t('Card Body'),
       '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
       '#format' => $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
-    ];
-
-    $element['media'] = [
-      '#type' => 'media_library',
-      '#title' => $this->t('Card Media'),
-      '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
-      '#allowed_bundles' => ['az_image'],
-      '#delta' => $delta,
-      '#cardinality' => 1,
     ];
 
     $element['link_title'] = [
