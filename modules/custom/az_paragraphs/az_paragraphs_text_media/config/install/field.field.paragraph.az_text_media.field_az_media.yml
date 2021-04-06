@@ -25,7 +25,6 @@ settings:
     sort:
       field: _none
       direction: ASC
-    auto_create: true
-    auto_create_bundle: az_remote_video
+    auto_create: false
 field_type: entity_reference
 
