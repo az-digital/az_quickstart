@@ -212,6 +212,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           ],
           'child' => $background_media,
           '#attached' => [
+            'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
             'drupalSettings' => [
               'azFieldsMedia' => [
                 'bgVideos' => [

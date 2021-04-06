@@ -19,13 +19,6 @@ az_paragraphs.az_text_media:
   css:
     theme:
       css/az_paragraphs_az_text_media.css: {}
-  js:
-    js/az_paragraphs_az_text_media.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupalSettings
-    - az_barrio/global-styling
-    - az_barrio/arizona-bootstrap
 az_paragraphs.az_cards:
   version: VERSION
   css:

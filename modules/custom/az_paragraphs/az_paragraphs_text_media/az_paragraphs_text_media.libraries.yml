@@ -1,0 +1,10 @@
+az_paragraphs_text_media.youtube:
+  version: VERSION
+  js:
+    js/az_paragraphs_az_text_media_youtube.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
+
