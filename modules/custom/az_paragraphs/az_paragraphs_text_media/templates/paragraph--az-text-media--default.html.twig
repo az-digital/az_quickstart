@@ -66,19 +66,16 @@
     text_on_media.bg_color
   ]
 %}
-
 {% block paragraph %}
-  {% if text_on_media.style != 'bottom' %}
-    {{style_element}}
-  {% endif %}
   <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
     {% block content %}
       {% if text_on_media.style == 'bottom' %}
-        <div class="text-on-media-bottom">
-          <img src="{{ file_url(paragraph.field_az_media.entity.field_media_az_image.entity.fileuri) }}">
-        </div>
+        {{ text_on_bottom }}
       {% endif %}
       {# Layout for content width AND full width styles #}
+      {% if text_on_media.style != 'bottom' %}
+        {{style_element}}
+      {% endif %}
       <div class="container">
         <div class="row">
           <div{{ col_attributes.addClass(col_classes) }}>

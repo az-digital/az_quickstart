@@ -100,37 +100,23 @@
   border-color: #ab0520;
 }
 
-.az-video-background.az-video-playing .bg-video-player-control.az-video-pause {
+.az-video-playing .az-video-pause {
   z-index: 2;
 }
 
-.az-video-background.az-video-paused .bg-video-player-control.az-video-play {
+.az-video-paused .az-video-play {
   z-index: 2;
 }
 .az-video-container iframe {
-  z-index: -2;
   position: absolute;
 }
-/*.az-video-overflow-container {*/
-    /*z-index: -1;*/
-    /*border-top-color: white;*/
-    /*border-top-style: solid;*/
-    /*border-bottom-color: white;*/
-    /*border-bottom-style: solid;*/
-    /*background: transparent;*/
-    /*position: absolute;*/
-    /*display: block;*/
-    /*width: 100%;*/
-    /*border-top-width: 367px;*/
-
-/*}*/
 .az-video-background {
-overflow: hidden;
-    height: 230px;
-    width: 100vw;
+    overflow: hidden;
     position: absolute;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    width: 100%;
+}
+.full-width-background .az-video-background {
+    width: 100vw;
 }
 .az-video-loading .az-video-container {
   opacity: 0;

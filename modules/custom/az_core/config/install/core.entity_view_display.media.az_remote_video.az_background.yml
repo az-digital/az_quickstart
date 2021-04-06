@@ -12,6 +12,16 @@ targetEntityType: media
 bundle: az_remote_video
 mode: az_background
 content:
+  az_pause_button:
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  az_play_button:
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   thumbnail:
     type: image_url
     weight: 0
