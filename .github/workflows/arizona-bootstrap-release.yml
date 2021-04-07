@@ -26,5 +26,5 @@ jobs:
           git add composer.json themes/custom/az_barrio/includes/common.inc
           git commit -m 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}'
           git push --set-upstream origin 'az-bootstrap-${{ github.event.client_payload.version }}'
-          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
           gh pr create --title 'Update Arizona Bootstrap to ${{ github.event.client_payload.version }}' --body ''
