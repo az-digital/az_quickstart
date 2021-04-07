@@ -10,16 +10,6 @@ class AZVideoEmbedHelper {
   /**
    * Get YouTube video id from URL.
    *
-   * Should work with these patterns:
-   * 'http://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player',
-   * 'http://youtube.com/vi/dQw4w9WgXcQ?feature=youtube_gdata_player',
-   * 'http://youtube.com/?v=dQw4w9WgXcQ&feature=youtube_gdata_player',
-   * 'http://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player',
-   * 'http://youtube.com/?vi=dQw4w9WgXcQ&feature=youtube_gdata_player',
-   * 'http://youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player',
-   * 'http://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player',
-   * 'http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player'
-   *
    * @param string $url
    *   A YouTube url.
    *
