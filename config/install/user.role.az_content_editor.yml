@@ -32,6 +32,7 @@ permissions:
   - 'create az_carousel_item content'
   - 'create az_document media'
   - 'create az_event content'
+  - 'create az_flexible_block block content'
   - 'create az_flexible_page content'
   - 'create az_image media'
   - 'create az_news content'
@@ -95,6 +96,7 @@ permissions:
   - 'revert az_person revisions'
   - 'revert book revisions'
   - 'revert webform revisions'
+  - 'update any az_flexible_block block content'
   - 'update content translations'
   - 'update media'
   - 'use editorial transition archive'
@@ -123,4 +125,3 @@ permissions:
   - 'view webform revisions'
   - 'view webform submissions any node'
   - 'view webform submissions own node'
-

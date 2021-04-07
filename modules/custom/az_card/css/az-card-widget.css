@@ -1,3 +1,34 @@
 tr.odd .az-card-elements .form-item {
   margin-bottom: 8px;
 }
+
+.az-card-elements .media-library-form-element .description {
+  display: none;
+}
+
+.az-card-elements .media-library-form-element {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.az-card-elements .media-library-form-element legend {
+  display: none;
+}
+
+.az-card-elements .media-library-selection {
+  margin: 0;
+}
+
+.az-card-elements .card-preview {
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.az-card-elements.az-card-elements-closed .form-type--textfield,
+.az-card-elements.az-card-elements-closed .form-type--url,
+.az-card-elements.az-card-elements-closed .form-type--textarea,
+.az-card-elements.az-card-elements-closed .filter-wrapper,
+.az-card-elements.az-card-elements-closed .form-type--select,
+.az-card-elements.az-card-elements-closed .media-library-form-element {
+  display: none;
+}
