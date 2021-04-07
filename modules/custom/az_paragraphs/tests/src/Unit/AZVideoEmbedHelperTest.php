@@ -52,6 +52,9 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
       ['http://youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
       ['http://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
       ['http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
+      ['https://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
+      ['https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
+      ['https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
     ];
   }
 }
