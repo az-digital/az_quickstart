@@ -4,7 +4,7 @@ dependencies:
   config:
     - system.menu.main
   module:
-    - system
+    - menu_block
   theme:
     - az_barrio
 id: az_barrio_sidebar_menu
@@ -12,13 +12,18 @@ theme: az_barrio
 region: sidebar_first
 weight: 0
 provider: null
-plugin: 'system_menu_block:main'
+plugin: 'menu_block:main'
 settings:
-  id: 'system_menu_block:main'
+  id: 'menu_block:main'
   label: 'Sidebar menu'
-  provider: system
-  label_display: false
+  provider: menu_block
+  label_display: visible
+  follow: false
+  follow_parent: active
   level: 2
   depth: 0
-  expand_all_items: false
+  expand: false
+  parent: 'main:'
+  suggestion: sidebar
+  label_type: root
 visibility: {  }
