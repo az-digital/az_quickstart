@@ -49,7 +49,7 @@ class AZCardItem extends FieldItemBase {
       ->setLabel(t('Card Media'));
     $properties['link_title'] = DataDefinition::create('string')
       ->setLabel(t('Card Link Title'));
-    $properties['link_uri'] = DataDefinition::create('uri')
+    $properties['link_uri'] = DataDefinition::create('string')
       ->setLabel(t('Card Link URI'));
     $properties['options'] = MapDataDefinition::create()
       ->setLabel(t('Card Options'));

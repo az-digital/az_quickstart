@@ -6,7 +6,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
@@ -38,6 +37,13 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   protected $cardImageHelper;
 
   /**
+   * Drupal\Core\Path\PathValidator definition.
+   *
+   * @var \Drupal\Core\Path\PathValidator
+   */
+  protected $pathValidator;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -50,6 +56,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
     $instance->cardImageHelper = $container->get('az_card.image');
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->pathValidator = $container->get('path.validator');
     return $instance;
   }
 
@@ -106,10 +113,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Link.
       $link_render_array = [];
       if ($item->link_title || $item->link_uri) {
+        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $item->link_uri ? Url::fromUri($item->link_uri) : '#',
+          '#url' => $link_url ? $link_url : '#',
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
