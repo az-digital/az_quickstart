@@ -21,7 +21,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'administer blocks'
+          perm: 'update any az_flexible_block block content'
       cache:
         type: tag
         options: {  }
