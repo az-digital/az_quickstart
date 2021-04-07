@@ -1,10 +1,5 @@
 <?php
 
-/**
- * @file
- * Contains \Drupal\Tests\az_paragraphs\Unit\AZVideoEmbedHelperTest.
- */
-
 namespace Drupal\Tests\az_paragraphs\Unit;
 
 use Drupal\az_paragraphs\AZVideoEmbedHelper;
@@ -42,19 +37,56 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
     $this->assertEquals($expected_id, $this->videoEmbedHelper->getYoutubeIdFromUrl($youtube_url));
   }
 
+  /**
+   * Array of links and the ids they should output.
+   */
   public function providerYouTubeVideoData() {
     return [
-      ['http://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['http://youtube.com/vi/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['http://youtube.com/?v=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['http://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['http://youtube.com/?vi=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['http://youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['http://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['https://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
-      ['https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player', 'dQw4w9WgXcQ'],
+      [
+        'http://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'http://youtube.com/vi/dQw4w9WgXcQ?feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'http://youtube.com/?v=dQw4w9WgXcQ&feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'http://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'http://youtube.com/?vi=dQw4w9WgXcQ&feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'http://youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'http://youtube.com/watch?vi=dQw4w9WgXcQ&feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'http://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'https://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'https://www.youtube.com/watch?v=dQw4w9WgXcQ&feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
+      [
+        'https://youtu.be/dQw4w9WgXcQ?feature=youtube_gdata_player',
+        'dQw4w9WgXcQ',
+      ],
     ];
   }
+
 }
