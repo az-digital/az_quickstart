@@ -36,7 +36,6 @@
             const parentParagraph = thisContainer.parentNode;
             const youtubeId = thisContainer.dataset.youtubeid;
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
-
             const options = bgVideos[youtubeId];
             const videoPlayer = thisContainer.getElementsByClassName(
               "az-video-player"
@@ -78,48 +77,53 @@
             });
           });
         };
+        const setDimensions = container => {
+          const parentParagraph = container.parentNode;
+          const youtubeId = container.dataset.youtubeid;
+          const thisPlayer = container.getElementsByClassName(
+            "az-video-player"
+          )[0];
+          thisPlayer.style.zIndex = -100;
+          const { style } = container.dataset;
+          const width = container.offsetWidth;
+          const height = container.offsetHeight;
+          const { ratio } = bgVideos[youtubeId];
+          const pWidth = Math.ceil(height * ratio); // get new player width
+          const pHeight = Math.ceil(width / ratio); // get new player height
+          let parentHeight = parentParagraph.offsetHeight;
+          parentHeight = `${parentHeight.toString()}px`;
+          container.style.height = parentHeight;
+          if (style === "bottom") {
+            container.style.top = 0;
+          }
+          let widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
+          widthMinuspWidthdividedbyTwo = `${widthMinuspWidthdividedbyTwo.toString()}px`;
+          let pHeightRatio = (height - pHeight) / 2;
+          pHeightRatio = `${pHeightRatio.toString()}px`;
+          // when screen aspect ratio differs from video,
+          // video must center and underlay one dimension.
+          if (width / ratio < height) {
+            // if new video height < window height (gap underneath)
+            thisPlayer.width = pWidth;
+            thisPlayer.height = height;
+            thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
+            thisPlayer.style.top = 0;
+            // player width is greater, offset left; reset top
+          } else {
+            // new video width < window width (gap to right)
+            // get new player height
+            thisPlayer.height = pHeight;
+            thisPlayer.width = width;
+            thisPlayer.style.top = pHeightRatio;
+            thisPlayer.style.left = 0;
+          }
+        };
 
         // Resize handler updates width, height and offset
         // of player after resize/init.
         const resize = () => {
           $.each(BgVideoParagraphs, index => {
-            const thisContainer = BgVideoParagraphs[index];
-            const parentParagraph = thisContainer.parentNode;
-            const youtubeId = thisContainer.dataset.youtubeid;
-            const thisPlayer = thisContainer.getElementsByClassName(
-              "az-video-player"
-            )[0];
-            const width = thisContainer.offsetWidth;
-            const height = thisContainer.offsetHeight;
-            const { ratio } = bgVideos[youtubeId];
-            const pWidth = Math.ceil(height * ratio); // get new player width
-            const pHeight = Math.ceil(width / ratio);
-            let parentHeight = parentParagraph.offsetHeight;
-            parentHeight = `${parentHeight.toString()}px`;
-            let widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
-            widthMinuspWidthdividedbyTwo = `${widthMinuspWidthdividedbyTwo.toString()}px`;
-            let pHeightRatio = (height - pHeight) / 2;
-            pHeightRatio = `${pHeightRatio.toString()}px`;
-            // when screen aspect ratio differs from video,
-            // video must center and underlay one dimension.
-            if (width / ratio < height) {
-              // if new video height < window height (gap underneath)
-              thisPlayer.width = pWidth;
-              thisPlayer.style.zIndex = 100 - index;
-              thisPlayer.height = height;
-              thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
-              thisPlayer.style.top = 0;
-              // player width is greater, offset left; reset top
-            } else {
-              // new video width < window width (gap to right)
-              // get new player height
-              thisContainer.style.height = parentHeight;
-              thisPlayer.height = pHeight;
-              thisPlayer.width = width;
-              thisPlayer.style.top = pHeightRatio;
-              thisPlayer.style.left = 0;
-              thisPlayer.style.zIndex = -100 + index;
-            }
+            setDimensions(BgVideoParagraphs[index]);
           });
         };
 
@@ -137,19 +141,27 @@
           const stateChangeContainer = document.getElementById(
             `${id}-bg-video-container`
           );
+          const { style } = stateChangeContainer.dataset;
           const parentContainer = stateChangeContainer.parentNode;
           if (event.data === 0 && bgVideos[id].repeat) {
             // video ended and repeat option is set true
             stateChangeContainer.player.seekTo(bgVideos[id].start); // restart
           }
           if (event.data === 1) {
-            resize();
-            parentContainer.classList.add("az-video-playing");
-            parentContainer.classList.remove("az-video-loading");
+            if (style === "bottom") {
+              stateChangeContainer.classList.add("az-video-playing");
+              stateChangeContainer.classList.remove("az-video-loading");
+            } else {
+              parentContainer.classList.add("az-video-playing");
+              parentContainer.classList.remove("az-video-loading");
+            }
           }
         };
 
         // events
+        $(window).on("load", () => {
+          resize();
+        });
         $(window).on("resize.bgVideo", () => {
           resize();
         });

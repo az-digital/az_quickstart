@@ -191,7 +191,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing {background-image: none;} </style>",
+          '#template' => "<style type='text/css'>#{{ id }}.az-video-loading {background-image: url({{filepath}});} </style>",
           '#context' => [
             'filepath' => file_create_url($thumb),
             'id' => $paragraph->bundle() . "-" . $paragraph->id(),
@@ -209,6 +209,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
               'az-js-video-background',
             ],
             'data-youtubeid' => $video_oembed_id,
+            'data-style' => $config['style'],
           ],
           'child' => $background_media,
           '#attached' => [
@@ -219,7 +220,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
                   $video_oembed_id => [
                     'videoId' => $video_oembed_id,
                     'start' => 0,
-                    'config' => $config,
                   ],
                 ],
               ],
@@ -231,7 +231,25 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         $variables['style_element'] = $style_element;
       }
       elseif ($variables['text_on_media']['style'] === 'bottom') {
-        $variables['text_on_bottom'] = $style_element;
+        $style_element['style']['#template'] = "<style type='text/css'>#{{ id }} .az-video-loading {background-image: url({{filepath}});background-repeat: no-repeat;background-attachment:fixed;background-size:cover;}</style>";
+        $image_renderable = [
+          '#theme' => 'image',
+          '#uri' => file_create_url($thumb),
+          '#alt' => $media->field_media_az_image->alt,
+          '#attributes' => [
+            'class' => ['img-fluid'],
+          ],
+        ];
+        $text_on_bottom = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          'img' => $image_renderable,
+          'video' => $style_element,
+          '#attributes' => [
+            'class' => ['text-on-media-bottom', 'text-on-video'],
+          ],
+        ];
+        $variables['text_on_bottom'] = $text_on_bottom;
       }
       return $variables;
     }

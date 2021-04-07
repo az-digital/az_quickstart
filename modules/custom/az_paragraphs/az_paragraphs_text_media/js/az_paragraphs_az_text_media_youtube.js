@@ -73,38 +73,46 @@
           });
         };
 
+        var setDimensions = function setDimensions(container) {
+          var parentParagraph = container.parentNode;
+          var youtubeId = container.dataset.youtubeid;
+          var thisPlayer = container.getElementsByClassName("az-video-player")[0];
+          thisPlayer.style.zIndex = -100;
+          var style = container.dataset.style;
+          var width = container.offsetWidth;
+          var height = container.offsetHeight;
+          var ratio = bgVideos[youtubeId].ratio;
+          var pWidth = Math.ceil(height * ratio);
+          var pHeight = Math.ceil(width / ratio);
+          var parentHeight = parentParagraph.offsetHeight;
+          parentHeight = "".concat(parentHeight.toString(), "px");
+          container.style.height = parentHeight;
+
+          if (style === "bottom") {
+            container.style.top = 0;
+          }
+
+          var widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
+          widthMinuspWidthdividedbyTwo = "".concat(widthMinuspWidthdividedbyTwo.toString(), "px");
+          var pHeightRatio = (height - pHeight) / 2;
+          pHeightRatio = "".concat(pHeightRatio.toString(), "px");
+
+          if (width / ratio < height) {
+            thisPlayer.width = pWidth;
+            thisPlayer.height = height;
+            thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
+            thisPlayer.style.top = 0;
+          } else {
+            thisPlayer.height = pHeight;
+            thisPlayer.width = width;
+            thisPlayer.style.top = pHeightRatio;
+            thisPlayer.style.left = 0;
+          }
+        };
+
         var resize = function resize() {
           $.each(BgVideoParagraphs, function (index) {
-            var thisContainer = BgVideoParagraphs[index];
-            var parentParagraph = thisContainer.parentNode;
-            var youtubeId = thisContainer.dataset.youtubeid;
-            var thisPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
-            var width = thisContainer.offsetWidth;
-            var height = thisContainer.offsetHeight;
-            var ratio = bgVideos[youtubeId].ratio;
-            var pWidth = Math.ceil(height * ratio);
-            var pHeight = Math.ceil(width / ratio);
-            var parentHeight = parentParagraph.offsetHeight;
-            parentHeight = "".concat(parentHeight.toString(), "px");
-            var widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
-            widthMinuspWidthdividedbyTwo = "".concat(widthMinuspWidthdividedbyTwo.toString(), "px");
-            var pHeightRatio = (height - pHeight) / 2;
-            pHeightRatio = "".concat(pHeightRatio.toString(), "px");
-
-            if (width / ratio < height) {
-              thisPlayer.width = pWidth;
-              thisPlayer.style.zIndex = 100 - index;
-              thisPlayer.height = height;
-              thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
-              thisPlayer.style.top = 0;
-            } else {
-              thisContainer.style.height = parentHeight;
-              thisPlayer.height = pHeight;
-              thisPlayer.width = width;
-              thisPlayer.style.top = pHeightRatio;
-              thisPlayer.style.left = 0;
-              thisPlayer.style.zIndex = -100 + index;
-            }
+            setDimensions(BgVideoParagraphs[index]);
           });
         };
 
@@ -122,6 +130,7 @@
         window.onPlayerStateChange = function (event) {
           var id = event.target.playerInfo.videoData.video_id;
           var stateChangeContainer = document.getElementById("".concat(id, "-bg-video-container"));
+          var style = stateChangeContainer.dataset.style;
           var parentContainer = stateChangeContainer.parentNode;
 
           if (event.data === 0 && bgVideos[id].repeat) {
@@ -129,12 +138,19 @@
           }
 
           if (event.data === 1) {
-            resize();
-            parentContainer.classList.add("az-video-playing");
-            parentContainer.classList.remove("az-video-loading");
+            if (style === "bottom") {
+              stateChangeContainer.classList.add("az-video-playing");
+              stateChangeContainer.classList.remove("az-video-loading");
+            } else {
+              parentContainer.classList.add("az-video-playing");
+              parentContainer.classList.remove("az-video-loading");
+            }
           }
         };
 
+        $(window).on("load", function () {
+          resize();
+        });
         $(window).on("resize.bgVideo", function () {
           resize();
         });
