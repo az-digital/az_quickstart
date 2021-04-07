@@ -23,12 +23,15 @@ use Drupal\Component\Utility\NestedArray;
  */
 class AZCardWidget extends WidgetBase {
 
+  // Default initial text format for cards.
+  const AZ_CARD_DEFAULT_TEXT_FORMAT = 'az_standard';
+
   /**
-   * Drupal\Core\Image\ImageFactory definition.
+   * The AZCardImageHelper service.
    *
-   * @var \Drupal\Core\Image\ImageFactory
+   * @var \Drupal\az_card\AZCardImageHelper
    */
-  protected $imageFactory;
+  protected $cardImageHelper;
 
   /**
    * Drupal\Core\Path\PathValidator definition.
@@ -55,8 +58,8 @@ class AZCardWidget extends WidgetBase {
       $plugin_definition,
     );
 
-    $instance->imageFactory = ($container->get('image.factory'));
-    $instance->pathValidator = ($container->get('path.validator'));
+    $instance->cardImageHelper = $container->get('az_card.image');
+    $instance->pathValidator = $container->get('path.validator');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     return $instance;
   }
@@ -66,8 +69,8 @@ class AZCardWidget extends WidgetBase {
    */
   public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL) {
 
-    // Create shared settings for widget elemeents.
-    // This is necessary because wigets have to be AJAX replaced together,
+    // Create shared settings for widget elements.
+    // This is necessary because widgets have to be AJAX replaced together,
     // And in general we need a place to store shared settings.
     $wrapper_id = Html::getUniqueId('az-card-wrapper');
     $field_name = $this->fieldDefinition->getName();
@@ -116,8 +119,8 @@ class AZCardWidget extends WidgetBase {
       $element['preview_container'] = [
         '#type' => 'container',
         '#attributes' => [
-          'class' => ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview',
-          ],
+          'class' =>
+            ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview'],
         ],
       ];
 
@@ -127,7 +130,7 @@ class AZCardWidget extends WidgetBase {
         '#title' => $items[$delta]->title ?? '',
         '#body' => check_markup(
           $items[$delta]->body ?? '',
-          $items[$delta]->body_format ?? 'basic_html'),
+          $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
         '#attributes' => ['class' => ['card']],
       ];
       // Add card class from options.
@@ -136,20 +139,12 @@ class AZCardWidget extends WidgetBase {
       }
 
       // Check and see if we can construct a valid image to preview.
-      $media_hint = $items[$delta]->media ?? NULL;
-      if ($media_hint) {
-        $file = $this->entityTypeManager->getStorage('file')->load($media_hint);
-        if ($file) {
-          $image = $this->imageFactory->get($file->getFileUri());
-          if ($image && $image->isValid()) {
-            $element['preview_container']['card_preview']['#media'] = [
-              '#theme' => 'image_style',
-              '#style_name' => 'az_card_image',
-              '#uri' => $file->getFileUri(),
-              '#attributes' => [
-                'class' => ['card-img-top'],
-              ],
-            ];
+      $media_id = $items[$delta]->media ?? NULL;
+      if (!empty($media_id)) {
+        if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
+          $media_render_array = $this->cardImageHelper->generateImageRenderArray($media);
+          if (!empty($media_render_array)) {
+            $element['preview_container']['card_preview']['#media'] = $media_render_array;
           }
         }
       }
@@ -165,42 +160,6 @@ class AZCardWidget extends WidgetBase {
         ];
       }
     }
-
-    $element['title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Card Title'),
-      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
-    ];
-
-    $element['body'] = [
-      '#type' => 'text_format',
-      '#title' => $this->t('Card Body'),
-      '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
-      '#format' => $items[$delta]->body_format ?? 'basic_html',
-    ];
-
-    $element['media'] = [
-      '#type' => 'media_library',
-      '#title' => $this->t('Card Media'),
-      '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
-      '#allowed_bundles' => ['az_image'],
-      '#delta' => $delta,
-      '#cardinality' => 1,
-    ];
-
-    $element['link_title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Card Link Title'),
-      '#default_value' => isset($items[$delta]->link_title) ? $items[$delta]->link_title : NULL,
-    ];
-
-    $element['link_uri'] = [
-      // Url FAPI element does not support internal paths.
-      '#type' => 'textfield',
-      '#title' => $this->t('Card Link URI'),
-      '#element_validate' => [[$this, 'validateCardLink']],
-      '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
-    ];
 
     $element['options'] = [
       '#type' => 'select',
@@ -225,6 +184,42 @@ class AZCardWidget extends WidgetBase {
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
       '#default_value' => (!empty($items[$delta]->options['class'])) ? $items[$delta]->options['class'] : 'bg-white',
+    ];
+
+    $element['media'] = [
+      '#type' => 'media_library',
+      '#title' => $this->t('Card Media'),
+      '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
+      '#allowed_bundles' => ['az_image'],
+      '#delta' => $delta,
+      '#cardinality' => 1,
+    ];
+
+    $element['title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Card Title'),
+      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
+    ];
+
+    $element['body'] = [
+      '#type' => 'text_format',
+      '#title' => $this->t('Card Body'),
+      '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
+      '#format' => $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+    ];
+
+    $element['link_title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Card Link Title'),
+      '#default_value' => isset($items[$delta]->link_title) ? $items[$delta]->link_title : NULL,
+    ];
+
+    $element['link_uri'] = [
+      // Url FAPI element does not support internal paths.
+      '#type' => 'textfield',
+      '#title' => $this->t('Card Link URL'),
+      '#element_validate' => [[$this, 'validateCardLink']],
+      '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
     ];
 
     if (!$items[$delta]->isEmpty()) {

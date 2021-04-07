@@ -6,7 +6,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\media\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
@@ -31,18 +30,18 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   protected $entityTypeManager;
 
   /**
+   * The AZCardImageHelper service.
+   *
+   * @var \Drupal\az_card\AZCardImageHelper
+   */
+  protected $cardImageHelper;
+
+  /**
    * Drupal\Core\Path\PathValidator definition.
    *
    * @var \Drupal\Core\Path\PathValidator
    */
   protected $pathValidator;
-
-  /**
-   * The renderer.
-   *
-   * @var \Drupal\Core\Render\RendererInterface
-   */
-  protected $renderer;
 
   /**
    * {@inheritdoc}
@@ -55,9 +54,9 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $plugin_definition,
     );
 
+    $instance->cardImageHelper = $container->get('az_card.image');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->pathValidator = $container->get('path.validator');
-    $instance->renderer = $container->get('renderer');
     return $instance;
   }
 
@@ -107,11 +106,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $media_render_array = [];
       if (!empty($item->media)) {
         if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
-          switch ($media->bundle()) {
-            case 'az_image':
-              $media_render_array = $this->generateImageRenderArray($media);
-              break;
-          }
+          $media_render_array = $this->cardImageHelper->generateImageRenderArray($media);
         }
       }
 
@@ -185,46 +180,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     }
 
     return $element;
-  }
-
-  /**
-   * Prepare an image render array.
-   *
-   * @param \Drupal\media\MediaInterface $media
-   *   A Drupal media entity object.
-   *
-   * @return string[]
-   *   An image render array.
-   */
-  protected function generateImageRenderArray(MediaInterface $media) {
-    $media_render_array = [];
-    $media_attributes = $media->get('field_media_az_image')->getValue();
-    if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {
-      $image = new \stdClass();
-      $image->title = NULL;
-      $image->alt = $media_attributes[0]['alt'];
-      $image->entity = $file;
-      $image->uri = $file->getFileUri();
-      $image->width = NULL;
-      $image->height = NULL;
-
-      // TODO: replace with responsive_image_formatter (?),
-      // add image style(s), add cache tags, add image classes(?).
-      $media_render_array = [
-        '#theme' => 'image_formatter',
-        '#item' => $image,
-        '#image_style' => 'az_card_image',
-        // Support images smaller than card width, eg. full width cards.
-        '#item_attributes' => [
-          'class' => ['card-img-top'],
-        ],
-        // '#url' => '',
-      ];
-      // Add the file entity to the cache dependencies.
-      // This will clear our cache when this entity updates.
-      $this->renderer->addCacheableDependency($media_render_array, $file);
-    }
-    return $media_render_array;
   }
 
 }
