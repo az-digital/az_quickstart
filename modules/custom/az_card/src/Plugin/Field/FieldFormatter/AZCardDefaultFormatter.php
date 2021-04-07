@@ -2,15 +2,11 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
-use Drupal\media\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
@@ -35,55 +31,26 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   protected $entityTypeManager;
 
   /**
-   * The renderer.
+   * The AZCardImageHelper service.
    *
-   * @var \Drupal\Core\Render\RendererInterface
+   * @var \Drupal\az_card\AZCardImageHelper
    */
-  protected $renderer;
-
-  /**
-   * Constructs a FormatterBase object.
-   *
-   * @param string $plugin_id
-   *   The plugin_id for the formatter.
-   * @param mixed $plugin_definition
-   *   The plugin implementation definition.
-   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
-   *   The definition of the field to which the formatter is associated.
-   * @param array $settings
-   *   The formatter settings.
-   * @param string $label
-   *   The formatter label display setting.
-   * @param string $view_mode
-   *   The view mode.
-   * @param array $third_party_settings
-   *   Any third party settings.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
-   *   The entity type manager service.
-   * @param \Drupal\Core\Render\RendererInterface $renderer
-   *   The renderer.
-   */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, $label, $view_mode, array $third_party_settings, EntityTypeManagerInterface $entity_type_manager, RendererInterface $renderer) {
-    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
-    $this->entityTypeManager = $entity_type_manager;
-    $this->renderer = $renderer;
-  }
+  protected $cardImageHelper;
 
   /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    return new static(
+    $instance = parent::create(
+      $container,
+      $configuration,
       $plugin_id,
       $plugin_definition,
-      $configuration['field_definition'],
-      $configuration['settings'],
-      $configuration['label'],
-      $configuration['view_mode'],
-      $configuration['third_party_settings'],
-      $container->get('entity_type.manager'),
-      $container->get('renderer')
     );
+
+    $instance->cardImageHelper = $container->get('az_card.image');
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    return $instance;
   }
 
   /**
@@ -130,11 +97,9 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
       // Media.
       $media_render_array = [];
-      if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
-        switch ($media->bundle()) {
-          case 'az_image':
-            $media_render_array = $this->generateImageRenderArray($media);
-            break;
+      if (!empty($item->media)) {
+        if ($media = $this->entityTypeManager->getStorage('media')->load($item->media)) {
+          $media_render_array = $this->cardImageHelper->generateImageRenderArray($media);
         }
       }
 
@@ -181,6 +146,9 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
+      if (!empty($item->options['class'])) {
+        $card_classes .= ' ' . $item->options['class'];
+      }
 
       $element[] = [
         '#theme' => 'az_card',
@@ -204,46 +172,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     }
 
     return $element;
-  }
-
-  /**
-   * Prepare an image render array.
-   *
-   * @param \Drupal\media\MediaInterface $media
-   *   A Drupal media entity object.
-   *
-   * @return string[]
-   *   An image render array.
-   */
-  protected function generateImageRenderArray(MediaInterface $media) {
-    $media_render_array = [];
-    $media_attributes = $media->get('field_media_az_image')->getValue();
-    if ($file = $this->entityTypeManager->getStorage('file')->load($media_attributes[0]['target_id'])) {
-      $image = new \stdClass();
-      $image->title = NULL;
-      $image->alt = $media_attributes[0]['alt'];
-      $image->entity = $file;
-      $image->uri = $file->getFileUri();
-      $image->width = NULL;
-      $image->height = NULL;
-
-      // TODO: replace with responsive_image_formatter (?),
-      // add image style(s), add cache tags, add image classes(?).
-      $media_render_array = [
-        '#theme' => 'image_formatter',
-        '#item' => $image,
-        '#image_style' => 'az_card_image',
-        // Support images smaller than card width, eg. full width cards.
-        '#item_attributes' => [
-          'class' => ['card-img-top'],
-        ],
-        // '#url' => '',
-      ];
-      // Add the file entity to the cache dependencies.
-      // This will clear our cache when this entity updates.
-      $this->renderer->addCacheableDependency($media_render_array, $file);
-    }
-    return $media_render_array;
   }
 
 }
