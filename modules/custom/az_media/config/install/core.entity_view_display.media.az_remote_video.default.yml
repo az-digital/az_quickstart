@@ -5,7 +5,28 @@ dependencies:
     - field.field.media.az_remote_video.field_media_az_oembed_video
     - media.type.az_remote_video
   module:
+    - field_group
     - media
+third_party_settings:
+  field_group:
+    group_16x9:
+      children:
+        - field_media_az_oembed_video
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'embed-responsive embed-responsive-16by9'
+      label: '16:9 Responsive'
 id: media.az_remote_video.default
 targetEntityType: media
 bundle: az_remote_video
@@ -13,7 +34,7 @@ mode: default
 content:
   field_media_az_oembed_video:
     type: oembed
-    weight: 0
+    weight: 1
     label: hidden
     settings:
       max_width: 0
