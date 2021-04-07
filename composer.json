@@ -42,7 +42,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.1.3",
+        "drupal/core-recommended": "9.1.5",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.4",
         "drupal/date_ap_style": "1.0",
@@ -55,6 +55,7 @@
         "drupal/field_group": "3.1",
         "drupal/field_group_link": "3.0-rc2",
         "drupal/image_widget_crop": "2.3",
+        "drupal/link_class": "2.0.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.0",
         "drupal/metatag": "1.15",
@@ -63,6 +64,9 @@
         "drupal/paragraphs": "1.12",
         "drupal/pathauto": "1.8",
         "drupal/redirect": "1.6",
+        "drupal/search_exclude": "2.0.0-beta2",
+        "drupal/slick": "2.2",
+        "drupal/slick_views": "2.3",
         "drupal/smart_date": "3.1.1",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
@@ -70,7 +74,9 @@
         "drupal/views_bootstrap": "4.3",
         "drupal/viewsreference": "2.0-beta2",
         "drupal/webform": "6.0.2",
-        "drupal/xmlsitemap": "1.0"
+        "drupal/xmlsitemap": "1.0",
+        "npm-asset/blazy": "1.8.2",
+        "npm-asset/slick-carousel": "1.8.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -87,15 +93,16 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-01-26/2259567--119-allow-svg-image-upload-d9-1-x.patch",
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-02-25/2259567--134-allow-svg-image-upload-d9-2-x.patch",
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
-                "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2020-11-14/784672-178.patch",
+                "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
                 "Remove Claro tabledrag.js replacement when core issues are resolved" : "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Editing menus user-experience issue" : "https://www.drupal.org/files/issues/2021-02-09/2957953-9.2.x-113.patch",
-                "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch"
+                "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",

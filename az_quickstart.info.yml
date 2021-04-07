@@ -65,6 +65,7 @@ install:
   - coffee:coffee
   - bootstrap_utilities:bootstrap_utilities
   - exclude_node_title:exclude_node_title
+  - search_exclude:search_exclude
 
 themes:
   - az_barrio
