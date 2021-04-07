@@ -148,6 +148,7 @@
             stateChangeContainer.player.seekTo(bgVideos[id].start); // restart
           }
           if (event.data === 1) {
+            resize();
             if (style === "bottom") {
               stateChangeContainer.classList.add("az-video-playing");
               stateChangeContainer.classList.remove("az-video-loading");
