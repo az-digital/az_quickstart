@@ -31,7 +31,7 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
    *
    * @covers ::getYoutubeIdFromUrl
    *
-   * @dataProvider ::providerYouTubeVideoData
+   * @dataProvider providerYouTubeVideoData
    */
   public function testGetYoutubeIdFromUrl($youtube_url, $expected_id) {
     $this->assertEquals($expected_id, $this->videoEmbedHelper->getYoutubeIdFromUrl($youtube_url));
