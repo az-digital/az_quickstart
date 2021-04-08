@@ -1,4 +1,4 @@
-block_content_add_action:
+az_flexible_block_add_action:
   route_name: block_content.add_page
   title: 'Add custom block'
   appears_on:
