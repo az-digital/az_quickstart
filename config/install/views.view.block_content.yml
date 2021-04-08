@@ -476,20 +476,7 @@ display:
           plugin_id: boolean
       sorts: {  }
       title: 'Custom block library'
-      header:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          empty: true
-          tokenize: true
-          content:
-            value: "<div id=\"block-claro-local-actions\">\r\n  \r\n    \r\n        <ul class=\"local-actions\">\r\n      <li class=\"local-actions__item\"><a href=\"/block/add?destination=/admin/structure/block/block-content\" class=\"button button--action button--primary\" data-drupal-link-query=\"{&quot;destination&quot;:&quot;\\/admin\\/structure\\/block\\/block-content&quot;}\" data-drupal-link-system-path=\"block/add\">Add custom block</a></li>\r\n\r\n    </ul>\r\n  </div>"
-            format: full_html
-          plugin_id: text
+      header: {  }
       footer: {  }
       empty:
         area_text_custom:
