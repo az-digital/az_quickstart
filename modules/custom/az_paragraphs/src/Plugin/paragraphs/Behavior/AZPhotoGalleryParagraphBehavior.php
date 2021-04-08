@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
@@ -48,6 +49,25 @@ class AZPhotoGalleryParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   public function preprocess(&$variables) {
     parent::preprocess($variables);
+
+    /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    $paragraph = $variables['paragraph'];
+
+    // Get the configuration for this paragraph.
+    $config = $this->getSettings($paragraph);
+
+    // Create a unique id for the carousel.
+    $variables['gallery'] = Html::getUniqueId('az-photo-gallery-id');
+
+    // Create a unique id for the modal, if needed.
+    $variables['modal'] = Html::getUniqueId('az-photo-gallery-modal-id');
+
+    // Variable to control whether to use the grid or slider display.
+    $variables['grid'] = FALSE;
+    // Set variable for grid.
+    if (!empty($config['gallery_display'])) {
+      $variables['grid'] = ($config['gallery_display'] === 'grid');
+    }
   }
 
 }
