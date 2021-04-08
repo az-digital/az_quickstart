@@ -47,7 +47,7 @@
   right: 0;
   font-size: 0.9em;
   color: #0c234b;
-  z-index: -1;
+  z-index: -102;
   cursor: pointer;
   padding: 0.3em 0.6em;
   border: none;
@@ -78,6 +78,7 @@
 .az-video-loading .az-video-container {
   opacity: 0;
 }
-.az-video-playing .az-video-container {
+.az-video-playing .az-video-container,
+.az-video-paused .az-video-container {
   opacity: 1;
 }

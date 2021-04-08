@@ -191,7 +191,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>#{{ id }}.az-video-loading {background-image: url({{filepath}});} </style>",
+          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing {background-image:none;}</style>",
           '#context' => [
             'filepath' => file_create_url($thumb),
             'id' => $paragraph->bundle() . "-" . $paragraph->id(),
