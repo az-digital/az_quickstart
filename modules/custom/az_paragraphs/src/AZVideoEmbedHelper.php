@@ -13,7 +13,7 @@ class AZVideoEmbedHelper {
    * @param string $url
    *   A YouTube url.
    *
-   * @return string
+   * @return mixed
    *   String Youtube video ID or boolean FALSE if not found.
    */
   public function getYoutubeIdFromUrl($url) {
