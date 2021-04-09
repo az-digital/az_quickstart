@@ -355,6 +355,10 @@ a.btn.btn-redbar {
 .navbar-offcanvas button.btn.btn-redbar {
   padding-bottom: 4px;
 }
+/* Fix offcanvas menu scroll */
+.navbar-offcanvas section.region-navigation {
+  overflow-y: scroll;
+}
 
 .bg-chili .btn.btn-redbar {
   background-color: #8b0015;
