@@ -57,19 +57,19 @@
                 onStateChange: window.onPlayerStateChange
               }
             });
-            const PlayButton = bgVideoParagraphs[index].getElementsByClassName(
+            const playButton = bgVideoParagraphs[index].getElementsByClassName(
               "az-video-play"
             )[0];
-            PlayButton.addEventListener("click", event => {
+            playButton.addEventListener("click", event => {
               event.preventDefault();
               bgVideoParagraphs[index].player.playVideo();
               parentParagraph.classList.remove("az-video-paused");
               parentParagraph.classList.add("az-video-playing");
             });
-            const PauseButton = bgVideoParagraphs[index].getElementsByClassName(
+            const pauseButton = bgVideoParagraphs[index].getElementsByClassName(
               "az-video-pause"
             )[0];
-            PauseButton.addEventListener("click", event => {
+            pauseButton.addEventListener("click", event => {
               event.preventDefault();
               bgVideoParagraphs[index].player.pauseVideo();
               parentParagraph.classList.remove("az-video-playing");

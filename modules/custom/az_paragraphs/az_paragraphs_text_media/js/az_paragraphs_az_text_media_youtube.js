@@ -56,15 +56,15 @@
                 onStateChange: window.onPlayerStateChange
               }
             });
-            var PlayButton = bgVideoParagraphs[index].getElementsByClassName("az-video-play")[0];
-            PlayButton.addEventListener("click", function (event) {
+            var playButton = bgVideoParagraphs[index].getElementsByClassName("az-video-play")[0];
+            playButton.addEventListener("click", function (event) {
               event.preventDefault();
               bgVideoParagraphs[index].player.playVideo();
               parentParagraph.classList.remove("az-video-paused");
               parentParagraph.classList.add("az-video-playing");
             });
-            var PauseButton = bgVideoParagraphs[index].getElementsByClassName("az-video-pause")[0];
-            PauseButton.addEventListener("click", function (event) {
+            var pauseButton = bgVideoParagraphs[index].getElementsByClassName("az-video-pause")[0];
+            pauseButton.addEventListener("click", function (event) {
               event.preventDefault();
               bgVideoParagraphs[index].player.pauseVideo();
               parentParagraph.classList.remove("az-video-playing");
