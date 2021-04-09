@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_media_az_image
     - image.style.large
     - media.type.az_image
@@ -15,14 +16,15 @@ content:
   field_media_az_image:
     label: visually_hidden
     settings:
-      image_style: 'large'
+      image_style: large
       image_link: ''
     third_party_settings: {  }
     type: image
-    weight: 1
+    weight: 0
     region: content
 hidden:
   created: true
+  field_az_caption: true
+  name: true
   thumbnail: true
   uid: true
-  name: true

@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.media.az_large
+    - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_media_az_image
     - image.style.az_large
     - media.type.az_image
@@ -24,6 +25,7 @@ content:
     region: content
 hidden:
   created: true
+  field_az_caption: true
   name: true
   thumbnail: true
   uid: true

@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.media.az_thumbnail
+    - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
@@ -24,6 +25,7 @@ content:
     third_party_settings: {  }
 hidden:
   created: true
+  field_az_caption: true
   field_media_az_image: true
   name: true
   uid: true

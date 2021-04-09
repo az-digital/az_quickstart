@@ -12,6 +12,7 @@ install:
   - az_paragraphs
   - az_paragraphs_accordion
   - az_paragraphs_cards
+  - az_paragraphs_photo_gallery
   - az_paragraphs_text
   - az_paragraphs_text_background
   - az_paragraphs_text_media
