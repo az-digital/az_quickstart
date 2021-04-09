@@ -2,9 +2,13 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Drupal\media\MediaInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a behavior for text with media.
@@ -19,13 +23,34 @@ use Drupal\paragraphs\ParagraphInterface;
 class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
 
   /**
+   * The VideoEmbedHelper.
+   *
+   * @var \Drupal\az_paragraphs\AZVideoEmbedHelper
+   */
+  protected $videoEmbedHelper;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create(
+      $container,
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+    );
+
+    $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
+    return $instance;
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
     $style_unique_id = Html::getUniqueId('az-text-media-style');
-
     $form['full_width'] = [
       '#title' => $this->t('Full width'),
       '#type' => 'checkbox',
@@ -108,13 +133,166 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   public function preprocess(&$variables) {
     parent::preprocess($variables);
-
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
-
-    // Get plugin configuration and save in vars for twig to use.
+    // Get plugin configuration.
     $config = $this->getSettings($paragraph);
     $variables['text_on_media'] = $config;
+    if ($paragraph->hasField('field_az_media')) {
+      /** @var \Drupal\media\Entity\Media $media */
+      foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
+        $variables['text_on_media']['media_type'] = $media->bundle();
+        switch ($media->bundle()) {
+          case 'az_remote_video':
+            $this->remoteVideo($variables, $paragraph, $media);
+            break;
+
+          case 'az_image':
+            $this->image($variables, $paragraph, $media);
+            break;
+
+          default:
+            return $variables;
+        }
+      }
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
+
+    // Get plugin configuration.
+    $config = $this->getSettings($paragraph);
+    // Apply bottom spacing if set.
+    if (!empty($config['az_display_settings']['bottom_spacing'])) {
+      $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
+    }
+
+  }
+
+  /**
+   * Prepare markup for remote video.
+   */
+  private function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
+
+    /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
+    $media_oembed = $media->getSource();
+    $config = $this->getSettings($paragraph);
+    $view_builder = $this->entityTypeManager->getViewBuilder('media');
+    $background_media = $view_builder->view($media, 'az_background');
+    $provider = $media_oembed->getMetadata($media, 'provider_name');
+    $html = $media_oembed->getMetadata($media, 'html');
+    $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
+    if ($provider === 'YouTube') {
+      $source_url = $media->get('field_media_az_oembed_video')->value;
+      $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
+      $style_element = [
+        'style' => [
+          '#type' => 'inline_template',
+          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing, #{{ id }}.az-video-paused {background-image:none;}</style>",
+          '#context' => [
+            'filepath' => file_create_url($thumb),
+            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+          ],
+        ],
+        $background_video = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#allowed_tags' => ['iframe', 'img'],
+          '#attributes' => [
+            'id' => [$video_oembed_id . '-bg-video-container'],
+            'class' => [
+              'az-video-loading',
+              'az-video-background',
+              'az-js-video-background',
+            ],
+            'data-youtubeid' => $video_oembed_id,
+            'data-style' => $config['style'],
+          ],
+          'child' => $background_media,
+          '#attached' => [
+            'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
+            'drupalSettings' => [
+              'azFieldsMedia' => [
+                'bgVideos' => [
+                  $video_oembed_id => [
+                    'videoId' => $video_oembed_id,
+                    'start' => 0,
+                  ],
+                ],
+              ],
+            ],
+          ],
+        ],
+      ];
+      if ($variables['text_on_media']['style'] !== 'bottom') {
+        $variables['style_element'] = $style_element;
+      }
+      elseif ($variables['text_on_media']['style'] === 'bottom') {
+        $style_element['style']['#template'] = "<style type='text/css'>#{{ id }} .az-video-loading {background-image: url({{filepath}});background-repeat: no-repeat;background-attachment:fixed;background-size:cover;}</style>";
+        $image_renderable = [
+          '#theme' => 'image',
+          '#uri' => file_create_url($thumb),
+          '#alt' => $media->field_media_az_image->alt,
+          '#attributes' => [
+            'class' => ['img-fluid'],
+          ],
+        ];
+        $text_on_bottom = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          'img' => $image_renderable,
+          'video' => $style_element,
+          '#attributes' => [
+            'class' => ['text-on-media-bottom', 'text-on-video'],
+          ],
+        ];
+        $variables['text_on_bottom'] = $text_on_bottom;
+      }
+      return $variables;
+    }
+  }
+
+  /**
+   * Prepare markup for image.
+   */
+  private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
+    $file_uri = $media->field_media_az_image->entity->getFileUri();
+    if ($variables['text_on_media']['style'] !== 'bottom') {
+      $style_element = [
+        'style' => [
+          '#type' => 'inline_template',
+          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
+          '#context' => [
+            'filepath' => file_create_url($file_uri),
+            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+          ],
+        ],
+      ];
+      $variables['style_element'] = $style_element;
+    }
+    elseif ($variables['text_on_media']['style'] === 'bottom') {
+      $image_renderable = [
+        '#theme' => 'image',
+        '#uri' => file_create_url($file_uri),
+        '#alt' => $media->field_media_az_image->alt,
+        '#attributes' => [
+          'class' => ['img-fluid'],
+        ],
+      ];
+      $text_on_bottom = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        'child' => $image_renderable,
+        '#attributes' => [
+          'class' => ['text-on-media-bottom'],
+        ],
+      ];
+      $variables['text_on_bottom'] = $text_on_bottom;
+    }
+    return $variables;
   }
 
 }

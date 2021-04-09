@@ -42,6 +42,7 @@
 {%
   set classes = [
     'paragraph',
+    'position-relative',
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
     not paragraph.isPublished() ? 'paragraph--unpublished',
@@ -66,23 +67,16 @@
     text_on_media.bg_color
   ]
 %}
-
 {% block paragraph %}
-  {% if text_on_media.style != 'bottom' %}
-    <style>
-      #{{ paragraph.bundle() }}-{{ paragraph.id() }} {
-        background-image: url('{{ file_url(paragraph.field_az_media.entity.field_media_az_image.entity.fileuri) }}');
-      }
-    </style>
-  {% endif %}
   <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
     {% block content %}
       {% if text_on_media.style == 'bottom' %}
-        <div class="text-on-media-bottom">
-          <img src="{{ file_url(paragraph.field_az_media.entity.field_media_az_image.entity.fileuri) }}">
-        </div>
+        {{ text_on_bottom }}
       {% endif %}
       {# Layout for content width AND full width styles #}
+      {% if text_on_media.style != 'bottom' %}
+        {{style_element}}
+      {% endif %}
       <div class="container">
         <div class="row">
           <div{{ col_attributes.addClass(col_classes) }}>
@@ -96,3 +90,4 @@
     {% endblock %}
   </div>
 {% endblock paragraph %}
+

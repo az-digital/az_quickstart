@@ -7,6 +7,9 @@
 .text-on-media-bottom img {
   width: 100%;
 }
+.text-on-media-bottom.text-on-video img {
+  opacity:0;
+}
 .bg-fixed {
   background-attachment: fixed;
 }
@@ -37,4 +40,45 @@
 .full-width-background {
   margin-left: calc(50% - 50vw);
   margin-right: calc(50% - 50vw);
+}
+.az-video-background .bg-video-player-control {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 0.9em;
+  color: #0c234b;
+  z-index: -102;
+  cursor: pointer;
+  padding: 0.3em 0.6em;
+  border: none;
+  margin: 10px;
+}
+.az-video-background .bg-video-player-control:focus,
+.az-video-background .bg-video-player-control:hover {
+  color: #ab0520;
+  border-color: #ab0520;
+}
+.az-video-playing .az-video-pause {
+  z-index: 2;
+}
+.az-video-paused .az-video-play {
+  z-index: 2;
+}
+.az-video-container iframe {
+  position: absolute;
+}
+.az-video-background {
+    overflow: hidden;
+    position: absolute;
+    width: 100%;
+}
+.full-width-background .az-video-background {
+    width: 100vw;
+}
+.az-video-loading .az-video-container {
+  opacity: 0;
+}
+.az-video-playing .az-video-container,
+.az-video-paused .az-video-container {
+  opacity: 1;
 }
