@@ -17,7 +17,7 @@ class AzFlexibleBlockAddLocalAction extends LocalActionDefault {
   public function getOptions(RouteMatchInterface $route_match) {
     $options = parent::getOptions($route_match);
     // Adds a destination on custom block listing.
-    if ($route_match->getRouteName() == 'view.block_content.page_1') {
+    if ($route_match->getRouteName() == 'view.block_content.admin') {
       $options['query']['destination'] = Url::fromRoute('<current>')->toString();
     }
     return $options;
