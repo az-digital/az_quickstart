@@ -513,7 +513,7 @@ display:
         - user.permissions
       max-age: -1
       tags: {  }
-  page_1:
+  admin:
     display_plugin: page
     id: page_1
     display_title: Page
