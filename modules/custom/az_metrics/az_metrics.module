@@ -13,15 +13,15 @@ const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1';
  * Get all data needed for reporting.
  */
 function az_metrics_data() {
-  $site_id = \Drupal::config('az_metrics.settings')->get('site_id', FALSE);
-
   $domains = \Drupal::database()
-    ->query('SELECT * from {az_metrics_domains}')
+    ->query('SELECT * FROM {az_metrics_domains}')
     ->fetchAll();
 
   $data = [
-    'site_id' => $site_id,
-    'domains' => $domains
+    'domains' => array_map(function ($x) { return $x->domain; }, $domains),
+    'mail' => \Drupal::config('system.site')->get('mail', ''),
+    'name' => \Drupal::config('system.site')->get('name', ''),
+    'uuid' => \Drupal::config('system.site')->get('uuid', ''),
   ];
 
   return $data;
