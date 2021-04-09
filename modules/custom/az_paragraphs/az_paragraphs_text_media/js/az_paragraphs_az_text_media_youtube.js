@@ -25,15 +25,15 @@
           minimumSupportedWidth: 600
         };
         var bgVideos = settings.azFieldsMedia.bgVideos;
-        var BgVideoParagraphs = document.getElementsByClassName("az-js-video-background");
+        var bgVideoParagraphs = document.getElementsByClassName("az-js-video-background");
         var tag = document.createElement("script");
         var firstScriptTag = document.getElementsByTagName("script")[0];
         tag.src = "https://www.youtube.com/iframe_api";
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         window.onYouTubeIframeAPIReady = function () {
-          $.each(BgVideoParagraphs, function (index) {
-            var thisContainer = BgVideoParagraphs[index];
+          $.each(bgVideoParagraphs, function (index) {
+            var thisContainer = bgVideoParagraphs[index];
             var parentParagraph = thisContainer.parentNode;
             var youtubeId = thisContainer.dataset.youtubeid;
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
@@ -56,17 +56,17 @@
                 onStateChange: window.onPlayerStateChange
               }
             });
-            var PlayButton = BgVideoParagraphs[index].getElementsByClassName("az-video-play")[0];
+            var PlayButton = bgVideoParagraphs[index].getElementsByClassName("az-video-play")[0];
             PlayButton.addEventListener("click", function (event) {
               event.preventDefault();
-              BgVideoParagraphs[index].player.playVideo();
+              bgVideoParagraphs[index].player.playVideo();
               parentParagraph.classList.remove("az-video-paused");
               parentParagraph.classList.add("az-video-playing");
             });
-            var PauseButton = BgVideoParagraphs[index].getElementsByClassName("az-video-pause")[0];
+            var PauseButton = bgVideoParagraphs[index].getElementsByClassName("az-video-pause")[0];
             PauseButton.addEventListener("click", function (event) {
               event.preventDefault();
-              BgVideoParagraphs[index].player.pauseVideo();
+              bgVideoParagraphs[index].player.pauseVideo();
               parentParagraph.classList.remove("az-video-playing");
               parentParagraph.classList.add("az-video-paused");
             });
@@ -111,8 +111,8 @@
         };
 
         var resize = function resize() {
-          $.each(BgVideoParagraphs, function (index) {
-            setDimensions(BgVideoParagraphs[index]);
+          $.each(bgVideoParagraphs, function (index) {
+            setDimensions(bgVideoParagraphs[index]);
           });
         };
 

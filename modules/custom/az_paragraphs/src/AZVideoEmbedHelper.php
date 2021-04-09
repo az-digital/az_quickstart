@@ -14,7 +14,7 @@ class AZVideoEmbedHelper {
    *   A YouTube url.
    *
    * @return string
-   *   Mixed Youtube video ID or FALSE if not found.
+   *   String Youtube video ID or boolean FALSE if not found.
    */
   public function getYoutubeIdFromUrl($url) {
     $parts = parse_url($url);

@@ -20,7 +20,7 @@
           minimumSupportedWidth: 600
         };
         const { bgVideos } = settings.azFieldsMedia;
-        const BgVideoParagraphs = document.getElementsByClassName(
+        const bgVideoParagraphs = document.getElementsByClassName(
           "az-js-video-background"
         );
         // load yt iframe js api
@@ -31,8 +31,8 @@
         // methods
         // set up iframe player, use global scope so YT api can talk
         window.onYouTubeIframeAPIReady = () => {
-          $.each(BgVideoParagraphs, index => {
-            const thisContainer = BgVideoParagraphs[index];
+          $.each(bgVideoParagraphs, index => {
+            const thisContainer = bgVideoParagraphs[index];
             const parentParagraph = thisContainer.parentNode;
             const youtubeId = thisContainer.dataset.youtubeid;
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
@@ -57,21 +57,21 @@
                 onStateChange: window.onPlayerStateChange
               }
             });
-            const PlayButton = BgVideoParagraphs[index].getElementsByClassName(
+            const PlayButton = bgVideoParagraphs[index].getElementsByClassName(
               "az-video-play"
             )[0];
             PlayButton.addEventListener("click", event => {
               event.preventDefault();
-              BgVideoParagraphs[index].player.playVideo();
+              bgVideoParagraphs[index].player.playVideo();
               parentParagraph.classList.remove("az-video-paused");
               parentParagraph.classList.add("az-video-playing");
             });
-            const PauseButton = BgVideoParagraphs[index].getElementsByClassName(
+            const PauseButton = bgVideoParagraphs[index].getElementsByClassName(
               "az-video-pause"
             )[0];
             PauseButton.addEventListener("click", event => {
               event.preventDefault();
-              BgVideoParagraphs[index].player.pauseVideo();
+              bgVideoParagraphs[index].player.pauseVideo();
               parentParagraph.classList.remove("az-video-playing");
               parentParagraph.classList.add("az-video-paused");
             });
@@ -122,8 +122,8 @@
         // Resize handler updates width, height and offset
         // of player after resize/init.
         const resize = () => {
-          $.each(BgVideoParagraphs, index => {
-            setDimensions(BgVideoParagraphs[index]);
+          $.each(bgVideoParagraphs, index => {
+            setDimensions(bgVideoParagraphs[index]);
           });
         };
 
