@@ -7,9 +7,8 @@ dependencies:
 id: media.field_az_caption
 field_name: field_az_caption
 entity_type: media
-type: text
-settings:
-  max_length: 255
+type: text_long
+settings: {  }
 module: text
 locked: false
 cardinality: 1

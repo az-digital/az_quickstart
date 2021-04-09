@@ -16,11 +16,11 @@ bundle: az_image
 mode: media_library
 content:
   field_az_caption:
-    type: text_textfield
+    type: text_textarea
     weight: 1
     region: content
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
   field_media_az_image:

@@ -24,10 +24,10 @@ content:
   field_az_caption:
     weight: 5
     settings:
-      size: 60
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textfield
+    type: text_textarea
     region: content
   field_media_az_image:
     settings:
