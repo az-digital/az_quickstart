@@ -4,6 +4,7 @@ dependencies:
   config:
     - node.type.az_carousel_item
   module:
+    - draggableviews
     - node
     - slick_views
     - user
@@ -185,6 +186,20 @@ display:
             operator_limit_selection: false
             operator_list: {  }
       sorts:
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: ASC
+          exposed: false
+          expose:
+            label: ''
+          draggable_views_reference: 'az_reorder:reorder_carousel_items'
+          draggable_views_null_order: after
+          plugin_id: draggable_views_sort_default
         created:
           id: created
           table: node_field_data
