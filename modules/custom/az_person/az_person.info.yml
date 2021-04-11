@@ -19,3 +19,4 @@ dependencies:
   - drupal:telephone
   - drupal:user
   - views_bootstrap:views_bootstrap
+  - views.view.az_reorder
