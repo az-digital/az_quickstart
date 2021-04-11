@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.az_carousel
+  module:
+    - system
+    - views
+  theme:
+    - az_barrio
+id: views_block__az_carousel_front_carousel_block
+theme: az_barrio
+region: content_featured
+weight: -8
+provider: null
+plugin: 'views_block:az_carousel-front_carousel_block'
+settings:
+  id: 'views_block:az_carousel-front_carousel_block'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility:
+  request_path:
+    id: request_path
+    pages: '<front>'
+    negate: false

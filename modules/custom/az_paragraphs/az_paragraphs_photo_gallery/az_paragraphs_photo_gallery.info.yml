@@ -1,0 +1,10 @@
+name: 'Quickstart Paragraphs - Photo Gallery'
+type: module
+description: 'Provides a photo gallery paragraph type.'
+core_version_requirement: ^8.8 || ^9
+dependencies:
+  - az_paragraphs
+  - drupal:field
+  - paragraphs:paragraphs
+  - az_media
+package: 'The University of Arizona'

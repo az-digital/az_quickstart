@@ -1,0 +1,41 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_contact.field_az_email
+    - field.field.paragraph.az_contact.field_az_phone
+    - field.field.paragraph.az_contact.field_az_title
+    - paragraphs.paragraphs_type.az_contact
+  module:
+    - telephone
+id: paragraph.az_contact.default
+targetEntityType: paragraph
+bundle: az_contact
+mode: default
+content:
+  field_az_email:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_az_phone:
+    weight: 2
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: telephone_default
+    region: content
+  field_az_title:
+    weight: 0
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+hidden:
+  created: true
+  status: true

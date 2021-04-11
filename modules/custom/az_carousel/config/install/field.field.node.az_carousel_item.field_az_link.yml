@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_link
+    - node.type.az_carousel_item
+  module:
+    - link
+id: node.az_carousel_item.field_az_link
+field_name: field_az_link
+entity_type: node
+bundle: az_carousel_item
+label: 'Call to Action'
+description: 'Optionally add a link to another page or website for users to learn more.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link

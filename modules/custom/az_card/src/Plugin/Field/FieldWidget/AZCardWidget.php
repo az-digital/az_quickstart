@@ -6,6 +6,9 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
 
 /**
  * Defines the 'az_card' field widget.
@@ -20,22 +23,167 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  */
 class AZCardWidget extends WidgetBase {
 
+  // Default initial text format for cards.
+  const AZ_CARD_DEFAULT_TEXT_FORMAT = 'az_standard';
+
+  /**
+   * The AZCardImageHelper service.
+   *
+   * @var \Drupal\az_card\AZCardImageHelper
+   */
+  protected $cardImageHelper;
+
+  /**
+   * Drupal\Core\Path\PathValidator definition.
+   *
+   * @var \Drupal\Core\Path\PathValidator
+   */
+  protected $pathValidator;
+
+  /**
+   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create(
+      $container,
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+    );
+
+    $instance->cardImageHelper = $container->get('az_card.image');
+    $instance->pathValidator = $container->get('path.validator');
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    return $instance;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL) {
+
+    // Create shared settings for widget elements.
+    // This is necessary because widgets have to be AJAX replaced together,
+    // And in general we need a place to store shared settings.
+    $wrapper_id = Html::getUniqueId('az-card-wrapper');
+    $field_name = $this->fieldDefinition->getName();
+    $field_parents = $form['#parents'];
+    $field_state = static::getWidgetState($field_parents, $field_name, $form_state);
+    $field_state['ajax_wrapper_id'] = $wrapper_id;
+    $field_state['items_count'] = count($items);
+    $field_state['array_parents'] = [];
+    if (empty($field_state['open_status'])) {
+      $field_state['open_status'] = [];
+    }
+
+    // Persist the widget state so formElement() can access it.
+    static::setWidgetState($field_parents, $field_name, $form_state, $field_state);
+
+    $container = parent::form($items, $form, $form_state, $get_delta);
+    $container['widget']['#prefix'] = '<div id="' . $wrapper_id . '">';
+    $container['widget']['#suffix'] = '</div>';
+
+    if (isset($container['widget']['add_more']['#ajax']['wrapper'])) {
+      $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
+    }
+    return $container;
+  }
+
   /**
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
-    $element['title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Card Title'),
-      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
-    ];
+    // Get current collapse status.
+    $field_name = $this->fieldDefinition->getName();
+    $field_parents = $element['#field_parents'];
+    $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
+    $wrapper = $widget_state['ajax_wrapper_id'];
+    $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
+    // New field values shouldn't be considered collapsed.
+    if ($items[$delta]->isEmpty()) {
+      $status = TRUE;
+    }
 
-    $element['body'] = [
-      '#type' => 'text_format',
-      '#title' => $this->t('Card Body'),
-      '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
-      '#format' => $items[$delta]->body_format ?? 'basic_html',
+    // Generate a preview if we need one.
+    if (!$status) {
+
+      // Bootstrap wrapper.
+      $element['preview_container'] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' =>
+            ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview'],
+        ],
+      ];
+
+      // Card item.
+      $element['preview_container']['card_preview'] = [
+        '#theme' => 'az_card',
+        '#title' => $items[$delta]->title ?? '',
+        '#body' => check_markup(
+          $items[$delta]->body ?? '',
+          $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
+        '#attributes' => ['class' => ['card']],
+      ];
+      // Add card class from options.
+      if (!empty($items[$delta]->options['class'])) {
+        $element['preview_container']['card_preview']['#attributes']['class'][] = $items[$delta]->options['class'];
+      }
+
+      // Check and see if we can construct a valid image to preview.
+      $media_id = $items[$delta]->media ?? NULL;
+      if (!empty($media_id)) {
+        if ($media = $this->entityTypeManager->getStorage('media')->load($media_id)) {
+          $media_render_array = $this->cardImageHelper->generateImageRenderArray($media);
+          if (!empty($media_render_array)) {
+            $element['preview_container']['card_preview']['#media'] = $media_render_array;
+          }
+        }
+      }
+
+      // Check and see if there's a valid link to preview.
+      if ($items[$delta]->link_title || $items[$delta]->link_uri) {
+        $link_url = $this->pathValidator->getUrlIfValid($items[$delta]->link_uri);
+        $element['preview_container']['card_preview']['#link'] = [
+          '#type' => 'link',
+          '#title' => $items[$delta]->link_title ?? '',
+          '#url' => $link_url ? $link_url : '#',
+          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
+        ];
+      }
+    }
+
+    $element['options'] = [
+      '#type' => 'select',
+      '#options' => [
+        'bg-white' => $this->t('White'),
+        'bg-transparent' => $this->t('Transparent'),
+        'bg-red' => $this->t('Arizona Red'),
+        'bg-blue' => $this->t('Arizona Blue'),
+        'bg-sky' => $this->t('Sky'),
+        'bg-oasis' => $this->t('Oasis'),
+        'bg-azurite' => $this->t('Azurite'),
+        'bg-midnight' => $this->t('Midnight'),
+        'bg-bloom' => $this->t('Bloom'),
+        'bg-chili' => $this->t('Chili'),
+        'bg-cool-gray' => $this->t('Cool Gray'),
+        'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-leaf' => $this->t('Leaf'),
+        'bg-river' => $this->t('River'),
+        'bg-silver' => $this->t('Silver'),
+        'bg-ash' => $this->t('Ash'),
+      ],
+      '#required' => TRUE,
+      '#title' => $this->t('Card Background'),
+      '#default_value' => (!empty($items[$delta]->options['class'])) ? $items[$delta]->options['class'] : 'bg-white',
     ];
 
     $element['media'] = [
@@ -47,6 +195,19 @@ class AZCardWidget extends WidgetBase {
       '#cardinality' => 1,
     ];
 
+    $element['title'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Card Title'),
+      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
+    ];
+
+    $element['body'] = [
+      '#type' => 'text_format',
+      '#title' => $this->t('Card Body'),
+      '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
+      '#format' => $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
+    ];
+
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
@@ -54,25 +215,118 @@ class AZCardWidget extends WidgetBase {
     ];
 
     $element['link_uri'] = [
-      '#type' => 'url',
-      '#title' => $this->t('Card Link URI'),
+      // Url FAPI element does not support internal paths.
+      '#type' => 'textfield',
+      '#title' => $this->t('Card Link URL'),
+      '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
     ];
 
-    // TODO: card style(s) selection form.
-    $element['options'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Card Options'),
-      '#default_value' => isset($items[$delta]->options) ? $items[$delta]->options : NULL,
-      // Hide element until implemented.
-      '#access' => FALSE,
-    ];
+    if (!$items[$delta]->isEmpty()) {
+      $button_name = implode('-', array_merge($field_parents,
+        [$field_name, $delta, 'toggle']
+      ));
+      $element['toggle'] = [
+        '#type' => 'submit',
+        '#limit_validation_errors' => [],
+        '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
+        '#submit' => [[$this, 'cardSubmit']],
+        '#value' => ($status ? $this->t('Collapse Card') : $this->t('Edit Card')),
+        '#name' => $button_name,
+        '#ajax' => [
+          'callback' => [$this, 'cardAjax'],
+          'wrapper' => $wrapper,
+        ],
+      ];
+    }
 
     $element['#theme_wrappers'] = ['container', 'form_element'];
     $element['#attributes']['class'][] = 'az-card-elements';
+    $element['#attributes']['class'][] = $status ? 'az-card-elements-open' : 'az-card-elements-closed';
     $element['#attached']['library'][] = 'az_card/az_card';
 
     return $element;
+  }
+
+  /**
+   * Submit handler for toggle button.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  public function cardSubmit(array $form, FormStateInterface $form_state) {
+
+    // Get triggering element.
+    $triggering_element = $form_state->getTriggeringElement();
+    $array_parents = $triggering_element['#array_parents'];
+    array_pop($array_parents);
+
+    // Determine delta.
+    $delta = array_pop($array_parents);
+
+    // Get the widget.
+    $element = NestedArray::getValue($form, $array_parents);
+    $field_name = $element['#field_name'];
+    $field_parents = $element['#field_parents'];
+
+    // Load current widget settings.
+    $settings = static::getWidgetState($field_parents, $field_name, $form_state);
+
+    // Prepare to toggle state.
+    $status = TRUE;
+    if (isset($settings['open_status'][$delta])) {
+      $status = !$settings['open_status'][$delta];
+    }
+    $settings['open_status'][$delta] = $status;
+
+    // Save new state and rebuild form.
+    static::setWidgetState($field_parents, $field_name, $form_state, $settings);
+    $form_state->setRebuild();
+  }
+
+  /**
+   * Ajax callback returning list widget container for ajax submit.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   *
+   * @return array
+   *   Ajax response as render array.
+   */
+  public function cardAjax(array &$form, FormStateInterface $form_state) {
+
+    // Find the widget and return it.
+    $element = [];
+    $triggering_element = $form_state->getTriggeringElement();
+    $oops = $triggering_element['#array_parents'];
+    $array_parents = array_slice($triggering_element['#array_parents'], 0, -2);
+    $element = NestedArray::getValue($form, $array_parents);
+
+    return $element;
+  }
+
+  /**
+   * Form element validation handler for the 'link_url' field.
+   *
+   * Disallows saving inaccessible or untrusted URLs.
+   */
+  public function validateCardLink(&$element, FormStateInterface $form_state, &$complete_form) {
+
+    if (!empty($element['#value'])) {
+      // Check to make sure the path can be found.
+      if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
+        // Url is valid, no conversion required.
+        return;
+      }
+      $form_state
+        ->setError($element, t('This link does not exist or you do not have permission to link to %path.', [
+          '%path' => $element['#value'],
+        ]));
+    }
   }
 
   /**
@@ -94,7 +348,7 @@ class AZCardWidget extends WidgetBase {
         $values[$delta]['body'] = NULL;
       }
       if (empty($value['media'])) {
-        $values[$delta]['media'] = 0;
+        $values[$delta]['media'] = NULL;
       }
       if ($value['link_title'] === '') {
         $values[$delta]['link_title'] = NULL;
@@ -102,8 +356,8 @@ class AZCardWidget extends WidgetBase {
       if ($value['link_uri'] === '') {
         $values[$delta]['link_uri'] = NULL;
       }
-      if ($value['options'] === '') {
-        $values[$delta]['options'] = NULL;
+      if (!empty($value['options'])) {
+        $values[$delta]['options'] = ['class' => $value['options']];
       }
       $values[$delta]['body'] = $value['body']['value'];
       $values[$delta]['body_format'] = $value['body']['format'];
