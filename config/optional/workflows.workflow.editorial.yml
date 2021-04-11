@@ -8,11 +8,6 @@ label: Editorial
 type: content_moderation
 type_settings:
   states:
-    az_needs_review:
-      published: false
-      default_revision: false
-      label: 'Needs Review'
-      weight: -1
     draft:
       label: Draft
       published: false
@@ -24,18 +19,12 @@ type_settings:
       default_revision: true
       weight: 0
   transitions:
-    az_reject:
-      label: Reject
-      from:
-        - az_needs_review
-      to: draft
-      weight: 0
-    az_submit_for_review:
-      label: 'Submit for Review'
+    az_publish:
+      label: Publish
       from:
         - draft
-      to: az_needs_review
-      weight: -1
+      to: published
+      weight: 0
     create_new_draft:
       label: 'Create New Draft'
       to: draft
@@ -43,11 +32,4 @@ type_settings:
       from:
         - draft
         - published
-    publish:
-      label: Publish
-      to: published
-      weight: 1
-      from:
-        - az_needs_review
-  entity_types: {  }
   default_moderation_state: draft
