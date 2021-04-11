@@ -20,4 +20,3 @@ dependencies:
   - slick:slick
   - slick_ui:slick_ui
   - slick_views:slick_views
-  - views.view.az_reorder
