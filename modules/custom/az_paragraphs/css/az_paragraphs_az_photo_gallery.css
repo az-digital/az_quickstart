@@ -1,0 +1,6 @@
+/* Styles for az_photo_gallery paragraph type. */
+
+/* Hide focus ring in claro previews. */
+.page-wrapper .paragraph--type--az-photo-gallery.paragraph--view-mode--preview *:focus {
+  box-shadow: none;
+}

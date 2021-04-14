@@ -22,6 +22,10 @@
    * Menu State: Shown
    * Menu Component: Menu.
    **/
+   /* Fix offcanvas menu scroll */
+   .navbar-offcanvas section.region-navigation {
+     overflow-y: scroll;
+   }
   .overlay-menu-scroll-show .navbar-default {
     z-index: 11;
   }

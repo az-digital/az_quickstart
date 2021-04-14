@@ -22,6 +22,14 @@ az_paragraphs.az_text_media:
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
+az_paragraphs.az_photo_gallery:
+  version: VERSION
+  css:
+    theme:
+      css/az_paragraphs_az_photo_gallery.css: {}
+  dependencies:
+    - az_barrio/global-styling
+    - az_barrio/arizona-bootstrap
 az_paragraphs.az_cards:
   version: VERSION
   css:

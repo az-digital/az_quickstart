@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_photo_gallery.field_az_photos
+    - paragraphs.paragraphs_type.az_photo_gallery
+  module:
+    - media_library
+id: paragraph.az_photo_gallery.default
+targetEntityType: paragraph
+bundle: az_photo_gallery
+mode: default
+content:
+  field_az_photos:
+    type: media_library_widget
+    weight: 0
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  created: true
+  status: true
