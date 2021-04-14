@@ -1,0 +1,41 @@
+id: az_person_categories
+label: Person Categories
+migration_group: az_migration
+status: true
+
+source:
+  plugin: az_d7_taxonomy_term
+  bundle: uaqs_person_category
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_person_categories
+
+process:
+  tid: tid
+  vid:
+    plugin: default_value
+    default_value: az_person_categories
+  
+  name: name
+  weight: weight
+
+  'description/value': description
+  'description/format': format
+
+  # Only attempt to stub real (non-zero) parents.
+  parent_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: parent
+    -
+      plugin: migration_lookup
+      migration: az_person_categories
+      
+  parent:
+    plugin: default_value
+    default_value: 0
+    source: '@parent_id'
+
+  changed: timestamp
