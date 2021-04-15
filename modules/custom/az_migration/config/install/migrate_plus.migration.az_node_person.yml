@@ -1,0 +1,40 @@
+id: az_node_person
+label: Person Node Content
+migration_group: az_migration
+status: true
+
+source:
+  plugin: az_person
+
+destination:
+  plugin: entity:node
+  bundle: az_person
+
+process:
+  nid: nid
+  vid: vid
+  type: 
+    plugin: default_value
+    default_value: az_person
+  langcode:
+    plugin: static_map
+    bypass: true
+    source: language
+    map:
+      und: en
+  field_az_fname: 
+    plugin: default_value
+    source: title
+  uid: 
+    plugin: default_value
+    default_value: 1
+  status: status
+  created: created
+  changed: changed
+  promote: promote
+  sticky: sticky
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
