@@ -72,8 +72,7 @@
         "drupal/xmlsitemap": "1.0"
     },
     "require-dev": {
-        "az-digital/az-quickstart-dev": "~1",
-        "liuggio/fastest": "^1.8"
+        "az-digital/az-quickstart-dev": "~1"
     },
     "extra": {
         "branch-alias": {
