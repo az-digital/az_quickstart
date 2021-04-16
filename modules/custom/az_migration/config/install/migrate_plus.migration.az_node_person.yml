@@ -9,6 +9,10 @@ source:
 destination:
   plugin: entity:node
   bundle: az_person
+  migration_dependencies:
+    requireed:
+      - az_person_categories
+      - az_person_categories_secondary
 
 process:
   nid: nid
@@ -22,9 +26,47 @@ process:
     source: language
     map:
       und: en
-  field_az_fname: 
-    plugin: default_value
-    source: title
+      
+  'field_az_fname/value': person_fname_value
+  'field_az_fname/format': person_fname_format
+
+  'field_az_lname/value': person_lname_value
+  'field_az_lname/format': person_lname_format
+
+  'field_az_email/value' : person_email
+
+  field_az_titles:
+    plugin: sub_process
+    source: person_job_title
+    process:
+      delta: delta
+      value: value
+      format: format
+
+  field_az_degrees:
+    plugin: sub_process
+    source: person_degrees
+    process:
+      delta: delta
+      value: value
+      format: format
+
+  field_az_phones:
+    plugin: sub_process
+    source: person_phones
+    process:
+      delta: delta
+      value: value
+
+  field_az_links:
+    plugin: sub_process
+    source: person_links
+    process:
+      delta: delta
+      uri: url
+      title: title
+      options: attributes
+
   uid: 
     plugin: default_value
     default_value: 1
@@ -33,6 +75,20 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
+
+  field_az_person_category:
+    - 
+      plugin: migration_lookup
+      source: person_category
+      migration:
+        - az_person_categories
+
+  field_az_person_category_sec:
+    -
+      plugin: migration_lookup
+      source: person_category_secondary
+      migration:
+        - az_person_categories_secondary
 
 dependencies:
   enforced:

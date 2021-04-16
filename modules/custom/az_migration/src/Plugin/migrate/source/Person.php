@@ -57,9 +57,179 @@ class Person extends SqlBase {
     // Get the source nid.
     $nid = $row->getSourceProperty('nid');
 
-    /*
-    Extra field will come here.
-     */
+    // Setting Person Category.
+    $result = $this->getDatabase()->query('
+      SELECT
+        GROUP_CONCAT(pc.field_uaqs_person_category_tid) as tids
+      FROM
+        {field_data_field_uaqs_person_category} pc
+      WHERE
+        pc.entity_id = :nid
+    ', [':nid' => $nid]);
+
+    foreach ($result as $record) {
+      if (!is_null($record->tids)) {
+        // Drush::output()->writeln($record->tids);
+        $row->setSourceProperty('person_category', explode(',', $record->tids));
+      }
+    }
+
+    // Setting Person Category Secondary.
+    $result = $this->getDatabase()->query('
+      SELECT
+        GROUP_CONCAT(psc.field_uaqs_person_categories_tid) as tids
+      FROM
+        {field_data_field_uaqs_person_categories} psc
+      WHERE
+        psc.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->tids)) {
+        // Drush::output()->writeln($record->tids);
+        $row->setSourceProperty('person_category_secondary', explode(',', $record->tids));
+      }
+    }
+
+    // Setting Person First Name.
+    $result = $this->getDatabase()->query('
+      SELECT
+        pfn.field_uaqs_fname_value,
+        pfn.field_uaqs_fname_format
+      FROM
+        {field_data_field_uaqs_fname} pfn
+      WHERE
+        pfn.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_fname_value)) {
+        $row->setSourceProperty('person_fname_value', $record->field_uaqs_fname_value);
+        $row->setSourceProperty('person_fname_format', $record->field_uaqs_fname_format);
+      }
+    }
+
+    // Setting Person Last Name.
+    $result = $this->getDatabase()->query('
+      SELECT
+        pln.field_uaqs_lname_value,
+        pln.field_uaqs_lname_format
+      FROM
+        {field_data_field_uaqs_lname} pln
+      WHERE
+        pln.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_lname_value)) {
+        $row->setSourceProperty('person_lname_value', $record->field_uaqs_lname_value);
+        $row->setSourceProperty('person_lname_format', $record->field_uaqs_lname_format);
+      }
+    }
+
+    // Setting Person Email.
+    $result = $this->getDatabase()->query('
+      SELECT
+        pe.field_uaqs_email_email
+      FROM
+        {field_data_field_uaqs_email} pe
+      WHERE
+        pe.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_email_email)) {
+        $row->setSourceProperty('person_email', $record->field_uaqs_email_email);
+      }
+    }
+
+    // Setting Person Job Title.
+    $person_job_title = [];
+    $result = $this->getDatabase()->query('
+      SELECT
+        pjt.field_uaqs_titles_value,
+        pjt.field_uaqs_titles_format,
+        pjt.delta
+      FROM
+        {field_data_field_uaqs_titles} pjt
+      WHERE
+        pjt.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_titles_value)) {
+        $person_job_title[] = [
+          'delta' => $record->delta,
+          'value' => $record->field_uaqs_titles_value,
+          'format' => $record->field_uaqs_titles_format,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_job_title', $person_job_title);
+
+    // Setting Person Degrees.
+    $person_degrees = [];
+    $result = $this->getDatabase()->query('
+      SELECT
+        pdg.field_uaqs_degrees_value,
+        pdg.field_uaqs_degrees_format,
+        pdg.delta
+      FROM
+        {field_data_field_uaqs_degrees} pdg
+      WHERE
+        pdg.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_degrees_value)) {
+        $person_degrees[] = [
+          'delta' => $record->delta,
+          'value' => $record->field_uaqs_degrees_value,
+          'format' => $record->field_uaqs_degrees_format,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_degrees', $person_degrees);
+
+    // Setting Person Phones.
+    $person_phones = [];
+    $result = $this->getDatabase()->query('
+      SELECT
+        pph.field_uaqs_phones_value,
+        pph.delta
+      FROM
+        {field_data_field_uaqs_phones} pph
+      WHERE
+        pph.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_phones_value)) {
+        $person_phones[] = [
+          'delta' => $record->delta,
+          'value' => $record->field_uaqs_phones_value,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_phones', $person_phones);
+
+    // Setting Person links.
+    $person_links = [];
+    $result = $this->getDatabase()->query('
+      SELECT
+        plk.field_uaqs_links_url,
+        plk.field_uaqs_links_title,
+        plk.field_uaqs_links_attributes,
+        plk.delta
+      FROM
+        {field_data_field_uaqs_links} plk
+      WHERE
+        plk.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_links_url)) {
+        $person_links[] = [
+          'delta' => $record->delta,
+          'url' => $record->field_uaqs_links_url,
+          'title' => $record->field_uaqs_links_title,
+          'attributes' => $record->field_uaqs_links_attributes,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_links', $person_links);
 
     return parent::prepareRow($row);
   }
