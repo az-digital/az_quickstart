@@ -29,7 +29,9 @@ INSTALLATION
 
   * Install the module using the below command.
 
+    ```
     drush en az_migration
+    ```
    
 
 CONFIGURATION
@@ -37,7 +39,7 @@ CONFIGURATION
 
   ## Configure the settings.php to connect Drupal 7 database.
 
-    Please add the below connection string to the settings.php
+  Please add the below connection string to the settings.php
     
     ```
     $databases['migrate']['default'] = [
@@ -54,9 +56,9 @@ CONFIGURATION
 
   ## Before running the file migration, please configure the file location.
 
-  File can be migrate in two ways as below
+  File can be migrate in two ways as below -
 
-  1. Copy the file  "sites/default/files/migrate_file" folder.
+  #### 1. Copy the file  "sites/default/files/migrate_file" folder.
         
       Then Set the configuration as below :
 
@@ -65,7 +67,7 @@ CONFIGURATION
       drush cset az_migration.settings migrate_d7_public_path "sites/default/files/migrate_file"
       ```
 
-  2. Can directly configure the remote url for the file as below
+  #### 2. Can directly configure the remote url for the file as below
 
       Set the configuration as below :
 
