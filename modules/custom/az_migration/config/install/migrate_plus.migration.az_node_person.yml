@@ -5,6 +5,8 @@ status: true
 
 source:
   plugin: az_person
+  constants:
+    slash: '/'
 
 destination:
   plugin: entity:node
@@ -65,16 +67,64 @@ process:
       delta: delta
       uri: url
       title: title
-      options: attributes
+
+  field_az_address:
+    plugin: sub_process
+    source: person_addresses
+    process:
+      delta: delta
+      value: value
+      summary: summary
+      format: format
+
+  field_az_body:
+    plugin: sub_process
+    source: person_biography
+    process:
+      delta: delta
+      value: value
+      summary: summary
+      format: format
+
+  field_az_attachments:
+    plugin: sub_process
+    source: person_attachment
+    process:
+      delta: delta
+      target_id: fid
+      display: display
+      description: description
+  
+  field_az_media_image:
+    plugin: sub_process
+    source: person_photo
+    process:
+      delta: delta
+      target_id: 
+        -
+          plugin: az_media_generate
+          source: fid
+          destination_field: field_media_az_image
+          destination_bundle: az_image
+          imageAltSource: alt
+          imageTitleSource: title
 
   uid: 
     plugin: default_value
     default_value: 1
+
   status: status
   created: created
   changed: changed
   promote: promote
   sticky: sticky
+
+  path/pathauto: pathauto
+  path/alias: 
+    plugin: concat
+    source:
+      - constants/slash
+      - path
 
   field_az_person_category:
     - 

@@ -69,7 +69,6 @@ class Person extends SqlBase {
 
     foreach ($result as $record) {
       if (!is_null($record->tids)) {
-        // Drush::output()->writeln($record->tids);
         $row->setSourceProperty('person_category', explode(',', $record->tids));
       }
     }
@@ -85,7 +84,6 @@ class Person extends SqlBase {
       ', [':nid' => $nid]);
     foreach ($result as $record) {
       if (!is_null($record->tids)) {
-        // Drush::output()->writeln($record->tids);
         $row->setSourceProperty('person_category_secondary', explode(',', $record->tids));
       }
     }
@@ -230,6 +228,130 @@ class Person extends SqlBase {
       }
     }
     $row->setSourceProperty('person_links', $person_links);
+
+    // Setting Person Addresses.
+    $person_addresses = [];
+    $result = $this->getDatabase()->query('
+      SELECT
+        pad.field_uaqs_addresses_value,
+        pad.field_uaqs_addresses_summary,
+        pad.field_uaqs_addresses_format,
+        pad.delta
+      FROM
+        {field_data_field_uaqs_addresses} pad
+      WHERE
+        pad.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_addresses_value)) {
+        $person_addresses[] = [
+          'delta' => $record->delta,
+          'value' => $record->field_uaqs_addresses_value,
+          'summary' => $record->field_uaqs_addresses_summary,
+          'format' => $record->field_uaqs_addresses_format,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_addresses', $person_addresses);
+
+    // Setting Person Biography.
+    $person_biography = [];
+    $result = $this->getDatabase()->query('
+    SELECT
+      pbio.field_uaqs_bio_value,
+      pbio.field_uaqs_bio_summary,
+      pbio.field_uaqs_bio_format,
+      pbio.delta
+    FROM
+      {field_data_field_uaqs_bio} pbio
+    WHERE
+      pbio.entity_id = :nid
+    ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_bio_value)) {
+        $person_biography[] = [
+          'delta' => $record->delta,
+          'value' => $record->field_uaqs_bio_value,
+          'summary' => $record->field_uaqs_bio_summary,
+          'format' => $record->field_uaqs_bio_format,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_biography', $person_biography);
+
+    // Setting Person CV/Documents.
+    $person_attachment = [];
+    $result = $this->getDatabase()->query('
+      SELECT
+        pat.field_uaqs_cv_documents_fid,
+        pat.field_uaqs_cv_documents_display,
+        pat.field_uaqs_cv_documents_description,
+        pat.delta
+      FROM
+        {field_data_field_uaqs_cv_documents} pat
+      WHERE
+        pat.entity_id = :nid
+      ', [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_cv_documents_fid)) {
+        $person_attachment[] = [
+          'delta' => $record->delta,
+          'fid' => $record->field_uaqs_cv_documents_fid,
+          'display' => $record->field_uaqs_cv_documents_display,
+          'description' => $record->field_uaqs_cv_documents_description,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_attachment', $person_attachment);
+
+    // Setting Person Photos.
+    $person_photo = [];
+    $result = $this->getDatabase()->query("
+      SELECT
+        uapt.field_uaqs_photo_fid,
+        uapt.field_uaqs_photo_alt,
+        uapt.field_uaqs_photo_title,
+        uapt.field_uaqs_photo_width,
+        uapt.field_uaqs_photo_height,
+        uapt.delta
+      FROM
+        {field_data_field_uaqs_photo} uapt
+      WHERE
+        uapt.entity_id = :nid
+        AND
+        uapt.bundle = 'uaqs_person'
+      ", [':nid' => $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->field_uaqs_photo_fid)) {
+        $person_photo[] = [
+          'delta' => $record->delta,
+          'fid' => $record->field_uaqs_photo_fid,
+          'alt' => $record->field_uaqs_photo_alt,
+          'title' => $record->field_uaqs_photo_title,
+          'width' => $record->field_uaqs_photo_width,
+          'height' => $record->field_uaqs_photo_height,
+        ];
+      }
+    }
+    $row->setSourceProperty('person_photo', $person_photo);
+
+    // Setting Person Url Alias.
+    $row->setSourceProperty('pathauto', 1);
+    $person_attachment = [];
+    $result = $this->getDatabase()->query("
+      SELECT
+        pa.alias
+      FROM
+        {url_alias} pa
+      WHERE
+        pa.source = :source
+      ", [':source' => 'node/' . $nid]);
+    foreach ($result as $record) {
+      if (!is_null($record->alias)) {
+        $row->setSourceProperty('path', $record->alias);
+        $row->setSourceProperty('pathauto', 0);
+      }
+    }
 
     return parent::prepareRow($row);
   }
