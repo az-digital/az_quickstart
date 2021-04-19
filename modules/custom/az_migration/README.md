@@ -74,7 +74,7 @@ CONFIGURATION
   ```
   drush cset az_migration.settings migrate_d7_protocol "https"
   drush cset az_migration.settings migrate_d7_filebasepath "<remote-url>"
-  drush cset az_migration.settings migrate_d7_filebasepath "sites/default/files"
+  drush cset az_migration.settings migrate_d7_public_path "sites/default/files"
   ```
 
 USAGE NOTES
