@@ -29,9 +29,9 @@ INSTALLATION
 
   * Install the module using the below command.
 
-    ```
+  ```
     drush en az_migration
-    ```
+  ```
    
 
 CONFIGURATION
@@ -41,18 +41,18 @@ CONFIGURATION
 
   Please add the below connection string to the settings.php
     
-    ```
-    $databases['migrate']['default'] = [
-      'driver' => 'my_driver',
-      'namespace' => 'Drupal\my_module\Driver\Database\my_driver',
-      'autoload' => 'modules/my_module/src/Driver/Database/my_driver/',
-      'database' => 'databasename',
-      'username' => 'sqlusername',
-      'password' => 'sqlpassword',
-      'host' => 'localhost',
-      'prefix' => '',
-    ];
-    ```
+  ```
+  $databases['migrate']['default'] = [
+    'driver' => 'my_driver',
+    'namespace' => 'Drupal\my_module\Driver\Database\my_driver',
+    'autoload' => 'modules/my_module/src/Driver/Database/my_driver/',
+    'database' => 'databasename',
+    'username' => 'sqlusername',
+    'password' => 'sqlpassword',
+    'host' => 'localhost',
+    'prefix' => '',
+  ];
+  ```
 
   ## Before running the file migration, please configure the file location.
 
@@ -60,23 +60,22 @@ CONFIGURATION
 
   #### 1. Copy the file  "sites/default/files/migrate_file" folder.
         
-      Then Set the configuration as below :
+  Then Set the configuration as below :
 
-      ```
-      drush cset az_migration.settings migrate_d7_filebasepath " "
-      drush cset az_migration.settings migrate_d7_public_path "sites/default/files/migrate_file"
-      ```
+  ```
+  drush cset az_migration.settings migrate_d7_filebasepath " "
+  drush cset az_migration.settings migrate_d7_public_path "sites/default/files/migrate_file"
+  ```
 
   #### 2. Can directly configure the remote url for the file as below
 
-      Set the configuration as below :
+  Set the configuration as below :
 
-      ```
-      drush cset az_migration.settings migrate_d7_protocol "https"
-      drush cset az_migration.settings migrate_d7_filebasepath "<remote-url>"
-      drush cset az_migration.settings migrate_d7_filebasepath "sites/default/files"
-      ```
-
+  ```
+  drush cset az_migration.settings migrate_d7_protocol "https"
+  drush cset az_migration.settings migrate_d7_filebasepath "<remote-url>"
+  drush cset az_migration.settings migrate_d7_filebasepath "sites/default/files"
+  ```
 
 USAGE NOTES
 -----------
