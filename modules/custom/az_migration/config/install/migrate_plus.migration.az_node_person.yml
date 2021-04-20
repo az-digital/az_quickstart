@@ -75,7 +75,9 @@ process:
       delta: delta
       value: value
       summary: summary
-      format: format
+      format: 
+        plugin: default_value
+        default_value: az_standard
 
   field_az_body:
     plugin: sub_process
@@ -84,7 +86,9 @@ process:
       delta: delta
       value: value
       summary: summary
-      format: format
+      format:  
+        plugin: default_value
+        default_value: az_standard
 
   field_az_attachments:
     plugin: sub_process
