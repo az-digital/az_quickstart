@@ -4,7 +4,7 @@ migration_group: az_migration
 status: true
 
 source:
-  plugin: az_d7_taxonomy_term
+  plugin: d7_taxonomy_term
   bundle: uaqs_person_category_secondary
 
 destination:
