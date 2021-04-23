@@ -83,7 +83,7 @@
         "drupal/webform": "6.0.2",
         "drupal/xmlsitemap": "1.0",
         "npm-asset/blazy": "1.8.2",
-        "npm-asset/slick-carousel": "1.8.0"
+        "npm-asset/slick-carousel": "1.8.1"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
