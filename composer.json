@@ -50,7 +50,7 @@
         "drupal/config_update": "1.7",
         "drupal/core-recommended": "9.1.7",
         "drupal/crop": "2.1",
-        "drupal/ctools": "3.4",
+        "drupal/ctools": "3.5.0",
         "drupal/date_ap_style": "1.0",
         "drupal/draggableviews": "2.0.0",
         "drupal/easy_breadcrumb": "1.13",
