@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_photo_gallery.field_az_photos
+    - paragraphs.paragraphs_type.az_photo_gallery
+id: paragraph.az_photo_gallery.default
+targetEntityType: paragraph
+bundle: az_photo_gallery
+mode: default
+content:
+  field_az_photos:
+    type: entity_reference_entity_view
+    weight: 0
+    label: hidden
+    settings:
+      view_mode: az_carousel_item
+      link: false
+    third_party_settings: {  }
+    region: content
+hidden: {  }

@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_paragraphs
+id: az_photo_gallery
+label: 'Photo Gallery'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins:
+  az_photo_gallery_paragraph_behavior:
+    enabled: true

@@ -25,7 +25,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "az-digital/arizona-bootstrap": "2.0.6",
+        "az-digital/arizona-bootstrap": "2.0.8",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
@@ -43,7 +43,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.1.5",
+        "drupal/core-recommended": "9.1.7",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.4",
         "drupal/date_ap_style": "1.0",
@@ -100,15 +100,16 @@
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
-                "Remove Claro tabledrag.js replacement when core issues are resolved" : "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch",
+                "Remove Claro tabledrag.js replacement when core issues are resolved": "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
-                "Editing menus user-experience issue" : "https://www.drupal.org/files/issues/2021-02-09/2957953-9.2.x-113.patch",
+                "Editing menus user-experience issue": "https://www.drupal.org/files/issues/2021-02-09/2957953-9.2.x-113.patch",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
-                "missing parent class": "https://git.drupalcode.org/issue/config_distro-3199197/-/commit/c312096d486caa2f01703ca7de1abf2285b6fac8.diff"
+                "missing parent class": "https://git.drupalcode.org/issue/config_distro-3199197/-/commit/c312096d486caa2f01703ca7de1abf2285b6fac8.diff",
+                "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
             "drupal/ctools": {
                 "3128339 - d9 test failures": "https://gist.githubusercontent.com/joeparsons/38e27d7d424e5b17575d2987a4b670fb/raw/d55182041e8c87ad26372e06802335ad734fa28e/3128339-11-tests-only.patch"
