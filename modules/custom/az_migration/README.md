@@ -118,3 +118,35 @@ To rollback the migrated person content :
 ```
 drush mr az_node_person
 ```
+
+#### 4. User Migration
+
+During the migration we have consider below mapping suggestions :
+
+* D7 Administrator role will be migrated to D9 Administrator role
+* D7 Content administrator and Content editor roles will be migrated to D9 Authenticated user role
+* D7 blocked users will not be migrated
+
+```
+composer update --lock
+```
+
+Migrate Users using the below command :
+```
+drush mim az_user
+```
+
+Migrate the CAS user data:
+```
+drush mim az_cas_user
+```
+
+To rollback the migrated users :
+```
+drush mr az_user
+```
+
+After rollback and import the users, need to run below command for CAS data :
+```
+drush mim az_cas_user --update
+```
