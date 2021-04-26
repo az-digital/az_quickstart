@@ -130,6 +130,12 @@
                 "Module test core_version_requirement": "https://www.drupal.org/files/issues/2020-11-11/3146665_7.patch",
                 "Drupal 9 core version requirement": "https://www.drupal.org/files/issues/2020-11-17/menu_block-core-info-3182983-2.patch",
                 "Add configuration options for dynamic block titles": "https://www.drupal.org/files/issues/2020-05-03/2809699-162-dynamic-block-titles.patch"
+            },
+            "drupal/cas": {
+                "Module add migration for D7": "https://www.drupal.org/files/issues/2021-02-24/add-migration-for-d7-3038662-10.patch"
+            },
+            "drupal/metatag": {
+                "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
             }
         }
     },
