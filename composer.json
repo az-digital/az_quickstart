@@ -96,6 +96,9 @@
             "drupal/bootstrap_utilities": {
                 "Invalid arguments passed in BlockquoteFilter->process()": "https://git.drupalcode.org/project/bootstrap_utilities/-/merge_requests/2.diff"
             },
+            "drupal/cas": {
+                "ServiceNotFoundException when logging out": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
+            },
             "drupal/config_sync": {
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
