@@ -43,9 +43,7 @@ third_party_settings:
     group_link:
       children:
         - group_media
-        - group_heading
-        - group_summary
-        - group_read_more
+        - group_content
       parent_name: group_card_clickable
       weight: 5
       format_type: link
@@ -78,8 +76,8 @@ third_party_settings:
     group_heading:
       children:
         - smart_title
-      parent_name: group_link
-      weight: 3
+      parent_name: group_content
+      weight: 4
       format_type: html_element
       region: content
       format_settings:
@@ -91,13 +89,13 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-title h4 text-midnight px-3'
+        classes: 'card-title h4 text-midnight mt-0'
       label: Heading
     group_summary:
       children:
         - field_az_summary
-      parent_name: group_link
-      weight: 4
+      parent_name: group_content
+      weight: 5
       format_type: html_element
       region: content
       format_settings:
@@ -109,26 +107,46 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card-text font-weight-normal px-3'
+        classes: 'card-text font-weight-normal'
       label: Summary
     group_read_more:
       children:
         - links
-      parent_name: group_link
-      weight: 5
+      parent_name: group_content
+      weight: 6
       format_type: html_element
       region: content
       format_settings:
         element: div
         show_label: true
         label_element: div
-        label_element_classes: 'btn btn-red btn-small btn-block'
+        label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
         id: ''
-        classes: 'card-clickable-link px-3 pb-4'
+        classes: 'card-clickable-link text-chili text-left'
       label: 'Read more'
+    group_content:
+      children:
+        - group_heading
+        - group_summary
+        - group_read_more
+      parent_name: group_link
+      weight: 3
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: p-4
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Content
 id: node.az_flexible_page.az_card
 targetEntityType: node
 bundle: az_flexible_page
