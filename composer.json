@@ -65,7 +65,7 @@
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.0",
         "drupal/menu_block": "1.6",
-        "drupal/metatag": "1.15",
+        "drupal/metatag": "1.16.0",
         "drupal/migrate_plus": "5.1",
         "drupal/migrate_tools": "5.0",
         "drupal/paragraphs": "1.12",
@@ -95,6 +95,9 @@
         "patches": {
             "drupal/bootstrap_utilities": {
                 "Invalid arguments passed in BlockquoteFilter->process()": "https://git.drupalcode.org/project/bootstrap_utilities/-/merge_requests/2.diff"
+            },
+            "drupal/cas": {
+                "ServiceNotFoundException when logging out": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
             },
             "drupal/config_sync": {
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
