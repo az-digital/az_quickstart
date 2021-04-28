@@ -61,11 +61,12 @@ steps:
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose;"
   - name: Log in to terminus
     command: 'source ${ASSET_DIR}/terminus.sh; terminus auth:login --machine-token=${TERMINUS_TOKEN}'
+  - name: Set up migration data
+    command: 'source ${ASSET_DIR}/migration.sh'
   - name: Migration Tests
     plugin: Script
     script:
-      - source ${ASSET_DIR}/migration.sh
-      - mysqladmin -u ${MIGRATION_DEST_DATABASE_USER} -p ${MIGRATION_DEST_DATABASE_PASSWORD} create "${MIGRATION_DEST_DATABASE_NAME}"
+      - mysqladmin -u ${MIGRATION_DEST_DATABASE_USER} -p${MIGRATION_DEST_DATABASE_PASSWORD} create "${MIGRATION_DEST_DATABASE_NAME}"
       - mkdir -p /var/www/html/sites/migration && cd /var/www/html/sites
       - cp example.sites.php sites.php
       - echo "\$sites['$BUILD_ID--site-migration.probo.build'] => 'migration';" >> sites.php
