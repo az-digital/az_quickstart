@@ -508,7 +508,6 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
 /**
  * Allows region-specific templates.
  */
-
 function az_barrio_theme_suggestions_block_alter(array &$suggestions, array $variables) {
   if (isset($variables['elements']['#id']) && !empty($variables['elements']['#id'])) {
     $block_storage = \Drupal::entityTypeManager()->getStorage('block') ;
