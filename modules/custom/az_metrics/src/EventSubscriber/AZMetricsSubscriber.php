@@ -5,7 +5,7 @@ namespace Drupal\az_metrics\EventSubscriber;
 use Drupal\Core\Database\Connection;
 use Drupal\Component\Datetime\Time;
 use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -43,7 +43,7 @@ class AZMetricsSubscriber implements EventSubscriberInterface {
   /**
    * The method to store the incoming domain in the database.
    */
-  public function logDomain(GetResponseEvent $event) {
+  public function logDomain(RequestEvent $event) {
     $httpHost = $event->getRequest()->getHttpHost();
     $requestTime = $this->time->getRequestTime();
     $this->connection->merge('az_metrics_domains')
