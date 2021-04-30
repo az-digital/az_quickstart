@@ -13,12 +13,17 @@ const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1';
  * Get all data needed for reporting.
  */
 function az_metrics_data() {
-  $domains = \Drupal::database()
+  $domainQuery = \Drupal::database()
     ->query('SELECT * FROM {az_metrics_domains}')
     ->fetchAll();
 
+  $domainList = [];
+  foreach ($domainQuery as $d) {
+    array_push($domainList, $d->domain);
+  }
+
   $data = [
-    'domains' => array_map(function ($x) { return $x->domain; }, $domains),
+    'domains' => $domainList,
     'mail' => \Drupal::config('system.site')->get('mail', ''),
     'name' => \Drupal::config('system.site')->get('name', ''),
     'uuid' => \Drupal::config('system.site')->get('uuid', ''),
@@ -34,11 +39,11 @@ function az_metrics_cron() {
   $data = az_metrics_data();
 
   \Drupal::httpClient()
-            ->post(AZ_METRICS_URL . "/metrics", [
-                'headers' =>  [
-                                'X-Api-Key' => 'secret',
-                                'Content-Type' => 'application/json'
-                              ],
-                'body' => Json::encode($data)
-              ]);
+    ->post(AZ_METRICS_URL . "/azqs/metrics", [
+      'headers' => [
+        'X-Api-Key' => 'secret',
+        'Content-Type' => 'application/json',
+      ],
+      'body' => Json::encode($data),
+    ]);
 }
