@@ -130,6 +130,42 @@
                 "Drupal 9 core version requirement": "https://www.drupal.org/files/issues/2020-11-17/menu_block-core-info-3182983-2.patch",
                 "Add configuration options for dynamic block titles": "https://www.drupal.org/files/issues/2020-05-03/2809699-162-dynamic-block-titles.patch"
             }
+        },
+        "drupal-scaffold": {
+            "file-mapping": {
+                "[web-root]/android-chrome-192x192.png": {
+                    "path": "assets/android-chrome-192x192.png",
+                    "overwrite": false
+                },
+                "[web-root]/android-chrome-384x384.png": {
+                    "path": "assets/android-chrome-384x384.png",
+                    "overwrite": false
+                },
+                "[web-root]/apple-touch-icon.png": {
+                    "path": "assets/apple-touch-icon.png",
+                    "overwrite": false
+                },
+                "[web-root]/browserconfig.xml": {
+                    "path": "assets/browserconfig.xml",
+                    "overwrite": false
+                },
+                "[web-root]/favicon.ico": {
+                    "path": "assets/favicon.ico",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-150x150.png": {
+                    "path": "assets/mstile-150x150.png",
+                    "overwrite": false
+                },
+                "[web-root]/safari-pinned-tab.svg": {
+                    "path": "assets/safari-pinned-tab.svg",
+                    "overwrite": false
+                },
+                "[web-root]/site.webmanifest": {
+                    "path": "assets/site.webmanifest",
+                    "overwrite": false
+                }
+            }
         }
     },
     "minimum-stability": "dev",
