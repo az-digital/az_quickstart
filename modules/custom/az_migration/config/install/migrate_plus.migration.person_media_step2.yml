@@ -1,0 +1,27 @@
+# This migration links the newly created media entities with entity reference field on the target bundle.
+
+id: person_media_step2
+label: Person Media Step 2 (migrate_file_to_media)
+migration_group: az_migration
+
+source:
+    plugin: d7_node
+    node_type: uaqs_person
+
+destination:
+    plugin: entity:node
+    bundle: az_person
+
+process:
+    nid: nid
+    changed: changed
+
+    field_az_media_image:
+        plugin: file_id_lookup
+        source: field_uaqs_photo
+        migration: person_media_step1
+        no_stub: true
+
+migration_dependencies:
+    optional:
+        - person_media_step1

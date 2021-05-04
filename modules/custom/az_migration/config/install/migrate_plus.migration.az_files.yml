@@ -3,6 +3,7 @@ label: All Files
 migration_group: az_migration
 source:
   plugin: az_file_migration
+  scheme: public
   constants:
     source_base_path: 'sites/default/files'
     old_files_path: ''

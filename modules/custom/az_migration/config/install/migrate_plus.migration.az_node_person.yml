@@ -1,10 +1,11 @@
 id: az_node_person
-label: Person Node Content
+label: AZ Person Content
 migration_group: az_migration
 status: true
 
 source:
-  plugin: az_person
+  plugin: d7_node
+  node_type: uaqs_person
   constants:
     slash: '/'
 
@@ -28,18 +29,34 @@ process:
     source: language
     map:
       und: en
-      
-  'field_az_fname/value': person_fname_value
-  'field_az_fname/format': person_fname_format
 
-  'field_az_lname/value': person_lname_value
-  'field_az_lname/format': person_lname_format
+  field_az_fname:
+    plugin: sub_process
+    source: field_uaqs_fname
+    process:
+      delta: delta
+      value: value
+      format: format
 
-  'field_az_email/value' : person_email
+  field_az_lname:
+    plugin: sub_process
+    source: field_uaqs_lname
+    process:
+      delta: delta
+      value: value
+      format: format
+
+  field_az_email:
+    plugin: sub_process
+    source: field_uaqs_email
+    process:
+      delta: delta
+      value: value
+      format: format
 
   field_az_titles:
     plugin: sub_process
-    source: person_job_title
+    source: field_uaqs_titles
     process:
       delta: delta
       value: value
@@ -47,7 +64,7 @@ process:
 
   field_az_degrees:
     plugin: sub_process
-    source: person_degrees
+    source: field_uaqs_degrees
     process:
       delta: delta
       value: value
@@ -55,14 +72,14 @@ process:
 
   field_az_phones:
     plugin: sub_process
-    source: person_phones
+    source: field_uaqs_phones
     process:
       delta: delta
       value: value
 
   field_az_links:
     plugin: sub_process
-    source: person_links
+    source: field_uaqs_links
     process:
       delta: delta
       uri: url
@@ -70,18 +87,18 @@ process:
 
   field_az_address:
     plugin: sub_process
-    source: person_addresses
+    source: field_uaqs_addresses
     process:
       delta: delta
       value: value
       summary: summary
       format: 
         plugin: default_value
-        default_value: az_standard
+        default_value: plain_text
 
   field_az_body:
     plugin: sub_process
-    source: person_biography
+    source: field_uaqs_bio
     process:
       delta: delta
       value: value
@@ -92,7 +109,7 @@ process:
 
   field_az_attachments:
     plugin: sub_process
-    source: person_attachment
+    source: field_uaqs_cv_documents
     process:
       delta: delta
       target_id: fid
@@ -101,7 +118,7 @@ process:
   
   field_az_media_image:
     plugin: sub_process
-    source: person_photo
+    source: field_uaqs_photo
     process:
       delta: delta
       target_id: 
@@ -113,10 +130,7 @@ process:
           imageAltSource: alt
           imageTitleSource: title
 
-  uid: 
-    plugin: default_value
-    default_value: 1
-
+  uid: node_uid
   status: status
   created: created
   changed: changed
@@ -133,14 +147,14 @@ process:
   field_az_person_category:
     - 
       plugin: migration_lookup
-      source: person_category
+      source: field_uaqs_person_category
       migration:
         - az_person_categories
 
   field_az_person_category_sec:
     -
       plugin: migration_lookup
-      source: person_category_secondary
+      source: field_uaqs_person_categories
       migration:
         - az_person_categories_secondary
 
@@ -148,3 +162,8 @@ dependencies:
   enforced:
     module:
       - az_migration
+
+migration_dependencies:
+  required:
+    - az_user
+    - az_files
