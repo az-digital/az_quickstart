@@ -1,6 +1,7 @@
 image: proboci/ubuntu:18.04-php7.4
 assets:
-  - credentials.sh
+  - test-credentials.sh
+  - migration.settings.php
   - migration.sh
   - terminus.sh
 steps:
@@ -54,9 +55,9 @@ steps:
       - chown www-data:www-data -R /var/www/html/sites/simpletest
       - mkdir -p /var/www/html/sites/default/files/simpletest
       - chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
-      - source $ASSET_DIR/credentials.sh
+      - source $ASSET_DIR/test-credentials.sh
       - export SIMPLETEST_BASE_URL="http://localhost"
-      - export SIMPLETEST_DB="mysql://${DATABASE_USER}:${DATABASE_PASS}@localhost/${DATABASE_NAME}"
+      - export SIMPLETEST_DB="mysql://${TEST_DATABASE_USER}:${TEST_DATABASE_PASS}@localhost/${TEST_DATABASE_NAME}"
       - cd /var/www/html/profiles/custom/az_quickstart
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose;"
   - name: Log in to terminus
@@ -66,7 +67,7 @@ steps:
   - name: Migration Tests
     plugin: Script
     script:
-      - . ${ASSET_DIR}/migration.sh
+      - source ${ASSET_DIR}/migration.sh
       - terminus connection:info ${MIGRATION_SOURCE_SITE_NAME}.dev --fields 'mysql_host,mysql_password,mysql_port,mysql_database,mysql_username' --format=json > /tmp/migration_config.json
       # - mysqladmin -u ${MIGRATION_DEST_DATABASE_USER} -p${MIGRATION_DEST_DATABASE_PASSWORD} create ${MIGRATION_DEST_DATABASE_NAME}
       - mkdir -p /var/www/html/sites/migration && cd /var/www/html/sites
