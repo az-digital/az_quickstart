@@ -66,12 +66,12 @@ steps:
   - name: Migration Tests
     plugin: Script
     script:
-      - source ${ASSET_DIR}/migration.sh
-      - mysqladmin -u ${MIGRATION_DEST_DATABASE_USER} -p${MIGRATION_DEST_DATABASE_PASSWORD} create ${MIGRATION_DEST_DATABASE_NAME}
+      - . ${ASSET_DIR}/migration.sh
+      - terminus connection:info ${MIGRATION_SOURCE_SITE_NAME}.dev --fields 'mysql_host,mysql_password,mysql_port,mysql_database,mysql_username' --format=json > /tmp/migration_config.json
+      # - mysqladmin -u ${MIGRATION_DEST_DATABASE_USER} -p${MIGRATION_DEST_DATABASE_PASSWORD} create ${MIGRATION_DEST_DATABASE_NAME}
       - mkdir -p /var/www/html/sites/migration && cd /var/www/html/sites
       - cp example.sites.php sites.php
       - echo "\$sites['$BUILD_ID--site-migration.probo.build'] = 'migration';" >> sites.php
-      - cp default/default.settings.php migration/settings.php
-      - echo 'CiRkYXRhYmFzZXNbJ21pZ3JhdGlvbiddWydkZWZhdWx0J10gPSBbCiAgJ2RhdGFiYXNlJyA9PiAkX0VOVlsnTUlHUkFUSU9OX1NPVVJDRV9EQVRBQkFTRV9OQU1FJ10sCiAgJ3VzZXJuYW1lJyA9PiAkX0VOVlsnTUlHUkFUSU9OX1NPVVJDRV9EQVRBQkFTRV9VU0VSJ10sCiAgJ3Bhc3N3b3JkJyA9PiAkX0VOVlsnTUlHUkFUSU9OX1NPVVJDRV9EQVRBQkFTRV9QQVNTV09SRCddLAogICdob3N0JyA9PiAkX0VOVlsnTUlHUkFUSU9OX1NPVVJDRV9EQVRBQkFTRV9IT1NUJ10sCiAgJ3BvcnQnID0+ICRfRU5WWydNSUdSQVRJT05fU09VUkNFX0RBVEFCQVNFX1BPUlQnXSwKICAnZHJpdmVyJyA9PiAnbXlzcWwnLAogICdwcmVmaXgnID0+ICcnLAogICdjb2xsYXRpb24nID0+ICd1dGY4bWI0X2dlbmVyYWxfY2knLApdOwokZGF0YWJhc2VzWydkZWZhdWx0J11bJ2RlZmF1bHQnXSA9IFsKICAnZGF0YWJhc2UnID0+ICRfRU5WWydNSUdSQVRJT05fREVTVF9EQVRBQkFTRV9OQU1FJ10sCiAgJ3VzZXJuYW1lJyA9PiAkX0VOVlsnTUlHUkFUSU9OX0RFU1RfREFUQUJBU0VfVVNFUiddLAogICdwYXNzd29yZCcgPT4gJF9FTlZbJ01JR1JBVElPTl9ERVNUX0RBVEFCQVNFX1BBU1NXT1JEJ10sCiAgJ2hvc3QnID0+ICdsb2NhbGhvc3QnLAogICdwb3J0JyA9PiAnMzMwNicsCiAgJ2RyaXZlcicgPT4gJ215c3FsJywKICAncHJlZml4JyA9PiAnJywKICAnY29sbGF0aW9uJyA9PiAndXRmOG1iNF9nZW5lcmFsX2NpJywKXTsK' | base64 --decode >> migration/settings.php
+      - cp ${ASSET_DIR}/migration.settings.php migration/settings.php
       - cd migration
       - drush site:install az_quickstart --site-name='Quickstart Migration' --account-name=azadmin --account-pass=azadmin --verbose --yes -n
