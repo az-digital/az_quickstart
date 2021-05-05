@@ -122,14 +122,12 @@ process:
     process:
       delta: delta
       target_id: 
-        -
-          plugin: az_media_generate
-          source: fid
-          destination_field: field_media_az_image
-          destination_bundle: az_image
-          imageAltSource: alt
-          imageTitleSource: title
-
+      - 
+        plugin: migration_lookup
+        source: fid
+        migration: 
+          - az_media
+        
   uid: node_uid
   status: status
   created: created
