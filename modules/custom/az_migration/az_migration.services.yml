@@ -1,6 +1,0 @@
-services:
-  migration_subscriber:
-    class: '\Drupal\az_migration\EventSubscriber\MigrationSubscriber'
-    arguments: ['@entity_type.manager', '@entity_field.manager']
-    tags:
-      - { name: 'event_subscriber' }
