@@ -37,7 +37,7 @@
         "drupal/auto_entitylabel": "3.0-beta4",
         "drupal/background_image_formatter": "1.7",
         "drupal/block_content_permissions": "1.10",
-        "drupal/bootstrap_barrio": "4.30",
+        "drupal/bootstrap_barrio": "5.1.4",
         "drupal/bootstrap_utilities": "1.0",
         "drupal/cas": "1.7",
         "drupal/chosen": "3.0.1",
