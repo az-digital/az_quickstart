@@ -51,7 +51,7 @@ process:
     source: field_uaqs_email
     process:
       delta: delta
-      value: value
+      value: email
       format: format
 
   field_az_titles:
