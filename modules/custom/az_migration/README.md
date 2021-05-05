@@ -95,19 +95,31 @@ To rollback the migrated category :
 drush mr az_person_categories
 drush mr az_person_categories_secondary
 ```
-#### 2. Person File Migration
+#### 2. All File Migration
 
 Migrate the related files using the below command :
 ```
-drush mim az_person_files
+drush mim az_files
 ```
 
 To rollback the migrated file :
 ```
-drush mr az_person_files
+drush mr az_files
 ```
 
-#### 3. Person Content Migration
+#### 3. All Media Migration
+
+Migrate the related files using the below command :
+```
+drush mim az_media
+```
+
+To rollback the migrated file :
+```
+drush mr az_media
+```
+
+#### 4. Person Content Migration
 
 Migrate person content using the below command :
 ```
@@ -119,7 +131,7 @@ To rollback the migrated person content :
 drush mr az_node_person
 ```
 
-#### 4. User Migration
+#### 5. User Migration
 
 During the migration we have consider below mapping suggestions :
 
