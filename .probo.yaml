@@ -75,5 +75,5 @@ steps:
       - echo "\$sites['$BUILD_ID--site-migration.probo.build'] = 'migration';" >> sites.php
       - cp ${ASSET_DIR}/migration.settings.php migration/settings.php
       - cd migration
-      - chown www-data:www-data -R ./files
+      - mkdir files && chown www-data:www-data -R ./files
       - drush site:install az_quickstart --site-name='Quickstart Migration' --account-name=azadmin --account-pass=azadmin --verbose --yes -n
