@@ -5,7 +5,6 @@ audit: true
 migration_tags:
   - Drupal 7
   - Content
-deriver: Drupal\media_migration\Plugin\migrate\D7FileEntityDeriver
 source:
   plugin: d7_file_entity_item
   constants:
@@ -15,11 +14,17 @@ process:
   # Bundles must exist, previous machine names were image, document, etc.
   # Note constants/bundle_prefix evaluates to 'az'
   bundle:
-    plugin: concat
-    source:
-      - constants/bundle_prefix
-      - bundle
-    delimiter: '_'
+    -
+      plugin: concat
+      source:
+        - constants/bundle_prefix
+        - bundle
+      delimiter: '_'
+    -
+      plugin: str_replace
+      search: az_video_oembed
+      replace: az_remote_video
+
   # Lookup fid through migration lookup. Should not depend on fid not changing.
   mfid:
     plugin: migration_lookup
@@ -32,8 +37,9 @@ process:
   field_media_az_image/alt: image_field_alt
   field_media_az_image/title: image_field_text
   field_media_az_video_file: '@mfid'
-  name: filename
+  field_media_az_oembed_video/value: uri
 
+  name: filename
   created: timestamp
   changed: timestamp
   status: status
