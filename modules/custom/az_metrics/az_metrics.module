@@ -7,7 +7,7 @@
 
 use Drupal\Component\Serialization\Json;
 
-const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1';
+const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1/azqs/metrics';
 
 /**
  * Get all data needed for reporting.
@@ -39,7 +39,7 @@ function az_metrics_cron() {
   $data = az_metrics_data();
 
   \Drupal::httpClient()
-    ->post(AZ_METRICS_URL . "/azqs/metrics", [
+    ->post(AZ_METRICS_URL, [
       'headers' => [
         'X-Api-Key' => 'secret',
         'Content-Type' => 'application/json',
