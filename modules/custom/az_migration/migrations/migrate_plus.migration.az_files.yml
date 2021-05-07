@@ -1,6 +1,8 @@
 id: az_files
 label: All Files
 migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
 source:
   plugin: az_file_migration
   scheme: public

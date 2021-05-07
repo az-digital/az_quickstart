@@ -7,6 +7,7 @@ status: true
 migration_tags:
   - Drupal 7
   - Content
+  - Quickstart Content Migration
 
 class: Drupal\user\Plugin\migrate\User
 source:

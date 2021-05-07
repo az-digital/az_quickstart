@@ -1,6 +1,8 @@
 id: az_person_categories_secondary
 label: Person Categories Secondary
 migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
 status: true
 
 source:

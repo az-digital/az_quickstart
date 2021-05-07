@@ -1,6 +1,8 @@
 id: az_node_person
 label: AZ Person Content
 migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
 status: true
 
 source:
