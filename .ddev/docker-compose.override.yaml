@@ -17,3 +17,12 @@ services:
       - ".:/mnt/ddev_config:ro"
       - ddev-global-cache:/mnt/ddev-global-cache
       - ddev-ssh-agent_socket_dir:/home/.ssh-agent
+    links:
+      - chromedriver:$DDEV_HOSTNAME
+  chromedriver:
+    container_name: ddev-${DDEV_SITENAME}-chromedriver
+    image: drupalci/chromedriver:production
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+      com.ddev.app-url: $DDEV_URL
