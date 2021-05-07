@@ -7,7 +7,7 @@ dependencies:
     - menu_block
   theme:
     - az_barrio
-id: az_barrio_footer_menu_info_for
+id: az_barrio_footer_menu_info
 theme: az_barrio
 region: footer_sub
 weight: 0
@@ -21,6 +21,6 @@ settings:
   level: 1
   depth: 1
   expand_all_items: true
-  suggestion: footer_info
+  suggestion: sub_footer
   label_type: root
 visibility: {  }
