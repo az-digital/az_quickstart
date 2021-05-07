@@ -52,6 +52,7 @@ steps:
       - chown www-data:www-data -R /var/www/html/sites/simpletest
       - mkdir -p /var/www/html/sites/default/files/simpletest
       - chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
+      - npm install --no-progress --global chromedriver
       - source $ASSET_DIR/credentials.sh
       - export SIMPLETEST_BASE_URL="http://localhost"
       - export SIMPLETEST_DB="mysql://${DATABASE_USER}:${DATABASE_PASS}@localhost/${DATABASE_NAME}"
