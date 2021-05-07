@@ -137,8 +137,8 @@
                     "path": "assets/android-chrome-192x192.png",
                     "overwrite": false
                 },
-                "[web-root]/android-chrome-384x384.png": {
-                    "path": "assets/android-chrome-384x384.png",
+                "[web-root]/android-chrome-512x512.png": {
+                    "path": "assets/android-chrome-512x512.png",
                     "overwrite": false
                 },
                 "[web-root]/apple-touch-icon.png": {
@@ -149,12 +149,36 @@
                     "path": "assets/browserconfig.xml",
                     "overwrite": false
                 },
+                "[web-root]/favicon-16x16.png": {
+                    "path": "assets/favicon-16x16.png",
+                    "overwrite": false
+                },
+                "[web-root]/favicon-32x32.png": {
+                    "path": "assets/favicon-32x32.png",
+                    "overwrite": false
+                },
                 "[web-root]/favicon.ico": {
                     "path": "assets/favicon.ico",
                     "overwrite": false
                 },
+                "[web-root]/mstile-70x70.png": {
+                    "path": "assets/mstile-70x70.png",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-144x144.png": {
+                    "path": "assets/mstile-144x144.png",
+                    "overwrite": false
+                },
                 "[web-root]/mstile-150x150.png": {
                     "path": "assets/mstile-150x150.png",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-310x150.png": {
+                    "path": "assets/mstile-310x150.png",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-310x310.png": {
+                    "path": "assets/mstile-310x310.png",
                     "overwrite": false
                 },
                 "[web-root]/safari-pinned-tab.svg": {
