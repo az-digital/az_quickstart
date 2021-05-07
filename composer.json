@@ -48,7 +48,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.2.x-dev",
+        "drupal/core-recommended": "9.2.0-alpha1",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.5",
         "drupal/date_ap_style": "1.0",
@@ -109,7 +109,7 @@
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
-                "Editing menus user-experience issue": "https://git.drupalcode.org/project/drupal/-/merge_requests/592/diffs.diff",
+                "Editing menus user-experience issue": "https://git.drupalcode.org/project/drupal/-/commit/68b026906b7aad748b2427caa52527436a99eb8c.diff",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch"
             },
