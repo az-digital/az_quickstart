@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - system.menu.az-footer-resources
+    - system.menu.main
   module:
     - menu_block
   theme:
@@ -18,12 +18,9 @@ settings:
   label: Resources
   provider: menu_block
   label_display: visible
-  follow: false
-  follow_parent: child
   level: 1
   depth: 1
-  expand: false
-  parent: 'az-footer-resources:'
+  expand_all_items: true
   suggestion: sub_footer
   label_type: root
   expand_all_items: true
