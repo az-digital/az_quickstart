@@ -48,7 +48,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.1.7",
+        "drupal/core-recommended": "9.1.8",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.5",
         "drupal/date_ap_style": "1.0",
@@ -64,7 +64,7 @@
         "drupal/link_class": "2.0.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.0",
-        "drupal/menu_block": "1.6",
+        "drupal/menu_block": "1.7.0",
         "drupal/metatag": "1.16",
         "drupal/migrate_plus": "5.1",
         "drupal/migrate_tools": "5.0",
@@ -110,7 +110,7 @@
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
                 "Remove Claro tabledrag.js replacement when core issues are resolved": "https://www.drupal.org/files/issues/2020-11-11/3083051--29-REROLL-PLUS.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
-                "Editing menus user-experience issue": "https://www.drupal.org/files/issues/2021-02-09/2957953-9.2.x-113.patch",
+                "Editing menus user-experience issue (#2957953)": "https://git.drupalcode.org/project/drupal/-/commit/68b026906b7aad748b2427caa52527436a99eb8c.diff",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch"
             },
@@ -124,11 +124,66 @@
             },
             "drupal/draggableviews": {
                 "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
-            },
-            "drupal/menu_block": {
-                "Module test core_version_requirement": "https://www.drupal.org/files/issues/2020-11-11/3146665_7.patch",
-                "Drupal 9 core version requirement": "https://www.drupal.org/files/issues/2020-11-17/menu_block-core-info-3182983-2.patch",
-                "Add configuration options for dynamic block titles": "https://www.drupal.org/files/issues/2020-05-03/2809699-162-dynamic-block-titles.patch"
+            }
+        },
+        "drupal-scaffold": {
+            "file-mapping": {
+                "[web-root]/android-chrome-192x192.png": {
+                    "path": "assets/android-chrome-192x192.png",
+                    "overwrite": false
+                },
+                "[web-root]/android-chrome-512x512.png": {
+                    "path": "assets/android-chrome-512x512.png",
+                    "overwrite": false
+                },
+                "[web-root]/apple-touch-icon.png": {
+                    "path": "assets/apple-touch-icon.png",
+                    "overwrite": false
+                },
+                "[web-root]/browserconfig.xml": {
+                    "path": "assets/browserconfig.xml",
+                    "overwrite": false
+                },
+                "[web-root]/favicon-16x16.png": {
+                    "path": "assets/favicon-16x16.png",
+                    "overwrite": false
+                },
+                "[web-root]/favicon-32x32.png": {
+                    "path": "assets/favicon-32x32.png",
+                    "overwrite": false
+                },
+                "[web-root]/favicon.ico": {
+                    "path": "assets/favicon.ico",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-70x70.png": {
+                    "path": "assets/mstile-70x70.png",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-144x144.png": {
+                    "path": "assets/mstile-144x144.png",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-150x150.png": {
+                    "path": "assets/mstile-150x150.png",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-310x150.png": {
+                    "path": "assets/mstile-310x150.png",
+                    "overwrite": false
+                },
+                "[web-root]/mstile-310x310.png": {
+                    "path": "assets/mstile-310x310.png",
+                    "overwrite": false
+                },
+                "[web-root]/safari-pinned-tab.svg": {
+                    "path": "assets/safari-pinned-tab.svg",
+                    "overwrite": false
+                },
+                "[web-root]/site.webmanifest": {
+                    "path": "assets/site.webmanifest",
+                    "overwrite": false
+                }
             }
         }
     },
