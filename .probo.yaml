@@ -77,10 +77,10 @@ steps:
       - mkdir files && chown www-data:www-data -R ./files
       - drush site:install az_quickstart --site-name='Quickstart Migration' --account-name=azadmin --account-pass=azadmin --verbose --yes -n
       - drush -y en az_migration
-      - drush cset az_migration.settings migrate_d7_filebasepath " "
-      - drush cset az_migration.settings migrate_d7_public_path "sites/default/files/migrate_file"
-      - drush cset az_migration.settings migrate_d7_protocol "https"
-      - drush cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io"
-      - drush cset az_migration.settings migrate_d7_public_path "sites/default/files"
+      - drush -y cset az_migration.settings migrate_d7_filebasepath " "
+      - drush -y cset az_migration.settings migrate_d7_public_path "sites/default/files/migrate_file"
+      - drush -y cset az_migration.settings migrate_d7_protocol "https"
+      - drush -y cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io"
+      - drush -y cset az_migration.settings migrate_d7_public_path "sites/default/files"
       - drush mim --group=az_migration
       - echo "https://${BUILD_ID}--site-migration.probo.build/"
