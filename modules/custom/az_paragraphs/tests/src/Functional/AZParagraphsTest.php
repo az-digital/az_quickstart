@@ -115,7 +115,7 @@ class AZParagraphsTest extends BrowserTestBase {
     $page->pressButton('Save');
 
     // Check for our addition to the node.
-    $assert->pageTextContains('Wilma Wildcat was here.');
+    $assert->pageTextContains('Wilbur Wildcat was here.');
 
     // Check for applied bottom spacing.
     $assert->elementExists('css', '.paragraph.mb-8');
