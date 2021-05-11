@@ -21,6 +21,6 @@ settings:
   level: 1
   depth: 1
   expand_all_items: true
-  suggestion: sub_footer
+  suggestion: sub_footer_topics
   label_type: root
 visibility: {  }
