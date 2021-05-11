@@ -62,8 +62,6 @@ steps:
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose;"
   - name: Log in to terminus
     command: 'source ${ASSET_DIR}/terminus.sh; terminus auth:login --machine-token=${TERMINUS_TOKEN}'
-  # - name: Set up migration data
-  #   command: 'source ${ASSET_DIR}/migration.sh'
   - name: Migration Tests
     plugin: Script
     script:
