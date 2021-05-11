@@ -50,17 +50,23 @@ class AZFileHandle extends File {
    */
   public function prepareRow(Row $row) {
 
+    // @phpstan-ignore-next-line
     $this->publicPath = \Drupal::config('az_migration.settings')->get('migrate_d7_public_path');
+    // @phpstan-ignore-next-line
     $this->privatePath = \Drupal::config('az_migration.settings')->get('migrate_d7_private_path');
+    // @phpstan-ignore-next-line
     $this->temporaryPath = \Drupal::config('az_migration.settings')->get('migrate_d7_temporary_path');
 
+    // @phpstan-ignore-next-line
     $migrate_d7_protocol = \Drupal::config('az_migration.settings')->get('migrate_d7_protocol');
+    // @phpstan-ignore-next-line
     $migrate_d7_filebasepath = \Drupal::config('az_migration.settings')->get('migrate_d7_filebasepath');
 
     if ($migrate_d7_filebasepath != " " && $migrate_d7_filebasepath != "") {
       $row->setSourceProperty('constants/old_files_path', $migrate_d7_protocol . "://" . $migrate_d7_filebasepath);
     }
 
+    // @phpstan-ignore-next-line
     $site_name = \Drupal::config('system.site')->get('name');
     // Setting the path to fetch the files.
     $path = str_replace(['public:/', 'private:/', 'temporary:/'],
