@@ -77,7 +77,6 @@ steps:
       - mkdir files && chown www-data:www-data -R ./files
       - drush site:install az_quickstart --site-name='Quickstart Migration' --account-name=azadmin --account-pass=azadmin --verbose --yes -n
       - terminus env:wake ${MIGRATION_SOURCE_SITE_NAME}.dev
-      - drush user:role:add az_content_admin azcontentadmin
       - drush -y en az_migration
       - drush -y cset az_migration.settings migrate_d7_protocol "https"
       - drush -y cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io/"
