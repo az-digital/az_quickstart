@@ -113,7 +113,7 @@ class AZParagraphsJavascriptTest extends WebDriverTestBase {
 
     // Check for our additions to the node.
     $assert->pageTextContains('Card One');
-    $assert->pageTextContains('Card Three');
+    $assert->pageTextContains('Card Two');
   }
 
 }
