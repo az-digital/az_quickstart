@@ -41,3 +41,9 @@ process:
     source: '@parent_id'
 
   changed: timestamp
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_person

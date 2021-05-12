@@ -44,9 +44,17 @@ process:
   created: timestamp
   changed: timestamp
   status: status
+
 destination:
   plugin: entity:media
+
 migration_dependencies:
   required:
     - az_user
     - az_files
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_media

@@ -162,6 +162,7 @@ dependencies:
   enforced:
     module:
       - az_migration
+      - az_person
 
 migration_dependencies:
   required:

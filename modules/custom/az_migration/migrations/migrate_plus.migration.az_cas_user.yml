@@ -26,6 +26,13 @@ process:
   authname: cas_name
 destination:
   plugin: authmap
+
 migration_dependencies:
   required:
     - az_user
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_cas
