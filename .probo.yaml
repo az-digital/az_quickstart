@@ -56,7 +56,7 @@ steps:
       - source $ASSET_DIR/credentials.sh
       - export SIMPLETEST_BASE_URL="http://localhost"
       - export SIMPLETEST_DB="mysql://${DATABASE_USER}:${DATABASE_PASS}@localhost/${DATABASE_NAME}"
-      - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless"]}}, "http://localhost:9515"]'
-      - sudo -u www-data chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1" &
+      - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
+      - chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1" &
       - cd /var/www/html/profiles/custom/az_quickstart
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose;"
