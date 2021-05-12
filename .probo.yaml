@@ -60,3 +60,4 @@ steps:
       - chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1" & sleep 5
       - cd /var/www/html/profiles/custom/az_quickstart
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose;"
+      - killall chromedriver
