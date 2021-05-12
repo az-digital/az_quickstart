@@ -40,7 +40,7 @@
   ]
 %}
 {% set heading_id = attributes.id ~ '-menu'|clean_id %}
-<nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass('col-12 col-sm-8 col-md-5 col-lg-5')|without('role', 'aria-labelledby') }}>
+<nav role="navigation" aria-labelledby="{{ heading_id }}"{{ attributes.addClass('col-12 col-sm-8 col-md-5')|without('role', 'aria-labelledby') }}>
   {# Label. If not displayed, we still provide it for screen readers. #}
   {% if not configuration.label_display %}
     {% set title_attributes = title_attributes.addClass('sr-only') %}
