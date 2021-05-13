@@ -37,9 +37,15 @@ process:
   changed: timestamp
   fid: fid
 
-  uid: 
-    plugin: default_value
-    default_value: 1
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: uid
+    -
+      plugin: default_value
+      default_value: 0
 
 destination:
   plugin: entity:file
