@@ -11,7 +11,16 @@ source:
   constants:
     bundle_prefix: az
 process:
-  uid: uid
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: uid
+    -
+      plugin: default_value
+      default_value: 0
+
   # Bundles must exist, previous machine names were image, document, etc.
   # Note constants/bundle_prefix evaluates to 'az'
   bundle:
