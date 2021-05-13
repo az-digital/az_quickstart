@@ -129,8 +129,17 @@ process:
         source: fid
         migration: 
           - az_media
-        
-  uid: node_uid
+         
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: node_uid
+    -
+      plugin: default_value
+      default_value: 0
+
   status: status
   created: created
   changed: changed
