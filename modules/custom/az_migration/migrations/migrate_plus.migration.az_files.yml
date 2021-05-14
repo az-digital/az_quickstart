@@ -35,7 +35,6 @@ process:
   status: status
   created: timestamp
   changed: timestamp
-  fid: fid
 
   uid:
     -
