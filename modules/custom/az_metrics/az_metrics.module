@@ -1,0 +1,48 @@
+<?php
+
+/**
+ * @file
+ * Contains az_metrics.module.
+ */
+
+use Drupal\Component\Serialization\Json;
+
+const AZ_METRICS_URL = 'https://api.web.arizona.edu/v1/azqs/metrics';
+
+/**
+ * Get all data needed for reporting.
+ */
+function az_metrics_data() {
+  $domainQuery = \Drupal::database()
+    ->query('SELECT * FROM {az_metrics_domains}')
+    ->fetchAll();
+
+  $domainList = [];
+  foreach ($domainQuery as $d) {
+    array_push($domainList, $d->domain);
+  }
+
+  $data = [
+    'domains' => $domainList,
+    'mail' => \Drupal::config('system.site')->get('mail', ''),
+    'name' => \Drupal::config('system.site')->get('name', ''),
+    'uuid' => \Drupal::config('system.site')->get('uuid', ''),
+  ];
+
+  return $data;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function az_metrics_cron() {
+  $data = az_metrics_data();
+
+  \Drupal::httpClient()
+    ->post(AZ_METRICS_URL, [
+      'headers' => [
+        'Content-Type' => 'application/json',
+      ],
+      'body' => Json::encode($data),
+    ]);
+}
