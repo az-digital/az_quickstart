@@ -105,8 +105,58 @@ process:
         source: fid
         migration: 
           - az_media
-        
-  uid: node_uid
+  
+  field_az_contacts:
+    plugin: sub_process
+    source: field_uaqs_contacts
+    process:
+      delta: delta
+      target_id:
+        -
+          plugin: migration_lookup
+          migration: az_paragraph_contact
+          source: value
+          no_stub: true
+        -
+          plugin: extract
+          index:
+            - 0
+      target_revision_id:
+        -
+          plugin: migration_lookup
+          migration: az_paragraph_contact
+          source: value
+          no_stub: true
+        -
+          plugin: extract
+          index:
+            - 1
+
+  field_az_event_date:
+    plugin: sub_process
+    source: field_uaqs_date
+    process:
+      delta: delta
+      value:
+        plugin: callback
+        callable: strtotime
+        source: value
+      end_value:
+        plugin: callback
+        callable: strtotime
+        source: value2
+      rrule: rrule
+      
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: node_uid
+    -
+      plugin: default_value
+      default_value: 0
+
   status: status
   created: created
   changed: changed
@@ -137,3 +187,4 @@ migration_dependencies:
   required:
     - az_user
     - az_files
+    - az_paragraph_contact
