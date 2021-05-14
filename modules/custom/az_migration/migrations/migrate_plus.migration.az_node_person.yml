@@ -20,8 +20,6 @@ destination:
       - az_person_categories_secondary
 
 process:
-  nid: nid
-  vid: vid
   type: 
     plugin: default_value
     default_value: az_person
