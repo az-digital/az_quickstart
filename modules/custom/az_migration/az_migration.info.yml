@@ -1,0 +1,11 @@
+name: AZ Quickstart Migration
+description: 'Provides migrations for the site.'
+core_version_requirement: ^8.8 || ^9
+type: module
+package: The University of Arizona
+dependencies:
+ - drupal:migrate
+ - drupal:migrate_plus
+ - drupal:migrate_tools
+ - drupal:migrate_drupal
+ - drupal:media_migration
