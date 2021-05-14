@@ -50,7 +50,7 @@
         "drupal/config_update": "1.7",
         "drupal/core-recommended": "9.1.8",
         "drupal/crop": "2.1",
-        "drupal/ctools": "3.5",
+        "drupal/ctools": "3.6",
         "drupal/date_ap_style": "1.0",
         "drupal/draggableviews": "2.0.0",
         "drupal/easy_breadcrumb": "1.15",
@@ -81,7 +81,7 @@
         "drupal/token": "1.9",
         "drupal/views_bootstrap": "4.3",
         "drupal/viewsreference": "2.0-beta2",
-        "drupal/webform": "6.0.2",
+        "drupal/webform": "6.0.3",
         "drupal/xmlsitemap": "1.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/slick-carousel": "1.8.0"
