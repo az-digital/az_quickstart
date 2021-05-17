@@ -38,4 +38,4 @@ regions:
   page_bottom: 'Page bottom'
 
 ckeditor_stylesheets:
-  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/2.0.6/css/arizona-bootstrap.min.css
+  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/main/css/arizona-bootstrap.min.css
