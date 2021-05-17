@@ -36,3 +36,6 @@ regions:
   footer: Footer
   footer_sub: 'Footer sub'
   page_bottom: 'Page bottom'
+
+ckeditor_stylesheets:
+  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/2.0.6/css/arizona-bootstrap.min.css
