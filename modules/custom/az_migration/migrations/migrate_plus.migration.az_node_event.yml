@@ -19,8 +19,6 @@ destination:
       - az_event_categories
 
 process:
-  nid: nid
-  vid: vid
   type: 
     plugin: default_value
     default_value: az_event
