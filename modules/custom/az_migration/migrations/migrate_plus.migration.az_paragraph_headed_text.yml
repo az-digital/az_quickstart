@@ -1,0 +1,33 @@
+id: az_paragraph_headed_text
+label: AZ Pragrapgh Headed Text
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: d7_paragraphs_item
+  bundle: uaqs_headed_text
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text
+
+process:
+
+  field_az_text_area:
+    plugin: sub_process
+    source: field_uaqs_summary
+    revision_id: revision_id
+    process:
+      delta: delta
+      value: value
+      summary: summary
+      format:  
+        plugin: default_value
+        default_value: az_standard
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
