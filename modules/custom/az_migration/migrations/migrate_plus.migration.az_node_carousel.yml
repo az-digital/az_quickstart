@@ -39,7 +39,12 @@ process:
     source: field_uaqs_link
     process:
       delta: delta
-      uri: url
+      uri: 
+        -
+          plugin: str_replace
+          search: '[node:url]'
+          replace: ''
+          source: url
       title: title
 
   field_az_carousel_short_summary:
