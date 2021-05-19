@@ -27,7 +27,6 @@ process:
   field_az_phone:
     plugin: sub_process
     source: field_uaqs_contact_phone
-    revision_id: revision_id
     process:
       delta: delta
       value: value
