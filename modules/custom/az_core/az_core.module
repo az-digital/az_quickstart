@@ -11,6 +11,7 @@ use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\editor\Entity\Editor;
 
 /**
  * Implements hook_help().
@@ -99,3 +100,22 @@ function az_core_block_access(Block $block, $operation, AccountInterface $accoun
   }
   return AccessResult::neutral();
 }
+
+/**
+ * Implements hook_ckeditor_css_alter().
+ */
+function az_core_ckeditor_css_alter(array &$css, Editor $editor) {
+  $global_styling = \Drupal::service('library.discovery')->getLibraryByName('az_barrio', 'global-styling');
+  if($global_styling['css']) {
+      $css[] = $global_styling['css'][0]['data'];
+  };
+  $proxima_nova = \Drupal::service('library.discovery')->getLibraryByName('az_barrio', 'az-proxima-nova');
+  if($proxima_nova['css']) {
+    $css[] = $proxima_nova['css'][0]['data'];
+  };
+  $arizona_bootstrap = \Drupal::service('library.discovery')->getLibraryByName('az_barrio', 'arizona-bootstrap');
+  if($arizona_bootstrap['css']) {
+    $css[] = $arizona_bootstrap['css'][0]['data'];
+  };
+}
+
