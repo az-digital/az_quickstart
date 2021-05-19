@@ -114,7 +114,7 @@ function az_core_ckeditor_css_alter(array &$css, Editor $editor) {
     $css[] = $proxima_nova['css'][0]['data'];
   };
   $arizona_bootstrap = \Drupal::service('library.discovery')->getLibraryByName('az_barrio', 'arizona-bootstrap');
-  if ($arizona_bootstrap && arizona_bootstrap['css']) {
+  if ($arizona_bootstrap && $arizona_bootstrap['css']) {
     $css[] = $arizona_bootstrap['css'][0]['data'];
   };
 }
