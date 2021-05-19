@@ -114,7 +114,8 @@
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Editing menus user-experience issue (#2957953)": "https://git.drupalcode.org/project/drupal/-/commit/68b026906b7aad748b2427caa52527436a99eb8c.diff",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch"
+                "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
+                "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
