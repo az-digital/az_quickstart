@@ -2,7 +2,7 @@ name: Build & deploy review site
 on:
   push:
     branches:
-      - kitten-d9-fixes
+      - main
 
 jobs:
   watch-workflow:
