@@ -70,7 +70,7 @@
         "drupal/migrate_plus": "5.1",
         "drupal/migrate_tools": "5.0",
         "drupal/paragraphs": "1.12",
-        "drupal/paragraphs_admin": "^1.2",
+        "drupal/paragraphs_admin": "1.2",
         "drupal/pathauto": "1.8",
         "drupal/redirect": "1.6",
         "drupal/search_exclude": "2.0.0-beta2",
