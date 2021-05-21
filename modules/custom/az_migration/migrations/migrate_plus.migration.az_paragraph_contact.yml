@@ -36,7 +36,6 @@ process:
     process:
       delta: delta
       value: value
-    revision_id: revision_id
 
 dependencies:
   enforced:
