@@ -9,4 +9,3 @@ dependencies:
  - drupal:migrate_tools
  - drupal:migrate_drupal
  - drupal:media_migration
- - az_carousel
