@@ -199,6 +199,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Card Title'),
       '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
+      '#maxlength' => 255,
     ];
 
     $element['body'] = [
