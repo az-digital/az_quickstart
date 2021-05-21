@@ -11,6 +11,7 @@ permissions:
   - 'access coffee'
   - 'access content overview'
   - 'access contextual links'
+  - 'access draggableviews'
   - 'access files overview'
   - 'access in-place editing'
   - 'access media overview'
