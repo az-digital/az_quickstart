@@ -4,7 +4,6 @@ namespace Drupal\az_migration\Plugin\migrate\source;
 
 use Drupal\migrate\Row;
 use Drupal\paragraphs\Plugin\migrate\source\d7\ParagraphsItem;
-use Drush\Drush;
 
 /**
  * Drupal 7 Person node source plugin.
@@ -45,5 +44,5 @@ class AZParagraphsItem extends ParagraphsItem {
     $row->setSourceProperty('bottom_spacing', $paragraph_bottom_spacing);
     return parent::prepareRow($row);
   }
-  
+
 }
