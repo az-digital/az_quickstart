@@ -6,6 +6,7 @@ label: 'Content administrator'
 weight: 3
 is_admin: false
 permissions:
+  - 'access draggableviews'
   - 'access news feeds'
   - 'access taxonomy overview'
   - 'administer blocks'
