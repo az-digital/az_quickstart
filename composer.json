@@ -128,6 +128,9 @@
             "drupal/draggableviews": {
                 "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
             },
+            "drupal/image_widget_crop": {
+                "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
+            },
             "drupal/metatag": {
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
             }
