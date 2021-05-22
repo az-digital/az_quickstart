@@ -1,10 +1,21 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.az_background
+    - core.entity_view_mode.media.az_card_image
+    - core.entity_view_mode.media.az_large
+    - core.entity_view_mode.media.az_medium
+    - core.entity_view_mode.media.az_natural_size
+    - core.entity_view_mode.media.az_square
+    - core.entity_view_mode.media.az_thumbnail
+    - core.entity_view_mode.media.full
+    - core.entity_view_mode.media.media_library
+    - core.entity_view_mode.media.token
   module:
+    - bootstrap_utilities
     - entity_embed
     - media
-    - bootstrap_utilities
 name: Standard
 format: az_standard
 weight: -10
@@ -21,7 +32,7 @@ filters:
     status: true
     weight: -10
     settings:
-      allowed_html: '<em> <strong> <s> <abbr> <address> <cite> <blockquote class="blockquote blockquote-reverse text-right text-center"> <br> <div class="col col-* row"> <ul type class="nav nav-* ul-*"> <ol start type> <li> <dl> <dt> <dd> <h1 class=""> <h2 class=""> <h3 class=""> <h4 class=""> <h5 class=""> <h6 class=""> <sup> <sub> <table> <caption> <tbody> <thead> <tfoot> <th colspan="" rowspan=""> <td colspan="" rowspan=""> <tr colspan="" rowspan=""> <hr> <a href class="btn btn-red btn-outline-red btn-blue btn-outline-blue btn-outline-white btn-link" target="" name="" id=""> <span class="text-* badge badge-* small lead h1 h2 h3 h4 h5 h6 align-* m* p*"> <img src alt data-entity-type data-entity-uuid> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align="" data-caption data-embed-button alt title> <drupal-media data-view-mode="" data-align="" data-entity-type data-entity-uuid alt title> <div class=* data-* > <p class="text-align-left text-align-center text-align-right"> <footer class="blockquote-footer">'
+      allowed_html: '<em> <strong> <s> <abbr> <address> <cite> <blockquote class="blockquote blockquote-reverse text-right text-center"> <br> <div class="col col-* row" name="" id=""> <ul type class="nav nav-* ul-*"> <ol start type> <li> <dl> <dt> <dd> <h1 class="" name="" id=""> <h2 class="" name="" id=""> <h3 class="" name="" id=""> <h4 class="" name="" id=""> <h5 class="" name="" id=""> <h6 class="" name="" id=""> <sup> <sub> <table> <caption> <tbody> <thead> <tfoot> <th colspan="" rowspan=""> <td colspan="" rowspan=""> <tr colspan="" rowspan=""> <hr> <a href class="btn btn-red btn-outline-red btn-blue btn-outline-blue btn-outline-white btn-link btn-block btn-lg btn-sm btn-arrow"> target="" name="" id=""> <span class="text-* badge badge-* small lead h1 h2 h3 h4 h5 h6 align-* m* p*" name="" id=""> <img src alt data-entity-type data-entity-uuid> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align="" data-caption data-embed-button alt title> <drupal-media data-view-mode="" data-align="" data-entity-type data-entity-uuid alt title> <div class=* data-* > <p class="text-align-left text-align-center text-align-right"> <footer class="blockquote-footer">'
       filter_html_help: true
       filter_html_nofollow: false
   filter_autop:
@@ -69,4 +80,14 @@ filters:
     status: true
     weight: 0
     settings: {  }
-
+  bootstrap_utilities_table_filter:
+    id: bootstrap_utilities_table_filter
+    provider: bootstrap_utilities
+    status: false
+    weight: 0
+    settings:
+      table_remove_width_height: '1'
+      table_row_striping: '0'
+      table_bordered: '0'
+      table_row_hover: '0'
+      table_small: '0'
