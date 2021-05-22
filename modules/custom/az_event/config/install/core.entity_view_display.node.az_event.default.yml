@@ -50,6 +50,8 @@ third_party_settings:
       format_type: html_element
       region: content
       format_settings:
+        id: ''
+        classes: ''
         element: div
         show_label: false
         label_element: h3
@@ -57,8 +59,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: clearfix
       label: 'Category Div'
     group_row_1:
       children:
@@ -138,7 +138,7 @@ third_party_settings:
       children:
         - field_az_contacts
       parent_name: group_row_2
-      weight: 8
+      weight: 11
       format_type: html_element
       region: content
       format_settings:
@@ -156,7 +156,7 @@ third_party_settings:
       children:
         - field_az_attachments
       parent_name: group_row_2
-      weight: 9
+      weight: 13
       format_type: html_element
       region: content
       format_settings:
@@ -194,7 +194,7 @@ content:
     region: content
   field_az_contacts:
     type: entity_reference_revisions_entity_view
-    weight: 23
+    weight: 16
     label: above
     settings:
       view_mode: default
@@ -202,7 +202,7 @@ content:
     third_party_settings: {  }
     region: content
   field_az_event_category:
-    weight: 22
+    weight: 5
     label: hidden
     settings:
       link: true
@@ -220,16 +220,16 @@ content:
       cap_today: '1'
       display_time: '1'
       time_before_date: '1'
-      display_noon_and_midnight: '1'
+      use_all_day: '1'
+      capitalize_noon_and_midnight: '1'
       separator: endash
       timezone: ''
-      use_all_day: 0
-      capitalize_noon_and_midnight: 0
+      display_noon_and_midnight: 0
       display_day: null
     third_party_settings: {  }
   field_az_location:
     type: link
-    weight: 23
+    weight: 10
     region: content
     label: above
     settings:
