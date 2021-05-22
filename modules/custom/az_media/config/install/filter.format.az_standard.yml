@@ -1,21 +1,10 @@
 langcode: en
 status: true
 dependencies:
-  config:
-    - core.entity_view_mode.media.az_background
-    - core.entity_view_mode.media.az_card_image
-    - core.entity_view_mode.media.az_large
-    - core.entity_view_mode.media.az_medium
-    - core.entity_view_mode.media.az_natural_size
-    - core.entity_view_mode.media.az_square
-    - core.entity_view_mode.media.az_thumbnail
-    - core.entity_view_mode.media.full
-    - core.entity_view_mode.media.media_library
-    - core.entity_view_mode.media.token
   module:
-    - bootstrap_utilities
     - entity_embed
     - media
+    - bootstrap_utilities
 name: Standard
 format: az_standard
 weight: -10
@@ -80,14 +69,4 @@ filters:
     status: true
     weight: 0
     settings: {  }
-  bootstrap_utilities_table_filter:
-    id: bootstrap_utilities_table_filter
-    provider: bootstrap_utilities
-    status: false
-    weight: 0
-    settings:
-      table_remove_width_height: '1'
-      table_row_striping: '0'
-      table_bordered: '0'
-      table_row_hover: '0'
-      table_small: '0'
+
