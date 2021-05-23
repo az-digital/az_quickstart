@@ -6,7 +6,7 @@ use Drupal\migrate\Row;
 use Drupal\paragraphs\Plugin\migrate\source\d7\ParagraphsItem;
 
 /**
- * Drupal 7 Person node source plugin.
+ * Drupal 7 Paragraph Item source plugin.
  *
  * @MigrateSource(
  *   id = "az_paragraphs_item"
