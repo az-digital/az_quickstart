@@ -122,7 +122,7 @@
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
             "drupal/date_ap_style": {
-                "Smart date compatibility": "https://www.drupal.org/files/issues/2020-08-25/3167284-support-smartdate-2.patch"
+                "Smart date compatibility": "https://git.drupalcode.org/project/date_ap_style/-/merge_requests/2.patch"
             },
             "drupal/draggableviews": {
                 "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
