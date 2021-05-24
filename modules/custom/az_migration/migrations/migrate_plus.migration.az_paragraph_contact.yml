@@ -18,7 +18,6 @@ process:
   field_az_email:
     plugin: sub_process
     source: field_uaqs_contact_email
-    revision_id: revision_id
     process:
       delta: delta
       value: email
@@ -27,7 +26,6 @@ process:
   field_az_phone:
     plugin: sub_process
     source: field_uaqs_contact_phone
-    revision_id: revision_id
     process:
       delta: delta
       value: value
@@ -38,7 +36,6 @@ process:
     process:
       delta: delta
       value: value
-    revision_id: revision_id
 
 dependencies:
   enforced:
