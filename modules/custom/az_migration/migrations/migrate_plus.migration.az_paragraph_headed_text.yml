@@ -6,7 +6,7 @@ migration_tags:
 status: true
 
 source:
-  plugin: d7_paragraphs_item
+  plugin: az_paragraphs_item
   bundle: uaqs_headed_text
 
 destination:
@@ -25,6 +25,9 @@ process:
       format:  
         plugin: default_value
         default_value: az_standard
+  
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
 
 dependencies:
   enforced:
