@@ -129,9 +129,6 @@
             },
             "drupal/metatag": {
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
-            },
-            "drupal/smart_date": {
-                "Hide end date when there isn't one (3212990)": "https://git.drupalcode.org/project/smart_date/-/commit/a1e18189315d74d75493e3983d6962fbebb31471.patch"
             }
         },
         "drupal-scaffold": {
