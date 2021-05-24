@@ -92,12 +92,6 @@ process:
       - constants/slash
       - path
 
-dependencies:
-  enforced:
-    module:
-      - az_migration
-      - az_carousel
-
 migration_dependencies:
   required:
     - az_user
