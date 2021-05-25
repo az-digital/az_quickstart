@@ -52,6 +52,7 @@
         "drupal/crop": "2.1",
         "drupal/ctools": "3.6",
         "drupal/date_ap_style": "1.0",
+        "drupal/devel": "^4.1",
         "drupal/draggableviews": "2.0.0",
         "drupal/easy_breadcrumb": "1.15",
         "drupal/embed": "1.4",
@@ -122,7 +123,7 @@
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
             "drupal/date_ap_style": {
-                "Smart date compatibility": "https://www.drupal.org/files/issues/2020-08-25/3167284-support-smartdate-2.patch"
+                "Smart date compatibility (3167284)": "https://gist.githubusercontent.com/trackleft/55af12bf179d14641c1611a411bc04bb/raw/95d49a3c5afd842e1c3da4e2ed5d14d06e5c6a5b/gistfile1.txt"
             },
             "drupal/draggableviews": {
                 "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
@@ -131,7 +132,7 @@
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
             },
             "drupal/smart_date": {
-                "Hide end date when there isn't one (3212990)": "https://git.drupalcode.org/project/smart_date/-/commit/a1e18189315d74d75493e3983d6962fbebb31471.patch"
+                "Hide end date when there isn't one (3212990)": "https://git.drupalcode.org/project/date_ap_style/-/merge_requests/2.patch"
             }
         },
         "drupal-scaffold": {
