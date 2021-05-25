@@ -1,0 +1,36 @@
+id: az_paragraph_carousel
+label: AZ Pragrapgh Carousel
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_carousel
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_photo_gallery
+
+process:
+  id:
+    plugin: migration_lookup
+    source: field_uaqs_carousel/value
+    migration: 
+      - az_paragraph_uaqs_carousel
+
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
+    gallery_display: 'slider'
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_files
+    - az_paragraph_uaqs_carousel
