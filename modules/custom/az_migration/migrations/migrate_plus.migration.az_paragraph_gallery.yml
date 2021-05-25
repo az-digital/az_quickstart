@@ -29,6 +29,7 @@ process:
 
   behavior_settings:
     plugin: paragraphs_behavior_settings
+    gallery_display: 'grid'
 
 dependencies:
   enforced:
