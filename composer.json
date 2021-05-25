@@ -52,6 +52,7 @@
         "drupal/crop": "2.1",
         "drupal/ctools": "3.6",
         "drupal/date_ap_style": "1.0",
+        "drupal/devel": "^4.1",
         "drupal/draggableviews": "2.0.0",
         "drupal/easy_breadcrumb": "1.15",
         "drupal/embed": "1.4",
@@ -122,7 +123,7 @@
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
             "drupal/date_ap_style": {
-                "Smart date compatibility (3167284)": "https://www.drupal.org/files/issues/2021-05-24/3167284-support-smartdate-15.patch"
+                "Smart date compatibility (3167284)": "https://www.drupal.org/files/issues/2021-05-24/3167284-support-smartdate-16.patch"
             },
             "drupal/draggableviews": {
                 "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
