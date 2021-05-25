@@ -122,7 +122,7 @@
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
             "drupal/date_ap_style": {
-                "Smart date compatibility (3167284)": "https://gist.githubusercontent.com/trackleft/55af12bf179d14641c1611a411bc04bb/raw/95d49a3c5afd842e1c3da4e2ed5d14d06e5c6a5b/gistfile1.txt"
+                "Smart date compatibility (3167284)": "https://gist.githubusercontent.com/trackleft/55af12bf179d14641c1611a411bc04bb/raw/e5786cbacdc12f91d0a065d098d8b5b4b771e3f4/gistfile1.patch"
             },
             "drupal/draggableviews": {
                 "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
