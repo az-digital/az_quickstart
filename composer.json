@@ -52,7 +52,7 @@
         "drupal/crop": "2.1",
         "drupal/ctools": "3.6",
         "drupal/date_ap_style": "1.0",
-        "drupal/draggableviews": "2.0.0",
+        "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "1.15",
         "drupal/embed": "1.4",
         "drupal/entity_embed": "1.1",
@@ -124,9 +124,6 @@
             },
             "drupal/date_ap_style": {
                 "Smart date compatibility": "https://www.drupal.org/files/issues/2020-08-25/3167284-support-smartdate-2.patch"
-            },
-            "drupal/draggableviews": {
-                "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
             },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
