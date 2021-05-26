@@ -30,12 +30,14 @@ function az_paragraphs_text_background_update_9201() {
 
   foreach ($paragraph_ids as $id) {
     $paragraph = Paragraph::load($id);
-    $behavior_settings = $paragraph->getAllBehaviorSettings();
-    if (!isset($behavior_settings['az_text_background_paragraph_behavior']['text_background_padding'])) {
-      $behavior_settings['az_text_background_paragraph_behavior']['text_background_padding'] = 'py-5';
-      $paragraph->setAllBehaviorSettings($behavior_settings);
-      $paragraph->save();
-      $sandbox['updated_count']++;
+    if (!empty($paragraph)) {
+      $behavior_settings = $paragraph->getAllBehaviorSettings();
+      if (!isset($behavior_settings['az_text_background_paragraph_behavior']['text_background_padding'])) {
+        $behavior_settings['az_text_background_paragraph_behavior']['text_background_padding'] = 'py-5';
+        $paragraph->setAllBehaviorSettings($behavior_settings);
+        $paragraph->save();
+        $sandbox['updated_count']++;
+      }
     }
     $sandbox['current']++;
   }
