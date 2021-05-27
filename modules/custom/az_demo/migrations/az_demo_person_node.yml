@@ -1,0 +1,125 @@
+id: az_demo_person_node
+label: AZ Quickstart Demo Person Content
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_person_node.json
+  item_selector: people
+  ids:
+    id:
+      type: integer
+
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: field_az_fname
+      selector: az_fname
+    -
+      name: field_az_lname
+      selector: az_lname
+    -
+      name: field_az_email
+      selector: az_email
+    -
+      name: field_az_body
+      selector: az_bio
+    -
+      name: field_az_titles
+      selector: az_titles
+    -
+      name: field_az_degrees
+      selector: az_degrees
+    -
+      name: field_az_phones
+      selector: az_phones
+    -
+      name: field_az_links
+      selector: az_links
+    -
+      name: field_az_address
+      selector: az_addresses
+    -
+      name: field_az_person_category
+      selector: az_person_category
+    -
+      name: field_az_person_category_sec
+      selector: az_person_categories
+
+process:
+  type:
+    plugin: default_value
+    default_value: az_person
+
+  field_az_fname: field_az_fname
+
+  field_az_lname: field_az_lname
+
+  field_az_email: field_az_email
+
+  field_az_titles:
+    plugin: explode
+    source: field_az_titles
+    delimiter: '|'
+
+  field_az_degrees:
+    plugin: explode
+    source: field_az_degrees
+    delimiter: '|'
+
+  field_az_phones:
+    plugin: explode
+    source: field_az_phones
+    delimiter: '|'
+
+  field_az_links:
+    plugin: sub_process
+    source: field_az_links
+    process:
+      delta: delta
+      uri: url
+      title: title
+
+  field_az_address: field_az_address
+
+  'field_az_body/value': field_az_body
+  'field_az_body/format':
+    -
+      plugin: default_value
+      default_value: az_standard
+
+  field_az_person_category:
+    -
+      plugin: migration_lookup
+      source: field_az_person_category
+      migration:
+        - az_demo_person_categories
+
+  field_az_person_category_sec:
+    -
+      plugin: explode
+      source: field_az_person_category_sec
+      delimiter: '|'
+    -
+      plugin: migration_lookup
+      source: field_az_person_category_sec
+      migration:
+        - az_demo_person_categories_secondary
+
+destination:
+  plugin: entity:node
+  bundle: az_person
+  migration_dependencies:
+    required:
+      - az_demo_person_categories
+      - az_demo_person_categories_secondary
+dependencies:
+  enforced:
+    module:
+      - az_person

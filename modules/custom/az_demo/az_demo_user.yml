@@ -1,0 +1,43 @@
+id: az_demo_user
+label: AZ Quickstart Demo User accounts
+audit: true
+status: true
+migration_tags:
+  - Quickstart Demo Content
+  - Users
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_user.json
+  item_selector: users
+  fields:
+    -
+      name: name
+      selector: name
+    -
+      name: pass
+      selector: pass
+    -
+      name: mail
+      selector: mail
+    -
+      name: roles
+      selector: roles
+
+process:
+  name: name
+  pass: pass
+  mail: mail
+  roles:
+    plugin: static_map
+    bypass: true
+    source: roles
+    map:
+      3: administrator
+      2: authenticated
+      4: authenticated
+      5: authenticated
+destination:
+  plugin: entity:user

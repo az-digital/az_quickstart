@@ -1,5 +1,5 @@
-id: az_demo_person_categories
-label: AZ Quickstart Demo Person Categories
+id: az_demo_person_categories_secondary
+label: AZ Quickstart Demo Person Secondary Categories
 migration_tags:
   - Quickstart Demo Content
   - Taxonomy
@@ -8,8 +8,8 @@ source:
   data_fetcher_plugin: file
   data_parser_plugin: json
   urls:
-    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_person_categories.json
-  item_selector: person_categories
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_person_categories_secondary.json
+  item_selector: person_categories_secondary
   ids:
     name:
       type: string
@@ -27,22 +27,18 @@ source:
 
 destination:
   plugin: entity:taxonomy_term
-  default_bundle: az_person_categories
+  default_bundle: az_person_categories_secondary
 
 process:
   name: name
   description: description
-  description/format:
-    plugin: default_value
-    default_value: az_standard
-
   vid:
     plugin: default_value
-    default_value: az_person_categories
+    default_value: az_person_categories_secondary
   parent:
     -
       plugin: migration_lookup
-      migration: az_demo_person_categories
+      migration: az_demo_person_categories_secondary
       source: parent
     -
       plugin: default_value
