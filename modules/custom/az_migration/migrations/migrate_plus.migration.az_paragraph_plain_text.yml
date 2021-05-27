@@ -21,7 +21,6 @@ process:
     process:
       delta: delta
       value: value
-      summary: summary
       format:  
         plugin: default_value
         default_value: az_standard
