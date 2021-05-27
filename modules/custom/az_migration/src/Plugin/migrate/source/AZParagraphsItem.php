@@ -17,6 +17,28 @@ class AZParagraphsItem extends ParagraphsItem {
   /**
    * {@inheritdoc}
    */
+  public function query() {
+    $query = $this->select('paragraphs_item', 'p')
+      ->fields('p',
+        ['item_id',
+          'bundle',
+          'field_name',
+          'archived',
+          'bottom_spacing',
+        ])
+      ->fields('pr', ['revision_id']);
+    $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
+    // This configuration item may be set by a deriver to restrict the
+    // bundles retrieved.
+    if ($this->configuration['bundle']) {
+      $query->condition('p.bundle', $this->configuration['bundle']);
+    }
+    return $query;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function fields() {
     $fields = [
       'item_id' => $this->t('The paragraph_item id'),
@@ -65,13 +87,6 @@ class AZParagraphsItem extends ParagraphsItem {
         }
       }
     }
-
-    $paragraph_bottom_spacing = $this->select('paragraphs_item', 'pi')
-      ->fields('pi', ['bottom_spacing'])
-      ->condition('pi.item_id', $item_id)
-      ->execute()
-      ->fetchCol();
-    $row->setSourceProperty('bottom_spacing', $paragraph_bottom_spacing);
     return parent::prepareRow($row);
   }
 
