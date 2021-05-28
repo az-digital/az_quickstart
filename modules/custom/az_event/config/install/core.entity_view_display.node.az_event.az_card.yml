@@ -281,7 +281,7 @@ content:
       capitalize_noon_and_midnight: '0'
       separator: endash
       timezone: ''
-      use_all_day: 0
+      use_all_day: '1'
       display_day: null
     third_party_settings: {  }
   field_az_summary:
