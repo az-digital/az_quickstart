@@ -4,9 +4,6 @@ migration_tags:
   - Quickstart Demo Content
   - Content
 source:
-  constants:
-    DEMO_FILE_DIRECTORY: profiles/custom/az_quickstart/modules/custom/az_demo/images
-    DRUPAL_FILE_SCHEME: public
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: json
@@ -114,7 +111,7 @@ process:
       migration:
         - az_demo_person_categories
 
-  field_az_person_category_sec:
+  psuedo_exploded_categories:
     -
       plugin: skip_on_empty
       method: process
@@ -123,15 +120,14 @@ process:
       plugin: explode
       source: field_az_person_category_secondary
       delimiter: '|'
+
+  field_az_person_category_sec:
     -
       plugin: migration_lookup
       migration: az_demo_person_categories_secondary
-      source: field_az_person_category_secondary
+      source: '@psuedo_exploded_categories'
 
   'field_az_media_image/target_id':
-    -
-      plugin: log
-      source: filename
     -
       plugin: migration_lookup
       source: filename

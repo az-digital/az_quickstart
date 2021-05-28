@@ -6,7 +6,7 @@ migration_tags:
 source:
   constants:
     DEMO_FILE_DIRECTORY: profiles/custom/az_quickstart/modules/custom/az_demo/images
-    DRUPAL_FILE_SCHEME: 'public://'
+    DRUPAL_FILE_SCHEME: 'public:/'
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: json
@@ -43,9 +43,9 @@ process:
   pseudo_destination_path:
     -
       plugin: concat
-      delimiter: 'public://'
+      delimiter: '/'
       source:
-        - constants/DRUPAL_FILE_SCHEM
+        - constants/DRUPAL_FILE_SCHEME
         - filename
 
   filename: filename
