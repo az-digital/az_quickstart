@@ -15,7 +15,7 @@ destination:
   plugin: entity:node
   bundle: az_person
   migration_dependencies:
-    requireed:
+    required:
       - az_person_categories
       - az_person_categories_secondary
 
