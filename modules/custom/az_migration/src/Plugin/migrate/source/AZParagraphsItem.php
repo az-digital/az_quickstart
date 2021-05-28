@@ -78,11 +78,12 @@ class AZParagraphsItem extends ParagraphsItem {
             $field_collection_value = $this->getFieldValues('field_collection_item',
                                       $field_collection_field_name, $field_collection_data_item['value'],
                                       $field_collection_data_item['revision_id']);
-            $field_collection_value = reset($field_collection_value);
-            $field_collection_value['delta'] = $i;
-            $field_collection_field_values[] = $field_collection_value;
-            $i++;
-          }
+            foreach($field_collection_value as $field_collection_value_item){
+              $field_collection_value_item['delta'] = $i;
+              $field_collection_field_values[] = $field_collection_value_item;
+              $i++;
+            }
+          }       
           $row->setSourceProperty($field_collection_field_name, $field_collection_field_values);
         }
       }
