@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "az-digital/arizona-bootstrap": "2.0.8",
+        "az-digital/arizona-bootstrap": "2.0.9",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
@@ -48,7 +48,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.1.8",
+        "drupal/core-recommended": "9.1.9",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.6",
         "drupal/date_ap_style": "1.0",
@@ -70,6 +70,7 @@
         "drupal/migrate_plus": "5.1",
         "drupal/migrate_tools": "5.0",
         "drupal/paragraphs": "1.12",
+        "drupal/paragraphs_admin": "1.2",
         "drupal/pathauto": "1.8",
         "drupal/redirect": "1.6",
         "drupal/search_exclude": "2.0.0-beta2",
@@ -123,6 +124,9 @@
             },
             "drupal/date_ap_style": {
                 "Smart date compatibility (3167284)": "https://www.drupal.org/files/issues/2021-05-24/3167284-support-smartdate-16.patch"
+            },
+            "drupal/image_widget_crop": {
+                "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
             "drupal/metatag": {
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
