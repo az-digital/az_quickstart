@@ -111,7 +111,7 @@ process:
       migration:
         - az_demo_person_categories
 
-  psuedo_exploded_categories:
+  pseudo_exploded_categories:
     -
       plugin: skip_on_empty
       method: process
@@ -125,7 +125,7 @@ process:
     -
       plugin: migration_lookup
       migration: az_demo_person_categories_secondary
-      source: '@psuedo_exploded_categories'
+      source: '@pseudo_exploded_categories'
 
   'field_az_media_image/target_id':
     -
