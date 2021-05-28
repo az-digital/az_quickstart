@@ -51,7 +51,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: clearfix
+        classes: 'clearfix'
         element: div
         show_label: false
         label_element: h3
