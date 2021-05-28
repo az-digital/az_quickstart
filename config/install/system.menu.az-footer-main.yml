@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-footer-main
+label: 'Footer - Main'
+description: 'Contains institution-level links that appear in the main footer area'
+locked: false

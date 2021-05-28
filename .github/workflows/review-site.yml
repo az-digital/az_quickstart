@@ -26,7 +26,11 @@ jobs:
 
       - name: Watch workflow logs
         run: |
-          while [ -z "$(terminus -y -n workflow:watch --checks 1 kitten 2>&1 | grep 'Finished workflow' | grep 'Sync code on \"dev\"')" ]; do echo 'watching workflows...'; done
+          START_TIME="$(date '+%s')"
+          while [ -z "$(terminus workflow:list ${{ secrets.DEMO_SITE_NAME }} --format=json | jq --arg start_time "${START_TIME}" '.[] | select((.started_at|tostring > $start_time) and (.workflow == "Sync code on \"dev\"") and (.finished_at != null))')" ]; do
+            echo 'watching workflows...'
+            sleep 2
+          done
 
   update-code:
     name: Update review site code

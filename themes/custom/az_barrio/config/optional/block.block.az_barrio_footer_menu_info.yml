@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - menu_block
+  theme:
+    - az_barrio
+id: az_barrio_footer_menu_info
+theme: az_barrio
+region: footer_sub
+weight: -10
+provider: null
+plugin: 'menu_block:az-footer-information-for'
+settings:
+  id: 'menu_block:az-footer-information-for'
+  label: 'Information for'
+  provider: menu_block
+  label_display: visible
+  level: 1
+  depth: 1
+  expand_all_items: true
+  suggestion: sub_footer
+  label_type: root
+visibility: {  }
