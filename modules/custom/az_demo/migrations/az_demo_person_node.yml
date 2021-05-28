@@ -4,6 +4,9 @@ migration_tags:
   - Quickstart Demo Content
   - Content
 source:
+  constants:
+    DEMO_FILE_DIRECTORY: profiles/custom/az_quickstart/modules/custom/az_demo/images
+    DRUPAL_FILE_SCHEME: public
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: json
@@ -49,8 +52,11 @@ source:
       name: field_az_person_category
       selector: az_person_category
     -
-      name: field_az_person_category_sec
+      name: field_az_person_category_secondary
       selector: az_person_categories
+    -
+      name: filename
+      selector: az_photo
 
 process:
   type:
@@ -103,14 +109,28 @@ process:
 
   field_az_person_category_sec:
     -
+      plugin: skip_on_empty
+      method: process
+      source: field_az_person_category_secondary
+    -
       plugin: explode
-      source: field_az_person_category_sec
+      source: field_az_person_category_secondary
       delimiter: '|'
     -
       plugin: migration_lookup
-      source: field_az_person_category_sec
+      migration: az_demo_person_categories_secondary
+      source: field_az_person_category_secondary
+
+
+  'field_az_media_image/target_id':
+    -
+      plugin: log
+      source: filename
+    -
+      plugin: migration_lookup
+      source: filename
       migration:
-        - az_demo_person_categories_secondary
+        - az_demo_image_file
 
 destination:
   plugin: entity:node
@@ -119,6 +139,8 @@ destination:
     required:
       - az_demo_person_categories
       - az_demo_person_categories_secondary
+      - az_demo_image_file
+
 dependencies:
   enforced:
     module:
