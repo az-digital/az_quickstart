@@ -27,7 +27,7 @@
       "parent_link_id": "0",
       "menu": "main",
       "title": "People",
-      "urlpath": "<nolink>",
+      "urlpath": "route:<button>",
       "external": false,
       "expanded": true,
       "enabled": true,
