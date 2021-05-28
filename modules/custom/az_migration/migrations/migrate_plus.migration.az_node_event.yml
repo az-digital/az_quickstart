@@ -144,13 +144,27 @@ process:
     process:
       delta: delta
       value:
-        plugin: callback
-        callable: strtotime
-        source: value
+        -
+          plugin: format_date
+          from_format: 'Y-m-d H:i:s'
+          to_format: 'Y-m-d\TH:i:s'
+          from_timezone: 'America/Phoenix'
+          to_timezone: 'UTC'
+          source: value
+        -
+          plugin: callback
+          callable: strtotime
       end_value:
-        plugin: callback
-        callable: strtotime
-        source: value2
+        -
+          plugin: format_date
+          from_format: 'Y-m-d H:i:s'
+          to_format: 'Y-m-d\TH:i:s'
+          from_timezone: 'America/Phoenix'
+          to_timezone: 'UTC'
+          source: value2
+        -
+          plugin: callback
+          callable: strtotime
       rrule: rrule
       
   uid:
