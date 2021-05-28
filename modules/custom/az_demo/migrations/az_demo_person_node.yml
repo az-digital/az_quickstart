@@ -60,13 +60,6 @@ process:
     plugin: default_value
     default_value: az_person
 
-  title:
-    plugin: concat
-    source:
-      - field_az_fname
-      - field_az_lname
-    delimiter: ' '
-
   field_az_fname: field_az_fname
 
   field_az_lname: field_az_lname
