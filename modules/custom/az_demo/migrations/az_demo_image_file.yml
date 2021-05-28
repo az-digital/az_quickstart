@@ -32,7 +32,6 @@ process:
     plugin: default_value
     default_value: az_image
 
-
   pseudo_source_path:
     -
       plugin: concat
@@ -67,6 +66,7 @@ process:
     value_key: uri
 
   'field_media_az_image/alt': alt
+
 # Dependencies.
 dependencies:
   enforced:
