@@ -119,7 +119,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'col-lg-8 offset-lg-2'
+        classes: 'col-lg-10 offset-lg-1'
       label: 'Text Column'
     group_lead:
       children:
@@ -129,7 +129,7 @@ third_party_settings:
       format_type: html_element
       region: content
       format_settings:
-        element: p
+        element: div
         show_label: false
         label_element: h3
         label_element_classes: ''
@@ -192,13 +192,14 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'border-bottom pb-3'
+        classes: 'border-bottom pb-2 small'
       label: 'Fig Caption'
   smart_title:
     enabled: true
     settings:
       smart_title__tag: h1
-      smart_title__classes: {  }
+      smart_title__classes:
+        - text-midnight
       smart_title__link: false
 id: node.az_news.default
 targetEntityType: node
@@ -257,7 +258,7 @@ content:
     weight: 6
     label: hidden
     settings:
-      view_mode: default
+      view_mode: az_large
       link: false
     third_party_settings: {  }
     type: entity_reference_entity_view
