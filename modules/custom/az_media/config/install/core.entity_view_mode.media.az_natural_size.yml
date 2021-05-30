@@ -4,6 +4,6 @@ dependencies:
   module:
     - media
 id: media.az_natural_size
-label: 'Natural Size'
+label: 'Original Size'
 targetEntityType: media
 cache: true

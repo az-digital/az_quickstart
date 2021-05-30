@@ -1,10 +1,17 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.az_card_image
+    - core.entity_view_mode.media.az_large
+    - core.entity_view_mode.media.az_medium
+    - core.entity_view_mode.media.az_natural_size
+    - core.entity_view_mode.media.az_small
+    - core.entity_view_mode.media.az_square
   module:
+    - bootstrap_utilities
     - entity_embed
     - media
-    - bootstrap_utilities
 name: Standard
 format: az_standard
 weight: -10
@@ -47,16 +54,12 @@ filters:
       allowed_media_types: {  }
       allowed_view_modes:
         default: default
-        az_background: az_background
         az_card_image: az_card_image
         az_large: az_large
         az_medium: az_medium
         az_natural_size: az_natural_size
+        az_small: az_small
         az_square: az_square
-        az_thumbnail: az_thumbnail
-        full: full
-        media_library: media_library
-        token: token
   entity_embed:
     id: entity_embed
     provider: entity_embed
@@ -69,3 +72,14 @@ filters:
     status: true
     weight: 0
     settings: {  }
+  bootstrap_utilities_table_filter:
+    id: bootstrap_utilities_table_filter
+    provider: bootstrap_utilities
+    status: false
+    weight: 0
+    settings:
+      table_remove_width_height: '1'
+      table_row_striping: '0'
+      table_bordered: '0'
+      table_row_hover: '0'
+      table_small: '0'

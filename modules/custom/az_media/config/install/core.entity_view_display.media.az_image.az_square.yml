@@ -2,21 +2,22 @@ langcode: en
 status: true
 dependencies:
   config:
+    - core.entity_view_mode.media.az_square
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_media_az_image
-    - image.style.az_small
+    - image.style.az_square
     - media.type.az_image
   module:
     - image
-id: media.az_image.default
+id: media.az_image.az_square
 targetEntityType: media
 bundle: az_image
-mode: default
+mode: az_square
 content:
   field_media_az_image:
     label: visually_hidden
     settings:
-      image_style: az_small
+      image_style: az_square
       image_link: ''
     third_party_settings: {  }
     type: image

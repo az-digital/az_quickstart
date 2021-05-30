@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - media
-id: media.az_medium
-label: 'Medium (66% width)'
+id: media.az_small
+label: 'Small (33% width)'
 targetEntityType: media
 cache: true
