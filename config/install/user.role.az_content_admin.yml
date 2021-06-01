@@ -6,6 +6,7 @@ label: 'Content administrator'
 weight: 3
 is_admin: false
 permissions:
+  - 'access draggableviews'
   - 'access news feeds'
   - 'access taxonomy overview'
   - 'administer blocks'
@@ -68,11 +69,8 @@ permissions:
   - 'rabbit hole bypass node'
   - 'update content translations'
   - 'use advanced search'
-  - 'use editorial transition archive'
-  - 'use editorial transition archived_draft'
-  - 'use editorial transition archived_published'
+  - 'use editorial transition az_publish'
   - 'use editorial transition create_new_draft'
-  - 'use editorial transition publish'
   - 'use text format full_html'
   - 'view any unpublished content'
   - 'view latest version'

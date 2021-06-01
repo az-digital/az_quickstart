@@ -70,6 +70,7 @@ install:
   - bootstrap_utilities:bootstrap_utilities
   - exclude_node_title:exclude_node_title
   - search_exclude:search_exclude
+  - draggableviews:draggableviews
 
 themes:
   - az_barrio
