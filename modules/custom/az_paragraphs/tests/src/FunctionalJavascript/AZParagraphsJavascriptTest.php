@@ -106,7 +106,7 @@ class AZParagraphsJavascriptTest extends WebDriverTestBase {
 
     // Fill out the card title.
     $assert->waitForField('field_az_main_content[0][subform][field_az_cards][1][title]');
-    $page->fillField('field_az_main_content[0][subform][field_az_cards][1][title]', 'Card Two');
+    $page->fillField('field_az_main_content[0][subform][field_az_cards][1][title]', 'Card Three');
 
     // Save the node.
     $page->pressButton('Save');
