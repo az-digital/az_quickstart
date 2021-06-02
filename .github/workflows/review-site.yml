@@ -97,6 +97,11 @@ jobs:
         run: |
           terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
 
+      - name: Wake env
+        run: |
+          terminus env:wake ${{ secrets.DEMO_SITE_NAME }}.dev
+          sleep 5
+
       - name: Wipe existing site
         run: |
           terminus -y -n env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
