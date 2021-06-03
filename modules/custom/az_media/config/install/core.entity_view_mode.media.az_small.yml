@@ -4,6 +4,6 @@ dependencies:
   module:
     - media
 id: media.az_small
-label: 'Small (33% width)'
+label: 'Small (360px)'
 targetEntityType: media
 cache: true
