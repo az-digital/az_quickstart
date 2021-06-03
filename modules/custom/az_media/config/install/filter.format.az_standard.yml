@@ -54,12 +54,12 @@ filters:
       allowed_media_types: {  }
       allowed_view_modes:
         default: default
-        az_card_image: az_card_image
-        az_large: az_large
-        az_medium: az_medium
-        az_natural_size: az_natural_size
         az_small: az_small
+        az_medium: az_medium
+        az_large: az_large
         az_square: az_square
+        az_card_image: az_card_image        
+        az_natural_size: az_natural_size        
   entity_embed:
     id: entity_embed
     provider: entity_embed
