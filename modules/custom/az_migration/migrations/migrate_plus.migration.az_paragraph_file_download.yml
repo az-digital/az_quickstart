@@ -1,0 +1,34 @@
+id: az_paragraph_file_download
+label: AZ Paragraph File Download
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_file_download
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text
+
+process:
+  field_az_text_area/value: 
+    plugin: paragraphs_file_download_field_merge
+  field_az_text_area/format:  
+    plugin: default_value
+    default_value: az_standard
+    
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_files
