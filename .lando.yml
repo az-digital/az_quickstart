@@ -11,7 +11,8 @@ services:
     overrides:
       environment:
         SIMPLETEST_DB: 'mysql://drupal8:drupal8@database/drupal8'
-        SIMPLETEST_BASE_URL: 'http://localhost'
+        SIMPLETEST_BASE_URL: 'http://appserver'
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--no-sandbox"]}}, "http://chromedriver:9515"]'
       volumes:
         # Don't share our host working directory as /app. We want /app empty for composer.
         - /app
@@ -29,6 +30,11 @@ services:
       - yarn install
     globals:
       eslint-config-drupal-bundle: 1.0.2
+  chromedriver:
+    type: compose
+    services:
+      image: drupalci/webdriver-chromedriver:production
+      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
 tooling:
   # Provide a command to install Drupal.
   # Current versions of the Bitnami MySQL container sometimes signal
