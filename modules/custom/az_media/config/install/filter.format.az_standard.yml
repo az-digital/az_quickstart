@@ -46,7 +46,6 @@ filters:
       default_view_mode: default
       allowed_media_types: {  }
       allowed_view_modes:
-        default: default
         az_small: az_small
         az_medium: az_medium
         az_large: az_large
