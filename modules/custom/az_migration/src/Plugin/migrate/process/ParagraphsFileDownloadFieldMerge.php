@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\media\MediaInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -28,7 +29,9 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
     if (isset($value[0]) && count($value[0])) {
       foreach ($value[0] as $mid) {
         $media = Media::load($mid);
-        $value['uaqs_text'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
+        if ($media instanceof MediaInterface) {
+          $value['uaqs_text'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
+        }
       }
     }
 
@@ -36,7 +39,9 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
     if (isset($value[1]) && count($value[1])) {
       foreach ($value[1] as $mid) {
         $media = Media::load($mid);
-        $value['uaqs_text'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
+        if ($media instanceof MediaInterface) {
+          $value['uaqs_text'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
+        }
       }
     }
     return $value['uaqs_text'];
