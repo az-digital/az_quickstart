@@ -88,7 +88,7 @@ content:
   field_az_event_date:
     weight: 11
     settings:
-      show_extra: true
+      show_extra: false
       modal: false
       default_duration: 60
       default_duration_increments: "30\n60|1 hour\n90\n120|2 hours\ncustom"

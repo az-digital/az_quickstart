@@ -42,12 +42,12 @@
   set classes = [
   'paragraph',
   'background-wrapper',
-  'text-with-background',
   'paragraph--type--' ~ paragraph.bundle|clean_class,
   view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
   not paragraph.isPublished() ? 'paragraph--unpublished',
   text_with_background.text_background_pattern,
   text_with_background.text_background_color,
+  text_with_background.text_background_padding,
   text_with_background.text_background_full_width
 ]
 %}
