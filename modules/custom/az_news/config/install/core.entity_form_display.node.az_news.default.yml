@@ -85,7 +85,7 @@ content:
     type: text_textarea
     region: content
   field_az_byline:
-    weight: 1
+    weight: 2
     settings:
       size: 60
       placeholder: ''
@@ -93,7 +93,7 @@ content:
     type: string_textfield
     region: content
   field_az_caption:
-    weight: 4
+    weight: 5
     settings:
       rows: 5
       placeholder: ''
@@ -108,7 +108,7 @@ content:
       edit_mode: open
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: '_none'
+      default_paragraph_type: _none
     third_party_settings: {  }
     type: entity_reference_paragraphs
     region: content
@@ -141,7 +141,7 @@ content:
     third_party_settings: {  }
     region: content
   field_az_media_image:
-    weight: 3
+    weight: 4
     settings:
       media_types: {  }
     third_party_settings: {  }
@@ -154,7 +154,7 @@ content:
     type: options_select
     region: content
   field_az_published:
-    weight: 2
+    weight: 1
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -168,7 +168,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_az_subheading:
-    weight: 5
+    weight: 3
     settings:
       size: 60
       placeholder: ''

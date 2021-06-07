@@ -162,3 +162,28 @@ After rollback and import the users, need to run below command for CAS data :
 ```
 drush mim az_cas_user --update
 ```
+#### 6. Event Content Migration
+
+Migrate event content using the below command :
+```
+drush mim az_event_categories
+drush mim az_node_event
+```
+
+To rollback the migrated event content : 
+```
+drush mr az_event_categories
+drush mr az_node_event
+```
+
+#### 7. Carousel Item Migration
+
+Migrate carousel item using the below command : 
+```
+drush mim az_node_carousel
+```
+
+To rollback the  carousel item using the below command :
+```
+drush mr az_node_carousel
+```

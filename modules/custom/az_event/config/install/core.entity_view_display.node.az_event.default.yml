@@ -51,7 +51,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: ''
+        classes: 'clearfix'
         element: div
         show_label: false
         label_element: h3
@@ -138,7 +138,7 @@ third_party_settings:
       children:
         - field_az_contacts
       parent_name: group_row_2
-      weight: 11
+      weight: 8
       format_type: html_element
       region: content
       format_settings:
@@ -156,7 +156,7 @@ third_party_settings:
       children:
         - field_az_attachments
       parent_name: group_row_2
-      weight: 13
+      weight: 9
       format_type: html_element
       region: content
       format_settings:
@@ -194,7 +194,7 @@ content:
     region: content
   field_az_contacts:
     type: entity_reference_revisions_entity_view
-    weight: 16
+    weight: 23
     label: above
     settings:
       view_mode: default
@@ -202,7 +202,7 @@ content:
     third_party_settings: {  }
     region: content
   field_az_event_category:
-    weight: 5
+    weight: 22
     label: hidden
     settings:
       link: true
@@ -220,16 +220,16 @@ content:
       cap_today: '1'
       display_time: '1'
       time_before_date: '1'
-      use_all_day: '1'
-      capitalize_noon_and_midnight: '1'
+      display_noon_and_midnight: '0'
       separator: endash
       timezone: ''
-      display_noon_and_midnight: 0
+      use_all_day: '1'
+      capitalize_noon_and_midnight: 0
       display_day: null
     third_party_settings: {  }
   field_az_location:
     type: link
-    weight: 10
+    weight: 23
     region: content
     label: above
     settings:

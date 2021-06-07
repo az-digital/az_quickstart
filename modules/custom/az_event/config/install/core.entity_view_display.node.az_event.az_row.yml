@@ -234,10 +234,10 @@ content:
       cap_today: '1'
       display_time: '1'
       time_before_date: '1'
-      use_all_day: '1'
+      display_noon_and_midnight: '0'
       separator: endash
       timezone: ''
-      display_noon_and_midnight: 0
+      use_all_day: '1'
       capitalize_noon_and_midnight: 0
       display_day: null
     third_party_settings: {  }
