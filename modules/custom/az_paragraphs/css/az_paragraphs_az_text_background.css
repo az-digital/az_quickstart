@@ -1,9 +1,5 @@
 /* Styles for az_text_background paragraph type. */
 
-.text-with-background {
-  padding: 3em 0;
-}
-
 .background-wrapper.full-width-background {
   width: initial;
 }
