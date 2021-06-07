@@ -14,7 +14,6 @@ destination:
   default_bundle: az_event_categories
 
 process:
-  tid: tid
   vid:
     plugin: default_value
     default_value: az_event_categories
@@ -41,3 +40,9 @@ process:
     source: '@parent_id'
 
   changed: timestamp
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_event

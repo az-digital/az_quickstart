@@ -48,11 +48,11 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.1.8",
+        "drupal/core-recommended": "9.1.9",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.6",
         "drupal/date_ap_style": "1.0",
-        "drupal/draggableviews": "2.0.0",
+        "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "1.15",
         "drupal/embed": "1.4",
         "drupal/entity_embed": "1.1",
@@ -76,7 +76,7 @@
         "drupal/search_exclude": "2.0.0-beta2",
         "drupal/slick": "2.3",
         "drupal/slick_views": "2.4",
-        "drupal/smart_date": "3.2.0",
+        "drupal/smart_date": "3.3.0",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
         "drupal/token": "1.9",
@@ -115,7 +115,8 @@
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Editing menus user-experience issue (#2957953)": "https://git.drupalcode.org/project/drupal/-/commit/68b026906b7aad748b2427caa52527436a99eb8c.diff",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch"
+                "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
+                "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
@@ -123,10 +124,7 @@
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
             "drupal/date_ap_style": {
-                "Smart date compatibility": "https://www.drupal.org/files/issues/2020-08-25/3167284-support-smartdate-2.patch"
-            },
-            "drupal/draggableviews": {
-                "Draggableviews select view that stores order issue": "https://www.drupal.org/files/issues/2019-12-17/draggableviews-sort_handler_specify_order_view-2767437-66.patch"
+                "Smart date compatibility (3167284)": "https://www.drupal.org/files/issues/2021-05-24/3167284-support-smartdate-16.patch"
             },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
