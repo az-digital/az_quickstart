@@ -11,7 +11,7 @@ source:
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-  default_bundle: az_text
+  default_bundle: az_text_background
 
 process:
 

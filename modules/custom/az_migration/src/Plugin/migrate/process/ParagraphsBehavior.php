@@ -35,7 +35,6 @@ class ParagraphsBehavior extends ProcessPluginBase {
       $bg_pattern = $row->getSourceProperty($this->configuration['bg_pattern']);
       $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = '';
       foreach ($bg_pattern as $bg_pattern_item) {
-        var_dump($bg_pattern_item['value']);
         if (in_array($bg_pattern_item['value'], ['bg-triangles-mosaic', 'bg-triangles-fade', 'bg-catalinas-abstract'])) {
           $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] .= 'None';
         }
@@ -44,7 +43,6 @@ class ParagraphsBehavior extends ProcessPluginBase {
         }
       }
     }
-    var_dump($behavior);
     $value['behavior'] = serialize($behavior);
     return $value['behavior'];
   }
