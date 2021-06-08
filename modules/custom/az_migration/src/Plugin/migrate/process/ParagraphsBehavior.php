@@ -20,7 +20,32 @@ class ParagraphsBehavior extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Setting the behavior to the paragraph.
-    $value['behavior'] = serialize(['az_display_settings' => ['bottom_spacing' => $row->getSourceProperty('bottom_spacing')]]);
+    $behavior = ['az_display_settings' => ['bottom_spacing' => $row->getSourceProperty('bottom_spacing')]];
+    if (!empty($this->configuration['gallery_display'])) {
+      $behavior['gallery_display'] = $this->configuration['gallery_display'];
+    }
+    if (!empty($this->configuration['bg_color'])) {
+      $bg_color = $row->getSourceProperty($this->configuration['bg_color']);
+      $behavior['az_text_background_paragraph_behavior']['text_background_color'] = '';
+      foreach ($bg_color as $bg_color_item) {
+        $behavior['az_text_background_paragraph_behavior']['text_background_color'] .= $bg_color_item['value'];
+      }
+    }
+    if (!empty($this->configuration['bg_pattern'])) {
+      $bg_pattern = $row->getSourceProperty($this->configuration['bg_pattern']);
+      $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = '';
+      foreach ($bg_pattern as $bg_pattern_item) {
+        var_dump($bg_pattern_item['value']);
+        if (in_array($bg_pattern_item['value'], ['bg-triangles-mosaic', 'bg-triangles-fade', 'bg-catalinas-abstract'])) {
+          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] .= 'None';
+        }
+        else {
+          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] .= $bg_pattern_item['value'];
+        }
+      }
+    }
+    var_dump($behavior);
+    $value['behavior'] = serialize($behavior);
     return $value['behavior'];
   }
 
