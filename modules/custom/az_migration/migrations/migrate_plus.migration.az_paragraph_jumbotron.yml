@@ -1,0 +1,34 @@
+id: az_paragraph_jumbotron
+label: AZ Paragraph Jumbotron
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_jumbotron
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text
+
+process:
+  field_az_text_area/value: 
+    plugin: paragraphs_jumbotron_field_merge
+  field_az_text_area/format:  
+    plugin: default_value
+    default_value: az_standard
+    
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_files
