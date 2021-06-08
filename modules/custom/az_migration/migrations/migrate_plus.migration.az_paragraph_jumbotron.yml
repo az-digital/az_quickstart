@@ -27,8 +27,3 @@ dependencies:
   enforced:
     module:
       - az_migration
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_files
