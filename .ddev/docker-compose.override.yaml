@@ -4,7 +4,8 @@ services:
   web:
     environment:
       SIMPLETEST_DB: 'mysql://db:db@db/db'
-      SIMPLETEST_BASE_URL: 'http://localhost'
+      SIMPLETEST_BASE_URL: 'http://web'
+      MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless","--no-sandbox"]}}, "http://chromedriver:9515"]'
     volumes:
       # Don't share our host working directory as /var/www/html. We want /var/www/html empty for composer.
       -  /var/www/html
@@ -16,3 +17,12 @@ services:
       - ".:/mnt/ddev_config:ro"
       - ddev-global-cache:/mnt/ddev-global-cache
       - ddev-ssh-agent_socket_dir:/home/.ssh-agent
+    links:
+      - chromedriver:$DDEV_HOSTNAME
+  chromedriver:
+    container_name: ddev-${DDEV_SITENAME}-chromedriver
+    image: drupalci/chromedriver:production
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+      com.ddev.app-url: $DDEV_URL
