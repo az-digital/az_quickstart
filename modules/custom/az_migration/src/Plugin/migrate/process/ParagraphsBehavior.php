@@ -20,7 +20,11 @@ class ParagraphsBehavior extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Setting the behavior to the paragraph.
-    $value['behavior'] = serialize(['az_display_settings' => ['bottom_spacing' => $row->getSourceProperty('bottom_spacing')]]);
+    $behavior = ['az_display_settings' => ['bottom_spacing' => $row->getSourceProperty('bottom_spacing')]];
+    if (!empty($this->configuration['gallery_display'])) {
+      $behavior['gallery_display'] = $this->configuration['gallery_display'];
+    }
+    $value['behavior'] = serialize($behavior);
     return $value['behavior'];
   }
 
