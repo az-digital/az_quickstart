@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -21,6 +22,7 @@ dependencies:
     - field_group
     - file
     - media_library
+    - metatag
     - paragraphs
     - path
     - text
@@ -146,6 +148,13 @@ content:
       media_types: {  }
     third_party_settings: {  }
     type: media_library_widget
+    region: content
+  field_az_metatag:
+    weight: 26
+    settings:
+      sidebar: true
+    third_party_settings: {  }
+    type: metatag_firehose
     region: content
   field_az_news_tags:
     weight: 8

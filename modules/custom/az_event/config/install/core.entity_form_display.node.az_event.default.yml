@@ -19,6 +19,7 @@ dependencies:
     - file
     - link
     - media_library
+    - metatag
     - paragraphs
     - path
     - smart_date
