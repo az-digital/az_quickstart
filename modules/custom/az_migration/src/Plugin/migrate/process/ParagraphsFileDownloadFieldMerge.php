@@ -39,7 +39,7 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
     if (isset($value[1]) && count($value[1])) {
       foreach ($value[1] as $mid) {
         $media = Media::load($mid);
-        if ($media instanceof MediaInterface) {
+        if (!empty($media)) {
           $value['uaqs_text'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
         }
       }
