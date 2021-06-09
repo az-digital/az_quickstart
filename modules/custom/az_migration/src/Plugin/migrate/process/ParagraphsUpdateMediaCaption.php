@@ -26,10 +26,12 @@ class ParagraphsUpdateMediaCaption extends ProcessPluginBase {
     $field_values = $row->getSourceProperty($field_name);
     // Loading the media to save from the row.
     $media = Media::load($value['target_id']);
-    // Setting the caption for the media.
-    $media->set('field_az_caption', $field_values[$value['delta']]['value']);
-    // Update the media.
-    $media->save();
+    if ($media && $media->get('field_az_caption')->value === NULL) {
+      // Setting the caption for the media.
+      $media->set('field_az_caption', $field_values[$value['delta']]['value']);
+      // Update the media.
+      $media->save();
+    }
     return $value;
   }
 
