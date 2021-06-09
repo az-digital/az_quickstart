@@ -12,6 +12,10 @@ az-proxima-nova:
   css:
     theme:
       https://use.typekit.net/emv3zbo.css: {}
+az-icons:
+  css:
+    theme:
+      https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}
 arizona-bootstrap:
   css:
     theme:
@@ -20,10 +24,7 @@ arizona-bootstrap:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
   dependencies:
     - core/jquery
-az-brand-icons:
-  css:
-    theme:
-      libraries/ua-brand-icons/ua-brand-icons.min.css: {}
+    - az_barrio/az-icons
 material-design-icons-sharp:
   css:
     theme:
