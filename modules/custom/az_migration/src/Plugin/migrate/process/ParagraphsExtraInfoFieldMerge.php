@@ -26,7 +26,7 @@ class ParagraphsExtraInfoFieldMerge extends ProcessPluginBase {
     $value['uaqs_text'] = '<div class="border-thick border-top border-azurite">
     <div class="border card-body">
        <h3>More information</h3>';
-    if ($field_uaqs_link[0]['url']) {
+    if (!empty($field_uaqs_link[0]['url'])) {
       $value['uaqs_text'] .= '<a href="' . $field_uaqs_link[0]['url'] . '" class="' . $field_uaqs_link[0]['attributes']['class'] . '">' . $field_uaqs_link[0]['title'] . '</a>';
     }
     $value['uaqs_text'] .= '<h2 class="h3">' . $field_uaqs_short_title[0]['value'] . '</h2>
