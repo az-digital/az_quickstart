@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_metatag
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -76,7 +77,7 @@ content:
       edit_mode: open
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: '_none'
+      default_paragraph_type: _none
     third_party_settings: {  }
     region: content
   field_az_event_category:
@@ -94,14 +95,14 @@ content:
       default_duration_increments: "30\n60|1 hour\n90\n120|2 hours\ncustom"
     third_party_settings:
       smart_date_recur:
-        modal: '1'
+        modal: true
         allowed_recur_freq_values:
           DAILY: DAILY
           WEEKLY: WEEKLY
           MONTHLY: MONTHLY
           YEARLY: YEARLY
-          MINUTELY: 0
-          HOURLY: 0
+          MINUTELY: '0'
+          HOURLY: '0'
     type: smartdate_default
     region: content
   field_az_link:
@@ -119,6 +120,13 @@ content:
       placeholder_title: ''
     third_party_settings: {  }
     type: link_default
+    region: content
+  field_az_metatag:
+    weight: 30
+    settings:
+      sidebar: true
+    third_party_settings: {  }
+    type: metatag_firehose
     region: content
   field_az_photos:
     type: media_library_widget
