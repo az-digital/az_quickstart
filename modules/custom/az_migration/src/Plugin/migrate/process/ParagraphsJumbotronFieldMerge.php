@@ -27,7 +27,7 @@ class ParagraphsJumbotronFieldMerge extends ProcessPluginBase {
     if (!empty($field_uaqs_short_title[0]['value'])) {
       $value['uaqs_text'] .= '<h1 class="display-3 mt-0">' . $field_uaqs_short_title[0]['value'] . '</h1>';
     }
-    if (!empty($field_uaqs_summary[0]['value'] != "")) {
+    if (!empty($field_uaqs_summary[0]['value'])) {
       $value['uaqs_text'] .= '<div class="lead">' . $field_uaqs_summary[0]['value'] . '</div>';
     }
     if (!empty($field_uaqs_links[0]['url'])) {
