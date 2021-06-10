@@ -35,7 +35,12 @@ class ParagraphsBehavior extends ProcessPluginBase {
       $bg_pattern = $row->getSourceProperty($this->configuration['bg_pattern']);
       $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = '';
       foreach ($bg_pattern as $bg_pattern_item) {
-        if (in_array($bg_pattern_item['value'], ['bg-triangles-mosaic', 'bg-triangles-fade', 'bg-catalinas-abstract'])) {
+        $match_pattern_item = [
+          'bg-triangles-mosaic',
+          'bg-triangles-fade',
+          'bg-catalinas-abstract',
+        ];
+        if (in_array($bg_pattern_item['value'], $match_pattern_item)) {
           $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] .= 'None';
         }
         else {
