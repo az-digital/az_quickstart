@@ -1,0 +1,8 @@
+az_media.ckeditorFix:
+  version: VERSION
+  js:
+    libraries/ckeditorFix/ckeditorFix.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupalSettings
+
