@@ -2,7 +2,6 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
-use Drupal\media\MediaInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
