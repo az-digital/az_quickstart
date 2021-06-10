@@ -26,7 +26,7 @@ class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
 
     // Backgroud Class.
     $bg_light = '';
-    if ($field_uaqs_callout_background[0]['value']) {
+    if (!empty($field_uaqs_callout_background[0]['value'])) {
       $bg_light = 'bg-light';
     }
 
@@ -52,10 +52,10 @@ class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
 
     // Field value mapping.
     $value['uaqs_text'] = '';
-    if ($title_field[0]['value'] != "") {
+    if (!empty($title_field[0]['value'])) {
       $value['uaqs_text'] .= '<h4 class="' . $text_mapping . '">' . $title_field[0]['value'] . '</h4>';
     }
-    if ($field_uaqs_summary[0]['value'] != "") {
+    if (!empty($field_uaqs_summary[0]['value'])) {
       $value['uaqs_text'] .= '<div class="callout ' . $color_mapping . ' ' . $bg_light . '">' . $field_uaqs_summary[0]['value'] . '</div>';
     }
 
