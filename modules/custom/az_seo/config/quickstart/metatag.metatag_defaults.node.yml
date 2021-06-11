@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: node
+label: Content
+tags:
+  description: '[node:field_az_summary]'
+  canonical_url: '[node:url]'
+  title: '[node:title] | [site:name]'
