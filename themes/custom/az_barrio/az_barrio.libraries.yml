@@ -24,7 +24,6 @@ arizona-bootstrap:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
   dependencies:
     - core/jquery
-   - az_barrio/az-icons
 material-design-icons-sharp:
   css:
     theme:
