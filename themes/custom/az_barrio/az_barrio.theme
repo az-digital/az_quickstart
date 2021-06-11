@@ -95,9 +95,6 @@ function az_barrio_preprocess_html(&$variables) {
   if (theme_get_setting('external_links')) {
     $variables['html_attributes']->addClass('external-links');
   }
-  if (theme_get_setting('az_barrio_az_icons_class')) {
-    $variables['html_attributes']->addClass('az-icons');
-  }
 }
 
 /**
