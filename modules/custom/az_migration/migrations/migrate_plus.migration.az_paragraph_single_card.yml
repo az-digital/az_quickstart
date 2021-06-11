@@ -49,6 +49,10 @@ process:
     
   behavior_settings:
     plugin: paragraphs_behavior_settings
+    card_width: 'col-md-4 col-lg-4'
+    card_style: 'card'
+    card_width_sm: 'col-sm-6'
+    card_width_xs: 'col-12'
 
 dependencies:
   enforced:
