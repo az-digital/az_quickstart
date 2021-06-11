@@ -22,7 +22,9 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Merging the data into one field.
     $field_uaqs_download_name = $row->getSourceProperty('field_uaqs_download_name');
-    $value['uaqs_text'] = '<h3>' . $field_uaqs_download_name[0]['value'] . '</h3>';
+    if (!empty($field_uaqs_download_name[0]['value'])) {
+      $value['uaqs_text'] = '<h3>' . $field_uaqs_download_name[0]['value'] . '</h3>';
+    }
 
     // Media embeded for field_uaqs_download_file.
     if (isset($value[0]) && count($value[0])) {
@@ -43,6 +45,11 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
         }
       }
     }
+    $field_uaqs_download_description = $row->getSourceProperty('field_uaqs_download_description');
+    if (!empty($field_uaqs_download_description[0]['value'])) {
+      $value['uaqs_text'] .= $field_uaqs_download_description[0]['value'];
+    }
+
     return $value['uaqs_text'];
   }
 
