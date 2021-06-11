@@ -2,13 +2,15 @@
 
 /**
  * @file
- * Install, update and uninstall functions for az_paragraphs_text_background module.
+ * Install, update and uninstall functions for
+ * az_paragraphs_text_background module.
  */
 
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
- * Add default text_background_padding behavior setting to existing Text with Background paragraphs.
+ * Add default text_background_padding behavior setting to existing Text with
+ * Background paragraphs.
  */
 function az_paragraphs_text_background_update_9201() {
   if (!isset($sandbox['total'])) {
@@ -42,7 +44,7 @@ function az_paragraphs_text_background_update_9201() {
     $sandbox['current']++;
   }
 
-  $sandbox['#finished'] = ($sandbox['total'] == 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
+  $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
 
   return t('Default padding setting added to %count Text with Background paragraphs.', ['%count' => $sandbox['updated_count']]);
 }
