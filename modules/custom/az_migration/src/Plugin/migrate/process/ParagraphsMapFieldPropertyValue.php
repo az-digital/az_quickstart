@@ -7,7 +7,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Configure Behavior for paragraphs.
+ * Process Plugin to Field map property value for paragraphs.
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_field_property_mapping"
