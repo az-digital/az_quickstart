@@ -7,7 +7,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Configure Behavior for paragraphs.
+ * Process Plugin to field merge for Extra Info paragraphs.
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_extra_info_field_merge"
