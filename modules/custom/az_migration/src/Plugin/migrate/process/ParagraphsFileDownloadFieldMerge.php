@@ -8,7 +8,7 @@ use Drupal\migrate\Row;
 use Drupal\media\Entity\Media;
 
 /**
- * Configure Behavior for paragraphs.
+ * Process Plugin to merge the fields for file download paragraphs.
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_file_download_field_merge"
@@ -21,9 +21,10 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Merging the data into one field.
+    $value['markup'] = '';
     $field_uaqs_download_name = $row->getSourceProperty('field_uaqs_download_name');
     if (!empty($field_uaqs_download_name[0]['value'])) {
-      $value['uaqs_text'] = '<h3>' . $field_uaqs_download_name[0]['value'] . '</h3>';
+      $value['markup'] = '<h3>' . $field_uaqs_download_name[0]['value'] . '</h3>';
     }
 
     // Media embeded for field_uaqs_download_file.
@@ -31,7 +32,7 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
       foreach ($value[0] as $mid) {
         $media = Media::load($mid);
         if (!empty($media)) {
-          $value['uaqs_text'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
+          $value['markup'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
         }
       }
     }
@@ -41,16 +42,16 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
       foreach ($value[1] as $mid) {
         $media = Media::load($mid);
         if (!empty($media)) {
-          $value['uaqs_text'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
+          $value['markup'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="default"></drupal-media>';
         }
       }
     }
     $field_uaqs_download_description = $row->getSourceProperty('field_uaqs_download_description');
     if (!empty($field_uaqs_download_description[0]['value'])) {
-      $value['uaqs_text'] .= $field_uaqs_download_description[0]['value'];
+      $value['markup'] .= $field_uaqs_download_description[0]['value'];
     }
 
-    return $value['uaqs_text'];
+    return $value['markup'];
   }
 
 }
