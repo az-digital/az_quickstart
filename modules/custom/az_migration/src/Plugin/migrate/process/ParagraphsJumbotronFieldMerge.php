@@ -7,7 +7,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Configure Behavior for paragraphs.
+ * Process plugin to merge the fields for Jumbotron Paragraph.
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_jumbotron_field_merge"
