@@ -28,7 +28,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
       $bg_color = $row->getSourceProperty($this->configuration['bg_color']);
       $behavior['az_text_background_paragraph_behavior']['text_background_color'] = '';
       foreach ($bg_color as $bg_color_item) {
-        $behavior['az_text_background_paragraph_behavior']['text_background_color'] .= $bg_color_item['value'];
+        $behavior['az_text_background_paragraph_behavior']['text_background_color'] = $bg_color_item['value'];
       }
     }
     if (!empty($this->configuration['bg_pattern'])) {
@@ -41,10 +41,10 @@ class ParagraphsBehavior extends ProcessPluginBase {
           'bg-catalinas-abstract',
         ];
         if (in_array($bg_pattern_item['value'], $match_pattern_item)) {
-          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] .= 'None';
+          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = '';
         }
         else {
-          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] .= $bg_pattern_item['value'];
+          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = $bg_pattern_item['value'];
         }
       }
     }
