@@ -61,3 +61,18 @@ jobs:
           asset_path: ./az_quickstart.tar.gz
           asset_name: az_quickstart.tar.gz
           asset_content_type: application/x-gzip
+  dispatch:
+    needs: build
+    strategy:
+      matrix:
+        repo:
+          - az-digital/az-quickstart-pantheon
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify dependencies
+        uses: peter-evans/repository-dispatch@1708dda5703a768a0fb0ef6a7a03a0c3805ebc59
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+          repository: ${{ matrix.repo }}
+          event-type: az_quickstart_release
+          client-payload: '{"version": "${{ github.event.inputs.version }}"}'
