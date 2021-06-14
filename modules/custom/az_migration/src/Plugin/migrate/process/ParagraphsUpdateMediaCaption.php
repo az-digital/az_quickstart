@@ -8,7 +8,7 @@ use Drupal\migrate\Row;
 use Drupal\media\Entity\Media;
 
 /**
- * Configure Behavior for paragraphs.
+ * Process PLugin to update media caption for paragraphs.
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_media_caption"
