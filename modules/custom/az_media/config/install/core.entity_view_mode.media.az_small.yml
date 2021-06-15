@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - media
-id: media.az_square
-label: 'Square (220X220px)'
+id: media.az_small
+label: 'Small (360px)'
 targetEntityType: media
 cache: true

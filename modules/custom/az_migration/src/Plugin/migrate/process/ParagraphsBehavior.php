@@ -48,6 +48,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
         }
       }
     }
+
     $value['behavior'] = serialize($behavior);
     return $value['behavior'];
   }
