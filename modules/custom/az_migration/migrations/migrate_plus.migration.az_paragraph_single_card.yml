@@ -46,6 +46,11 @@ process:
   field_az_cards/body_format:  
     plugin: default_value
     default_value: az_standard
+  
+  field_az_cards/options:
+    plugin: default_value
+    default_value: 
+      class: 'bg-white'
     
   behavior_settings:
     plugin: paragraphs_behavior_settings
