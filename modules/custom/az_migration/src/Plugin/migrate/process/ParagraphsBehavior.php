@@ -63,6 +63,18 @@ class ParagraphsBehavior extends ProcessPluginBase {
         $behavior['az_display_settings']['card_width_sm'] = $card_width_sm[$card_count];
       }
     }
+
+    if (!empty($row->getSourceProperty('view_mode'))) {
+      $card_style_map = [
+        'default' => 'card card-borderless',
+        'full' => 'card card-borderless',
+        'token' => 'card card-borderless',
+        'uaqs_landing_grid' => 'card card-borderless',
+        'uaqs_borderless_card' => 'card card-borderless',
+      ];
+      $behavior['card_style'] = $card_style_map[$row->getSourceProperty('view_mode')];
+    }
+
     $value['behavior'] = serialize($behavior);
     return $value['behavior'];
   }
