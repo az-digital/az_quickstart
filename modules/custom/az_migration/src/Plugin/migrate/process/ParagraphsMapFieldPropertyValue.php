@@ -21,11 +21,16 @@ class ParagraphsMapFieldPropertyValue extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Getting the field property values from the field collection.
     $key = $this->configuration['key'];
-    $field_name = $this->configuration['field_name'];
     $value_key = $this->configuration['value'];
     // Get the field values.
-    $field_values = $row->getSourceProperty($field_name);
-    $value[$key] = $field_values[$value['delta']][$value_key];
+    if ($key === 'body_format') {
+      $value[$key] = $value_key;
+    }
+    else {
+      $field_name = $this->configuration['field_name'];
+      $field_values = $row->getSourceProperty($field_name);
+      $value[$key] = $field_values[$value['delta']][$value_key];
+    }
     return $value;
   }
 

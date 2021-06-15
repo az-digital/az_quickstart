@@ -23,17 +23,15 @@ process:
         delta: delta
         title: value
     -
-      plugin: sub_process
-      source: field_uaqs_summary
-      process:
-        body_format:  
-          plugin: default_value
-          default_value: az_standard
-    -
       plugin: paragraphs_field_property_mapping
       key: body
       field_name: field_uaqs_summary
       value: value
+    -
+      plugin: paragraphs_field_property_mapping
+      key: body_format
+      field_name: field_uaqs_summary
+      value: az_standard
     -
       plugin: paragraphs_field_property_mapping
       key: collapsed
