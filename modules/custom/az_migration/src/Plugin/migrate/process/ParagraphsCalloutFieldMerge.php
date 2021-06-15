@@ -50,14 +50,14 @@ class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
 
     // Field value mapping.
     $value['markup'] = '';
-    
+
     if (!empty($this->configuration['text'])) {
       $field_uaqs_summary = $row->getSourceProperty($this->configuration['text']);
       if (!empty($field_uaqs_summary[0]['value'])) {
         $value['markup'] .= '<div class="callout ' . $color_mapping . ' ' . $bg_light . '">' . $field_uaqs_summary[0]['value'];
       }
     }
-    
+
     if (!empty($this->configuration['title'])) {
       $title_field = $row->getSourceProperty($this->configuration['title']);
       if (!empty($title_field[0]['value'])) {
