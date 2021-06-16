@@ -43,8 +43,6 @@ third_party_settings:
         required_fields: true
         weight: 0
       label: 'Summary fields'
-_core:
-  default_config_hash: '-PrT7Z_cg-V1sqCMF0QUVxk6fP3Z-uUVZwqj1EnG4_0'
 id: node.az_event.default
 targetEntityType: node
 bundle: az_event
