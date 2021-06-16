@@ -31,6 +31,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
         $behavior['az_text_background_paragraph_behavior']['text_background_color'] = $bg_color_item['value'];
       }
     }
+    // Background Pattern.
     if (!empty($this->configuration['bg_pattern'])) {
       $bg_pattern = $row->getSourceProperty($this->configuration['bg_pattern']);
       $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = '';
