@@ -39,7 +39,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
     // Getting the card width checking field.
     if (!empty($this->configuration['card_width_field'])) {
       $card_width_field = $row->getSourceProperty($this->configuration['card_width_field']);
-      $card_count_field = $row->getSourceProperty($this->configuration['card_count']);
+      $card_count_field = $row->getSourceProperty($this->configuration['card_count_field']);
 
       // If the card width field value is Full Width, adding the conditions.
       if (!empty($card_width_field[0]['value']) &&
