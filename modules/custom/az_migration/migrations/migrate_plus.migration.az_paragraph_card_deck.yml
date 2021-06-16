@@ -66,7 +66,7 @@ process:
     card_width_sm: 'col-sm-6'
     card_width_xs: 'col-12'
     card_width_field: field_uaqs_setting_deck_width
-    card_count: field_uaqs_photo
+    card_count_field: field_uaqs_photo
 
 dependencies:
   enforced:
