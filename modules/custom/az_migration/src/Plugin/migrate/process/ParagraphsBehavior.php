@@ -36,7 +36,6 @@ class ParagraphsBehavior extends ProcessPluginBase {
     if (!empty($this->configuration['card_width_xs'])) {
       $behavior['az_display_settings']['card_width_xs'] = $this->configuration['card_width_xs'];
     }
-
     $value['behavior'] = serialize($behavior);
     return $value['behavior'];
   }
