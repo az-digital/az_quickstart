@@ -2,7 +2,7 @@
 
 /**
  * @file
- * az_news.install
+ * Install, update and uninstall functions for az_news module.
  */
 
 /**
