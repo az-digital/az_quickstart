@@ -60,8 +60,6 @@ third_party_settings:
         required_fields: true
         weight: 0
       label: 'Extra Fields'
-_core:
-  default_config_hash: 4mNfedvNkrf-BeMP6PKElcTrMR0JpJ07E8SHTFwwUBo
 id: node.az_news.default
 targetEntityType: node
 bundle: az_news
