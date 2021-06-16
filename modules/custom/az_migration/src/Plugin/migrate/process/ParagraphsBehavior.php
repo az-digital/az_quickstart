@@ -24,6 +24,18 @@ class ParagraphsBehavior extends ProcessPluginBase {
     if (!empty($this->configuration['gallery_display'])) {
       $behavior['gallery_display'] = $this->configuration['gallery_display'];
     }
+    if (!empty($this->configuration['card_width'])) {
+      $behavior['card_width'] = $this->configuration['card_width'];
+    }
+    if (!empty($this->configuration['card_style'])) {
+      $behavior['card_style'] = $this->configuration['card_style'];
+    }
+    if (!empty($this->configuration['card_width_sm'])) {
+      $behavior['az_display_settings']['card_width_sm'] = $this->configuration['card_width_sm'];
+    }
+    if (!empty($this->configuration['card_width_xs'])) {
+      $behavior['az_display_settings']['card_width_xs'] = $this->configuration['card_width_xs'];
+    }
     $value['behavior'] = serialize($behavior);
     return $value['behavior'];
   }
