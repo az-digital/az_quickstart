@@ -29,23 +29,25 @@ class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
       }
     }
     // Color and text Mapping.
-    $field_uaqs_callout_border_color = $row->getSourceProperty('field_uaqs_callout_border_color');
     $color_mapping = '';
     $text_mapping = '';
-    if ($field_uaqs_callout_border_color[0]['value'] === "callout-warning") {
-      $color_mapping = 'border-warning';
-      $text_mapping = 'text-warning';
-    }
-    elseif ($field_uaqs_callout_border_color[0]['value'] === "callout-danger") {
-      $color_mapping = 'border-danger';
-      $text_mapping = 'text-danger';
-    }
-    elseif ($field_uaqs_callout_border_color[0]['value'] === "callout-info") {
-      $color_mapping = 'border-info';
-      $text_mapping = 'text-info';
-    }
-    else {
-      $color_mapping = $field_uaqs_callout_border_color[0]['value'];
+    if (!empty($this->configuration['border'])) {
+      $field_uaqs_callout_border_color = $row->getSourceProperty($this->configuration['border']);
+      if ($field_uaqs_callout_border_color[0]['value'] === "callout-warning") {
+        $color_mapping = 'border-warning';
+        $text_mapping = 'text-warning';
+      }
+      elseif ($field_uaqs_callout_border_color[0]['value'] === "callout-danger") {
+        $color_mapping = 'border-danger';
+        $text_mapping = 'text-danger';
+      }
+      elseif ($field_uaqs_callout_border_color[0]['value'] === "callout-info") {
+        $color_mapping = 'border-info';
+        $text_mapping = 'text-info';
+      }
+      else {
+        $color_mapping = $field_uaqs_callout_border_color[0]['value'];
+      }
     }
 
     // Field value mapping.
