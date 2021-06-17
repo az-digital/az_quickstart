@@ -36,6 +36,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
     if (!empty($this->configuration['card_width_xs'])) {
       $behavior['az_display_settings']['card_width_xs'] = $this->configuration['card_width_xs'];
     }
+
     // Getting the card width checking field.
     if (!empty($this->configuration['card_width_field'])) {
       $card_width_field = $row->getSourceProperty($this->configuration['card_width_field']);

@@ -48,9 +48,9 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.1.9",
+        "drupal/core-recommended": "9.1.10",
         "drupal/crop": "2.1",
-        "drupal/ctools": "3.6",
+        "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.0",
         "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "1.15",
@@ -106,7 +106,7 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-02-25/2259567--134-allow-svg-image-upload-d9-2-x.patch",
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-05-29/2259567-137--allow-svg-image-upload-d9-2-beta-3.patch",
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
