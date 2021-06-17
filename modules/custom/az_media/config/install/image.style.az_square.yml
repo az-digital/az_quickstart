@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: az_square
+label: 'Square (220x220)'
+effects:
+  c9a0104f-9943-426f-813a-0b5e2cb765c0:
+    uuid: c9a0104f-9943-426f-813a-0b5e2cb765c0
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 220
+      height: 220
+      anchor: center-center
