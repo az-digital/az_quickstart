@@ -7,7 +7,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process Plugin to field merge for Extra Info paragraphs.
+ * Process Plugin to map view and display for Chunks View paragraphs.
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_chunks_view_display_mapping"
