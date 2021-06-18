@@ -1,0 +1,27 @@
+name: Build & deploy CDN assets
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Build & deploy CDN assets
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@e9d3185f7a72ecb1a71000a3f11be505e74e0081
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-west-2
+
+      - name: Deploy CDN assets to S3 + CloudFront
+        run: |
+          aws s3 sync --delete --cache-control max-age=691200 --exclude ".git*" --exclude demo.html . s3://${{ secrets.AZ_DIGITAL_CDN_BUCKET }}/lib/az-icons/main/
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.AZ_DIGITAL_CDN }} --paths /lib/az-icons/main/*
+
