@@ -176,8 +176,10 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
                 ]
             )
           )->toString(),
-        ]
+        ],
+
       ),
+      'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
     ],
     '#default_value' => theme_get_setting('az_barrio_az_icons_source'),
   ];

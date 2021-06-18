@@ -301,6 +301,10 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
         if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
           $az_barrio_az_icons_css_info['type'] = 'external';
         }
+        else {
+          $az_barrio_az_icons_css_info['type'] = 'file';
+        }
+
         $libraries['az-icons']['css']['theme'] = [
           $az_icons_path => $az_barrio_az_icons_css_info,
         ];
@@ -356,9 +360,9 @@ function az_barrio_az_icons_assets_path($type) {
   if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
     $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
   }
-  // else {
-  //   $az_icons_path = 'libraries/ua-brand-icons/ua-brand-icons.min.css';
-  // }
+  else {
+    $az_icons_path = 'libraries/az-icons/az-icons-styles.css';
+  }
 
   return $az_icons_path;
 }
