@@ -1,5 +1,5 @@
 id: az_paragraph_panel_group
-label: AZ Paragraph Panel Group
+label: AZ Paragraph Panel Groups
 migration_group: az_migration
 migration_tags:
   - Quickstart Content Migration
