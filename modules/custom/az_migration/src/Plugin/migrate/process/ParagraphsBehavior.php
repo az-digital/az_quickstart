@@ -25,7 +25,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
       $behavior['gallery_display'] = $this->configuration['gallery_display'];
     }
 
-    if (!empty($this->configuration['bg_color'])) {
+   if (!empty($this->configuration['bg_color'])) {
       $bg_color = $row->getSourceProperty($this->configuration['bg_color']);
       $behavior['az_text_background_paragraph_behavior']['text_background_color'] = '';
       foreach ($bg_color as $bg_color_item) {
@@ -50,6 +50,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
         }
       }
     }
+
     if (!empty($this->configuration['card_width'])) {
       $behavior['card_width'] = $this->configuration['card_width'];
     }
