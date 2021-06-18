@@ -23,7 +23,7 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
     // Getting view name and display name.
     $view_display = explode("|", $value['vname']);
 
-    $value['markup'] = [];
+    $value = [];
     $uaqs_events = [
       'view' => 'az_events',
       'display' => [
@@ -70,15 +70,15 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
       'uaqs_content_chunks_views_page_by_category' => $uaqs_content_chunks_views_page_by_category,
     ];
 
-    $value['markup']['target_id'] = $view_mapping[$view_display[0]]['view'];
-    $value['markup']['display_id'] = $view_mapping[$view_display[0]]['display'][$view_display[1]];
+    $value['target_id'] = $view_mapping[$view_display[0]]['view'];
+    $value['display_id'] = $view_mapping[$view_display[0]]['display'][$view_display[1]];
 
     // Setting Items per page: 6 for 3 Column news block.
     if ($view_display[0] === 'uaqs_news' && $view_display[1] === 'three_col_news_block') {
-      $value['markup']['data'] = serialize(['limit' => 6]);
+      $value['data'] = serialize(['limit' => 6]);
     }
 
-    return $value['markup'];
+    return $value;
   }
 
 }
