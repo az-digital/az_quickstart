@@ -39,3 +39,5 @@ regions:
 
 ckeditor_stylesheets:
   - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest/css/arizona-bootstrap.min.css
+  - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
+
