@@ -70,8 +70,14 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
       'uaqs_content_chunks_views_page_by_category' => $uaqs_content_chunks_views_page_by_category,
     ];
 
-    $value['target_id'] = $view_mapping[$view_display[0]]['view'];
-    $value['display_id'] = $view_mapping[$view_display[0]]['display'][$view_display[1]];
+    if (isset($view_mapping[$view_display[0]])) {
+      $value['target_id'] = $view_mapping[$view_display[0]]['view'];
+      $value['display_id'] = $view_mapping[$view_display[0]]['display'][$view_display[1]];
+    }
+    else {
+      $value['target_id'] = $view_display[0];
+      $value['display_id'] = $view_display[1];
+    }
 
     // Setting Items per page: 6 for 3 Column news block.
     if ($view_display[0] === 'uaqs_news' && $view_display[1] === 'three_col_news_block') {
