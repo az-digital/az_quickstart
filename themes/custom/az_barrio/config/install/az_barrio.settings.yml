@@ -2,23 +2,68 @@
 # --------------
 bootstrap_barrio_library: 'production'
 
-# Layout
-# --------------=
-bootstrap_barrio_region_clean_header_ua_utilities: 0
+# Layout clean region classes.
+# -------------------------------
+bootstrap_barrio_region_clean_alert: false
+bootstrap_barrio_region_clean_header_ua_utilities: false
+bootstrap_barrio_region_clean_header: false
+bootstrap_barrio_region_clean_header_2: false
+bootstrap_barrio_region_clean_navigation: false
+bootstrap_barrio_region_clean_navigation_offcanvas: false
+bootstrap_barrio_region_clean_content_featured: false
+bootstrap_barrio_region_clean_sidebar_first: false
+bootstrap_barrio_region_clean_sidebar_second: false
+bootstrap_barrio_region_clean_highlighted: false
+bootstrap_barrio_region_clean_content_top: false
+bootstrap_barrio_region_clean_breadcrumb: false
+bootstrap_barrio_region_clean_content: false
+bootstrap_barrio_region_clean_content_2_col_1: false
+bootstrap_barrio_region_clean_content_2_col_2: false
+bootstrap_barrio_region_clean_content_3_col_1: false
+bootstrap_barrio_region_clean_content_3_col_2: false
+bootstrap_barrio_region_clean_content_3_col_3: false
+bootstrap_barrio_region_clean_full_width_content_bottom: false
+bootstrap_barrio_region_clean_content_4_col_1: false
+bootstrap_barrio_region_clean_content_4_col_2: false
+bootstrap_barrio_region_clean_content_4_col_3: false
+bootstrap_barrio_region_clean_content_4_col_4: false
+bootstrap_barrio_region_clean_content_bottom: false
+bootstrap_barrio_region_clean_footer: false
+bootstrap_barrio_region_clean_footer_sub: false
+bootstrap_barrio_region_clean_page_bottom: false
+
+# Layout region column classes.
+# -------------------------------
+bootstrap_barrio_region_class_alert: 'col-md'
 bootstrap_barrio_region_class_header_ua_utilities: 'ml-auto d-none d-lg-block d-xl-block'
-bootstrap_barrio_region_clean_alert: 1
-bootstrap_barrio_region_class_alert: ''
-bootstrap_barrio_region_class_navigation: ''
-bootstrap_barrio_region_clean_navigation_offcanvas: 0
+bootstrap_barrio_region_class_header: 'col-md'
+bootstrap_barrio_region_class_header_2: 'col-md'
+bootstrap_barrio_region_class_navigation: 'col-md'
 bootstrap_barrio_region_class_navigation_offcanvas: ''
-bootstrap_barrio_region_clean_content_featured: 1
 bootstrap_barrio_region_class_content_featured: ''
-bootstrap_barrio_region_clean_full_width_content_bottom: 1
+bootstrap_barrio_region_class_sidebar_first: ''
+bootstrap_barrio_region_class_sidebar_second: ''
+bootstrap_barrio_region_class_highlighted: ''
+bootstrap_barrio_region_class_content_top: 'col-md'
+bootstrap_barrio_region_class_breadcrumb: 'col-md'
+bootstrap_barrio_region_class_content: ''
+bootstrap_barrio_region_class_content_2_col_1: 'col-md-6'
+bootstrap_barrio_region_class_content_2_col_2: 'col-md-6'
+bootstrap_barrio_region_class_content_3_col_1: 'col-md-4'
+bootstrap_barrio_region_class_content_3_col_2: 'col-md-4'
+bootstrap_barrio_region_class_content_3_col_3: 'col-md-4'
 bootstrap_barrio_region_class_full_width_content_bottom: ''
-bootstrap_barrio_region_clean_footer: 1
-bootstrap_barrio_region_class_footer: ''
-bootstrap_barrio_region_clean_footer_sub: 1
-bootstrap_barrio_region_class_footer_sub: ''
+bootstrap_barrio_region_class_content_4_col_1: 'col-md-3'
+bootstrap_barrio_region_class_content_4_col_2: 'col-md-3'
+bootstrap_barrio_region_class_content_4_col_3: 'col-md-3'
+bootstrap_barrio_region_class_content_4_col_4: 'col-md-3'
+bootstrap_barrio_region_class_content_bottom: 'col-md'
+bootstrap_barrio_region_class_footer: 'col-12 col-sm-7 col-md-8 col-lg-8'
+bootstrap_barrio_region_class_footer_sub: 'col-md'
+bootstrap_barrio_region_class_page_bottom: 'col-md'
+
+# Layout sidebar settings.
+# -------------------------------
 bootstrap_barrio_sidebar_position: 'both'
 bootstrap_barrio_content_offset: 0
 bootstrap_barrio_sidebar_first_width: 3
@@ -47,7 +92,6 @@ bootstrap_barrio_table_hover: 1
 # Arizona
 # --------------
 wordmark: true
-
 info_security_privacy: true
 copyright_notice: 'The Arizona Board of Regents on behalf of <a href="https://www.arizona.edu" target="_blank">The University of Arizona</a>.'
 az_hide_front_title: false

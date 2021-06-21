@@ -81,9 +81,7 @@
         {% if page.alert %}
         <div class="{{ container }}">
           <div class="row">
-            <div class="col">
-              {{ page.alert }}
-            </div>
+            {{ page.alert }}
           </div>
         </div>
         {% endif %}
@@ -121,9 +119,7 @@
               </div>
               <div class="col-12 col-sm-6 col-lg-8">
                 <div class="row">
-                  <div class="col">
-                    {{ page.header }}
-                  </div>
+                  {{ page.header }}
                 </div>
                 {% if page.header_2 %}
                 <div class="row">
@@ -135,30 +131,32 @@
           </div> <!-- /.container -->
 
           <div class="container">
-            {% if az_barrio_navbar_offcanvas %}
-            <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
-              <div class="navbar-offcanvas-header">
-                <div class="bg-chili d-flex justify-content-between align-items-center bg-">
-                  <a href="/" class="btn btn-redbar">
-                    <span class="icon material-icons-sharp"> home </span>
-                    <span class="icon-text"> home </span>
-                  </a>
-                  <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
-                    <span class="icon material-icons-sharp"> close </span>
-                    <span class="icon-text"> close </span>
-                  </button>
-                </div>
-                {% if page.navigation_offcanvas %}
-                  {{ page.navigation_offcanvas }}
-                {% endif %}
-             </div>
-            {% endif %}
-              {% if page.navigation %}
-                {{ page.navigation }}
+            <div class="row">
+              {% if az_barrio_navbar_offcanvas %}
+              <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
+                <div class="navbar-offcanvas-header">
+                  <div class="bg-chili d-flex justify-content-between align-items-center bg-">
+                    <a href="/" class="btn btn-redbar">
+                      <span class="icon material-icons-sharp"> home </span>
+                      <span class="icon-text"> home </span>
+                    </a>
+                    <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
+                      <span class="icon material-icons-sharp"> close </span>
+                      <span class="icon-text"> close </span>
+                    </button>
+                  </div>
+                  {% if page.navigation_offcanvas %}
+                    {{ page.navigation_offcanvas }}
+                  {% endif %}
+              </div>
               {% endif %}
-            {% if az_barrio_navbar_offcanvas %}
-            </nav>
-            {% endif %}
+                {% if page.navigation %}
+                  {{ page.navigation }}
+                {% endif %}
+              {% if az_barrio_navbar_offcanvas %}
+              </nav>
+              {% endif %}
+            </div>
           </div>
         </div>
 {% endblock %}
@@ -173,20 +171,18 @@
           {% if page.breadcrumb or page.content_top %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col" aria-label="breadcrumb">
-                {{ page.breadcrumb }}
-                {{ page.content_top }}
-              </div>
+              {{ page.breadcrumb }}
+            </div>
+            <div class="row">
+              {{ page.content_top }}
             </div>
           </div>
           {% endif %}
           <div class="{{ container }}">
             <div class="row row-offcanvas row-offcanvas-left clearfix">
               <main{{ content_attributes }}>
-                <section class="section">
-                  <a id="main-content" tabindex="-1"></a>
-                  {{ page.content }}
-                </section>
+                <a id="main-content" tabindex="-1"></a>
+                {{ page.content }}
               </main>
               {% if page.sidebar_first %}
               <div{{ sidebar_first_attributes }}>
@@ -208,54 +204,34 @@
           {% if page.content_2_col_1 or page.content_2_col_2 %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col-md-6">
-                {{ page.content_2_col_1 }}
-              </div>
-              <div class="col-md-6">
-                {{ page.content_2_col_2 }}
-              </div>
+              {{ page.content_2_col_1 }}
+              {{ page.content_2_col_2 }}
             </div>
           </div>
           {% endif %}
           {% if page.content_3_col_1 or page.content_3_col_2 or page.content_3_col_3 %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col-md-4">
-                {{ page.content_3_col_1 }}
-              </div>
-              <div class="col-md-4">
-                {{ page.content_3_col_2 }}
-              </div>
-              <div class="col-md-4">
-                {{ page.content_3_col_3 }}
-              </div>
+              {{ page.content_3_col_1 }}
+              {{ page.content_3_col_2 }}
+              {{ page.content_3_col_3 }}
             </div>
           </div>
           {% endif %}
           {% if page.content_bottom %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col">
-                {{ page.content_bottom }}
-              </div>
+              {{ page.content_bottom }}
             </div>
           </div>
           {% endif %}
           {% if page.content_4_col_1 or page.content_4_col_2 or page.content_4_col_3 or page.content_4_col_4 %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col-md-3">
                 {{ page.content_4_col_1 }}
-              </div>
-              <div class="col-md-3">
                 {{ page.content_4_col_2 }}
-              </div>
-              <div class="col-md-3">
                 {{ page.content_4_col_3 }}
-              </div>
-              <div class="col-md-3">
                 {{ page.content_4_col_4 }}
-              </div>
             </div>
           </div>
           {% endif %}
@@ -279,11 +255,9 @@
                   </div>
                 {% endif %}
                 {% if page.footer %}
-                  <!-- Add the extra clearfix for only the required viewport -->
-                  <div class="clearfix visible-xs-block"></div>
-                  <div class="col-12 col-sm-7 col-md-8 col-lg-8">
-                    {{ page.footer }}
-                  </div>
+                  <!-- Force next columns to break to new line at md breakpoint and up -->
+                  <div class="w-100 d-block d-sm-none"></div>
+                  {{ page.footer }}
                 {% endif %}
                 <div class="col-12">
                   <hr>

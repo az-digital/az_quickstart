@@ -95,6 +95,9 @@
             "dev-main": "2.1.x-dev"
         },
         "patches": {
+            "drupal/bootstrap_barrio": {
+                "Fix schema (3217958)": "https://gist.githubusercontent.com/trackleft/6b7752228979c6932e8d09e01381dd28/raw/70bd7ed90ab487b454a1106aa9935a335b7d4f49/gistfile1.txt"
+            },
             "drupal/bootstrap_utilities": {
                 "Invalid arguments passed in BlockquoteFilter->process()": "https://git.drupalcode.org/project/bootstrap_utilities/-/merge_requests/2.diff",
                 "Bootstrap Utilities filter for tables adds classes from previous tables to subsequent tables (3219205).": "https://git.drupalcode.org/issue/bootstrap_utilities-3219205/-/commit/dbcf010ae885ba0f17112a8dfe8ab5b70001900f.patch"
