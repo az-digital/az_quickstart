@@ -24,6 +24,31 @@ class ParagraphsBehavior extends ProcessPluginBase {
     if (!empty($this->configuration['gallery_display'])) {
       $behavior['gallery_display'] = $this->configuration['gallery_display'];
     }
+    if (!empty($this->configuration['bg_color'])) {
+      $bg_color = $row->getSourceProperty($this->configuration['bg_color']);
+      $behavior['az_text_background_paragraph_behavior']['text_background_color'] = '';
+      foreach ($bg_color as $bg_color_item) {
+        $behavior['az_text_background_paragraph_behavior']['text_background_color'] = $bg_color_item['value'];
+      }
+    }
+    // Background Pattern.
+    if (!empty($this->configuration['bg_pattern'])) {
+      $bg_pattern = $row->getSourceProperty($this->configuration['bg_pattern']);
+      $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = '';
+      foreach ($bg_pattern as $bg_pattern_item) {
+        $deprecated_patterns = [
+          'bg-triangles-mosaic',
+          'bg-triangles-fade',
+          'bg-catalinas-abstract',
+        ];
+        if (in_array($bg_pattern_item['value'], $deprecated_patterns)) {
+          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = '';
+        }
+        else {
+          $behavior['az_text_background_paragraph_behavior']['text_background_pattern'] = $bg_pattern_item['value'];
+        }
+      }
+    }
     if (!empty($this->configuration['card_width'])) {
       $behavior['card_width'] = $this->configuration['card_width'];
     }
