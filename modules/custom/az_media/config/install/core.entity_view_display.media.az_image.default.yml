@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_media_az_image
-    - image.style.large
+    - image.style.az_small
     - media.type.az_image
   module:
     - image
@@ -16,7 +16,7 @@ content:
   field_media_az_image:
     label: visually_hidden
     settings:
-      image_style: large
+      image_style: az_small
       image_link: ''
     third_party_settings: {  }
     type: image

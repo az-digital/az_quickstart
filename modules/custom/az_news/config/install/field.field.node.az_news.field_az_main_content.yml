@@ -5,6 +5,7 @@ dependencies:
     - field.storage.node.field_az_main_content
     - node.type.az_news
     - paragraphs.paragraphs_type.az_cards
+    - paragraphs.paragraphs_type.az_photo_gallery
     - paragraphs.paragraphs_type.az_text
   module:
     - entity_reference_revisions
@@ -24,6 +25,7 @@ settings:
     negate: 0
     target_bundles:
       az_cards: az_cards
+      az_photo_gallery: az_photo_gallery
       az_text: az_text
     target_bundles_drag_drop:
       az_cards:
@@ -32,7 +34,10 @@ settings:
       az_text:
         enabled: true
         weight: 5
-      az_view_reference:
+      az_photo_gallery:
+        enabled: true
         weight: 6
+      az_view_reference:
+        weight: 7
         enabled: false
 field_type: entity_reference_revisions

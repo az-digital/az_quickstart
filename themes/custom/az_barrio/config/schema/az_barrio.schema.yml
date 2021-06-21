@@ -223,12 +223,12 @@ az_barrio.settings:
     az_barrio_material_design_sharp_icons:
       type: boolean
       label: 'Use Material Design Sharp Icons'
-    az_brand_icons_source:
-      type: string
-      label: 'AZ Brand Icons source'
-    az_brand_icons_class:
+    az_barrio_az_icons:
       type: boolean
-      label: 'Enable AZ Brand Icons class'
+      label: 'Use AZ Icons'
+    az_barrio_az_icons_source:
+      type: string
+      label: 'AZ Icons source'
     external_links:
       type: boolean
       label: 'Enable AZ Bootstrap external links styling'

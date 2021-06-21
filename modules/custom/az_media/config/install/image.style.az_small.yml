@@ -1,0 +1,13 @@
+langcode: en
+status: true
+name: az_small
+label: 'Small (360px)'
+effects:
+  a5aee9bc-6dd3-4b48-b04e-027cc8017630:
+    uuid: a5aee9bc-6dd3-4b48-b04e-027cc8017630
+    id: image_scale
+    weight: 1
+    data:
+      width: 360
+      height: null
+      upscale: true
