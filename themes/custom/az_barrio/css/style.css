@@ -47,6 +47,38 @@ audio:not([controls]) {
   display: none;
 }
 
+.navbar-offcanvas {
+  position: relative;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -ms-flex-align: center;
+  align-items: center;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  max-width: 100%;
+  padding: 0 1rem;
+  padding: initial;
+  overflow-y: initial;
+  background-color: initial;
+  border: initial;
+  -webkit-transform: initial;
+  transform: initial;
+  top: initial;
+  right: initial;
+  z-index: initial;
+  -ms-flex-direction: initial;
+  flex-direction: initial;
+  width: initial;
+  height: initial;
+  transition: initial;
+  -ms-flex-preferred-size: 0;
+  flex-basis: 0;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  max-width: 100%;
+}
 /**
  * Wireframes.
  */
