@@ -49,6 +49,53 @@ class ParagraphsBehavior extends ProcessPluginBase {
         }
       }
     }
+
+    // Text Background Color.
+    if (!empty($this->configuration['bg_text_color'])) {
+      $bg_text_color = $row->getSourceProperty($this->configuration['bg_text_color']);
+      $bg_text_color_mapping = [
+        'bg-transparent' => 'transparent',
+        'bg-trans-white' => 'light',
+        'bg-trans-sky' => 'light',
+        'bg-trans-arizona-blue' => 'dark',
+        'bg-trans-black' => 'dark',
+      ];
+      foreach ($bg_text_color as $bg_text_color_item) {
+        $behavior['bg_color'] = $bg_text_color_mapping[$bg_text_color_item['value']];
+      }
+    }
+
+    // Text Background Color.
+    if (!empty($this->configuration['bg_attach'])) {
+      $bg_attach = $row->getSourceProperty($this->configuration['bg_attach']);
+      $bg_attach_mapping = [
+        'bg-attachment-fixed' => 'bg-fixed',
+        'bg-attachment-scroll' => '',
+      ];
+      foreach ($bg_attach as $bg_attach_item) {
+        $behavior['bg_attachment'] = $bg_attach_mapping[$bg_attach_item['value']];
+      }
+    }
+
+    if (!empty($this->configuration['media_mode'])) {
+      if (!empty($row->getSourceProperty($this->configuration['media_mode']))) {
+        $media_mode_mapping = [
+          'uaqs_bg_img_content_left' => 'col-md-8 col-lg-6',
+          'uaqs_bg_img_content_center' => 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3',
+          'uaqs_bg_img_content_right' => 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6',
+        ];
+      }
+      $behavior['position'] = $media_mode_mapping[$row->getSourceProperty($this->configuration['media_mode'])];
+    }
+
+    if (!empty($this->configuration['full_width'])) {
+      $behavior['full_width'] = $this->configuration['full_width'];
+    }
+
+    if (!empty($this->configuration['content_style'])) {
+      $behavior['style'] = $this->configuration['content_style'];
+    }
+
     if (!empty($this->configuration['card_width'])) {
       $behavior['card_width'] = $this->configuration['card_width'];
     }
