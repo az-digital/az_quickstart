@@ -88,6 +88,14 @@ class ParagraphsBehavior extends ProcessPluginBase {
       $behavior['position'] = $media_mode_mapping[$row->getSourceProperty($this->configuration['media_mode'])];
     }
 
+    if (!empty($this->configuration['full_width'])) {
+      $behavior['full_width'] = $this->configuration['full_width'];
+    }
+
+    if (!empty($this->configuration['content_style'])) {
+      $behavior['style'] = $this->configuration['content_style'];
+    }
+
     if (!empty($this->configuration['card_width'])) {
       $behavior['card_width'] = $this->configuration['card_width'];
     }

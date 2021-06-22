@@ -47,6 +47,8 @@ process:
     bg_text_color: field_uaqs_setting_text_bg_color
     bg_attach: field_uaqs_setting_bg_attach
     media_mode: view_mode
+    full_width: 1
+    content_style: column
 
 dependencies:
   enforced:
