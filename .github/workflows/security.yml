@@ -40,7 +40,7 @@ jobs:
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          composer require --no-update az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
       - name: Check dependencies for vulnerabilities
         uses: symfonycorp/security-checker-action@038cecb1ee1bf871d1ef43e873f813d900a1125c
@@ -67,7 +67,7 @@ jobs:
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          composer require --no-update az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
       - name: Run static code analysis
         run: |
