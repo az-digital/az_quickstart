@@ -26,7 +26,7 @@ class ParagraphsColumnImageFieldMerge extends ProcessPluginBase {
     if (isset($value[0])) {
       $media = Media::load($value[0]);
       if (!empty($media)) {
-        $value['value'] .= '<drupal-media data-align="center" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="az_large"></drupal-media>';
+        $value['value'] .= '<drupal-media data-align="none" data-entity-type="media" data-entity-uuid="' . $media->get('uuid')->value . '" data-view-mode="az_large"></drupal-media>';
       }
     }
     $hr_flag = 0;
