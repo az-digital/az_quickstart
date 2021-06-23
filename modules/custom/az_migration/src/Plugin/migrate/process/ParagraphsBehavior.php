@@ -77,15 +77,15 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
-    if (!empty($this->configuration['media_mode'])) {
-      if (!empty($row->getSourceProperty($this->configuration['media_mode']))) {
-        $media_mode_mapping = [
+    if (!empty($this->configuration['position'])) {
+      if (!empty($row->getSourceProperty($this->configuration['position']))) {
+        $position_mapping = [
           'uaqs_bg_img_content_left' => 'col-md-8 col-lg-6',
           'uaqs_bg_img_content_center' => 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3',
           'uaqs_bg_img_content_right' => 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6',
         ];
       }
-      $behavior['position'] = $media_mode_mapping[$row->getSourceProperty($this->configuration['media_mode'])];
+      $behavior['position'] = $position_mapping[$row->getSourceProperty($this->configuration['position'])];
     }
 
     if (!empty($this->configuration['full_width'])) {
