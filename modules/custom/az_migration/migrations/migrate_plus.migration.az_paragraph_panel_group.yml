@@ -1,0 +1,46 @@
+id: az_paragraph_panel_group
+label: AZ Paragraph Panel Groups
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_panel_group
+  field_collection_names: 'field_uaqs_panel'
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_accordion
+
+process:
+  field_az_accordion:
+    -
+      plugin: sub_process
+      source: field_uaqs_short_title
+      process:
+        delta: delta
+        title: value
+    -
+      plugin: paragraphs_field_property_mapping
+      key: body
+      field_name: field_uaqs_summary
+      value: value
+    -
+      plugin: paragraphs_field_property_mapping
+      key: body_format
+      value: az_standard
+    -
+      plugin: paragraphs_field_property_mapping
+      key: collapsed
+      field_name: field_uaqs_setting_collapse
+      value: value
+
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
