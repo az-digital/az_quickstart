@@ -84,8 +84,8 @@ class ParagraphsBehavior extends ProcessPluginBase {
           'uaqs_bg_img_content_center' => 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3',
           'uaqs_bg_img_content_right' => 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6',
         ];
+        $behavior['position'] = $media_mode_mapping[$row->getSourceProperty($this->configuration['position'])];
       }
-      $behavior['position'] = $position_mapping[$row->getSourceProperty($this->configuration['position'])];
     }
 
     if (!empty($this->configuration['full_width'])) {
