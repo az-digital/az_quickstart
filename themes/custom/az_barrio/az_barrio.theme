@@ -205,7 +205,7 @@ function az_barrio_preprocess_maintenance_page(&$variables) {
 function az_barrio_library_info_alter(&$libraries, $extension) {
   if ($extension === 'bootstrap_barrio' && isset($libraries['global-styling'])) {
     // Remove node styles.
-    unset($libraries['global-styling']['css']['component']['css/components/node.css']);
+    unset($libraries['node']['css']['component']['css/components/node.css']);
     // Remove table styles.
     unset($libraries['global-styling']['css']['component']['css/components/table.css']);
     // Remove sidebar styles.
