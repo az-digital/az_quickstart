@@ -158,35 +158,128 @@ az_barrio.settings:
       type: text
       label: 'Container'
     bootstrap_barrio_region_clean_alert:
-      type: integer
+      type: boolean
       label: 'Enable clean wrapper for alert region'
     bootstrap_barrio_region_class_alert:
       type: text
       label: 'Classes for alert region'
+    bootstrap_barrio_region_clean_header_ua_utilities:
+      type: boolean
+      label: 'Enable clean wrapper for arizona utilities region'
+    bootstrap_barrio_region_class_header_ua_utilities:
+      type: text
+      label: 'Classes for arizona utilities region'
+    bootstrap_barrio_region_clean_header_2:
+      type: boolean
+      label: 'Enable clean wrapper for header 2 region'
+    bootstrap_barrio_region_class_navigation:
+      type: text
+      label: 'Classes for arizona navigation region'
+    bootstrap_barrio_region_clean_navigation:
+      type: boolean
+      label: 'Enable clean wrapper for navigation region'
+    bootstrap_barrio_region_class_navigation_offcanvas:
+      type: text
+      label: 'Classes for arizona navigation off-canvas region'
+    bootstrap_barrio_region_clean_navigation_offcanvas:
+      type: boolean
+      label: 'Enable clean wrapper for navigation off-canvas region'
     bootstrap_barrio_region_clean_content_featured:
-      type: integer
+      type: boolean
       label: 'Enable clean wrapper for content featured region'
     bootstrap_barrio_region_class_content_featured:
       type: text
       label: 'Classes for content featured region'
+    bootstrap_barrio_region_clean_content_top:
+      type: boolean
+      label: 'Enable clean wrapper for content top region'
+    bootstrap_barrio_region_class_content_top:
+      type: text
+      label: 'Classes for content top region'
+    bootstrap_barrio_region_clean_content_2_col_1:
+      type: boolean
+      label: 'Enable clean wrapper for content 2 column 1 region'
+    bootstrap_barrio_region_class_content_2_col_1:
+      type: text
+      label: 'Classes for content 2 column 1 region'
+    bootstrap_barrio_region_clean_content_2_col_2:
+      type: boolean
+      label: 'Enable clean wrapper for content 2 column 2 region'
+    bootstrap_barrio_region_class_content_2_col_2:
+      type: text
+      label: 'Classes for content 2 column 2 region'
+    bootstrap_barrio_region_clean_content_3_col_1:
+      type: boolean
+      label: 'Enable clean wrapper for content 3 column 1 region region'
+    bootstrap_barrio_region_class_content_3_col_1:
+      type: text
+      label: 'Classes for content 3 column 1 region'
+    bootstrap_barrio_region_clean_content_3_col_2:
+      type: boolean
+      label: 'Enable clean wrapper for content 3 column 2 region region'
+    bootstrap_barrio_region_class_content_3_col_2:
+      type: text
+      label: 'Classes for content 3 column 2 region'
+    bootstrap_barrio_region_clean_content_3_col_3:
+      type: boolean
+      label: 'Enable clean wrapper for content 3 column 3 region region'
+    bootstrap_barrio_region_class_content_3_col_3:
+      type: text
+      label: 'Classes for content 3 column 3 region'
     bootstrap_barrio_region_clean_full_width_content_bottom:
-      type: integer
-      label: 'Enable clean wrapper for content bottom region'
+      type: boolean
+      label: 'Enable clean wrapper for full-width content bottom region'
     bootstrap_barrio_region_class_full_width_content_bottom:
+      type: text
+      label: 'Classes for full-width content bottom region'
+    bootstrap_barrio_region_clean_content_4_col_1:
+      type: boolean
+      label: 'Enable clean wrapper for content 4 column 1 region region'
+    bootstrap_barrio_region_class_content_4_col_1:
+      type: text
+      label: 'Classes for content 4 column 1 region'
+    bootstrap_barrio_region_clean_content_4_col_2:
+      type: boolean
+      label: 'Enable clean wrapper for content 4 column 2 region region'
+    bootstrap_barrio_region_class_content_4_col_2:
+      type: text
+      label: 'Classes for content 4 column 2 region'
+    bootstrap_barrio_region_clean_content_4_col_3:
+      type: boolean
+      label: 'Enable clean wrapper for content 4 column 3 region region'
+    bootstrap_barrio_region_class_content_4_col_3:
+      type: text
+      label: 'Classes for content 4 column 3 region'
+    bootstrap_barrio_region_clean_content_4_col_4:
+      type: boolean
+      label: 'Enable clean wrapper for content 4 column 4 region region'
+    bootstrap_barrio_region_class_content_4_col_4:
+      type: text
+      label: 'Classes for content 4 column 4 region'
+    bootstrap_barrio_region_clean_content_bottom:
+      type: boolean
+      label: 'Enable clean wrapper for content bottom region'
+    bootstrap_barrio_region_class_content_bottom:
       type: text
       label: 'Classes for content bottom region'
     bootstrap_barrio_region_clean_footer:
-      type: integer
+      type: boolean
       label: 'Enable clean wrapper for footer region'
     bootstrap_barrio_region_class_footer:
       type: text
       label: 'Classes for footer region'
     bootstrap_barrio_region_clean_footer_sub:
-      type: integer
+      type: boolean
       label: 'Enable clean wrapper for footer sub region'
     bootstrap_barrio_region_class_footer_sub:
       type: text
       label: 'Classes for footer sub region'
+    bootstrap_barrio_region_clean_az_page_bottom:
+      type: boolean
+      label: 'Enable clean wrapper for page bottom region'
+    bootstrap_barrio_region_class_az_page_bottom:
+      type: text
+      label: 'Classes for page bottom region'
     wordmark:
       type: boolean
       label: 'Enable wordmark logo'
