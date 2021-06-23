@@ -23,6 +23,7 @@ class ParagraphsMapFieldPropertyValue extends ProcessPluginBase {
     $key = $this->configuration['key'];
     $value_key = $this->configuration['value'];
     // Get the field values.
+
     if ($key === 'body_format' || $key === 'options') {
       $value[$key] = $value_key;
     }
