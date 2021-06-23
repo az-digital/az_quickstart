@@ -58,9 +58,9 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
     $uaqs_content_chunks_views_page_by_category = [
       'view' => 'az_page_by_category',
       'display' => [
-        'default' => 'grid',
-        'page' => 'grid',
-        'page_1' => 'row',
+        'default' => 'row',
+        'page' => 'row',
+        'page_1' => 'grid',
       ],
     ];
     $view_mapping = [
