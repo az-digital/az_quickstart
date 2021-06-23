@@ -81,7 +81,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
         $card_width_sm = [
           '1' => 'col-sm-12',
           '2' => 'col-sm-6',
-          '3' => 'col-sm-4',
+          '3' => 'col-sm-6',
           '4' => 'col-sm-3',
         ];
         $card_count = count($card_count_field);
