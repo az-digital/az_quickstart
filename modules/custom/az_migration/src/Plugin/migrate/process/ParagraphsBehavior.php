@@ -82,7 +82,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
           '1' => 'col-sm-12',
           '2' => 'col-sm-6',
           '3' => 'col-sm-6',
-          '4' => 'col-sm-3',
+          '4' => 'col-sm-6',
         ];
         $card_count = count($card_count_field);
         $behavior['card_width'] = $card_width[$card_count];
