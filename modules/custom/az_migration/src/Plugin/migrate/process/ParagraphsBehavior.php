@@ -92,9 +92,9 @@ class ParagraphsBehavior extends ProcessPluginBase {
 
     if (!empty($row->getSourceProperty('view_mode'))) {
       $card_style_map = [
-        'default' => 'card card-borderless',
-        'full' => 'card card-borderless',
-        'token' => 'card card-borderless',
+        'default' => 'card',
+        'full' => 'card',
+        'token' => 'card',
         'uaqs_landing_grid' => 'card card-borderless',
         'uaqs_borderless_card' => 'card card-borderless',
       ];
