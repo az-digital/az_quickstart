@@ -20,8 +20,16 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
+    // Collecting the view data field values.
+    $view_data = [];
+
     // Getting view name and display name.
     $view_display = explode("|", $value['vname']);
+
+    // View argument mapping.
+    if ($value['vargs'] != "") {
+      $view_data['argument'] = $value['vargs'];
+    }
 
     $value = [];
     $uaqs_events = [
@@ -81,8 +89,10 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
 
     // Setting Items per page: 6 for 3 Column news block.
     if ($view_display[0] === 'uaqs_news' && $view_display[1] === 'three_col_news_block') {
-      $value['data'] = serialize(['limit' => 6]);
+      $view_data['limit'] = 6;
     }
+
+    $value['data'] = serialize($view_data);
 
     return $value;
   }
