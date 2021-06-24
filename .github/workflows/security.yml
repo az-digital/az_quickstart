@@ -23,6 +23,11 @@ jobs:
           else
             echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
           fi
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
+            echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          else
+            echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
+          fi
       - name: Clone scaffolding repo
         uses: actions/checkout@v2
         with:
@@ -35,6 +40,7 @@ jobs:
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
+          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
       - name: Check dependencies for vulnerabilities
         uses: symfonycorp/security-checker-action@038cecb1ee1bf871d1ef43e873f813d900a1125c
@@ -55,11 +61,13 @@ jobs:
       - name: Install dependencies
         run: |
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$AZ_TRIMMED_REF"; else DEV_PACKAGE_BRANCH=main; fi
           git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
           cd az-quickstart-scaffolding
           composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
           composer config use-github-api false
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
+          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
       - name: Run static code analysis
         run: |
