@@ -63,7 +63,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
-    // Text Background Color.
+    // Background Attchement.
     if (!empty($this->configuration['bg_attach'])) {
       $bg_attach = $row->getSourceProperty($this->configuration['bg_attach']);
       $bg_attach_mapping = [
@@ -75,6 +75,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
+    // Media Position.
     if (!empty($this->configuration['position'])) {
       if (!empty($row->getSourceProperty($this->configuration['position']))) {
         $position_mapping = [
