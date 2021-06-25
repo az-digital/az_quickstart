@@ -1,57 +1,61 @@
 {
-    "images": [
-      {
-        "filename" : "placeduck10.jpg",
-        "alt" : "Anders And"
+  "images": [
+    {
+      "filename" : "placeduck10.jpg",
+      "alt" : "Anders And"
+    },
+    {
+      "filename" : "placeduck01.jpg",
+      "alt" : "Grimme Ælling"
+    },
+    {
+      "filename" : "placeduck04.jpg",
+      "alt" : "José An'ersen"
+    },
+    {
+      "filename" : "placeduck11.jpg",
+      "alt" : "Albertina Quack"
+    },
+    {
+      "filename" : "placeduck05.jpg",
+      "alt" : "Alcofribas Nasier"
       },
-      {
-        "filename" : "placeduck01.jpg",
-        "alt" : "Grimme Ælling"
+    {
+      "filename" : "placeduck07.jpg",
+      "alt" : "Thomas Urquhart"
       },
-      {
-        "filename" : "placeduck04.jpg",
-        "alt" : "José An'ersen"
-      },
-      {
-        "filename" : "placeduck11.jpg",
-        "alt" : "Albertina Quack"
-      },
-      {
-        "filename" : "placeduck05.jpg",
-        "alt" : "Alcofribas Nasier"
-       },
-      {
-        "filename" : "placeduck07.jpg",
-        "alt" : "Thomas Urquhart"
-       },
-      {
-        "filename" : "placeduck06.jpg",
-        "alt" : "Janet Horne"
-      },
-      {
-        "filename" : "placeduck08.jpg",
-        "alt" : "Antonio de Espinosa"
-      },
-      {
-        "filename" : "placeduck02.jpg",
-        "alt" : "Barbara Strozzi"
-      },
-      {
-        "filename" : "placeduck03.jpg",
-        "alt" : "Urania Muse"
-      },
-      {
-        "filename" : "placeduck09.jpg",
-        "alt" : "Donald Giovanni"
-      },
-      {
-        "filename" : "wilbur-wildcat.jpg",
-        "alt" : "Wilbur Wildcat"
-      },
-      {
-        "filename" : "wilma-wildcat.jpg",
-        "alt" : "Wilma Wildcat"
-      }
-    ]
-  }
-  
+    {
+      "filename" : "placeduck06.jpg",
+      "alt" : "Janet Horne"
+    },
+    {
+      "filename" : "placeduck08.jpg",
+      "alt" : "Antonio de Espinosa"
+    },
+    {
+      "filename" : "placeduck02.jpg",
+      "alt" : "Barbara Strozzi"
+    },
+    {
+      "filename" : "placeduck03.jpg",
+      "alt" : "Urania Muse"
+    },
+    {
+      "filename" : "placeduck09.jpg",
+      "alt" : "Donald Giovanni"
+    },
+    {
+      "filename" : "wilbur-wildcat.jpg",
+      "alt" : "Wilbur Wildcat"
+    },
+    {
+      "filename" : "wilma-wildcat.jpg",
+      "alt" : "Wilma Wildcat"
+    },
+    {
+      "filename" : "lynx.jpg",
+      "alt" : "Two lynxes cuddling"
+    }
+  ]
+}
+
