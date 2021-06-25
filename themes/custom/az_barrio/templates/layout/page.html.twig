@@ -134,28 +134,30 @@
           <div class="container">
             <div class="row">
               {% if az_barrio_navbar_offcanvas %}
-              <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
-                <div class="navbar-offcanvas-header">
-                  <div class="bg-chili d-flex justify-content-between align-items-center bg-">
-                    <a href="/" class="btn btn-redbar">
-                      <span class="icon material-icons-sharp"> home </span>
-                      <span class="icon-text"> home </span>
-                    </a>
-                    <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
-                      <span class="icon material-icons-sharp"> close </span>
-                      <span class="icon-text"> close </span>
-                    </button>
-                  </div>
-                  {% if page.navigation_offcanvas %}
-                    {{ page.navigation_offcanvas }}
-                  {% endif %}
-              </div>
-              {% endif %}
-                {% if page.navigation %}
-                  {{ page.navigation }}
+              <div class="col-lg">
+                <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
+                  <div class="navbar-offcanvas-header">
+                    <div class="bg-chili d-flex justify-content-between align-items-center">
+                      <a href="/" class="btn btn-redbar">
+                        <span class="icon material-icons-sharp"> home </span>
+                        <span class="icon-text"> home </span>
+                      </a>
+                      <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
+                        <span class="icon material-icons-sharp"> close </span>
+                        <span class="icon-text"> close </span>
+                      </button>
+                    </div>
+                    {% if page.navigation_offcanvas %}
+                      {{ page.navigation_offcanvas }}
+                    {% endif %}
+                </div>
                 {% endif %}
+                  {% if page.navigation %}
+                    {{ page.navigation }}
+                  {% endif %}
               {% if az_barrio_navbar_offcanvas %}
-              </nav>
+                </nav>
+              </div>
               {% endif %}
             </div>
             {% if page.help %}
