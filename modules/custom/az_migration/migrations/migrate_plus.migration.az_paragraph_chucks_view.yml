@@ -1,0 +1,28 @@
+id: az_paragraph_chucks_view
+label: AZ Paragraph Chunks View
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_content_chunks_view
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_view_reference
+
+process:
+
+  field_az_view_reference:
+    plugin: paragraphs_chunks_view_display_mapping
+    source: field_uaqs_view
+
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
