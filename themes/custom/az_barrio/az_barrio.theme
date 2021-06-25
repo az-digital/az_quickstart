@@ -105,10 +105,8 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
   }
-  $variables['navbar_offcanvas_attributes'] = [
-    'class' => [ 'navbar-offcanvas' ],
-    'id' => 'navbar-top',
-  ];
+  $variables['navbar_offcanvas_attributes']['id'] = 'navbar-top';
+  $variables['navbar_offcanvas_attributes']['class'][] = 'navbar-offcanvas';
 
   // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
