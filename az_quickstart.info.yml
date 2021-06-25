@@ -1,7 +1,6 @@
 name: Arizona Quickstart
 type: profile
 description: 'The University of Arizona Quickstart Installation Profile'
-version: 0.0.1
 core_version_requirement: ^8.8 || ^9
 
 distribution:
@@ -20,6 +19,7 @@ install:
   - az_core
   - az_flexible_page
   - az_flexible_block
+  - az_metrics
   - az_news
   - az_person
   - az_event
@@ -69,6 +69,7 @@ install:
   - bootstrap_utilities:bootstrap_utilities
   - exclude_node_title:exclude_node_title
   - search_exclude:search_exclude
+  - draggableviews:draggableviews
 
 themes:
   - az_barrio

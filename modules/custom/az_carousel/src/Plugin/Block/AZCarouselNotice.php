@@ -27,7 +27,7 @@ class AZCarouselNotice extends BlockBase {
   public function build() {
 
     return [
-      '#markup' => '<div class="container"><div class="row"><div class="col-12"><div class="callout callout-leaf"><p><strong>Need to edit your carousel items?</strong></p><p>Use the button below to edit your carousel items.</p><p><a class="btn btn-success" href="/admin/content?title=&type=az_carousel_item">Edit Carousel Items</a></p></div></div></div></div>',
+      '#markup' => '<div class="container"><div class="row"><div class="col-12"><div class="callout callout-leaf"><p><strong>Need to modify your carousel items?</strong></p><p>Use the buttons below to modify your carousel items.</p><p><a class="btn btn-success" href="/admin/content?title=&type=az_carousel_item">Edit Carousel Items</a>&nbsp;<a class="btn btn-success" href="/admin/az-carousel/reorder-carousel-items">Reorder Carousel Items</a></p></div></div></div></div>',
     ];
   }
 

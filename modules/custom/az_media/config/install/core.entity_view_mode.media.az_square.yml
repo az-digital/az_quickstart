@@ -4,6 +4,6 @@ dependencies:
   module:
     - media
 id: media.az_square
-label: Square
+label: 'Square (220X220px)'
 targetEntityType: media
 cache: true

@@ -76,7 +76,7 @@ content:
       edit_mode: open
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: '_none'
+      default_paragraph_type: _none
     third_party_settings: {  }
     region: content
   field_az_event_category:
@@ -88,20 +88,20 @@ content:
   field_az_event_date:
     weight: 11
     settings:
-      show_extra: true
+      show_extra: false
       modal: false
       default_duration: 60
       default_duration_increments: "30\n60|1 hour\n90\n120|2 hours\ncustom"
     third_party_settings:
       smart_date_recur:
-        modal: '1'
+        modal: true
         allowed_recur_freq_values:
           DAILY: DAILY
           WEEKLY: WEEKLY
           MONTHLY: MONTHLY
           YEARLY: YEARLY
-          MINUTELY: 0
-          HOURLY: 0
+          MINUTELY: '0'
+          HOURLY: '0'
     type: smartdate_default
     region: content
   field_az_link:

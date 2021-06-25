@@ -1,0 +1,36 @@
+id: az_paragraph_full_width_bg_wrapper
+label: AZ Paragraph Full Width BG Wrapper
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_full_width_bg_wrapper
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text_background
+
+process:
+  field_az_text_area:
+    -
+      plugin: sub_process
+      source: field_uaqs_summary
+      process:
+        delta: delta
+        value: value
+        format:  
+          plugin: default_value
+          default_value: az_standard
+
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
+    bg_color: field_uaqs_background_color
+    bg_pattern: field_uaqs_background_pattern
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
