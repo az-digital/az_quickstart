@@ -514,6 +514,27 @@ a.nolink + ul .sf-clone-parent {
     color: #333;
   }
 
+  .region-sidebar-first .menu > li > a:hover,
+  .region-sidebar-first .menu > li > a:focus,
+  .region-sidebar-first .menu > li.active a,
+  .region-sidebar-first .menu > li a.active {
+    background: url("../images/sidebar-menu-chevron-left.png") no-repeat scroll 100% center/30px 100% #dee8e7;
+    border-bottom: 0 solid transparent;
+    color: #076873;
+    text-decoration: none;
+  }
+
+  .region-sidebar-second .menu > li > a:hover,
+  .region-sidebar-second .menu > li > a:focus,
+  .region-sidebar-second .menu > li.active a,
+  .region-sidebar-second .menu > li a.active {
+    background: url("../images/sidebar-menu-chevron-right.png") no-repeat scroll 0 center/30px 100% #dee8e7;
+    border-bottom: 0 solid transparent;
+    color: #076873;
+    text-decoration: none;
+  }
+}
+
 .region-sidebar-first .block,
 .region-sidebar-second .block {
   margin-bottom: 24px !important;
