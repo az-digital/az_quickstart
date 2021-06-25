@@ -46,7 +46,6 @@
         {%
           set link_classes = [
             'nav-link',
-            item.in_active_trail ? 'active',
             item.url.getOption('attributes').class ? item.url.getOption('attributes').class | join(''),
             'nav-link-' ~ item.url.toString() | clean_class,
           ]
