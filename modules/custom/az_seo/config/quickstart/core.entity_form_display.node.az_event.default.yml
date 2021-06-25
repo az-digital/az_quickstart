@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_metatag
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -18,6 +19,7 @@ dependencies:
     - file
     - link
     - media_library
+    - metatag
     - paragraphs
     - path
     - smart_date
@@ -69,7 +71,7 @@ content:
     region: content
   field_az_contacts:
     type: entity_reference_paragraphs
-    weight: 29
+    weight: 16
     settings:
       title: Contact
       title_plural: Contacts
@@ -91,7 +93,13 @@ content:
       show_extra: false
       modal: false
       default_duration: 60
-      default_duration_increments: "30\n60|1 hour\n90\n120|2 hours\ncustom"
+      default_duration_increments: |-
+        30
+        60|1 hour
+        90
+        120|2 hours
+        custom
+      hide_date: true
     third_party_settings:
       smart_date_recur:
         modal: true
@@ -120,6 +128,13 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
+  field_az_metatag:
+    type: metatag_firehose
+    weight: 17
+    region: content
+    settings:
+      sidebar: true
+    third_party_settings: {  }
   field_az_photos:
     type: media_library_widget
     weight: 10
