@@ -504,14 +504,3 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
 }
-
-/**
- * Allows region-specific templates.
- */
-function az_barrio_theme_suggestions_block_alter(array &$suggestions, array $variables) {
-  if (isset($variables['elements']['#id']) && !empty($variables['elements']['#id'])) {
-    $block_storage = \Drupal::entityTypeManager()->getStorage('block') ;
-    $block = $block_storage->load($variables['elements']['#id']);
-    $suggestions[] = 'block__' . $block->getRegion() . '__' . $variables['elements']['#id'];
-  }
-}
