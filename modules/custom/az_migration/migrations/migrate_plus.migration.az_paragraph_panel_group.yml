@@ -30,7 +30,7 @@ process:
     -
       plugin: paragraphs_field_property_mapping
       key: body_format
-      value: az_standard
+      default_value: az_standard
     -
       plugin: paragraphs_field_property_mapping
       key: collapsed
