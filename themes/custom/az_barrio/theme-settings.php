@@ -183,11 +183,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     ],
     '#default_value' => theme_get_setting('az_barrio_az_icons_source'),
   ];
-  $form['fonts']['icons']['az_barrio_icons']['external_links'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use AZ Bootstrap external links styling.'),
-    '#default_value' => theme_get_setting('external_links'),
-  ];
+
   // AZ Bootstrap settings.
   $form['azbs_settings'] = [
     '#type' => 'details',

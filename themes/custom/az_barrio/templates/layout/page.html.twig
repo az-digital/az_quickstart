@@ -1,5 +1,3 @@
-{% extends "@bootstrap_barrio/layout/page.html.twig" %}
-
 {#
 /**
  * @file
@@ -65,11 +63,12 @@
  * - page.page_bottom: Items for the very bottom of the page.
  *
  * Theme variables:
- * - navbar_top_attributes: Items for the header region.
- * - navbar_attributes: Items for the header region.
- * - content_attributes: Items for the header region.
- * - sidebar_first_attributes: Items for the highlighted region.
- * - sidebar_second_attributes: Items for the primary menu region.
+ * - navbar_offcanvas_attributes: Attributes for the navbar_top region.
+ * - navbar_top_attributes: Attributes for the navbar_top region.
+ * - navbar_attributes: Attributes for the navbar region.
+ * - content_attributes: Attributes for the content region.
+ * - sidebar_first_attributes: Attributes for the sidebar_first region.
+ * - sidebar_second_attributes: Attributes for the sidebar_second region.
  *
  * @see template_preprocess_page()
  * @see bootstrap_barrio_preprocess_page()
@@ -77,13 +76,13 @@
  */
 #}
 
-{% block head %}
+<div id="page-wrapper">
+  <div id="page">
+    <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
         {% if page.alert %}
         <div class="{{ container }}">
           <div class="row">
-            <div class="col">
-              {{ page.alert }}
-            </div>
+            {{ page.alert }}
           </div>
         </div>
         {% endif %}
@@ -121,9 +120,7 @@
               </div>
               <div class="col-12 col-sm-6 col-lg-8">
                 <div class="row">
-                  <div class="col">
-                    {{ page.header }}
-                  </div>
+                  {{ page.header }}
                 </div>
                 {% if page.header_2 %}
                 <div class="row">
@@ -135,58 +132,81 @@
           </div> <!-- /.container -->
 
           <div class="container">
-            {% if az_barrio_navbar_offcanvas %}
-            <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
-              <div class="navbar-offcanvas-header">
-                <div class="bg-chili d-flex justify-content-between align-items-center bg-">
-                  <a href="/" class="btn btn-redbar">
-                    <span class="icon material-icons-sharp"> home </span>
-                    <span class="icon-text"> home </span>
-                  </a>
-                  <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
-                    <span class="icon material-icons-sharp"> close </span>
-                    <span class="icon-text"> close </span>
-                  </button>
+            <div class="row">
+              {% if az_barrio_navbar_offcanvas %}
+              <div class="col-lg">
+                <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
+                  <div class="navbar-offcanvas-header">
+                    <div class="bg-chili d-flex justify-content-between align-items-center">
+                      <a href="/" class="btn btn-redbar">
+                        <span class="icon material-icons-sharp"> home </span>
+                        <span class="icon-text"> home </span>
+                      </a>
+                      <button data-toggle="offcanvas" type="button" data-target="#navbarOffcanvasDemo" aria-controls="navbarOffcanvasDemo" class="btn btn-redbar">
+                        <span class="icon material-icons-sharp"> close </span>
+                        <span class="icon-text"> close </span>
+                      </button>
+                    </div>
+                    {% if page.navigation_offcanvas %}
+                      {{ page.navigation_offcanvas }}
+                    {% endif %}
                 </div>
-                {% if page.navigation_offcanvas %}
-                  {{ page.navigation_offcanvas }}
                 {% endif %}
-             </div>
-            {% endif %}
-              {% if page.navigation %}
-                {{ page.navigation }}
+                  {% if page.navigation %}
+                    {{ page.navigation }}
+                  {% endif %}
+              {% if az_barrio_navbar_offcanvas %}
+                </nav>
+              </div>
               {% endif %}
-            {% if az_barrio_navbar_offcanvas %}
-            </nav>
+            </div>
+            {% if page.help %}
+              <div class="row">
+                {{ page.help }}
+              </div>
             {% endif %}
           </div>
         </div>
-{% endblock %}
+    </header>
+    {% if page.featured_top %}
+        <div class="featured-top">
+          <aside class="featured-top__inner section {{ container }} clearfix" role="complementary">
+            {{ page.featured_top }}
+          </aside>
+        </div>
+    {% endif %}
 
-{% block content %}
+
+    <div id="main-wrapper" class="layout-main-wrapper clearfix">
         <div id="main" role="main">
           {% if page.content_featured %}
           <section id="content_featured">
             {{ page.content_featured }}
           </section>
           {% endif %}
-          {% if page.breadcrumb or page.content_top %}
+          {% if page.breadcrumb or page.content_top or page.highlighted %}
           <div class="{{ container }}">
+            {% if page.highlighted %}
             <div class="row">
-              <div class="col" aria-label="breadcrumb">
-                {{ page.breadcrumb }}
-                {{ page.content_top }}
-              </div>
+              {{ page.highlighted }}
             </div>
+            {% endif %}
+            {% if page.breadcrumb %}
+            <div class="row">
+              {{ page.breadcrumb }}
+            </div>
+            {% endif %}
+            {% if page.breadcrumb %}
+            <div class="row">
+              {{ page.content_top }}
+            </div>
+            {% endif %}
           </div>
           {% endif %}
           <div class="{{ container }}">
             <div class="row row-offcanvas row-offcanvas-left clearfix">
               <main{{ content_attributes }}>
-                <section class="section">
-                  <a id="main-content" tabindex="-1"></a>
-                  {{ page.content }}
-                </section>
+                {{ page.content }}
               </main>
               {% if page.sidebar_first %}
               <div{{ sidebar_first_attributes }}>
@@ -208,61 +228,50 @@
           {% if page.content_2_col_1 or page.content_2_col_2 %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col-md-6">
-                {{ page.content_2_col_1 }}
-              </div>
-              <div class="col-md-6">
-                {{ page.content_2_col_2 }}
-              </div>
+              {{ page.content_2_col_1 }}
+              {{ page.content_2_col_2 }}
             </div>
           </div>
           {% endif %}
           {% if page.content_3_col_1 or page.content_3_col_2 or page.content_3_col_3 %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col-md-4">
-                {{ page.content_3_col_1 }}
-              </div>
-              <div class="col-md-4">
-                {{ page.content_3_col_2 }}
-              </div>
-              <div class="col-md-4">
-                {{ page.content_3_col_3 }}
-              </div>
+              {{ page.content_3_col_1 }}
+              {{ page.content_3_col_2 }}
+              {{ page.content_3_col_3 }}
             </div>
           </div>
           {% endif %}
           {% if page.content_bottom %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col">
-                {{ page.content_bottom }}
-              </div>
+              {{ page.content_bottom }}
             </div>
           </div>
           {% endif %}
           {% if page.content_4_col_1 or page.content_4_col_2 or page.content_4_col_3 or page.content_4_col_4 %}
           <div class="{{ container }}">
             <div class="row">
-              <div class="col-md-3">
                 {{ page.content_4_col_1 }}
-              </div>
-              <div class="col-md-3">
                 {{ page.content_4_col_2 }}
-              </div>
-              <div class="col-md-3">
                 {{ page.content_4_col_3 }}
-              </div>
-              <div class="col-md-3">
                 {{ page.content_4_col_4 }}
-              </div>
             </div>
           </div>
           {% endif %}
         </div>
-{% endblock %}
+    </div>
+    {% if page.featured_bottom_first or page.featured_bottom_second or page.featured_bottom_third %}
+      <div class="featured-bottom">
+        <aside class="{{ container }} clearfix" role="complementary">
+          {{ page.featured_bottom_first }}
+          {{ page.featured_bottom_second }}
+          {{ page.featured_bottom_third }}
+        </aside>
+      </div>
+    {% endif %}
+    <footer class="site-footer">
 
-{% block footer %}
         {% if page.footer or page.footer_sub or footer_logo %}
         <div class="bg-warm-gray py-5" role="contentinfo">
           {% if page.footer or footer_logo %}
@@ -279,11 +288,9 @@
                   </div>
                 {% endif %}
                 {% if page.footer %}
-                  <!-- Add the extra clearfix for only the required viewport -->
-                  <div class="clearfix visible-xs-block"></div>
-                  <div class="col-12 col-sm-7 col-md-8 col-lg-8">
-                    {{ page.footer }}
-                  </div>
+                  <!-- Force next columns to break to new line at md breakpoint and up -->
+                  <div class="w-100 d-block d-sm-none"></div>
+                  {{ page.footer }}
                 {% endif %}
                 <div class="col-12">
                   <hr>
@@ -312,4 +319,9 @@
           {% endif %}
         </div>
         {% endif %}
-{% endblock %}
+    </footer>
+    {% if page.az_page_bottom %}
+    {{ page.az_page_bottom }}
+    {% endif %}
+  </div>
+</div>
