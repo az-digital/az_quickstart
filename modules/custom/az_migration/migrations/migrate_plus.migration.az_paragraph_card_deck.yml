@@ -41,8 +41,7 @@ process:
     -
       plugin: paragraphs_field_property_mapping
       key: body_format
-      field_name: field_uaqs_summary
-      value: az_standard
+      default_value: az_standard
     -
       plugin: paragraphs_field_property_mapping
       key: link_title
