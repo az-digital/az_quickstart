@@ -65,7 +65,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
-    // Text Background Color.
+    // Background Attachment.
     if (!empty($this->configuration['bg_attach'])) {
       $bg_attach = $row->getSourceProperty($this->configuration['bg_attach']);
       $bg_attach_mapping = [
