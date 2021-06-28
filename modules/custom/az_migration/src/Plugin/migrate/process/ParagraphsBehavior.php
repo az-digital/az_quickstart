@@ -59,7 +59,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
         'bg-transparent' => 'transparent',
         'bg-trans-white' => 'light',
         'bg-trans-sky' => 'light',
-        'bg-trans-arizona-blue' => 'dark'
+        'bg-trans-arizona-blue' => 'dark',
         'bg-trans-black' => 'dark',
       ];
       foreach ($bg_text_color as $bg_text_color_item) {
