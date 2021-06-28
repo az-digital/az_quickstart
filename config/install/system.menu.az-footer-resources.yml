@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-footer-resources
+label: 'Footer - Resources'
+description: 'Generally contains navigation links institution-level resources.'
+locked: false

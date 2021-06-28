@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-footer-topics
+label: 'Footer - Topics'
+description: 'Generally contains institution-level navigation links to topic pages on Arizona.edu.'
+locked: false

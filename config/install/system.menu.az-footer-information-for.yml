@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-footer-information-for
+label: 'Footer - Information For'
+description: 'Generally contains institution-level navigation links to audience-based sections of Arizona.edu (e.g. current students, faculty).'
+locked: false

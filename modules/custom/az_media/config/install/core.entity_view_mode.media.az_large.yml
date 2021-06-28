@@ -4,6 +4,6 @@ dependencies:
   module:
     - media
 id: media.az_large
-label: Large
+label: 'Large (1140px)'
 targetEntityType: media
 cache: true

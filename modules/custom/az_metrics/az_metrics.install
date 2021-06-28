@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Contains az_metrics.install.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function az_metrics_schema() {
+  $schema['az_metrics_domains'] = [
+    'description' => 'Stores gathered domain data.',
+    'fields' => [
+      'domain' => [
+        'description' => 'The domain to store.',
+        'type' => 'varchar_ascii',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ],
+      'last_seen' => [
+        'description' => 'The last time this domain was accessed on this site.',
+        'type' => 'int',
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => [
+      'domain',
+    ],
+    'indexes' => [
+      'domain' => [
+        'domain',
+      ],
+    ],
+  ];
+
+  return $schema;
+}
