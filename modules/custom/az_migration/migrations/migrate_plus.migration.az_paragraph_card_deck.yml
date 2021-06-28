@@ -55,7 +55,7 @@ process:
     -
       plugin: paragraphs_field_property_mapping
       key: options
-      value: 
+      default_value: 
         class: 'bg-white'
 
   behavior_settings:
