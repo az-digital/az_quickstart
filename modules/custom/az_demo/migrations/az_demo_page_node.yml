@@ -67,6 +67,7 @@ process:
       plugin: migration_lookup
       migration:
         - az_demo_text_paragraph
+        - az_demo_text_background_paragraph
       source: '@pseudo_exploded_paragraphs'
 
 
@@ -92,6 +93,7 @@ migration_dependencies:
   required:
     - az_demo_image_file
     - az_demo_text_paragraph
+    - az_demo_text_background_paragraph
 
 dependencies:
   enforced:

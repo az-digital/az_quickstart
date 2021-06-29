@@ -1,0 +1,42 @@
+{
+    "paragraphs": [
+        {
+            "id":2,
+            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Arizona Red<\/h2>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Background Pattern: Triangles Centered<\/span><\/p>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Full-width: Not checked<\/span><\/p>",
+            "bg_color" : [{"value":"bg-red"}],
+            "bg_pattern" : [{"value":"bg-triangles-centered"}]
+        },
+        {
+            "id":3,
+            "az_text_area" : "<h2>Background Color: Cool Gray<\/h2>\r\n\r\n<p><span class=\"lead\">Background Pattern: Trilines<\/span><\/p>\r\n\r\n<p><span class=\"lead\">Full-width: Checked<\/span><\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
+            "full_width" : "full-width-background",
+            "bg_color" : [{"value":"bg-cool-gray"}],
+            "bg_pattern" : [{"value":"trilines"}]
+        },
+        {
+            "id":8,
+            "az_text_area" : "<p>Text with Background can be added to any Page to enhance your page content. Customization options are available for background color, background pattern, and full or content width backgrounds.<\/p>\r\n\r\n<p><a href=\"https:\/\/digital.arizona.edu\/arizona-bootstrap\/docs\/2.0\/components\/background-wrappers\/#live-demo\">View all&nbsp;background color and pattern combinations<\/a><\/p>\r\n\r\n<h2>Accessibile Color Combinations<\/h2>\r\n\r\n<p>It's up to YOU to ensure text colors are legible on your selected background color! We created a handy tool for you to see which brand colors pass the accessibility guidelines.<\/p>\r\n\r\n<p><a href=\"https:\/\/digital.arizona.edu\/arizona-bootstrap\/docs\/2.0\/getting-started\/color-contrast\/#university-standards\">View our color accessibility tool<\/a>&nbsp;and check the \"Hide inaccessible color combinations.\" box.<\/p>\r\n\r\n<h2>Examples<\/h2>\r\n",
+            "bg_color" : [{"value":"bg-azurite"}],
+            "bg_pattern" : [{"value":"bg-triangles-top-left"}]
+        },
+        {
+            "id":9,
+            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: River<\/h2>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Background Pattern: None<\/span><\/p>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Full-width: Checked<\/span><\/p>\r\n",
+            "full_width" : "full-width-background",
+            "bg_color" : [{"value":"bg-river"}],
+            "bg_pattern" : [{"value":""}]
+        },
+        {
+            "id":12,
+            "az_text_area" : "<p>Text is the most common type of Page element. It can do wonderful things like style text, embed images and files, make lists, and add tables and grids. Below are some examples of what this \"What You See is What You Get\" (WYSIWYG) editor can do.<\/p>\r\n",
+            "bg_color" : [{"value":""}],
+            "bg_pattern" : [{"value":""}]
+        },
+        {
+            "id":14,
+            "az_text_area" : "<h2>Background Color: Midnight<\/h2>\r\n\r\n<p><span class=\"lead\">Background Pattern: Triangles Right<\/span><\/p>\r\n\r\n<p><span class=\"lead\">Full-width: Not checked<\/span><\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
+            "bg_color" : [{"value":"bg-midnight"}],
+            "bg_pattern" : [{"value":"bg-triangles-top-right"}]
+        }
+    ]
+}

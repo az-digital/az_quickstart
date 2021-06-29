@@ -49,6 +49,10 @@ class ParagraphsBehavior extends ProcessPluginBase {
         }
       }
     }
+
+    if (!empty($this->configuration['text_background_full_width']) && $row->getSourceProperty($this->configuration['text_background_full_width']) != false) {
+      $behavior['az_text_background_paragraph_behavior']['text_background_full_width'] = $row->getSourceProperty($this->configuration['text_background_full_width']);
+    }
     if (!empty($this->configuration['card_width'])) {
       $behavior['card_width'] = $this->configuration['card_width'];
     }
