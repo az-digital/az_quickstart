@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-header-resources
+label: 'Header - Resources'
+description: 'Contains institution-level links that appear in the Resources dropdown in the header region.'
+locked: false

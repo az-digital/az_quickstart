@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - menu_block
+  theme:
+    - az_barrio
+id: az_barrio_header_menu_resources
+theme: az_barrio
+region: header_ua_utilities
+weight: 3
+provider: null
+plugin: 'menu_block:az-header-resources'
+settings:
+  id: 'menu_block:az-header-resources'
+  label: Resources
+  provider: menu_block
+  label_display: visible
+  level: 1
+  depth: 1
+  expand_all_items: true
+  suggestion: header
+  label_type: root
+visibility: {  }
