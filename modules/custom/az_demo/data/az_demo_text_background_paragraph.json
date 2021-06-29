@@ -27,12 +27,6 @@
             "bg_pattern" : [{"value":""}]
         },
         {
-            "id":12,
-            "az_text_area" : "<p>Text is the most common type of Page element. It can do wonderful things like style text, embed images and files, make lists, and add tables and grids. Below are some examples of what this \"What You See is What You Get\" (WYSIWYG) editor can do.<\/p>\r\n",
-            "bg_color" : [{"value":""}],
-            "bg_pattern" : [{"value":""}]
-        },
-        {
             "id":14,
             "az_text_area" : "<h2>Background Color: Midnight<\/h2>\r\n\r\n<p><span class=\"lead\">Background Pattern: Triangles Right<\/span><\/p>\r\n\r\n<p><span class=\"lead\">Full-width: Not checked<\/span><\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
             "bg_color" : [{"value":"bg-midnight"}],
