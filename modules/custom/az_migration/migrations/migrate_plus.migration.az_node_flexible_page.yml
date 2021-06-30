@@ -151,3 +151,4 @@ migration_dependencies:
     - az_paragraph_single_card
     - az_paragraph_well
     - az_paragraph_card_deck
+    - az_paragraph_flexible_page_sub
