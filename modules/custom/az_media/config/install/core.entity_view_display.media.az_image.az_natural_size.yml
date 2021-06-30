@@ -42,7 +42,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: fig-caption
+        classes: figure-caption
         element: figcaption
         show_label: false
         label_element: h3

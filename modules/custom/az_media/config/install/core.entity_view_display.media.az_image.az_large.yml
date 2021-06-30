@@ -43,7 +43,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: fig-caption
+        classes: figure-caption
         element: figcaption
         show_label: false
         label_element: h3
@@ -64,11 +64,11 @@ third_party_settings:
         show_label: false
         label_element: h3
         label_element_classes: ''
-        attributes: small
+        attributes: ''
         effect: none
         speed: fast
         id: ''
-        classes: ''
+        classes: small
       label: Cite
 id: media.az_image.az_large
 targetEntityType: media
