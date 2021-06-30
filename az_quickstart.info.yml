@@ -23,7 +23,6 @@ install:
   - az_news
   - az_person
   - az_event
-  - az_demo
   - az_seo
   - drupal:node
   - drupal:history
