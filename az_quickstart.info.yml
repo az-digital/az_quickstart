@@ -58,6 +58,7 @@ install:
   - drupal:field_ui
   - drupal:file
   - drupal:rdf
+  - drupal:view_unpublished
   - drupal:views
   - drupal:views_ui
   - drupal:tour
