@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.media.az_image.field_az_caption
+    - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
@@ -28,6 +29,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
+    region: content
+  field_az_credit:
+    weight: 26
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textfield
     region: content
   field_media_az_image:
     settings:
