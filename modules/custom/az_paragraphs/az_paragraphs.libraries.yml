@@ -6,6 +6,11 @@ az_paragraphs.az_text:
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
+az_paragraphs.az_paragraphs_full_width:
+  version: VERSION
+  css:
+    theme:
+      css/az_paragraphs_full_width.css: {}
 az_paragraphs.az_text_background:
   version: VERSION
   css:
@@ -14,6 +19,7 @@ az_paragraphs.az_text_background:
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
+    - az_paragraphs/az_paragraphs.az_paragraphs_full_width
 az_paragraphs.az_text_media:
   version: VERSION
   css:
@@ -22,6 +28,7 @@ az_paragraphs.az_text_media:
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
+    - az_paragraphs/az_paragraphs.az_paragraphs_full_width
 az_paragraphs.az_photo_gallery:
   version: VERSION
   css:
