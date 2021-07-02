@@ -50,12 +50,14 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
-    // Text Background Color.
+    // Background Text Color.
     if (!empty($this->configuration['bg_text_color'])) {
       $bg_text_color = $row->getSourceProperty($this->configuration['bg_text_color']);
       $bg_text_color_mapping = [
         'bg-transparent' => 'transparent',
         'bg-trans-white' => 'light',
+        'bg-trans-sky' => 'light',
+        'bg-trans-arizona-blue' => 'dark',
         'bg-trans-black' => 'dark',
       ];
       foreach ($bg_text_color as $bg_text_color_item) {
@@ -75,7 +77,6 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
-    // Media Position.
     if (!empty($this->configuration['position'])) {
       if (!empty($row->getSourceProperty($this->configuration['position']))) {
         $position_mapping = [
@@ -83,8 +84,9 @@ class ParagraphsBehavior extends ProcessPluginBase {
           'uaqs_bg_img_content_center' => 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3',
           'uaqs_bg_img_content_right' => 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6',
         ];
-        $behavior['position'] = $media_mode_mapping[$row->getSourceProperty($this->configuration['position'])];
+
       }
+      $behavior['position'] = $position_mapping[$row->getSourceProperty($this->configuration['position'])];
     }
 
     if (!empty($this->configuration['full_width'])) {
