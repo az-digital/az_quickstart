@@ -28,7 +28,7 @@ class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    /**
+    /*
      * @See https://git.drupalcode.org/project/smart_date/-/blob/3.4.x/modules/smart_date_recur/src/Controller/Instances.php#L351
      * @See https://git.drupalcode.org/project/smart_date/-/blob/3.4.x/modules/smart_date_recur/smart_date_recur.module#L547
      */
