@@ -18,11 +18,10 @@ function az_demo_install() {
   $config = \Drupal::service('config.factory')->getEditable('system.date');
   $config->setData([
     'timezone' => [
-      'default' => 'America/Phoenix'
+      'default' => 'America/Phoenix',
     ],
   ])
-  ->save();
-
+    ->save();
 
   // Run the migrations that are tagged as demo content.
   $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
@@ -45,4 +44,3 @@ function az_demo_uninstall() {
     $executable->rollback();
   }
 }
-

@@ -2,12 +2,10 @@
 
 namespace Drupal\az_event\Plugin\migrate\process;
 
-use Drupal\migrate\MigrateException;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 use Drupal\smart_date_recur\Entity\SmartDateRule;
-use Drupal\smart_date_recur\Controller\Instances;
 
 /**
  * Process plugin to create smart_date rule instances.
@@ -23,7 +21,6 @@ use Drupal\smart_date_recur\Controller\Instances;
  *   plugin: smart_date_create_recurrence_on_field
  *   source: rid
  * @endcode
- *
  */
 class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
 
@@ -35,7 +32,7 @@ class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
      * @See https://git.drupalcode.org/project/smart_date/-/blob/3.4.x/modules/smart_date_recur/src/Controller/Instances.php#L351
      * @See https://git.drupalcode.org/project/smart_date/-/blob/3.4.x/modules/smart_date_recur/smart_date_recur.module#L547
      */
-    if (!empty($value) ) {
+    if (!empty($value)) {
       $rrule = SmartDateRule::load($value);
       if ($rrule) {
         $first_instance = FALSE;
@@ -65,4 +62,5 @@ class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
       }
     }
   }
+
 }
