@@ -1,0 +1,121 @@
+{
+  "rules": [
+  {
+    "rid":1,
+    "rule" : "RRULE:FREQ=YEARLY;BYMONTHDAY=14;BYMONTH=3",
+    "freq" : "YEARLY",
+    "limit" : "",
+    "parameters" : "BYMONTHDAY=14;BYMONTH=3",
+    "unlimited" : 0,
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "03/14",
+    "end" : "03/14"
+  },
+  {
+    "rid":2,
+    "rule" : "RRULE:FREQ=YEARLY;BYMONTHDAY=4;BYMONTH=5",
+    "freq" : "YEARLY",
+    "limit" : "",
+    "parameters" : "BYMONTHDAY=4;BYMONTH=5",
+    "unlimited" : 0,
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "05/04",
+    "end" : "05/04"
+  },
+  {
+    "rid":3,
+    "rule" : "RRULE:FREQ=DAILY;BYDAY=MO,TU,WE,TH,FR;COUNT=10",
+    "freq" : "DAILY",
+    "limit" : "COUNT=10",
+    "parameters" : "BYDAY=MO,TU,WE,TH,FR",
+    "unlimited" : "0",
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "06/08 09:00",
+    "end" : "06/08 17:00"
+  },
+  {
+    "rid":4,
+    "rule" : "RRULE:FREQ=WEEKLY;COUNT=8",
+    "freq" : "WEEKLY",
+    "limit" : "COUNT=8",
+    "parameters" : "",
+    "unlimited" : "0",
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "Sunday 04:30",
+    "end" : "Sunday 14:00"
+  },
+  {
+    "rid":5,
+    "rule" : "RRULE:FREQ=DAILY;INTERVAL=1;BYDAY=MO,TU,WE,TH,FR;COUNT=10",
+    "freq" : "DAILY",
+    "limit" : "COUNT=10",
+    "parameters" : "BYDAY=MO,TU,WE,TH,FR",
+    "unlimited" : "0",
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "07/13 09:00",
+    "end" : "07/13 17:00"
+  },
+  {
+    "rid":6,
+    "rule" : "RRULE:FREQ=DAILY;INTERVAL=1;BYDAY=TU,TH;COUNT=15",
+    "freq" : "DAILY",
+    "limit" : "COUNT=15",
+    "parameters" : "BYDAY=TU,TH",
+    "unlimited" : "0",
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "08/23 15:00:00",
+    "end" : "08/23 17:00:00"
+  },
+  {
+    "rid":7,
+    "rule" : "RRULE:FREQ=DAILY;INTERVAL=1;BYDAY=TU,TH;COUNT=15",
+    "freq" : "DAILY",
+    "limit" : "COUNT=15",
+    "parameters" : "BYDAY=TU,TH",
+    "unlimited" : "0",
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "01/14 15:00:00",
+    "end" : "01/14 17:00:00"
+  },
+  {
+    "rid":8,
+    "rule" : "RRULE:FREQ=DAILY;INTERVAL=1;BYDAY=MO,WE,FR;COUNT=15",
+    "freq" : "DAILY",
+    "limit" : "COUNT=15",
+    "parameters" : "BYDAY=MO,WE,FR",
+    "unlimited" : "0",
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "08/26 09:30",
+    "end" : "08/26 11:00"
+  },
+  {
+    "rid":9,
+    "rule" : "RRULE:FREQ=DAILY;INTERVAL=1;BYDAY=MO,WE,FR;COUNT=15",
+    "freq" : "DAILY",
+    "limit" : "COUNT=15",
+    "parameters" : "BYDAY=MO,WE,FR",
+    "unlimited" : "0",
+    "entity_type": "node",
+    "bundle" : "az_event",
+    "field_name" : "field_az_event_date",
+    "start" : "01/13 09:30",
+    "end" : "01/13 11:00"
+  }
+]
+}

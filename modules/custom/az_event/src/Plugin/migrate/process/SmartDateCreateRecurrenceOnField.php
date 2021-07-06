@@ -1,0 +1,64 @@
+<?php
+
+namespace Drupal\az_event\Plugin\migrate\process;
+
+use Drupal\migrate\MigrateException;
+use Drupal\migrate\MigrateExecutableInterface;
+use Drupal\migrate\ProcessPluginBase;
+use Drupal\migrate\Row;
+use Drupal\smart_date_recur\Entity\SmartDateRule;
+use Drupal\smart_date_recur\Controller\Instances;
+
+/**
+ * Process plugin to create smart_date rule instances.
+ *
+ * @MigrateProcessPlugin(
+ *   id = "smart_date_create_recurrence_on_field"
+ * )
+ *
+ *  To create smart_date recurring date instances on the date field do the following.
+ *
+ * @code
+ * field_az_event_date:
+ *   plugin: smart_date_create_recurrence_on_field
+ *   source: rid
+ * @endcode
+ *
+ */
+class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    if (!empty($value) ) {
+      $rrule = SmartDateRule::load($value);
+      if ($rrule) {
+        $first_instance = FALSE;
+        $before = NULL;
+        // Retrieve all instances for this rule, with overrides applied.
+        if ($rrule->limit->isEmpty()) {
+          $before = strtotime('+ 24 months');
+        }
+        $instances = $rrule->getRuleInstances($before);
+        $rrule->set('instances', ['data' => $instances]);
+
+        $rrule->save();
+        $instancesAgain = $rrule->getRuleInstances($before);
+
+        foreach ($instancesAgain as $rrule_index => $instance) {
+          // Apply instance values to our template, and add to the field values.
+          $first_instance['value'] = $instance['value'];
+          $first_instance['end_value'] = $instance['end_value'];
+          // Calculate the duration, since it isn't returned.
+          $first_instance['duration'] = ($instance['end_value'] - $instance['value']) / 60;
+          $first_instance['rrule_index'] = $rrule_index;
+          $first_instance['rrule'] = $rrule->id();
+          $first_instance['timezone'] = 'America/Phoenix';
+          $values[] = $first_instance;
+        }
+        return $values;
+      }
+    }
+  }
+}

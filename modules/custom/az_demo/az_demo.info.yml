@@ -5,6 +5,7 @@ core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
   - az_core
+  - az_event
   - az_flexible_page
   - az_paragraphs_text
   - az_paragraphs_text_background

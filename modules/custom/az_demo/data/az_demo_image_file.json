@@ -55,6 +55,11 @@
     {
       "filename" : "lynx.jpg",
       "alt" : "Two lynxes cuddling"
+    },
+    {
+      "filename" : "badwater_panorama.jpg",
+      "alt" : "panoramic view (more than 360 degrees)",
+      "title": "Salt flats at Badwater"
     }
   ]
 }

@@ -14,6 +14,16 @@ use Drupal\migrate\MigrateMessage;
 function az_demo_install() {
   $tag = 'Quickstart Demo Content';
 
+  // Set default timezone for demo content.
+  $config = \Drupal::service('config.factory')->getEditable('system.date');
+  $config->setData([
+    'timezone' => [
+      'default' => 'America/Phoenix'
+    ],
+  ])
+  ->save();
+
+
   // Run the migrations that are tagged as demo content.
   $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
   foreach ($migrations as $migration) {
@@ -35,3 +45,4 @@ function az_demo_uninstall() {
     $executable->rollback();
   }
 }
+

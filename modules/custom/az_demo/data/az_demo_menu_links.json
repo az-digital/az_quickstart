@@ -164,6 +164,50 @@
       "expanded": false,
       "enabled": true,
       "weight": "7"
+    },
+    {
+      "link_id": "16",
+      "parent_link_id": "0",
+      "menu": "main",
+      "title": "News",
+      "urlpath": "route:<button>",
+      "external": false,
+      "expanded": true,
+      "enabled": true,
+      "weight": "1"
+    },
+    {
+      "link_id": "17",
+      "parent_link_id": "0",
+      "menu": "main",
+      "title": "Events",
+      "urlpath": "route:<button>",
+      "external": false,
+      "expanded": true,
+      "enabled": true,
+      "weight": "1"
+    },
+    {
+      "link_id": "18",
+      "parent_link_id": "17",
+      "menu": "main",
+      "title": "Calendar",
+      "urlpath": "/calendar",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "1"
+    },
+    {
+      "link_id": "19",
+      "parent_link_id": "17",
+      "menu": "main",
+      "title": "Annual Events",
+      "urlpath": "/pages/annual-events",
+      "external": false,
+      "expanded": true,
+      "enabled": true,
+      "weight": "2"
     }
   ]
 }
