@@ -14,7 +14,8 @@ use Drupal\smart_date_recur\Entity\SmartDateRule;
  *   id = "smart_date_create_recurrence_on_field"
  * )
  *
- *  To create smart_date recurring date instances on the date field do the following.
+ *  To create smart_date recurring date instances on the date field do
+ *  the following.
  *
  * @code
  * field_az_event_date:
