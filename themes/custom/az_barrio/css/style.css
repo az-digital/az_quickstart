@@ -661,7 +661,7 @@ fieldset.collapsed {
   margin: initial;
 }
 
-@media screen (min-width: 576px) {
+@media screen and (min-width: 576px) {
   /**
   * Alignment classes for block level elements (images, videos, blockquotes, etc.)
   */
