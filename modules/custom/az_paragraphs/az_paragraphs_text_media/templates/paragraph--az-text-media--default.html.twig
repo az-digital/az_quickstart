@@ -63,8 +63,10 @@
   set content_classes = [
     'content',
     text_on_media.bg_color,
-    text_on_media.style == 'column' ? 'px-4 p' ~ text_on_media.text_media_spacing,
-    text_on_media.style == 'box' ? 'p-4 m' ~ text_on_media.text_media_spacing
+    text_on_media.style == 'column' ? 'column px-4 p' ~ text_on_media.text_media_spacing,
+    text_on_media.style == 'box' ? 'box p-4 m' ~ text_on_media.text_media_spacing,
+    text_on_media.style == 'bottom' ? 'bottom'
+
   ]
 %}
 {% block paragraph %}
@@ -90,4 +92,3 @@
     {% endblock %}
   </div>
 {% endblock paragraph %}
-
