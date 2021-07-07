@@ -647,26 +647,27 @@ fieldset.collapsed {
 }
 }
 
-/**
- * Alignment classes for block level elements (images, videos, blockquotes, etc.)
- */
-.align-left {
-  margin-right: 1em;
-  margin-bottom: 0.7em;
+@media screen (min-width: 576px) {
+  /**
+  * Alignment classes for block level elements (images, videos, blockquotes, etc.)
+  */
+  .align-left {
+    margin-right: 1em;
+    margin-bottom: 0.7em;
+  }
+  .align-right {
+    margin-left: 1em;
+    margin-bottom: 0.7em;
+  }
+  .align-center figure {
+      margin-left: auto;
+      margin-right: auto;
+  }
+  .field--type-image img,
+  .field--name-field-user-picture img {
+    margin: initial;
+  }
 }
-.align-right {
-  margin-left: 1em;
-  margin-bottom: 0.7em;
-}
-.align-center figure {
-    margin-left: auto;
-    margin-right: auto;
-}
-.field--type-image img,
-.field--name-field-user-picture img {
-  margin: initial;
-}
-
 /* overrides Bootstrap Barrio image field styles */
 @media all and (min-width: 560px) {
   .node .field--type-image {
