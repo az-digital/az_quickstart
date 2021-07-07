@@ -32,14 +32,8 @@ function az_paragraphs_text_media_update_9201() {
     $paragraph = Paragraph::load($id);
     if (!empty($paragraph)) {
       $behavior_settings = $paragraph->getAllBehaviorSettings();
-      if (!isset($behavior_settings['az_text_media_paragraph_behavior']['text_media_column_padding'])) {
-        $behavior_settings['az_text_media_paragraph_behavior']['text_media_column_padding'] = 'py-5';
-        $paragraph->setAllBehaviorSettings($behavior_settings);
-        $paragraph->save();
-        $sandbox['updated_count']++;
-      }
-      if (!isset($behavior_settings['az_text_media_paragraph_behavior']['text_media_box_margin'])) {
-        $behavior_settings['az_text_media_paragraph_behavior']['text_media_box_margin'] = 'my-5';
+      if (!isset($behavior_settings['az_text_media_paragraph_behavior']['text_media_spacing'])) {
+        $behavior_settings['az_text_media_paragraph_behavior']['text_media_spacing'] = 'y-5';
         $paragraph->setAllBehaviorSettings($behavior_settings);
         $paragraph->save();
         $sandbox['updated_count']++;
