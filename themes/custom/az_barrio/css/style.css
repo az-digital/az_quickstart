@@ -203,21 +203,25 @@ span.field-label {
  * Unpublished note.
  */
 /* The word "Unpublished" displayed underneath the content. */
-.unpublished {
-  height: 0;
+.node--unpublished:before {
   overflow: visible;
   /* Remove background highlighting from <mark> in normalize. */
   background-color: transparent;
-  color: #d8d8d8;
   font-size: 75px;
   font-size: 4.7rem;
-  line-height: 1;
   font-family: Impact, "Arial Narrow", Helvetica, sans-serif;
   font-weight: bold;
   text-transform: uppercase;
-  text-align: center;
-  /* A very nice CSS3 property. */
   word-wrap: break-word;
+  content: "UNPUBLISHED";
+  display: block;
+  font-size: 104px;
+  word-break: break-all;
+  color: #ab052029;
+  text-align: center;
+}
+.node--unpublished {
+    background: #ab05200d;
 }
 
 /* Buttons used by contrib modules like Media. */
@@ -641,6 +645,27 @@ fieldset.collapsed {
   width: initial;
   max-width: 100%;
 }
+}
+
+/**
+ * Alignment classes for block level elements (images, videos, blockquotes, etc.)
+ */
+.align-left {
+  margin-right: 1em;
+  margin-bottom: 0.7em;
+}
+.align-right {
+  margin-left: 1em;
+  margin-bottom: 0.7em;
+}
+.align-center figure {
+    margin-left: auto;
+    margin-right: auto;
+}
+.field--type-image img,
+.field--name-field-user-picture img {
+  margin: initial;
+}
 
 /* overrides Bootstrap Barrio image field styles */
 @media all and (min-width: 560px) {
@@ -656,10 +681,8 @@ fieldset.collapsed {
     clear: initial;
   }
 }
-.field--type-image img,
-.field--name-field-user-picture img {
-  margin: initial;
-}
+
+
 /* end Bootstrap Barrio image field styles */
 
 @media (min-width: 768px) {
