@@ -46,6 +46,7 @@
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
     not paragraph.isPublished() ? 'paragraph--unpublished',
+    text_on_media.style != 'bottom' ? 'text-on-media',
     text_on_media.full_width,
     text_on_media.bg_attachment
   ]
