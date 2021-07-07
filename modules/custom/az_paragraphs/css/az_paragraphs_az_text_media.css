@@ -26,6 +26,16 @@
 .transparent {
   background: none;
 }
+.box {
+  padding-left:2em;
+  padding-right: 2em;
+  margin-left: 0;
+  margin-right:0;
+}
+.column {
+  padding-left:2em;
+  padding-right: 2em;
+}
 .bottom {
   margin-top: -5em;
   padding: 2em;
