@@ -38,7 +38,7 @@ function az_core_toolbar() {
     '#type' => 'toolbar_item',
     'tab' => [
       '#type' => 'link',
-      '#title' => t('Quickstart 2'),
+      '#title' => t('Quickstart'),
       '#url' => Url::fromUri('https://quickstart.arizona.edu'),
       '#attributes' => [
         'target' => t('_blank'),
