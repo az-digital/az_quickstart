@@ -19,24 +19,28 @@ class AZCalendarFilter extends Date {
    */
   protected function valueForm(&$form, FormStateInterface $form_state) {
     parent::valueForm($form, $form_state);
-    $form['#attached']['library'][] = 'az_event/az_calendar_filter';
-    // Prepare a wrapper for the calendar JS to access.
-    $calendar_element = [
-      '#type' => 'container',
-      '#attached' => ['library' => ['az_event/az_calendar_filter']],
-      '#attributes' => [
-        'class' => [
-          'az-calendar-filter-wrapper',
-        ],
-        // Communicate to the HTML DOM what the unique id of our filter is.
-        'data-az-calendar-filter' => $this->options['expose']['identifier'],
-      ],
-    ];
 
-    // Add the calendar markup into the widget.
-    array_unshift($form['value'], $calendar_element);
-    $form['value']['#attributes']['class'][] = 'views-widget-az-calendar-filter';
-    $form['value']['#type'] = 'container';
+    // Only add modifications if this is the exposed filter.
+    if ($exposed = $form_state->get('exposed')) {
+      $form['#attached']['library'][] = 'az_event/az_calendar_filter';
+      // Prepare a wrapper for the calendar JS to access.
+      $calendar_element = [
+        '#type' => 'container',
+        '#attached' => ['library' => ['az_event/az_calendar_filter']],
+        '#attributes' => [
+          'class' => [
+            'az-calendar-filter-wrapper',
+          ],
+          // Communicate to the HTML DOM what the unique id of our filter is.
+          'data-az-calendar-filter' => $this->options['expose']['identifier'],
+        ],
+      ];
+
+      // Add the calendar markup into the widget.
+      array_unshift($form['value'], $calendar_element);
+      $form['value']['#attributes']['class'][] = 'views-widget-az-calendar-filter';
+      $form['value']['#type'] = 'container';
+    }
   }
 
   /**
@@ -72,12 +76,17 @@ class AZCalendarFilter extends Date {
    * {@inheritdoc}
    */
   protected function opOverlap($field) {
+    $offset = FALSE;
+    if ($this->value['min'] === 'today') {
+      $offset = TRUE;
+    }
+
     $field2 = "$this->tableAlias.$this->realField" . '_end_value';
 
     $a = intval(strtotime($this->value['min'] . ' 00:00:00', 0));
     $b = intval(strtotime($this->value['max'] . ' 23:59:59', 0));
 
-    if ($this->value['type'] === 'offset') {
+    if ($offset) {
       // Keep sign.
       $a = '***CURRENT_TIME***' . sprintf('%+d', $a);
       // Keep sign.
