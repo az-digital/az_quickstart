@@ -46,7 +46,6 @@
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
     not paragraph.isPublished() ? 'paragraph--unpublished',
-    text_on_media.style != 'bottom' ? 'text-on-media',
     text_on_media.full_width,
     text_on_media.bg_attachment
   ]
@@ -63,8 +62,9 @@
 {%
   set content_classes = [
     'content',
-    text_on_media.style,
-    text_on_media.bg_color
+    text_on_media.bg_color,
+    text_on_media.style == 'column' ? text_on_media.text_media_column_padding,
+    text_on_media.style == 'box' ? text_on_media.text_media_box_margin
   ]
 %}
 {% block paragraph %}

@@ -120,6 +120,46 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
+    $form['text_media_column_padding'] = [
+      '#title' => $this->t('Space Around Content (for Column style)'),
+      '#type' => 'select',
+      '#options' => [
+        'py-0' => $this->t('Zero'),
+        'py-1' => $this->t('1 (0.25rem | ~4px)'),
+        'py-2' => $this->t('2 (0.5rem | ~8px)'),
+        'py-3' => $this->t('3 (1.0rem | ~16px)'),
+        'py-4' => $this->t('4 (1.5rem | ~24px)'),
+        'py-5' => $this->t('5 (3.0rem | ~48px) - Default'),
+        'py-6' => $this->t('6 (4.0rem | ~64px)'),
+        'py-7' => $this->t('7 (5.0rem | ~80px)'),
+        'py-8' => $this->t('8 (6.0rem | ~96px)'),
+        'py-9' => $this->t('9 (7.0rem | ~112px)'),
+        'py-10' => $this->t('10 (8.0rem | ~128px)'),
+      ],
+      '#default_value' => $config['text_media_column_padding'] ?? 'py-5',
+      '#description' => $this->t('Adds padding above and below the text.'),
+    ];
+
+    $form['text_media_box_margin'] = [
+      '#title' => $this->t('Space Around Content (for Box style)'),
+      '#type' => 'select',
+      '#options' => [
+        'my-0' => $this->t('Zero'),
+        'my-1' => $this->t('1 (0.25rem | ~4px)'),
+        'my-2' => $this->t('2 (0.5rem | ~8px)'),
+        'my-3' => $this->t('3 (1.0rem | ~16px)'),
+        'my-4' => $this->t('4 (1.5rem | ~24px)'),
+        'my-5' => $this->t('5 (3.0rem | ~48px) - Default'),
+        'my-6' => $this->t('6 (4.0rem | ~64px)'),
+        'my-7' => $this->t('7 (5.0rem | ~80px)'),
+        'my-8' => $this->t('8 (6.0rem | ~96px)'),
+        'my-9' => $this->t('9 (7.0rem | ~112px)'),
+        'my-10' => $this->t('10 (8.0rem | ~128px)'),
+      ],
+      '#default_value' => $config['text_media_box_margin'] ?? 'my-5',
+      '#description' => $this->t('Adds margin above and below the text.'),
+    ];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // This places the form fields on the content tab rather than behavior tab.
