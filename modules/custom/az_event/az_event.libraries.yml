@@ -1,0 +1,13 @@
+az_calendar_filter:
+  version: VERSION
+  css:
+    theme:
+      css/az_calendar_filter.css: {}
+  js:
+    js/az_calendar_filter.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - jquery_ui_datepicker/datepicker
+    - core/drupal
+    - core/drupalSettings

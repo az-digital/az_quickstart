@@ -61,6 +61,8 @@
         "drupal/field_group": "3.1",
         "drupal/field_group_link": "3.0-rc2",
         "drupal/image_widget_crop": "2.3",
+        "drupal/jquery_ui": "1.4",
+        "drupal/jquery_ui_datepicker": "1.1",
         "drupal/link_class": "2.0.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
