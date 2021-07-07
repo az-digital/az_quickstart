@@ -19,7 +19,6 @@
 
       // Initialize calendar widget wrapper if needed.
       $(".az-calendar-filter-wrapper", context).once('azCalendarFilter').each(function(){
-        console.log("Oh, we running.");
         var $wrapper = $(this);
         // rangeKey contains our filter identifier to find calendar cell data.
         var rangeKey = $wrapper.data('az-calendar-filter');
