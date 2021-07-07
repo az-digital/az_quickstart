@@ -60,6 +60,36 @@
       "filename" : "badwater_panorama.jpg",
       "alt" : "panoramic view (more than 360 degrees)",
       "title": "Salt flats at Badwater"
+    },
+    {
+      "filename" : "daisy.jpg",
+      "alt" : "Flower",
+      "title": ""
+    },
+    {
+      "filename" : "june_bugs.jpeg",
+      "alt" : "June bugs",
+      "title": ""
+    },
+    {
+      "filename" : "arizona_campus_fireworks.jpg",
+      "alt" : "Fireworks over campus",
+      "title": ""
+    },
+    {
+      "filename" : "mecklerphoto_mens-wearhouse.jpeg",
+      "alt" : "Men's Warehouse",
+      "title": ""
+    },
+    {
+      "filename" : "study.jpeg",
+      "alt" : "Student writing a letter",
+      "title": ""
+    },
+    {
+      "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
+      "alt" : "The Hay Wain by Hieronymus Bosch",
+      "title": ""
     }
   ]
 }

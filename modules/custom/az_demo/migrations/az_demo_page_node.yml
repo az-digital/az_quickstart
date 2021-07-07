@@ -68,6 +68,7 @@ process:
       migration:
         - az_demo_text_paragraph
         - az_demo_text_background_paragraph
+        - az_demo_text_media_paragraph
       source: '@pseudo_exploded_paragraphs'
 
 
@@ -94,6 +95,7 @@ migration_dependencies:
     - az_demo_image_file
     - az_demo_text_paragraph
     - az_demo_text_background_paragraph
+    - az_demo_text_media_paragraph
 
 dependencies:
   enforced:

@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_form_mode.media.media_library
     - field.field.media.az_image.field_az_caption
+    - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
@@ -21,6 +22,14 @@ content:
     region: content
     settings:
       rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_credit:
+    type: text_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
       placeholder: ''
     third_party_settings: {  }
   field_media_az_image:

@@ -9,6 +9,7 @@ use Drupal\node\Entity\NodeType;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Render\Element;
 
 /**
  * Implements hook_theme().
@@ -89,6 +90,76 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           '#type' => 'markup',
           '#markup' => Html::escape($formatter->format($timestamp, 'az_event_day')),
         ];
+      }
+    }
+  }
+
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function az_event_preprocess_node(&$variables) {
+
+  $node = $variables['node'];
+
+  // Only for the event content type.
+  if ($node->getType() === 'az_event') {
+
+    // Only process if we see view information.
+    if (isset($variables['elements']['#az_view_row_index'])) {
+
+      // Get row and delta for transformations.
+      $row_index = $variables['elements']['#az_view_row_index'];
+      $delta = (int) $node->view->result[$row_index]->node__field_az_event_date_delta;
+
+      // There is a field value at our computed delta.
+      if (!empty($variables['content']['field_az_event_date'][$delta])) {
+        $all_children = Element::children($variables['content']['field_az_event_date']);
+        foreach ($all_children as $child) {
+          if ($child !== $delta) {
+            // Hide all the others.
+            $variables['content']['field_az_event_date'][$child]['#access'] = FALSE;
+          }
+        }
+
+        // Transform the sidebar psuedofields if needed.
+        if ($node->hasField('field_az_event_date')) {
+          $values = $node->get('field_az_event_date')->getValue();
+          if (!empty($values[$delta]['value'])) {
+            $timestamp = $values[$delta]['value'];
+            $formatter = \Drupal::service('date.formatter');
+
+            // Format the replacement value.
+            if (!empty($variables['content']['az_event_day'])) {
+              $variables['content']['az_event_day'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_day'));
+              $variables['content']['az_event_day']['#cache']['max-age'] = 0;
+            }
+            if (!empty($variables['content']['az_event_month'])) {
+              $variables['content']['az_event_month']['#cache']['max-age'] = 0;
+              $variables['content']['az_event_month'][0]['#markup'] = Html::escape($formatter->format($timestamp, 'az_event_month'));
+            }
+          }
+        }
+      }
+      // Don't cache this particular field.
+      $variables['content']['field_az_event_date']['#cache']['max-age'] = 0;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function az_event_preprocess_views_view(&$variables) {
+
+  // EntityRow views do not give the entity access to a row_index.
+  // We need to provide one to understand the delta relationship
+  // of the row.
+  if ($variables['id'] === 'az_events') {
+    if (!empty($variables['rows'][0]['#rows'])) {
+      foreach ($variables['rows'][0]['#rows'] as $i => $n) {
+        $variables['rows'][0]['#rows'][$i]['#az_view_row_index'] = $i;
       }
     }
   }

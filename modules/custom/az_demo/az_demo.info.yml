@@ -9,6 +9,7 @@ dependencies:
   - az_flexible_page
   - az_paragraphs_text
   - az_paragraphs_text_background
+  - az_paragraphs_text_media
   - az_person
   - az_media
   - migrate:migrate
