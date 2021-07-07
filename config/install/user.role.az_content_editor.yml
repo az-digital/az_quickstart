@@ -23,7 +23,6 @@ permissions:
   - 'access webform help'
   - 'access webform overview'
   - 'add content to books'
-  - 'administer nodes'
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
