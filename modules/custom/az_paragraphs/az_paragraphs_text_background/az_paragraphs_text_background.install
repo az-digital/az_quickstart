@@ -1,7 +1,8 @@
 <?php
 
 /**
- * @file az_paragraphs_text_background.install.
+ * @file
+ * Az_paragraphs_text_background.install.
  *
  * Install, update and uninstall functions for
  * az_paragraphs_text_background module.
