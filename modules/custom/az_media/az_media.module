@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Contains az_media.module.
+ */
+use Drupal\Core\Entity\EntityInterface;
+
+/**
+ * Implements hook_entity_presave().
+ */
+function az_media_entity_presave(EntityInterface $entity) {
+    if ($entity->getEntityTypeId() === 'media') {
+        if ($entity->bundle() === 'az_remote_video' ) {
+            if ( isset($entity->field_media_az_image->entity)) {
+                $entity->thumbnail->target_id = $entity->field_media_az_image->target_id;
+            }
+        }
+    }
+}
