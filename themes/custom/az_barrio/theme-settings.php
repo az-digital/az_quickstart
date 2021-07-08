@@ -132,29 +132,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     ),
     '#default_value' => theme_get_setting('az_barrio_material_design_sharp_icons'),
   ];
-  $form['fonts']['icons']['az_barrio_icons']['az_brand_icons_source'] = [
-    '#type' => 'radios',
-    '#title' => t('AZ Brand Icons Source'),
-    '#options' => [
-      'local' => t(
-        'Use local copy of @azbrandicons packaged with AZ Barrio (%stableversion).', [
-          '@azbrandicons' => Link::fromTextAndUrl(
-            'UA Brand Icons', Url::fromUri(
-                'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons', [
-                  'attributes' => [
-                    'target' => '_blank',
-                  ],
-                ]
-            )
-          )->toString(),
-          '%stableversion' => AZ_BRAND_ICONS_STABLE_VERSION,
-        ]
-      ),
-      'cdn' => t(
-        'Use external copy of @azbrandicons hosted on the CDN.', [
-          '@azbrandicons' => Link::fromTextAndUrl(
-            'UA Brand Icons', Url::fromUri(
-                'http://uadigital.arizona.edu/ua-bootstrap/components.html#ua-brand-icons', [
+  $form['fonts']['icons']['az_barrio_icons']['az_barrio_az_icons'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use AZ Icons'),
+    '#description' => t(
+        'If selected, a Arizona Digital CDN <code>&lt;link&gt;</code> will be added to every page importing the @az_icons_link CSS.', [
+          '@az_icons_link' => Link::fromTextAndUrl(
+            'Arizona icons', Url::fromUri(
+                'https://github.com/az-digital/az-icons', [
                   'attributes' => [
                     'target' => '_blank',
                   ],
@@ -162,20 +147,43 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
             )
           )->toString(),
         ]
-      ),
+    ),
+    '#default_value' => theme_get_setting('az_barrio_az_icons'),
+  ];
+  $form['fonts']['icons']['az_barrio_icons']['az_icons'] = [
+    '#type' => 'fieldset',
+    '#title' => t('AZ Icons Settings'),
+    '#states' => [
+      'visible' => [
+        ':input[name="az_barrio_az_icons"]' => ['checked' => TRUE],
+      ],
     ],
-    '#default_value' => theme_get_setting('az_brand_icons_source'),
+    '#default_value' => theme_get_setting('az_barrio_az_icons'),
   ];
-  $form['fonts']['icons']['az_barrio_icons']['az_brand_icons_class'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Add <code>ua-brand-icons</code> class to <code>html</code> element.'),
-    '#default_value' => theme_get_setting('az_brand_icons_class'),
+
+  $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_barrio_az_icons_source'] = [
+    '#type' => 'radios',
+    '#title' => t('Arizona Icons Source'),
+    '#options' => [
+      'cdn' => t(
+        'Use external copy of @azicons hosted on the CDN.', [
+          '@azicons' => Link::fromTextAndUrl(
+            'AZ Icons', Url::fromUri(
+                'https://github.com/az-digital/az-icons', [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
+        ],
+
+      ),
+      'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
+    ],
+    '#default_value' => theme_get_setting('az_barrio_az_icons_source'),
   ];
-  $form['fonts']['icons']['az_barrio_icons']['external_links'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use AZ Bootstrap external links styling.'),
-    '#default_value' => theme_get_setting('external_links'),
-  ];
+
   // AZ Bootstrap settings.
   $form['azbs_settings'] = [
     '#type' => 'details',

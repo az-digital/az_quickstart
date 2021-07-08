@@ -25,6 +25,7 @@ class AZParagraphsItem extends ParagraphsItem {
           'field_name',
           'archived',
           'bottom_spacing',
+          'view_mode',
         ])
       ->fields('pr', ['revision_id']);
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
@@ -46,6 +47,7 @@ class AZParagraphsItem extends ParagraphsItem {
       'bundle' => $this->t('The paragraph bundle'),
       'field_name' => $this->t('The paragraph field_name'),
       'bottom_space' => $this->t('The paragraph Bottom Space'),
+      'view_mode' => $this->t('The paragraph view mode'),
     ];
     return $fields;
   }

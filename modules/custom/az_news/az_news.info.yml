@@ -22,6 +22,7 @@ dependencies:
   - az_paragraphs
   - az_paragraphs_cards
   - az_paragraphs_contact
+  - az_paragraphs_photo_gallery
   - az_paragraphs_text
   - smart_title:smart_title
   - date_ap_style:date_ap_style

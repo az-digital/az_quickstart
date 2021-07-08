@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_az_credit
+    - filter.format.plain_text
+    - media.type.az_image
+  module:
+    - text
+id: media.az_image.field_az_credit
+field_name: field_az_credit
+entity_type: media
+bundle: az_image
+label: 'Image Credit'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - plain_text
+field_type: text
