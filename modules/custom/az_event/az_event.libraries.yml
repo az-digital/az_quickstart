@@ -9,5 +9,7 @@ az_calendar_filter:
     - core/jquery
     - core/jquery.once
     - jquery_ui_datepicker/datepicker
+    - views/views.ajax
     - core/drupal
+    - core/drupal.ajax
     - core/drupalSettings

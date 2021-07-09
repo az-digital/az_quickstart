@@ -4,15 +4,34 @@
  *
  */
 
-(function ($, Drupal, window, document) {
+(function ($, Drupal, drupalSettings) {
   "use strict";
 
   Drupal.behaviors.azCalendarFilter = {
     attach: function (context, settings) {
 
+      var filterInformation = drupalSettings.azCalendarFilter;
+      if (!drupalSettings.hasOwnProperty('calendarFilterRanges')) {
+        drupalSettings.calendarFilterRanges = [];
+      }
+
       // Drupal settings get merged rather than replaced during ajax.
       // We should clear out stale entries when we process a new cells.
-      settings.azCalendarFilter = {};
+      drupalSettings.azCalendarFilter = {};
+
+      // Process cell date strings into javascript dates.
+      for (var property in filterInformation) {
+        if (filterInformation.hasOwnProperty(property)) {
+          drupalSettings.calendarFilterRanges[property] = [];
+          var ranges = filterInformation[property];
+          for (var i = 0; i < ranges.length; i++) {
+            drupalSettings.calendarFilterRanges[property].push([
+              $.datepicker.parseDate( "@", ranges[i][0] * 1000),
+              $.datepicker.parseDate( "@", ranges[i][1] * 1000)
+            ]);
+          }
+        }
+      }
 
       // We may have recieved new cell data. Refresh existing datepickers.
       $(".az-calendar-filter-calendar" ).datepicker( "refresh" );
@@ -89,7 +108,17 @@
                 }
               }
             }
-
+            // Check if the cell information encapsulates this date.
+            if (drupalSettings.calendarFilterRanges.hasOwnProperty(rangeKey)) {
+              var ranges = drupalSettings.calendarFilterRanges[rangeKey];
+                for (var i = 0; i < ranges.length; i++) {
+                  if ((ranges[i][0].getTime() <= time) &&
+                    (ranges[i][1].getTime() >= time))
+                    {
+                      dateClass = withinRange ? "calendar-filter-window" : "calendar-filter-day-events";
+                    }
+                }
+            }
             return [true, dateClass];
           },
           onChangeMonthYear: function(year, month, inst){
@@ -149,4 +178,4 @@
 
   };
 
-})(jQuery, Drupal, window, document);
+})(jQuery, Drupal, drupalSettings);
