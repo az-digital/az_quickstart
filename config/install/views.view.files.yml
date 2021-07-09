@@ -1181,7 +1181,7 @@ display:
           decimal: .
           separator: ','
           format_plural: true
-          format_plural_string: !!binary QGNvdW50A0Bjb3VudCBwbGFjZXM=
+          format_plural_string: !!binary QGNvdW50IHBsYWNlA0Bjb3VudCBwbGFjZXM=
           prefix: ''
           suffix: ''
           plugin_id: numeric
