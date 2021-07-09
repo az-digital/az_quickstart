@@ -23,8 +23,8 @@ install:
   - az_news
   - az_person
   - az_event
+  - az_security
   - az_seo
-  - az_webform
   - drupal:node
   - drupal:history
   - drupal:block
