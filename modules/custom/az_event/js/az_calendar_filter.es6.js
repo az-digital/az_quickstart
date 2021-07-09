@@ -4,13 +4,13 @@
  *
  */
 
-(function ($, Drupal, drupalSettings) {
+(($, Drupal, drupalSettings) => {
   "use strict";
 
   Drupal.behaviors.azCalendarFilter = {
-    attach: function (context, settings) {
+    attach(context, settings) {
 
-      var filterInformation = drupalSettings.azCalendarFilter;
+      const filterInformation = drupalSettings.azCalendarFilter;
       if (!drupalSettings.hasOwnProperty('calendarFilterRanges')) {
         drupalSettings.calendarFilterRanges = [];
       }
@@ -20,11 +20,11 @@
       drupalSettings.azCalendarFilter = {};
 
       // Process cell date strings into javascript dates.
-      for (var property in filterInformation) {
+      for (const property in filterInformation) {
         if (filterInformation.hasOwnProperty(property)) {
           drupalSettings.calendarFilterRanges[property] = [];
-          var ranges = filterInformation[property];
-          for (var i = 0; i < ranges.length; i++) {
+          const ranges = filterInformation[property];
+          for (let i = 0; i < ranges.length; i++) {
             drupalSettings.calendarFilterRanges[property].push([
               $.datepicker.parseDate( "@", ranges[i][0] * 1000),
               $.datepicker.parseDate( "@", ranges[i][1] * 1000)
@@ -38,33 +38,33 @@
 
       // Initialize calendar widget wrapper if needed.
       $(".az-calendar-filter-wrapper", context).once('azCalendarFilter').each(function(){
-        var $wrapper = $(this);
+        const $wrapper = $(this);
         // rangeKey contains our filter identifier to find calendar cell data.
-        var rangeKey = $wrapper.data('az-calendar-filter');
-        var rangeStart = null;
-        var rangeEnd = null;
+        const rangeKey = $wrapper.data('az-calendar-filter');
+        let rangeStart = null;
+        let rangeEnd = null;
         $wrapper.append('<div class="az-calendar-filter-buttons"></div><div class="az-calendar-filter-calendar"></div>');
-        var $buttonWrapper = $wrapper.children(".az-calendar-filter-buttons");
-        var $calendar = $wrapper.children(".az-calendar-filter-calendar");
-        var $submitButton = $wrapper.closest(".views-exposed-form").find("button.form-submit");
-        var task = null;
+        const $buttonWrapper = $wrapper.children(".az-calendar-filter-buttons");
+        const $calendar = $wrapper.children(".az-calendar-filter-calendar");
+        const $submitButton = $wrapper.closest(".views-exposed-form").find("button.form-submit");
+        let task = null;
 
         // Function to update a filter's internal date fields from datepicker.
         function updateCalendarFilters(startDate, endDate) {
-          var $ancestor = $wrapper.closest(".views-widget-az-calendar-filter");
+          const $ancestor = $wrapper.closest(".views-widget-az-calendar-filter");
 
-          var dates = [startDate, endDate];
-          for (var i = 0; i < dates.length; i++) {
-            var month = dates[i].getMonth() + 1;
-            var day = dates[i].getDate();
-            var year = dates[i].getFullYear();
-            $ancestor.find('input').eq(i).val(year + "-" + month + "-" + day);
+          const dates = [startDate, endDate];
+          for (let i = 0; i < dates.length; i++) {
+            const month = dates[i].getMonth() + 1;
+            const day = dates[i].getDate();
+            const year = dates[i].getFullYear();
+            $ancestor.find('input').eq(i).val(`${year}-${month}-${day}`);
           }
 
           // Signal to UI that the inputs were updated programmatically.
           triggerFilterChange($ancestor, 0);
           $ancestor.find('.btn').removeClass('active').attr('aria-pressed', 'false');
-          var $form = $wrapper.closest("form");
+          const $form = $wrapper.closest("form");
         }
 
         // Set task to trigger filter element change.
@@ -72,7 +72,7 @@
           if (task != null) {
             clearTimeout(task);
           }
-          task = setTimeout(function(){
+          task = setTimeout(() => {
             // Only trigger if submit buttion isn't disabled.
             if (!$submitButton.prop("disabled")) {
               $ancestor.find('input').eq(0).change();
@@ -93,11 +93,11 @@
           showOtherMonths: true,
           selectOtherMonths: true,
           dayNamesMin: [ "S", "M", "T", "W", "T", "F", "S" ],
-          beforeShowDay: function(date){
+          beforeShowDay(date) {
             // Loop through date ranges to determine if a day qualifies.
-            var dateClass = "calendar-filter-day-no-events";
-            var time = date.getTime();
-            var withinRange = false;
+            let dateClass = "calendar-filter-day-no-events";
+            const time = date.getTime();
+            let withinRange = false;
             // Check if the date is within the selection window.
             if (rangeStart && rangeEnd) {
               if ((rangeStart <= time) && (rangeEnd >= time)) {
@@ -110,8 +110,8 @@
             }
             // Check if the cell information encapsulates this date.
             if (drupalSettings.calendarFilterRanges.hasOwnProperty(rangeKey)) {
-              var ranges = drupalSettings.calendarFilterRanges[rangeKey];
-                for (var i = 0; i < ranges.length; i++) {
+              const ranges = drupalSettings.calendarFilterRanges[rangeKey];
+                for (let i = 0; i < ranges.length; i++) {
                   if ((ranges[i][0].getTime() <= time) &&
                     (ranges[i][1].getTime() >= time))
                     {
@@ -121,17 +121,17 @@
             }
             return [true, dateClass];
           },
-          onChangeMonthYear: function(year, month, inst){
+          onChangeMonthYear(year, month, inst) {
             // When the month is changed, update the date input fields.
-            var startDay = new Date(year, month - 1, 1);
-            var endDay = new Date(year, month, 0);
+            const startDay = new Date(year, month - 1, 1);
+            const endDay = new Date(year, month, 0);
             rangeStart = null;
             rangeEnd = null;
             updateCalendarFilters(startDay, endDay);
           },
-          onSelect: function(datetext, inst){
+          onSelect(datetext, inst) {
             // When a day is selected, update the date input fields.
-            var newDate = $.datepicker.parseDate( "m-d-yy", datetext );
+            const newDate = $.datepicker.parseDate( "m-d-yy", datetext );
             rangeStart = newDate.getTime();
             rangeEnd = newDate.getTime();
             updateCalendarFilters(newDate, newDate);
@@ -146,15 +146,15 @@
 
         // Handle button presses for calendar range selection buttions.
         $buttonWrapper.children('.calendar-filter-button').on( "click", function() {
-          var $pressed = $(this);
-          var current = new Date(Date.now());
-          var today = new Date(current.getFullYear(), current.getMonth(), current.getDate());
-          var month = current.getMonth();
-          var year = current.getFullYear();
-          var day = current.getDay();
-          var diff = current.getDate() - day;
-          var startDay = today;
-          var endDay = today;
+          const $pressed = $(this);
+          const current = new Date(Date.now());
+          const today = new Date(current.getFullYear(), current.getMonth(), current.getDate());
+          const month = current.getMonth();
+          const year = current.getFullYear();
+          const day = current.getDay();
+          const diff = current.getDate() - day;
+          let startDay = today;
+          let endDay = today;
           if ($pressed.hasClass('calendar-filter-week')) {
             // Compute start and end days of the week.
             startDay = new Date(year, month, diff);
