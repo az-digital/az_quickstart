@@ -4,16 +4,91 @@ dependencies:
   config:
     - core.entity_view_mode.media.az_square
     - field.field.media.az_image.field_az_caption
+    - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
     - image.style.az_square
     - media.type.az_image
   module:
+    - field_group
     - image
+    - text
+third_party_settings:
+  field_group:
+    group_figure:
+      children:
+        - field_media_az_image
+        - group_fig
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        element: figure
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="max-width: 220px;"'
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+      label: Figure
+    group_fig:
+      children:
+        - field_az_caption
+        - group_cite
+      parent_name: group_figure
+      weight: 2
+      format_type: html_element
+      region: content
+      format_settings:
+        element: figcaption
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: figure-caption
+      label: 'Fig Caption'
+    group_cite:
+      children:
+        - field_az_credit
+      parent_name: group_fig
+      weight: 4
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: small
+        element: cite
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Cite
 id: media.az_image.az_square
 targetEntityType: media
 bundle: az_image
 mode: az_square
 content:
+  field_az_caption:
+    type: text_default
+    weight: 3
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_az_credit:
+    type: text_default
+    weight: 4
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
   field_media_az_image:
     label: visually_hidden
     settings:
@@ -21,11 +96,10 @@ content:
       image_link: ''
     third_party_settings: {  }
     type: image
-    weight: 0
+    weight: 1
     region: content
 hidden:
   created: true
-  field_az_caption: true
   name: true
   thumbnail: true
   uid: true

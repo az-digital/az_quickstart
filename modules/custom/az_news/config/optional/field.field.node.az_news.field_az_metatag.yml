@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_metatag
+    - node.type.az_news
+  module:
+    - metatag
+id: node.az_news.field_az_metatag
+field_name: field_az_metatag
+entity_type: node
+bundle: az_news
+label: 'Meta tags'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: metatag

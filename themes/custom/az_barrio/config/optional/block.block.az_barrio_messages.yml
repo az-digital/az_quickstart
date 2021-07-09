@@ -7,7 +7,7 @@ dependencies:
     - az_barrio
 id: az_barrio_messages
 theme: az_barrio
-region: highlighted
+region: help
 weight: 0
 provider: null
 plugin: system_messages_block

@@ -23,7 +23,6 @@ install:
   - az_news
   - az_person
   - az_event
-  - az_demo
   - az_seo
   - drupal:node
   - drupal:history
@@ -32,6 +31,7 @@ install:
   - drupal:ckeditor
   - drupal:color
   - drupal:config
+  - drupal:content_moderation
   - drupal:contextual
   - drupal:menu_link_content
   - drupal:datetime

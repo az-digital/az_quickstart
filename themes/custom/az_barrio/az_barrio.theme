@@ -92,12 +92,6 @@ function az_barrio_preprocess_html(&$variables) {
   if (theme_get_setting('sticky_footer')) {
     $variables['html_attributes']->addClass('sticky-footer');
   }
-  if (theme_get_setting('external_links')) {
-    $variables['html_attributes']->addClass('external-links');
-  }
-  if (theme_get_setting('az_brand_icons_class')) {
-    $variables['html_attributes']->addClass('ua-brand-icons');
-  }
 }
 
 /**
@@ -108,10 +102,8 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
   }
-  $variables['navbar_offcanvas_attributes'] = [
-    'class' => [ 'navbar-offcanvas' ],
-    'id' => 'navbar-top',
-  ];
+  $variables['navbar_offcanvas_attributes']['id'] = 'navbar-top';
+  $variables['navbar_offcanvas_attributes']['class'][] = 'navbar-offcanvas';
 
   // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
@@ -210,6 +202,10 @@ function az_barrio_preprocess_maintenance_page(&$variables) {
  */
 function az_barrio_library_info_alter(&$libraries, $extension) {
   if ($extension === 'bootstrap_barrio' && isset($libraries['global-styling'])) {
+    // Remove node styles.
+    unset($libraries['node']['css']['component']['css/components/node.css']);
+    // Remove table styles.
+    unset($libraries['global-styling']['css']['component']['css/components/table.css']);
     // Remove sidebar styles.
     unset($libraries['global-styling']['css']['component']['css/components/sidebar.css']);
     // Remove site-footer styles.
@@ -269,34 +265,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 
     // Populate AZ Bootstrap location variable for CKEditor.
     \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path . $az_bootstrap_token);
-  }
 
-  if ($extension === 'az_barrio' && isset($libraries['az-brand-icons'])) {
-    // Add UA Brand Icons CSS based on theme settings.
-    $az_brand_icons_path = az_barrio_brand_icons_assets_path('css');
-    // Ensure icons are loaded before arizona bootstrap.
-    $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-brand-icons';
-
-    $az_brand_icons_css_info = [
-      'media' => 'all',
-      'preprocess' => FALSE,
-      'browsers' => [
-        'IE' => TRUE,
-        '!IE' => TRUE,
-      ],
-      'minified' => TRUE,
-    ];
-
-    // AZ Brand Icons source.
-    if (theme_get_setting('az_brand_icons_source') === 'cdn') {
-      $az_brand_icons_css_info['type'] = 'external';
-    }
-    else {
-      $az_brand_icons_css_info['type'] = 'file';
-    }
-    $libraries['az-brand-icons']['css']['theme'] = [
-      $az_brand_icons_path => $az_brand_icons_css_info,
-    ];
     $font = theme_get_setting('az_barrio_font');
     if ($font === TRUE) {
       // Add Proxima Nova CSS based on theme settings.
@@ -309,6 +278,36 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       // Add Material Design Sharp Icon CSS based on theme settings.
       // Ensure icon CSS is loaded before Arizona Bootstrap.
       $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
+    }
+
+    $az_icons = theme_get_setting('az_barrio_az_icons');
+    if ($az_icons === TRUE) {
+      if ($extension === 'az_barrio' && isset($libraries['az-icons'])) {
+        // Add Arizona Icons CSS based on theme settings.
+        $az_icons_path = az_barrio_az_icons_assets_path('css');
+        // Ensure icons are loaded before Arizona Bootstrap.
+        $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-icons';
+        $az_barrio_az_icons_css_info = [
+          'media' => 'all',
+          'preprocess' => FALSE,
+          'browsers' => [
+            'IE' => TRUE,
+            '!IE' => TRUE,
+          ],
+          'minified' => TRUE,
+        ];
+        // AZ Brand Icons source.
+        if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
+          $az_barrio_az_icons_css_info['type'] = 'external';
+        }
+        else {
+          $az_barrio_az_icons_css_info['type'] = 'file';
+        }
+
+        $libraries['az-icons']['css']['theme'] = [
+          $az_icons_path => $az_barrio_az_icons_css_info,
+        ];
+      }
     }
   }
 }
@@ -353,18 +352,18 @@ function az_barrio_az_bootstrap_assets_path($type) {
 /**
  * Helper function for constructing UA Brand Icons asset paths.
  */
-function az_barrio_brand_icons_assets_path($type) {
-  $az_brand_icons_path = '';
+function az_barrio_az_icons_assets_path($type) {
+  $az_icons_path = '';
 
-  // AZ Brand Icons source.
-  if (theme_get_setting('az_brand_icons_source') === 'cdn') {
-    $az_brand_icons_path = 'https://cdn.uadigital.arizona.edu/lib/ua-brand-icons/' . AZ_BRAND_ICONS_STABLE_VERSION . '/ua-brand-icons.min.css';
+  // AZ Icons source.
+  if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
+    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
   }
   else {
-    $az_brand_icons_path = 'libraries/ua-brand-icons/ua-brand-icons.min.css';
+    $az_icons_path = 'libraries/az-icons/az-icons-styles.css';
   }
 
-  return $az_brand_icons_path;
+  return $az_icons_path;
 }
 
 /**

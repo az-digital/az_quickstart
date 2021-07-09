@@ -3,8 +3,8 @@ status: true
 dependencies:
   config:
     - field.field.node.az_person.field_az_address
-    - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
@@ -60,6 +60,13 @@ content:
     third_party_settings: {  }
     type: text_textarea
     region: content
+  field_az_attachments:
+    weight: 11
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
   field_az_body:
     weight: 10
     settings:
@@ -67,13 +74,6 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: text_textarea
-    region: content
-  field_az_attachments:
-    weight: 11
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
-    type: file_generic
     region: content
   field_az_degrees:
     weight: 12
@@ -194,4 +194,9 @@ content:
       match_limit: 10
     region: content
     third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    settings: {  }
+    third_party_settings: {  }
+    region: content
 hidden: {  }

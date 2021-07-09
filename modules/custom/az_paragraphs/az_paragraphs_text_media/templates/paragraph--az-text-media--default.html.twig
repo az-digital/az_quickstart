@@ -78,8 +78,8 @@
         {{style_element}}
       {% endif %}
       <div class="container">
-        <div class="row">
-          <div{{ col_attributes.addClass(col_classes) }}>
+        <div class="az-full-width-row">
+          <div{{ col_attributes.addClass(col_classes).addClass('az-full-width-column-content') }}>
             <div{{ content_attributes.addClass(content_classes) }}>
               <h2 class="mt-0 text-blue bold">{{ paragraph.field_az_title.value }}</h2>
               {{ content }}
