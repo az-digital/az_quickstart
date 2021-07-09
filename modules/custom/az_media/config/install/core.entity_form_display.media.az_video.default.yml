@@ -2,44 +2,32 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.az_remote_video.field_media_az_image
-    - field.field.media.az_remote_video.field_media_az_oembed_video
-    - image.style.thumbnail
-    - media.type.az_remote_video
+    - field.field.media.az_video.field_media_az_video_file
+    - media.type.az_video
   module:
-    - image
-    - media
+    - file
     - path
-id: media.az_remote_video.default
+id: media.az_video.default
 targetEntityType: media
-bundle: az_remote_video
+bundle: az_video
 mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 3
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_media_az_image:
-    weight: 1
-    settings:
-      progress_indicator: throbber
-      preview_image_style: thumbnail
-    third_party_settings: {  }
-    type: image_image
-    region: content
-  field_media_az_oembed_video:
-    type: oembed_textfield
+  field_media_az_video_file:
     weight: 0
     settings:
-      size: 60
-      placeholder: ''
+      progress_indicator: throbber
     third_party_settings: {  }
+    type: file_generic
     region: content
   path:
     type: path
-    weight: 4
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -47,12 +35,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 5
+    weight: 100
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 2
+    weight: 5
     settings:
       match_operator: CONTAINS
       match_limit: 10
