@@ -31,6 +31,15 @@
   padding: 0;
 }
 
+.az-calendar-filter-calendar .ui-datepicker.ui-datepicker-inline {
+  width: 100%;
+}
+
+/* Fix for Barrio form-row issue. */
+.views-exposed-form.block-views-exposed-filter-blockaz-events-page-1 .form-row>fieldset {
+  max-width: 100%;
+}
+
 .az-calendar-filter-calendar .ui-datepicker table {
   font-size: 0.75em;
   text-align: center;
