@@ -15,8 +15,8 @@
       }
 
       drupalSettings.azCalendarFilter = {};
-
-      for (var property in filterInformation) {
+      settings.azCalendarFilter = {};
+      Object.keys(filterInformation).forEach(function (property) {
         if (filterInformation.hasOwnProperty(property)) {
           drupalSettings.calendarFilterRanges[property] = [];
           var ranges = filterInformation[property];
@@ -25,8 +25,7 @@
             drupalSettings.calendarFilterRanges[property].push([$.datepicker.parseDate("@", ranges[i][0] * 1000), $.datepicker.parseDate("@", ranges[i][1] * 1000)]);
           }
         }
-      }
-
+      });
       $(".az-calendar-filter-calendar").datepicker("refresh");
       $(".az-calendar-filter-wrapper", context).once("azCalendarFilter").each(function () {
         var $wrapper = $(this);
@@ -38,25 +37,6 @@
         var $calendar = $wrapper.children(".az-calendar-filter-calendar");
         var $submitButton = $wrapper.closest(".views-exposed-form").find("button.form-submit");
         var task = null;
-
-        function updateCalendarFilters(startDate, endDate) {
-          var $ancestor = $wrapper.closest(".views-widget-az-calendar-filter");
-          var dates = [startDate, endDate];
-
-          for (var _i = 0; _i < dates.length; _i++) {
-            var month = dates[_i].getMonth() + 1;
-
-            var day = dates[_i].getDate();
-
-            var year = dates[_i].getFullYear();
-
-            $ancestor.find("input").eq(_i).val("".concat(year, "-").concat(month, "-").concat(day));
-          }
-
-          triggerFilterChange($ancestor, 0);
-          $ancestor.find(".btn").removeClass("active").attr("aria-pressed", "false");
-          var $form = $wrapper.closest("form");
-        }
 
         function triggerFilterChange($ancestor, delay) {
           if (task != null) {
@@ -72,6 +52,21 @@
                 triggerFilterChange($ancestor, 200);
               }
           }, delay);
+        }
+
+        function updateCalendarFilters(startDate, endDate) {
+          var $ancestor = $wrapper.closest(".views-widget-az-calendar-filter");
+          var dates = [startDate, endDate];
+
+          for (var i = 0; i < dates.length; i++) {
+            var month = dates[i].getMonth() + 1;
+            var day = dates[i].getDate();
+            var year = dates[i].getFullYear();
+            $ancestor.find("input").eq(i).val("".concat(year, "-").concat(month, "-").concat(day));
+          }
+
+          triggerFilterChange($ancestor, 0);
+          $ancestor.find(".btn").removeClass("active").attr("aria-pressed", "false");
         }
 
         $calendar.datepicker({
@@ -95,10 +90,10 @@
             }
 
             if (drupalSettings.calendarFilterRanges.hasOwnProperty(rangeKey)) {
-              var _ranges = drupalSettings.calendarFilterRanges[rangeKey];
+              var ranges = drupalSettings.calendarFilterRanges[rangeKey];
 
-              for (var _i2 = 0; _i2 < _ranges.length; _i2++) {
-                if (_ranges[_i2][0].getTime() <= time && _ranges[_i2][1].getTime() >= time) {
+              for (var i = 0; i < ranges.length; i++) {
+                if (ranges[i][0].getTime() <= time && ranges[i][1].getTime() >= time) {
                   dateClass = withinRange ? "calendar-filter-window" : "calendar-filter-day-events";
                 }
               }
@@ -106,14 +101,14 @@
 
             return [true, dateClass];
           },
-          onChangeMonthYear: function onChangeMonthYear(year, month, inst) {
+          onChangeMonthYear: function onChangeMonthYear(year, month) {
             var startDay = new Date(year, month - 1, 1);
             var endDay = new Date(year, month, 0);
             rangeStart = null;
             rangeEnd = null;
             updateCalendarFilters(startDay, endDay);
           },
-          onSelect: function onSelect(datetext, inst) {
+          onSelect: function onSelect(datetext) {
             var newDate = $.datepicker.parseDate("m-d-yy", datetext);
             rangeStart = newDate.getTime();
             rangeEnd = newDate.getTime();
@@ -124,8 +119,8 @@
         $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-today btn-block">Today</button>');
         $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-week btn-block">This Week</button>');
         $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-month btn-block mb-2">This Month</button>');
-        $buttonWrapper.children(".calendar-filter-button").on("click", function () {
-          var $pressed = $(this);
+        $buttonWrapper.children(".calendar-filter-button").on("click", function (e) {
+          var $pressed = $(e.currentTarget);
           var current = new Date(Date.now());
           var today = new Date(current.getFullYear(), current.getMonth(), current.getDate());
           var month = current.getMonth();

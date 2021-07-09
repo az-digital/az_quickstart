@@ -15,20 +15,21 @@
       // Drupal settings get merged rather than replaced during ajax.
       // We should clear out stale entries when we process a new cells.
       drupalSettings.azCalendarFilter = {};
+      settings.azCalendarFilter = {};
 
       // Process cell date strings into javascript dates.
-      for (const property in filterInformation) {
+      Object.keys(filterInformation).forEach((property) => {
         if (filterInformation.hasOwnProperty(property)) {
           drupalSettings.calendarFilterRanges[property] = [];
           const ranges = filterInformation[property];
           for (let i = 0; i < ranges.length; i++) {
             drupalSettings.calendarFilterRanges[property].push([
               $.datepicker.parseDate("@", ranges[i][0] * 1000),
-              $.datepicker.parseDate("@", ranges[i][1] * 1000),
+              $.datepicker.parseDate("@", ranges[i][1] * 1000)
             ]);
           }
         }
-      }
+      });
 
       // We may have recieved new cell data. Refresh existing datepickers.
       $(".az-calendar-filter-calendar").datepicker("refresh");
@@ -36,6 +37,7 @@
       // Initialize calendar widget wrapper if needed.
       $(".az-calendar-filter-wrapper", context)
         .once("azCalendarFilter")
+        // eslint-disable-next-line func-names
         .each(function () {
           const $wrapper = $(this);
           // rangeKey contains our filter identifier to find calendar cell data.
@@ -54,6 +56,29 @@
             .find("button.form-submit");
           let task = null;
 
+          // Set task to trigger filter element change.
+          function triggerFilterChange($ancestor, delay) {
+            if (task != null) {
+              clearTimeout(task);
+            }
+            task = setTimeout(() => {
+              // Only trigger if submit buttion isn't disabled.
+              if (!$submitButton.prop("disabled")) {
+                $ancestor
+                  .find("input")
+                  .eq(0)
+                  .change();
+                $submitButton.click();
+                task = null;
+              }
+              // The form is disabled and we are probably ajaxing.
+              // Wait for a while.
+              else {
+                triggerFilterChange($ancestor, 200);
+              }
+            }, delay);
+          }
+
           // Function to update a filter's internal date fields from datepicker.
           function updateCalendarFilters(startDate, endDate) {
             const $ancestor = $wrapper.closest(
@@ -65,7 +90,10 @@
               const month = dates[i].getMonth() + 1;
               const day = dates[i].getDate();
               const year = dates[i].getFullYear();
-              $ancestor.find("input").eq(i).val(`${year}-${month}-${day}`);
+              $ancestor
+                .find("input")
+                .eq(i)
+                .val(`${year}-${month}-${day}`);
             }
 
             // Signal to UI that the inputs were updated programmatically.
@@ -74,27 +102,6 @@
               .find(".btn")
               .removeClass("active")
               .attr("aria-pressed", "false");
-            const $form = $wrapper.closest("form");
-          }
-
-          // Set task to trigger filter element change.
-          function triggerFilterChange($ancestor, delay) {
-            if (task != null) {
-              clearTimeout(task);
-            }
-            task = setTimeout(() => {
-              // Only trigger if submit buttion isn't disabled.
-              if (!$submitButton.prop("disabled")) {
-                $ancestor.find("input").eq(0).change();
-                $submitButton.click();
-                task = null;
-              }
-              // The form is disabled and we are probably ajaxing.
-              // Wait for a while.
-              else {
-                triggerFilterChange($ancestor, 200);
-              }
-            }, delay);
           }
 
           // Initialize the calendar datepicker options.
@@ -136,7 +143,7 @@
               }
               return [true, dateClass];
             },
-            onChangeMonthYear(year, month, inst) {
+            onChangeMonthYear(year, month) {
               // When the month is changed, update the date input fields.
               const startDay = new Date(year, month - 1, 1);
               const endDay = new Date(year, month, 0);
@@ -144,7 +151,7 @@
               rangeEnd = null;
               updateCalendarFilters(startDay, endDay);
             },
-            onSelect(datetext, inst) {
+            onSelect(datetext) {
               // When a day is selected, update the date input fields.
               const newDate = $.datepicker.parseDate("m-d-yy", datetext);
               rangeStart = newDate.getTime();
@@ -168,8 +175,8 @@
           // Handle button presses for calendar range selection buttions.
           $buttonWrapper
             .children(".calendar-filter-button")
-            .on("click", function () {
-              const $pressed = $(this);
+            .on("click", (e) => {
+              const $pressed = $(e.currentTarget);
               const current = new Date(Date.now());
               const today = new Date(
                 current.getFullYear(),
