@@ -6,3 +6,4 @@ package: The University of Arizona
 dependencies:
   - antibot
   - honeypot
+  - webform
