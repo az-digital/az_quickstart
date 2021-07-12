@@ -28,10 +28,12 @@
 }
 .box {
   padding: 2em;
-  margin: 3em 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 .column {
-  padding: 5em 2em;
+  padding-left: 2em;
+  padding-right: 2em;
 }
 .bottom {
   margin-top: -5em;
