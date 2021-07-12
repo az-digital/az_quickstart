@@ -517,8 +517,6 @@ a.nolink + ul .sf-clone-parent {
   color: #333;
 }
 
-@media screen and (min-width: 60em) {
-
 .region-sidebar-first .block,
 .region-sidebar-second .block {
   margin-bottom: 24px !important;
@@ -645,7 +643,7 @@ fieldset.collapsed {
   width: initial;
   max-width: 100%;
 }
-}
+
 .align-left {
   float: none;
 }
