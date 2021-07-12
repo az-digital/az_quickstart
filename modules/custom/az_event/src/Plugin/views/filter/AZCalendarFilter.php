@@ -132,7 +132,10 @@ class AZCalendarFilter extends Date {
   }
 
   /**
-   * {@inheritdoc}
+   * Filters by date overlap to determine if content overlaps calendar range.
+   *
+   * @param object $field
+   *   The views field.
    */
   protected function opOverlap($field) {
     $offset = FALSE;
@@ -164,6 +167,7 @@ class AZCalendarFilter extends Date {
       // Keep sign.
       $b = '***CURRENT_TIME***' . sprintf('%+d', $b);
     }
+    // Compute date overlap between ranges.
     // This is safe because we are manually scrubbing the values.
     // It is necessary to do it this way since $a and $b might be formulae.
     $this->query->addWhereExpression($this->options['group'], "$field <= $b AND $field2 >= $a");
