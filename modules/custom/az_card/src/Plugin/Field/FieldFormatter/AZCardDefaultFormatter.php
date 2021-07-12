@@ -73,7 +73,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
-    // TODO: Card style selection (based on custom config entities).
+    // @todo Card style selection (based on custom config entities).
     $element['foo'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Foo'),
