@@ -59,17 +59,6 @@
       "link_id": "6",
       "parent_link_id": "0",
       "menu": "main",
-      "title": "Home",
-      "urlpath": "/",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "0"
-    },
-    {
-      "link_id": "7",
-      "parent_link_id": "0",
-      "menu": "main",
       "title": "Pages",
       "urlpath": "route:<button>",
       "external": false,
@@ -78,8 +67,8 @@
       "weight": "1"
     },
     {
-      "link_id": "8",
-      "parent_link_id": "7",
+      "link_id": "7",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Text",
       "urlpath": "/pages/text",
@@ -89,8 +78,8 @@
       "weight": "0"
     },
     {
-      "link_id": "9",
-      "parent_link_id": "7",
+      "link_id": "8",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Text with Background",
       "urlpath": "/pages/text-background",
@@ -100,8 +89,8 @@
       "weight": "1"
     },
     {
-      "link_id": "10",
-      "parent_link_id": "7",
+      "link_id": "9",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Text on Media",
       "urlpath": "/pages/text-media",
@@ -111,8 +100,8 @@
       "weight": "2"
     },
     {
-      "link_id": "11",
-      "parent_link_id": "7",
+      "link_id": "10",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Card Decks",
       "urlpath": "/pages/card-decks",
@@ -122,8 +111,8 @@
       "weight": "3"
     },
     {
-      "link_id": "12",
-      "parent_link_id": "7",
+      "link_id": "11",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Accordions",
       "urlpath": "/pages/accordions",
@@ -133,8 +122,8 @@
       "weight": "4"
     },
     {
-      "link_id": "13",
-      "parent_link_id": "7",
+      "link_id": "12",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Photo Galleries",
       "urlpath": "/pages/photo-galleries",
@@ -144,8 +133,8 @@
       "weight": "5"
     },
     {
-      "link_id": "14",
-      "parent_link_id": "7",
+      "link_id": "13",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Page Grid",
       "urlpath": "/page-grid",
@@ -155,8 +144,8 @@
       "weight": "6"
     },
     {
-      "link_id": "15",
-      "parent_link_id": "7",
+      "link_id": "14",
+      "parent_link_id": "6",
       "menu": "main",
       "title": "Page List",
       "urlpath": "/page-list",
@@ -166,7 +155,7 @@
       "weight": "7"
     },
     {
-      "link_id": "16",
+      "link_id": "15",
       "parent_link_id": "0",
       "menu": "main",
       "title": "News",
@@ -177,7 +166,7 @@
       "weight": "1"
     },
     {
-      "link_id": "17",
+      "link_id": "16",
       "parent_link_id": "0",
       "menu": "main",
       "title": "Events",
@@ -188,8 +177,8 @@
       "weight": "1"
     },
     {
-      "link_id": "18",
-      "parent_link_id": "17",
+      "link_id": "17",
+      "parent_link_id": "16",
       "menu": "main",
       "title": "Calendar",
       "urlpath": "/calendar",
@@ -199,8 +188,8 @@
       "weight": "1"
     },
     {
-      "link_id": "19",
-      "parent_link_id": "17",
+      "link_id": "18",
+      "parent_link_id": "16",
       "menu": "main",
       "title": "Annual Events",
       "urlpath": "/pages/annual-events",

@@ -7,6 +7,7 @@
 
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_install().
@@ -29,6 +30,15 @@ function az_demo_install() {
     $executable = new MigrateExecutable($migration, new MigrateMessage());
     $executable->import();
   }
+
+  // Set front page.
+  $alias = \Drupal::service('path_alias.manager')->getPathByAlias('/home');
+  $params = Url::fromUri("internal:" . $alias)->getRouteParameters();
+  $entity_type = key($params);
+  $home = \Drupal::entityTypeManager()->getStorage($entity_type)->load($params[$entity_type]);
+
+  $config = \Drupal::service('config.factory')->getEditable('system.site');
+  $config->set('page.front', '/node/' . $home->id())->save();
 }
 
 /**
