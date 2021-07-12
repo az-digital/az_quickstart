@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Contains az_media.module
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\editor\Entity\Editor;
+
+/**
+ * Implements hook_ckeditor_css_alter.
+ */
+function az_media_ckeditor_css_alter(array &$css, Editor $editor) {
+  $css[] = drupal_get_path('module', 'az_media') . '/css/az-media-edit.css';
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function az_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+    /** @var Drupal\Core\Entity\FieldableEntityInterface $entity */
+    $formObject = $form_state->getFormObject();
+    if ($formObject instanceof EntityFormInterface) {
+      $entity = $formObject->getEntity();
+      if (
+        $entity->getEntityTypeId() === 'node'
+        && in_array($entity->bundle(), ['az_flexible_page'])
+      ) {
+        $form['#attached']['library'][] = 'az_media/az_media_edit';
+      }
+    }
+  }
