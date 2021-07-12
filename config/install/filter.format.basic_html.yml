@@ -9,7 +9,7 @@ name: 'Basic HTML'
 format: basic_html
 weight: 0
 roles:
-  - authenticated
+  - administrator
 filters:
   filter_html:
     id: filter_html
