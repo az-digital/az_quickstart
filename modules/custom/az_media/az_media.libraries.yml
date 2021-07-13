@@ -1,0 +1,8 @@
+az_media_display:
+  css:
+    component:
+      css/az-media-display.css: {}
+az_media_edit:
+  css:
+    component:
+      css/az-media-edit.css: {}

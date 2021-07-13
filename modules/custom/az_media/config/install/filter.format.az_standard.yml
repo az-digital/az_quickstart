@@ -1,10 +1,16 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.media.az_large
+    - core.entity_view_mode.media.az_medium
+    - core.entity_view_mode.media.az_natural_size
+    - core.entity_view_mode.media.az_small
+    - core.entity_view_mode.media.az_square
   module:
+    - bootstrap_utilities
     - entity_embed
     - media
-    - bootstrap_utilities
 name: Standard
 format: az_standard
 weight: -10
@@ -46,11 +52,11 @@ filters:
       default_view_mode: default
       allowed_media_types: {  }
       allowed_view_modes:
-        az_small: az_small
-        az_medium: az_medium
         az_large: az_large
-        az_square: az_square        
-        az_natural_size: az_natural_size   
+        az_medium: az_medium
+        az_natural_size: az_natural_size
+        az_small: az_small
+        az_square: az_square
   entity_embed:
     id: entity_embed
     provider: entity_embed
@@ -74,3 +80,9 @@ filters:
       table_bordered: '0'
       table_row_hover: '0'
       table_small: '0'
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
