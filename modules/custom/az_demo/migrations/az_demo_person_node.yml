@@ -130,11 +130,12 @@ process:
 destination:
   plugin: entity:node
   bundle: az_person
-  migration_dependencies:
-    required:
-      - az_demo_person_categories
-      - az_demo_person_categories_secondary
-      - az_demo_image_file
+
+migration_dependencies:
+  required:
+    - az_demo_person_categories
+    - az_demo_person_categories_secondary
+    - az_demo_image_file
 
 dependencies:
   enforced:

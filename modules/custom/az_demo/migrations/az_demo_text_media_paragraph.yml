@@ -1,0 +1,83 @@
+id: az_demo_text_media_paragraph
+label: AZ Quickstart Demo Text with Media Paragraphs
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_text_media_paragraph.json
+  item_selector: paragraphs
+  ids:
+    id:
+      type: integer
+
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: az_title
+      selector: az_title
+    -
+      name: az_text_area
+      selector: az_text_area
+    -
+      name: filename
+      selector: filename
+    -
+      name: full_width
+      selector: full_width
+    -
+      name: bg_color
+      selector: bg_color
+    -
+      name: content_style
+      selector: content_style
+    -
+      name: bg_attachment
+      selector: bg_attachment
+    -
+      name: position
+      selector: position
+
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text_media
+
+process:
+  field_az_text_area/value: az_text_area
+  field_az_text_area/format:
+    -
+      plugin: default_value
+      default_value: az_standard
+
+  field_az_title: az_title
+
+  field_az_media/target_id:
+    -
+      plugin: migration_lookup
+      source: filename
+      migration:
+        - az_demo_image_file
+
+  behavior_settings:
+    plugin: paragraphs_behavior_settings
+    bg_text_color: bg_color
+    bg_attach: bg_attachment
+    position: position
+    full_width: full_width
+    content_style: content_style
+
+
+migration_dependencies:
+  required:
+    - az_demo_image_file
+
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page

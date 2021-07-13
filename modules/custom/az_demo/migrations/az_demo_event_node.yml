@@ -1,0 +1,197 @@
+id: az_demo_event_node
+label: AZ Quickstart Demo Event Content
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_event_node.json
+  item_selector: events
+  ids:
+    id:
+      type: integer
+
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: title
+      selector: title
+    -
+      name: path_alias
+      selector: path
+    -
+      name: filename
+      selector: az_photos
+    -
+      name: az_body
+      selector: az_body
+    -
+      name: az_link
+      selector: az_link
+    -
+      name: az_subheading
+      selector: az_subheading
+    -
+      name: az_event_date_value
+      selector: az_event_date
+    -
+      name: az_event_date_end
+      selector: az_event_date_to
+    -
+      name: az_event_date_rrule
+      selector: az_event_date_rrule
+    -
+      name: az_event_date_duration
+      selector: az_event_date_duration
+    -
+      name: az_location
+      selector: az_location
+    -
+      name: az_summary
+      selector: az_summary
+process:
+  type:
+    plugin: default_value
+    default_value: az_event
+
+  title: title
+
+  field_az_location:
+    plugin: sub_process
+    source: az_location
+    process:
+      delta: delta
+      uri: url
+      title: title
+
+  field_az_link:
+    plugin: sub_process
+    source: az_link
+    process:
+      delta: delta
+      uri: url
+      title: title
+
+  field_az_body/value: az_body
+  field_az_body/format:
+    -
+      plugin: default_value
+      default_value: az_standard
+
+  az_event_start_time:
+    -
+      plugin: callback
+      callable: strtotime
+      source: az_event_date_value
+    -
+      plugin: format_date
+      from_format: 'U'
+      to_format: 'U'
+      from_timezone: 'UTC'
+      to_timezone: 'America/Phoenix'
+
+  field_az_event_date/value: '@az_event_start_time'
+
+  field_az_event_date/end_value:
+    -
+      plugin: default_value
+      default_value: '@az_event_start_time'
+    -
+      plugin: callback
+      source: az_event_date_end
+      callable: strtotime
+    -
+      plugin: format_date
+      from_format: 'U'
+      to_format: 'U'
+      from_timezone: 'UTC'
+      to_timezone: 'America/Phoenix'
+
+  az_event_date_rrule:
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_event_rrule
+      source: az_event_date_rrule
+
+  field_az_event_date/rrule:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: '@az_event_date_rrule'
+
+  field_az_event_date/duration:
+    plugin: default_value
+    source: az_event_date_duration
+    default_value: 'custom'
+
+  field_az_event_date/timezone:
+    plugin: default_value
+    default_value: 'America/Phoenix'
+
+  field_az_event_date:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: '@az_event_date_rrule'
+    -
+      plugin: smart_date_create_recurrence_on_field
+      source: '@az_event_date_rrule'
+
+  # 'path/pathauto':
+  #   plugin: default_value
+  #   default_value: 0 # Disable pathauto.
+
+  # 'path/alias': path_alias
+
+  pseudo_exploded_photos:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: filename
+    -
+      plugin: explode
+      source: filename
+      delimiter: '|'
+
+  pseudo_photos:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: '@pseudo_exploded_photos'
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_image_file
+      source: '@pseudo_exploded_photos'
+
+  field_az_photos:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: '@pseudo_exploded_photos'
+    -
+      plugin: sub_process
+      source: '@pseudo_photos'
+      process:
+        delta: delta
+        target_id: '0'
+
+destination:
+  plugin: entity:node
+  bundle: az_event
+
+migration_dependencies:
+  required:
+    - az_demo_image_file
+    - az_demo_event_rrule
+
+dependencies:
+  enforced:
+    module:
+      - az_event
