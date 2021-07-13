@@ -2,9 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.media.az_remote_video.field_media_az_image
     - field.field.media.az_remote_video.field_media_az_oembed_video
+    - image.style.thumbnail
     - media.type.az_remote_video
   module:
+    - image
     - media
     - path
 id: media.az_remote_video.default
@@ -14,10 +17,18 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 10
+    weight: 3
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_media_az_image:
+    weight: 1
+    settings:
+      progress_indicator: throbber
+      preview_image_style: thumbnail
+    third_party_settings: {  }
+    type: image_image
+    region: content
   field_media_az_oembed_video:
     type: oembed_textfield
     weight: 0
@@ -28,7 +39,7 @@ content:
     region: content
   path:
     type: path
-    weight: 30
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -36,12 +47,12 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 100
+    weight: 5
     region: content
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 5
+    weight: 2
     settings:
       match_operator: CONTAINS
       match_limit: 10
