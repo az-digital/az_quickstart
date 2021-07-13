@@ -1,0 +1,18 @@
+unprotected_forms:
+  - user_login_form
+  - search_form
+  - search_block_form
+  - views_exposed_form
+  - honeypot_settings_form
+protect_all_forms: true
+log: false
+element_name: url
+time_limit: 5
+# expire: 300
+# form_settings:
+#   user_register_form: false
+#   user_pass: false
+#   node_az_event_form: false
+#   node_az_flexible_page_form: false
+#   node_az_news_form: false
+#   node_az_person_form: false

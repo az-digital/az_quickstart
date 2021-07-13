@@ -24,6 +24,7 @@ install:
   - az_person
   - az_event
   - az_seo
+  - az_webform
   - drupal:node
   - drupal:history
   - drupal:block
