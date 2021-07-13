@@ -6,7 +6,7 @@ use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Test to ensure the metrics module grabs the desired data for a test site.
+ * Test to ensure the metrics module runs the cron function successfully
  *
  * @group az_metrics
  */
@@ -51,10 +51,10 @@ class MetricsCronTest extends BrowserTestBase{
         try {
             az_metrics_cron();
             assert(true);
-        } catch (Exception $e) {
+        } 
+        catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
             assert(false);
         }
     }
-
 }
