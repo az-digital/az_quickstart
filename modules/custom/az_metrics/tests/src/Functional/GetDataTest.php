@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\az_metrics\Functional;
 
-use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -10,72 +9,75 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group az_metrics
  */
-class GetDataTest extends BrowserTestBase{
+class GetDataTest extends BrowserTestBase {
 
-    /**
-    * The profile to install as a basis for testing.
-    *
-    * @var string
-    */
-    protected $profile = 'az_quickstart';
+  /**
+   * The profile to install as a basis for testing.
+   *
+   * @var string
+   */
+  protected $profile = 'az_quickstart';
 
-    /**
-     * @var bool
-     */
-    protected $strictConfigSchema = FALSE;
+  /**
+   * @var bool
+   */
+  protected $strictConfigSchema = FALSE;
 
-    /**
-     * @var string
-     */
-    protected $defaultTheme = 'seven';
+  /**
+   * @var string
+   */
+  protected $defaultTheme = 'seven';
 
-    /**
-     * Modules to enable.
-     *
-     * @var array
-    */
-    protected static $modules = [
-        'az_metrics',
-        'az_core'
-        ];
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  protected static $modules = [
+    'az_metrics',
+    'az_core',
+  ];
 
-    public function testGetData(){
+  /**
+   * Main test function.
+   */
+  public function testGetData() {
 
-        $user = $this->drupalCreateUser(['administer quickstart configuration']);
-        
-        $this->drupalLogin($user);
-        
-        $assert = $this->assertSession();
-        
-        $ret = $this->drupalGet('');
-        
-        $this->assertSession()->statusCodeEquals(200);
-        
-        // Call function from az_metrics.module
-        $data = az_metrics_data();
+    $user = $this->drupalCreateUser(['administer quickstart configuration']);
 
-        $empty = 0;
+    $this->drupalLogin($user);
 
-        // Checks the domain array generated
-        $domainListSize = count($data['domains']);
+    $assert = $this->assertSession();
 
-        $this->assertGreaterThan($empty, $domainListSize, "The domains list is empty!");
+    $ret = $this->drupalGet('');
 
-        // Checks that there is a mail address generated
-        $mailSize = strlen($data['mail']);
+    $this->assertSession()->statusCodeEquals(200);
 
-        $this->assertGreaterThan($empty, $mailSize, "The uuid is empty!");
+    // Call function from az_metrics.module.
+    $data = az_metrics_data();
 
-        // Checks that there is a name generated
-        $nameSize = strlen($data['name']);
+    $empty = 0;
 
-        $this->assertGreaterThan($empty, $nameSize, "The uuid is empty!");
+    // Checks the domain array generated.
+    $domainListSize = count($data['domains']);
 
-        // Checks that there is a uuid generated
-        $uuidSize = strlen($data['uuid']);
+    $this->assertGreaterThan($empty, $domainListSize, "The domains list is empty!");
 
-        $this->assertGreaterThan($empty, $uuidSize, "The uuid is empty!");
+    // Checks that there is a mail address generated.
+    $mailSize = strlen($data['mail']);
 
-    }
+    $this->assertGreaterThan($empty, $mailSize, "The uuid is empty!");
+
+    // Checks that there is a name generated.
+    $nameSize = strlen($data['name']);
+
+    $this->assertGreaterThan($empty, $nameSize, "The uuid is empty!");
+
+    // Checks that there is a uuid generated.
+    $uuidSize = strlen($data['uuid']);
+
+    $this->assertGreaterThan($empty, $uuidSize, "The uuid is empty!");
+
+  }
 
 }

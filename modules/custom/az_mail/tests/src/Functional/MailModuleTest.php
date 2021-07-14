@@ -2,7 +2,6 @@
 
 namespace Drupal\Tests\az_mail\Functional;
 
-use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
 /**
@@ -10,53 +9,55 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group az_metrics
  */
-class MailModuleTest extends BrowserTestBase{
+class MailModuleTest extends BrowserTestBase {
 
-    /**
-    * The profile to install as a basis for testing.
-    *
-    * @var string
-    */
-    protected $profile = 'az_quickstart';
+  /**
+   * The profile to install as a basis for testing.
+   *
+   * @var string
+   */
+  protected $profile = 'az_quickstart';
 
-    /**
-     * @var bool
-     */
-    protected $strictConfigSchema = FALSE;
+  /**
+   * @var bool
+   */
+  protected $strictConfigSchema = FALSE;
 
-    /**
-     * @var string
-     */
-    protected $defaultTheme = 'seven';
+  /**
+   * @var string
+   */
+  protected $defaultTheme = 'seven';
 
-    /**
-     * Modules to enable.
-     *
-     * @var array
-    */
-    protected static $modules = [
-        'az_mail',
-        'az_core'
-        ];
+  /**
+   * Modules to enable.
+   *
+   * @var array
+   */
+  protected static $modules = [
+    'az_mail',
+    'az_core',
+  ];
 
-    public function testMail(){
+  /**
+   * Main test function.
+   */
+  public function testMail() {
 
-        $user = $this->drupalCreateUser(['administer quickstart configuration']);
-        
-        $this->drupalLogin($user);
-        
-        $assert = $this->assertSession();
-        
-        $ret = $this->drupalGet('');
-        
-        $this->assertSession()->statusCodeEquals(200);
-        
-        
-        $message = "Hello!";
+    $user = $this->drupalCreateUser(['administer quickstart configuration']);
 
-        // Call function from az_mail.module
-        az_mail_mail_alter($message);
+    $this->drupalLogin($user);
 
-    }
+    $assert = $this->assertSession();
+
+    $ret = $this->drupalGet('');
+
+    $this->assertSession()->statusCodeEquals(200);
+
+    $message = "Hello!";
+
+    // Call function from az_mail.module.
+    az_mail_mail_alter($message);
+
+  }
 
 }
