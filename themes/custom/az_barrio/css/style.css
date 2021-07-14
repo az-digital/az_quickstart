@@ -200,6 +200,13 @@ span.field-label {
 }
 
 /**
+ * General node styles (replacing Bootstrap Barrio node.css).
+ */
+.node__content {
+  margin-top: 10px;
+}
+
+/**
  * Unpublished note.
  */
 /* The word "Unpublished" displayed underneath the content. */
