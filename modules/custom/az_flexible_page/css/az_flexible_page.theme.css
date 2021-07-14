@@ -1,0 +1,9 @@
+/*
+*  Page-specific overrides to the theme defaults.
+*/
+
+.node__content {
+  /* Remove extra space at the top of content. */
+  margin-top: 0;
+}
+  
