@@ -15,5 +15,4 @@ permissions:
   - 'access_unpublished node az_person'
   - 'search content'
   - 'use exclude node title'
-  - 'use text format restricted_html'
   - 'view media'

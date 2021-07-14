@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.az_events
+  module:
+    - system
+    - views
+  theme:
+    - az_barrio
+id: exposedformaz_eventspage_1
+theme: az_barrio
+region: sidebar_second
+weight: 0
+provider: null
+plugin: 'views_exposed_filter_block:az_events-page_1'
+settings:
+  id: 'views_exposed_filter_block:az_events-page_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+visibility:
+  request_path:
+    id: request_path
+    pages: /calendar
+    negate: false
