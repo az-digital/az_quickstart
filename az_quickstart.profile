@@ -13,7 +13,7 @@ function az_quickstart_update_9201() {
 }
 
 /**
- *  Set account creation rules, default to admin_only.
+ * Set account creation rules, default to admin_only.
  */
 function az_quickstart_update_9202() {
   $config = \Drupal::service('config.factory')->getEditable('user.settings');
