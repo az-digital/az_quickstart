@@ -713,3 +713,13 @@ fieldset.collapsed {
   padding-bottom: 0;
   color: #49595e;
 }
+
+.navbar-offcanvas.open {
+   overflow-y: scroll;
+}
+@media (min-width: 992px) {
+  .navbar-offcanvas.open {
+     overflow-y: initial;
+  }
+}
+
