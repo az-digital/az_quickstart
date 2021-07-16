@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - system.menu.main
+    - system.menu.az-footer-resources
   module:
     - menu_block
   theme:
