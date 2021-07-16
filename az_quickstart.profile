@@ -11,3 +11,12 @@
 function az_quickstart_update_9201() {
   \Drupal::service('module_installer')->install(['az_metrics']);
 }
+
+/**
+ * Set account creation rules, default to admin_only.
+ */
+function az_quickstart_update_9202() {
+  $config = \Drupal::service('config.factory')->getEditable('user.settings');
+  $config->set('register', 'admin_only')
+    ->save(TRUE);
+}
