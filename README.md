@@ -125,7 +125,7 @@ sudo chown normaluser drupalsites
 It should then be possible to install Quickstart directly in this directory:
 ```
 cd /var/www/drupalsites
-composer create-project az-digital/az-quickstart-scaffolding:2.0.x-dev azqs --no-interaction
+composer create-project az-digital/az-quickstart-scaffolding:2.0.x-dev azqs --no-interaction --no-dev
 ```
 This should produce a long list of messages, looking something like
 ```
@@ -153,4 +153,29 @@ PHP CodeSniffer Config installed_paths set to ../../drupal/coder/coder_sniffer,.
 Created a sites/default/settings.php file with chmod 0666
 Created a sites/default/files directory with chmod 0777
  ```
- This will have created a top-level directory (`azqs` in this example), within which there is a `web` subdirectory serving as the actual DocumentRoot for the web server (it's important to update the Apache configuration at this point to reflect this).
+This will have created a top-level directory (`azqs` in this example), within
+which there is a `web` subdirectory serving as the actual DocumentRoot for the
+web server. It's important to update the Apache configuration at this point to
+reflect this, so in the example there would be a
+`DocumentRoot /var/www/drupalsites/azqs/web` directive, and a corresponding
+`<Directory /var/www/drupalsites/azqs/web>` (to set things like `AllowOverride All` there).
+Once Apache has restarted with the new configuration, there are two ways to
+complete the installation. The web site itself will display a variation on the
+usual initial Drupal installation form (headed “Arizona Quickstart”), allowing
+you to fill in various fields with details such as the database user and
+password; but the initial build includes the popular _drush_ utility (down in
+the vendor subdirectory), so a purely command-line installation is possible with
+something like
+ ```
+ /var/www/drupalsites/azqs/vendor/drush/drush/drush si --db-url=mysql://azqslampdbadmin:turn_over_an_old_leaf_at_Ardtun@localhost/azqslampdb --account-name=azadmin --account-pass=flour_85_percent_extraction --account-mail=webmaster@lamp.arizona.edu --site-mail=admin@development.lamp.arizona.edu --site-name='LAMP Development' --verbose --yes az_quickstart
+```
+In this example, note that the database credentials match those set previously
+(other details shown here should also be customized with your own settings). One
+messy detail at the moment is that you may have to manually create a top-level
+`config/sync` directory (so /var/www/drupalsites/azqs/config/sync in this
+example). If all goes well, you will be able log in to the new site with the
+username and password you have set. One thing that will need immediate attention
+is the report at `/admin/reports/status#error` once you have logged in. There
+will probably be a Trusted Host Settings error, needing a manual change to your
+settings file, and notice of some directory permissions that need relaxed to
+allow the web server to write there.
