@@ -2,7 +2,7 @@
 *  Page-specific overrides to the theme defaults.
 */
 
-.node--type-az-flexible-page .node--view-mode-full .node__content {
+.node--type-az-flexible-page article.node--view-mode-full:first-child {
   /* Remove extra space at the top of content. */
   margin-top: 0;
 }
