@@ -4,7 +4,6 @@
  * @file
  * az_quickstart.profile
  */
-use Drupal\Core\Config\FileStorage;
 
 /**
  * Install az_metrics.
