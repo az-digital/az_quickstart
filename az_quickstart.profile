@@ -18,8 +18,6 @@ function az_quickstart_update_9201() {
 function az_quickstart_update_9202() {
   // Set account creation rules, default to only admin can create accounts.
   $config = \Drupal::service('config.factory')->getEditable('user.settings');
-  $config->setData([
-    'register' => 'admin_only'
-  ])
+  $config->setData(['register' => 'admin_only'])
     ->save();
 }
