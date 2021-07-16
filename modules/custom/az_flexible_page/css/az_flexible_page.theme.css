@@ -2,7 +2,7 @@
 *  Page-specific overrides to the theme defaults.
 */
 
-.node--type-az-flexible-page article.node--view-mode-full:first-child {
-  /* Remove extra space at the top of content. */
+/* Because you can embed flexible pages in flexible pages. */
+.node--type-az-flexible-page article.node--view-mode-full .node__content:nth-of-type(1) {
   margin-top: 0;
 }
