@@ -17,8 +17,6 @@ function az_quickstart_update_9201() {
  */
 function az_quickstart_update_9202() {
   $config = \Drupal::service('config.factory')->getEditable('user.settings');
-  $config->setData([
-    'register' => 'admin_only'
-  ])
+  $config->setData(['register' => 'admin_only'])
     ->save();
 }
