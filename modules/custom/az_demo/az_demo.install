@@ -17,12 +17,7 @@ function az_demo_install() {
 
   // Set default timezone for demo content.
   $config = \Drupal::service('config.factory')->getEditable('system.date');
-  $config->setData([
-    'timezone' => [
-      'default' => 'America/Phoenix',
-    ],
-  ])
-    ->save();
+  $config->set('timezone.default', 'America/Phoenix')->save();
 
   // Run the migrations that are tagged as demo content.
   $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
