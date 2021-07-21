@@ -2,7 +2,7 @@
 *  Page-specific overrides to the theme defaults.
 */
 
-.node--type-az-flexible-page .node__content {
+#block-az-barrio-content > .content > .node--type-az-flexible-page > .node__content {
   /* Remove extra space at the top of content. */
   margin-top: 0;
 }
