@@ -61,6 +61,7 @@ class AZDemoContentTest extends BrowserTestBase {
     $assert->linkExists('Utility 1');
     $assert->linkExists('Utility 2');
   }
+
   /**
    * Tests that imported utility links exist.
    */
@@ -73,4 +74,5 @@ class AZDemoContentTest extends BrowserTestBase {
     $homepage_title = $assert
       ->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
   }
+
 }
