@@ -46,7 +46,7 @@ process:
 
   processed_full_width:
     plugin: default_value
-    default_value: 1
+    default_value: 'full-width-background'
 
   behavior_settings:
     plugin: paragraphs_behavior_settings

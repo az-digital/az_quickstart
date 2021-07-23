@@ -37,7 +37,7 @@ process:
 
   processed_full_width:
     plugin: default_value
-    default_value: 1
+    default_value: 'full-width-background'
 
   field_az_text_area/value:
     plugin: paragraphs_fw_media_row_field_merge
