@@ -70,7 +70,6 @@ class AZDemoContentTest extends BrowserTestBase {
     $assert = $this->assertSession();
     $assert->statusCodeEquals(200);
     // Home page title test.
-    $assert->titleEquals('Kitten | Quickstart Review');
     $homepage_title = $assert
       ->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
   }
