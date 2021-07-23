@@ -74,14 +74,13 @@ class ParagraphsBehavior extends ProcessPluginBase {
 
     // Background Attachment.
     if (!empty($this->configuration['bg_attach'])) {
-      $bg_attach = $row->getSourceProperty($this->configuration['bg_attach']);
-      $bg_attach_mapping = [
-        'bg-attachment-fixed' => 'bg-fixed',
-        'bg-fixed' => 'bg-fixed',
-        'bg-attachment-scroll' => '',
-      ];
-      foreach ($bg_attach as $bg_attach_item) {
-        $behavior['az_text_media_paragraph_behavior']['bg_attachment'] = $bg_attach_mapping[$bg_attach_item['value']];
+      if (!empty($row->getSourceProperty($this->configuration['bg_attach']))) {
+        $bg_attach_mapping = [
+          'bg-attachment-fixed' => 'bg-fixed',
+          'bg-fixed' => 'bg-fixed',
+          'bg-attachment-scroll' => '',
+        ];
+        $behavior['az_text_media_paragraph_behavior']['bg_attachment'] = $bg_attach_mapping[$row->getSourceProperty($this->configuration['bg_attach'])];
       }
     }
 
@@ -95,9 +94,8 @@ class ParagraphsBehavior extends ProcessPluginBase {
           'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3',
           'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6',
         ];
-
+        $behavior['az_text_media_paragraph_behavior']['position'] = $position_mapping[$row->getSourceProperty($this->configuration['position'])];
       }
-      $behavior['az_text_media_paragraph_behavior']['position'] = $position_mapping[$row->getSourceProperty($this->configuration['position'])];
     }
 
     if (!empty($this->configuration['full_width'])) {

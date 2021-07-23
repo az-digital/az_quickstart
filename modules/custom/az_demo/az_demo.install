@@ -15,10 +15,6 @@ use Drupal\Core\Url;
 function az_demo_install() {
   $tag = 'Quickstart Demo Content';
 
-  // Set default timezone for demo content.
-  $config = \Drupal::service('config.factory')->getEditable('system.date');
-  $config->set('timezone.default', 'America/Phoenix')->save();
-
   // Run the migrations that are tagged as demo content.
   $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
   foreach ($migrations as $migration) {
