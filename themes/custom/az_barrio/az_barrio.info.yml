@@ -44,4 +44,4 @@ ckeditor_stylesheets:
 
 libraries-extend:
   system/base:
-    - az_media/az_media_display
+    - az_barrio/az-media-display
