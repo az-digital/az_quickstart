@@ -61,17 +61,17 @@ class AZDemoContentTest extends BrowserTestBase {
     $assert->linkExists('Utility 1');
     $assert->linkExists('Utility 2');
   }
-
   /**
-   * Tests that imported utility links exist.
+   * Tests page titles.
    */
   public function testTitle() {
     $this->drupalGet(Url::fromRoute('<front>'));
     $assert = $this->assertSession();
     $assert->statusCodeEquals(200);
+
     // Home page title test.
+    $assert->titleEquals('Kitten | Quickstart Review');
     $homepage_title = $assert
       ->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
   }
-
 }
