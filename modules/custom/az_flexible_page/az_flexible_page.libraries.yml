@@ -2,3 +2,7 @@ az_flexible_page_form:
   css:
     base:
       css/az-flexible-page-edit-form.css: {}
+az_flexible_page_theme:
+  css:
+    layout:
+      css/az_flexible_page.theme.css: {}

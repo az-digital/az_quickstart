@@ -2,7 +2,7 @@ name: 'Quickstart Demo Content'
 type: module
 description: 'Provides sample content to demonstrate various features of the AZ Quickstart distribution.'
 core_version_requirement: ^8.8 || ^9
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
 dependencies:
   - az_core
   - az_event

@@ -50,6 +50,7 @@ az_paragraphs.preview:
   css:
     theme:
       css/az_paragraphs_preview.css: {}
+      css/az_paragraphs_widget.css: {}
   dependencies:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
