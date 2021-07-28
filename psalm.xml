@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <psalm>
     <projectFiles>
-        <directory name="web" />
+        <directory name="az-quickstart-scaffolding" />
     </projectFiles>
 </psalm>
