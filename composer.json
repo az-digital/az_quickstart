@@ -92,7 +92,8 @@
         "npm-asset/slick-carousel": "1.8.0"
     },
     "require-dev": {
-        "az-digital/az-quickstart-dev": "~1"
+        "az-digital/az-quickstart-dev": "~1",
+        "mortenson/psalm-plugin-drupal": "dev-master"
     },
     "extra": {
         "branch-alias": {
