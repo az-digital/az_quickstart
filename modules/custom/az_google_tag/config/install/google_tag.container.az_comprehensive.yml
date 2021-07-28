@@ -1,0 +1,57 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ctools
+    - google_tag
+id: az_comprehensive
+label: 'AZ Comprehensive'
+weight: 0
+container_id: GTM-ML2BZB
+data_layer: dataLayer
+include_classes: false
+whitelist_classes: |-
+  google
+  nonGooglePixels
+  nonGoogleScripts
+  nonGoogleIframes
+blacklist_classes: |-
+  customScripts
+  customPixels
+include_environment: false
+environment_id: ''
+environment_token: ''
+path_toggle: 'exclude listed'
+path_list: |-
+  /admin*
+  batch*
+  block/add/*
+  /block/*/edit
+  file/add
+  file/*/edit
+  /node/add*
+  /node/*/edit
+  /node/*/delete
+  /user/*/edit*
+  /user/*/cancel*
+  taxonomy/term/*/edit
+role_toggle: 'include listed'
+role_list:
+  anonymous: anonymous
+status_toggle: 'exclude listed'
+status_list: |-
+  403
+  404
+conditions:
+  'entity_bundle:node':
+    id: 'entity_bundle:node'
+    bundles: {  }
+    negate: false
+    context_mapping:
+      node: '@node.node_route_context:node'
+  'entity_bundle:taxonomy_term':
+    id: 'entity_bundle:taxonomy_term'
+    bundles: {  }
+    negate: false
+    context_mapping:
+      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
