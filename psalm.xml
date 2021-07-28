@@ -3,6 +3,7 @@
   errorLevel="5"
   resolveFromConfigFile="false"
   runTaintAnalysis="true"
+  autoloader="az-quickstart-scaffolding/vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
 >
     <fileExtensions>
         <extension name=".php" />
@@ -13,17 +14,4 @@
     <projectFiles>
         <directory name="az-quickstart-scaffolding/web/profiles/custom/az_quickstart"/>
     </projectFiles>
-    <!-- <plugins>
-        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
-            <containerXml>DrupalContainerDump.xml</containerXml>
-        </pluginClass>
-        <pluginClass class="mortenson\PsalmPluginDrupal\Plugin">
-            <containerXml>DrupalContainerDump.xml</containerXml>
-            <extensions>
-              <!-- List your modules explicitly here, as the scan may happen without a database -->
-              <module name="my_custom_module" />
-              <module name="my_module_dependency" />
-            </extensions>
-        </pluginClass>
-    </plugins> -->
 </psalm>
