@@ -97,6 +97,7 @@ jobs:
           # report_file: results.sarif
           composer_ignore_platform_reqs: false
           composer_require_dev: false
+          composer_command: ls
       # - name: Upload Security Analysis results to GitHub
       #   uses: github/codeql-action/upload-sarif@v1
       #   with:

@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <psalm
-  errorLevel="6"
+  errorLevel="5"
   resolveFromConfigFile="true"
   runTaintAnalysis="true"
-  autoloader="../../../../vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
+  autoloader="vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
 >
     <fileExtensions>
         <extension name=".php" />
@@ -12,7 +12,7 @@
         <extension name=".inc" />
     </fileExtensions>
     <projectFiles>
-        <directory name="modules/custom"/>
+        <directory name="az-quickstart-scaffolding/web/profiles/custom/az_quickstart"/>
     </projectFiles>
     <plugins>
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
