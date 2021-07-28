@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<psalm
+  errorLevel="6"
+  resolveFromConfigFile="true"
+  runTaintAnalysis="true"
+  autoloader="../../../../vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
+>
+    <fileExtensions>
+        <extension name=".php" />
+        <extension name=".module" />
+        <extension name=".theme" />
+        <extension name=".inc" />
+    </fileExtensions>
+    <projectFiles>
+        <directory name="modules/custom"/>
+    </projectFiles>
+    <plugins>
+        <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
+            <containerXml>DrupalContainerDump.xml</containerXml>
+        </pluginClass>
+        <pluginClass class="mortenson\PsalmPluginDrupal\Plugin">
+            <containerXml>DrupalContainerDump.xml</containerXml>
+            <extensions>
+              <!-- List your modules explicitly here, as the scan may happen without a database -->
+              <module name="my_custom_module" />
+              <module name="my_module_dependency" />
+            </extensions>
+        </pluginClass>
+    </plugins>
+</psalm>
