@@ -24,6 +24,7 @@ install:
   - az_person
   - az_event
   - az_seo
+  - az_google_tag
   - drupal:node
   - drupal:history
   - drupal:block
@@ -63,6 +64,7 @@ install:
   - drupal:views_ui
   - drupal:tour
   - drupal:automated_cron
+  - drupal:google_tag
   - chosen:chosen
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee
