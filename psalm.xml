@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <psalm
-  errorLevel="6"
+  errorLevel="5"
   runTaintAnalysis="true"
+  autoloader="az-quickstart-scaffolding/vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
 >
+    <fileExtensions>
+        <extension name=".php" />
+        <extension name=".module" />
+        <extension name=".theme" />
+        <extension name=".inc" />
+    </fileExtensions>
     <projectFiles>
         <directory name="az-quickstart-scaffolding/web/profiles/custom/az_quickstart" />
     </projectFiles>
