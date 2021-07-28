@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <psalm
   errorLevel="5"
-  resolveFromConfigFile="true"
+  resolveFromConfigFile="false"
   runTaintAnalysis="true"
-  autoloader="../vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
 >
     <fileExtensions>
         <extension name=".php" />

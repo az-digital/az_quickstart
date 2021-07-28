@@ -203,7 +203,7 @@
                     "overwrite": false
                 },
                "[web-root]/psalm.xml": {
-                    "path": "psalm.xml",
+                    "path": "assets/site.webmanifest",
                     "overwrite": false
                 }
             }
