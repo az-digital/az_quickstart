@@ -75,6 +75,7 @@ jobs:
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
           php-version: '7.4'
+          extensions: imagick, swoole
       - name: Set variables
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Install dependencies
@@ -88,6 +89,3 @@ jobs:
           composer install -o
       - name: Psalm
         uses: docker://vimeo/psalm-github-actions
-        with:
-          composer_require_dev: true
-          composer_ignore_platform_reqs: true
