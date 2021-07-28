@@ -13,7 +13,7 @@
     <projectFiles>
         <directory name="az-quickstart-scaffolding/web/profiles/custom/az_quickstart"/>
     </projectFiles>
-    <plugins>
+    <!-- <plugins>
         <pluginClass class="Psalm\SymfonyPsalmPlugin\Plugin">
             <containerXml>DrupalContainerDump.xml</containerXml>
         </pluginClass>
@@ -25,5 +25,5 @@
               <module name="my_module_dependency" />
             </extensions>
         </pluginClass>
-    </plugins>
+    </plugins> -->
 </psalm>
