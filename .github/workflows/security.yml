@@ -90,6 +90,7 @@ jobs:
           find . -name mortenson
           ls
           pwd
+          rm composer.json composer.lock
       - name: Psalm
         uses: docker://vimeo/psalm-github-actions
         with:
