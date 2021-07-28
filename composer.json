@@ -201,6 +201,10 @@
                 "[web-root]/site.webmanifest": {
                     "path": "assets/site.webmanifest",
                     "overwrite": false
+                },
+               "[web-root]/psalm.xml": {
+                    "path": "psalm.xml",
+                    "overwrite": false
                 }
             }
         }
