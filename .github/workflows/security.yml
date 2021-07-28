@@ -86,6 +86,10 @@ jobs:
           composer config use-github-api false
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
           composer install -o
+          find . -name psalm.xml
+          find . -name mortenson
+          ls
+          pwd
       - name: Psalm
         uses: docker://vimeo/psalm-github-actions
         with:
