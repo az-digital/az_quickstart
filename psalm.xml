@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
-<psalm>
+<psalm
+  errorLevel="6"
+  resolveFromConfigFile="true"
+  runTaintAnalysis="true"
+>
     <projectFiles>
         <directory name="az-quickstart-scaffolding/web/profiles/custom/az_quickstart" />
     </projectFiles>
