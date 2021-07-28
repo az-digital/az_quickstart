@@ -3,7 +3,7 @@
   errorLevel="5"
   resolveFromConfigFile="true"
   runTaintAnalysis="true"
-  autoloader="vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
+  autoloader="az-quickstart-scaffolding/vendor/mortenson/psalm-plugin-drupal/scripts/autoload.php"
 >
     <fileExtensions>
         <extension name=".php" />
