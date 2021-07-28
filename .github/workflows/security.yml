@@ -90,3 +90,4 @@ jobs:
         uses: docker://vimeo/psalm-github-actions
         with:
           composer_ignore_platform_reqs: false
+          composer_require_dev: false
