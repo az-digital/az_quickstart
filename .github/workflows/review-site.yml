@@ -115,7 +115,7 @@ jobs:
           --account-mail="noreply@email.arizona.edu" \
           --site-mail="noreply@email.arizona.edu" \
           --site-name="Kitten" \
-          --yes
+          --yes \
           --verbose
           terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- pm:enable -n -y az_demo
           terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
