@@ -149,23 +149,29 @@
         {% if content.field_az_media_image.0 %}
           {{ content.field_az_media_image.0 }}
         {% endif %}
+          {% if content.field_az_address.0 %}
           <div class="card-body pb-0">
             {{ content.field_az_address.0 }}
           </div>
+          {% endif %}
+          {% if content.field_az_phones.0 or content.field_az_email.0 or content.field_az_links.0 %}
           <ul class="list-group list-group-flush border-0 py-3">
           {% if content.field_az_phones %}
             {% for key, item in content.field_az_phones if key|first != '#' %}
               <li class="list-group-item border-0 py-0">{{ item }}</li>
             {% endfor %}
           {% endif %}
+          {% if content.field_az_email.0 %}
           <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
+          {% endif %}
           {% if content.field_az_links %}
             {% for key, item in content.field_az_links if key|first != '#' %}
               <li class="list-group-item border-0 py-0">{{ item }}</li>
             {% endfor %}
           {% endif %}
           </ul>
-          {% if content.field_az_attachments %}
+          {% endif %}
+          {% if content.field_az_attachments.0 %}
           <ul class="list-group list-group-flush border-0 py-3">
             {% for key, item in content.field_az_attachments if key|first != '#' %}
               <li class="list-group-item text-break border-0 py-0">{{ item }}</li>
