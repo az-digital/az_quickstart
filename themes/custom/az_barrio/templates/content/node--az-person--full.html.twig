@@ -154,14 +154,14 @@
             {{ content.field_az_address.0 }}
           </div>
           {% endif %}
-          {% if content.field_az_phones or content.field_az_email is defined or content.field_az_links %}
+          {% if content.field_az_phones or not content.field_az_email.isEmpty() or content.field_az_links %}
           <ul class="list-group list-group-flush border-0 py-3">
           {% if content.field_az_phones %}
             {% for key, item in content.field_az_phones if key|first != '#' %}
               <li class="list-group-item border-0 py-0">{{ item }}</li>
             {% endfor %}
           {% endif %}
-          {% if content.field_az_email is defined %}
+          {% if not content.field_az_email.isEmpty() %}
           <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
           {% endif %}
           {% if content.field_az_links %}
