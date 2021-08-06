@@ -171,7 +171,7 @@
           {% endif %}
           </ul>
           {% endif %}
-          {% if content.field_az_attachments %}
+          {% if content.field_az_attachments.0 %}
           <ul class="list-group list-group-flush border-0 py-3">
             {% for key, item in content.field_az_attachments if key|first != '#' %}
               <li class="list-group-item text-break border-0 py-0">{{ item }}</li>
