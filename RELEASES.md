@@ -1,3 +1,8 @@
+# Draft: Needs community review
+This document is currently a work in progress, and will need more feedback from the community before it can be finalized.
+
+The overarching goal of this release policy is to make sure that developers know what to expect when they use Quickstart 2.0 for their websites. Quickstart 2.0 has adopted semantic versioning to allow site maintainers to keep sites up to date with security updates and other critical improvements without having to track the ongoing feature development of Quickstart. 
+
 *This policy explains what changes can be made to Quickstart following the release of 2.0.0.*
 ## Release Overview
 Quickstart 2 introduces a six-month minor release cycle with releases targeted for March and September. Minor releases provide new improvements and functionality without breaking backward compatibility and will usually include the latest minor release version of Drupal.
