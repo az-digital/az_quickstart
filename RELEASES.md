@@ -12,28 +12,36 @@ Arizona Digital will support two minor releases at a time with ongoing patch rel
 This process will allow for flexibility of development while allowing site owners to have more stable websites with fewer ongoing updates.
 ### Patch releases (2.0.x)
 Patch releases will be applied to the current development branch first and then backported to each of the two currently supported Minor releases. These will be released as necessary and limited to:
-- Drupal Core security updates
-- Security updates to Contrib modules that are included with Quickstart
-- Critical bug fixes
-- Critical accessibility improvements
-- Critical institutional link changes
-- Critical brand changes
+- AZ Quickstart (install profile, custom modules, custom theme)
+  - Bug fixes
+  - Accessibility improvements
+  - Critical institutional link changes
+  - Critical brand changes
+- Third-party code / dependencies
+  - Drupal core
+    - Security updates
+    - Patch level releases (non-security bug-fix releases)
+    - Removal of patches that are no longer necessary
+  - Drupal contrib projects
+    - Security updates
+    - Patch and minor level updates
+    - Addition of new modules
+    - Removal of patches that are no longer necessary
 ### Minor releases (2.x.0)
 Minor releases will occur every six months and will be targeted for March and September.
 The following types of changes are allowed for minor releases in addition to those allowed for patch releases.
 - Functionality and frontend
--- New features
--- Changes to behavior that existing sites might rely on
--- CSS, markup or template changes
--- Improvements to accessibility
-- Drupal Core and Contrib 
--- Non-security/maintenance updates
--- Removal of patches that are no longer necessary
+  - New features
+  - Changes to behavior that existing sites might rely on
+  - CSS, markup or template changes
+  - Improvements to accessibility
+- Third-party code / dependencies
+  - Drupal core
+    - Minor level releases
+  - Drupal contrib projects
+    - Major level releases
 - APIs
 -- New APIs or API improvements with backwards compatibility
-- Third Party Code
--- patch- and minor-level library updates
--- new library dependencies
 - Coding Standards
 -- risky or disruptive cleanups to comply with coding standards
 - High-risk and disruptive changes
