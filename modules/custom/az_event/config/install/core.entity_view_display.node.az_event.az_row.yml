@@ -64,7 +64,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: 'col-4 col-lg-2'
+        classes: 'col-xs-4 col-md-2'
         element: div
         show_label: false
         label_element: h3
@@ -82,7 +82,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: 'col-8 col-lg-10'
+        classes: 'col-xs-8 col-md-10'
         element: div
         show_label: false
         label_element: h3
