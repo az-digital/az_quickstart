@@ -55,7 +55,7 @@ display:
           sort_desc_label: Desc
       pager:
         type: full
-         options:
+        options:
           items_per_page: 0
           offset: 0
           id: 0
