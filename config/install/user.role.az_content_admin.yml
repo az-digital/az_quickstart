@@ -18,6 +18,7 @@ permissions:
   - 'administer quickstart configuration'
   - 'administer redirects'
   - 'administer taxonomy'
+  - 'administer users'
   - 'administer xmlsitemap'
   - 'assign az_content_admin role'
   - 'assign az_content_editor role'
