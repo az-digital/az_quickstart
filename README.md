@@ -3,6 +3,8 @@
 Demonstration/starter Drupal distribution and installation profile that packages
 various features consistent with community best practices and UArizona brand strategy.
 
+Testing devtools on issue/21 branch.
+
 ## A Complete Customized Drupal
 
 AZ Quickstart is a complete customized version of the popular Drupal content
@@ -60,7 +62,7 @@ emphasized or checked are:
   * Check that the Apache configuration enables `mod_rewrite`, and the module letting it work with PHP.
   * Check the user and group of the running web server: in many Debian-derived Linux systems these will be `www-data`, but not on all (this information is needed for setting file and directory permissions later).
   * Install and configure the software as a normal (non-root) user with the ability to `sudo` when elevated privileges areneeded; add this user to the same group that the web server uses (so you would see something like `www-data:x:33:normaluser` in the /etc/group file).
-  * A recent version of Composer is a necessity, not an option — remove any previously installed but stale versions, and follow the [https://getcomposer.org/download/](https://getcomposer.org/download/) instructions to install it, or if upgrading is possible, try the command `sudo -H composer self-update --2` 
+  * A recent version of Composer is a necessity, not an option — remove any previously installed but stale versions, and follow the [https://getcomposer.org/download/](https://getcomposer.org/download/) instructions to install it, or if upgrading is possible, try the command `sudo -H composer self-update --2`
 
 ### Web Server Configuration
 
@@ -136,7 +138,7 @@ Installing az-digital/az-quickstart-scaffolding (2.0.x-dev 238cc222d24ca1fdcbd1d
 Created project in /var/www/drupalsites/azqs
 > QuickstartProject\composer\ScriptHandler::checkComposerVersion
 Loading composer repositories with package information
-Updating dependencies                                 
+Updating dependencies
 Lock file operations: 240 installs, 0 updates, 0 removals
   - Locking alchemy/zippy (0.4.9)
   - Locking asm89/stack-cors (1.3.0)
