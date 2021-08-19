@@ -2,12 +2,11 @@
 
 /**
  * @file
- * az_media.install.
+ * Az_media.install.
  *
  * Install, update and uninstall functions for
  * az_media module.
  */
-
 
 /**
  * Update media fields to allow editing media from the referencing entity.
