@@ -1,3 +1,4 @@
+# See https://digital.arizona.edu/arizona-bootstrap/docs/2.0/layout/grid/#grid-options
 az_barrio.small:
   label: small
   mediaQuery: 'all and (min-width: 576px)'
