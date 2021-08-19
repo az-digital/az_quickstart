@@ -49,8 +49,6 @@ third_party_settings:
         required_fields: true
         weight: 0
       label: Categorization
-_core:
-  default_config_hash: Pzu8bondIyvx3_40AGUzCIbykktWI8da1D_ttrxExnQ
 id: node.az_flexible_page.default
 targetEntityType: node
 bundle: az_flexible_page
