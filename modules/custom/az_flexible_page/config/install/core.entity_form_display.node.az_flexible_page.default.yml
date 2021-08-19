@@ -4,12 +4,15 @@ dependencies:
   config:
     - field.field.node.az_flexible_page.field_az_main_content
     - field.field.node.az_flexible_page.field_az_media_image
+    - field.field.node.az_flexible_page.field_az_metatag
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
   module:
     - field_group
     - media_library
+    - media_library_edit
+    - metatag
     - paragraphs
     - path
     - text
@@ -80,9 +83,18 @@ content:
     weight: 9
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     type: media_library_widget
     region: content
+  field_az_metatag:
+    type: metatag_firehose
+    weight: 11
+    region: content
+    settings:
+      sidebar: true
+    third_party_settings: {  }
   field_az_page_category:
     weight: 11
     settings: {  }

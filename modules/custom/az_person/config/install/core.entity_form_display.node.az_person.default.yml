@@ -21,6 +21,7 @@ dependencies:
     - file
     - link
     - media_library
+    - media_library_edit
     - path
     - telephone
     - text
@@ -120,6 +121,10 @@ content:
     weight: 3
     settings:
       media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+    region: content
     third_party_settings: {  }
     region: content
   field_az_person_category:
@@ -198,5 +203,4 @@ content:
     weight: 50
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden: {  }

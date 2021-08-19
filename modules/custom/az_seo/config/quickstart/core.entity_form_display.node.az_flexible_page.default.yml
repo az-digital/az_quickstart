@@ -11,6 +11,7 @@ dependencies:
   module:
     - field_group
     - media_library
+    - media_library_edit
     - metatag
     - paragraphs
     - path
@@ -48,6 +49,8 @@ third_party_settings:
         required_fields: true
         weight: 0
       label: Categorization
+_core:
+  default_config_hash: Pzu8bondIyvx3_40AGUzCIbykktWI8da1D_ttrxExnQ
 id: node.az_flexible_page.default
 targetEntityType: node
 bundle: az_flexible_page
@@ -82,7 +85,9 @@ content:
     weight: 9
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     type: media_library_widget
     region: content
   field_az_metatag:
