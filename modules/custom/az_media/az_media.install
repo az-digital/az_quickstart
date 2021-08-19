@@ -12,7 +12,7 @@
 /**
  * Update media fields to allow editing media from the referencing entity.
  *
- * Enable media_library_edit and it's configuration.
+ * Enable media_library_edit.
  */
 function az_media_update_9201() {
   $module_list = [

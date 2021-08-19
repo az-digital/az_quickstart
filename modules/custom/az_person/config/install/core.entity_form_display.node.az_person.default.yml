@@ -125,8 +125,6 @@ content:
       media_library_edit:
         show_edit: '1'
     region: content
-    third_party_settings: {  }
-    region: content
   field_az_person_category:
     weight: 1
     settings: {  }
