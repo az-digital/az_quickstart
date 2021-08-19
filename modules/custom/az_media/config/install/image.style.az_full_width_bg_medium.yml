@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_full_width_background
+  module:
+    - crop
+name: az_full_width_bg_medium
+label: 'Medium full-width Background (Scales width to 991px)'
+effects:
+  d3f6ebea-23e3-4262-86d0-dc8f50a2cb7d:
+    uuid: d3f6ebea-23e3-4262-86d0-dc8f50a2cb7d
+    id: image_scale
+    weight: -9
+    data:
+      width: 991
+      height: null
+      upscale: false
+  aa88534f-24f8-4f96-8b8f-9e1b28d70da7:
+    uuid: aa88534f-24f8-4f96-8b8f-9e1b28d70da7
+    id: crop_crop
+    weight: -10
+    data:
+      crop_type: az_full_width_background

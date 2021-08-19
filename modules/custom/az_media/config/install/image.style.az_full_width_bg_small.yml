@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_full_width_background
+  module:
+    - crop
+name: az_full_width_bg_small
+label: 'Small full-width background (Scales width to 767px)'
+effects:
+  d2684a44-3a17-44af-9b66-eaae6b3176aa:
+    uuid: d2684a44-3a17-44af-9b66-eaae6b3176aa
+    id: image_scale
+    weight: -9
+    data:
+      width: 767
+      height: null
+      upscale: false
+  0ed91c91-dd3b-4630-98ad-a767a6a52249:
+    uuid: 0ed91c91-dd3b-4630-98ad-a767a6a52249
+    id: crop_crop
+    weight: -10
+    data:
+      crop_type: az_full_width_background

@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_full_width_background
+label: 'Full-width background'
+description: 'Free-form crop, to be used with a full-width background image style, which will scale your image to the appropriate width per breakpoint.'
+aspect_ratio: ''
+soft_limit_width: null
+soft_limit_height: null
+hard_limit_width: null
+hard_limit_height: null
