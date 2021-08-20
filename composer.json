@@ -81,7 +81,7 @@
         "drupal/search_exclude": "2.0.0-beta2",
         "drupal/slick": "2.3",
         "drupal/slick_views": "2.4",
-        "drupal/smart_date": "3.3.0",
+        "drupal/smart_date": "3.4.0",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
         "drupal/token": "1.9",
