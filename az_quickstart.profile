@@ -20,3 +20,11 @@ function az_quickstart_update_9202() {
   $config->set('register', 'admin_only')
     ->save(TRUE);
 }
+
+/**
+ * Enable the role_delegation module.
+ */
+function az_quickstart_update_9203() {
+  $module_list = ['role_delegation'];
+  \Drupal::service('module_installer')->install($module_list);
+}
