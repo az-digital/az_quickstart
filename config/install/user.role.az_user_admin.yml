@@ -9,3 +9,4 @@ permissions:
   - 'administer users'
   - 'assign az_content_admin role'
   - 'assign az_content_editor role'
+  - 'assign az_user_admin role'
