@@ -38,11 +38,3 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 }
-
-/**
- * Enable the role_delegation module.
- */
-function az_quickstart_update_9201() {
-  $module_list = ['role_delegation'];
-  \Drupal::service('module_installer')->install($module_list);
-}
