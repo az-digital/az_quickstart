@@ -2,11 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - crop.type.az_full_width_background
+    - crop.type.az_medium_full_width_background
   module:
     - crop
 name: az_full_width_bg_medium
-label: 'Medium full-width Background (Scales width to 991px)'
+label: 'Medium full-width background (Scales width down to 991px)'
 effects:
   d3f6ebea-23e3-4262-86d0-dc8f50a2cb7d:
     uuid: d3f6ebea-23e3-4262-86d0-dc8f50a2cb7d
@@ -21,4 +21,4 @@ effects:
     id: crop_crop
     weight: -10
     data:
-      crop_type: az_full_width_background
+      crop_type: az_medium_full_width_background

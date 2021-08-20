@@ -2,11 +2,11 @@ langcode: en
 status: true
 dependencies:
   config:
-    - crop.type.az_full_width_background
+    - crop.type.az_small_full_width_bg
   module:
     - crop
 name: az_full_width_bg_small
-label: 'Small full-width background (Scales width to 767px)'
+label: 'Small full-width background (Scales width down to 767px)'
 effects:
   d2684a44-3a17-44af-9b66-eaae6b3176aa:
     uuid: d2684a44-3a17-44af-9b66-eaae6b3176aa
@@ -21,4 +21,4 @@ effects:
     id: crop_crop
     weight: -10
     data:
-      crop_type: az_full_width_background
+      crop_type: az_small_full_width_bg
