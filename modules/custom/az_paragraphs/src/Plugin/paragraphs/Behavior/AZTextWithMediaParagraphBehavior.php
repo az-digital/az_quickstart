@@ -294,9 +294,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $variables['style_element'] = $style_element;
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
+      // $image_renderable =   ResponsiveImageStyle::load('az_full_width_background');
+
       $image_renderable = [
-        '#theme' => 'image',
-        '#uri' => file_create_url($file_uri),
+        '#theme' => 'responsive_image_formatter',
+        '#responsive_image_style_id' => 'az_full_width_background',
+        '#item' => $media->field_media_az_image,
         '#alt' => $media->field_media_az_image->alt,
         '#attributes' => [
           'class' => ['img-fluid'],

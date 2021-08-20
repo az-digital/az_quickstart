@@ -46,7 +46,11 @@ content:
       crop_preview_image_style: crop_thumbnail
       crop_list:
         - az_card_image
+        - az_extrasmall_full_width_bg
         - az_large
+        - az_large_full_width_background
+        - az_medium_full_width_background
+        - az_small_full_width_bg
       progress_indicator: throbber
       crop_types_required: {  }
       show_crop_area: false

@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.az_full_width_bg_extra_small
+    - image.style.az_full_width_bg_large
+    - image.style.az_full_width_bg_medium
+    - image.style.az_full_width_bg_small
+  theme:
+    - az_barrio
+id: az_full_width_background
+label: 'Full-width background'
+image_style_mappings:
+  -
+    breakpoint_id: az_barrio.large
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: az_full_width_bg_large
+  -
+    breakpoint_id: az_barrio.medium
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: az_full_width_bg_medium
+  -
+    breakpoint_id: az_barrio.small
+    multiplier: 1x
+    image_mapping_type: image_style
+    image_mapping: az_full_width_bg_small
+breakpoint_group: az_barrio
+fallback_image_style: az_full_width_bg_extra_small
