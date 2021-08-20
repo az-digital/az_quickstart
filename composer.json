@@ -68,7 +68,7 @@
         "drupal/link_class": "2.0.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
-        "drupal/media_migration": "1.0-alpha11",
+        "drupal/media_migration": "1.0.0-alpha12",
         "drupal/menu_block": "1.7.0",
         "drupal/metatag": "1.16",
         "drupal/migrate_plus": "5.1",
