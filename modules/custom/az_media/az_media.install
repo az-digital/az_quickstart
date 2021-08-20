@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Az_media.install.
+ *
+ * Install, update and uninstall functions for
+ * az_media module.
+ */
+
+/**
+ * Enable responsive_image and breakpoint modules.
+ */
+function az_media_update_9201() {
+  $module_list = [
+    'breakpoint',
+    'responsive_image',
+  ];
+  \Drupal::service('module_installer')->install($module_list);
+}
