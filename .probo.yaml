@@ -68,7 +68,7 @@ steps:
       - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
       - daemonize /usr/local/bin/chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1"
       - cd /var/www/html/profiles/custom/az_quickstart
-      - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -p 2 -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
+      - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
   - name: Log in to terminus
     command: 'source ${ASSET_DIR}/terminus.sh; terminus auth:login --machine-token=${TERMINUS_TOKEN}'
   - name: Migration Tests
