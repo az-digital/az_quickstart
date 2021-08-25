@@ -49,8 +49,8 @@
               $submitButton.click();
               task = null;
             } else {
-                triggerFilterChange($ancestor, 200);
-              }
+              triggerFilterChange($ancestor, 200);
+            }
           }, delay);
         }
 
