@@ -66,7 +66,6 @@
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.1",
         "drupal/link_class": "2.0.0",
-        "drupal/media_library_edit": "2.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
         "drupal/media_migration": "1.0-alpha11",
@@ -127,7 +126,8 @@
                 "Editing menus user-experience issue (#2957953)": "https://www.drupal.org/files/issues/2021-07-29/2957953-130.patch",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
-                "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff"
+                "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff",
+                "Media library edit in core (2985168)": "https://www.drupal.org/files/issues/2020-11-04/media_library_edit-3180721-1.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
