@@ -8,6 +8,7 @@ dependencies:
     - paragraphs.paragraphs_type.az_text_media
   module:
     - media_library
+    - media_library_edit
     - text
 id: paragraph.az_text_media.default
 targetEntityType: paragraph
@@ -21,7 +22,9 @@ content:
       media_types:
         - az_image
         - az_remote_video
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     region: content
   field_az_text_area:
     weight: 2
