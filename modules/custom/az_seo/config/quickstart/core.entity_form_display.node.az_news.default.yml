@@ -22,7 +22,6 @@ dependencies:
     - field_group
     - file
     - media_library
-    - media_library_edit
     - metatag
     - paragraphs
     - path
@@ -147,9 +146,7 @@ content:
     weight: 4
     settings:
       media_types: {  }
-    third_party_settings:
-      media_library_edit:
-        show_edit: '1'
+    third_party_settings: {  }
     type: media_library_widget
     region: content
   field_az_metatag:

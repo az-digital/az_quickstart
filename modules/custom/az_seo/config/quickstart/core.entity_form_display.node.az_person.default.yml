@@ -22,7 +22,6 @@ dependencies:
     - file
     - link
     - media_library
-    - media_library_edit
     - metatag
     - path
     - telephone
@@ -123,9 +122,7 @@ content:
     weight: 3
     settings:
       media_types: {  }
-    third_party_settings:
-      media_library_edit:
-        show_edit: '1'
+    third_party_settings: {  }
     region: content
   field_az_metatag:
     weight: 51
