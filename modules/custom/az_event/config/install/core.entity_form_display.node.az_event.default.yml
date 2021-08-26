@@ -69,7 +69,7 @@ content:
     region: content
   field_az_contacts:
     type: entity_reference_paragraphs
-    weight: 16
+    weight: 29
     settings:
       title: Contact
       title_plural: Contacts
@@ -89,6 +89,7 @@ content:
     weight: 11
     settings:
       show_extra: false
+      hide_date: false
       modal: false
       default_duration: 60
       default_duration_increments: |-
@@ -97,7 +98,6 @@ content:
         90
         120|2 hours
         custom
-      hide_date: true
     third_party_settings:
       smart_date_recur:
         modal: true

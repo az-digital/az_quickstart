@@ -197,6 +197,6 @@ content:
   url_redirects:
     weight: 50
     settings: {  }
-    region: content
     third_party_settings: {  }
+    region: content
 hidden: {  }
