@@ -72,6 +72,7 @@ install:
   - exclude_node_title:exclude_node_title
   - search_exclude:search_exclude
   - draggableviews:draggableviews
+  - role_delegation:role_delegation
 
 themes:
   - az_barrio
