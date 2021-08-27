@@ -89,7 +89,7 @@ content:
     weight: 11
     settings:
       show_extra: false
-      hide_date: true
+      hide_date: false
       modal: false
       default_duration: 60
       default_duration_increments: |-
