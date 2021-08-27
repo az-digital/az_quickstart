@@ -19,9 +19,7 @@ content:
     type: media_library_widget
     weight: 1
     settings:
-      media_types:
-        - az_image
-        - az_remote_video
+      media_types: {  }
     third_party_settings:
       media_library_edit:
         show_edit: '1'
