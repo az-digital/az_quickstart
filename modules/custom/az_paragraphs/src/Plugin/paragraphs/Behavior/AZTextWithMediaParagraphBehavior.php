@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Html;
@@ -30,6 +31,18 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   protected $videoEmbedHelper;
 
   /**
+   * @var EntityStorageInterface
+   */
+  protected $responsiveImageStyleStorage;
+
+  /*
+   * The image style entity storage.
+   *
+   * @var \Drupal\Core\Entity\EntityStorageInterface
+   */
+  protected $imageStyleStorage;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -41,6 +54,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     );
 
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
+    $instance->responsiveImageStyleStorage = $container->get('entity_type.manager')
+    ->getStorage('responsive_image_style');
+    $instance->imageStyleStorage = $container->get('entity_type.manager')
+    ->getStorage('image_style');
+
     return $instance;
   }
 
@@ -294,12 +312,33 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $variables['style_element'] = $style_element;
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
+      // Collect cache tags to be added for each item in the field.
+      $responsive_image_style = $this->responsiveImageStyleStorage
+      ->load('az_full_width_background');
+      $image_styles_to_load = array();
+      $cache_tags = [];
+      if ($responsive_image_style) {
+        $cache_tags = Cache::mergeTags($cache_tags, $responsive_image_style
+          ->getCacheTags());
+        $image_styles_to_load = $responsive_image_style
+          ->getImageStyleIds();
+      }
+      $image_styles = $this->imageStyleStorage
+        ->loadMultiple($image_styles_to_load);
+      foreach ($image_styles as $image_style) {
+        $cache_tags = Cache::mergeTags($cache_tags, $image_style
+          ->getCacheTags());
+      }
+
       $image_renderable = [
         '#theme' => 'responsive_image_formatter',
         '#responsive_image_style_id' => 'az_full_width_background',
         '#item' => $media->field_media_az_image,
         '#item_attributes' => [
           'class' => ['img-fluid'],
+        ],
+        '#cache' => [
+          'tags' => $cache_tags,
         ],
       ];
       $text_on_bottom = [
