@@ -298,6 +298,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         '#theme' => 'responsive_image_formatter',
         '#responsive_image_style_id' => 'az_full_width_background',
         '#item' => $media->field_media_az_image,
+        '#item_attributes' => [
+          'class' => ['img-fluid'],
+        ],
       ];
       $text_on_bottom = [
         '#type' => 'html_tag',
