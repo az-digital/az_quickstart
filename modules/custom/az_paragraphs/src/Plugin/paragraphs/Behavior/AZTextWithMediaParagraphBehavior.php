@@ -31,6 +31,13 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   protected $videoEmbedHelper;
 
   /**
+   * The ResponsiveBackgroundCSSFormatter.
+   *
+   * @var \Drupal\az_paragraphs\AZResponsiveBackgroundCSSFormatter;
+   */
+  protected $responsiveBackgroundCSSFormatter;
+
+  /**
    * @var EntityStorageInterface
    */
   protected $responsiveImageStyleStorage;
@@ -54,6 +61,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     );
 
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
+    $instance->responsiveBackgroundCSSFormatter = ($container->get('az_paragraphs.az_responsive_background_css_formatter'));
     $instance->responsiveImageStyleStorage = $container->get('entity_type.manager')
     ->getStorage('responsive_image_style');
     $instance->imageStyleStorage = $container->get('entity_type.manager')
@@ -271,13 +279,17 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       elseif ($variables['text_on_media']['style'] === 'bottom') {
         $style_element['style']['#template'] = "<style type='text/css'>#{{ id }} .az-video-loading {background-image: url({{filepath}});background-repeat: no-repeat;background-attachment:fixed;background-size:cover;}</style>";
         $image_renderable = [
-          '#theme' => 'image',
-          '#uri' => file_create_url($thumb),
-          '#alt' => $media->field_media_az_image->alt,
-          '#attributes' => [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => 'az_full_width_background',
+          '#item' => $media->field_media_az_image,
+          '#item_attributes' => [
             'class' => ['img-fluid'],
           ],
+          '#cache' => [
+            'tags' => $this->getImageCacheTags(),
+          ],
         ];
+
         $text_on_bottom = [
           '#type' => 'html_tag',
           '#tag' => 'div',
@@ -297,13 +309,32 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    * Prepare markup for image.
    */
   private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
-    $file_uri = $media->field_media_az_image->entity->getFileUri();
+    $settings = [];
+    $settings['css_settings']['bg_image_selector'] = "#" . $paragraph->bundle() . "-" . $paragraph->id();
+    $settings['css_settings']['bg_image_background_size_ie8'] = '';
+    $settings['css_settings']['bg_image_z_index'] = '';
+    $settings['css_settings']['bg_image_background_size'] = '';
+    $settings['css_settings']['bg_image_important'] = '';
+    $settings['css_settings']['bg_image_repeat'] = '';
+    $settings['css_settings']['bg_image_attachment'] = '';
+    $settings['css_settings']['bg_image_y'] = '';
+    $settings['css_settings']['bg_image_x'] = '';
+    $settings['image_style'] = 'az_full_width_background';
+    $settings['css_settings']['bg_image_color'] = 'red';
+    $file = $media->field_media_az_image->entity;
+    $langcode = 'en';
+    $responsive_css = $this->responsiveBackgroundCSSFormatter->getResponsiveBackgroundImageCSS($settings, $file, $langcode);
+
+    $file_uri =  $file->getFileUri();
     if ($variables['text_on_media']['style'] !== 'bottom') {
+
+      dpm($responsive_css);
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
+          '#template' => "<style type='text/css'>{{responsive_css}}</style>",
           '#context' => [
+            'responsive_css' => $responsive_css,
             'filepath' => file_create_url($file_uri),
             'id' => $paragraph->bundle() . "-" . $paragraph->id(),
           ],
@@ -312,23 +343,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $variables['style_element'] = $style_element;
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
-      // Collect cache tags to be added for each item in the field.
-      $responsive_image_style = $this->responsiveImageStyleStorage
-      ->load('az_full_width_background');
-      $image_styles_to_load = array();
-      $cache_tags = [];
-      if ($responsive_image_style) {
-        $cache_tags = Cache::mergeTags($cache_tags, $responsive_image_style
-          ->getCacheTags());
-        $image_styles_to_load = $responsive_image_style
-          ->getImageStyleIds();
-      }
-      $image_styles = $this->imageStyleStorage
-        ->loadMultiple($image_styles_to_load);
-      foreach ($image_styles as $image_style) {
-        $cache_tags = Cache::mergeTags($cache_tags, $image_style
-          ->getCacheTags());
-      }
 
       $image_renderable = [
         '#theme' => 'responsive_image_formatter',
@@ -338,7 +352,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           'class' => ['img-fluid'],
         ],
         '#cache' => [
-          'tags' => $cache_tags,
+          'tags' => $this->getImageCacheTags(),
         ],
       ];
       $text_on_bottom = [
@@ -352,6 +366,29 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $variables['text_on_bottom'] = $text_on_bottom;
     }
     return $variables;
+  }
+
+  /**
+   * Collect cache tags to be added for each image style.
+   */
+  private function getImageCacheTags() {
+    $responsive_image_style = $this->responsiveImageStyleStorage
+    ->load('az_full_width_background');
+    $image_styles_to_load = array();
+    $cache_tags = [];
+    if ($responsive_image_style) {
+      $cache_tags = Cache::mergeTags($cache_tags, $responsive_image_style
+        ->getCacheTags());
+      $image_styles_to_load = $responsive_image_style
+        ->getImageStyleIds();
+    }
+    $image_styles = $this->imageStyleStorage
+      ->loadMultiple($image_styles_to_load);
+    foreach ($image_styles as $image_style) {
+      $cache_tags = Cache::mergeTags($cache_tags, $image_style
+        ->getCacheTags());
+    }
+    return $cache_tags;
   }
 
 }

@@ -1,3 +1,7 @@
 services:
   az_paragraphs.az_video_embed_helper:
     class: Drupal\az_paragraphs\AZVideoEmbedHelper
+  az_paragraphs.az_responsive_background_css_formatter:
+    class: Drupal\az_paragraphs\AZResponsiveBackgroundCSSFormatter
+    autowire: true
+
