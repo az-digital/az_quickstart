@@ -29,7 +29,7 @@ steps:
     script:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress n
-      - sudo n 12.22.6
+      - sudo n 16.8.0
       - npm install --no-progress --global eslint-config-drupal-bundle
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart && eslint --color .
   - name: Install Arizona Quickstart
