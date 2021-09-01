@@ -77,7 +77,7 @@ tooling:
     cmd: yarn
   eslint:
     service: node
-    cmd: yarn run eslint --color .
+    cmd: yarn run eslint --color
   # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
   composer:
     service: appserver
