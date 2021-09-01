@@ -28,8 +28,6 @@ services:
     type: node:12.16
     build:
       - yarn install
-    globals:
-      eslint-config-drupal-bundle: 1.0.2
   chromedriver:
     type: compose
     services:
@@ -79,7 +77,7 @@ tooling:
     cmd: yarn
   eslint:
     service: node
-    cmd: eslint --color
+    cmd: yarn run eslint --color .
   # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
   composer:
     service: appserver
