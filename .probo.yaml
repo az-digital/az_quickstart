@@ -30,7 +30,9 @@ steps:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress n
       - sudo n 12.22.6
-      - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart && yarn install && yarn run eslint --color .
+      - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
+      - yarn install
+      - yarn run eslint --color .
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 8

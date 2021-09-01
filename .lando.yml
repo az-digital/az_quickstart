@@ -25,7 +25,7 @@ services:
       - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
       - composer install
   node:
-    type: node:12.16
+    type: node:12
     build:
       - yarn install
   chromedriver:
