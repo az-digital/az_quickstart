@@ -9,10 +9,11 @@
  */
 
 /**
- * Enable responsive_image and breakpoint modules.
  * Update media fields to allow editing media from the referencing entity.
  *
+ * Enable breakpoint.
  * Enable media_library_edit.
+ * Enable responsive_image.
  */
 function az_media_update_9201() {
   $module_list = [
