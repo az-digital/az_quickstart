@@ -36,7 +36,7 @@ function az_demo_install() {
   $source = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
   $config_storage->write('block.block.az_barrio_footer_menu_info', $source->read('block.block.az_barrio_footer_menu_info'));
-  // $config_storage->write('system.menu.az-footer-information-for', $source->read('system.menu.az-footer-information-for'));
+  $config_storage->write('block.block.footertopics.yml', $source->read('block.block.az_barrio_footer_menu_topics'));
   // $config_storage->write('system.menu.az-footer-information-for', $source->read('system.menu.az-footer-information-for'));
 
 }
