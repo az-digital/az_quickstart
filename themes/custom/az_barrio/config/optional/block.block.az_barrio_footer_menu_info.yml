@@ -7,20 +7,24 @@ dependencies:
     - menu_block
   theme:
     - az_barrio
-id: az_barrio_footer_menu_info
+id: footerinformationfor
 theme: az_barrio
 region: footer_sub
-weight: -10
+weight: -11
 provider: null
 plugin: 'menu_block:az-footer-information-for'
 settings:
   id: 'menu_block:az-footer-information-for'
-  label: 'Information for'
+  label: 'Information For'
   provider: menu_block
   label_display: visible
+  follow: false
+  follow_parent: child
   level: 1
-  depth: 1
-  expand_all_items: true
+  depth: 0
+  expand_all_items: false
+  parent: 'az-footer-information-for:'
   suggestion: sub_footer
-  label_type: root
+  label_type: block
+  label_link: false
 visibility: {  }

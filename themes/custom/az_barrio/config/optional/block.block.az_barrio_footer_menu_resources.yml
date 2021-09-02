@@ -7,10 +7,10 @@ dependencies:
     - menu_block
   theme:
     - az_barrio
-id: az_barrio_footer_menu_resources
+id: footerresources
 theme: az_barrio
 region: footer_sub
-weight: -8
+weight: -9
 provider: null
 plugin: 'menu_block:az-footer-resources'
 settings:
@@ -18,9 +18,13 @@ settings:
   label: Resources
   provider: menu_block
   label_display: visible
+  follow: false
+  follow_parent: child
   level: 1
-  depth: 1
-  expand_all_items: true
+  depth: 0
+  expand_all_items: false
+  parent: 'az-footer-resources:'
   suggestion: sub_footer
-  label_type: root
+  label_type: block
+  label_link: false
 visibility: {  }
