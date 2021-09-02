@@ -32,7 +32,7 @@ function az_demo_install() {
   $site_config = \Drupal::service('config.factory')->getEditable('system.site');
   $site_config->set('page.front', '/node/' . $home->id())->save();
 
-  //Enable optional config.
+  // Enable optional config.
   $config_path = drupal_get_path('theme', 'az_barrio') . '/config/optional';
   $source = new FileStorage($config_path);
   \Drupal::service('config.installer')->installOptionalConfig($source);
