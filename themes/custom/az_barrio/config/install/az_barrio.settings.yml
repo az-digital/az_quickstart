@@ -61,7 +61,7 @@ bootstrap_barrio_region_class_content_4_col_3: 'col-md-3'
 bootstrap_barrio_region_class_content_4_col_4: 'col-md-3'
 bootstrap_barrio_region_class_content_bottom: 'col-md'
 bootstrap_barrio_region_class_footer: 'col-12 col-sm-7 col-md-8 col-lg-8'
-bootstrap_barrio_region_class_footer_sub: 'col-md'
+bootstrap_barrio_region_class_footer_sub: 'col-md flex-row d-flex'
 bootstrap_barrio_region_class_az_page_bottom: ''
 
 # Layout sidebar settings.
