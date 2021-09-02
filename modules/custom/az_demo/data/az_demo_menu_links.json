@@ -197,6 +197,51 @@
       "expanded": true,
       "enabled": true,
       "weight": "2"
-    }
+    },
+    {
+      "link_id": "19",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Link 1",
+      "urlpath": "<front>",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "0"
+    },
+    {
+      "link_id": "20",
+      "parent_link_id": "0",
+      "menu": "az-footer-resources",
+      "title": "Link 1",
+      "urlpath": "<front>",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "0"
+    },
+    {
+      "link_id": "21",
+      "parent_link_id": "0",
+      "menu": "az-footer-topics",
+      "title": "Link 1",
+      "urlpath": "<front>",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "0"
+    },
+    {
+      "link_id": "22",
+      "parent_link_id": "0",
+      "menu": "az-footer-information-for",
+      "title": "Link 1",
+      "urlpath": "<front>",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "0"
+    },
+
   ]
 }
