@@ -25,11 +25,9 @@ services:
       - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
       - composer install
   node:
-    type: node:12.16
+    type: node:12
     build:
       - yarn install
-    globals:
-      eslint-config-drupal-bundle: 1.0.2
   chromedriver:
     type: compose
     services:
@@ -79,7 +77,7 @@ tooling:
     cmd: yarn
   eslint:
     service: node
-    cmd: eslint --color
+    cmd: yarn run eslint --color
   # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
   composer:
     service: appserver
