@@ -58,18 +58,41 @@ function az_barrio_preprocess_form_element(array &$variables) {
  * Implements template_preprocess_block().
  */
 function az_barrio_preprocess_block(array &$variables) {
-  if (!empty($variables['elements']['#id'])) {
-    $block = Block::load($variables['elements']['#id']);
-    $variables['title_attributes']['class'][] = $block->getRegion();
-    if(!empty($block->getRegion()) && $block->getRegion() === "footer_sub") {
-      $variables['title_attributes']['class'][] = 'h6';
-      $variables['title_attributes']['class'][] = 'mt-md-3';
-      $variables['title_attributes']['class'][] = 'text-uppercase';
-
+  if (isset($variables['elements']['#base_plugin_id']) && $variables['elements']['#base_plugin_id'] === 'menu_block') {
+    if (!empty($variables['elements']['#id'])) {
+      $block = Block::load($variables['elements']['#id']);
+      if(!empty($block) && $block->getRegion() === 'footer') {
+        $variables['content']['#attributes']['class'][] = 'justify-content-end';
+      }
+      if(!empty($block) && $block->getRegion() === 'footer_sub') {
+        if (!empty($variables['derivative_plugin_id']) && $variables['derivative_plugin_id'] === 'az-footer-topics') {
+          $variables['content']['#attributes']['class'][] = 'split-md-2-col';
+        }
+        $variables['content']['#attributes']['class'][] = 'nav';
+        $variables['content']['#attributes']['class'][] = 'flex-column';
+        $variables['content']['#attributes']['class'][] = 'nav-utility';
+        $variables['title_attributes']['class'][] = 'h6';
+        $variables['title_attributes']['class'][] = 'mt-md-3';
+        $variables['title_attributes']['class'][] = 'text-uppercase';
+      }
     }
   }
-
 }
+
+/**
+ * Implements template_preprocess_menu().
+ */
+// function az_barrio_preprocess_menu(array &$variables) {
+//   if (!empty($variables['menu_name']) && $variables['menu_name'] === '') {
+//     if(!empty($block->getRegion()) && $block->getRegion() === 'footer_sub') {
+//       $variables['title_attributes']['class'][] = 'h6';
+//       $variables['title_attributes']['class'][] = 'mt-md-3';
+//       $variables['title_attributes']['class'][] = 'text-uppercase';
+//     }
+
+//   }
+
+// }
 
 /**
  * Implements hook_form_alter().
