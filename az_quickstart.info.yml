@@ -65,6 +65,7 @@ install:
   - drupal:tour
   - drupal:automated_cron
   - drupal:google_tag
+  - block_class:block_class
   - chosen:chosen
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee

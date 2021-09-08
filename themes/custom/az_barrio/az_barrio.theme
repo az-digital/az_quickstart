@@ -56,6 +56,9 @@ function az_barrio_preprocess_form_element(array &$variables) {
 
 /**
  * Implements template_preprocess_block().
+ *
+ *  Arizona Digital issue #1012.
+ *  Footer menu links styles, using default theme templates.
  */
 function az_barrio_preprocess_block(array &$variables) {
   if (isset($variables['elements']['#base_plugin_id']) && $variables['elements']['#base_plugin_id'] === 'menu_block') {
@@ -78,21 +81,6 @@ function az_barrio_preprocess_block(array &$variables) {
     }
   }
 }
-
-/**
- * Implements template_preprocess_menu().
- */
-// function az_barrio_preprocess_menu(array &$variables) {
-//   if (!empty($variables['menu_name']) && $variables['menu_name'] === '') {
-//     if(!empty($block->getRegion()) && $block->getRegion() === 'footer_sub') {
-//       $variables['title_attributes']['class'][] = 'h6';
-//       $variables['title_attributes']['class'][] = 'mt-md-3';
-//       $variables['title_attributes']['class'][] = 'text-uppercase';
-//     }
-
-//   }
-
-// }
 
 /**
  * Implements hook_form_alter().
