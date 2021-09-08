@@ -262,8 +262,16 @@ Developing within Drupal can be a real challenge without debugging enabled.
 You can easily enable them by using the following commands.
 
 ### Lando
+First you have to make the folder containing /app/web/sites/default/services.yml writable.
 ```
-lando drush en -y devel && lando drupal site:mode dev
+lando ssh --user root
+chmod 744 -R /app/web/sites/default
+exit
+```
+Then enable devel module and put the site into dev mode via drupal console.
+```
+lando drush en -y devel
+lando drupal site:mode dev
 ```
 
 ### DDev
