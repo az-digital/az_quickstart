@@ -8,6 +8,7 @@
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
+use Drupal\block\Entity\Block;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
@@ -51,6 +52,23 @@ function az_barrio_preprocess_form_element(array &$variables) {
   if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $variables['label']['#form_id'] = $variables['element']['#form_id'];
   }
+}
+
+/**
+ * Implements template_preprocess_block().
+ */
+function az_barrio_preprocess_block(array &$variables) {
+  if (!empty($variables['elements']['#id'])) {
+    $block = Block::load($variables['elements']['#id']);
+    $variables['title_attributes']['class'][] = $block->getRegion();
+    if(!empty($block->getRegion()) && $block->getRegion() === "footer_sub") {
+      $variables['title_attributes']['class'][] = 'h6';
+      $variables['title_attributes']['class'][] = 'mt-md-3';
+      $variables['title_attributes']['class'][] = 'text-uppercase';
+
+    }
+  }
+
 }
 
 /**
