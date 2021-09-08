@@ -7,7 +7,7 @@ dependencies:
     - menu_block
   theme:
     - az_barrio
-id: footerinfo
+id: footerinformationfor
 theme: az_barrio
 region: footer_sub
 weight: -11
