@@ -11,7 +11,7 @@ dependencies:
 third_party_settings:
   block_class:
     classes: 'col-12 col-sm-4 col-md-3'
-id: footerinformationfor
+id: az_barrio_footer_menu_info
 theme: az_barrio
 region: footer_sub
 weight: -11
