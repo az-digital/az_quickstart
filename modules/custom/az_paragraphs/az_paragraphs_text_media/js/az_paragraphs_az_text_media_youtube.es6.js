@@ -17,7 +17,7 @@
           volumeDownClass: "az-video-volume-down",
           increaseVolumeBy: 10,
           start: 0,
-          minimumSupportedWidth: 600
+          minimumSupportedWidth: 600,
         };
         const { bgVideos } = settings.azFieldsMedia;
         const bgVideoParagraphs = document.getElementsByClassName(
@@ -31,15 +31,14 @@
         // methods
         // set up iframe player, use global scope so YT api can talk
         window.onYouTubeIframeAPIReady = () => {
-          $.each(bgVideoParagraphs, index => {
+          $.each(bgVideoParagraphs, (index) => {
             const thisContainer = bgVideoParagraphs[index];
             const parentParagraph = thisContainer.parentNode;
             const youtubeId = thisContainer.dataset.youtubeid;
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
             const options = bgVideos[youtubeId];
-            const videoPlayer = thisContainer.getElementsByClassName(
-              "az-video-player"
-            )[0];
+            const videoPlayer =
+              thisContainer.getElementsByClassName("az-video-player")[0];
             const YouTubePlayer = window.YT;
             thisContainer.player = new YouTubePlayer.Player(videoPlayer, {
               width: options.width,
@@ -50,26 +49,28 @@
                 controls: 0,
                 showinfo: 0,
                 rel: 0,
-                wmode: "transparent"
+                wmode: "transparent",
               },
               events: {
                 onReady: window.onPlayerReady,
-                onStateChange: window.onPlayerStateChange
-              }
+                onStateChange: window.onPlayerStateChange,
+              },
             });
-            const playButton = bgVideoParagraphs[index].getElementsByClassName(
-              "az-video-play"
-            )[0];
-            playButton.addEventListener("click", event => {
+            const playButton =
+              bgVideoParagraphs[index].getElementsByClassName(
+                "az-video-play"
+              )[0];
+            playButton.addEventListener("click", (event) => {
               event.preventDefault();
               bgVideoParagraphs[index].player.playVideo();
               parentParagraph.classList.remove("az-video-paused");
               parentParagraph.classList.add("az-video-playing");
             });
-            const pauseButton = bgVideoParagraphs[index].getElementsByClassName(
-              "az-video-pause"
-            )[0];
-            pauseButton.addEventListener("click", event => {
+            const pauseButton =
+              bgVideoParagraphs[index].getElementsByClassName(
+                "az-video-pause"
+              )[0];
+            pauseButton.addEventListener("click", (event) => {
               event.preventDefault();
               bgVideoParagraphs[index].player.pauseVideo();
               parentParagraph.classList.remove("az-video-playing");
@@ -77,12 +78,11 @@
             });
           });
         };
-        const setDimensions = container => {
+        const setDimensions = (container) => {
           const parentParagraph = container.parentNode;
           const youtubeId = container.dataset.youtubeid;
-          const thisPlayer = container.getElementsByClassName(
-            "az-video-player"
-          )[0];
+          const thisPlayer =
+            container.getElementsByClassName("az-video-player")[0];
           thisPlayer.style.zIndex = -100;
           const { style } = container.dataset;
           const width = container.offsetWidth;
@@ -122,12 +122,12 @@
         // Resize handler updates width, height and offset
         // of player after resize/init.
         const resize = () => {
-          $.each(bgVideoParagraphs, index => {
+          $.each(bgVideoParagraphs, (index) => {
             setDimensions(bgVideoParagraphs[index]);
           });
         };
 
-        window.onPlayerReady = event => {
+        window.onPlayerReady = (event) => {
           const id = event.target.playerInfo.videoData.video_id;
           if (bgVideos[id].mute) {
             event.target.mute();
@@ -136,7 +136,7 @@
           event.target.playVideo();
         };
 
-        window.onPlayerStateChange = event => {
+        window.onPlayerStateChange = (event) => {
           const id = event.target.playerInfo.videoData.video_id;
           const stateChangeContainer = document.getElementById(
             `${id}-bg-video-container`
@@ -167,6 +167,6 @@
           resize();
         });
       }
-    }
+    },
   };
 })(jQuery, Drupal, drupalSettings);
