@@ -10,7 +10,7 @@ use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\editor\Entity\Editor;
 
 /**
- * Implements hook_ckeditor_css_alter.
+ * Implements hook_ckeditor_css_alter().
  */
 function az_media_ckeditor_css_alter(array &$css, Editor $editor) {
   $css[] = drupal_get_path('module', 'az_media') . '/css/az-media-edit.css';
