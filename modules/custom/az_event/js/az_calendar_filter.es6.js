@@ -18,14 +18,14 @@
       settings.azCalendarFilter = {};
 
       // Process cell date strings into javascript dates.
-      Object.keys(filterInformation).forEach(property => {
+      Object.keys(filterInformation).forEach((property) => {
         if (filterInformation.hasOwnProperty(property)) {
           drupalSettings.calendarFilterRanges[property] = [];
           const ranges = filterInformation[property];
           for (let i = 0; i < ranges.length; i++) {
             drupalSettings.calendarFilterRanges[property].push([
               $.datepicker.parseDate("@", ranges[i][0] * 1000),
-              $.datepicker.parseDate("@", ranges[i][1] * 1000)
+              $.datepicker.parseDate("@", ranges[i][1] * 1000),
             ]);
           }
         }
@@ -38,7 +38,7 @@
       $(".az-calendar-filter-wrapper", context)
         .once("azCalendarFilter")
         // eslint-disable-next-line func-names
-        .each(function() {
+        .each(function () {
           const $wrapper = $(this);
           // rangeKey contains our filter identifier to find calendar cell data.
           const rangeKey = $wrapper.data("az-calendar-filter");
@@ -64,10 +64,7 @@
             task = setTimeout(() => {
               // Only trigger if submit buttion isn't disabled.
               if (!$submitButton.prop("disabled")) {
-                $ancestor
-                  .find("input")
-                  .eq(0)
-                  .change();
+                $ancestor.find("input").eq(0).change();
                 $submitButton.click();
                 task = null;
               }
@@ -90,10 +87,7 @@
               const month = dates[i].getMonth() + 1;
               const day = dates[i].getDate();
               const year = dates[i].getFullYear();
-              $ancestor
-                .find("input")
-                .eq(i)
-                .val(`${year}-${month}-${day}`);
+              $ancestor.find("input").eq(i).val(`${year}-${month}-${day}`);
             }
 
             // Signal to UI that the inputs were updated programmatically.
@@ -157,7 +151,7 @@
               rangeStart = newDate.getTime();
               rangeEnd = newDate.getTime();
               updateCalendarFilters(newDate, newDate);
-            }
+            },
           });
           $calendar.children(".ui-corner-all").removeClass("ui-corner-all");
 
@@ -173,38 +167,40 @@
           );
 
           // Handle button presses for calendar range selection buttions.
-          $buttonWrapper.children(".calendar-filter-button").on("click", e => {
-            const $pressed = $(e.currentTarget);
-            const current = new Date(Date.now());
-            const today = new Date(
-              current.getFullYear(),
-              current.getMonth(),
-              current.getDate()
-            );
-            const month = current.getMonth();
-            const year = current.getFullYear();
-            const day = current.getDay();
-            const diff = current.getDate() - day;
-            let startDay = today;
-            let endDay = today;
-            if ($pressed.hasClass("calendar-filter-week")) {
-              // Compute start and end days of the week.
-              startDay = new Date(year, month, diff);
-              endDay = new Date(year, month, diff + 6);
-            } else if ($pressed.hasClass("calendar-filter-month")) {
-              // Compute start and end days of the month.
-              startDay = new Date(year, month, 1);
-              endDay = new Date(year, month + 1, 0);
-            }
-            $calendar.datepicker("setDate", startDay);
-            $calendar.datepicker("setDate", null);
-            rangeStart = startDay.getTime();
-            rangeEnd = endDay.getTime();
-            updateCalendarFilters(startDay, endDay);
-            $(".az-calendar-filter-calendar").datepicker("refresh");
-            $pressed.addClass("active").attr("aria-pressed", "true");
-          });
+          $buttonWrapper
+            .children(".calendar-filter-button")
+            .on("click", (e) => {
+              const $pressed = $(e.currentTarget);
+              const current = new Date(Date.now());
+              const today = new Date(
+                current.getFullYear(),
+                current.getMonth(),
+                current.getDate()
+              );
+              const month = current.getMonth();
+              const year = current.getFullYear();
+              const day = current.getDay();
+              const diff = current.getDate() - day;
+              let startDay = today;
+              let endDay = today;
+              if ($pressed.hasClass("calendar-filter-week")) {
+                // Compute start and end days of the week.
+                startDay = new Date(year, month, diff);
+                endDay = new Date(year, month, diff + 6);
+              } else if ($pressed.hasClass("calendar-filter-month")) {
+                // Compute start and end days of the month.
+                startDay = new Date(year, month, 1);
+                endDay = new Date(year, month + 1, 0);
+              }
+              $calendar.datepicker("setDate", startDay);
+              $calendar.datepicker("setDate", null);
+              rangeStart = startDay.getTime();
+              rangeEnd = endDay.getTime();
+              updateCalendarFilters(startDay, endDay);
+              $(".az-calendar-filter-calendar").datepicker("refresh");
+              $pressed.addClass("active").attr("aria-pressed", "true");
+            });
         });
-    }
+    },
   };
 })(jQuery, Drupal, drupalSettings);
