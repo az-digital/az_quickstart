@@ -44,7 +44,6 @@ install:
   - drupal:image
   - drupal:menu_ui
   - menu_block:menu_block
-  - menu_link_attributes:menu_link_attributes
   - drupal:options
   - drupal:path
   - pathauto:pathauto
