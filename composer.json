@@ -49,7 +49,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.2.4",
+        "drupal/core-recommended": "9.2.5",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.0",
@@ -117,13 +117,13 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-05-29/2259567-137--allow-svg-image-upload-d9-2-beta-3.patch",
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-09-02/2259567-146-9-2-x.patch",
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
-                "Editing menus user-experience issue (#2957953)": "https://www.drupal.org/files/issues/2021-07-29/2957953-130.patch",
+                "Editing menus user-experience issue (#2957953)": "https://www.drupal.org/files/issues/2021-09-02/2957953-134-9-2-x.patch",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
                 "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff"
