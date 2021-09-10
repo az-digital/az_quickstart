@@ -265,7 +265,7 @@ You can easily enable them by using the following commands.
 First you have to make the folder containing /app/web/sites/default/services.yml writable.
 ```
 lando ssh --user root
-chmod 744 -R /app/web/sites/default
+chmod 755 -R /app/web/sites/default
 exit
 ```
 Then enable devel module and put the site into dev mode via drupal console.
