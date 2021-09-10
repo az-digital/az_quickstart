@@ -11,6 +11,7 @@ dependencies:
   - datetime_range
   - field
   - field_group
+  - jquery_ui_datepicker
   - file
   - link
   - media

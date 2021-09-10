@@ -1,0 +1,81 @@
+{
+    "paragraphs": [
+        {
+            "id":1,
+            "az_title" : "",
+            "az_text_area" : "<h1>Successful Build!<\/h1>\r\n\r\n<p>Kitten serves as the final integration test of the Quickstart 2.0 development process. This site is rebuilt with every successfully merged pull request, so it always has the very latest version of the code base.<\/p>\r\n\r\n<p><a class=\"btn btn-blue\" href=\"https:\/\/github.com\/az-digital\/az_quickstart\">See the code<\/a><\/p>\r\n",
+            "filename" : "lynx.jpg",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "content_style" : "box",
+            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
+            "bg_color" : [{"value":"light"}]
+        },
+        {
+            "id":42,
+            "az_title" : "More paintings with musical connections",
+            "az_text_area" : "<p>Musicians appear in prominent positions in other works by the same artist, notably in the middle of the central panel of the&nbsp;<a href=\"https:\/\/en.wikipedia.org\/wiki\/The_Haywain_Triptych\" target=\"_blank\">Hay Wain Triptych<\/a>. The well-known Estonian vocal group Heinavanker (which has visited Tucson on two occasions) takes its name from this painting.<\/p>\r\n\r\n<p><a class=\"btn btn-blue\" href=\"https:\/\/en.wikipedia.org\/wiki\/Museo_del_Prado\">Museo del Prado<\/a><\/p>\r\n",
+            "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "bg-fixed",
+            "content_style" : "column",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "bg_color" : [{"value":"light"}]
+        },
+        {
+            "id":43,
+            "az_title" : "Join the Best Students in the Country",
+            "az_text_area" : "<p>Beyond employment, are you looking to design your ideal career and life?<\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"https:\/\/www.arizona.edu\/how-apply-uarizona\">Apply<\/a> <a class=\"btn btn-blue\" href=\"https:\/\/admissions.arizona.edu\/visit\">Visit<\/a><\/p>\r\n",
+            "filename" : "study.jpeg",
+            "full_width" : false,
+            "bg_attachment" : "",
+            "content_style" : "column",
+            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
+            "bg_color" : [{"value":"dark"}]
+        },
+        {
+            "id":44,
+            "az_title" : "More Than 100 Majors",
+            "az_text_area" : "<p class=\"text-align-center\">Beyond employment, are you looking to design your ideal career and life? With more than 100 majors, we have the academics and faculty to help you connect what you are learning with your aspirations to make the world better. Coupled with outstanding tutoring, support, and engagement inside and outside the classroom, you will succeed no matter what your career plans are.<\/p>\r\n\r\n<p class=\"text-align-center\"><a class=\"btn btn-outline-red\" href=\"https:\/\/www.arizona.edu\/majors\">View majors<\/a><\/p>\r\n",
+            "filename" : "mecklerphoto_mens-wearhouse.jpeg",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "content_style" : "box",
+            "position" : "col-md-8 col-lg-6",
+            "bg_color" : [{"value":"light"}]
+        },
+        {
+            "id":45,
+            "az_title" : "We have so many june bugs.",
+            "az_text_area" : "<p><a class=\"btn btn-outline-white\" href=\"https:\/\/insects.arizona.edu\/\">Bug out!<\/a><\/p>",
+            "filename" : "june_bugs.jpeg",
+            "full_width" : false,
+            "bg_attachment" : "bg-fixed",
+            "content_style" : "box",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "bg_color" : [{"value":"dark"}]
+        },
+        {
+            "id":46,
+            "az_title" : "Full Width Bottom Style",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "arizona_campus_fireworks.jpg",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "content_style" : "bottom",
+            "position" : "",
+            "bg_color" : [{"value":"dark"}]
+        },
+        {
+            "id":47,
+            "az_title" : "Bottom style",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "daisy.jpg",
+            "full_width" : false,
+            "bg_attachment" : "",
+            "content_style" : "bottom",
+            "position" : "",
+            "bg_color" : [{"value":"light"}]
+        }
+    ]
+}

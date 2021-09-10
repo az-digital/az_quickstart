@@ -1,0 +1,7 @@
+views.filter_value.az_calendar_filter:
+  type: views.filter_value.date
+  label: 'Calendar Filter'
+
+views.filter.az_calendar_filter:
+  type: views.filter.date
+  label: 'Calendar Filter'

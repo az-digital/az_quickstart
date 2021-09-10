@@ -1,0 +1,25 @@
+# See https://digital.arizona.edu/arizona-bootstrap/docs/2.0/layout/grid/#grid-options
+az_barrio.small:
+  label: Small
+  mediaQuery: 'all and (min-width: 576px)'
+  weight: 0
+  multipliers:
+    - 1x
+az_barrio.medium:
+  label: Medium
+  mediaQuery: 'all and (min-width: 768px)'
+  weight: 1
+  multipliers:
+    - 1x
+az_barrio.large:
+  label: Large
+  mediaQuery: 'all and (min-width: 992px)'
+  weight: 2
+  multipliers:
+    - 1x
+az_barrio.extra:
+  label: Extra Large
+  mediaQuery: 'all and (min-width: 1200px)'
+  weight: 3
+  multipliers:
+    - 1x

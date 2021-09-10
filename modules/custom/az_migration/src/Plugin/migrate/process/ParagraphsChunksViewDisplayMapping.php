@@ -27,7 +27,7 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
     $view_display = explode("|", $value['vname']);
 
     // View argument mapping.
-    if ($value['vargs'] != "") {
+    if ($value['vargs'] !== "") {
       $view_data['argument'] = $value['vargs'];
     }
 

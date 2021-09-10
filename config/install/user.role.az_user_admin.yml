@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_user_admin
+label: 'User administrator'
+weight: 4
+is_admin: false
+permissions:
+  - 'administer users'
+  - 'assign az_content_admin role'
+  - 'assign az_content_editor role'
+  - 'assign az_user_admin role'

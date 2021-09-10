@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_migration\Plugin\migrate\process;
+namespace Drupal\az_paragraphs\Plugin\migrate\process;
 
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
@@ -50,6 +50,10 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
+    if (!empty($this->configuration['text_background_full_width']) && $row->getSourceProperty($this->configuration['text_background_full_width']) !== FALSE) {
+      $behavior['az_text_background_paragraph_behavior']['text_background_full_width'] = $row->getSourceProperty($this->configuration['text_background_full_width']);
+    }
+
     // Background Text Color.
     if (!empty($this->configuration['bg_text_color'])) {
       $bg_text_color = $row->getSourceProperty($this->configuration['bg_text_color']);
@@ -59,21 +63,24 @@ class ParagraphsBehavior extends ProcessPluginBase {
         'bg-trans-sky' => 'light',
         'bg-trans-arizona-blue' => 'dark',
         'bg-trans-black' => 'dark',
+        'dark' => 'dark',
+        'light' => 'light',
+
       ];
       foreach ($bg_text_color as $bg_text_color_item) {
-        $behavior['bg_color'] = $bg_text_color_mapping[$bg_text_color_item['value']];
+        $behavior['az_text_media_paragraph_behavior']['bg_color'] = $bg_text_color_mapping[$bg_text_color_item['value']];
       }
     }
 
     // Background Attachment.
     if (!empty($this->configuration['bg_attach'])) {
-      $bg_attach = $row->getSourceProperty($this->configuration['bg_attach']);
-      $bg_attach_mapping = [
-        'bg-attachment-fixed' => 'bg-fixed',
-        'bg-attachment-scroll' => '',
-      ];
-      foreach ($bg_attach as $bg_attach_item) {
-        $behavior['bg_attachment'] = $bg_attach_mapping[$bg_attach_item['value']];
+      if (!empty($row->getSourceProperty($this->configuration['bg_attach']))) {
+        $bg_attach_mapping = [
+          'bg-attachment-fixed' => 'bg-fixed',
+          'bg-fixed' => 'bg-fixed',
+          'bg-attachment-scroll' => '',
+        ];
+        $behavior['az_text_media_paragraph_behavior']['bg_attachment'] = $bg_attach_mapping[$row->getSourceProperty($this->configuration['bg_attach'])];
       }
     }
 
@@ -83,18 +90,20 @@ class ParagraphsBehavior extends ProcessPluginBase {
           'uaqs_bg_img_content_left' => 'col-md-8 col-lg-6',
           'uaqs_bg_img_content_center' => 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3',
           'uaqs_bg_img_content_right' => 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6',
+          'col-md-8 col-lg-6' => 'col-md-8 col-lg-6',
+          'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3',
+          'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6',
         ];
-
+        $behavior['az_text_media_paragraph_behavior']['position'] = $position_mapping[$row->getSourceProperty($this->configuration['position'])];
       }
-      $behavior['position'] = $position_mapping[$row->getSourceProperty($this->configuration['position'])];
     }
 
     if (!empty($this->configuration['full_width'])) {
-      $behavior['full_width'] = $this->configuration['full_width'];
+      $behavior['az_text_media_paragraph_behavior']['full_width'] = $row->getSourceProperty($this->configuration['full_width']);
     }
 
     if (!empty($this->configuration['content_style'])) {
-      $behavior['style'] = $this->configuration['content_style'];
+      $behavior['az_text_media_paragraph_behavior']['style'] = $row->getSourceProperty($this->configuration['content_style']);
     }
 
     if (!empty($this->configuration['card_width'])) {
