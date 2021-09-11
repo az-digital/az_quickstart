@@ -328,7 +328,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $file_uri =  $file->getFileUri();
     if ($variables['text_on_media']['style'] !== 'bottom') {
 
-      dpm($responsive_css);
+      // dpm($responsive_css);
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
