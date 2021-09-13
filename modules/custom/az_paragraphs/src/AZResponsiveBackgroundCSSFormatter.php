@@ -12,27 +12,6 @@ use Drupal\Core\Render\Markup;
 class AZResponsiveBackgroundCSSFormatter {
 
   /**
-   * Drupal\Core\Asset\LibraryDiscoveryInterface definition.
-   *
-   * @var \Drupal\Core\Asset\LibraryDiscoveryInterface
-   */
-  protected $libraryDiscovery;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function __construct() {
-    $instance = parent::create(
-      $container,
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-    );
-    return $instance;
-  }
-
-
-  /**
    * The file entity.
    *
    * @var \Drupal\file\Entity\File
@@ -53,125 +32,125 @@ class AZResponsiveBackgroundCSSFormatter {
    * @return mixed
    *   String Youtube video ID or boolean FALSE if not found.
    */
-  // public function getResponsiveBackgroundImageCSS(array $settings, File $image) {
-  //   $this->file = $image;
-  //   $elements = [];
-  //   $index = 0;
-  //   $css_settings = $settings['css_settings'];
-  //   $selectors = array_filter(preg_split('/$/', $css_settings['bg_image_selector']));
+  public function getResponsiveBackgroundImageCSS(array $settings, File $image) {
+    $this->file = $image;
+    $elements = [];
+    $index = 0;
+    $css_settings = $settings['css_settings'];
+    $selectors = array_filter(preg_split('/$/', $css_settings['bg_image_selector']));
 
-  //   // Filter out empty selectors.
-  //   $selectors = array_map(static function ($value) {
-  //     return trim($value, ',');
-  //   }, $selectors);
+    // Filter out empty selectors.
+    $selectors = array_map(static function ($value) {
+      return trim($value, ',');
+    }, $selectors);
 
-  //   // Early opt-out if the field is empty.
-  //   if (empty($image) || empty($settings['image_style'])) {
-  //     return $elements;
-  //   }
+    // Early opt-out if the field is empty.
+    if (empty($image) || empty($settings['image_style'])) {
+      return $elements;
+    }
 
-  //   // Prepare token data in bg image css selector.
-  //   $token_data = [
-  //     'user' => \Drupal::currentUser(),
-  //     $image->getEntityTypeId() => $image,
-  //   ];
+    // Prepare token data in bg image css selector.
+    $token_data = [
+      'user' => \Drupal::currentUser(),
+      $image->getEntityTypeId() => $image,
+    ];
 
-  //   foreach ($selectors as &$selector) {
-  //     $selector = \Drupal::token()->replace($selector, $token_data);
-  //   }
+    foreach ($selectors as &$selector) {
+      $selector = \Drupal::token()->replace($selector, $token_data);
+    }
 
-  //   // Need an empty element so views renderer will see something to render.
-  //   $elements[0] = [];
+    // Need an empty element so views renderer will see something to render.
+    $elements[0] = [];
 
-  //     // Use specified selectors in round-robin order.
-  //     $selector = $selectors[$index % \count($selectors)];
-  //     $vars = [
-  //       'uri' => $image->getFileUri(),
-  //       'responsive_image_style_id' => $settings['image_style'],
-  //     ];
-  //     template_preprocess_responsive_image($vars);
+      // Use specified selectors in round-robin order.
+      $selector = $selectors[$index % \count($selectors)];
+      $vars = [
+        'uri' => $image->getFileUri(),
+        'responsive_image_style_id' => $settings['image_style'],
+      ];
+      template_preprocess_responsive_image($vars);
 
-  //   //   if (empty($vars['sources'])) {
-  //   //     continue;
-  //   //   }
-  //     // Split each source into multiple rules.
-  //     foreach (array_reverse($vars['sources']) as $source_i => $source) {
-  //       $attr = $source->toArray();
+    //   if (empty($vars['sources'])) {
+    //     continue;
+    //   }
+      // Split each source into multiple rules.
+      foreach (array_reverse($vars['sources']) as $source_i => $source) {
+        $attr = $source->toArray();
 
-  //       $srcset = explode(', ', $attr['srcset']);
+        $srcset = explode(', ', $attr['srcset']);
 
-  //       foreach ($srcset as $src_i => $src) {
-  //         list($src, $res) = explode(' ', $src);
+        foreach ($srcset as $src_i => $src) {
+          list($src, $res) = explode(' ', $src);
 
-  //         $media = isset($attr['media']) ? $attr['media'] : '';
+          $media = isset($attr['media']) ? $attr['media'] : '';
 
-  //         // Add "retina" to media query if this is a 2x image.
-  //         if ($res && $res === '2x' && !empty($media)) {
-  //           $media = "{$media} and (-webkit-min-device-pixel-ratio: 2), {$media} and (min-resolution: 192dpi)";
-  //         }
+          // Add "retina" to media query if this is a 2x image.
+          if ($res && $res === '2x' && !empty($media)) {
+            $media = "{$media} and (-webkit-min-device-pixel-ratio: 2), {$media} and (min-resolution: 192dpi)";
+          }
 
-  //         // Correct a bug in template_preprocess_responsive_image which
-  //         // generates an invalid media rule "screen (max-width)" when no
-  //         // min-width is specified. If this bug gets fixed, this replacement
-  //         // will deactivate.
-  //         $media = str_replace('screen (max-width', 'screen and (max-width', $media);
+          // Correct a bug in template_preprocess_responsive_image which
+          // generates an invalid media rule "screen (max-width)" when no
+          // min-width is specified. If this bug gets fixed, this replacement
+          // will deactivate.
+          $media = str_replace('screen (max-width', 'screen and (max-width', $media);
 
-  //         $css_settings['bg_image_selector'] = $selector;
+          $css_settings['bg_image_selector'] = $selector;
 
-  //         $css = $this->getBackgroundImageCss($src, $css_settings);
+          $css = $this->getBackgroundImageCss($src, $css_settings);
 
-  //         // $css_settings['bg_image_selector'] probably needs to be sanitized.
-  //         $with_media_query = sprintf('%s { background-image: url(%s);}', $css_settings['bg_image_selector'], $vars['img_element']['#uri']);
+          // $css_settings['bg_image_selector'] probably needs to be sanitized.
+          $with_media_query = sprintf('%s { background-image: url(%s);}', $css_settings['bg_image_selector'], $vars['img_element']['#uri']);
 
-  //         $with_media_query .= sprintf('@media %s {', $media);
-  //         $with_media_query .= sprintf($css['data']);
-  //         $with_media_query .= '}';
+          $with_media_query .= sprintf('@media %s {', $media);
+          $with_media_query .= sprintf($css['data']);
+          $with_media_query .= '}';
 
-  //         $css['attributes']['media'] = $media;
-  //         $css['data'] = $with_media_query;
+          $css['attributes']['media'] = $media;
+          $css['data'] = $with_media_query;
 
-  //       //   dpm($css);
+        //   dpm($css);
 
-  //       //   $style_elements = [
-  //       //     'style' => [
-  //       //       '#type' => 'inline_template',
-  //       //       '#template' => "{{ css }}",
-  //       //       '#context' => [
-  //       //         'css' => Markup::create($css['data']),
-  //       //       ],
-  //       //       '#attributes' => [
-  //       //         'media' => $css['attributes']['media'],
-  //       //       ],
-  //       //     ],
-  //       //   ];
-  //       //   $style_element = [
-  //       //     '#type' => 'html_tag',
-  //       //     '#tag' => 'style',
-  //       //     '#attributes' => [
-  //       //       'media' => $css['attributes']['media'],
-  //       //     ],
-  //       //     '#value' => Markup::create($css['data']),
-  //       //   ];
-  //       //   $elements['#attached']['css'][] = '$css';
-  //       // $elements['#attached']['css'][] = $css;
-  //       $style_elements[] = [
-  //           'style' => [
-  //             '#type' => 'inline_template',
-  //             '#template' => "{{ css }}",
-  //             '#context' => [
-  //               'css' => Markup::create($css['data']),
-  //             ],
-  //             '#attributes' => [
-  //               'media' => $css['attributes']['media'],
-  //             ],
-  //           ],
-  //         ];
-  //       }
-  //     }
+        //   $style_elements = [
+        //     'style' => [
+        //       '#type' => 'inline_template',
+        //       '#template' => "{{ css }}",
+        //       '#context' => [
+        //         'css' => Markup::create($css['data']),
+        //       ],
+        //       '#attributes' => [
+        //         'media' => $css['attributes']['media'],
+        //       ],
+        //     ],
+        //   ];
+        //   $style_element = [
+        //     '#type' => 'html_tag',
+        //     '#tag' => 'style',
+        //     '#attributes' => [
+        //       'media' => $css['attributes']['media'],
+        //     ],
+        //     '#value' => Markup::create($css['data']),
+        //   ];
+        //   $elements['#attached']['css'][] = '$css';
+        // $elements['#attached']['css'][] = $css;
+        $style_elements[] = [
+            'style' => [
+              '#type' => 'inline_template',
+              '#template' => "{{ css }}",
+              '#context' => [
+                'css' => Markup::create($css['data']),
+              ],
+              '#attributes' => [
+                'media' => $css['attributes']['media'],
+              ],
+            ],
+          ];
+        }
+      }
 
 
-  //   return $style_elements;
-  // }
+    return $style_elements;
+  }
 
 
   /**
