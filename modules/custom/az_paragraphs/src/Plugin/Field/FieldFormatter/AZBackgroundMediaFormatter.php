@@ -3,6 +3,8 @@
 namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -32,34 +34,23 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
    */
   protected $entityTypeManager;
 
-//   /**
-//    * The AZCardImageHelper service.
-//    *
-//    * @var \Drupal\az_card\AZCardImageHelper
-//    */
-//   protected $cardImageHelper;
-
-//   /**
-//    * Drupal\Core\Path\PathValidator definition.
-//    *
-//    * @var \Drupal\Core\Path\PathValidator
-//    */
-//   protected $pathValidator;
-
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+      ContainerInterface $container,
+      array $configuration,
+      $plugin_id,
+      $plugin_definition
+    ) {
     $instance = parent::create(
       $container,
       $configuration,
       $plugin_id,
-      $plugin_definition,
+      $plugin_definition
     );
-
-    // $instance->cardImageHelper = $container->get('az_card.image');
     $instance->entityTypeManager = $container->get('entity_type.manager');
-    // $instance->pathValidator = $container->get('path.validator');
+
     return $instance;
   }
 
@@ -93,15 +84,21 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
-    $element['image_style']['#options'] = $this->getResponsiveImageStyles(TRUE);
-    $element['image_style']['#description'] = $this->t(
-      'Select <a href="@href_image_style">the responsive image style</a> to use.',
-      [
-        '@href_image_style' => Url::fromRoute('entity.responsive_image_style.collection')->toString(),
-      ]
-    );
+    $responsive_image_style_options = $this->getResponsiveImageStyles(TRUE);
+    $form['image_style'] = [
+      '#title' => $this->t('Responsive image style.'),
+      '#description' => $this->t(
+        'Select <a href="@href_image_style">the responsive image style</a> to use.',
+        [
+          '@href_image_style' => Url::fromRoute('entity.responsive_image_style.collection')->toString(),
+        ]
+      ),
+      '#type' => 'select',
+      '#options' => $responsive_image_style_options,
+      '#default_value' => $this->getSetting('image_style'),
+    ];
 
-    return $element;
+    return $form;
 
   }
 
@@ -113,9 +110,9 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
     $options = $this->getResponsiveImageStyles();
 
     if (isset($options[$settings['image_style']])) {
-      $summary[1] = $this->t('URL for image style: @style', ['@style' => $options[$settings['image_style']]]);
+      $summary[] = $this->t('URL for image style: @style', ['@style' => $options[$settings['image_style']]]);
     } else {
-      $summary[1] = $this->t('Original image style');
+      $summary[] = $this->t('Original image style');
     }
 
     return $summary;
@@ -125,24 +122,41 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
+  public function viewElements(EntityReferenceFieldItemListInterface $items, $langcode) {
 
-    $files = $this->getEntitiesToView($items, $langcode);
+    $elements = [];
+    $media_items = $this->getEntitiesToView($items, $langcode);
 
+    // // Early opt-out if the field is empty.
+    // if (empty($media_items)) {
+    //   return $elements;
+    // }
 
-    // Need an empty element so views renderer will see something to render.
-    $elements[0] = [];
+    /** @var \Drupal\media\MediaInterface[] $media_items */
+    foreach ($items as $delta => $media) {
+      // foreach ($this->getEntitiesToView($items, $langcode) as $delta => $entity) {
 
+      // dpm($this->getMediaThumbnailUrl($media, $items->getEntity()));
 
-    foreach ($files as $delta => $file) {
+      $elements[$delta] = [
 
-        template_preprocess_responsive_image(
-            [
-                'uri' => $file->getFileUri(),
-                'responsive_image_style_id' => $settings['image_style'],
-            ]
-        );
+        '#theme' => 'az_card',
+        // '#media' => $media_render_array,
+        // '#title' => $title,
+        // '#body' => check_markup($item->body, $item->body_format),
+        // '#link' => $link_render_array,
+        // '#attributes' => ['class' => $card_classes],
+    ];
 
+    // Add cacheability of each item in the field.
+    // $this->renderer->addCacheableDependency($elements[$delta], $media);
+
+    dpm(template_preprocess_responsive_image (
+      [
+          'uri' => $this->getMediaURI($media, $items->getEntity()),
+          'responsive_image_style_id' => $this->getSetting['image_style']
+      ]
+    ));
 
     //   // Media.
     //   $media_render_array = [];
@@ -191,37 +205,9 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
 
     //     }
     //   }
-
-    //   // Handle class keys that contained multiple classes.
-    //   $column_classes = implode(' ', $column_classes);
-    //   $column_classes = explode(' ', $column_classes);
-    //   $column_classes[] = 'pb-4';
-    //   if (!empty($item->options['class'])) {
-    //     $card_classes .= ' ' . $item->options['class'];
-    //   }
-
-    //   $element[] = [
-    //     '#theme' => 'az_card',
-    //     '#media' => $media_render_array,
-    //     '#title' => $title,
-    //     '#body' => check_markup($item->body, $item->body_format),
-    //     '#link' => $link_render_array,
-    //     '#attributes' => ['class' => $card_classes],
-    //   ];
-
-    //   $element['#items'][$delta] = new \stdClass();
-    //   $element['#items'][$delta]->_attributes = [
-    //     'class' => $column_classes,
-    //   ];
-
-    //   $element['#attributes']['class'][] = 'content';
-    //   $element['#attributes']['class'][] = 'h-100';
-    //   $element['#attributes']['class'][] = 'row';
-    //   $element['#attributes']['class'][] = 'd-flex';
-    //   $element['#attributes']['class'][] = 'flex-wrap';
     }
 
-    return $element;
+    return $elements;
   }
 
   /**
@@ -246,6 +232,24 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
     }
 
     return $options;
+  }
+
+  /**
+   * Get the URI for the media item.
+   *
+   * @param \Drupal\media\MediaInterface $media
+   *   The media item.
+   * @param \Drupal\Core\Entity\EntityInterface $entity
+   *   The entity that the field belongs to.
+   *
+   * @return \Drupal\Core\Url|null
+   *   The URL object for the media item or null if we don't want to add
+   *   a link.
+   */
+  protected function getMediaURI(MediaInterface $media, EntityInterface $entity) {
+    $uri = NULL;
+    $uri = $media->getFileUri();
+    return $uri;
   }
 
 }
