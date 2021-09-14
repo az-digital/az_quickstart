@@ -15,7 +15,7 @@ use Drupal\Core\Url;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 /**
- * Plugin implementation of the 'az_card_default' formatter.
+ * Plugin implementation of the 'az_background_media_formatter' formatter.
  *
  * @FieldFormatter(
  *   id = "az_background_media_formatter",
@@ -122,10 +122,13 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
   /**
    * {@inheritdoc}
    */
-  public function viewElements(EntityReferenceFieldItemListInterface $items, $langcode) {
+  public function viewElements(FieldItemListInterface $items, $langcode) {
 
     $elements = [];
-    $media_items = $this->getEntitiesToView($items, $langcode);
+    dpm('test');
+
+    $media_items = $this->referencedEntities();
+    dpm($media_items);
 
     // // Early opt-out if the field is empty.
     // if (empty($media_items)) {
@@ -151,12 +154,12 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
     // Add cacheability of each item in the field.
     // $this->renderer->addCacheableDependency($elements[$delta], $media);
 
-    dpm(template_preprocess_responsive_image (
-      [
-          'uri' => $this->getMediaURI($media, $items->getEntity()),
-          'responsive_image_style_id' => $this->getSetting['image_style']
-      ]
-    ));
+    // template_preprocess_responsive_image (
+    //   [
+    //       'uri' => $this->getMediaURI($media, $items->getEntity()),
+    //       'responsive_image_style_id' => $this->getSetting['image_style']
+    //   ]
+    // );
 
     //   // Media.
     //   $media_render_array = [];
@@ -246,10 +249,10 @@ class AZBackgroundMediaFormatter extends FormatterBase implements ContainerFacto
    *   The URL object for the media item or null if we don't want to add
    *   a link.
    */
-  protected function getMediaURI(MediaInterface $media, EntityInterface $entity) {
-    $uri = NULL;
-    $uri = $media->getFileUri();
-    return $uri;
-  }
+  // protected function getMediaURI(MediaInterface $media, EntityInterface $entity) {
+  //   $uri = NULL;
+  //   $uri = $media->getFileUri();
+  //   return $uri;
+  // }
 
 }
