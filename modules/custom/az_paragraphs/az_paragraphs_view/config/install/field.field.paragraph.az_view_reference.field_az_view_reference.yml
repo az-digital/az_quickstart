@@ -23,14 +23,15 @@ settings:
     auto_create: 0
   plugin_types:
     default: default
-    page: page
     block: block
+    page: page
     attachment: 0
     feed: 0
   preselect_views:
-    az_events: 1 
-    az_news: 1
-    az_person: 1
+    az_events: az_events
+    az_news: az_news
+    az_page_by_category: az_page_by_category
+    az_person: az_person
     az_reorder: 0
     block_content: 0
     content: 0
@@ -39,6 +40,7 @@ settings:
     frontpage: 0
     media: 0
     media_library: 0
+    moderated_content: 0
     redirect: 0
     taxonomy_term: 0
     user_admin_people: 0
@@ -46,9 +48,9 @@ settings:
     who_s_new: 0
     who_s_online: 0
   enabled_settings:
-    title: title
-    argument: argument
     limit: limit
+    argument: argument
+    title: title
     pager: 0
     offset: 0
 field_type: viewsreference
