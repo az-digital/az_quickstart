@@ -28,9 +28,9 @@ settings:
     attachment: 0
     feed: 0
   preselect_views:
-    az_events: 0
-    az_news: 0
-    az_person: 0
+    az_events: 1 
+    az_news: 1
+    az_person: 1
     az_reorder: 0
     block_content: 0
     content: 0
