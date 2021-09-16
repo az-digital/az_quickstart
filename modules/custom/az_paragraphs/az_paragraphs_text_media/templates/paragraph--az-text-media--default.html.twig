@@ -38,6 +38,7 @@
  * @ingroup themeable
  */
 #}
+      {{ kint(content.field_az_media) }}
 
 {%
   set classes = [
@@ -70,6 +71,7 @@
 
   ]
 %}
+
 {% block paragraph %}
   <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
     {% block content %}
