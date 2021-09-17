@@ -4,11 +4,7 @@ namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
-use Drupal\Core\Field\FieldDefinitionInterface;
-use Drupal\file\Entity\File;
-use Drupal\Core\Field\FormatterBase;
 use Drupal\media\MediaInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -16,7 +12,6 @@ use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
-use Drupal\Component\Utility\Xss;
 
 /**
  * Plugin implementation of the 'az_background_media_formatter' formatter.
@@ -74,13 +69,13 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   protected function getCssSelector($item) {
     $parent = $item->getEntity();
     $css_selector = '';
-      // Get entity keys from parent paragraph.
-      if (!empty($parent)) {
-        if ($parent instanceof ParagraphInterface) {
-          $referencing_paragraph_id = $parent->id();
-          $referencing_paragraph_bundle = $parent->getType();
-          $css_selector = "#" . $referencing_paragraph_bundle . "-" . $referencing_paragraph_id;
-        }
+    // Get entity keys from parent paragraph.
+    if (!empty($parent)) {
+      if ($parent instanceof ParagraphInterface) {
+        $referencing_paragraph_id = $parent->id();
+        $referencing_paragraph_bundle = $parent->getType();
+        $css_selector = "#" . $referencing_paragraph_bundle . "-" . $referencing_paragraph_id;
+      }
     }
 
     return $css_selector;
@@ -143,13 +138,13 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     if (isset($options[$settings['image_style']])) {
       $summary[] = $this->t('URL for image style: @style', ['@style' => $options[$settings['image_style']]]);
-    } else {
+    }
+    else {
       $summary[] = $this->t('Original image style');
     }
 
     return $summary;
   }
-
 
   /**
    * {@inheritdoc}
@@ -159,11 +154,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     // $settings = $this->getSettings();
     // dpm($settings);
     $settings = $this->getAllSettings($items);
-    dpm($settings);
 
     $elements = [];
     // $defaults = self::defaultSettings();
-
     $media_items = $this->getEntitiesToView($items, $langcode);
 
     // Early opt-out if the field is empty.
@@ -177,7 +170,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $uri = $this->getMediaURI($media);
 
       // Add cacheability of each item in the field.
-      // $this->renderer->addCacheableDependency($elements[$delta], $media);
+      // $this->renderer->addCacheableDependency($elements[$delta], $media);.
       $preprocessed_background_image = [
         'uri' => $uri,
         'responsive_image_style_id' => $settings['image_style'],
@@ -197,7 +190,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ];
 
       // $elements[$delta] = $this->renderableStyleElement;
-
     }
 
     return $elements;
@@ -241,7 +233,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     $uri = NULL;
     $file = $media->getSource();
-    $uri = $file->getMetadata($media,'thumbnail_uri');
+    $uri = $file->getMetadata($media, 'thumbnail_uri');
 
     return $uri;
   }
@@ -259,7 +251,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $css_settings = $paragraphSettings['css_settings'];
     template_preprocess_responsive_image($preprocessedBackgroundImage);
     // Split each source into multiple rules.
-
     foreach (array_reverse($preprocessedBackgroundImage['sources']) as $source_i => $source) {
 
       $attr = $source->toArray();
@@ -300,7 +291,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
               'css' => Markup::create($css['data']),
             ],
             '#attributes' => [
-                'media' => $css['attributes']['media'],
+              'media' => $css['attributes']['media'],
             ],
           ],
         ];
@@ -409,20 +400,28 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     return [];
   }
 
+  /**
+   *
+   */
   protected function getAllSettings(FieldItemListInterface $items) {
-    $defaultSettings = $this->defaultSettings();
-    $allSettings = $defaultSettings;
+    $default_settings = $this->defaultSettings();
+    $all_settings = $default_settings;
     $parent = $items->getEntity();
     // Get settings from parent paragraph.
     if (!empty($parent)) {
       if ($parent instanceof ParagraphInterface) {
-        $allSettings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
+        $all_settings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
         // Get the behavior settings for the parent.
         $parent_config = $parent->getAllBehaviorSettings();
-        $allSettings += $parent_config;
+
+        $all_settings += $parent_config;
         // See if the parent behavior defines some background settings.
         if (!empty($parent_config['az_text_media_paragraph_behavior'])) {
           $az_text_media_defaults = $parent_config['az_text_media_paragraph_behavior'];
+          if ($az_text_media_defaults) {
+            dpm($az_text_media_defaults['bg_attachment']);
+          }
+
         }
 
       }

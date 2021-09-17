@@ -33,7 +33,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * The ResponsiveBackgroundCSSFormatter.
    *
-   * @var \Drupal\az_paragraphs\AZResponsiveBackgroundCSSFormatter;
+   * @var \Drupal\az_paragraphs\AZResponsiveBackgroundCSSFormatter
    */
   protected $responsiveBackgroundCSSFormatter;
 
@@ -42,11 +42,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   protected $responsiveImageStyleStorage;
 
-  /*
+  /**
    * The image style entity storage.
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
+
   protected $imageStyleStorage;
 
   /**
@@ -63,9 +64,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
     $instance->responsiveBackgroundCSSFormatter = ($container->get('az_paragraphs.az_responsive_background_css_formatter'));
     $instance->responsiveImageStyleStorage = $container->get('entity_type.manager')
-    ->getStorage('responsive_image_style');
+      ->getStorage('responsive_image_style');
     $instance->imageStyleStorage = $container->get('entity_type.manager')
-    ->getStorage('image_style');
+      ->getStorage('image_style');
 
     return $instance;
   }
@@ -325,7 +326,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $langcode = 'en';
     $responsive_css = $this->responsiveBackgroundCSSFormatter->getResponsiveBackgroundImageCSS($settings, $file, $langcode);
 
-    $file_uri =  $file->getFileUri();
+    $file_uri = $file->getFileUri();
     if ($variables['text_on_media']['style'] !== 'bottom') {
 
       // dpm($responsive_css);
@@ -373,8 +374,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   private function getImageCacheTags() {
     $responsive_image_style = $this->responsiveImageStyleStorage
-    ->load('az_full_width_background');
-    $image_styles_to_load = array();
+      ->load('az_full_width_background');
+    $image_styles_to_load = [];
     $cache_tags = [];
     if ($responsive_image_style) {
       $cache_tags = Cache::mergeTags($cache_tags, $responsive_image_style
