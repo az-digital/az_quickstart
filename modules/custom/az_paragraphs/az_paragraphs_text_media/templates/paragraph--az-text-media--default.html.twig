@@ -71,7 +71,14 @@
 
   ]
 %}
-
+{% set title_attributes = create_attribute() %}
+{%
+  set title_classes = [
+    'mt-0',
+    'bold',
+    text_on_media.bg_color != 'dark' ? 'text-blue'
+  ]
+%}
 {% block paragraph %}
   <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
     {% block content %}
@@ -86,7 +93,7 @@
         <div class="az-full-width-row">
           <div{{ col_attributes.addClass(col_classes) }}>
             <div{{ content_attributes.addClass(content_classes).addClass('az-full-width-column-content') }}>
-              <h2 class="mt-0 text-blue bold">{{ paragraph.field_az_title.value }}</h2>
+              <h2{{ title_attributes.addClass(title_classes) }}>{{ paragraph.field_az_title.value }}</h2>
               {{ content }}
             </div>
           </div>

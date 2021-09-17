@@ -411,15 +411,15 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
   protected function getAllSettings(FieldItemListInterface $items) {
     $defaultSettings = $this->defaultSettings();
-    $paragraphSettings = $defaultSettings;
+    $allSettings = $defaultSettings;
     $parent = $items->getEntity();
     // Get settings from parent paragraph.
     if (!empty($parent)) {
       if ($parent instanceof ParagraphInterface) {
-        $paragraphSettings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
+        $allSettings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
         // Get the behavior settings for the parent.
         $parent_config = $parent->getAllBehaviorSettings();
-        $paragraphSettings += $parent_config;
+        $allSettings += $parent_config;
         // See if the parent behavior defines some background settings.
         if (!empty($parent_config['az_text_media_paragraph_behavior'])) {
           $az_text_media_defaults = $parent_config['az_text_media_paragraph_behavior'];
@@ -427,8 +427,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
       }
     }
-
-    return $paragraphSettings;
+    return $allSettings;
   }
 
 }
