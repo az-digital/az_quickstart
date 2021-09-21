@@ -20,7 +20,8 @@
       "az_person_category" : "Director",
       "az_person_categories" : "Communications"
     },
-    {"id":2,
+    {
+      "id":2,
       "az_lname"  : "Ælling",
       "az_fname"  : "Grimme",
       "az_email"  : "uglyd@email.arizona.edu",
@@ -39,7 +40,8 @@
       "az_person_category" : "Departmental Faculty",
       "az_person_categories" : "Psychology|World Literature"
     },
-    {"id":3,
+    {
+      "id":3,
       "az_lname"  : "An'ersen",
       "az_fname"  : "José",
       "az_email"  : "hcandersen@email.arizona.edu",
@@ -58,7 +60,8 @@
       "az_person_category" : "Joint Faculty",
       "az_person_categories" : "Philosophy"
     },
-    {"id":4,
+    {
+      "id":4,
       "az_lname"  : "Quack",
       "az_fname"  : "Albertina",
       "az_email"  : "aquack@email.arizona.edu",
@@ -77,7 +80,8 @@
       "az_person_category" : "Departmental Faculty",
       "az_person_categories" : "History"
     },
-    {"id":5,
+    {
+      "id":5,
       "az_lname"  : "Nasier",
       "az_fname"  : "Alcofribas",
       "az_email"  : "alcofribasnasier@email.arizona.edu",
@@ -100,7 +104,8 @@
       "az_person_category" : "Joint Faculty",
       "az_person_categories" : "World Literature"
     },
-    {"id":6,
+    {
+      "id":6,
       "az_lname"  : "Urquhart",
       "az_fname"  : "Thomas",
       "az_email"  : "turquhart@email.arizona.edu",
@@ -119,7 +124,8 @@
       "az_person_category" : "Research Associates",
       "az_person_categories" : "Mathematics"
     },
-    {"id":7,
+    {
+      "id":7,
       "az_lname"  : "Horne",
       "az_fname"  : "Janet",
       "az_email"  : "jhorne@email.arizona.edu",
@@ -138,7 +144,8 @@
       "az_person_category" : "Departmental Faculty",
       "az_person_categories" : "Nutrition and Food Systems"
     },
-    {"id":8,
+    {
+      "id":8,
       "az_lname"  : "de Espinosa",
       "az_fname"  : "Antonio",
       "az_email"  : "typefoundry@email.arizona.edu",
@@ -157,7 +164,8 @@
       "az_person_category" : "Research Associates",
       "az_person_categories" : "World Literature"
     },
-    {"id":9,
+    {
+      "id":9,
       "az_lname"  : "Strozzi",
       "az_fname"  : "Barbara",
       "az_email"  : "bstrozzi@email.arizona.edu",
@@ -176,7 +184,8 @@
       "az_person_category" : "Departmental Faculty",
       "az_person_categories" : "Music"
     },
-    {"id":10,
+    {
+      "id":10,
       "az_lname"  : "Muse",
       "az_fname"  : "Urania",
       "az_email"  : "urania@email.arizona.edu",
@@ -195,7 +204,8 @@
       "az_person_category" : "Director",
       "az_person_categories" : "Astronomy"
     },
-    {"id":11,
+    {
+      "id":11,
       "az_lname"  : "Giovanni",
       "az_fname"  : "Donald",
       "az_email"  : "stonedguest@email.arizona.edu",
@@ -214,7 +224,8 @@
       "az_person_category" : "Joint Faculty",
       "az_person_categories" : "Education"
     },
-    {"id":12,
+    {
+      "id":12,
       "az_lname"  : "Wildcat",
       "az_fname"  : "Wilbur",
       "az_email"  : "wilbur@email.arizona.edu",
@@ -233,7 +244,8 @@
       "az_person_category" : "Undergraduates",
       "az_person_categories" : "Government and Public Service"
     },
-    {"id":13,
+    {
+      "id":13,
       "az_lname"  : "Wildcat",
       "az_fname"  : "Wilma",
       "az_email"  : "wilma@email.arizona.edu",

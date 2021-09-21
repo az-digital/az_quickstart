@@ -34,7 +34,7 @@ class ParagraphsColumnImageFieldMerge extends ProcessPluginBase {
     if (!empty($this->configuration['credit'])) {
       $credit = $row->getSourceProperty($this->configuration['credit']);
       foreach ($credit as $credit_item) {
-        if (isset($credit_item['value']) && $credit_item['value'] != "") {
+        if (isset($credit_item['value']) && $credit_item['value'] !== "") {
           $value['value'] .= '<p><span class="small">' . $credit_item['value'] . '</span></p>';
           $hr_flag = 1;
         }
@@ -44,7 +44,7 @@ class ParagraphsColumnImageFieldMerge extends ProcessPluginBase {
     if (!empty($this->configuration['caption'])) {
       $caption = $row->getSourceProperty($this->configuration['caption']);
       foreach ($caption as $caption_item) {
-        if (isset($credit_item['value']) && $credit_item['value'] != "") {
+        if (isset($credit_item['value']) && $credit_item['value'] !== "") {
           $value['value'] .= '<p>' . $caption_item['value'] . '</p>';
           $hr_flag = 1;
         }

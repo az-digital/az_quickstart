@@ -1,0 +1,96 @@
+id: az_demo_event_rrule
+label: AZ Quickstart Demo Event Repeat Rules
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_event_rrule.json
+  item_selector: rules
+  ids:
+    rid:
+      type: integer
+
+  fields:
+    -
+      name: rid
+      selector: rid
+    -
+      name: rule
+      selector: rule
+    -
+      name: freq
+      selector: freq
+    -
+      name: limit
+      selector: limit
+    -
+      name: parameters
+      selector: parameters
+    -
+      name: unlimited
+      selector: unlimited
+    -
+      name: entity_type
+      selector: entity_type
+    -
+      name: bundle
+      selector: bundle
+    -
+      name: field_name
+      selector: field_name
+    -
+      name: start
+      selector: start
+    -
+      name: end
+      selector: end
+
+process:
+  entity_type: entity_type
+  bundle: bundle
+  field_name: field_name
+  rule: rule
+  freq: freq
+
+  limit:
+  # Example Input: "COUNT=10" or "UNTIL=2020-12-31" or empty
+    - plugin: default_value
+      source: limit
+      default_value: ""
+
+  parameters:
+  # Example Input: "BYDAY=TU;INTERVAL=1"
+    - plugin: skip_on_empty
+      method: process
+      source: parameters
+      message: "Parameters is empty. Skipping."
+
+  start:
+    -
+      plugin: callback
+      source: start
+      callable: strtotime
+
+  end:
+    -
+      plugin: callback
+      source: end
+      callable: strtotime
+
+  unlimited:
+  # Example Input: Boolean 0 or 1 (0=limited, 1=unlimited)
+    - plugin: default_value
+      default_value: 0
+
+destination:
+  plugin: entity:smart_date_rule
+  bundle: smart_date_rule
+
+dependencies:
+  enforced:
+    module:
+      - az_event

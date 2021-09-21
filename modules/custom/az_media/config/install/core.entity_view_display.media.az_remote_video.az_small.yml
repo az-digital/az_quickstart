@@ -22,11 +22,11 @@ third_party_settings:
         show_label: false
         label_element: h3
         label_element_classes: ''
-        attributes: 'style="max-width: 360px;"'
+        attributes: ''
         effect: none
         speed: fast
         id: ''
-        classes: 'embed-responsive embed-responsive-16by9'
+        classes: 'embed-responsive embed-responsive-16by9 az-small az-media'
       label: '16:9 Responsive'
 id: media.az_remote_video.az_small
 targetEntityType: media

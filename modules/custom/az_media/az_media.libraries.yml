@@ -1,0 +1,4 @@
+az_media_edit:
+  css:
+    component:
+      css/az-media-edit.css: {}

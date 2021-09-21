@@ -63,8 +63,19 @@
 {%
   set content_classes = [
     'content',
+    text_on_media.bg_color,
     text_on_media.style,
-    text_on_media.bg_color
+    text_on_media.style == 'column' ? 'p' ~ text_on_media.text_media_spacing,
+    text_on_media.style == 'box' ? 'm' ~ text_on_media.text_media_spacing
+
+  ]
+%}
+{% set title_attributes = create_attribute() %}
+{%
+  set title_classes = [
+    'mt-0',
+    'bold',
+    text_on_media.bg_color != 'dark' ? 'text-blue'
   ]
 %}
 {% block paragraph %}
@@ -79,9 +90,9 @@
       {% endif %}
       <div class="container">
         <div class="az-full-width-row">
-          <div{{ col_attributes.addClass(col_classes).addClass('az-full-width-column-content') }}>
-            <div{{ content_attributes.addClass(content_classes) }}>
-              <h2 class="mt-0 text-blue bold">{{ paragraph.field_az_title.value }}</h2>
+          <div{{ col_attributes.addClass(col_classes) }}>
+            <div{{ content_attributes.addClass(content_classes).addClass('az-full-width-column-content') }}>
+              <h2{{ title_attributes.addClass(title_classes) }}>{{ paragraph.field_az_title.value }}</h2>
               {{ content }}
             </div>
           </div>
@@ -90,4 +101,3 @@
     {% endblock %}
   </div>
 {% endblock paragraph %}
-

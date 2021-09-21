@@ -20,34 +20,40 @@ process:
     process:
       delta: delta
       value: value
-  
+
   field_az_media:
     plugin: sub_process
     source: field_uaqs_photo
     process:
       delta: delta
-      target_id: 
-      - 
+      target_id:
+      -
         plugin: migration_lookup
         source: fid
-        migration: 
+        migration:
           - az_media
 
-  field_az_text_area/value: 
+  field_uaqs_setting_bg_attach_value: field_uaqs_setting_bg_attach/0/value
+
+  processed_full_width:
+    plugin: default_value
+    default_value: 'full-width-background'
+
+  field_az_text_area/value:
     plugin: paragraphs_fw_media_row_field_merge
     body: field_uaqs_summary
     link: field_uaqs_links
 
-  field_az_text_area/format:  
+  field_az_text_area/format:
     plugin: default_value
     default_value: az_standard
 
   behavior_settings:
     plugin: paragraphs_behavior_settings
     bg_text_color: field_uaqs_setting_text_bg_color
-    bg_attach: field_uaqs_setting_bg_attach
+    bg_attach: '@field_uaqs_setting_bg_attach_value'
     position: view_mode
-    full_width: 1
+    full_width: '@processed_full_width'
     content_style: column
 
 dependencies:

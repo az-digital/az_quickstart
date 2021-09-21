@@ -1,0 +1,143 @@
+
+.az-calendar-filter-calendar .views-exposed-form .views-exposed-widget {
+  float: none;
+  padding: 0;
+  padding-bottom: 1em;
+}
+
+.az-calendar-filter-calendar .ui-datepicker-calendar tbody td {
+  line-height: 1;
+}
+
+.block-views-exposed-filter-blockaz-events-page-1 .form-actions {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .az-calendar-filter-calendar .ui-datepicker-calendar tbody td {
+    line-height: 1.5;
+  }
+}
+
+.views-widget-az-calendar-filter .ui-datepicker-calendar thead {
+  background-color: #e2e9eb;
+}
+
+.views-widget-az-calendar-filter .js-form-type-textfield{
+  display: none;
+}
+
+.az-calendar-filter-calendar .ui-datepicker {
+  padding: 0;
+}
+
+.az-calendar-filter-calendar .ui-datepicker.ui-datepicker-inline {
+  width: 100%;
+}
+
+/* Fix for Barrio form-row issue. */
+.views-exposed-form.block-views-exposed-filter-blockaz-events-page-1 .form-row>fieldset {
+  max-width: 100%;
+}
+
+.az-calendar-filter-calendar .ui-datepicker table {
+  font-size: 0.75em;
+  text-align: center;
+}
+
+.az-calendar-filter-calendar .ui-datepicker table td a {
+  text-align: center;
+}
+
+.az-calendar-filter-calendar .ui-datepicker td {
+  position: relative;
+  padding: 1px;
+}
+
+.az-calendar-filter-calendar .ui-datepicker table {
+  width: 100%;
+  table-layout:fixed !important;
+  font-size: .9em;
+  border-collapse: collapse;
+  margin: 0 0 0;
+}
+
+.az-calendar-filter-calendar .ui-datepicker td a {
+  display: block;
+  padding: .2em;
+  text-align: center;
+  text-decoration: none;
+  position:  absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.az-calendar-filter-calendar .ui-datepicker td:before {
+  content: "";
+  display: block;
+  padding-top: 100%;
+}
+
+.az-calendar-filter-calendar .ui-widget {
+  font-family: proxima-nova,calibri,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+}
+
+.az-calendar-filter-calendar .ui-datepicker-next-hover,
+.az-calendar-filter-calendar .ui-datepicker-prev-hover {
+  background: none;
+  border: none;
+  top: 2px;
+  right: 2px;
+  font-weight: 400;
+}
+
+.az-calendar-filter-calendar table > thead > tr > th {
+  color: #403635;
+}
+
+.az-calendar-filter-calendar .ui-datepicker .ui-datepicker-header {
+  background: white;
+  color: #403635;
+  border: none;
+}
+
+.az-calendar-filter-calendar .ui-state-active,
+.az-calendar-filter-calendar .ui-widget-content .ui-state-active,
+.az-calendar-filter-calendar .ui-widget-header .ui-state-active,
+.az-calendar-filter-calendar .ui-state-default,
+.az-calendar-filter-calendar .ui-widget-content .ui-state-default,
+.az-calendar-filter-calendar .ui-widget-header .ui-state-default {
+  background: white;
+  border: 1px solid white;
+  color: #403635;
+}
+
+.az-calendar-filter-calendar .ui-widget-content .ui-state-default:hover {
+  text-decoration: underline;
+}
+
+.az-calendar-filter-calendar .ui-widget-content .calendar-filter-day-events .ui-state-default,
+.az-calendar-filter-calendar .ui-widget-content .calendar-filter-window .ui-state-default {
+  background: #e2e9eb;
+  font-weight: bold;
+  text-decoration: underline;
+  color: #1E5288;
+}
+
+.az-calendar-filter-calendar .ui-widget-content .calendar-filter-window .ui-state-default,
+.az-calendar-filter-calendar .ui-widget-content .calendar-filter-window .ui-state-default.ui-state-active {
+  background: #1E5288;
+  color: white;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.az-calendar-filter-calendar .ui-icon-circle-triangle-e {
+  background-position: -32px -16px;
+}
+
+.az-calendar-filter-calendar .ui-icon-circle-triangle-w {
+  background-position: -96px -16px;
+}

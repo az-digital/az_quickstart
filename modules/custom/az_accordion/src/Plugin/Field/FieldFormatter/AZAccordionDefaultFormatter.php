@@ -66,7 +66,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
-    // TODO: accordion style selection (based on custom config entities).
+    // @todo accordion style selection (based on custom config entities).
     $element['foo'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Foo'),
@@ -109,7 +109,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           // See if the parent behavior defines some accordion-specific
           // settings.
           if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
-            // TODO: implement az_accordion_paragraph_behavior handling.
+            // @todo implement az_accordion_paragraph_behavior handling.
           }
 
         }

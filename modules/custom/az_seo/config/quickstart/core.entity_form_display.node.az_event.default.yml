@@ -19,6 +19,7 @@ dependencies:
     - file
     - link
     - media_library
+    - media_library_edit
     - metatag
     - paragraphs
     - path
@@ -99,7 +100,7 @@ content:
         90
         120|2 hours
         custom
-      hide_date: true
+      hide_date: false
     third_party_settings:
       smart_date_recur:
         modal: true
@@ -140,7 +141,9 @@ content:
     weight: 10
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     region: content
   field_az_subheading:
     weight: 8

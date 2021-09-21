@@ -1,0 +1,39 @@
+{
+    "paragraphs": [
+        {
+            "id":2,
+            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: Arizona Red<\/h2>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Background Pattern: Triangles Centered<\/span><\/p>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Full-width: Not checked<\/span><\/p>",
+            "full_width" : false,
+            "bg_color" : [{"value":"bg-red"}],
+            "bg_pattern" : [{"value":"bg-triangles-centered"}]
+        },
+        {
+            "id":3,
+            "az_text_area" : "<h2>Background Color: Cool Gray<\/h2>\r\n\r\n<p><span class=\"lead\">Background Pattern: Trilines<\/span><\/p>\r\n\r\n<p><span class=\"lead\">Full-width: Checked<\/span><\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
+            "full_width" : "full-width-background",
+            "bg_color" : [{"value":"bg-cool-gray"}],
+            "bg_pattern" : [{"value":"bg-trilines"}]
+        },
+        {
+            "id":8,
+            "az_text_area" : "<h2 class=\"text-align-right\">Background Color: Azurite<\/h2>\r\n\r\n<p class=\"text-align-right\"><span class=\"lead\">Background Pattern: Triangles Left<\/span><\/p>\r\n\r\n<p class=\"text-align-right\"><span class=\"lead\">Full-width: Not checked<\/span><\/p>\r\n\r\n<p class=\"text-align-right\">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
+            "full_width" : false,
+            "bg_color" : [{"value":"bg-azurite"}],
+            "bg_pattern" : [{"value":"bg-triangles-top-left"}]
+        },
+        {
+            "id":9,
+            "az_text_area" : "<h2 class=\"text-align-center\">Background Color: River<\/h2>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Background Pattern: None<\/span><\/p>\r\n\r\n<p class=\"text-align-center\"><span class=\"lead\">Full-width: Checked<\/span><\/p>\r\n",
+            "full_width" : "full-width-background",
+            "bg_color" : [{"value":"bg-river"}],
+            "bg_pattern" : [{"value":""}]
+        },
+        {
+            "id":14,
+            "az_text_area" : "<h2>Background Color: Midnight<\/h2>\r\n\r\n<p><span class=\"lead\">Background Pattern: Triangles Right<\/span><\/p>\r\n\r\n<p><span class=\"lead\">Full-width: Not checked<\/span><\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n",
+            "full_width" : false,
+            "bg_color" : [{"value":"bg-midnight"}],
+            "bg_pattern" : [{"value":"bg-triangles-top-right"}]
+        }
+    ]
+}
