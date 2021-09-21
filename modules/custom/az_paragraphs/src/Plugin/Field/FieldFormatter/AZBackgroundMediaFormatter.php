@@ -199,7 +199,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         ];
       }
       elseif ($marquee_style !== 'bottom' && $text_media_spacing === 'aspect-ratio') {
-        $background_css =   [
+        $background_css = [
           'style' => [
             '#type' => 'inline_template',
             '#template' => "<style type='text/css'>{{responsive_css}}</style>",
@@ -227,7 +227,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           //   'class' => $text_on_bottom_classes,
           // ],
         ];
-        $elements[$delta]  = $aspect_ratio_markup;
+        $elements[$delta] = $aspect_ratio_markup;
       }
 
       elseif ($marquee_style === 'bottom') {
@@ -236,10 +236,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $text_on_bottom = [];
         $fallback = [];
         $text_on_bottom_classes = ['text-on-media-bottom'];
-        if($media_bundle === 'az_remote_video') {
+        if ($media_bundle === 'az_remote_video') {
           $text_on_bottom_classes[] = 'text-on-video';
         }
-        if($media_bundle === 'az_remote_video') {
+        if ($media_bundle === 'az_remote_video') {
           $media_element = $this->getRemoteVideoMarkup($media, $settings);
           $fallback = [
             '#theme' => 'responsive_image_formatter',
@@ -249,7 +249,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
               'class' => ['img-fluid'],
             ],
           ];
-        } else {
+        }
+        else {
           $media_element = [
             '#theme' => 'responsive_image_formatter',
             '#responsive_image_style_id' => $settings['image_style'],
@@ -269,7 +270,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'class' => $text_on_bottom_classes,
           ],
         ];
-        $elements[$delta]  = $text_on_bottom;
+        $elements[$delta] = $text_on_bottom;
       }
 
     }
@@ -493,7 +494,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     return [];
   }
 
-    /**
+  /**
    *
    */
   protected function getParagraphSettings(FieldItemListInterface $items) {
@@ -511,7 +512,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     return $paragraph_settings_all;
   }
 
-
   /**
    *
    */
@@ -524,17 +524,18 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $all_settings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
 
     // Get settings from parent paragraph.
-      if (!empty($all_settings['bg_attachment'])) {
-        switch ($all_settings['bg_attachment']) {
-          case 'bg-fixed':
-            $all_settings['css_settings']['bg_image_attachment'] = 'fixed';
-            break;
-          default:
+    if (!empty($all_settings['bg_attachment'])) {
+      switch ($all_settings['bg_attachment']) {
+        case 'bg-fixed':
+          $all_settings['css_settings']['bg_image_attachment'] = 'fixed';
+          break;
+
+        default:
           $all_settings['css_settings']['bg_image_attachment'] = $default_settings['css_settings']['bg_image_attachment'];
-        }
       }
-      return $all_settings;
     }
+    return $all_settings;
+  }
 
   /**
    * Prepare markup for remote video.
