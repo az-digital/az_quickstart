@@ -56,6 +56,7 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
     $instance->entityDisplayRepository = $container->get('entity_display.repository');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->libraryDiscovery = $container->get('library.discovery');
+
     return $instance;
   }
 

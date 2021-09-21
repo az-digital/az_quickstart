@@ -1,5 +1,22 @@
 /* Styles for az_text_media paragraph type. */
-
+.paragraph--type--az-text-media.paragraph--view-mode--default.text-on-media.full-width-background picture * {
+    width: 100%;
+    height: auto !important;
+}
+.az-video-playing picture * {
+    visibility: hidden;
+}
+.field--type-entity-reference {
+    margin: 0 !important;
+}
+.container-absolute {
+    bottom: 0;
+    top: 0;
+    float: none;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
 .text-on-media {
   background-size: cover;
   background-position: center;

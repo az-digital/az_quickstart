@@ -162,6 +162,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-8' => $this->t('8 (6.0rem | ~96px)'),
         'y-9' => $this->t('9 (7.0rem | ~112px)'),
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
+        'aspect-ratio' => $this->t('Background Aspect Ratio'),
       ],
       '#default_value' => $config['text_media_spacing'] ?? 'y-5',
       '#description' => $this->t('Adds spacing above and below the text.'),
@@ -185,24 +186,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get plugin configuration.
     $config = $this->getSettings($paragraph);
     $variables['text_on_media'] = $config;
-    if ($paragraph->hasField('field_az_media')) {
-      /** @var \Drupal\media\Entity\Media $media */
-      foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
-        $variables['text_on_media']['media_type'] = $media->bundle();
-        switch ($media->bundle()) {
-          case 'az_remote_video':
-            $this->remoteVideo($variables, $paragraph, $media);
-            break;
-
-          case 'az_image':
-            $this->image($variables, $paragraph, $media);
-            break;
-
-          default:
-            return $variables;
-        }
-      }
-    }
   }
 
   /**
@@ -216,7 +199,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
       $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
     }
-
   }
 
   /**
@@ -227,8 +209,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
     $config = $this->getSettings($paragraph);
-    $view_builder = $this->entityTypeManager->getViewBuilder('media');
-    $background_media = $view_builder->view($media, 'az_background');
     $provider = $media_oembed->getMetadata($media, 'provider_name');
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
@@ -258,7 +238,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
             'data-youtubeid' => $video_oembed_id,
             'data-style' => $config['style'],
           ],
-          'child' => $background_media,
           '#attached' => [
             'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
             'drupalSettings' => [
@@ -310,62 +289,47 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    * Prepare markup for image.
    */
   private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
-    $settings = [];
-    $settings['css_settings']['bg_image_selector'] = "#" . $paragraph->bundle() . "-" . $paragraph->id();
-    $settings['css_settings']['bg_image_background_size_ie8'] = '';
-    $settings['css_settings']['bg_image_z_index'] = '';
-    $settings['css_settings']['bg_image_background_size'] = '';
-    $settings['css_settings']['bg_image_important'] = '';
-    $settings['css_settings']['bg_image_repeat'] = '';
-    $settings['css_settings']['bg_image_attachment'] = '';
-    $settings['css_settings']['bg_image_y'] = '';
-    $settings['css_settings']['bg_image_x'] = '';
-    $settings['image_style'] = 'az_full_width_background';
-    $settings['css_settings']['bg_image_color'] = 'red';
-    $file = $media->field_media_az_image->entity;
-    $langcode = 'en';
-    $responsive_css = $this->responsiveBackgroundCSSFormatter->getResponsiveBackgroundImageCSS($settings, $file, $langcode);
+    // $file_uri = $file->getFileUri();
+    // if ($variables['text_on_media']['style'] !== 'bottom') {
 
-    $file_uri = $file->getFileUri();
-    if ($variables['text_on_media']['style'] !== 'bottom') {
+    //   // dpm($responsive_css);
+    //   $style_element = [
+    //     'style' => [
+    //       '#type' => 'inline_template',
+    //       '#template' => "<style type='text/css'>{{responsive_css}}</style>",
+    //       '#context' => [
+    //         'responsive_css' => $responsive_css,
+    //         'filepath' => file_create_url($file_uri),
+    //         'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+    //       ],
+    //     ],
+    //   ];
+    //   $variables['style_element'] = $style_element;
+    // }
+    // elseif ($variables['text_on_media']['style'] === 'bottom') {
 
-      // dpm($responsive_css);
-      $style_element = [
-        'style' => [
-          '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>{{responsive_css}}</style>",
-          '#context' => [
-            'responsive_css' => $responsive_css,
-            'filepath' => file_create_url($file_uri),
-            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
-          ],
-        ],
-      ];
-      $variables['style_element'] = $style_element;
-    }
-    elseif ($variables['text_on_media']['style'] === 'bottom') {
+    //   $image_renderable = [
+    //     '#theme' => 'responsive_image_formatter',
+    //     '#responsive_image_style_id' => 'az_full_width_background',
+    //     '#item' => $media->field_media_az_image,
+    //     '#item_attributes' => [
+    //       'class' => ['img-fluid'],
+    //     ],
+    //     '#cache' => [
+    //       'tags' => $this->getImageCacheTags(),
+    //     ],
+    //   ];
+    //   $text_on_bottom = [
+    //     '#type' => 'html_tag',
+    //     '#tag' => 'div',
+    //     'child' => $image_renderable,
+    //     '#attributes' => [
+    //       'class' => ['text-on-media-bottom'],
+    //     ],
+    //   ];
+    //   $variables['text_on_bottom'] = $text_on_bottom;
+    // }
 
-      $image_renderable = [
-        '#theme' => 'responsive_image_formatter',
-        '#responsive_image_style_id' => 'az_full_width_background',
-        '#item' => $media->field_media_az_image,
-        '#item_attributes' => [
-          'class' => ['img-fluid'],
-        ],
-        '#cache' => [
-          'tags' => $this->getImageCacheTags(),
-        ],
-      ];
-      $text_on_bottom = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        'child' => $image_renderable,
-        '#attributes' => [
-          'class' => ['text-on-media-bottom'],
-        ],
-      ];
-      $variables['text_on_bottom'] = $text_on_bottom;
-    }
     return $variables;
   }
 

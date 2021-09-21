@@ -26,6 +26,15 @@ use Drupal\responsive_image\Entity\ResponsiveImageStyle;
  */
 class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements ContainerFactoryPluginInterface {
 
+  protected $textMediaSpacing;
+
+  /**
+   * The VideoEmbedHelper.
+   *
+   * @var \Drupal\az_paragraphs\AZVideoEmbedHelper
+   */
+  protected $videoEmbedHelper;
+
   /**
    * A style element render array for the background image.
    */
@@ -58,6 +67,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $plugin_id,
       $plugin_definition
     );
+    $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
     $instance->entityTypeManager = $container->get('entity_type.manager');
 
     return $instance;
@@ -86,12 +96,13 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   public static function defaultSettings() {
     return [
+      'text_media_spacing' => '',
       'image_style' => '',
       'css_settings' => [
         'bg_image_selector' => 'body',
         'bg_image_color' => '#FFFFFF',
-        'bg_image_x' => 'left',
-        'bg_image_y' => 'top',
+        'bg_image_x' => 'center',
+        'bg_image_y' => 'center',
         'bg_image_attachment' => 'scroll',
         'bg_image_repeat' => 'no-repeat',
         'bg_image_background_size' => '',
@@ -99,7 +110,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         'bg_image_gradient' => '',
         'bg_image_media_query' => 'all',
         'bg_image_important' => 1,
-        'bg_image_z_index' => 'auto',
+        'bg_image_z_index' => '-999',
         'bg_image_path_format' => 'absolute',
       ],
     ];
@@ -150,10 +161,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
-
-    // $settings = $this->getSettings();
-    // dpm($settings);
     $settings = $this->getAllSettings($items);
+    $full_width = '';
+    if (!empty($settings['full_width'])) {
+      $full_width = $settings['full_width'];
+    }
+    $marquee_style = $settings['style'];
 
     $elements = [];
     // $defaults = self::defaultSettings();
@@ -166,30 +179,99 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     /** @var \Drupal\media\MediaInterface[] $media_items */
     foreach ($media_items as $delta => $media) {
-
-      $uri = $this->getMediaURI($media);
-
-      // Add cacheability of each item in the field.
-      // $this->renderer->addCacheableDependency($elements[$delta], $media);.
+      $media_bundle = $media->bundle();
       $preprocessed_background_image = [
-        'uri' => $uri,
+        'uri' => $this->getMediaThumbURI($media),
         'responsive_image_style_id' => $settings['image_style'],
       ];
-
-      $this->renderableStyleElement = $this->getResponsiveBackgroundImageStyleElement($preprocessed_background_image, $settings);
-      $elements[$delta] = [
-        'style' => [
-          '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>{{responsive_css}}</style>",
-          '#context' => [
-            'responsive_css' => $this->renderableStyleElement,
-            'filepath' => file_create_url($uri),
-            'id' => 'test',
+      $renderable_style_element = $this->getResponsiveBackgroundImageStyleElement($preprocessed_background_image, $settings);
+      $text_media_spacing = $settings['text_media_spacing'];
+      $media_element = $this->getRemoteVideoMarkup($media, $settings);
+      if ($marquee_style !== 'bottom' && $text_media_spacing !== 'aspect-ratio') {
+        $elements[$delta] = [
+          'style' => [
+            '#type' => 'inline_template',
+            '#template' => "<style type='text/css'>{{responsive_css}}</style>",
+            '#context' => [
+              'responsive_css' => $renderable_style_element,
+            ],
           ],
-        ],
-      ];
+        ];
+      }
+      elseif ($marquee_style !== 'bottom' && $text_media_spacing === 'aspect-ratio') {
+        $background_css =   [
+          'style' => [
+            '#type' => 'inline_template',
+            '#template' => "<style type='text/css'>{{responsive_css}}</style>",
+            '#context' => [
+              'responsive_css' => $renderable_style_element,
+            ],
+          ],
+        ];
 
-      // $elements[$delta] = $this->renderableStyleElement;
+        $aspect_ratio_sizer = [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => $settings['image_style'],
+          '#item' => $media->thumbnail,
+          '#item_attributes' => [
+            'class' => ['img-fluid'],
+          ],
+        ];
+        $aspect_ratio_markup = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          'media_element' => $media_element,
+          'aspect_ratio_sizer' => $aspect_ratio_sizer,
+          'background_css' => $background_css,
+          // '#attributes' => [
+          //   'class' => $text_on_bottom_classes,
+          // ],
+        ];
+        $elements[$delta]  = $aspect_ratio_markup;
+      }
+
+      elseif ($marquee_style === 'bottom') {
+
+        // Need to add text-on-media-bottom class on field.
+        $text_on_bottom = [];
+        $fallback = [];
+        $text_on_bottom_classes = ['text-on-media-bottom'];
+        if($media_bundle === 'az_remote_video') {
+          $text_on_bottom_classes[] = 'text-on-video';
+        }
+        if($media_bundle === 'az_remote_video') {
+          $media_element = $this->getRemoteVideoMarkup($media, $settings);
+          $fallback = [
+            '#theme' => 'responsive_image_formatter',
+            '#responsive_image_style_id' => $settings['image_style'],
+            '#item' => $media->thumbnail,
+            '#item_attributes' => [
+              'class' => ['img-fluid'],
+            ],
+          ];
+        } else {
+          $media_element = [
+            '#theme' => 'responsive_image_formatter',
+            '#responsive_image_style_id' => $settings['image_style'],
+            '#item' => $media->thumbnail,
+            '#item_attributes' => [
+              'class' => ['img-fluid'],
+            ],
+          ];
+        }
+
+        $text_on_bottom = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          'fallback' => $fallback,
+          'media' => $media_element,
+          '#attributes' => [
+            'class' => $text_on_bottom_classes,
+          ],
+        ];
+        $elements[$delta]  = $text_on_bottom;
+      }
+
     }
 
     return $elements;
@@ -225,11 +307,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @param \Drupal\media\MediaInterface $media
    *   The media item.
    *
-   * @return \Drupal\Core\Url|null
-   *   The URL object for the media item or null if we don't want to add
-   *   a link.
+   * @return \Drupal\Core\Uri|null
+   *   The URI object for the media item's thumbnail image.
    */
-  protected function getMediaURI(MediaInterface $media) {
+  protected function getMediaThumbURI(MediaInterface $media) {
 
     $uri = NULL;
     $file = $media->getSource();
@@ -330,6 +411,18 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   public function getBackgroundImageCss($image_path, array $css_settings = [], $image_style = NULL) {
 
+    $attachment = $css_settings['bg_image_attachment'];
+    $background_size = $css_settings['bg_image_background_size'];
+    $selector = $css_settings['bg_image_selector'];
+    $important = $css_settings['bg_image_important'];
+    $repeat = $css_settings['bg_image_repeat'];
+    $bg_color = $css_settings['bg_image_color'];
+    $bg_x = $css_settings['bg_image_x'];
+    $bg_y = $css_settings['bg_image_y'];
+    $background_gradient = $css_settings['bg_image_gradient'];
+    $z_index = $css_settings['bg_image_z_index'];
+    $background_size_ie8 = $css_settings['bg_image_background_size_ie8'];
+
     // If important is true, we turn it into a string for css output.
     if ($important) {
       $important = '!important';
@@ -400,33 +493,101 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     return [];
   }
 
-  /**
+    /**
    *
    */
-  protected function getAllSettings(FieldItemListInterface $items) {
-    $default_settings = $this->defaultSettings();
-    $all_settings = $default_settings;
+  protected function getParagraphSettings(FieldItemListInterface $items) {
+    $paragraph_settings = NULL;
     $parent = $items->getEntity();
     // Get settings from parent paragraph.
     if (!empty($parent)) {
       if ($parent instanceof ParagraphInterface) {
-        $all_settings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
-        // Get the behavior settings for the parent.
-        $parent_config = $parent->getAllBehaviorSettings();
-
-        $all_settings += $parent_config;
-        // See if the parent behavior defines some background settings.
-        if (!empty($parent_config['az_text_media_paragraph_behavior'])) {
-          $az_text_media_defaults = $parent_config['az_text_media_paragraph_behavior'];
-          if ($az_text_media_defaults) {
-            dpm($az_text_media_defaults['bg_attachment']);
-          }
-
+        $paragraph_settings = $parent->getAllBehaviorSettings();
+        if (!empty($paragraph_settings['az_text_media_paragraph_behavior'])) {
+          $paragraph_settings_all = $paragraph_settings['az_text_media_paragraph_behavior'];
         }
-
       }
     }
-    return $allSettings;
+    return $paragraph_settings_all;
+  }
+
+
+  /**
+   *
+   */
+  protected function getAllSettings(FieldItemListInterface $items) {
+    $all_settings = [];
+    $default_settings = $this->getSettings();
+    $this->paragraphSettings = $this->getParagraphSettings($items);
+    $all_settings += $this->paragraphSettings;
+    $all_settings += $default_settings;
+    $all_settings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
+
+    // Get settings from parent paragraph.
+      if (!empty($all_settings['bg_attachment'])) {
+        switch ($all_settings['bg_attachment']) {
+          case 'bg-fixed':
+            $all_settings['css_settings']['bg_image_attachment'] = 'fixed';
+            break;
+          default:
+          $all_settings['css_settings']['bg_image_attachment'] = $default_settings['css_settings']['bg_image_attachment'];
+        }
+      }
+      return $all_settings;
+    }
+
+  /**
+   * Prepare markup for remote video.
+   */
+  private function getRemoteVideoMarkup(MediaInterface $media, array $settings = []) {
+
+    $selector = $settings['css_settings']['bg_image_selector'];
+
+    $marquee_style = $settings['style'];
+
+    /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
+    $media_oembed = $media->getSource();
+    $provider = $media_oembed->getMetadata($media, 'provider_name');
+    $html = $media_oembed->getMetadata($media, 'html');
+    $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
+    $view_builder = $this->entityTypeManager->getViewBuilder('media');
+    $background_media = $view_builder->view($media, 'az_background');
+
+    if ($provider === 'YouTube') {
+      $source_url = $media->get('field_media_az_oembed_video')->value;
+      $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
+      $style_element = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#allowed_tags' => ['iframe'],
+        '#attributes' => [
+          'id' => [$video_oembed_id . '-bg-video-container'],
+          'class' => [
+            'az-video-loading',
+            'az-video-background',
+            'az-js-video-background',
+          ],
+          'data-youtubeid' => $video_oembed_id,
+          'data-style' => $marquee_style,
+        ],
+        'child' => $background_media,
+        '#attached' => [
+          'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
+          'drupalSettings' => [
+            'azFieldsMedia' => [
+              'bgVideos' => [
+                $video_oembed_id => [
+                  'videoId' => $video_oembed_id,
+                  'start' => 0,
+                ],
+              ],
+            ],
+          ],
+        ],
+      ];
+      // $style_element +  $background_media;
+      return $style_element;
+    }
   }
 
 }

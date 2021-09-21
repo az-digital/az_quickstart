@@ -38,7 +38,6 @@
  * @ingroup themeable
  */
 #}
-      {{ kint(content.field_az_media) }}
 
 {%
   set classes = [
@@ -48,9 +47,14 @@
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
     not paragraph.isPublished() ? 'paragraph--unpublished',
     text_on_media.style != 'bottom' ? 'text-on-media',
-    text_on_media.full_width,
-    text_on_media.bg_attachment
+    text_on_media.full_width
   ]
+%}
+{% set container_attributes = create_attribute() %}
+{% set container_class = [
+    text_on_media.text_media_spacing == 'aspect-ratio' ? 'container-absolute align-items-center d-flex',
+    text_on_media.text_media_spacing != 'aspect-ratio' ? 'container',
+]
 %}
 {% set col_attributes = create_attribute() %}
 {%
@@ -81,20 +85,15 @@
 %}
 {% block paragraph %}
   <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
+    {{ content.field_az_media }}
     {% block content %}
-      {% if text_on_media.style == 'bottom' %}
-        {{ text_on_bottom }}
-      {% endif %}
       {# Layout for content width AND full width styles #}
-      {% if text_on_media.style != 'bottom' %}
-        {{style_element}}
-      {% endif %}
-      <div class="container">
+      <div {{ container_attributes.addClass(container_class) }}>
         <div class="az-full-width-row">
           <div{{ col_attributes.addClass(col_classes) }}>
             <div{{ content_attributes.addClass(content_classes).addClass('az-full-width-column-content') }}>
               <h2{{ title_attributes.addClass(title_classes) }}>{{ paragraph.field_az_title.value }}</h2>
-              {{ content }}
+              {{ content.group_az_content }}
             </div>
           </div>
         </div>
