@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - crop.type.az_large_full_width_background
+    - crop.type.az_full_width_bg_large
   module:
     - crop
 name: az_full_width_bg_large
