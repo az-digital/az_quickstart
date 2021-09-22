@@ -100,3 +100,64 @@ function az_core_block_access(Block $block, $operation, AccountInterface $accoun
   }
   return AccessResult::neutral();
 }
+
+
+/**
+ * Implements hook_token_info().
+ */
+
+function az_core_token_info() {
+  return [
+    'tokens' => [
+      'node' => [
+        'az-canonical-url' => [
+          'name' => t("Canonical URL"),
+          'description' => t("Switches between field_az_link and node:url."),
+        ],
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_token().
+ */
+
+function az_core_tokens($type, $tokens, array $data, array $options, \Drupal\Core\Render\BubbleableMetadata $bubbleable_metadata) {
+  $replacements = [];
+  if ($type == 'node') {
+
+    foreach ($tokens as $name => $original) {
+      // Find the desired token by name.
+      switch ($name) {
+        case 'az-canonical-url':
+          $replacements[$original] = az_core_canonical_url($data);
+          break;
+      }
+    }
+  }
+  return $replacements;
+
+}
+/**
+ * @TODO internal paths don't work.
+ */
+function az_core_canonical_url($data) {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $data['node'];
+  $options = ['absolute' => TRUE];
+  $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()], $options);
+  $default_url = $url->toString();
+  $url = $default_url;
+
+  if (!empty($node->field_az_link[0]->uri)){
+    try {
+      $url = Url::fromUri($node->field_az_link[0]->uri);
+      $url = $url->toString();
+      } catch (\InvalidArgumentException $e) {
+        $url = $default_url;
+      }
+  }
+
+  return $url;
+}
