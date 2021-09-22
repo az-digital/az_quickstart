@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: az_extrasmall_full_width_bg
+id: az_full_width_bg_extra_small
 label: 'Extra small full-width background'
 description: 'Minimum crop width 575px, or the image will be scaled up and will possibly be blurry.'
 aspect_ratio: ''
