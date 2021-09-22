@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - crop.type.az_medium_full_width_background
+    - crop.type.az_full_width_bg_medium
   module:
     - crop
 name: az_full_width_bg_medium
@@ -21,4 +21,4 @@ effects:
     id: crop_crop
     weight: -10
     data:
-      crop_type: az_medium_full_width_background
+      crop_type: az_full_width_bg_medium
