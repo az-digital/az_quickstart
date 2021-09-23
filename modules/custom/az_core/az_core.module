@@ -5,6 +5,7 @@
  * Contains az_core.module.
  */
 
+use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
 use Drupal\pathauto\PathautoPatternInterface;
@@ -109,8 +110,8 @@ function az_core_token_info() {
     'tokens' => [
       'node' => [
         'az-canonical-url' => [
-          'name' => t("Canonical URL"),
-          'description' => t("Switches between field_az_link and node:url."),
+          'name' => t("AZ Canonical URL"),
+          'description' => t("Returns the URI value of field_az_link if present on the node or the default node URI if not."),
         ],
       ],
     ],
@@ -120,9 +121,9 @@ function az_core_token_info() {
 /**
  * Implements hook_token().
  */
-function az_core_tokens($type, $tokens, array $data, array $options, \Drupal\Core\Render\BubbleableMetadata $bubbleable_metadata) {
+function az_core_tokens($type, $tokens, array $data, array $options, BubbleableMetadata $bubbleable_metadata) {
   $replacements = [];
-  if ($type == 'node') {
+  if ($type === 'node') {
     foreach ($tokens as $name => $original) {
       // Find the desired token by name.
       switch ($name) {
@@ -137,13 +138,23 @@ function az_core_tokens($type, $tokens, array $data, array $options, \Drupal\Cor
 }
 
 /**
- * @TODO internal paths don't work.
+ * Token replacement callback providing the canonical URI for a node.
+ *
+ * Returns the URI value of field_az_link if present on the node or the default
+ * node URI if not.
+ *
+ * @param array $data
+ *   Node data from hook_tokens().
+ *
+ * @return string
+ *   The node's canononical URI.
  */
-function az_core_canonical_url($data) {
+function az_core_canonical_url(array $data) {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'];
-  $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()]);
-  $uri = $url->getUri();
+  /** @var \Drupal\Core\Url $url */
+  $url = $node->toUrl();
+  $uri = $url->toUriString();
 
   if (!empty($node->field_az_link[0]->uri)) {
     $uri = $node->field_az_link[0]->uri;
