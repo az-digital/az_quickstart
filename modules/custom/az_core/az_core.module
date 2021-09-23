@@ -133,7 +133,7 @@ function az_core_tokens($type, $tokens, array $data, array $options, \Drupal\Cor
     }
   }
 
-    return $replacements;
+  return $replacements;
 }
 
 /**
@@ -142,19 +142,12 @@ function az_core_tokens($type, $tokens, array $data, array $options, \Drupal\Cor
 function az_core_canonical_url($data) {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'];
-  $options = ['absolute' => TRUE];
-  $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()], $options);
-  $default_url = $url->toString();
-  $url = $default_url;
+  $url = \Drupal\Core\Url::fromRoute('entity.node.canonical', ['node' => $node->id()]);
+  $uri = $url->getUri();
 
-  if (!empty($node->field_az_link[0]->uri)){
-    try {
-      $url = Url::fromUri($node->field_az_link[0]->uri);
-      $url = $url->toString();
-    } catch (\InvalidArgumentException $e) {
-      $url = $default_url;
-    }
+  if (!empty($node->field_az_link[0]->uri)) {
+    $uri = $node->field_az_link[0]->uri;
   }
 
-  return $url;
+  return $uri;
 }
