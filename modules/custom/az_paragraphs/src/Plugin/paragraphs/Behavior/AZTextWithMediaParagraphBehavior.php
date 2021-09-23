@@ -120,6 +120,27 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
+    $form['bg_size'] = [
+      '#title' => $this->t('Background image size'),
+      '#type' => 'select',
+      '#options' => [
+        'cover' => $this->t('Cover'),
+        'contain' => $this->t('Contain'),
+        'auto' => $this->t('Contain'),
+      ],
+      '#empty_option' => $this->t('Cover'),
+      '#default_value' => $config['bg_size'] ?? 'cover',
+      '#description' => $this->t('<strong>Cover:</strong> Scales the image as large as possible to fill the container, stretching the image if necessary. If the proportions of the image differ from the element, it is cropped either vertically or horizontally so that no empty space remains.
+
+      <br><strong>Contain:</strong> Scales the image as large as possible within its container without cropping or stretching the image. If the container is larger than the image, this will result in image tiling, unless the background-repeat property is set to no-repeat.
+      <br><strong>Auto:</strong> Scales the background image in the corresponding direction such that its intrinsic proportions are maintained.'),
+      '#states' => [
+        'invisible' => [
+          ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
+        ],
+      ],
+    ];
+
     $form['text_media_spacing'] = [
       '#title' => $this->t('Space Around Content'),
       '#type' => 'select',
@@ -200,6 +221,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
     $config = $this->getSettings($paragraph);
+    $bg_size = '';
+    if(!empty($config['bg_size'])) {
+      $bg_size = 'background-size: ' . $config['bg_size'] . ';';
+    }
+
     $view_builder = $this->entityTypeManager->getViewBuilder('media');
     $background_media = $view_builder->view($media, 'az_background');
     $provider = $media_oembed->getMetadata($media, 'provider_name');
@@ -211,10 +237,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing, #{{ id }}.az-video-paused {background-image:none;}</style>",
+          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); {{bg_size}}} #{{ id }}.az-video-playing, #{{ id }}.az-video-paused {background-image:none;}</style>",
           '#context' => [
             'filepath' => file_create_url($thumb),
             'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+            'bg_size' => $bg_size,
           ],
         ],
         $background_video = [
@@ -280,14 +307,21 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
     $file_uri = $media->field_media_az_image->entity->getFileUri();
+    $config = $this->getSettings($paragraph);
+    $bg_size = '';
+    if(!empty($config['bg_size'])) {
+      $bg_size = 'background-size: ' . $config['bg_size'] . ';';
+    }
+
     if ($variables['text_on_media']['style'] !== 'bottom') {
       $style_element = [
         'style' => [
           '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
+          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); {{bg_size}} }</style>",
           '#context' => [
             'filepath' => file_create_url($file_uri),
             'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+            'bg_size' => $bg_size,
           ],
         ],
       ];
