@@ -6,8 +6,8 @@ dependencies:
     - image.style.az_full_width_bg_large
     - image.style.az_full_width_bg_medium
     - image.style.az_full_width_bg_small
-  theme:
-    - az_barrio
+  module:
+    - az_media
 id: az_full_width_background
 label: 'Full-width background'
 image_style_mappings:
@@ -26,5 +26,5 @@ image_style_mappings:
     multiplier: 1x
     image_mapping_type: image_style
     image_mapping: az_full_width_bg_small
-breakpoint_group: az_barrio
+breakpoint_group: az_media
 fallback_image_style: az_full_width_bg_extra_small
