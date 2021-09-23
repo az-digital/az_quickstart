@@ -1,3 +1,10 @@
 services:
   az_paragraphs.az_video_embed_helper:
     class: Drupal\az_paragraphs\AZVideoEmbedHelper
+  az_paragraphs.az_background_image_css_helper:
+    class: Drupal\az_paragraphs\AZBackgroundImageCssHelper
+  az_paragraphs.az_responsive_background_image_css_helper:
+    class: Drupal\az_paragraphs\AZResponsiveBackgroundImageCssHelper
+    arguments:
+      - '@az_paragraphs.az_background_image_css_helper'
+

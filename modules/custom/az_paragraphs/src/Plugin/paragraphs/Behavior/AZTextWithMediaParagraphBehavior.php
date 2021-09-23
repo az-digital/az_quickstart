@@ -30,6 +30,13 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   protected $videoEmbedHelper;
 
   /**
+   * The ResponsiveBackgroundImageCssHelper.
+   *
+   * @var \Drupal\az_paragraphs\AZResponsiveBackgroundImageCssHelper
+   */
+  protected $responsiveBackroundImageCssHelper;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -41,6 +48,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     );
 
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
+    $instance->responsiveBackroundImageCssHelper = (
+      $container->get('az_paragraphs.az_responsive_background_image_css_helper')
+    );
+
     return $instance;
   }
 
@@ -193,6 +204,35 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   }
 
   /**
+   * Get settings from paragraph and override defaults.
+   */
+  private function getParagraphBackgroundSettings(ParagraphInterface $paragraph) {
+
+    // Get plugin configuration.
+    $config = $this->getSettings($paragraph);
+    $bg_attachment = 'scroll';
+    if (!empty($config['bg_attachment'])) {
+      $bg_attachment = 'fixed';
+    }
+    return [
+      'bg_image_selector' => '#' . $paragraph->bundle() . "-" . $paragraph->id(),
+      'bg_image_color' => '#FFFFFF',
+      'bg_image_x' => 'center',
+      'bg_image_y' => 'center',
+      'bg_image_attachment' => $bg_attachment,
+      'bg_image_repeat' => 'no-repeat',
+      'bg_image_background_size' => '',
+      'bg_image_background_size_ie8' => '0',
+      'bg_image_gradient' => '',
+      'bg_image_media_query' => 'all',
+      'bg_image_important' => '1',
+      'bg_image_z_index' => 'auto',
+      'bg_image_path_format' => 'absolute',
+    ];
+
+  }
+
+  /**
    * Prepare markup for remote video.
    */
   private function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
@@ -279,19 +319,17 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    * Prepare markup for image.
    */
   private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
-    $file_uri = $media->field_media_az_image->entity->getFileUri();
     if ($variables['text_on_media']['style'] !== 'bottom') {
-      $style_element = [
-        'style' => [
-          '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
-          '#context' => [
-            'filepath' => file_create_url($file_uri),
-            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
-          ],
-        ],
+      $responsive_image_style = 'az_full_width_background';
+      $css_settings = $this->getParagraphBackgroundSettings($paragraph);
+      $file = $file_uri = $media->field_media_az_image->entity;
+      $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $responsive_image_style);
+
+      $variables['style_element']['#template'] = "<style type='text/css'>{{css}}</style>";
+      $variables['style_element']['#type'] = 'inline_template';
+      $variables['style_element']['#context'] = [
+        'css' => $css,
       ];
-      $variables['style_element'] = $style_element;
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
       $image_renderable = [
