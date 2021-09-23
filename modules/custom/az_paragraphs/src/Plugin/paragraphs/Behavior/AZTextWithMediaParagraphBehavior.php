@@ -222,7 +222,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $media_oembed = $media->getSource();
     $config = $this->getSettings($paragraph);
     $bg_size = '';
-    if(!empty($config['bg_size'])) {
+    if (!empty($config['bg_size'])) {
       $bg_size = 'background-size: ' . $config['bg_size'] . ';';
     }
 
@@ -309,7 +309,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $file_uri = $media->field_media_az_image->entity->getFileUri();
     $config = $this->getSettings($paragraph);
     $bg_size = '';
-    if(!empty($config['bg_size'])) {
+    if (!empty($config['bg_size'])) {
       $bg_size = 'background-size: ' . $config['bg_size'] . ';';
     }
 
