@@ -12,17 +12,17 @@ id: az_full_width_background
 label: 'Full-width background'
 image_style_mappings:
   -
-    breakpoint_id: az_barrio.large
+    breakpoint_id: az_core.large
     multiplier: 1x
     image_mapping_type: image_style
     image_mapping: az_full_width_bg_large
   -
-    breakpoint_id: az_barrio.medium
+    breakpoint_id: az_core.medium
     multiplier: 1x
     image_mapping_type: image_style
     image_mapping: az_full_width_bg_medium
   -
-    breakpoint_id: az_barrio.small
+    breakpoint_id: az_core.small
     multiplier: 1x
     image_mapping_type: image_style
     image_mapping: az_full_width_bg_small
