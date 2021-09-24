@@ -16,12 +16,6 @@
         "title": "Death Valley"
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "badwater_panorama.jpg",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -42,12 +36,6 @@
       {
         "url": "http://uanow.org/3EW",
         "title": "Math"
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "uaqs_link_info" : "https://en.wikipedia.org/wiki/Pi_Day",
@@ -73,12 +61,6 @@
         "title": "Museum of Art"
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -99,12 +81,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -129,12 +105,6 @@
         "title": ""
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -153,12 +123,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -181,12 +145,6 @@
         "title": ""
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -205,12 +163,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -233,12 +185,6 @@
         "title": "Gallagher Theater"
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -257,12 +203,6 @@
       {
         "url": "https://union.arizona.edu/involvement/gallagher/",
         "title": "Gallagher Theater"
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -285,12 +225,6 @@
         "title": "Gallagher Theater"
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -309,12 +243,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -337,12 +265,6 @@
         "title": ""
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -361,12 +283,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -389,12 +305,6 @@
         "title": ""
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -415,12 +325,6 @@
         "title": ""
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -439,12 +343,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -487,12 +385,6 @@
         "title": "Holsclaw Hall"
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -511,12 +403,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
@@ -539,12 +425,6 @@
         "title": ""
       }
     ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
-      }
-    ],
     "az_photos" : "",
     "az_attachments" : "",
     "az_attachments_description" : ""
@@ -563,12 +443,6 @@
       {
         "url": "",
         "title": ""
-      }
-    ],
-    "az_link": [
-      {
-        "url": "[node:url]",
-        "title": "View Event"
       }
     ],
     "az_photos" : "",
