@@ -7,6 +7,7 @@
             "filename" : "lynx.jpg",
             "full_width" : "full-width-background",
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "box",
             "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
             "bg_color" : [{"value":"light"}]
@@ -18,6 +19,7 @@
             "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
             "full_width" : "full-width-background",
             "bg_attachment" : "bg-fixed",
+            "spacing" : "y-5",
             "content_style" : "column",
             "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
             "bg_color" : [{"value":"light"}]
@@ -29,6 +31,7 @@
             "filename" : "study.jpeg",
             "full_width" : false,
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "column",
             "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
             "bg_color" : [{"value":"dark"}]
@@ -40,6 +43,7 @@
             "filename" : "mecklerphoto_mens-wearhouse.jpeg",
             "full_width" : "full-width-background",
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "box",
             "position" : "col-md-8 col-lg-6",
             "bg_color" : [{"value":"light"}]
@@ -51,6 +55,7 @@
             "filename" : "june_bugs.jpeg",
             "full_width" : false,
             "bg_attachment" : "bg-fixed",
+            "spacing" : "y-5",
             "content_style" : "box",
             "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
             "bg_color" : [{"value":"dark"}]
@@ -84,8 +89,9 @@
             "filename" : "https://www.youtube.com/watch?v=fePMsmtd7EU",
             "full_width" : false,
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "column",
-            "position" : "",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
             "bg_color" : [{"value":"light"}]
         },
         {
@@ -95,6 +101,7 @@
             "filename" : "https://www.youtube.com/watch?v=9VntGNAE4L8",
             "full_width" : "full-width-background",
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "column",
             "position" : "",
             "bg_color" : [{"value":"light"}]
@@ -106,8 +113,9 @@
             "filename" : "https://www.youtube.com/watch?v=KkogmuRNt1M",
             "full_width" : false,
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
             "bg_color" : [{"value":"light"}]
         },
         {
@@ -117,8 +125,9 @@
             "filename" : "https://www.youtube.com/watch?v=x_C7XpqJdso",
             "full_width" : "full-width-background",
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "box",
-            "position" : "",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
             "bg_color" : [{"value":"light"}]
         },
         {
@@ -137,7 +146,7 @@
             "az_title" : "Bottom style with full-width video",
             "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
             "filename" : "https://www.youtube.com/watch?v=GHnSIobpE-0",
-            "full_width" : false,
+            "full_width" : "full-width-background",
             "bg_attachment" : "",
             "content_style" : "bottom",
             "position" : "",

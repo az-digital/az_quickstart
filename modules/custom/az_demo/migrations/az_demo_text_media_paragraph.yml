@@ -42,6 +42,9 @@ source:
     -
       name: position
       selector: position
+    -
+      name: spacing
+      selector: spacing
 
 
 destination:
@@ -78,6 +81,7 @@ process:
     position: position
     full_width: full_width
     content_style: content_style
+    text_media_spacing: spacing
 
 migration_dependencies:
   required:
