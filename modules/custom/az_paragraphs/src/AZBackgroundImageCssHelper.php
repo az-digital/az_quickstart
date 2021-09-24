@@ -14,7 +14,6 @@ class AZBackgroundImageCssHelper {
    */
   public static function defaultSettings() {
     return [
-      'image_style' => '',
       'css_settings' => [
         'bg_image_selector' => 'body',
         'bg_image_color' => '#FFFFFF',
