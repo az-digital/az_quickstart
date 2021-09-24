@@ -257,7 +257,7 @@ class AZCardWidget extends WidgetBase {
           '#name' => $remove_name,
           '#delta' => $delta,
           '#type' => 'submit',
-          '#value' => $this->t('Remove'),
+          '#value' => $this->t('Delete Card'),
           '#validate' => [],
           '#submit' => [[$this, 'cardRemove']],
           '#limit_validation_errors' => [],
