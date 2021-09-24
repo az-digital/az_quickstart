@@ -30,11 +30,12 @@ third_party_settings:
       format_type: link
       region: content
       format_settings:
-        target: entity
-        custom_uri: ''
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
         target_attribute: default
         id: ''
         classes: text-decoration-none
+        show_empty_fields: false
       label: Link
     group_row:
       children:
