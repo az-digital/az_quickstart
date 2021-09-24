@@ -8,6 +8,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\media\MediaInterface;
+use Drupal\Core\Template\Attribute;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -158,6 +159,62 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get plugin configuration.
     $config = $this->getSettings($paragraph);
     $variables['text_on_media'] = $config;
+
+    $style = '';
+    if (!empty($config['style']) && $config['style'] !== 'bottom') {
+      $style = $config['style'];
+    }
+    // @TODO use HTML::getId() for the id string.
+    $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
+    $variables['attributes']['id'] = $paragraph->bundle() . '-' . $paragraph->id();
+    $variables['attributes']['class'][] = 'paragraph';
+    $variables['attributes']['class'][] = 'position-relative';
+    $variables['attributes']['class'][] = HTML::getClass('paragraph--type--' . $paragraph->bundle());
+    $variables['attributes']['class'][] = HTML::getClass('paragraph--view-mode--' . $variables['view_mode']);
+    $variables['attributes']['class'][] = HTML::getClass('paragraph--' . $paragraph_status);
+    $variables['attributes']['class'][] = HTML::getClass($style);
+    $variables['attributes']['class'][] = HTML::getClass($config['full_width']);
+    $variables['attributes']['class'][] = HTML::getClass($config['bg_attachment']);
+
+    $column_classes = ['col'];
+    if (!empty($config['style']) && $config['style'] === 'bottom') {
+      $column_classes[] = 'col-md-10 col-md-offset-1';
+    }
+    else {
+      $column_classes[] = $config['position'];
+    }
+    $variables['col_attributes'] = new Attribute();
+    $variables['col_attributes']['class'] = $column_classes;
+
+    $content_classes = [
+      'content',
+      'az-full-width-column-content',
+      HTML::getClass($config['bg_color']),
+      HTML::getClass($config['style']),
+    ];
+    if (!empty($config['style']) && $config['style'] === 'column') {
+      $content_classes[] = 'p' . HTML::getClass($config['text_media_spacing']);
+    }
+    elseif (!empty($config['style']) && $config['style'] === 'box') {
+      $content_classes[] = 'm' . HTML::getClass($config['text_media_spacing']);
+    }
+
+    $variables['content_attributes'] = new Attribute();
+    $variables['content_attributes']['class'] = $content_classes;
+
+    $title_classes = [
+      'mt-0',
+      'bold',
+      HTML::getClass($config['bg_color']),
+      HTML::getClass($config['style']),
+    ];
+    if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
+      $title_classes[] = 'text-blue';
+    }
+
+    $variables['title_attributes'] = new Attribute();
+    $variables['title_attributes']['class'] = $title_classes;
+
     if ($paragraph->hasField('field_az_media')) {
       /** @var \Drupal\media\Entity\Media $media */
       foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
