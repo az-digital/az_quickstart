@@ -60,9 +60,16 @@ process:
   field_az_media/target_id:
     -
       plugin: migration_lookup
+      no_stub: true
       source: filename
       migration:
+        - az_demo_remote_video
         - az_demo_image_file
+      source_ids:
+        - az_demo_remote_video:
+            - filename
+        - az_demo_image_file:
+            - filename
 
   behavior_settings:
     plugin: paragraphs_behavior_settings
@@ -72,10 +79,10 @@ process:
     full_width: full_width
     content_style: content_style
 
-
 migration_dependencies:
   required:
     - az_demo_image_file
+    - az_demo_remote_video
 
 dependencies:
   enforced:
