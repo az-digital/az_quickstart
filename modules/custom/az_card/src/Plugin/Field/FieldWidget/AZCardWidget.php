@@ -228,6 +228,9 @@ class AZCardWidget extends WidgetBase {
       $button_name = implode('-', array_merge($field_parents,
         [$field_name, $delta, 'toggle']
       ));
+      $remove_name = implode('-', array_merge($field_parents,
+        [$field_name, $delta, 'toggle']
+      ));
       $element['toggle'] = [
         '#type' => 'submit',
         '#limit_validation_errors' => [],
@@ -235,6 +238,19 @@ class AZCardWidget extends WidgetBase {
         '#submit' => [[$this, 'cardSubmit']],
         '#value' => ($status ? $this->t('Collapse Card') : $this->t('Edit Card')),
         '#name' => $button_name,
+        '#ajax' => [
+          'callback' => [$this, 'cardAjax'],
+          'wrapper' => $wrapper,
+        ],
+      ];
+      $element['remove'] = [
+        '#name' => $remove_name,
+        '#type' => 'submit',
+        '#value' => $this->t('Remove'),
+        '#validate' => [],
+        '#submit' => [[$this, 'cardRemove']],
+        '#limit_validation_errors' => [],
+        '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
         '#ajax' => [
           'callback' => [$this, 'cardAjax'],
           'wrapper' => $wrapper,
@@ -282,6 +298,73 @@ class AZCardWidget extends WidgetBase {
       $status = !$settings['open_status'][$delta];
     }
     $settings['open_status'][$delta] = $status;
+
+    // Save new state and rebuild form.
+    static::setWidgetState($field_parents, $field_name, $form_state, $settings);
+    $form_state->setRebuild();
+  }
+
+  /**
+   * Submit handler for remove button.
+   *
+   * @param array $form
+   *   The build form.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state.
+   */
+  public function cardRemove(array $form, FormStateInterface $form_state) {
+
+    // Get triggering element.
+    $triggering_element = $form_state->getTriggeringElement();
+    $array_parents = $triggering_element['#array_parents'];
+    array_pop($array_parents);
+
+    // Determine delta.
+    $delta = array_pop($array_parents);
+
+    // Get the widget.
+    $element = NestedArray::getValue($form, $array_parents);
+    $field_name = $element['#field_name'];
+    $field_parents = $element['#field_parents'];
+
+    // Remove input being deleted.
+    $user_input = $form_state->getUserInput();
+    $field_input = NestedArray::getValue($user_input, $element['#parents'], $exists);
+    if ($exists) {
+      $field_values = [];
+      foreach ($field_input as $key => $input) {
+        if (is_numeric($key) && $key >= $delta) {
+          if ((int) $key === $delta) {
+            continue;
+          }
+        }
+        $field_values[$key] = $input;
+      }
+      NestedArray::setValue($user_input, $element['#parents'], $field_values);
+      $form_state->setUserInput($user_input);
+    }
+
+    // Load current widget settings.
+    $settings = static::getWidgetState($field_parents, $field_name, $form_state);
+    if ($settings['items_count'] > 0) {
+      $settings['items_count']--;
+    }
+
+    // Recalculate weights.
+    $user_input = $form_state->getUserInput();
+    $input = NestedArray::getValue($user_input, $element['#parents'], $exists);
+    $weight = -1 * $settings['items_count'];
+    foreach ($input as $key => $item) {
+      if ($item) {
+        $input[$key]['_weight'] = $weight++;
+      }
+    }
+
+    // Reset indices of input.
+    $input = array_values($input);
+    $user_input = $form_state->getUserInput();
+    NestedArray::setValue($user_input, $element['#parents'], $input);
+    $form_state->setUserInput($user_input);
 
     // Save new state and rebuild form.
     static::setWidgetState($field_parents, $field_name, $form_state, $settings);
