@@ -6,7 +6,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
@@ -108,6 +107,14 @@ class AZCardWidget extends WidgetBase {
     $widget_state = static::getWidgetState($field_parents, $field_name, $form_state);
     $wrapper = $widget_state['ajax_wrapper_id'];
     $status = (isset($widget_state['open_status'][$delta])) ? $widget_state['open_status'][$delta] : FALSE;
+
+    // We may have had a deleted row. This shouldn't be necessary to check, but
+    // The experimental paragraphs widget extracts values before the submit
+    // handler.
+    if (isset($widget_state['original_deltas'][$delta]) && ($widget_state['original_deltas'][$delta] !== $delta)) {
+      $delta = $widget_state['original_deltas'][$delta];
+    }
+
     // New field values shouldn't be considered collapsed.
     if ($items[$delta]->isEmpty()) {
       $status = TRUE;
@@ -229,7 +236,7 @@ class AZCardWidget extends WidgetBase {
         [$field_name, $delta, 'toggle']
       ));
       $remove_name = implode('-', array_merge($field_parents,
-        [$field_name, $delta, 'toggle']
+        [$field_name, $delta, 'remove']
       ));
       $element['toggle'] = [
         '#type' => 'submit',
@@ -243,19 +250,23 @@ class AZCardWidget extends WidgetBase {
           'wrapper' => $wrapper,
         ],
       ];
-      $element['remove'] = [
-        '#name' => $remove_name,
-        '#type' => 'submit',
-        '#value' => $this->t('Remove'),
-        '#validate' => [],
-        '#submit' => [[$this, 'cardRemove']],
-        '#limit_validation_errors' => [],
-        '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
-        '#ajax' => [
-          'callback' => [$this, 'cardAjax'],
-          'wrapper' => $wrapper,
-        ],
-      ];
+
+      if (!empty($widget_state['items_count']) && ($widget_state['items_count'] > 1)) {
+        $element['remove'] = [
+          '#name' => $remove_name,
+          '#delta' => $delta,
+          '#type' => 'submit',
+          '#value' => $this->t('Remove'),
+          '#validate' => [],
+          '#submit' => [[$this, 'cardRemove']],
+          '#limit_validation_errors' => [],
+          '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
+          '#ajax' => [
+            'callback' => [$this, 'cardAjax'],
+            'wrapper' => $wrapper,
+          ],
+        ];
+      }
     }
 
     $element['#theme_wrappers'] = ['container', 'form_element'];
@@ -305,7 +316,7 @@ class AZCardWidget extends WidgetBase {
   }
 
   /**
-   * Submit handler for remove button.
+   * Submit handler for remove button. See multiple_fields_remove_button module.
    *
    * @param array $form
    *   The build form.
@@ -313,61 +324,121 @@ class AZCardWidget extends WidgetBase {
    *   The form state.
    */
   public function cardRemove(array $form, FormStateInterface $form_state) {
+    $formValues = $form_state->getValues();
+    $formInputs = $form_state->getUserInput();
+    $button = $form_state->getTriggeringElement();
+    $delta = $button['#delta'];
+    // Where in the form we'll find the parent element.
+    $address = array_slice($button['#array_parents'], 0, -2);
 
-    // Get triggering element.
-    $triggering_element = $form_state->getTriggeringElement();
-    $array_parents = $triggering_element['#array_parents'];
-    array_pop($array_parents);
+    // Go one level up in the form, to the widgets container.
+    $parent_element = NestedArray::getValue($form, $address);
+    $field_name = $parent_element['#field_name'];
+    $parents = $parent_element['#field_parents'];
+    $field_state = WidgetBase::getWidgetState($parents, $field_name, $form_state);
 
-    // Determine delta.
-    $delta = array_pop($array_parents);
+    // Go ahead and renumber everything from our delta to the last
+    // item down one. This will overwrite the item being removed.
+    for ($i = $delta; $i <= $field_state['items_count']; $i++) {
+      $old_element_address = array_merge($address, [$i + 1]);
+      $new_element_address = array_merge($address, [$i]);
 
-    // Get the widget.
-    $element = NestedArray::getValue($form, $array_parents);
-    $field_name = $element['#field_name'];
-    $field_parents = $element['#field_parents'];
+      $moving_element = NestedArray::getValue($form, $old_element_address);
+      $keys = array_keys($old_element_address, 'widget', TRUE);
+      foreach ($keys as $key) {
+        unset($old_element_address[$key]);
+      }
+      $moving_element_value = NestedArray::getValue($formValues, $old_element_address);
+      $moving_element_input = NestedArray::getValue($formInputs, $old_element_address);
 
-    // Remove input being deleted.
-    $user_input = $form_state->getUserInput();
-    $field_input = NestedArray::getValue($user_input, $element['#parents'], $exists);
-    if ($exists) {
-      $field_values = [];
-      foreach ($field_input as $key => $input) {
-        if (is_numeric($key) && $key >= $delta) {
-          if ((int) $key === $delta) {
-            continue;
+      $keys = array_keys($new_element_address, 'widget', TRUE);
+      foreach ($keys as $key) {
+        unset($new_element_address[$key]);
+      }
+      // Tell the element where it's being moved to.
+      $moving_element['#parents'] = $new_element_address;
+
+      // Delete default value for the last deleted element.
+      if ($field_state['items_count'] === 0) {
+        $struct_key = NestedArray::getValue($formInputs, $new_element_address);
+        if (is_null($moving_element_value)) {
+          foreach ($struct_key as &$key) {
+            $key = '';
           }
+          $moving_element_value = $struct_key;
         }
-        $field_values[$key] = $input;
+        if (is_null($moving_element_input)) {
+          $moving_element_input = $moving_element_value;
+        }
       }
-      NestedArray::setValue($user_input, $element['#parents'], $field_values);
-      $form_state->setUserInput($user_input);
-    }
 
-    // Load current widget settings.
-    $settings = static::getWidgetState($field_parents, $field_name, $form_state);
-    if ($settings['items_count'] > 0) {
-      $settings['items_count']--;
-    }
+      // Move the element around.
+      NestedArray::setValue($formValues, $moving_element['#parents'], $moving_element_value, TRUE);
+      NestedArray::setValue($formInputs, $moving_element['#parents'], $moving_element_input);
 
-    // Recalculate weights.
-    $user_input = $form_state->getUserInput();
-    $input = NestedArray::getValue($user_input, $element['#parents'], $exists);
-    $weight = -1 * $settings['items_count'];
-    foreach ($input as $key => $item) {
-      if ($item) {
-        $input[$key]['_weight'] = $weight++;
+      // Save new element values.
+      foreach ($formValues as $key => $value) {
+        $form_state->setValue($key, $value);
+      }
+      $form_state->setUserInput($formInputs);
+
+      // Move the entity in our saved state.
+      if (isset($field_state['original_deltas'][$i + 1])) {
+        $field_state['original_deltas'][$i] = $field_state['original_deltas'][$i + 1];
+      }
+      else {
+        unset($field_state['original_deltas'][$i]);
       }
     }
 
-    // Reset indices of input.
-    $input = array_values($input);
-    $user_input = $form_state->getUserInput();
-    NestedArray::setValue($user_input, $element['#parents'], $input);
-    $form_state->setUserInput($user_input);
+    // Replace the deleted entity with an empty one. This helps to ensure that
+    // trying to add a new entity won't resurrect a deleted entity
+    // from the trash bin.
+    // $count = count($field_state['entity']);
+    // Then remove the last item. But we must not go negative.
+    if ($field_state['items_count'] > 0) {
+      $field_state['items_count']--;
+    }
 
-    // Save new state and rebuild form.
-    static::setWidgetState($field_parents, $field_name, $form_state, $settings);
+    // Fix the weights. Field UI lets the weights be in a range of
+    // (-1 * item_count) to (item_count). This means that when we remove one,
+    // the range shrinks; weights outside of that range then get set to
+    // the first item in the select by the browser, floating them to the top.
+    // We use a brute force method because we lost weights on both ends
+    // and if the user has moved things around, we have to cascade because
+    // if I have items weight weights 3 and 4, and I change 4 to 3 but leave
+    // the 3, the order of the two 3s now is undefined and may not match what
+    // the user had selected.
+    $address = array_slice($button['#array_parents'], 0, -2);
+    $keys = array_keys($address, 'widget', TRUE);
+    foreach ($keys as $key) {
+      unset($address[$key]);
+    }
+    $input = NestedArray::getValue($formInputs, $address);
+
+    if ($input && is_array($input)) {
+      // Sort by weight.
+      // phpcs:ignore
+      uasort($input, '_field_multiple_value_form_sort_helper');
+
+      // Reweight everything in the correct order.
+      $weight = -1 * $field_state['items_count'];
+      foreach ($input as $key => $item) {
+        if ($item) {
+          $input[$key]['_weight'] = $weight++;
+        }
+      }
+      NestedArray::setValue($formInputs, $address, $input);
+      $form_state->setUserInput($formInputs);
+    }
+
+    $element_id = isset($form[$field_name]['#id']) ? $form[$field_name]['#id'] : '';
+    if (!$element_id) {
+      $element_id = $parent_element['#id'];
+    }
+    $field_state['wrapper_id'] = $element_id;
+    WidgetBase::setWidgetState($parents, $field_name, $form_state, $field_state);
+
     $form_state->setRebuild();
   }
 
