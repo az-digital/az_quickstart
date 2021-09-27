@@ -8,7 +8,7 @@ id: node.az_person.field_az_pronoun
 field_name: field_az_pronoun
 entity_type: node
 bundle: az_person
-label: Pronoun
+label: Pronouns
 description: ''
 required: false
 translatable: false
