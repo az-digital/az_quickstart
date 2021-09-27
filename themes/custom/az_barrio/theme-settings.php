@@ -45,7 +45,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => theme_get_setting('wordmark'),
   ];
-  $form['az_settings']['settings']['website_logo']['display_logo_image'] = [
+  $form['az_settings']['settings']['website_logo']['display_image_logo'] = [
     '#type' => 'checkbox',
     '#title' => t('Display site logo'),
     '#description' => t('If checked, the site logo will display.'),
@@ -54,7 +54,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['az_settings']['settings']['website_logo']['display_logo_text'] = [
     '#type' => 'checkbox',
     '#title' => t('Display logo text'),
-    '#description' => t('Site will display text instead of a logo if this is checked and "Dispaly site logo" is unchecked.'),
+    '#description' => t('Site will display text instead of a logo if this is checked and "Display site logo" is unchecked.'),
     '#default_value' => theme_get_setting('display_logo_text'),
   ];
   $form['az_settings']['settings']['website_logo']['logo_text'] = [

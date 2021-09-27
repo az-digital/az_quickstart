@@ -135,10 +135,10 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['wordmark'] = (theme_get_setting('wordmark')) ? TRUE : FALSE;
 
   // Allow display of logo image to be disabled.
-  $variables['display_logo_image'] = (theme_get_setting('display_logo_image')) ? TRUE : FALSE;
+  $variables['display_image_logo'] = (theme_get_setting('display_image_logo')) ? TRUE : FALSE;
 
   // Allow display of logo text to be disabled.
-  $variables['display_logo_text'] = (theme_get_setting('display_logo_text')) ? TRUE : FALSE;
+  $variables['display_text_logo'] = (theme_get_setting('display_text_logo')) ? TRUE : FALSE;
 }
 
 /**
@@ -379,7 +379,7 @@ function az_barrio_primary_logo() {
   $return = '';
 
   // Display a logo image
-  if (theme_get_setting('display_logo_image')) {
+  if (theme_get_setting('display_image_logo')) {
     $primary_logo_link_classes = ['qs-site-logo', 'd-block'];
     $primary_logo_path = theme_get_setting('logo');
     $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
@@ -432,7 +432,7 @@ function az_barrio_primary_logo() {
     }
   }
   // Display a text logo
-  elseif (theme_get_setting('display_logo_text')) {
+  elseif (theme_get_setting('display_text_logo')) {
     $logo_text = theme_get_setting('logo_text');
     $primary_logo_link_classes = ['d-flex', 'align-items-center', 'justify-content-start', 'text-decoration-none'];
     if (empty($logo_text)) {
