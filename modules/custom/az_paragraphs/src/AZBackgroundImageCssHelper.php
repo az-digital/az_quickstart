@@ -25,7 +25,7 @@ class AZBackgroundImageCssHelper {
         'bg_image_background_size_ie8' => 0,
         'bg_image_gradient' => '',
         'bg_image_media_query' => 'all',
-        'bg_image_important' => 1,
+        'bg_image_important' => 0,
         'bg_image_z_index' => 'auto',
         'bg_image_path_format' => 'absolute',
       ],
@@ -60,35 +60,34 @@ class AZBackgroundImageCssHelper {
    *   The array containing the CSS.
    */
   public function getBackgroundImageCss($image_path, array $css_settings = [], $image_style = NULL) {
-    $defaults = self::defaultSettings();
-    $css_settings += $defaults['css_settings'];
 
     // Pull the default css setting if not provided.
+    $defaults = self::defaultSettings();
+    // Merge defaults into css_settings array without overriding values.
+    $css_settings += $defaults['css_settings'];
+
     $selector = Xss::filter($css_settings['bg_image_selector']);
     $bg_color = Xss::filter($css_settings['bg_image_color']);
     $bg_x = Xss::filter($css_settings['bg_image_x']);
     $bg_y = Xss::filter($css_settings['bg_image_y']);
     $attachment = $css_settings['bg_image_attachment'];
     $repeat = $css_settings['bg_image_repeat'];
-    $important = $css_settings['bg_image_important'];
+    $important_set = $css_settings['bg_image_important'];
     $background_size = Xss::filter($css_settings['bg_image_background_size']);
     $background_size_ie8 = $css_settings['bg_image_background_size_ie8'];
     $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
     $media_query = isset($css_settings['bg_image_media_query']) ? Xss::filter($css_settings['bg_image_media_query']) : NULL;
     $z_index = Xss::filter($css_settings['bg_image_z_index']);
-
-    // If important is true, we turn it into a string for css output.
-    if ($important) {
-      $important = '!important';
-    }
-    else {
-      $important = '';
-    }
-
-    // Handle the background size property.
+    $important = 0;
     $bg_size = '';
     $ie_bg_size = '';
 
+    // If important_set is true, we turn it into a string for css output.
+    if ($important_set) {
+      $important = '!important';
+    }
+
+    // Handle the background size property.
     if ($background_size) {
       // CSS3.
       $bg_size = sprintf('background-size: %s %s;', $background_size, $important);
