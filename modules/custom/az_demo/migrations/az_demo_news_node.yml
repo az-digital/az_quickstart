@@ -110,10 +110,10 @@ process:
     -
       plugin: skip_on_empty
       method: process
-      source: field_az_news_tags
+      source: az_news_tags
     -
       plugin: explode
-      source: field_az_news_tags
+      source: az_news_tags
       delimiter: '|'
 
   field_az_news_tags:
