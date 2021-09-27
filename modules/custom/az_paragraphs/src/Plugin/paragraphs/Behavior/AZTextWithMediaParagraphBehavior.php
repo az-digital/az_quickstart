@@ -215,7 +215,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $bg_attachment = 'fixed';
     }
     return [
-      'bg_image_selector' => '#' . $paragraph->bundle() . "-" . $paragraph->id(),
+      'bg_image_selector' => '#' . HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
       'bg_image_color' => '#FFFFFF',
       'bg_image_x' => 'center',
       'bg_image_y' => 'center',
@@ -254,7 +254,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing, #{{ id }}.az-video-paused {background-image:none;}</style>",
           '#context' => [
             'filepath' => file_create_url($thumb),
-            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+            'id' => HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
           ],
         ],
         $background_video = [

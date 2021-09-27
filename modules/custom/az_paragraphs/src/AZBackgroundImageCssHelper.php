@@ -3,6 +3,7 @@
 namespace Drupal\az_paragraphs;
 
 use Drupal\Component\Utility\Xss;
+use Drupal\Component\Utility\Html;
 
 /**
  * Class AZBackgroundImageCssHelper. Adds service to form background image CSS.
@@ -66,16 +67,16 @@ class AZBackgroundImageCssHelper {
     // Merge defaults into css_settings array without overriding values.
     $css_settings += $defaults['css_settings'];
 
-    $selector = Xss::filter($css_settings['bg_image_selector']);
+    $selector = HTML::getId($css_settings['bg_image_selector']);
     $bg_color = Xss::filter($css_settings['bg_image_color']);
     $bg_x = Xss::filter($css_settings['bg_image_x']);
     $bg_y = Xss::filter($css_settings['bg_image_y']);
-    $attachment = $css_settings['bg_image_attachment'];
-    $repeat = $css_settings['bg_image_repeat'];
-    $important_set = $css_settings['bg_image_important'];
+    $attachment = Xss::filter($css_settings['bg_image_attachment']);
+    $repeat = Xss::filter($css_settings['bg_image_repeat']);
+    $important_set = Xss::filter($css_settings['bg_image_important']);
     $background_size = Xss::filter($css_settings['bg_image_background_size']);
-    $background_size_ie8 = $css_settings['bg_image_background_size_ie8'];
-    $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
+    $background_size_ie8 = Xss::filter($css_settings['bg_image_background_size_ie8']);
+    $background_gradient = !empty($css_settings['bg_image_gradient']) ? Xss::filter($css_settings['bg_image_gradient']) . ',' : '';
     $media_query = isset($css_settings['bg_image_media_query']) ? Xss::filter($css_settings['bg_image_media_query']) : NULL;
     $z_index = Xss::filter($css_settings['bg_image_z_index']);
     $important = 0;

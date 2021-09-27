@@ -2,8 +2,8 @@
 
 namespace Drupal\az_paragraphs;
 
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Markup;
 
 /**
@@ -33,9 +33,7 @@ class AZResponsiveBackgroundImageCssHelper {
   }
 
   /**
-   * Function taken from the module 'bg_image'.
-   *
-   * Adds a background image to the page using the
+   * Adds a responsive background image to the page using the
    * css 'background' property.
    *
    * @param \Drupal\Core\Entity\EntityInterface $image
@@ -61,7 +59,7 @@ class AZResponsiveBackgroundImageCssHelper {
 
     $style_elements = [];
 
-    $selector = Xss::filter($css_settings['bg_image_selector']);
+    $selector = HTML::getId($css_settings['bg_image_selector']);
     $vars = [
       'uri' => $image->getFileUri(),
       'responsive_image_style_id' => $responsive_image_style,
@@ -91,12 +89,9 @@ class AZResponsiveBackgroundImageCssHelper {
         // will deactivate.
         $media = str_replace('screen (max-width', 'screen and (max-width', $media);
 
-        $css_settings['bg_image_selector'] = $selector;
-
         $css = $this->backgroundImageCss->getBackgroundImageCss($src, $css_settings);
 
-        // $css_settings['bg_image_selector'] probably needs to be sanitized.
-        $with_media_query = sprintf('%s { background-image: url(%s);}', $css_settings['bg_image_selector'], $vars['img_element']['#uri']);
+        $with_media_query = sprintf('%s { background-image: url(%s);}', $selector, $vars['img_element']['#uri']);
 
         $with_media_query .= sprintf('@media %s {', $media);
         $with_media_query .= sprintf($css['data']);
