@@ -164,7 +164,7 @@ function az_core_canonical_url(array $data) {
 }
 
 /**
- * Implements hook_form_BASE_FORM_ID_alter().
+ * Implements hook_form_FORM_ID_alter().
  *
  * Replaces links to Site information page in system_branding_block settings
  * form with links to Quickstart settings page.
