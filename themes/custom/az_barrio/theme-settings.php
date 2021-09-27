@@ -463,7 +463,7 @@ function az_barrio_validate_file_path($path) {
 }
 
 /**
- * Helper function to determine logo text value
+ * Helper function to determine logo text value.
  */
 function az_barrio_settings_logo_text() {
   $text_logo = theme_get_setting('logo_text');
