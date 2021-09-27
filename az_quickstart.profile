@@ -36,7 +36,7 @@ function az_quickstart_update_9204() {
   $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
   $config
     ->set('bootstrap_barrio_region_clean_branding', FALSE)
-    ->set('bootstrap_barrio_region_class_branding', 'col-md')
+    ->set('bootstrap_barrio_region_class_branding', '')
     ->save(TRUE);
 
   $config = \Drupal::service('config.factory')->getEditable('block.block.az_barrio_branding');
