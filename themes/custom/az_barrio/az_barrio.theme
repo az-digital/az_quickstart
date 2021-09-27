@@ -133,12 +133,6 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   // Allow wordmark to be disabled.
   $variables['wordmark'] = (theme_get_setting('wordmark')) ? TRUE : FALSE;
-
-  // Allow display of logo image to be disabled.
-  $variables['display_image_logo'] = (theme_get_setting('display_image_logo')) ? TRUE : FALSE;
-
-  // Allow display of logo text to be disabled.
-  $variables['display_text_logo'] = (theme_get_setting('display_text_logo')) ? TRUE : FALSE;
 }
 
 /**
@@ -377,77 +371,57 @@ function az_barrio_az_icons_assets_path($type) {
  */
 function az_barrio_primary_logo() {
   $return = '';
+  $primary_logo_link_classes = ['qs-site-logo', 'd-block'];
+  $primary_logo_path = theme_get_setting('logo');
+  $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
+  $primary_alt_text = theme_get_setting('primary_logo_alt_text');
+  $primary_title_text = theme_get_setting('primary_logo_title_text');
+  $config = \Drupal::config('az_barrio.settings');
+  if (\Drupal::moduleHandler()->moduleExists('token')) {
+    $token_service = \Drupal::token();
+    $primary_alt_text = $token_service->replace($primary_alt_text);
+    $primary_title_text = $token_service->replace($primary_title_text);
+  }
 
-  // Display a logo image
-  if (theme_get_setting('display_image_logo')) {
-    $primary_logo_link_classes = ['qs-site-logo', 'd-block'];
-    $primary_logo_path = theme_get_setting('logo');
-    $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
-    $primary_alt_text = theme_get_setting('primary_logo_alt_text');
-    $primary_title_text = theme_get_setting('primary_logo_title_text');
-    $config = \Drupal::config('az_barrio.settings');
-    if (\Drupal::moduleHandler()->moduleExists('token')) {
-      $token_service = \Drupal::token();
-      $primary_alt_text = $token_service->replace($primary_alt_text);
-      $primary_title_text = $token_service->replace($primary_title_text);
+  // Set primary logo.
+  if (!empty($primary_logo_path)) {
+
+    // Inline SVG logo.
+    if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $primary_logo_path_parts['extension'] === 'svg') {
+      $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_path['url']);
+      $rendered_image = render($svg);
+      $image_markup = Markup::create($rendered_image);
+      $primary_logo_link_classes[] = 'qs-logo-svg-inline';
+      $return = Link::createFromRoute($image_markup, '<front>', [], [
+        'attributes' => [
+          'title' => $primary_title_text,
+          'class' => $primary_logo_link_classes,
+          'rel' => 'home',
+        ],
+      ]
+      );
     }
-
-    // Set primary logo.
-    if (!empty($primary_logo_path)) {
-
-      // Inline SVG logo.
-      if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $primary_logo_path_parts['extension'] === 'svg') {
-        $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_path['url']);
-        $rendered_image = render($svg);
-        $image_markup = Markup::create($rendered_image);
-        $primary_logo_link_classes[] = 'qs-logo-svg-inline';
-        $return = Link::createFromRoute($image_markup, '<front>', [], [
-          'attributes' => [
-            'title' => $primary_title_text,
-            'class' => $primary_logo_link_classes,
-            'rel' => 'home',
-          ],
+    else {
+      $image_renderable = [
+        '#theme' => 'image',
+        '#uri' => $primary_logo_path['path'],
+        '#alt' => $primary_alt_text,
+        '#attributes' => [
+          'class' => ['img-fluid'],
         ]
-        );
-      }
-      else {
-        $image_renderable = [
-          '#theme' => 'image',
-          '#uri' => $primary_logo_path['path'],
-          '#alt' => $primary_alt_text,
-          '#attributes' => [
-            'class' => ['img-fluid'],
-          ]
-        ];
-        $renderer = \Drupal::service('renderer');
-        $renderer->addCacheableDependency($image_renderable, $config);
-        $return = Link::createFromRoute($image_renderable,'<front>', [], [
-          'attributes' => [
-            'title' => $primary_title_text,
-            'class' => $primary_logo_link_classes,
-            'rel' => 'home',
-          ],
-        ]);
-      }
+      ];
+      $renderer = \Drupal::service('renderer');
+      $renderer->addCacheableDependency($image_renderable, $config);
+      $return = Link::createFromRoute($image_renderable,'<front>', [], [
+        'attributes' => [
+          'title' => $primary_title_text,
+          'class' => $primary_logo_link_classes,
+          'rel' => 'home',
+        ],
+      ]);
     }
   }
-  // Display a text logo
-  elseif (theme_get_setting('display_text_logo')) {
-    $logo_text = theme_get_setting('logo_text');
-    $primary_logo_link_classes = ['d-flex', 'align-items-center', 'justify-content-start', 'text-decoration-none'];
-    if (empty($logo_text)) {
-      $site_config = \Drupal::config('system.site');
-      $logo_text = $site_config->get('name');
-    }
-    $link_text = Markup::create('<span class="d-inline-block h3 text-blue text-uppercase bold">' . $logo_text . '</span>');
-    $return = Link::createFromRoute($link_text,'<front>', [], [
-      'attributes' => [
-        'class' => $primary_logo_link_classes,
-        'rel' => 'home',
-      ],
-    ]);
-  }
-  
+
   return $return;
 }
 
@@ -534,8 +508,9 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
  * Pass proper logo to the system branding block.
  */
 function az_barrio_preprocess_block(&$variables) {
-  $logo = az_barrio_primary_logo();
-  if ($variables['base_plugin_id'] == 'system_branding_block') {
-    $variables['site_logo'] = $logo;
+  if ($variables['base_plugin_id'] === 'system_branding_block') {
+    if ($variables['configuration']['use_site_logo']) {
+      $variables['site_logo'] = az_barrio_primary_logo();
+    }
   }
 }

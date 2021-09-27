@@ -1,5 +1,5 @@
 langcode: en
-status: false
+status: true
 dependencies:
   module:
     - system
@@ -7,8 +7,8 @@ dependencies:
     - az_barrio
 id: az_barrio_branding
 theme: az_barrio
-region: header
-weight: -6
+region: branding
+weight: -9
 provider: null
 plugin: system_branding_block
 settings:
@@ -17,6 +17,6 @@ settings:
   provider: system
   label_display: '0'
   use_site_logo: true
-  use_site_name: true
-  use_site_slogan: true
+  use_site_name: false
+  use_site_slogan: false
 visibility: {  }

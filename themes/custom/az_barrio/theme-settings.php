@@ -34,35 +34,16 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#weight' => -10,
   ];
 
-  // Logo settings.
-  $form['az_settings']['settings']['website_logo'] = [
+  // Institutional logo.
+  $form['az_settings']['settings']['institutional_logo'] = [
     '#type' => 'fieldset',
     '#title' => t('Institutional Logo Settings'),
   ];
-  $form['az_settings']['settings']['website_logo']['wordmark'] = [
+  $form['az_settings']['settings']['institutional_logo']['wordmark'] = [
     '#type' => 'checkbox',
     '#title' => t('Institutional header wordmark logo'),
     '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => theme_get_setting('wordmark'),
-  ];
-  $form['az_settings']['settings']['website_logo']['display_image_logo'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Display site logo'),
-    '#description' => t('If checked, the site logo will display.'),
-    '#default_value' => theme_get_setting('display_logo_image'),
-  ];
-  $form['az_settings']['settings']['website_logo']['display_logo_text'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Display logo text'),
-    '#description' => t('Site will display text instead of a logo if this is checked and "Display site logo" is unchecked.'),
-    '#default_value' => theme_get_setting('display_logo_text'),
-  ];
-  $form['az_settings']['settings']['website_logo']['logo_text'] = [
-    '#type' => 'textfield',
-    '#title' => t('Website logo text'),
-    '#maxlength' => 512,
-    '#description' => t('This text will appear as a logo.'),
-    '#default_value' => az_barrio_settings_logo_text(),
   ];
 
   // Information security and privacy link.
@@ -460,16 +441,4 @@ function az_barrio_validate_file_path($path) {
     return $path;
   }
   return FALSE;
-}
-
-/**
- * Helper function to determine logo text value.
- */
-function az_barrio_settings_logo_text() {
-  $text_logo = theme_get_setting('logo_text');
-  if (empty($text_logo)) {
-    $system_config = \Drupal::config('system.site');
-    $text_logo = $system_config->get('name');
-  }
-  return $text_logo;
 }

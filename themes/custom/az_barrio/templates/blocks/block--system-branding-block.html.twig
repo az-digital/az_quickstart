@@ -18,11 +18,13 @@
     {{ site_logo }}
   {% endif %}
   {% if site_name %}
-    <div class="site-name visually-hidden">
-      <a href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">{{ site_name }}</a>
-    </div>
+    <a class="d-flex align-items-center justify-content-start text-decoration-none" href="{{ path('<front>') }}" title="{{ 'Home'|t }}" rel="home">
+      <span class="d-inline-block h3 text-blue text-uppercase bold mb-0">{{ site_name }}</span>
+    </a>
   {% endif %}
   {% if site_slogan %}
-    <div class="site-slogan visually-hidden">{{ site_slogan }}</div>
+    <div class="d-inline-block align-top site-name-slogan lead my-3">
+      {{ site_slogan }}
+    </div>
   {% endif %}
 {% endblock %}
