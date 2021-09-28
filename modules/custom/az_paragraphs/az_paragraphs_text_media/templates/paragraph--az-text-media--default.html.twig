@@ -4,6 +4,7 @@
  * Default theme implementation to display a paragraph.
  *
  * Available variables:
+ * - az_background_media: Background Media.
  * - paragraph: Full paragraph entity.
  *   Only method names starting with "get", "has", or "is" and a few common
  *   methods such as "id", "label", and "bundle" are available. For example:
@@ -43,14 +44,8 @@
 #}
 {% block paragraph %}
   <div{{ attributes }}>
+    {{az_background_media}}
     {% block content %}
-      {% if text_on_media.style == 'bottom' %}
-        {{ text_on_bottom }}
-      {% endif %}
-      {# Layout for content width AND full width styles #}
-      {% if text_on_media.style != 'bottom' %}
-        {{style_element}}
-      {% endif %}
       <div class="container">
         <div class="az-full-width-row">
           <div{{ col_attributes }}>

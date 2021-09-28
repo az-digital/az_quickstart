@@ -164,9 +164,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
       $style = $config['style'];
     }
-    // @TODO use HTML::getId() for the id string.
     $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
     $variables['attributes']['id'] = $paragraph->bundle() . '-' . $paragraph->id();
+    if (!is_array($variables['attributes']['class'])) {
+      $variables['attributes']['class'] = [];
+    }
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
     $variables['attributes']['class'][] = HTML::getClass('paragraph--type--' . $paragraph->bundle());
@@ -205,9 +207,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $title_classes = [
       'mt-0',
       'bold',
-      HTML::getClass($config['bg_color']),
-      HTML::getClass($config['style']),
     ];
+
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
       $title_classes[] = 'text-blue';
     }
@@ -215,7 +216,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['title_attributes'] = new Attribute();
     $variables['title_attributes']['class'] = $title_classes;
 
-    if ($paragraph->hasField('field_az_media')) {
+
+    if ($variables['elements']['#az_background_media']) {
       /** @var \Drupal\media\Entity\Media $media */
       foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
         $variables['text_on_media']['media_type'] = $media->bundle();
@@ -239,6 +241,21 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    * {@inheritdoc}
    */
   public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
+    $displayArray = $display->toArray();
+
+
+    foreach($displayArray['content'] as $field_name => $field_data) {
+      if ($field_data['type'] === 'entity_reference_entity_view'){
+        $fields_extract[] =  $field_name;
+      }
+
+    }
+    foreach($fields_extract as $delta => $field_name) {
+      $az_background_media[] = $build[$field_name];
+      unset($build[$field_name]);
+    }
+
+    $build['#az_background_media'] = $az_background_media;
 
     // Get plugin configuration.
     $config = $this->getSettings($paragraph);
@@ -246,7 +263,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
       $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
     }
-
   }
 
   /**
@@ -305,7 +321,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         ],
       ];
       if ($variables['text_on_media']['style'] !== 'bottom') {
-        $variables['style_element'] = $style_element;
+        $variables['az_background_media'][] = $style_element;
       }
       elseif ($variables['text_on_media']['style'] === 'bottom') {
         $style_element['style']['#template'] = "<style type='text/css'>#{{ id }} .az-video-loading {background-image: url({{filepath}});background-repeat: no-repeat;background-attachment:fixed;background-size:cover;}</style>";
@@ -326,7 +342,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
             'class' => ['text-on-media-bottom', 'text-on-video'],
           ],
         ];
-        $variables['text_on_bottom'] = $text_on_bottom;
+        $variables['az_background_media'][] = $text_on_bottom;
       }
       return $variables;
     }
@@ -348,7 +364,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           ],
         ],
       ];
-      $variables['style_element'] = $style_element;
+      $variables['az_background_media'][] = $style_element;
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
       $image_renderable = [
@@ -367,7 +383,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           'class' => ['text-on-media-bottom'],
         ],
       ];
-      $variables['text_on_bottom'] = $text_on_bottom;
+      $variables['az_background_media'][] = $text_on_bottom;
     }
     return $variables;
   }
