@@ -305,6 +305,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     $settings = $this->getAllSettings($items);
     $css_settings = $settings['css_settings'];
+    $elements = [];
     $az_background_media = [];
     $full_width = '';
     $marquee_style = $settings['style'];
