@@ -3,7 +3,6 @@
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -78,7 +77,11 @@ class AZCardWidget extends WidgetBase {
     $field_parents = $form['#parents'];
     $field_state = static::getWidgetState($field_parents, $field_name, $form_state);
     $field_state['ajax_wrapper_id'] = $wrapper_id;
-    $field_state['items_count'] = (!empty($field_state['items_count'])) ? $field_state['items_count'] : count($items);
+
+    // Remove extra field added on form instantiation for existing content.
+    $count = count($items);
+    $field_state['items_count'] = (!empty($field_state['items_count'])) ? $field_state['items_count'] : max(0, $count - 1);
+
     $field_state['array_parents'] = [];
     if (empty($field_state['open_status'])) {
       $field_state['open_status'] = [];
@@ -520,119 +523,6 @@ class AZCardWidget extends WidgetBase {
       $values[$delta]['body_format'] = $value['body']['format'];
     }
     return $values;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
-    $field_name = $this->fieldDefinition->getName();
-    $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
-    $parents = $form['#parents'];
-
-    // Determine the number of widgets to display.
-    switch ($cardinality) {
-      case FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED:
-        $field_state = static::getWidgetState($parents, $field_name, $form_state);
-        $max = max(0, $field_state['items_count'] - 1);
-        $is_multiple = TRUE;
-        break;
-
-      default:
-        $max = $cardinality - 1;
-        $is_multiple = ($cardinality > 1);
-        break;
-    }
-
-    $title = $this->fieldDefinition->getLabel();
-    $description = $this->getFilteredDescription();
-
-    $elements = [];
-
-    for ($delta = 0; $delta <= $max; $delta++) {
-      // Add a new empty item if it doesn't exist yet at this delta.
-      if (!isset($items[$delta])) {
-        $items->appendItem();
-      }
-
-      // For multiple fields, title and description are handled by the wrapping
-      // table.
-      if ($is_multiple) {
-        $element = [
-          '#title' => $this->t(
-            '@title (value @number)',
-            ['@title' => $title, '@number' => $delta + 1]
-          ),
-          '#title_display' => 'invisible',
-          '#description' => '',
-        ];
-      }
-      else {
-        $element = [
-          '#title' => $title,
-          '#title_display' => 'before',
-          '#description' => $description,
-        ];
-      }
-
-      $element = $this->formSingleElement($items, $delta, $element, $form, $form_state);
-
-      if ($element) {
-        // Input field for the delta (drag-n-drop reordering).
-        if ($is_multiple) {
-          // We name the element '_weight' to avoid clashing with elements
-          // defined by widget.
-          $element['_weight'] = [
-            '#type' => 'weight',
-            '#title' => $this->t('Weight for row @number', ['@number' => $delta + 1]),
-            '#title_display' => 'invisible',
-            // Note: this 'delta' is the FAPI #type 'weight' element's property.
-            '#delta' => $max,
-            '#default_value' => $items[$delta]->_weight ?: $delta,
-            '#weight' => 100,
-          ];
-        }
-
-        $elements[$delta] = $element;
-      }
-    }
-
-    if ($elements) {
-      $elements += [
-        '#theme' => 'field_multiple_value_form',
-        '#field_name' => $field_name,
-        '#cardinality' => $cardinality,
-        '#cardinality_multiple' => $this->fieldDefinition->getFieldStorageDefinition()->isMultiple(),
-        '#required' => $this->fieldDefinition->isRequired(),
-        '#title' => $title,
-        '#description' => $description,
-        '#max_delta' => $max,
-      ];
-
-      // Add 'add more' button, if not working with a programmed form.
-      if ($cardinality === FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED && !$form_state->isProgrammed()) {
-        $id_prefix = implode('-', array_merge($parents, [$field_name]));
-        $wrapper_id = Html::getUniqueId($id_prefix . '-add-more-wrapper');
-        $elements['#prefix'] = '<div id="' . $wrapper_id . '">';
-        $elements['#suffix'] = '</div>';
-
-        $elements['add_more'] = [
-          '#type' => 'submit',
-          '#name' => strtr($id_prefix, '-', '_') . '_add_more',
-          '#value' => t('Add another item'),
-          '#attributes' => ['class' => ['field-add-more-submit']],
-          '#limit_validation_errors' => [array_merge($parents, [$field_name])],
-          '#submit' => [[static::class, 'addMoreSubmit']],
-          '#ajax' => [
-            'callback' => [static::class, 'addMoreAjax'],
-            'wrapper' => $wrapper_id,
-            'effect' => 'fade',
-          ],
-        ];
-      }
-    }
-
-    return $elements;
   }
 
 }
