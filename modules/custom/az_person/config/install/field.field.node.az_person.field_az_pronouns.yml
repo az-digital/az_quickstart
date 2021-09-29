@@ -9,7 +9,7 @@ field_name: field_az_pronouns
 entity_type: node
 bundle: az_person
 label: Pronouns
-description: ''
+description: "Recommended formatting: \r\n<ul>\r\n<li>\"she, her, hers\"</li>\r\n<li>\"they, them, theirs\"</li>\r\n<li>\"he, him, his\"</li>\r\n</ul>"
 required: false
 translatable: false
 default_value: {  }
