@@ -390,7 +390,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   }
 
   /**
+   * Get the paragraph instance settings.
    *
+   * @return array
+   *   The paragraph behavior settings.
    */
   protected function getParagraphSettings(FieldItemListInterface $items) {
     $paragraph_settings = NULL;
@@ -404,11 +407,15 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         }
       }
     }
-    return $paragraph_settings_all;
+    return $paragraph_settings;
   }
 
   /**
+   * Get and merge all settings needed to output a paragraph with a background image.
    *
+   * @return array
+   *   The paragraph behavior settings,
+   *   field formatter settings, and default settings merged.
    */
   protected function getAllSettings(FieldItemListInterface $items) {
     $all_settings = [];
@@ -435,7 +442,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   }
 
   /**
-   * Prepare markup for remote video.
+   * Prepare markup for remote video. (YouTube is the only supported provider.)
    */
   private function remoteVideo(array $settings, MediaInterface $media) {
 
