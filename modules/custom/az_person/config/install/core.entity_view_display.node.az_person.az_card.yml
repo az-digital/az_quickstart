@@ -4,8 +4,8 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_card
     - field.field.node.az_person.field_az_address
-    - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
+    - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -36,7 +37,7 @@ content:
     type: string
     weight: 4
     region: content
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -44,7 +45,7 @@ content:
     type: string
     weight: 5
     region: content
-    label: above
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
@@ -65,6 +66,14 @@ content:
     third_party_settings: {  }
     type: telephone_link
     region: content
+  field_az_pronouns:
+    type: string
+    weight: 6
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
   field_az_titles:
     weight: 1
     label: hidden
@@ -75,8 +84,8 @@ content:
     region: content
 hidden:
   field_az_address: true
-  field_az_body: true
   field_az_attachments: true
+  field_az_body: true
   field_az_degrees: true
   field_az_links: true
   field_az_person_category: true
