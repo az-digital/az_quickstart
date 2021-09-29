@@ -380,9 +380,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $file = $media->getSource();
     $uri = $file->getMetadata($media, 'thumbnail_uri');
     /** @var \Drupal\file\FileInterface[] $files */
-    $files = $this->entityTypeManager()
-    ->getStorage('file')
-    ->loadByProperties(['uri' => $uri]);
+    $files = $this->entityTypeManager
+      ->getStorage('file')
+      ->loadByProperties(['uri' => $uri]);
     /** @var \Drupal\file\FileInterface|null $file */
     $file = reset($files) ?: NULL;
 
