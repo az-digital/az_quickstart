@@ -326,7 +326,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
         switch ($media->bundle()) {
         case 'az_remote_video':
-            $az_background_media = $this->remoteVideo($settings, $paragraph, $media);
+            $az_background_media = $this->remoteVideo($settings, $media);
             break;
 
         case 'az_image':
@@ -420,7 +420,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   protected function getAllSettings(FieldItemListInterface $items) {
     $all_settings = [];
     // Paragraph instance settings override everything.
-    $all_settings += $this->getParagraphSettings($items);
+    $paragraph_settings = $this->getParagraphSettings($items);
+    $all_settings += $paragraph_settings['az_text_media_paragraph_behavior'];
     // Field formatter settings.
     $all_settings += $this->getSettings();
     // Fill in all the rest of the required settings.
@@ -461,10 +462,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     if ($provider === 'YouTube') {
 
       $source_url = $media->get('field_media_az_oembed_video')->value;
-      $video_oembed_id = HTML::getId($this->videoEmbedHelper->getYoutubeIdFromUrl($source_url));
+      $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
 
       if ($settings['style'] !== 'bottom') {
-
         $responsive_image_style_element = [
           'style' => [
             '#type' => 'inline_template',
@@ -503,7 +503,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             ],
           ],
         ];
-        $az_background_media = $responsive_image_style_element;
+        $az_background_media[] = $responsive_image_style_element;
       }
       elseif ($settings['style'] === 'bottom') {
         $responsive_image_style_element = [
@@ -534,7 +534,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         ];
         $az_background_media[] = $text_on_bottom;
       }
-      return $variables;
+      return $az_background_media;
     }
   }
 

@@ -40,8 +40,24 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * {@inheritdoc}
    */
+  public static function defaultSettings() {
+    return [
+      'full_width' => '',
+      'style' => '',
+      'bg_color' => '',
+      'position' => '',
+      'text_media_spacing' => '',
+      'bg_attachment' =>'',
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
+    $default_settings = $this->defaultSettings();
     $config = $this->getSettings($paragraph);
+    $config += $default_settings;
 
     $style_unique_id = Html::getUniqueId('az-text-media-style');
     $form['full_width'] = [
@@ -149,7 +165,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
     // Get plugin configuration.
+    $default_settings = $this->defaultSettings();
     $config = $this->getSettings($paragraph);
+    $config += $default_settings;
     $variables['text_on_media'] = $config;
 
     $style = '';
@@ -158,7 +176,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
     $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . '-' . $paragraph->id());
-    if (!is_array($variables['attributes']['class'])) {
+    if (!empty($variables['attributes']) && !empty($variables['attributes']['class']) && !is_array($variables['attributes']['class'])) {
       $variables['attributes']['class'] = [];
     }
     $variables['attributes']['class'][] = 'paragraph';

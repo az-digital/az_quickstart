@@ -10,18 +10,19 @@ use Drupal\Core\Entity\EntityInterface;
 
 function az_paragraphs_text_media_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
     $displayArray = $display->toArray();
+    $az_background_media = [];
 
     foreach($displayArray['content'] as $field_name => $field_data) {
-      if ($field_data['type'] === 'az_background_media_formatter'){
+      if (!empty($field_data['type']) && $field_data['type'] === 'az_background_media_formatter'){
         $fields_extract[] =  $field_name;
       }
     }
-
-    foreach($fields_extract as $delta => $field_name) {
-      $az_background_media[] = $build[$field_name];
-      unset($build[$field_name]);
+    if (!empty($fields_extract)) {
+      foreach($fields_extract as $delta => $field_name) {
+        $az_background_media[] = $build[$field_name];
+        unset($build[$field_name]);
+      }
     }
-
     $build['#az_background_media'] = $az_background_media;
 }
 
