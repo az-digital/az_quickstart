@@ -72,7 +72,6 @@
     view_mode ? 'node--view-mode-' ~ view_mode|clean_class,
     'clearfix',
     'd-block',
-    'az-js-search-result',
   ]
 %}
 
@@ -82,6 +81,6 @@
     {{ title_prefix }}
     {{ title_suffix }}
   </header>
-  <a href="{{ url }}" class="d-inline-block py-1">{{ label }}</a>
+  <a href="{{ url }}" class="d-inline-block py-1 az-alphabetical-listing-item">{{ label }}</a>
 </div>
 

@@ -26,3 +26,10 @@
   text-align:center;
   vertical-align:middle;
 }
+
+
+#az-js-alpha-navigation .page-item:not(.disabled) .page-link {
+  border-width: 2px;
+  border-color: #378dbd;
+  margin-left: 0px;
+}

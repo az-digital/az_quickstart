@@ -41,10 +41,10 @@ display:
         type: basic
         options:
           submit_button: Apply
-          reset_button: false
+          reset_button: true
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
+          expose_sort_order: false
           sort_asc_label: Asc
           sort_desc_label: Desc
       pager:
@@ -60,7 +60,7 @@ display:
               field: field_az_alphabetical_index
               rendered: true
               rendered_strip: false
-          row_class: 'az-alphabetical-letter-group az-alphabetical-letter-group-{{ field_az_alphabetical_index }}'
+          row_class: 'az-js-alphabetical-listing-search-result az-alphabetical-letter-group-{{ field_az_alphabetical_index }}'
           default_row_class: false
           uses_fields: true
       row:
@@ -143,7 +143,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: '<h3 class="text-midnight text-uppercase" id="{{ field_az_alphabetical_index|upper }}">{{ field_az_alphabetical_index }}</h3>'
+            text: '<h3 class="text-midnight text-uppercase az-alphabetical-listing-group-title" id="{{ field_az_alphabetical_index|upper }}">{{ field_az_alphabetical_index }}</h3>'
             make_link: false
             path: ''
             absolute: false
@@ -322,6 +322,11 @@ display:
       relationships: {  }
       arguments: {  }
       display_extenders: {  }
+      css_class: view-az-alphabetical-listing
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:
