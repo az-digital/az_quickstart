@@ -7,12 +7,33 @@ dependencies:
     - field.field.paragraph.az_text_media.field_az_title
     - paragraphs.paragraphs_type.az_text_media
   module:
+    - az_paragraphs
     - text
 id: paragraph.az_text_media.default
 targetEntityType: paragraph
 bundle: az_text_media
 mode: default
 content:
+  field_az_media:
+    type: az_background_media_formatter
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      image_style: az_full_width_background
+      css_settings:
+        bg_image_z_index: '-999'
+        bg_image_color: '#FFFFFF'
+        bg_image_x: center
+        bg_image_y: center
+        bg_image_attachment: scroll
+        bg_image_repeat: no-repeat
+        bg_image_background_size: cover
+        bg_image_gradient: ''
+        bg_image_background_size_ie8: 0
+        bg_image_important: 0
+      text_media_spacing: ''
+    third_party_settings: {  }
   field_az_text_area:
     weight: 0
     label: hidden
@@ -21,5 +42,4 @@ content:
     type: text_default
     region: content
 hidden:
-  field_az_media: true
   field_az_title: true
