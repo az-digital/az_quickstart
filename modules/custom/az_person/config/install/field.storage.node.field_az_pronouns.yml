@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_az_pronoun
-field_name: field_az_pronoun
+id: node.field_az_pronouns
+field_name: field_az_pronouns
 entity_type: node
 type: string
 settings:

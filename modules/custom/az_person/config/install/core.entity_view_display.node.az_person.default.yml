@@ -14,7 +14,7 @@ dependencies:
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
-    - field.field.node.az_person.field_az_pronoun
+    - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -126,7 +126,7 @@ content:
     third_party_settings: {  }
     type: telephone_link
     region: content
-  field_az_pronoun:
+  field_az_pronouns:
     weight: 22
     label: above
     settings:

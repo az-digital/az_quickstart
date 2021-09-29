@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_az_pronoun
+    - field.storage.node.field_az_pronouns
     - node.type.az_person
-id: node.az_person.field_az_pronoun
-field_name: field_az_pronoun
+id: node.az_person.field_az_pronouns
+field_name: field_az_pronouns
 entity_type: node
 bundle: az_person
 label: Pronouns
