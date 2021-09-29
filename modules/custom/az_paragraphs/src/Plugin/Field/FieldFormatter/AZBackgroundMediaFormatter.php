@@ -10,6 +10,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Core\Render\Markup;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
@@ -26,7 +27,12 @@ use Drupal\responsive_image\Entity\ResponsiveImageStyle;
  */
 class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements ContainerFactoryPluginInterface {
 
-  protected $textMediaSpacing;
+  /**
+   * The ResponsiveBackgroundImageCssHelper.
+   *
+   * @var \Drupal\az_paragraphs\AZResponsiveBackgroundImageCssHelper
+   */
+  protected $responsiveBackroundImageCssHelper;
 
   /**
    * The VideoEmbedHelper.
@@ -34,16 +40,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @var \Drupal\az_paragraphs\AZVideoEmbedHelper
    */
   protected $videoEmbedHelper;
-
-  /**
-   * A style element render array for the background image.
-   */
-  protected $renderableStyleElement;
-
-  /**
-   * A style element render array for the background image.
-   */
-  protected $preprocessedBackgroundImage;
 
   /**
    * The entity type manager service.
@@ -69,6 +65,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     );
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->responsiveBackroundImageCssHelper = (
+        $container->get('az_paragraphs.az_responsive_background_image_css_helper')
+    );
 
     return $instance;
   }
@@ -84,7 +83,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       if ($parent instanceof ParagraphInterface) {
         $referencing_paragraph_id = $parent->id();
         $referencing_paragraph_bundle = $parent->getType();
-        $css_selector = "#" . $referencing_paragraph_bundle . "-" . $referencing_paragraph_id;
+        $css_selector = "#" . HTML::getId($referencing_paragraph_bundle . "-" . $referencing_paragraph_id);
       }
     }
 
@@ -105,11 +104,11 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         'bg_image_y' => 'center',
         'bg_image_attachment' => 'scroll',
         'bg_image_repeat' => 'no-repeat',
-        'bg_image_background_size' => '',
+        'bg_image_background_size' => 'cover',
         'bg_image_background_size_ie8' => 0,
         'bg_image_gradient' => '',
         'bg_image_media_query' => 'all',
-        'bg_image_important' => 1,
+        'bg_image_important' => TRUE,
         'bg_image_z_index' => '-999',
         'bg_image_path_format' => 'absolute',
       ],
@@ -120,11 +119,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    $settings = $this->getSettings();
-    dpm($settings);
 
+    $settings = $this->getSettings();
     $responsive_image_style_options = $this->getResponsiveImageStyles(TRUE);
-    dpm($responsive_image_style_options);
+
     $form['image_style'] = [
       '#title' => $this->t('Responsive image style.'),
       '#description' => $this->t(
@@ -137,6 +135,149 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#options' => $responsive_image_style_options,
       '#default_value' => $this->getSetting('image_style'),
     ];
+    // Fieldset for css settings.
+    $form['css_settings'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Default CSS Settings'),
+      '#description' => $this->t(
+        'Default CSS settings for outputting the background property.
+                These settings will be concatenated to form a complete css statementthat uses the "background"
+                property. For more information on the css background property see
+                http://www.w3schools.com/css/css_background.asp"'
+      ),
+    ];
+
+    // The selector for the background property.
+    $form['css_settings']['bg_image_z_index'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Z Index'),
+      '#description' => $this->t(
+        'The z-index property specifies the stack order of an element. An element with greater stack order is
+                      always in front of an element with a lower stack order. Note: z-index only works on positioned
+                      elements (position:absolute, position:relative, or position:fixed)'
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_z_index'],
+    ];
+
+    // The selector for the background property.
+    $form['css_settings']['bg_image_color'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Color'),
+      '#description' => $this->t(
+        'The background color formatted as any valid css color format (e.g. hex, rgb, text, hsl)
+                      [<a href="@url">css property: background-color</a>]. One per line. If the field is a multivalue
+                      field, the first line will be applied to the first value, the second to the second value...
+                      and so on.',
+        ['@url' => 'https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient']
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_color'],
+    ];
+
+    // The selector for the background property.
+    $form['css_settings']['bg_image_x'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Horizontal Alignment'),
+      '#description' => $this->t(
+        'The horizontal alignment of the background image formatted as any valid css alignment.
+                      [<a href="http://www.w3schools.com/css/pr_background-position.asp">
+                      css property: background-position
+                      </a>]'
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_x'],
+    ];
+    // The selector for the background property.
+    $form['css_settings']['bg_image_y'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Vertical Alignment'),
+      '#description' => $this->t(
+        'The vertical alignment of the background image formatted as any valid css alignment.
+                      [<a href="http://www.w3schools.com/css/pr_background-position.asp">
+                      css property: background-position
+                      </a>]'
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_y'],
+    ];
+    // The selector for the background property.
+    $form['css_settings']['bg_image_attachment'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Background Attachment'),
+      '#description' => $this->t(
+        'The attachment setting for the background image.
+                      [<a href="http://www.w3schools.com/css/pr_background-attachment.asp">
+                      css property: background-attachment
+                      </a>]'
+      ),
+      '#options' => [
+        FALSE => $this->t('Ignore'),
+        'scroll' => 'Scroll',
+        'fixed' => 'Fixed',
+      ],
+      '#default_value' => $settings['css_settings']['bg_image_attachment'],
+    ];
+    // The background-repeat property.
+    $form['css_settings']['bg_image_repeat'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Background Repeat'),
+      '#description' => $this->t(
+        'Define the repeat settings for the background image.
+                      [<a href="http://www.w3schools.com/css/pr_background-repeat.asp">
+                      css property: background-repeat
+                      </a>]'
+      ),
+      '#options' => [
+        FALSE => $this->t('Ignore'),
+        'no-repeat' => $this->t('No Repeat'),
+        'repeat' => $this->t('Tiled (repeat)'),
+        'repeat-x' => $this->t('Repeat Horizontally (repeat-x)'),
+        'repeat-y' => $this->t('Repeat Vertically (repeat-y)'),
+      ],
+      '#default_value' => $settings['css_settings']['bg_image_repeat'],
+    ];
+    // The background-size property.
+    $form['css_settings']['bg_image_background_size'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Background Size'),
+      '#description' => $this->t(
+        'The size of the background (NOTE: CSS3 only. Useful for responsive designs)
+                      [<a href="http://www.w3schools.com/cssref/css3_pr_background-size.asp">
+                      css property: background-size
+                      </a>]'
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_background_size'],
+    ];
+    // background-size:cover suppor for IE8.
+    $form['css_settings']['bg_image_background_size_ie8'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add background-size:cover support for ie8'),
+      '#description' => $this->t(
+        'The background-size css property is only supported on browsers that support CSS3.
+                      However, there is a workaround for IE using Internet Explorer\'s built-in filters
+                      (http://msdn.microsoft.com/en-us/library/ms532969%28v=vs.85%29.aspx).
+                      Check this box to add the filters to the css. Sometimes it works well, sometimes it doesn\'t.
+                      Use at your own risk'
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_background_size_ie8'],
+    ];
+    // Add gradient to background-image.
+    $form['css_settings']['bg_image_gradient'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Gradient'),
+      '#description' => $this->t(
+        'Apply this background image gradient css.
+                  Example: linear-gradient(red, yellow)
+                  [<a href="https://www.w3schools.com/css/css3_gradients.asp">Read about gradients</a>]'
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_gradient'],
+    ];
+    $form['css_settings']['bg_image_important'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add "!important" to the background property.'),
+      '#description' => $this->t(
+        'This can be helpful to override any existing background image or color properties added by the theme.'
+      ),
+      '#default_value' => $settings['css_settings']['bg_image_important'],
+    ];
+
 
     return $form;
 
@@ -163,121 +304,41 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+
     $settings = $this->getAllSettings($items);
+    $css_settings = $settings['css_settings'];
+    $az_background_media = [];
     $full_width = '';
+    $marquee_style = $settings['style'];
     if (!empty($settings['full_width'])) {
       $full_width = $settings['full_width'];
     }
-    $marquee_style = $settings['style'];
-
-    $elements = [];
-    // $defaults = self::defaultSettings();
     $media_items = $this->getEntitiesToView($items, $langcode);
 
     // Early opt-out if the field is empty.
     if (empty($media_items)) {
       return $elements;
     }
+    $paragraph = $items->getEntity();
 
     /** @var \Drupal\media\MediaInterface[] $media_items */
     foreach ($media_items as $delta => $media) {
-      $media_bundle = $media->bundle();
-      $preprocessed_background_image = [
-        'uri' => $this->getMediaThumbURI($media),
-        'responsive_image_style_id' => $settings['image_style'],
-      ];
-      $renderable_style_element = $this->getResponsiveBackgroundImageStyleElement($preprocessed_background_image, $settings);
-      $text_media_spacing = $settings['text_media_spacing'];
-      $media_element = $this->getRemoteVideoMarkup($media, $settings);
-      if ($marquee_style !== 'bottom' && $text_media_spacing !== 'aspect-ratio') {
-        $elements[$delta] = [
-          'style' => [
-            '#type' => 'inline_template',
-            '#template' => "<style type='text/css'>{{responsive_css}}</style>",
-            '#context' => [
-              'responsive_css' => $renderable_style_element,
-            ],
-          ],
-        ];
-      }
-      elseif ($marquee_style !== 'bottom' && $text_media_spacing === 'aspect-ratio') {
-        $background_css = [
-          'style' => [
-            '#type' => 'inline_template',
-            '#template' => "<style type='text/css'>{{responsive_css}}</style>",
-            '#context' => [
-              'responsive_css' => $renderable_style_element,
-            ],
-          ],
-        ];
 
-        $aspect_ratio_sizer = [
-          '#theme' => 'responsive_image_formatter',
-          '#responsive_image_style_id' => $settings['image_style'],
-          '#item' => $media->thumbnail,
-          '#item_attributes' => [
-            'class' => ['img-fluid'],
-          ],
-        ];
-        $aspect_ratio_markup = [
-          '#type' => 'html_tag',
-          '#tag' => 'div',
-          'media_element' => $media_element,
-          'aspect_ratio_sizer' => $aspect_ratio_sizer,
-          'background_css' => $background_css,
-          // '#attributes' => [
-          //   'class' => $text_on_bottom_classes,
-          // ],
-        ];
-        $elements[$delta] = $aspect_ratio_markup;
-      }
+        switch ($media->bundle()) {
+        case 'az_remote_video':
+            $az_background_media = $this->remoteVideo($settings, $paragraph, $media);
+            break;
 
-      elseif ($marquee_style === 'bottom') {
+        case 'az_image':
+            $az_background_media = $this->image($settings, $media);
+            break;
 
-        // Need to add text-on-media-bottom class on field.
-        $text_on_bottom = [];
-        $fallback = [];
-        $text_on_bottom_classes = ['text-on-media-bottom'];
-        if ($media_bundle === 'az_remote_video') {
-          $text_on_bottom_classes[] = 'text-on-video';
+        default:
+            return $az_background_media;
         }
-        if ($media_bundle === 'az_remote_video') {
-          $media_element = $this->getRemoteVideoMarkup($media, $settings);
-          $fallback = [
-            '#theme' => 'responsive_image_formatter',
-            '#responsive_image_style_id' => $settings['image_style'],
-            '#item' => $media->thumbnail,
-            '#item_attributes' => [
-              'class' => ['img-fluid'],
-            ],
-          ];
-        }
-        else {
-          $media_element = [
-            '#theme' => 'responsive_image_formatter',
-            '#responsive_image_style_id' => $settings['image_style'],
-            '#item' => $media->thumbnail,
-            '#item_attributes' => [
-              'class' => ['img-fluid'],
-            ],
-          ];
-        }
-
-        $text_on_bottom = [
-          '#type' => 'html_tag',
-          '#tag' => 'div',
-          'fallback' => $fallback,
-          'media' => $media_element,
-          '#attributes' => [
-            'class' => $text_on_bottom_classes,
-          ],
-        ];
-        $elements[$delta] = $text_on_bottom;
-      }
-
     }
 
-    return $elements;
+    return $az_background_media;
   }
 
   /**
@@ -313,187 +374,19 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return \Drupal\Core\Uri|null
    *   The URI object for the media item's thumbnail image.
    */
-  protected function getMediaThumbURI(MediaInterface $media) {
+  protected function getMediaThumbFile(MediaInterface $media) {
 
     $uri = NULL;
     $file = $media->getSource();
     $uri = $file->getMetadata($media, 'thumbnail_uri');
+    /** @var \Drupal\file\FileInterface[] $files */
+    $files = $this->entityTypeManager()
+    ->getStorage('file')
+    ->loadByProperties(['uri' => $uri]);
+    /** @var \Drupal\file\FileInterface|null $file */
+    $file = reset($files) ?: NULL;
 
-    return $uri;
-  }
-
-  /**
-   * Get CSS that conforms to an installed breakpoint set.
-   *
-   * @param array $preprocessedBackgroundImage
-   *   Settings for the background image.
-   *
-   * @return mixed
-   *   Render array.
-   */
-  protected function getResponsiveBackgroundImageStyleElement($preprocessedBackgroundImage, $paragraphSettings) {
-    $css_settings = $paragraphSettings['css_settings'];
-    template_preprocess_responsive_image($preprocessedBackgroundImage);
-    // Split each source into multiple rules.
-    foreach (array_reverse($preprocessedBackgroundImage['sources']) as $source_i => $source) {
-
-      $attr = $source->toArray();
-
-      $srcset = explode(', ', $attr['srcset']);
-
-      foreach ($srcset as $src_i => $src) {
-
-        list($src, $res) = explode(' ', $src);
-
-        $media = isset($attr['media']) ? $attr['media'] : '';
-
-        // Add "retina" to media query if this is a 2x image.
-        if ($res && $res === '2x' && !empty($media)) {
-          $media = "{$media} and (-webkit-min-device-pixel-ratio: 2), {$media} and (min-resolution: 192dpi)";
-        }
-
-        // Correct a bug in template_preprocess_responsive_image which
-        // generates an invalid media rule "screen (max-width)" when no
-        // min-width is specified. If this bug gets fixed, this replacement
-        // will deactivate.
-        $media = str_replace('screen (max-width', 'screen and (max-width', $media);
-
-        $css = $this->getBackgroundImageCss($src, $css_settings);
-        // $css_settings['bg_image_selector'] probably needs to be sanitized.
-        $with_media_query = sprintf('%s { background-image: url(%s);}', $css_settings['bg_image_selector'], $preprocessedBackgroundImage['img_element']['#uri']);
-        $with_media_query .= sprintf('@media %s {', $media);
-        $with_media_query .= sprintf($css['data']);
-        $with_media_query .= '}';
-        $css['attributes']['media'] = $media;
-        $css['data'] = $with_media_query;
-
-        $style_elements[] = [
-          'style' => [
-            '#type' => 'inline_template',
-            '#template' => "{{ css }}",
-            '#context' => [
-              'css' => Markup::create($css['data']),
-            ],
-            '#attributes' => [
-              'media' => $css['attributes']['media'],
-            ],
-          ],
-        ];
-      }
-    }
-
-    return $style_elements;
-  }
-
-  /**
-   * Function taken from the module 'bg_image'.
-   *
-   * Adds a background image to the page using the
-   * css 'background' property.
-   *
-   * @param string $image_path
-   *   The path of the image to use. This can be either
-   *      - A relative path e.g. sites/default/files/image.png
-   *      - A uri: e.g. public://image.png.
-   * @param array $css_settings
-   *   An array of css settings to use. Possible values are:
-   *      - bg_image_selector: The css selector to use
-   *      - bg_image_color: The background color
-   *      - bg_image_x: The x offset
-   *      - bg_image_y: The y offset
-   *      - bg_image_attachment: The attachment property (scroll or fixed)
-   *      - bg_image_repeat: The repeat settings
-   *      - bg_image_background_size: The background size property if necessary
-   *    Default settings will be used for any values not provided.
-   * @param string $image_style
-   *   Optionally add an image style to the image before applying it to the
-   *   background.
-   *
-   * @return array
-   *   The array containing the CSS.
-   */
-  public function getBackgroundImageCss($image_path, array $css_settings = [], $image_style = NULL) {
-
-    $attachment = $css_settings['bg_image_attachment'];
-    $background_size = $css_settings['bg_image_background_size'];
-    $selector = $css_settings['bg_image_selector'];
-    $important = $css_settings['bg_image_important'];
-    $repeat = $css_settings['bg_image_repeat'];
-    $bg_color = $css_settings['bg_image_color'];
-    $bg_x = $css_settings['bg_image_x'];
-    $bg_y = $css_settings['bg_image_y'];
-    $background_gradient = $css_settings['bg_image_gradient'];
-    $z_index = $css_settings['bg_image_z_index'];
-    $background_size_ie8 = $css_settings['bg_image_background_size_ie8'];
-
-    // If important is true, we turn it into a string for css output.
-    if ($important) {
-      $important = '!important';
-    }
-    else {
-      $important = '';
-    }
-
-    // Handle the background size property.
-    $bg_size = '';
-    $ie_bg_size = '';
-
-    if ($background_size) {
-      // CSS3.
-      $bg_size = sprintf('background-size: %s %s;', $background_size, $important);
-      // Let's cover ourselves for other browsers as well...
-      $bg_size .= sprintf('-webkit-background-size: %s %s;', $background_size, $important);
-      $bg_size .= sprintf('-moz-background-size: %s %s;', $background_size, $important);
-      $bg_size .= sprintf('-o-background-size: %s %s;', $background_size, $important);
-      // IE filters to apply the cover effect.
-      if ($background_size === 'cover' && $background_size_ie8) {
-        $ie_bg_size = sprintf(
-          "filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='%s', sizingMethod='scale');",
-          $image_path
-        );
-        $ie_bg_size .= sprintf(
-          "-ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='%s', sizingMethod='scale');",
-          $image_path
-        );
-      }
-    }
-
-    // Add the css if we have everything we need.
-    if ($selector && $image_path) {
-      $style = sprintf('%s {', $selector);
-
-      if ($bg_color) {
-        $style .= sprintf('background-color: %s %s;', $bg_color, $important);
-      }
-      $style .= sprintf("background-image: %s url('%s') %s;", $background_gradient, $image_path, $important);
-
-      if ($repeat) {
-        $style .= sprintf('background-repeat: %s %s;', $repeat, $important);
-      }
-
-      if ($attachment) {
-        $style .= sprintf('background-attachment: %s %s;', $attachment, $important);
-      }
-
-      if ($bg_x && $bg_y) {
-        $style .= sprintf('background-position: %s %s %s;', $bg_x, $bg_y, $important);
-      }
-
-      if ($z_index) {
-        $style .= sprintf('z-index: %s;', $z_index);
-      }
-      $style .= $bg_size;
-      $style .= $background_size_ie8 ? $ie_bg_size : '';
-      $style .= '}';
-
-      return [
-        'data' => $style,
-        'media' => !empty($media_query) ? $media_query : 'all',
-        'group' => CSS_THEME,
-      ];
-    }
-
-    return [];
+    return $file;
   }
 
   /**
@@ -519,13 +412,15 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   protected function getAllSettings(FieldItemListInterface $items) {
     $all_settings = [];
-    $default_settings = $this->getSettings();
-    $this->paragraphSettings = $this->getParagraphSettings($items);
-    $all_settings += $this->paragraphSettings;
-    $all_settings += $default_settings;
-    $all_settings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
+    // Paragraph instance settings override everything.
+    $all_settings += $this->getParagraphSettings($items);
+    // Field formatter settings.
+    $all_settings += $this->getSettings();
+    // Fill in all the rest of the required settings.
+    $all_settings += $this->defaultSettings();
 
-    // Get settings from parent paragraph.
+    $all_settings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
+    // Get settings from parent paragraph and transforming to what the field formatter requires.
     if (!empty($all_settings['bg_attachment'])) {
       switch ($all_settings['bg_attachment']) {
         case 'bg-fixed':
@@ -542,55 +437,144 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * Prepare markup for remote video.
    */
-  private function getRemoteVideoMarkup(MediaInterface $media, array $settings = []) {
+  private function remoteVideo(array $settings, MediaInterface $media) {
 
-    $selector = $settings['css_settings']['bg_image_selector'];
-
-    $marquee_style = $settings['style'];
-
+    $az_background_media = [];
+    $css_settings = $settings['css_settings'];
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
+    $view_builder = $this->entityTypeManager->getViewBuilder('media');
+    $background_media = $view_builder->view($media, 'az_background');
     $provider = $media_oembed->getMetadata($media, 'provider_name');
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
-    $view_builder = $this->entityTypeManager->getViewBuilder('media');
-    $background_media = $view_builder->view($media, 'az_background');
+    $file = $this->getMediaThumbFile($media);
+    $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $settings['image_style']);
 
     if ($provider === 'YouTube') {
+
       $source_url = $media->get('field_media_az_oembed_video')->value;
-      $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
-      $style_element = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#allowed_tags' => ['iframe'],
-        '#attributes' => [
-          'id' => [$video_oembed_id . '-bg-video-container'],
-          'class' => [
-            'az-video-loading',
-            'az-video-background',
-            'az-js-video-background',
+      $video_oembed_id = HTML::getId($this->videoEmbedHelper->getYoutubeIdFromUrl($source_url));
+
+      if ($settings['style'] !== 'bottom') {
+
+        $responsive_image_style_element = [
+          'style' => [
+            '#type' => 'inline_template',
+            '#template' => "<style type='text/css'>{{css}}</style>",
+            '#context' => [
+              'css' => $css,
+            ],
           ],
-          'data-youtubeid' => $video_oembed_id,
-          'data-style' => $marquee_style,
-        ],
-        'child' => $background_media,
-        '#attached' => [
-          'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
-          'drupalSettings' => [
-            'azFieldsMedia' => [
-              'bgVideos' => [
-                $video_oembed_id => [
-                  'videoId' => $video_oembed_id,
-                  'start' => 0,
+          $background_video = [
+            '#type' => 'html_tag',
+            '#tag' => 'div',
+            '#allowed_tags' => ['iframe', 'img'],
+            '#attributes' => [
+              'id' => [$video_oembed_id . '-bg-video-container'],
+              'class' => [
+                'az-video-loading',
+                'az-video-background',
+                'az-js-video-background',
+              ],
+              'data-youtubeid' => $video_oembed_id,
+              'data-style' => $settings['style'],
+            ],
+            'child' => $background_media,
+            '#attached' => [
+              'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
+              'drupalSettings' => [
+                'azFieldsMedia' => [
+                  'bgVideos' => [
+                    $video_oembed_id => [
+                      'videoId' => $video_oembed_id,
+                      'start' => 0,
+                    ],
+                  ],
                 ],
               ],
             ],
           ],
+        ];
+        $az_background_media = $responsive_image_style_element;
+      }
+      elseif ($settings['style'] === 'bottom') {
+        $responsive_image_style_element = [
+          'style' => [
+            '#type' => 'inline_template',
+            '#template' => "<style type='text/css'>{{css}}</style>",
+            '#context' => [
+              'css' => $css,
+            ],
+          ],
+        ];
+        $image_renderable = [
+          '#theme' => 'image',
+          '#uri' => file_create_url($thumb),
+          '#alt' => $media->field_media_az_image->alt,
+          '#attributes' => [
+            'class' => ['img-fluid'],
+          ],
+        ];
+        $text_on_bottom = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          'img' => $image_renderable,
+          'video' => $responsive_image_style_element,
+          '#attributes' => [
+            'class' => ['text-on-media-bottom', 'text-on-video'],
+          ],
+        ];
+        $az_background_media[] = $text_on_bottom;
+      }
+      return $variables;
+    }
+  }
+
+  /**
+   * Prepare markup for image.
+   */
+  private function image(array $settings, MediaInterface $media) {
+    $az_background_media = [];
+    $css_settings = $settings['css_settings'];
+
+    if ($settings['style'] !== 'bottom') {
+      $file = $this->getMediaThumbFile($media);
+      $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $settings['image_style']);
+      $responsive_image_style_element = [
+        'style' => [
+          '#type' => 'inline_template',
+          '#template' => "<style type='text/css'>{{css}}</style>",
+          '#context' => [
+            'css' => $css,
+            ],
         ],
       ];
-      // $style_element +  $background_media;
-      return $style_element;
+
+      $az_background_media[] = $responsive_image_style_element;
     }
+    elseif ($settings['style'] === 'bottom') {
+
+      $fields = $media->getFieldDefinitions();
+      $image_renderable = [
+        '#theme' => 'responsive_image_formatter',
+        '#responsive_image_style_id' => 'az_full_width_background',
+        '#item' => $media->field_media_az_image,
+        '#item_attributes' => [
+          'class' => ['img-fluid'],
+        ],
+      ];
+      $text_on_bottom = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        'child' => $image_renderable,
+        '#attributes' => [
+          'class' => ['text-on-media-bottom'],
+        ],
+      ];
+      $az_background_media[] = $text_on_bottom;
+    }
+    return $az_background_media;
   }
 
 }
