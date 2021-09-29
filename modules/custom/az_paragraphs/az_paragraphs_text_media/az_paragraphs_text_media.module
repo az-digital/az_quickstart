@@ -8,22 +8,29 @@
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 
-function az_paragraphs_text_media_entity_view_alter(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display) {
-    $displayArray = $display->toArray();
-    $az_background_media = [];
+/**
+ * Implements hook_entity_view_alter().
+ */
+function az_paragraphs_text_media_entity_view_alter(
+    array &$build,
+    EntityInterface $entity,
+    EntityViewDisplayInterface $display
+  ) {
+  $displayArray = $display->toArray();
+  $az_background_media = [];
 
-    foreach($displayArray['content'] as $field_name => $field_data) {
-      if (!empty($field_data['type']) && $field_data['type'] === 'az_background_media_formatter'){
-        $fields_extract[] =  $field_name;
-      }
+  foreach ($displayArray['content'] as $field_name => $field_data) {
+    if (!empty($field_data['type']) && $field_data['type'] === 'az_background_media_formatter') {
+      $fields_extract[] = $field_name;
     }
-    if (!empty($fields_extract)) {
-      foreach($fields_extract as $delta => $field_name) {
-        $az_background_media[] = $build[$field_name];
-        unset($build[$field_name]);
-      }
+  }
+  if (!empty($fields_extract)) {
+    foreach ($fields_extract as $delta => $field_name) {
+      $az_background_media[] = $build[$field_name];
+      unset($build[$field_name]);
     }
-    $build['#az_background_media'] = $az_background_media;
+  }
+  $build['#az_background_media'] = $az_background_media;
 }
 
 /**
@@ -31,66 +38,65 @@ function az_paragraphs_text_media_entity_view_alter(array &$build, EntityInterfa
  */
 function az_paragraphs_text_media_theme_registry_alter(&$theme_registry) {
 
-    // Inject az_paragraphs_text_media_build_backgrounds in all entity theming functions.
-    $entity_info = Drupal::entityTypeManager()->getDefinitions();
-    $entity_types = [];
-    foreach ($entity_info as $entity_type_id => $entity_type) {
-      if ($route_name = $entity_type->get('field_ui_base_route')) {
-        $entity_types[] = $entity_type_id;
-      }
-    }
-
-    foreach ($theme_registry as $theme_hook => $info) {
-      if (in_array($theme_hook, $entity_types) || (!empty($info['base hook']) && in_array($info['base hook'], $entity_types))) {
-        $theme_registry[$theme_hook]['preprocess functions'][] = 'az_paragraphs_text_media_build_backgrounds';
-      }
-    }
-
-    // ECK does not use the eck as theme function.
-    if (isset($theme_registry['eck_entity'])) {
-      $theme_registry['eck_entity']['preprocess functions'][] = 'az_paragraphs_text_media_build_backgrounds';
-    }
-
-    // External entities use the external_entity as theme function.
-    if (isset($theme_registry['external_entity'])) {
-      $theme_registry['external_entity']['preprocess functions'][] = 'az_paragraphs_text_media_build_backgrounds';
+  // Inject az_paragraphs_text_media_build_backgrounds
+  // in all entity theming functions.
+  $entity_info = Drupal::entityTypeManager()->getDefinitions();
+  $entity_types = [];
+  foreach ($entity_info as $entity_type_id => $entity_type) {
+    if ($route_name = $entity_type->get('field_ui_base_route')) {
+      $entity_types[] = $entity_type_id;
     }
   }
 
+  foreach ($theme_registry as $theme_hook => $info) {
+    if (in_array($theme_hook, $entity_types) || (!empty($info['base hook']) && in_array($info['base hook'], $entity_types))) {
+      $theme_registry[$theme_hook]['preprocess functions'][] = 'az_paragraphs_text_media_build_backgrounds';
+    }
+  }
+
+  // ECK does not use the eck as theme function.
+  if (isset($theme_registry['eck_entity'])) {
+    $theme_registry['eck_entity']['preprocess functions'][] = 'az_paragraphs_text_media_build_backgrounds';
+  }
+
+  // External entities use the external_entity as theme function.
+  if (isset($theme_registry['external_entity'])) {
+    $theme_registry['external_entity']['preprocess functions'][] = 'az_paragraphs_text_media_build_backgrounds';
+  }
+}
 
 /**
  * Pre-render callback for entity views.
  *
- * @param preprocess $vars
+ * @param array $variables
  *   Variables.
- * @param $context
+ * @param string $context
  *   The display context (entity type, form or view).
  *
  * @return array
  *   With az_background_media added to variables
- *
  */
 function az_paragraphs_text_media_build_backgrounds(array &$variables, $context = 'view') {
 
-    if (isset($variables['elements'])) {
-      $element = &$variables['elements'];
-    }
-    elseif (isset($variables['content'])) {
-      $element = &$variables['content'];
+  if (isset($variables['elements'])) {
+    $element = &$variables['elements'];
+  }
+  elseif (isset($variables['content'])) {
+    $element = &$variables['content'];
+  }
+  else {
+    if ($context === 'eck_entity' || $context === 'external_entity') {
+      $element = &$variables['entity'];
     }
     else {
-      if ($context === 'eck_entity' || $context === 'external_entity') {
-        $element = &$variables['entity'];
-      }
-      else {
-        $element = &$variables;
-      }
+      $element = &$variables;
     }
+  }
 
-    // No background media on the entity.
-    if (empty($element['#az_background_media'])) {
-        return $element;
-    }
-    $variables['az_background_media'] = $element['#az_background_media'];
+  // No background media on the entity.
+  if (empty($element['#az_background_media'])) {
+    return $element;
+  }
+  $variables['az_background_media'] = $element['#az_background_media'];
 
 }

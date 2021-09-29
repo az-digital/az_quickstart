@@ -3,7 +3,6 @@
 namespace Drupal\az_paragraphs;
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Markup;
 
 /**
@@ -33,8 +32,7 @@ class AZResponsiveBackgroundImageCssHelper {
   }
 
   /**
-   * Adds a responsive background image to the page using the
-   * css 'background' property.
+   * Adds a responsive background image to the page.
    *
    * @param \Drupal\Core\Entity\EntityInterface $image
    *   The entity to display.

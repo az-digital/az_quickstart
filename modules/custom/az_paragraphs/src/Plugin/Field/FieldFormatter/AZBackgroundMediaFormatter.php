@@ -9,7 +9,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\Core\Render\Markup;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
@@ -278,7 +277,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#default_value' => $settings['css_settings']['bg_image_important'],
     ];
 
-
     return $form;
 
   }
@@ -324,18 +322,18 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     /** @var \Drupal\media\MediaInterface[] $media_items */
     foreach ($media_items as $delta => $media) {
 
-        switch ($media->bundle()) {
+      switch ($media->bundle()) {
         case 'az_remote_video':
-            $az_background_media = $this->remoteVideo($settings, $media);
-            break;
+          $az_background_media = $this->remoteVideo($settings, $media);
+          break;
 
         case 'az_image':
-            $az_background_media = $this->image($settings, $media);
-            break;
+          $az_background_media = $this->image($settings, $media);
+          break;
 
         default:
-            return $az_background_media;
-        }
+          return $az_background_media;
+      }
     }
 
     return $az_background_media;
@@ -411,7 +409,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   }
 
   /**
-   * Get and merge all settings needed to output a paragraph with a background image.
+   * Get and merge all settings needed.
    *
    * @return array
    *   The paragraph behavior settings,
@@ -428,7 +426,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $all_settings += $this->defaultSettings();
 
     $all_settings['css_settings']['bg_image_selector'] = $this->getCssSelector($items);
-    // Get settings from parent paragraph and transforming to what the field formatter requires.
+    // Get settings from parent paragraph and transforming to
+    // what the field formatter requires.
     if (!empty($all_settings['bg_attachment'])) {
       switch ($all_settings['bg_attachment']) {
         case 'bg-fixed':
@@ -443,7 +442,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   }
 
   /**
-   * Prepare markup for remote video. (YouTube is the only supported provider.)
+   * Prepare markup for remote video.
+   *
+   * YouTube is currently the only supported provider.
+   *
+   * @return array
+   *   The remote video render array for az_background_media element.
    */
   private function remoteVideo(array $settings, MediaInterface $media) {
 
@@ -540,6 +544,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
   /**
    * Prepare markup for image.
+   *
+   * @return array
+   *   The image render array for az_background_media element.
    */
   private function image(array $settings, MediaInterface $media) {
     $az_background_media = [];
@@ -554,7 +561,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           '#template' => "<style type='text/css'>{{css}}</style>",
           '#context' => [
             'css' => $css,
-            ],
+          ],
         ],
       ];
 

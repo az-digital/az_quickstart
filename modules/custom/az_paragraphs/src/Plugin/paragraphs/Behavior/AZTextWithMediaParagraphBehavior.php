@@ -7,7 +7,6 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\media\MediaInterface;
 use Drupal\Core\Template\Attribute;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -47,7 +46,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'bg_color' => '',
       'position' => '',
       'text_media_spacing' => '',
-      'bg_attachment' =>'',
+      'bg_attachment' => '',
     ];
   }
 
