@@ -101,7 +101,7 @@
   <div{{ content_attributes.addClass('node__content', 'clearfix') }}>
     <div class="row d-md-none">
       <div class="col-12">
-        <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
+        <h1 class="text-blue my-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
             <span class="h4 d-block mt-0">{{ item }}</span>
@@ -113,7 +113,7 @@
       <div class="col-12 col-md-8 order-2">
 
         <div class="d-none d-md-block">
-          <h1 class="text-blue mt-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
+          <h1 class="text-blue my-0">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</h1>
           {% if content.field_az_titles[0] %}
             {% for key, item in content.field_az_titles if key|first != '#' %}
               <span class="h4 d-block mt-0">{{ item }}</span>
@@ -163,6 +163,9 @@
           {% endif %}
           {% if content.field_az_email.0 %}
           <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
+          {% endif %}
+          {% if content.field_az_pronouns.0 %}
+            <li class="list-group-item border-0 py-0">Pronouns: {{ content.field_az_pronouns.0|render|lower }}</li>
           {% endif %}
           {% if content.field_az_links %}
             {% for key, item in content.field_az_links if key|first != '#' %}

@@ -15,6 +15,7 @@ dependencies:
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
+    - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -34,7 +35,7 @@ third_party_settings:
         - field_az_person_category
         - field_az_person_category_sec
       parent_name: ''
-      weight: 4
+      weight: 5
       format_type: details
       region: content
       format_settings:
@@ -51,12 +52,12 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 18
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_address:
-    weight: 8
+    weight: 9
     settings:
       rows: 9
       placeholder: ''
@@ -64,14 +65,14 @@ content:
     type: text_textarea
     region: content
   field_az_attachments:
-    weight: 11
+    weight: 12
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
     region: content
   field_az_body:
-    weight: 10
+    weight: 11
     settings:
       rows: 9
       placeholder: ''
@@ -79,7 +80,7 @@ content:
     type: text_textarea
     region: content
   field_az_degrees:
-    weight: 12
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -87,7 +88,7 @@ content:
     type: string_textfield
     region: content
   field_az_email:
-    weight: 6
+    weight: 7
     settings:
       size: 60
       placeholder: ''
@@ -103,7 +104,7 @@ content:
     type: string_textfield
     region: content
   field_az_links:
-    weight: 9
+    weight: 10
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -120,7 +121,7 @@ content:
     region: content
   field_az_media_image:
     type: media_library_widget
-    weight: 3
+    weight: 4
     settings:
       media_types: {  }
     third_party_settings:
@@ -128,7 +129,7 @@ content:
         show_edit: '1'
     region: content
   field_az_metatag:
-    weight: 51
+    weight: 21
     settings:
       sidebar: true
     third_party_settings: {  }
@@ -147,14 +148,22 @@ content:
     type: options_buttons
     region: content
   field_az_phones:
-    weight: 7
+    weight: 8
     settings:
       placeholder: ''
     third_party_settings: {  }
     type: telephone_default
     region: content
+  field_az_pronouns:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_az_titles:
-    weight: 5
+    weight: 6
     settings:
       size: 60
       placeholder: ''
@@ -163,7 +172,7 @@ content:
     region: content
   path:
     type: path
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -171,21 +180,21 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 14
+    weight: 15
     region: content
     third_party_settings: {  }
   status:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 13
+    weight: 14
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 15
+    weight: 16
     region: content
     third_party_settings: {  }
   title:
@@ -198,7 +207,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 17
+    weight: 18
     settings:
       match_operator: CONTAINS
       size: 60
@@ -207,8 +216,8 @@ content:
     region: content
     third_party_settings: {  }
   url_redirects:
-    weight: 50
+    weight: 20
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden: {  }

@@ -3,8 +3,8 @@ status: true
 dependencies:
   config:
     - field.field.node.az_person.field_az_address
-    - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
@@ -14,6 +14,7 @@ dependencies:
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
+    - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -34,13 +35,6 @@ content:
     third_party_settings: {  }
     type: text_default
     region: content
-  field_az_body:
-    weight: 16
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
-    region: content
   field_az_attachments:
     weight: 18
     label: hidden
@@ -48,6 +42,13 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
     type: file_default
+    region: content
+  field_az_body:
+    weight: 16
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
     region: content
   field_az_degrees:
     weight: 17
@@ -125,6 +126,14 @@ content:
     third_party_settings: {  }
     type: telephone_link
     region: content
+  field_az_pronouns:
+    weight: 22
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
   field_az_titles:
     weight: 4
     label: hidden
@@ -138,4 +147,3 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
