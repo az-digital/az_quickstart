@@ -44,7 +44,7 @@ function az_quickstart_update_9204() {
     ->set('status', TRUE)
     ->set('region', 'branding')
     ->set('weight', -9)
-    ->set('use_site_name', FALSE)
-    ->set('use_site_slogan', FALSE)
+    ->set('settings.use_site_name', FALSE)
+    ->set('settings.use_site_slogan', FALSE)
     ->save(TRUE);
 }
