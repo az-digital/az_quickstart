@@ -2,7 +2,7 @@
 
 namespace Drupal\az_paragraphs;
 
-use Drupal\Component\Utility\Xss;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Class AZBackgroundImageCssHelper. Adds service to form background image CSS.
@@ -10,7 +10,8 @@ use Drupal\Component\Utility\Xss;
 class AZBackgroundImageCssHelper {
 
   /**
-   * {@inheritdoc}
+   *  @return array
+   *    An array with all required settings.
    */
   public static function defaultSettings() {
     return [
@@ -21,7 +22,7 @@ class AZBackgroundImageCssHelper {
         'bg_image_y' => 'top',
         'bg_image_attachment' => 'scroll',
         'bg_image_repeat' => 'no-repeat',
-        'bg_image_background_size' => '',
+        'bg_image_background_size' => 'cover',
         'bg_image_background_size_ie8' => 0,
         'bg_image_gradient' => '',
         'bg_image_media_query' => 'all',
@@ -64,18 +65,18 @@ class AZBackgroundImageCssHelper {
     $css_settings += $defaults['css_settings'];
 
     // Pull the default css setting if not provided.
-    $selector = Xss::filter($css_settings['bg_image_selector']);
-    $bg_color = Xss::filter($css_settings['bg_image_color']);
-    $bg_x = Xss::filter($css_settings['bg_image_x']);
-    $bg_y = Xss::filter($css_settings['bg_image_y']);
+    $selector = $css_settings['bg_image_selector'];
+    $bg_color = $css_settings['bg_image_color'];
+    $bg_x = $css_settings['bg_image_x'];
+    $bg_y = $css_settings['bg_image_y'];
     $attachment = $css_settings['bg_image_attachment'];
     $repeat = $css_settings['bg_image_repeat'];
     $important = $css_settings['bg_image_important'];
-    $background_size = Xss::filter($css_settings['bg_image_background_size']);
-    $background_size_ie8 = $css_settings['bg_image_background_size_ie8'];
+    $background_size = $css_settings['bg_image_background_size'];
+    dpm($background_size);
     $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
-    $media_query = isset($css_settings['bg_image_media_query']) ? Xss::filter($css_settings['bg_image_media_query']) : NULL;
-    $z_index = Xss::filter($css_settings['bg_image_z_index']);
+    $media_query = isset($css_settings['bg_image_media_query']) ? $css_settings['bg_image_media_query'] : NULL;
+    $z_index = $css_settings['bg_image_z_index'];
 
     // If important is true, we turn it into a string for css output.
     if ($important) {
@@ -87,52 +88,74 @@ class AZBackgroundImageCssHelper {
 
     // Handle the background size property.
     $bg_size = '';
-    $ie_bg_size = '';
 
     if ($background_size) {
       // CSS3.
-      $bg_size = sprintf('background-size: %s %s;', $background_size, $important);
-      // Let's cover ourselves for other browsers as well...
-      $bg_size .= sprintf('-webkit-background-size: %s %s;', $background_size, $important);
-      $bg_size .= sprintf('-moz-background-size: %s %s;', $background_size, $important);
-      $bg_size .= sprintf('-o-background-size: %s %s;', $background_size, $important);
-      // IE filters to apply the cover effect.
-      if ($background_size === 'cover' && $background_size_ie8) {
-        $ie_bg_size = sprintf(
-          "filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='%s', sizingMethod='scale');",
-          $image_path
-        );
-        $ie_bg_size .= sprintf(
-          "-ms-filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='%s', sizingMethod='scale');",
-          $image_path
-        );
-      }
+      $bg_size = new FormattableMarkup(
+        'background-size: :bg_size :important;',
+        [':bg_size' => $background_size, ':important' => $important]
+      );
+      $bg_size .= new FormattableMarkup(
+        ' -webkit-background-size: :bg_size :important;',
+        [':bg_size' => $background_size, ':important' => $important]
+      );
+      $bg_size .= new FormattableMarkup(
+        ' -moz-background-size: :bg_size :important;',
+        [':bg_size' => $background_size, ':important' => $important]
+      );
+      $bg_size .= new FormattableMarkup(
+        ' -o-background-size: :bg_size :important;',
+        [':bg_size' => $background_size, ':important' => $important]
+      );
     }
 
     // Add the css if we have everything we need.
     if ($selector && $image_path) {
-      $style = sprintf('%s {', $selector);
-
+      $style = new FormattableMarkup(
+        ':selector: {',
+        [':selector' => $selector]
+      );
+      $background_image_style = new FormattableMarkup(
+        'background-image: :bg_gradient url(":image_path") :important;',
+        [':image_path' => $image_path, ':bg_gradient' => $background_gradient, ':important' => $important]
+      );
+      $style .= $background_image_style;
       if ($bg_color) {
-        $style .= sprintf('background-color: %s %s;', $bg_color, $important);
+        $style .= new FormattableMarkup(
+          ' background-color: :bg_color :important;',
+          [':bg_color' => $bg_color, ':important' => $important]
+        );
+        $style .= $style_background_color;
       }
-      $style .= sprintf("background-image: %s url('%s') %s;", $background_gradient, $image_path, $important);
-
       if ($repeat) {
-        $style .= sprintf('background-repeat: %s %s;', $repeat, $important);
+        $style .= new FormattableMarkup(
+          ' background-repeat: :repeat :important;',
+          [':repeat' => $style_repeat, ':important' => $important]
+        );
       }
 
       if ($attachment) {
-        $style .= sprintf('background-attachment: %s %s;', $attachment, $important);
+        $style .= new FormattableMarkup(
+          ' background-repeat: :attachment :important;',
+          [':attachment' => $attachment, ':important' => $important]
+        );
+
       }
 
       if ($bg_x && $bg_y) {
-        $style .= sprintf('background-position: %s %s %s;', $bg_x, $bg_y, $important);
+        $style .=  new FormattableMarkup(
+          ' background-position: :bg_x :bg_y :important;',
+          [':bg_x' => $bg_x, ':bg_y' => $bg_y, ':important' => $important]
+        );
       }
 
       if ($z_index) {
-        $style .= sprintf('z-index: %s;', $z_index);
+        $style .= new FormattableMarkup(
+          ' z-index: :z_index;',
+          [':z_index' => $z_index]
+        );
       }
+
       $style .= $bg_size;
       $style .= $background_size_ie8 ? $ie_bg_size : '';
       $style .= '}';

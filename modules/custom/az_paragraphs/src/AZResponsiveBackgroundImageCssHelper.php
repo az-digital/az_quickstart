@@ -5,6 +5,7 @@ namespace Drupal\az_paragraphs;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Markup;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Class AZResponsiveBackgroundImageCssHelper.
@@ -95,11 +96,17 @@ class AZResponsiveBackgroundImageCssHelper {
 
         $css = $this->backgroundImageCss->getBackgroundImageCss($src, $css_settings);
 
-        // $css_settings['bg_image_selector'] probably needs to be sanitized.
-        $with_media_query = sprintf('%s { background-image: url(%s);}', $css_settings['bg_image_selector'], $vars['img_element']['#uri']);
+        $with_media_query = new FormattableMarkup(
+          '@bg_image_selector { background-image:     url(":img_element_uri");}',
+          ['@bg_image_selector' => $css_settings['bg_image_selector'], ':img_element_uri' => $vars['img_element']['#uri']]
+        );
+        $with_media_query .= new FormattableMarkup(
+          '@media @media_query { @data }',
+          ['@media_query' => $media, '@data' => $css['data']]
+        );
 
-        $with_media_query .= sprintf('@media %s {', $media);
-        $with_media_query .= sprintf($css['data']);
+
+        // $with_media_query .= sprintf($css['data']);
         $with_media_query .= '}';
 
         $css['attributes']['media'] = $media;
