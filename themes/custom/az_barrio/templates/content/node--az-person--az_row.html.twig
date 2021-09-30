@@ -105,6 +105,9 @@
           {% endfor %}
         {% endif %}
           <li class="list-group-item border-0 p-0">{{ content.field_az_email }}</li>
+        {% if content.field_az_pronouns.0 %}
+          <li class="list-group-item border-0 p-0">Pronouns: {{ content.field_az_pronouns.0|render|lower }}</li>
+        {% endif %}
         </ul>
       </div>
 
