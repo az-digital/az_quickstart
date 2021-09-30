@@ -1,3 +1,8 @@
+#az-js-floating-alpha-nav-container {
+  /* Keep alpha nav under dropdown menus */
+  z-index: 999;
+}
+
 #az-js-alpha-navigation .page-item:not(.disabled) .page-link {
   border-width: 2px;
   border-color: #378dbd;
