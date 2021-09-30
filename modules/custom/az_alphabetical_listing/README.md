@@ -17,8 +17,8 @@ ________________________
 2. Click "Add field"
 3. From the "Re-use an existing field" dropdown, select `List (text): field_az_alphabetical_index` and provide a field label (recommended: `Alphabetical Index Letter`)
 4. Save your changes
-5. Modify the form display to place the Index letter field where you would like it to display
-6. Modify the main/default display of your content type to disable the index letter field from view
+5. Modify the form display to place the Alphabetical Index field where you would like it to display
+6. Modify the main/default display of your content type to disable Alphabetical Index field from the display
 
 ### 2.) Enable the Alphabetical Index View Mode
 
@@ -29,7 +29,15 @@ In order for the Alphabetical Listing display to work properly, you must enable 
 
 ### 3.) Leverage the View
 
-The view that is provided by the Alphabetical Listing module can be configured to meet your site's use case, such as narrowing the scope to specific content types. The view is already configured to have the necessary classes, so no additional changes are required for the view to work unless you want to modify
+The view that is provided by the Alphabetical Listing module can be configured to meet your site's use case, such as narrowing the scope to specific content types. The view is already configured to have the necessary classes, so no additional changes are required for the view to work unless you want to modify.
+
+### (Optional) Enable the View on the Page Content Type
+
+If you want to embed the Alphabetical Listing view on a page, you will need to enable the view on View pargraph type.
+
+1. Navigate to `Structure > Paragraph types > View > Manage fields` and click "edit" on the View field
+2. Under "Preselect View Options", check the box for `AZ Alphabetical Listing`
+3. Save your changes
 
 ________________________
 
