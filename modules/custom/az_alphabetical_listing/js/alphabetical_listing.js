@@ -48,11 +48,6 @@ jQuery(document).ready(function($) {
 
   /** 
    * function azAlphabeticalListingGroupLoop()
-   * Arguments:
-   *  - changeDisplay | boolean
-   *    If TRUE, update the display of each heading as needed
-   *  - updateNav | boolean
-   *    If TURE, update display of corresponding nav item
    * 
    * Check if search result "group" has no results by determining if it has
    * an immediate sibling of .az-alphabetical-listing-group-title
@@ -74,7 +69,6 @@ jQuery(document).ready(function($) {
           visibleChildren = true;
         }
       });
-
      
       // Get nav item with data attribute that matches the group's ID
       var navTarget = $("#az-js-alpha-navigation").find(".page-link[data-href='#" + thisId + "']");
@@ -83,7 +77,6 @@ jQuery(document).ready(function($) {
         // Hide title if no visible children in the group
         $(this).hide();
         $(this).addClass("hide-result");
-
 
         // Hide nav item if no visible children in the group
         navTarget.parent().addClass("disabled");
@@ -98,7 +91,6 @@ jQuery(document).ready(function($) {
         navTarget.parent().removeClass("disabled");
         navTarget.attr('tabindex','0').attr('aria-hidden','false').attr('href', $(this).attr('id'));
       }
-
     });
   }
 
@@ -154,19 +146,33 @@ jQuery(document).ready(function($) {
     event.preventDefault();
     var $alpha_nav = $('#az-js-floating-alpha-nav-container');
     var href = $.attr(this, 'data-href');
-    var fixed_nav_height = $alpha_nav.outerHeight();
-    var heading_height = $(".az-alphabetical-listing-group-title:first").outerHeight();
+    var fixedNavHeight = $alpha_nav.outerHeight();
+    var headingHeight = $(".az-alphabetical-listing-group-title:first").outerHeight();
+    var offsetHeight = fixedNavHeight + headingHeight;
 
     if ($(window).width() <= breakpoint) {
-      fixed_nav_height = 0;
+      fixedNavHeight = 0;
     }
-    if (!$alpha_nav.hasClass('affix')) {
-      fixed_nav_height *= 2;
-    }
+
     $root.animate({
-      scrollTop: $(href).offset().top - fixed_nav_height - heading_height
+      scrollTop: $(href).offset().top - offsetHeight
     }, 500, function () {
       window.location.hash = href;
     });
   });
+
+  /**
+   * Check if Drupal admin toolbar is present on the page, and if it is, 
+   * increase the top value of the alpha navigation to prevent overlap with the 
+   * Drupal admin toolbar.
+   */
+   if($("body.toolbar-tray-open").length) {
+    // Both toolbars open
+    $("#az-js-floating-alpha-nav-container").css("top", "79px");
+   }
+   // Only black toolbar is open
+   else if($("body.toolbar-horizontal").length) {
+    $("#az-js-floating-alpha-nav-container").css("top", "39px");
+   }
+
 });

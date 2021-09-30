@@ -1,35 +1,10 @@
-.affix.az-floating-alpha-nav {
-  position: relative !important;
-}
-@media screen and (min-width: 768px) {
-  .affix.az-floating-alpha-nav {
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index:1;
-  }
-}
-.navbar-administration.navbar-fixed.navbar-horizontal.navbar-tray-open .az-floating-alpha-nav.affix {
-  top: 55px;
-}
-.navbar-administration.navbar-vertical.navbar-tray-open.navbar-fixed .az-floating-alpha-nav.affix {
-  top: 19;
-}
-.navbar-administration.navbar-vertical.navbar-fixed .az-floating-alpha-nav.affix {
-  top: 34px;
-}
-.pagination-square > li > a, .pagination-square > li > span {
-  height:25px;
-  width:25px;
-  padding:0;
-  text-align:center;
-  vertical-align:middle;
-}
-
-
 #az-js-alpha-navigation .page-item:not(.disabled) .page-link {
   border-width: 2px;
   border-color: #378dbd;
   margin-left: 0px;
+}
+
+#az-js-alpha-navigation .page-item .page-link:hover,
+#az-js-alpha-navigation .page-item .page-link:focus {
+  text-decoration: underline;
 }
