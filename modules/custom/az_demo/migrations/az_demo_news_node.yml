@@ -1,0 +1,151 @@
+id: az_demo_news_node
+label: AZ Quickstart Demo News Content
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_news_node.json
+  item_selector: news
+  ids:
+    id:
+      type: integer
+
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: title
+      selector: title
+    -
+      name: path_alias
+      selector: path
+    -
+      name: filename
+      selector: az_media_image
+    -
+      name: az_caption
+      selector: az_caption
+    -
+      name: az_short_title
+      selector: az_short_title
+    -
+      name: az_body
+      selector: az_body
+    -
+      name: az_link
+      selector: az_link
+    -
+      name: az_subheading
+      selector: az_subheading
+    -
+      name: az_published
+      selector: az_published
+    -
+      name: az_byline
+      selector: az_byline
+    -
+      name: az_contacts
+      selector: az_contacts
+    -
+      name: az_attachments
+      selector: az_attachments
+    -
+      name: az_news_tags
+      selector: az_news_tags
+    -
+      name: field_az_main_content
+      selector: az_main_content
+    -
+      name: az_summary
+      selector: az_summary
+process:
+  type:
+    plugin: default_value
+    default_value: az_news
+
+  title: title
+
+  field_az_link/uri: az_link
+
+  field_az_body/value: az_body
+  field_az_body/format:
+    -
+      plugin: default_value
+      default_value: az_standard
+
+  field_az_caption/value: az_caption
+  field_az_caption/format:
+    -
+      plugin: default_value
+      default_value: plain_text
+
+  field_az_subheading/value: az_subheading
+  field_az_subheading/format:
+    -
+      plugin: default_value
+      default_value: plain_text
+
+  field_az_byline: az_byline
+
+  temp_field_az_published:
+    -
+      plugin: callback
+      callable: strtotime
+      source: az_published
+    -
+      plugin: format_date
+      from_format: 'U'
+      to_format: 'Y-m-d'
+      from_timezone: 'UTC'
+      to_timezone: 'America/Phoenix'
+
+  field_az_published/value: '@temp_field_az_published'
+
+  pseudo_exploded_tags:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: az_news_tags
+    -
+      plugin: explode
+      source: az_news_tags
+      delimiter: '|'
+
+  field_az_news_tags:
+    -
+      plugin: migration_lookup
+      migration: az_demo_news_tags
+      source: '@pseudo_exploded_tags'
+
+
+  # 'path/pathauto':
+  #   plugin: default_value
+  #   default_value: 0 # Disable pathauto.
+
+  # 'path/alias': path_alias
+
+  'field_az_media_image/target_id':
+    -
+      plugin: migration_lookup
+      source: filename
+      migration:
+        - az_demo_image_file
+
+destination:
+  plugin: entity:node
+  bundle: az_news
+
+migration_dependencies:
+  required:
+    - az_demo_image_file
+    - az_demo_news_tags
+
+dependencies:
+  enforced:
+    module:
+      - az_news
