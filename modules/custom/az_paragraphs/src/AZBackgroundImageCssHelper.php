@@ -3,6 +3,7 @@
 namespace Drupal\az_paragraphs;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Laminas\Escaper\Escaper;
 
 /**
  * Class AZBackgroundImageCssHelper. Adds service to form background image CSS.
@@ -63,6 +64,7 @@ class AZBackgroundImageCssHelper {
   public function getBackgroundImageCss($image_path, array $css_settings = [], $image_style = NULL) {
     $defaults = self::defaultSettings();
     $css_settings += $defaults['css_settings'];
+    $escaper = new Escaper('utf-8');
 
     // Pull the default css setting if not provided.
     $selector = $css_settings['bg_image_selector'];
@@ -73,7 +75,6 @@ class AZBackgroundImageCssHelper {
     $repeat = $css_settings['bg_image_repeat'];
     $important = $css_settings['bg_image_important'];
     $background_size = $css_settings['bg_image_background_size'];
-    dpm($background_size);
     $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
     $media_query = isset($css_settings['bg_image_media_query']) ? $css_settings['bg_image_media_query'] : NULL;
     $z_index = $css_settings['bg_image_z_index'];
@@ -93,18 +94,9 @@ class AZBackgroundImageCssHelper {
       // CSS3.
       $bg_size = new FormattableMarkup(
         'background-size: :bg_size :important;',
-        [':bg_size' => $background_size, ':important' => $important]
-      );
-      $bg_size .= new FormattableMarkup(
-        ' -webkit-background-size: :bg_size :important;',
-        [':bg_size' => $background_size, ':important' => $important]
-      );
-      $bg_size .= new FormattableMarkup(
-        ' -moz-background-size: :bg_size :important;',
-        [':bg_size' => $background_size, ':important' => $important]
-      );
-      $bg_size .= new FormattableMarkup(
-        ' -o-background-size: :bg_size :important;',
+        '-webkit-background-size: :bg_size :important;',
+        '-moz-background-size: :bg_size :important;',
+        '-o-background-size: :bg_size :important;',
         [':bg_size' => $background_size, ':important' => $important]
       );
     }
@@ -157,8 +149,9 @@ class AZBackgroundImageCssHelper {
       }
 
       $style .= $bg_size;
-      $style .= $background_size_ie8 ? $ie_bg_size : '';
       $style .= '}';
+
+      $output = $escaper->escapeCss($style);
 
       return [
         'data' => $style,

@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Component\Render\FormattableMarkup;
+use Laminas\Escaper\Escaper;
 
 /**
  * Class AZResponsiveBackgroundImageCssHelper.
@@ -61,8 +62,9 @@ class AZResponsiveBackgroundImageCssHelper {
   public function getResponsiveBackgroundImageCss(EntityInterface $image, array $css_settings = [], $responsive_image_style = NULL) {
 
     $style_elements = [];
+    $selector = $css_settings['bg_image_selector'];
+    $escaper = new Escaper('utf-8');
 
-    $selector = Xss::filter($css_settings['bg_image_selector']);
     $vars = [
       'uri' => $image->getFileUri(),
       'responsive_image_style_id' => $responsive_image_style,
@@ -97,20 +99,21 @@ class AZResponsiveBackgroundImageCssHelper {
         $css = $this->backgroundImageCss->getBackgroundImageCss($src, $css_settings);
 
         $with_media_query = new FormattableMarkup(
-          '@bg_image_selector { background-image:     url(":img_element_uri");}',
+          '@bg_image_selector { background-image: url(":img_element_uri");}',
           ['@bg_image_selector' => $css_settings['bg_image_selector'], ':img_element_uri' => $vars['img_element']['#uri']]
         );
+
         $with_media_query .= new FormattableMarkup(
           '@media @media_query { @data }',
           ['@media_query' => $media, '@data' => $css['data']]
         );
 
-
-        // $with_media_query .= sprintf($css['data']);
-        $with_media_query .= '}';
+        // $with_media_query .= '}';
 
         $css['attributes']['media'] = $media;
         $css['data'] = $with_media_query;
+        dpm(Markup::create($css['data']));
+        // dpm($css['data']);
 
         $style_elements[] = [
           'style' => [
@@ -125,6 +128,7 @@ class AZResponsiveBackgroundImageCssHelper {
           ],
         ];
       }
+      // dpm($style_elements);
     }
     return $style_elements;
   }
