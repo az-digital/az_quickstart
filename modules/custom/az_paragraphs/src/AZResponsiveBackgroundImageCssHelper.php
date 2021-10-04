@@ -61,8 +61,6 @@ class AZResponsiveBackgroundImageCssHelper {
 
     $style_elements = [];
     $css = [];
-    $selector = $css_settings['bg_image_selector'];
-
     $selector = HTML::getId($css_settings['bg_image_selector']);
     $vars = [
       'uri' => $image->getFileUri(),
