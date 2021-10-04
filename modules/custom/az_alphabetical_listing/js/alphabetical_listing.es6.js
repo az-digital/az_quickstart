@@ -4,18 +4,18 @@ jQuery(document).ready(($) => {
    * corresponding search result group exists on the page. If it doesn't
    * exist on the page, then hide the navigation item.
    */
-  $("#az-js-alpha-navigation li").each(function (i, li) {
+  $("#az-js-alpha-navigation li").each(() => {
     // Get ID of current nav item.
-    const group_id = $(this).children().attr("data-href");
+    const groupId = $(this).children().attr("data-href");
 
     // Enable nav item if results group exists on page
-    if ($(group_id).length != 0) {
+    if ($(groupId).length !== 0) {
       $(this).removeClass("disabled");
       $(this)
         .children()
         .attr("tabindex", "0")
         .attr("aria-hidden", "false")
-        .attr("href", group_id);
+        .attr("href", groupId);
     }
 
     // Disable nav item if no results group exists on page
@@ -38,7 +38,7 @@ jQuery(document).ready(($) => {
    */
   function azAlphabeticalListingCheckNoResults() {
     let visibleResults = false;
-    $(".az-alphabetical-listing-group-title").each(function () {
+    $(".az-alphabetical-listing-group-title").each(() => {
       if (!$(this).hasClass("hide-result")) {
         visibleResults = true;
       }
@@ -58,7 +58,7 @@ jQuery(document).ready(($) => {
    * an immediate sibling of .az-alphabetical-listing-group-title
    */
   function azAlphabeticalListingGroupLoop() {
-    $(".az-alphabetical-listing-group-title").each(function () {
+    $(".az-alphabetical-listing-group-title").each(() => {
       // Get the ID of the current results group
       const thisId = $(this).attr("id");
       const thisGroup = thisId.toLowerCase();
@@ -68,7 +68,7 @@ jQuery(document).ready(($) => {
       // Set variable to determine if there are visible children
       let visibleChildren = false;
       // Loop through each item in the results group
-      $(targetGroup).each(function () {
+      $(targetGroup).each(() => {
         if (!$(this).hasClass("hide-result")) {
           // Set variable to true if item isn't hidden
           visibleChildren = true;
@@ -109,7 +109,7 @@ jQuery(document).ready(($) => {
   /**
    *  Perform search as query is entered into the search input field.
    */
-  $("#az-js-alphabetical-listing-search").keyup(function () {
+  $("#az-js-alphabetical-listing-search").keyup(() => {
     // Retrieve the input field text
     const filter = $(this).val();
 
@@ -118,7 +118,7 @@ jQuery(document).ready(($) => {
      * determine if the item should be shown or hidden, based on the search
      * query text provided.
      */
-    $(".az-js-alphabetical-listing-search-result").each(function () {
+    $(".az-js-alphabetical-listing-search-result").each(() => {
       // Get text for current item in loop.
       const searchResultText = $(this)
         .find(".az-alphabetical-listing-item")
@@ -151,11 +151,11 @@ jQuery(document).ready(($) => {
   const $root = $("html, body");
   const breakpoint = 600;
 
-  $("#az-js-alpha-navigation a").on("click", function (event) {
+  $("#az-js-alpha-navigation a").on("click", (event) => {
     event.preventDefault();
-    const $alpha_nav = $("#az-js-floating-alpha-nav-container");
+    const $alphaNav = $("#az-js-floating-alpha-nav-container");
     const href = $.attr(this, "data-href");
-    let fixedNavHeight = $alpha_nav.outerHeight();
+    let fixedNavHeight = $alphaNav.outerHeight();
     const headingHeight = $(
       ".az-alphabetical-listing-group-title:first"
     ).outerHeight();
