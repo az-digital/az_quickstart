@@ -222,7 +222,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'bg_image_y' => 'center',
       'bg_image_attachment' => $bg_attachment,
       'bg_image_repeat' => 'no-repeat',
-      'bg_image_background_size' => '',
+      'bg_image_background_size' => 'cover',
       'bg_image_background_size_ie8' => '0',
       'bg_image_gradient' => '',
       'bg_image_media_query' => 'all',

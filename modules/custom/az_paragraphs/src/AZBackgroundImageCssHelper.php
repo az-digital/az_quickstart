@@ -84,32 +84,19 @@ class AZBackgroundImageCssHelper {
     // Handle the background size property.
     $bg_size = '';
 
-    // If important_set is true, we turn it into a string for css output.
-    if ($important_set) {
-      $important = '!important';
-    }
-
-    // Handle the background size property.
-    if ($background_size) {
-      // CSS3.
-      $bg_size = new FormattableMarkup(
-        'background-size: :bg_size :important;',
-        '-webkit-background-size: :bg_size :important;',
-        '-moz-background-size: :bg_size :important;',
-        '-o-background-size: :bg_size :important;', [
-          ':bg_size' => $background_size,
-          ':important' => $important,
-        ]
-      );
-    }
-
     // Add the css if we have everything we need.
     if ($selector && $image_path) {
+      // If important_set is true, we turn it into a string for css output.
+      if ($important_set) {
+        $important = '!important';
+      }
+      // Add selector name to CSS rule.
       $style = new FormattableMarkup(
         ':selector {', [
           ':selector' => $selector,
         ]
       );
+      // Set background-attachment.
       if ($attachment) {
         $style .= new FormattableMarkup(
           ' background-attachment: :attachment :important;', [
@@ -117,8 +104,8 @@ class AZBackgroundImageCssHelper {
             ':important' => $important,
           ]
         );
-
       }
+      // Set background-color.
       if ($bg_color) {
         $style .= new FormattableMarkup(
           ' background-color: :bg_color :important;', [
@@ -126,17 +113,16 @@ class AZBackgroundImageCssHelper {
             ':important' => $important,
           ]
         );
-        $style .= $style_background_color;
       }
-
-      $background_image_style = new FormattableMarkup(
+      // Set background-image.
+      $style .= new FormattableMarkup(
         'background-image: :bg_gradient url(":image_path") :important;', [
           ':image_path' => $image_path,
           ':bg_gradient' => $background_gradient,
           ':important' => $important,
         ]
       );
-      $style .= $background_image_style;
+      // Set background-repeat.
       if (!empty($repeat)) {
         $style .= new FormattableMarkup(
           ' background-repeat: :repeat :important;', [
@@ -145,6 +131,21 @@ class AZBackgroundImageCssHelper {
           ]
         );
       }
+      // Handle the background size property.
+      // Set background-size.
+      if ($background_size) {
+        // CSS3.
+        $bg_size = new FormattableMarkup(
+          'background-size: :bg_size :important;
+          -webkit-background-size: :bg_size :important;
+          -moz-background-size: :bg_size :important;
+          -o-background-size: :bg_size :important;', [
+            ':bg_size' => $background_size,
+            ':important' => $important,
+          ]
+        );
+      }
+      // Set z-index.
       if ($z_index) {
         $style .= new FormattableMarkup(
           ' z-index: :z_index;', [
@@ -152,7 +153,6 @@ class AZBackgroundImageCssHelper {
           ]
         );
       }
-
       $style .= $bg_size . '}';
 
       return [
