@@ -7,5 +7,5 @@ az_alphabetical_listing:
     js/alphabetical_listing.js: {}
   dependencies:
     - core/jquery
+    - core/drupal
     - az_barrio/arizona-bootstrap
-      
