@@ -169,6 +169,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get plugin configuration.
     $config = $this->getSettings($paragraph);
     $variables['text_on_media'] = $config;
+    $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . "-" . $paragraph->id());
     if ($paragraph->hasField('field_az_media')) {
       /** @var \Drupal\media\Entity\Media $media */
       foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
@@ -215,7 +216,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $bg_attachment = 'fixed';
     }
     return [
-      'bg_image_selector' => '#' . $paragraph->bundle() . "-" . $paragraph->id(),
+      'bg_image_selector' => '#' . HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
       'bg_image_color' => '#FFFFFF',
       'bg_image_x' => 'center',
       'bg_image_y' => 'center',
@@ -225,7 +226,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'bg_image_background_size_ie8' => '0',
       'bg_image_gradient' => '',
       'bg_image_media_query' => 'all',
-      'bg_image_important' => '1',
+      'bg_image_important' => '0',
       'bg_image_z_index' => 'auto',
       'bg_image_path_format' => 'absolute',
     ];
@@ -254,7 +255,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing, #{{ id }}.az-video-paused {background-image:none;}</style>",
           '#context' => [
             'filepath' => file_create_url($thumb),
-            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+            'id' => HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
           ],
         ],
         $background_video = [

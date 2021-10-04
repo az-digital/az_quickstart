@@ -11,8 +11,8 @@ use Laminas\Escaper\Escaper;
 class AZBackgroundImageCssHelper {
 
   /**
-   *  @return array
-   *    An array with all required settings.
+   * @return array
+   *   An array with all required settings.
    */
   public static function defaultSettings() {
     return [
@@ -27,7 +27,7 @@ class AZBackgroundImageCssHelper {
         'bg_image_background_size_ie8' => 0,
         'bg_image_gradient' => '',
         'bg_image_media_query' => 'all',
-        'bg_image_important' => 1,
+        'bg_image_important' => 0,
         'bg_image_z_index' => 'auto',
         'bg_image_path_format' => 'absolute',
       ],
@@ -62,7 +62,10 @@ class AZBackgroundImageCssHelper {
    *   The array containing the CSS.
    */
   public function getBackgroundImageCss($image_path, array $css_settings = [], $image_style = NULL) {
+
+    // Pull the default css setting if not provided.
     $defaults = self::defaultSettings();
+    // Merge defaults into css_settings array without overriding values.
     $css_settings += $defaults['css_settings'];
     $escaper = new Escaper('utf-8');
 
@@ -73,85 +76,85 @@ class AZBackgroundImageCssHelper {
     $bg_y = $css_settings['bg_image_y'];
     $attachment = $css_settings['bg_image_attachment'];
     $repeat = $css_settings['bg_image_repeat'];
-    $important = $css_settings['bg_image_important'];
+    $important_set = $css_settings['bg_image_important'];
     $background_size = $css_settings['bg_image_background_size'];
     $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
     $media_query = isset($css_settings['bg_image_media_query']) ? $css_settings['bg_image_media_query'] : NULL;
     $z_index = $css_settings['bg_image_z_index'];
 
-    // If important is true, we turn it into a string for css output.
-    if ($important) {
-      $important = '!important';
-    }
-    else {
-      $important = '';
-    }
-
     // Handle the background size property.
     $bg_size = '';
 
+    // If important_set is true, we turn it into a string for css output.
+    if ($important_set) {
+      $important = '!important';
+    }
+
+    // Handle the background size property.
     if ($background_size) {
       // CSS3.
       $bg_size = new FormattableMarkup(
         'background-size: :bg_size :important;',
         '-webkit-background-size: :bg_size :important;',
         '-moz-background-size: :bg_size :important;',
-        '-o-background-size: :bg_size :important;',
-        [':bg_size' => $background_size, ':important' => $important]
+        '-o-background-size: :bg_size :important;', [
+          ':bg_size' => $background_size,
+          ':important' => $important,
+        ]
       );
     }
 
     // Add the css if we have everything we need.
     if ($selector && $image_path) {
       $style = new FormattableMarkup(
-        ':selector: {',
-        [':selector' => $selector]
+        ':selector {', [
+          ':selector' => $selector,
+        ]
       );
-      $background_image_style = new FormattableMarkup(
-        'background-image: :bg_gradient url(":image_path") :important;',
-        [':image_path' => $image_path, ':bg_gradient' => $background_gradient, ':important' => $important]
-      );
-      $style .= $background_image_style;
+      if ($attachment) {
+        $style .= new FormattableMarkup(
+          ' background-attachment: :attachment :important;', [
+            ':attachment' => $attachment,
+            ':important' => $important,
+          ]
+        );
+
+      }
       if ($bg_color) {
         $style .= new FormattableMarkup(
-          ' background-color: :bg_color :important;',
-          [':bg_color' => $bg_color, ':important' => $important]
+          ' background-color: :bg_color :important;', [
+            ':bg_color' => $bg_color,
+            ':important' => $important,
+          ]
         );
         $style .= $style_background_color;
       }
-      if ($repeat) {
+
+      $background_image_style = new FormattableMarkup(
+        'background-image: :bg_gradient url(":image_path") :important;', [
+          ':image_path' => $image_path,
+          ':bg_gradient' => $background_gradient,
+          ':important' => $important,
+        ]
+      );
+      $style .= $background_image_style;
+      if (!empty($repeat)) {
         $style .= new FormattableMarkup(
-          ' background-repeat: :repeat :important;',
-          [':repeat' => $style_repeat, ':important' => $important]
+          ' background-repeat: :repeat :important;', [
+            ':repeat' => $repeat,
+            ':important' => $important,
+          ]
         );
       }
-
-      if ($attachment) {
-        $style .= new FormattableMarkup(
-          ' background-repeat: :attachment :important;',
-          [':attachment' => $attachment, ':important' => $important]
-        );
-
-      }
-
-      if ($bg_x && $bg_y) {
-        $style .=  new FormattableMarkup(
-          ' background-position: :bg_x :bg_y :important;',
-          [':bg_x' => $bg_x, ':bg_y' => $bg_y, ':important' => $important]
-        );
-      }
-
       if ($z_index) {
         $style .= new FormattableMarkup(
-          ' z-index: :z_index;',
-          [':z_index' => $z_index]
+          ' z-index: :z_index;', [
+            ':z_index' => $z_index,
+          ]
         );
       }
 
-      $style .= $bg_size;
-      $style .= '}';
-
-      $output = $escaper->escapeCss($style);
+      $style .= $bg_size . '}';
 
       return [
         'data' => $style,

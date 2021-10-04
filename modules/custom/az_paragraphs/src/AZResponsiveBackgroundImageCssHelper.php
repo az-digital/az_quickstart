@@ -2,11 +2,10 @@
 
 namespace Drupal\az_paragraphs;
 
-use Drupal\Component\Utility\Xss;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Markup;
 use Drupal\Component\Render\FormattableMarkup;
-use Laminas\Escaper\Escaper;
 
 /**
  * Class AZResponsiveBackgroundImageCssHelper.
@@ -35,10 +34,9 @@ class AZResponsiveBackgroundImageCssHelper {
   }
 
   /**
-   * Function taken from the module 'bg_image'.
+   * Adds a responsive background image to the page.
    *
-   * Adds a background image to the page using the
-   * css 'background' property.
+   * This function uses the css 'background' property.
    *
    * @param \Drupal\Core\Entity\EntityInterface $image
    *   The entity to display.
@@ -63,8 +61,8 @@ class AZResponsiveBackgroundImageCssHelper {
 
     $style_elements = [];
     $selector = $css_settings['bg_image_selector'];
-    $escaper = new Escaper('utf-8');
 
+    $selector = HTML::getId($css_settings['bg_image_selector']);
     $vars = [
       'uri' => $image->getFileUri(),
       'responsive_image_style_id' => $responsive_image_style,
@@ -94,26 +92,18 @@ class AZResponsiveBackgroundImageCssHelper {
         // will deactivate.
         $media = str_replace('screen (max-width', 'screen and (max-width', $media);
 
-        $css_settings['bg_image_selector'] = $selector;
-
         $css = $this->backgroundImageCss->getBackgroundImageCss($src, $css_settings);
 
         $with_media_query = new FormattableMarkup(
-          '@bg_image_selector { background-image: url(":img_element_uri");}',
-          ['@bg_image_selector' => $css_settings['bg_image_selector'], ':img_element_uri' => $vars['img_element']['#uri']]
+          '@bg_image_selector { background-image: url(":img_element_uri");}', [
+            '@bg_image_selector' => $css_settings['bg_image_selector'],
+            ':img_element_uri' => $vars['img_element']['#uri'],
+          ]
         );
-
-        $with_media_query .= new FormattableMarkup(
-          '@media @media_query { @data }',
-          ['@media_query' => $media, '@data' => $css['data']]
-        );
-
-        // $with_media_query .= '}';
+        $with_media_query .= '@media ' . $media . '{' . $css['data'] . '}';
 
         $css['attributes']['media'] = $media;
         $css['data'] = $with_media_query;
-        dpm(Markup::create($css['data']));
-        // dpm($css['data']);
 
         $style_elements[] = [
           'style' => [
@@ -128,7 +118,6 @@ class AZResponsiveBackgroundImageCssHelper {
           ],
         ];
       }
-      // dpm($style_elements);
     }
     return $style_elements;
   }
