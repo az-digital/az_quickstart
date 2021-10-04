@@ -3,7 +3,6 @@
 namespace Drupal\az_paragraphs;
 
 use Drupal\Component\Render\FormattableMarkup;
-use Laminas\Escaper\Escaper;
 
 /**
  * Class AZBackgroundImageCssHelper. Adds service to form background image CSS.
@@ -67,7 +66,6 @@ class AZBackgroundImageCssHelper {
     $defaults = self::defaultSettings();
     // Merge defaults into css_settings array without overriding values.
     $css_settings += $defaults['css_settings'];
-    $escaper = new Escaper('utf-8');
 
     // Pull the default css setting if not provided.
     $selector = $css_settings['bg_image_selector'];
