@@ -75,6 +75,7 @@ class AZBackgroundImageCssHelper {
     $attachment = $css_settings['bg_image_attachment'];
     $repeat = $css_settings['bg_image_repeat'];
     $important_set = $css_settings['bg_image_important'];
+    $important = '';
     $background_size = $css_settings['bg_image_background_size'];
     $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
     $media_query = isset($css_settings['bg_image_media_query']) ? $css_settings['bg_image_media_query'] : NULL;
