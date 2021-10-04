@@ -196,6 +196,6 @@ function az_core_form_block_form_alter(&$form, &$form_state, $form_id) {
     $form['settings']['block_branding']['use_site_slogan']['#access'] = FALSE;
 
     // Modify help text.
-    $form['settings']['block_branding']['#description'] = t('Choose which branding elements you want to show in this block instance.  Enabling both the Site logo and the Site name is <strong><em>not recommended</em></strong> per UArizona brand guidelines.');
+    $form['settings']['block_branding']['#description'] = t('Choose which branding elements you want to show in this block instance.  Enabling both the Site logo and the Site name is <strong><em>not recommended</em></strong> per University of Arizona brand guidelines.');
   }
 }
