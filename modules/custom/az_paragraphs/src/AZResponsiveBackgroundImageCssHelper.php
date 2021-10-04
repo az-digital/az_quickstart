@@ -3,7 +3,9 @@
 namespace Drupal\az_paragraphs;
 
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Markup;
+use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Class AZResponsiveBackgroundImageCssHelper.
@@ -34,6 +36,8 @@ class AZResponsiveBackgroundImageCssHelper {
   /**
    * Adds a responsive background image to the page.
    *
+   * This function uses the css 'background' property.
+   *
    * @param \Drupal\Core\Entity\EntityInterface $image
    *   The entity to display.
    * @param array $css_settings
@@ -56,8 +60,8 @@ class AZResponsiveBackgroundImageCssHelper {
   public function getResponsiveBackgroundImageCss(EntityInterface $image, array $css_settings = [], $responsive_image_style = NULL) {
 
     $style_elements = [];
-
-    $selector = $css_settings['bg_image_selector'];
+    $css = [];
+    $selector = HTML::getId($css_settings['bg_image_selector']);
     $vars = [
       'uri' => $image->getFileUri(),
       'responsive_image_style_id' => $responsive_image_style,
@@ -65,6 +69,12 @@ class AZResponsiveBackgroundImageCssHelper {
 
     template_preprocess_responsive_image($vars);
 
+    $fallback_image = new FormattableMarkup(
+      '@bg_image_selector { background-image: url(":img_element_uri");}', [
+        '@bg_image_selector' => $css_settings['bg_image_selector'],
+        ':img_element_uri' => $vars['img_element']['#uri'],
+      ]
+    );
     // Split each source into multiple rules.
     foreach (array_reverse($vars['sources']) as $source_i => $source) {
       $attr = $source->toArray();
@@ -86,32 +96,26 @@ class AZResponsiveBackgroundImageCssHelper {
         // min-width is specified. If this bug gets fixed, this replacement
         // will deactivate.
         $media = str_replace('screen (max-width', 'screen and (max-width', $media);
-
         $css = $this->backgroundImageCss->getBackgroundImageCss($src, $css_settings);
-
-        $with_media_query = sprintf('%s { background-image: url(%s);}', $selector, $vars['img_element']['#uri']);
-
-        $with_media_query .= sprintf('@media %s {', $media);
-        $with_media_query .= sprintf($css['data']);
-        $with_media_query .= '}';
-
+        $with_media_query .= '@media ' . $media . '{' . $css['data'] . '}';
         $css['attributes']['media'] = $media;
-        $css['data'] = $with_media_query;
-
-        $style_elements[] = [
-          'style' => [
-            '#type' => 'inline_template',
-            '#template' => "{{ css }}",
-            '#context' => [
-              'css' => Markup::create($css['data']),
-            ],
-            '#attributes' => [
-              'media' => $css['attributes']['media'],
-            ],
-          ],
-        ];
       }
     }
+    // Adding fallback image.
+    $css['data'] = $fallback_image . $with_media_query;
+    $style_elements[] = [
+      'style' => [
+        '#type' => 'inline_template',
+        '#template' => "{{ css }}",
+        '#context' => [
+          'css' => Markup::create($css['data']),
+        ],
+        '#attributes' => [
+          'media' => $css['attributes']['media'],
+        ],
+      ],
+    ];
+
     return $style_elements;
   }
 

@@ -8,6 +8,7 @@ use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Core\Template\Attribute;
+use Drupal\media\MediaInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -238,6 +239,36 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
       $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
     }
+
+  }
+
+  /**
+   * Get settings from paragraph and override defaults.
+   */
+  private function getParagraphBackgroundSettings(ParagraphInterface $paragraph) {
+
+    // Get plugin configuration.
+    $config = $this->getSettings($paragraph);
+    $bg_attachment = 'scroll';
+    if (!empty($config['bg_attachment'])) {
+      $bg_attachment = 'fixed';
+    }
+    return [
+      'bg_image_selector' => '#' . HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
+      'bg_image_color' => '#FFFFFF',
+      'bg_image_x' => 'center',
+      'bg_image_y' => 'center',
+      'bg_image_attachment' => $bg_attachment,
+      'bg_image_repeat' => 'no-repeat',
+      'bg_image_background_size' => 'cover',
+      'bg_image_background_size_ie8' => '0',
+      'bg_image_gradient' => '',
+      'bg_image_media_query' => 'all',
+      'bg_image_important' => '0',
+      'bg_image_z_index' => 'auto',
+      'bg_image_path_format' => 'absolute',
+    ];
+
   }
 
 }
