@@ -90,7 +90,7 @@ class AZBackgroundImageCssHelper {
       if ($important_set) {
         $important = '!important';
       }
-      // Add selector name to CSS rule.
+      // Add selector name and open the CSS declaration block.
       $style = new FormattableMarkup(
         ':selector {', [
           ':selector' => $selector,
@@ -135,7 +135,7 @@ class AZBackgroundImageCssHelper {
       // Set background-size.
       if ($background_size) {
         // CSS3.
-        $bg_size = new FormattableMarkup(
+        $style .= new FormattableMarkup(
           'background-size: :bg_size :important;
           -webkit-background-size: :bg_size :important;
           -moz-background-size: :bg_size :important;
@@ -153,7 +153,8 @@ class AZBackgroundImageCssHelper {
           ]
         );
       }
-      $style .= $bg_size . '}';
+      // Close the style declaration block.
+      $style .= '}';
 
       return [
         'data' => $style,
