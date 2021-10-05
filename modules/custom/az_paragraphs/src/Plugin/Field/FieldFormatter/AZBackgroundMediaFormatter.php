@@ -65,7 +65,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->responsiveBackroundImageCssHelper = (
-        $container->get('az_paragraphs.az_responsive_background_image_css_helper')
+      $container->get('az_paragraphs.az_responsive_background_image_css_helper')
     );
 
     return $instance;
@@ -453,6 +453,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   private function remoteVideo(array $settings, MediaInterface $media) {
 
     $az_background_media = [];
+    $az_background_media['#media_type'] = $media->bundle();
     $css_settings = $settings['css_settings'];
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
@@ -539,6 +540,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         ];
         $az_background_media[] = $text_on_bottom;
       }
+
       return $az_background_media;
     }
   }
@@ -551,6 +553,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   private function image(array $settings, MediaInterface $media) {
     $az_background_media = [];
+    $az_background_media['#media_type'] = $media->bundle();
     $css_settings = $settings['css_settings'];
 
     if ($settings['style'] !== 'bottom') {
@@ -570,7 +573,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     }
     elseif ($settings['style'] === 'bottom') {
 
-      $fields = $media->getFieldDefinitions();
       $image_renderable = [
         '#theme' => 'responsive_image_formatter',
         '#responsive_image_style_id' => 'az_full_width_background',
@@ -589,6 +591,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ];
       $az_background_media[] = $text_on_bottom;
     }
+
     return $az_background_media;
   }
 

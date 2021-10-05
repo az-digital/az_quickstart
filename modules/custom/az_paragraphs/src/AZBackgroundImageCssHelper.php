@@ -18,8 +18,8 @@ class AZBackgroundImageCssHelper {
       'css_settings' => [
         'bg_image_selector' => 'body',
         'bg_image_color' => '#FFFFFF',
-        'bg_image_x' => 'left',
-        'bg_image_y' => 'top',
+        'bg_image_x' => 'center',
+        'bg_image_y' => 'center',
         'bg_image_attachment' => 'scroll',
         'bg_image_repeat' => 'no-repeat',
         'bg_image_background_size' => 'cover',
@@ -119,6 +119,14 @@ class AZBackgroundImageCssHelper {
         'background-image: :bg_gradient url(":image_path") :important;', [
           ':image_path' => $image_path,
           ':bg_gradient' => $background_gradient,
+          ':important' => $important,
+        ]
+      );
+      // Set background-position.
+      $style .= new FormattableMarkup(
+        'background-position: :bg_x :bg_y :important;', [
+          ':bg_x' => $bg_x,
+          ':bg_y' => $bg_y,
           ':important' => $important,
         ]
       );

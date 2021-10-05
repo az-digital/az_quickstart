@@ -9,6 +9,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\media\MediaInterface;
+use Drupal\media\Media;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -169,6 +170,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     $config += $default_settings;
     $variables['text_on_media'] = $config;
+    $az_background_media = [];
 
     $style = '';
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
@@ -182,6 +184,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
     $variables['attributes']['class'][] = HTML::getClass('paragraph--type--' . $paragraph->bundle());
+    if(!empty($variables['elements']['#az_background_media'])) {
+      $variables['attributes']['class'][] = 'media--type--' . HTML::getClass($variables['elements']['#az_background_media'][0]['#media_type']);
+    }
     $variables['attributes']['class'][] = HTML::getClass('paragraph--view-mode--' . $variables['view_mode']);
     $variables['attributes']['class'][] = HTML::getClass('paragraph--' . $paragraph_status);
     $variables['attributes']['class'][] = HTML::getClass($style);
