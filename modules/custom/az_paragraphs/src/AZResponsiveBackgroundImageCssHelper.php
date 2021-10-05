@@ -61,6 +61,7 @@ class AZResponsiveBackgroundImageCssHelper {
 
     $style_elements = [];
     $css = [];
+    $with_media_query = '';
     $selector = HTML::getId($css_settings['bg_image_selector']);
     $template_variables = [
       'uri' => $image->getFileUri(),
@@ -97,7 +98,7 @@ class AZResponsiveBackgroundImageCssHelper {
         // will deactivate.
         $media = str_replace('screen (max-width', 'screen and (max-width', $media);
         $css = $this->backgroundImageCss->getBackgroundImageCss($src, $css_settings);
-        $with_media_query .= '@media ' . $media . '{' . $css['data'] . '}';
+        $with_media_query = '@media ' . $media . '{' . $css['data'] . '}';
         $css['attributes']['media'] = $media;
       }
     }
