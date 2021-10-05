@@ -34,6 +34,26 @@ class AZResponsiveBackgroundImageCssHelper {
   }
 
   /**
+   * @return array
+   *   An array with all required settings.
+   */
+  public static function defaultSettings() {
+    return [
+      'bg_image_selector' => 'body',
+      'bg_image_color' => '#FFFFFF',
+      'bg_image_x' => 'center',
+      'bg_image_y' => 'center',
+      'bg_image_attachment' => 'scroll',
+      'bg_image_repeat' => 'no-repeat',
+      'bg_image_background_size' => 'cover',
+      'bg_image_gradient' => '',
+      'bg_image_media_query' => 'all',
+      'bg_image_important' => 0,
+      'bg_image_z_index' => 'auto',
+    ];
+  }
+
+  /**
    * Adds a responsive background image to the page.
    *
    * This function uses the css 'background' property.
@@ -62,6 +82,9 @@ class AZResponsiveBackgroundImageCssHelper {
    *   The array containing the CSS.
    */
   public function getResponsiveBackgroundImageCss(EntityInterface $image, array $css_settings = [], $responsive_image_style = NULL) {
+
+    // Merge defaults into css_settings array without overriding values.
+    $css_settings += self::defaultSettings();
 
     $style_elements = [];
     $css = [];
