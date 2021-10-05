@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Contains az_block_types_quick_links.module.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Adds list-group-item classes to field item attributes.
+ */
+function az_block_types_quick_links_preprocess_field__block_content__field_az_links__az_quick_links(&$variables) {
+  $item_classes = [
+    'list-group-item',
+    'list-group-item-action',
+  ];
+  foreach ($variables['items'] as $delta => $item) {
+    $variables['items'][$delta]['attributes']->addClass($item_classes);
+  }
+}
