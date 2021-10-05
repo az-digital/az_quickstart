@@ -76,17 +76,16 @@ class AZBackgroundImageCssHelper {
     $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
     $media_query = isset($css_settings['bg_image_media_query']) ? $css_settings['bg_image_media_query'] : NULL;
     $important_set = $css_settings['bg_image_important'];
-    $important = '';
     $z_index = $css_settings['bg_image_z_index'];
-
-    // Handle the background size property.
-    $bg_size = '';
 
     // Add the css if we have everything we need.
     if ($selector && $image_path) {
-      // If important_set is true, we turn it into a string for css output.
+      // If important_set is true, we turn it into a string for CSS output.
       if ($important_set) {
         $important = '!important';
+      }
+      else {
+        $important = '';
       }
       // Add selector name and open the CSS declaration block.
       $style = new FormattableMarkup(
