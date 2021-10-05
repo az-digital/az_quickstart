@@ -450,7 +450,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
     $file = $this->getMediaThumbFile($media);
-    if($settings['style'] === 'bottom') {
+    if ($settings['style'] === 'bottom') {
       $css_settings['bg_image_selector'] = $css_settings['bg_image_selector'] . ' .text-on-video';
     }
     $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $settings['image_style']);
