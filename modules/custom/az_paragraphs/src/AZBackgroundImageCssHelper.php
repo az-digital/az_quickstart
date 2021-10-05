@@ -15,21 +15,19 @@ class AZBackgroundImageCssHelper {
    */
   public static function defaultSettings() {
     return [
-      'css_settings' => [
-        'bg_image_selector' => 'body',
-        'bg_image_color' => '#FFFFFF',
-        'bg_image_x' => 'left',
-        'bg_image_y' => 'top',
-        'bg_image_attachment' => 'scroll',
-        'bg_image_repeat' => 'no-repeat',
-        'bg_image_background_size' => 'cover',
-        'bg_image_background_size_ie8' => 0,
-        'bg_image_gradient' => '',
-        'bg_image_media_query' => 'all',
-        'bg_image_important' => 0,
-        'bg_image_z_index' => 'auto',
-        'bg_image_path_format' => 'absolute',
-      ],
+      'bg_image_selector' => 'body',
+      'bg_image_color' => '#FFFFFF',
+      'bg_image_x' => 'left',
+      'bg_image_y' => 'top',
+      'bg_image_attachment' => 'scroll',
+      'bg_image_repeat' => 'no-repeat',
+      'bg_image_background_size' => 'cover',
+      'bg_image_background_size_ie8' => 0,
+      'bg_image_gradient' => '',
+      'bg_image_media_query' => 'all',
+      'bg_image_important' => 0,
+      'bg_image_z_index' => 'auto',
+      'bg_image_path_format' => 'absolute',
     ];
   }
 
@@ -62,10 +60,8 @@ class AZBackgroundImageCssHelper {
    */
   public function getBackgroundImageCss($image_path, array $css_settings = [], $image_style = NULL) {
 
-    // Pull the default css setting if not provided.
-    $defaults = self::defaultSettings();
     // Merge defaults into css_settings array without overriding values.
-    $css_settings += $defaults['css_settings'];
+    $css_settings += self::defaultSettings();
 
     // Pull the default css setting if not provided.
     $selector = $css_settings['bg_image_selector'];
