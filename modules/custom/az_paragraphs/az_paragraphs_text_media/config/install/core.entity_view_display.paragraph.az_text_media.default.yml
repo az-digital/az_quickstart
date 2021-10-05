@@ -22,7 +22,7 @@ content:
     settings:
       image_style: az_full_width_background
       css_settings:
-        bg_image_z_index: '-999'
+        bg_image_z_index: 'auto'
         bg_image_color: '#FFFFFF'
         bg_image_x: center
         bg_image_y: center
@@ -30,7 +30,6 @@ content:
         bg_image_repeat: no-repeat
         bg_image_background_size: cover
         bg_image_gradient: ''
-        bg_image_background_size_ie8: 0
         bg_image_important: 0
       text_media_spacing: ''
     third_party_settings: {  }

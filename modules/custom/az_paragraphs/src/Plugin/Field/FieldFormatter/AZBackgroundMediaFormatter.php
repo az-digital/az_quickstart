@@ -108,7 +108,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         'bg_image_gradient' => '',
         'bg_image_media_query' => 'all',
         'bg_image_important' => TRUE,
-        'bg_image_z_index' => '-999',
+        'bg_image_z_index' => 'auto',
         'bg_image_path_format' => 'absolute',
       ],
     ];
@@ -146,7 +146,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ),
     ];
 
-    // The selector for the background property.
+    // The z-index property.
     $form['css_settings']['bg_image_z_index'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Z Index'),
@@ -158,7 +158,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#default_value' => $settings['css_settings']['bg_image_z_index'],
     ];
 
-    // The selector for the background property.
+    // The background-color property.
     $form['css_settings']['bg_image_color'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Color'),
@@ -172,7 +172,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#default_value' => $settings['css_settings']['bg_image_color'],
     ];
 
-    // The selector for the background property.
+    // The background-size x property.
     $form['css_settings']['bg_image_x'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Horizontal Alignment'),
@@ -184,7 +184,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ),
       '#default_value' => $settings['css_settings']['bg_image_x'],
     ];
-    // The selector for the background property.
+    // The background-size y property.
     $form['css_settings']['bg_image_y'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Vertical Alignment'),
@@ -196,7 +196,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ),
       '#default_value' => $settings['css_settings']['bg_image_y'],
     ];
-    // The selector for the background property.
+    // The background-attachemetn property.
     $form['css_settings']['bg_image_attachment'] = [
       '#type' => 'radios',
       '#title' => $this->t('Background Attachment'),
@@ -243,19 +243,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
                       </a>]'
       ),
       '#default_value' => $settings['css_settings']['bg_image_background_size'],
-    ];
-    // background-size:cover suppor for IE8.
-    $form['css_settings']['bg_image_background_size_ie8'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Add background-size:cover support for ie8'),
-      '#description' => $this->t(
-        'The background-size css property is only supported on browsers that support CSS3.
-                      However, there is a workaround for IE using Internet Explorer\'s built-in filters
-                      (http://msdn.microsoft.com/en-us/library/ms532969%28v=vs.85%29.aspx).
-                      Check this box to add the filters to the css. Sometimes it works well, sometimes it doesn\'t.
-                      Use at your own risk'
-      ),
-      '#default_value' => $settings['css_settings']['bg_image_background_size_ie8'],
     ];
     // Add gradient to background-image.
     $form['css_settings']['bg_image_gradient'] = [
@@ -463,64 +450,61 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
     $file = $this->getMediaThumbFile($media);
+    if($settings['style'] === 'bottom') {
+      $css_settings['bg_image_selector'] = $css_settings['bg_image_selector'] . ' .text-on-video';
+    }
     $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $settings['image_style']);
 
     if ($provider === 'YouTube') {
 
       $source_url = $media->get('field_media_az_oembed_video')->value;
       $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
+      $attached_library = [
+        'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
+        'drupalSettings' => [
+          'azFieldsMedia' => [
+            'bgVideos' => [
+              $video_oembed_id => [
+                'videoId' => $video_oembed_id,
+                'start' => 0,
+              ],
+            ],
+          ],
+        ],
+      ];
+      $responsive_image_style_element = [
+        'style' => [
+          '#type' => 'inline_template',
+          '#template' => "<style type='text/css'>{{css}}</style>",
+          '#context' => [
+            'css' => $css,
+          ],
+        ],
+      ];
+      $background_video = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#allowed_tags' => ['iframe', 'img'],
+        '#attributes' => [
+          'id' => [$video_oembed_id . '-bg-video-container'],
+          'class' => [
+            'az-video-loading',
+            'az-video-background',
+            'az-js-video-background',
+          ],
+          'data-youtubeid' => $video_oembed_id,
+          'data-style' => $settings['style'],
+          'data-parentid' => HTML::getId($settings['css_settings']['bg_image_selector']),
+        ],
+        'child' => $background_media,
+        '#attached' => $attached_library,
+      ];
 
       if ($settings['style'] !== 'bottom') {
-        $responsive_image_style_element = [
-          'style' => [
-            '#type' => 'inline_template',
-            '#template' => "<style type='text/css'>{{css}}</style>",
-            '#context' => [
-              'css' => $css,
-            ],
-          ],
-          $background_video = [
-            '#type' => 'html_tag',
-            '#tag' => 'div',
-            '#allowed_tags' => ['iframe', 'img'],
-            '#attributes' => [
-              'id' => [$video_oembed_id . '-bg-video-container'],
-              'class' => [
-                'az-video-loading',
-                'az-video-background',
-                'az-js-video-background',
-              ],
-              'data-youtubeid' => $video_oembed_id,
-              'data-style' => $settings['style'],
-            ],
-            'child' => $background_media,
-            '#attached' => [
-              'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
-              'drupalSettings' => [
-                'azFieldsMedia' => [
-                  'bgVideos' => [
-                    $video_oembed_id => [
-                      'videoId' => $video_oembed_id,
-                      'start' => 0,
-                    ],
-                  ],
-                ],
-              ],
-            ],
-          ],
-        ];
         $az_background_media[] = $responsive_image_style_element;
+        $az_background_media[] = $background_video;
       }
       elseif ($settings['style'] === 'bottom') {
-        $responsive_image_style_element = [
-          'style' => [
-            '#type' => 'inline_template',
-            '#template' => "<style type='text/css'>{{css}}</style>",
-            '#context' => [
-              'css' => $css,
-            ],
-          ],
-        ];
         $image_renderable = [
           '#theme' => 'image',
           '#uri' => file_create_url($thumb),
@@ -533,12 +517,14 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           '#type' => 'html_tag',
           '#tag' => 'div',
           'img' => $image_renderable,
-          'video' => $responsive_image_style_element,
+          'style' => $responsive_image_style_element,
+          'video' => $background_video,
           '#attributes' => [
             'class' => ['text-on-media-bottom', 'text-on-video'],
           ],
         ];
         $az_background_media[] = $text_on_bottom;
+
       }
 
       return $az_background_media;

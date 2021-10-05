@@ -34,8 +34,9 @@
 .media--type--az-remote-video.box {
   padding: 0;
 }
-.az-video-playing {
-  background: none;
+.az-video-playing,
+.az-video-playing .text-on-video {
+  background: none !important;
 }
 .column {
   padding-left: 2em;
