@@ -20,18 +20,11 @@ ________________________
 5. Modify the form display to place the Alphabetical Index field where you would like it to display
 6. Modify the main/default display of your content type to disable Alphabetical Index field from the display
 
-### 2.) Enable the Alphabetical Index View Mode
-
-In order for the Alphabetical Listing display to work properly, you must enable the view mode on your content type. The display will be automatically configured by the provided node template (no changes are required in the view mode apart from enabling it).
-
-1. Navigate to `Structure > Content types > [your content type] > Manage Display`
-2. Expand the "Custom display settings" accordion at the bottom of the page and enable the `Alphabetical Listing view mode`
-
-### 3.) Leverage the View
+### 2.) Leverage the View
 
 The view that is provided by the Alphabetical Listing module can be configured to meet your site's use case, such as narrowing the scope to specific content types. The view is already configured to have the necessary classes, so no additional changes are required for the view to work unless you want to modify.
 
-### (Optional) Enable the View on the Page Content Type
+### 3.) (Optional) Enable the View on the View Paragraph Type
 
 If you want to embed the Alphabetical Listing view on a page, you will need to enable the view on View pargraph type.
 
