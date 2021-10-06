@@ -8,12 +8,12 @@
 /**
  * Implements template_preprocess_views_view()
  */
-  function az_alphabetical_listing_preprocess_views_view(&$variables)  {
-    $view_id = $variables['view']->id();
-    if ($view_id == 'az_alphabetical_listing') {
-      $variables['#attached']['library'][] = 'az_alphabetical_listing/az_alphabetical_listing';
-    }
+function az_alphabetical_listing_preprocess_views_view(&$variables) {
+  $view_id = $variables['view']->id();
+  if ($view_id === 'az_alphabetical_listing') {
+    $variables['#attached']['library'][] = 'az_alphabetical_listing/az_alphabetical_listing';
   }
+}
 
 /**
  * Implements hook_theme_registry_alter().
