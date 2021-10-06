@@ -135,6 +135,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-8' => $this->t('8 (6.0rem | ~96px)'),
         'y-9' => $this->t('9 (7.0rem | ~112px)'),
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
+        'y-20' => $this->t('20 (16.0rem | ~256px)'),
+        'y-30' => $this->t('30 (24.0rem | ~384px)'),
       ],
       '#default_value' => $config['text_media_spacing'] ?? 'y-5',
       '#description' => $this->t('Adds spacing above and below the text.'),

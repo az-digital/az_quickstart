@@ -93,6 +93,8 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'py-8' => $this->t('8 (6.0rem | ~96px)'),
         'py-9' => $this->t('9 (7.0rem | ~112px)'),
         'py-10' => $this->t('10 (8.0rem | ~128px)'),
+        'py-20' => $this->t('20 (16.0rem | ~256px)'),
+        'py-30' => $this->t('30 (24.0rem | ~384px)'),
       ],
       '#default_value' => $config['text_background_padding'] ?? 'py-5',
       '#description' => $this->t('Adds padding above and below the text.'),
