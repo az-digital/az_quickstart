@@ -98,8 +98,8 @@ class AZResponsiveBackgroundImageCssHelper {
     template_preprocess_responsive_image($vars);
 
     $fallback_image = new FormattableMarkup(
-      '@bg_image_selector { background-image: url(":img_element_uri");}', [
-        '@bg_image_selector' => $css_settings['bg_image_selector'],
+      ':bg_image_selector { background-image: url(":img_element_uri");}', [
+        ':bg_image_selector' => $css_settings['bg_image_selector'],
         ':img_element_uri' => $vars['img_element']['#uri'],
       ]
     );
