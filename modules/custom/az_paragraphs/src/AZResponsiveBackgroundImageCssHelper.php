@@ -34,6 +34,26 @@ class AZResponsiveBackgroundImageCssHelper {
   }
 
   /**
+   * @return array
+   *   An array with all required settings.
+   */
+  public static function defaultSettings() {
+    return [
+      'bg_image_selector' => 'body',
+      'bg_image_color' => '#FFFFFF',
+      'bg_image_x' => 'center',
+      'bg_image_y' => 'center',
+      'bg_image_attachment' => 'scroll',
+      'bg_image_repeat' => 'no-repeat',
+      'bg_image_background_size' => 'cover',
+      'bg_image_gradient' => '',
+      'bg_image_media_query' => 'all',
+      'bg_image_important' => 0,
+      'bg_image_z_index' => 'auto',
+    ];
+  }
+
+  /**
    * Adds a responsive background image to the page.
    *
    * This function uses the css 'background' property.
@@ -49,6 +69,10 @@ class AZResponsiveBackgroundImageCssHelper {
    *      - bg_image_attachment: The attachment property (scroll or fixed)
    *      - bg_image_repeat: The repeat settings
    *      - bg_image_background_size: The background size property if necessary
+   *      - bg_image_gradient: A CSS background gradient
+   *      - bg_image_media_query: Set the media query (all, print or screen)
+   *      - bg_image_important: Add the `!important` property to all background properties.
+   *      - bg_image_z_index: The z-index property if necessary
    *    Default settings will be used for any values not provided.
    * @param string $responsive_image_style
    *   Add responsive image style to the image before applying it to the
@@ -58,6 +82,9 @@ class AZResponsiveBackgroundImageCssHelper {
    *   The array containing the CSS.
    */
   public function getResponsiveBackgroundImageCss(EntityInterface $image, array $css_settings = [], $responsive_image_style = NULL) {
+
+    // Merge defaults into css_settings array without overriding values.
+    $css_settings += self::defaultSettings();
 
     $style_elements = [];
     $css = [];
@@ -71,8 +98,8 @@ class AZResponsiveBackgroundImageCssHelper {
     template_preprocess_responsive_image($template_variables);
 
     $fallback_image = new FormattableMarkup(
-      '@bg_image_selector { background-image: url(":img_element_uri");}', [
-        '@bg_image_selector' => $css_settings['bg_image_selector'],
+      ':bg_image_selector { background-image: url(":img_element_uri");}', [
+        ':bg_image_selector' => $css_settings['bg_image_selector'],
         ':img_element_uri' => $template_variables['img_element']['#uri'],
       ]
     );
