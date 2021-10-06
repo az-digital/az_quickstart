@@ -184,16 +184,18 @@ function az_core_form_block_form_alter(&$form, &$form_state, $form_id) {
 
       // Provide link to Quickstart settings page if the user has access.
       $site_name_description = t('Defined on the <a href=":information">Quickstart settings</a> page.', [':information' => $quickstart_settings_url]);
-      $site_slogan_description = t('Defined on the <a href=":information">Quickstart settings</a> page.', [':information' => $quickstart_settings_url]);
     }
     else {
       // Explain that the user does not have access to the Quickstart settings
       // page.
       $site_name_description = t('Defined on the Quickstart settings page. You do not have the appropriate permissions to change the site name.');
-      $site_slogan_description = t('Defined on the Quickstart settings page. You do not have the appropriate permissions to change the site slogan.');
     }
-
     $form['settings']['block_branding']['use_site_name']['#description'] = $site_name_description;
-    $form['settings']['block_branding']['use_site_slogan']['#description'] = $site_slogan_description;
+
+    // Suppress site slogan toggle.
+    $form['settings']['block_branding']['use_site_slogan']['#access'] = FALSE;
+
+    // Modify help text.
+    $form['settings']['block_branding']['#description'] = t('Choose which branding elements you want to show in this block instance.  Enabling both the Site logo and the Site name is <strong><em>not recommended</em></strong> per University of Arizona brand guidelines.');
   }
 }
