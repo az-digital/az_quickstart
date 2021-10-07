@@ -48,7 +48,7 @@ class AZResponsiveBackgroundImageCssHelper {
       'bg_image_background_size' => 'cover',
       'bg_image_gradient' => '',
       'bg_image_media_query' => 'all',
-      'bg_image_important' => 0,
+      'bg_image_important' => false,
       'bg_image_z_index' => 'auto',
     ];
   }
@@ -71,7 +71,8 @@ class AZResponsiveBackgroundImageCssHelper {
    *      - bg_image_background_size: The background size property if necessary
    *      - bg_image_gradient: A CSS background gradient
    *      - bg_image_media_query: Set the media query (all, print or screen)
-   *      - bg_image_important: Add the `!important` property to all background properties.
+   *      - bg_image_important: Add the `!important` property to all
+   *        background properties.
    *      - bg_image_z_index: The z-index property if necessary
    *    Default settings will be used for any values not provided.
    * @param string $responsive_image_style

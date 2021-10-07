@@ -7,7 +7,6 @@ use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\Core\Template\Attribute;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -183,9 +182,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
     $variables['attributes']['class'][] = HTML::getClass('paragraph--type--' . $paragraph->bundle());
-    // if (!empty($variables['elements']['#az_background_media'])) {
-    //   $variables['attributes']['class'][] = 'media--type--' . HTML::getClass($variables['elements']['#az_background_media'][0]['#media_type']);
-    // }
+    if (!empty($variables['content']['field_az_media']['#media_type'])) {
+      $variables['attributes']['class'][] = 'media--type--' . HTML::getClass($variables['content']['field_az_media']['#media_type']);
+    }
     $variables['attributes']['class'][] = HTML::getClass('paragraph--view-mode--' . $variables['view_mode']);
     $variables['attributes']['class'][] = HTML::getClass('paragraph--' . $paragraph_status);
     $variables['attributes']['class'][] = HTML::getClass($style);
@@ -226,7 +225,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
-// dpm($variables);
   }
 
   /**

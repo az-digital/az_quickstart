@@ -294,6 +294,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     $css_settings = $settings['css_settings'];
     $element = [];
+
     $full_width = '';
     $marquee_style = $settings['style'];
     if (!empty($settings['full_width'])) {
@@ -310,6 +311,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     /** @var \Drupal\media\MediaInterface[] $media_items */
     foreach ($media_items as $delta => $media) {
+      $element['#media_type'] = $media->bundle();
 
       switch ($media->bundle()) {
         case 'az_remote_video':
@@ -317,11 +319,11 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           break;
 
         case 'az_image':
-          $element  = $this->image($settings, $media);
+          $element[$delta] = $this->image($settings, $media);
           break;
 
         default:
-          return $element ;
+          return $element;
       }
 
     }
@@ -442,7 +444,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   private function remoteVideo(array $settings, MediaInterface $media) {
 
     $az_background_media = [];
-    // $az_background_media['#media_type'] = $media->bundle();
     $css_settings = $settings['css_settings'];
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
@@ -458,7 +459,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $settings['image_style']);
 
     if ($provider === 'YouTube') {
-
       $source_url = $media->get('field_media_az_oembed_video')->value;
       $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
       $attached_library = [
@@ -510,7 +510,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $image_renderable = [
           '#theme' => 'image',
           '#uri' => file_create_url($thumb),
-          // '#alt' => $media->field_media_az_image->alt,
           '#attributes' => [
             'class' => ['img-fluid'],
           ],
@@ -541,7 +540,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   private function image(array $settings, MediaInterface $media) {
     $az_background_media = [];
-    // $az_background_media['#media_type'] = $media->bundle();
     $css_settings = $settings['css_settings'];
 
     if ($settings['style'] !== 'bottom') {
