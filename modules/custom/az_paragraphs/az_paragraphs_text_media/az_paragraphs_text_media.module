@@ -11,7 +11,7 @@
 function az_paragraphs_text_media_theme($existing, $type, $theme, $path) {
   return [
     'field__paragraph__az_text_media' => [
-      'template' => 'paragraph__az_text_media',
+      'template' => 'field--paragraph--az-text-media',
       'base hook' => 'field',
     ],
   ];

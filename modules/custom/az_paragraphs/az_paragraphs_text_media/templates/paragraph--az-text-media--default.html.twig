@@ -4,7 +4,6 @@
  * Default theme implementation to display a paragraph.
  *
  * Available variables:
- * - az_background_media: Background Media.
  * - paragraph: Full paragraph entity.
  *   Only method names starting with "get", "has", or "is" and a few common
  *   methods such as "id", "label", and "bundle" are available. For example:
@@ -33,9 +32,6 @@
  *   current user is a logged-in member.
  * - is_admin: Flag for admin user status. Will be true when the current user
  *   is an administrator.
- * - col_attributes: HTML attributes for the column.
- * - content_attributes: HTML attributes for content container.
- * - title_attributes: HTML attributes for title.
 
  * @see template_preprocess_paragraph()
  *
@@ -44,18 +40,8 @@
 #}
 {% block paragraph %}
   <div{{ attributes }}>
-    {{az_background_media}}
     {% block content %}
-      <div class="container">
-        <div class="az-full-width-row">
-          <div{{ col_attributes }}>
-            <div{{ content_attributes }}>
-              <h2{{ title_attributes }}>{{ paragraph.field_az_title.value }}</h2>
-              {{ content }}
-            </div>
-          </div>
-        </div>
-      </div>
+        {{ content }}
     {% endblock %}
   </div>
 {% endblock paragraph %}

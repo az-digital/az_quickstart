@@ -17,7 +17,7 @@ use Drupal\responsive_image\Entity\ResponsiveImageStyle;
  * Plugin implementation of the 'az_background_media_formatter' formatter.
  *
  * @FieldFormatter(
- *   id = "az_background_media_formatter",
+ *   id = "az_background_media",
  *   label = @Translation("Background Media"),
  *   field_types = {
  *     "entity_reference"
@@ -107,7 +107,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         'bg_image_background_size_ie8' => 0,
         'bg_image_gradient' => '',
         'bg_image_media_query' => 'all',
-        'bg_image_important' => TRUE,
+        'bg_image_important' => 1,
         'bg_image_z_index' => 'auto',
         'bg_image_path_format' => 'absolute',
       ],
@@ -123,7 +123,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $responsive_image_style_options = $this->getResponsiveImageStyles(TRUE);
 
     $form['image_style'] = [
-      '#title' => $this->t('Responsive image style.'),
+      '#title' => $this->t('Responsive image style'),
       '#description' => $this->t(
         'Select <a href="@href_image_style">the responsive image style</a> to use.',
         [
@@ -291,9 +291,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   public function viewElements(FieldItemListInterface $items, $langcode) {
 
     $settings = $this->getAllSettings($items);
+
     $css_settings = $settings['css_settings'];
-    $elements = [];
-    $az_background_media = [];
+    $element = [];
     $full_width = '';
     $marquee_style = $settings['style'];
     if (!empty($settings['full_width'])) {
@@ -303,8 +303,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     // Early opt-out if the field is empty.
     if (empty($media_items)) {
-      return $elements;
+      return $element;
     }
+
     $paragraph = $items->getEntity();
 
     /** @var \Drupal\media\MediaInterface[] $media_items */
@@ -312,19 +313,20 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
       switch ($media->bundle()) {
         case 'az_remote_video':
-          $az_background_media = $this->remoteVideo($settings, $media);
+          $element[$delta] = $this->remoteVideo($settings, $media);
           break;
 
         case 'az_image':
-          $az_background_media = $this->image($settings, $media);
+          $element  = $this->image($settings, $media);
           break;
 
         default:
-          return $az_background_media;
+          return $element ;
       }
+
     }
 
-    return $az_background_media;
+    return $element;
   }
 
   /**
@@ -440,7 +442,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   private function remoteVideo(array $settings, MediaInterface $media) {
 
     $az_background_media = [];
-    $az_background_media['#media_type'] = $media->bundle();
+    // $az_background_media['#media_type'] = $media->bundle();
     $css_settings = $settings['css_settings'];
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
@@ -508,7 +510,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $image_renderable = [
           '#theme' => 'image',
           '#uri' => file_create_url($thumb),
-          '#alt' => $media->field_media_az_image->alt,
+          // '#alt' => $media->field_media_az_image->alt,
           '#attributes' => [
             'class' => ['img-fluid'],
           ],
@@ -539,7 +541,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   private function image(array $settings, MediaInterface $media) {
     $az_background_media = [];
-    $az_background_media['#media_type'] = $media->bundle();
+    // $az_background_media['#media_type'] = $media->bundle();
     $css_settings = $settings['css_settings'];
 
     if ($settings['style'] !== 'bottom') {

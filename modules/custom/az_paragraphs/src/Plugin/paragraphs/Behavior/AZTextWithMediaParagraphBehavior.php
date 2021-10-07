@@ -162,6 +162,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function preprocess(&$variables) {
     parent::preprocess($variables);
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+
     $paragraph = $variables['paragraph'];
     // Get plugin configuration.
     $default_settings = $this->defaultSettings();
@@ -182,15 +183,15 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
     $variables['attributes']['class'][] = HTML::getClass('paragraph--type--' . $paragraph->bundle());
-    if (!empty($variables['elements']['#az_background_media'])) {
-      $variables['attributes']['class'][] = 'media--type--' . HTML::getClass($variables['elements']['#az_background_media'][0]['#media_type']);
-    }
+    // if (!empty($variables['elements']['#az_background_media'])) {
+    //   $variables['attributes']['class'][] = 'media--type--' . HTML::getClass($variables['elements']['#az_background_media'][0]['#media_type']);
+    // }
     $variables['attributes']['class'][] = HTML::getClass('paragraph--view-mode--' . $variables['view_mode']);
     $variables['attributes']['class'][] = HTML::getClass('paragraph--' . $paragraph_status);
     $variables['attributes']['class'][] = HTML::getClass($style);
     $variables['attributes']['class'][] = HTML::getClass($config['full_width']);
     $variables['attributes']['class'][] = HTML::getClass($config['bg_attachment']);
-
+    // Get column classes.
     $column_classes = ['col'];
     if (!empty($config['style']) && $config['style'] === 'bottom') {
       $column_classes[] = 'col-md-10 col-md-offset-1';
@@ -198,9 +199,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     else {
       $column_classes[] = $config['position'];
     }
-    $variables['col_attributes'] = new Attribute();
-    $variables['col_attributes']['class'] = $column_classes;
-
+    // Set column classes.
+    $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
+    // Get content classes.
     $content_classes = [
       'content',
       'az-full-width-column-content',
@@ -213,22 +214,19 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     elseif (!empty($config['style']) && $config['style'] === 'box') {
       $content_classes[] = 'm' . HTML::getClass($config['text_media_spacing']);
     }
-
-    $variables['content_attributes'] = new Attribute();
-    $variables['content_attributes']['class'] = $content_classes;
-
+    // Set content classes.
+    $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
+    // Get title classes.
     $title_classes = [
       'mt-0',
       'bold',
     ];
-
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
       $title_classes[] = 'text-blue';
     }
-
-    $variables['title_attributes'] = new Attribute();
-    $variables['title_attributes']['class'] = $title_classes;
-
+    // Set title classes.
+    $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
+// dpm($variables);
   }
 
   /**
