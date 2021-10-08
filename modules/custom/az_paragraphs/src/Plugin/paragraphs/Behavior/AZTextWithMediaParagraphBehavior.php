@@ -205,7 +205,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   }
 
   /**
-   * Get settings from paragraph and override defaults.
+   * Get settings from paragraph and return the necessary settings.
    */
   private function getParagraphBackgroundSettings(ParagraphInterface $paragraph) {
 
@@ -217,18 +217,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     return [
       'bg_image_selector' => '#' . HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
-      'bg_image_color' => '#FFFFFF',
-      'bg_image_x' => 'center',
-      'bg_image_y' => 'center',
       'bg_image_attachment' => $bg_attachment,
-      'bg_image_repeat' => 'no-repeat',
-      'bg_image_background_size' => 'cover',
-      'bg_image_background_size_ie8' => '0',
-      'bg_image_gradient' => '',
-      'bg_image_media_query' => 'all',
-      'bg_image_important' => '0',
-      'bg_image_z_index' => 'auto',
-      'bg_image_path_format' => 'absolute',
     ];
 
   }

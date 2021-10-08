@@ -40,16 +40,6 @@ class AZResponsiveBackgroundImageCssHelper {
   public static function defaultSettings() {
     return [
       'bg_image_selector' => 'body',
-      'bg_image_color' => '#FFFFFF',
-      'bg_image_x' => 'center',
-      'bg_image_y' => 'center',
-      'bg_image_attachment' => 'scroll',
-      'bg_image_repeat' => 'no-repeat',
-      'bg_image_background_size' => 'cover',
-      'bg_image_gradient' => '',
-      'bg_image_media_query' => 'all',
-      'bg_image_important' => 0,
-      'bg_image_z_index' => 'auto',
     ];
   }
 
