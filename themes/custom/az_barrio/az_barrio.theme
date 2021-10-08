@@ -65,6 +65,8 @@ function az_barrio_preprocess_block(array &$variables) {
     if (!empty($variables['elements']['#id'])) {
       $block = Block::load($variables['elements']['#id']);
       if(!empty($block) && $block->getRegion() === 'footer') {
+        $variables['content']['#attributes']['class'][] = 'nav-utility';
+        $variables['content']['#attributes']['class'][] = 'd-flex';
         $variables['content']['#attributes']['class'][] = 'justify-content-end';
       }
       if(!empty($block) && $block->getRegion() === 'footer_sub') {
