@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_help().
@@ -20,5 +21,20 @@ function az_cas_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Restrict assignable roles in 'Add CAS Users' form when Role Delegation module
+ * is enabled.
+ */
+function az_cas_form_bulk_add_cas_users_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+    $form['roles']['#options'] = array_map(
+      ['\Drupal\Component\Utility\Html', 'escape'],
+      \Drupal::service('delegatable_roles')->getAssignableRoles(\Drupal::currentUser())
+    );
   }
 }
