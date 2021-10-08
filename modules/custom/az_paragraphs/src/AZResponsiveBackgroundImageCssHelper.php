@@ -71,7 +71,8 @@ class AZResponsiveBackgroundImageCssHelper {
    *      - bg_image_background_size: The background size property if necessary
    *      - bg_image_gradient: A CSS background gradient
    *      - bg_image_media_query: Set the media query (all, print or screen)
-   *      - bg_image_important: Add the `!important` property to all background properties.
+   *      - bg_image_important: Add the `!important` property to all
+   *        background properties.
    *      - bg_image_z_index: The z-index property if necessary
    *    Default settings will be used for any values not provided.
    * @param string $responsive_image_style
@@ -90,21 +91,21 @@ class AZResponsiveBackgroundImageCssHelper {
     $css = [];
     $with_media_query = '';
     $selector = HTML::getId($css_settings['bg_image_selector']);
-    $vars = [
+    $template_variables = [
       'uri' => $image->getFileUri(),
       'responsive_image_style_id' => $responsive_image_style,
     ];
 
-    template_preprocess_responsive_image($vars);
+    template_preprocess_responsive_image($template_variables);
 
     $fallback_image = new FormattableMarkup(
       ':bg_image_selector { background-image: url(":img_element_uri");}', [
         ':bg_image_selector' => $css_settings['bg_image_selector'],
-        ':img_element_uri' => $vars['img_element']['#uri'],
+        ':img_element_uri' => $template_variables['img_element']['#uri'],
       ]
     );
     // Split each source into multiple rules.
-    foreach (array_reverse($vars['sources']) as $source_i => $source) {
+    foreach (array_reverse($template_variables['sources']) as $source_i => $source) {
       $attr = $source->toArray();
 
       $srcset = explode(', ', $attr['srcset']);
