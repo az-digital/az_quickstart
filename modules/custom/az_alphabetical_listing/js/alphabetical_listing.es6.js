@@ -70,8 +70,8 @@
           // Set variable to determine if there are visible children
           let visibleChildren = false;
           // Loop through each item in the results group
-          $(targetGroup).each(() => {
-            if (!$(element).hasClass("hide-result")) {
+          $(targetGroup).each((resultIndex, resultElement) => {
+            if (!$(resultElement).hasClass("hide-result")) {
               // Set variable to true if item isn't hidden
               visibleChildren = true;
             }

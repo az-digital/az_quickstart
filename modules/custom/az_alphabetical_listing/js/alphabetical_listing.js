@@ -41,8 +41,8 @@
           var group = elementId.toLowerCase();
           var targetGroup = ".az-alphabetical-letter-group-".concat(group);
           var visibleChildren = false;
-          $(targetGroup).each(function () {
-            if (!$(element).hasClass("hide-result")) {
+          $(targetGroup).each(function (resultIndex, resultElement) {
+            if (!$(resultElement).hasClass("hide-result")) {
               visibleChildren = true;
             }
           });
