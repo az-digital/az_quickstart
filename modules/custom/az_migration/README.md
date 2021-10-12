@@ -14,14 +14,17 @@ INTRODUCTION
 Custom Migration from Drupal 7 to Drupal 9
 
   * Person Content Type:
-    
+
     All the person categories and files can be migrated using this module.
     Person data can be migrated by follow the below steps.
 
 REQUIREMENTS
 ------------
 
-No special requirements.
+Quickstart 1 source website.
+Access to Quickstart 1 database credentials.
+Migration Quickstart 2 destination site should have http access to the
+QuickStart 1 source database.
 
 
 INSTALLATION
@@ -32,7 +35,7 @@ INSTALLATION
   ```
     drush en az_migration
   ```
-   
+
 
 CONFIGURATION
 -------------
@@ -40,7 +43,7 @@ CONFIGURATION
   ## Configure the settings.php to connect Drupal 7 database.
 
   Please add the below connection string to the settings.php
-    
+
   ```
   $databases['migrate']['default'] = [
     'driver' => 'my_driver',
@@ -59,7 +62,7 @@ CONFIGURATION
   File can be migrate in two ways as below -
 
   #### 1. Copy the file  "sites/default/files/migrate_file" folder.
-        
+
   Then Set the configuration as below :
 
   ```
@@ -77,61 +80,18 @@ CONFIGURATION
   drush cset az_migration.settings migrate_d7_public_path "sites/default/files"
   ```
 
+
 USAGE NOTES
 -----------
 
-## Migrate the Person Content type.
+Nearly any architectural customization or override to a Quickstart 1 site will require a custom module with custom migrations.
 
-#### 1. Person Category Migration
+#### 1. User Migration
 
-Migrate the related categories using the below command :
-```
-drush mim az_person_categories
-drush mim az_person_categories_secondary
-```
+Source site pre-migration tasks :
 
-To rollback the migrated category :
-```
-drush mr az_person_categories
-drush mr az_person_categories_secondary
-```
-#### 2. All File Migration
-
-Migrate the related files using the below command :
-```
-drush mim az_files
-```
-
-To rollback the migrated file :
-```
-drush mr az_files
-```
-
-#### 3. All Media Migration
-
-Migrate the related files using the below command :
-```
-drush mim az_media
-```
-
-To rollback the migrated file :
-```
-drush mr az_media
-```
-
-#### 4. Person Content Migration
-
-Migrate person content using the below command :
-```
-drush mim az_node_person
-```
-
-To rollback the migrated person content : 
-```
-drush mr az_node_person
-```
-
-#### 5. User Migration
+* Block any users you don’t want to migrate.
+* Check for any custom or overridden fields on users.
 
 During the migration we have consider below mapping suggestions :
 
@@ -158,11 +118,87 @@ To rollback the migrated users :
 drush mr az_user
 ```
 
-After rollback and import the users, need to run below command for CAS data :
+#### 2. All File Migration
+
+Source site pre-migration tasks :
+
+* Delete any files you don’t want migrated.
+
+
+Migrate the related files using the below command :
 ```
-drush mim az_cas_user --update
+drush mim az_files
 ```
-#### 6. Event Content Migration
+
+To rollback the migrated file :
+```
+drush mr az_files
+```
+
+#### 3. All Media Migration
+
+Source site pre-migration tasks :
+
+* Delete any files you don’t want migrated.
+* Check for any custom or overridden fields on file_entities.
+* Check for any custom file entity types.
+
+Migrate the related files using the below command :
+```
+drush mim az_media
+```
+
+To rollback the migrated file :
+```
+drush mr az_media
+```
+
+## Migrate the Person Content type.
+
+#### 1. Person Category Migration
+
+Source site pre-migration tasks :
+
+* Delete any terms you don’t want migrated.
+* Check for any custom or overridden fields on uaqs_person_category taxonomy.
+* Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
+
+Migrate the related categories using the below command :
+```
+drush mim az_person_categories
+drush mim az_person_categories_secondary
+```
+
+To rollback the migrated category :
+```
+drush mr az_person_categories
+drush mr az_person_categories_secondary
+```
+
+#### 2. Person Content Migration
+
+Source site pre-migration tasks :
+
+* Delete any uaqs_person content you don’t want migrated.
+* Check for any custom or overridden fields on uaqs_person.
+
+Migrate person content using the below command :
+```
+drush mim az_node_person
+```
+
+To rollback the migrated person content :
+```
+drush mr az_node_person
+```
+
+## Migrate the Event Content type.
+
+Source site pre-migration tasks :
+
+* Delete any terms you don’t want migrated.
+* Check for any custom or overridden fields on uaqs_person_category taxonomy.
+* Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
 
 Migrate event content using the below command :
 ```
@@ -170,7 +206,27 @@ drush mim az_event_categories
 drush mim az_node_event
 ```
 
-To rollback the migrated event content : 
+To rollback the migrated event content :
+```
+drush mr az_event_categories
+drush mr az_node_event
+```
+
+
+## Migrate the Event Content type.
+
+Source site pre-migration tasks :
+
+* Delete any terms you don’t want migrated.
+* Check for any custom or overridden fields on uaqs_person_category taxonomy.
+* Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
+
+Migrate news tags using the below command :
+```
+drush mim az_news_tags
+```
+
+To rollback the migrated event content :
 ```
 drush mr az_event_categories
 drush mr az_node_event
@@ -178,7 +234,7 @@ drush mr az_node_event
 
 #### 7. Carousel Item Migration
 
-Migrate carousel item using the below command : 
+Migrate carousel item using the below command :
 ```
 drush mim az_node_carousel
 ```

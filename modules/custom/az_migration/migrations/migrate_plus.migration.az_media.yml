@@ -48,6 +48,7 @@ process:
   field_media_az_image/title: image_field_text
   field_media_az_video_file: '@mfid'
   field_media_az_oembed_video/value: uri
+  field_media_az_oembed_tweet/value: uri
 
   name: filename
   created: timestamp
