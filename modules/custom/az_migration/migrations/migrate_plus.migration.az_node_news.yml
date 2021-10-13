@@ -62,7 +62,6 @@ process:
           plugin: migration_lookup
           migration:
             - az_paragraph_column_image
-            - az_paragraph_contact
             - az_paragraph_extra_info
             - az_paragraph_file_download
             - az_paragraph_headed_text
@@ -78,7 +77,6 @@ process:
           plugin: migration_lookup
           migration:
             - az_paragraph_column_image
-            - az_paragraph_contact
             - az_paragraph_extra_info
             - az_paragraph_file_download
             - az_paragraph_headed_text
