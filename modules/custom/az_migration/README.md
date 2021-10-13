@@ -163,6 +163,15 @@ Source site pre-migration tasks :
 * Check for any custom or overridden fields on uaqs_person_category taxonomy.
 * Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
 
+Dependencies :
+
+* User Migration
+* File Migration
+* Media Migration
+* Person Category Migration
+* Person Secondary Category Migration
+* Person Module
+
 Migrate the related categories using the below command :
 ```
 drush mim az_person_categories
@@ -194,45 +203,110 @@ drush mr az_node_person
 
 ## Migrate the Event Content type.
 
+Dependencies :
+
+* User Migration
+* File Migration
+* Media Migration
+* Contact Migration
+* Event Category Migration
+* Event Module
+
+#### 1. Event Category Migration.
+
 Source site pre-migration tasks :
 
-* Delete any terms you don’t want migrated.
-* Check for any custom or overridden fields on uaqs_person_category taxonomy.
-* Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
+* Delete any categories you don’t want migrated.
+* Check for any custom or overridden fields on event_categories taxonomy.
+
+Migrate event categories using the below command :
+```
+drush mim az_event_categories
+```
+
+#### 2. Event Content Migration.
+
+Source site pre-migration tasks :
+
+* Check for any custom or overridden fields on uaqs_event content type.
+* Delete any events you don’t want migrated.
 
 Migrate event content using the below command :
 ```
-drush mim az_event_categories
 drush mim az_node_event
 ```
 
 To rollback the migrated event content :
 ```
-drush mr az_event_categories
 drush mr az_node_event
 ```
 
 
-## Migrate the Event Content type.
+## Migrate the News Content type.
+
+Dependencies :
+
+* User Migration
+* File Migration
+* Media Migration
+* Paragraph Migration
+* Contact Migration
+* News Tag Migration
+* News Module
+
+#### 1. News Tags Migration.
 
 Source site pre-migration tasks :
 
-* Delete any terms you don’t want migrated.
-* Check for any custom or overridden fields on uaqs_person_category taxonomy.
-* Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
+* Delete any news tags you don’t want migrated.
+* Check for any custom or overridden fields on uaqs_news_tags taxonomy.
+
 
 Migrate news tags using the below command :
 ```
 drush mim az_news_tags
 ```
 
-To rollback the migrated event content :
+To rollback the migrated news tags :
 ```
-drush mr az_event_categories
-drush mr az_node_event
+drush mr az_news_tags
 ```
 
-#### 7. Carousel Item Migration
+#### 2. Contact Migration.
+
+Migrate contact paragraphs using the below command :
+
+```
+drush mim az_paragraph_contact
+```
+
+To rollback the migrated contacts :
+```
+drush mr az_paragraph_contact
+```
+
+#### 3. Paragraph Migration.
+
+``` Paragraphs instructions go here ```
+
+#### 4. News Content Migration.
+
+Source site pre-migration tasks :
+
+* Delete any news content you don’t want migrated.
+* Check for any custom or overridden fields on uaqs_news content type.
+
+Migrate news content using the below command :
+```
+drush mim az_node_news
+```
+
+To rollback the migrated news content :
+```
+drush mr az_node_news
+```
+
+## Carousel Item Migration
 
 Migrate carousel item using the below command :
 ```
