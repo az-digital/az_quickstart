@@ -285,11 +285,72 @@ To rollback the migrated contacts :
 drush mr az_paragraph_contact
 ```
 
-#### 3. Paragraph Migration.
+#### 3. Headed Text Migration.
 
-``` Paragraphs instructions go here ```
+Migrate headed text paragraphs using the below command :
 
-#### 4. News Content Migration.
+```
+drush mim az_paragraph_headed_text
+```
+
+To rollback the migrated headed texts :
+```
+drush mr az_paragraph_headed_text
+```
+
+#### 4. Extra Info Migration.
+
+Migrate extra info paragraphs using the below command :
+
+```
+drush mim az_paragraph_extra_info
+```
+
+To rollback the migrated extra info paragraphs :
+```
+drush mr az_paragraph_extra_info
+```
+
+#### 5. File Download Migration.
+
+Migrate file download paragraphs using the below command :
+
+```
+drush mim az_paragraph_file_download
+```
+
+To rollback the migrated file download paragraphs :
+```
+drush mr az_paragraph_file_download
+```
+
+#### 6. Card Deck Migration.
+
+Migrate card deck paragraphs using the below command :
+
+```
+drush mim az_paragraph_card_deck
+```
+
+To rollback the migrated card decks :
+```
+drush mr az_paragraph_card_deck
+```
+
+#### 7. Column Image Migration.
+
+Migrate column image paragraphs using the below command :
+
+```
+drush mim az_paragraph_column_image
+```
+
+To rollback the migrated column image paragraphs :
+```
+drush mr az_paragraph_column_image
+```
+
+#### 8. News Content Migration.
 
 Source site pre-migration tasks :
 
