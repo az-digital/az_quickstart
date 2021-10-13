@@ -68,11 +68,11 @@ process:
     process:
       delta: delta
       target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_files
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_files
       display: display
       description: description
 
