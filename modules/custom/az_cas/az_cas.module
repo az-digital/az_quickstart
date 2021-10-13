@@ -54,14 +54,14 @@ function az_cas_validate_roles(array &$form, FormStateInterface $form_state) {
   $allowed_roles = \Drupal::service('delegatable_roles')->getAssignableRoles(\Drupal::currentUser());
   $allowed_roles = array_keys($allowed_roles);
 
-  $valid_roles = TRUE;
-  foreach ($submitted_roles as $role) {
-    if (!in_array($role, $allowed_roles)) {
-      $valid_roles = FALSE;
+  $invalid_roles = array_filter(
+    $submitted_roles,
+    function($key) use ($allowed_roles) {
+      return !in_array($key, $allowed_roles);
     }
-  }
+  );
 
-  if (!$valid_roles) {
+  if (!empty($invalid_roles)) {
     $form_state->setErrorByName(
       'roles',
       t('You do not have permission to assign all of the submitted roles.')
