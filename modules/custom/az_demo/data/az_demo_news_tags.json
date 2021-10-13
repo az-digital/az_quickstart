@@ -1,0 +1,16 @@
+{
+    "news_tags": [
+    { "name" : "Research",
+      "description" : "Research."
+    },
+    { "name" : "Students",
+      "description" : "Students."
+    },
+    { "name" : "Campus News",
+      "description" : "Campus News."
+    },
+    { "name" : "Arts",
+      "description" : "Arts."
+    }
+  ]
+}

@@ -162,3 +162,40 @@ function az_core_canonical_url(array $data) {
 
   return $uri;
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Replaces links to Site information page in system_branding_block settings
+ * form with links to Quickstart settings page.
+ *
+ * @see Drupal\system\Plugin\Block\SystemBrandingBlock::blockForm()
+ */
+function az_core_form_block_form_alter(&$form, &$form_state, $form_id) {
+  $build_info = $form_state->getBuildInfo();
+  $plugin_id = $build_info['callback_object']->getEntity()->getPluginId();
+  if ($plugin_id === 'system_branding_block') {
+    // Get permissions.
+    $url_quickstart_settings = new Url('az_core.az_settings');
+
+    if ($url_quickstart_settings->access()) {
+      // Get path to settings page.
+      $quickstart_settings_url = $url_quickstart_settings->toString();
+
+      // Provide link to Quickstart settings page if the user has access.
+      $site_name_description = t('Defined on the <a href=":information">Quickstart settings</a> page.', [':information' => $quickstart_settings_url]);
+    }
+    else {
+      // Explain that the user does not have access to the Quickstart settings
+      // page.
+      $site_name_description = t('Defined on the Quickstart settings page. You do not have the appropriate permissions to change the site name.');
+    }
+    $form['settings']['block_branding']['use_site_name']['#description'] = $site_name_description;
+
+    // Suppress site slogan toggle.
+    $form['settings']['block_branding']['use_site_slogan']['#access'] = FALSE;
+
+    // Modify help text.
+    $form['settings']['block_branding']['#description'] = t('Choose which branding elements you want to show in this block instance.  Enabling both the Site logo and the Site name is <strong><em>not recommended</em></strong> per University of Arizona brand guidelines.');
+  }
+}

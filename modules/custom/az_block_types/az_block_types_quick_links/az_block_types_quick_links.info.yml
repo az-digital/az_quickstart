@@ -1,0 +1,9 @@
+name: 'Quickstart Block Types - Quick Links'
+type: module
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - drupal:block_content
+  - drupal:link
+  - field_group:field_group
+  - az_block_types
