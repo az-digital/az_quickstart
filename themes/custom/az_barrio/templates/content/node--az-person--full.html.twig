@@ -154,7 +154,7 @@
             {{ content.field_az_address.0 }}
           </div>
           {% endif %}
-          {% if content.field_az_phones.0 or content.field_az_email.0 or content.field_az_links.0 %}
+          {% if content.field_az_phones.0 or content.field_az_email.0 or content.field_az_links.0 or content.field_az_pronouns.0 %}
           <ul class="list-group list-group-flush border-0 py-3">
           {% if content.field_az_phones %}
             {% for key, item in content.field_az_phones if key|first != '#' %}
