@@ -6,10 +6,8 @@ migration_tags:
 status: true
 
 source:
-  plugin: d7_node
+  plugin: az_node
   node_type: uaqs_news
-  constants:
-    slash: '/'
 
 destination:
   plugin: entity:node
@@ -247,13 +245,10 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
-
-  path/pathauto: pathauto
-  path/alias:
-    plugin: concat
-    source:
-      - constants/slash
-      - path
+  path/pathauto:
+    plugin: default_value
+    default_value: 0
+  path/alias: alias
 
 dependencies:
   enforced:

@@ -86,6 +86,8 @@ USAGE NOTES
 
 Nearly any architectural customization or override to a Quickstart 1 site will require a custom module with custom migrations.
 
+Compare source site pathauto settings to ensure new content and migrated content are consistent.
+
 #### 1. User Migration
 
 Source site pre-migration tasks :
