@@ -10,16 +10,8 @@ use Drupal\migrate\Row;
 /**
  * Process plugin to upgrade ua-bootstrap styles to arizona-bootstrap styles.
  *
- * Replace HTML elements with elements and classes specified in the Styles menu
- * of the WYSIWYG editor.
- *
- * Available configuration keys:
- * - format: the text format to inspect for style options (optional,
- *   defaults to 'basic_html').
- * - rules: an array of keyed arrays, with the following keys:
- *   - xpath: an XPath expression for the elements to replace.
- *   - style: the label of the item in the Styles menu to use.
- *   - depth: the number of parent elements to remove (optional, defaults to 0).
+ * Replace CSS classes available in ua-bootstrap with coresponding class in
+ * arizona-bootstrap.
  *
  * Example:
  *
@@ -31,14 +23,6 @@ use Drupal\migrate\Row;
  *       source: 'body/0/value'
  * @endcode
  *
- * This will replace <b>...</b> with whatever style is labeled "Bold" in the
- * Full HTML text format, perhaps <strong class="foo">...</strong>.
- * It will also replace <span><i>...</i></span> with the style labeled "Italic"
- * in that text format, perhaps <em class="foo bar">...</em>.
- * You may get unexpected results if there is anything between the two opening
- * tags or between the two closing tags. That is, the code assumes that
- * '<span><i>' is closed with '</i></span>' exactly.
-*
  * @MigrateProcessPlugin(
  *   id = "upgrade_ua_bootstrap_to_arizona_bootstrap"
  * )
