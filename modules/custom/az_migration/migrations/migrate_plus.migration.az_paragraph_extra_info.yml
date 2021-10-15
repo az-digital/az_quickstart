@@ -15,11 +15,7 @@ destination:
 
 process:
   field_az_text_area/value:
-    -
-      plugin: paragraphs_extra_info_field_merge
-    -
-      plugin: upgrade_ua_bootstrap_to_arizona_bootstrap
-
+    plugin: paragraphs_extra_info_field_merge
   field_az_text_area/format:
     plugin: default_value
     default_value: az_standard
