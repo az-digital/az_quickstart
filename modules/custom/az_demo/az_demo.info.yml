@@ -6,6 +6,7 @@ package: 'The University of Arizona - Experimental'
 dependencies:
   - az_core
   - az_event
+  - az_news
   - az_flexible_page
   - az_paragraphs_text
   - az_paragraphs_text_background

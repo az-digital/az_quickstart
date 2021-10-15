@@ -19,6 +19,7 @@ install:
   - az_core
   - az_flexible_page
   - az_flexible_block
+  - az_block_types_quick_links
   - az_metrics
   - az_news
   - az_person
