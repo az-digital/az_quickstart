@@ -4,6 +4,4 @@ description: Provides hardened config for Quickstart sites.
 core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
-  - antibot
   - honeypot
-  - seckit
