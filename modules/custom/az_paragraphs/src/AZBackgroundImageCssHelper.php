@@ -3,6 +3,7 @@
 namespace Drupal\az_paragraphs;
 
 use Drupal\Component\Render\FormattableMarkup;
+use Drupal\Core\Render\Markup;
 
 /**
  * Class AZBackgroundImageCssHelper. Adds service to form background image CSS.
@@ -113,12 +114,8 @@ class AZBackgroundImageCssHelper {
         );
       }
       // Set background-image.
-      $style .= new FormattableMarkup(
-        'background-image: :bg_gradient url(":image_path") :important;', [
-          ':image_path' => $image_path,
-          ':bg_gradient' => $background_gradient,
-          ':important' => $important,
-        ]
+      $style .= Markup::create(
+        'background-image: ' . $bg_gradient . ' url("' . $image_path . '") ' . $important . ';'
       );
       // Set background-position.
       $style .= new FormattableMarkup(

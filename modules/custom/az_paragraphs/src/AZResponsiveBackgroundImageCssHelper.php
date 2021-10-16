@@ -77,7 +77,6 @@ class AZResponsiveBackgroundImageCssHelper {
     // Merge defaults into css_settings array without overriding values.
     $css_settings += self::defaultSettings();
 
-    $style_elements = [];
     $css = [];
     $with_media_query = '';
     $selector = HTML::getId($css_settings['bg_image_selector']);
@@ -88,12 +87,10 @@ class AZResponsiveBackgroundImageCssHelper {
 
     template_preprocess_responsive_image($template_variables);
 
-    $fallback_image = new FormattableMarkup(
-      ':bg_image_selector { background-image: url(":img_element_uri");}', [
-        ':bg_image_selector' => $css_settings['bg_image_selector'],
-        ':img_element_uri' => $template_variables['img_element']['#uri'],
-      ]
+    $fallback_image = Markup::create(
+      $css_settings['bg_image_selector'] . ' { background-image: url("' . $template_variables['img_element']['#uri'] . '");}'
     );
+
     // Split each source into multiple rules.
     foreach (array_reverse($template_variables['sources']) as $source_i => $source) {
       $attr = $source->toArray();
@@ -116,26 +113,26 @@ class AZResponsiveBackgroundImageCssHelper {
         // will deactivate.
         $media = str_replace('screen (max-width', 'screen and (max-width', $media);
         $css = $this->backgroundImageCss->getBackgroundImageCss($src, $css_settings);
-        $with_media_query = '@media ' . $media . '{' . $css['data'] . '}';
+        $with_media_query .= '@media ' . $media . '{' . $css['data'] . '}';
         $css['attributes']['media'] = $media;
       }
     }
     // Adding fallback image.
     $css['data'] = $fallback_image . $with_media_query;
-    $style_elements[] = [
+    $css_string = Markup::create($css['data']);
+
+    return [
       'style' => [
         '#type' => 'inline_template',
         '#template' => "{{ css }}",
         '#context' => [
-          'css' => Markup::create($css['data']),
+          'css' => $css_string,
         ],
         '#attributes' => [
           'media' => $css['attributes']['media'],
         ],
       ],
     ];
-
-    return $style_elements;
   }
 
 }

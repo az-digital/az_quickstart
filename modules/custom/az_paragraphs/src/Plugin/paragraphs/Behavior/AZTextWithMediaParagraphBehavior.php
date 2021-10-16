@@ -5,6 +5,7 @@ namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\media\MediaInterface;
@@ -178,7 +179,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           case 'az_remote_video':
             $this->remoteVideo($variables, $paragraph, $media);
             break;
-
           case 'az_image':
             $this->image($variables, $paragraph, $media);
             break;
@@ -314,11 +314,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $css_settings = $this->getParagraphBackgroundSettings($paragraph);
       $file = $file_uri = $media->field_media_az_image->entity;
       $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $responsive_image_style);
-
       $variables['style_element']['#template'] = "<style type='text/css'>{{css}}</style>";
       $variables['style_element']['#type'] = 'inline_template';
       $variables['style_element']['#context'] = [
-        'css' => $css,
+        'css' => Markup::create($css['style']['#context']['css']->__toString()),
       ];
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
