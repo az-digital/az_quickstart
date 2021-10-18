@@ -48,3 +48,14 @@ function az_quickstart_update_9204() {
     ->set('settings.use_site_slogan', FALSE)
     ->save(TRUE);
 }
+
+/**
+ * Disable land grant acknowledgement theme setting by default on existing
+ * sites.
+ */
+function az_quickstart_update_9205() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  $config
+    ->set('land_acknowledgment', FALSE)
+    ->save(TRUE);
+}
