@@ -5,7 +5,6 @@ namespace Drupal\az_paragraphs;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Markup;
-use Drupal\Component\Render\FormattableMarkup;
 
 /**
  * Class AZResponsiveBackgroundImageCssHelper.

@@ -179,6 +179,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           case 'az_remote_video':
             $this->remoteVideo($variables, $paragraph, $media);
             break;
+
           case 'az_image':
             $this->image($variables, $paragraph, $media);
             break;
