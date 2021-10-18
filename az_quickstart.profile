@@ -48,3 +48,11 @@ function az_quickstart_update_9204() {
     ->set('settings.use_site_slogan', FALSE)
     ->save(TRUE);
 }
+
+/**
+ * Enable the az_security module.
+ */
+function az_quickstart_update_9205() {
+  $module_list = ['az_security'];
+  \Drupal::service('module_installer')->install($module_list);
+}
