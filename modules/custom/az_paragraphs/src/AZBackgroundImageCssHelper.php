@@ -89,6 +89,7 @@ class AZBackgroundImageCssHelper {
       else {
         $important = '';
       }
+
       // Add selector name and open the CSS declaration block.
       $style = new FormattableMarkup(
         ':selector {', [
@@ -115,7 +116,7 @@ class AZBackgroundImageCssHelper {
       }
       // Set background-image.
       $style .= Markup::create(
-        'background-image: ' . $bg_gradient . ' url("' . $image_path . '") ' . $important . ';'
+        'background-image: ' . $background_gradient . ' url("' . $image_path . '") ' . $important . ';'
       );
       // Set background-position.
       $style .= new FormattableMarkup(
