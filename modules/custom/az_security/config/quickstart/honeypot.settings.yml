@@ -8,11 +8,9 @@ protect_all_forms: true
 log: false
 element_name: url
 time_limit: 5
-# expire: 300
-# form_settings:
-#   user_register_form: false
-#   user_pass: false
-#   node_az_event_form: false
-#   node_az_flexible_page_form: false
-#   node_az_news_form: false
-#   node_az_person_form: false
+expire: 300
+form_settings:
+  user_register_form: false
+  user_pass: false
+  feedback_contact_message_form: false
+  _contact_message_form: false

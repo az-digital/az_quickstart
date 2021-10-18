@@ -1,4 +1,0 @@
-third_party_settings:
-  antibot:
-    antibot: true
-  honeypot: {  }
