@@ -8,7 +8,7 @@ protect_all_forms: true
 log: false
 element_name: url
 time_limit: 5
-expire: 300
+expire: 600
 form_settings:
   user_register_form: false
   user_pass: false
