@@ -134,9 +134,9 @@ Setup:
   4. If using lando, find the container whose name ends with `_appserver_1`.
   Click it to attach to that container.
   5. The last thing you'll have to do is add a folder from within the container
-    to your workspace.  
+    to your workspace.
     To do this, use the file menu within Visual Studio Code,
-    to Add Folder to Workspace.  
+    to Add Folder to Workspace.
     Then replace `/root` with the `/app` folder.
   6. You are ready to begin development.
 
@@ -251,4 +251,30 @@ Single file:
 ```
 lando eslint myfile.js
 ddev eslint myfile.js
+```
+
+## Theme debugging and the development site mode.
+
+Developing within Drupal can be a real challenge without debugging enabled.
+
+[Devel](https://www.drupal.org/project/devel) and [Drupal Console](https://drupalconsole.com/) are both included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
+
+You can easily enable them by using the following commands.
+
+### Lando
+First you have to make the folder containing /app/web/sites/default/services.yml writable.
+```
+lando ssh --user root
+chmod 755 -R /app/web/sites/default
+exit
+```
+Then enable devel module and put the site into dev mode via drupal console.
+```
+lando drush en -y devel
+lando drupal site:mode dev
+```
+
+### DDev
+```
+ddev drush en -y devel && ddev drupal site:mode dev
 ```

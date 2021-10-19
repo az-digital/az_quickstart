@@ -1,0 +1,223 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_person.field_az_address
+    - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_body
+    - field.field.node.az_person.field_az_degrees
+    - field.field.node.az_person.field_az_email
+    - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_links
+    - field.field.node.az_person.field_az_lname
+    - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_metatag
+    - field.field.node.az_person.field_az_person_category
+    - field.field.node.az_person.field_az_person_category_sec
+    - field.field.node.az_person.field_az_phones
+    - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_titles
+    - node.type.az_person
+  module:
+    - field_group
+    - file
+    - link
+    - media_library
+    - media_library_edit
+    - metatag
+    - path
+    - telephone
+    - text
+third_party_settings:
+  field_group:
+    group_az_category:
+      children:
+        - field_az_person_category
+        - field_az_person_category_sec
+      parent_name: ''
+      weight: 5
+      format_type: details
+      region: content
+      format_settings:
+        description: ''
+        open: true
+        id: ''
+        classes: ''
+        required_fields: false
+      label: Categories
+id: node.az_person.default
+targetEntityType: node
+bundle: az_person
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 19
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_address:
+    weight: 9
+    settings:
+      rows: 9
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_az_attachments:
+    weight: 12
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+    type: file_generic
+    region: content
+  field_az_body:
+    weight: 11
+    settings:
+      rows: 9
+      placeholder: ''
+    third_party_settings: {  }
+    type: text_textarea
+    region: content
+  field_az_degrees:
+    weight: 13
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_az_email:
+    weight: 7
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: email_default
+    region: content
+  field_az_fname:
+    weight: 1
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_az_links:
+    weight: 10
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
+  field_az_lname:
+    weight: 2
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  field_az_media_image:
+    type: media_library_widget
+    weight: 4
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+    region: content
+  field_az_metatag:
+    weight: 21
+    settings:
+      sidebar: true
+    third_party_settings: {  }
+    type: metatag_firehose
+    region: content
+  field_az_person_category:
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_az_person_category_sec:
+    weight: 2
+    settings: {  }
+    third_party_settings: {  }
+    type: options_buttons
+    region: content
+  field_az_phones:
+    weight: 8
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+    type: telephone_default
+    region: content
+  field_az_pronouns:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_titles:
+    weight: 6
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textfield
+    region: content
+  path:
+    type: path
+    weight: 17
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 15
+    region: content
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 14
+    region: content
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    settings:
+      display_label: true
+    weight: 16
+    region: content
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 18
+    settings:
+      match_operator: CONTAINS
+      size: 60
+      placeholder: ''
+      match_limit: 10
+    region: content
+    third_party_settings: {  }
+  url_redirects:
+    weight: 20
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

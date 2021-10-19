@@ -18,6 +18,7 @@ dependencies:
     - file
     - link
     - media_library
+    - media_library_edit
     - paragraphs
     - path
     - smart_date
@@ -69,14 +70,14 @@ content:
     region: content
   field_az_contacts:
     type: entity_reference_paragraphs
-    weight: 29
+    weight: 16
     settings:
       title: Contact
       title_plural: Contacts
       edit_mode: open
       add_mode: dropdown
       form_display_mode: default
-      default_paragraph_type: '_none'
+      default_paragraph_type: _none
     third_party_settings: {  }
     region: content
   field_az_event_category:
@@ -89,19 +90,25 @@ content:
     weight: 11
     settings:
       show_extra: false
+      hide_date: false
       modal: false
       default_duration: 60
-      default_duration_increments: "30\n60|1 hour\n90\n120|2 hours\ncustom"
+      default_duration_increments: |-
+        30
+        60|1 hour
+        90
+        120|2 hours
+        custom
     third_party_settings:
       smart_date_recur:
-        modal: '1'
+        modal: true
         allowed_recur_freq_values:
           DAILY: DAILY
           WEEKLY: WEEKLY
           MONTHLY: MONTHLY
           YEARLY: YEARLY
-          MINUTELY: 0
-          HOURLY: 0
+          MINUTELY: '0'
+          HOURLY: '0'
     type: smartdate_default
     region: content
   field_az_link:
@@ -125,7 +132,9 @@ content:
     weight: 10
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     region: content
   field_az_subheading:
     weight: 8

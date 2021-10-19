@@ -30,11 +30,12 @@ third_party_settings:
       format_type: link
       region: content
       format_settings:
-        target: entity
-        custom_uri: ''
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
         target_attribute: default
         id: ''
         classes: text-decoration-none
+        show_empty_fields: false
       label: Link
     group_row:
       children:
@@ -64,7 +65,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: 'col-xs-4 col-md-2'
+        classes: 'col-4 col-lg-2'
         element: div
         show_label: false
         label_element: h3
@@ -82,7 +83,7 @@ third_party_settings:
       region: content
       format_settings:
         id: ''
-        classes: 'col-xs-8 col-md-10'
+        classes: 'col-8 col-lg-10'
         element: div
         show_label: false
         label_element: h3

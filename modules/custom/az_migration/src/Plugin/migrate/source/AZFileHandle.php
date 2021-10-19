@@ -62,7 +62,7 @@ class AZFileHandle extends File {
     // @phpstan-ignore-next-line
     $migrate_d7_filebasepath = \Drupal::config('az_migration.settings')->get('migrate_d7_filebasepath');
 
-    if ($migrate_d7_filebasepath != " " && $migrate_d7_filebasepath != "") {
+    if ($migrate_d7_filebasepath !== " " && $migrate_d7_filebasepath !== "") {
       $row->setSourceProperty('constants/old_files_path', $migrate_d7_protocol . "://" . $migrate_d7_filebasepath);
     }
 

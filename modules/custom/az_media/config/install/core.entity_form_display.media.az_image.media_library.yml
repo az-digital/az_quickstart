@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_form_mode.media.media_library
     - field.field.media.az_image.field_az_caption
+    - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
     - image.style.thumbnail
     - media.type.az_image
@@ -23,6 +24,14 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
+  field_az_credit:
+    type: text_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_media_az_image:
     type: image_widget_crop
     weight: 0
@@ -34,6 +43,10 @@ content:
       crop_preview_image_style: crop_thumbnail
       crop_list:
         - az_card_image
+        - az_full_width_bg_extra_small
+        - az_full_width_bg_large
+        - az_full_width_bg_medium
+        - az_full_width_bg_small
         - az_large
       progress_indicator: throbber
       crop_types_required: {  }

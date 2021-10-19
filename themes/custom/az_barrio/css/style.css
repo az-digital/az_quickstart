@@ -200,24 +200,35 @@ span.field-label {
 }
 
 /**
+ * General node styles (replacing Bootstrap Barrio node.css).
+ */
+.node__content {
+  margin-top: 10px;
+}
+
+/**
  * Unpublished note.
  */
 /* The word "Unpublished" displayed underneath the content. */
-.unpublished {
-  height: 0;
+.node--unpublished:before {
   overflow: visible;
   /* Remove background highlighting from <mark> in normalize. */
   background-color: transparent;
-  color: #d8d8d8;
   font-size: 75px;
   font-size: 4.7rem;
-  line-height: 1;
   font-family: Impact, "Arial Narrow", Helvetica, sans-serif;
   font-weight: bold;
   text-transform: uppercase;
-  text-align: center;
-  /* A very nice CSS3 property. */
   word-wrap: break-word;
+  content: "UNPUBLISHED";
+  display: block;
+  font-size: 104px;
+  word-break: break-all;
+  color: #ab052029;
+  text-align: center;
+}
+.node--unpublished {
+    background: #ab05200d;
 }
 
 /* Buttons used by contrib modules like Media. */
@@ -490,49 +501,27 @@ a.nolink + ul .sf-clone-parent {
 }
 
 /* SIDE MENUS */
-@media screen and (min-width: 60em) {
-  .sidebar ul.menu {
-    list-style: none outside none;
-    padding: 0;
-    margin: 0;
-  }
-  .sidebar ul.menu li {
-    list-style: none outside none;
-    padding: 0;
-    margin: 0;
-    display: block;
-  }
-  .sidebar ul.menu li > a,
-  .sidebar ul.menu li > a:link,
-  .sidebar ul.menu li > a:visited {
-    position: relative;
-    padding: 10px 16px;
-    padding: 0.625rem 1rem;
-    text-decoration: none;
-    font-weight: normal;
-    display: block;
-    color: #333;
-  }
-
-  .region-sidebar-first .menu > li > a:hover,
-  .region-sidebar-first .menu > li > a:focus,
-  .region-sidebar-first .menu > li.active a,
-  .region-sidebar-first .menu > li a.active {
-    background: url("../images/sidebar-menu-chevron-left.png") no-repeat scroll 100% center/30px 100% #dee8e7;
-    border-bottom: 0 solid transparent;
-    color: #076873;
-    text-decoration: none;
-  }
-
-  .region-sidebar-second .menu > li > a:hover,
-  .region-sidebar-second .menu > li > a:focus,
-  .region-sidebar-second .menu > li.active a,
-  .region-sidebar-second .menu > li a.active {
-    background: url("../images/sidebar-menu-chevron-right.png") no-repeat scroll 0 center/30px 100% #dee8e7;
-    border-bottom: 0 solid transparent;
-    color: #076873;
-    text-decoration: none;
-  }
+.sidebar ul.menu {
+  list-style: none outside none;
+  padding: 0;
+  margin: 0;
+}
+.sidebar ul.menu li {
+  list-style: none outside none;
+  padding: 0;
+  margin: 0;
+  display: block;
+}
+.sidebar ul.menu li > a,
+.sidebar ul.menu li > a:link,
+.sidebar ul.menu li > a:visited {
+  position: relative;
+  padding: 10px 16px;
+  padding: 0.625rem 1rem;
+  text-decoration: none;
+  font-weight: normal;
+  display: block;
+  color: #333;
 }
 
 .region-sidebar-first .block,
@@ -662,6 +651,36 @@ fieldset.collapsed {
   max-width: 100%;
 }
 
+.align-left {
+  float: none;
+}
+.align-right {
+  float: none;
+}
+.align-center figure {
+  margin-left: auto;
+  margin-right: auto;
+}
+.field--type-image img,
+.field--name-field-user-picture img {
+  margin: initial;
+}
+
+@media screen and (min-width: 576px) {
+  /**
+  * Alignment classes for block level elements (images, videos, blockquotes, etc.)
+  */
+  .align-left {
+    margin-right: 1em;
+    margin-bottom: 0.7em;
+    float: left;
+  }
+  .align-right {
+    margin-left: 1em;
+    margin-bottom: 0.7em;
+    float: right;
+  }
+}
 /* overrides Bootstrap Barrio image field styles */
 @media all and (min-width: 560px) {
   .node .field--type-image {
@@ -676,10 +695,7 @@ fieldset.collapsed {
     clear: initial;
   }
 }
-.field--type-image img,
-.field--name-field-user-picture img {
-  margin: initial;
-}
+
 /* end Bootstrap Barrio image field styles */
 
 @media (min-width: 768px) {
@@ -697,3 +713,13 @@ fieldset.collapsed {
   padding-bottom: 0;
   color: #49595e;
 }
+
+.navbar-offcanvas.open {
+   overflow-y: scroll;
+}
+@media (min-width: 992px) {
+  .navbar-offcanvas.open {
+     overflow-y: initial;
+  }
+}
+

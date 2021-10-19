@@ -9,6 +9,13 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 
 /**
+ * Implements hook_preprocess_node().
+ */
+function az_flexible_page_preprocess_node__az_flexible_page(&$variables) {
+  $variables['#attached']['library'][] = 'az_flexible_page/az_flexible_page_theme';
+}
+
+/**
  * Implements hook_form_alter().
  */
 function az_flexible_page_form_alter(&$form, FormStateInterface $form_state, $form_id) {

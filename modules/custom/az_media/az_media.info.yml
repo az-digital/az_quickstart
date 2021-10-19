@@ -8,7 +8,9 @@ dependencies:
   - drupal:image
   - drupal:media
   - drupal:media_library
+  - drupal:responsive_image
   - entity_embed:entity_embed
   - field_group:field_group
   - image_widget_crop:image_widget_crop
   - bootstrap_utilities:bootstrap_utilities
+  - media_library_edit:media_library_edit

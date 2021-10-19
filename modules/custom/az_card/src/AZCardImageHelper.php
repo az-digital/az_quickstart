@@ -59,7 +59,7 @@ class AZCardImageHelper {
       $image->width = NULL;
       $image->height = NULL;
 
-      // TODO: replace with responsive_image_formatter (?),
+      // @todo replace with responsive_image_formatter (?),
       // add image style(s), add cache tags, add image classes(?).
       $media_render_array = [
         '#theme' => 'image_formatter',

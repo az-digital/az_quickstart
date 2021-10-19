@@ -120,6 +120,26 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
+    $form['text_media_spacing'] = [
+      '#title' => $this->t('Space Around Content'),
+      '#type' => 'select',
+      '#options' => [
+        'y-0' => $this->t('Zero'),
+        'y-1' => $this->t('1 (0.25rem | ~4px)'),
+        'y-2' => $this->t('2 (0.5rem | ~8px)'),
+        'y-3' => $this->t('3 (1.0rem | ~16px)'),
+        'y-4' => $this->t('4 (1.5rem | ~24px)'),
+        'y-5' => $this->t('5 (3.0rem | ~48px) - Default'),
+        'y-6' => $this->t('6 (4.0rem | ~64px)'),
+        'y-7' => $this->t('7 (5.0rem | ~80px)'),
+        'y-8' => $this->t('8 (6.0rem | ~96px)'),
+        'y-9' => $this->t('9 (7.0rem | ~112px)'),
+        'y-10' => $this->t('10 (8.0rem | ~128px)'),
+      ],
+      '#default_value' => $config['text_media_spacing'] ?? 'y-5',
+      '#description' => $this->t('Adds spacing above and below the text.'),
+    ];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // This places the form fields on the content tab rather than behavior tab.
@@ -275,10 +295,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
       $image_renderable = [
-        '#theme' => 'image',
-        '#uri' => file_create_url($file_uri),
-        '#alt' => $media->field_media_az_image->alt,
-        '#attributes' => [
+        '#theme' => 'responsive_image_formatter',
+        '#responsive_image_style_id' => 'az_full_width_background',
+        '#item' => $media->field_media_az_image,
+        '#item_attributes' => [
           'class' => ['img-fluid'],
         ],
       ];

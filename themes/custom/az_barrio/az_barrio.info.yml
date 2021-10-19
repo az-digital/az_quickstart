@@ -11,17 +11,19 @@ libraries:
 regions:
   alert: Alert
   header_ua_utilities: 'UA header utilities'
+  branding: 'Site branding'
   header: 'Header 1'
   header_2: 'Header 2'
   navigation: 'Navigation bar'
   navigation_offcanvas: 'Off canvas content associated with the mobile off canvas navbar'
+  help: 'Help'
   content_featured: 'Featured content'
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'
-  highlighted: Highlighted
+  highlighted: 'Highlighted'
   content_top: 'Content top'
-  breadcrumb: Breadcrumb
-  content: Content
+  breadcrumb: 'Breadcrumb'
+  content: 'Content'
   content_2_col_1: 'Content 2-column stacked(1)'
   content_2_col_2: 'Content 2-column stacked(2)'
   content_3_col_1: 'Content 3-column stacked(1)'
@@ -33,10 +35,14 @@ regions:
   content_4_col_3: 'Content 4-column stacked(3)'
   content_4_col_4: 'Content 4-column stacked(4)'
   content_bottom: 'Content bottom'
-  footer: Footer
+  footer: 'Footer'
   footer_sub: 'Footer sub'
-  page_bottom: 'Page bottom'
+  az_page_bottom: 'Page bottom'
 
 ckeditor_stylesheets:
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
   - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest/css/arizona-bootstrap.min.css
+
+libraries-extend:
+  system/base:
+    - az_barrio/az-media-display
