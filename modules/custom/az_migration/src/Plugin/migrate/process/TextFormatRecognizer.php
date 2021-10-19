@@ -66,8 +66,7 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
 
       // Render the text according to the format.
       // Attempt to put autoparagraphs back in after the fact, since they
-      // Are likely to exist in the source whether the user means to use
-      // Them or not.
+      // Are likely to exist in the source regardless of intent.
       $markup = trim(_filter_autop(check_markup($value, $format)));
       // Attempt to parse the resultant html.
       $markup = @\DOMDocument::loadHTML($markup);
