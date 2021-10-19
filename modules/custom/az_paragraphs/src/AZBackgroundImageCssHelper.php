@@ -37,7 +37,7 @@ class AZBackgroundImageCssHelper {
    *
    * @param string $image_path
    *   The path of the image to use. This can be
-   *      - A relative path e.g. sites/default/files/image.png
+   *      - A relative path e.g. sites/default/files/image.png.
    * @param array $css_settings
    *   An array of css settings to use. Possible values are:
    *      - bg_image_selector: The css selector to use
