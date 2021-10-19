@@ -23,7 +23,6 @@ class AZBackgroundImageCssHelper {
       'bg_image_attachment' => 'scroll',
       'bg_image_repeat' => 'no-repeat',
       'bg_image_background_size' => 'cover',
-      'bg_image_gradient' => '',
       'bg_image_media_query' => 'all',
       'bg_image_important' => 0,
       'bg_image_z_index' => 'auto',
@@ -37,9 +36,8 @@ class AZBackgroundImageCssHelper {
    * css 'background' property.
    *
    * @param string $image_path
-   *   The path of the image to use. This can be either
+   *   The path of the image to use. This can be
    *      - A relative path e.g. sites/default/files/image.png
-   *      - A uri: e.g. public://image.png.
    * @param array $css_settings
    *   An array of css settings to use. Possible values are:
    *      - bg_image_selector: The css selector to use
@@ -49,7 +47,6 @@ class AZBackgroundImageCssHelper {
    *      - bg_image_attachment: The attachment property (scroll or fixed)
    *      - bg_image_repeat: The repeat settings
    *      - bg_image_background_size: The background size property if necessary
-   *      - bg_image_gradient: A CSS background gradient
    *      - bg_image_media_query: Set the media query (all, print or screen)
    *      - bg_image_important: Add the `!important` property to all
    *        background properties.
@@ -75,7 +72,6 @@ class AZBackgroundImageCssHelper {
     $attachment = $css_settings['bg_image_attachment'];
     $repeat = $css_settings['bg_image_repeat'];
     $background_size = $css_settings['bg_image_background_size'];
-    $background_gradient = !empty($css_settings['bg_image_gradient']) ? $css_settings['bg_image_gradient'] . ',' : '';
     $media_query = isset($css_settings['bg_image_media_query']) ? $css_settings['bg_image_media_query'] : NULL;
     $important_set = $css_settings['bg_image_important'];
     $z_index = $css_settings['bg_image_z_index'];
@@ -116,7 +112,7 @@ class AZBackgroundImageCssHelper {
       }
       // Set background-image.
       $style .= Markup::create(
-        'background-image: ' . $background_gradient . ' url("' . $image_path . '") ' . $important . ';'
+        'background-image: url("' . $image_path . '") ' . $important . ';'
       );
       // Set background-position.
       $style .= new FormattableMarkup(

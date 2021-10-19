@@ -318,7 +318,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $variables['style_element']['#template'] = "<style type='text/css'>{{css}}</style>";
       $variables['style_element']['#type'] = 'inline_template';
       $variables['style_element']['#context'] = [
-        'css' => Markup::create($css['style']['#context']['css']->__toString()),
+        'css' => Markup::create($css['style']['#context']['css']),
       ];
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
