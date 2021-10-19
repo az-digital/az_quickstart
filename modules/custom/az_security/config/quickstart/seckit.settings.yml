@@ -36,7 +36,7 @@ seckit_clickjacking:
 seckit_ssl:
   hsts: true
   hsts_subdomains: false
-  hsts_max_age: 1000
+  hsts_max_age: 2592000
   hsts_preload: false
 seckit_ct:
   expect_ct: false
