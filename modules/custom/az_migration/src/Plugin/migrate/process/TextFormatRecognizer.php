@@ -76,7 +76,7 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
         $full = $full->saveXML();
         $markup = $markup->saveXML();
         // If the HTML nodes were comparable, output should be the same.
-        if (!empty($full) && !empty($markup) && ($full === $markup)) {
+        if ($full === $markup) {
           return $this->configuration['passed'];
         }
       }
