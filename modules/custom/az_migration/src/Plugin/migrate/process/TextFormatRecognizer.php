@@ -2,6 +2,8 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -13,7 +15,28 @@ use Drupal\migrate\Row;
  *   id = "text_format_recognizer"
  * )
  */
-class TextFormatRecognizer extends ProcessPluginBase {
+class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+
+  /**
+   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+    );
+
+    $instance->moduleHandler = $container->get('module_handler');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -24,28 +47,43 @@ class TextFormatRecognizer extends ProcessPluginBase {
       $value = $value['value'];
     }
 
-    if (!empty($value) && !empty($this->configuration['format']) &&
+    if (!empty($this->configuration['required_module'])) {
+      // Don't proceed if the specified module is not loaded.
+      if (!$this->moduleHandler->moduleExists($this->configuration['required_module'])) {
+        return $this->configuration['module_missing'];
+      }
+
+    }
+
+    if (!empty($this->configuration['format']) &&
       !empty($this->configuration['passed']) && !empty($this->configuration['failed'])) {
       $format = $this->configuration['format'];
 
       // Render as full html first.
-      $value = trim(_filter_autop(check_markup($value, 'full_html')));
+      $full = trim(_filter_autop(check_markup($value, 'full_html')));
+      // Attempt to parse the resultant html.
+      $full = @\DOMDocument::loadHTML($full);
 
       // Render the text according to the format.
       // Attempt to put autoparagraphs back in after the fact, since they
       // Are likely to exist in the source whether the user means to use
       // Them or not.
       $markup = trim(_filter_autop(check_markup($value, $format)));
+      // Attempt to parse the resultant html.
+      $markup = @\DOMDocument::loadHTML($markup);
 
-      // Length change implies content filtering.
-      if (mb_strlen($markup) >= mb_strlen($value)) {
-        return $this->configuration['passed'];
+      if (!empty($full) && !empty($markup)) {
+        // Let's compare canonical markup after going back from parsed html.
+        $full = $full->saveXML();
+        $markup = $markup->saveXML();
+        // If the HTML nodes were comparable, output should be the same.
+        if (!empty($full) && !empty($value) && ($full === $markup)) {
+          return $this->configuration['passed'];
+        }
       }
-      else {
-        return $this->configuration['failed'];
-      }
-
     }
+
+    return $this->configuration['failed'];
   }
 
 }

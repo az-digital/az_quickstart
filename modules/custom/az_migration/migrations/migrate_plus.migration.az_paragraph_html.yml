@@ -14,8 +14,10 @@ process:
     plugin: text_format_recognizer
     format: 'az_standard'
     source: field_uaqs_html
+    required_module: 'az_paragraphs_html'
     passed: 'az_text'
     failed: 'az_html'
+    module_missing: 'az_text'
 
   type:
     plugin: array_shift

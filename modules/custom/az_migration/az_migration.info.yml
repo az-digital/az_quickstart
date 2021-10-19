@@ -10,4 +10,3 @@ dependencies:
  - drupal:migrate_drupal
  - drupal:media_migration
  - az_carousel
- - az_paragraphs_html
