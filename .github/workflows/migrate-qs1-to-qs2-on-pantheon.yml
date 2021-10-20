@@ -19,7 +19,7 @@ on:
         required: true
         default: ''
 
-# jobs:
+jobs:
 #   watch-workflow:
 #     name: Watch workflow logs
 #     runs-on: ubuntu-latest
