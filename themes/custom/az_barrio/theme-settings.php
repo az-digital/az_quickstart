@@ -46,6 +46,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('wordmark'),
   ];
 
+  // Land Acknowledgment.
+  $form['az_settings']['settings']['land_acknowledgment'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Land Acknowledgment'),
+    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#default_value' => theme_get_setting('land_acknowledgment'),
+  ];
+
   // Information security and privacy link.
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',
@@ -405,7 +413,7 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
   // If the user provided a path for a footer logo, make sure a file exists at
   // that path.
   if ($form_state->getValue('footer_logo_path')) {
-    // TODO: Use the validatePath function from ThemeSettingsForm Class here?
+    // @todo Use the validatePath function from ThemeSettingsForm Class here?
     $path = az_barrio_validate_file_path($form_state->getValue('footer_logo_path'));
     if (!$path) {
       $form_state->setErrorByName('footer_logo_path', t('The custom footer logo path is invalid.'));

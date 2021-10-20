@@ -1,0 +1,8 @@
+.align-center .az-media {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+.az-media.embed-responsive {
+  width:400px;
+}

@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_contacts
     - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_metatag
@@ -21,7 +22,9 @@ dependencies:
     - datetime
     - field_group
     - file
+    - link
     - media_library
+    - media_library_edit
     - metatag
     - paragraphs
     - path
@@ -33,6 +36,7 @@ third_party_settings:
         - field_az_short_title
         - field_az_summary
         - field_az_expiration_date
+        - field_az_link
       parent_name: ''
       weight: 10
       format_type: details_sidebar
@@ -123,6 +127,14 @@ content:
     third_party_settings: {  }
     type: datetime_datelist
     region: content
+  field_az_link:
+    weight: 15
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
+    region: content
   field_az_main_content:
     type: paragraphs
     weight: 7
@@ -146,7 +158,9 @@ content:
     weight: 4
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     type: media_library_widget
     region: content
   field_az_metatag:

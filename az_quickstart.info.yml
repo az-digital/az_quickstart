@@ -19,12 +19,13 @@ install:
   - az_core
   - az_flexible_page
   - az_flexible_block
+  - az_block_types_quick_links
   - az_metrics
   - az_news
   - az_person
   - az_event
-  - az_demo
   - az_seo
+  - az_google_tag
   - drupal:node
   - drupal:history
   - drupal:block
@@ -32,6 +33,7 @@ install:
   - drupal:ckeditor
   - drupal:color
   - drupal:config
+  - drupal:content_moderation
   - drupal:contextual
   - drupal:menu_link_content
   - drupal:datetime
@@ -63,6 +65,7 @@ install:
   - drupal:views_ui
   - drupal:tour
   - drupal:automated_cron
+  - drupal:google_tag
   - chosen:chosen
   - ckeditor_bs_grid:ckeditor_bs_grid
   - coffee:coffee
@@ -70,6 +73,7 @@ install:
   - exclude_node_title:exclude_node_title
   - search_exclude:search_exclude
   - draggableviews:draggableviews
+  - role_delegation:role_delegation
 
 themes:
   - az_barrio

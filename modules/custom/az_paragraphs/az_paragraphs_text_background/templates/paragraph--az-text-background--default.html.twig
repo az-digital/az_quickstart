@@ -51,13 +51,14 @@
   text_with_background.text_background_full_width
 ]
 %}
+
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       {# Layout for content width AND full width styles #}
       <div class="container">
-        <div class="row">
-          <div class="col col-xs-12">
+        <div class="az-full-width-row">
+          <div class="az-full-width-column-content">
             <div class="content">
               {{ content }}
             </div>

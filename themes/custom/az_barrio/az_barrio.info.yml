@@ -11,6 +11,7 @@ libraries:
 regions:
   alert: Alert
   header_ua_utilities: 'UA header utilities'
+  branding: 'Site branding'
   header: 'Header 1'
   header_2: 'Header 2'
   navigation: 'Navigation bar'
@@ -41,3 +42,7 @@ regions:
 ckeditor_stylesheets:
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
   - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest/css/arizona-bootstrap.min.css
+
+libraries-extend:
+  system/base:
+    - az_barrio/az-media-display

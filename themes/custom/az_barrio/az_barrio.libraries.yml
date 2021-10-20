@@ -3,6 +3,10 @@ global-styling:
   css:
     component:
       css/style.css: {}
+az-media-display:
+  css:
+    component:
+      css/az-media-display.css: {}
 az-barrio-off-canvas-nav:
   js:
     js/az-barrio-off-canvas-nav.js: {}

@@ -4,4 +4,5 @@ description: Send mail via SMTP using Amazon SES.
 core_version_requirement: ^8.8 || ^9
 package: The University of Arizona
 dependencies:
-  - smtp
+  - az_core
+  - smtp:smtp

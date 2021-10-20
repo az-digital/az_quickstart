@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * @file
+ * Install functions for az_event module.
+ */
+
+/**
+ * Enable the jquery_ui_datepicker module.
+ */
+function az_event_update_9201() {
+  $module_list = ['jquery_ui_datepicker'];
+  \Drupal::service('module_installer')->install($module_list);
+}

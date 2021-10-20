@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_quick_links
+    - field.storage.block_content.field_az_short_title
+id: block_content.az_quick_links.field_az_short_title
+field_name: field_az_short_title
+entity_type: block_content
+bundle: az_quick_links
+label: Title
+description: 'The title of the block.'
+required: false
+translatable: false
+default_value:
+  -
+    value: 'Quick Links'
+default_value_callback: ''
+settings: {  }
+field_type: string

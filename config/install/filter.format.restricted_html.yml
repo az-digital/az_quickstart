@@ -5,7 +5,7 @@ name: 'Restricted HTML'
 format: restricted_html
 weight: 1
 roles:
-  - anonymous
+  - administrator
 filters:
   filter_html:
     id: filter_html

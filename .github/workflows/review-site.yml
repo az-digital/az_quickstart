@@ -110,12 +110,14 @@ jobs:
         run: |
           terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
           terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
-          site-install az_quickstart install_configure_form.update_status_module='array(FALSE,FALSE)' \
+          site:install az_quickstart install_configure_form.enable_update_status_module=NULL \
           --account-name="azadmin" \
           --account-mail="noreply@email.arizona.edu" \
           --site-mail="noreply@email.arizona.edu" \
           --site-name="Kitten" \
-          --yes
+          --yes \
+          --verbose
+          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- pm:enable -n -y az_demo
           terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
 
       - name: Clear caches
