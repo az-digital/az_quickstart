@@ -1,0 +1,174 @@
+name: Migrate Quickstart 1 to Quickstart 2 in Pantheon
+on:
+  workflow_dispatch:
+    inputs:
+      qs1SiteName:
+        description: 'Quickstart 1 sitename in Pantheon'
+        required: true
+        default: ''
+      qs1Multidev:
+        description: 'Name of multidev you would like to create in pantheon from live version of quickstart 1 site.'
+        required: true
+        default: 'migrate'
+      qs2SiteName:
+        description: 'Quickstart 2 sitename in Pantheon'
+        required: true
+        default: ''
+      qs2SiteLabel:
+        description: 'Quickstart 2 sitename in Pantheon'
+        required: true
+        default: ''
+
+# jobs:
+#   watch-workflow:
+#     name: Watch workflow logs
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 10
+#     steps:
+#       - name: Setup PHP
+#         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+#         with:
+#           php-version: '7.4'
+
+#       - name: Install terminus
+#         run: |
+#           composer -n require pantheon-systems/terminus:^2
+#           echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
+
+#       - name: Set up terminus
+#         run: |
+#           terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+
+#       - name: Watch workflow logs
+#         run: |
+#           START_TIME="$(date '+%s')"
+#           while [ -z "$(terminus workflow:list ${{ secrets.DEMO_SITE_NAME }} --format=json | jq --arg start_time "${START_TIME}" '.[] | select((.started_at|tostring > $start_time) and (.workflow == "Sync code on \"dev\"") and (.finished_at != null))')" ]; do
+#             echo 'watching workflows...'
+#             sleep 2
+#           done
+
+  create-mulitdev-of-quickstart-1-site:
+    name: Create a Quickstart 1 multidev of live site in pantheon and get connection info.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        with:
+          php-version: '7.4'
+
+      - name: Set up SSH
+        run: |
+          mkdir ${HOME}/.ssh && chmod 700 ${HOME}/.ssh
+          echo -e "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
+          echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
+          chmod 600 ${HOME}/.ssh/*
+
+      - name: Install terminus
+        run: |
+          composer -n require pantheon-systems/terminus:^2
+          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
+
+      - name: Set up terminus
+        run: |
+          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+
+      - name: Sync code to pantheon
+        run: |
+          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          $(terminus -y -n connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
+          cd ${{ secrets.DEMO_SITE_NAME }}
+          rm composer.lock
+          UPSTREAM_VERSION=$(jq -r '.require."az-digital/az_quickstart"' upstream/composer.json)
+          COMPOSER_MEMORY_LIMIT=-1 composer -n require "az-digital/az_quickstart:dev-main as ${UPSTREAM_VERSION}"
+          git add composer.json composer.lock
+          git commit --allow-empty -m 'rebuild kitten'
+          git push
+          terminus multidev:create ${{ github.event.inputs.qs1SiteName }}.live ${{ github.event.inputs.qs1Multidev }}
+
+  create-qs-two-site:
+    name: Create a Quickstart 2 site on CWS upstream.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        with:
+          php-version: '7.4'
+
+      - name: Set up SSH
+        run: |
+          mkdir ${HOME}/.ssh && chmod 700 ${HOME}/.ssh
+          echo -e "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
+          echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
+          chmod 600 ${HOME}/.ssh/*
+
+      - name: Install terminus
+        run: |
+          composer -n require pantheon-systems/terminus:^2
+          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
+
+      - name: Set up terminus
+        run: |
+          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+
+      - name: Create new QS2 Site.
+        run: |
+          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          $(terminus -y -n connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
+          terminus site:create --org=76681b9d-620b-49c7-998f-b34a2829d8ab --region=us -- ${{ github.event.inputs.qs2SiteName }} ${{ github.event.inputs.qs2SiteLabel }} 3162cc4c-2f75-40cb-8487-0c69bda99f39
+
+  install-azqs:
+    name: Install AZQS
+    needs: watch-workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        with:
+          php-version: '7.4'
+
+      - name: Set up SSH
+        run: |
+          mkdir ${HOME}/.ssh && chmod 700 ${HOME}/.ssh
+          echo -e "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
+          echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
+          chmod 600 ${HOME}/.ssh/*
+
+      - name: Install terminus
+        run: |
+          composer -n require pantheon-systems/terminus:^2
+          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
+
+      - name: Set up terminus
+        run: |
+          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+
+      - name: Wake env
+        run: |
+          terminus env:wake ${{ secrets.DEMO_SITE_NAME }}.dev
+          sleep 5
+
+      - name: Wipe existing site
+        run: |
+          terminus -y -n env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
+
+      - name: Install site
+        run: |
+          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
+          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
+          site:install az_quickstart install_configure_form.enable_update_status_module=NULL \
+          --account-name="azadmin" \
+          --account-mail="noreply@email.arizona.edu" \
+          --site-mail="noreply@email.arizona.edu" \
+          --site-name="Kitten" \
+          --yes \
+          --verbose
+          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- pm:enable -n -y az_demo
+          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+
+      - name: Clear caches
+        run: |
+          terminus -y -n env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
