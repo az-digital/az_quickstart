@@ -1,4 +1,4 @@
-name: Migrate Quickstart 1 to Quickstart 2 in Pantheon
+name: Migrate Workflow
 on:
   workflow_dispatch:
     inputs:
