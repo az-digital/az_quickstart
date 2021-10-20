@@ -46,6 +46,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('wordmark'),
   ];
 
+  // Land Acknowledgment.
+  $form['az_settings']['settings']['land_acknowledgment'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Land Acknowledgment'),
+    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#default_value' => theme_get_setting('land_acknowledgment'),
+  ];
+
   // Information security and privacy link.
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',

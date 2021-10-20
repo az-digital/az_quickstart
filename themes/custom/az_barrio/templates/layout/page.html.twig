@@ -299,7 +299,7 @@
             </div>
           </section>
           {% endif %}
-          {% if page.footer_sub or info_security_privacy or copyright_notice %}
+          {% if page.footer_sub or land_acknowledgment or info_security_privacy or copyright_notice %}
           <div id="footer_sub"{{ attributes.addClass(classes) }}>
             <div class="container">
               <div class="row">
@@ -310,6 +310,7 @@
                   {% if page.footer_sub %}
                   <hr>
                   {% endif %}
+                  {{ land_acknowledgment }}
                   {{ info_security_privacy }}
                   {{ copyright_notice }}
                 </div>
