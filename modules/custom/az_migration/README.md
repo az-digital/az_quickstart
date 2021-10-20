@@ -23,8 +23,8 @@ REQUIREMENTS
 
 Quickstart 1 source website.
 Access to Quickstart 1 database credentials.
-Migration Quickstart 2 destination site should have http access to the
-QuickStart 1 source database.
+Migration Quickstart 2 destination site should have database and http
+access to the QuickStart 1 source website.
 
 
 INSTALLATION
