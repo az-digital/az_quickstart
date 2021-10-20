@@ -47,7 +47,7 @@ on:
 #             sleep 2
 #           done
 
-  create-mulitdev-of-quickstart-1-site:
+  create-mulitdev:
     name: Create a Quickstart 1 multidev of live site in pantheon and get connection info.
     runs-on: ubuntu-latest
     steps:
