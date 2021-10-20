@@ -20,8 +20,12 @@ process:
     module_missing: 'az_text'
 
   type:
-    plugin: array_shift
-    source: '@destination_bundle'
+    -
+      plugin: array_shift
+      source: '@destination_bundle'
+    -
+      plugin: default_value
+      default_value: 'az_text'
 
 
   field_az_full_html:

@@ -43,7 +43,7 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Likely dealing with a text field.
-    if (!empty($value['value'])) {
+    if (isset($value['value'])) {
       $value = $value['value'];
     }
 
@@ -71,14 +71,17 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
       // Attempt to parse the resultant html.
       $markup = @\DOMDocument::loadHTML($markup);
 
-      if (!empty($full) && !empty($markup)) {
-        // Let's compare canonical markup after going back from parsed html.
+      // Let's convert back to canonical HTML if parsing was successful.
+      if (!empty($full)) {
         $full = $full->saveXML();
+      }
+      if (!empty($markup)) {
         $markup = $markup->saveXML();
-        // If the HTML nodes were comparable, output should be the same.
-        if ($full === $markup) {
-          return $this->configuration['passed'];
-        }
+      }
+      // Let's compare canonical markup after going back from parsed html.
+      // If the HTML nodes were comparable, output should be the same.
+      if ($full === $markup) {
+        return $this->configuration['passed'];
       }
     }
 
