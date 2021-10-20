@@ -15,7 +15,7 @@ on:
         required: true
         default: ''
       qs2SiteLabel:
-        description: 'Quickstart 2 sitename in Pantheon'
+        description: 'Quickstart 2 label in Pantheon'
         required: true
         default: ''
 
