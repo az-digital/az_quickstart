@@ -42,18 +42,9 @@
  */
 #}
 {% block paragraph %}
-  <div{{ attributes.addClass(classes) }}>
+  <div{{ attributes }}>
     {% block content %}
-      <div class="container">
-        <div class="az-full-width-row">
-          <div{{ col_attributes }}>
-            <div{{ content_attributes }}>
-              <h2{{ title_attributes }}>{{ paragraph.field_az_title.value }}</h2>
-              {{ content }}
-            </div>
-          </div>
-        </div>
-      </div>
+        {{ content }}
     {% endblock %}
   </div>
 {% endblock paragraph %}
