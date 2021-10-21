@@ -503,3 +503,14 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
 }
+
+/**
+ * Pass proper logo to the system branding block.
+ */
+function az_barrio_preprocess_block(&$variables) {
+  if ($variables['base_plugin_id'] === 'system_branding_block') {
+    if ($variables['configuration']['use_site_logo']) {
+      $variables['site_logo'] = az_barrio_primary_logo();
+    }
+  }
+}
