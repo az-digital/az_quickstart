@@ -217,8 +217,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $bg_attachment = 'fixed';
     }
     return [
-      'bg_image_selector' => '#' . HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
-      'bg_image_attachment' => $bg_attachment,
+      'selector' => '#' . HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
+      'attachment' => $bg_attachment,
     ];
 
   }
@@ -314,12 +314,21 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $responsive_image_style = 'az_full_width_background';
       $css_settings = $this->getParagraphBackgroundSettings($paragraph);
       $file = $file_uri = $media->field_media_az_image->entity;
-      $css = $this->responsiveBackroundImageCssHelper->getResponsiveBackgroundImageCss($file, $css_settings, $responsive_image_style);
-      $variables['style_element']['#template'] = "<style type='text/css'>{{css}}</style>";
-      $variables['style_element']['#type'] = 'inline_template';
-      $variables['style_element']['#context'] = [
-        'css' => Markup::create($css['style']['#context']['css']),
+      $style_element = [
+        '#type' => 'az_responsive_background_image',
+        '#selector' => $css_settings['selector'],
+        '#repeat' => 'no-repeat',
+        '#important' => TRUE,
+        '#color' => '',
+        '#x' => 'center',
+        '#y' => 'center',
+        '#size' => 'cover',
+        '#attachment' => $css_settings['attachment'],
+        '#responsive_image_style_id' => $responsive_image_style,
+        '#uri' => $file_uri,
+        '#z_index' => 'auto',
       ];
+      $variables['style_element'] = $style_element;
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
       $image_renderable = [
