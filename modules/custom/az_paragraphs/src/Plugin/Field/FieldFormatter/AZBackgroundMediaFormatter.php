@@ -454,16 +454,16 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $responsive_image_style_element = [
         '#theme' => 'az_responsive_background_image',
         '#selector' => $css_settings['selector'],
-        '#repeat' => 'no-repeat',
-        '#important' => FALSE,
-        '#color' => '',
-        '#x' => 'center',
-        '#y' => 'center',
-        '#size' => 'cover',
+        '#repeat' => $css_settings['repeat'],
+        '#important' => $css_settings['important'],
+        '#color' => $css_settings['color'],
+        '#x' => $css_settings['x'],
+        '#y' => $css_settings['y'],
+        '#size' => $css_settings['size'],
         '#attachment' => $css_settings['attachment'],
         '#responsive_image_style_id' => $settings['image_style'],
         '#uri' => $file_uri,
-        '#z_index' => 'auto',
+        '#z_index' => $css_settings['z_index'],
       ];
       $background_video = [
         '#type' => 'html_tag',
@@ -530,16 +530,16 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $responsive_image_style_element = [
         '#theme' => 'az_responsive_background_image',
         '#selector' => $css_settings['selector'],
-        '#repeat' => 'no-repeat',
-        '#important' => FALSE,
-        '#color' => '',
-        '#x' => 'center',
-        '#y' => 'center',
-        '#size' => 'cover',
+        '#repeat' => $css_settings['repeat'],
+        '#important' => $css_settings['important'],
+        '#color' => $css_settings['color'],
+        '#x' => $css_settings['x'],
+        '#y' => $css_settings['y'],
+        '#size' => $css_settings['size'],
         '#attachment' => $css_settings['attachment'],
         '#responsive_image_style_id' => $settings['image_style'],
         '#uri' => $file_uri,
-        '#z_index' => 'auto',
+        '#z_index' => $css_settings['z_index'],
       ];
 
       $az_background_media[] = $responsive_image_style_element;
