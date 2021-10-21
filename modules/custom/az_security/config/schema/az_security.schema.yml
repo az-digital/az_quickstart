@@ -1,0 +1,44 @@
+az_security.settings:
+  type: config_object
+  label: Quickstart Security settings
+  mapping:
+    headers:
+      type: mapping
+      label: HTTP headers to attach to every response.
+      mapping:
+        report_to:
+          type: sequence
+          label: List of objects for the Report-To header
+          sequence:
+            type: mapping
+            mapping:
+              group:
+                type: string
+                label: Optional. If a group name is not specified, the endpoint is given a name of "default".
+              max_age:
+                type: integer
+                label: A non-negative integer that defines the lifetime of the endpoint in seconds. A value of "0" will cause the endpoint group to be removed from the user agent's reporting cache.
+              include_subdomains:
+                type: boolean
+                label: A boolean that enables the endpoint group for all subdomains of the current origin's host. If omitted or anything other than "true", the subdomains are not reported to the endpoint.
+              endpoints:
+                type: sequence
+                label: An array of JSON objects that specify the actual URL of your report collector.
+                sequence:
+                  type: mapping
+                  mapping:
+                    url:
+                      type: string
+                      label: The URL of the endpoint.
+        other:
+          type: sequence
+          label: List of other headers to attach to responses
+          sequence:
+            type: mapping
+            mapping:
+              name:
+                type: string
+                label: The name of the header
+              value:
+                type: string
+                label: The value of the header

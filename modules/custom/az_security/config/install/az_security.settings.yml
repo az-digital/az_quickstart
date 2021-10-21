@@ -1,0 +1,10 @@
+headers:
+  report_to:
+    - group: azqs
+      max_age: 2592000
+      endpoints:
+        - url: https://api.web.arizona.edu/v1/azqs/report
+          include_subdomains: false
+  other:
+    - name: Permissions-Policy
+      value: "'self'"
