@@ -22,9 +22,10 @@ use Drupal\responsive_image\Entity\ResponsiveImageStyle;
  *   field_types = {
  *     "entity_reference"
  *   },
- *   description = @Translation("This formatter can be enabled on any entity reference field,
- *     but will only create a background image for media entities of bundle type az_image,
- *     or az_remote_video. For az_remote_video, it must be a youtube video."),
+ *   description = @Translation("This formatter can be enabled on any entity reference
+ *   field, but will only create a background image for media entities of
+ *   bundle type az_image, or az_remote_video.
+ *   For az_remote_video, it must be a youtube video."),
  * )
  */
 class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements ContainerFactoryPluginInterface {
@@ -433,7 +434,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $provider = $media_oembed->getMetadata($media, 'provider_name');
     $html = $media_oembed->getMetadata($media, 'html');
     $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
-    $file_uri  = $this->getMediaThumbFile($media)->getFileUri();
+    $file_uri = $this->getMediaThumbFile($media)->getFileUri();
 
     if ($settings['style'] === 'bottom') {
       $css_settings['selector'] = $css_settings['selector'] . ' .text-on-video';
@@ -526,7 +527,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   private function image(array $settings, MediaInterface $media) {
     $az_background_media = [];
     $css_settings = $settings['css_settings'];
-    $file_uri  = $this->getMediaThumbFile($media)->getFileUri();
+    $file_uri = $this->getMediaThumbFile($media)->getFileUri();
 
     if ($settings['style'] !== 'bottom') {
       $file = $this->getMediaThumbFile($media);
