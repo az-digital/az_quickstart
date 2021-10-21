@@ -66,7 +66,7 @@
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.1",
         "drupal/link_class": "2.0.0",
-        "drupal/media_library_edit": "2.0",
+        "drupal/media_library_edit": "2.1.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
         "drupal/media_migration": "1.0.0-alpha13",
