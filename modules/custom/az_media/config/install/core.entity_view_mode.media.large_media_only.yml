@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.large_media_only
+label: 'Large (1140px) - Media only'
+targetEntityType: media
+cache: true
