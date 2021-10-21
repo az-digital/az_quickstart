@@ -21,7 +21,10 @@ use Drupal\responsive_image\Entity\ResponsiveImageStyle;
  *   label = @Translation("Background Media"),
  *   field_types = {
  *     "entity_reference"
- *   }
+ *   },
+ *   description = @Translation("This formatter can be enabled on any entity reference field,
+ *     but will only create a background image for media entities of bundle type az_image,
+ *     or az_remote_video. For az_remote_video, it must be a youtube video."),
  * )
  */
 class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements ContainerFactoryPluginInterface {
