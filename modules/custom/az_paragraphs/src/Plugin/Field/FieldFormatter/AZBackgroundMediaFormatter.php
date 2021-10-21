@@ -88,21 +88,17 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   public static function defaultSettings() {
     return [
-      'text_media_spacing' => '',
       'image_style' => '',
       'css_settings' => [
-        'selector' => 'body',
+        'z_index' => 'auto',
         'color' => '#FFFFFF',
         'x' => 'center',
         'y' => 'center',
         'attachment' => 'scroll',
         'repeat' => 'no-repeat',
         'size' => 'cover',
-        'gradient' => '',
-        'media_query' => 'all',
-        'important' => 1,
-        'z_index' => 'auto',
-        'path_format' => 'absolute',
+        'important' => FALSE,
+        'selector' => 'body',
       ],
     ];
   }
