@@ -5,7 +5,6 @@ namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\Component\Utility\Html;
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\media\MediaInterface;
@@ -31,13 +30,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   protected $videoEmbedHelper;
 
   /**
-   * The ResponsiveBackgroundImageCssHelper.
-   *
-   * @var \Drupal\az_paragraphs\AZResponsiveBackgroundImageCssHelper
-   */
-  protected $responsiveBackroundImageCssHelper;
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -49,9 +41,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     );
 
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
-    $instance->responsiveBackroundImageCssHelper = (
-      $container->get('az_paragraphs.az_responsive_background_image_css_helper')
-    );
 
     return $instance;
   }
