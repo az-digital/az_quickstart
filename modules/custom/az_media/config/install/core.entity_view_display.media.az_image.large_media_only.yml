@@ -1,0 +1,152 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.large_media_only
+    - field.field.media.az_image.field_az_caption
+    - field.field.media.az_image.field_az_credit
+    - field.field.media.az_image.field_media_az_image
+    - image.style.az_large
+    - media.type.az_image
+  module:
+    - field_group
+    - image
+    - text
+third_party_settings:
+  field_group:
+    group_figure:
+      children:
+        - field_media_az_image
+        - group_cite
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        element: figure
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="max-width: 1140px;"'
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+        show_empty_fields: false
+      label: Figure
+    group_fig_caption:
+      children:
+        - field_az_caption
+      parent_name: ''
+      weight: 1
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: figcaption
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: figure-caption
+      label: 'Fig Caption'
+    group_content:
+      children:
+        - group_row
+      parent_name: ''
+      weight: 6
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: ''
+      label: Content
+    group_cite:
+      children:
+        - field_az_credit
+      parent_name: group_figure
+      weight: 2
+      format_type: html_element
+      region: content
+      format_settings:
+        element: cite
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'small mt-2'
+        show_empty_fields: false
+      label: Cite
+    group_row:
+      children: {  }
+      parent_name: group_content
+      weight: 2
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: row
+      label: 'Image Row'
+    group_caption:
+      children: {  }
+      parent_name: ''
+      weight: 7
+      format_type: html_element
+      region: hidden
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: row
+      label: 'Caption Row'
+id: media.az_image.large_media_only
+targetEntityType: media
+bundle: az_image
+mode: large_media_only
+content:
+  field_az_credit:
+    weight: 4
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    type: text_default
+    region: content
+  field_media_az_image:
+    label: visually_hidden
+    settings:
+      image_style: az_large
+      image_link: ''
+    third_party_settings: {  }
+    type: image
+    weight: 1
+    region: content
+hidden:
+  created: true
+  field_az_caption: true
+  name: true
+  thumbnail: true
+  uid: true
