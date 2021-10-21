@@ -308,7 +308,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         '#selector' => $css_settings['selector'],
         '#repeat' => 'no-repeat',
         '#important' => FALSE,
-        '#color' => '',
         '#x' => 'center',
         '#y' => 'center',
         '#size' => 'cover',
