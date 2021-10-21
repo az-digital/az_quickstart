@@ -302,7 +302,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if ($variables['text_on_media']['style'] !== 'bottom') {
       $responsive_image_style = 'az_full_width_background';
       $css_settings = $this->getParagraphBackgroundSettings($paragraph);
-      $file = $file_uri = $media->field_media_az_image->entity;
+      $file_uri = $media->field_media_az_image->entity->getFileUri();
       $style_element = [
         '#type' => 'az_responsive_background_image',
         '#selector' => $css_settings['selector'],
