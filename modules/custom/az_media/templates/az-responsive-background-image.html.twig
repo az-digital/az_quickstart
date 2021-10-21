@@ -28,7 +28,7 @@
 
 <style type="text/css">
   {{ selector }} {
-    background-image: url({{ fallback_image }});
+    background-image: url({{ fallback_image }}){{ important }};
     {% if repeat %}
     background-repeat: {{ repeat }}{{ important }};
     {% endif %}
@@ -58,7 +58,7 @@
     {% for media_query in media_queries %}
       @media {{media_query.media}} {
         {{ selector }} {
-          background-image: url({{media_query.src|raw}});
+          background-image: url({{media_query.src|raw}}){{ important }};
         }
       }
     {% endfor %}

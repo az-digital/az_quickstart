@@ -304,10 +304,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $css_settings = $this->getParagraphBackgroundSettings($paragraph);
       $file_uri = $media->field_media_az_image->entity->getFileUri();
       $style_element = [
-        '#type' => 'az_responsive_background_image',
+        '#theme' => 'az_responsive_background_image',
         '#selector' => $css_settings['selector'],
         '#repeat' => 'no-repeat',
-        '#important' => TRUE,
+        '#important' => FALSE,
         '#color' => '',
         '#x' => 'center',
         '#y' => 'center',
