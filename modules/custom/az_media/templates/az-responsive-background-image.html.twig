@@ -56,9 +56,9 @@
   }
   {% if media_queries %}
     {% for media_query in media_queries %}
-      @media {{media_query.media}} {
+      @media {{ media_query.media }} {
         {{ selector }} {
-          background-image: url({{media_query.src|raw}}){{ important }};
+          background-image: url({{ media_query.src|raw }}){{ important }};
         }
       }
     {% endfor %}
