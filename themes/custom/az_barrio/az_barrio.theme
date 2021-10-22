@@ -469,10 +469,10 @@ function az_barrio_footer_logo() {
       $svg = file_get_contents($filepath);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
-      $footer_logo_link_classes[] = 'qs-logo-svg-inline';
+      $attr['attributes']['class'] = 'qs-logo-svg-inline';
       // Footer link destination is empty (default value)
       if ($footer_link_destination === '<front>') {
-        $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, $attr));
+        $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, [], $attr));
       }
       // An external URL was entered
       else {
@@ -492,7 +492,8 @@ function az_barrio_footer_logo() {
       $renderer->addCacheableDependency($image_renderable, $config);
       // Footer link destination is empty (default value)
       if ($footer_link_destination === '<front>') {
-        $return = Link::fromTextAndUrl($image_renderable, Url::fromRoute($footer_link_destination, $attr));
+        $attr['attributes']['class'] = 'qs-logo-svg-inline';
+        $return = Link::fromTextAndUrl($image_renderable, Url::fromRoute($footer_link_destination, [], $attr));
       }
       // An external URL was entered
       else {
