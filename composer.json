@@ -49,7 +49,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.2.6",
+        "drupal/core-recommended": "9.2.7",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.0",
@@ -81,7 +81,7 @@
         "drupal/role_delegation": "1.1",
         "drupal/search_exclude": "2.0.0-beta2",
         "drupal/slick": "2.3",
-        "drupal/slick_views": "2.4",
+        "drupal/slick_views": "2.5.0",
         "drupal/smart_date": "3.4.2",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
@@ -121,7 +121,7 @@
                 "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
-                "Editing menus user-experience issue (#2957953)": "https://www.drupal.org/files/issues/2021-09-02/2957953-134-9-2-x.patch",
+                "Editing menus user-experience issue (#2957953)": "https://www.drupal.org/files/issues/2021-09-20/2957953-9.3.x-139.patch",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
                 "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff"
@@ -139,6 +139,9 @@
             },
             "drupal/metatag": {
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
+            },
+            "drupal/migrate_plus": {
+                "Add a process plugin for extracting an entity value (2974221)": "https://www.drupal.org/files/issues/2019-01-16/migrate_plus-2974221-10-Add-a-EntityValue-process-plugin.patch"
             }
         },
         "drupal-scaffold": {

@@ -96,13 +96,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#required' => TRUE,
     ];
 
-    $form['site_slogan'] = [
-      '#type' => 'textfield',
-      '#title' => t('Site slogan'),
-      '#default_value' => $site_config->get('slogan'),
-      '#required' => FALSE,
-    ];
-
     $form['monitoring_page'] = [
       '#type' => 'details',
       '#title' => t('Monitoring page'),
@@ -166,7 +159,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('system.site')
       ->set('name', $form_state->getValue('site_name'))
-      ->set('slogan', $form_state->getValue('site_slogan'))
       ->save();
 
     $this->config('az_core.settings')

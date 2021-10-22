@@ -28,12 +28,12 @@
 
 <style type="text/css">
   {{ selector }} {
-    background-image: url({{ fallback_image }}){{ important }};
+    background-image: url({{ fallback_image|raw }}){{ important }};
     {% if repeat %}
     background-repeat: {{ repeat }}{{ important }};
     {% endif %}
     {% if color %}
-    background-color: {{ size }}{{ important }};
+    background-color: {{ color }}{{ important }};
     {% endif %}
     {% if size %}
     background-size: {{ size }}{{ important }};
@@ -56,9 +56,9 @@
   }
   {% if media_queries %}
     {% for media_query in media_queries %}
-      @media {{media_query.media}} {
+      @media {{ media_query.media }} {
         {{ selector }} {
-          background-image: url({{media_query.src|raw}}){{ important }};
+          background-image: url({{ media_query.src|raw }}){{ important }};
         }
       }
     {% endfor %}
