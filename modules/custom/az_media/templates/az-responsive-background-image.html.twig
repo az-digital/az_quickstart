@@ -28,7 +28,7 @@
 
 <style type="text/css">
   {{ selector }} {
-    background-image: url({{ fallback_image }}){{ important }};
+    background-image: url({{ fallback_image|raw }}){{ important }};
     {% if repeat %}
     background-repeat: {{ repeat }}{{ important }};
     {% endif %}
