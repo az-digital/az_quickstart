@@ -491,7 +491,7 @@ function az_barrio_footer_logo() {
       $renderer = \Drupal::service('renderer');
       $renderer->addCacheableDependency($image_renderable, $config);
       // Footer link destination is empty (default value)
-      if ($footer_link_destination == '<front>') {
+      if ($footer_link_destination === '<front>') {
         $return = Link::fromTextAndUrl($image_renderable, Url::fromRoute($footer_link_destination, $attr));
       }
       // An external URL was entered
