@@ -197,7 +197,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * Get settings from paragraph and return the necessary settings.
    */
-  private function getParagraphBackgroundSettings(ParagraphInterface $paragraph) {
+  protected function getParagraphBackgroundSettings(ParagraphInterface $paragraph) {
 
     // Get plugin configuration.
     $config = $this->getSettings($paragraph);
