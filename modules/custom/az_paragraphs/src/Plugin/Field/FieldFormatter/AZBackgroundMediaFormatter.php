@@ -419,7 +419,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return array
    *   The remote video render array for az_background_media element.
    */
-  private function remoteVideo(array $settings, MediaInterface $media) {
+  protected function remoteVideo(array $settings, MediaInterface $media) {
 
     $az_background_media = [];
     $css_settings = $settings['css_settings'];
@@ -520,7 +520,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return array
    *   The image render array for az_background_media element.
    */
-  private function image(array $settings, MediaInterface $media) {
+  protected function image(array $settings, MediaInterface $media) {
     $az_background_media = [];
     $css_settings = $settings['css_settings'];
     $file_uri = $this->getMediaThumbFile($media)->getFileUri();
