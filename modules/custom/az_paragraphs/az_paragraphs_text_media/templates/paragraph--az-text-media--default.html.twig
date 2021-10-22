@@ -79,7 +79,7 @@
   ]
 %}
 {% block paragraph %}
-  <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
+  <div{{ attributes.addClass(classes) }}>
     {% block content %}
       {% if text_on_media.style == 'bottom' %}
         {{ text_on_bottom }}
