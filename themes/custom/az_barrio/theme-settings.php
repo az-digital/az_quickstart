@@ -341,7 +341,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   $form['footer_logo']['settings']['footer_logo_link_destination'] = [
     '#type' => 'url',
-    '#title' => t('Footer logo link destination'),
+    '#title' => t('Footer logo external link destination'),
     '#description' => t('If blank, the footer logo links to the homepage; otherwise, enter an external site URL. Example: https://www.arizona.edu/'),
     '#default_value' => theme_get_setting('footer_logo_link_destination'),
   ];
