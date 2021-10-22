@@ -298,7 +298,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * Prepare markup for image.
    */
-  private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
+  protected function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
     if ($variables['text_on_media']['style'] !== 'bottom') {
       $responsive_image_style = 'az_full_width_background';
       $css_settings = $this->getParagraphBackgroundSettings($paragraph);
