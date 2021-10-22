@@ -215,7 +215,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * Prepare markup for remote video.
    */
-  private function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
+  protected function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
 
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();

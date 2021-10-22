@@ -136,6 +136,7 @@ function az_media_theme() {
         'responsive_image_style_id' => NULL,
         'fallback_image' => NULL,
         'important' => FALSE,
+        'color' => 'transparent',
         'repeat' => 'no-repeat',
         'size' => 'cover',
         'attachment' => 'scroll',
