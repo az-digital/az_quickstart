@@ -30,7 +30,10 @@ function az_quickstart_update_9203() {
 }
 
 /**
- * Save default barrio settings for new branding theme region and place sytem branding block in new region.
+ * Place system branding block in new region.
+ *
+ * Save default barrio settings for new branding theme region,
+ * and place the new branding block in it.
  */
 function az_quickstart_update_9204() {
   $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
