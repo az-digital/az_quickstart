@@ -37,15 +37,15 @@ class AZSecuritySubscriber implements EventSubscriberInterface {
     $response = $event->getResponse();
     $headers = $this->config->get('headers') ?? [];
 
-    if($headers['report_to']['enabled'] ?? FALSE) {
+    if ($headers['report_to']['enabled'] ?? FALSE) {
       $response->headers->set(
         'Report-To',
         trim(json_encode($headers['report_to']['objects'], JSON_UNESCAPED_SLASHES), '[]')
       );
     }
 
-    if($headers['other']['enabled'] ?? FALSE) {
-      foreach($headers['other']['objects'] ?? [] as $header) {
+    if ($headers['other']['enabled'] ?? FALSE) {
+      foreach ($headers['other']['objects'] ?? [] as $header) {
         $response->headers->set(
           $header['name'],
           $header['value']
