@@ -471,7 +471,7 @@ function az_barrio_footer_logo() {
       $image_markup = Markup::create($rendered_image);
       $footer_logo_link_classes[] = 'qs-logo-svg-inline';
       // Footer link destination is empty (default value)
-      if ($footer_link_destination == '<front>') {
+      if ($footer_link_destination === '<front>') {
         $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, $attr));
       }
       // An external URL was entered
