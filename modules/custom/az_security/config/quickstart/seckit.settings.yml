@@ -4,8 +4,8 @@ seckit_xss:
     vendor-prefix:
       x: false
       webkit: false
-    report-only: false
-    default-src: ''
+    report-only: true
+    default-src: '*'
     script-src: ''
     object-src: ''
     img-src: ''
@@ -15,7 +15,7 @@ seckit_xss:
     child-src: ''
     font-src: ''
     connect-src: ''
-    report-uri: /report-csp-violation
+    report-uri: 'https://api.web.arizona.edu/v1/azqs/report; report-to azqs'
     upgrade-req: false
     policy-uri: ''
     style-src: ''
