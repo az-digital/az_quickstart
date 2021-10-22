@@ -9,6 +9,7 @@
 include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
@@ -452,8 +453,16 @@ function az_barrio_footer_logo() {
     $footer_title_text = $token_service->replace($footer_title_text);
   }
 
-  // Set footer logo.
+  // Set footer logo. 
   if (!empty($footer_logo_path) && !$footer_logo_default) {
+    $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
+    $attr = [
+      'attributes' => [
+        'title' => $footer_title_text,
+        'rel' => 'home',
+        'class' => $footer_logo_link_classes,
+      ],
+    ];
     $filepath = \Drupal::service('file_system')->realpath($footer_logo_path);
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_footer_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
@@ -461,13 +470,14 @@ function az_barrio_footer_logo() {
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
       $footer_logo_link_classes[] = 'qs-logo-svg-inline';
-      $return = Link::createFromRoute($image_markup, $footer_link_destination, [], [
-        'attributes' => [
-          'title' => $footer_title_text,
-          'class' => $footer_logo_link_classes,
-          'rel' => 'home',
-        ],
-      ]);
+      // Footer link destination is empty (default value)
+      if ($footer_link_destination == '<front>') {
+        $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, $attr));
+      }
+      // An external URL was entered
+      else {
+        $return = Link::fromTextAndUrl($image_markup, Url::fromUri($footer_link_destination, $attr));
+      }
     }
     else {
       $image_renderable = [
@@ -480,14 +490,14 @@ function az_barrio_footer_logo() {
       ];
       $renderer = \Drupal::service('renderer');
       $renderer->addCacheableDependency($image_renderable, $config);
-      $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
-      $return = Link::createFromRoute($image_renderable, $footer_link_destination, [], [
-        'attributes' => [
-          'title' => $footer_title_text,
-          'rel' => 'home',
-          'class' => $footer_logo_link_classes,
-        ],
-      ]);
+      // Footer link destination is empty (default value)
+      if ($footer_link_destination == '<front>') {
+        $return = Link::fromTextAndUrl($image_renderable, Url::fromRoute($footer_link_destination, $attr));
+      }
+      // An external URL was entered
+      else {
+        $return = Link::fromTextAndUrl($image_renderable, Url::fromUri($footer_link_destination, $attr));
+      }
     }
   }
   // Fallback to primary logo when footer logo settings are not configured.
