@@ -68,24 +68,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * {@inheritdoc}
    */
-  protected function getCssSelector($item) {
-    $parent = $item->getEntity();
-    $css_selector = '';
-    // Get entity keys from parent paragraph.
-    if (!empty($parent)) {
-      if ($parent instanceof ParagraphInterface) {
-        $referencing_paragraph_id = $parent->id();
-        $referencing_paragraph_bundle = $parent->getType();
-        $css_selector = "#" . HTML::getId($referencing_paragraph_bundle . "-" . $referencing_paragraph_id);
-      }
-    }
-
-    return $css_selector;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public static function defaultSettings() {
     return [
       'image_style' => '',
@@ -241,6 +223,29 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ),
       '#default_value' => $settings['css_settings']['important'],
     ];
+    // The selector for the background property.
+    $form['css_settings']['selector'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Selector(s)'),
+      '#description' => $this->t(
+        'A valid CSS selector that will be used to apply the background image. One per line.
+                      If the field is a multivalue field, the first line will be applied to the first value,
+                      the second to the second value... and so on. Tokens are supported.'
+      ),
+      '#default_value' => $settings['css_settings']['selector'],
+    ];
+    // The token help relevant to this entity type.
+    if (isset($form['#entity_type'])) {
+      $form['css_settings']['token_help'] = [
+        '#theme' => 'token_tree_link',
+        '#token_types' => ['user', $form['#entity_type']],
+      ];
+    }
+    else {
+      $form['css_settings']['token_help'] = [
+        '#theme' => 'token_tree_link',
+      ];
+    }
 
     return $form;
 
@@ -270,7 +275,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     $settings = $this->getAllSettings($items);
 
-    $css_settings = $settings['css_settings'];
     $element = [];
 
     $full_width = '';
@@ -286,6 +290,18 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     }
 
     $paragraph = $items->getEntity();
+
+    // Prepare token data in bg image CSS selector.
+    $token_data = [
+      'user' => \Drupal::currentUser(),
+      $items->getEntity()->getEntityTypeId() => $items->getEntity(),
+    ];
+
+    $settings['css_settings']['selector'] = \Drupal::token()->replace(
+      $settings['css_settings']['selector'],
+      $token_data
+    );
+    $settings['css_settings'] = str_replace(['_'], '-', $settings['css_settings']);
 
     /** @var \Drupal\media\MediaInterface[] $media_items */
     foreach ($media_items as $delta => $media) {
@@ -395,7 +411,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     // Fill in all the rest of the required settings.
     $all_settings += $this->defaultSettings();
 
-    $all_settings['css_settings']['selector'] = $this->getCssSelector($items);
     // Get settings from parent paragraph and transforming to
     // what the field formatter requires.
     if (!empty($all_settings['bg_attachment'])) {
