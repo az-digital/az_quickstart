@@ -131,7 +131,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     // The background-color property.
     $form['css_settings']['color'] = [
-      '#type' => 'textarea',
+      '#type' => 'textfield',
       '#title' => $this->t('Color'),
       '#description' => $this->t(
         'The background color formatted as any valid css color format (e.g. hex, rgb, text, hsl)
