@@ -340,9 +340,6 @@ az_barrio.settings:
     primary_logo_title_text:
       type: string
       label: 'Primary logo title text'
-    az_barrio_footer_homepage_link:
-      type: boolean
-      lable: 'Link footer logo to homepage'
     footer_logo_link_destination:
       type: string
       label: 'Footer logo link destination'
