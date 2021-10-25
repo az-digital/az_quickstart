@@ -111,7 +111,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#title' => $this->t('Default CSS Settings'),
       '#description' => $this->t(
         'Default CSS settings for outputting the background property.
-                These settings will be concatenated to form a complete css statementthat uses the "background"
+                These settings will be concatenated to form a complete css statement that uses the "background"
                 property. For more information on the css background property see
                 http://www.w3schools.com/css/css_background.asp"'
       ),
@@ -135,9 +135,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#title' => $this->t('Color'),
       '#description' => $this->t(
         'The background color formatted as any valid css color format (e.g. hex, rgb, text, hsl)
-                      [<a href="@url">css property: background-color</a>]. One per line. If the field is a multivalue
-                      field, the first line will be applied to the first value, the second to the second value...
-                      and so on.',
+                      [<a href="@url">css property: background-color</a>].',
         ['@url' => 'https://developer.mozilla.org/en-US/docs/Web/CSS/linear-gradient']
       ),
       '#default_value' => $settings['css_settings']['color'],
@@ -225,12 +223,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     ];
     // The selector for the background property.
     $form['css_settings']['selector'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Selector(s)'),
+      '#type' => 'textfield',
+      '#title' => $this->t('Selector'),
       '#description' => $this->t(
-        'A valid CSS selector that will be used to apply the background image. One per line.
-                      If the field is a multivalue field, the first line will be applied to the first value,
-                      the second to the second value... and so on. Tokens are supported.'
+        'A valid CSS selector that will be used to apply the background image. Tokens are supported.'
       ),
       '#default_value' => $settings['css_settings']['selector'],
     ];
