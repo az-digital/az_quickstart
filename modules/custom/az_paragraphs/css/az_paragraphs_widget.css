@@ -1,3 +1,7 @@
 .js .paragraph-type{
   overflow:unset;
 }
+.paragraph--type--az-text-media.full-width-background {
+    margin-left: 0;
+    margin-right: 0;
+}
