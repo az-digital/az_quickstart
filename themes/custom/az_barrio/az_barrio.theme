@@ -453,7 +453,7 @@ function az_barrio_footer_logo() {
     $footer_title_text = $token_service->replace($footer_title_text);
   }
 
-  // Set footer logo. 
+  // Set footer logo.
   if (!empty($footer_logo_path) && !$footer_logo_default) {
     $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
     $attr = [
