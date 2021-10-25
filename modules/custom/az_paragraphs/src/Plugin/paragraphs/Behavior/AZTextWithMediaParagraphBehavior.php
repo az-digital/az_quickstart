@@ -44,7 +44,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'style' => '',
       'bg_color' => '',
       'position' => '',
-      'text_media_spacing' => '',
+      'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
     ];
   }
@@ -61,7 +61,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $form['full_width'] = [
       '#title' => $this->t('Full width'),
       '#type' => 'checkbox',
-      '#default_value' => $config['full_width'] ?? '',
+      '#default_value' => $config['full_width'],
       '#description' => $this->t('Makes media full width if checked.'),
       '#return_value' => 'full-width-background',
     ];
@@ -74,7 +74,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'box' => $this->t('Box style'),
         'bottom' => $this->t('Bottom style'),
       ],
-      '#default_value' => $config['style'] ?? '',
+      '#default_value' => $config['style'],
       '#description' => $this->t('The style of the content background.'),
       '#attributes' => [
         'id' => $style_unique_id,
@@ -89,7 +89,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'dark' => $this->t('Dark'),
         'transparent' => $this->t('Transparent'),
       ],
-      '#default_value' => $config['bg_color'] ?? '',
+      '#default_value' => $config['bg_color'],
       '#description' => $this->t('The color of the content background.'),
     ];
 
@@ -102,7 +102,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Position right'),
         'col-xs-12' => $this->t('None'),
       ],
-      '#default_value' => $config['position'] ?? '',
+      '#default_value' => $config['position'],
       '#description' => $this->t('The position of the content on the media.'),
       '#states' => [
         'invisible' => [
@@ -118,7 +118,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'bg-fixed' => $this->t('Fixed'),
       ],
       '#empty_option' => $this->t('Scroll'),
-      '#default_value' => $config['bg_attachment'] ?? '',
+      '#default_value' => $config['bg_attachment'],
       '#description' => $this->t('<strong>Scroll:</strong> The media will scroll along with the page.<br> <strong>Fixed:</strong> The media will be fixed and the page will scroll over it.'),
       '#states' => [
         'invisible' => [
@@ -143,7 +143,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-9' => $this->t('9 (7.0rem | ~112px)'),
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
       ],
-      '#default_value' => $config['text_media_spacing'] ?? 'y-5',
+      '#default_value' => $config['text_media_spacing'],
       '#description' => $this->t('Adds spacing above and below the text.'),
     ];
 
