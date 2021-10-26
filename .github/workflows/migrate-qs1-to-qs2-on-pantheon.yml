@@ -114,12 +114,19 @@ jobs:
 
       - name: Create new QS2 Site.
         run: |
-          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
+          terminus -y -n connection:set ${{ github.event.inputs.qs2SiteName }}.dev git
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
-          $(terminus -y -n connection:info --field "Git Command" ${{ secrets.DEMO_SITE_NAME }}.dev)
+          $(terminus -y -n connection:info --field "Git Command" ${{ github.event.inputs.qs2SiteName }}.dev)
           terminus site:create --org=76681b9d-620b-49c7-998f-b34a2829d8ab --region=us -- ${{ github.event.inputs.qs2SiteName }} ${{ github.event.inputs.qs2SiteLabel }} 3162cc4c-2f75-40cb-8487-0c69bda99f39
-
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.key migrate
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.driver mysql
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.username pantheon
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.password `terminus connection:info ${{ github.event.inputs.qs2SiteName }}.dev --field="mysql_password"`
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.host `terminus connection:info ${{ github.event.inputs.qs2SiteName }}.dev --field="mysql_host"`
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.port `terminus connection:info ${{ github.event.inputs.qs2SiteName }}.dev --field="mysql_port"`
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.database pantheon
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.prefix null
   install-azqs:
     name: Install AZQS
     needs: watch-workflow
