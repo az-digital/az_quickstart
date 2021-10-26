@@ -48,7 +48,7 @@ jobs:
           done
 
   create-mulitdev:
-    name: Create a Quickstart 1 multidev of live site in pantheon and get connection info.
+    name: Create a Quickstart 1 multidev of live site you wish to migrate.
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
@@ -88,7 +88,7 @@ jobs:
           terminus multidev:create ${{ github.event.inputs.qs1SiteName }}.live ${{ github.event.inputs.qs1Multidev }}
 
   create-qs-two-site:
-    name: Create a Quickstart 2 site on CWS upstream.
+    name: Create a Quickstart 2 site on CWS upstream and set migrate database credentials from QS1 site.
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
@@ -122,60 +122,8 @@ jobs:
           terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.key migrate
           terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.driver mysql
           terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.username pantheon
-          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.password `terminus connection:info ${{ github.event.inputs.qs2SiteName }}.dev --field="mysql_password"`
-          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.host `terminus connection:info ${{ github.event.inputs.qs2SiteName }}.dev --field="mysql_host"`
-          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.port `terminus connection:info ${{ github.event.inputs.qs2SiteName }}.dev --field="mysql_port"`
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.password `terminus connection:info ${{ github.event.inputs.qs1SiteName }}.${{ github.event.inputs.qs1Multidev }} --field="mysql_password"`
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.host `terminus connection:info ${{ github.event.inputs.qs1SiteName }}.${{ github.event.inputs.qs1Multidev }} --field="mysql_host"`
+          terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.port `terminus connection:info ${{ github.event.inputs.qs1SiteName }}.${{ github.event.inputs.qs1Multidev }} --field="mysql_port"`
           terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.database pantheon
           terminus drush ${{ github.event.inputs.qs2SiteName }}.dev -- config:set -y migrate_plus.migration_group.az_migration shared_configuration.source.database.prefix null
-  install-azqs:
-    name: Install AZQS
-    needs: watch-workflow
-    runs-on: ubuntu-latest
-    steps:
-      - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
-        with:
-          php-version: '7.4'
-
-      - name: Set up SSH
-        run: |
-          mkdir ${HOME}/.ssh && chmod 700 ${HOME}/.ssh
-          echo -e "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
-          echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
-          chmod 600 ${HOME}/.ssh/*
-
-      - name: Install terminus
-        run: |
-          composer -n require pantheon-systems/terminus:^2
-          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
-
-      - name: Set up terminus
-        run: |
-          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
-
-      - name: Wake env
-        run: |
-          terminus env:wake ${{ secrets.DEMO_SITE_NAME }}.dev
-          sleep 5
-
-      - name: Wipe existing site
-        run: |
-          terminus -y -n env:wipe ${{ secrets.DEMO_SITE_NAME }}.dev
-
-      - name: Install site
-        run: |
-          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev sftp
-          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- \
-          site:install az_quickstart install_configure_form.enable_update_status_module=NULL \
-          --account-name="azadmin" \
-          --account-mail="noreply@email.arizona.edu" \
-          --site-mail="noreply@email.arizona.edu" \
-          --site-name="Kitten" \
-          --yes \
-          --verbose
-          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- pm:enable -n -y az_demo
-          terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
-
-      - name: Clear caches
-        run: |
-          terminus -y -n env:clear-cache ${{ secrets.DEMO_SITE_NAME }}.dev
