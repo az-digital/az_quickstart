@@ -5,5 +5,5 @@ id: node
 label: Content
 tags:
   description: '[node:field_az_summary]'
-  canonical_url: '[node:field_az_link:url]'
+  canonical_url: '[node:field_az_link:uri]'
   title: '[node:title] | [site:name]'
