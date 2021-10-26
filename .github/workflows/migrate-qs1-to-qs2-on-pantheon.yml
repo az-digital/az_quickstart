@@ -18,6 +18,10 @@ on:
         description: 'Quickstart 2 label in Pantheon'
         required: true
         default: ''
+      qs2SitnameHumanReadable
+        description: 'Quickstart 2 sitename to appear on site.'
+        required: true
+        default: ''
 
 jobs:
   watch-workflow:
