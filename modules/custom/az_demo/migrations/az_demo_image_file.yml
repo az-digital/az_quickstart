@@ -24,6 +24,9 @@ source:
     -
       name: alt
       selector: alt
+    -
+      name: caption
+      selector: caption
 
 destination:
   plugin: 'entity:media'
@@ -50,6 +53,7 @@ process:
 
   filename: filename
   alt: alt
+  caption: caption
   uri:
     -
       plugin: file_copy
@@ -66,6 +70,8 @@ process:
     value_key: uri
 
   'field_media_az_image/alt': alt
+
+  'field_media_az_image/caption': caption
 
 # Dependencies.
 dependencies:
