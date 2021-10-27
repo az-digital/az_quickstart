@@ -1,6 +1,0 @@
-services:
-  az_security.event_subscriber:
-    class: Drupal\az_security\EventSubscriber\AZSecuritySubscriber
-    arguments: ['@config.factory']
-    tags:
-      - { name: event_subscriber }

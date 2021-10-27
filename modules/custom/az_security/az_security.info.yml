@@ -6,4 +6,3 @@ package: The University of Arizona
 dependencies:
   - az_core
   - honeypot:honeypot
-  - seckit:seckit
