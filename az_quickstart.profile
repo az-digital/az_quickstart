@@ -61,3 +61,15 @@ function az_quickstart_update_9205() {
     ->set('land_acknowledgment', FALSE)
     ->save(TRUE);
 }
+
+/**
+ * Update footer logo link destination if it's currently set to "<front>".
+ */
+function az_quickstart_update_9206() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  if ($config->get('footer_logo_link_destination') === '<front>') {
+    $config
+      ->set('footer_logo_link_destination', '')
+      ->save(TRUE);
+  }
+}
