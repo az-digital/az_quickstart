@@ -3,6 +3,7 @@
 namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\media\MediaInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -45,6 +46,13 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   protected $entityTypeManager;
 
   /**
+   * The current user.
+   *
+   * @var \Drupal\Core\Session\AccountInterface
+   */
+  protected $currentUser;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(
@@ -59,6 +67,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $plugin_id,
       $plugin_definition
     );
+    $instance->currentUser = ($container->get('current_user'));
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
     $instance->entityTypeManager = $container->get('entity_type.manager');
 
@@ -289,7 +298,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
     // Prepare token data in bg image CSS selector.
     $token_data = [
-      'user' => \Drupal::currentUser(),
+      'user' => $this->currentUser,
       $items->getEntity()->getEntityTypeId() => $items->getEntity(),
     ];
 
