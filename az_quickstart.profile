@@ -73,3 +73,11 @@ function az_quickstart_update_9206() {
       ->save(TRUE);
   }
 }
+
+/**
+ * Enable the az_security module.
+ */
+function az_quickstart_update_9207() {
+  $module_list = ['az_security'];
+  \Drupal::service('module_installer')->install($module_list);
+}
