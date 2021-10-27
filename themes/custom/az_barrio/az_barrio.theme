@@ -9,6 +9,7 @@
 include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
@@ -110,6 +111,12 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     // $variables['title'] = FALSE;
   }
 
+  // Check if land acknowledgment should be displayed.
+  $land_acknowledgment = '';
+  if (theme_get_setting('land_acknowledgment')) {
+    $land_acknowledgment = '<p class="font-weight-light"><em>We respectfully acknowledge the University of Arizona is on the land and territories of Indigenous peoples. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. Committed to diversity and inclusion, the University strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
+  }
+
   // Check if information security policy should be displayed.
   $info_security_privacy = '';
   if (theme_get_setting('info_security_privacy')) {
@@ -127,6 +134,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   }
 
   $variables['logo'] = az_barrio_primary_logo();
+  $variables['land_acknowledgment'] = Markup::create($land_acknowledgment);
   $variables['info_security_privacy'] = Markup::create($info_security_privacy);
   $variables['copyright_notice'] = Markup::create($copyright_notice);
   $variables['footer_logo'] = az_barrio_footer_logo();
@@ -447,20 +455,29 @@ function az_barrio_footer_logo() {
 
   // Set footer logo.
   if (!empty($footer_logo_path) && !$footer_logo_default) {
+    $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
+    $attr = [
+      'attributes' => [
+        'title' => $footer_title_text,
+        'rel' => 'home',
+        'class' => $footer_logo_link_classes,
+      ],
+    ];
     $filepath = \Drupal::service('file_system')->realpath($footer_logo_path);
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_footer_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
       $svg = file_get_contents($filepath);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
-      $footer_logo_link_classes[] = 'qs-logo-svg-inline';
-      $return = Link::createFromRoute($image_markup, $footer_link_destination, [], [
-        'attributes' => [
-          'title' => $footer_title_text,
-          'class' => $footer_logo_link_classes,
-          'rel' => 'home',
-        ],
-      ]);
+      $attr['attributes']['class'] = 'qs-logo-svg-inline';
+      // Footer link destination is empty (default value)
+      if ($footer_link_destination === '<front>') {
+        $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, [], $attr));
+      }
+      // An external URL was entered
+      else {
+        $return = Link::fromTextAndUrl($image_markup, Url::fromUri($footer_link_destination, $attr));
+      }
     }
     else {
       $image_renderable = [
@@ -473,14 +490,14 @@ function az_barrio_footer_logo() {
       ];
       $renderer = \Drupal::service('renderer');
       $renderer->addCacheableDependency($image_renderable, $config);
-      $footer_link_destination = (!empty($footer_link_destination)) ? $footer_link_destination : '<front>';
-      $return = Link::createFromRoute($image_renderable, $footer_link_destination, [], [
-        'attributes' => [
-          'title' => $footer_title_text,
-          'rel' => 'home',
-          'class' => $footer_logo_link_classes,
-        ],
-      ]);
+      // Footer link destination is empty (default value)
+      if ($footer_link_destination === '<front>') {
+        $return = Link::fromTextAndUrl($image_renderable, Url::fromRoute($footer_link_destination, [], $attr));
+      }
+      // An external URL was entered
+      else {
+        $return = Link::fromTextAndUrl($image_renderable, Url::fromUri($footer_link_destination, $attr));
+      }
     }
   }
   // Fallback to primary logo when footer logo settings are not configured.

@@ -44,8 +44,26 @@ process:
   field_media_az_audio_file/target_id: '@mfid'
   field_media_az_document/target_id: '@mfid'
   field_media_az_image/target_id: '@mfid'
-  field_media_az_image/alt: image_field_alt
-  field_media_az_image/title: image_field_text
+  field_media_az_image/alt: field_file_image_alt_text/0/value
+  field_media_az_image/title: field_file_image_title_text/0/value
+  field_az_caption:
+    plugin: sub_process
+    source: field_uaqs_caption_text
+    process:
+      delta: delta
+      value: value
+      format:
+        plugin: default_value
+        default_value: plain_text
+  field_az_credit:
+    plugin: sub_process
+    source: field_uaqs_image_credit
+    process:
+      delta: delta
+      value: value
+      format:
+        plugin: default_value
+        default_value: plain_text
   field_media_az_video_file: '@mfid'
   field_media_az_oembed_video/value: uri
 

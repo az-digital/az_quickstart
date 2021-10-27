@@ -30,7 +30,10 @@ function az_quickstart_update_9203() {
 }
 
 /**
- * Save default barrio settings for new branding theme region and place sytem branding block in new region.
+ * Place system branding block in new region.
+ *
+ * Save default barrio settings for new branding theme region,
+ * and place the new branding block in it.
  */
 function az_quickstart_update_9204() {
   $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
@@ -50,9 +53,23 @@ function az_quickstart_update_9204() {
 }
 
 /**
- * Enable the az_security module.
+ * Disable land acknowledgement theme setting by default on existing sites.
  */
 function az_quickstart_update_9205() {
-  $module_list = ['az_security'];
-  \Drupal::service('module_installer')->install($module_list);
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  $config
+    ->set('land_acknowledgment', FALSE)
+    ->save(TRUE);
+}
+
+/**
+ * Update footer logo link destination if it's currently set to "<front>".
+ */
+function az_quickstart_update_9206() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  if ($config->get('footer_logo_link_destination') === '<front>') {
+    $config
+      ->set('footer_logo_link_destination', '')
+      ->save(TRUE);
+  }
 }
