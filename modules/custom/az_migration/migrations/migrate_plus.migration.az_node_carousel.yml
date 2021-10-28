@@ -91,6 +91,14 @@ process:
   promote: promote
   sticky: sticky
 
+  path/pathauto: pathauto
+  path/alias:
+    plugin: concat
+    source:
+      - constants/slash
+      - path
+
+
 migration_dependencies:
   required:
     - az_user
