@@ -51,12 +51,8 @@ process:
           -
             plugin: default_value
             default_value:
-              - attributes:
-                - class: 'btn btn-outline-white btn-sm'
-          -
-            plugin: callback
-            callable: serialize
-
+              attributes:
+                class: 'btn btn-outline-white btn-sm'
   field_az_carousel_short_summary:
     plugin: sub_process
     source: field_uaqs_summary_short
