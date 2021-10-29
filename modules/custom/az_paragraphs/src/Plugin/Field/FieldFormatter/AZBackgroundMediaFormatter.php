@@ -192,10 +192,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
                       </a>]'
       ),
       '#options' => [
-        FALSE => $this->t('Ignore'),
-        'scroll' => 'Scroll',
-        'fixed' => 'Fixed',
+        'scroll' => $this->t('Scroll'),
+        'fixed' => $this->t('Fixed'),
       ],
+      '#empty_option' => $this->t('Ignore'),
       '#default_value' => $settings['css_settings']['attachment'],
     ];
     // The background-repeat property.
