@@ -209,12 +209,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
                       </a>]'
       ),
       '#options' => [
-        FALSE => $this->t('Ignore'),
         'no-repeat' => $this->t('No Repeat'),
         'repeat' => $this->t('Tiled (repeat)'),
         'repeat-x' => $this->t('Repeat Horizontally (repeat-x)'),
         'repeat-y' => $this->t('Repeat Vertically (repeat-y)'),
       ],
+      '#empty_option' => $this->t('Ignore'),
       '#default_value' => $settings['css_settings']['repeat'],
     ];
     // The background-size property.
