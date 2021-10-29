@@ -45,6 +45,13 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   protected $entityTypeManager;
 
   /**
+   * The token service.
+   *
+   * @var \Drupal\Core\Utility\Token
+   */
+  protected $token;
+
+  /**
    * The current user.
    *
    * @var \Drupal\Core\Session\AccountInterface
@@ -66,6 +73,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $plugin_id,
       $plugin_definition
     );
+    $instance->token = $container->get('token');
     $instance->currentUser = $container->get('current_user');
     $instance->videoEmbedHelper = $container->get('az_paragraphs.az_video_embed_helper');
     $instance->entityTypeManager = $container->get('entity_type.manager');
@@ -301,7 +309,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $items->getEntity()->getEntityTypeId() => $items->getEntity(),
     ];
 
-    $settings['css_settings']['selector'] = \Drupal::token()->replace(
+    $settings['css_settings']['selector'] = $this->token->replace(
       $settings['css_settings']['selector'],
       $token_data
     );
