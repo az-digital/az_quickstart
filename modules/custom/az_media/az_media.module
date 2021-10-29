@@ -7,6 +7,7 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\editor\Entity\Editor;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
@@ -148,3 +149,13 @@ function az_media_theme() {
     ],
   ];
 }
+
+/**
+ * Implements hook_entity_presave().
+ */
+function az_media_entity_presave(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() == 'media' && isset($entity->field_media_az_image->entity)) {
+    $entity->thumbnail->target_id = $entity->field_media_az_image->target_id;
+  }
+}
+
