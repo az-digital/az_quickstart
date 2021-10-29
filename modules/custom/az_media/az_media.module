@@ -152,6 +152,8 @@ function az_media_theme() {
 
 /**
  * Implements hook_entity_presave().
+ *
+ * This allows content editors to override remote video thumbs.
  */
 function az_media_entity_presave(EntityInterface $entity) {
   if ($entity->getEntityTypeId() == 'media' && isset($entity->field_media_az_image->entity)) {
