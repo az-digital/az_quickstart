@@ -421,7 +421,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    *   The paragraph behavior settings.
    */
   protected function getParagraphSettings(FieldItemListInterface $items) {
-    $paragraph_settings = NULL;
+    $paragraph_settings = [];
     $parent = $items->getEntity();
     // Get settings from parent paragraph.
     if (!empty($parent)) {
