@@ -3,7 +3,6 @@
 namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\media\MediaInterface;
 use Drupal\Core\Form\FormStateInterface;
