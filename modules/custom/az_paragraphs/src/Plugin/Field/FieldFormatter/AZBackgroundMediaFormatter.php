@@ -277,6 +277,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $summary[] = $this->t('Original image style');
     }
     $summary[] =  Markup::create('<p></p><strong>CSS settings:</strong>');
+    if (isset($settings['css_settings']['selector'])) {
+      $summary[] = $this->t('CSS selector: @selector', ['@selector' => $settings['css_settings']['selector']]);
+    }
     if (isset($settings['z_index'])) {
       $summary[] = $this->t('z-index: @z-index', ['@z-index' => $settings['css_settings']['z_index']]);
     }
