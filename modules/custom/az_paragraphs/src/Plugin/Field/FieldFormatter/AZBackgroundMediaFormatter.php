@@ -11,7 +11,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Url;
-use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 /**
  * Plugin implementation of the 'az_background_media_formatter' formatter.
