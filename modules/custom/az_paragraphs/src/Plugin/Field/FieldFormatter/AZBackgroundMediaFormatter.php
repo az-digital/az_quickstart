@@ -271,10 +271,37 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $options = $this->getResponsiveImageStyles();
 
     if (isset($options[$settings['image_style']])) {
-      $summary[] = $this->t('URL for image style: @style', ['@style' => $options[$settings['image_style']]]);
+      $summary[] = $this->t('Responsive image style: @style', ['@style' => $options[$settings['image_style']]]);
     }
     else {
       $summary[] = $this->t('Original image style');
+    }
+    if (isset($settings['css_settings']['selector'])) {
+      $summary[] = $this->t('CSS selector: @selector', ['@selector' => $settings['css_settings']['selector']]);
+    }
+    if (isset($settings['z_index'])) {
+      $summary[] = $this->t('z-index: @z-index', ['@z-index' => $settings['css_settings']['z_index']]);
+    }
+    if (isset($settings['css_settings']['important']) && $settings['css_settings']['important']) {
+      $summary[] = $this->t('Add !important: True');
+    }
+    if (isset($settings['css_settings']['size'])) {
+      $summary[] = $this->t('background-size: @size', ['@size' => $settings['css_settings']['size']]);
+    }
+    if (isset($settings['css_settings']['repeat'])) {
+      $summary[] = $this->t('background-repeat: @repeat', ['@repeat' => $settings['css_settings']['repeat']]);
+    }
+    if (isset($settings['css_settings']['attachment'])) {
+      $summary[] = $this->t('background-attachment: @attachment', ['@attachment' => $settings['css_settings']['attachment']]);
+    }
+    if (isset($settings['css_settings']['y'])) {
+      $summary[] = $this->t('background-position-y: @y', ['@y' => $settings['css_settings']['y']]);
+    }
+    if (isset($settings['css_settings']['x'])) {
+      $summary[] = $this->t('background-position-x: @x', ['@x' => $options[$settings['css_settings']['x']]]);
+    }
+    if (isset($settings['css_settings']['color'])) {
+      $summary[] = $this->t('background-color: @color', ['@color' => $settings['css_settings']['color']]);
     }
 
     return $summary;
@@ -347,7 +374,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    *   The select options.
    */
   protected function getResponsiveImageStyles($withNone = FALSE) {
-    $styles = ResponsiveImageStyle::loadMultiple();
+
+    $styles = $this->entityTypeManager->getStorage('responsive_image_style')->loadMultiple();
+
     $options = [];
 
     if ($withNone && empty($styles)) {
