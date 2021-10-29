@@ -10,6 +10,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 
 /**
@@ -275,9 +276,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     else {
       $summary[] = $this->t('Original image style');
     }
-    if (isset($settings['css_settings']['selector'])) {
-      $summary[] = $this->t('CSS selector: @selector', ['@selector' => $settings['css_settings']['selector']]);
-    }
+    $summary[] =  Markup::create('<p></p><strong>CSS settings:</strong>');
     if (isset($settings['z_index'])) {
       $summary[] = $this->t('z-index: @z-index', ['@z-index' => $settings['css_settings']['z_index']]);
     }
