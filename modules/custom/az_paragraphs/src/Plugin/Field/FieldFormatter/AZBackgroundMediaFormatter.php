@@ -376,7 +376,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   protected function getResponsiveImageStyles($withNone = FALSE) {
 
     $styles = $this->entityTypeManager->getStorage('responsive_image_style')->loadMultiple();
-
     $options = [];
 
     if ($withNone && empty($styles)) {
