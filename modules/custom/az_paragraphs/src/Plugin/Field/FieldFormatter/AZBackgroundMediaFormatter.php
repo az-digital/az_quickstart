@@ -2,16 +2,16 @@
 
 namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
-use Drupal\media\MediaInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\paragraphs\ParagraphInterface;
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+use Drupal\media\MediaInterface;
+use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_background_media_formatter' formatter.
