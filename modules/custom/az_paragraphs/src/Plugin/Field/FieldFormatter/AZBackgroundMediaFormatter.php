@@ -59,7 +59,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $plugin_id,
       $plugin_definition
     );
-    $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
+    $instance->videoEmbedHelper = $container->get('az_paragraphs.az_video_embed_helper');
     $instance->entityTypeManager = $container->get('entity_type.manager');
 
     return $instance;
