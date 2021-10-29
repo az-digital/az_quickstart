@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_full_width_bg_small
+label: 'Small full-width background'
+description: "Minimum crop width 767px, or the image will be scaled up and will possibly be blurry.\t"
+aspect_ratio: ''
+soft_limit_width: 767
+soft_limit_height: null
+hard_limit_width: null
+hard_limit_height: null

@@ -41,6 +41,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     );
 
     $instance->videoEmbedHelper = ($container->get('az_paragraphs.az_video_embed_helper'));
+
     return $instance;
   }
 
@@ -158,6 +159,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get plugin configuration.
     $config = $this->getSettings($paragraph);
     $variables['text_on_media'] = $config;
+    $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . "-" . $paragraph->id());
     if ($paragraph->hasField('field_az_media')) {
       /** @var \Drupal\media\Entity\Media $media */
       foreach ($paragraph->get('field_az_media')->referencedEntities() as $media) {
@@ -193,9 +195,27 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   }
 
   /**
+   * Get settings from paragraph and return the necessary settings.
+   */
+  protected function getParagraphBackgroundSettings(ParagraphInterface $paragraph) {
+
+    // Get plugin configuration.
+    $config = $this->getSettings($paragraph);
+    $bg_attachment = 'scroll';
+    if (!empty($config['bg_attachment'])) {
+      $bg_attachment = 'fixed';
+    }
+    return [
+      'selector' => '#' . HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
+      'attachment' => $bg_attachment,
+    ];
+
+  }
+
+  /**
    * Prepare markup for remote video.
    */
-  private function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
+  protected function remoteVideo(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
 
     /** @var \Drupal\media\Plugin\media\Source\OEmbed $media_oembed */
     $media_oembed = $media->getSource();
@@ -214,7 +234,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}});} #{{ id }}.az-video-playing, #{{ id }}.az-video-paused {background-image:none;}</style>",
           '#context' => [
             'filepath' => file_create_url($thumb),
-            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
+            'id' => HTML::getId($paragraph->bundle() . "-" . $paragraph->id()),
           ],
         ],
         $background_video = [
@@ -278,27 +298,32 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * Prepare markup for image.
    */
-  private function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
-    $file_uri = $media->field_media_az_image->entity->getFileUri();
+  protected function image(array &$variables, ParagraphInterface $paragraph, MediaInterface $media) {
     if ($variables['text_on_media']['style'] !== 'bottom') {
+      $responsive_image_style = 'az_full_width_background';
+      $css_settings = $this->getParagraphBackgroundSettings($paragraph);
+      $file_uri = $media->field_media_az_image->entity->getFileUri();
       $style_element = [
-        'style' => [
-          '#type' => 'inline_template',
-          '#template' => "<style type='text/css'>#{{ id }} {background-image: url({{filepath}}); }</style>",
-          '#context' => [
-            'filepath' => file_create_url($file_uri),
-            'id' => $paragraph->bundle() . "-" . $paragraph->id(),
-          ],
-        ],
+        '#theme' => 'az_responsive_background_image',
+        '#selector' => $css_settings['selector'],
+        '#repeat' => 'no-repeat',
+        '#important' => FALSE,
+        '#x' => 'center',
+        '#y' => 'center',
+        '#size' => 'cover',
+        '#attachment' => $css_settings['attachment'],
+        '#responsive_image_style_id' => $responsive_image_style,
+        '#uri' => $file_uri,
+        '#z_index' => 'auto',
       ];
       $variables['style_element'] = $style_element;
     }
     elseif ($variables['text_on_media']['style'] === 'bottom') {
       $image_renderable = [
-        '#theme' => 'image',
-        '#uri' => file_create_url($file_uri),
-        '#alt' => $media->field_media_az_image->alt,
-        '#attributes' => [
+        '#theme' => 'responsive_image_formatter',
+        '#responsive_image_style_id' => 'az_full_width_background',
+        '#item' => $media->field_media_az_image,
+        '#item_attributes' => [
           'class' => ['img-fluid'],
         ],
       ];
