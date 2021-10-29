@@ -299,7 +299,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $summary[] = $this->t('background-position-y: @y', ['@y' => $settings['css_settings']['y']]);
     }
     if (isset($settings['css_settings']['x'])) {
-      $summary[] = $this->t('background-position-x: @x', ['@x' => $options[$settings['css_settings']['x']]]);
+      $summary[] = $this->t('background-position-x: @x', ['@x' => $settings['css_settings']['x']]);
     }
     if (isset($settings['css_settings']['color'])) {
       $summary[] = $this->t('background-color: @color', ['@color' => $settings['css_settings']['color']]);
