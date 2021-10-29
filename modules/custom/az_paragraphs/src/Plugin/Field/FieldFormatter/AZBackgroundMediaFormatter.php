@@ -271,7 +271,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $options = $this->getResponsiveImageStyles();
 
     if (isset($options[$settings['image_style']])) {
-      $summary[] = $this->t('URL for image style: @style', ['@style' => $options[$settings['image_style']]]);
+      $summary[] = $this->t('Image style: @style', ['@style' => $options[$settings['image_style']]]);
     }
     else {
       $summary[] = $this->t('Original image style');
