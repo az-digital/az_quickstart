@@ -3,11 +3,11 @@
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\paragraphs\Entity\Paragraph;
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\paragraphs\Entity\Paragraph;
+use Drupal\paragraphs\ParagraphInterface;
 
 /**
  * Provides a behavior for text with media.
@@ -38,7 +38,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings(): array {
     return [
       'full_width' => '',
       'style' => '',
@@ -52,12 +52,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
   /**
    * {@inheritdoc}
    */
-  public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
+  public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state): array {
     $default_settings = $this->defaultSettings();
     $config = $this->getSettings($paragraph);
     $config += $default_settings;
-
     $style_unique_id = Html::getUniqueId('az-text-media-style');
+
     $form['full_width'] = [
       '#title' => $this->t('Full width'),
       '#type' => 'checkbox',
@@ -65,7 +65,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Makes media full width if checked.'),
       '#return_value' => 'full-width-background',
     ];
-
     $form['style'] = [
       '#title' => $this->t('Content style'),
       '#type' => 'select',
@@ -80,7 +79,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'id' => $style_unique_id,
       ],
     ];
-
     $form['bg_color'] = [
       '#title' => $this->t('Content background color'),
       '#type' => 'select',
@@ -92,7 +90,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['bg_color'],
       '#description' => $this->t('The color of the content background.'),
     ];
-
     $form['position'] = [
       '#title' => $this->t('Content position'),
       '#type' => 'select',
@@ -110,7 +107,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         ],
       ],
     ];
-
     $form['bg_attachment'] = [
       '#title' => $this->t('Media attachment'),
       '#type' => 'select',
@@ -126,7 +122,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         ],
       ],
     ];
-
     $form['text_media_spacing'] = [
       '#title' => $this->t('Space Around Content'),
       '#type' => 'select',
@@ -231,14 +226,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
    * {@inheritdoc}
    */
   public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-
     // Get plugin configuration.
     $config = $this->getSettings($paragraph);
     // Apply bottom spacing if set.
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
       $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
     }
-
   }
 
 }
