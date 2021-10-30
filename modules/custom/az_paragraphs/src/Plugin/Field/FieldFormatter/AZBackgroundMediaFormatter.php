@@ -84,7 +84,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
+  public static function defaultSettings(): array {
     return [
       'image_style' => '',
       'css_settings' => [
@@ -104,8 +104,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state) {
-
+  public function settingsForm(array $form, FormStateInterface $form_state): array {
     $settings = $this->getSettings();
     $responsive_image_style_options = $this->getResponsiveImageStyles(TRUE);
 
@@ -132,7 +131,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
                 http://www.w3schools.com/css/css_background.asp"'
       ),
     ];
-
     // The z-index property.
     $form['css_settings']['z_index'] = [
       '#type' => 'textfield',
@@ -144,7 +142,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ),
       '#default_value' => $settings['css_settings']['z_index'],
     ];
-
     // The background-color property.
     $form['css_settings']['color'] = [
       '#type' => 'textfield',
@@ -156,7 +153,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ),
       '#default_value' => $settings['css_settings']['color'],
     ];
-
     // The background-size x property.
     $form['css_settings']['x'] = [
       '#type' => 'textfield',
@@ -266,7 +262,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * {@inheritdoc}
    */
-  public function settingsSummary() {
+  public function settingsSummary(): array {
     $settings = $this->getSettings();
     $options = $this->getResponsiveImageStyles();
 
@@ -311,36 +307,34 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode) {
-
+  public function viewElements(FieldItemListInterface $items, $langcode): array {
     $settings = $this->getAllSettings($items);
-
     $element = [];
-
     $full_width = '';
     $marquee_style = $settings['style'];
-    if (!empty($settings['full_width'])) {
-      $full_width = $settings['full_width'];
-    }
     $media_items = $this->getEntitiesToView($items, $langcode);
+    $paragraph = $items->getEntity();
 
     // Early opt-out if the field is empty.
     if (empty($media_items)) {
       return $element;
     }
 
-    $paragraph = $items->getEntity();
+    if (!empty($settings['full_width'])) {
+      $full_width = $settings['full_width'];
+    }
 
     // Prepare token data in bg image CSS selector.
     $token_data = [
       'user' => $this->currentUser,
       $items->getEntity()->getEntityTypeId() => $items->getEntity(),
     ];
-
+    // Replace token with value.
     $settings['css_settings']['selector'] = $this->token->replace(
       $settings['css_settings']['selector'],
       $token_data
     );
+    // Replace underscores with hyphens in selector.
     $settings['css_settings'] = str_replace(['_'], '-', $settings['css_settings']);
 
     /** @var \Drupal\media\MediaInterface[] $media_items */
@@ -361,7 +355,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       }
 
     }
-
     return $element;
   }
 
@@ -374,7 +367,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return array
    *   The select options.
    */
-  protected function getResponsiveImageStyles($withNone = FALSE) {
+  protected function getResponsiveImageStyles($withNone = FALSE): array {
 
     $styles = $this->entityTypeManager->getStorage('responsive_image_style')->loadMultiple();
     $options = [];
@@ -382,11 +375,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     if ($withNone && empty($styles)) {
       $options[''] = t('- Defined None -');
     }
-
     foreach ($styles as $name => $style) {
       $options[$name] = $style->label();
     }
-
     return $options;
   }
 
@@ -399,8 +390,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return \Drupal\Core\Uri|null
    *   The URI object for the media item's thumbnail image.
    */
-  protected function getMediaThumbFile(MediaInterface $media) {
-
+  protected function getMediaThumbFile(MediaInterface $media): ?Uri {
     $uri = NULL;
     $file = $media->getSource();
     $uri = $file->getMetadata($media, 'thumbnail_uri');
@@ -412,6 +402,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $file = reset($files) ?: NULL;
 
     return $file;
+
   }
 
   /**
@@ -420,7 +411,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return array
    *   The paragraph behavior settings.
    */
-  protected function getParagraphSettings(FieldItemListInterface $items) {
+  protected function getParagraphSettings(FieldItemListInterface $items): array {
     $paragraph_settings = [];
     $parent = $items->getEntity();
     // Get settings from parent paragraph.
@@ -442,7 +433,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    *   The paragraph behavior settings,
    *   field formatter settings, and default settings merged.
    */
-  protected function getAllSettings(FieldItemListInterface $items) {
+  protected function getAllSettings(FieldItemListInterface $items): array {
     $all_settings = [];
     // Paragraph instance settings override everything.
     $paragraph_settings = $this->getParagraphSettings($items);
@@ -465,6 +456,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       }
     }
     return $all_settings;
+
   }
 
   /**
@@ -475,7 +467,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return array
    *   The remote video render array for az_background_media element.
    */
-  protected function remoteVideo(array $settings, MediaInterface $media) {
+  protected function remoteVideo(array $settings, MediaInterface $media): array {
 
     $az_background_media = [];
     $css_settings = $settings['css_settings'];
@@ -563,7 +555,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $az_background_media[] = $text_on_bottom;
 
       }
-
       return $az_background_media;
     }
   }
@@ -574,7 +565,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @return array
    *   The image render array for az_background_media element.
    */
-  protected function image(array $settings, MediaInterface $media) {
+  protected function image(array $settings, MediaInterface $media): array {
     $az_background_media = [];
     $css_settings = $settings['css_settings'];
     $file_uri = $this->getMediaThumbFile($media)->getFileUri();
@@ -616,7 +607,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ];
       $az_background_media[] = $text_on_bottom;
     }
-
     return $az_background_media;
   }
 
