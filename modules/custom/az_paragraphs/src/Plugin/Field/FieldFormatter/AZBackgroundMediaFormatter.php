@@ -484,8 +484,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $view_builder = $this->entityTypeManager->getViewBuilder('media');
     $background_media = $view_builder->view($media, 'az_background');
     $provider = $media_oembed->getMetadata($media, 'provider_name');
-    $html = $media_oembed->getMetadata($media, 'html');
-    $thumb = $media_oembed->getMetadata($media, 'thumbnail_uri');
     $file_uri = $this->getMediaThumbFile($media)->getFileUri();
 
     if ($settings['style'] === 'bottom') {
@@ -547,7 +545,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       elseif ($settings['style'] === 'bottom') {
         $image_renderable = [
           '#theme' => 'image',
-          '#uri' => file_create_url($thumb),
+          '#uri' => file_create_url($file_uri),
           '#attributes' => [
             'class' => ['img-fluid'],
           ],
@@ -582,7 +580,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $file_uri = $this->getMediaThumbFile($media)->getFileUri();
 
     if ($settings['style'] !== 'bottom') {
-      $file = $this->getMediaThumbFile($media);
       $responsive_image_style_element = [
         '#theme' => 'az_responsive_background_image',
         '#selector' => $css_settings['selector'],
@@ -601,7 +598,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $az_background_media[] = $responsive_image_style_element;
     }
     elseif ($settings['style'] === 'bottom') {
-
       $image_renderable = [
         '#theme' => 'responsive_image_formatter',
         '#responsive_image_style_id' => 'az_full_width_background',
