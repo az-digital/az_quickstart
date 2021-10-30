@@ -387,10 +387,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * @param \Drupal\media\MediaInterface $media
    *   The media item.
    *
-   * @return \Drupal\Core\Uri|null
+   * @return \Drupal\file\FileInterface|null
    *   The URI object for the media item's thumbnail image.
    */
-  protected function getMediaThumbFile(MediaInterface $media): ?Uri {
+  protected function getMediaThumbFile(MediaInterface $media): ?FileInterface {
     $uri = NULL;
     $file = $media->getSource();
     $uri = $file->getMetadata($media, 'thumbnail_uri');
@@ -398,7 +398,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $files = $this->entityTypeManager
       ->getStorage('file')
       ->loadByProperties(['uri' => $uri]);
-    /** @var \Drupal\file\FileInterface|null $file */
     $file = reset($files) ?: NULL;
 
     return $file;
