@@ -5,6 +5,7 @@ namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
+use Drupal\file\FileInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Markup;
@@ -394,7 +395,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $uri = NULL;
     $file = $media->getSource();
     $uri = $file->getMetadata($media, 'thumbnail_uri');
-    /** @var \Drupal\file\FileInterface[] $files */
     $files = $this->entityTypeManager
       ->getStorage('file')
       ->loadByProperties(['uri' => $uri]);
