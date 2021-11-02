@@ -21,6 +21,8 @@ function az_news_update_9202(&$sandbox) {
   $field_name = 'field_az_caption';
   if (!isset($sandbox['total'])) {
     $sandbox['current'] = 0;
+    $sandbox['migrated'] = 0;
+    $sandbox['skipped'] = 0;
     $sandbox['total'] = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
       ->condition('type', 'az_news')
@@ -60,12 +62,23 @@ function az_news_update_9202(&$sandbox) {
         $media->$field_name->value = $caption_value;
         $media->$field_name->format = 'plain_text';
         $media->save();
+        $sandbox['migrated']++;
       }
+      else {
+        $sandbox['skipped']++;
+      }
+    }
+    else {
+      $sandbox['skipped']++;
     }
     $sandbox['current']++;
   }
   \Drupal::messenger()
     ->addMessage($sandbox['current'] . ' news items processed.');
+  \Drupal::messenger()
+    ->addMessage($sandbox['migrated'] . ' ' . $field_name . ' values migrated.');
+  \Drupal::messenger()
+    ->addMessage($sandbox['skipped'] . ' ' . $field_name . ' values skipped.');
 
   if ($sandbox['current'] >= $sandbox['total']) {
     $sandbox['#finished'] = 1;
