@@ -1,0 +1,93 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_news module.
+ */
+
+use Drupal\field\Entity\FieldConfig;
+
+/**
+ * Install az_paragraphs_photo_gallery.
+ */
+function az_news_update_9201() {
+  \Drupal::service('module_installer')->install(['az_paragraphs_photo_gallery']);
+}
+
+/**
+ * Migrate az_news field_az_caption values to media entities.
+ */
+function az_news_update_9202(&$sandbox) {
+  $field_name = 'field_az_caption';
+  if (!isset($sandbox['total'])) {
+    $sandbox['current'] = 0;
+    $sandbox['total'] = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'az_news')
+      ->condition($field_name . '.value', NULL, 'IS NOT NULL')
+      ->count()
+      ->execute();
+
+    if (empty($sandbox['total'])) {
+      \Drupal::messenger()
+        ->addMessage('No ' . $field_name . ' values found to migrate.');
+      $sandbox['#finished'] = 1;
+      return;
+    }
+  }
+
+  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+  $nodes_per_patch = 10;
+  $nids = $node_storage->getQuery()
+    ->accessCheck(FALSE)
+    ->condition('type', 'az_news')
+    ->condition($field_name . '.value', NULL, 'IS NOT NULL')
+    ->range($sandbox['current'], $nodes_per_patch)
+    ->execute();
+
+  if (empty($nids)) {
+    $sandbox['#finished'] = 1;
+    return;
+  }
+
+  $captioned_nodes = $node_storage->loadMultiple($nids);
+  foreach ($captioned_nodes as $node) {
+    $caption_value = $node->$field_name->value;
+    $media_id = $node->field_az_media_image->target_id;
+    if (!empty($media_id)) {
+      $media = \Drupal::entityTypeManager()->getStorage('media')->load($media_id);
+      if (empty($media->$field_name->value)) {
+        $media->$field_name->value = $caption_value;
+        $media->$field_name->format = 'plain_text';
+        $media->save();
+      }
+    }
+    $sandbox['current']++;
+  }
+  \Drupal::messenger()
+    ->addMessage($sandbox['current'] . ' news items processed.');
+
+  if ($sandbox['current'] >= $sandbox['total']) {
+    $sandbox['#finished'] = 1;
+  }
+  else {
+    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
+  }
+}
+
+/**
+ * Delete field_az_caption from az_news content type.
+ */
+function az_news_update_9203() {
+  $field_name = 'field_az_caption';
+  $field = FieldConfig::loadbyName('node', 'az_news', $field_name);
+  if ($field) {
+    $field->delete();
+    \Drupal::messenger()
+      ->addMessage($field_name . ' deleted from az_news content type.');
+  }
+  else {
+    \Drupal::messenger()
+      ->addMessage($field_name . ' not found on az_news content type.');
+  }
+}
