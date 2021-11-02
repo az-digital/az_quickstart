@@ -117,7 +117,7 @@ process:
       display: display
       description: description
 
-  pseudo_az_media:
+  field_az_media_image:
     -
       plugin: sub_process
       source: field_uaqs_photo
@@ -129,15 +129,6 @@ process:
             source: fid
             migration:
               - az_media
-
-  field_az_media_image: '@pseudo_az_media'
-
-  field_az_caption:
-    -
-      source: '@pseudo_az_media/0/target_id'
-      plugin: entity_value
-      entity_type: media
-      field_name: field_az_caption
 
   field_az_expiration_date:
     plugin: sub_process
