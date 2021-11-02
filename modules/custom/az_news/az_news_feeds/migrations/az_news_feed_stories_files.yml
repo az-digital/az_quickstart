@@ -1,0 +1,85 @@
+id: az_news_feed_stories_files
+label: UArizona News Stories - Files
+migration_tags:
+  - Quickstart News Feeds
+
+destination:
+  plugin: entity:file
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  urls: https://azqs-559-uaqs-uanews.pantheonsite.io/feed/json/stories/campus-news
+
+  ids:
+    fid:
+      type: integer
+
+  constants:
+    DRUPAL_FILE_DIRECTORY: 'public://images/'
+
+  item_selector: stories/
+
+  fields:
+    -
+      name: fid
+      label: 'File ID'
+      selector: /story/img-fid
+    -
+      name: image
+      label: 'Image'
+      selector: /story/img-large
+
+
+process:
+  filename:
+    -
+      plugin: skip_on_empty
+      method: row
+      message: 'Cannot import empty image filename.'
+      source: image/src
+    -
+      plugin: callback
+      callable: parse_url
+    -
+      plugin: extract
+      index:
+        - path
+    -
+      plugin: callback
+      callable: basename
+
+  destination_path:
+    -
+      plugin: concat
+      source:
+        - constants/DRUPAL_FILE_DIRECTORY
+        - '@filename'
+
+  uri:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: image/src
+    -
+      plugin: file_copy
+      source:
+        - image/src
+        - '@destination_path'
+      file_exists: rename
+      move: false
+
+  field_media_az_image/target_id:
+    plugin: entity_generate
+    source: '@uri'
+    entity_type: file
+    value_key: uri
+
+  field_media_az_image/alt: image/alt
+
+dependencies:
+  enforced:
+    module:
+      - az_media

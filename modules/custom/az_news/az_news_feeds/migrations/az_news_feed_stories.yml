@@ -1,0 +1,115 @@
+id: az_news_feed_stories
+label: UArizona News Stories
+migration_tags:
+  - Quickstart News Feeds
+
+destination:
+  plugin: entity:node
+  default_bundle: az_news
+
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: json
+
+  urls: https://azqs-559-uaqs-uanews.pantheonsite.io/feed/json/stories/campus-news
+
+  ids:
+    uuid:
+      type: uuid
+
+  item_selector: stories/
+
+  fields:
+    -
+      name: uuid
+      label: 'UUID'
+      selector: /story/uuid
+    -
+      name: title
+      label: 'Title'
+      selector: /story/title
+    -
+      name: date-of-publication
+      label: 'Date of Publication'
+      selector: /story/date-of-publication
+    -
+      name: tags
+      label: 'News tags'
+      selector: /story/terms
+    -
+      name: summary
+      label: 'Summary'
+      selector: /story/summary-med
+    -
+      name: canonical-url
+      label: 'Canonical URL'
+      selector: /story/url-canonical
+    -
+      name: body
+      label: 'Body'
+      selector: /story/body
+    -
+      name: fid
+      label: 'File ID'
+      selector: /story/img-fid
+    -
+      name: image
+      label: 'Image'
+      selector: /story/img-large
+
+process:
+  title: title
+
+  field_az_published/value:
+    plugin: format_date
+    from_format: 'Y-m-d\TH:i:sP'
+    to_format: 'Y-m-d'
+    source: date-of-publication
+
+  field_az_link/uri: canonical-url
+
+  field_az_summary/value:
+    plugin: callback
+    callable: trim
+    source: summary
+  field_az_summary/format:
+    plugin: default_value
+    default_value: plain_text
+
+  field_az_body/value: body
+  field_az_body/format:
+    plugin: default_value
+    default_value: az_standard
+
+  field_az_news_tags:
+    - plugin: skip_on_empty
+      source: tags
+      method: process
+      message: 'No terms listed.'
+    - plugin: explode
+      delimiter: ','
+    - plugin: callback
+      callable: trim
+    - plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: az_news_tags
+
+  field_az_media_image/target_id:
+    -
+      plugin: migration_lookup
+      source: fid
+      migration:
+        - az_news_feed_stories_media
+
+
+migration_dependencies:
+  required:
+    - az_news_feed_stories_media
+
+dependencies:
+  enforced:
+    module:
+      - az_news
