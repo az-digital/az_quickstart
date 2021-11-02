@@ -39,12 +39,12 @@ function az_news_update_9202(&$sandbox) {
   }
 
   $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-  $nodes_per_patch = 10;
+  $nodes_per_batch = 10;
   $nids = $node_storage->getQuery()
     ->accessCheck(FALSE)
     ->condition('type', 'az_news')
     ->condition($field_name . '.value', NULL, 'IS NOT NULL')
-    ->range($sandbox['current'], $nodes_per_patch)
+    ->range($sandbox['current'], $nodes_per_batch)
     ->execute();
 
   if (empty($nids)) {
@@ -78,7 +78,7 @@ function az_news_update_9202(&$sandbox) {
   \Drupal::messenger()
     ->addMessage($sandbox['migrated'] . ' ' . $field_name . ' values migrated.');
   \Drupal::messenger()
-    ->addMessage($sandbox['skipped'] . ' ' . $field_name . ' values skipped.');
+    ->addMessage($sandbox['skipped'] . ' ' . $field_name . ' values skipped because both news content and media content have a caption value, or the target media entity does not exist.');
 
   if ($sandbox['current'] >= $sandbox['total']) {
     $sandbox['#finished'] = 1;
