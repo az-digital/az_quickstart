@@ -8,7 +8,6 @@ dependencies:
     - draggableviews
     - node
     - user
-_core:
 id: az_reorder
 label: 'AZ Reorder'
 module: views
