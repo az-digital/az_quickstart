@@ -119,14 +119,16 @@ process:
 
   field_az_media_image:
     -
+      plugin: sub_process
+      source: field_uaqs_photo
       process:
-      delta: delta
-      target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_media
+        delta: delta
+        target_id:
+          -
+            plugin: migration_lookup
+            source: fid
+            migration:
+              - az_media
 
   field_az_expiration_date:
     plugin: sub_process
