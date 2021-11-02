@@ -8,6 +8,7 @@ dependencies:
     - draggableviews
     - node
     - user
+_core:
 id: az_reorder
 label: 'AZ Reorder'
 module: views
@@ -27,13 +28,13 @@ display:
         options:
           perm: 'access administration pages'
       cache:
-        type: tag
+        type: none
         options: {  }
       query:
         type: views_query
         options:
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_comment: ''
           query_tags: {  }

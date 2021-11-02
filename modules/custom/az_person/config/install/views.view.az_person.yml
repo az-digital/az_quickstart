@@ -289,6 +289,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -384,8 +385,9 @@ display:
           exposed: false
           expose:
             label: ''
-          draggable_views_reference: 'azqs_reorder:page_1'
+          draggable_views_reference: 'az_reorder:reorder_people'
           draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
           plugin_id: standard
         field_az_lname_value:
           id: field_az_lname_value
@@ -417,6 +419,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -460,8 +463,9 @@ display:
           exposed: false
           expose:
             label: ''
-          draggable_views_reference: 'azqs_reorder:page_1'
+          draggable_views_reference: 'az_reorder:reorder_people'
           draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
           plugin_id: standard
         field_az_lname_value:
           id: field_az_lname_value
@@ -495,6 +499,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags:
