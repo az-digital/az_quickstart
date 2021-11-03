@@ -87,17 +87,17 @@ USAGE NOTES
 
 Nearly any architectural customization or override to a Quickstart 1 site will require a custom module with custom migrations.
 Luckily this is fairly simple and only requires a structure shown below:
-
 <webroot>
-  - modules
-    - custom
-      - my_migration_module
-        - migrations
-          - some_migration.yml
-        - config
-          - install
-            - migrate_plus.migration_group.my_migration_group.yml
-        - my_migration_module.info.yml
+  * modules/
+    * custom/
+      * my_migration_module/
+        * config/
+          * install/
+            * migrate_plus.migration_group.my_migration_group.yml
+        * migrations/
+          * some_migration.yml
+          * another_migration.yml
+        * my_migration_module.info.yml
 
 Example [migration group file](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/config/install/migrate_plus.migration_group.az_migration.yml)
 
