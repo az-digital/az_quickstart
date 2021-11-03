@@ -47,8 +47,7 @@ CONFIGURATION
   ```
   $databases['migrate']['default'] = [
     'driver' => 'mysql',
-    'namespace' => 'Drupal\my_module\Driver\Database\my_driver',
-    'autoload' => 'modules/my_module/src/Driver/Database/my_driver/',
+    'namespace' => 'Drupal\core\Driver\Database\mysql',
     'database' => 'databasename',
     'username' => 'databaseusername',
     'password' => 'databasepassword',
