@@ -119,7 +119,7 @@
                 "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-09-02/2259567-146-9-2-x.patch",
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-07-13/3072231-29-core-9-1-x.patch",
+                "Quickedit attributes issue": "https://www.drupal.org/files/issues/2020-10-19/3072231-39-core-9-2-x.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Editing menus user-experience issue (#2957953)": "https://www.drupal.org/files/issues/2021-09-20/2957953-9.3.x-139.patch",
