@@ -393,12 +393,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    */
   protected function getMediaThumbFile(MediaInterface $media): ?FileInterface {
     $uri = NULL;
-    $file = $media->getSource();
-    $uri = $file->getMetadata($media, 'thumbnail_uri');
-    $files = $this->entityTypeManager
-      ->getStorage('file')
-      ->loadByProperties(['uri' => $uri]);
-    $file = reset($files) ?: NULL;
+    $fid = $media->thumbnail->target_id;
+    $file = FileInterface::load($fid);
 
     return $file;
 
