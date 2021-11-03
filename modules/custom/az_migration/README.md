@@ -46,20 +46,21 @@ CONFIGURATION
 
   ```
   $databases['migrate']['default'] = [
-    'driver' => 'my_driver',
+    'driver' => 'mysql',
     'namespace' => 'Drupal\my_module\Driver\Database\my_driver',
     'autoload' => 'modules/my_module/src/Driver/Database/my_driver/',
     'database' => 'databasename',
-    'username' => 'sqlusername',
-    'password' => 'sqlpassword',
+    'username' => 'databaseusername',
+    'password' => 'databasepassword',
+    'port' => 'databaseport',
     'host' => 'localhost',
-    'prefix' => '',
+    'prefix' => 'tableprefix',
   ];
   ```
 
   ## Before running the file migration, please configure the file location.
 
-  File can be migrate in two ways as below -
+  File can be migrated in two ways as below -
 
   #### 1. Copy the file  "sites/default/files/migrate_file" folder.
 
@@ -73,18 +74,32 @@ CONFIGURATION
   #### 2. Can directly configure the remote url for the file as below
 
   Set the configuration as below :
+  Example filebasepath: `www.arizona.edu`
 
   ```
   drush cset az_migration.settings migrate_d7_protocol "https"
-  drush cset az_migration.settings migrate_d7_filebasepath "<remote-url>"
+  drush cset az_migration.settings migrate_d7_filebasepath "filebasepath" 
   drush cset az_migration.settings migrate_d7_public_path "sites/default/files"
   ```
-
 
 USAGE NOTES
 -----------
 
 Nearly any architectural customization or override to a Quickstart 1 site will require a custom module with custom migrations.
+Luckily this is fairly simple and only requires a structure shown below:
+
+<webroot>
+  - modules
+    - custom
+      - my_migration_module
+        - migrations
+          - some_migration.yml
+        - config
+          - install
+            - migrate_plus.migration_group.my_migration_group.yml
+        - my_migration_module.info.yml
+
+Example [migration group file](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/config/install/migrate_plus.migration_group.az_migration.yml)
 
 Compare source site pathauto settings to ensure new content and migrated content are consistent.
 
