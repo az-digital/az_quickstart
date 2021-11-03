@@ -33,7 +33,8 @@
         window.onYouTubeIframeAPIReady = () => {
           $.each(bgVideoParagraphs, (index) => {
             const thisContainer = bgVideoParagraphs[index];
-            const parentParagraph = thisContainer.parentNode;
+            const parentId = thisContainer.dataset.parentid;
+            const parentParagraph = document.getElementById(parentId);
             const youtubeId = thisContainer.dataset.youtubeid;
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
             const options = bgVideos[youtubeId];
@@ -141,21 +142,16 @@
           const stateChangeContainer = document.getElementById(
             `${id}-bg-video-container`
           );
-          const { style } = stateChangeContainer.dataset;
-          const parentContainer = stateChangeContainer.parentNode;
+          const { parentid } = stateChangeContainer.dataset;
+          const parentContainer = document.getElementById(parentid);
           if (event.data === 0 && bgVideos[id].repeat) {
             // video ended and repeat option is set true
             stateChangeContainer.player.seekTo(bgVideos[id].start); // restart
           }
           if (event.data === 1) {
             resize();
-            if (style === "bottom") {
-              stateChangeContainer.classList.add("az-video-playing");
-              stateChangeContainer.classList.remove("az-video-loading");
-            } else {
-              parentContainer.classList.add("az-video-playing");
-              parentContainer.classList.remove("az-video-loading");
-            }
+            parentContainer.classList.add("az-video-playing");
+            parentContainer.classList.remove("az-video-loading");
           }
         };
 
