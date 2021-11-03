@@ -5,7 +5,6 @@ namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
-use Drupal\file\Entity\File;
 use Drupal\file\FileInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -393,9 +392,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    *   The URI object for the media item's thumbnail image.
    */
   protected function getMediaThumbFile(MediaInterface $media): ?FileInterface {
-    $uri = NULL;
     $fid = $media->thumbnail->target_id;
-    $file = File::load($fid);
+    $file = $this->entityTypeManager->getStorage('file')->load($fid);
 
     return $file;
 
