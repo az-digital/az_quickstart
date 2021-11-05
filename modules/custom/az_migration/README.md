@@ -53,7 +53,7 @@ CONFIGURATION
     'password' => 'databasepassword',
     'port' => 'databaseport',
     'host' => 'localhost',
-    'prefix' => 'tableprefix',
+    'prefix' => '',
   ];
   ```
 
