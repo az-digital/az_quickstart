@@ -5,7 +5,6 @@ dependencies:
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
-    - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_contacts
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_main_content
@@ -160,7 +159,6 @@ third_party_settings:
     group_photo_container:
       children:
         - field_az_media_image
-        - group_fig_caption
       parent_name: group_text_column
       weight: 6
       format_type: html_element
@@ -176,24 +174,6 @@ third_party_settings:
         effect: none
         speed: fast
       label: 'Photo Container'
-    group_fig_caption:
-      children:
-        - field_az_caption
-      parent_name: group_photo_container
-      weight: 7
-      format_type: html_element
-      region: content
-      format_settings:
-        element: figcaption
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: 'border-bottom mb-5 small'
-      label: 'Fig Caption'
   smart_title:
     enabled: true
     settings:
@@ -228,13 +208,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     type: string
-    region: content
-  field_az_caption:
-    weight: 10
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    type: text_default
     region: content
   field_az_contacts:
     weight: 3
