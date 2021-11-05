@@ -139,9 +139,6 @@
             },
             "drupal/metatag": {
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
-            },
-            "drupal/migrate_plus": {
-                "Add a process plugin for extracting an entity value (2974221)": "https://www.drupal.org/files/issues/2019-01-16/migrate_plus-2974221-10-Add-a-EntityValue-process-plugin.patch"
             }
         },
         "drupal-scaffold": {
