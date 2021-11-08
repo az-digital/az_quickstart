@@ -142,6 +142,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
       '#default_value' => $config['text_media_spacing'],
       '#description' => $this->t('Adds spacing above and below the text.'),
+      '#states' => [
+        'invisible' => [
+          ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
+        ],
+      ],
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -204,12 +209,30 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       HTML::getClass($config['bg_color']),
       HTML::getClass($config['style']),
     ];
-    if (!empty($config['style']) && $config['style'] === 'column') {
-      $content_classes[] = 'p' . HTML::getClass($config['text_media_spacing']);
+
+    // Add responsive spacing classes.
+    if (!empty($config['style']) && $config['style'] !== 'bottom') {
+      $spacing_prefix = '';
+      if ($config['style'] === 'column') {
+        $spacing_prefix =  'p';
+      }
+      elseif ($config['style'] === 'box') {
+        $spacing_prefix =  'm';
+      }
+      switch ($config['text_media_spacing']) {
+        case 'y-20':
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-20');
+          break;
+        case 'y-30':
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
+          break;
+        default:
+          $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
+      }
     }
-    elseif (!empty($config['style']) && $config['style'] === 'box') {
-      $content_classes[] = 'm' . HTML::getClass($config['text_media_spacing']);
-    }
+
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
     // Get title classes.
