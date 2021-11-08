@@ -7,7 +7,10 @@
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\editor\Entity\Editor;
+use Drupal\Core\Logger\RfcLogLevel;
+use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 /**
  * Implements hook_ckeditor_css_alter().
@@ -30,5 +33,130 @@ function az_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     ) {
       $form['#attached']['library'][] = 'az_media/az_media_edit';
     }
+  }
+}
+
+/**
+ * Prepares variables for a responsive background image.
+ *
+ * Default template: az-responsive-bg-image.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - uri: The URI of the image.
+ *   - responsive_image_style_id: The ID of the responsive image style.
+ *   - selector: The css selector to use
+ *   - color: The background color
+ *   - x: The x offset
+ *   - y: The y offset
+ *   - attachment: The attachment property (scroll or fixed)
+ *   - repeat: The repeat settings
+ *   - size: The background size property if necessary
+ *   - important: Boolean that adds the `!important` property to **all**
+ *     background properties.
+ *   - z_index: The z-index property if necessary
+ *
+ *   For CSS settings, if there is no value a default will be used.
+ */
+function template_preprocess_az_responsive_background_image(array &$variables) {
+
+  $responsive_image_style = ResponsiveImageStyle::load($variables['responsive_image_style_id']);
+
+  // If a responsive image style is not selected, log the error and stop
+  // execution.
+  if (!$responsive_image_style) {
+    $variables = [];
+    \Drupal::logger('az_media')
+      ->log(RfcLogLevel::ERROR, 'Failed to load responsive image style: “@style“ while displaying responsive image.', [
+        '@style' => $variables['responsive_image_style_id'],
+      ]);
+    return;
+  }
+
+  if ($variables['important']) {
+    $variables['important'] = ' !important';
+  }
+
+  // Retrieve all breakpoints and multipliers and reverse order of breakpoints.
+  // By default, breakpoints are ordered from smallest weight to largest:
+  // the smallest weight is expected to have the smallest breakpoint width,
+  // while the largest weight is expected to have the largest breakpoint
+  // width. For responsive images, we need largest breakpoint widths first, so
+  // we need to reverse the order of these breakpoints.
+  $breakpoints = array_reverse(\Drupal::service('breakpoint.manager')
+    ->getBreakpointsByGroup($responsive_image_style
+      ->getBreakpointGroup()));
+  foreach ($responsive_image_style
+    ->getKeyedImageStyleMappings() as $breakpoint_id => $multipliers) {
+    if (isset($breakpoints[$breakpoint_id])) {
+      $variables['sources'][] = _responsive_image_build_source_attributes($variables, $breakpoints[$breakpoint_id], $multipliers);
+    }
+  }
+
+  $variables['fallback_image'] = _responsive_image_image_style_url($responsive_image_style
+    ->getFallbackImageStyle(), $variables['uri']);
+
+  // Split each source into multiple rules.
+  foreach (array_reverse($variables['sources']) as $source_i => $source) {
+    $attr = $source->toArray();
+
+    $srcset = explode(', ', $attr['srcset']);
+
+    foreach ($srcset as $src_i => $src) {
+      list($src, $res) = explode(' ', $src);
+
+      $media = isset($attr['media']) ? $attr['media'] : '';
+
+      // Add "retina" to media query if this is a 2x image.
+      if ($res && $res === '2x' && !empty($media)) {
+        $media = "{$media} and (-webkit-min-device-pixel-ratio: 2), {$media} and (min-resolution: 192dpi)";
+      }
+
+      // Correct a bug in template_preprocess_responsive_image which
+      // generates an invalid media rule "screen (max-width)" when no
+      // min-width is specified. If this bug gets fixed, this replacement
+      // will deactivate.
+      $media = str_replace('screen (max-width', 'screen and (max-width', $media);
+      $variables['media_queries'][] = [
+        'media' => $media,
+        'src' => $src,
+      ];
+
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_media_theme() {
+  return [
+    'az_responsive_background_image' => [
+      'variables' => [
+        'uri' => NULL,
+        'responsive_image_style_id' => NULL,
+        'fallback_image' => NULL,
+        'important' => FALSE,
+        'color' => 'transparent',
+        'repeat' => 'no-repeat',
+        'size' => 'cover',
+        'attachment' => 'scroll',
+        'selector' => 'body',
+        'x' => 'center',
+        'y' => 'center',
+        'z_index' => 'auto',
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_entity_presave().
+ *
+ * This allows content editors to override remote video thumbs.
+ */
+function az_media_entity_presave(EntityInterface $entity) {
+  if ($entity->getEntityTypeId() === 'media' && $entity->bundle() === 'az_remote_video' && isset($entity->field_media_az_image->entity)) {
+    $entity->thumbnail->target_id = $entity->field_media_az_image->target_id;
   }
 }

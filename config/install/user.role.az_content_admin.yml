@@ -37,6 +37,7 @@ permissions:
   - 'delete any az_image media'
   - 'delete any az_news content'
   - 'delete any az_person content'
+  - 'delete any az_quick_links block content'
   - 'delete any az_remote_video media'
   - 'delete any az_video media'
   - 'delete any book content'

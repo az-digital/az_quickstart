@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   module:
-    - node
-    - text
-id: node.field_az_caption
-field_name: field_az_caption
-entity_type: node
-type: text_long
+    - block_content
+    - link
+id: block_content.field_az_links
+field_name: field_az_links
+entity_type: block_content
+type: link
 settings: {  }
-module: text
+module: link
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false
