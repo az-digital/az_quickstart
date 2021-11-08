@@ -214,20 +214,22 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
       $spacing_prefix = '';
       if ($config['style'] === 'column') {
-        $spacing_prefix =  'p';
+        $spacing_prefix = 'p';
       }
       elseif ($config['style'] === 'box') {
-        $spacing_prefix =  'm';
+        $spacing_prefix = 'm';
       }
       switch ($config['text_media_spacing']) {
         case 'y-20':
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-20');
           break;
+
         case 'y-30':
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
           break;
+
         default:
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }

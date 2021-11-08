@@ -127,10 +127,12 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         $padding_classes[] = 'py-10';
         $padding_classes[] = 'py-md-20';
         break;
+
       case 'py-30':
         $padding_classes[] = 'py-10';
         $padding_classes[] = 'py-md-30';
         break;
+
       default:
         $padding_classes[] = $config['text_background_padding'];
     }
