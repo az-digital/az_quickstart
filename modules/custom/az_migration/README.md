@@ -66,18 +66,18 @@ CONFIGURATION
   Then Set the configuration as below :
 
   ```
-  drush cset az_migration.settings migrate_d7_filebasepath " "
+  drush cset az_migration.settings migrate_d7_filebasepath ""
   drush cset az_migration.settings migrate_d7_public_path "sites/default/files/migrate_file"
   ```
 
   #### 2. Can directly configure the remote url for the file as below
 
   Set the configuration as below :
-  Example filebasepath: `www.arizona.edu`
+  Example filebasepath: `example.arizona.edu`
 
   ```
   drush cset az_migration.settings migrate_d7_protocol "https"
-  drush cset az_migration.settings migrate_d7_filebasepath "filebasepath"
+  drush cset az_migration.settings migrate_d7_filebasepath "example.arizona.edu"
   drush cset az_migration.settings migrate_d7_public_path "sites/default/files"
   ```
 
