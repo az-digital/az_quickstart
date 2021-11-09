@@ -23,6 +23,7 @@ type_settings:
       label: Publish
       from:
         - draft
+        - published
       to: published
       weight: 0
     create_new_draft:
