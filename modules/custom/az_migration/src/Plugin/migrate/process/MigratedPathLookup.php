@@ -19,6 +19,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * - node_migration: A single node migration ID, or an array of node migration
  *   IDs to reference migrated node paths against.
  *
+ * Examples:
+ *
+ * Consider a menu links migration, where you want to preserve internal links to
+ * nodes or taxonomy terms that have already been migrated.
+ * @code
+ * process:
+ *   link_path_processed:
+ *     plugin: az_migrated_path_lookup
+ *     term_migration:
+ *       - az_person_categories_secondary
+ *       - az_person_categories
+ *     node_migration:
+ *       - az_node_person
+ *     source: link_path
+ * @endcode
+ *
  * @MigrateProcessPlugin(
  *  id = "az_migrated_path_lookup"
  * )
