@@ -47,7 +47,7 @@ CONFIGURATION
   ```
   $databases['migrate']['default'] = [
     'driver' => 'mysql',
-    'namespace' => 'Drupal\Core\Driver\Database\mysql',
+    'namespace' => 'Drupal\Core\Database\Driver\mysql',
     'database' => 'databasename',
     'username' => 'databaseusername',
     'password' => 'databasepassword',
@@ -77,7 +77,7 @@ CONFIGURATION
 
   ```
   drush cset az_migration.settings migrate_d7_protocol "https"
-  drush cset az_migration.settings migrate_d7_filebasepath "filebasepath" 
+  drush cset az_migration.settings migrate_d7_filebasepath "filebasepath"
   drush cset az_migration.settings migrate_d7_public_path "sites/default/files"
   ```
 
@@ -393,4 +393,15 @@ drush mim az_node_carousel
 To rollback the  carousel item using the below command :
 ```
 drush mr az_node_carousel
+```
+## Menu Links Migration
+
+Quickstart 1 menu links can be migrated using the following command:
+```
+drush mim az_menu_links
+```
+
+To rollback menu links, use the following command:
+```
+drush mr az_menu_links
 ```
