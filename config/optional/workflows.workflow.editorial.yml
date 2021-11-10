@@ -11,18 +11,19 @@ type_settings:
     draft:
       label: Draft
       published: false
-      default_revision: false
+      default_revision: true
       weight: -2
     published:
       label: Published
       published: true
-      default_revision: true
+      default_revision: false
       weight: 0
   transitions:
     az_publish:
       label: Publish
       from:
         - draft
+        - published
       to: published
       weight: 0
     create_new_draft:
