@@ -125,7 +125,8 @@
                 "Editing menus user-experience issue (#2957953)": "https://www.drupal.org/files/issues/2021-09-20/2957953-9.3.x-139.patch",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
-                "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff"
+                "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff",
+                "Allow menu_link source plugin to filter menu links by menu name (#3064016)": "https://git.drupalcode.org/project/drupal/-/commit/510b5904fcd2498800b733d4e3015003eed23c81.diff"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
