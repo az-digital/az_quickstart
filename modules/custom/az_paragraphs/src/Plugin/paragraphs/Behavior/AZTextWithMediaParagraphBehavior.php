@@ -137,9 +137,16 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-8' => $this->t('8 (6.0rem | ~96px)'),
         'y-9' => $this->t('9 (7.0rem | ~112px)'),
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
+        'y-20' => $this->t('20 (16.0rem | ~256px)'),
+        'y-30' => $this->t('30 (24.0rem | ~384px)'),
       ],
       '#default_value' => $config['text_media_spacing'],
       '#description' => $this->t('Adds spacing above and below the text.'),
+      '#states' => [
+        'invisible' => [
+          ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
+        ],
+      ],
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -202,12 +209,32 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       HTML::getClass($config['bg_color']),
       HTML::getClass($config['style']),
     ];
-    if (!empty($config['style']) && $config['style'] === 'column') {
-      $content_classes[] = 'p' . HTML::getClass($config['text_media_spacing']);
+
+    // Add responsive spacing classes.
+    if (!empty($config['style']) && $config['style'] !== 'bottom') {
+      $spacing_prefix = '';
+      if ($config['style'] === 'column') {
+        $spacing_prefix = 'p';
+      }
+      elseif ($config['style'] === 'box') {
+        $spacing_prefix = 'm';
+      }
+      switch ($config['text_media_spacing']) {
+        case 'y-20':
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-20');
+          break;
+
+        case 'y-30':
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
+          $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
+          break;
+
+        default:
+          $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
+      }
     }
-    elseif (!empty($config['style']) && $config['style'] === 'box') {
-      $content_classes[] = 'm' . HTML::getClass($config['text_media_spacing']);
-    }
+
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
     // Get title classes.
