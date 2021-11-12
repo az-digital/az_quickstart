@@ -111,9 +111,6 @@
                 "ServiceNotFoundException when logging out": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
                 "Module add migration for D7": "https://www.drupal.org/files/issues/2021-02-24/add-migration-for-d7-3038662-10.patch"
             },
-            "drupal/ckeditor_bs_grid": {
-                "Remove overrides to Claro defaults for dialog (3218760)": "https://git.drupalcode.org/issue/ckeditor_bs_grid-3218760/-/commit/55b5726b9a0b6bc5bd5703257c6b720a297e3f5b.diff"
-            },
             "drupal/config_sync": {
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
