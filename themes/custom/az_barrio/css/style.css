@@ -26,6 +26,11 @@ html.sticky-footer #main-wrapper {
   width: 100%;
 }
 
+/* Hide overflowing content */
+body {
+  overflow-x: hidden;
+}
+
 /* Correct `inline-block` display not defined in IE 8/9. */
 audio,
 canvas,
