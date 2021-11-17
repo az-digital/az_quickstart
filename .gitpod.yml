@@ -8,11 +8,10 @@ tasks:
     init: |
       export DDEV_NONINTERACTIVE=true
       .ddev/gitpod-setup-ddev.sh
-      ddev composer install
-      ddev drush si -y --account-pass=admin --site-name='ddev_gitpod' az-quickstart
+      ddev install
     command: |
       .ddev/gitpod-setup-ddev.sh
-      ddev composer install
+      ddev install
       gp await-port 8080 && gp preview $(gp url 8080)
 
 # VScode xdebug extension
