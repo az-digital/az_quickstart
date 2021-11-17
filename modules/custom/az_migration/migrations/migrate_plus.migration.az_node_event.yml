@@ -177,8 +177,14 @@ process:
   sticky: sticky
 
   path/pathauto:
-    plugin: default_value
-    default_value: 0
+    - 
+      plugin: skip_on_empty
+      source: alias
+      method: process
+    -
+      plugin: default_value
+      default_value: 0
+
   path/alias: alias
 
   field_az_event_category:
