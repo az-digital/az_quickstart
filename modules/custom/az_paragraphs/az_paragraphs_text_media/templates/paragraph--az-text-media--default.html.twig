@@ -32,72 +32,19 @@
  *   current user is a logged-in member.
  * - is_admin: Flag for admin user status. Will be true when the current user
  *   is an administrator.
- *
+ * - col_attributes: HTML attributes for the column.
+ * - content_attributes: HTML attributes for content container.
+ * - title_attributes: HTML attributes for title.
+
  * @see template_preprocess_paragraph()
  *
  * @ingroup themeable
  */
 #}
-
-{%
-  set classes = [
-    'paragraph',
-    'position-relative',
-    'paragraph--type--' ~ paragraph.bundle|clean_class,
-    view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
-    not paragraph.isPublished() ? 'paragraph--unpublished',
-    text_on_media.style != 'bottom' ? 'text-on-media',
-    text_on_media.full_width,
-    text_on_media.bg_attachment
-  ]
-%}
-{% set col_attributes = create_attribute() %}
-{%
-  set col_classes = [
-    'col',
-    text_on_media.style == 'bottom' ? 'col-md-10 col-md-offset-1',
-    text_on_media.style != 'bottom' ? text_on_media.position,
-  ]
-%}
-{% set content_attributes = create_attribute() %}
-{%
-  set content_classes = [
-    'content',
-    text_on_media.bg_color,
-    text_on_media.style,
-    text_on_media.style == 'column' ? 'p' ~ text_on_media.text_media_spacing,
-    text_on_media.style == 'box' ? 'm' ~ text_on_media.text_media_spacing
-
-  ]
-%}
-{% set title_attributes = create_attribute() %}
-{%
-  set title_classes = [
-    'mt-0',
-    'bold',
-    text_on_media.bg_color != 'dark' ? 'text-blue'
-  ]
-%}
 {% block paragraph %}
-  <div{{ attributes.addClass(classes).setAttribute('id', paragraph.bundle() ~ '-' ~ paragraph.id()) }}>
+  <div{{ attributes }}>
     {% block content %}
-      {% if text_on_media.style == 'bottom' %}
-        {{ text_on_bottom }}
-      {% endif %}
-      {# Layout for content width AND full width styles #}
-      {% if text_on_media.style != 'bottom' %}
-        {{style_element}}
-      {% endif %}
-      <div class="container">
-        <div class="az-full-width-row">
-          <div{{ col_attributes.addClass(col_classes) }}>
-            <div{{ content_attributes.addClass(content_classes).addClass('az-full-width-column-content') }}>
-              <h2{{ title_attributes.addClass(title_classes) }}>{{ paragraph.field_az_title.value }}</h2>
-              {{ content }}
-            </div>
-          </div>
-        </div>
-      </div>
+        {{ content }}
     {% endblock %}
   </div>
 {% endblock paragraph %}

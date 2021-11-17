@@ -6,7 +6,6 @@ dependencies:
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
-    - field.field.node.az_news.field_az_caption
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content

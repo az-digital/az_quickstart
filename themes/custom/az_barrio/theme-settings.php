@@ -46,6 +46,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#default_value' => theme_get_setting('wordmark'),
   ];
 
+  // Land Acknowledgment.
+  $form['az_settings']['settings']['land_acknowledgment'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Land Acknowledgment'),
+    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#default_value' => theme_get_setting('land_acknowledgment'),
+  ];
+
   // Information security and privacy link.
   $form['az_settings']['settings']['info_security_privacy'] = [
     '#type' => 'checkbox',
@@ -331,12 +339,10 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       ],
     ],
   ];
-
   $form['footer_logo']['settings']['footer_logo_link_destination'] = [
-    '#required' => TRUE,
-    '#type' => 'textfield',
-    '#title' => t('Footer logo link destination'),
-    '#description' => t('Where should the footer logo link to. Example: &#x3C;front&#x3E;'),
+    '#type' => 'url',
+    '#title' => t('Footer logo external link destination'),
+    '#description' => t('If blank, the footer logo links to the homepage; otherwise, enter an external site URL. Example: https://www.arizona.edu/'),
     '#default_value' => theme_get_setting('footer_logo_link_destination'),
   ];
   $form['footer_logo']['settings']['footer_logo_alt_text'] = [
