@@ -1,5 +1,5 @@
-id: d7_path_redirect
-label: Path Redirect
+id: az_redirects
+label: AZ Path Redirect
 migration_group: az_migration
 migration_tags:
   - Quickstart Content Migration
