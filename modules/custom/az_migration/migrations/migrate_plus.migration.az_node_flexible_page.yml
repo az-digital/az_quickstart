@@ -77,7 +77,7 @@ process:
       plugin: default_value
       default_value: 0
 
-  path/alias: alias
+  path/alias:
     - 
       plugin: skip_on_empty
       source: alias
