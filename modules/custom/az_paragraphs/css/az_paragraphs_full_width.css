@@ -4,6 +4,12 @@
 .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width) / 2);
 }
+
+.layout-sidebar-first .full-width-background,
+.layout-sidebar-second .full-width-background {
+    max-width: calc(100vw - var(--scrollbar-width));
+}
+
 .region-content .full-width-background {
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
