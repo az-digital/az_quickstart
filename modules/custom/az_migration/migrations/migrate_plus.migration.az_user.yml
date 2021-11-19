@@ -49,7 +49,7 @@ process:
     bypass: true
     source: roles
     map:
-      3: administrator
+      3: authenticated
       2: authenticated
       4: authenticated
       5: authenticated
