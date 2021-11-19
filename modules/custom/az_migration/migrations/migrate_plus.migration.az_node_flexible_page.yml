@@ -6,17 +6,15 @@ migration_tags:
 status: true
 
 source:
-  plugin: d7_node
+  plugin: az_node
   node_type: uaqs_flexible_page
-  constants:
-    slash: '/'
 
 destination:
   plugin: entity:node
   bundle: az_flexible_page
 
 process:
-  type: 
+  type:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
@@ -25,7 +23,7 @@ process:
     source: language
     map:
       und: en
-  
+
   title:
     plugin: sub_process
     source: title_field
@@ -47,13 +45,13 @@ process:
     source: field_uaqs_photo
     process:
       delta: delta
-      target_id: 
-      - 
+      target_id:
+      -
         plugin: migration_lookup
         source: fid
-        migration: 
+        migration:
           - az_media
-    
+
   uid:
     -
       plugin: migration_lookup
@@ -70,25 +68,33 @@ process:
   promote: promote
   sticky: sticky
 
-  path/pathauto: pathauto
-  path/alias: 
-    plugin: concat
-    source:
-      - constants/slash
-      - path
+  path/pathauto:
+    - 
+      plugin: skip_on_empty
+      source: alias
+      method: process
+    -
+      plugin: default_value
+      default_value: 0
+
+  path/alias:
+    - 
+      plugin: skip_on_empty
+      source: alias
+      method: process
 
   field_az_page_category:
-    - 
+    -
       plugin: migration_lookup
       source: field_uaqs_flexible_category
       migration:
         - az_flexible_page_categories
-  
+
   tmp_flexible_subpage:
     -
       plugin: migration_lookup
       source: nid
-      migration: 
+      migration:
         - az_paragraph_flexible_page_sub
 
   temp_pid:
@@ -100,7 +106,7 @@ process:
           -
             plugin: migration_lookup
             source: value
-            migration: 
+            migration:
               - az_paragraph_callout
               - az_paragraph_carousel
               - az_paragraph_chucks_view
@@ -122,7 +128,7 @@ process:
 
   field_az_main_content:
       plugin: paragraphs_mapping_flexible_page
-      source: 
+      source:
         - '@temp_pid'
         - '@tmp_flexible_subpage'
 
