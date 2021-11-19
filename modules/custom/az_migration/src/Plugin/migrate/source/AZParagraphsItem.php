@@ -88,6 +88,7 @@ class AZParagraphsItem extends ParagraphsItem {
             }
           }
         }
+        ksort($field_collection_field_values);
         $source_property_name = $field . '_values';
         $row->setSourceProperty($source_property_name, $field_collection_field_values);
 
