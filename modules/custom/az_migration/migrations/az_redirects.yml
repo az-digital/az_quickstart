@@ -1,0 +1,68 @@
+id: az_redirects
+label: AZ Path Redirect
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+source:
+  plugin: d7_path_redirect
+process:
+  rid: rid
+  skip_count: 
+    plugin: skip_on_value
+    source: count
+    value: 0
+    method: row
+  uid:      
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: node_uid
+    -
+      plugin: default_value
+      default_value: 1
+  redirect_source/path: source
+  redirect_source/query:
+    plugin: d7_redirect_source_query
+    source: source_options
+  link_path_processed:
+    plugin: az_migrated_path_lookup
+    term_migration:
+      - az_event_categories
+      - az_flexible_page_categories
+      - az_news_tags
+      - az_person_categories_secondary
+      - az_person_categories
+    node_migration:
+      - az_node_carousel
+      - az_node_event
+      - az_node_flexible_page
+      - az_node_news
+      - az_node_person
+    source: redirect
+  redirect_redirect/uri:
+    -
+      plugin: d7_path_redirect
+      source:
+        - "@link_path_processed"
+        - redirect_options
+  language:
+    plugin: default_value
+    source: language
+    default_value: und
+  status_code: status_code
+destination:
+  plugin: entity:redirect
+migration_dependencies:
+  required:
+      - az_event_categories
+      - az_flexible_page_categories
+      - az_news_tags
+      - az_person_categories_secondary
+      - az_person_categories
+      - az_node_carousel
+      - az_node_event
+      - az_node_flexible_page
+      - az_node_news
+      - az_node_person
+      - az_user
