@@ -46,8 +46,6 @@ process:
       source:
         - "@link_path_processed"
         - redirect_options
-
-
   language:
     plugin: default_value
     source: language
@@ -68,4 +66,3 @@ migration_dependencies:
       - az_node_news
       - az_node_person
       - az_user
-
