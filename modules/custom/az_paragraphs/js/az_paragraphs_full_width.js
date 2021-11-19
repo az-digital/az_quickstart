@@ -7,14 +7,14 @@
 
 (function ($, Drupal) {
   Drupal.behaviors.azParagraphsFullWidth = {
-    attach: function attach(context, settings) {
+    attach: function attach() {
       function _calculateScrollbarWidth() {
-        document.documentElement.style.setProperty('--scrollbar-width', window.innerWidth - document.documentElement.clientWidth + "px");
+        document.documentElement.style.setProperty("--scrollbar-width", "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
       }
 
-      window.addEventListener('resize', _calculateScrollbarWidth, false);
-      document.addEventListener('DOMContentLoaded', _calculateScrollbarWidth, false);
-      window.addEventListener('load', _calculateScrollbarWidth);
+      window.addEventListener("resize", _calculateScrollbarWidth, false);
+      document.addEventListener("DOMContentLoaded", _calculateScrollbarWidth, false);
+      window.addEventListener("load", _calculateScrollbarWidth);
     }
   };
 })(jQuery, Drupal);
