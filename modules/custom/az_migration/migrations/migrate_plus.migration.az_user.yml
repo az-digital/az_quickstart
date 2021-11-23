@@ -19,11 +19,9 @@ process:
   pass: pass
   mail: mail
   created: created
-  access:
-    plugin: skip_on_empty
-    source: access
-    method: process
+  access: access
   login: login
+  # Skip blocked users.
   status:
     plugin: skip_on_value
     equals: true
