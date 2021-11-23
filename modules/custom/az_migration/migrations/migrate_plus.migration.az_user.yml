@@ -21,15 +21,14 @@ process:
   created: created
   access: access
   login: login
-  status: 
-    -
-      plugin: skip_on_value
-      equals: true
-      method: row
-      source: status
-      value: 
-        - 0
-
+  # Skip blocked users.  If you want to maintain a blocked user's history, you should not use this approach.
+  status:
+    plugin: skip_on_value
+    equals: true
+    method: row
+    source: status
+    value:
+      - 0
   timezone: timezone
   langcode:
     plugin: user_langcode
@@ -44,15 +43,6 @@ process:
     source: language
     fallback_to_site_default: true
   init: init
-  roles:
-    plugin: static_map
-    bypass: true
-    source: roles
-    map:
-      3: authenticated
-      2: authenticated
-      4: authenticated
-      5: authenticated
   user_picture:
     -
       plugin: default_value
