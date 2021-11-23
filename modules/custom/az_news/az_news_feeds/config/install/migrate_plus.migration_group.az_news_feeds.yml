@@ -1,8 +1,11 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - az_news_feeds
   enforced:
     module:
+      - az_news_feeds
       - migrate_tools
 id: az_news_feeds
 label: 'AZ Quickstart News Feeds'
@@ -14,10 +17,7 @@ shared_configuration:
     plugin: url
     data_fetcher_plugin: http
     data_parser_plugin: json
-
     urls: https://azqs-559-uaqs-uanews.pantheonsite.io/feed/json/stories/campus-news
-
     constants:
       DRUPAL_FILE_DIRECTORY: 'public://images/'
-
     item_selector: stories/

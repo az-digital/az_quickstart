@@ -1,6 +1,6 @@
 id: az_news_feed_stories_files
 label: UArizona News Stories - Files
-migration_group: az_news_feeds_migration
+migration_group: az_news_feeds
 migration_tags:
   - Quickstart News Feeds
 
@@ -8,20 +8,9 @@ destination:
   plugin: entity:file
 
 source:
-  plugin: url
-  data_fetcher_plugin: http
-  data_parser_plugin: json
-
-  urls: https://azqs-559-uaqs-uanews.pantheonsite.io/feed/json/stories/campus-news
-
   ids:
     fid:
       type: integer
-
-  constants:
-    DRUPAL_FILE_DIRECTORY: 'public://images/'
-
-  item_selector: stories/
 
   fields:
     -
@@ -81,6 +70,10 @@ process:
   field_media_az_image/alt: image/alt
 
 dependencies:
+  module:
+    - az_news_feeds
   enforced:
     module:
       - az_media
+      - az_news_feeds
+      - migrate_tools

@@ -9,18 +9,9 @@ destination:
   default_bundle: az_news
 
 source:
-  plugin: url
-  data_fetcher_plugin: http
-  data_parser_plugin: json
-
-  urls: https://azqs-559-uaqs-uanews.pantheonsite.io/feed/json/stories/campus-news
-
   ids:
     uuid:
       type: uuid
-
-  item_selector: stories/
-
   fields:
     -
       name: uuid
@@ -111,6 +102,10 @@ migration_dependencies:
     - az_news_feed_stories_media
 
 dependencies:
+  module:
+    - az_news_feeds
   enforced:
     module:
       - az_news
+      - az_news_feeds
+      - migrate_tools

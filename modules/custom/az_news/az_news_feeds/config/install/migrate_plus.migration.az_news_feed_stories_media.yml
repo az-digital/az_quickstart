@@ -1,6 +1,6 @@
 id: az_news_feed_stories_media
 label: UArizona News Stories - Media
-migration_group: az_news_feeds_migration
+migration_group: az_news_feeds
 migration_tags:
   - Quickstart News Feeds
 
@@ -9,17 +9,9 @@ destination:
   default_bundle: az_image
 
 source:
-  plugin: url
-  data_fetcher_plugin: http
-  data_parser_plugin: json
-
-  urls: https://azqs-559-uaqs-uanews.pantheonsite.io/feed/json/stories/campus-news
-
   ids:
     fid:
       type: integer
-
-  item_selector: stories/
 
   fields:
     -
@@ -47,6 +39,10 @@ migration_dependencies:
     - az_news_feed_stories_files
 
 dependencies:
+  module:
+    - az_news_feeds
   enforced:
     module:
       - az_media
+      - az_news_feeds
+      - migrate_tools
