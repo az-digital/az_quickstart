@@ -7,19 +7,143 @@ dependencies:
     - field.field.paragraph.az_text_media.field_az_title
     - paragraphs.paragraphs_type.az_text_media
   module:
+    - az_paragraphs
+    - field_group
     - text
+third_party_settings:
+  field_group:
+    group_az_container:
+      children:
+        - group_az_full_width_row
+      parent_name: ''
+      weight: 1
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: container
+        show_empty_fields: false
+      label: Container
+    group_az_full_width_row:
+      children:
+        - group_az_column
+      parent_name: group_az_container
+      weight: 20
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: az-full-width-row
+        show_empty_fields: false
+      label: Row
+    group_az_title:
+      children:
+        - field_az_title
+      parent_name: group_az_content
+      weight: 22
+      format_type: html_element
+      region: content
+      format_settings:
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: 'bold mt-0'
+        show_empty_fields: false
+      label: Title
+    group_az_content:
+      children:
+        - group_az_title
+        - field_az_text_area
+      parent_name: group_az_column
+      weight: 21
+      format_type: html_element
+      region: content
+      format_settings:
+        show_empty_fields: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Content
+    group_az_column:
+      children:
+        - group_az_content
+      parent_name: group_az_full_width_row
+      weight: 20
+      format_type: html_element
+      region: content
+      format_settings:
+        show_empty_fields: false
+        id: ''
+        classes: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Column
 id: paragraph.az_text_media.default
 targetEntityType: paragraph
 bundle: az_text_media
 mode: default
 content:
-  field_az_text_area:
+  field_az_media:
+    type: az_background_media
     weight: 0
+    region: content
+    label: hidden
+    settings:
+      image_style: az_full_width_background
+      css_settings:
+        z_index: auto
+        color: transparent
+        x: center
+        'y': center
+        attachment: scroll
+        repeat: no-repeat
+        size: cover
+        selector: '#[paragraph:type:target_id]-[paragraph:id]'
+        important: false
+    third_party_settings: {  }
+  field_az_text_area:
+    weight: 23
     label: hidden
     settings: {  }
     third_party_settings: {  }
     type: text_default
     region: content
-hidden:
-  field_az_media: true
-  field_az_title: true
+  field_az_title:
+    type: string
+    weight: 21
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden: {  }
