@@ -1,5 +1,6 @@
 id: az_news_feed_stories_media
 label: UArizona News Stories - Media
+migration_group: az_news_feeds_migration
 migration_tags:
   - Quickstart News Feeds
 
