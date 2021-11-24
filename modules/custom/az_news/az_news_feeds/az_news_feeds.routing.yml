@@ -1,0 +1,9 @@
+az_news_feeds.admin_importers:
+  path: '/admin/content/az-news-feeds'
+  defaults:
+    _form: '\Drupal\az_news_feeds\Form\AzNewsFeedsAdminForm'
+    link_id: 'az_news_feeds.admin_importers'
+    _title: 'Administer Importers'
+  requirements:
+    _permission: 'access administration pages'
+

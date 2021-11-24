@@ -1,6 +1,5 @@
 langcode: en
 status: true
-dependencies: {  }
 id: az_news_feeds
 label: 'Quickstart News'
 migration: az_news_feed_stories
@@ -8,3 +7,10 @@ time: 1800
 update: true
 sync: true
 ignore_dependencies: false
+dependencies:
+  module:
+    - az_news_feeds
+  enforced:
+    module:
+      - az_news_feeds
+
