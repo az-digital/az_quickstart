@@ -54,6 +54,28 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
       - chown www-data:www-data -R /var/www/html/sites/default/files
+  - name: Check for PHP errors and notices
+    plugin: Script
+    script:
+      # Load some known demo URL paths
+      - curl -I http://localhost
+      - curl -I http://localhost/user
+      - curl -I http://localhost/people
+      - curl -I http://localhost/people-list
+      - curl -I http://localhost/pages/text
+      - curl -I http://localhost/pages/text-background
+      - curl -I http://localhost/pages/text-media
+      - curl -I http://localhost/pages/card-decks
+      - curl -I http://localhost/pages/accordions
+      - curl -I http://localhost/pages/photo-galleries
+      - curl -I http://localhost/page-grid
+      - curl -I http://localhost/page-list
+      - curl -I http://localhost/news
+      - curl -I http://localhost/calendar
+      - curl -I http://localhost/pages/annual-events
+      # Check for PHP watchdog entries
+      - messages=$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php)
+      - if [ -z "$messages" ]; then echo "No PHP notices/errors logged."; else $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php && echo "PHP notices/errors found in log. >&2 && exit 1; fi
   - name: Run PHPUnit Tests
     plugin: Script
     script:
