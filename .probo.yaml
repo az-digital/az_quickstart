@@ -74,8 +74,7 @@ steps:
       - curl -I http://localhost/calendar
       - curl -I http://localhost/pages/annual-events
       # Check for PHP watchdog entries
-      - messages=$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php)
-      - if [ -z "$messages" ]; then echo "No PHP notices/errors logged."; else $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php && echo "PHP notices/errors found in log. >&2 && exit 1; fi
+      - if [ -z $($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php) ]; then echo "No PHP notices/errors logged."; else $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php && echo "PHP notices/errors found in log. >&2 && exit 1; fi
   - name: Run PHPUnit Tests
     plugin: Script
     script:
