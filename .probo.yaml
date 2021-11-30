@@ -58,23 +58,23 @@ steps:
     plugin: Script
     script:
       # Load some known demo URL paths
-      - curl -I http://localhost
-      - curl -I http://localhost/user
-      - curl -I http://localhost/people
-      - curl -I http://localhost/people-list
-      - curl -I http://localhost/pages/text
-      - curl -I http://localhost/pages/text-background
-      - curl -I http://localhost/pages/text-media
-      - curl -I http://localhost/pages/card-decks
-      - curl -I http://localhost/pages/accordions
-      - curl -I http://localhost/pages/photo-galleries
-      - curl -I http://localhost/page-grid
-      - curl -I http://localhost/page-list
-      - curl -I http://localhost/news
-      - curl -I http://localhost/calendar
-      - curl -I http://localhost/pages/annual-events
+      - curl -sS -o /dev/null http://localhost
+      - curl -sS -o /dev/null http://localhost/user
+      - curl -sS -o /dev/null http://localhost/people
+      - curl -sS -o /dev/null http://localhost/people-list
+      - curl -sS -o /dev/null http://localhost/pages/text
+      - curl -sS -o /dev/null http://localhost/pages/text-background
+      - curl -sS -o /dev/null http://localhost/pages/text-media
+      - curl -sS -o /dev/null http://localhost/pages/card-decks
+      - curl -sS -o /dev/null http://localhost/pages/accordions
+      - curl -sS -o /dev/null http://localhost/pages/photo-galleries
+      - curl -sS -o /dev/null http://localhost/page-grid
+      - curl -sS -o /dev/null http://localhost/page-list
+      - curl -sS -o /dev/null http://localhost/news
+      - curl -sS -o /dev/null http://localhost/calendar
+      - curl -sS -o /dev/null http://localhost/pages/annual-events
       # Check for PHP watchdog entries
-      - if [ -z "$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php)" ]; then echo "No PHP notices/errors logged."; else $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php && echo "PHP notices/errors found in log." >&2 && exit 1; fi
+      - if [ -z "$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
   - name: Run PHPUnit Tests
     plugin: Script
     script:
