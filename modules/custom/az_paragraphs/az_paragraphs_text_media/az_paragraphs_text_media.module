@@ -8,11 +8,39 @@
 /**
  * Implements hook_theme().
  */
-function az_paragraphs_text_media_theme($existing, $type, $theme, $path) {
+function az_paragraphs_text_media_theme($existing, $type, $theme, $path): array {
   return [
     'field__paragraph__az_text_media' => [
       'template' => 'field--paragraph--az-text-media',
       'base hook' => 'field',
     ],
   ];
+}
+
+/**
+ * Implements hook_field_group_pre_render_alter().
+ */
+function az_paragraphs_text_media_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
+  if ($group->group_name === 'group_az_container') {
+    if (array_key_exists('#paragraph', $rendering_object)) {
+      if ($rendering_object['#paragraph']->bundle() === 'az_text_media'){
+        $paragraph = $rendering_object['#paragraph'];
+        $full_width = $paragraph->getBehaviorSetting('az_text_media_paragraph_behavior', 'full_width', $default = NULL);
+        $text_bottom_spacing = $paragraph->getBehaviorSetting('az_text_media_paragraph_behavior', 'text_media_spacing', $default = NULL);
+        if ($text_bottom_spacing === 'aspect-ratio' && $full_width === 'full-width-background') {
+          $element['#theme_wrappers'] = [
+            'container' => [
+              '#attributes' => [
+                'class' => [
+                  'container-absolute',
+                  'align-items-center',
+                  'd-flex',
+                ],
+              ],
+            ],
+          ];
+        }
+      }
+    }
+  }
 }

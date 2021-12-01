@@ -526,13 +526,25 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
+        if ($settings['text_media_spacing'] === 'aspect-ratio') {
+          $image_renderable = [
+            '#theme' => 'responsive_image_formatter',
+            '#responsive_image_style_id' => 'az_full_width_background',
+            '#item' => $media->thumbnail,
+            '#item_attributes' => [
+              'class' => ['img-fluid'],
+            ],
+          ];
+          $az_background_media[] = $image_renderable;
+        }
         $az_background_media[] = $background_video;
       }
       elseif ($settings['style'] === 'bottom') {
         $image_renderable = [
-          '#theme' => 'image',
-          '#uri' => file_create_url($file_uri),
-          '#attributes' => [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => 'az_full_width_background',
+          '#item' => $media->thumbnail,
+          '#item_attributes' => [
             'class' => ['img-fluid'],
           ],
         ];

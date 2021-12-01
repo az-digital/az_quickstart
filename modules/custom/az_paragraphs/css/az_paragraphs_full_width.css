@@ -32,7 +32,14 @@
     padding-right: 15px;
     padding-left: 15px;
 }
-
+.container-absolute {
+    bottom: 0;
+    top: 0;
+    float: none;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
 @media (min-width: 768px) {
     .layout-sidebar-first .region-content .full-width-background .az-full-width-column-content {
         -ms-flex: 0 0 75%;
