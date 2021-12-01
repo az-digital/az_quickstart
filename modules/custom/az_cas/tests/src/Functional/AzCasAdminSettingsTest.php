@@ -67,12 +67,12 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
     $this->drupalLogout();
     $this->drupalGet('user/login');
     if ($disable_login_form) {
-      $this->assertSession()->pageTextContains(t('Access denied'));
-      $this->assertSession()->pageTextNotContains(t('Log in'));
+      $this->assertSession()->pageTextContains('Access denied');
+      $this->assertSession()->pageTextNotContains('Log in');
     }
     else {
-      $this->assertSession()->pageTextNotContains(t('Access denied'));
-      $this->assertSession()->pageTextContains(t('Log in'));
+      $this->assertSession()->pageTextNotContains('Access denied');
+      $this->assertSession()->pageTextContains('Log in');
     }
   }
 
@@ -95,12 +95,12 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
     $this->drupalLogout();
     $this->drupalGet('user/password');
     if ($disable_password_recovery_link) {
-      $this->assertSession()->pageTextContains(t('Access denied'));
-      $this->assertSession()->pageTextNotContains(t('Reset your password'));
+      $this->assertSession()->pageTextContains('Access denied');
+      $this->assertSession()->pageTextNotContains('Reset your password');
     }
     else {
-      $this->assertSession()->pageTextNotContains(t('Access denied'));
-      $this->assertSession()->pageTextContains(t('Reset your password'));
+      $this->assertSession()->pageTextNotContains('Access denied');
+      $this->assertSession()->pageTextContains('Reset your password');
     }
   }
 
