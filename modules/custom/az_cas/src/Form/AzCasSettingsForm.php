@@ -64,6 +64,13 @@ class AzCasSettingsForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $az_cas_config = $this->config('az_cas.settings');
 
+    $form['disable_login_form'] = [
+      '#title' => t("Disable login form"),
+      '#type' => 'checkbox',
+      '#description' => t("Disables the default user login form provided by Drupal core."),
+      '#default_value' => $az_cas_config->get('disable_login_form'),
+    ];
+
     $form['disable_password_recovery_link'] = [
       '#title' => t("Disable 'request new password' form"),
       '#type' => 'checkbox',
@@ -78,6 +85,10 @@ class AzCasSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    $this->config('az_cas.settings')
+      ->set('disable_login_form', $form_state->getValue('disable_login_form'))
+      ->save();
+
     $this->config('az_cas.settings')
       ->set('disable_password_recovery_link', $form_state->getValue('disable_password_recovery_link'))
       ->save();

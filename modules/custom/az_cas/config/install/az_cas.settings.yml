@@ -1,1 +1,2 @@
+disable_login_form: true
 disable_password_recovery_link: true
