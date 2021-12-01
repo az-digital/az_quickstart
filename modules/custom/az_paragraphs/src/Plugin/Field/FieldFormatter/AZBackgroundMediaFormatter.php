@@ -532,7 +532,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             '#responsive_image_style_id' => 'az_full_width_background',
             '#item' => $media->thumbnail,
             '#item_attributes' => [
-              'class' => ['img-fluid'],
+              'class' => ['img-fluid', ' w-100'],
             ],
           ];
           $az_background_media[] = $image_renderable;
@@ -591,6 +591,17 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
+      if ($settings['text_media_spacing'] === 'aspect-ratio') {
+        $image_renderable = [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => 'az_full_width_background',
+          '#item' => $media->field_media_az_image,
+          '#item_attributes' => [
+            'class' => ['img-fluid', ' w-100'],
+          ],
+        ];
+        $az_background_media[] = $image_renderable;
+      }
 
       $az_background_media[] = $responsive_image_style_element;
     }
