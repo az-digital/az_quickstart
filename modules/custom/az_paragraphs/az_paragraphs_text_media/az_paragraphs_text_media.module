@@ -23,7 +23,7 @@ function az_paragraphs_text_media_theme($existing, $type, $theme, $path): array 
 function az_paragraphs_text_media_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
   if ($group->group_name === 'group_az_container') {
     if (array_key_exists('#paragraph', $rendering_object)) {
-      if ($rendering_object['#paragraph']->bundle() === 'az_text_media'){
+      if ($rendering_object['#paragraph']->bundle() === 'az_text_media') {
         $paragraph = $rendering_object['#paragraph'];
         $full_width = $paragraph->getBehaviorSetting('az_text_media_paragraph_behavior', 'full_width', $default = NULL);
         $text_bottom_spacing = $paragraph->getBehaviorSetting('az_text_media_paragraph_behavior', 'text_media_spacing', $default = NULL);
