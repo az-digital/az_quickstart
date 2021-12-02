@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\az_cas\Functional;
 
+use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 
 /**
