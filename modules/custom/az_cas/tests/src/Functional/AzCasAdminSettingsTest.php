@@ -64,7 +64,10 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
     // CAS menu alter runs again.
     $this->container->get('router.builder')->rebuild();
 
-    $this->drupalLogout();
+    // Logout manually because $this->drupalLogout() checks for prescence of
+    // fields on login form which don't exist if login form is disabled.
+    $destination = Url::fromRoute('<front>')->toString();
+    $this->drupalGet(Url::fromRoute('user.logout', [], ['query' => ['destination' => $destination]]));
     $this->drupalGet('user/login');
     if ($disable_login_form) {
       $this->assertSession()->pageTextContains('Access denied');
