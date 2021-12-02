@@ -87,9 +87,6 @@ class AzCasSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('az_cas.settings')
       ->set('disable_login_form', $form_state->getValue('disable_login_form'))
-      ->save();
-
-    $this->config('az_cas.settings')
       ->set('disable_password_recovery_link', $form_state->getValue('disable_password_recovery_link'))
       ->save();
 
