@@ -1,0 +1,92 @@
+{
+  "menu_links": [
+    {
+      "link_id": "1",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Employment",
+      "urlpath": "https://talent.arizona.edu/",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "1"
+    },
+    {
+      "link_id": "2",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Emergency Information",
+      "urlpath": "https://cirt.arizona.edu",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "2"
+    },
+    {
+      "link_id": "3",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Title IX / Non-Discrimination",
+      "urlpath": "https://www.arizona.edu/title-ix",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "3"
+    },
+    {
+      "link_id": "4",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Campus Safety",
+      "urlpath": "https://www.arizona.edu/campus-safety",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "4"
+    },
+    {
+      "link_id": "5",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "UAlert",
+      "urlpath": "https://cirt.arizona.edu/ualert",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "5"
+    },
+    {
+      "link_id": "6",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Copyright",
+      "urlpath": "https://www.arizona.edu/copyright",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "6"
+    },
+    {
+      "link_id": "7",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Campus Accessibility",
+      "urlpath": "https://www.arizona.edu/campus-accessibility",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "7"
+    },
+    {
+      "link_id": "8",
+      "parent_link_id": "0",
+      "menu": "az-footer-main",
+      "title": "Contact Us",
+      "urlpath": "https://www.arizona.edu/contact-us",
+      "external": true,
+      "expanded": false,
+      "enabled": true,
+      "weight": "8"
+    }
+  ]
+}

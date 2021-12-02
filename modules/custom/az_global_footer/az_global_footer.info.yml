@@ -1,0 +1,12 @@
+name: 'Quickstart Global Footer'
+type: module
+description: 'Provides gloabl footer content which links to UArizona social media accounts and resources.'
+core_version_requirement: ^8.8 || ^9
+package: 'The University of Arizona'
+dependencies:
+  - az_core
+  - drupal:block
+  - drupal:menu_block
+  - migrate:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
