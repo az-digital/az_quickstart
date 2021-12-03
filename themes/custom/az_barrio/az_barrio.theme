@@ -568,7 +568,7 @@ function az_barrio_preprocess_block(&$variables) {
         }
 
         // Default classes for footer_sub region.
-        if($region === 'footer_sub') {
+        if ($region === 'footer_sub') {
 
           // Footer topics menu has special split behavior.
           if (!empty($variables['derivative_plugin_id']) && $variables['derivative_plugin_id'] === 'az-footer-topics') {
