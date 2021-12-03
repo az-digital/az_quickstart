@@ -554,8 +554,8 @@ function az_barrio_preprocess_block(&$variables) {
               if (empty($options)) {
                 $options = [];
               }
-              $attributes['attributes']['class'][] = 'bg-transparent';
-              $item['url']->setOptions($attributes);
+              $options['attributes']['class'][] = 'bg-transparent';
+              $item['url']->setOptions($options);
             }
           }
 
@@ -585,8 +585,8 @@ function az_barrio_preprocess_block(&$variables) {
               if (empty($options)) {
                 $options = [];
               }
-              $attributes['attributes']['class'][] = 'bg-transparent';
-              $item['url']->setOptions($attributes);
+              $options['attributes']['class'][] = 'bg-transparent';
+              $item['url']->setOptions($options);
             }
           }
 
