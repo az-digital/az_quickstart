@@ -47,6 +47,10 @@ source:
       name: weight
       label: 'Weight'
       selector: weight
+    -
+      name: attributes
+      label: 'Attributes'
+      selector: attributes
   ids:
     link_id:
       type: integer
@@ -61,11 +65,16 @@ process:
   route_name: '@route/route_name'
   route_parameters: '@route/route_parameters'
   url: '@route/url'
-  options: '@route/options'
+  # options: '@route/options'
   external: external
   weight: weight
   expanded: expanded
   enabled: enabled
+  'link/options/attributes': attributes
+  attributes:
+    plugin: callback
+    callable: var_dump
+    source: attributes
   # Handle mapping of parent menu links. Refers to SOURCE id numbers.
   parent:
     plugin: menu_link_parent

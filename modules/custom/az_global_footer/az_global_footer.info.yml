@@ -7,6 +7,7 @@ dependencies:
   - az_core
   - drupal:block
   - drupal:menu_block
+  - menu_link_attributes
   - migrate:migrate
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools

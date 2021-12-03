@@ -369,16 +369,15 @@
       "menu": "az-footer-social-media",
       "title": "Facebook",
       "urlpath": "https://facebook.com/uarizona",
-      "class": "az-icon-facebook",
       "external": true,
       "expanded": false,
       "enabled": true,
       "weight": "1",
-      "attributes": {
+      "attributes": [
         "class": [
-          "icon-class"
+          "az-icon-facebook"
         ]
-      }
+      ]
     },
     {
       "link_id": "35",
@@ -386,16 +385,15 @@
       "menu": "az-footer-social-media",
       "title": "Twitter",
       "urlpath": "https://twitter.com/uarizona",
-      "class": "az-icon-twitter",
       "external": true,
       "expanded": false,
       "enabled": true,
       "weight": "2",
-      "attributes": {
+      "attributes": [
         "class": [
-          "icon-class"
+          "az-icon-twitter"
         ]
-      }
+      ]
     },
     {
       "link_id": "36",
@@ -403,16 +401,15 @@
       "menu": "az-footer-social-media",
       "title": "Instagram",
       "urlpath": "https://instagram.com/uarizona",
-      "class": "az-icon-instagram",
       "external": true,
       "expanded": false,
       "enabled": true,
       "weight": "3",
-      "attributes": {
+      "attributes": [
         "class": [
-          "icon-class"
+          "az-icon-instagram"
         ]
-      }
+      ]
     },
     {
       "link_id": "37",
@@ -420,16 +417,15 @@
       "menu": "az-footer-social-media",
       "title": "LinkedIn",
       "urlpath": "https://linkedin.com/edu/university-of-arizona-17783",
-      "class": "az-icon-linkedin",
       "external": true,
       "expanded": false,
       "enabled": true,
       "weight": "4",
-      "attributes": {
+      "attributes": [
         "class": [
-          "icon-class"
+          "az-icon-linkedin"
         ]
-      }
+      ]
     },
     {
       "link_id": "38",
@@ -437,16 +433,15 @@
       "menu": "az-footer-social-media",
       "title": "YouTube",
       "urlpath": "https://youtube.com/universityofarizona",
-      "class": "az-icon-youtube",
       "external": true,
       "expanded": false,
       "enabled": true,
       "weight": "5",
-      "attributes": {
+      "attributes": [
         "class": [
-          "icon-class"
+          "az-icon-youtube"
         ]
-      }
+      ]
     }
   ]
 }
