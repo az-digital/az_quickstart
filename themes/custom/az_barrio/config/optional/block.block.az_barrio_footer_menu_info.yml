@@ -10,7 +10,7 @@ dependencies:
     - az_barrio
 third_party_settings:
   block_class:
-    classes: 'col-12 col-sm-4 col-md-3'
+    classes: 'col-12 col-sm-6 col-md-3'
 id: az_barrio_footer_menu_info
 theme: az_barrio
 region: footer_sub
