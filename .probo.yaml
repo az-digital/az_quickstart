@@ -53,7 +53,6 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n config:set az_cas.settings disable_login_form false
       - chown www-data:www-data -R /var/www/html/sites/default/files
   - name: Check for PHP errors and notices
     plugin: Script
