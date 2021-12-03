@@ -543,7 +543,7 @@ function az_barrio_preprocess_block(&$variables) {
       if (!empty($block)) {
         $region = $block->getRegion();
         // Default classes for footer region.
-        if($region === 'footer') {
+        if ($region === 'footer') {
 
           // Add classes to interior <li> elements and <a> elements.
           if (!empty($variables['elements']['content']['#items'])) {
