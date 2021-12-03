@@ -159,7 +159,7 @@
       "parent_link_id": "0",
       "menu": "main",
       "title": "News",
-      "urlpath": "route:<button>",
+      "urlpath": "/news",
       "external": false,
       "expanded": true,
       "enabled": true,

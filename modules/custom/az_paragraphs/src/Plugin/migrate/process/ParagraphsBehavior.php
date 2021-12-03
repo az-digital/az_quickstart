@@ -98,6 +98,10 @@ class ParagraphsBehavior extends ProcessPluginBase {
       }
     }
 
+    if (!empty($this->configuration['text_media_spacing'])) {
+      $behavior['az_text_media_paragraph_behavior']['text_media_spacing'] = $row->getSourceProperty($this->configuration['text_media_spacing']);
+    }
+
     if (!empty($this->configuration['full_width'])) {
       $behavior['az_text_media_paragraph_behavior']['full_width'] = $row->getSourceProperty($this->configuration['full_width']);
     }

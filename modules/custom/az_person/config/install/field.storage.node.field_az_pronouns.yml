@@ -3,13 +3,15 @@ status: true
 dependencies:
   module:
     - node
-    - text
-id: node.field_az_caption
-field_name: field_az_caption
+id: node.field_az_pronouns
+field_name: field_az_pronouns
 entity_type: node
-type: text_long
-settings: {  }
-module: text
+type: string
+settings:
+  max_length: 255
+  is_ascii: false
+  case_sensitive: false
+module: core
 locked: false
 cardinality: 1
 translatable: true

@@ -11,6 +11,10 @@ az_paragraphs.az_paragraphs_full_width:
   css:
     theme:
       css/az_paragraphs_full_width.css: {}
+  js:
+    js/az_paragraphs_full_width.js: {}
+  dependencies:
+    - core/jquery
 az_paragraphs.az_text_background:
   version: VERSION
   css:

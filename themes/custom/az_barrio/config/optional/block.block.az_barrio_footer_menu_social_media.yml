@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.az-footer-social-media
+  module:
+    - menu_block
+  theme:
+    - az_barrio
+id: az_barrio_footer_menu_social_media
+theme: az_barrio
+region: footer_sub
+weight: -8
+provider: null
+plugin: 'menu_block:az-footer-social-media'
+settings:
+  id: 'menu_block:az-footer-social-media'
+  label: Connect
+  provider: menu_block
+  label_display: visible
+  level: 1
+  depth: 1
+  expand_all_items: true
+  suggestion: sub_footer
+  label_type: root
+visibility: {  }

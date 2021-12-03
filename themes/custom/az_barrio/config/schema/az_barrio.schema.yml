@@ -289,6 +289,9 @@ az_barrio.settings:
     az_bs_overlay_menu_scroll:
       type: boolean
       label: 'Enable overlay menu scroll'
+    land_acknowledgment:
+      type: boolean
+      label: 'Enable land acknowledgment'
     info_security_privacy:
       type: boolean
       label: 'Enable privacy link'

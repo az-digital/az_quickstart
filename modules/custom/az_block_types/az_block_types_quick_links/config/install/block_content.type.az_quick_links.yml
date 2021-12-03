@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_quick_links
+label: 'Quick Links'
+revision: 1
+description: 'Add quick links to a site.'

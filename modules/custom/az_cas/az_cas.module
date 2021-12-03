@@ -6,6 +6,9 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\user\RoleInterface;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_help().
@@ -20,5 +23,49 @@ function az_cas_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Restrict assignable roles in 'Add CAS User(s)' form when Role Delegation
+ * module is enabled.
+ */
+function az_cas_form_bulk_add_cas_users_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (\Drupal::moduleHandler()->moduleExists('role_delegation')) {
+    $options = \Drupal::service('delegatable_roles')->getAssignableRoles(\Drupal::currentUser());
+    foreach ($options as $key => $value) {
+      $options[$key] = HTML::escape($value);
+    }
+    $form['roles']['#options'] = $options;
+    $form['#validate'][] = 'az_cas_validate_roles';
+  }
+}
+
+/**
+ * Custom validation callback for Add CAS User(s) form.
+ *
+ * Ensures only assignable roles are assigned.
+ */
+function az_cas_validate_roles(array &$form, FormStateInterface $form_state) {
+  $submitted_roles = array_filter($form_state->getValue('roles'));
+  unset($submitted_roles[RoleInterface::AUTHENTICATED_ID]);
+  $submitted_roles = array_keys($submitted_roles);
+  $allowed_roles = \Drupal::service('delegatable_roles')->getAssignableRoles(\Drupal::currentUser());
+  $allowed_roles = array_keys($allowed_roles);
+
+  $valid_roles = TRUE;
+  foreach ($submitted_roles as $role) {
+    if (!in_array($role, $allowed_roles)) {
+      $valid_roles = FALSE;
+    }
+  }
+
+  if (!$valid_roles) {
+    $form_state->setErrorByName(
+      'roles',
+      t('You do not have permission to assign all of the submitted roles.')
+    );
   }
 }

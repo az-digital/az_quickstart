@@ -34,7 +34,8 @@
         window.onYouTubeIframeAPIReady = function () {
           $.each(bgVideoParagraphs, function (index) {
             var thisContainer = bgVideoParagraphs[index];
-            var parentParagraph = thisContainer.parentNode;
+            var parentId = thisContainer.dataset.parentid;
+            var parentParagraph = document.getElementById(parentId);
             var youtubeId = thisContainer.dataset.youtubeid;
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
             var options = bgVideos[youtubeId];
@@ -130,8 +131,8 @@
         window.onPlayerStateChange = function (event) {
           var id = event.target.playerInfo.videoData.video_id;
           var stateChangeContainer = document.getElementById("".concat(id, "-bg-video-container"));
-          var style = stateChangeContainer.dataset.style;
-          var parentContainer = stateChangeContainer.parentNode;
+          var parentid = stateChangeContainer.dataset.parentid;
+          var parentContainer = document.getElementById(parentid);
 
           if (event.data === 0 && bgVideos[id].repeat) {
             stateChangeContainer.player.seekTo(bgVideos[id].start);
@@ -139,14 +140,8 @@
 
           if (event.data === 1) {
             resize();
-
-            if (style === "bottom") {
-              stateChangeContainer.classList.add("az-video-playing");
-              stateChangeContainer.classList.remove("az-video-loading");
-            } else {
-              parentContainer.classList.add("az-video-playing");
-              parentContainer.classList.remove("az-video-loading");
-            }
+            parentContainer.classList.add("az-video-playing");
+            parentContainer.classList.remove("az-video-loading");
           }
         };
 
