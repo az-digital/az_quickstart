@@ -8,6 +8,7 @@
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
 
+use Drupal\block\Entity\Block;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
 use Drupal\Core\Render\Markup;
@@ -522,12 +523,81 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
 }
 
 /**
- * Pass proper logo to the system branding block.
+ *  Implements template_preprocess_block().
+ *
+ *  Pass proper logo to the system branding block.
+ *
+ *  Arizona Digital issue #1012.
+ *  Footer menu links styles, using default theme templates.
  */
 function az_barrio_preprocess_block(&$variables) {
   if ($variables['base_plugin_id'] === 'system_branding_block') {
     if ($variables['configuration']['use_site_logo']) {
       $variables['site_logo'] = az_barrio_primary_logo();
+    }
+  }
+
+  if (isset($variables['elements']['#base_plugin_id']) && $variables['elements']['#base_plugin_id'] === 'menu_block') {
+    if (!empty($variables['elements']['#id'])) {
+      $block = Block::load($variables['elements']['#id']);
+      if (!empty($block)) {
+        $region = $block->getRegion();
+        // Default classes for footer region.
+        if ($region === 'footer') {
+
+          // Add classes to interior <li> elements and <a> elements.
+          if (!empty($variables['elements']['content']['#items'])) {
+            foreach ($variables['elements']['content']['#items'] as $key => $item) {
+
+              // Merge existing url options with transparent.
+              $options = $item['url']->getOptions();
+              if (empty($options)) {
+                $options = [];
+              }
+              $options['attributes']['class'][] = 'bg-transparent';
+              $item['url']->setOptions($options);
+            }
+          }
+
+          $variables['content']['#attributes']['class'][] = 'nav-utility';
+          $variables['content']['#attributes']['class'][] = 'd-flex';
+          $variables['content']['#attributes']['class'][] = 'justify-content-end';
+          $variables['title_attributes']['class'][] = 'h6';
+          $variables['title_attributes']['class'][] = 'mt-md-3';
+          $variables['title_attributes']['class'][] = 'text-uppercase';
+        }
+
+        // Default classes for footer_sub region.
+        if ($region === 'footer_sub') {
+
+          // Footer topics menu has special split behavior.
+          if (!empty($variables['derivative_plugin_id']) && $variables['derivative_plugin_id'] === 'az-footer-topics') {
+            $variables['content']['#attributes']['class'][] = 'split-md-2-col';
+          }
+
+          // Add classes to interior <li> elements and <a> elements.
+          if (!empty($variables['elements']['content']['#items'])) {
+            foreach ($variables['elements']['content']['#items'] as $key => $item) {
+              $item['attributes']->addClass('d-flex', 'px-0');
+
+              // Merge existing url options with transparent.
+              $options = $item['url']->getOptions();
+              if (empty($options)) {
+                $options = [];
+              }
+              $options['attributes']['class'][] = 'bg-transparent';
+              $item['url']->setOptions($options);
+            }
+          }
+
+          $variables['content']['#attributes']['class'][] = 'nav';
+          $variables['content']['#attributes']['class'][] = 'flex-column';
+          $variables['content']['#attributes']['class'][] = 'nav-utility';
+          $variables['title_attributes']['class'][] = 'h6';
+          $variables['title_attributes']['class'][] = 'mt-md-3';
+          $variables['title_attributes']['class'][] = 'text-uppercase';
+        }
+      }
     }
   }
 }
