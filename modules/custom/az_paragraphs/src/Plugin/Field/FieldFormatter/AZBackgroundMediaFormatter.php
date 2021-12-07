@@ -60,6 +60,13 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   protected $currentUser;
 
   /**
+   * The file_url_generator service.
+   *
+   * @var \Drupal\Core\File\FileUrlGeneratorInterface
+   */
+  protected $fileUrlGenerator;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(
@@ -78,6 +85,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $instance->currentUser = $container->get('current_user');
     $instance->videoEmbedHelper = $container->get('az_paragraphs.az_video_embed_helper');
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->fileUrlGenerator = $container->get('file_url_generator');
 
     return $instance;
   }
@@ -531,7 +539,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       elseif ($settings['style'] === 'bottom') {
         $image_renderable = [
           '#theme' => 'image',
-          '#uri' => file_create_url($file_uri),
+          '#uri' => $this->fileUrlGenerator->generateAbsoluteString($file_uri),
           '#attributes' => [
             'class' => ['img-fluid'],
           ],
