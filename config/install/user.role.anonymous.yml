@@ -1,14 +1,18 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - access_unpublished
+    - exclude_node_title
+    - media
+    - search
+    - system
 id: anonymous
 label: 'Anonymous user'
 weight: 0
 is_admin: false
 permissions:
-  - 'access comments'
   - 'access content'
-  - 'access site-wide contact form'
   - 'access_unpublished node az_event'
   - 'access_unpublished node az_flexible_page'
   - 'access_unpublished node az_news'

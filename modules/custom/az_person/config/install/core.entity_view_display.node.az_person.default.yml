@@ -29,52 +29,52 @@ bundle: az_person
 mode: default
 content:
   field_az_address:
-    weight: 5
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 5
     region: content
   field_az_attachments:
-    weight: 18
+    type: file_default
     label: hidden
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    type: file_default
+    weight: 18
     region: content
   field_az_body:
-    weight: 16
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 16
     region: content
   field_az_degrees:
-    weight: 17
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 17
     region: content
   field_az_email:
-    weight: 7
+    type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: email_mailto
+    weight: 7
     region: content
   field_az_fname:
-    weight: 2
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 2
     region: content
   field_az_links:
-    weight: 8
+    type: link
     label: hidden
     settings:
       trim_length: 80
@@ -83,67 +83,67 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    weight: 8
     region: content
   field_az_lname:
-    weight: 3
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 3
     region: content
   field_az_media_image:
     type: entity_reference_entity_view
-    weight: 21
     label: above
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 21
     region: content
   field_az_person_category:
-    weight: 19
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 19
     region: content
   field_az_person_category_sec:
-    weight: 20
+    type: entity_reference_label
     label: above
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 20
     region: content
   field_az_phones:
-    weight: 6
+    type: telephone_link
     label: hidden
     settings:
       title: ''
     third_party_settings: {  }
-    type: telephone_link
+    weight: 6
     region: content
   field_az_pronouns:
-    weight: 22
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 22
     region: content
   field_az_titles:
-    weight: 4
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 4
     region: content
   links:
-    weight: 1
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 1
+    region: content

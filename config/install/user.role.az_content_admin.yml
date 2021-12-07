@@ -1,6 +1,40 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.full_html
+    - media.type.az_audio
+    - media.type.az_document
+    - media.type.az_image
+    - media.type.az_remote_video
+    - media.type.az_video
+    - node.type.az_event
+    - node.type.az_flexible_page
+    - node.type.az_news
+    - node.type.az_person
+    - taxonomy.vocabulary.az_event_categories
+    - taxonomy.vocabulary.az_news_tags
+    - taxonomy.vocabulary.az_page_categories
+    - taxonomy.vocabulary.az_person_categories
+    - taxonomy.vocabulary.az_person_categories_secondary
+    - taxonomy.vocabulary.tags
+    - workflows.workflow.editorial
+  module:
+    - access_unpublished
+    - az_core
+    - block
+    - block_content_permissions
+    - content_moderation
+    - draggableviews
+    - easy_breadcrumb
+    - filter
+    - media
+    - node
+    - redirect
+    - search
+    - system
+    - taxonomy
+    - xmlsitemap
 id: az_content_admin
 label: 'Content administrator'
 weight: 3

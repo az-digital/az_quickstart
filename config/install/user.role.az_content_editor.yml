@@ -1,6 +1,35 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - filter.format.az_standard
+    - media.type.az_audio
+    - media.type.az_document
+    - media.type.az_image
+    - media.type.az_remote_video
+    - media.type.az_video
+    - node.type.az_event
+    - node.type.az_flexible_page
+    - node.type.az_news
+    - node.type.az_person
+    - workflows.workflow.editorial
+  module:
+    - block_content_permissions
+    - coffee
+    - content_moderation
+    - contextual
+    - draggableviews
+    - exclude_node_title
+    - file
+    - filter
+    - media
+    - node
+    - paragraphs
+    - path
+    - smart_date_recur
+    - system
+    - toolbar
+    - tour
 id: az_content_editor
 label: 'Content editor'
 weight: 2

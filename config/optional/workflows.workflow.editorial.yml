@@ -34,3 +34,4 @@ type_settings:
         - draft
         - published
   default_moderation_state: draft
+  entity_types: {  }

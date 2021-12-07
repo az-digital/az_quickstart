@@ -4,11 +4,11 @@ dependencies:
   config:
     - field.storage.media.field_media_az_image
     - media.type.az_image
+  module:
+    - image
   enforced:
     module:
       - media
-  module:
-    - image
 id: media.az_image.field_media_az_image
 field_name: field_media_az_image
 entity_type: media

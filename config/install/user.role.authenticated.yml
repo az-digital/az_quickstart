@@ -1,21 +1,24 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - access_unpublished
+    - exclude_node_title
+    - honeypot
+    - search
+    - shortcut
+    - system
 id: authenticated
 label: 'Authenticated user'
 weight: 1
 is_admin: false
 permissions:
-  - 'access comments'
   - 'access content'
   - 'access shortcuts'
-  - 'access site-wide contact form'
   - 'access_unpublished node az_event'
   - 'access_unpublished node az_flexible_page'
   - 'access_unpublished node az_news'
   - 'access_unpublished node az_person'
   - 'bypass honeypot protection'
-  - 'post comments'
   - 'search content'
-  - 'skip comment approval'
   - 'use exclude node title'

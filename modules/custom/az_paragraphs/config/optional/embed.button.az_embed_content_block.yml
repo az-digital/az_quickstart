@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.block_content.full
   module:
     - block_content
     - entity_embed

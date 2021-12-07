@@ -171,6 +171,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_published_value
           granularity: second
           plugin_id: datetime
         created:
@@ -184,6 +185,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: created
           granularity: second
           entity_type: node
           entity_field: created

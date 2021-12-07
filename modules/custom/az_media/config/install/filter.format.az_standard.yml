@@ -50,13 +50,14 @@ filters:
     weight: 100
     settings:
       default_view_mode: default
-      allowed_media_types: {  }
       allowed_view_modes:
         az_large: az_large
         az_medium: az_medium
         az_natural_size: az_natural_size
         az_small: az_small
         az_square: az_square
+      allowed_media_types: {  }
+      default_view_mode_9301: default
   entity_embed:
     id: entity_embed
     provider: entity_embed

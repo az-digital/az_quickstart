@@ -40,7 +40,6 @@ install:
   - drupal:datetime
   - drupal:block_content
   - block_content_permissions:block_content_permissions
-  - drupal:quickedit
   - drupal:editor
   - drupal:help
   - drupal:image
@@ -76,6 +75,7 @@ install:
   - search_exclude:search_exclude
   - draggableviews:draggableviews
   - role_delegation:role_delegation
+  - access_unpublished:access_unpublished
 
 themes:
   - az_barrio
