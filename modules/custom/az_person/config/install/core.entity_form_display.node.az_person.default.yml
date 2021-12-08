@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
@@ -43,6 +44,22 @@ third_party_settings:
         classes: ''
         required_fields: false
       label: Categories
+    group_summary_fields:
+      children:
+        - field_az_link
+      parent_name: ''
+      weight: 17
+      format_type: details_sidebar
+      region: content
+      format_settings:
+        show_empty_fields: false
+        id: ''
+        classes: 'group-summary field-group-tab'
+        description: ''
+        open: false
+        required_fields: true
+        weight: 0
+      label: 'Summary fields'
 id: node.az_person.default
 targetEntityType: node
 bundle: az_person
@@ -100,6 +117,14 @@ content:
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
+    region: content
+  field_az_link:
+    weight: 22
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+    type: link_default
     region: content
   field_az_links:
     weight: 10
