@@ -178,6 +178,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       $style = $config['style'];
     }
     $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
+        dpm($variables['attributes']['class']);
+
     $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . '-' . $paragraph->id());
     if (!empty($variables['attributes']) && !empty($variables['attributes']['class']) && !is_array($variables['attributes']['class'])) {
       $variables['attributes']['class'] = [];
