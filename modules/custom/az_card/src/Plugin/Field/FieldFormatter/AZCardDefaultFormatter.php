@@ -165,6 +165,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#body' => check_markup($item->body, $item->body_format),
         '#link' => $link_render_array,
         '#attributes' => ['class' => $card_classes],
+        '#link_attributes' => ['class' => $card_clickable],
       ];
 
       $element['#items'][$delta] = new \stdClass();
