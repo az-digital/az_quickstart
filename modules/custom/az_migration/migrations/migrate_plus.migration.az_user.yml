@@ -19,10 +19,7 @@ process:
   pass: pass
   mail: mail
   created: created
-  access:
-    plugin: skip_on_empty
-    source: access
-    method: process
+  access: access
   login: login
   # Skip blocked users.  If you want to maintain a blocked user's history, you should not use this approach.
   status:
