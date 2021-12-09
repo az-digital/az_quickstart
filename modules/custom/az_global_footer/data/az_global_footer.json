@@ -373,11 +373,11 @@
       "expanded": false,
       "enabled": true,
       "weight": "1",
-      "attributes": [
+      "attributes": {
         "class": [
           "az-icon-facebook"
         ]
-      ]
+      }
     },
     {
       "link_id": "35",
@@ -389,11 +389,11 @@
       "expanded": false,
       "enabled": true,
       "weight": "2",
-      "attributes": [
+      "attributes": {
         "class": [
           "az-icon-twitter"
         ]
-      ]
+      }
     },
     {
       "link_id": "36",
@@ -405,11 +405,11 @@
       "expanded": false,
       "enabled": true,
       "weight": "3",
-      "attributes": [
+      "attributes": {
         "class": [
           "az-icon-instagram"
         ]
-      ]
+      }
     },
     {
       "link_id": "37",
@@ -421,11 +421,11 @@
       "expanded": false,
       "enabled": true,
       "weight": "4",
-      "attributes": [
+      "attributes": {
         "class": [
           "az-icon-linkedin"
         ]
-      ]
+      }
     },
     {
       "link_id": "38",
@@ -437,11 +437,11 @@
       "expanded": false,
       "enabled": true,
       "weight": "5",
-      "attributes": [
+      "attributes": {
         "class": [
           "az-icon-youtube"
         ]
-      ]
+      }
     }
   ]
 }
