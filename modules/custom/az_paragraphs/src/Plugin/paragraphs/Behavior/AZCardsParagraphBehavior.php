@@ -56,7 +56,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'stretched-link' => $this->t('Clickable cards'),
       ],
       '#default_value' => isset($config['card_clickable']) ? $config['card_clickable'] : '',
-      '#description' => $this->t('Choose if the whole card is clickable.'),
+      '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);

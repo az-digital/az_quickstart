@@ -119,7 +119,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#title' => $item->link_title ?? '',
           '#url' => $link_url ? $link_url : '#',
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
-          '#link_attributes' => ['class' => ['']],
         ];
       }
 
@@ -179,6 +178,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $element['#attributes']['class'][] = 'row';
       $element['#attributes']['class'][] = 'd-flex';
       $element['#attributes']['class'][] = 'flex-wrap';
+      $element['#link_attributes']['class'][] = 'stretched-link';
     }
 
     return $element;
