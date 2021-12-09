@@ -15,12 +15,16 @@ provider: null
 plugin: 'menu_block:az-footer-main'
 settings:
   id: 'menu_block:az-footer-main'
-  label: 'Main'
+  label: 'Footer - Main'
   provider: menu_block
   label_display: '0'
+  follow: false
+  follow_parent: child
   level: 1
-  depth: 1
-  expand_all_items: true
-  suggestion: footer_main
-  label_type: root
+  depth: 0
+  expand_all_items: false
+  parent: 'az-footer-main:'
+  suggestion: az_footer_main
+  label_type: block
+  label_link: false
 visibility: {  }

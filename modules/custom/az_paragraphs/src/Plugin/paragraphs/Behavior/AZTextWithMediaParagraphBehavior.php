@@ -257,7 +257,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     // Apply bottom spacing if set.
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
-      $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
+      $build['#attributes']['class'][] = $config['az_display_settings']['bottom_spacing'];
     }
   }
 
