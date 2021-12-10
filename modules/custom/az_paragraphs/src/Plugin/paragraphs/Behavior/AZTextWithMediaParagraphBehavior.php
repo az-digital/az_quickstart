@@ -97,7 +97,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-md-8 col-lg-6' => $this->t('Position left'),
         'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Position center'),
         'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Position right'),
-        'col-xs-12' => $this->t('None'),
+        'col-xs-12' => $this->t('Full-width'),
       ],
       '#default_value' => $config['position'],
       '#description' => $this->t('The position of the content on the media.'),
