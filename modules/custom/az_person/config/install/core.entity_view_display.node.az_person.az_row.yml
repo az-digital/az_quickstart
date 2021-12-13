@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
@@ -87,6 +88,7 @@ hidden:
   field_az_attachments: true
   field_az_body: true
   field_az_degrees: true
+  field_az_link: true
   field_az_links: true
   field_az_person_category: true
   field_az_person_category_sec: true

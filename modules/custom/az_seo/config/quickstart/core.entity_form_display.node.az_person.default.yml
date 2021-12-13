@@ -49,19 +49,19 @@ third_party_settings:
     group_summary_fields:
       children:
         - field_az_link
+      label: 'Summary fields'
+      region: content
       parent_name: ''
       weight: 17
       format_type: details_sidebar
-      region: content
       format_settings:
+        classes: 'group-summary field-group-tab'
         show_empty_fields: false
         id: ''
-        classes: 'group-summary field-group-tab'
-        description: ''
         open: false
+        description: ''
         required_fields: true
         weight: 0
-      label: 'Summary fields'
 id: node.az_person.default
 targetEntityType: node
 bundle: az_person
@@ -121,13 +121,13 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_az_link:
+    type: link_default
     weight: 22
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
   field_az_links:
     type: link_default
     weight: 10
