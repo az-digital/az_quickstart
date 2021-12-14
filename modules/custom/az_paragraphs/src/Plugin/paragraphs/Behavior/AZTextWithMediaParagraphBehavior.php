@@ -230,10 +230,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
           break;
+
         case 'az-aspect-ratio':
           $variables['attributes']['class'][] = 'az-aspect-ratio';
           break;
-  
+
         default:
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }
