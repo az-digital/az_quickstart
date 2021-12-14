@@ -512,7 +512,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#attributes' => [
           'id' => [$video_oembed_id . '-bg-video-container'],
           'class' => [
-            'az-video-loading',
+            // 'az-video-loading',
             'az-video-background',
             'az-js-video-background',
           ],
@@ -526,7 +526,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
 
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
-        if ($settings['text_media_spacing'] === 'aspect-ratio') {
+        $az_background_media[] = $background_video;
+        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
           $image_renderable = [
             '#theme' => 'responsive_image_formatter',
             '#responsive_image_style_id' => 'az_full_width_background',
@@ -537,7 +538,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           ];
           $az_background_media[] = $image_renderable;
         }
-        $az_background_media[] = $background_video;
       }
       elseif ($settings['style'] === 'bottom') {
         $image_renderable = [
@@ -591,7 +591,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
-      if ($settings['text_media_spacing'] === 'aspect-ratio') {
+      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
         $image_renderable = [
           '#theme' => 'responsive_image_formatter',
           '#responsive_image_style_id' => 'az_full_width_background',
