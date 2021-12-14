@@ -71,8 +71,28 @@ settings:
     language:
       language_list: un
     bs_grid:
-      use_cdn: 0
+      use_cdn: false
       cdn_url: ''
+      available_columns:
+        1: '1'
+        2: '2'
+        3: '3'
+        4: '4'
+        5: '5'
+        6: '6'
+        7: '7'
+        8: '8'
+        9: '9'
+        10: '10'
+        11: '11'
+        12: '12'
+      available_breakpoints:
+        xs: xs
+        sm: sm
+        md: md
+        lg: lg
+        xl: 0
+        xxl: 0
 image_upload:
   status: false
   scheme: public
