@@ -43,7 +43,7 @@
         "drupal/bootstrap_utilities": "1.1.0",
         "drupal/cas": "1.7",
         "drupal/chosen": "3.0.1",
-        "drupal/ckeditor_bs_grid": "2.0.5",
+        "drupal/ckeditor_bs_grid": "2.0.7",
         "drupal/coffee": "1.2",
         "drupal/config_distro": "1.0-alpha4",
         "drupal/config_provider": "2.0-rc4",
@@ -63,12 +63,12 @@
         "drupal/field_group": "3.2.0",
         "drupal/field_group_link": "3.0-rc2",
         "drupal/google_tag": "1.4",
-        "drupal/honeypot": "2.0.1",
+        "drupal/honeypot": "2.0.2",
         "drupal/image_widget_crop": "2.3",
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.1",
         "drupal/link_class": "2.0.0",
-        "drupal/media_library_edit": "2.1.0",
+        "drupal/media_library_edit": "2.2.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
         "drupal/media_migration": "1.0.0-alpha13",
@@ -91,8 +91,8 @@
         "drupal/token": "1.9",
         "drupal/views_bootstrap": "4.3",
         "drupal/viewsreference": "2.0-beta2",
-        "drupal/webform": "6.1.0",
-        "drupal/xmlsitemap": "1.1.0",
+        "drupal/webform": "6.1.2",
+        "drupal/xmlsitemap": "1.2.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/slick-carousel": "1.8.0"
     },
@@ -110,9 +110,6 @@
             "drupal/cas": {
                 "ServiceNotFoundException when logging out": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
                 "Module add migration for D7": "https://www.drupal.org/files/issues/2021-02-24/add-migration-for-d7-3038662-10.patch"
-            },
-            "drupal/ckeditor_bs_grid": {
-                "Remove overrides to Claro defaults for dialog (3218760)": "https://git.drupalcode.org/issue/ckeditor_bs_grid-3218760/-/commit/55b5726b9a0b6bc5bd5703257c6b720a297e3f5b.diff"
             },
             "drupal/config_sync": {
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
