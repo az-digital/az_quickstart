@@ -512,7 +512,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#attributes' => [
           'id' => [$video_oembed_id . '-bg-video-container'],
           'class' => [
-            // 'az-video-loading',
             'az-video-background',
             'az-js-video-background',
           ],
