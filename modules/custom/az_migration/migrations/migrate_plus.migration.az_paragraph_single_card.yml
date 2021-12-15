@@ -60,20 +60,6 @@ process:
       index:
         - 0
         - url
-    -
-      plugin: az_migrated_path_lookup
-      term_migration:
-        - az_event_categories
-        - az_flexible_page_categories
-        - az_news_tags
-        - az_person_categories_secondary
-        - az_person_categories
-      node_migration:
-        - az_node_carousel
-        - az_node_event
-        - az_node_flexible_page
-        - az_node_news
-        - az_node_person
 
   field_az_cards/body_format:
     plugin: default_value
@@ -90,19 +76,6 @@ process:
     card_style: 'card'
     card_width_sm: 'col-sm-12'
     card_width_xs: 'col-12'
-
-migration_dependencies:
-  optional:
-    - az_event_categories
-    - az_flexible_page_categories
-    - az_news_tags
-    - az_person_categories_secondary
-    - az_person_categories
-    - az_node_carousel
-    - az_node_event
-    - az_node_flexible_page
-    - az_node_news
-    - az_node_person
 
 dependencies:
   enforced:
