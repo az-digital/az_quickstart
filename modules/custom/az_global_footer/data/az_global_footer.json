@@ -372,12 +372,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "1",
-      "attributes": {
-        "class": [
-          "az-icon-facebook"
-        ]
-      }
+      "weight": "1"
     },
     {
       "link_id": "35",
@@ -388,12 +383,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "2",
-      "attributes": {
-        "class": [
-          "az-icon-twitter"
-        ]
-      }
+      "weight": "2"
     },
     {
       "link_id": "36",
@@ -404,12 +394,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "3",
-      "attributes": {
-        "class": [
-          "az-icon-instagram"
-        ]
-      }
+      "weight": "3"
     },
     {
       "link_id": "37",
@@ -420,12 +405,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "4",
-      "attributes": {
-        "class": [
-          "az-icon-linkedin"
-        ]
-      }
+      "weight": "4"
     },
     {
       "link_id": "38",
@@ -436,12 +416,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "5",
-      "attributes": {
-        "class": [
-          "az-icon-youtube"
-        ]
-      }
+      "weight": "5"
     }
   ]
 }

@@ -70,7 +70,7 @@ process:
   weight: weight
   expanded: expanded
   enabled: enabled
-  'link/options/attributes': attributes
+  # 'link/options/attributes': attributes
   # Handle mapping of parent menu links. Refers to SOURCE id numbers.
   parent:
     plugin: menu_link_parent
