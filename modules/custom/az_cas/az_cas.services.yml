@@ -1,6 +1,6 @@
 services:
-  az_cas.prevent_password_reset_subscriber:
-    class: Drupal\az_cas\Subscriber\PreventPasswordResetSubscriber
+  az_cas.az_cas_route_subscriber:
+    class: Drupal\az_cas\Routing\AzCasRouteSubscriber
     arguments: ['@config.factory']
     tags:
       - { name: 'event_subscriber' }
