@@ -46,20 +46,34 @@
     position: absolute;
     top: 0px;
     z-index: 0;
+  }
+  .layout-no-sidebars .az-aspect-ratio.full-width-background .container {
     left: 0;
     right: 0;
   }
-.az-aspect-ratio.full-width-background .az-full-width-column-content {
+  .layout-sidebar-second .az-aspect-ratio.full-width-background .container {
+    left: 0;
+    right: 0;
+  }
+.az-aspect-ratio.full-width-background.column .az-full-width-column-content {
     height: 100%;
     display: -ms-flexbox!important;
     display: flex!important;
 }
+.az-aspect-ratio.full-width-background.box .col:first-child {
+    align-self: center;
+}
+
 .az-aspect-ratio.full-width-background .column .az-full-width-column-content-wrapper {
     align-self: center;
 }
+.region-content .full-width-background .container .az-full-width-row {
+    height: 100%;
+}
+
 @media (min-width: 768px) {
     .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: -185px;
+        margin-left: calc(50% - 185px);
     }
     .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
         margin-left: calc(50% - 355px);
@@ -70,7 +84,7 @@
 }
 @media (min-width: 992px) {
     .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: -258px;
+        margin-left: calc(50% - 245px);
     }
     .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
         margin-left: calc(50% - 464px);
@@ -82,7 +96,7 @@
 }
 @media (min-width: 1200px) {
     .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
-        margin-left: -290px;
+        margin-left: calc(50% - 290px);
     }
     .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
         margin-left: calc(50% - 565px);
@@ -91,13 +105,6 @@
     .layout-one-sidebar .region-content .az-aspect-ratio.full-width-background .container {
         width: 855px;
     }
-}
-.layout-sidebar-first .region-content .full-width-background .container .az-full-width-row {
-    height: 100%;
-}
-.layout-sidebar-first .region-content .box.full-width-background .container .col {
-    align-content: center;
-    align-self: center;
 }
 @media (min-width: 768px) {
     .layout-sidebar-first .region-content .full-width-background .az-full-width-row  {
