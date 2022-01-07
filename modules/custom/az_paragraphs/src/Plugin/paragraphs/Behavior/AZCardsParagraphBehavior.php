@@ -60,7 +60,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-sm-4' => $this->t('3'),
         'col-sm-3' => $this->t('4'),
       ],
-      '#default_value' => $config['az_display_settings']['card_width_sm'] ?? 'col-sm-6',
+      '#default_value' => $config['az_display_settings']['card_width_sm'] ?? 'col-sm-12',
       '#description' => $this->t('Choose how many cards appear per row. Additional cards will wrap to a new row. This selection sets the cards per row on tablets.'),
       '#weight' => 1,
     ];
