@@ -139,6 +139,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
         'y-20' => $this->t('20 (16.0rem | ~256px)'),
         'y-30' => $this->t('30 (24.0rem | ~384px)'),
+        'az-aspect-ratio' => $this->t('Media Aspect Ratio'),
       ],
       '#default_value' => $config['text_media_spacing'],
       '#description' => $this->t('Adds spacing above and below the text.'),
@@ -228,6 +229,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         case 'y-30':
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-10');
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
+          break;
+
+        case 'az-aspect-ratio':
+          $variables['attributes']['class'][] = 'az-aspect-ratio';
           break;
 
         default:
