@@ -22,6 +22,7 @@ process:
       method: process
     -
       plugin: extract
+      default: null
       index:
         - 0
         - value
@@ -33,6 +34,7 @@ process:
       method: process
     -
       plugin: extract
+      default: null
       index:
         - 0
         - value
