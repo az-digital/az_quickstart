@@ -17,22 +17,24 @@ use GuzzleHttp\Client;
 class AzNewsFeedsAdminForm extends ConfigFormBase {
 
   /**
-   * @var MigrationPluginManager $migration_plugin_manager
+   * @var \Drupal\migrate\Plugin\MigrationPluginManager
    */
-  protected $migration_plugin_manager;
+  protected $migrationPluginManager;
 
   /**
    * Constructs a AzNewsFeedsAdminForm object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
+   * @param \Drupal\migrate\Plugin\MigrationPluginManager $migration_plugin_manager
+   *   Plugin manager for migration plugins.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
     MigrationPluginManager $migration_plugin_manager
     ) {
     parent::__construct($config_factory);
-    $this->migration_plugin_manager = $migration_plugin_manager;
+    $this->migrationPluginManager = $migration_plugin_manager;
 
   }
 
@@ -134,14 +136,14 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $tag = 'Quickstart News Feeds';
 
     // Rollback the migrations for the old endpoint.
-    $migrations = $this->migration_plugin_manager->createInstancesByTag($tag);
+    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
     foreach ($migrations as $migration) {
       $executable = new MigrateExecutable($migration, new MigrateMessage());
       $executable->rollback();
     }
 
     // Run the migrations for the new endpoint.
-    $migrations = $this->migration_plugin_manager->createInstancesByTag($tag);
+    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
     foreach ($migrations as $migration) {
       $executable = new MigrateExecutable($migration, new MigrateMessage());
       $executable->import();
