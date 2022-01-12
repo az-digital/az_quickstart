@@ -17,5 +17,4 @@ az_news_feeds.settings:
       sequence:
         type: string
         label: 'Term'
-
         
