@@ -26,25 +26,18 @@
 .transparent {
   background: none;
 }
-.box {
-  padding: 2em;
-  margin-left: 0;
-  margin-right: 0;
-}
-.media--type--az-remote-video.box {
-  padding: 0;
-}
 .az-video-playing,
 .az-video-playing .text-on-video {
   background: none !important;
 }
-.column {
+.paragraph--type--az-text-media .box {
+  padding: 2em;
+  margin-left: 0;
+  margin-right: 0;
+}
+.paragraph--type--az-text-media .column {
   padding-left: 2em;
   padding-right: 2em;
-}
-.media--type--az-remote-video.column {
-  padding-left: 0;
-  padding-right: 0;
 }
 .bottom {
   margin-top: -5em;

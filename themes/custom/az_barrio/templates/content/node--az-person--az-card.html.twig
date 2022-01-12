@@ -61,7 +61,7 @@
 #}
 
 {{ attach_library('bootstrap_barrio/node') }}
-
+{% set url = (node.field_az_link.0.url) ? node.field_az_link.0.url : url %}
 {%
   set classes = [
     'node',

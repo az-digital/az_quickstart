@@ -141,7 +141,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             $column_classes = [];
             if (!empty($card_defaults['az_display_settings'])) {
               $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
-              $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-6';
+              $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
             }
             $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
             $card_classes = $card_defaults['card_style'] ?? 'card';
