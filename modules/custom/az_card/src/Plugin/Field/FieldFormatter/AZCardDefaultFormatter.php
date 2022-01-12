@@ -132,10 +132,13 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         if ($parent instanceof ParagraphInterface) {
           // Get the behavior settings for the parent.
           $parent_config = $parent->getAllBehaviorSettings();
-
           // See if the parent behavior defines some card-specific settings.
           if (!empty($parent_config['az_cards_paragraph_behavior'])) {
             $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+            // Is the card clickable?
+            if (!empty($card_defaults['card_clickable'])) {
+              $link_render_array['#attributes']['class'][] = 'stretched-link';
+            }
 
             // Set card classes according to behavior settings.
             $column_classes = [];
@@ -165,7 +168,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#body' => check_markup($item->body, $item->body_format),
         '#link' => $link_render_array,
         '#attributes' => ['class' => $card_classes],
-        '#link_attributes' => ['class' => $card_clickable],
       ];
 
       $element['#items'][$delta] = new \stdClass();
