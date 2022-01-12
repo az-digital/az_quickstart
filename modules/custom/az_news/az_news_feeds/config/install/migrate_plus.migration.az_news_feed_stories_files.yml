@@ -11,6 +11,8 @@ source:
   ids:
     fid:
       type: integer
+    uuid:
+      type: uuid
 
   fields:
     -
@@ -18,12 +20,16 @@ source:
       label: 'File ID'
       selector: /story/img-fid
     -
+      name: uuid
+      label: 'Story UUID'
+      selector: /story/uuid
+    -
       name: image
       label: 'Image'
-      selector: /story/img-large
-
+      selector: /story/img-thumb
 
 process:
+
   filename:
     -
       plugin: skip_on_empty
@@ -48,24 +54,30 @@ process:
         - constants/DRUPAL_FILE_DIRECTORY
         - '@filename'
 
+
   uri:
     -
       plugin: skip_on_empty
       method: process
       source: image/src
+
     -
       plugin: file_copy
       source:
         - image/src
         - '@destination_path'
-      file_exists: rename
+      file_exists: use existing
       move: false
+      guzzle_options:
+        headers:
+          User-Agent: 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 
   field_media_az_image/target_id:
-    plugin: entity_generate
-    source: '@uri'
-    entity_type: file
-    value_key: uri
+    - 
+      plugin: entity_generate
+      source: '@uri'
+      entity_type: file
+      value_key: uri
 
   field_media_az_image/alt: image/alt
 

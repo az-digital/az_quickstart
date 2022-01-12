@@ -1,0 +1,4 @@
+uarizona_news_category_base_uri: 'https://news.arizona.edu'
+uarizona_news_category_path: /feed/json/categories/uanews_categories+uanews_tags
+uarizona_news_terms:
+  all: All

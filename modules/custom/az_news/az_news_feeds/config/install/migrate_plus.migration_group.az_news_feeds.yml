@@ -17,7 +17,7 @@ shared_configuration:
     plugin: url
     data_fetcher_plugin: http
     data_parser_plugin: json
-    urls: https://azqs-559-uaqs-uanews.pantheonsite.io/feed/json/stories/campus-news
+    urls: https://news.arizona.edu/feed/json/stories/id/all
     constants:
       DRUPAL_FILE_DIRECTORY: 'public://images/'
     item_selector: stories/

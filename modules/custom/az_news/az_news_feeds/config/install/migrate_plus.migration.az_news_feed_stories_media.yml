@@ -12,12 +12,18 @@ source:
   ids:
     fid:
       type: integer
+    uuid:
+      type: uuid
 
   fields:
     -
       name: fid
       label: 'File ID'
       selector: /story/img-fid
+    -
+      name: uuid
+      label: 'Story UUID'
+      selector: /story/uuid
     -
       name: image
       label: 'Image'
