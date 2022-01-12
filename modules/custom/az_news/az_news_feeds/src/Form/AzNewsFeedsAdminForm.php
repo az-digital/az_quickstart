@@ -9,6 +9,7 @@ use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use GuzzleHttp\Client;
+
 /**
  * Form for editing news importer source.
  */
@@ -67,13 +68,12 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $terms = json_decode($response->getBody(), TRUE);
 
     $options = ['all' => 'All'];
-    foreach ($terms['terms']  as $key => $value) {
+    foreach ($terms['terms'] as $key => $value) {
       $options[$value['term']['tid']] = $value['term']['name'];
     }
 
     return $options;
   }
-
 
   /**
    * {@inheritdoc}
@@ -117,25 +117,25 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       ->set('shared_configuration.source.urls', $urls)
       ->save();
 
-      drupal_flush_all_caches();
+    drupal_flush_all_caches();
 
-      $tag = 'Quickstart News Feeds';
+    $tag = 'Quickstart News Feeds';
 
-      // Rollback the migrations for the old endpoint.
-      $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
-      foreach ($migrations as $migration) {
-        $executable = new MigrateExecutable($migration, new MigrateMessage());
-        $executable->rollback();
-      }
+    // Rollback the migrations for the old endpoint.
+    $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+    foreach ($migrations as $migration) {
+      $executable = new MigrateExecutable($migration, new MigrateMessage());
+      $executable->rollback();
+    }
 
-      // Run the migrations for the new endpoint.
-      $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
-      foreach ($migrations as $migration) {
-        $executable = new MigrateExecutable($migration, new MigrateMessage());
-        $executable->import();
-      }
-      
-      parent::submitForm($form, $form_state);
+    // Run the migrations for the new endpoint.
+    $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+    foreach ($migrations as $migration) {
+      $executable = new MigrateExecutable($migration, new MigrateMessage());
+      $executable->import();
+    }
+
+    parent::submitForm($form, $form_state);
 
   }
 
