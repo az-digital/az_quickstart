@@ -7,6 +7,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
+use Drupal\migrate\Plugin\MigrationPluginManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use GuzzleHttp\Client;
 
@@ -16,13 +17,23 @@ use GuzzleHttp\Client;
 class AzNewsFeedsAdminForm extends ConfigFormBase {
 
   /**
+   * @var MigrationPluginManager $migration_plugin_manager
+   */
+  protected $migration_plugin_manager;
+
+  /**
    * Constructs a AzNewsFeedsAdminForm object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
    */
-  public function __construct(ConfigFactoryInterface $config_factory) {
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    MigrationPluginManager $migration_plugin_manager
+    ) {
     parent::__construct($config_factory);
+    $this->migration_plugin_manager = $migration_plugin_manager;
+
   }
 
   /**
@@ -31,6 +42,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('plugin.manager.migration')
     );
   }
 
@@ -122,14 +134,14 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $tag = 'Quickstart News Feeds';
 
     // Rollback the migrations for the old endpoint.
-    $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+    $migrations = $this->migration_plugin_manager->createInstancesByTag($tag);
     foreach ($migrations as $migration) {
       $executable = new MigrateExecutable($migration, new MigrateMessage());
       $executable->rollback();
     }
 
     // Run the migrations for the new endpoint.
-    $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+    $migrations = $this->migration_plugin_manager->createInstancesByTag($tag);
     foreach ($migrations as $migration) {
       $executable = new MigrateExecutable($migration, new MigrateMessage());
       $executable->import();
