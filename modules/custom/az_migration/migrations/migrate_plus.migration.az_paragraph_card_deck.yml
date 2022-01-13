@@ -87,10 +87,10 @@ process:
     plugin: paragraphs_behavior_settings
     card_width: 'col-md-4 col-lg-4'
     card_style: 'card'
-    card_width_sm: 'col-sm-6'
+    card_width_sm: 'col-sm-12'
     card_width_xs: 'col-12'
     card_width_field: field_uaqs_setting_deck_width
-    card_count_field: field_uaqs_photo
+    card_count_field: field_uaqs_cards_values
 
 dependencies:
   enforced:

@@ -53,8 +53,8 @@ third_party_settings:
     group_az_title:
       children:
         - field_az_title
-      parent_name: group_az_content
-      weight: 22
+      parent_name: group_az_content_wrapper
+      weight: 21
       format_type: html_element
       region: content
       format_settings:
@@ -71,8 +71,7 @@ third_party_settings:
       label: Title
     group_az_content:
       children:
-        - group_az_title
-        - field_az_text_area
+        - group_az_content_wrapper
       parent_name: group_az_column
       weight: 21
       format_type: html_element
@@ -108,6 +107,26 @@ third_party_settings:
         effect: none
         speed: fast
       label: Column
+    group_az_content_wrapper:
+      children:
+        - group_az_title
+        - field_az_text_area
+      parent_name: group_az_content
+      weight: 20
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: az-full-width-column-content-wrapper
+        show_empty_fields: false
+      label: 'Content Wrapper'
 id: paragraph.az_text_media.default
 targetEntityType: paragraph
 bundle: az_text_media
@@ -132,7 +151,7 @@ content:
         important: false
     third_party_settings: {  }
   field_az_text_area:
-    weight: 23
+    weight: 22
     label: hidden
     settings: {  }
     third_party_settings: {  }
