@@ -48,9 +48,9 @@ source:
       label: 'Weight'
       selector: weight
     -
-      name: attributes
-      label: 'Attributes'
-      selector: attributes
+      name: class
+      label: 'Class'
+      selector: 'class'
   ids:
     link_id:
       type: integer
@@ -70,7 +70,10 @@ process:
   weight: weight
   expanded: expanded
   enabled: enabled
-  # 'link/options/attributes': attributes
+  'link/options/attributes/class':
+    plugin: skip_on_empty
+    source: class
+    method: process
   # Handle mapping of parent menu links. Refers to SOURCE id numbers.
   parent:
     plugin: menu_link_parent
