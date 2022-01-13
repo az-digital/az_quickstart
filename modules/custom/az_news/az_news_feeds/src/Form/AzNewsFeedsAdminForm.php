@@ -8,8 +8,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationPluginManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use GuzzleHttp\Client;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form for editing news importer source.
@@ -95,7 +95,8 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   public function buildForm(array $form, FormStateInterface $form_state) {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
     $config = $this->config('migrate_plus.migration_group.az_news_feeds');
-    $selected_cat = $az_news_feeds_config->get('uarizona_news_terms');
+    $selected_categories = $az_news_feeds_config->get('uarizona_news_terms');
+    $selected_categories = array_keys($selected_categories);
     $term_options = $this->getRemoteTermOptions();
 
     $form['term_options'] = [
@@ -110,7 +111,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#required' => TRUE,
       '#description' => 'Select which terms you want to use.',
       '#options' => $form['term_options']['#value'],
-      '#default_value' => $selected_cat,
+      '#default_value' => $selected_categories,
     ];
 
     return parent::buildForm($form, $form_state);
@@ -121,33 +122,32 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
-    $terms = implode('+', array_keys($form_state->getValue('uarizona_news_terms')));
+    $keys = $form_state->getValue('uarizona_news_terms');
+    $selected_terms = [];
+    foreach($keys as $key){
+      $selected_terms[$key] = $form['uarizona_news_terms']['#options'][$key];
+    }
     $az_news_feeds_config
-      ->set('uarizona_news_terms', $form_state->getValue('uarizona_news_terms'))
+      ->set('uarizona_news_terms', $selected_terms)
       ->save();
 
-    $urls = 'https://news.arizona.edu/feed/json/stories/id/' . $terms;
-    $this->config('migrate_plus.migration_group.az_news_feeds')
-      ->set('shared_configuration.source.urls', $urls)
-      ->save();
+    // drupal_flush_all_caches();
 
-    drupal_flush_all_caches();
+    // $tag = 'Quickstart News Feeds';
 
-    $tag = 'Quickstart News Feeds';
+    // // Rollback the migrations for the old endpoint.
+    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    // foreach ($migrations as $migration) {
+    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
+    //   $executable->rollback();
+    // }
 
-    // Rollback the migrations for the old endpoint.
-    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    foreach ($migrations as $migration) {
-      $executable = new MigrateExecutable($migration, new MigrateMessage());
-      $executable->rollback();
-    }
-
-    // Run the migrations for the new endpoint.
-    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    foreach ($migrations as $migration) {
-      $executable = new MigrateExecutable($migration, new MigrateMessage());
-      $executable->import();
-    }
+    // // Run the migrations for the new endpoint.
+    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    // foreach ($migrations as $migration) {
+    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
+    //   $executable->import();
+    // }
 
     parent::submitForm($form, $form_state);
 
