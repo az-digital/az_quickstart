@@ -180,7 +180,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $element['#attributes']['class'][] = 'row';
       $element['#attributes']['class'][] = 'd-flex';
       $element['#attributes']['class'][] = 'flex-wrap';
-      $element['#link_attributes']['class'][] = 'stretched-link';
     }
 
     return $element;
