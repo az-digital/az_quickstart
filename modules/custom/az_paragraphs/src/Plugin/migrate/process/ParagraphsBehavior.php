@@ -116,7 +116,7 @@ class ParagraphsBehavior extends ProcessPluginBase {
     if (!empty($this->configuration['card_style'])) {
       $behavior['card_style'] = $this->configuration['card_style'];
     }
-    if (!empty($this->configuration['card_clickable'])) {
+    if (isset($this->configuration['card_clickable'])) {
       $behavior['card_clickable'] = $this->configuration['card_clickable'];
     }
     if (!empty($this->configuration['card_width_sm'])) {
