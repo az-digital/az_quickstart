@@ -48,6 +48,13 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Select a card style.'),
     ];
 
+    $form['card_clickable'] = [
+      '#title' => $this->t('Clickable cards'),
+      '#type' => 'checkbox',
+      '#default_value' => isset($config['card_clickable']) ? $config['card_clickable'] : FALSE,
+      '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
+    ];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // Card deck width for tablets.
