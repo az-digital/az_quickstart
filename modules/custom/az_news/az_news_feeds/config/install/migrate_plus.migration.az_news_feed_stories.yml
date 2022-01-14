@@ -74,7 +74,7 @@ process:
     plugin: default_value
     default_value: az_standard
 
-  field_az_news_tags:
+  field_az_news_tags_processed:
     - plugin: skip_on_empty
       source: tags
       method: process
@@ -83,11 +83,15 @@ process:
       delimiter: ','
     - plugin: callback
       callable: trim
-    - plugin: entity_generate
-      entity_type: taxonomy_term
-      value_key: name
-      bundle_key: vid
-      bundle: az_news_tags
+
+  field_az_news_tags:
+    plugin: entity_generate
+    source: @field_az_news_tags_processed
+    entity_type: taxonomy_term
+    value_key: name
+    bundle_key: vid
+    bundle: az_news_tags
+    ignore_case: true
 
   field_az_media_image/target_id:
     -
