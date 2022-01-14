@@ -131,23 +131,23 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       ->set('uarizona_news_terms', $selected_terms)
       ->save();
 
-    // drupal_flush_all_caches();
+    drupal_flush_all_caches();
 
-    // $tag = 'Quickstart News Feeds';
+    $tag = 'Quickstart News Feeds';
 
-    // // Rollback the migrations for the old endpoint.
-    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    // foreach ($migrations as $migration) {
-    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
-    //   $executable->rollback();
-    // }
+    // Rollback the migrations for the old endpoint.
+    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    foreach ($migrations as $migration) {
+      $executable = new MigrateExecutable($migration, new MigrateMessage());
+      $executable->rollback();
+    }
 
-    // // Run the migrations for the new endpoint.
-    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    // foreach ($migrations as $migration) {
-    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
-    //   $executable->import();
-    // }
+    // Run the migrations for the new endpoint.
+    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    foreach ($migrations as $migration) {
+      $executable = new MigrateExecutable($migration, new MigrateMessage());
+      $executable->import();
+    }
 
     parent::submitForm($form, $form_state);
 

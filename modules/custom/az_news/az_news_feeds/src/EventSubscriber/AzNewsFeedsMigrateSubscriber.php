@@ -7,6 +7,7 @@ use Drupal\migrate\Event\EventBase;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateImportEvent;
 use Drupal\migrate\Event\MigratePreRowSaveEvent;
+use Drupal\migrate_plus\Entity\Migration;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -67,28 +68,21 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
   *  Current MigrateImportEvent object.
   */
   public function onPreImport(MigrateImportEvent $event) {
+
     $migration = $event->getMigration();
-    $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
-    $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
-    $views_contextual_argument = implode('+', array_keys($selected_terms));
-    // $terms = implode('+', array_keys($selected_terms));
-
-    $urls = 'https://news.arizona.edu/feed/json/stories/id/' . $views_contextual_argument;
-    // $this->config('migrate_plus.migration_group.az_news_feeds')
-    //   ->set('shared_configuration.source.urls', $urls)
-    //   ->save();
-    if ($this->isUarizonaNews($event)) {
-        Drush::output()->writeln($urls);
-        // Drush::output()->writeln($sourceTags);
-
-    //   $row = $event->getRow();
-    //   $source = $row->getSource();
-    //   $destination = $row->getDestination();
-    //   $collection = $this->keyValue->get('node_translation_redirect');
-    //   $collection->set($source['nid'], [$destination['nid'], $destination['langcode']]);
+    if ($migration->id() === 'az_news_feed_stories') {
+      $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
+      $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
+      $views_contextual_argument = implode('+', array_keys($selected_terms));
+      $urls = 'https://news.arizona.edu/feed/json/stories/id/' . $views_contextual_argument;
+      $event_migration = Migration::load($migration->id());
+      $source = $event_migration->get('source');
+      $source['urls'] = $urls;
+      $event_migration->set('source', $source);
+      $event_migration->save();
     }
-
   }
+
  /**
   * Event which fires before the Row is going to be saved.
   *
@@ -97,24 +91,14 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
   */
   public function onPreRowSave(MigratePreRowSaveEvent $event) {
     $migration = $event->getMigration();
-    $sourceTags =  $event->getRow()->getSourceProperty('tags');
-    $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
-    $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
-
-
-    $toSave =  $event->getRow()->getDestinationProperty('field_az_news_tags');
-    // Drush::output()->writeln($toSave);
-
-    //   dpm($event);
-    if ($this->isUarizonaNews($event)) {
-        // Drush::output()->writeln($selected_terms);
-        // Drush::output()->writeln($sourceTags);
-
-    //   $row = $event->getRow();
-    //   $source = $row->getSource();
-    //   $destination = $row->getDestination();
-    //   $collection = $this->keyValue->get('node_translation_redirect');
-    //   $collection->set($source['nid'], [$destination['nid'], $destination['langcode']]);
+    if ($migration->id() === 'az_news_feed_stories') {
+      $sourceTags =  explode(', ', $event->getRow()->getSourceProperty('tags'));
+      $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
+      $selected_terms = array_values($az_news_feeds_config->get('uarizona_news_terms'));
+      $pruned_tags = implode(', ', array_values(array_intersect($sourceTags, $selected_terms)));
+      $row = $event->getRow();
+      $row->setDestinationProperty('field_az_news_tags', $pruned_tags);
+      // \Drupal::logger('az_news_feeds')->notice(print_r($pruned_tags, TRUE));
     }
   }
 
