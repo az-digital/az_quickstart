@@ -51,10 +51,6 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
     $form['card_clickable'] = [
       '#title' => $this->t('Clickable cards'),
       '#type' => 'checkbox',
-      '#options' => [
-        '' => $this->t('Non-clickable cards'),
-        'stretched-link' => $this->t('Clickable cards'),
-      ],
       '#default_value' => isset($config['card_clickable']) ? $config['card_clickable'] : '',
       '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
     ];
