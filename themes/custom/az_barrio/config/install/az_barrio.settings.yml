@@ -31,7 +31,7 @@ bootstrap_barrio_region_clean_content_4_col_3: false
 bootstrap_barrio_region_clean_content_4_col_4: false
 bootstrap_barrio_region_clean_content_bottom: false
 bootstrap_barrio_region_clean_footer: false
-bootstrap_barrio_region_clean_footer_sub: false
+bootstrap_barrio_region_clean_footer_sub: true
 bootstrap_barrio_region_clean_az_page_bottom: false
 
 # Layout region column classes.

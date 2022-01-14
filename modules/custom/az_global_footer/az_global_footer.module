@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains az_global_footer.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_global_footer_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_global_footer module.
+    case 'help.page.az_global_footer':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides global footer content which links to UArizona social media accounts and resources. If your site is already has links in the Footer - Main menu, you will want to transfer those to a new menu prior to enabling this module.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
