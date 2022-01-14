@@ -78,9 +78,18 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
       $urls = 'https://news.arizona.edu/feed/json/stories/id/' . $views_contextual_argument;
       $event_migration = Migration::load($migration->id());
       $source = $event_migration->get('source');
-      $source_count = $migration->getProcess();
+      $processes = $migration->getProcess();
+      $array_intersect_process = [
+        'plugin' => 'array_intersect',
+        'source' => '@field_az_news_tags_processed',
+        'match'  => array_values($selected_terms),
+      ];
+      array_unshift($processes['field_az_news_tags'], $array_intersect_process);  
       $source['urls'] = $urls;
-      \Drupal::logger('az_news_feeds')->notice(print_r($source_count, TRUE));
+      \Drupal::logger('az_news_feeds')->notice(print_r($processes, TRUE));
+      $event_migration->set('process', $processes);
+      // $event_migration->save();
+
       // $process = [
       //   'plugin' => 'sub_process',
       //   'source' => 'field_az_news_tags',
