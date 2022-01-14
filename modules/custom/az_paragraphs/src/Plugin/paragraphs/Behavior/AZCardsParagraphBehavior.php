@@ -50,7 +50,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     $form['card_clickable'] = [
       '#title' => $this->t('Clickable cards'),
-      '#type' => 'select',
+      '#type' => 'checkbox',
       '#options' => [
         '' => $this->t('Non-clickable cards'),
         'stretched-link' => $this->t('Clickable cards'),
