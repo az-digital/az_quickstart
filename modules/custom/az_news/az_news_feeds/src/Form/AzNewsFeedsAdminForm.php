@@ -124,7 +124,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
     $keys = $form_state->getValue('uarizona_news_terms');
     $selected_terms = [];
-    foreach($keys as $key){
+    foreach ($keys as $key) {
       $selected_terms[$key] = $form['uarizona_news_terms']['#options'][$key];
     }
     $az_news_feeds_config
