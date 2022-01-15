@@ -248,5 +248,5 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
   }
-  
+
 }
