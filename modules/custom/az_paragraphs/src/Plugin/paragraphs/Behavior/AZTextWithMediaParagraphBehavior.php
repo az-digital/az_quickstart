@@ -179,9 +179,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
     $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . '-' . $paragraph->id());
-    if (!empty($variables['attributes']) && !empty($variables['attributes']['class']) && !is_array($variables['attributes']['class'])) {
-      $variables['attributes']['class'] = [];
-    }
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
     $variables['attributes']['class'][] = HTML::getClass('paragraph--type--' . $paragraph->bundle());
@@ -253,17 +250,5 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    // Get plugin configuration.
-    $config = $this->getSettings($paragraph);
-    // Apply bottom spacing if set.
-    if (!empty($config['az_display_settings']['bottom_spacing'])) {
-      $build['#attributes']['class'][] = $config['az_display_settings']['bottom_spacing'];
-    }
-  }
-
+  
 }
