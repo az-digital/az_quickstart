@@ -68,9 +68,6 @@ process:
         - '@destination_path'
       file_exists: use existing
       move: false
-      guzzle_options:
-        headers:
-          User-Agent: 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:60.0) Gecko/20100101 Firefox/60.0'
 
   field_media_az_image/target_id:
     - 

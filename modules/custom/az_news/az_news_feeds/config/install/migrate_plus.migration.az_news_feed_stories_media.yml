@@ -27,7 +27,7 @@ source:
     -
       name: image
       label: 'Image'
-      selector: /story/img-large
+      selector: /story/img-thumb
 
 
 process:
