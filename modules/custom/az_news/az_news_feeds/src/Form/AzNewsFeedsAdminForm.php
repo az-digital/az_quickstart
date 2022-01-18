@@ -33,8 +33,11 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
+   * @param GuzzleHttp\ClientInterface $http_client
+   *   An http client.
    * @param \Drupal\migrate\Plugin\MigrationPluginManager $migration_plugin_manager
    *   Plugin manager for migration plugins.
+
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
@@ -50,7 +53,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
       $container->get('http_client'),
@@ -62,7 +65,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  protected function getEditableConfigNames() {
+  protected function getEditableConfigNames(): array {
     return [
       'migrate_plus.migration_group.az_news_feeds',
       'az_news_feeds.settings',
@@ -72,7 +75,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function getFormId() {
+  public function getFormId(): string {
     return 'az_news_feeds_admin';
   }
 
@@ -99,7 +102,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state) {
+  public function buildForm(array $form, FormStateInterface $form_state): array {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
     $config = $this->config('migrate_plus.migration_group.az_news_feeds');
     $selected_categories = $az_news_feeds_config->get('uarizona_news_terms');

@@ -3,7 +3,6 @@ az_news_feeds.admin_importers:
   defaults:
     _form: '\Drupal\az_news_feeds\Form\AzNewsFeedsAdminForm'
     _title: 'Configure UArizona News Importer'
-  weight: 100
   requirements:
     _permission: 'administer quickstart configuration'
 
