@@ -83,13 +83,9 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
     $base_uri = $az_news_feeds_config->get('uarizona_news_category_base_uri');
     $category_path = $az_news_feeds_config->get('uarizona_news_category_path');
-
-    $client = new Client([
-      'base_uri' => $base_uri,
-    ]);
-
-    $response = $client->get($category_path, []);
-
+    $news_category_url = $base_uri . $category_path;
+    // Get category options remotely.
+    $response = $this->httpClient->request('GET', $news_category_url, ['verify' => FALSE]);
     $terms = json_decode($response->getBody(), TRUE);
 
     $options = ['all' => 'All'];
