@@ -8,7 +8,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationPluginManager;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -21,6 +21,13 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    */
   protected $migrationPluginManager;
 
+   /**
+   * An http client.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  protected $httpClient;
+
   /**
    * Constructs a AzNewsFeedsAdminForm object.
    *
@@ -31,9 +38,11 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
+    ClientInterface $http_client,
     MigrationPluginManager $migration_plugin_manager
     ) {
     parent::__construct($config_factory);
+    $this->httpClient = $http_client;
     $this->migrationPluginManager = $migration_plugin_manager;
 
   }
@@ -44,7 +53,9 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('http_client'),
       $container->get('plugin.manager.migration')
+
     );
   }
 
