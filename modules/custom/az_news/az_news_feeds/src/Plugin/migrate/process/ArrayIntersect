@@ -32,7 +32,7 @@ class ArrayIntersect extends ProcessPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property): ?array {
     // Only process non-empty values.
     if (empty($value)) {
       return NULL;

@@ -36,7 +36,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
     );
@@ -51,7 +51,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
    * @return bool
    *   True if we are migrating UArizona News stories, false otherwise.
    */
-  protected function isUarizonaNews(EventBase $event) {
+  protected function isUarizonaNews(EventBase $event): bool {
     $uarizonaNewsUrl = 'news.arizona.edu';
     $migration = $event->getMigration();
     $source_configuration = $migration->getSourceConfiguration();
@@ -71,9 +71,11 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
     if ($migration->id() === 'az_news_feed_stories') {
       // Change the news.arizona.edu feed url.
       $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
+      $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
+      $content_path = $az_news_feeds_config->get('uarizona_news_content_path');
       $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
       $views_contextual_argument = implode('+', array_keys($selected_terms));
-      $urls = 'https://news.arizona.edu/feed/json/stories/id/' . $views_contextual_argument;
+      $urls = $base_uri . $content_path . $views_contextual_argument;
       $event_migration = Migration::load($migration->id());
       $source = $event_migration->get('source');
       $processes = $migration->getProcess();
@@ -84,7 +86,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
       ];
       array_unshift($processes['field_az_news_tags'], $array_intersect_process);
       $source['urls'] = $urls;
-      \Drupal::logger('az_news_feeds')->notice(print_r($processes, TRUE));
+      // \Drupal::logger('az_news_feeds')->notice(print_r($processes, TRUE));
       $event_migration->set('process', $processes);
       $event_migration->set('source', $source);
       $event_migration->save();
@@ -94,7 +96,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
   /**
    * {@inheritdoc}
    */
-  public static function getSubscribedEvents() {
+  public static function getSubscribedEvents(): array {
     $events = [];
     $events[MigrateEvents::PRE_IMPORT] = ['onPreImport'];
 

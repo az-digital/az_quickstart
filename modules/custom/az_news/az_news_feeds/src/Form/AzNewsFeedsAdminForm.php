@@ -84,9 +84,11 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    */
   public function getRemoteTermOptions(): array {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
-    $base_uri = $az_news_feeds_config->get('uarizona_news_category_base_uri');
+    $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
     $category_path = $az_news_feeds_config->get('uarizona_news_category_path');
-    $news_category_url = $base_uri . $category_path;
+    $selected_vocabularies = $az_news_feeds_config->get('uarizona_news_vocabularies');
+    $views_contextual_argument = implode('+', array_keys($selected_vocabularies));
+    $news_category_url = $base_uri . $category_path . $views_contextual_argument;
     // Get category options remotely.
     $response = $this->httpClient->request('GET', $news_category_url, ['verify' => FALSE]);
     $terms = json_decode($response->getBody(), TRUE);
