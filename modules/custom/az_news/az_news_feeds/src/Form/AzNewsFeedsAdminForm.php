@@ -120,7 +120,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#type' => 'select',
       '#multiple' => TRUE,
       '#required' => TRUE,
-      '#description' => 'Select which terms you want to use.',
+      '#description' => 'Select which terms you want to use. To import the most recent stories regardless of tag, select "All". Deselect "All" if you want to import the most recent stories of any specific tag or tags. If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags. This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.',
       '#options' => $form['term_options']['#value'],
       '#default_value' => $selected_categories,
     ];

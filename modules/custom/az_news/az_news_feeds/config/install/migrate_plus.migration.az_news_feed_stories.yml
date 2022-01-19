@@ -69,11 +69,6 @@ process:
     plugin: default_value
     default_value: plain_text
 
-  field_az_body/value: body
-  field_az_body/format:
-    plugin: default_value
-    default_value: az_standard
-
   field_az_news_tags_processed:
     - plugin: skip_on_empty
       source: tags

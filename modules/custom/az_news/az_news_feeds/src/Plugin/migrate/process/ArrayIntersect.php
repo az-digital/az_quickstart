@@ -8,13 +8,13 @@ use Drupal\migrate\Row;
 
 /**
  * Enables use of array_intersect within a migration.
- * 
+ *
  * @MigrateProcessPlugin(
  *   id = "array_intersect"
  * )
- * 
+ *
  * @See https://git.drupalcode.org/project/migrate_process_array/-/blob/8.x-1.x/src/Plugin/migrate/process/ArrayIntersect.php
- * 
+ *
  * @code
  * process:
  *   field_of_array_values:
@@ -25,7 +25,6 @@ use Drupal\migrate\Row;
  *      - to
  *      - match
  * @endcode
- *
  */
 class ArrayIntersect extends ProcessPluginBase {
 
@@ -48,24 +47,17 @@ class ArrayIntersect extends ProcessPluginBase {
     if (!is_array($match)) {
       $match = [$match];
     }
-    
-    // Get the method and callable, if any.
+
+    // Get the method.
     $method = empty($this->configuration['method']) ? '' : $this->configuration['method'];
-    $callable = empty($this->configuration['callable']) ? NULL : $this->configuration['callable'];
-    
+
     // Return results by method.
     $out = [];
-    if ($method == 'assoc') {
+    if ($method === 'assoc') {
       $out = array_intersect_assoc($value, $match);
     }
-    elseif ($method == 'key') {
+    elseif ($method === 'key') {
       $out = array_intersect_key($value, $match);
-    }
-    elseif ($method == 'uassoc' && !empty($callable)) {
-      $out = array_intersect_uassoc($value, $match, $callable);
-    }
-    elseif ($method == 'ukey') {
-      $out = array_intersect_ukey($value, $match, $callable);
     }
     else {
       $out = array_intersect($value, $match);
@@ -78,4 +70,5 @@ class ArrayIntersect extends ProcessPluginBase {
 
     return $out;
   }
+
 }
