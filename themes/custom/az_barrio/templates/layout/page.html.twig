@@ -60,6 +60,7 @@
  * - page.content_bottom: Items for the bottom region.
  * - page.footer: Items for footer content.
  * - page.footer_sub: Items for the content below footer.
+ * - page.footer_sub_menus: Items for menu content below footer.
  * - page.page_bottom: Items for the very bottom of the page.
  *
  * Theme variables:
@@ -299,15 +300,18 @@
             </div>
           </section>
           {% endif %}
-          {% if page.footer_sub or land_acknowledgment or info_security_privacy or copyright_notice %}
+          {% if page.footer_sub or page.footer_sub_menus or land_acknowledgment or info_security_privacy or copyright_notice %}
           <div id="footer_sub"{{ attributes.addClass(classes) }}>
             <div class="container">
               <div class="row">
                 {{ page.footer_sub }}
               </div>
               <div class="row">
+                {{ page.footer_sub_menus }}
+              </div>
+              <div class="row">
                 <div class="col text-center">
-                  {% if page.footer_sub %}
+                  {% if page.footer_sub or page.footer_sub_menus %}
                   <hr>
                   {% endif %}
                   {{ land_acknowledgment }}

@@ -37,6 +37,7 @@ regions:
   content_bottom: 'Content bottom'
   footer: 'Footer'
   footer_sub: 'Footer sub'
+  footer_sub_menus: 'Footer sub menus'
   az_page_bottom: 'Page bottom'
 
 ckeditor_stylesheets:
