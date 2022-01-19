@@ -145,6 +145,7 @@ class AZCardWidget extends WidgetBase {
           $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
         '#attributes' => ['class' => ['card']],
       ];
+
       // Add card class from options.
       if (!empty($items[$delta]->options['class'])) {
         $element['preview_container']['card_preview']['#attributes']['class'][] = $items[$delta]->options['class'];
@@ -247,7 +248,7 @@ class AZCardWidget extends WidgetBase {
       ],
       '#required' => TRUE,
       '#title' => $this->t('Link Style'),
-      '#default_value' => (!empty($items[$delta]->link_style['class'])) ? $items[$delta]->link_style['class'] : 'text',
+      '#default_value' => (!empty($items[$delta]->link_style['class'])) ? $items[$delta]->link_style['class'] : '',
     ];
 
     if (!$items[$delta]->isEmpty()) {
@@ -533,6 +534,9 @@ class AZCardWidget extends WidgetBase {
       }
       if (!empty($value['options'])) {
         $values[$delta]['options'] = ['class' => $value['options']];
+      }
+      if (!empty($value['link_style'])) {
+        $values[$delta]['link_style'] = ['class' => $value['link_style']];
       }
       $values[$delta]['body'] = $value['body']['value'];
       $values[$delta]['body_format'] = $value['body']['format'];
