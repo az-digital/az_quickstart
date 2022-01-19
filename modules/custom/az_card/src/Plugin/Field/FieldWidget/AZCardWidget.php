@@ -533,8 +533,8 @@ class AZCardWidget extends WidgetBase {
       }
       if (!empty($value['options']) || !empty($value['link_style'])) {
         $values[$delta]['options'] = [
-          'class' => $value['options'], 
-          'link_style' => $value['link_style']
+          'class' => $value['options'],
+          'link_style' => $value['link_style'],
         ];
       }
       $values[$delta]['body'] = $value['body']['value'];
