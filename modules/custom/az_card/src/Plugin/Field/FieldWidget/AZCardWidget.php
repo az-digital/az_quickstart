@@ -168,7 +168,7 @@ class AZCardWidget extends WidgetBase {
           '#type' => 'link',
           '#title' => $items[$delta]->link_title ?? '',
           '#url' => $link_url ? $link_url : '#',
-          '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
+          '#attributes' => ['class' => ['btn-block']],
         ];
       }
     }
@@ -233,6 +233,21 @@ class AZCardWidget extends WidgetBase {
       '#title' => $this->t('Card Link URL'),
       '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
+    ];
+
+    $element['link_style'] = [
+      '#type' => 'select',
+      '#options' => [
+        'text' => $this->t('Text link'),
+        'btn-red' => $this->t('Red button'),
+        'btn-blue' => $this->t('Blue button'),
+        'btn-outline-red' => $this->t('Red outline button'),
+        'btn-outline-blue' => $this->t('Blue outline button'),
+        'btn-outline-white' => $this->t('White outline button'),
+      ],
+      '#required' => TRUE,
+      '#title' => $this->t('Link Style'),
+      '#default_value' => (!empty($items[$delta]->link_style['class'])) ? $items[$delta]->link_style['class'] : 'text',
     ];
 
     if (!$items[$delta]->isEmpty()) {

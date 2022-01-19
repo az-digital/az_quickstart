@@ -1,4 +1,4 @@
-name: az_quickstart
+name: az_quickstart_749
 recipe: drupal9
 config:
   php: '7.4'
