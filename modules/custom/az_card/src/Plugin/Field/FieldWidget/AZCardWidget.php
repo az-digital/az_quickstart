@@ -238,12 +238,12 @@ class AZCardWidget extends WidgetBase {
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
-        'text' => $this->t('Text link'),
-        'btn-red' => $this->t('Red button'),
-        'btn-blue' => $this->t('Blue button'),
-        'btn-outline-red' => $this->t('Red outline button'),
-        'btn-outline-blue' => $this->t('Blue outline button'),
-        'btn-outline-white' => $this->t('White outline button'),
+        '' => $this->t('Text link'),
+        'btn btn-red' => $this->t('Red button'),
+        'btn btn-blue' => $this->t('Blue button'),
+        'btn btn-outline-red' => $this->t('Red outline button'),
+        'btn btn-outline-blue' => $this->t('Blue outline button'),
+        'btn btn-outline-white' => $this->t('White outline button'),
       ],
       '#required' => TRUE,
       '#title' => $this->t('Link Style'),
