@@ -9,7 +9,7 @@ dependencies:
     - az_barrio
 id: az_barrio_footer_menu_social_media
 theme: az_barrio
-region: footer_sub
+region: footer_sub_menus
 weight: -8
 provider: null
 plugin: 'menu_block:az-footer-social-media'

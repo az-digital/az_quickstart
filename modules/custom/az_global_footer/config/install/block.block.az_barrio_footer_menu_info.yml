@@ -13,7 +13,7 @@ third_party_settings:
     classes: 'col-12 col-sm-6 col-md-3'
 id: az_barrio_footer_menu_info
 theme: az_barrio
-region: footer_sub
+region: footer_sub_menus
 weight: -11
 provider: null
 plugin: 'menu_block:az-footer-information-for'
