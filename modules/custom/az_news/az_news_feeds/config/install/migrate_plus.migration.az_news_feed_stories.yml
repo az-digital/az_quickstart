@@ -80,14 +80,15 @@ process:
       callable: trim
     - plugin: callback
       callable: var_dump
-
   field_az_news_tags/target_id:
-    - plugin: callback
-      callable: var_dump
+    - plugin: gate
+      use_as_key: '@field_az_news_tags_processed'
       source: '@field_az_news_tags_processed'
+      valid_keys:
+        - Sports
+      key_direction: unlock
     - plugin: skip_on_empty
       method: process
-      source: '@field_az_news_tags_processed'
     - plugin: entity_generate
       entity_type: taxonomy_term
       value_key: name
@@ -96,11 +97,10 @@ process:
       ignore_case: true
 
   field_az_media_image/target_id:
-    -
-      plugin: migration_lookup
-      source: fid
-      migration:
-        - az_news_feed_stories_media
+    plugin: migration_lookup
+    source: fid
+    migration:
+      - az_news_feed_stories_media
 
 migration_dependencies:
   required:

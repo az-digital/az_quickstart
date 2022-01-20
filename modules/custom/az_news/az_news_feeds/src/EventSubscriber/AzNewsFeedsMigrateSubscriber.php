@@ -70,26 +70,30 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
       $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
       $views_contextual_argument = implode('+', array_keys($selected_terms));
       $urls = $base_uri . $content_path . $views_contextual_argument;
+      $sourceConfig = $migration->getSourceConfiguration();
       $sourceConfig['urls'] = $urls;
+      $migration->set('source', $sourceConfig);
 
       if ($migration->id() === 'az_news_feed_stories') {
         $processConfig = $migration->getProcess();
-        $sourceConfig = $migration->getSourceConfiguration();
-        $array_intersect_process = [
-          'plugin' => 'array_intersect',
-          'match'  => array_values($selected_terms),
-        ];
-        $var_dump_process = [
-          'plugin' => 'callback',
-          'callable'  => 'var_dump',
-          // 'source' => $processConfig['field_az_news_tags_processed']
-        ];
+
+      //   $array_intersect_process = [
+      //     'plugin' => 'array_intersect',
+      //     'match'  => array_values($selected_terms),
+        // ];
+        // $var_dump_process = [
+        //   'plugin' => 'callback',
+        //   'callable'  => 'var_dump',
+        //   // 'source' => $processConfig['field_az_news_tags_processed']
+        // ];
+        // $migration->set('process', $processConfig);
+
+        \Drupal::logger('az_news_feeds')->notice(print_r($processConfig['field_az_news_tags_processed']));
 
         // $processConfig['field_az_news_tags_processed'][] = $var_dump_process;
-        $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
+        // $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
         // $processConfig['field_az_news_tags_processed'][] = $var_dump_process;
         $migration->set('process', $processConfig);
-        $migration->set('source', $sourceConfig);
       }
     }
   }
