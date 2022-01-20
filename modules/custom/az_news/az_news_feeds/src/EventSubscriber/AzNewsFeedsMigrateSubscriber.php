@@ -79,14 +79,15 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
       $event_migration = Migration::load($migration->id());
       $source = $event_migration->get('source');
       $processes = $migration->getProcess();
+
       $array_intersect_process = [
         'plugin' => 'array_intersect',
-        'source' => '@field_az_news_tags_processed',
+        // 'source' => '@field_az_news_tags_processed',
         'match'  => array_values($selected_terms),
       ];
-      array_unshift($processes['field_az_news_tags'], $array_intersect_process);
+      $processes['field_az_news_tags_processed'][] = $array_intersect_process;
+
       $source['urls'] = $urls;
-      // \Drupal::logger('az_news_feeds')->notice(print_r($processes, TRUE));
       $event_migration->set('process', $processes);
       $event_migration->set('source', $source);
       $event_migration->save();

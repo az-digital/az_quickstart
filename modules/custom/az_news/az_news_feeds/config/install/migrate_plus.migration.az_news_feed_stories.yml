@@ -80,12 +80,20 @@ process:
       callable: trim
 
   field_az_news_tags:
-    - plugin: entity_generate
-      entity_type: taxonomy_term
-      value_key: name
-      bundle_key: vid
-      bundle: az_news_tags
-      ignore_case: true
+    - plugin: callback
+      source: '@field_az_news_tags_processed'
+      callable: var_dump
+    #   method: process
+    # - plugin: sub_process
+    #   process:
+    #     target_id:
+    #       plugin: entity_generate
+    #       entity_type: taxonomy_term
+    #       value_key: name
+    #       bundle_key: vid
+    #       bundle: az_news_tags
+    #       ignore_case: true
+    #       source: '@field_az_news_tags_processed'
 
   field_az_media_image/target_id:
     -
@@ -93,7 +101,6 @@ process:
       source: fid
       migration:
         - az_news_feed_stories_media
-
 
 migration_dependencies:
   required:

@@ -11,4 +11,4 @@ dependencies:
   - migrate_plus:migrate_plus
   - migrate_queue_importer:migrate_queue_importer
 
-configure: az_news_feeds.admin
+configure: az_news_feeds.admin_importers

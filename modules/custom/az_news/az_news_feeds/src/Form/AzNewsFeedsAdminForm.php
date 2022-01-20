@@ -5,6 +5,8 @@ namespace Drupal\az_news_feeds\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationPluginManager;
@@ -109,18 +111,34 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $selected_categories = $az_news_feeds_config->get('uarizona_news_terms');
     $selected_categories = array_keys($selected_categories);
     $term_options = $this->getRemoteTermOptions();
-
+    $form['links'] = [
+      '#type' => 'item',
+      '#markup' =>  t('You can @migrate_queue_importer_link, or @migrate_tools_link separately.', [
+        '@migrate_queue_importer_link' => Link::fromTextAndUrl(
+          'configure the import schedule', Url::fromRoute('entity.cron_migration.collection')
+        )->toString(),
+        '@migrate_tools_link' => Link::fromTextAndUrl(
+          'run the import', Url::fromRoute('entity.migration_group.list')
+        )->toString(),
+      ]),
+    ];
+    $form['help'] = [
+      '#type' => 'item',
+      '#markup' =>  '<p>To import the most recent stories regardless of tag, select "All".</p>' .
+      '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
+      '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
+      '<p>This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.</p>'
+    ];
     $form['term_options'] = [
       '#type' => 'value',
       '#value' => $term_options,
     ];
-
     $form['uarizona_news_terms'] = [
       '#title' => t('News Categories'),
       '#type' => 'select',
       '#multiple' => TRUE,
       '#required' => TRUE,
-      '#description' => 'Select which terms you want to use. To import the most recent stories regardless of tag, select "All". Deselect "All" if you want to import the most recent stories of any specific tag or tags. If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags. This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.',
+      '#description' => 'Select which terms you want to import.',
       '#options' => $form['term_options']['#value'],
       '#default_value' => $selected_categories,
     ];
@@ -144,23 +162,21 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
 
     drupal_flush_all_caches();
 
+    parent::submitForm($form, $form_state);
     $tag = 'Quickstart News Feeds';
 
-    // Rollback the migrations for the old endpoint.
-    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    foreach ($migrations as $migration) {
-      $executable = new MigrateExecutable($migration, new MigrateMessage());
-      $executable->rollback();
-    }
-
-    // Run the migrations for the new endpoint.
-    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    foreach ($migrations as $migration) {
-      $executable = new MigrateExecutable($migration, new MigrateMessage());
-      $executable->import();
-    }
-
-    parent::submitForm($form, $form_state);
+    // // Rollback the migrations for the old endpoint.
+    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    // foreach ($migrations as $migration) {
+    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
+    //   $executable->rollback();
+    // }
+    // // Run the migrations for the new endpoint.
+    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    // foreach ($migrations as $migration) {
+    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
+    //   $executable->import();
+    // }
 
   }
 
