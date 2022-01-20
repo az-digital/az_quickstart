@@ -34,15 +34,6 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container): self {
-    return new static(
-      $container->get('config.factory'),
-    );
-  }
-
-  /**
    * Helper method to check if we are migrating UArizona News stories.
    *
    * @param \Drupal\migrate\Event\EventBase $event
@@ -67,6 +58,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
    */
   public function onPreImport(MigrateImportEvent $event) {
 
+    /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
     $migration = $event->getMigration();
     if ($migration->id() === 'az_news_feed_stories') {
       // Change the news.arizona.edu feed url.
