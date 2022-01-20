@@ -6,8 +6,6 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\migrate\Event\EventBase;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigrateImportEvent;
-use Drupal\migrate_plus\Entity\Migration;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -60,7 +58,11 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
 
     /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
     $migration = $event->getMigration();
-    if ($migration->id() === 'az_news_feed_stories') {
+    if (
+      $migration->id() === 'az_news_feed_stories' ||
+      $migration->id() === 'az_news_feed_stories_files' ||
+      $migration->id() === 'az_news_feed_stories_media'
+    ) {
       // Change the news.arizona.edu feed url.
       $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
       $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
@@ -68,21 +70,27 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
       $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
       $views_contextual_argument = implode('+', array_keys($selected_terms));
       $urls = $base_uri . $content_path . $views_contextual_argument;
-      $migration_config = Migration::load($migration->id());
-      $processes = $migration_config->get('process');
-      $source = $migration_config->get('source');
+      $sourceConfig['urls'] = $urls;
 
-      $array_intersect_process = [
-        'plugin' => 'array_intersect',
-        'match'  => array_values($selected_terms),
-      ];
+      if ($migration->id() === 'az_news_feed_stories') {
+        $processConfig = $migration->getProcess();
+        $sourceConfig = $migration->getSourceConfiguration();
+        $array_intersect_process = [
+          'plugin' => 'array_intersect',
+          'match'  => array_values($selected_terms),
+        ];
+        $var_dump_process = [
+          'plugin' => 'callback',
+          'callable'  => 'var_dump',
+          // 'source' => $processConfig['field_az_news_tags_processed']
+        ];
 
-      $processes['field_az_news_tags_processed'][] = $array_intersect_process;
-
-      $source['urls'] = $urls;
-      $migration_config->set('process', $processes);
-      $migration->set('source', $source);
-      $migration_config->save();
+        // $processConfig['field_az_news_tags_processed'][] = $var_dump_process;
+        $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
+        // $processConfig['field_az_news_tags_processed'][] = $var_dump_process;
+        $migration->set('process', $processConfig);
+        $migration->set('source', $sourceConfig);
+      }
     }
   }
 

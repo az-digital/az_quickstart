@@ -78,16 +78,16 @@ process:
       delimiter: ','
     - plugin: callback
       callable: trim
-    # - plugin: callback
-    #   callable: var_dump
+    - plugin: callback
+      callable: var_dump
 
   field_az_news_tags/target_id:
+    - plugin: callback
+      callable: var_dump
+      source: '@field_az_news_tags_processed'
     - plugin: skip_on_empty
       method: process
       source: '@field_az_news_tags_processed'
-    - plugin: flatten
-    - plugin: callback
-      callable: var_dump
     - plugin: entity_generate
       entity_type: taxonomy_term
       value_key: name

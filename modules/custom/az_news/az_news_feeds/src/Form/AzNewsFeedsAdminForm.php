@@ -7,8 +7,6 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\migrate\MigrateExecutable;
-use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationPluginManager;
 use GuzzleHttp\ClientInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -113,7 +111,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $term_options = $this->getRemoteTermOptions();
     $form['links'] = [
       '#type' => 'item',
-      '#markup' =>  t('You can @migrate_queue_importer_link, or @migrate_tools_link separately.', [
+      '#markup' => t('You can @migrate_queue_importer_link, or @migrate_tools_link separately.', [
         '@migrate_queue_importer_link' => Link::fromTextAndUrl(
           'configure the import schedule', Url::fromRoute('entity.cron_migration.collection')
         )->toString(),
@@ -124,10 +122,10 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     ];
     $form['help'] = [
       '#type' => 'item',
-      '#markup' =>  '<p>To import the most recent stories regardless of tag, select "All".</p>' .
+      '#markup' => '<p>To import the most recent stories regardless of tag, select "All".</p>' .
       '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
       '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
-      '<p>This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.</p>'
+      '<p>This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.</p>',
     ];
     $form['term_options'] = [
       '#type' => 'value',
@@ -165,19 +163,18 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     parent::submitForm($form, $form_state);
     $tag = 'Quickstart News Feeds';
 
-    // // Rollback the migrations for the old endpoint.
-    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    // foreach ($migrations as $migration) {
-    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
-    //   $executable->rollback();
-    // }
-    // // Run the migrations for the new endpoint.
-    // $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
-    // foreach ($migrations as $migration) {
-    //   $executable = new MigrateExecutable($migration, new MigrateMessage());
-    //   $executable->import();
-    // }
-
+    // Rollback the migrations for the old endpoint.
+    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    foreach ($migrations as $migration) {
+      $executable = new MigrateExecutable($migration, new MigrateMessage());
+      $executable->rollback();
+    }
+    // Run the migrations for the new endpoint.
+    $migrations = $this->migrationPluginManager->createInstancesByTag($tag);
+    foreach ($migrations as $migration) {
+      $executable = new MigrateExecutable($migration, new MigrateMessage());
+      $executable->import();
+    }
   }
 
 }
