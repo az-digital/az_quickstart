@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - system.menu.az-footer-resources
+    - system.menu.az-footer-topics
   module:
     - block_class
     - menu_block
@@ -10,16 +10,16 @@ dependencies:
     - az_barrio
 third_party_settings:
   block_class:
-    classes: 'col-12 col-sm-6 col-md-2'
-id: az_barrio_footer_menu_resources
+    classes: 'col-12 col-sm-6 col-md-5'
+id: az_barrio_footer_menu_topics
 theme: az_barrio
-region: footer_sub
-weight: -9
+region: footer_sub_menus
+weight: -10
 provider: null
-plugin: 'menu_block:az-footer-resources'
+plugin: 'menu_block:az-footer-topics'
 settings:
-  id: 'menu_block:az-footer-resources'
-  label: Resources
+  id: 'menu_block:az-footer-topics'
+  label: Topics
   provider: menu_block
   label_display: visible
   follow: false
@@ -27,8 +27,8 @@ settings:
   level: 1
   depth: 0
   expand_all_items: false
-  parent: 'az-footer-resources:'
-  suggestion: sub_footer
+  parent: 'az-footer-topics:'
+  suggestion: sub_footer_topics
   label_type: block
   label_link: false
 visibility: {  }

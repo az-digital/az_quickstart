@@ -567,8 +567,8 @@ function az_barrio_preprocess_block(&$variables) {
           $variables['title_attributes']['class'][] = 'text-uppercase';
         }
 
-        // Default classes for footer_sub region.
-        if ($region === 'footer_sub') {
+        // Default classes for footer_sub regions.
+        if ($region === 'footer_sub' || $region === 'footer_sub_menus') {
 
           // Footer topics menu has special split behavior.
           if (!empty($variables['derivative_plugin_id']) && $variables['derivative_plugin_id'] === 'az-footer-topics') {
