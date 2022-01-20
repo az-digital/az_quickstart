@@ -274,6 +274,12 @@ az_barrio.settings:
     bootstrap_barrio_region_class_footer_sub:
       type: text
       label: 'Classes for footer sub region'
+    bootstrap_barrio_region_clean_footer_sub_menus:
+      type: boolean
+      label: 'Enable clean wrapper for footer sub menus region'
+    bootstrap_barrio_region_class_footer_sub_menus:
+      type: text
+      label: 'Classes for footer sub menus region'
     bootstrap_barrio_region_clean_az_page_bottom:
       type: boolean
       label: 'Enable clean wrapper for page bottom region'

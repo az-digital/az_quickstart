@@ -25,6 +25,10 @@ html.sticky-footer #main-wrapper {
   flex: 1 0 auto;
   width: 100%;
 }
+/* Footer Social Media Icons */
+.az-icon-spacing::before {
+  margin-right:  .4rem;
+}
 
 /* Correct `inline-block` display not defined in IE 8/9. */
 audio,
