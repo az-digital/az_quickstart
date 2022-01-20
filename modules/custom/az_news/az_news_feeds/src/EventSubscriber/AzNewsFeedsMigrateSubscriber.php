@@ -89,7 +89,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
 
       $source['urls'] = $urls;
       $migration_config->set('process', $processes);
-      $migration_config->set('source', $source);
+      $migration->set('source', $source);
       $migration_config->save();
     }
   }
