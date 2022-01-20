@@ -80,9 +80,16 @@ process:
       callable: trim
 
   field_az_news_tags:
+    - plugin: multiple_values
     - plugin: callback
-      source: '@field_az_news_tags_processed'
       callable: var_dump
+    - plugin: skip_on_empty
+      method: process
+      # source: '@field_az_news_tags_processed'
+    - plugin: callback
+      callable: var_dump
+    - plugin: extract
+
     #   method: process
     # - plugin: sub_process
     #   process:

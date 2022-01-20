@@ -82,10 +82,11 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
 
       $array_intersect_process = [
         'plugin' => 'array_intersect',
-        // 'source' => '@field_az_news_tags_processed',
+        'source' => '@field_az_news_tags_processed',
         'match'  => array_values($selected_terms),
       ];
-      $processes['field_az_news_tags_processed'][] = $array_intersect_process;
+
+      array_unshift($processes['field_az_news_tags'], $array_intersect_process);
 
       $source['urls'] = $urls;
       $event_migration->set('process', $processes);
