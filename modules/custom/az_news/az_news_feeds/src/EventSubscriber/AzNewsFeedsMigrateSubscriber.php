@@ -76,22 +76,21 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
       $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
       $views_contextual_argument = implode('+', array_keys($selected_terms));
       $urls = $base_uri . $content_path . $views_contextual_argument;
-      $event_migration = Migration::load($migration->id());
-      $source = $event_migration->get('source');
-      $processes = $migration->getProcess();
+      $migration_config = Migration::load($migration->id());
+      $processes = $migration_config->get('process');
+      $source = $migration_config->get('source');
 
       $array_intersect_process = [
         'plugin' => 'array_intersect',
-        'source' => '@field_az_news_tags_processed',
         'match'  => array_values($selected_terms),
       ];
 
-      array_unshift($processes['field_az_news_tags'], $array_intersect_process);
+      $processes['field_az_news_tags_processed'][] = $array_intersect_process;
 
       $source['urls'] = $urls;
-      $event_migration->set('process', $processes);
-      $event_migration->set('source', $source);
-      $event_migration->save();
+      $migration_config->set('process', $processes);
+      $migration_config->set('source', $source);
+      $migration_config->save();
     }
   }
 

@@ -78,29 +78,22 @@ process:
       delimiter: ','
     - plugin: callback
       callable: trim
+    # - plugin: callback
+    #   callable: var_dump
 
-  field_az_news_tags:
-    - plugin: multiple_values
-    - plugin: callback
-      callable: var_dump
+  field_az_news_tags/target_id:
     - plugin: skip_on_empty
       method: process
-      # source: '@field_az_news_tags_processed'
+      source: '@field_az_news_tags_processed'
+    - plugin: flatten
     - plugin: callback
       callable: var_dump
-    - plugin: extract
-
-    #   method: process
-    # - plugin: sub_process
-    #   process:
-    #     target_id:
-    #       plugin: entity_generate
-    #       entity_type: taxonomy_term
-    #       value_key: name
-    #       bundle_key: vid
-    #       bundle: az_news_tags
-    #       ignore_case: true
-    #       source: '@field_az_news_tags_processed'
+    - plugin: entity_generate
+      entity_type: taxonomy_term
+      value_key: name
+      bundle_key: vid
+      bundle: az_news_tags
+      ignore_case: true
 
   field_az_media_image/target_id:
     -
