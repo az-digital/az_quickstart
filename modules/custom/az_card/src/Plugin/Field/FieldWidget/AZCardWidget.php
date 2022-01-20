@@ -173,6 +173,12 @@ class AZCardWidget extends WidgetBase {
         ];
       }
     }
+    
+    // Add link class from options.
+    if (!empty($items[$delta]->options['link_style'])) {
+      $element['preview_container']['card_preview']['#link']['#attributes']['class'] = explode(' ', $items[$delta]->options['link_style']);
+    }
+
 
     $element['options'] = [
       '#type' => 'select',
