@@ -76,23 +76,11 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
 
       if ($migration->id() === 'az_news_feed_stories') {
         $processConfig = $migration->getProcess();
-
-      //   $array_intersect_process = [
-      //     'plugin' => 'array_intersect',
-      //     'match'  => array_values($selected_terms),
-        // ];
-        // $var_dump_process = [
-        //   'plugin' => 'callback',
-        //   'callable'  => 'var_dump',
-        //   // 'source' => $processConfig['field_az_news_tags_processed']
-        // ];
-        // $migration->set('process', $processConfig);
-
-        \Drupal::logger('az_news_feeds')->notice(print_r($processConfig['field_az_news_tags_processed']));
-
-        // $processConfig['field_az_news_tags_processed'][] = $var_dump_process;
-        // $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
-        // $processConfig['field_az_news_tags_processed'][] = $var_dump_process;
+        $array_intersect_process = [
+          'plugin' => 'array_intersect',
+          'match'  => array_values($selected_terms),
+        ];
+        $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
         $migration->set('process', $processConfig);
       }
     }

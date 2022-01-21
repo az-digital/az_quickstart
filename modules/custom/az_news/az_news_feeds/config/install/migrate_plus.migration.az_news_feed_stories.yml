@@ -78,18 +78,19 @@ process:
       delimiter: ','
     - plugin: callback
       callable: trim
-    - plugin: callback
-      callable: var_dump
-  field_az_news_tags/target_id:
-    - plugin: gate
-      use_as_key: '@field_az_news_tags_processed'
+
+  field_az_news_tags:
+    -
+      plugin: array_intersect
       source: '@field_az_news_tags_processed'
-      valid_keys:
-        - Sports
-      key_direction: unlock
-    - plugin: skip_on_empty
+      match:
+        - 'Sports'
+        - 'Arizona Athletics'
+    -
+      plugin: skip_on_empty
       method: process
-    - plugin: entity_generate
+    -
+      plugin: entity_generate
       entity_type: taxonomy_term
       value_key: name
       bundle_key: vid

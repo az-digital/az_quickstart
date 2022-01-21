@@ -31,7 +31,7 @@ class ArrayIntersect extends ProcessPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property): ?array {
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Only process non-empty values.
     if (empty($value)) {
       return NULL;
@@ -60,12 +60,13 @@ class ArrayIntersect extends ProcessPluginBase {
       $out = array_intersect_key($value, $match);
     }
     else {
-      $out = array_intersect($value, $match);
+      $array_intersect = array_intersect($value, $match);
+      $out = $array_intersect[0];
     }
 
     // Migrate treats NULL as empty not not empty arrays.
     if (empty($out)) {
-      return NULL;
+      return false;
     }
 
     return $out;
