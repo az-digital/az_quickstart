@@ -169,7 +169,7 @@ class AZCardWidget extends WidgetBase {
           '#type' => 'link',
           '#title' => $items[$delta]->link_title ?? '',
           '#url' => $link_url ? $link_url : '#',
-          '#attributes' => ['class' => ['btn-block']],
+          '#attributes' => ['btn', 'btn-default', 'w-100']],
         ];
       }
     }
