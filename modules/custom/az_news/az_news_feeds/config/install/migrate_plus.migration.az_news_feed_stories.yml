@@ -81,16 +81,16 @@ process:
 
   field_az_news_tags:
     -
-      plugin: skip_on_empty
-      method: process
-      source: '@field_az_news_tags_processed'
-    -
       plugin: entity_generate
       entity_type: taxonomy_term
       value_key: name
       bundle_key: vid
       bundle: az_news_tags
       ignore_case: true
+      source: '@field_az_news_tags_processed'
+    -
+      plugin: skip_on_empty
+      method: process
 
   field_az_media_image/target_id:
     plugin: migration_lookup

@@ -61,7 +61,9 @@ class ArrayIntersect extends ProcessPluginBase {
     }
     else {
       $array_intersect = array_intersect($value, $match);
-      $out = $array_intersect[0];
+      if (isset($array_intersect[0])) {
+        $out = $array_intersect[0];
+      }
     }
 
     // Migrate treats NULL as empty not not empty arrays.
