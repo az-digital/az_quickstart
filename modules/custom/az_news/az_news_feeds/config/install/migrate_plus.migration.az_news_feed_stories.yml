@@ -84,7 +84,6 @@ process:
       plugin: skip_on_empty
       method: process
       source: '@field_az_news_tags_processed'
-
     -
       plugin: entity_generate
       entity_type: taxonomy_term
