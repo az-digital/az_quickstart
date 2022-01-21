@@ -31,7 +31,7 @@ class ArrayIntersect extends ProcessPluginBase {
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property): ?string {
     // Only process non-empty values.
     if (empty($value)) {
       return NULL;
@@ -54,10 +54,16 @@ class ArrayIntersect extends ProcessPluginBase {
     // Return results by method.
     $out = [];
     if ($method === 'assoc') {
-      $out = array_intersect_assoc($value, $match);
+      $array_intersect = array_intersect_assoc($value, $match);
+      if (isset($array_intersect[0])) {
+        $out = $array_intersect[0];
+      }
     }
     elseif ($method === 'key') {
-      $out = array_intersect_key($value, $match);
+      $array_intersect = array_intersect_key($value, $match);
+      if (isset($array_intersect[0])) {
+        $out = $array_intersect[0];
+      }
     }
     else {
       $array_intersect = array_intersect($value, $match);
