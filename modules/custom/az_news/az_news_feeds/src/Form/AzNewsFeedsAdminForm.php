@@ -29,8 +29,6 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    *   The factory for configuration objects.
    * @param GuzzleHttp\ClientInterface $http_client
    *   An http client.
-   * @param \Drupal\migrate\Plugin\MigrationPluginManager $migration_plugin_manager
-   *   Plugin manager for migration plugins.   *.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,

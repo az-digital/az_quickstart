@@ -68,7 +68,7 @@ class ArrayIntersect extends ProcessPluginBase {
 
     // Migrate treats NULL as empty not not empty arrays.
     if (empty($out)) {
-      return FALSE;
+      return NULL;
     }
 
     return $out;
