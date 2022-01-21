@@ -17,11 +17,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AzNewsFeedsAdminForm extends ConfigFormBase {
 
   /**
-   * @var \Drupal\migrate\Plugin\MigrationPluginManager
-   */
-  protected $migrationPluginManager;
-
-  /**
    * An http client.
    *
    * @var \GuzzleHttp\ClientInterface
