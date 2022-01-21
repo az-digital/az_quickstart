@@ -6,6 +6,7 @@ migration: az_news_feed_stories
 time: 1800
 update: true
 sync: false
+continue_on_falure: true
 ignore_dependencies: 0
 dependencies:
   module:

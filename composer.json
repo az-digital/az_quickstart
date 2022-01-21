@@ -140,6 +140,9 @@
             },
             "drupal/metatag": {
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
+            },
+            "drupal/migrate_queue_importer": {
+                "Add continue on failure option. (3259875)": "https://git.drupalcode.org/project/migrate_queue_importer/-/merge_requests/4/diffs.patch"
             }
         },
         "drupal-scaffold": {
