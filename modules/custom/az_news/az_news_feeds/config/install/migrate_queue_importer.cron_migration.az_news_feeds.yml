@@ -5,7 +5,7 @@ label: 'Quickstart News'
 migration: az_news_feed_stories
 time: 1800
 update: true
-sync: true
+sync: false
 ignore_dependencies: 0
 dependencies:
   module:
