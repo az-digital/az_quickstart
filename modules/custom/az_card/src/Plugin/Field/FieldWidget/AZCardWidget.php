@@ -252,7 +252,7 @@ class AZCardWidget extends WidgetBase {
         'btn btn-block btn-outline-white' => $this->t('White outline button'),
       ],
       '#title' => $this->t('Card Link Style'),
-      '#default_value' => (!empty($items[$delta]->options['link_style'])) ? $items[$delta]->options['link_style'] : '',
+      '#default_value' => (!empty($items[$delta]->options['link_style'])) ? $items[$delta]->options['link_style'] : 'btn-block',
     ];
 
     if (!$items[$delta]->isEmpty()) {
