@@ -81,14 +81,10 @@ process:
 
   field_az_news_tags:
     -
-      plugin: array_intersect
-      source: '@field_az_news_tags_processed'
-      match:
-        - 'Sports'
-        - 'Arizona Athletics'
-    -
       plugin: skip_on_empty
       method: process
+      source: '@field_az_news_tags_processed'
+
     -
       plugin: entity_generate
       entity_type: taxonomy_term
