@@ -2,7 +2,7 @@ name: Quickstart News Feeds
 type: module
 description: 'Import news stories from UArizona News.'
 core_version_requirement: ^8.8 || ^9
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
 
 dependencies:
   - az_news
