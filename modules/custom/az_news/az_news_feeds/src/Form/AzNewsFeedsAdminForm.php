@@ -34,13 +34,10 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    ClientInterface $http_client,
-    MigrationPluginManager $migration_plugin_manager
+    ClientInterface $http_client
     ) {
     parent::__construct($config_factory);
     $this->httpClient = $http_client;
-    $this->migrationPluginManager = $migration_plugin_manager;
-
   }
 
   /**
@@ -49,9 +46,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
-      $container->get('http_client'),
-      $container->get('plugin.manager.migration')
-
+      $container->get('http_client')
     );
   }
 
