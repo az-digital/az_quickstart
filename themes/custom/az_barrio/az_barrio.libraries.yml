@@ -9,7 +9,7 @@ az-media-display:
       css/az-media-display.css: {}
 az-barrio-off-canvas-nav:
   css:
-    component:
+    theme:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
