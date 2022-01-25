@@ -3,6 +3,8 @@ global-styling:
   css:
     component:
       css/style.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap
 az-media-display:
   css:
     component:
@@ -13,8 +15,6 @@ az-barrio-off-canvas-nav:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
-  dependencies:
-    - az_barrio/arizona-bootstrap
 az-proxima-nova:
   css:
     theme:
