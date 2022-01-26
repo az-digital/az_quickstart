@@ -75,6 +75,7 @@
         "drupal/menu_block": "1.7.0",
         "drupal/menu_link_attributes": "1.2",
         "drupal/metatag": "1.16",
+        "drupal/migrate_queue_importer": "2.0",
         "drupal/migrate_plus": "5.2.0",
         "drupal/migrate_tools": "5.1.0",
         "drupal/paragraphs": "1.12",
@@ -124,7 +125,8 @@
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
                 "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff",
-                "Allow menu_link source plugin to filter menu links by menu name (#3064016)": "https://git.drupalcode.org/project/drupal/-/commit/510b5904fcd2498800b733d4e3015003eed23c81.diff"
+                "Allow menu_link source plugin to filter menu links by menu name (#3064016)": "https://git.drupalcode.org/project/drupal/-/commit/510b5904fcd2498800b733d4e3015003eed23c81.diff",
+                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2020-06-28/2766369-25.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
