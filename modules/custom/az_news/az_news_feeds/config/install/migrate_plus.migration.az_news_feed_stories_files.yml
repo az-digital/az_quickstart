@@ -68,6 +68,7 @@ process:
         - '@destination_path'
       file_exists: use existing
       move: false
+      skip_process_on_failure: true
 
   field_media_az_image/target_id:
     - 
