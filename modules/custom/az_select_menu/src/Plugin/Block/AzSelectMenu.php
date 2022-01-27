@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   },
  * )
  */
-class AzDropdownMenuBlock extends MenuBlock {
+class AzSelectMenu extends MenuBlock {
 
   /**
    * {@inheritdoc}
@@ -129,6 +129,14 @@ class AzDropdownMenuBlock extends MenuBlock {
    */
   public function build() {
     $build = parent::build();
+
+    if (!empty($build['#theme'])) {
+
+        // Add the configuration for use in menu_block_theme_suggestions_menu().
+        $build['#az_select_menu_configuration'] = $this->configuration['az_select_menu'];
+        dpm($build);
+
+    };
 
     return $build;
   }

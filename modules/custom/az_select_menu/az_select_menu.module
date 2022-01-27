@@ -1,0 +1,57 @@
+<?php
+
+/**
+ * @file
+ * Provides configurable blocks of menu links.
+ */
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function az_select_menu_theme_registry_alter(&$theme_registry) {
+  // Add $az_select_menu_configuration as a variable to the 'menu' theme hook. Set
+  // its default value to be an empty array.
+  $theme_registry['menu']['variables']['az_select_menu_configuration'] = [];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK() for "menu".
+ */
+function az_select_menu_theme_suggestions_menu(array $variables) {
+  $suggestions = [];
+  // dpm($variables);
+  // dpm($suggestions);
+  dpm($variables);
+
+  // The AzSelectMenu plugin's build() method populates this variable.
+  if (!empty($variables['menu_block_configuration'])) {
+        dpm($variables);
+
+    if (!empty($variables['menu_block_configuration']['provider']) && $variables['menu_block_configuration']['provider'] === 'az_select_menu') {
+
+      $config = $variables['menu_block_configuration']['az_select_menu'];
+      $menu_name = strtr($variables['menu_name'], '-', '_');
+
+      $suggestions[] = 'az_select_menu';
+      $suggestions[] = 'az_select_menu__' . $menu_name;
+
+      // Context module (and perhaps others?) adds 'region' into the config.
+      if (!empty($config['region'])) {
+        $suggestions[] = 'az_select_menu__region_' . $config['region'];
+        $suggestions[] = 'az_select_menu__' . $menu_name . '__region_' . $config['region'];
+      }
+
+      // Add our custom theme suggestion.
+      if (!empty($config['suggestion']) && $config['suggestion'] !== $menu_name) {
+        $suggestions[] = 'az_select_menu__' . $config['suggestion'];
+      }
+
+      // Context module adds block 'uuid' into the config.
+      if (!empty($config['uuid'])) {
+        $suggestions[] = 'az_select_menu__' . $menu_name . '__' . $config['uuid'];
+      }
+    }
+  }
+
+  return $suggestions;
+}
