@@ -163,36 +163,4 @@ class AzSelectMenu extends MenuBlock {
 
     return $build;
   }
-
-  // /**
-  //  * {@inheritdoc}
-  //  */
-  // public function preprocess(&$variables) {
-  //   dpm($variables);
-  // // Libraries to attach to this paragraph.
-  // $libraries = [];
-  // /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
-  // $paragraph = $variables['paragraph'];
-  // // Get plugin configuration.
-  // $config = $this->getSettings($paragraph);
-  // // Get the paragraph bundle name and compute name of potential library.
-  // $bundle = $paragraph->bundle();
-  // $libraries[] = 'az_paragraphs.' . $bundle;
-  // // Generate library names to check based on view mode.
-  // if (!empty($variables['view_mode'])) {
-  //   // Potential library for paragraph view mode.
-  //   $libraries[] = 'az_paragraphs.' . $variables['view_mode'];
-  //   // Bundle-specific view mode libraries.
-  //   $libraries[] = 'az_paragraphs.' . $bundle . '_' . $variables['view_mode'];
-  // }
-  // // Check if any of the potential library names actually exist.
-  // foreach ($libraries as $name) {
-  //   // Check if library discovery service knows about the library.
-  //   $library = $this->libraryDiscovery->getLibraryByName('az_paragraphs', $name);
-  // if ($library) {
-  //     // If we found a library, attach it to the paragraph.
-  //     $variables['#attached']['library'][] = 'az_paragraphs/' . $name;
-  //   }
-  // }
-  // }.
 }

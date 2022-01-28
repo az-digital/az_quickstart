@@ -11,6 +11,7 @@
     attach: function attach() {
       var _loop = function _loop(i) {
         var selectFormId = drupalSettings.azSelectMenu.ids[i];
+        console.log(drupalSettings.azSelectMenu.ids[i]);
         $("#".concat(selectFormId)).once('az-select-menu', function () {
           console.log(drupalSettings.azSelectMenu.ids[i]);
           $("#".concat(selectFormId, " .js_select_menu_button")).on('touchstart click mouseenter mouseleave focus blur', Drupal.azSelectMenu.handleEvents);
