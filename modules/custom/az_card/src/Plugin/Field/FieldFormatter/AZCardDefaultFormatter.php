@@ -136,7 +136,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           if (!empty($parent_config['az_cards_paragraph_behavior'])) {
             $card_defaults = $parent_config['az_cards_paragraph_behavior'];
             // Is the card clickable?
-            if ($card_defaults['card_clickable']) {
+            if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
 
