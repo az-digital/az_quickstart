@@ -8,6 +8,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Menu\MenuTreeParameters;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Template\Attribute;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
 use Drupal\system\Entity\Menu;
 use Drupal\system\Plugin\Block\SystemMenuBlock;
@@ -129,18 +130,86 @@ class AzSelectMenu extends MenuBlock {
    */
   public function build() {
     $build = parent::build();
+    // dpm($build);
 
-    if (!empty($build['#theme'])) {
+    $form_attributes = new Attribute([
+      'id' => 'az-select-menu-form-' . $build['#menu_name'],
+      'class' => [
+        'form-inline',
+      ],
+      'data-toggle' => 'popover',
+      'data-trigger' => 'focus',
+      'data-placement' => 'top',
+      'data-content' => t('Please make a selection.'),
+    ]);
 
-        // Add the configuration for use in menu_block_theme_suggestions_menu().
-        $build['#az_select_menu_configuration'] = $this->configuration['az_select_menu'];
-        dpm($build);
+    $build['#form_attributes'] = $form_attributes;
 
-    };
+    $select_attributes = new Attribute([
+      'id' => 'az-select-menu-select-' . $build['#menu_name'] . '',
+      'class' => [
+        'form-control',
+        'select-primary',
+      ],
+      'aria-invalid' => "false",
+    ]);
+
+    $build['#select_attributes'] = $select_attributes;
+
+    $button_attributes = new Attribute([
+      'id' => 'socks',
+      'class' => [
+        'form-control',
+        'select-primary',
+      ],
+      'aria-invalid' => "false",
+    ]);
+
+    $build['#button_attributes'] = $button_attributes;
+
+    $build['#attached']['library'][] = 'az_select_menu/az_select_menu';
+    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az_select_menu_' . $build['#menu_name'];
 
     return $build;
   }
 
+  // /**
+  //  * {@inheritdoc}
+  //  */
+  // public function preprocess(&$variables) {
+  //   dpm($variables);
+    // // Libraries to attach to this paragraph.
+    // $libraries = [];
+
+    // /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+    // $paragraph = $variables['paragraph'];
+
+    // // Get plugin configuration.
+    // $config = $this->getSettings($paragraph);
+
+    // // Get the paragraph bundle name and compute name of potential library.
+    // $bundle = $paragraph->bundle();
+    // $libraries[] = 'az_paragraphs.' . $bundle;
+
+    // // Generate library names to check based on view mode.
+    // if (!empty($variables['view_mode'])) {
+    //   // Potential library for paragraph view mode.
+    //   $libraries[] = 'az_paragraphs.' . $variables['view_mode'];
+    //   // Bundle-specific view mode libraries.
+    //   $libraries[] = 'az_paragraphs.' . $bundle . '_' . $variables['view_mode'];
+    // }
+
+    // // Check if any of the potential library names actually exist.
+    // foreach ($libraries as $name) {
+    //   // Check if library discovery service knows about the library.
+    //   $library = $this->libraryDiscovery->getLibraryByName('az_paragraphs', $name);
+
+    //   if ($library) {
+    //     // If we found a library, attach it to the paragraph.
+    //     $variables['#attached']['library'][] = 'az_paragraphs/' . $name;
+    //   }
+    // }
+  // }
 
 
 }
