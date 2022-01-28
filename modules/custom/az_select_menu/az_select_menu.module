@@ -4,6 +4,7 @@
  * @file
  * Provides configurable blocks of menu links.
  */
+
 /**
  * Implements hook_theme().
  */
@@ -64,4 +65,3 @@ function az_select_menu_theme_suggestions_menu(array $variables) {
 
   return $suggestions;
 }
-
