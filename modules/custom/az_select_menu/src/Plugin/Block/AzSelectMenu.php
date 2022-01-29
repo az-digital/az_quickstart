@@ -4,7 +4,6 @@ namespace Drupal\az_select_menu\Plugin\Block;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
-use Drupal\Core\Url;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -74,7 +73,7 @@ class AzSelectMenu extends MenuBlock {
       '#type' => 'textfield',
       '#title' => t('Form help for screen-readers.'),
       '#default_value' => $config['az_select_menu']['preform_text_sr_only'],
-      '#description' => t('Depending on the preform text, screen readers don\'t necessarily show their users this form in a helpful context.'),
+      '#description' => t('Depending on the preform text, screen readers do not necessarily show their users this form in a helpful context.'),
     ];
 
     $form['az_select_menu']['button_text'] = [
@@ -179,4 +178,5 @@ class AzSelectMenu extends MenuBlock {
 
     return $build;
   }
+
 }
