@@ -81,11 +81,7 @@
   <div id="page">
     <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
         {% if page.alert %}
-        <div class="{{ container }}">
-          <div class="row">
-            {{ page.alert }}
-          </div>
-        </div>
+          {{ page.alert }}
         {% endif %}
         <header class="bg-red arizona-header" id="header_arizona" role="banner">
           <div class="{{ container }}">
