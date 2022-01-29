@@ -5,39 +5,51 @@
 * @preserve
 **/
 
-(function ($, Drupal, drupalSettings, window, document, undefined) {
+(function ($, Drupal, window, document, once) {
   Drupal.azSelectMenu = Drupal.azSelectMenu || {};
   Drupal.behaviors.azSelectMenu = {
-    attach: function attach() {
-      var _loop = function _loop(i) {
-        var selectFormId = drupalSettings.azSelectMenu.ids[i];
-        console.log(drupalSettings.azSelectMenu.ids[i]);
-        $("#".concat(selectFormId)).once('az-select-menu', function () {
-          console.log(drupalSettings.azSelectMenu.ids[i]);
-          $("#".concat(selectFormId, " .js_select_menu_button")).on('touchstart click mouseenter mouseleave focus blur', Drupal.azSelectMenu.handleEvents);
-          $("#".concat(selectFormId, "-menu")).on('focus mouseenter', Drupal.azSelectMenu.handleEvents);
-          $("#".concat(selectFormId, "-menu")).change(Drupal.azSelectMenu.handleEvents);
-          $(document).on('touchstart', Drupal.azSelectMenu.handleEvents);
+    attach: function attach(context, settings) {
+      for (var i = 0; i < settings.azSelectMenu.ids.length; i++) {
+        var selectFormId = settings.azSelectMenu.ids[i];
+        var selectForm = document.querySelector("#".concat(selectFormId));
+        once('azSelectMenu', selectForm, context).forEach(function (element) {
+          $(element).popover();
+          element.addEventListener('focus', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), element.addEventListener('change', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), element.addEventListener('mouseenter', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), button = element.querySelector('button');
+          button.addEventListener('click', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), button.addEventListener('touchstart', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), button.addEventListener('mouseenter', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), button.addEventListener('mouseleave', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), button.addEventListener('focus', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), button.addEventListener('blur', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), document.addEventListener('touchstart', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), element.classList.add('processed');
         });
-      };
-
-      for (var i = 0; i < drupalSettings.azSelectMenu.ids.length; i++) {
-        _loop(i);
       }
 
       ;
     }
   };
 
-  Drupal.azSelectMenu.handleEvents = function (e) {
-    console.log(e);
+  Drupal.azSelectMenu.handleEvents = function (event) {
     var $this = $(this);
 
-    if (e.type === 'touchstart') {
-      if ($this.hasClass('btn')) {
-        e.stopPropagation();
+    if (event.type === 'touchstart') {
+      if ($this.hasClass('js_select_menu_button')) {
+        event.stopPropagation();
       } else {
-        console.log($this);
         $('.az-select-menu').popover('hide');
         return;
       }
@@ -45,19 +57,24 @@
 
     var $selectForm = $this.closest('form');
     var $selectElement = $selectForm.find('select');
-    var $selectBtn = $selectForm.find('.btn');
-    var selectElementHref = $selectElement.find('option:selected').data('href');
+    var $selectBtn = $selectForm.find('button');
+    var selectElementHref = $selectElement.children('option:selected').data('href');
+    $selectForm.popover('show');
+    console.log(selectElementHref);
+    console.log($selectElement.children("option:selected").attr('data-href'));
+    console.log($selectElement.find('option:selected').attr('data-href'));
 
-    if (selectElementHref.indexOf('%3Cnolink%3E') <= 0) {
+    if (selectElementHref !== undefined) {
       $selectForm.popover('hide');
       $selectElement.attr('aria-invalid', 'false');
       $selectBtn.removeClass('disabled');
       $selectBtn.attr('aria-disabled', 'false');
       $selectBtn.removeAttr('disabled');
+      console.log($selectBtn);
 
-      switch (e.type) {
+      switch (event.type) {
         case 'click':
-          e.stopImmediatePropagation();
+          event.stopImmediatePropagation();
           window.location = selectElementHref;
           break;
       }
@@ -67,7 +84,7 @@
       $selectBtn.attr('disabled', true);
       $selectElement.attr('aria-invalid', 'true');
 
-      switch (e.type) {
+      switch (event.type) {
         case 'click':
           if ($this.hasClass('btn')) {
             $selectForm.popover('show');
@@ -92,4 +109,4 @@
       }
     }
   };
-})(jQuery, Drupal, drupalSettings, this, this.document);
+})(jQuery, Drupal, this, this.document, once);

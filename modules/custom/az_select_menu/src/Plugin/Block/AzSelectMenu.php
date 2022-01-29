@@ -4,6 +4,7 @@ namespace Drupal\az_select_menu\Plugin\Block;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -121,10 +122,19 @@ class AzSelectMenu extends MenuBlock {
    * {@inheritdoc}
    */
   public function build() {
+
     $build = parent::build();
-    // dpm($build);
+    // Add the empty option if set.
+    if ($build['#menu_block_configuration']['az_select_menu']['empty_option'] && !empty($build['#menu_block_configuration']['az_select_menu']['empty_option_label'])) {
+      $empty_option = [
+        'href' => '<nolink>',
+        'title' => $build['#menu_block_configuration']['az_select_menu']['empty_option_label'],
+      ];
+      array_unshift($build['#items'], $empty_option);
+    }
+
     $form_attributes = new Attribute([
-      'id' => 'az-select-menu-form-' . $build['#menu_name'],
+      'id' => 'az-select-menu-' . $build['#menu_name'] . '-form',
       'class' => [
         'form-inline',
       ],
@@ -137,7 +147,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#form_attributes'] = $form_attributes;
 
     $select_attributes = new Attribute([
-      'id' => 'az-select-menu-select-' . $build['#menu_name'] . '',
+      'id' => 'az-select-menu-' . $build['#menu_name'] . '-select',
       'class' => [
         'form-control',
         'select-primary',
@@ -148,18 +158,24 @@ class AzSelectMenu extends MenuBlock {
     $build['#select_attributes'] = $select_attributes;
 
     $button_attributes = new Attribute([
-      'id' => 'socks',
+      'id' => 'az-select-menu-' . $build['#menu_name'] . '-button',
       'class' => [
-        'form-control',
-        'select-primary',
+        'btn',
+        'btn-primary',
+        'js_select_menu_button',
+        'disabled',
       ],
-      'aria-invalid' => "false",
+      'aria-disabled' => 'true',
+      'role' => 'button',
+      'type' => 'button',
+      'tabindex' => '0',
+      'disabled' => 'disabled',
     ]);
 
     $build['#button_attributes'] = $button_attributes;
 
     $build['#attached']['library'][] = 'az_select_menu/az_select_menu';
-    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az_select_menu_' . $build['#menu_name'];
+    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az-select-menu-' . $build['#menu_name'] . '-form';
 
     return $build;
   }

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-select-menu
+label: 'Demo Audience Select Menu'
+description: 'Demo menu to be used with az_select_menu module.'
+locked: false
