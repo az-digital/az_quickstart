@@ -60,9 +60,6 @@
     var selectElement = document.getElementById('az-select-menu-az-select-menu-select');
     var $selectBtn = $selectForm.find('button');
     var selectElementHref = $selectElement.children('option:selected').data('href')[0];
-    // console.log(selectElementHref);
-    console.log(selectElement.selectedOptions.data('href'));
-    // console.log($this.find('option:selected').attr('data-href'));
 
     if (selectElementHref !== undefined) {
       $selectForm.popover('hide');

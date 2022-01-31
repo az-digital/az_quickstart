@@ -12,7 +12,6 @@
       for ( let i = 0; i < settings.azSelectMenu.ids.length; i++ ) {
         const selectFormId =  settings.azSelectMenu.ids[i];
         const selectForm = document.querySelector(`#${selectFormId}`);
-        // const [selectFormOnce] = once('az-select-menu', selectForm);
         once('azSelectMenu', selectForm, context).forEach(function (element) {
           $(element).popover();
           element.addEventListener('focus', (event) => {
@@ -25,7 +24,6 @@
             Drupal.azSelectMenu.handleEvents(event);
           }),
           button = element.querySelector('button');
-          // console.log(button);
           button.addEventListener('click', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           }),
