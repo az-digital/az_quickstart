@@ -28,26 +28,36 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           $(element).popover();
           element.addEventListener("focus", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), element.addEventListener("change", function (event) {
+          });
+          element.addEventListener("change", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), element.addEventListener("mouseenter", function (event) {
+          });
+          element.addEventListener("mouseenter", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), button = element.querySelector("button");
+          });
+          var button = element.querySelector("button");
           button.addEventListener("click", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), button.addEventListener("touchstart", function (event) {
+          });
+          button.addEventListener("touchstart", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), button.addEventListener("mouseenter", function (event) {
+          });
+          button.addEventListener("mouseenter", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), button.addEventListener("mouseleave", function (event) {
+          });
+          button.addEventListener("mouseleave", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), button.addEventListener("focus", function (event) {
+          });
+          button.addEventListener("focus", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), button.addEventListener("blur", function (event) {
+          });
+          button.addEventListener("blur", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), document.addEventListener("touchstart", function (event) {
+          });
+          document.addEventListener("touchstart", function (event) {
             Drupal.azSelectMenu.handleEvents(event);
-          }), element.classList.add("processed");
+          });
+          element.classList.add("processed");
         });
       }
     }
@@ -83,6 +93,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           event.stopImmediatePropagation();
           window.location = selectElementHref;
           break;
+
+        default:
+          break;
       }
     } else {
       button.classList.add("disabled");
@@ -110,6 +123,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
         case "mouseleave":
           $selectForm.popover("hide");
+          break;
+
+        default:
           break;
       }
     }

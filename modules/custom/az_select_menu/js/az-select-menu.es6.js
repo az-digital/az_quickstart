@@ -11,40 +11,40 @@
       for (let i = 0; i < settings.azSelectMenu.ids.length; i++) {
         const selectFormId = settings.azSelectMenu.ids[i];
         const selectForm = document.querySelector(`#${selectFormId}`);
-        once("azSelectMenu", selectForm, context).forEach(function (element) {
+        once("azSelectMenu", selectForm, context).forEach((element) => {
           $(element).popover();
           element.addEventListener("focus", (event) => {
             Drupal.azSelectMenu.handleEvents(event);
-          }),
-            element.addEventListener("change", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            element.addEventListener("mouseenter", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            (button = element.querySelector("button"));
+          });
+          element.addEventListener("change", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          element.addEventListener("mouseenter", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          const button = element.querySelector("button");
           button.addEventListener("click", (event) => {
             Drupal.azSelectMenu.handleEvents(event);
-          }),
-            button.addEventListener("touchstart", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            button.addEventListener("mouseenter", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            button.addEventListener("mouseleave", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            button.addEventListener("focus", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            button.addEventListener("blur", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            document.addEventListener("touchstart", (event) => {
-              Drupal.azSelectMenu.handleEvents(event);
-            }),
-            element.classList.add("processed");
+          });
+          button.addEventListener("touchstart", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          button.addEventListener("mouseenter", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          button.addEventListener("mouseleave", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          button.addEventListener("focus", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          button.addEventListener("blur", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          document.addEventListener("touchstart", (event) => {
+            Drupal.azSelectMenu.handleEvents(event);
+          });
+          element.classList.add("processed");
         });
       }
     },
@@ -55,8 +55,10 @@
    *
    * Handles mouse and click events for the select menu
    * elements.
+   * @param {object} event The javascript event object.
    */
-  Drupal.azSelectMenu.handleEvents = function (event) {
+
+  Drupal.azSelectMenu.handleEvents = (event) => {
     // Hide the popover when user touches any part of the screen, except the
     // select form button regardless of state.
     if (event.type === "touchstart") {
@@ -86,8 +88,11 @@
           event.stopImmediatePropagation();
           window.location = selectElementHref;
           break;
+        default:
+          break;
       }
     }
+
     //  Don't follow link if using the nolink setting.
     else {
       button.classList.add("disabled");
@@ -112,6 +117,8 @@
 
         case "mouseleave":
           $selectForm.popover("hide");
+          break;
+        default:
           break;
       }
     }
