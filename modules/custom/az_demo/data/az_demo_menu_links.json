@@ -241,28 +241,6 @@
       "expanded": false,
       "enabled": true,
       "weight": "0"
-    },
-    {
-      "link_id": "23",
-      "parent_link_id": "0",
-      "menu": "az-select-menu",
-      "title": "a future student",
-      "urlpath": "https://www.arizona.edu/admissions",
-      "external": true,
-      "expanded": false,
-      "enabled": true,
-      "weight": "0"
-    },
-    {
-      "link_id": "24",
-      "parent_link_id": "0",
-      "menu": "az-select-menu",
-      "title": "a current student",
-      "urlpath": "https://www.arizona.edu/students",
-      "external": true,
-      "expanded": false,
-      "enabled": true,
-      "weight": "0"
     }
   ]
 }

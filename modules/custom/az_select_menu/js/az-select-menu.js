@@ -5,6 +5,18 @@
 * @preserve
 **/
 
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 (function ($, Drupal, window, document, once) {
   Drupal.azSelectMenu = Drupal.azSelectMenu || {};
   Drupal.behaviors.azSelectMenu = {
@@ -14,13 +26,7 @@
         var selectForm = document.querySelector("#".concat(selectFormId));
         once('azSelectMenu', selectForm, context).forEach(function (element) {
           $(element).popover();
-          element.addEventListener('focus', function (event) {
-            Drupal.azSelectMenu.handleEvents(event);
-          }), element.addEventListener('change', function (event) {
-            Drupal.azSelectMenu.handleEvents(event);
-          }), element.addEventListener('mouseenter', function (event) {
-            Drupal.azSelectMenu.handleEvents(event);
-          }), button = element.querySelector('button');
+          button = element.closest('button');
           button.addEventListener('click', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           }), button.addEventListener('touchstart', function (event) {
@@ -56,13 +62,15 @@
     }
 
     var $selectForm = $this.closest('form');
+    var selectForm = event.target.closest('form');
+    var selectElement = selectForm.querySelector('select');
+
+    var _selectElement$select = _slicedToArray(selectElement.selectedOptions, 1),
+        optionsSelected = _selectElement$select[0];
+
+    var selectElementHref = optionsSelected.dataset.href;
     var $selectElement = $selectForm.find('select');
-    var selectElement = document.getElementById('az-select-menu-az-select-menu-select');
     var $selectBtn = $selectForm.find('button');
-    var selectElementHref = $selectElement.children('option:selected').data('href')[0];
-    // console.log(selectElementHref);
-    console.log(selectElement.selectedOptions.data('href'));
-    // console.log($this.find('option:selected').attr('data-href'));
 
     if (selectElementHref !== undefined) {
       $selectForm.popover('hide');
@@ -70,11 +78,12 @@
       $selectBtn.removeClass('disabled');
       $selectBtn.attr('aria-disabled', 'false');
       $selectBtn.removeAttr('disabled');
-      console.log($selectBtn);
+      console.log(event.type);
 
       switch (event.type) {
         case 'click':
           event.stopImmediatePropagation();
+          console.log('going to ' + selectElementHref);
           window.location = selectElementHref;
           break;
       }

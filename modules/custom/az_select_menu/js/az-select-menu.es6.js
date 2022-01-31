@@ -25,6 +25,7 @@
             Drupal.azSelectMenu.handleEvents(event);
           }),
           button = element.querySelector('button');
+          console.log(button);
           button.addEventListener('click', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           }),
@@ -72,15 +73,15 @@
         return;
       }
     }
+
     const $selectForm = $this.closest('form');
+    const selectForm = event.target.closest('form');
+    const selectElement = selectForm.querySelector('select');
+    const [optionsSelected] = selectElement.selectedOptions;
+    const selectElementHref = optionsSelected.dataset.href;
+    console.log(selectElementHref);
     const $selectElement = $selectForm.find('select');
     const $selectBtn = $selectForm.find('button');
-    const selectElementHref = $selectElement.children('option:selected').data('href');
-    // let selectElementHref ="test";
-    $selectForm.popover('show');
-    console.log(selectElementHref);
-    console.log($selectElement.children("option:selected").attr('data-href'));
-    console.log($selectElement.find('option:selected').attr('data-href'));
 
     //  If a navigable link is selected in the dropdown.
     if (selectElementHref !== undefined) {
@@ -89,11 +90,12 @@
       $selectBtn.removeClass('disabled');
       $selectBtn.attr('aria-disabled', 'false');
       $selectBtn.removeAttr('disabled');
-      console.log($selectBtn);
+      console.log(event.type);
       switch (event.type) {
         case 'click':
           // If the link works, don't allow the button to focus.
           event.stopImmediatePropagation();
+          console.log('going to ' + selectElementHref);
           window.location = selectElementHref;
           break;
       }

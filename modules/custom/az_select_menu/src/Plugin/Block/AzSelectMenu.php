@@ -126,7 +126,7 @@ class AzSelectMenu extends MenuBlock {
     // Add the empty option if set.
     if ($build['#menu_block_configuration']['az_select_menu']['empty_option'] && !empty($build['#menu_block_configuration']['az_select_menu']['empty_option_label'])) {
       $empty_option = [
-        'href' => '<nolink>',
+        'href' => Url::fromRoute('<nolink>', ['absolute' => 'true']),
         'title' => $build['#menu_block_configuration']['az_select_menu']['empty_option_label'],
       ];
       array_unshift($build['#items'], $empty_option);

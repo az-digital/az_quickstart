@@ -1,7 +1,10 @@
 az_select_menu:
   version: 1.x
+  css:
+    theme:
+      css/az-select-menu.css: {}
   js:
-    js/az_select_menu.js: {}
+    js/az-select-menu.js: {}
   dependencies:
     - core/jquery
     - core/drupal
