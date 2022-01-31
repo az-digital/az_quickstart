@@ -7,12 +7,12 @@ source:
   plugin: d7_path_redirect
 process:
   rid: rid
-  skip_count: 
+  skip_count:
     plugin: skip_on_value
     source: count
     value: 0
     method: row
-  uid:      
+  uid:
     -
       plugin: migration_lookup
       migration: az_user
@@ -50,7 +50,14 @@ process:
     plugin: default_value
     source: language
     default_value: und
-  status_code: status_code
+  status_code:
+    -
+      plugin: get
+      source: status_code
+    -
+      plugin: default_value
+      default_value: 302
+      source: status_code
 destination:
   plugin: entity:redirect
 migration_dependencies:
