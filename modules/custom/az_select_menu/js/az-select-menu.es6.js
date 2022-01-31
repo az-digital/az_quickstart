@@ -25,7 +25,7 @@
             Drupal.azSelectMenu.handleEvents(event);
           }),
           button = element.querySelector('button');
-          console.log(button);
+          // console.log(button);
           button.addEventListener('click', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           }),
@@ -61,11 +61,10 @@
    * elements.
    */
   Drupal.azSelectMenu.handleEvents = function (event) {
-    const $this = $(this);
     // Hide the popover when user touches any part of the screen, except the
     // select form button regardless of state.
     if (event.type === 'touchstart') {
-      if ($this.hasClass('js_select_menu_button')) {
+      if (event.target.classList.contains('js_select_menu_button')) {
         event.stopPropagation();
       }
       else {
@@ -74,49 +73,42 @@
       }
     }
 
-    const $selectForm = $this.closest('form');
     const selectForm = event.target.closest('form');
+    const $selectForm = $(selectForm);
     const selectElement = selectForm.querySelector('select');
     const [optionsSelected] = selectElement.selectedOptions;
     const selectElementHref = optionsSelected.dataset.href;
-    console.log(selectElementHref);
-    const $selectElement = $selectForm.find('select');
-    const $selectBtn = $selectForm.find('button');
+    const button = selectForm.querySelector('button');
 
     //  If a navigable link is selected in the dropdown.
-    if (selectElementHref !== undefined) {
+    if (selectElementHref !== '') {
       $selectForm.popover('hide');
-      $selectElement.attr('aria-invalid', 'false');
-      $selectBtn.removeClass('disabled');
-      $selectBtn.attr('aria-disabled', 'false');
-      $selectBtn.removeAttr('disabled');
-      console.log(event.type);
+      button.classList.remove("disabled");
+      button.setAttribute('aria-disabled', 'false');
       switch (event.type) {
         case 'click':
           // If the link works, don't allow the button to focus.
           event.stopImmediatePropagation();
-          console.log('going to ' + selectElementHref);
           window.location = selectElementHref;
           break;
       }
     }
     //  Don't follow link if using the nolink setting.
     else {
-      $selectBtn.addClass('disabled');
-      $selectBtn.attr('aria-disabled', 'true');
-      $selectBtn.attr('disabled', true);
-      $selectElement.attr('aria-invalid', 'true');
+      button.classList.add("disabled");
+      button.setAttribute('aria-disabled', 'true');
+      selectElement.setAttribute('aria-disabled', 'true');
       switch (event.type) {
         case 'click':
-          if ($this.hasClass('btn')) {
+          if (event.target.classList.contains('js_select_menu_button')) {
             $selectForm.popover('show');
-            $selectElement.focus();
+            selectElement.focus();
           }
           break;
 
         case 'focus':
         case 'mouseenter':
-          if ($this.hasClass('btn')) {
+          if (event.target.classList.contains('js_select_menu_button')) {
             $selectForm.popover('show');
           }
           else {

@@ -26,25 +26,26 @@ select.select-primary {
     -webkit-transition: .15s all ease-in-out;
     transition: .15s all ease-in-out;
     text-overflow: '';
+    height: calc(1.6em + 0.75rem + 2px);
   }
   
   /*This only works in Internet Explorer 10 and beyond. */
   select.select-primary::-ms-expand {
     display: none;
   }
-  
+
   select.select-primary:focus,
   select.select-primary:hover {
     border-top: 1px solid transparent;
-    border-bottom: 3px solid #ab0520;
+    border-bottom: 3px solid var(--red);
   }
-  
+
   label.select-menu-label {
     font-weight: normal;
   }
-  
-  .form-inline label.select-menu-label {
-    margin: .7em;
+
+  .input-group .select-menu-label {
+    margin: 0.7em 0.7em 0;
   }
   
   select.select-primary:active,

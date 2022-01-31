@@ -26,7 +26,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         var selectForm = document.querySelector("#".concat(selectFormId));
         once('azSelectMenu', selectForm, context).forEach(function (element) {
           $(element).popover();
-          button = element.closest('button');
+          element.addEventListener('focus', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), element.addEventListener('change', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), element.addEventListener('mouseenter', function (event) {
+            Drupal.azSelectMenu.handleEvents(event);
+          }), button = element.querySelector('button');
           button.addEventListener('click', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           }), button.addEventListener('touchstart', function (event) {
@@ -50,10 +56,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   };
 
   Drupal.azSelectMenu.handleEvents = function (event) {
-    var $this = $(this);
-
     if (event.type === 'touchstart') {
-      if ($this.hasClass('js_select_menu_button')) {
+      if (event.target.classList.contains('js_select_menu_button')) {
         event.stopPropagation();
       } else {
         $('.az-select-menu').popover('hide');
@@ -61,50 +65,44 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     }
 
-    var $selectForm = $this.closest('form');
     var selectForm = event.target.closest('form');
+    var $selectForm = $(selectForm);
     var selectElement = selectForm.querySelector('select');
 
     var _selectElement$select = _slicedToArray(selectElement.selectedOptions, 1),
         optionsSelected = _selectElement$select[0];
 
     var selectElementHref = optionsSelected.dataset.href;
-    var $selectElement = $selectForm.find('select');
-    var $selectBtn = $selectForm.find('button');
+    var button = selectForm.querySelector('button');
 
-    if (selectElementHref !== undefined) {
+    if (selectElementHref !== '') {
       $selectForm.popover('hide');
-      $selectElement.attr('aria-invalid', 'false');
-      $selectBtn.removeClass('disabled');
-      $selectBtn.attr('aria-disabled', 'false');
-      $selectBtn.removeAttr('disabled');
-      console.log(event.type);
+      button.classList.remove("disabled");
+      button.setAttribute('aria-disabled', 'false');
 
       switch (event.type) {
         case 'click':
           event.stopImmediatePropagation();
-          console.log('going to ' + selectElementHref);
           window.location = selectElementHref;
           break;
       }
     } else {
-      $selectBtn.addClass('disabled');
-      $selectBtn.attr('aria-disabled', 'true');
-      $selectBtn.attr('disabled', true);
-      $selectElement.attr('aria-invalid', 'true');
+      button.classList.add("disabled");
+      button.setAttribute('aria-disabled', 'true');
+      selectElement.setAttribute('aria-disabled', 'true');
 
       switch (event.type) {
         case 'click':
-          if ($this.hasClass('btn')) {
+          if (event.target.classList.contains('js_select_menu_button')) {
             $selectForm.popover('show');
-            $selectElement.focus();
+            selectElement.focus();
           }
 
           break;
 
         case 'focus':
         case 'mouseenter':
-          if ($this.hasClass('btn')) {
+          if (event.target.classList.contains('js_select_menu_button')) {
             $selectForm.popover('show');
           } else {
             $selectForm.popover('hide');

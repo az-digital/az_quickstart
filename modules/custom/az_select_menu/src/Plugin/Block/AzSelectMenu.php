@@ -4,6 +4,7 @@ namespace Drupal\az_select_menu\Plugin\Block;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -57,7 +58,7 @@ class AzSelectMenu extends MenuBlock {
       '#default_value' => $config['az_select_menu']['empty_option_label'],
       '#states' => [
         'visible' => [
-          ':input[name="az_select_menu[empty_option]"]' => ['checked' => TRUE],
+          ':input[name="settings][az_select_menu][empty_option]' => ['checked' => TRUE],
         ],
       ],
     ];
@@ -126,7 +127,7 @@ class AzSelectMenu extends MenuBlock {
     // Add the empty option if set.
     if ($build['#menu_block_configuration']['az_select_menu']['empty_option'] && !empty($build['#menu_block_configuration']['az_select_menu']['empty_option_label'])) {
       $empty_option = [
-        'href' => Url::fromRoute('<nolink>', ['absolute' => 'true']),
+        'href' => Url::fromRoute('<button>', []),
         'title' => $build['#menu_block_configuration']['az_select_menu']['empty_option_label'],
       ];
       array_unshift($build['#items'], $empty_option);
@@ -134,9 +135,6 @@ class AzSelectMenu extends MenuBlock {
 
     $form_attributes = new Attribute([
       'id' => 'az-select-menu-' . $build['#menu_name'] . '-form',
-      'class' => [
-        'form-inline',
-      ],
       'data-toggle' => 'popover',
       'data-trigger' => 'focus',
       'data-placement' => 'top',
@@ -168,7 +166,6 @@ class AzSelectMenu extends MenuBlock {
       'role' => 'button',
       'type' => 'button',
       'tabindex' => '0',
-      'disabled' => 'disabled',
     ]);
 
     $build['#button_attributes'] = $button_attributes;
