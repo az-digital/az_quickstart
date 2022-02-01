@@ -51,13 +51,10 @@ process:
     source: language
     default_value: und
   status_code:
-    -
-      plugin: get
-      source: status_code
-    -
-      plugin: default_value
-      default_value: 302
-      source: status_code
+    plugin: default_value
+    default_value: 302
+    source: status_code
+
 destination:
   plugin: entity:redirect
 migration_dependencies:
