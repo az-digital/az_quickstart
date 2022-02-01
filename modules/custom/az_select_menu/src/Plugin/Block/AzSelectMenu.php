@@ -58,7 +58,7 @@ class AzSelectMenu extends MenuBlock {
       '#default_value' => $config['az_select_menu']['empty_option_label'],
       '#states' => [
         'visible' => [
-          ':input[name="settings][az_select_menu][empty_option]' => ['checked' => TRUE],
+          ':input[name="settings][az_select_menu][empty_option"]' => ['checked' => TRUE],
         ],
       ],
     ];
