@@ -56,8 +56,8 @@
           {% import _self as menus %}
           {% if items %}
             <select {{ select_attributes }}>
-            {% if menu_block_configuration.az_select_menu.empty_option_label %}
-             <option data-href="<nolink>">{{menu_block_configuration.az_select_menu.empty_option_label}}</option>
+            {% if menu_block_configuration.az_select_menu.empty_option and  menu_block_configuration.az_select_menu.empty_option_label %}
+             <option data-href="">{{menu_block_configuration.az_select_menu.empty_option_label}}</option>
             {% endif %}
             {% for item in items %}
               <option data-href="{{item.url}}">{{item.title}}</option>
