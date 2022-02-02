@@ -4,7 +4,6 @@ namespace Drupal\az_select_menu\Plugin\Block;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
-use Drupal\Core\Url;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -41,13 +40,13 @@ class AzSelectMenu extends MenuBlock {
     $defaults = $this->defaultConfiguration();
 
     $form = parent::blockForm($form, $form_state);
-    $form['menu_levels']['depth']['#attributes'] = array('disabled' => 'disabled');
+    $form['menu_levels']['depth']['#attributes'] = ['disabled' => 'disabled'];
     $form['menu_levels']['depth']['#default_value'] = 1;
     $form['menu_levels']['depth']['#description'] = 'This maximum number includes the initial level. This has to be set to 1 for Quickstart Select Menus.';
     $form['menu_levels']['expand_all_items']['#default_value'] = 0;
-    $form['menu_levels']['expand_all_items']['#attributes'] = array('disabled' => 'disabled');
+    $form['menu_levels']['expand_all_items']['#attributes'] = ['disabled' => 'disabled'];
     $form['menu_levels']['expand_all_items']['#states']['visible'] = [
-      ':select[name="settings[depth]"]' => ['!value' => 1]
+      ':select[name="settings[depth]"]' => ['!value' => 1],
     ];
 
     $form['az_select_menu'] = [
