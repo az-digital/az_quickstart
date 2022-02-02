@@ -1,0 +1,6 @@
+name: 'Quickstart Select Menu Block'
+type: module
+core_version_requirement: ^8.8 || ^9
+package: The University of Arizona
+dependencies:
+  - drupal:menu_block
