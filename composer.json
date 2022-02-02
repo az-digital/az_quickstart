@@ -81,7 +81,7 @@
         "drupal/paragraphs": "1.12",
         "drupal/paragraphs_admin": "1.2",
         "drupal/pathauto": "1.8",
-        "drupal/redirect": "1.6",
+        "drupal/redirect": "1.7.0",
         "drupal/role_delegation": "1.1",
         "drupal/search_exclude": "2.0.0-beta2",
         "drupal/slick": "2.4.0",
