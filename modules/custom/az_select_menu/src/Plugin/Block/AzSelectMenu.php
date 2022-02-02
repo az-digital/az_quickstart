@@ -41,6 +41,15 @@ class AzSelectMenu extends MenuBlock {
     $defaults = $this->defaultConfiguration();
 
     $form = parent::blockForm($form, $form_state);
+    $form['menu_levels']['depth']['#attributes'] = array('disabled' => 'disabled');
+    $form['menu_levels']['depth']['#default_value'] = 1;
+    $form['menu_levels']['depth']['#description'] = 'This maximum number includes the initial level. This has to be set to 1 for Quickstart Select Menus.';
+    $form['menu_levels']['expand_all_items']['#default_value'] = 0;
+    $form['menu_levels']['expand_all_items']['#attributes'] = array('disabled' => 'disabled');
+    $form['menu_levels']['expand_all_items']['#states']['visible'] = [
+      ':select[name="settings[depth]"]' => ['!value' => 1]
+    ];
+
     $form['az_select_menu'] = [
       '#type' => 'details',
       '#title' => $this->t('Quickstart select menu options.'),
@@ -124,14 +133,6 @@ class AzSelectMenu extends MenuBlock {
   public function build() {
 
     $build = parent::build();
-    // Add the empty option if set.
-    if ($build['#menu_block_configuration']['az_select_menu']['empty_option'] && !empty($build['#menu_block_configuration']['az_select_menu']['empty_option_label'])) {
-      $empty_option = [
-        'href' => Url::fromRoute('<button>', []),
-        'title' => $build['#menu_block_configuration']['az_select_menu']['empty_option_label'],
-      ];
-      array_unshift($build['#items'], $empty_option);
-    }
 
     $form_attributes = new Attribute([
       'id' => 'az-select-menu-' . $build['#menu_name'] . '-form',
