@@ -1,5 +1,5 @@
 services:
-  mymodule.event_subscriber:
+  az_metrics.event_subscriber:
     class: Drupal\az_metrics\EventSubscriber\AZMetricsSubscriber
     arguments: ['@database', '@datetime.time']
     tags:
