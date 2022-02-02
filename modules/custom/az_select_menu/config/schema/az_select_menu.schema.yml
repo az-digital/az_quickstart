@@ -1,0 +1,54 @@
+block.settings.az_select_menu:*:
+  type: block_settings
+  label: 'Quickstart Select Menu Block'
+  mapping:
+    follow:
+      type: boolean
+      label: 'The initial visibility level follows the active menu item'
+    follow_parent:
+      type: string
+      label: 'Set initial visibility level to the active menu item, or its children'
+    label_link:
+      type: boolean
+      label: 'If the block label should be a link'
+    label_type:
+      type: string
+      label: 'Label type'
+    level:
+      type: integer
+      label: 'Starting level'
+    depth:
+      type: integer
+      label: 'Maximum number of levels'
+    expand_all_items:
+      type: boolean
+      label: 'Expand all items'
+    parent:
+      type: string
+      label: 'Parent menu link'
+    suggestion:
+      type: string
+      label: 'Theme suggestion'
+    az_select_menu:
+      type: mapping
+      mapping:
+        empty_option:
+          type: boolean
+          label: 'Empty Option'
+        empty_option_label:
+          type: string
+          label: 'Empty option label.'
+        preform_text:
+          type: string
+          label: 'Text to display inline before the select form.'
+        preform_text_sr_only:
+          type: string
+          label: 'Form help for screen-readers.'
+        button_text:
+          type: string
+          label: 'Text you would like to appear in the button.'
+        button_text_sr_only:
+          type: string
+          label: 'Text to help screen-reader users understand what to do.'
+
+
