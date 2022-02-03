@@ -6,8 +6,7 @@ use Drupal\migrate\Row;
 use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
 
 /**
- * Custom node source for convering field collections
- * into a single paragraph.
+ * Custom node source for convering field collections into a single paragraph.
  *
  * @MigrateSource(
  *   id = "az_node_with_field_collection"
