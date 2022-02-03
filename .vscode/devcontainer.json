@@ -1,7 +1,0 @@
-{
-  "workspaceFolder": "/app",
-  "extensions": [
-    "xdebug.php-debug",
-    "ms-vscode-remote.remote-containers"
-  ]
-}
