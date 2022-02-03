@@ -8,7 +8,7 @@
       "port": 9003,
       "log": false,
       "pathMappings": {
-        "/usr/local/quickstart-install-profile": "${workspaceFolder}"
+        "/app": "${workspaceFolder}"
       }
     }
   ]
