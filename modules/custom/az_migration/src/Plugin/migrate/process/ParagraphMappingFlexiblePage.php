@@ -13,30 +13,25 @@ use Drupal\migrate\Row;
  *   id = "paragraphs_mapping_flexible_page"
  * )
  */
-class ParagraphMappingFlexiblePage extends ProcessPluginBase {
+class ParagraphMappingFlexiblePage extends ProcessPluginBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property)
+    {
+        // Merging the data into paragraph field on flexible page.
+        $main_content = [];
+        foreach ($value as $item) {
+            if (isset($item[0]) && isset($item[1])) {
+                $main_content[] = [
+                  'target_id' => $item[0],
+                  'target_revision_id' => $item[1],
+                ];
+            }
+        }
 
-    // Merging the data into paragraph field on flexible page.
-    $value['main_content'] = [];
-    foreach ($value[0] as $item) {
-      if (isset($item['value'])) {
-        $value['main_content'][] = [
-          'target_id' => $item['value'][0],
-          'target_revision_id' => $item['value'][1],
-        ];
-      }
+        return $main_content;
     }
-    if (isset($value[1])) {
-      $value['main_content'][] = [
-        'target_id' => $value[1][0],
-        'target_revision_id' => $value[1][1],
-      ];
-    }
-    return $value['main_content'];
-  }
-
 }
