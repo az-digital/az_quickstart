@@ -6,6 +6,7 @@ package: 'The University of Arizona'
 dependencies:
   - az_core
   - drupal:block
+  - drupal:block_class
   - drupal:menu_block
   - menu_link_attributes
   - migrate:migrate
