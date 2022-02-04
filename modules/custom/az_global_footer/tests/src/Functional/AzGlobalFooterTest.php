@@ -66,7 +66,7 @@ class AzSelectMenuTest extends BrowserTestBase {
    */
   public function testIsUninstallable() {
 
-    // Uninstalls the az_select_menu module, so hook_modules_uninstalled()
+    // Uninstalls the az_global_footer module, so hook_modules_uninstalled()
     // is executed.
     $this->container
       ->get('module_installer')
