@@ -19,4 +19,5 @@ If you uninstall this module the following menu block configuration will also be
   - az-footer-social-media
   - az-footer-topics
 
-The menu content will not be deleted upon uninstallation.
+The menu link content provided by this module will also be deleted including any modifications to specific menu items.
+To ensure your menu links are not uninstalled by this module, create new menu links instead of changing existing menu links.
