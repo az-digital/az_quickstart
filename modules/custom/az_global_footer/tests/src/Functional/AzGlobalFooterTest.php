@@ -9,7 +9,7 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group az_global_footer
  */
-class AzSelectMenuTest extends BrowserTestBase {
+class AzGlobalFooterTest extends BrowserTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -61,6 +61,7 @@ class AzSelectMenuTest extends BrowserTestBase {
 
   /**
    * Tests that the Quickstart Select Menu Block module can be uninstalled.
+   *
    * @group regression
    * @testdox The az_global_footer module is uninstallable.
    */
@@ -71,8 +72,8 @@ class AzSelectMenuTest extends BrowserTestBase {
     $this->container
       ->get('module_installer')
       ->uninstall([
-      'az_global_footer',
-    ]);
+        'az_global_footer',
+      ]);
 
   }
 
