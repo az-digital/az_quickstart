@@ -1,11 +1,12 @@
+# Arizona Quickstart Releases
 The overarching goal of this release policy is to make sure that developers know what to expect when they use Arizona Quickstart for their websites. Arizona Quickstart has adopted semantic versioning to allow site maintainers to keep websites up to date with security updates and other critical improvements without having to track the ongoing feature development of Arizona Quickstart.
 
 ## Release Overview
 Arizona Digital will support two minor releases at a time with ongoing patch releases. This process will allow for flexibility of development while allowing site owners to have more stable websites with fewer ongoing updates.
 
-Note: When an Arizona Quickstart minor release contains a major or minor Drupal core release, it will be *vital* that existing sites are updated to the latest patch release of the previous minor version of Arizona Quickstart and ensure that Drupal database updates have been applied BEFORE updating to the new minor release.
+_Note: When an Arizona Quickstart minor release contains a major or minor Drupal core release, it will be vital that existing sites are updated to the latest patch release of the previous minor version of Arizona Quickstart and ensure that Drupal database updates have been applied BEFORE updating to the new minor release._
 
-### Patch releases (x.y.Z)
+### Patch Releases (x.y.Z)
 Patch releases will be applied to the current development branch first and then backported to the currently supported minor release(s). These will be released as necessary and limited to:
 - Arizona Quickstart (install profile, custom modules, custom theme)
   - Bug fixes
@@ -23,7 +24,7 @@ Patch releases will be applied to the current development branch first and then 
     - Addition of new modules
     - Removal of patches that are no longer necessary
 
-### Minor releases (x.Y.z)
+### Minor Releases (x.Y.z)
 The following types of changes are allowed for minor releases in addition to those allowed for patch releases.
 - Functionality and frontend
   - New features
@@ -46,7 +47,7 @@ The following types of changes are allowed for minor releases in addition to tho
   - Changes that risk regressions
   - Other disruptive bug fixes or high-risk changes
 
-### Major releases (X.y.z)
+### Major Releases (X.y.z)
 No decisions have been made about what will constitute the next major release yet.
 
 <!-- The following may be revisited in the future -->
