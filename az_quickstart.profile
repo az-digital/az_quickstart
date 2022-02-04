@@ -81,3 +81,12 @@ function az_quickstart_update_9207() {
   $module_list = ['az_security'];
   \Drupal::service('module_installer')->install($module_list);
 }
+
+/**
+ * Ensure Pantheon sites have the advanced page cache module installed.
+ */
+function az_quickstart_update_9208() {
+  if (defined('PANTHEON_ENVIRONMENT')) {
+    \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
+  }
+}
