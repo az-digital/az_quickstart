@@ -63,7 +63,6 @@ class AzSelectMenuTest extends BrowserTestBase {
    * Tests that the Quickstart Select Menu Block module can be uninstalled.
    *
    * @group az_select_menu
-   * @testdox The az_select_menu module is uninstallable.
    */
   public function testIsUninstallable() {
 
@@ -72,6 +71,13 @@ class AzSelectMenuTest extends BrowserTestBase {
     $this->container
       ->get('module_installer')
       ->uninstall([
+        'az_select_menu',
+      ]);
+
+    // Reinstalls the az_select_menu module.
+    $this->container
+      ->get('module_installer')
+      ->install([
         'az_select_menu',
       ]);
 
