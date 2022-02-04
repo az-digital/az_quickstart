@@ -21,4 +21,4 @@ If you uninstall this module the following menu block configuration will also be
 
 The menu link content provided by this module will also be deleted including any modifications to specific menu items.
 To ensure your menu links are not uninstalled by this module, create new menu links instead of changing the [links
-provided by this module](/migrations/az_global_footer_links.yml]).
+provided by this module](migrations/az_global_footer_links.yml]).
