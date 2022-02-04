@@ -4,7 +4,7 @@ The overarching goal of this release policy is to make sure that developers know
 ## Release Overview
 Arizona Digital will support two minor releases at a time with ongoing patch releases. This process will allow for flexibility of development while allowing site owners to have more stable websites with fewer ongoing updates.
 
-_Note: When an Arizona Quickstart minor release contains a major or minor Drupal core release, it will be vital that existing sites are updated to the latest patch release of the previous minor version of Arizona Quickstart and ensure that Drupal database updates have been applied BEFORE updating to the new minor release._
+_**Note:** When an Arizona Quickstart minor release contains a major or minor Drupal core release, it will be vital that existing sites are updated to the latest patch release of the previous minor version of Arizona Quickstart and ensure that Drupal database updates have been applied BEFORE updating to the new minor release._
 
 ### Patch Releases (x.y.Z)
 Patch releases will be applied to the current development branch first and then backported to the currently supported minor release(s). These will be released as necessary and limited to:
