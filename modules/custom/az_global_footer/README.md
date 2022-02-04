@@ -9,3 +9,14 @@ You must have administrator permissions in order to enable this module.
 ## Pre-existing Menu Links
 
 If your site already has menu links in the provided footer menus, those links will persist after enabling this module.
+
+## Uninstalling
+
+If you uninstall this module the following menu block configuration will also be uninstalled and deleted:
+  - az-footer-information-for
+  - az-footer-main
+  - az-footer-resources
+  - az-footer-social-media
+  - az-footer-topics
+
+The menu content will not be deleted upon uninstallation.
