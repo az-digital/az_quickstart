@@ -1,5 +1,7 @@
 <?php
 
+use Drupal\Core\Extension\MissingDependencyException;
+
 /**
  * @file
  * az_quickstart.profile
@@ -87,6 +89,13 @@ function az_quickstart_update_9207() {
  */
 function az_quickstart_update_9208() {
   if (defined('PANTHEON_ENVIRONMENT')) {
-    \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
+    try {
+      \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
+    }
+    catch (MissingDependencyException $e) {
+      return t('Pantheon Advanced Page Cache module not available to install.');
+    }
+
+    return t('Pantheon Advanced Page Cache module installed.');
   }
 }
