@@ -1,11 +1,11 @@
 <?php
 
-use Drupal\Core\Extension\MissingDependencyException;
-
 /**
  * @file
  * az_quickstart.profile
  */
+
+use Drupal\Core\Extension\MissingDependencyException;
 
 /**
  * Install az_metrics.
