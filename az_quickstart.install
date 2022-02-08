@@ -5,6 +5,7 @@
  * Install, update and uninstall functions for az_quickstart install profile.
  */
 
+use Drupal\Core\Extension\MissingDependencyException;
 use Drupal\user\Entity\User;
 use Drupal\shortcut\Entity\Shortcut;
 
@@ -37,4 +38,14 @@ function az_quickstart_install() {
     'link' => ['uri' => 'internal:/admin/content'],
   ]);
   $shortcut->save();
+
+  // Install the Patheon Advanced Page Cache Module when running on Pantheon.
+  if (defined('PANTHEON_ENVIRONMENT')) {
+    try {
+      \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
+    }
+    catch (MissingDependencyException $e) {
+      \Drupal::logger('az_quickstart')->warning('Pantheon Advanced Page Cache module not available to install.');
+    }
+  }
 }
