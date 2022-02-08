@@ -1,5 +1,4 @@
-image:
-  file: .gitpod.Dockerfile
+image: drupalpod/drupalpod-gitpod-base:20211116-ready-made-envs
 
 tasks:
   - name: Install Quickstart
