@@ -22,6 +22,7 @@ services:
   chromedriver:
     container_name: ddev-${DDEV_SITENAME}-chromedriver
     image: drupalci/chromedriver:production
+    networks: [default, ddev_default]
     labels:
       com.ddev.site-name: ${DDEV_SITENAME}
       com.ddev.approot: $DDEV_APPROOT
