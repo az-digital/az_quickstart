@@ -6,6 +6,7 @@ tasks:
   - init: |
       cd /workspace/az_quickstart
       ddev start -y
+      ddev describe      
       ddev config --help
       ddev --help
       ddev config --project-type php
