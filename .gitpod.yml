@@ -4,8 +4,7 @@ image: drupalpod/drupalpod-gitpod-base:20220202-optimized
 # when starting a workspace all docker images are ready
 tasks:
   - init: |
-      git clone https://github.com/az-digital/az_quickstart.git az_quickstart
-      cd az_quickstart
+      cd /workspace/az_quickstart
       ddev start -y
       ddev config --project-type php
       ddev install
