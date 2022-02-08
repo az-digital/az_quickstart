@@ -5,6 +5,7 @@ image: drupalpod/drupalpod-gitpod-base:20220202-optimized
 tasks:
   - init: |
       ddev start -y
+      ddev config --project-type php
       ddev install
     command: |
       ddev start -y
