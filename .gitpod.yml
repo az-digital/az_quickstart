@@ -8,6 +8,7 @@ tasks:
       ddev start -y
       ddev describe      
       ddev config --project-type=php
+      ddev auth ssh
       ddev install
     command: |
       ddev start -y
