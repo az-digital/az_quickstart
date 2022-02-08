@@ -5,6 +5,6 @@ RUN sudo apt-get -qq update && sudo apt-get install -y zsh && sudo chsh -s $(whi
 RUN sh -c "$(curl -fsSL https://starship.rs/install.sh)" -- --yes 
 RUN echo 'eval "$(starship init zsh)"' > .zshrc
 RUN curl -OL https://github.com/lando/lando/releases/download/v3.6.1/lando-x64-v3.6.1.deb 
-RUN sudo dpkg -i --ignore-depends docker-ce,iptables lando-x64-v3.6.1.deb 
+RUN sudo dpkg -i --ignore-depends=docker-ce,iptables lando-x64-v3.6.1.deb 
 RUN rm -rf lando-x64-v3.6.1.deb
 RUN mkdir -p ~/.lando && echo "proxy: 'ON'\nproxyHttpPort: '8080'\nproxyHttpsPort: '4443'\nbindAddress: '0.0.0.0'\nproxyBindAddress: '0.0.0.0'" > ~/.lando/config.yml
