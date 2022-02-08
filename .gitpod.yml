@@ -4,16 +4,11 @@ image: drupalpod/drupalpod-gitpod-base:20220202-optimized
 # when starting a workspace all docker images are ready
 tasks:
   - init: |
-      .gitpod/utils/send-a-message-gcs.sh
-      ddev debug download-images
-      .gitpod/utils/ddev-in-gitpod-setup.sh
-      .gitpod/drupal/envs-prep/prepare-environments-gcs.sh
-      .gitpod/drupal/envs-prep/set-default-environment.sh
+      ddev start -y
+      ddev install
     command: |
-      .gitpod/utils/ddev-in-gitpod-setup.sh
-      .gitpod/utils/env-setup.sh
-      .gitpod/drupal/ssh/01-check-private-ssh.sh
-      .gitpod/drupal/drupalpod-setup.sh
+      ddev start -y
+      gp await-port 8080 && gp preview $(gp url 8080)
 # VScode xdebug extension
 vscode:
   extensions:
@@ -26,17 +21,7 @@ vscode:
     # Twig extensions.
     - mblode.twig-language-2
 
-    # Help extensions.
-    - drupal-mentoring.drupalpod-ext
-
-    # Bash extensions.
-    - timonwong.shellcheck
-    - rogalmic.bash-debug
-
 ports:
-  # Used by ddev - direct-bind https port
-  - port: 2222
-    onOpen: ignore
   # Used by ddev - local db clients
   - port: 3306
     onOpen: ignore
@@ -44,7 +29,7 @@ ports:
   - port: 6942
     onOpen: ignore
   # Used by MailHog
-  - port: 8025
+  - port: 8027
     onOpen: ignore
   # Used by phpMyAdmin
   - port: 8036
@@ -52,11 +37,15 @@ ports:
   # Direct-connect ddev-webserver port that is the main port
   - port: 8080
     onOpen: ignore
+  # Ignore host https port
+  - port: 8443
+    onOpen: ignore
   # xdebug port
   - port: 9000
     onOpen: ignore
   # projector port
   - port: 9999
+    onOpen: open-browser
 
 github:
   prebuilds:
