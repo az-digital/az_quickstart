@@ -12,6 +12,7 @@ Patch releases will be applied to the current development branch first and then 
   - Bug fixes
   - Accessibility improvements
   - Performance improvements
+  - Security improvements
   - Critical institutional link changes
   - Critical brand changes
 - Third-party code / dependencies
