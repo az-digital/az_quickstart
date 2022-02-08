@@ -7,9 +7,7 @@ tasks:
       cd /workspace/az_quickstart
       ddev start -y
       ddev describe      
-      ddev config --help
-      ddev --help
-      ddev config --project-type php
+      ddev config --project-type=php --docroot=web --create-docroot
       ddev install
     command: |
       ddev start -y
