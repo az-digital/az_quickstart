@@ -363,4 +363,4 @@ az_barrio.settings:
       label: 'Header column one classes'
     header_two_col_classes:
       type: string
-      label: 'Header column classes two'
+      label: 'Header column two classes'
