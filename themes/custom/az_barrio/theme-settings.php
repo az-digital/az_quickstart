@@ -247,11 +247,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
-  $form['azbs_settings']['settings']['az_bootstrap_style']['sticky_footer'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use the AZ Bootstrap sticky footer template.'),
-    '#default_value' => theme_get_setting('sticky_footer'),
-  ];
   $form['layout']['region_containers'] = [
     '#type' => 'details',
     '#collapsible' => TRUE,
