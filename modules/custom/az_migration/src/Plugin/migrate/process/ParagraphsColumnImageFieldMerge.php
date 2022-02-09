@@ -17,8 +17,8 @@ use Drupal\media\Entity\Media;
  *
  * Examples:
  *
- * Consider a paragraph item migration, where you want to merge the source caption and credit fields into
- * the destination paragraph.
+ * Consider a paragraph item migration, where you want to merge the source
+ * caption and credit fields into the destination paragraph.
  * @code
  * process:
  *   field_az_text_area:
