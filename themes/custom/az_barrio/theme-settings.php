@@ -247,6 +247,39 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
+  $form['azbs_settings']['settings']['az_bootstrap_style']['sticky_footer'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Use the AZ Bootstrap sticky footer template.'),
+    '#default_value' => theme_get_setting('sticky_footer'),
+  ];
+  $form['layout']['region_containers'] = [
+    '#type' => 'details',
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#title' => t('Az Barrio Region Containers.'),
+  ];
+  // Region column containers.
+  $form['layout']['region_containers']['header'] = [
+    '#description' => t('The header typically contains two columns with the "Site branding" region on the left, with "Header 1", and "Header 2" on the right.'),
+    '#type' => 'fieldset',
+    '#title' => t('Header Region Columns.'),
+    '#collapsible' => FALSE,
+    '#collapsed' => FALSE,
+  ];
+  $form['layout']['region_containers']['header']['az_header_responsive_column_classes_one'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the branding region.'),
+    '#default_value' => theme_get_setting('az_header_responsive_column_classes_one'),
+    '#element_validate' => ['token_element_validate'],
+  ];
+  $form['layout']['region_containers']['header']['az_header_responsive_column_classes_two'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the header 1 and header 2 regions.'),
+    '#default_value' => theme_get_setting('az_header_responsive_column_classes_two'),
+    '#element_validate' => ['token_element_validate'],
+  ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
