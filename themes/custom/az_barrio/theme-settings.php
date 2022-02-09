@@ -266,7 +266,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Column two classes'),
     '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
     '#default_value' => theme_get_setting('header_two_col_classes'),
-    '#element_validate' => ['token_element_validate'],
   ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
