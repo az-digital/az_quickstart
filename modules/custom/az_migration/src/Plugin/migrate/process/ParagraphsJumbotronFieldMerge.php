@@ -7,7 +7,36 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process plugin to merge the fields for Jumbotron Paragraph.
+ * Process plugin for converting uaqs_jumbotron paragraphs to az_text.
+ *
+ * NOTE: This plugin is only designed to be used with uaqs_jumbotron source
+ * paragraphs and is not generically reusable for other use cases.
+ *
+ * Transforms uaqs_jumbotron paragraph field values (Quickstart 1) into
+ * HTML markup for use within the field_az_text_area field on az_text paragraph
+ * entities (Quickstart 2).
+ *
+ * Expects uaqs_jumbotron source fields to exist as source properties:
+ * - field_uaqs_short_title
+ * - field_uaqs_summary
+ * - field_uaqs_links
+ *
+ * Examples:
+ * @code
+ * source:
+ *   plugin: az_paragraphs_item
+ *   bundle: uaqs_jumbotron
+ * destination:
+ *   plugin: 'entity_reference_revisions:paragraph'
+ *   default_bundle: az_text
+ *
+ * process:
+ *   field_az_text_area/value:
+ *     plugin: paragraphs_jumbotron_field_merge
+ *   field_az_text_area/format:
+ *     plugin: default_value
+ *     default_value: az_standard
+ * @endcode
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_jumbotron_field_merge"
