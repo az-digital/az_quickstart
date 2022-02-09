@@ -107,6 +107,6 @@ function az_quickstart_update_9209() {
   $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
   $config
     ->set('header_one_col_classes', 'col-12 col-sm-6 col-lg-4')
-    ->set('header_one_col_classes', 'col-12 col-sm-6 col-lg-8')
+    ->set('header_two_col_classes', 'col-12 col-sm-6 col-lg-8')
     ->save(TRUE);
 }
