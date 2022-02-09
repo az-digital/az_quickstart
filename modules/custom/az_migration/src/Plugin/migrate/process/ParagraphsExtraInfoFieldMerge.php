@@ -7,15 +7,26 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Quickstart 1 to Quickstart2 Process plugin to combine the fields on uaqs_extra_info
- *  paragraphs and format them with markup before injecting the result into az_text paragraphs.
+ * Quickstart 1 to Quickstart2 Process plugin to extract specific field values from the source,
+ * (uaqs_extra_info paragraphs), and transforming those values by wrapping them in specific
+ * arizona-bootstrap markup before outputting before returning the desired markup.
  *
- * The source entity does need to have the following fields:
- *  - field_uaqs_short_title
- *  - field_uaqs_body
- *  - field_uaqs_link
+ * Expects the source value to contain the following fields:
+ *  - field_uaqs_short_title: An indexed array with the first index of 0 and the second index of value.
+ *  - field_uaqs_body: An indexed array with the first index of 0 and the second index of value.
+ *  - field_uaqs_link: An indexed array of associative arrays with the following keys:
+ *    - url
+ *    - attributes: An associative array with the following keys:
+ *      - class
+ *    - title
  *
  * @code
+ * source:
+ *   plugin: az_paragraphs_item
+ *   bundle: uaqs_extra_info
+ * destination:
+ *   plugin: 'entity_reference_revisions:paragraph'
+ *   default_bundle: az_text
  * process:
  *  field_az_text_area/value:
  *    plugin: paragraphs_extra_info_field_merge
