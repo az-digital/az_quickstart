@@ -360,7 +360,7 @@ az_barrio.settings:
       label: 'Footer logo path'
     header_one_col_classes:
       type: string
-      label: 'Header column classes one'
+      label: 'Header column one classes'
     header_two_col_classes:
       type: string
       label: 'Header column classes two'
