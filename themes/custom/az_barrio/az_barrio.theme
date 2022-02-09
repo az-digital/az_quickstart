@@ -558,7 +558,8 @@ function az_barrio_preprocess_block(&$variables) {
 
           $variables['content']['#attributes']['class'][] = 'nav-utility';
           $variables['content']['#attributes']['class'][] = 'd-flex';
-          $variables['content']['#attributes']['class'][] = 'justify-content-end';
+          $variables['content']['#attributes']['class'][] = 'justify-content-center';
+          $variables['content']['#attributes']['class'][] = 'justify-content-sm-end';
           $variables['title_attributes']['class'][] = 'h6';
           $variables['title_attributes']['class'][] = 'mt-md-3';
           $variables['title_attributes']['class'][] = 'text-uppercase';
