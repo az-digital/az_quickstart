@@ -253,7 +253,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
     '#title' => t('Responsive Header Grid'),
-    '#description' => t('The header typically contains two columns with the "Site branding" region on the left, with "Header 1", and "Header 2" on the right.'),
+    '#description' => t('The header typically contains two columns on small screen sizes and larger with the "Site branding" region on the left and with "Header 1" and "Header 2" on the right.'),
   ];
   $form['layout']['region_containers']['header_one_col_classes'] = [
     '#type' => 'textfield',
