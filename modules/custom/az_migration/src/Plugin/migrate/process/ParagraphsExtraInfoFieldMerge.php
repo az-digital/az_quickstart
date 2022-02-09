@@ -7,7 +7,22 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process Plugin to field merge for Extra Info paragraphs.
+ * Quickstart 1 to Quickstart2 Process plugin to combine the fields on uaqs_extra_info
+ *  paragraphs and format them with markup before injecting the result into az_text paragraphs.
+ *
+ * The source entity does need to have the following fields:
+ *  - field_uaqs_short_title
+ *  - field_uaqs_body
+ *  - field_uaqs_link
+ *
+ * @code
+ * process:
+ *  field_az_text_area/value:
+ *    plugin: paragraphs_extra_info_field_merge
+ *  field_az_text_area/format:
+ *    plugin: default_value
+ *    default_value: az_standard
+ * @endcode
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_extra_info_field_merge"
