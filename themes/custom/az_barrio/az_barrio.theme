@@ -570,7 +570,7 @@ function az_barrio_preprocess_block(&$variables) {
 
           // Footer topics menu has special split behavior.
           if (!empty($variables['derivative_plugin_id']) && $variables['derivative_plugin_id'] === 'az-footer-topics') {
-            $variables['content']['#attributes']['class'][] = 'split-2-col';
+            $variables['content']['#attributes']['class'][] = 'split-md-2-col';
           }
 
           // Add classes to interior <li> elements and <a> elements.
