@@ -11,7 +11,7 @@ use Drupal\media\Entity\Media;
  * Process plugin for converting uaqs_file_download paragraphs to az_text.
  *
  * NOTE: This plugin is only designed to be used with uaqs_file_download source
- * paragraphs and is not gemnerically reusable for other use cases.
+ * paragraphs and is not generically reusable for other use cases.
  *
  * Transforms uaqs_file_download paragraph file field values (Quickstart 1) into
  * embedded media markup (i.e. <drupal-media>) for use within the
