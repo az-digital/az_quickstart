@@ -79,8 +79,8 @@ bootstrap_barrio_sidebar_second_offset: 0
 
 # // Region column container class settings.
 # -------------------------------
-az_header_responsive_column_classes_one: 'col-12 col-sm-6 col-lg-4'
-az_header_responsive_column_classes_two: 'col-12 col-sm-6 col-lg-8'
+header_one_col_classes: 'col-12 col-sm-6 col-lg-4'
+header_two_col_classes: 'col-12 col-sm-6 col-lg-8'
 
 # Container
 # --------------

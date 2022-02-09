@@ -261,18 +261,18 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => FALSE,
     '#collapsed' => FALSE,
   ];
-  $form['layout']['region_containers']['header']['az_header_responsive_column_classes_one'] = [
+  $form['layout']['region_containers']['header']['header_one_col_classes'] = [
     '#type' => 'textfield',
     '#title' => t('Column classes'),
     '#description' => t('Responsive column classes for the parent <code>div</code> of the branding region. Should contain a string with classes separated by a space.'),
-    '#default_value' => theme_get_setting('az_header_responsive_column_classes_one'),
+    '#default_value' => theme_get_setting('header_one_col_classes'),
     '#element_validate' => ['token_element_validate'],
   ];
-  $form['layout']['region_containers']['header']['az_header_responsive_column_classes_two'] = [
+  $form['layout']['region_containers']['header']['header_two_col_classes'] = [
     '#type' => 'textfield',
     '#title' => t('Column classes'),
     '#description' => t('Responsive column classes for the parent <code>div</code> of the header 1 and header 2 regions. Should contain a string with classes separated by a space.'),
-    '#default_value' => theme_get_setting('az_header_responsive_column_classes_two'),
+    '#default_value' => theme_get_setting('header_two_col_classes'),
     '#element_validate' => ['token_element_validate'],
   ];
   // Remove Navbar options.
