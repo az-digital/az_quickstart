@@ -7,14 +7,15 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process Plugin to map view and display for Chunks View paragraphs.
+ * Process Plugin to map view and display for Chunks View paragraphs. This plugin expects a source value
+ * which is an associative containing the keys "vname" and "vargs".
  *
  * Available configuration keys
  * - N/A
  *
  * Examples:
  *
- * TODO: Description
+ * Consider a paragraph item migration, where you want to preserve the view display mapping.
  * @code
  * process:
  *   field_az_view_reference:
