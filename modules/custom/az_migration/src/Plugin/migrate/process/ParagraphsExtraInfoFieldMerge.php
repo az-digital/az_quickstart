@@ -13,12 +13,11 @@ use Drupal\migrate\Row;
  * before returning the desired markup.
  *
  * Expects the source value to contain the following fields:
- *  - field_uaqs_short_title: An indexed array with the first index of 0 and the
- *    second index of value.
- *  - field_uaqs_body: An indexed array with the first index of 0 and the second
- *    index of value.
- *  - field_uaqs_link: An indexed array of associative arrays with the following
- *    keys:
+ *  - field_uaqs_short_title: An indexed array with the first index of 0 with 1
+ *  element for value.
+ *  - field_uaqs_body: An indexed array with the first index of 0 with 1
+ *  element for value.
+ *  - field_uaqs_link: An indexed array the first index of 0 the following keys:
  *    - url
  *    - attributes: An associative array with the following keys:
  *      - class
@@ -35,8 +34,7 @@ use Drupal\migrate\Row;
  *   default_value default_value: az_standard
  * @endcode
  *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_extra_info_field_merge"
+ * @MigrateProcessPlugin( id = "paragraphs_extra_info_field_merge"
  * )
  */
 class ParagraphsExtraInfoFieldMerge extends ProcessPluginBase {
