@@ -247,30 +247,24 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
+  // Responsive Header Grid.
   $form['layout']['region_containers'] = [
     '#type' => 'details',
     '#collapsible' => TRUE,
     '#collapsed' => TRUE,
-    '#title' => t('Az Barrio Region Containers.'),
-  ];
-  // Region column containers.
-  $form['layout']['region_containers']['header'] = [
+    '#title' => t('Responsive Header Grid'),
     '#description' => t('The header typically contains two columns with the "Site branding" region on the left, with "Header 1", and "Header 2" on the right.'),
-    '#type' => 'fieldset',
-    '#title' => t('Header Region Columns.'),
-    '#collapsible' => FALSE,
-    '#collapsed' => FALSE,
   ];
-  $form['layout']['region_containers']['header']['header_one_col_classes'] = [
+  $form['layout']['region_containers']['header_one_col_classes'] = [
     '#type' => 'textfield',
-    '#title' => t('Column classes'),
+    '#title' => t('Column one classes'),
     '#description' => t('Responsive column classes for the parent <code>div</code> of the branding region. Should contain a string with classes separated by a space.'),
     '#default_value' => theme_get_setting('header_one_col_classes'),
     '#element_validate' => ['token_element_validate'],
   ];
-  $form['layout']['region_containers']['header']['header_two_col_classes'] = [
+  $form['layout']['region_containers']['header_two_col_classes'] = [
     '#type' => 'textfield',
-    '#title' => t('Column classes'),
+    '#title' => t('Column two classes'),
     '#description' => t('Responsive column classes for the parent <code>div</code> of the header 1 and header 2 regions. Should contain a string with classes separated by a space.'),
     '#default_value' => theme_get_setting('header_two_col_classes'),
     '#element_validate' => ['token_element_validate'],
