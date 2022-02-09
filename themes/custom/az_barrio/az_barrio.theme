@@ -142,6 +142,10 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   // Allow wordmark to be disabled.
   $variables['wordmark'] = (theme_get_setting('wordmark')) ? TRUE : FALSE;
+
+  $variables['az_header_responsive_column_classes_one'] = theme_get_setting('az_header_responsive_column_classes_one');
+  $variables['az_header_responsive_column_classes_two'] = theme_get_setting('az_header_responsive_column_classes_two');
+
 }
 
 /**
