@@ -11,13 +11,14 @@ use Drupal\media\Entity\Media;
  * Process Plugin to field merge for Column Image paragraphs.
  *
  * Available configuration keys
- * - caption:
- * - credit:
- * - format:
+ * - caption: The field ID for the source image caption.
+ * - credit: The field ID for the source image caption.
+ * - format: The destination filter format for the migrated text.
  *
  * Examples:
  *
- * TODO: Description
+ * Consider a paragraph item migration, where you want to merge the source caption and credit fields into
+ * the destination paragraph.
  * @code
  * process:
  *   field_az_text_area:
