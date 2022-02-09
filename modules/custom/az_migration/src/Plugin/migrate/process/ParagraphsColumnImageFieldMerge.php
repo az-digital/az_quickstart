@@ -10,6 +10,24 @@ use Drupal\media\Entity\Media;
 /**
  * Process Plugin to field merge for Column Image paragraphs.
  *
+ * Available configuration keys
+ * - caption:
+ * - credit:
+ * - format:
+ *
+ * Examples:
+ *
+ * TODO: Description
+ * @code
+ * process:
+ *   field_az_text_area:
+ *     plugin: paragraphs_column_image_field_merge
+ *     source: '@temp_photo'
+ *     caption: field_uaqs_caption_text
+ *     credit: field_uaqs_image_credit
+ *     format: 'az_standard'
+ * @endcode
+ *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_column_image_field_merge"
  * )
