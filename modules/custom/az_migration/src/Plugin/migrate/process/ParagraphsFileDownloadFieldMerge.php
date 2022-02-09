@@ -8,7 +8,57 @@ use Drupal\migrate\Row;
 use Drupal\media\Entity\Media;
 
 /**
- * Process Plugin to merge the fields for file download paragraphs.
+ * Process plugin for converting uaqs_file_download paragraphs to az_text.
+ *
+ * NOTE: This plugin is only designed to be used with uaqs_file_download source
+ * paragraphs and is not gemnerically reusable for other use cases.
+ *
+ * Transforms uaqs_file_download paragraph file field values (Quickstart 1) into
+ * embedded media markup (i.e. <drupal-media>) for use within the
+ * field_az_text_area field on az_text paragraph entities (Quickstart 2).
+ *
+ * Expects a source value containing an indexed array with 2 elements:
+ * - Destination file ID for field_uaqs_download_file (obtained through
+ * migration lookup)
+ * - Destination file ID for field_uaqs_download_preview (obtained through
+ * migration lookup)
+ *
+ * Also transforms value of the source field_uaqs_download_name (if not empty)
+ * to an <h3> element that is added to the destination field.
+ *
+ * Examples:
+ * @code
+ * process:
+ *   temp_download_file:
+ *     -
+ *       plugin: sub_process
+ *       source: field_uaqs_download_file
+ *       process:
+ *         -
+ *           plugin: migration_lookup
+ *           source: fid
+ *           migration:
+ *             - az_media
+ *
+ *   temp_download_preview:
+ *     -
+ *       plugin: sub_process
+ *       source: field_uaqs_download_preview
+ *       process:
+ *         -
+ *           plugin: migration_lookup
+ *           source: fid
+ *           migration:
+ *             - az_media
+ *   field_az_text_area/value:
+ *     -
+ *       plugin: merge
+ *       source:
+ *         - '@temp_download_file'
+ *         - '@temp_download_preview'
+ *     -
+ *       plugin: paragraphs_file_download_field_merge
+ * @endcode
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_file_download_field_merge"
