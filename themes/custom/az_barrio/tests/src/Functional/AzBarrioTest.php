@@ -77,7 +77,7 @@ class AzBarrioTest extends BrowserTestBase {
    * Tests that the header column class settings work on install.
    */
   public function testHeaderColumnClassesAreSet() {
-    $this->drupalGet('/');
+    $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-4');
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-8');
   }
