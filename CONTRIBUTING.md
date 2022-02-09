@@ -278,3 +278,23 @@ lando drupal site:mode dev
 ```
 ddev drush en -y devel && ddev drupal site:mode dev
 ```
+
+### Configuration Management and Database Updates
+
+Many times the issue of how or when to make a database update or rely on config updates comes up.
+
+#### Context
+`az-digital/az_quickstart` is a drupal distribution that is used in many environments and with differing
+philosophies about how to make changes to quickstart provided features on live sites.
+
+#### When to make a database update in your code change.
+If your code change:
+-  Adds a new setting that never existed before
+-  It would be best if the new setting is immediately set to the default
+-  Replaces an existing setting and has a new key name.
+#### When to rely on just a config file change.
+If your code change:
+- Adds another option to an existing setting
+- Changes an existing setting, but doesn't have breaking implications
+- Won't be a future problem if not applied immediately
+

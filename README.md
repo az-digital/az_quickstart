@@ -179,3 +179,9 @@ is the report at `/admin/reports/status#error` once you have logged in. There
 will probably be a Trusted Host Settings error, needing a manual change to your
 settings file, and notice of some directory permissions that need relaxed to
 allow the web server to write there.
+### Distribution update
+
+When updating your codebase on an existing site, you should always check if there are
+distribution updates that need to be applied.
+
+
