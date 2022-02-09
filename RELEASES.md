@@ -11,6 +11,8 @@ Patch releases will be applied to the current development branch first and then 
 - Arizona Quickstart (install profile, custom modules, custom theme)
   - Bug fixes
   - Accessibility improvements
+  - Performance improvements
+  - Security improvements
   - Critical institutional link changes
   - Critical brand changes
 - Third-party code / dependencies
