@@ -77,7 +77,7 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
       $value['markup'] = '<h3>' . $field_uaqs_download_name[0]['value'] . '</h3>';
     }
 
-    // Media embeded for field_uaqs_download_file.
+    // Media embedded for field_uaqs_download_file.
     if (isset($value[0]) && count($value[0])) {
       foreach ($value[0] as $mid) {
         $media = Media::load($mid);
@@ -87,7 +87,7 @@ class ParagraphsFileDownloadFieldMerge extends ProcessPluginBase {
       }
     }
 
-    // Media embeded for field_uaqs_download_preview.
+    // Media embedded for field_uaqs_download_preview.
     if (isset($value[1]) && count($value[1])) {
       foreach ($value[1] as $mid) {
         $media = Media::load($mid);
