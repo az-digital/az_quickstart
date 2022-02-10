@@ -9,7 +9,35 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process Plugin to recognize text formats and return a given response.
+ * Process plugin to recognize text formats with configurable response values.
+ *
+ * Available configuration keys
+ * - format: The text format to test compatibility with.
+ * - passed: The value to return if the text format compatibility test passed.
+ * - failed: The value to return if the text format compatibility test failed.
+ * - required_module: The name of a required module. (optional)
+ * - module_missing: The value to return if the required module is missing.
+ *   (optional)
+ *
+ * Examples:
+ *
+ * Consider a paragraphs migration, where you want to be able to automatically
+ * use a specific destination paragraph type with a less permissive text format
+ * if the source field value is compatible with it and fallback to a destination
+ * paragraph type with a more permissive text format if not. This example also
+ * checks that the 'az_paragraphs_html' module exists on the destination check
+ * and defaults to the 'az_text' paragraph type if the module is missing.
+ * @code
+ * process:
+ *   destination_bundle:
+ *     plugin: text_format_recognizer
+ *     source: field_uaqs_html
+ *     format: 'az_standard'
+ *     passed: 'az_text'
+ *     failed: 'az_html'
+ *     required_module: 'az_paragraphs_html'
+ *     module_missing: 'az_text'
+ * @endcode
  *
  * @MigrateProcessPlugin(
  *   id = "text_format_recognizer"
