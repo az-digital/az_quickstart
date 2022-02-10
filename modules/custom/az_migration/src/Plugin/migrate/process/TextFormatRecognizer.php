@@ -23,10 +23,11 @@ use Drupal\migrate\Row;
  *
  * Consider a paragraphs migration, where you want to be able to automatically
  * use a specific destination paragraph type with a less permissive text format
- * if the source field value is compatible with it and fallback to a destination
- * paragraph type with a more permissive text format if not. This example also
- * checks that the 'az_paragraphs_html' module exists on the destination check
- * and defaults to the 'az_text' paragraph type if the module is missing.
+ * ('az_text') if the source field value is compatible with it and fallback to a
+ * destination paragraph type with a more permissive text format ('az_html') if
+ * not. This example also checks that the 'az_paragraphs_html' module exists on
+ * the destination and defaults to the 'az_text' paragraph type if the module is
+ * missing.
  * @code
  * process:
  *   destination_bundle:
