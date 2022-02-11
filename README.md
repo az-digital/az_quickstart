@@ -1,7 +1,8 @@
 # Arizona Quickstart
 
 Demonstration/starter Drupal distribution and installation profile that packages
-various features consistent with community best practices and UArizona brand strategy.
+various features consistent with community best practices and UArizona brand
+strategy.
 
 ## A Complete Customized Drupal
 
@@ -9,58 +10,77 @@ AZ Quickstart is a complete customized version of the popular Drupal content
 management system, not an add-on to an existing Drupal-based web site.
 Previously, to start a new Drupal site you would prepare a web server and
 database, then install the core software following the instructions in its
-[Installing Drupal](https://www.drupal.org/docs/installing-drupal) document and the
-[installation chapter](https://www.drupal.org/docs/user_guide/en/installation-chapter.html)
-in its user guide.
-This would produce a minimally functional web site with no content, which you
-could then customize by adding themes and modules to fit it to your needs.
-Increasingly, however, you can install Drupal distributions, which not only
-contain the core, but also complete sets of additions to make it almost
-immediately useful for a particular purpose, such as an online storefront. AZ
-Quickstart is the distribution that provides many of the features specific to
-the University of Arizona, and rather than an empty site, can include some
-demonstration content (which can nevertheless be turned off instantly).
+[Installing Drupal](https://www.drupal.org/docs/installing-drupal) document and
+the [installation
+chapter](https://www.drupal.org/docs/user_guide/en/installation-chapter.html) in
+its user guide. This would produce a minimally functional web site with no
+content, which you could then customize by adding themes and modules to fit it
+to your needs. Increasingly, however, you can install Drupal distributions,
+which not only contain the core, but also complete sets of additions to make it
+almost immediately useful for a particular purpose, such as an online
+storefront. AZ Quickstart is the distribution that provides many of the features
+specific to the University of Arizona, and rather than an empty site, can
+include some demonstration content (which can nevertheless be turned off
+instantly).
 
 ## How to Contribute
 
 See our [contributing](./CONTRIBUTING.md) document for detailed instructions on
 how to contribute including:
 
-* What you'll need to [get started](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#things-youll-need-to-get-started)
-* How to [report a bug or request a new feature](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#submitting-a-bugissuefeature-request)
-* How to [submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-requests)
-* [Local development](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#local-development)
+* What you'll need to [get
+  started](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#things-youll-need-to-get-started)
+* How to [report a bug or request a new
+  feature](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#submitting-a-bugissuefeature-request)
+* How to [submit a pull
+  request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-requests)
+* [Local
+  development](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#local-development)
 
 ## Where to Install Your Quickstart Site
 
 The University's Campus Web Services group provides ready-to-use sites based on
 Quickstart for anyone who isn't comfortable with web development or system
 administration. Behind the scenes, a web hosting service called Pantheon hosts
-these sites, so in cases where people require more control and flexibility
-in a Quickstart site than these can provide, there are ways they can also host
-it independently on Pantheon, and many important University sites are already
+these sites, so in cases where people require more control and flexibility in a
+Quickstart site than these can provide, there are ways they can also host it
+independently on Pantheon, and many important University sites are already
 there. However, there are many other options for hosting web sites based on
-Arizona Quickstart; the only caveat is that anyone following one of these has
-to maintain their responsibility for keeping the system and web site secure
-and up-to-date. A generic hosting option that has been around for many years
-is known as LAMP: the combination of the Linux operating system, Apache web
-server, MySQL database, and PHP scripting language, so it is worth giving a
-more extensive example of using this, but many variations are common (for
-example, substituting Nginx for the Apache web server software).
+Arizona Quickstart; the only caveat is that anyone following one of these has to
+maintain their responsibility for keeping the system and web site secure and
+up-to-date. A generic hosting option that has been around for many years is
+known as LAMP: the combination of the Linux operating system, Apache web server,
+MySQL database, and PHP scripting language, so it is worth giving a more
+extensive example of using this, but many variations are common (for example,
+substituting Nginx for the Apache web server software).
 
 ### System Requirements
 
-Arizona Quickstart's system requirements are almost identical to
-[Drupal's own requirements](https://www.drupal.org/docs/system-requirements),
-in particular the requirements for Drupal 9. Some additional things that need
-emphasized or checked are:
-  * Make sure the system has enough memory: even if the running site consumes little, updates and installations are memory-intensive.
-  * Check that PHP's configuration allows it to use the memory (see the [memory requirements](https://www.drupal.org/docs/system-requirements) section).
-  * Re-check that the required PHP extensions are added: on a recent system the usual packaging mechanism should suffice to add them (such as apt on Debian or Ubuntu versions of Linux).
-  * Check that the Apache configuration enables `mod_rewrite`, and the module letting it work with PHP.
-  * Check the user and group of the running web server: in many Debian-derived Linux systems these will be `www-data`, but not on all (this information is needed for setting file and directory permissions later).
-  * Install and configure the software as a normal (non-root) user with the ability to `sudo` when elevated privileges areneeded; add this user to the same group that the web server uses (so you would see something like `www-data:x:33:normaluser` in the /etc/group file).
-  * A recent version of Composer is a necessity, not an option — remove any previously installed but stale versions, and follow the [https://getcomposer.org/download/](https://getcomposer.org/download/) instructions to install it, or if upgrading is possible, try the command `sudo -H composer self-update --2` 
+Arizona Quickstart's system requirements are almost identical to [Drupal's own
+requirements](https://www.drupal.org/docs/system-requirements), in particular
+the requirements for Drupal 9. Some additional things that need emphasized or
+checked are:
+  * Make sure the system has enough memory: even if the running site consumes
+    little, updates and installations are memory-intensive.
+  * Check that PHP's configuration allows it to use the memory (see the [memory
+    requirements](https://www.drupal.org/docs/system-requirements) section).
+  * Re-check that the required PHP extensions are added: on a recent system the
+    usual packaging mechanism should suffice to add them (such as apt on Debian
+    or Ubuntu versions of Linux).
+  * Check that the Apache configuration enables `mod_rewrite`, and the module
+    letting it work with PHP.
+  * Check the user and group of the running web server: in many Debian-derived
+    Linux systems these will be `www-data`, but not on all (this information is
+    needed for setting file and directory permissions later).
+  * Install and configure the software as a normal (non-root) user with the
+    ability to `sudo` when elevated privileges areneeded; add this user to the
+    same group that the web server uses (so you would see something like
+    `www-data:x:33:normaluser` in the /etc/group file).
+  * A recent version of Composer is a necessity, not an option — remove any
+    previously installed but stale versions, and follow the
+    [https://getcomposer.org/download/](https://getcomposer.org/download/)
+    instructions to install it, or if upgrading is possible, try the command
+    `sudo -H composer self-update --2`
 
 ### Web Server Configuration
 
@@ -82,8 +102,8 @@ configuration, with things like
     Header always set Strict-Transport-Security "max-age=63072000; includeSubdomains;"
     Header always set X-XSS-Protection 1
 ```
-The more general Drupal
-[web server requirements](https://www.drupal.org/docs/system-requirements/web-server-requirements)
+The more general Drupal [web server
+requirements](https://www.drupal.org/docs/system-requirements/web-server-requirements)
 are not particularly demanding. Make sure the web server is functioning properly
 with a trivial static site before trying the Quickstart installation (an
 index.html file stuck somewhere), but note that you should change Apache's
@@ -93,8 +113,8 @@ already exist).
 
 ### Database Server Configuration
 
-The main point of Drupal's
-[database requirements](https://www.drupal.org/docs/system-requirements/database-server-requirements)
+The main point of Drupal's [database
+requirements](https://www.drupal.org/docs/system-requirements/database-server-requirements)
 is that it does not support old versions of the server software, but does
 support several different variations in the software itself. Quickstart requires
 configuration with a MySQL or similar database, and a user set up within the
@@ -156,9 +176,9 @@ Created a sites/default/files directory with chmod 0777
 This will have created a top-level directory (`azqs` in this example), within
 which there is a `web` subdirectory serving as the actual DocumentRoot for the
 web server. It's important to update the Apache configuration at this point to
-reflect this, so in the example there would be a
-`DocumentRoot /var/www/drupalsites/azqs/web` directive, and a corresponding
-`<Directory /var/www/drupalsites/azqs/web>` (to set things like `AllowOverride All` there).
+reflect this, so in the example there would be a `DocumentRoot
+/var/www/drupalsites/azqs/web` directive, and a corresponding `<Directory
+/var/www/drupalsites/azqs/web>` (to set things like `AllowOverride All` there).
 Once Apache has restarted with the new configuration, there are two ways to
 complete the installation. The web site itself will display a variation on the
 usual initial Drupal installation form (headed “Arizona Quickstart”), allowing
@@ -181,7 +201,15 @@ settings file, and notice of some directory permissions that need relaxed to
 allow the web server to write there.
 ### Distribution update
 
-When updating your codebase on an existing site, you should always check if there are
-distribution updates that need to be applied.
+When updating your codebase on an existing site, you should always check if
+there are distribution updates that need to be applied.
+
+This can be done by users with the administrator role on your website at this
+path: `/admin/config/development/distro`
+
+You should be able to see the upstream updates to be applied, after updating
+your codebase by employing the "Merge" strategy available under the "Advanced"
+accordion on that page.
+
 
 
