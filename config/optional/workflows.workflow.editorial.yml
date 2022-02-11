@@ -39,7 +39,6 @@ type_settings:
       from:
         - draft
         - published
-        - unpublished
     az_unpublish:
       label: 'Unpublish'
       to: unpublished
@@ -47,5 +46,6 @@ type_settings:
       from:
         - unpublished
         - published
+        - draft
 
   default_moderation_state: draft
