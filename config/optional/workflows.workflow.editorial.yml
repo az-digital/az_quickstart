@@ -45,7 +45,7 @@ type_settings:
       to: unpublished
       weight: 1
       from:
-        - draft
+        - unpublished
         - published
 
   default_moderation_state: draft
