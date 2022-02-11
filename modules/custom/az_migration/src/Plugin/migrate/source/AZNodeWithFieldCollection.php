@@ -6,10 +6,46 @@ use Drupal\migrate\Row;
 use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
 
 /**
- * Custom node source for convering field collections into a single paragraph.
+ * Extends D7Node source plugin to convert field collection content into paragraph content.
+ *
+ * Available configuration keys:
+ * - node_type: The node_types to get from the source - can be a string or
+ *   an array. If not declared then nodes of all types will be retrieved.
+ * - field_collection_names: The field_collection types to get from the source - can be a string or
+ *   an array. If not declared then nothing will be retrieved.
+ *
+ * Examples:
+ *
+ * @code
+ * source:
+ *   plugin: az_node_with_field_collection
+ *   node_type: page
+ *   field_collection_names: field_accordion
+ * @endcode
+ *
+ * In this example nodes of type page, and the accordion field collection are retrieved from the source database
+ *
+ * @code
+ * source:
+ *   plugin: az_node_with_field_collection
+ *   node_type: [page, test]
+ *   field_collection_names:
+ * .    - field_accordion
+ *     - field_contacts
+ * @endcode
+ *
+ * In this example nodes of type page and test along with the field_accordion and
+ * field_contacts field collections are retrieved from the source database.
+ *
+ * For additional configuration keys, refer to the parent classes.
+ *
+ * @see \Drupal\migrate\Plugin\migrate\source\SqlBase
+ * @see \Drupal\migrate\Plugin\migrate\source\SourcePluginBase
+ * @see \Drupal\node\Plugin\migrate\source\d7\Node
  *
  * @MigrateSource(
- *   id = "az_node_with_field_collection"
+ *   id = "az_node_with_field_collection",
+ *   source_module = "az_migration"
  * )
  */
 class AZNodeWithFieldCollection extends D7Node {
