@@ -23,19 +23,17 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *   field_collection_names: field_accordion
  * @endcode
  *
- * In this example nodes of type page, and the accordion field collection are retrieved from the source database
+ * In this example nodes of type page and test along with the field_accordion and
+ * field_contacts field collections are retrieved from the source database.
  *
  * @code
  * source:
  *   plugin: az_node_with_field_collection
  *   node_type: [page, test]
  *   field_collection_names:
- * .    - field_accordion
+ *     - field_accordion
  *     - field_contacts
  * @endcode
- *
- * In this example nodes of type page and test along with the field_accordion and
- * field_contacts field collections are retrieved from the source database.
  *
  * For additional configuration keys, refer to the parent classes.
  *
@@ -48,7 +46,7 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *   source_module = "az_migration"
  * )
  */
-class AZNodeWithFieldCollection extends D7Node {
+class NodeWithFieldCollection extends D7Node {
 
   /**
    * {@inheritdoc}
