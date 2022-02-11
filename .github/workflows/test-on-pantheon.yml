@@ -1,0 +1,30 @@
+name: Test on Pantheon
+on:
+   workflow_dispatch:
+    inputs:
+      pr_number:
+        description: The PR number to apply to the pantheon site
+        required: true
+      site_name:
+        description: The name of the pantheon site
+        required: true
+
+jobs:
+  build:
+    name: Upload Release Asset
+    runs-on: ubuntu-18.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup PHP
+        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        with:
+          php-version: '7.4'
+      - name: Apply PR diff to site
+        run: |
+          jq ".extra.patches += {\"drupal/az_quickstart\": {\"pr-$PATCH_NUM\": \"$PATCH_URL\"}}" composer.json > composer.json.new
+          mv composer.json.new composer.json
+          jq '.' composer.json
+        env:
+          PATCH_URL: "https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/${{github.event.inputs.pr_number}}.diff"
+          PATCH_NUM: "${{github.event.inputs.pr_number}}"
