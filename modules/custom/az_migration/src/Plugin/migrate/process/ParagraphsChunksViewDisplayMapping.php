@@ -7,12 +7,17 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process Plugin to map view and display for Chunks View paragraphs. This
- * plugin expects a source value which is an associative containing the keys
+ * Process plugin that maps QS1 view & display names QS2 view & display names.
+ *
+ * Used to map view and display names in uaqs_content_chunks_view Quickstart 1
+ * source paragraphs into view and display names suitable for use
+ * in az_view_reference paragraphs in Quickstart 2.
+ *
+ * Expects a source value which is an associative containing the keys
  * "vname" and "vargs".
  *
  * Available configuration keys
- * - N/A
+ * - N/A.
  *
  * Examples:
  *

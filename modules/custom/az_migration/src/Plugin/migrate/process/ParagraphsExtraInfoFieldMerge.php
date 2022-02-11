@@ -7,7 +7,9 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Quickstart 1 to Quickstart2 Process plugin to extract specific field values
+ * Process plugin for converting uaqs_extra_info paragraphs to az_text.
+ *
+ * Quickstart 1 to Quickstart2 process plugin to extract specific field values
  * from the source, (uaqs_extra_info paragraphs), and transforming those values
  * by wrapping them in specific arizona-bootstrap markup before outputting
  * before returning the desired markup.
@@ -18,10 +20,10 @@ use Drupal\migrate\Row;
  *  - field_uaqs_body: An indexed array with the first index of 0 with 1
  *  element for value.
  *  - field_uaqs_link: An indexed array the first index of 0 the following keys:
- *    - url
+ *    - url: Link URL.
  *    - attributes: An associative array with the following keys:
- *      - class
- *    - title
+ *      - class: Link classes.
+ *      - title: Link title.
  *
  * Available configuration keys
  * - N/A
@@ -34,7 +36,8 @@ use Drupal\migrate\Row;
  *   default_value default_value: az_standard
  * @endcode
  *
- * @MigrateProcessPlugin( id = "paragraphs_extra_info_field_merge"
+ * @MigrateProcessPlugin(
+ *   id = "paragraphs_extra_info_field_merge"
  * )
  */
 class ParagraphsExtraInfoFieldMerge extends ProcessPluginBase {
