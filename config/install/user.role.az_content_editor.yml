@@ -110,6 +110,7 @@ permissions:
   - 'update media'
   - 'use editorial transition az_publish'
   - 'use editorial transition create_new_draft'
+  - 'use editorial transition az_unpublish'
   - 'use text format az_standard'
   - 'view all media revisions'
   - 'view all revisions'

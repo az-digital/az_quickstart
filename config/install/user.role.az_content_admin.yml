@@ -72,6 +72,7 @@ permissions:
   - 'use advanced search'
   - 'use editorial transition az_publish'
   - 'use editorial transition create_new_draft'
+  - 'use editorial transition az_unpublish'
   - 'use text format full_html'
   - 'view any unpublished content'
   - 'view latest version'
