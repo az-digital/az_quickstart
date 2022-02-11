@@ -12,7 +12,7 @@ use Drupal\media\Entity\Media;
  *
  * Available configuration keys
  * - caption: The field ID for the source image caption.
- * - credit: The field ID for the source image caption.
+ * - credit: The field ID for the source image credit.
  * - format: The destination filter format for the migrated text.
  *
  * Examples:
