@@ -13,24 +13,36 @@ use Drupal\migrate\Row;
  *   id = "paragraphs_mapping_flexible_page"
  * )
  */
-class ParagraphMappingFlexiblePage extends ProcessPluginBase {
+class ParagraphMappingFlexiblePage extends ProcessPluginBase
+{
 
-  /**
-   * {@inheritdoc}
-   */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    // Merging the data into paragraph field on flexible page.
-    $main_content = [];
-    foreach ($value as $item) {
-      if (isset($item[0]) && isset($item[1])) {
-        $main_content[] = [
-          'target_id' => $item[0],
-          'target_revision_id' => $item[1],
-        ];
-      }
+    /**
+     * {@inheritdoc}
+     */
+    public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property)
+    {
+        // Merging the data into paragraph field on flexible page.
+        $main_content = [];
+        $this->populateMainContentArray($main_content, $value);
+
+        return $main_content;
     }
 
-    return $main_content;
-  }
-
+    private function populateMainContentArray(&$main_content, $value_array)
+    {
+        foreach ($value_array as $item) {
+            if (
+              is_array($item) &&
+              count($item) == 2 &&
+              is_numeric($item[0]) &&
+              is_numeric($item[1])) {
+                $main_content[] = [
+                  'target_id' => $item[0],
+                  'target_revision_id' => $item[1],
+                ];
+            } elseif (is_array($item)) {
+                $this->populateMainContentArray($main_content, $item);
+            }
+        }
+    }
 }
