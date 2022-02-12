@@ -48,8 +48,8 @@ jobs:
           rm composer.lock
           git add composer.json composer.lock
           git commit --allow-empty -m "Apply PR ${PR_NUM}"
-          git push
-          terminus -y -n multidev:create ${SITE_NAME}.${PR_NUM}
+          git push --set-upstream origin "${PR_NUM}"
+          terminus -y -n multidev:create "${SITE_NAME}.live" "${PR_NUM}"
         env:
           PATCH_URL: https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/${{github.event.inputs.pr_number}}.diff
           PR_NUM: ${{ github.event.inputs.pr_number }}
