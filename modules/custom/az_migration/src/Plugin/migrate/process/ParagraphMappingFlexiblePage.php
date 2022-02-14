@@ -13,38 +13,50 @@ use Drupal\migrate\Row;
  *   id = "paragraphs_mapping_flexible_page"
  * )
  */
-class ParagraphMappingFlexiblePage extends ProcessPluginBase {
+class ParagraphMappingFlexiblePage extends ProcessPluginBase
+{
 
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    // Merging the data into paragraph field on flexible page.
-    $main_content = [];
-    $this->populateMainContentArray($main_content, $value);
+    public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property)
+    {
+        // Merging the data into paragraph field on flexible page.
+        $main_content = [];
+        $this->populateMainContentArray($main_content, $value);
 
-    return $main_content;
-  }
+        return $main_content;
+    }
 
-  /**
-   *
-   */
-  private function populateMainContentArray(&$main_content, $value_array) {
-    foreach ($value_array as $item) {
-      if (
+    /**
+     * Internal, recurive function. This iterates the incoming array
+     * of values to transform and searches for valid values to pull-
+     * out and return as an array of paragraph ids to associate
+     * with a given node.
+     *
+     * @param array $main_content
+     *   An array of target_ids/target_revision_ids to return
+     * @param array value_array
+     *   The incoming array of values to transform and iterate
+     *
+     * @return null
+     *   Edits main_content via pass-by-reference
+     */
+    private function populateMainContentArray(&$main_content, $value_array)
+    {
+        foreach ($value_array as $item) {
+            if (
           is_array($item) &&
           count($item) == 2 &&
           is_numeric($item[0]) &&
           is_numeric($item[1])) {
-        $main_content[] = [
+                $main_content[] = [
           'target_id' => $item[0],
           'target_revision_id' => $item[1],
         ];
-      }
-      elseif (is_array($item)) {
-        $this->populateMainContentArray($main_content, $item);
-      }
+            } elseif (is_array($item)) {
+                $this->populateMainContentArray($main_content, $item);
+            }
+        }
     }
-  }
-
 }
