@@ -27,6 +27,8 @@ class ParagraphMappingFlexiblePage extends ProcessPluginBase {
   }
 
   /**
+   * Processes incoming value array.
+   *
    * Internal, recurive function. This iterates the incoming array
    * of values to transform and searches for valid values to pull-
    * out and return as an array of paragraph ids to associate
@@ -36,9 +38,6 @@ class ParagraphMappingFlexiblePage extends ProcessPluginBase {
    *   An array of target_ids/target_revision_ids to return.
    * @param array value_array
    *   The incoming array of values to transform and iterate
-   *
-   * @return null
-   *   Edits main_content via pass-by-reference
    */
   private function populateMainContentArray(&$main_content, $value_array) {
     foreach ($value_array as $item) {
