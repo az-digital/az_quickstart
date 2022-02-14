@@ -36,8 +36,8 @@ class ParagraphMappingFlexiblePage extends ProcessPluginBase {
    *
    * @param array $main_content
    *   An array of target_ids/target_revision_ids to return.
-   * @param array value_array
-   *   The incoming array of values to transform and iterate
+   * @param array $value_array
+   *   The incoming array of values to transform and iterate.
    */
   private function populateMainContentArray(&$main_content, $value_array) {
     foreach ($value_array as $item) {
