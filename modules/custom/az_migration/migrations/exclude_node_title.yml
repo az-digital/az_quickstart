@@ -38,7 +38,7 @@ destination:
   config_name: exclude_node_title.settings
 
 migration_dependencies:
-  required:
+  optional:
     - az_node_carousel
     - az_node_event
     - az_node_flexible_page
