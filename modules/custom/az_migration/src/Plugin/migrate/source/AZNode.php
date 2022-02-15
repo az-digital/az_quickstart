@@ -11,7 +11,8 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  * @see Drupal\node\Plugin\migrate\source\d7\Node
  *
  * Additions to D7Node:
- *  - alias: string containing the content's relative path alias beginning with '/'
+ *  - alias: string containing the content's relative path alias beginning
+ *    with '/'
  *
  * @MigrateSource(
  *   id = "az_node"
