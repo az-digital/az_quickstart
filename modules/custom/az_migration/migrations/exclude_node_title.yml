@@ -24,6 +24,7 @@ process:
         - az_node_flexible_page
         - az_node_news
         - az_node_person
+        - az_node_uaqs_basic_page_to_az_page
     -
       plugin: single_value
     -
@@ -44,3 +45,5 @@ migration_dependencies:
     - az_node_flexible_page
     - az_node_news
     - az_node_person
+    - az_node_uaqs_basic_page_to_az_page
+
