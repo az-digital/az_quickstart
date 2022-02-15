@@ -1,0 +1,15 @@
+name: Quickstart News Feeds
+type: module
+description: 'Import news stories from UArizona News.'
+core_version_requirement: ^9
+package: 'The University of Arizona - Experimental'
+
+dependencies:
+  - az_core
+  - az_news
+  - az_media
+  - migrate:migrate
+  - migrate_plus:migrate_plus
+  - migrate_queue_importer:migrate_queue_importer
+
+configure: az_news_feeds.admin_importers

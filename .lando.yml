@@ -1,16 +1,16 @@
 name: az_quickstart
-recipe: drupal8
+recipe: drupal9
 config:
   php: '7.4'
   via: apache:2.4
   webroot: web
-  database: mysql:5.7
+  database: mariadb:10.4
   xdebug: false
 services:
   appserver:
     overrides:
       environment:
-        SIMPLETEST_DB: 'mysql://drupal8:drupal8@database/drupal8'
+        SIMPLETEST_DB: 'mysql://drupal9:drupal9@database/drupal9'
         SIMPLETEST_BASE_URL: 'http://appserver'
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://chromedriver:9515"]'
       volumes:
@@ -40,7 +40,7 @@ tooling:
   # in a race condition if Drupal is installed during the run phase.
   install:
     service: appserver
-    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal8:drupal8@database:3306/drupal8 -y --verbose
+    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose
   # Provide Drush tooling to automatically know the Drupal root.
   drush:
     service: appserver
@@ -83,7 +83,7 @@ tooling:
     service: appserver
     cmd:
       # Run command against the install profile's composer.json - eg. profile dependencies.
-      - composer --working-dir=/usr/local/quickstart-install-profile --no-scripts --no-update
+      - /usr/local/bin/composer --working-dir=/usr/local/quickstart-install-profile --no-scripts --no-update
       # Now issue a composer update/install for the scaffolding folder to pull in new dependencies.
       # "true" command consumes passed Lando arguments that were only intended to be passed to the previous call.
-      - composer --working-dir=/app --no-scripts update && composer --working-dir=/app install && true
+      - /usr/local/bin/composer --working-dir=/app --no-scripts update && /usr/local/bin/composer --working-dir=/app install && true

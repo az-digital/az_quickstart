@@ -48,6 +48,13 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Select a card style.'),
     ];
 
+    $form['card_clickable'] = [
+      '#title' => $this->t('Clickable cards'),
+      '#type' => 'checkbox',
+      '#default_value' => isset($config['card_clickable']) ? $config['card_clickable'] : FALSE,
+      '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
+    ];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // Card deck width for tablets.
@@ -60,7 +67,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-sm-4' => $this->t('3'),
         'col-sm-3' => $this->t('4'),
       ],
-      '#default_value' => $config['az_display_settings']['card_width_sm'] ?? 'col-sm-6',
+      '#default_value' => $config['az_display_settings']['card_width_sm'] ?? 'col-sm-12',
       '#description' => $this->t('Choose how many cards appear per row. Additional cards will wrap to a new row. This selection sets the cards per row on tablets.'),
       '#weight' => 1,
     ];

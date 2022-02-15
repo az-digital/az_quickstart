@@ -26,12 +26,16 @@
 .transparent {
   background: none;
 }
-.box {
+.az-video-playing,
+.az-video-playing .text-on-video {
+  background: none !important;
+}
+.paragraph--type--az-text-media .box {
   padding: 2em;
   margin-left: 0;
   margin-right: 0;
 }
-.column {
+.paragraph--type--az-text-media .column {
   padding-left: 2em;
   padding-right: 2em;
 }

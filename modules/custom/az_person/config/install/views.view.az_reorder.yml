@@ -27,13 +27,13 @@ display:
         options:
           perm: 'access administration pages'
       cache:
-        type: tag
+        type: none
         options: {  }
       query:
         type: views_query
         options:
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_comment: ''
           query_tags: {  }
@@ -336,10 +336,10 @@ display:
           entity_field: type
           plugin_id: bundle
       sorts:
-        field_az_person_category_target_id:
-          id: field_az_person_category_target_id
-          table: node__field_az_person_category
-          field: field_az_person_category_target_id
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
           relationship: none
           group_type: group
           admin_label: ''
@@ -348,10 +348,10 @@ display:
           expose:
             label: ''
           plugin_id: standard
-        weight:
-          id: weight
-          table: draggableviews_structure
-          field: weight
+        field_az_person_category_target_id:
+          id: field_az_person_category_target_id
+          table: node__field_az_person_category
+          field: field_az_person_category_target_id
           relationship: none
           group_type: group
           admin_label: ''

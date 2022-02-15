@@ -93,6 +93,8 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'py-8' => $this->t('8 (6.0rem | ~96px)'),
         'py-9' => $this->t('9 (7.0rem | ~112px)'),
         'py-10' => $this->t('10 (8.0rem | ~128px)'),
+        'py-20' => $this->t('20 (16.0rem | ~256px)'),
+        'py-30' => $this->t('30 (24.0rem | ~384px)'),
       ],
       '#default_value' => $config['text_background_padding'] ?? 'py-5',
       '#description' => $this->t('Adds padding above and below the text.'),
@@ -117,6 +119,27 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
 
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
+
+    // Add responsive padding classes.
+    if (isset($config['text_background_padding'])) {
+      $padding_classes = [];
+      switch ($config['text_background_padding']) {
+        case 'py-20':
+          $padding_classes[] = 'py-10';
+          $padding_classes[] = 'py-md-20';
+          break;
+
+        case 'py-30':
+          $padding_classes[] = 'py-10';
+          $padding_classes[] = 'py-md-30';
+          break;
+
+        default:
+          $padding_classes[] = $config['text_background_padding'];
+      }
+      $config['text_background_padding'] = implode(' ', $padding_classes);
+    }
+
     $variables['text_with_background'] = $config;
   }
 

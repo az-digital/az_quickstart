@@ -5,6 +5,8 @@
  * az_quickstart.profile
  */
 
+use Drupal\Core\Extension\MissingDependencyException;
+
 /**
  * Install az_metrics.
  */
@@ -30,7 +32,10 @@ function az_quickstart_update_9203() {
 }
 
 /**
- * Save default barrio settings for new branding theme region and place sytem branding block in new region.
+ * Place system branding block in new region.
+ *
+ * Save default barrio settings for new branding theme region,
+ * and place the new branding block in it.
  */
 function az_quickstart_update_9204() {
   $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
@@ -50,9 +55,58 @@ function az_quickstart_update_9204() {
 }
 
 /**
- * Enable the az_security module.
+ * Disable land acknowledgement theme setting by default on existing sites.
  */
 function az_quickstart_update_9205() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  $config
+    ->set('land_acknowledgment', FALSE)
+    ->save(TRUE);
+}
+
+/**
+ * Update footer logo link destination if it's currently set to "<front>".
+ */
+function az_quickstart_update_9206() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  if ($config->get('footer_logo_link_destination') === '<front>') {
+    $config
+      ->set('footer_logo_link_destination', '')
+      ->save(TRUE);
+  }
+}
+
+/**
+ * Enable the az_security module.
+ */
+function az_quickstart_update_9207() {
   $module_list = ['az_security'];
   \Drupal::service('module_installer')->install($module_list);
+}
+
+/**
+ * Ensure Pantheon sites have the advanced page cache module installed.
+ */
+function az_quickstart_update_9208() {
+  if (defined('PANTHEON_ENVIRONMENT')) {
+    try {
+      \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
+    }
+    catch (MissingDependencyException $e) {
+      return t('Pantheon Advanced Page Cache module not available to install.');
+    }
+
+    return t('Pantheon Advanced Page Cache module installed.');
+  }
+}
+
+/**
+ * Set the default columns classes on the new theme setting.
+ */
+function az_quickstart_update_9209() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  $config
+    ->set('header_one_col_classes', 'col-12 col-sm-6 col-lg-4')
+    ->set('header_two_col_classes', 'col-12 col-sm-6 col-lg-8')
+    ->save(TRUE);
 }

@@ -18,11 +18,18 @@ type_settings:
       published: true
       default_revision: true
       weight: 0
+    unpublished:
+      label: Unpublished
+      published: false
+      default_revision: true
+      weight: 1
   transitions:
     az_publish:
       label: Publish
       from:
         - draft
+        - published
+        - unpublished
       to: published
       weight: 0
     create_new_draft:
@@ -32,4 +39,13 @@ type_settings:
       from:
         - draft
         - published
+    az_unpublish:
+      label: 'Unpublish'
+      to: unpublished
+      weight: 1
+      from:
+        - unpublished
+        - published
+        - draft
+
   default_moderation_state: draft
