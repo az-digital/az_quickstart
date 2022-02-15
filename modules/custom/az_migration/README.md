@@ -421,6 +421,9 @@ drush mr az_menu_links
 ```
 ## Exclude Node Title Migration
 
+This migration uses migration_lookup to match the nid of migrated content to
+source values.
+
 Optional Migration Dependencies:
 - az_node_carousel
 - az_node_event
