@@ -16,18 +16,32 @@
 
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to change)
-- [ ] Configuration change (change that will need to be merged in to existing sites)
+**Arizona Quickstart** (install profile, custom modules, custom theme)
+- Patch release changes
+   - [ ] Bug fix
+   - [ ] Accessibility, performance, or security improvement
+   - [ ] Critical institutional link or brand change
+- Minor release changes
+   - [ ] New feature
+   - [ ] Breaking or visual change to existing behavior
+   - [ ] Non-critical brand change
+   - [ ] New internal API or API improvement with backwards compatibility
+   - [ ] Risky or disruptive cleanup to comply with coding standards
+   - [ ] High-risk or disruptive change (requires upgrade path, risks regression, etc.)
 
-## Checklist:
-<!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
-<!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] My code follows the code style of this project.
-- [ ] My change requires a change to the documentation.
-- [ ] All relevant permissions have been added to the appropriate roles.
-- [ ] I have updated the documentation accordingly.
-- [ ] I have read the **CONTRIBUTING** document.
-- [ ] I have added tests to cover my changes.
-- [ ] All new and existing tests passed.
+**Drupal core**
+- Patch release changes
+   - [ ] Security update
+   - [ ] Patch level release (non-security bug-fix release)
+   - [ ] Patch removal that's no longer necessary
+- Minor release changes
+   - [ ] Major or minor level update
+
+**Drupal contrib projects**
+- Patch release changes
+   - [ ] Security update
+   - [ ] Patch or minor level update
+   - [ ] Add new module
+   - [ ] Patch removal that's no longer necessary
+- Minor release changes
+   - [ ] Major level update
