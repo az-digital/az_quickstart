@@ -1,5 +1,4 @@
 # Recipe for AZ Quickstart local development
-name: az-quickstart
 type: php
 docroot: web
 php_version: "7.4"
