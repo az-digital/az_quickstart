@@ -341,6 +341,20 @@ drush mr az_paragraph_file_download
 ```
 
 #### 6. Card Deck Migration.
+Notes: 
+
+This migration only imports the first link for cards from the multi-value link field in Quickstart v1. If there are multiple links on a card, you can edit the migrated card after the migration and add the links to the text area as HTML instead of using the link field.
+
+Source site pre-migration tasks:
+
+* Check for any custom or overridden fields on uaqs_content_chunks_card_deck paragraph type.
+* Delete any card decks you don’t want migrated.
+
+Dependencies :
+
+* Media Migration
+* Files Migration
+* Quickstart Paragraphs - Cards Module (az_paragraphs_cards)
 
 Migrate card deck paragraphs using the below command :
 

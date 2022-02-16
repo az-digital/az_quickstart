@@ -62,7 +62,7 @@
 
 
 {{ attach_library('bootstrap_barrio/node') }}
-
+{% set url = (node.field_az_link.0.url) ? node.field_az_link.0.url : url %}
 {%
   set classes = [
     'node',
@@ -84,9 +84,9 @@
     <div class="row">
       <div class="col-12 col-md-3 pb-3 pb-md-0">
       {% if content.field_az_media_image.0 %}
-        <a href="{{ url }}" class="az-person-row-img">
-          {{ content.field_az_media_image.0 }}
-        </a>
+          <a href="{{ url }}" class="az-person-row-img">
+            {{ content.field_az_media_image.0 }}
+          </a>
       {% endif %}
       </div>
       <div class="col-12 col-md-5">

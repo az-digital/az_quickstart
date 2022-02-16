@@ -97,7 +97,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-md-8 col-lg-6' => $this->t('Position left'),
         'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Position center'),
         'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Position right'),
-        'col-xs-12' => $this->t('None'),
+        'col-xs-12' => $this->t('Full-width'),
       ],
       '#default_value' => $config['position'],
       '#description' => $this->t('The position of the content on the media.'),
@@ -139,6 +139,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
         'y-20' => $this->t('20 (16.0rem | ~256px)'),
         'y-30' => $this->t('30 (24.0rem | ~384px)'),
+        'az-aspect-ratio' => $this->t('Media Aspect Ratio'),
       ],
       '#default_value' => $config['text_media_spacing'],
       '#description' => $this->t('Adds spacing above and below the text.'),
@@ -230,6 +231,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
           break;
 
+        case 'az-aspect-ratio':
+          $variables['attributes']['class'][] = 'az-aspect-ratio';
+          break;
+
         default:
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }
@@ -257,7 +262,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     // Apply bottom spacing if set.
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
-      $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
+      $build['#attributes']['class'][] = $config['az_display_settings']['bottom_spacing'];
     }
   }
 

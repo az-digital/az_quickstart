@@ -7,6 +7,7 @@
 
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Url;
 
 /**
@@ -28,8 +29,13 @@ function az_demo_install() {
   $entity_type = key($params);
   $home = \Drupal::entityTypeManager()->getStorage($entity_type)->load($params[$entity_type]);
 
-  $config = \Drupal::service('config.factory')->getEditable('system.site');
-  $config->set('page.front', '/node/' . $home->id())->save();
+  $site_config = \Drupal::service('config.factory')->getEditable('system.site');
+  $site_config->set('page.front', '/node/' . $home->id())->save();
+
+  // Enable optional config.
+  $config_path = drupal_get_path('theme', 'az_barrio') . '/config/optional';
+  $source = new FileStorage($config_path);
+  \Drupal::service('config.installer')->installOptionalConfig($source);
 }
 
 /**

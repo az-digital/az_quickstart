@@ -1,0 +1,54 @@
+id: az_news_feed_stories_media
+label: UArizona News Stories - Media
+migration_group: az_news_feeds
+migration_tags:
+  - Quickstart News Feeds
+
+destination:
+  plugin: entity:media
+  default_bundle: az_image
+
+source:
+  ids:
+    fid:
+      type: integer
+    uuid:
+      type: uuid
+
+  fields:
+    -
+      name: fid
+      label: 'File ID'
+      selector: /story/img-fid
+    -
+      name: uuid
+      label: 'Story UUID'
+      selector: /story/uuid
+    -
+      name: image
+      label: 'Image'
+      selector: /story/img-thumb
+
+
+process:
+  field_media_az_image/target_id:
+    -
+      plugin: migration_lookup
+      source: fid
+      migration:
+        - az_news_feed_stories_files
+
+  field_media_az_image/alt: image/alt
+
+migration_dependencies:
+  required:
+    - az_news_feed_stories_files
+
+dependencies:
+  module:
+    - az_news_feeds
+  enforced:
+    module:
+      - az_media
+      - az_news_feeds
+      - migrate_tools

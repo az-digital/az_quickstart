@@ -247,6 +247,26 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
+  // Responsive Header Grid.
+  $form['layout']['header_grid'] = [
+    '#type' => 'details',
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#title' => t('Responsive Header Grid'),
+    '#description' => t('The header typically contains two columns on small screen sizes and larger with the "Site branding" region on the left and with "Header 1" and "Header 2" on the right.'),
+  ];
+  $form['layout']['header_grid']['header_one_col_classes'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column one classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the Site branding region. Should contain a string with classes separated by a space.'),
+    '#default_value' => theme_get_setting('header_one_col_classes'),
+  ];
+  $form['layout']['header_grid']['header_two_col_classes'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column two classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
+    '#default_value' => theme_get_setting('header_two_col_classes'),
+  ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];

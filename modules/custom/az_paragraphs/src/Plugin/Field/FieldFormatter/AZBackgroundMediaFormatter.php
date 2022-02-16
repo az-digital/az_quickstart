@@ -512,7 +512,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#attributes' => [
           'id' => [$video_oembed_id . '-bg-video-container'],
           'class' => [
-            'az-video-loading',
             'az-video-background',
             'az-js-video-background',
           ],
@@ -527,12 +526,24 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
         $az_background_media[] = $background_video;
+        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+          $image_renderable = [
+            '#theme' => 'responsive_image_formatter',
+            '#responsive_image_style_id' => 'az_full_width_background',
+            '#item' => $media->thumbnail,
+            '#item_attributes' => [
+              'class' => ['img-fluid', ' w-100', 'invisible'],
+            ],
+          ];
+          $az_background_media[] = $image_renderable;
+        }
       }
       elseif ($settings['style'] === 'bottom') {
         $image_renderable = [
-          '#theme' => 'image',
-          '#uri' => file_create_url($file_uri),
-          '#attributes' => [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => 'az_full_width_background',
+          '#item' => $media->thumbnail,
+          '#item_attributes' => [
             'class' => ['img-fluid'],
           ],
         ];
@@ -579,6 +590,17 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
+      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+        $image_renderable = [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => 'az_full_width_background',
+          '#item' => $media->field_media_az_image,
+          '#item_attributes' => [
+            'class' => ['img-fluid', ' w-100', 'invisible'],
+          ],
+        ];
+        $az_background_media[] = $image_renderable;
+      }
 
       $az_background_media[] = $responsive_image_style_element;
     }
