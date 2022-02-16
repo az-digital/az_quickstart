@@ -82,7 +82,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       'uaqs_sidebar_teaser_list' => 'az_minimal_media_list',
       'uaqs_med_media_list' => 'az_medium_media_list',
       'uaqs_card' => 'az_card',
-      'uaqs_marquee' => 'marquee',
+      'uaqs_marquee' => 'az_marquee',
     ],
   ];
 
