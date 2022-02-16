@@ -436,15 +436,15 @@ Quickstart 1 exclude node title per node settings can be migrated using the
 following command:
 
 ```
-drush mim exclude_node_title
+drush mim az_exclude_node_title
 ```
 To update content after running additional quickstart migrations:
 
 ```
-drush mim exclude_node_title --update
+drush mim az_exclude_node_title --update
 ```
 
 To rollback menu links, use the following command:
 ```
-drush mr exclude_node_title
+drush mr az_exclude_node_title
 ```
