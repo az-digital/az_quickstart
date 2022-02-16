@@ -35,7 +35,7 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *     - field_contacts
  * @endcode
  *
- * For additional configuration keys, refer to the parent classes.
+ * For additional configuration keys refer to the parent classes.
  *
  * @see \Drupal\migrate\Plugin\migrate\source\SqlBase
  * @see \Drupal\migrate\Plugin\migrate\source\SourcePluginBase
