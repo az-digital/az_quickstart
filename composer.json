@@ -96,6 +96,7 @@
         "drupal/webform": "6.1.2",
         "drupal/xmlsitemap": "1.2.0",
         "npm-asset/blazy": "1.8.2",
+        "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0"
     },
     "require-dev": {
