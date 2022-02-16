@@ -1,5 +1,6 @@
 id: az_exclude_node_title
 label: Exclude node title config
+migration_group: az_migration
 migration_tags:
   - Quickstart Content Migration
 
