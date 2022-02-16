@@ -43,7 +43,7 @@ class ParagraphMappingFlexiblePage extends ProcessPluginBase {
     foreach ($value_array as $item) {
       if (
       is_array($item) &&
-      count($item) == 2 &&
+      count($item) === 2 &&
       is_numeric($item[0]) &&
       is_numeric($item[1])) {
         $main_content[] = [
