@@ -3,6 +3,7 @@ label: Exclude node title config
 migration_tags:
   - Quickstart Content Migration
 
+# This will skip processing if the source variable is missing.
 source:
   plugin: variable
   variables:
