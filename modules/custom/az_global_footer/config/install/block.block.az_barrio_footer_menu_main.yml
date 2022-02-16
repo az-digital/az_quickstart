@@ -7,6 +7,9 @@ dependencies:
     - menu_block
   theme:
     - az_barrio
+  enforced:
+    module:
+      - az_global_footer
 id: az_barrio_footer_menu_main
 theme: az_barrio
 region: footer

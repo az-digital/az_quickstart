@@ -50,7 +50,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.2.10",
+        "drupal/core-recommended": "9.2.11",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.0",
@@ -66,7 +66,7 @@
         "drupal/honeypot": "2.0.2",
         "drupal/image_widget_crop": "2.3",
         "drupal/jquery_ui": "1.4",
-        "drupal/jquery_ui_datepicker": "1.1",
+        "drupal/jquery_ui_datepicker": "1.2.0",
         "drupal/link_class": "2.0.0",
         "drupal/media_library_edit": "2.2.0",
         "drupal/media_library_form_element": "2.0.3",
@@ -75,12 +75,13 @@
         "drupal/menu_block": "1.7.0",
         "drupal/menu_link_attributes": "1.2",
         "drupal/metatag": "1.16",
-        "drupal/migrate_plus": "5.1",
-        "drupal/migrate_tools": "5.0",
+        "drupal/migrate_queue_importer": "2.0",
+        "drupal/migrate_plus": "5.2.0",
+        "drupal/migrate_tools": "5.1.0",
         "drupal/paragraphs": "1.12",
         "drupal/paragraphs_admin": "1.2",
         "drupal/pathauto": "1.8",
-        "drupal/redirect": "1.6",
+        "drupal/redirect": "1.7.0",
         "drupal/role_delegation": "1.1",
         "drupal/search_exclude": "2.0.0-beta2",
         "drupal/slick": "2.4.0",
@@ -101,7 +102,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.1.x-dev"
+            "dev-main": "2.2.x-dev"
         },
         "patches": {
             "drupal/bootstrap_barrio": {
@@ -118,13 +119,15 @@
                 "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-09-02/2259567-146-9-2-x.patch",
                 "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Quickedit attributes issue": "https://www.drupal.org/files/issues/2021-11-05/3072231-61-9.2.x.patch",
                 "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
                 "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
                 "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff",
-                "Allow menu_link source plugin to filter menu links by menu name (#3064016)": "https://git.drupalcode.org/project/drupal/-/commit/510b5904fcd2498800b733d4e3015003eed23c81.diff"
+                "Allow menu_link source plugin to filter menu links by menu name (#3064016)": "https://git.drupalcode.org/project/drupal/-/commit/510b5904fcd2498800b733d4e3015003eed23c81.diff",
+                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2020-06-28/2766369-25.patch",
+                "Incorrect results on grouped exposed filters (1810148)": "https://www.drupal.org/files/issues/2022-02-02/1810148-101.patch",
+                "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-2-x.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",

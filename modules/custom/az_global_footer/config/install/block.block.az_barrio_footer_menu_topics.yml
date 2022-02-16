@@ -8,12 +8,15 @@ dependencies:
     - menu_block
   theme:
     - az_barrio
+  enforced:
+    module:
+      - az_global_footer
 third_party_settings:
   block_class:
     classes: 'col-12 col-sm-6 col-md-5'
 id: az_barrio_footer_menu_topics
 theme: az_barrio
-region: footer_sub
+region: footer_sub_menus
 weight: -10
 provider: null
 plugin: 'menu_block:az-footer-topics'

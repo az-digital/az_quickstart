@@ -142,6 +142,10 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   // Allow wordmark to be disabled.
   $variables['wordmark'] = (theme_get_setting('wordmark')) ? TRUE : FALSE;
+
+  $variables['header_one_col_classes'] = theme_get_setting('header_one_col_classes');
+  $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
+
 }
 
 /**
@@ -221,9 +225,6 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     unset($libraries['global-styling']['css']['component']['css/components/site-footer.css']);
   }
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
-    if (isset($libraries['global-styling'])) {
-      $libraries['global-styling']['dependencies'][] = 'az_barrio/az-barrio-off-canvas-nav';
-    }
     // Add AZ Bootstrap CSS & JS based on theme settings.
     $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
     $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
@@ -561,14 +562,15 @@ function az_barrio_preprocess_block(&$variables) {
 
           $variables['content']['#attributes']['class'][] = 'nav-utility';
           $variables['content']['#attributes']['class'][] = 'd-flex';
-          $variables['content']['#attributes']['class'][] = 'justify-content-end';
+          $variables['content']['#attributes']['class'][] = 'justify-content-center';
+          $variables['content']['#attributes']['class'][] = 'justify-content-sm-end';
           $variables['title_attributes']['class'][] = 'h6';
           $variables['title_attributes']['class'][] = 'mt-md-3';
           $variables['title_attributes']['class'][] = 'text-uppercase';
         }
 
-        // Default classes for footer_sub region.
-        if ($region === 'footer_sub') {
+        // Default classes for footer_sub regions.
+        if ($region === 'footer_sub' || $region === 'footer_sub_menus') {
 
           // Footer topics menu has special split behavior.
           if (!empty($variables['derivative_plugin_id']) && $variables['derivative_plugin_id'] === 'az-footer-topics') {

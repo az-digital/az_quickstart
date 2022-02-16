@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains az_news_feeds.install.
+ */
+
+use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate\MigrateMessage;
+
+/**
+ * Implements hook_uninstall().
+ */
+function az_news_feeds_uninstall() {
+  $tag = 'Quickstart News Feeds';
+
+  // Rollback the migrations that are tagged as news feed content.
+  $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+  foreach ($migrations as $migration) {
+    $executable = new MigrateExecutable($migration, new MigrateMessage());
+    $executable->rollback();
+  }
+}

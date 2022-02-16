@@ -5,6 +5,8 @@
  * az_quickstart.profile
  */
 
+use Drupal\Core\Extension\MissingDependencyException;
+
 /**
  * Install az_metrics.
  */
@@ -80,4 +82,31 @@ function az_quickstart_update_9206() {
 function az_quickstart_update_9207() {
   $module_list = ['az_security'];
   \Drupal::service('module_installer')->install($module_list);
+}
+
+/**
+ * Ensure Pantheon sites have the advanced page cache module installed.
+ */
+function az_quickstart_update_9208() {
+  if (defined('PANTHEON_ENVIRONMENT')) {
+    try {
+      \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
+    }
+    catch (MissingDependencyException $e) {
+      return t('Pantheon Advanced Page Cache module not available to install.');
+    }
+
+    return t('Pantheon Advanced Page Cache module installed.');
+  }
+}
+
+/**
+ * Set the default columns classes on the new theme setting.
+ */
+function az_quickstart_update_9209() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  $config
+    ->set('header_one_col_classes', 'col-12 col-sm-6 col-lg-4')
+    ->set('header_two_col_classes', 'col-12 col-sm-6 col-lg-8')
+    ->save(TRUE);
 }
