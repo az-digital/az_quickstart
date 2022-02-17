@@ -12,7 +12,6 @@ use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\node\Entity\NodeType;
 use Drupal\user\Entity\Role;
 
 /**
@@ -83,7 +82,12 @@ function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array
  */
 function az_core_modules_installed($modules, $is_syncing) {
   if (in_array('quick_node_clone', $modules)) {
-    $node_types = NodeType::loadMultiple();
+    $entityTypeManager = \Drupal::service('entity_type.manager');
+    $node_types = [];
+    $contentTypes = $entityTypeManager->getStorage('node_type')->loadMultiple();
+    foreach ($contentTypes as $contentType) {
+      $node_types[] = $contentType->id();
+    }
     $role_object = Role::load('az_content_editor');
     $moduleHandler = \Drupal::service('module_handler');
     if ($moduleHandler->moduleExists('az_news')) {
