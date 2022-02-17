@@ -10,11 +10,38 @@ use Drupal\migrate\Row;
 use Drupal\Core\Database\Database;
 
 /**
- * Process Plugin to recognize text formats and return a given response.
+ * Process Plugin to handle embedded entities in HTML text.
  *
  * @MigrateProcessPlugin(
  *   id = "entity_embed_process"
  * )
+ *
+ * This plugin processes handles HTML text that has had marup embedded within
+ * it from the entity_embed module of D7. It does this by parsing the relevant
+ * HTML, seeking out embed tags, and transforming the id numbers to those of
+ * the destination system. In order to do this, it may need additional
+ * information about custom migrations to know which migrations and view_modes
+ * are needed to properly lookup the id numbers and displays of custom content.
+ *
+ * The optional migrations key may be used to specify a migration for any given
+ * source content types. This is used to compute id number change between soure
+ * and destination locales for custom content types.
+ *
+ * The optional view_modes key may be used to specify how view_modes are mapped
+ * from the source system to the destination.
+ *
+ * @code
+ *   process:
+ *     field_example:
+ *       plugin: entity_embed_process
+ *       source: example
+ *       migrations:
+ *         my_content_type1: my_migration1
+ *         my_content_type2: my_migration2
+ *       view_modes:
+ *         original_view_mode1: new_view_mode1
+ *         original_view_mode2: new_view_mode2
+ * @endcode
  */
 class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
@@ -60,7 +87,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   const VIEW_MODES = [
     'file' => [
-      'default' => 'default',
+      'default' => 'az_small',
       'preview' => 'media_library',
       'uaqs_inline_link' => 'az_card_image',
       'uaqs_small' => 'az_small',
@@ -184,6 +211,17 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     $dom = @\DOMDocument::loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
+    // Configuration of custom content.
+    $migrations = self::MIGRATION_MAPPING;
+    $view_modes = self::VIEW_MODES;
+
+    if (!empty($this->configuration['migrations']) && is_array($this->configuration['migrations'])) {
+      $migrations = array_merge($migrations, $this->configuration['migrations']);
+    }
+    if (!empty($this->configuration['view_modes']) && is_array($this->configuration['view_modes'])) {
+      $view_modes = array_merge($view_modes, $this->configuration['view_modes']);
+    }
+
     // We iterate backwards because it simplifies removal logic.
     for ($i = $elements->length - 1; $i >= 0; $i--) {
       $element = $elements->item($i);
@@ -203,8 +241,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         elseif (!empty($settings['file_view_mode'])) {
           $v = $settings['file_view_mode'];
         }
-        if (isset(self::VIEW_MODES[$type][$v])) {
-          $view = self::VIEW_MODES[$type][$v];
+        if (isset($view_modes[$type][$v])) {
+          $view = $view_modes[$type][$v];
         }
       }
 
@@ -216,7 +254,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
           break;
 
         // Embedded node. Special consideration, as we need to know which
-        // migraiton the node is part of, if any. Migration of an Embedded
+        // migration the node is part of, if any. Migration of an Embedded
         // node only is defined if it's a type that can be migrated.
         case 'node':
           $destination_db = Database::setActiveConnection('migrate');
@@ -228,8 +266,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
           if (!empty($node_type)) {
             // Map our D7 node type to a migration. If we can't, we have no
             // guarantee our node is a migrated one.
-            if (!empty(self::MIGRATION_MAPPING[$node_type])) {
-              $migration = self::MIGRATION_MAPPING[$node_type];
+            if (!empty($migrations[$node_type])) {
+              $migration = $migrations[$node_type];
               $post = $this->updateEmbedTag($id, 'node', 'drupal-entity', $view, $dom, $element, $migration, 'node');
             }
 
