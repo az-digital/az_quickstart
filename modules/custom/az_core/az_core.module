@@ -87,22 +87,22 @@ function az_core_modules_installed($modules, $is_syncing) {
     $role_object = Role::load('az_content_editor');
     $moduleHandler = \Drupal::service('module_handler');
     if ($moduleHandler->moduleExists('az_news')) {
-      if (in_array('az_news', $node_types)){
+      if (in_array('az_news', $node_types)) {
         $role_object->grantPermission('clone az_news content');
       }
     }
     if ($moduleHandler->moduleExists('az_flexible_page')) {
-      if (in_array('az_flexible_page', $node_types)){
+      if (in_array('az_flexible_page', $node_types)) {
         $role_object->grantPermission('clone az_flexible_page content');
       }
     }
     if ($moduleHandler->moduleExists('az_person')) {
-      if (in_array('az_person', $node_types)){
+      if (in_array('az_person', $node_types)) {
         $role_object->grantPermission('clone az_person content');
       }
     }
     if ($moduleHandler->moduleExists('az_event')) {
-      if (in_array('az_event', $node_types)){
+      if (in_array('az_event', $node_types)) {
         $role_object->grantPermission('clone az_event content');
       }
     }
