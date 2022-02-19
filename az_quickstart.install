@@ -163,3 +163,25 @@ function az_quickstart_update_92101() {
       ->save(TRUE);
   }
 }
+
+/**
+ * Delete orphaned footer menu-block configs to prevent global footer conflicts.
+ */
+function az_quickstart_update_92102() {
+  if (\Drupal::service('module_handler')->moduleExists('az_global_footer')) {
+    return t('Quickstart Global Footer module already installed.  No footer menu blocks need to be deleted.');
+  }
+  else {
+    $footer_menu_blocks = [
+      'block.block.az_barrio_footer_menu_info',
+      'block.block.az_barrio_footer_menu_main',
+      'block.block.az_barrio_footer_menu_resources',
+      'block.block.az_barrio_footer_menu_social_media',
+      'block.block.az_barrio_footer_menu_topics',
+    ];
+    foreach ($footer_menu_blocks as $block) {
+      \Drupal::service('config.factory')->getEditable($block)->delete();
+    }
+    return t('Deleted legacy global footer menu blocks.');
+  }
+}
