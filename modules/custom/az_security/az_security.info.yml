@@ -5,4 +5,5 @@ core_version_requirement: ^9
 package: The University of Arizona
 dependencies:
   - az_core
+  - antibot:antibot
   - honeypot:honeypot
