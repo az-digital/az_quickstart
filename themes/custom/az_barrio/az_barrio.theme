@@ -467,7 +467,7 @@ function az_barrio_footer_logo() {
       $svg = file_get_contents($filepath);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
-      $attr['attributes']['class'] = 'qs-logo-svg-inline';
+      $attr['attributes']['class'][] = 'qs-logo-svg-inline';
       // Footer link destination is empty (default value)
       if ($footer_link_destination === '<front>') {
         $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, [], $attr));
