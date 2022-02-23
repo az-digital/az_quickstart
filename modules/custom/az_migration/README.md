@@ -438,6 +438,7 @@ following command:
 ```
 drush mim az_exclude_node_title
 ```
+You do have the option to run this migration as many times as necessary. 
 To update content after running additional quickstart migrations:
 
 ```
