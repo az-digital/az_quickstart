@@ -425,6 +425,9 @@ This migration uses migration_lookup to match source node id to the nid of
 migrated content.
 
 Optional Migration Dependencies:
+Optional dependencies are honored in the correct order if the group import is run.
+`drush migrate:import --group=az_migration`
+If the variable doesn't exist in the source db, it will stop immediately and move on.
 - az_node_carousel
 - az_node_event
 - az_node_flexible_page
