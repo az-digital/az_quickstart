@@ -10,7 +10,7 @@ use Drupal\Core\Config\FileStorage;
 /**
  * Install antibot module.
  */
-function az_seo_update_9201() {
+function az_security_update_9201() {
   \Drupal::service('module_installer')->install(['antibot']);
   $module_handler = \Drupal::service('module_handler');
   $config_path = $module_handler->getModule('az_security')->getPath() . '/config/quickstart/antibot.settings.yml';
