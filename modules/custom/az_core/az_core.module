@@ -12,7 +12,6 @@ use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\user\Entity\Role;
 
 /**
  * Implements hook_help().
@@ -81,6 +80,7 @@ function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array
  * Implements hook_modules_installed().
  */
 function az_core_modules_installed($modules, $is_syncing) {
+
   // Import overrides that exist for the enabled modules.
   $overrider = Drupal::service('az_core.override_import');
   if ($overrider) {
