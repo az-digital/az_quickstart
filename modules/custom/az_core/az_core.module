@@ -12,6 +12,7 @@ use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\user\Entity\Role;
 
 /**
  * Implements hook_help().
@@ -80,6 +81,38 @@ function az_core_pathauto_pattern_alter(PathautoPatternInterface $pattern, array
  * Implements hook_modules_installed().
  */
 function az_core_modules_installed($modules, $is_syncing) {
+  // Set permissions when quick_node_clone is installed.
+  if (in_array('quick_node_clone', $modules)) {
+    $entityTypeManager = \Drupal::service('entity_type.manager');
+    $node_types = [];
+    $contentTypes = $entityTypeManager->getStorage('node_type')->loadMultiple();
+    foreach ($contentTypes as $contentType) {
+      $node_types[] = $contentType->id();
+    }
+    $role_object = Role::load('az_content_editor');
+    $moduleHandler = \Drupal::service('module_handler');
+    if ($moduleHandler->moduleExists('az_news')) {
+      if (in_array('az_news', $node_types)) {
+        $role_object->grantPermission('clone az_news content');
+      }
+    }
+    if ($moduleHandler->moduleExists('az_flexible_page')) {
+      if (in_array('az_flexible_page', $node_types)) {
+        $role_object->grantPermission('clone az_flexible_page content');
+      }
+    }
+    if ($moduleHandler->moduleExists('az_person')) {
+      if (in_array('az_person', $node_types)) {
+        $role_object->grantPermission('clone az_person content');
+      }
+    }
+    if ($moduleHandler->moduleExists('az_event')) {
+      if (in_array('az_event', $node_types)) {
+        $role_object->grantPermission('clone az_event content');
+      }
+    }
+    $role_object->save();
+  }
 
   // Import overrides that exist for the enabled modules.
   $overrider = Drupal::service('az_core.override_import');
