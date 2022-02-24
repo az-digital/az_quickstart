@@ -45,6 +45,9 @@ source:
     -
       name: spacing
       selector: spacing
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
 
 
 destination:
@@ -74,13 +77,17 @@ process:
             - filename
 
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    bg_text_color: bg_color
-    bg_attach: bg_attachment
-    position: position
-    full_width: full_width
-    content_style: content_style
-    text_media_spacing: spacing
+    plugin: paragraphs_behavior
+    paragraph_behavior_plugins:
+      az_text_media_paragraph_behavior:
+        bg_color: bg_color
+        bg_attach: bg_attachment
+        position: position
+        full_width: full_width
+        style: content_style
+        text_media_spacing: spacing
+        az_display_settings:
+            bottom_spacing: bottom_spacing
 
 migration_dependencies:
   required:
