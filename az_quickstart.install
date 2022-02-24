@@ -144,7 +144,7 @@ function az_quickstart_update_9208() {
 }
 
 /**
- * Set the default columns classes on the new theme setting.
+ * (Removed) Set the default columns classes on the new theme setting.
  */
 function az_quickstart_update_9209() {
   // Update removed and moved to az_quickstart_update_92101().
