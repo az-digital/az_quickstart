@@ -83,18 +83,46 @@ process:
           migration:
             - az_media
 
+  card_width_processed:
+    plugin: default_value
+    default_value: 'col-md-4 col-lg-4'
+
+  # Map QS1 landing grid and default card styles to QS2 default.
+  # Map QS1 borderless style to QS2 borderless.
+  card_style_processed:
+    - plugin: static_map
+      default_value: 'card'
+      map:
+        uaqs_borderless_card: 'card card-borderless'
+
+  card_width_sm_processed:
+    plugin: default_value
+    default_value: 'col-sm-12'
+
+  card_width_xs_processed:
+    plugin: default_value
+    default_value: 'col-sm-12'
+
+  # Map QS1 landing grid, borderless styles to clickable card.
+  card_clickable_processed:
+    - plugin: static_map
+      default_value: 0
+      source: view_mode
+      map:
+        uaqs_borderless_card: 1
+        uaqs_landing_grid: 1
+
   behavior_settings:
     plugin: paragraphs_behavior
     paragraph_behavior_plugins:
       az_cards_paragraph_behavior:
-        card_width: bg_color
-        card_style: bg_attachment
-        card_width_field: field_uaqs_setting_deck_width
-        card_count_field: field_uaqs_cards_values
+        card_width: '@card_width_processed'
+        card_style: '@card_style_processed'
+        card_clickable: '@card_clickable_processed'
         az_display_settings:
             bottom_spacing: bottom_spacing
-            card_width_sm: position
-            card_width_xs: full_width
+            card_width_sm: '@card_width_sm_processed'
+            card_width_xs: '@card_width_xs_processed'
 
 dependencies:
   enforced:

@@ -30,13 +30,18 @@ process:
     plugin: default_value
     default_value: 
       class: 'bg-cool-gray'
-    
+
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    card_width: 'col-md-12 col-lg-12'
-    card_style: 'card card-borderless'
-    card_width_sm: 'col-sm-12'
-    card_width_xs: 'col-12'
+    plugin: paragraphs_behavior
+    paragraph_behavior_plugins:
+      az_cards_paragraph_behavior:
+        card_width: 'col-md-12 col-lg-12'
+        card_style: 'card card-borderless'
+        card_clickable: 0
+        az_display_settings:
+            bottom_spacing: bottom_spacing
+            card_width_sm: 'col-sm-12'
+            card_width_xs: 'col-12'
 
 dependencies:
   enforced:

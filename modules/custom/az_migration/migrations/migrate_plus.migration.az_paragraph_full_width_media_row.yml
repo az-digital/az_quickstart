@@ -33,16 +33,17 @@ process:
         migration:
           - az_media
 
-  field_uaqs_setting_bg_attach_value:
+  bg_attach_processed:
     - plugin: get
       source: field_uaqs_setting_bg_attach/0/value
     - plugin: static_map
+      default_value: ''
       map:
         bg-attachment-fixed: bg-fixed
         bg-fixed: bg-fixed
         bg-attachment-scroll: ''
 
-  processed_full_width:
+  full_width_processed:
     plugin: default_value
     default_value: 'full-width-background'
 
@@ -55,13 +56,15 @@ process:
     plugin: default_value
     default_value: az_standard
 
-  field_uaqs_setting_text_bg_color_processed:
+  bg_color_processed:
     - plugin: extract
       source: field_uaqs_setting_text_bg_color
       index:
         - 0
         - value
+      default: 'light'
     - plugin: static_map
+      default_value: 'light'
       map:
         bg-transparent: transparent
         bg-trans-white: light
@@ -70,8 +73,6 @@ process:
         bg-trans-black: dark
         dark: dark
         light: light
-    - plugin: default_value
-      default_value: 'light'
 
   view_mode_processed:
     - plugin: static_map
@@ -94,10 +95,10 @@ process:
     plugin: paragraphs_behavior
     paragraph_behavior_plugins:
       az_text_media_paragraph_behavior:
-        bg_color: '@field_uaqs_setting_text_bg_color_processed'
-        bg_attach: '@field_uaqs_setting_bg_attach_value'
+        bg_color: '@bg_color_processed'
+        bg_attach: '@bg_attach_processed'
         position: '@view_mode_processed'
-        full_width: '@processed_full_width'
+        full_width: '@full_width_processed'
         style: '@content_style_processed'
         az_display_settings:
             bottom_spacing: '@bottom_spacing_processed'

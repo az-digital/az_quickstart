@@ -26,10 +26,16 @@ process:
           source: fid
           migration: 
             - az_media
-
+  gallery_display_processed:
+    plugin: default_value
+    default_value: 'grid'
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    gallery_display: 'grid'
+    plugin: paragraphs_behavior
+    paragraph_behavior_plugins:
+      az_photo_gallery_paragraph_behavior:
+        gallery_display: '@gallery_display_processed'
+        az_display_settings:
+            bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

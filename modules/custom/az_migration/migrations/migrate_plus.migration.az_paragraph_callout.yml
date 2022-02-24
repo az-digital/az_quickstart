@@ -23,9 +23,12 @@ process:
   field_az_text_area/format:  
     plugin: default_value
     default_value: az_standard
-    
   behavior_settings:
-    plugin: paragraphs_behavior_settings
+    plugin: paragraphs_behavior
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:
