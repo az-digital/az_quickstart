@@ -39,9 +39,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *  id = "az_migrated_path_lookup"
  * )
  */
-
-
-
 class MigratedPathLookup extends ProcessPluginBase implements ContainerFactoryPluginInterface {
   /**
    * The migration plugin manager.

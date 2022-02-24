@@ -82,6 +82,9 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
    */
   protected $processPluginManager;
 
+  /**
+   * {@inheritdoc}
+   */
   public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, MigratePluginManagerInterface $process_plugin_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->migration = $migration;
@@ -119,7 +122,6 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-
     $behavior = $this->buildSettingsArray($this->configuration['paragraph_behavior_plugins'], $row);
     $value['behavior'] = serialize($behavior);
     return $value['behavior'];
@@ -129,7 +131,7 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
    * Recursive array builder that reads values in deeply nested arrays.
    */
   protected function buildSettingsArray(array &$settings, Row $row) {
-    $branch = array();
+    $branch = [];
 
     foreach ($settings as $key => $value) {
       if (is_array($value)) {
