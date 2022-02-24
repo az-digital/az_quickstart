@@ -165,23 +165,42 @@ function az_quickstart_update_92101() {
 }
 
 /**
- * Delete orphaned footer menu-block configs to prevent global footer conflicts.
+ * Delete unmodified legacy footer menu blocks to prevent global footer issues.
  */
 function az_quickstart_update_92102() {
   if (\Drupal::service('module_handler')->moduleExists('az_global_footer')) {
     return t('Quickstart Global Footer module already installed.  No footer menu blocks need to be deleted.');
   }
   else {
+    $delete_blocks = TRUE;
+
+    // Default config hashes generated from clean install of Quickstart 2.0.18.
     $footer_menu_blocks = [
-      'block.block.az_barrio_footer_menu_info',
-      'block.block.az_barrio_footer_menu_main',
-      'block.block.az_barrio_footer_menu_resources',
-      'block.block.az_barrio_footer_menu_social_media',
-      'block.block.az_barrio_footer_menu_topics',
+      'block.block.az_barrio_footer_menu_info' => 'UPd_XW4rSu7i2VUmkzxPOWBlNM-ckDDv3p_3YFzTOxw',
+      'block.block.az_barrio_footer_menu_main' => 'fYhWRgj2xwKqlRJMJgsVftrGWu3Py7p6SQoHslS6eks',
+      'block.block.az_barrio_footer_menu_resources' => 'NwIzEthgG1SVgWc7GJKsW_44TaWW4HbyY4sZqLqxEKE',
+      'block.block.az_barrio_footer_menu_social_media' => 'Vk6yulKY8Q3ErOnox11fzDTu4-uBxB1oKTQmcxG94RQ',
+      'block.block.az_barrio_footer_menu_topics' => '5GU2oFYWqdhXrFxFcxxArQXQd3YBskaIdVS1uJZ7kDg',
     ];
-    foreach ($footer_menu_blocks as $block) {
-      \Drupal::service('config.factory')->getEditable($block)->delete();
+
+    // Check whether any of the footer menu blocks have been modified.
+    foreach ($footer_menu_blocks as $block => $default_config_hash) {
+      $current_config_hash = \Drupal::service('config.factory')
+        ->get($block)
+        ->get('_core.default_config_hash');
+      if ($current_config_hash !== $default_config_hash) {
+        $delete_blocks = FALSE;
+      }
     }
-    return t('Deleted legacy global footer menu blocks.');
+
+    if ($delete_blocks) {
+      foreach ($footer_menu_blocks as $block => $default_config_hash) {
+        \Drupal::service('config.factory')->getEditable($block)->delete();
+      }
+      return t('Deleted legacy global footer menu blocks. Install Quickstart Global Footer module to re-enable footer menu blocks.');
+    }
+    else {
+      return t('Legacy global footer blocks not deleted because config differences detected. Blocks will need to be manually deleted with drush in order to install Quickstart Global Footer module.');
+    }
   }
 }
