@@ -84,13 +84,17 @@ process:
             - az_media
 
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    card_width: 'col-md-4 col-lg-4'
-    card_style: 'card'
-    card_width_sm: 'col-sm-12'
-    card_width_xs: 'col-12'
-    card_width_field: field_uaqs_setting_deck_width
-    card_count_field: field_uaqs_cards_values
+    plugin: paragraphs_behavior
+    paragraph_behavior_plugins:
+      az_cards_paragraph_behavior:
+        card_width: bg_color
+        card_style: bg_attachment
+        card_width_field: field_uaqs_setting_deck_width
+        card_count_field: field_uaqs_cards_values
+        az_display_settings:
+            bottom_spacing: bottom_spacing
+            card_width_sm: position
+            card_width_xs: full_width
 
 dependencies:
   enforced:
