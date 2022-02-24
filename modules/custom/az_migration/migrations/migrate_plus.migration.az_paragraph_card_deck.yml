@@ -68,6 +68,9 @@ process:
         plugin: default_value
         default_value:
           class: 'bg-white'
+          # Set the link style to default, since we can't migrate classes to this
+          # field.
+          link_style: 'btn btn-block btn-red'
       media:
         -
           plugin: skip_on_empty
@@ -91,6 +94,7 @@ process:
   # Map QS1 borderless style to QS2 borderless.
   card_style_processed:
     - plugin: static_map
+      source: view_mode
       default_value: 'card'
       map:
         uaqs_borderless_card: 'card card-borderless'

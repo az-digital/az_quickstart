@@ -80,11 +80,11 @@ process:
       default_value: 'col-md-8 col-lg-6'
       map:
         uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
-        uaqs_bg_img_content_center: 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3'
-        uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6'
+        uaqs_bg_img_content_center: 'col-xs-12'
+        uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4'
+        uaqs_bg_img_content_bottom: 'col-xs-12'
+
   content_style_processed:
-    - plugin: default_value
-      default_value: 'box'
     - plugin: static_map
       source: view_mode
       default_value: 'box'
