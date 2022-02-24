@@ -82,7 +82,7 @@ process:
         uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
         uaqs_bg_img_content_center: 'col-xs-12'
         uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4'
-        uaqs_bg_img_content_bottom: 'col-xs-12'
+        uaqs_bg_img_content_bottom: ''
 
   content_style_processed:
     - plugin: static_map
