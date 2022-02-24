@@ -15,15 +15,16 @@ destination:
 
 process:
   field_az_text_area:
-    plugin: sub_process
-    source: field_uaqs_flexible_page_sub
-    process:
-      delta: delta
-      value: value
-      format:  
-        plugin: default_value
-        default_value: az_standard
-    
+    - plugin: sub_process
+      source: field_uaqs_flexible_page_sub
+      process:
+        delta: delta
+        value: value
+        format:
+          plugin: default_value
+          default_value: az_standard
+    - plugin: skip_on_empty
+      method: row
   behavior_settings:
     plugin: paragraphs_behavior_settings
 
