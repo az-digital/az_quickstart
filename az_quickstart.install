@@ -144,7 +144,7 @@ function az_quickstart_update_9208() {
 }
 
 /**
- * 2.1.x only update (removed).
+ * Quickstart 2.1.x only update (removed).
  */
 function az_quickstart_update_9209() {
   // Update removed and moved to az_quickstart_update_92101().
