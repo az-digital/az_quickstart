@@ -28,6 +28,7 @@
    - [ ] New internal API or API improvement with backwards compatibility
    - [ ] Risky or disruptive cleanup to comply with coding standards
    - [ ] High-risk or disruptive change (requires upgrade path, risks regression, etc.)
+- [ ] Other or unknown
 
 **Drupal core**
 - Patch release changes
@@ -36,6 +37,7 @@
    - [ ] Patch removal that's no longer necessary
 - Minor release changes
    - [ ] Major or minor level update
+- [ ] Other or unknown
 
 **Drupal contrib projects**
 - Patch release changes
@@ -45,6 +47,7 @@
    - [ ] Patch removal that's no longer necessary
 - Minor release changes
    - [ ] Major level update
+- [ ] Other or unknown
 
 ## Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
