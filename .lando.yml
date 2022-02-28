@@ -1,12 +1,24 @@
-name: az_quickstart
+name: az-quickstart
 recipe: drupal9
 config:
   php: '7.4'
   via: apache:2.4
   webroot: web
-  database: mariadb:10.4
   xdebug: false
 services:
+  database:
+    type: compose
+    services:
+      image: mariadb:latest
+      command: docker-entrypoint.sh mariadbd
+      restart: always
+      ports:
+        - '3306'
+      environment:
+        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
+        MARIADB_DATABASE: drupal9
+        MARIADB_USER: drupal9
+        MARIADB_PASSWORD: drupal9
   appserver:
     overrides:
       environment:
