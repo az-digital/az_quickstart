@@ -2,3 +2,7 @@
 header#header_arizona {
   min-height: 50px;
 }
+
+.navbar-offcanvas.no-navigation-region {
+  border: 0 !important;
+}
