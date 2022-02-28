@@ -7,4 +7,3 @@ dependencies:
   - az_core
   - antibot:antibot
   - honeypot:honeypot
-  - spambot:spambot
