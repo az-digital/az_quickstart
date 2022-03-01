@@ -5,16 +5,3 @@
  * Install, update and uninstall functions for az_security module.
  */
 
-use Drupal\Core\Config\FileStorage;
-
-/**
- * Install antibot module.
- */
-// function az_security_update_9201() {
-//   \Drupal::service('module_installer')->install(['antibot']);
-//   $module_handler = \Drupal::service('module_handler');
-//   $config_path = $module_handler->getModule('az_security')->getPath() . '/config/quickstart/antibot.settings.yml';
-//   $storage = new FileStorage($config_path);
-//   $config_installer = \Drupal::service('config.installer');
-//   $config_installer->installOptionalConfig($storage);
-// }
