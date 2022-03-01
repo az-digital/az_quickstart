@@ -3,7 +3,7 @@
 namespace Drupal\az_paragraphs\Plugin\migrate\process;
 
 @trigger_error('The ' . __NAMESPACE__ . '\ParagraphsBehavior is deprecated in
-Quickstart 2.1.x and will be removed before Quickstart 2.3.x. Instead, use ' . __NAMESPACE__ . '\ParagraphBehaviorSettings', E_USER_DEPRECATED);
+Arizona Quickstart 2.1.x and will be removed before Arizona Quickstart 2.3.x. Instead, use ' . __NAMESPACE__ . '\AZParagraphBehaviorSettings', E_USER_DEPRECATED);
 
 
 use Drupal\migrate\MigrateExecutableInterface;
@@ -15,7 +15,7 @@ use Drupal\migrate\Row;
  *
  * @deprecated in az_quickstart:2.1.3 and is removed from az_quickstart:2.3.0.
  *   Use the
- *   \Drupal\az_paragraphs\Plugin\migrate\process\ParagraphsBehaviorSettings
+ *   \Drupal\az_paragraphs\Plugin\migrate\process\AZParagraphsBehaviorSettings
  *   process plugin instead following its migration patterns.
  * // @codingStandardsIgnoreStart
  * @link https://github.com/az-digital/az_quickstart/pull/1345 @endlink
