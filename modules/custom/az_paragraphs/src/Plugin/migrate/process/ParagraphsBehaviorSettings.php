@@ -156,18 +156,9 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-    $behavior_id = '';
+    $behaviors = array_keys($this->behaviorPluginManager->getDefinitions());
     foreach($this->configuration['paragraph_behavior_plugins'] as $behavior_id => $settings) {
-      print_r($behavior_id);
-      $behavior_id = 'derp';
-      $behaviors = $this->behaviorPluginManager->createInstances($behavior_id);
-      if (!$behaviors) {
-        if (is_array($behavior_id)) {
-          if (count($behavior_id) != 1) {
-            throw new PluginException("Plugin IDs '" . implode("', '", $behavior_id) . "' were not found.");
-          }
-          $behavior_id = reset($behavior_id);
-        }
+      if (!$behaviors || !in_array($behavior_id, $behaviors)) {
         throw new PluginNotFoundException($behavior_id);
       }
     }
