@@ -2,6 +2,10 @@
 
 namespace Drupal\az_paragraphs\Plugin\migrate\process;
 
+@trigger_error('The ' . __NAMESPACE__ . '\ParagraphsBehavior is deprecated in
+Quickstart 2.1.x and will be removed before Quickstart 2.3.x. Instead, use ' . __NAMESPACE__ . '\ParagraphBehaviorSettings', E_USER_DEPRECATED);
+
+
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -9,7 +13,7 @@ use Drupal\migrate\Row;
 /**
  * Configure Behavior for paragraphs.
  *
- * @deprecated in az_quickstart:2.1.3 and is removed from az_quickstart:2.2.0.
+ * @deprecated in az_quickstart:2.1.3 and is removed from az_quickstart:2.3.0.
  *   Use the
  *   \Drupal\az_paragraphs\Plugin\migrate\process\ParagraphsBehaviorSettings
  *   process plugin instead following its migration patterns.
