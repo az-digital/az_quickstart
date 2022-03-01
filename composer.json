@@ -108,6 +108,9 @@
             "dev-main": "2.2.x-dev"
         },
         "patches": {
+            "drupal/antibot" : {
+                "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
+            },
             "drupal/better_exposed_filters": {
                 "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-02-16/3210947-12.patch"
             },
