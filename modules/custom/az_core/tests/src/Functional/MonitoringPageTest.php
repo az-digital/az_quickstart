@@ -36,6 +36,7 @@ class MonitoringPageTest extends BrowserTestBase {
     $user = $this->drupalCreateUser([
       'administer site configuration',
       'administer quickstart configuration',
+      'skip antibot',
     ]);
     $this->drupalLogin($user);
     $assert = $this->assertSession();
