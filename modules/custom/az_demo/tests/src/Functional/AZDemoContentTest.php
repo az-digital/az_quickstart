@@ -45,7 +45,10 @@ class AZDemoContentTest extends BrowserTestBase {
    */
   protected function setUp() {
     parent::setUp();
-    $this->user = $this->drupalCreateUser(['administer site configuration']);
+    $this->user = $this->drupalCreateUser([
+      'administer site configuration',
+      'skip antibot',
+    ]);
     $this->drupalLogin($this->user);
   }
 

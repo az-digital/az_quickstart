@@ -45,7 +45,10 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
    */
   protected function setUp() {
     parent::setUp();
-    $this->adminUser = $this->drupalCreateUser(['administer account settings']);
+    $this->adminUser = $this->drupalCreateUser([
+      'administer account settings',
+      'skip antibot',
+    ]);
     $this->drupalLogin($this->adminUser);
   }
 

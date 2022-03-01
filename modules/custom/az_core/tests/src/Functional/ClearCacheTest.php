@@ -33,7 +33,10 @@ class ClearCacheTest extends BrowserTestBase {
    * Tests the clear cache button on the Quickstart settings page.
    */
   public function testClearCache() {
-    $user = $this->drupalCreateUser(['administer quickstart configuration']);
+    $user = $this->drupalCreateUser([
+      'administer quickstart configuration',
+      'skip antibot',
+    ]);
     $this->drupalLogin($user);
     $assert = $this->assertSession();
     $this->drupalGet(Url::fromRoute('az_core.az_settings'));
