@@ -16,7 +16,7 @@ use Drupal\Core\Database\Database;
  *   id = "entity_embed_process"
  * )
  *
- * This plugin processes handles HTML text that has had marup embedded within
+ * This plugin processes HTML text that has had markup embedded within
  * it from the entity_embed module of D7. It does this by parsing the relevant
  * HTML, seeking out embed tags, and transforming the id numbers to those of
  * the destination system. In order to do this, it may need additional
