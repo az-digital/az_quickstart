@@ -2,94 +2,130 @@
 
 namespace Drupal\az_paragraphs\Plugin\migrate\process;
 
+use Drupal\Component\Plugin\Exception\PluginException;
+use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\Plugin\MigratePluginManagerInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
+use Drupal\paragraphs\ParagraphsBehaviorManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure Behavior for paragraphs.
+
+ * Available configuration keys
+ * - paragraph_behavior_plugins: A keyed multidimensional array matching each enabled behavior's
+ * expected structure where the first key is a paragraph behavior plugin id.
  *
  * Examples:
+ * Consider a paragraph migration for a marquee style paragraph with the
+ * following behavior settings in the destination site:
+ *   - bg_color string representing a selected value key.
+ *   - bg_attach string representing a selected value key.
+ *   - position: string representing a selected value key.
+ *   - full_width: boolean indicating that the paragraph should span the page width.
+ *   - style: string representing a selected value key.
+ *   - bottom_spacing: string representing a selected value key.
  *
- * Consider a paragraph with a behavior plugin.
+ *  Also consider that paragraphs behavior settings are formatted as a
+ *  serialized array in the `behavior_settings` field of the
+ *  `paragraphs_item_field_data` table in the destination site.
+ *
+ *  Modified seralized array for readability.
+ *  a:1:{
+ * i:0;s:323:"a:1:{
+ *   s:32:"az_text_media_paragraph_behavior";a:6:{
+ *     s:10:"full_width";s:21:"full-width-background";
+ *     s:5:"style";s:3:"box";
+ *     s:8:"bg_color";s:5:"light";
+ *     s:8:"position";s:49:"col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6";
+ *     s:18:"text_media_spacing";s:4:"y-10";
+ *     s:19:"az_display_settings";a:1:{
+ *       s:14:"bottom_spacing";s:4:"mb-0";
+ *     }
+ *   }
+ * }
+ * ";}
+ *
+ * The `behavior_settings` field uses the `paragraphs_behavior` process plugin
+ * to build the array to be serialized, you are able to use the pseudo field
+ * concept within migrate processes to get the values of source site ready for
+ * injecting into the `behavior_settings` array.
+ *
  * @code
- * field_uaqs_setting_text_bg_color_processed:
- *   - plugin: extract
- *     source: field_uaqs_setting_text_bg_color
- *     index:
- *       - 0
- *       - value
- *   - plugin: static_map
- *     map:
- *       bg-transparent: transparent
- *       bg-trans-white: light
- *       bg-trans-sky: light
- *       bg-trans-arizona-blue: dark
- *       bg-trans-black: dark
- *       dark: dark
- *       light: light
- *   - plugin: default_value
- *     default_value: 'light'
- * view_mode_processed:
- *   - plugin: static_map
- *     source: view_mode
- *     map:
- *       uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
- *       uaqs_bg_img_content_center: 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3'
- *       uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6'
- *   - plugin: default_value
- *     default_value: 'col-md-8 col-lg-6'
- * content_style_processed:
- *   - plugin: default_value
- *     default_value: 'column'
- * bottom_spacing_processed:
- *   - plugin: default_value
- *     default_value: 'mb-0'
- *     source: bottom_spacing
- * behavior_settings:
- *   plugin: paragraphs_behavior
- *   paragraph_behavior_plugins:
- *     az_text_media_paragraph_behavior:
- *       bg_color: '@field_uaqs_setting_text_bg_color_processed'
- *       bg_attach: '@field_uaqs_setting_bg_attach_value'
- *       position: '@view_mode_processed'
- *       full_width: '@processed_full_width'
- *       style: '@content_style_processed'
- *       az_display_settings:
- *         bottom_spacing: '@bottom_spacing_processed'
+ * process:
+ *   field_uaqs_setting_text_bg_color_processed:
+ *     - plugin: extract
+ *       source: field_uaqs_setting_text_bg_color
+ *       index:
+ *         - 0
+ *         - value
+ *     - plugin: static_map
+ *       default: 'light'
+ *       map:
+ *         bg-transparent: transparent
+ *         bg-trans-white: light
+ *         bg-trans-sky: light
+ *         bg-trans-arizona-blue: dark
+ *         bg-trans-black: dark
+ *         dark: dark
+ *         light: light
+ *     - plugin: default_value
+ *       default_value: 'light'
+ *   view_mode_processed:
+ *     - plugin: static_map
+ *       source: view_mode
+ *       default: 'col-md-8 col-lg-6'
+ *       map:
+ *         uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
+ *         uaqs_bg_img_content_center: 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3'
+ *         uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6'
+ *     - plugin: default_value
+ *       default_value: 'col-md-8 col-lg-6'
+ *   content_style_processed:
+ *     - plugin: default_value
+ *       default_value: 'column'
+ *   bottom_spacing_processed:
+ *     - plugin: default_value
+ *       default_value: 'mb-0'
+ *       source: bottom_spacing
  *
- * @endcode * @MigrateProcessPlugin(
+ *   #Set the behavior_settings value.
+ *   behavior_settings:
+ *     plugin: paragraphs_behavior
+ *     paragraph_behavior_plugins:
+ *       az_text_media_paragraph_behavior:
+ *         bg_color: '@field_uaqs_setting_text_bg_color_processed'
+ *         bg_attach: '@field_uaqs_setting_bg_attach_value'
+ *         position: '@view_mode_processed'
+ *         full_width: '@processed_full_width'
+ *         style: '@content_style_processed'
+ *         az_display_settings:
+ *           bottom_spacing: '@bottom_spacing_processed'
+ *
+ * @endcode
+ *
+ * @MigrateProcessPlugin(
  *   id = "paragraphs_behavior"
  * )
  */
 class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The migration to be executed.
-   *
-   * @var \Drupal\migrate\Plugin\MigrationInterface
-   */
-  protected $migration;
-
-  /**
    * The process plugin manager.
    *
-   * @var \Drupal\migrate\Plugin\MigratePluginManagerInterface
+   * @var \Drupal\paragraphs\ParagraphsBehaviorManager
    */
-  protected $processPluginManager;
+  protected $behaviorPluginManager;
 
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, MigratePluginManagerInterface $process_plugin_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ParagraphsBehaviorManager $behavior_plugin_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
-    $this->migration = $migration;
-    $this->processPluginManager = $process_plugin_manager;
-
+    $this->behaviorPluginManager = $behavior_plugin_manager;
     if (empty($this->configuration['paragraph_behavior_plugins'])) {
       throw new InvalidPluginDefinitionException(
         $this->getPluginId(),
@@ -99,7 +135,7 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
     if (!is_array($this->configuration['paragraph_behavior_plugins'])) {
       throw new InvalidPluginDefinitionException(
         $this->getPluginId(),
-        "Configuration option 'paragraph_behavior_plugins' should be a keyed array."
+        "Configuration option 'paragraph_behavior_plugins' should be a multi-dimensional array keyed with paragraph behavior plugin ids."
       );
     }
   }
@@ -112,8 +148,7 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $migration,
-      $container->get('plugin.manager.migrate.process')
+      $container->get('plugin.manager.paragraphs.behavior')
     );
   }
 
@@ -121,6 +156,21 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    $behavior_id = '';
+    foreach($this->configuration['paragraph_behavior_plugins'] as $behavior_id => $settings) {
+      print_r($behavior_id);
+      $behavior_id = 'derp';
+      $behaviors = $this->behaviorPluginManager->createInstances($behavior_id);
+      if (!$behaviors) {
+        if (is_array($behavior_id)) {
+          if (count($behavior_id) != 1) {
+            throw new PluginException("Plugin IDs '" . implode("', '", $behavior_id) . "' were not found.");
+          }
+          $behavior_id = reset($behavior_id);
+        }
+        throw new PluginNotFoundException($behavior_id);
+      }
+    }
 
     $behavior = $this->buildSettingsArray($this->configuration['paragraph_behavior_plugins'], $row);
     $value['behavior'] = serialize($behavior);

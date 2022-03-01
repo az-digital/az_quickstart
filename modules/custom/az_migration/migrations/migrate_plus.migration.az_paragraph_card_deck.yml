@@ -90,24 +90,18 @@ process:
     plugin: default_value
     default_value: 'col-md-4 col-lg-4'
 
-  # Map QS1 landing grid and default card styles to QS2 default.
-  # Map QS1 borderless style to QS2 borderless.
   card_style_processed:
     - plugin: static_map
       source: view_mode
       default_value: 'card'
       map:
+        default: 'card'
+        full: 'card'
+        token: 'card'
+        uaqs_landing_grid: 'card card-borderless'
         uaqs_borderless_card: 'card card-borderless'
 
-  card_width_sm_processed:
-    plugin: default_value
-    default_value: 'col-sm-12'
-
-  card_width_xs_processed:
-    plugin: default_value
-    default_value: 'col-sm-12'
-
-  # Map QS1 landing grid, borderless styles to clickable card.
+  # Map QS1 landing grid, borderless styles to clickable card, default to off.
   card_clickable_processed:
     - plugin: static_map
       default_value: 0
@@ -115,6 +109,14 @@ process:
       map:
         uaqs_borderless_card: 1
         uaqs_landing_grid: 1
+
+  card_width_sm_processed:
+    plugin: default_value
+    default_value: 'col-sm-12'
+
+  card_width_xs_processed:
+    plugin: default_value
+    default_value: 'col-12'
 
   behavior_settings:
     plugin: paragraphs_behavior
