@@ -49,7 +49,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * }
  * ";}
  *
- * The `behavior_settings` field uses the `paragraphs_behavior` process plugin
+ * The `behavior_settings` field uses the `az_paragraphs_behavior_settings` process plugin
  * to build the array to be serialized, you are able to use the pseudo field
  * concept within migrate processes to get the values of source site ready for
  * injecting into the `behavior_settings` array.
@@ -94,7 +94,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  *   #Set the behavior_settings value.
  *   behavior_settings:
- *     plugin: paragraphs_behavior
+ *     plugin: az_paragraphs_behavior_settings
  *     paragraph_behavior_plugins:
  *       az_text_media_paragraph_behavior:
  *         bg_color: '@field_uaqs_setting_text_bg_color_processed'
@@ -108,10 +108,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @endcode
  *
  * @MigrateProcessPlugin(
- *   id = "paragraphs_behavior"
+ *   id = "az_paragraphs_behavior_settings"
  * )
  */
-class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface
+{
 
   /**
    * The process plugin manager.
@@ -123,7 +124,8 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
   /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, ParagraphsBehaviorManager $behavior_plugin_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, ParagraphsBehaviorManager $behavior_plugin_manager)
+  {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->behaviorPluginManager = $behavior_plugin_manager;
     if (empty($this->configuration['paragraph_behavior_plugins'])) {
@@ -143,7 +145,8 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration = NULL) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration = NULL)
+  {
     return new static(
       $configuration,
       $plugin_id,
@@ -155,9 +158,10 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property)
+  {
     $behaviors = array_keys($this->behaviorPluginManager->getDefinitions());
-    foreach($this->configuration['paragraph_behavior_plugins'] as $behavior_id => $settings) {
+    foreach ($this->configuration['paragraph_behavior_plugins'] as $behavior_id => $settings) {
       if (!$behaviors || !in_array($behavior_id, $behaviors)) {
         throw new PluginNotFoundException($behavior_id);
       }
@@ -171,18 +175,17 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
   /**
    * Recursive array builder that reads values in deeply nested arrays.
    */
-  protected function buildSettingsArray(array &$settings, Row $row) {
+  protected function buildSettingsArray(array &$settings, Row $row)
+  {
     $branch = [];
 
     foreach ($settings as $key => $value) {
       if (is_array($value)) {
         $branch[$key] = $this->buildSettingsArray($value, $row);
-      }
-      else {
+      } else {
         $branch[$key] = $row->get($value);
       }
     }
     return $branch;
   }
-
 }

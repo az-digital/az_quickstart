@@ -54,7 +54,7 @@ process:
     plugin: default_value
     default_value: 'slider'
   behavior_settings:
-    plugin: paragraphs_behavior
+    plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
       az_photo_gallery_paragraph_behavior:
         gallery_display: '@gallery_display_processed'

@@ -77,7 +77,7 @@ process:
             - filename
 
   behavior_settings:
-    plugin: paragraphs_behavior
+    plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
       az_text_media_paragraph_behavior:
         bg_color: bg_color

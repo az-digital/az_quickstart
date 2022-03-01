@@ -21,7 +21,7 @@ process:
       process:
         delta: delta
         value: value
-        format:  
+        format:
           plugin: default_value
           default_value: az_standard
   text_background_color_processed:
@@ -72,7 +72,7 @@ process:
     plugin: default_value
     default_value: 'py-5'
   behavior_settings:
-    plugin: paragraphs_behavior
+    plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
       az_text_background_paragraph_behavior:
         text_background_color: '@text_background_color_processed'

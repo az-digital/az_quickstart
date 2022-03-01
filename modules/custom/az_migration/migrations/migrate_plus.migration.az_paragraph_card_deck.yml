@@ -119,7 +119,7 @@ process:
     default_value: 'col-12'
 
   behavior_settings:
-    plugin: paragraphs_behavior
+    plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
       az_cards_paragraph_behavior:
         card_width: '@card_width_processed'
