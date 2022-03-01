@@ -8,7 +8,7 @@ use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\paragraphs\ParagraphsBehaviorManager;å
+use Drupal\paragraphs\ParagraphsBehaviorManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
