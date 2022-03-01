@@ -47,7 +47,6 @@ class AzCasTest extends BrowserTestBase {
       'administer site configuration',
       'access administration pages',
       'administer account settings',
-      'skip antibot'
     ]);
     $this->drupalLogin($this->adminUser);
   }
