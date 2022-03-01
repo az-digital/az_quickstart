@@ -208,7 +208,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $dom = @\DOMDocument::loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $dom = new \DOMDocument();
+    $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
     // Configuration of custom content.
