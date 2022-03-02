@@ -9,16 +9,26 @@
  * Implements hook_install().
  */
 function az_mail_install() {
-    $config_factory = \Drupal::service('config.factory');
-    $mail_config = $config_factory->getEditable('system.mail');
-    $mail_config->set('interface.default', 'SMTPMailSystem')->save();
+  $config_factory = \Drupal::service('config.factory');
+  $config = $config_factory->getEditable('smtp.settings');
+  $mail_config = $config_factory->getEditable('system.mail');
+  $mail_system = $mail_config->get('interface.default');
+  if ($mail_system != 'SMTPMailSystem') {
+    $config->set('prev_mail_system', $mail_system);
+  }    
+  $mail_config->set('interface.default', 'SMTPMailSystem')->save();
 }
 
 /**
- * Force update system.mail.interface.default.
+ * Configure system.mail interface to use SMTP (unless already configured).
  */
 function az_mail_update_9201() {
-    $config_factory = \Drupal::service('config.factory');
-    $mail_config = $config_factory->getEditable('system.mail');
-    $mail_config->set('interface.default', 'SMTPMailSystem')->save();
+  $config_factory = \Drupal::service('config.factory');
+  $config = $config_factory->getEditable('smtp.settings');
+  $mail_config = $config_factory->getEditable('system.mail');
+  $mail_system = $mail_config->get('interface.default');
+  if ($mail_system != 'SMTPMailSystem') {
+    $config->set('prev_mail_system', $mail_system);
+  }    
+  $mail_config->set('interface.default', 'SMTPMailSystem')->save();
 }
