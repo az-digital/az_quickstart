@@ -33,7 +33,9 @@ process:
     source: field_uaqs_html
     process:
       delta: delta
-      value: value
+      value:
+        plugin: entity_embed_process
+        source: value
       format:
         plugin: default_value
         default_value: full_html
