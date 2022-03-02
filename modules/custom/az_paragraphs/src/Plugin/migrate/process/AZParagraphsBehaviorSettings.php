@@ -51,7 +51,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * The `behavior_settings` field uses the `az_paragraphs_behavior_settings`
  * process plugin to build the array to be serialized, you are able to use the
- * pseudo field concept within migrate processes to get the values of source
+ * pseudo field concept within migrate processes to get the values of the source
  * site ready for injecting into the `behavior_settings` array.
  *
  * @code
@@ -92,7 +92,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *       default_value: 'mb-0'
  *       source: bottom_spacing
  *
- *   #Set the behavior_settings value.
+ *   # Set the behavior_settings value.
  *   behavior_settings:
  *     plugin: az_paragraphs_behavior_settings
  *     paragraph_behavior_plugins:
@@ -114,7 +114,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
-   * The process plugin manager.
+   * The paragraphs behavior plugin manager.
    *
    * @var \Drupal\paragraphs\ParagraphsBehaviorManager
    */
