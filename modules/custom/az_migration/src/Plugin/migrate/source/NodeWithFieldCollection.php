@@ -43,7 +43,7 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *
  * @MigrateSource(
  *   id = "az_node_with_field_collection",
- *   source_provider = "az_migration"
+ *   source_module = "node"
  * )
  */
 class NodeWithFieldCollection extends D7Node {
