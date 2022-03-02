@@ -13,6 +13,7 @@ use Drupal\migrate\Row;
  *   Use the
  *   \Drupal\az_paragraphs\Plugin\migrate\process\ParagraphsBehaviorSettings
  *   process plugin instead following its migration patterns.
+ * // @codingStandardsIgnoreStart
  * @see https://github.com/az-digital/az_quickstart/pull/1345
  * @see https://github.com/az-digital/az_quickstart/issues/1348
  *
