@@ -4,8 +4,11 @@ config:
   php: '7.4'
   via: apache:2.4
   webroot: web
+  database: mariadb:10.4
   xdebug: false
 services:
+  # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
+  # TODO: remove database service overrides once lando is updated.
   database:
     type: compose
     services:
@@ -17,6 +20,7 @@ services:
       environment:
         MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
         MARIADB_DATABASE: drupal9
+        MYSQL_DATABASE: drupal9
         MARIADB_USER: drupal9
         MARIADB_PASSWORD: drupal9
   appserver:
