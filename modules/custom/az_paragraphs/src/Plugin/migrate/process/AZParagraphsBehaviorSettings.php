@@ -170,7 +170,7 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
   /**
    * Recursive array builder that reads values in deeply nested arrays.
    *
-   * @param array
+   * @param array $settings
    *   The behavior settings array.
    * @param \Drupal\migrate\Row $row
    *   The current row.
