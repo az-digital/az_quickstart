@@ -147,14 +147,14 @@ function az_quickstart_update_9208() {
  * Set the default columns classes on the new theme setting (Removed).
  */
 function az_quickstart_update_9209() {
-  // Update removed and moved to az_quickstart_update_92101().
+  // Update removed and moved to az_quickstart_update_920101().
   // See https://github.com/az-digital/az_quickstart/issues/1350.
 }
 
 /**
  * Set the default columns classes on the new theme setting.
  */
-function az_quickstart_update_92101() {
+function az_quickstart_update_920101() {
   $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
   if ($config->get('header_one_col_classes') === NULL && $config->get('header_two_col_classes') === NULL) {
     $config
