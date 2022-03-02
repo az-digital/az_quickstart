@@ -177,7 +177,6 @@ class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerF
    *
    * @return array
    *   The behavior settings array.
-
    */
   protected function buildSettingsArray(array &$settings, Row $row): array {
     $branch = [];
