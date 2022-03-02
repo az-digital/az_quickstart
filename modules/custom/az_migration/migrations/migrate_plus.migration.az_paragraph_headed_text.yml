@@ -23,6 +23,7 @@ process:
       value: value
       format:  
         plugin: default_value
+        default_value: az_standard
   
   behavior_settings:
     plugin: paragraphs_behavior_settings
