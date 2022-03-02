@@ -155,7 +155,7 @@ class AZParagraphsBehaviorSettings extends ProcessPluginBase implements Containe
   /**
    * {@inheritdoc}
    */
-  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+  public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property): string {
     $behaviors = array_keys($this->behaviorPluginManager->getDefinitions());
     foreach ($this->configuration['paragraph_behavior_plugins'] as $behavior_id => $settings) {
       if (!$behaviors || !in_array($behavior_id, $behaviors)) {
@@ -170,8 +170,17 @@ class AZParagraphsBehaviorSettings extends ProcessPluginBase implements Containe
 
   /**
    * Recursive array builder that reads values in deeply nested arrays.
+   *
+   * @param array
+   *   The behavior settings array.
+   * @param \Drupal\migrate\Row $row
+   *   The current row.
+   *
+   * @return array
+   *   The behavior settings array.
+
    */
-  protected function buildSettingsArray(array &$settings, Row $row) {
+  protected function buildSettingsArray(array &$settings, Row $row): array {
     $branch = [];
 
     foreach ($settings as $key => $value) {
