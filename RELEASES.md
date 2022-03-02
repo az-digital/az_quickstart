@@ -78,10 +78,10 @@ independently, DB update hooks implementing `hook_update_N()` should adhere to
 the following update numbering convention.
 
 **hook_update_XYZZnn()**
-X = 1 or 2 digits for Drupal core major version compatibility (e.g. `9`)
-Y = 1 digit for Quickstart major version compatibility (e.g. `2`)
-ZZ = 2 digits for Quickstart minor version compatibility (e.g. `01`)
-nn = 2 digits for sequential counting, starting with 01 (e.g. `01`)
+- X = 1 or 2 digits for Drupal core major version compatibility (e.g. `9`)
+- Y = 1 digit for Quickstart major version compatibility (e.g. `2`)
+- ZZ = 2 digits for Quickstart minor version compatibility (e.g. `01`)
+- nn = 2 digits for sequential counting, starting with 01 (e.g. `01`)
 
 This will allow us to continue to add DB update hooks to a minor release branch
 (e.g. `2.1.x`) as needed without changing the schema version sites to be
