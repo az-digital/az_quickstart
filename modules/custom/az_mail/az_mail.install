@@ -15,12 +15,12 @@ function az_mail_install() {
   $mail_system = $mail_config->get('interface.default');
   if ($mail_system != 'SMTPMailSystem') {
     $config->set('prev_mail_system', $mail_system);
-  }    
+  }
   $mail_config->set('interface.default', 'SMTPMailSystem')->save();
 }
 
 /**
- * Configure system.mail interface to use SMTP (unless already configured).
+ * Configure system.mail interface to use SMTP.
  */
 function az_mail_update_9201() {
   $config_factory = \Drupal::service('config.factory');
@@ -29,6 +29,6 @@ function az_mail_update_9201() {
   $mail_system = $mail_config->get('interface.default');
   if ($mail_system != 'SMTPMailSystem') {
     $config->set('prev_mail_system', $mail_system);
-  }    
+  }
   $mail_config->set('interface.default', 'SMTPMailSystem')->save();
 }
