@@ -18,7 +18,8 @@ use Drupal\migrate\Row;
  * @see https://github.com/az-digital/az_quickstart/issues/1348
  * // @codingStandardsIgnoreEnd
  *
- * @MigrateProcessPlugin( id = "paragraphs_behavior_settings"
+ * @MigrateProcessPlugin(
+ *   id = "paragraphs_behavior_settings"
  * )
  */
 class ParagraphsBehavior extends ProcessPluginBase {
