@@ -35,7 +35,8 @@
   margin-left: 0;
   margin-right: 0;
 }
-.paragraph--type--az-text-media .column {
+.paragraph--type--az-text-media .column,
+.paragraph--type--az-text-media .az-full-width-column-content.column {
   padding-left: 2em;
   padding-right: 2em;
 }
