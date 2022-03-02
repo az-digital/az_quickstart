@@ -104,7 +104,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *         style: '@content_style_processed'
  *         az_display_settings:
  *           bottom_spacing: '@bottom_spacing_processed'
- *
  * @endcode
  *
  * @MigrateProcessPlugin(
