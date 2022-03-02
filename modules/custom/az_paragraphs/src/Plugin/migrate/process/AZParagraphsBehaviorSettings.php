@@ -110,7 +110,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "az_paragraphs_behavior_settings"
  * )
  */
-class AZParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
    * The paragraphs behavior plugin manager.
