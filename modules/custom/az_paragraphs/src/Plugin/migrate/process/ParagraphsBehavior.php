@@ -16,6 +16,7 @@ use Drupal\migrate\Row;
  * // @codingStandardsIgnoreStart
  * @see https://github.com/az-digital/az_quickstart/pull/1345
  * @see https://github.com/az-digital/az_quickstart/issues/1348
+ * // @codingStandardsIgnoreEnd
  *
  * @MigrateProcessPlugin( id = "paragraphs_behavior_settings"
  * )
