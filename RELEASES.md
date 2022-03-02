@@ -84,7 +84,6 @@ the following update numbering convention.
 - nn = 2 digits for sequential counting, starting with 01 (e.g. `01`)
 
 This will allow us to continue to add DB update hooks to a minor release branch
-(e.g. `2.1.x`) as needed without changing the schema version sites to be
-something that would prevent this necessary  updates that are specific to a
-later minor release branch (e.g. `2.2.x`) from being applied when the site is
-upgraded to the later minor release.
+(e.g. `2.1.x`) as needed without updating a site's schema version to a number
+that would prevent updates included in a later release branch (e.g. `2.2.x`) to
+be applied when the site is upgraded.
