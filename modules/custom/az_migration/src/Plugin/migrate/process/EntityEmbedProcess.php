@@ -258,12 +258,10 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         // migration the node is part of, if any. Migration of an Embedded
         // node only is defined if it's a type that can be migrated.
         case 'node':
-          $destination_db = Database::setActiveConnection('migrate');
           // Lookup of content type.
-          $node_type = Database::getConnection()
+          $node_type = Database::getConnection('migrate')
             ->query('SELECT type FROM {node} WHERE nid = :nid', [':nid' => $id])
             ->fetchField();
-          Database::setActiveConnection($destination_db);
           if (!empty($node_type)) {
             // Map our D7 node type to a migration. If we can't, we have no
             // guarantee our node is a migrated one.
