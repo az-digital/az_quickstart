@@ -53,20 +53,38 @@ The following types of changes are allowed for minor releases in addition to tho
 No decisions have been made about what will constitute the next major release yet.
 
 <!-- The following may be revisited in the future -->
-<!-- 
+<!--
 ## Release Process
 Each release will go through the same phases:
 ### Alpha phase (6 months)
-The goal of the alpha phase is to work on new features, improvements and integrations to Quickstart without impacting live websites. 
+The goal of the alpha phase is to work on new features, improvements and integrations to Quickstart without impacting live websites.
 Each time a new release enters beta in anticipation of launch, a new branch will be created for the next minor release with an alpha tag. This is where all active development will take place.
 ### Alpha - Release Candidate phase (2-4 weeks prior to release)
 The goal of this phase is to prepare a polished and stable release:
-- Remove any “work in progress” code that had been added as part of a larger feature that is not yet complete. 
+- Remove any “work in progress” code that had been added as part of a larger feature that is not yet complete.
 - Complete a full accessibility review
 - Complete integration testing
 - Document on the website a complete list of all new features and changes. Highlight key new features.
 ### Stable Release (each March and September)
 The goal of the stable release is to provide a version of Quickstart for The University of Arizona community to use that will be supported for a full year with security updates and bug fixes while minimizing any other disruptions.
 ### End of Life
-Once two more releases of Quickstart are available (approximately one year from initial release), releases will no longer be supported. This means that they will not receive any further security updates or bug fixes. 
+Once two more releases of Quickstart are available (approximately one year from initial release), releases will no longer be supported. This means that they will not receive any further security updates or bug fixes.
 -->
+
+## Update hook numbering convention
+
+In order to allow update hooks to be added to different minor release branches
+independently, DB update hooks implementing `hook_update_N()` should adhere to
+the following update numbering convention.
+
+**hook_update_XYZZnn()**
+- X = 1 or 2 digits for Drupal core major version compatibility (e.g. `9`)
+- Y = 1 digit for Quickstart major version compatibility (e.g. `2`)
+- ZZ = 2 digits for Quickstart minor version compatibility (e.g. `01`)
+- nn = 2 digits for sequential counting, starting with 01 (e.g. `01`)
+
+This will allow us to continue to add DB update hooks to a minor release branch
+(e.g. `2.1.x`) as needed without changing the schema version sites to be
+something that would prevent this necessary  updates that are specific to a
+later minor release branch (e.g. `2.2.x`) from being applied when the site is
+upgraded to the later minor release.
