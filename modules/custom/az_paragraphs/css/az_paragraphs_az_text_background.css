@@ -2,4 +2,5 @@
 
 .region-content .background-wrapper.full-width-background {
   width: initial;
+  z-index: -1;
 }
