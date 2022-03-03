@@ -113,7 +113,6 @@
         max-width: 75%;
         margin-left: auto;
         -ms-flex-pack: end;
-        justify-content: flex-end;
     }
     .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .az-full-width-row,
     .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .az-full-width-row {
