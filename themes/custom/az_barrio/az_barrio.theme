@@ -142,6 +142,10 @@ function az_barrio_preprocess_page(&$variables, $hook) {
 
   // Allow wordmark to be disabled.
   $variables['wordmark'] = (theme_get_setting('wordmark')) ? TRUE : FALSE;
+
+  $variables['header_one_col_classes'] = theme_get_setting('header_one_col_classes');
+  $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
+
 }
 
 /**
@@ -467,7 +471,7 @@ function az_barrio_footer_logo() {
       $svg = file_get_contents($filepath);
       $rendered_image = render($svg);
       $image_markup = Markup::create($rendered_image);
-      $attr['attributes']['class'] = 'qs-logo-svg-inline';
+      $attr['attributes']['class'][] = 'qs-logo-svg-inline';
       // Footer link destination is empty (default value)
       if ($footer_link_destination === '<front>') {
         $return = Link::fromTextAndUrl($image_markup, Url::fromRoute($footer_link_destination, [], $attr));
@@ -558,7 +562,8 @@ function az_barrio_preprocess_block(&$variables) {
 
           $variables['content']['#attributes']['class'][] = 'nav-utility';
           $variables['content']['#attributes']['class'][] = 'd-flex';
-          $variables['content']['#attributes']['class'][] = 'justify-content-end';
+          $variables['content']['#attributes']['class'][] = 'justify-content-center';
+          $variables['content']['#attributes']['class'][] = 'justify-content-sm-end';
           $variables['title_attributes']['class'][] = 'h6';
           $variables['title_attributes']['class'][] = 'mt-md-3';
           $variables['title_attributes']['class'][] = 'text-uppercase';

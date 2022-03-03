@@ -1,7 +1,7 @@
 name: Arizona Barrio
 type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9
 base theme: bootstrap_barrio
 block_default_region: 'content'
 
