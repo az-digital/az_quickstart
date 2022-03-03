@@ -7,8 +7,6 @@
 .layout-sidebar-first .full-width-background,
 .layout-sidebar-second .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width));
-    position: relative;
-    z-index: -1;
 }
 .region-content .full-width-background {
     margin-left: calc(50% - 50vw);
