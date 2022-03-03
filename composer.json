@@ -144,9 +144,6 @@
                 "missing parent class": "https://git.drupalcode.org/issue/config_distro-3199197/-/commit/c312096d486caa2f01703ca7de1abf2285b6fac8.diff",
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
-            "drupal/date_ap_style": {
-                "Smart date compatibility (3167284)": "https://www.drupal.org/files/issues/2021-05-24/3167284-support-smartdate-16.patch"
-            },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
