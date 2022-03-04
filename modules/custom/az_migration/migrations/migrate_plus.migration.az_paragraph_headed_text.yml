@@ -21,7 +21,7 @@ process:
     process:
       delta: delta
       value:
-        plugin: entity_embed_process
+        plugin: az_entity_embed_process
         source: value
       format:
         plugin: default_value

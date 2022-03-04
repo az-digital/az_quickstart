@@ -13,7 +13,7 @@ use Drupal\Core\Database\Database;
  * Process Plugin to handle embedded entities in HTML text.
  *
  * @MigrateProcessPlugin(
- *   id = "entity_embed_process"
+ *   id = "az_entity_embed_process"
  * )
  *
  * This plugin processes HTML text that has had markup embedded within
