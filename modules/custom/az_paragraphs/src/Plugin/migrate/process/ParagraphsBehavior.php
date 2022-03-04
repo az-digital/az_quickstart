@@ -9,7 +9,7 @@ use Drupal\migrate\Row;
 /**
  * Configure Behavior for paragraphs.
  *
- * @deprecated in az_quickstart:2.1.3 and is removed from az_quickstart:2.3.0.
+ * @deprecated in az_quickstart:2.2.0 and is removed from az_quickstart:2.3.0.
  *   Use the
  *   \Drupal\az_paragraphs\Plugin\migrate\process\ParagraphsBehaviorSettings
  *   process plugin instead following its migration patterns.
