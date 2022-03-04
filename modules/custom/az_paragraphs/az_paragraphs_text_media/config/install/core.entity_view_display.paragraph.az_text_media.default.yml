@@ -140,7 +140,7 @@ content:
     settings:
       image_style: az_full_width_background
       css_settings:
-        z_index: -1
+        z_index: auto
         color: transparent
         x: center
         'y': center
