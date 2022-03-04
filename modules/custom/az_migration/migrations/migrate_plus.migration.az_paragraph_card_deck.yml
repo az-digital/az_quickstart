@@ -70,7 +70,7 @@ process:
           class: 'bg-white'
           # Set the link style to default, since we can't migrate classes to this
           # field.
-          link_style: 'btn btn-block btn-red'
+          link_style: 'btn-block'
       media:
         -
           plugin: skip_on_empty
