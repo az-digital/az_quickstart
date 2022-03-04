@@ -12,10 +12,6 @@ function az_mail_install() {
   $config_factory = \Drupal::service('config.factory');
   $mail_config = $config_factory->getEditable('system.mail');
   $mail_system = $mail_config->get('interface.default');
-  if ($mail_system != 'SMTPMailSystem') {
-    $config = $config_factory->getEditable('smtp.settings');
-    $config->set('prev_mail_system', $mail_system)->save();
-  }
   $mail_config->set('interface.default', 'SMTPMailSystem')->save();
 }
 
@@ -26,9 +22,5 @@ function az_mail_update_9201() {
   $config_factory = \Drupal::service('config.factory');
   $mail_config = $config_factory->getEditable('system.mail');
   $mail_system = $mail_config->get('interface.default');
-  if ($mail_system != 'SMTPMailSystem') {
-    $config = $config_factory->getEditable('smtp.settings');
-    $config->set('prev_mail_system', $mail_system)->save();
-  }
   $mail_config->set('interface.default', 'SMTPMailSystem')->save();
 }
