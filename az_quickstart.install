@@ -49,3 +49,158 @@ function az_quickstart_install() {
     }
   }
 }
+
+/**
+ * Install az_metrics.
+ */
+function az_quickstart_update_9201() {
+  \Drupal::service('module_installer')->install(['az_metrics']);
+}
+
+/**
+ * Set account creation rules, default to admin_only.
+ */
+function az_quickstart_update_9202() {
+  $config = \Drupal::service('config.factory')->getEditable('user.settings');
+  $config->set('register', 'admin_only')
+    ->save(TRUE);
+}
+
+/**
+ * Enable the role_delegation module.
+ */
+function az_quickstart_update_9203() {
+  $module_list = ['role_delegation'];
+  \Drupal::service('module_installer')->install($module_list);
+}
+
+/**
+ * Place system branding block in new region.
+ *
+ * Save default barrio settings for new branding theme region,
+ * and place the new branding block in it.
+ */
+function az_quickstart_update_9204() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  $config
+    ->set('bootstrap_barrio_region_clean_branding', FALSE)
+    ->set('bootstrap_barrio_region_class_branding', '')
+    ->save(TRUE);
+
+  $config = \Drupal::service('config.factory')->getEditable('block.block.az_barrio_branding');
+  $config
+    ->set('status', TRUE)
+    ->set('region', 'branding')
+    ->set('weight', -9)
+    ->set('settings.use_site_name', FALSE)
+    ->set('settings.use_site_slogan', FALSE)
+    ->save(TRUE);
+}
+
+/**
+ * Disable land acknowledgement theme setting by default on existing sites.
+ */
+function az_quickstart_update_9205() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  $config
+    ->set('land_acknowledgment', FALSE)
+    ->save(TRUE);
+}
+
+/**
+ * Update footer logo link destination if it's currently set to "<front>".
+ */
+function az_quickstart_update_9206() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  if ($config->get('footer_logo_link_destination') === '<front>') {
+    $config
+      ->set('footer_logo_link_destination', '')
+      ->save(TRUE);
+  }
+}
+
+/**
+ * Enable the az_security module.
+ */
+function az_quickstart_update_9207() {
+  $module_list = ['az_security'];
+  \Drupal::service('module_installer')->install($module_list);
+}
+
+/**
+ * Ensure Pantheon sites have the advanced page cache module installed.
+ */
+function az_quickstart_update_9208() {
+  if (defined('PANTHEON_ENVIRONMENT')) {
+    try {
+      \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
+    }
+    catch (MissingDependencyException $e) {
+      return t('Pantheon Advanced Page Cache module not available to install.');
+    }
+
+    return t('Pantheon Advanced Page Cache module installed.');
+  }
+}
+
+/**
+ * Set the default columns classes on the new theme setting (Removed).
+ */
+function az_quickstart_update_9209() {
+  // Update removed and moved to az_quickstart_update_920101().
+  // @see https://github.com/az-digital/az_quickstart/issues/1350
+}
+
+/**
+ * Set the default columns classes on the new theme setting.
+ */
+function az_quickstart_update_920101() {
+  $config = \Drupal::service('config.factory')->getEditable('az_barrio.settings');
+  if ($config->get('header_one_col_classes') === NULL && $config->get('header_two_col_classes') === NULL) {
+    $config
+      ->set('header_one_col_classes', 'col-12 col-sm-6 col-lg-4')
+      ->set('header_two_col_classes', 'col-12 col-sm-6 col-lg-8')
+      ->save(TRUE);
+  }
+}
+
+/**
+ * Delete unmodified legacy footer menu blocks to prevent global footer issues.
+ */
+function az_quickstart_update_920102() {
+  if (\Drupal::service('module_handler')->moduleExists('az_global_footer')) {
+    return t('Quickstart Global Footer module already installed.  No footer menu blocks need to be deleted.');
+  }
+  else {
+    $delete_blocks = TRUE;
+
+    // Default config hashes generated from clean install of Quickstart 2.0.18.
+    $footer_menu_blocks = [
+      'block.block.az_barrio_footer_menu_info' => 'UPd_XW4rSu7i2VUmkzxPOWBlNM-ckDDv3p_3YFzTOxw',
+      'block.block.az_barrio_footer_menu_main' => 'fYhWRgj2xwKqlRJMJgsVftrGWu3Py7p6SQoHslS6eks',
+      'block.block.az_barrio_footer_menu_resources' => 'NwIzEthgG1SVgWc7GJKsW_44TaWW4HbyY4sZqLqxEKE',
+      'block.block.az_barrio_footer_menu_social_media' => 'Vk6yulKY8Q3ErOnox11fzDTu4-uBxB1oKTQmcxG94RQ',
+      'block.block.az_barrio_footer_menu_topics' => '5GU2oFYWqdhXrFxFcxxArQXQd3YBskaIdVS1uJZ7kDg',
+    ];
+
+    // Check whether any of the footer menu blocks have been modified.
+    foreach ($footer_menu_blocks as $block => $default_config_hash) {
+      $current_config_hash = \Drupal::service('config.factory')
+        ->get($block)
+        ->get('_core.default_config_hash');
+      if ($current_config_hash !== $default_config_hash) {
+        $delete_blocks = FALSE;
+      }
+    }
+
+    if ($delete_blocks) {
+      foreach ($footer_menu_blocks as $block => $default_config_hash) {
+        \Drupal::service('config.factory')->getEditable($block)->delete();
+      }
+      return t('Deleted legacy global footer menu blocks. Install Quickstart Global Footer module to re-enable footer menu blocks.');
+    }
+    else {
+      return t('Legacy global footer blocks not deleted because config differences detected. Blocks will need to be manually deleted with drush in order to install Quickstart Global Footer module.');
+    }
+  }
+}

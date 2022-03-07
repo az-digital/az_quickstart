@@ -30,16 +30,19 @@
 .az-video-playing .text-on-video {
   background: none !important;
 }
-.paragraph--type--az-text-media .box {
+.paragraph--type--az-text-media .box,
+.paragraph--type--az-text-media .az-full-width-column-content.box {
   padding: 2em;
   margin-left: 0;
   margin-right: 0;
 }
-.paragraph--type--az-text-media .column {
+.paragraph--type--az-text-media .column,
+.paragraph--type--az-text-media .az-full-width-column-content.column {
   padding-left: 2em;
   padding-right: 2em;
 }
-.bottom {
+.bottom,
+.paragraph--type--az-text-media .az-full-width-column-content.bottom {
   margin-top: -5em;
   padding: 2em;
 }
