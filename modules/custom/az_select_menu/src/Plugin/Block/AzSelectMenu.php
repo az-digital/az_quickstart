@@ -126,9 +126,12 @@ class AzSelectMenu extends MenuBlock {
   public function build() {
 
     $build = parent::build();
+		$menu_name = 'az-select-menu-' . $build['#menu_name'];
 
     $form_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-form',
+      'id' => $menu_name . '-form',
+			'data-formname' => $build['#menu_name'],
+			'data-formtype' => 'az-select-menu',
       'data-toggle' => 'popover',
       'data-trigger' => 'focus',
       'data-placement' => 'top',
@@ -138,18 +141,19 @@ class AzSelectMenu extends MenuBlock {
     $build['#form_attributes'] = $form_attributes;
 
     $select_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-select',
+      'id' => $menu_name . '-select',
       'class' => [
         'form-control',
         'select-primary',
       ],
       'aria-invalid' => "false",
+			'data-formid' => $menu_name . '-form',
     ]);
 
     $build['#select_attributes'] = $select_attributes;
 
     $button_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-button',
+      'id' => $menu_name . '-button',
       'class' => [
         'btn',
         'btn-primary',
@@ -160,13 +164,14 @@ class AzSelectMenu extends MenuBlock {
       'role' => 'button',
       'type' => 'button',
       'tabindex' => '0',
+			'data-formid' => $menu_name . '-form',
     ]);
 
     $build['#button_attributes'] = $button_attributes;
 
     $build['#attached']['library'][] = 'az_select_menu/az_select_menu';
  		$build['#attached']['drupalSettings']['azSelectMenu'] = [
-      $build['#menu_block_configuration']['id'] => 'az-select-menu-' . $build['#menu_name'] . '-form'
+      $build['#menu_block_configuration']['id'] => $menu_name . '-form'
     ];
 
     return $build;
