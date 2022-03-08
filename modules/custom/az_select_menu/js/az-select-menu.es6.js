@@ -8,8 +8,10 @@
     attach(context, settings) {
       //  az_select_menu form id's are added in an array depending
       //  on the page you are on, and how many select menus are on the page.
-      for (let i = 0; i < settings.azSelectMenu.ids.length; i++) {
-        const selectFormId = settings.azSelectMenu.ids[i];
+      //  casting settings.azSelectMenu values to an array azSelectMenuArr
+      const azSelectMenuArr = Object.values(settings.azSelectMenu);
+      for (let i = 0; i < azSelectMenuArr.length; i++) {
+        const selectFormId = azSelectMenuArr[i];
         const selectForm = document.querySelector(`#${selectFormId}`);
         once("azSelectMenu", selectForm, context).forEach((element) => {
           $(element).popover();

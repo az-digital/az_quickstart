@@ -165,7 +165,9 @@ class AzSelectMenu extends MenuBlock {
     $build['#button_attributes'] = $button_attributes;
 
     $build['#attached']['library'][] = 'az_select_menu/az_select_menu';
-    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az-select-menu-' . $build['#menu_name'] . '-form';
+ 		$build['#attached']['drupalSettings']['azSelectMenu'] = [
+      $build['#menu_block_configuration']['id'] => 'az-select-menu-' . $build['#menu_name'] . '-form'
+    ];
 
     return $build;
   }
