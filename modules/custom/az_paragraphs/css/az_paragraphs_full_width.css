@@ -5,8 +5,7 @@
     max-width: calc(100vw - var(--scrollbar-width) / 2);
 }
 // See https://github.com/az-digital/az_quickstart/pull/1365
-.region-sidebar-first,
-.region-sidebar-second {
+.region-sidebar-first {
     z-index: 3;
 }
 .layout-sidebar-first .full-width-background,
