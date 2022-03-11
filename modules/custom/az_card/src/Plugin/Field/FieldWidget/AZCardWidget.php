@@ -239,6 +239,7 @@ class AZCardWidget extends WidgetBase {
       '#title' => $this->t('Card Link URL'),
       '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
+      '#maxlength' => 2048,
     ];
 
     $element['link_style'] = [
