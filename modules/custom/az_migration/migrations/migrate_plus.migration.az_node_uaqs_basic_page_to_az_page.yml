@@ -11,10 +11,11 @@ source:
 
 destination:
   plugin: entity:node
+  validate: true
   bundle: az_flexible_page
 
 process:
-  type: 
+  type:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
@@ -23,7 +24,6 @@ process:
     source: language
     map:
       und: en
-  
   title: title
   uid:
     -

@@ -12,6 +12,7 @@ source:
 destination:
   plugin: entity:node
   bundle: az_event
+  validate: true
   migration_dependencies:
     requireed:
       - az_event_categories

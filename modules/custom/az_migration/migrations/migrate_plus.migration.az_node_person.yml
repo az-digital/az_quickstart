@@ -12,6 +12,7 @@ source:
 destination:
   plugin: entity:node
   bundle: az_person
+  validate: true
   migration_dependencies:
     required:
       - az_person_categories

@@ -11,6 +11,7 @@ source:
 
 destination:
   plugin: entity:node
+  validate: true
   bundle: az_news
 
 process:
