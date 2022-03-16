@@ -44,6 +44,7 @@ steps:
     plugin: Script
     script:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:enable az_demo
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:enable az_global_footer
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin"
