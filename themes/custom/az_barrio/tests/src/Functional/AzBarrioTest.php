@@ -84,15 +84,17 @@ class AzBarrioTest extends BrowserTestBase {
   }
 
   /**
-   * Tests that the navbar off-canvas region classes are set properly on install.
+   * Tests that the navbar off-canvas region classes are set on install.
    */
   public function testNavbarOffCanvaseRegionClassesSetonInstall() {
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
   }
+
   /**
-   * Tests that the navbar off-canvas region classes are set properly when
-   * blocks are removed from regions.
+   * Tests that the navbar off-canvas region classes are set properly.
+   *
+   * When blocks are removed or added to regions, classes should change.
    */
   public function testNavbarOffCanvaseRegionClassesSetNoOffCanvasBlocks() {
     $this->drupalLogin($this->adminUser);
@@ -113,6 +115,5 @@ class AzBarrioTest extends BrowserTestBase {
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
   }
-
 
 }
