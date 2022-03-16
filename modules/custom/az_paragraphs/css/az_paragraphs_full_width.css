@@ -4,6 +4,10 @@
 .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width) / 2);
 }
+/* See https://github.com/az-digital/az_quickstart/pull/1365 */
+.sidebar_first {
+    z-index: 3;
+}
 .layout-sidebar-first .full-width-background,
 .layout-sidebar-second .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width));
