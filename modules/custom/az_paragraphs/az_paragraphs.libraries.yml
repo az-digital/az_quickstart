@@ -63,3 +63,7 @@ az_paragraphs.az_html:
   header: true
   dependencies:
     - core/jquery
+az_paragraphs.push_sidebar_down:
+  version: VERSION
+  js:
+    js/az_paragraphs_push_sidebar_down.js: {}

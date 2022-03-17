@@ -311,18 +311,11 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   public function viewElements(FieldItemListInterface $items, $langcode): array {
     $settings = $this->getAllSettings($items);
     $element = [];
-    $full_width = '';
-    $marquee_style = $settings['style'];
     $media_items = $this->getEntitiesToView($items, $langcode);
-    $paragraph = $items->getEntity();
 
     // Early opt-out if the field is empty.
     if (empty($media_items)) {
       return $element;
-    }
-
-    if (!empty($settings['full_width'])) {
-      $full_width = $settings['full_width'];
     }
 
     // Prepare token data in bg image CSS selector.
@@ -560,6 +553,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $az_background_media[] = $text_on_bottom;
 
       }
+      if (!empty($settings['push_sidebar_down']) && $settings['push_sidebar_down'] === 'push-sidebar-down') {
+        $az_background_media['#attached']['library'][] = 'az_paragraphs/az_paragraphs.push_sidebar_down';
+
+      }
       return $az_background_media;
     }
   }
@@ -623,6 +620,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       ];
       $az_background_media[] = $text_on_bottom;
     }
+    if (!empty($settings['push_sidebar_down']) && $settings['push_sidebar_down'] === 'push-sidebar-down') {
+      $az_background_media['#attached']['library'][] = 'az_paragraphs/az_paragraphs.push_sidebar_down';
+    }
+
     return $az_background_media;
   }
 

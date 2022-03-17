@@ -44,6 +44,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'position' => '',
       'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
+      'push_sidebar_down' => '',
     ];
   }
 
@@ -120,6 +121,15 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         ],
       ],
     ];
+    $form['push_sidebar_down'] = [
+      '#title' => $this->t('Push sidebar down below this element.'),
+      '#type' => 'select',
+      '#type' => 'checkbox',
+      '#default_value' => $config['push_sidebar_down'],
+      '#description' => $this->t('Pushes sidebar down if checked.'),
+      '#return_value' => 'push-sidebar-down',
+    ];
+
     $form['text_media_spacing'] = [
       '#title' => $this->t('Space Around Content'),
       '#type' => 'select',
@@ -169,7 +179,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     $config += $default_settings;
     $variables['text_on_media'] = $config;
-    $az_background_media = [];
 
     $style = '';
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
@@ -191,6 +200,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = HTML::getClass($style);
     $variables['attributes']['class'][] = HTML::getClass($config['full_width']);
     $variables['attributes']['class'][] = HTML::getClass($config['bg_attachment']);
+
+    if (!empty($config['push_sidebar_down'] && $config['push_sidebar_down'] === 'push-sidebar-down')){
+      $variables['attributes']['push-sidebar-down'] = 'push-sidebar-down';
+
+      // az_paragraphs.push_sidebar_down
+    }
     // Get column classes.
     $column_classes = ['col'];
     if (!empty($config['style']) && $config['style'] === 'bottom') {
