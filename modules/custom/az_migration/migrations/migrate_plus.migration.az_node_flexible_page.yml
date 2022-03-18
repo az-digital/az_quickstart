@@ -129,8 +129,8 @@ process:
   field_az_main_content:
       plugin: paragraphs_mapping_flexible_page
       source:
-        - '@tmp_flexible_subpage'
         - '@temp_pid'
+        - '@tmp_flexible_subpage'
 
 dependencies:
   enforced:
