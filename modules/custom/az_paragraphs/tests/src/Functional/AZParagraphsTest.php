@@ -26,6 +26,11 @@ class AZParagraphsTest extends BrowserTestBase {
   protected $strictConfigSchema = FALSE;
 
   /**
+   * @var string
+   */
+  protected $defaultTheme = 'az_barrio';
+
+  /**
    * Modules to enable.
    *
    * @var array
