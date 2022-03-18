@@ -86,6 +86,9 @@ process:
   content_style_processed:
     - plugin: default_value
       default_value: 'column'
+  text_media_spacing_processed:
+    - plugin: default_value
+      default_value: 'y-5'
   bottom_spacing_processed:
     - plugin: default_value
       default_value: 'mb-0'
@@ -96,10 +99,11 @@ process:
     paragraph_behavior_plugins:
       az_text_media_paragraph_behavior:
         bg_color: '@bg_color_processed'
-        bg_attach: '@bg_attach_processed'
+        bg_attachment: '@bg_attach_processed'
         position: '@view_mode_processed'
         full_width: '@full_width_processed'
         style: '@content_style_processed'
+        text_media_spacing: '@text_media_spacing_processed'
         az_display_settings:
             bottom_spacing: '@bottom_spacing_processed'
 
