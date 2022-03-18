@@ -118,6 +118,7 @@ process:
               - az_paragraph_full_width_media_row
               - az_paragraph_gallery
               - az_paragraph_headed_text
+              - az_paragraph_html
               - az_paragraph_jumbotron
               - az_paragraph_panel_group
               - az_paragraph_plain_text
@@ -152,6 +153,7 @@ migration_dependencies:
     - az_paragraph_full_width_media_row
     - az_paragraph_gallery
     - az_paragraph_headed_text
+    - az_paragraph_html
     - az_paragraph_jumbotron
     - az_paragraph_panel_group
     - az_paragraph_plain_text
