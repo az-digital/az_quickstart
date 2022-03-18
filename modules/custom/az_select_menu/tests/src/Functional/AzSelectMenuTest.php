@@ -31,35 +31,6 @@ class AzSelectMenuTest extends BrowserTestBase {
   protected $strictConfigSchema = FALSE;
 
   /**
-   * The created user.
-   *
-   * @var User
-   */
-  protected $adminUser;
-
-  /**
-   * Modules to enable.
-   *
-   * @var array
-   */
-
-  public static $modules = ['az_select_menu'];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp() {
-    parent::setUp();
-
-    // Create a test user.
-    $this->adminUser = $this->drupalCreateUser([
-      'access administration pages',
-      'administer modules',
-    ]);
-    $this->drupalLogin($this->adminUser);
-  }
-
-  /**
    * Tests that the Quickstart Select Menu Block module can be uninstalled.
    *
    * @group az_select_menu
