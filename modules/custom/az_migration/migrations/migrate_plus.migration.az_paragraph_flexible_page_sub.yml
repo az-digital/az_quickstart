@@ -22,7 +22,9 @@ process:
     - plugin: sub_process
       process:
         delta: delta
-        value: value
+        value:
+          plugin: convert_string_to_lead_p_tag
+          source: value
         format:
           plugin: default_value
           default_value: az_standard
