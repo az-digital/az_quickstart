@@ -11,7 +11,7 @@ use Drupal\migrate\Row;
  *
  * This process plugin is meant to convert a plain text string to a Arizona
  * Bootstrap lead paragraph.  There is most likely no real use for this outside
- * of az_quickstart
+ * of az_quickstart.
  *
  * @code
  *   process:
@@ -19,7 +19,7 @@ use Drupal\migrate\Row;
  *       plugin: convert_string_to_lead_p_tag
  *       source: example
  * @endcode
-
+ *
  * @MigrateProcessPlugin(
  *   id = "convert_string_to_lead_p_tag"
  * )
