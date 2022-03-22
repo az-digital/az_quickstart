@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  config:
+    - core.entity_view_mode.block_content.full
   module:
     - block_content
     - entity_embed
@@ -14,5 +16,7 @@ type_settings:
     - 'view_mode:block_content.full'
   entity_browser: ''
   entity_browser_settings: {  }
-icon: {  }
+icon:
+  data: iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAAAMUlEQVQ4T2NgGMHgPxwGM6xG4iHDUQ3IGkIZ6rFCIjSEMmgRowHhpNVAHkJmVMOIAgAdfdraiZTr/wAAAABJRU5ErkJggg==
+  uri: 'public://embed_buttons/sharp_view_quilt_black_24dp.png'
 icon_uuid: null

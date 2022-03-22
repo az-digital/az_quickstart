@@ -22,5 +22,7 @@ type_settings:
     - 'view_mode:node.teaser'
   entity_browser: ''
   entity_browser_settings: {  }
-icon: {  }
+icon:
+  data: iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAAAJElEQVQ4y2NgGLTgPxFwqGjA5z/qaBj1A+l+oIWGoZxaBxEAAKCVDQIr7yBuAAAAAElFTkSuQmCC
+  uri: 'public://embed_buttons/sharp_article_black_24dp.png'
 icon_uuid: null
