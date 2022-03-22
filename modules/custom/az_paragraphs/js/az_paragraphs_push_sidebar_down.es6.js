@@ -4,8 +4,6 @@
         function _calculateParagraphHeight() {
             const content_region = document.getElementById('content');
             const sidebar_pusher = document.querySelectorAll('[push-sidebar-down="push-sidebar-down"]');
-
-            console.log(sidebar_pusher[0]);
             const content_region_position = content_region.getBoundingClientRect();
             const content_region_top = content_region_position.top;
             const sidebar_pusher_position = sidebar_pusher[0].getBoundingClientRect();
@@ -18,12 +16,9 @@
         }
         // recalculate on resize
         window.addEventListener("resize", _calculateParagraphHeight, false);
-        // recalculate on dom load
-        document.addEventListener(
-          "DOMContentLoaded",
-          _calculateParagraphHeight,
-          false
-        );
+        window.addEventListener('DOMContentLoaded', (event) => {
+          _calculateParagraphHeight();
+        });
         // recalculate on load (assets loaded as well)
         window.addEventListener("load", _calculateParagraphHeight);
       },
