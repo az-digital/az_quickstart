@@ -2,7 +2,7 @@ id: az_site_frontpage
 label: Site Front Page
 migration_group: az_migration
 migration_tags:
-  - Quickstart Settings Migration
+  - Quickstart Content Migration
 
 # This will skip processing if the source variable is missing.
 source:
