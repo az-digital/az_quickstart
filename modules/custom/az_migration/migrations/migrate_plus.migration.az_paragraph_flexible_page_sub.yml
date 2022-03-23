@@ -28,9 +28,9 @@ process:
         value:
           plugin: concat
           source:
-            - subhead_prefix
+            - constants/subhead_prefix
             - value
-            - subhead_postfix
+            - constants/subhead_postfix
         format:
           plugin: default_value
           default_value: az_standard
