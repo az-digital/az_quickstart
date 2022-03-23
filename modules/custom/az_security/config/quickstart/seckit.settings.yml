@@ -1,11 +1,11 @@
 seckit_xss:
   csp:
-    checkbox: true
+    checkbox: false
     vendor-prefix:
       x: false
       webkit: false
-    report-only: true
-    default-src: '*'
+    report-only: false
+    default-src: ''
     script-src: ''
     object-src: ''
     img-src: ''
@@ -15,10 +15,9 @@ seckit_xss:
     child-src: ''
     font-src: ''
     connect-src: ''
-    report-uri: 'https://api.web.arizona.edu/v1/azqs/report; report-to azqs'
+    report-uri: /report-csp-violation
     upgrade-req: false
     policy-uri: ''
-    style-src: ''
   x_xss:
     seckit_x_xss_option_disable: Disabled
     seckit_x_xss_option_0: '0'
@@ -49,6 +48,6 @@ seckit_fp:
 seckit_various:
   from_origin: false
   from_origin_destination: same
-  referrer_policy: true
-  referrer_policy_policy: strict-origin-when-cross-origin
+  referrer_policy: false
+  referrer_policy_policy: no-referrer-when-downgrade
   disable_autocomplete: false
