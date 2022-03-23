@@ -90,7 +90,7 @@
         "drupal/seckit": "2.0.0",
         "drupal/slick": "2.4.0",
         "drupal/slick_views": "2.6.0",
-        "drupal/smart_date": "3.4.3",
+        "drupal/smart_date": "3.5.1",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
         "drupal/token": "1.10.0",
