@@ -31,35 +31,6 @@ class AzGlobalFooterTest extends BrowserTestBase {
   protected $strictConfigSchema = FALSE;
 
   /**
-   * The created user.
-   *
-   * @var User
-   */
-  protected $adminUser;
-
-  /**
-   * Modules to enable.
-   *
-   * @var array
-   */
-
-  public static $modules = ['az_global_footer'];
-
-  /**
-   * {@inheritdoc}
-   */
-  protected function setUp() {
-    parent::setUp();
-
-    // Create a test user.
-    $this->adminUser = $this->drupalCreateUser([
-      'access administration pages',
-      'administer modules',
-    ]);
-    $this->drupalLogin($this->adminUser);
-  }
-
-  /**
    * Tests that the Quickstart Global Footer module can be uninstalled.
    *
    * @group regression
