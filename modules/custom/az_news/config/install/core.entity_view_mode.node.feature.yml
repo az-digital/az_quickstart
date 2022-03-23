@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - node
-id: node.feature
+id: node.az_feature
 label: Feature
 targetEntityType: node
 cache: true
