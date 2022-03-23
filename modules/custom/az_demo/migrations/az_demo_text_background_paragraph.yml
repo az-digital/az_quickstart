@@ -30,7 +30,12 @@ source:
     -
       name: bg_pattern
       selector: bg_pattern
-
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
+    -
+      name: push_sidebar_down
+      selector: push_sidebar_down
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_text_background
@@ -43,10 +48,16 @@ process:
       default_value: az_standard
 
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    bg_color: bg_color
-    bg_pattern: bg_pattern
-    text_background_full_width: full_width
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_text_background_paragraph_behavior:
+        text_background_color: bg_color
+        text_background_full_width: full_width
+        text_background_pattern: bg_pattern
+        az_display_settings:
+            bottom_spacing: bottom_spacing
+      az_push_sidebar_down:
+        push_sidebar_down: push_sidebar_down
 
 dependencies:
   enforced:

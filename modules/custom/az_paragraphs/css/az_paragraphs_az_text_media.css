@@ -1,7 +1,4 @@
 /* Styles for az_text_media paragraph type. */
-.sidebar_first {
-  margin-top: var(--sidebar-top-margin);
-}
 .text-on-media {
   background-size: cover;
   background-position: center;

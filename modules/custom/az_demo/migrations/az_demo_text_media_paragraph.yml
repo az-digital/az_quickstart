@@ -48,7 +48,9 @@ source:
     -
       name: bottom_spacing
       selector: bottom_spacing
-
+    -
+      name: push_sidebar_down
+      selector: push_sidebar_down
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
@@ -88,6 +90,8 @@ process:
         text_media_spacing: spacing
         az_display_settings:
             bottom_spacing: bottom_spacing
+      az_push_sidebar_down:
+        push_sidebar_down: push_sidebar_down
 
 migration_dependencies:
   required:

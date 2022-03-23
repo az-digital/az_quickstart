@@ -67,3 +67,6 @@ az_paragraphs.push_sidebar_down:
   version: VERSION
   js:
     js/az_paragraphs_push_sidebar_down.js: {}
+  css:
+    theme:
+      css/az_paragraphs_push_sidebar_down.css: {}
