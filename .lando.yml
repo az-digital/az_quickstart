@@ -7,6 +7,22 @@ config:
   database: mariadb:10.4
   xdebug: false
 services:
+  # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
+  # TODO: remove database service overrides once lando is updated.
+  database:
+    type: compose
+    services:
+      image: mariadb:10.4
+      command: docker-entrypoint.sh mariadbd
+      restart: always
+      ports:
+        - '3306'
+      environment:
+        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
+        MARIADB_DATABASE: drupal9
+        MYSQL_DATABASE: drupal9
+        MARIADB_USER: drupal9
+        MARIADB_PASSWORD: drupal9
   appserver:
     overrides:
       environment:
@@ -23,6 +39,8 @@ services:
       # Use the matching scaffolding branch if available.
       - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
       - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
+      # Use the matching require-dev metapackage branch if available.
+      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi; composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
       - composer install
   node:
     type: node:12

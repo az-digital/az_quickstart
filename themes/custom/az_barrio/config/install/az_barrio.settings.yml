@@ -77,6 +77,11 @@ bootstrap_barrio_sidebar_first_offset: 0
 bootstrap_barrio_sidebar_second_width: 3
 bootstrap_barrio_sidebar_second_offset: 0
 
+# Responsive Header Grid.
+# -------------------------------
+header_one_col_classes: 'col-12 col-sm-6 col-lg-4'
+header_two_col_classes: 'col-12 col-sm-6 col-lg-8'
+
 # Container
 # --------------
 bootstrap_barrio_fluid_container: 0
