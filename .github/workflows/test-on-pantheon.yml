@@ -1,4 +1,4 @@
-name: Test on Pantheon
+name: Test PR on Pantheon
 on:
    workflow_dispatch:
     inputs:
@@ -10,8 +10,8 @@ on:
         required: true
 
 jobs:
-  build:
-    name: Upload Release Asset
+  test_pr_on_pantheon:
+    name: Test PR on Pantheon
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout code
