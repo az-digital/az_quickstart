@@ -8,6 +8,9 @@ status: true
 source:
   plugin: d7_node
   node_type: uaqs_flexible_page
+  constants:
+    subhead_prefix: '<p class="lead">'
+    subhead_postfix: '</p>'
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
@@ -23,8 +26,11 @@ process:
       process:
         delta: delta
         value:
-          plugin: convert_string_to_lead_p_tag
-          source: value
+          plugin: concat
+          source:
+            - subhead_prefix
+            - value
+            - subhead_postfix
         format:
           plugin: default_value
           default_value: az_standard
