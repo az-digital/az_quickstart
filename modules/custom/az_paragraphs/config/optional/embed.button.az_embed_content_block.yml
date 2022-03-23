@@ -17,6 +17,11 @@ type_settings:
   entity_browser: ''
   entity_browser_settings: {  }
 icon:
+<<<<<<< HEAD
   data: iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVRYhe2WYQqAIAxGP6NDBZ3De3SU7mHX8Fz1o4Jls3Qg/vkeDMZk8ESXAYS82QsjiJ5Q0fdgaLSJYihAAQpQYFRqW2FvzOSkCqfUglLTiADWzNoCYL5yXytleQ1T5Ov4Sfcp6C6gjaEFeeYAMIk8ParfO8E/Igse50jfIb+mLokmAmYoQMgB49tAGQ6ExnQAAAAASUVORK5CYII=
   uri: 'public://embed_buttons/sharp_dashboard_customize_black_24dp.png'
+=======
+  data: iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAQAAABKfvVzAAAAMUlEQVQ4T2NgGMHgPxwGM6xG4iHDUQ3IGkIZ6rFCIjSEMmgRowHhpNVAHkJmVMOIAgAdfdraiZTr/wAAAABJRU5ErkJggg==
+  uri: 'public://embed_buttons/sharp_view_quilt_black_24dp.png'
+>>>>>>> 259adada76f81e223a285d23efde7b6ebf0b5414
 icon_uuid: null
