@@ -81,6 +81,21 @@ CONFIGURATION
   drush cset az_migration.settings migrate_d7_public_path "sites/default/files"
   ```
 
+  ## Post migration steps
+
+  After migrating content, the `migrate` database connection should be removed
+  from your site's `settings.php` file.  This will prevent the issues with the
+  migrations being loaded by the Drupal plugin system and interfering with
+  Quickstart features that use the migrate API (e.g. Quickstart News Feeds and
+  Quickstart Global Footer).  This is especially important if the source site
+  has been shut down or is on an environment that suspends idle
+  servers/containers (e.g. Pantheon).
+
+  The `migrate` database connection can be added back to the site's
+  `settings.php` file as needed (e.g. if additional content migrations need to
+  be run or rerun after the initial migration is complete) as long as the source
+  site's database is available.
+
 USAGE NOTES
 -----------
 
@@ -341,7 +356,7 @@ drush mr az_paragraph_file_download
 ```
 
 #### 6. Card Deck Migration.
-Notes: 
+Notes:
 
 This migration only imports the first link for cards from the multi-value link field in Quickstart v1. If there are multiple links on a card, you can edit the migrated card after the migration and add the links to the text area as HTML instead of using the link field.
 
@@ -418,4 +433,37 @@ drush mim az_menu_links
 To rollback menu links, use the following command:
 ```
 drush mr az_menu_links
+```
+## Exclude Node Title Migration
+
+This migration uses migration_lookup to match source node id to the nid of
+migrated content.
+
+Optional Migration Dependencies:
+Optional dependencies are honored in the correct order if the group import is run.
+`drush migrate:import --group=az_migration`
+If the variable doesn't exist in the source db, it will stop immediately and move on.
+- az_node_carousel
+- az_node_event
+- az_node_flexible_page
+- az_node_news
+- az_node_person
+- az_node_uaqs_basic_page_to_az_page
+
+Quickstart 1 exclude node title per node settings can be migrated using the
+following command:
+
+```
+drush mim az_exclude_node_title
+```
+You do have the option to run this migration as many times as necessary.
+To update content after running additional quickstart migrations:
+
+```
+drush mim az_exclude_node_title --update
+```
+
+To rollback menu links, use the following command:
+```
+drush mr az_exclude_node_title
 ```

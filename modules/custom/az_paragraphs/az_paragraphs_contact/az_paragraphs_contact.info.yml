@@ -1,7 +1,7 @@
 name: 'Quickstart Paragraphs - Contact'
 type: module
 description: 'Provides a Contact paragraph type.'
-core_version_requirement: ^8.8 || ^9
+core_version_requirement: ^9
 dependencies:
   - az_paragraphs
   - drupal:field

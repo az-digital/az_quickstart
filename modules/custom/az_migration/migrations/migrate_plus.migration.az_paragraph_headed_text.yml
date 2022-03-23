@@ -20,11 +20,13 @@ process:
     source: field_uaqs_summary
     process:
       delta: delta
-      value: value
-      format:  
+      value:
+        plugin: az_entity_embed_process
+        source: value
+      format:
         plugin: default_value
         default_value: az_standard
-  
+
   behavior_settings:
     plugin: paragraphs_behavior_settings
 
