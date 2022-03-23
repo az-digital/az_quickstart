@@ -1,4 +1,4 @@
-name: Test on Pantheon
+name: Test PR on Release Branch
 on:
    workflow_dispatch:
     inputs:
@@ -12,7 +12,7 @@ on:
 
 jobs:
   test-pr-on-branch:
-    name: Test on Release Branch
+    name: Test PR on Release Branch
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout code
