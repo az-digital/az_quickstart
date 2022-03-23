@@ -197,7 +197,7 @@ To start a debugging session, perform the following steps:
 9. Type `@recommended` in the search bar.
 10. Install all workspace recommended extensions.
 11. In VSCode, go to the debugging tab.
-12. Click the gree triangle next to `Listen for XDebug` at the top right.
+12. Click the green triangle next to `Listen for XDebug` at the top right.
 13. In VSCode, go back to the code tab.
 14. Set any desired breakpoints.
 15. You may now proceed with debugging.
