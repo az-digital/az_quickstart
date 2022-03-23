@@ -35,7 +35,7 @@ class AzSelectMenuTest extends BrowserTestBase {
    *
    * @group az_select_menu
    */
-  public function testIsUninstallable() {
+  public function testIsUninstallableAndReinstallable() {
 
     // Uninstalls the az_select_menu module, so hook_modules_uninstalled()
     // is executed.
