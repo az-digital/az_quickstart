@@ -26,6 +26,11 @@ class ConfigOverrideTest extends BrowserTestBase {
   protected $strictConfigSchema = FALSE;
 
   /**
+   * @var string
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Modules to enable.
    *
    * @var array

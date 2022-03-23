@@ -83,7 +83,7 @@ process:
     paragraph_behavior_plugins:
       az_text_media_paragraph_behavior:
         bg_color: bg_color
-        bg_attach: bg_attachment
+        bg_attachment: bg_attachment
         position: position
         full_width: full_width
         style: content_style
