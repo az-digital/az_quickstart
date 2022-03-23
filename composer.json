@@ -52,7 +52,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.2.13",
+        "drupal/core-recommended": "9.2.16",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.4",
@@ -147,6 +147,9 @@
             },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
+            },
+            "drupal/media_migration": {
+                "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
