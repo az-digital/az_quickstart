@@ -8,6 +8,8 @@ config:
   xdebug: false
 services:
   appserver:
+    config:
+      php: .vscode/php.ini
     overrides:
       environment:
         SIMPLETEST_DB: 'mysql://drupal9:drupal9@database/drupal9'
