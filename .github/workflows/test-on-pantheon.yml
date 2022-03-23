@@ -10,7 +10,7 @@ on:
         required: true
 
 jobs:
-  test_pr_on_pantheon:
+  test-pr-on-pantheon:
     name: Test PR on Pantheon
     runs-on: ubuntu-18.04
     steps:
