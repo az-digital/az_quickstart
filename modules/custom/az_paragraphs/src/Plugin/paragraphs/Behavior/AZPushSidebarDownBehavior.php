@@ -81,12 +81,12 @@ class AZPushSidebarDownBehavior extends ParagraphsBehaviorBase {
     $config = $this->getSettings($paragraph);
 
     $form['push_sidebar_down'] = [
-        '#title' => $this->t('Push sidebar down below this element.'),
-        '#type' => 'select',
-        '#type' => 'checkbox',
-        '#default_value' => $config['push_sidebar_down'],
-        '#description' => $this->t('Pushes sidebar down if checked.'),
-        '#return_value' => 'push-sidebar-down',
+      '#title' => $this->t('Push sidebar down below this element.'),
+      '#type' => 'select',
+      '#type' => 'checkbox',
+      '#default_value' => $config['push_sidebar_down'],
+      '#description' => $this->t('Pushes sidebar down if checked.'),
+      '#return_value' => 'push-sidebar-down',
     ];
 
     // This places the form fields on the content tab rather than behavior tab.
@@ -115,7 +115,7 @@ class AZPushSidebarDownBehavior extends ParagraphsBehaviorBase {
     if (!empty($config['push_sidebar_down'])) {
       $build['#attributes']['class'][] = 'push-sidebar-down';
     }
-    if (!empty($config['push_sidebar_down'] && $config['push_sidebar_down'] === 'push-sidebar-down')){
+    if (!empty($config['push_sidebar_down'] && $config['push_sidebar_down'] === 'push-sidebar-down')) {
       $build['#attributes']['push-sidebar-down'] = 'push-sidebar-down';
     }
   }
