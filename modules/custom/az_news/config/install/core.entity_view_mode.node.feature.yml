@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - node
-id: node.az_feature
-label: Feature
-targetEntityType: node
-cache: true
