@@ -12,9 +12,6 @@ source:
 destination:
   plugin: entity:node
   bundle: az_event
-  migration_dependencies:
-    requireed:
-      - az_event_categories
 
 process:
   type:
@@ -177,7 +174,7 @@ process:
   sticky: sticky
 
   path/pathauto:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -194,14 +191,15 @@ process:
       migration:
         - az_event_categories
 
-dependencies:
-  enforced:
-    module:
-      - az_migration
-      - az_event
-
 migration_dependencies:
   required:
     - az_user
     - az_files
+  optional:
     - az_paragraph_contact
+dependencies:
+  enforced:
+    module:
+      - az_migration
+  module:
+    - az_event

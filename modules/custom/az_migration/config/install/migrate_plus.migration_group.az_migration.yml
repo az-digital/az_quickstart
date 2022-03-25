@@ -20,8 +20,6 @@ shared_configuration:
 
 # We add dependencies just to make sure everything we need will be available
 dependencies:
- enforced:
-   module:
-     - az_migration
-     - migrate_drupal
-     - migrate_tools
+  enforced:
+    module:
+      - az_migration

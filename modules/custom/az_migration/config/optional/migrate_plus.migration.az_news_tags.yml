@@ -17,7 +17,7 @@ process:
   vid:
     plugin: default_value
     default_value: az_news_tags
-  
+
   name: name
   weight: weight
 
@@ -33,7 +33,7 @@ process:
     -
       plugin: migration_lookup
       migration: az_news_tags
-      
+
   parent:
     plugin: default_value
     default_value: 0
@@ -45,4 +45,5 @@ dependencies:
   enforced:
     module:
       - az_migration
-      - az_news
+  module:
+    - az_news

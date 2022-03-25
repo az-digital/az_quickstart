@@ -64,4 +64,3 @@ dependencies:
 migration_dependencies:
   required:
     - az_media
-    - az_files

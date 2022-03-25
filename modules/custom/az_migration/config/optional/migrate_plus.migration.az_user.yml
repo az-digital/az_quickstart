@@ -13,8 +13,6 @@ class: Drupal\user\Plugin\migrate\User
 source:
   plugin: d7_user
 process:
-  # If you are using this file to build a custom migration consider removing
-  # the uid field to allow incremental migrations.
   name: name
   pass: pass
   mail: mail

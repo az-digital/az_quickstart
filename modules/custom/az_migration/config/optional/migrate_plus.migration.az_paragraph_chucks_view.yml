@@ -30,3 +30,5 @@ dependencies:
   enforced:
     module:
       - az_migration
+  module:
+    - az_paragraphs_view

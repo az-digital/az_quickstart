@@ -90,7 +90,7 @@ process:
   sticky: sticky
 
   path/pathauto:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -99,7 +99,7 @@ process:
       default_value: 0
 
   path/alias:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -109,3 +109,9 @@ migration_dependencies:
     - az_user
     - az_files
     - az_media
+dependencies:
+  enforced:
+    module:
+      - az_migration
+  module:
+    - az_carousel

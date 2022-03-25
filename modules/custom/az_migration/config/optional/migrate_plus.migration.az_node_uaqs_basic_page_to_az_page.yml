@@ -14,7 +14,7 @@ destination:
   bundle: az_flexible_page
 
 process:
-  type: 
+  type:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
@@ -23,7 +23,7 @@ process:
     source: language
     map:
       und: en
-  
+
   title: title
   uid:
     -
@@ -42,7 +42,7 @@ process:
   sticky: sticky
 
   path/pathauto:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -51,7 +51,7 @@ process:
       default_value: 0
 
   path/alias:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process

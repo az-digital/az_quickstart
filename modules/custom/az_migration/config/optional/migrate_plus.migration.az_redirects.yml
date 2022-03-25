@@ -57,7 +57,7 @@ process:
 destination:
   plugin: entity:redirect
 migration_dependencies:
-  required:
+  optional:
       - az_event_categories
       - az_flexible_page_categories
       - az_news_tags

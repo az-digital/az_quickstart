@@ -117,3 +117,8 @@ dependencies:
   enforced:
     module:
       - az_migration
+  module:
+    - az_paragraphs_text_media
+migration_dependencies:
+  required:
+    - az_media

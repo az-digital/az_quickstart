@@ -64,3 +64,6 @@ dependencies:
   enforced:
     module:
       - az_migration
+  module:
+    - az_paragraphs_html
+    - az_paragraphs_text

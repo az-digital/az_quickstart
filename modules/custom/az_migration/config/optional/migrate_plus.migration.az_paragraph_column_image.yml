@@ -43,8 +43,9 @@ dependencies:
   enforced:
     module:
       - az_migration
+  module:
+    - az_paragraphs_text
 
 migration_dependencies:
   required:
     - az_media
-    - az_files

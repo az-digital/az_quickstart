@@ -84,4 +84,5 @@ dependencies:
   enforced:
     module:
       - az_migration
-      - az_media
+  module:
+    - az_media

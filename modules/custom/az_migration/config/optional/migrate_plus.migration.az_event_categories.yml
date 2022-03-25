@@ -17,13 +17,10 @@ process:
   vid:
     plugin: default_value
     default_value: az_event_categories
-  
   name: name
   weight: weight
-
   'description/value': description
   'description/format': format
-
   # Only attempt to stub real (non-zero) parents.
   parent_id:
     -
@@ -33,16 +30,15 @@ process:
     -
       plugin: migration_lookup
       migration: az_event_categories
-      
   parent:
     plugin: default_value
     default_value: 0
     source: '@parent_id'
-
   changed: timestamp
 
 dependencies:
   enforced:
     module:
       - az_migration
-      - az_event
+  module:
+    - az_event

@@ -243,9 +243,9 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
-  
+
   path/pathauto:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -254,7 +254,7 @@ process:
       default_value: 0
 
   path/alias:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -263,12 +263,14 @@ dependencies:
   enforced:
     module:
       - az_migration
-      - az_news
+  module:
+    - az_news
 
 migration_dependencies:
   required:
     - az_user
     - az_media
+  optional:
     - az_news_tags
     - az_paragraph_contact
     - az_paragraph_extra_info

@@ -22,7 +22,7 @@ process:
       delta: delta
       value: email
       format: format
-  
+
   field_az_phone:
     plugin: sub_process
     source: field_uaqs_contact_phone
@@ -41,4 +41,5 @@ dependencies:
   enforced:
     module:
       - az_migration
-      - az_event
+  module:
+    - az_paragraphs_contact

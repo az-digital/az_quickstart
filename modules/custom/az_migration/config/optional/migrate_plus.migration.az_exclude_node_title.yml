@@ -50,3 +50,7 @@ migration_dependencies:
     - az_node_person
     - az_node_uaqs_basic_page_to_az_page
 
+dependencies:
+  enforced:
+    module:
+      - az_migration

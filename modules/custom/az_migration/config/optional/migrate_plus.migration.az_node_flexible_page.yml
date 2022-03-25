@@ -133,10 +133,11 @@ process:
         - '@tmp_flexible_subpage'
 
 dependencies:
+  module:
+    - az_flexible_page
   enforced:
     module:
       - az_migration
-      - az_flexible_page
 
 migration_dependencies:
   required:

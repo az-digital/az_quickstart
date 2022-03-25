@@ -80,7 +80,7 @@ destination:
   plugin: entity:menu_link_content
   no_stub: true
 migration_dependencies:
-  required:
+  optional:
     - az_node_carousel
     - az_node_event
     - az_node_flexible_page
@@ -91,3 +91,7 @@ migration_dependencies:
     - az_news_tags
     - az_person_categories_secondary
     - az_person_categories
+dependencies:
+  enforced:
+    module:
+      - az_migration
