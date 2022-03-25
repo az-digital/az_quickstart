@@ -24,11 +24,14 @@ services:
         MARIADB_USER: drupal9
         MARIADB_PASSWORD: drupal9
   appserver:
+    config:
+      php: .vscode/php.ini
     overrides:
       environment:
         SIMPLETEST_DB: 'mysql://drupal9:drupal9@database/drupal9'
         SIMPLETEST_BASE_URL: 'http://appserver'
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://chromedriver:9515"]'
+        XDEBUG_MODE: debug
       volumes:
         # Don't share our host working directory as /app. We want /app empty for composer.
         - /app
@@ -42,6 +45,7 @@ services:
       # Use the matching require-dev metapackage branch if available.
       - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi; composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
       - composer install
+      - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
     type: node:12
     build:
@@ -105,3 +109,13 @@ tooling:
       # Now issue a composer update/install for the scaffolding folder to pull in new dependencies.
       # "true" command consumes passed Lando arguments that were only intended to be passed to the previous call.
       - /usr/local/bin/composer --working-dir=/app --no-scripts update && /usr/local/bin/composer --working-dir=/app install && true
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for Apache.
+    cmd: docker-php-ext-enable xdebug && /etc/init.d/apache2 reload && echo "Enabling xdebug"
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for Apache.
+    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload && echo "Disabling xdebug"
+    user: root
