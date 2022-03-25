@@ -111,6 +111,7 @@ steps:
       - chown www-data:www-data -R /var/www/html/sites/migration/files
       - terminus env:wake ${MIGRATION_SOURCE_SITE_NAME}.dev
       - drush -y en az_migration
+      - drush -y en az_paragraphs_html
       - drush -y cset az_migration.settings migrate_d7_protocol "https"
       - drush -y cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io/"
       - drush -y cset az_migration.settings migrate_d7_public_path "sites/default/files"
