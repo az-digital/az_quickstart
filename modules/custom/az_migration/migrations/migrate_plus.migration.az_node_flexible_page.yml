@@ -69,7 +69,7 @@ process:
   sticky: sticky
 
   path/pathauto:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -78,7 +78,7 @@ process:
       default_value: 0
 
   path/alias:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -111,7 +111,6 @@ process:
               - az_paragraph_carousel
               - az_paragraph_chucks_view
               - az_paragraph_column_image
-              - az_paragraph_contact
               - az_paragraph_content_marquee
               - az_paragraph_extra_info
               - az_paragraph_file_download
@@ -119,6 +118,7 @@ process:
               - az_paragraph_full_width_media_row
               - az_paragraph_gallery
               - az_paragraph_headed_text
+              - az_paragraph_html
               - az_paragraph_jumbotron
               - az_paragraph_panel_group
               - az_paragraph_plain_text
@@ -136,22 +136,24 @@ dependencies:
   enforced:
     module:
       - az_migration
+      - az_flexible_page
 
 migration_dependencies:
   required:
     - az_user
     - az_files
+  optional:
     - az_paragraph_callout
     - az_paragraph_carousel
     - az_paragraph_chucks_view
     - az_paragraph_column_image
-    - az_paragraph_contact
     - az_paragraph_extra_info
     - az_paragraph_file_download
     - az_paragraph_full_width_bg_wrapper
     - az_paragraph_full_width_media_row
     - az_paragraph_gallery
     - az_paragraph_headed_text
+    - az_paragraph_html
     - az_paragraph_jumbotron
     - az_paragraph_panel_group
     - az_paragraph_plain_text
