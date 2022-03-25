@@ -44,9 +44,14 @@ destination:
 
 migration_dependencies:
   optional:
+    - az_event_categories
+    - az_flexible_page_categories
+    - az_news_tags
     - az_node_carousel
     - az_node_event
     - az_node_flexible_page
     - az_node_news
     - az_node_person
     - az_node_uaqs_basic_page_to_az_page
+    - az_person_categories_secondary
+    - az_person_categories
