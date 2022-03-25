@@ -1,0 +1,22 @@
+az_migration.settings:
+  type: config_object
+  label: 'AZ Migration Settings'
+  mapping:
+    migrate_d7_public_path:
+      type: string
+      label: 'The public file directory path, if any.'
+      nullable: true
+    migrate_d7_filebasepath: 
+      type: string
+      label: 'The Drupal 7 file base directory path.'
+    migrate_d7_protocol:
+      type: string
+      label: 'HTTP Protocol to use.'
+    migrate_d7_private_path:
+      label: 'The private file directory path, if any.'
+      type: string
+      nullable: true
+    migrate_d7_temporary_path:
+      label: 'The temporary file directory path, if any.'
+      type: string
+      nullable: true

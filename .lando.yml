@@ -1,4 +1,4 @@
-name: az_quickstart
+name: migrate-ui
 recipe: drupal9
 config:
   php: '7.4'

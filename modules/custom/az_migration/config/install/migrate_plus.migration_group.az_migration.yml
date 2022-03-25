@@ -8,13 +8,15 @@ label: AZ Quickstart Migrations
 description: Common configuration for simple migrations.
 
 # Short description of the type of source, e.g. "Drupal 6" or "WordPress".
-source_type: Drupal 7 Site
-
+source_type: Quickstart 1 Site
+langcode: en
+status: true
+module: az_migration
 # Here we add any default configuration settings to be shared among all
 # migrations in the group.
 shared_configuration:
- source:
-   key: migrate
+  source:
+    key: migrate
 
 # We add dependencies just to make sure everything we need will be available
 dependencies:

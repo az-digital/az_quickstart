@@ -45,4 +45,4 @@ dependencies:
   enforced:
     module:
       - az_migration
-      - az_node_news
+      - az_news
