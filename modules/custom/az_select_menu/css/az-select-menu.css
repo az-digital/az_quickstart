@@ -9,7 +9,7 @@ select.select-primary {
     background-repeat: no-repeat;
     background-position: 95% 50%;
     background-position: calc(100% - 10px)  50%;
-    border-top: 1px solid transparent;
+    border-top: 0;
     border-right: 0;
     border-bottom: 3px solid #cbd1e0;
     border-left: 0;
@@ -26,7 +26,7 @@ select.select-primary {
     -webkit-transition: .15s all ease-in-out;
     transition: .15s all ease-in-out;
     text-overflow: '';
-    height: calc(1.6em + 0.75rem + 2px);
+    height: unset;
   }
   
   /*This only works in Internet Explorer 10 and beyond. */
