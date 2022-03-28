@@ -17,20 +17,24 @@ destination:
   default_bundle: az_text
 
 process:
-  field_az_text_area/0/value:
+  field_az_text_area:
     - plugin: single_value
-      source: field_uaqs_flexible_page_sub/0/value
+      source: field_uaqs_flexible_page_sub
     - plugin: skip_on_empty
       method: row
-    - plugin: concat
-      source:
-        - constants/prefix
-        - field_uaqs_flexible_page_sub/0/value
-        - constants/suffix
-
-  field_az_text_area/0/format:
-    plugin: default_value
-    default_value: az_standard
+    - plugin: sub_process
+      include_source: true
+      process:
+        delta: delta
+        value:
+          - plugin: concat
+            source:
+              - source/constants/prefix
+              - value
+              - source/constants/suffix
+        format:
+          plugin: default_value
+          default_value: az_standard
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
