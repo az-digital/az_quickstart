@@ -6,34 +6,37 @@ migration_tags:
 status: true
 
 source:
+  defaults:
+    prefix: "<p>"
   plugin: d7_node
   node_type: uaqs_flexible_page
-  constants:
-    subhead_prefix: '<p class="lead">'
-    subhead_postfix: '</p>'
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_text
 
 process:
-  field_az_text_area:
+  field_az_text_area/0/value:
     - plugin: single_value
       source: field_uaqs_flexible_page_sub
     - plugin: skip_on_empty
       method: row
-    - plugin: sub_process
-      process:
-        delta: delta
-        value:
-          plugin: concat
-          source:
-            - constants/subhead_prefix
-            - value
-            - constants/subhead_postfix
-        format:
-          plugin: default_value
-          default_value: az_standard
+    - plugin: dom
+      method: import
+      non_root: true
+      source: value
+    - plugin: dom_apply_styles
+      format: az_standard
+      rules:
+        -
+          xpath: '/body/text()'
+          style: Text Size Lead
+    - plugin: dom
+      method: export
+
+  field_az_text_area/0/format:
+    plugin: default_value
+    default_value: az_standard
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
