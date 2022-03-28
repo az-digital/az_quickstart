@@ -43,7 +43,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           cd $(terminus -y -n local:clone "${SITE_NAME}")
           git checkout -b "${PR_NUM}"
-          jq --indent 4 ".extra.patches += {\"az-digital/az_quickstart\": {\"pr-${PRH_NUM}\": \"${PATCH_URL}\"}}" composer.json > composer.json.new
+          jq --indent 4 ".extra.patches += {\"az-digital/az_quickstart\": {\"pr-${PR_NUM}\": \"${PATCH_URL}\"}}" composer.json > composer.json.new
           mv composer.json.new composer.json
           git add composer.json
           git commit --allow-empty -m "Apply PR ${PR_NUM}"
