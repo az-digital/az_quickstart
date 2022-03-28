@@ -10,6 +10,9 @@ use Drupal\media\Entity\Media;
 /**
  * Process Plugin to field merge for Column Image paragraphs.
  *
+ * NOTE: This plugin is only designed to be used with uaqs_column_image source
+ * paragraphs and is not generically reusable for other use cases.
+ *
  * Available configuration keys
  * - caption: The field ID for the source image caption.
  * - credit: The field ID for the source image credit.
@@ -17,12 +20,22 @@ use Drupal\media\Entity\Media;
  *
  * Examples:
  *
- * Consider a paragraph item migration, where you want to merge the source
- * caption and credit fields into the destination paragraph.
+ * Consider a paragraph item migration, where you want to convert a previously
+ * migrated media entity via migration_lookup, to an embedded media entity
+ * (i.e. <drupal-media>) and place it into a text field that is allowed to use a
+ * text formatter that is configured to process <drupal-media> elements.
+ *
  * @code
  * process:
- *   field_az_text_area:
- *     plugin: paragraphs_column_image_field_merge
+ *  temp_photo:
+ *    plugin: sub_process
+ *    source: field_uaqs_photo
+ *    process:
+ *      - plugin: migration_lookup
+ *        source: fid
+ *        migration:
+ *          - az_media
+ *  field_az_text_area:
  *     source: '@temp_photo'
  *     caption: field_uaqs_caption_text
  *     credit: field_uaqs_image_credit
