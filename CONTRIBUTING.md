@@ -291,7 +291,7 @@ ddev drush en -y devel && ddev drupal site:mode dev
 ### Configuration Management and Database Updates
 
 Many times the issue of how or when to make a database update, or whether to
-simply rely on configuration file changes when adding or changing quickstart
+simply rely on configuration file changes when adding or changing Quickstart
 functionality comes up.
 #### Context
 `az-digital/az_quickstart` is a drupal distribution that is hosted on many
