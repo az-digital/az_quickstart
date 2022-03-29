@@ -9,17 +9,16 @@
   Drupal.behaviors.azParagraphsPushSidebarDown = {
     attach: function attach() {
       function _setSidebarTopMargin() {
-        var content_region = document.getElementById('content');
-        var sidebar_pusher = document.querySelectorAll('[push-sidebar-down="push-sidebar-down"]');
-        var content_region_position = content_region.getBoundingClientRect();
-        var style = sidebar_pusher[0].currentStyle || window.getComputedStyle(sidebar_pusher[0], '');
-        var bottom_margin = style.marginBottom;
-        var content_region_top = content_region_position.top;
-        var sidebar_pusher_position = sidebar_pusher[0].getBoundingClientRect();
-        var sidebar_pusher_bottom = sidebar_pusher_position.bottom;
-        var sidebar_top_margin = sidebar_pusher_bottom - content_region_top;
-        console.log(bottom_margin);
-        document.documentElement.style.setProperty("--sidebar-top-margin", "calc(".concat(sidebar_top_margin, "px + ").concat(bottom_margin, ")"));
+        var contentRegion = document.getElementById("content");
+        var sidebarPusher = document.querySelectorAll('[push-sidebar-down="push-sidebar-down"]');
+        var contentRegionPosition = contentRegion.getBoundingClientRect();
+        var style = sidebarPusher[0].currentStyle || window.getComputedStyle(sidebarPusher[0], "");
+        var bottomMargin = style.marginBottom;
+        var contentRegionTop = contentRegionPosition.top;
+        var sidebarPusherPosition = sidebarPusher[0].getBoundingClientRect();
+        var sidebarPusherBottom = sidebarPusherPosition.bottom;
+        var sidebarTopMargin = sidebarPusherBottom - contentRegionTop;
+        document.documentElement.style.setProperty("--sidebar-top-margin", "calc(".concat(sidebarTopMargin, "px + ").concat(bottomMargin, ")"));
       }
 
       function _calculateLeftMargin() {
@@ -34,7 +33,7 @@
       }
 
       window.addEventListener("resize", _setSidebarTopMargin, false);
-      window.addEventListener('DOMContentLoaded', function (event) {
+      window.addEventListener("DOMContentLoaded", function (event) {
         _setSidebarTopMargin();
 
         _calculateLeftMargin();
