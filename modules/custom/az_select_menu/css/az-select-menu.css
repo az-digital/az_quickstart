@@ -36,8 +36,7 @@ select.select-primary {
 
   select.select-primary:focus,
   select.select-primary:hover {
-    border-top: 1px solid transparent;
-    border-bottom: 3px solid var(--red);
+    border-bottom-color: var(--red);
   }
 
   label.select-menu-label {
