@@ -7,7 +7,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Quickstart 1 to Quickstart2 Process plugin to extract specific field values
+ * Quickstart 1 to Quickstart 2 Process plugin to extract specific field values
  * from the source, (uaqs_full_width_media_row paragraphs), and transforming those values
  * by wrapping them in specific arizona-bootstrap markup.
  *
@@ -15,8 +15,8 @@ use Drupal\migrate\Row;
  * paragraphs and is not generically reusable for other use cases.
  *
  * Expects the source value to contain the following fields:
- *  - body: A drupal text area field array.
- *  - link: A drupal multi-value link field array.
+ *  - body: A Drupal 7 text area field array.
+ *  - link: A Drupal 7 multi-value link field array.
  *
  * Available configuration keys
  * - N/A

@@ -29,7 +29,6 @@ use Drupal\migrate\Row;
  * destination:
  *   plugin: 'entity_reference_revisions:paragraph'
  *   default_bundle: az_text
- *
  * process:
  *   field_az_text_area/value:
  *     plugin: paragraphs_jumbotron_field_merge

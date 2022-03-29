@@ -127,21 +127,10 @@ process:
               - az_paragraph_card_deck
 
   field_az_main_content:
-    - plugin: merge
+      plugin: paragraphs_mapping_flexible_page
       source:
         - '@temp_pid'
         - '@tmp_flexible_subpage'
-    - plugin: sub_process
-      process:
-        delta: delta
-        target_id:
-          plugin: extract
-          index:
-            - 0
-        target_revision_id:
-          plugin: extract
-          index:
-            - 1
 
 dependencies:
   enforced:
