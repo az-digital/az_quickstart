@@ -37,6 +37,8 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git checkout "${RELEASE_BRANCH}"
           AZ_TRIMMED_REF="${GITHUB_REF##*/}"
+          echo "BRANCH BELOW"
+          echo "${AZ_TRIMMED_REF}"
           git merge "${AZ_TRIMMED_REF}"
           composer install
         env:
