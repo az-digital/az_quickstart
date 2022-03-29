@@ -11,7 +11,7 @@
       window.addEventListener("resize", _calculateScrollbarWidth, false);
 
       // recalculate on dom load
-      window.addEventListener('DOMContentLoaded', (event) => {
+      window.addEventListener("DOMContentLoaded", (event) => {
         _calculateScrollbarWidth();
       });
 
