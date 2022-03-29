@@ -1,19 +1,27 @@
 name: Test PR on Release Branch
 on:
-   workflow_dispatch:
-    inputs:
-      release_branch:
-        description: The release branch to test this PR on
-        required: true
-        type: choice
-        options: 
-          - 2.1.x
-          - 2.2.x
+    pull_request:
+      types:
+        - opened
+  #  workflow_dispatch:
+  #   inputs:
+  #     release_branch:
+  #       description: The release branch to test this PR on
+  #       required: true
+  #       type: choice
+  #       options: 
+  #         - 2.1.x
+  #         - 2.2.x
 
 jobs:
   test-pr-on-branch:
     name: Test PR on Release Branch
     runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        release:
+          - "2.1.x"
+          - "2.2.x"
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,4 +40,4 @@ jobs:
           git merge "${AZ_TRIMMED_REF}"
           composer install
         env:
-          RELEASE_BRANCH: ${{ github.event.inputs.release_branch }}
+          RELEASE_BRANCH: ${{ matrix.release }}
