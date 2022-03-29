@@ -294,7 +294,7 @@ Many times the issue of how or when to make a database update, or whether to
 simply rely on configuration file changes when adding or changing Quickstart
 functionality comes up.
 #### Context
-`az-digital/az_quickstart` is a drupal distribution that is hosted on many
+`az-digital/az_quickstart` is a Drupal distribution that is hosted on many
 different environments by a multitude of teams with differing philosophies on
 change management when it comes to their Quickstart websites. This means that
 the Arizona Digital team should use the following guidelines when making changes
