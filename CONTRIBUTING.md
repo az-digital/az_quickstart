@@ -299,7 +299,7 @@ different environments by a multitude of teams with differing philosophies on
 change management when it comes to their Quickstart websites. This means that
 the Arizona Digital team should use the following guidelines when making changes
 to the Quickstart codebase.
-#### When to make a database update as part of your change pull request.
+#### Configuration changes that require database updates
 If your code change:
 -  Adds a new setting that never existed before.
 -  It would be best if the new setting is immediately set to the default
