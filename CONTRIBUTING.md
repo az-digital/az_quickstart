@@ -306,7 +306,7 @@ If your code change:
    regardless of downstream decisions.
 -  Replaces an existing setting and has a new key name.
 
-#### When to rely on just a configuration yaml file change.
+#### Configuration changes that do not require database updates
 If your code change:
 - Adds another option to an existing setting and doesn't need to be selected by
   default.
