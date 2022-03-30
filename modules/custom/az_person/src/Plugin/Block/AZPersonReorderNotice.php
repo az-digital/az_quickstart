@@ -3,6 +3,7 @@
 namespace Drupal\az_person\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\Url;
 
 /**
  * Provides an 'AZPersonReorderNotice' block.
@@ -23,9 +24,41 @@ class AZPersonReorderNotice extends BlockBase {
    */
   public function build() {
 
-    return [
-      '#markup' => '<div class="callout callout-leaf"><p><strong>Need to reorder people?</strong></p><p>Use the button below to reorder the people on this page.</p><p><a class="btn btn-success" href="/admin/az-person/reorder-people">Reorder People</a></p></div>',
+    $callout_markup_header = [
+      '#markup' => '<p><strong>' . $this->t('Need to reorder people?') . '</strong></p>',
     ];
+    $callout_markup_description = [
+      '#markup' => '<p>' . t('Use the button below to reorder the people on this page.') . '</p>',
+    ];
+    $link_to_reorder_content =  [
+      '#type' => 'link',
+      '#title' => $this->t('Reorder People'),
+      '#url' => Url::fromRoute('view.az_reorder.reorder_people'),
+      '#attributes' => [
+        'class' => [
+          'btn',
+          'btn-success',
+        ],
+      ],
+    ];
+
+    $callout = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'class' => [
+          'callout',
+          'callout-leaf',
+        ],
+      ],
+      'child' => [
+        $callout_markup_header,
+        $callout_markup_description,
+        $link_to_reorder_content,
+      ]
+    ];
+
+    return $callout;
   }
 
 }

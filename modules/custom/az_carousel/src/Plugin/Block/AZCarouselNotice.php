@@ -29,12 +29,21 @@ class AZCarouselNotice extends BlockBase {
     $link_to_content =  [
       '#type' => 'link',
       '#title' => $this->t('Edit Carousel Items'),
-      '#url' => Url::fromRoute('examples.description', [
-        'query' => [
-          'title', => ''.
-          'type' => 'az_carousel_item',
-        ],
+      '#url' => Url::fromRoute('system.admin_content', [
+        'type' => 'az_carousel_item',
       ]),
+      '#attributes' => [
+        'class' => [
+          'btn',
+          'btn-success',
+          'mr-4'
+        ],
+      ],
+    ];
+    $link_to_reorder_content =  [
+      '#type' => 'link',
+      '#title' => $this->t('Reorder Carousel Items'),
+      '#url' => Url::fromRoute('view.az_carousel.reorder_carousel_items'),
       '#attributes' => [
         'class' => [
           'btn',
@@ -42,9 +51,20 @@ class AZCarouselNotice extends BlockBase {
         ],
       ],
     ];
-    $callout_markup =  '<p><strong>' . t('Need to modify your carousel items?') . '</strong></p>';
-    $callout_markup .= '<p>' . t('Use the buttons below to modify your carousel items.') . '</p>';
-    $callout_markup .= '<p><a class="btn btn-success" href="/admin/content?title=&type=az_carousel_item">Edit Carousel Items</a>&nbsp;<a class="btn btn-success" href="/admin/az-carousel/reorder-carousel-items">Reorder Carousel Items</a></p>';
+    $callout_markup_header = [
+      '#markup' => '<p><strong>' . $this->t('Need to modify your carousel items?') . '</strong></p>',
+    ];
+    $callout_markup_description = [
+      '#markup' => '<p>' . t('Use the buttons below to modify your carousel items.') . '</p>',
+    ];
+    $callout_markup_links = [
+      '#type' => 'html_tag',
+      '#tag' => 'p',
+      'child' => [
+        $link_to_content,
+        $link_to_reorder_content,
+      ]
+    ];
 
     $callout = [
       '#type' => 'html_tag',
@@ -54,7 +74,12 @@ class AZCarouselNotice extends BlockBase {
           'callout',
           'callout-leaf',
         ],
-      'child' => $callout_markup,
+      ],
+      'child' => [
+        $callout_markup_header,
+        $callout_markup_description,
+        $callout_markup_links,
+      ]
     ];
     $column = [
       '#type' => 'html_tag',
@@ -63,7 +88,8 @@ class AZCarouselNotice extends BlockBase {
         'class' => [
           'col-12',
         ],
-        'child' => $callout,
+      ],
+      'child' => $callout,
     ];
     $row = [
       '#type' => 'html_tag',
@@ -72,6 +98,7 @@ class AZCarouselNotice extends BlockBase {
         'class' => [
           'row',
         ],
+      ],
       'child' => $column,
     ];
     $container = [
@@ -81,13 +108,11 @@ class AZCarouselNotice extends BlockBase {
         'class' => [
           'container',
         ],
+      ],
       'child' => $row,
     ];
 
-
-    return [
-      '#markup' => '<div class="container"><div class="row"><div class="col-12"><div class="callout callout-leaf"><p><strong>Need to modify your carousel items?</strong></p><p>Use the buttons below to modify your carousel items.</p><p><a class="btn btn-success" href="/admin/content?title=&type=az_carousel_item">Edit Carousel Items</a>&nbsp;<a class="btn btn-success" href="/admin/az-carousel/reorder-carousel-items">Reorder Carousel Items</a></p></div></div></div></div>',
-    ];
+    return $container;
   }
 
 }
