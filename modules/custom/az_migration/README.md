@@ -24,7 +24,7 @@ This module provides a collection of ready to use migrations for migrating conte
 
 # Getting started
 
-## Using Quickstart scaffolding repo (recommended)
+## Using the Quickstart scaffolding repo (recommended)
 
 In order to simplify the process of getting started with Quickstart migrations, the Arizona Digital team has added some migration-specifc features to the [Quickstart Scaffolding Repo](https://github.com/az-digital/az-quickstart-scaffolding).  This repository is designed to be used as a composer project template for new Quickstart 2 website projects.
 
