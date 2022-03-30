@@ -519,7 +519,7 @@ drush mr az_exclude_node_title
   
 Migrate plugins provided by Quickstart modules.
 
-## Reuseable plugins
+## Reusable plugins
 
 These plugins are designed to be resuable in custom migrations.
 
@@ -534,9 +534,10 @@ These plugins are designed to be resuable in custom migrations.
   
 ### Source plugins
 
-- `az_file_migration`
-- `az_node`
-- `az_paragraphs_item`
+- [AZFileHandle (az_file_migration)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/source/AZFileHandle.php)
+- [AZNode (az_node)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/source/AZNode.php)
+- [AZParagraphsItem (az_paragraphs_item)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/source/AZParagraphsItem.php)
+- [NodeWithFieldCollection (az_node_with_field_collection)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/source/NodeWithFieldCollection.php)
 
 ## Internal plugins
 
@@ -549,7 +550,6 @@ These plugins are used in various built-in Quickstart migrations but were not de
 - `paragraphs_file_download_field_merge`
 - `paragraphs_fw_media_row_field_merge`
 - `az_paragraphs_media_caption`
-
 
 
 # Useful modules
