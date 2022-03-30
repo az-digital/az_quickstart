@@ -23,8 +23,8 @@ In order to migrate from Quickstart 1 or another distribution of Drupal 7,
 please use the [az-digital/az-quickstart-scaffolding repo](https://github.com/az-digital/az-quickstart-scaffolding) to create a new
 migration project.
 
-Follow along with that repository's README until you get to the Migration setup
-in Lando section and then follow these steps.
+Follow along with that repository's README until you get to the "Migration setup
+in Lando" section and then follow these steps.
 
 1. Download an archive of your Drupal 7 site's database.
 2. Place the database dump file in the the new site's docroot.
