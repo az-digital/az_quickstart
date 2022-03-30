@@ -5,18 +5,51 @@ CONTENTS OF THIS FILE
  * Requirements
  * Installation
  * Configuration
+ * Process Plugins
+ * Source Plugins
+ * Useful Modules
  * Usage Notes
 
 
 INTRODUCTION
 ------------
 
+Custom Migration from Drupal 7 to Drupal.
+
+This module is meant to be used instead of, or in combination with, the core
+`migrate_drupal` module.
 Custom Migration from Drupal 7 to Drupal 9
 
-  * Person Content Type:
+In order to migrate from Quickstart 1 or another distribution of Drupal 7,
+please use the [az-digital/az-quickstart-scaffolding repo](https://github.com/az-digital/az-quickstart-scaffolding) to create a new
+migration project.
 
-    All the person categories and files can be migrated using this module.
-    Person data can be migrated by follow the below steps.
+Follow along with that repository's README until you get to the Migration setup
+in Lando section and then follow these steps.
+
+1. Download an archive of your Drupal 7 site's database.
+2. Place the database dump file in the the new site's docroot.
+3. Download an archive of you Drupal 7 site's files directory. This is usually
+   sites/default/files
+4. Set the site up for migration with the follow lando commands from root of
+   your new migration project.
+  - `lando start`
+  - `lando install`
+  - `lando migrate-setup`
+5. Copy your downloaded Drupal 7 site's files into
+   `/web/sites/default/files/az_migrate`
+6. Import your Drupal 7 site's database archive with lando replacing
+   `<filename>` with the path to your archive in the docroot.
+  - `lando migrate-db-import <filename>`
+7. Check that everything worked
+  - `lando drush migrate:status --group=az_migration`
+You should now see a migration status table depicting the upcoming migration.
+8. Import the `az_migration` group.
+  - `lando drush migrate:import --group=az_migration`
+9. Check the migration log and troubleshoot any errors.
+10. Log into the lando site and check for imported content.
+
+You can skip most of the rest of this README unless you run into trouble.
 
 REQUIREMENTS
 ------------
@@ -25,7 +58,6 @@ Quickstart 1 source website.
 Access to Quickstart 1 database credentials.
 Migration Quickstart 2 destination site should have database and http
 access to the QuickStart 1 source website.
-
 
 INSTALLATION
 ------------
@@ -42,7 +74,7 @@ CONFIGURATION
 
   ## Configure the settings.php to connect Drupal 7 database.
 
-  Please add the below connection string to the settings.php
+  Please modify and add the below connection string to the settings.php
 
   ```
   $databases['migrate']['default'] = [
@@ -59,11 +91,11 @@ CONFIGURATION
 
   ## Before running the file migration, please configure the file location.
 
-  File can be migrated in two ways as below -
+  Files can be migrated in two ways as depicted below:
 
   #### 1. Copy the file  "sites/default/files/migrate_file" folder.
 
-  Then Set the configuration as below :
+  Then set the configuration as below:
 
   ```
   drush cset az_migration.settings migrate_d7_filebasepath ""
@@ -95,6 +127,46 @@ CONFIGURATION
   `settings.php` file as needed (e.g. if additional content migrations need to
   be run or rerun after the initial migration is complete) as long as the source
   site's database is available.
+
+PROCESS PLUGINS
+------------
+
+These process plugins are provided by this module.
+
+	Reuseable plugins:
+	- `az_migrated_path_lookup`
+	- `text_format_recognizer`
+	- `paragraphs_mapping_flexible_page`
+
+	"Internal" (non-reusable) plugins:
+	- `paragraphs_callout_field_merge`
+	- `paragraphs_chunks_view_display_mapping`
+	- `paragraphs_column_image_field_merge`
+	- `paragraphs_extra_info_field_merge`
+	- `paragraphs_file_download_field_merge`
+	- `paragraphs_fw_media_row_field_merge`
+	- `az_paragraphs_media_caption`
+
+Process plugins provided by `az_paragraphs` module.
+	Reuseable plugins:
+  - paragraphs_behavior_settings (Deprecated: use `az_paragraphs_behavior_settings`)
+  - az_paragraphs_behavior_settings
+
+SOURCE PLUGINS
+------------
+
+These source plugins are provided by this module.
+
+- `az_file_migration`
+- `az_node`
+- `az_paragraphs_item`
+
+USEFUL MODULES
+------------
+
+When debugging migrations, the [Migrate
+Devel](https://www.drupal.org/project/migrate_devel) module can be used to print source
+and destination values on the screen when importing or rolling back via `drush`.
 
 USAGE NOTES
 -----------
