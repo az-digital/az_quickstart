@@ -14,10 +14,10 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 
+Custom Migration from Drupal 7 to Drupal 9
 
 This module is meant to be used instead of, or in combination with, the core
 `migrate_drupal` module.
-Custom Migration from Drupal 7 to Drupal 9
 
 In order to migrate from Quickstart 1 or another distribution of Drupal 7,
 please use the [az-digital/az-quickstart-scaffolding repo](https://github.com/az-digital/az-quickstart-scaffolding) to create a new
