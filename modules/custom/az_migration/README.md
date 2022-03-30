@@ -14,7 +14,6 @@ CONTENTS OF THIS FILE
 INTRODUCTION
 ------------
 
-Custom Migration from Drupal 7 to Drupal.
 
 This module is meant to be used instead of, or in combination with, the core
 `migrate_drupal` module.
