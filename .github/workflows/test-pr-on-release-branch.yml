@@ -1,8 +1,9 @@
 name: Test PR on Release Branch
-on:
-    pull_request:
-      types:
-        - opened
+on: [workflow_dispatch]
+    # pull_request:
+    #   types:
+    #     - opened
+    
   #  workflow_dispatch:
   #   inputs:
   #     release_branch:
