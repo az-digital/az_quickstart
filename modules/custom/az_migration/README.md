@@ -92,12 +92,12 @@ You can skip most of the rest of this README unless you run into trouble.
 
   Files can be migrated in two ways as depicted below:
 
-  #### 1. Copy the file  "sites/default/files/migrate_files" folder.
+  #### 1. Copy the source site files to the "sites/default/files/migrate_file" folder.
 
   Then set the configuration as below:
 
   ```
-  drush cset az_migration.settings migrate_d7_filebasepath ""
+  drush cset az_migration.settings migrate_d7_filebasepath " "
   drush cset az_migration.settings migrate_d7_public_path "sites/default/files/migrate_file"
   ```
 
