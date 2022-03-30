@@ -7,6 +7,8 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
+ * Process Plugin to handle Full-Width Media Row Paragraphs from QS1.
+ *
  * Quickstart 1 to Quickstart 2 Process plugin to extract specific field values
  * from the source, (uaqs_full_width_media_row paragraphs), and transforming those values
  * by wrapping them in specific arizona-bootstrap markup.

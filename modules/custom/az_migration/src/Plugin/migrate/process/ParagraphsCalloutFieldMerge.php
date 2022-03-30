@@ -7,6 +7,8 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
+ * Process Plugin to handle Callout Paragraphs from QS1.
+ *
  * Quickstart 1 to Quickstart2 Process plugin to extract specific field values
  * from the source, (uaqs_callout paragraphs), and transforming those values
  * by wrapping them in specific arizona-bootstrap markup.
@@ -45,7 +47,6 @@ use Drupal\migrate\Row;
  *   id = "paragraphs_callout_field_merge"
  * )
  */
-
 class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
 
   /**

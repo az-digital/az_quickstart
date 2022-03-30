@@ -7,6 +7,8 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
+ * Process Plugin to handle Extra Info Paragraphs from QS1.
+ *
  * Quickstart 1 to Quickstart 2 process plugin to extract specific field values
  * from the source, (uaqs_extra_info paragraphs), and transforming those values
  * by wrapping them in specific arizona-bootstrap markup.
