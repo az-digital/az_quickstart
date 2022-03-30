@@ -30,7 +30,7 @@ class AZPersonReorderNotice extends BlockBase {
     $callout_markup_description = [
       '#markup' => '<p>' . t('Use the button below to reorder the people on this page.') . '</p>',
     ];
-    $link_to_reorder_content =  [
+    $link_to_reorder_content = [
       '#type' => 'link',
       '#title' => $this->t('Reorder People'),
       '#url' => Url::fromRoute('view.az_reorder.reorder_people'),
@@ -55,7 +55,7 @@ class AZPersonReorderNotice extends BlockBase {
         $callout_markup_header,
         $callout_markup_description,
         $link_to_reorder_content,
-      ]
+      ],
     ];
 
     return $callout;
