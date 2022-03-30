@@ -26,7 +26,7 @@ This module provides a collection of ready to use migrations for migrating conte
 
 ## Using the Quickstart scaffolding repo (recommended)
 
-In order to simplify the process of getting started with Quickstart migrations, the Arizona Digital team has added some migration-specifc features to the [Quickstart Scaffolding Repo](https://github.com/az-digital/az-quickstart-scaffolding).  This repository is designed to be used as a composer project template for new Quickstart 2 website projects.
+In order to simplify the process of getting started with Quickstart migrations, the Arizona Digital team has added some migration-specific features to the [Quickstart Scaffolding Repo](https://github.com/az-digital/az-quickstart-scaffolding).  This repository is designed to be used as a composer project template for new Quickstart 2 website projects.
 
 To get started with a Quickstart 2 migration using the scaffolding repo as a project template, follow the steps in that repository's [README](https://github.com/az-digital/az-quickstart-scaffolding#readme) until you get to the "Migration setup in Lando" section and then follow these steps:
 
@@ -61,7 +61,7 @@ To get started with a Quickstart 2 migration using the scaffolding repo as a pro
 You can skip most of the rest of this README unless you run into trouble.
 
 
-## Manual installtion and configuration
+## Manual installation and configuration
 
   ### Module installation
 
@@ -521,7 +521,7 @@ Migrate plugins provided by Quickstart modules.
 
 ## Reusable plugins
 
-These plugins are designed to be resuable in custom migrations.
+These plugins are designed to be reusable in custom migrations.
 
 ### Process plugins
   
