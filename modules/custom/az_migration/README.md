@@ -31,7 +31,7 @@ In order to simplify the process of getting started with Quickstart migrations, 
 To get started with a Quickstart 2 migration using the scaffolding repo as a project template, follow the steps in that repository's [README](https://github.com/az-digital/az-quickstart-scaffolding#readme) until you get to the "Migration setup in Lando" section and then follow these steps:
 
 1. Download an archive (dump) of your source site's database.
-2. Place the database dump file into the (project) root diredtory of your new migration project directory.
+2. Place the database dump file into the (project) root directory of your new migration project directory.
 3. Download an archive of your source site's files directory. This is usually in the
    `sites/default/files` directory of your website
 4. Set the site up for migration by running lando commands from root of your new migration project.
@@ -43,7 +43,7 @@ To get started with a Quickstart 2 migration using the scaffolding repo as a pro
 5. Copy your downloaded Drupal 7 site's files into
    `/web/sites/default/files/migrate_files`.
 6. Import your Drupal 7 site's database archive with lando replacing
-   `<filename>` with the path to your database archive in the docroot.
+   `<filename>` with the path to your database archive in the root of your new migration project.
    ```
    lando migrate-db-import <filename>
    ```
