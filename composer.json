@@ -145,6 +145,9 @@
                 "missing parent class": "https://git.drupalcode.org/issue/config_distro-3199197/-/commit/c312096d486caa2f01703ca7de1abf2285b6fac8.diff",
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
+            "drupal/date_ap_style": {
+                "All Day Setting hides time display (3272760)": "https://gist.githubusercontent.com/trackleft/d30c91c76b1ece73a86837f0b17b1553/raw/d7f3a4aa62ee7870773f7f3540c56e3037fca9d4/date_ap_style-9a7617aad566f7e145ea3a51c599315f31b42183.patch"
+            },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
