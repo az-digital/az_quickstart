@@ -19,7 +19,6 @@ use Drupal\migrate\Row;
  * Expects the source value to contain the following fields:
  *  - field_uaqs_short_title: An indexed array of associative arrays with a
  *    `value` key.
- *    value property
  *  - field_uaqs_body: An indexed array of associative arrays with a
  *    `value` key.
  *  - field_uaqs_link: An indexed array of associative arrays with the following keys:
