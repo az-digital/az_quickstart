@@ -28,7 +28,7 @@ class AZPersonReorderNotice extends BlockBase {
       '#markup' => '<p><strong>' . $this->t('Need to reorder people?') . '</strong></p>',
     ];
     $callout_markup_description = [
-      '#markup' => '<p>' . t('Use the button below to reorder the people on this page.') . '</p>',
+      '#markup' => '<p>' . $this->t('Use the button below to reorder the people on this page.') . '</p>',
     ];
     $link_to_reorder_content = [
       '#type' => 'link',
