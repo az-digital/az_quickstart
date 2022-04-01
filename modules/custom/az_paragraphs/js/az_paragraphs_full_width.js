@@ -5,16 +5,48 @@
 * @preserve
 **/
 
-(function ($, Drupal) {
-  Drupal.behaviors.azParagraphsFullWidth = {
-    attach: function attach() {
-      function _calculateScrollbarWidth() {
-        document.documentElement.style.setProperty("--scrollbar-width", "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
-      }
+(function (Drupal) {
+  'use strict';
 
-      window.addEventListener("resize", _calculateScrollbarWidth, false);
-      document.addEventListener("DOMContentLoaded", _calculateScrollbarWidth, false);
-      window.addEventListener("load", _calculateScrollbarWidth);
+  Drupal.behaviors.calculateScrollbarWidth = {
+    attach: function attach(context) {
+      document.documentElement.style.setProperty("--scrollbar-width", "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
     }
   };
-})(jQuery, Drupal);
+  Drupal.behaviors.azParagraphsPushSidebarDown = {
+    attach: function attach() {
+      var contentRegion = document.getElementById("content");
+      var sidebarPusher = document.querySelectorAll('.paragraph.full-width-background');
+      var lastFullWidthElement = sidebarPusher[sidebarPusher.length - 1];
+      var contentRegionPosition = contentRegion.getBoundingClientRect();
+      var style = sidebarPusher[0].currentStyle || window.getComputedStyle(lastFullWidthElement, "");
+      var bottomMargin = style.marginBottom;
+      var contentRegionTop = contentRegionPosition.top;
+      var sidebarPusherPosition = lastFullWidthElement.getBoundingClientRect();
+      var sidebarPusherBottom = sidebarPusherPosition.bottom;
+      var sidebarTopMargin = sidebarPusherBottom - contentRegionTop + bottomMargin;
+      document.documentElement.style.setProperty("--sidebar-top-margin", "".concat(sidebarTopMargin));
+    }
+  };
+  Drupal.behaviors.calculateFullWidthNegativeMargins = {
+    attach: function attach() {
+      var contentRegion = document.getElementById("block-az-barrio-content");
+      var contentRegionPosition = contentRegion.getBoundingClientRect();
+      var distanceFromLeft = contentRegionPosition.left;
+      var distanceFromRight = contentRegionPosition.right;
+      var negativeLeftMargin = 0 - distanceFromLeft;
+      var negativeRightMargin = 0 - distanceFromRight;
+      document.documentElement.style.setProperty("--full-width-thirty-three-percent", "".concat(negativeLeftMargin, "px"));
+      document.documentElement.style.setProperty("--full-width-sixty-six-percent", "".concat(negativeRightMargin, "px"));
+    }
+  };
+  window.addEventListener("resize", function (event) {
+    Drupal.behaviors.azParagraphsPushSidebarDown, Drupal.behaviors.calculateFullWidthNegativeMargins, Drupal.behaviors.calculateScrollbarWidth;
+  });
+  window.addEventListener("DOMContentLoaded", function (event) {
+    Drupal.behaviors.azParagraphsPushSidebarDown, Drupal.behaviors.calculateFullWidthNegativeMargins, Drupal.behaviors.calculateScrollbarWidth;
+  });
+  window.addEventListener("load", function (event) {
+    Drupal.behaviors.azParagraphsPushSidebarDown, Drupal.behaviors.calculateFullWidthNegativeMargins, Drupal.behaviors.calculateScrollbarWidth;
+  });
+})(Drupal);
