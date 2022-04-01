@@ -136,13 +136,10 @@
         -ms-flex-pack: initial;
         justify-content: initial;
     }
+    .layout-sidebar-second .region-content .full-width-background,
     .layout-sidebar-first .region-content .full-width-background {
-        margin-left: var(--full-width-thirty-three-percent);
-        margin-right: var(--full-width-sixty-six-percent);
-    }
-    .layout-sidebar-second .region-content .full-width-background {
-        margin-right: var(--full-width-thirty-three-percent);
-        margin-left:  var(--full-width-sixty-six-percent);
+        margin-left: var(--full-width-left-distance);
+        margin-right: var(--full-width-right-distance);
     }
     .layout-sidebar-second .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 75%;

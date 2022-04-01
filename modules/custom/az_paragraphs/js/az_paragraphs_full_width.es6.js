@@ -40,31 +40,13 @@
       const negativeLeftMargin = 0 - distanceFromLeft;
       const negativeRightMargin = 0 - distanceFromRight;
       document.documentElement.style.setProperty(
-        "--full-width-thirty-three-percent",
+        "--full-width-left-distance",
         `${negativeLeftMargin}px`
       );
       document.documentElement.style.setProperty(
-        "--full-width-sixty-six-percent",
+        "--full-width-right-distance",
         `${negativeRightMargin}px`
       );
     },
   };
-  // recalculate on resize
-  window.addEventListener("resize", (event) => {
-    Drupal.behaviors.azParagraphsPushSidebarDown,
-    Drupal.behaviors.calculateFullWidthNegativeMargins,
-    Drupal.behaviors.calculateScrollbarWidth;
-  });
-  window.addEventListener("DOMContentLoaded", (event) => {
-    Drupal.behaviors.azParagraphsPushSidebarDown,
-    Drupal.behaviors.calculateFullWidthNegativeMargins,
-    Drupal.behaviors.calculateScrollbarWidth;
-  });
-  // recalculate on load (assets loaded as well)
-  window.addEventListener("load", (event) => {
-    Drupal.behaviors.azParagraphsPushSidebarDown,
-    Drupal.behaviors.calculateFullWidthNegativeMargins,
-    Drupal.behaviors.calculateScrollbarWidth;
-  });
-
 })(Drupal);

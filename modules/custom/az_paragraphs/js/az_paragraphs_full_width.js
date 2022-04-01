@@ -36,17 +36,8 @@
       var distanceFromRight = contentRegionPosition.right;
       var negativeLeftMargin = 0 - distanceFromLeft;
       var negativeRightMargin = 0 - distanceFromRight;
-      document.documentElement.style.setProperty("--full-width-thirty-three-percent", "".concat(negativeLeftMargin, "px"));
-      document.documentElement.style.setProperty("--full-width-sixty-six-percent", "".concat(negativeRightMargin, "px"));
+      document.documentElement.style.setProperty("--full-width-left-distance", "".concat(negativeLeftMargin, "px"));
+      document.documentElement.style.setProperty("--full-width-right-distance", "".concat(negativeRightMargin, "px"));
     }
   };
-  window.addEventListener("resize", function (event) {
-    Drupal.behaviors.azParagraphsPushSidebarDown, Drupal.behaviors.calculateFullWidthNegativeMargins, Drupal.behaviors.calculateScrollbarWidth;
-  });
-  window.addEventListener("DOMContentLoaded", function (event) {
-    Drupal.behaviors.azParagraphsPushSidebarDown, Drupal.behaviors.calculateFullWidthNegativeMargins, Drupal.behaviors.calculateScrollbarWidth;
-  });
-  window.addEventListener("load", function (event) {
-    Drupal.behaviors.azParagraphsPushSidebarDown, Drupal.behaviors.calculateFullWidthNegativeMargins, Drupal.behaviors.calculateScrollbarWidth;
-  });
 })(Drupal);
