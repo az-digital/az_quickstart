@@ -14,10 +14,10 @@
         const contentRegionTop = contentRegionPosition.top;
         const sidebarPusherPosition = sidebarPusher[0].getBoundingClientRect();
         const sidebarPusherBottom = sidebarPusherPosition.bottom;
-        const sidebarTopMargin = sidebarPusherBottom - contentRegionTop;
+        const sidebarTopMargin = (sidebarPusherBottom - contentRegionTop) + bottomMargin;
         document.documentElement.style.setProperty(
           "--sidebar-top-margin",
-          `calc(${sidebarTopMargin}px + ${bottomMargin})`
+          `${sidebarTopMargin}px`
         );
       }
       function _calculateLeftMargin() {
