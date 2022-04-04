@@ -287,7 +287,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['components']['navbar_offcanvas']['az_barrio_header_offcanvas'] = [
     '#type' => 'checkbox',
     '#title' => t('Fold header blocks into Off Canvas'),
-    '#description' => t('Check to move the header blocks into Off Canvas region.'),
+    '#description' => t('Check to move the header blocks into Off Canvas region. No effect if Use Navbar Off Canvas is unchecked.'),
     '#default_value' => theme_get_setting('az_barrio_header_offcanvas'),
   ];
   // Logos.
