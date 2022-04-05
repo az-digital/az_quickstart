@@ -13,8 +13,7 @@ on: push
   #       options: 
   #         - 2.1.x
   #         - 2.2.x
-  #         AZ_TRIMMED_REF="${GITHUB_REF##*/}"
-  #         git merge "${AZ_TRIMMED_REF}" --allow-unrelated-histories
+
 
 jobs:
   test-pr-on-branch:
@@ -40,8 +39,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git fetch
           git checkout "${RELEASE_BRANCH}"
-          AZ_TRIMMED_REF="${GITHUB_REF#refs/heads/}"
-          curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1450.patch | git apply
+          curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1429.patch | git apply
           composer install
         env:
           RELEASE_BRANCH: ${{ matrix.release }}
