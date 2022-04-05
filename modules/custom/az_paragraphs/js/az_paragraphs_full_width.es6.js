@@ -2,7 +2,7 @@
   'use strict';
 
   Drupal.behaviors.calculateScrollbarWidth = {
-    attach: (context) => {
+    attach: () => {
         document.documentElement.style.setProperty(
           "--scrollbar-width",
           `${window.innerWidth - document.documentElement.clientWidth}px`
