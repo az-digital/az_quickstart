@@ -16,7 +16,7 @@ destination:
 process:
 
   field_az_view_reference:
-    plugin: paragraphs_chunks_view_display_mapping
+    plugin: az_views_reference_mapping
     source: field_uaqs_view
 
   behavior_settings:
