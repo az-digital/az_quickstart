@@ -60,6 +60,7 @@
  * - page.content_bottom: Items for the bottom region.
  * - page.footer: Items for footer content.
  * - page.footer_sub: Items for the content below footer.
+ * - page.footer_sub_menus: Items for menu content below footer.
  * - page.page_bottom: Items for the very bottom of the page.
  *
  * Theme variables:
@@ -76,21 +77,27 @@
  */
 #}
 
+{% set navbar_attribute = create_attribute() %}
+
+{%
+  set navbar_classes = [
+    az_barrio_navbar_offcanvas ? 'navbar-offcanvas',
+    page.navigation ? 'has-navigation-region' : 'no-navigation-region' ,
+    page.navigation_offcanvas ? 'has-off-canvas-region' : 'no-off-canvas-region',
+  ]
+%}
+
 <div id="page-wrapper">
   <div id="page">
     <header id="header" class="header" role="banner" aria-label="{{ 'Site header'|t}}">
         {% if page.alert %}
-        <div class="{{ container }}">
-          <div class="row">
-            {{ page.alert }}
-          </div>
-        </div>
+          {{ page.alert }}
         {% endif %}
         <header class="bg-red arizona-header" id="header_arizona" role="banner">
           <div class="{{ container }}">
             <div class="row">
               {% if wordmark %}
-              <a class="arizona-logo" href="http://www.arizona.edu" title="The University of Arizona homepage">
+              <a class="arizona-logo" href="https://www.arizona.edu" title="The University of Arizona homepage">
                 <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"/>
               </a>
               {% endif %}
@@ -115,10 +122,10 @@
         <div class="header page-row" id="header_site" role="banner">
           <div class="{{ container }}">
             <div class="row">
-              <div class="col-12 col-sm-6 col-lg-4">
+              <div class="{{ header_one_col_classes }}">
                 {{ page.branding }}
               </div>
-              <div class="col-12 col-sm-6 col-lg-8">
+              <div class="{{ header_two_col_classes }}">
                 <div class="row">
                   {{ page.header }}
                 </div>
@@ -135,7 +142,7 @@
             <div class="row">
               {% if az_barrio_navbar_offcanvas %}
               <div class="col-lg">
-                <nav class="navbar-offcanvas" id="navbarOffcanvasDemo">
+                <nav {{ navbar_attribute.addClass(navbar_classes) }} id="navbarOffcanvasDemo">
                   <div class="navbar-offcanvas-header">
                     <div class="bg-chili d-flex justify-content-between align-items-center">
                       <a href="/" class="btn btn-redbar">
@@ -299,15 +306,18 @@
             </div>
           </section>
           {% endif %}
-          {% if page.footer_sub or land_acknowledgment or info_security_privacy or copyright_notice %}
+          {% if page.footer_sub or page.footer_sub_menus or land_acknowledgment or info_security_privacy or copyright_notice %}
           <div id="footer_sub"{{ attributes.addClass(classes) }}>
             <div class="container">
               <div class="row">
                 {{ page.footer_sub }}
               </div>
               <div class="row">
+                {{ page.footer_sub_menus }}
+              </div>
+              <div class="row">
                 <div class="col text-center">
-                  {% if page.footer_sub %}
+                  {% if page.footer_sub or page.footer_sub_menus %}
                   <hr>
                   {% endif %}
                   {{ land_acknowledgment }}

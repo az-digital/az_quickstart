@@ -4,6 +4,10 @@
 .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width) / 2);
 }
+/* See https://github.com/az-digital/az_quickstart/pull/1365 */
+.sidebar_first {
+    z-index: 3;
+}
 .layout-sidebar-first .full-width-background,
 .layout-sidebar-second .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width));
@@ -32,29 +36,109 @@
     padding-right: 15px;
     padding-left: 15px;
 }
+.az-aspect-ratio.full-width-background .container {
+    bottom: 0;
+    top: 0;
+    float: none;
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+}
+.az-aspect-ratio.full-width-background .container {
+    bottom: 0;
+    float: none;
+    position: absolute;
+    top: 0px;
+    z-index: 0;
+  }
+  .layout-no-sidebars .az-aspect-ratio.full-width-background .container {
+    left: 0;
+    right: 0;
+  }
+  .layout-sidebar-second .az-aspect-ratio.full-width-background .container {
+    left: 0;
+    right: 0;
+  }
+.az-aspect-ratio.full-width-background.column .az-full-width-column-content {
+    height: 100%;
+    display: -ms-flexbox!important;
+    display: flex!important;
+}
+.az-aspect-ratio.full-width-background.box .col:first-child {
+    align-self: center;
+}
+
+.az-aspect-ratio.full-width-background .column .az-full-width-column-content-wrapper {
+    align-self: center;
+}
+.region-content .full-width-background .container .az-full-width-row {
+    height: 100%;
+}
 
 @media (min-width: 768px) {
-    .layout-sidebar-first .region-content .full-width-background .az-full-width-column-content {
+    .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
+        margin-left: calc(50% - 185px);
+    }
+    .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
+        margin-left: calc(50% - 355px);
+    }
+    .layout-one-sidebar .region-content .az-aspect-ratio.full-width-background .container {
+        width: 540px;
+    }
+}
+@media (min-width: 992px) {
+    .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
+        margin-left: calc(50% - 245px);
+    }
+    .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
+        margin-left: calc(50% - 464px);
+    }
+
+    .layout-one-sidebar .region-content .az-aspect-ratio.full-width-background .container {
+        width: 722px;
+    }
+}
+@media (min-width: 1200px) {
+    .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
+        margin-left: calc(50% - 290px);
+    }
+    .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .container {
+        margin-left: calc(50% - 565px);
+    }
+
+    .layout-one-sidebar .region-content .az-aspect-ratio.full-width-background .container {
+        width: 855px;
+    }
+}
+@media (min-width: 768px) {
+    .layout-sidebar-first .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 75%;
         flex: 0 0 75%;
         max-width: 75%;
+        margin-left: auto;
+        margin-right: 0;
     }
-    .layout-sidebar-first .region-content .full-width-background .az-full-width-row {
-        margin-right: -30px;
-        margin-left: -30px;
-        -ms-flex-pack: end!important;
-        justify-content: flex-end!important;
+    .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .az-full-width-row,
+    .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .az-full-width-row {
+        flex: initial;
+        max-width: initial;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        margin-right: -15px;
+        margin-left: -15px;
+        -ms-flex-pack: initial;
+        justify-content: initial;
     }
     .layout-sidebar-first .region-content .full-width-background {
         margin-left: calc(33.333333333333333% - 50vw);
         margin-right: calc(66.66666666666% - 50vw);
     }
-    .layout-sidebar-second .region-content .full-width-background .az-full-width-column-content {
+    .layout-sidebar-second .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 75%;
         flex: 0 0 75%;
         max-width: 75%;
-    }
-    .layout-sidebar-second .region-content .full-width-background .az-full-width-row {
         -ms-flex-pack: start!important;
         justify-content: flex-start!important;
     }
@@ -66,10 +150,14 @@
         -ms-flex-pack: center!important;
         justify-content: center!important;
     }
-    .layout-two-sidebars .region-content .full-width-background .az-full-width-column-content {
+    .layout-two-sidebars .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 50%;
         flex: 0 0 50%;
         max-width: 50%;
+    }
+    .region-content .paragraph--type--az-text-background.full-width-background .az-full-width-column-content {
+        padding-left: 0;
+        padding-right: 0;
     }
     .layout-two-sidebars .region-content .full-width-background .full-width-background {
         margin-left: calc(50% - 50vw);

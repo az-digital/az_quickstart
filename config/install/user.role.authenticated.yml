@@ -21,4 +21,6 @@ permissions:
   - 'access_unpublished node az_person'
   - 'bypass honeypot protection'
   - 'search content'
+  - 'skip antibot'
+  - 'skip comment approval'
   - 'use exclude node title'

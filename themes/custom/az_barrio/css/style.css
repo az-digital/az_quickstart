@@ -6,6 +6,11 @@
  * of these @include files will be combined into a single file.
  */
 
+/* For structuring header utilities*/
+header#header_arizona {
+  min-height: 10px;
+}
+
 /* Sticky footer */
 html.sticky-footer #page {
   display: -webkit-box;
@@ -24,6 +29,10 @@ html.sticky-footer #main-wrapper {
   -ms-flex: 1 0 auto;
   flex: 1 0 auto;
   width: 100%;
+}
+/* Footer Social Media Icons */
+.az-icon-spacing::before {
+  margin-right:  .4rem;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */

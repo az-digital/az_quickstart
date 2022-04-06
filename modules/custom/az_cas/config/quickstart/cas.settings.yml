@@ -4,7 +4,7 @@ login_success_message: 'Logged in via University of Arizona WebAuth as [cas:user
 server:
   version: '2.0'
   protocol: https
-  hostname: webauth.arizona.edu
+  hostname: shibboleth.arizona.edu
   port: 443
   path: /webauth
   verify: 0

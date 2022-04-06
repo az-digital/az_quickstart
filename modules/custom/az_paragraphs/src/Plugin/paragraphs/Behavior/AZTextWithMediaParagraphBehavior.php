@@ -2,11 +2,9 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -139,6 +137,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
         'y-20' => $this->t('20 (16.0rem | ~256px)'),
         'y-30' => $this->t('30 (24.0rem | ~384px)'),
+        'az-aspect-ratio' => $this->t('Media Aspect Ratio'),
       ],
       '#default_value' => $config['text_media_spacing'],
       '#description' => $this->t('Adds spacing above and below the text.'),
@@ -179,7 +178,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
     $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . '-' . $paragraph->id());
     if (!empty($variables['attributes']) && !empty($variables['attributes']['class']) && !is_array($variables['attributes']['class'])) {
-      $variables['attributes']['class'] = [];
+      $variables['attributes']['class'] = [$variables['attributes']['class']];
     }
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
@@ -230,6 +229,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
           break;
 
+        case 'az-aspect-ratio':
+          $variables['attributes']['class'][] = 'az-aspect-ratio';
+          break;
+
         default:
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }
@@ -247,18 +250,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    // Get plugin configuration.
-    $config = $this->getSettings($paragraph);
-    // Apply bottom spacing if set.
-    if (!empty($config['az_display_settings']['bottom_spacing'])) {
-      $build['#attributes']['class'][] = $config['az_display_settings']['bottom_spacing'];
-    }
   }
 
 }

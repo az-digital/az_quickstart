@@ -16,5 +16,7 @@ type_settings:
     - 'view_mode:block_content.full'
   entity_browser: ''
   entity_browser_settings: {  }
-icon: {  }
+icon:
+  data: iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAiUlEQVRYhe2WYQqAIAxGP6NDBZ3De3SU7mHX8Fz1o4Jls3Qg/vkeDMZk8ESXAYS82QsjiJ5Q0fdgaLSJYihAAQpQYFRqW2FvzOSkCqfUglLTiADWzNoCYL5yXytleQ1T5Ov4Sfcp6C6gjaEFeeYAMIk8ParfO8E/Igse50jfIb+mLokmAmYoQMgB49tAGQ6ExnQAAAAASUVORK5CYII=
+  uri: 'public://embed_buttons/sharp_dashboard_customize_black_24dp.png'
 icon_uuid: null

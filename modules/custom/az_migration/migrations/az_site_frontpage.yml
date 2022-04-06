@@ -1,0 +1,57 @@
+id: az_site_frontpage
+label: Site Front Page
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+
+# This will skip processing if the source variable is missing.
+source:
+  plugin: variable
+  constants:
+    slash: '/'
+  variables:
+    - site_frontpage
+  variables_no_row_if_missing:
+    - site_frontpage
+
+process:
+  path:
+    plugin: az_migrated_path_lookup
+    source: site_frontpage
+    term_migration:
+      - az_event_categories
+      - az_flexible_page_categories
+      - az_news_tags
+      - az_person_categories_secondary
+      - az_person_categories
+    node_migration:
+      - az_node_carousel
+      - az_node_event
+      - az_node_flexible_page
+      - az_node_news
+      - az_node_person
+      - az_node_uaqs_basic_page_to_az_page
+
+  'page/front':
+    plugin: concat
+    source:
+      - constants/slash
+      - '@path'
+
+destination:
+  plugin: config
+  config_name: system.site
+
+migration_dependencies:
+  optional:
+    - az_event_categories
+    - az_flexible_page_categories
+    - az_news_tags
+    - az_node_carousel
+    - az_node_event
+    - az_node_flexible_page
+    - az_node_news
+    - az_node_person
+    - az_node_uaqs_basic_page_to_az_page
+    - az_person_categories_secondary
+    - az_person_categories

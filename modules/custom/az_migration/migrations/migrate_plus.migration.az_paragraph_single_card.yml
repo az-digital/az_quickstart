@@ -15,49 +15,76 @@ destination:
 
 process:
 
-  field_az_cards/title: 
-    plugin: extract
-    source: field_uaqs_short_title
-    index:
-      - 0
-      - value
+  field_az_cards/title:
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_short_title
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - value
 
   field_az_cards/body:
-    plugin: extract
-    source: field_uaqs_summary
-    index:
-      - 0
-      - value
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_summary
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - value
 
   field_az_cards/link_title:
-    plugin: extract
-    source: field_uaqs_links
-    index:
-      - 0
-      - title
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_links
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - title
 
   field_az_cards/link_uri:
-    plugin: extract
-    source: field_uaqs_links
-    index:
-      - 0
-      - url
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_links
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - url
 
-  field_az_cards/body_format:  
+  field_az_cards/body_format:
     plugin: default_value
     default_value: az_standard
-  
+
   field_az_cards/options:
     plugin: default_value
-    default_value: 
+    default_value:
       class: 'bg-white'
-    
+      # Set the link style to default, since we can't migrate classes to this field.
+      link_style: 'btn-block'
+
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    card_width: 'col-md-12 col-lg-12'
-    card_style: 'card'
-    card_width_sm: 'col-sm-12'
-    card_width_xs: 'col-12'
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_cards_paragraph_behavior:
+        card_width: 'col-md-12 col-lg-12'
+        card_style: 'card'
+        card_clickable: 0
+        az_display_settings:
+            bottom_spacing: bottom_spacing
+            card_width_sm: 'col-sm-12'
+            card_width_xs: 'col-12'
 
 dependencies:
   enforced:
