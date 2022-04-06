@@ -1,5 +1,5 @@
 ((Drupal) => {
-  'use strict';
+  "use strict";
 
   Drupal.behaviors.calculateScrollbarWidth = {
     attach: () => {
@@ -22,9 +22,9 @@
         window.getComputedStyle(lastFullWidthElement, "");
       const bottomMargin = style.marginBottom;
       const contentRegionTop = contentRegionPosition.top;
-      const sidebarPusherPosition = lastFullWidthElement.getBoundingClientRect();
-      const sidebarPusherBottom = sidebarPusherPosition.bottom;
-      const sidebarTopMargin = (sidebarPusherBottom - contentRegionTop) + bottomMargin;
+      const lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
+      const lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
+      const sidebarTopMargin = (lastFullWidthElementBottom - contentRegionTop) + bottomMargin;
       document.documentElement.style.setProperty(
         "--sidebar-top-margin",
         `${sidebarTopMargin}`
@@ -49,4 +49,15 @@
       );
     },
   };
+
+  document.addEventListener('DOMContentLoaded', () => {
+    Drupal.behaviors.azParagraphsPushSidebarDown.attach();
+    Drupal.behaviors.calculateScrollbarWidth.attach();
+    Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
+  });
+  window.addEventListener('resize', () => {
+    Drupal.behaviors.calculateScrollbarWidth.attach();
+    Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
+  });
+
 })(Drupal);

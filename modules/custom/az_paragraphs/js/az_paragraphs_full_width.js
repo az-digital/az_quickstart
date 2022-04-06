@@ -6,10 +6,10 @@
 **/
 
 (function (Drupal) {
-  'use strict';
+  "use strict";
 
   Drupal.behaviors.calculateScrollbarWidth = {
-    attach: function attach(context) {
+    attach: function attach() {
       document.documentElement.style.setProperty("--scrollbar-width", "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
     }
   };
@@ -22,9 +22,9 @@
       var style = sidebarPusher[0].currentStyle || window.getComputedStyle(lastFullWidthElement, "");
       var bottomMargin = style.marginBottom;
       var contentRegionTop = contentRegionPosition.top;
-      var sidebarPusherPosition = lastFullWidthElement.getBoundingClientRect();
-      var sidebarPusherBottom = sidebarPusherPosition.bottom;
-      var sidebarTopMargin = sidebarPusherBottom - contentRegionTop + bottomMargin;
+      var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
+      var lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
+      var sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin;
       document.documentElement.style.setProperty("--sidebar-top-margin", "".concat(sidebarTopMargin));
     }
   };
@@ -40,4 +40,13 @@
       document.documentElement.style.setProperty("--full-width-right-distance", "".concat(negativeRightMargin, "px"));
     }
   };
+  document.addEventListener('DOMContentLoaded', function () {
+    Drupal.behaviors.azParagraphsPushSidebarDown.attach();
+    Drupal.behaviors.calculateScrollbarWidth.attach();
+    Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
+  });
+  window.addEventListener('resize', function () {
+    Drupal.behaviors.calculateScrollbarWidth.attach();
+    Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
+  });
 })(Drupal);
