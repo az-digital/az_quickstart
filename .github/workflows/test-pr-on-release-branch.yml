@@ -40,6 +40,9 @@ jobs:
           git fetch
           git checkout "${RELEASE_BRANCH}"
           curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1451.patch | git apply --reject --whitespace=fix
+      
+      - name: Runs Checks
+        run: |
           composer install
         env:
           RELEASE_BRANCH: ${{ matrix.release }}
