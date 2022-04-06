@@ -1,6 +1,4 @@
 ((Drupal, window, document) => {
-  "use strict";
-
   Drupal.behaviors.calculateScrollbarWidth = {
     attach: () => {
       document.documentElement.style.setProperty(
@@ -13,18 +11,21 @@
     attach: () => {
       const contentRegion = document.getElementById("content");
       const allFullWidthElements = document.querySelectorAll(
-        '.paragraph.full-width-background'
+        ".paragraph.full-width-background"
       );
-      const lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
+      const lastFullWidthElement =
+        allFullWidthElements[allFullWidthElements.length - 1];
       const contentRegionPosition = contentRegion.getBoundingClientRect();
       const style =
         allFullWidthElements[0].currentStyle ||
         window.getComputedStyle(lastFullWidthElement, "");
       const bottomMargin = style.marginBottom;
       const contentRegionTop = contentRegionPosition.top;
-      const lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
+      const lastFullWidthElementPosition =
+        lastFullWidthElement.getBoundingClientRect();
       const lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
-      const sidebarTopMargin = (lastFullWidthElementBottom - contentRegionTop) + bottomMargin;
+      const sidebarTopMargin =
+        lastFullWidthElementBottom - contentRegionTop + bottomMargin;
       document.documentElement.style.setProperty(
         "--sidebar-top-margin",
         `${sidebarTopMargin}`
@@ -49,14 +50,13 @@
       );
     },
   };
-  document.addEventListener('DOMContentLoaded', () => {
+  document.addEventListener("DOMContentLoaded", () => {
     Drupal.behaviors.azParagraphsPushSidebarDown.attach();
     Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
   });
-  window.addEventListener('resize', () => {
+  window.addEventListener("resize", () => {
     Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
     Drupal.behaviors.calculateScrollbarWidth.attach();
     Drupal.behaviors.azParagraphsPushSidebarDown.attach();
   });
-
 })(Drupal, this, this.document);

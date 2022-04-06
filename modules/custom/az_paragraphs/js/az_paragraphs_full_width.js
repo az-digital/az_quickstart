@@ -6,8 +6,6 @@
 **/
 
 (function (Drupal, window, document) {
-  "use strict";
-
   Drupal.behaviors.calculateScrollbarWidth = {
     attach: function attach() {
       document.documentElement.style.setProperty("--scrollbar-width", "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
@@ -16,7 +14,7 @@
   Drupal.behaviors.azParagraphsPushSidebarDown = {
     attach: function attach() {
       var contentRegion = document.getElementById("content");
-      var allFullWidthElements = document.querySelectorAll('.paragraph.full-width-background');
+      var allFullWidthElements = document.querySelectorAll(".paragraph.full-width-background");
       var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
       var contentRegionPosition = contentRegion.getBoundingClientRect();
       var style = allFullWidthElements[0].currentStyle || window.getComputedStyle(lastFullWidthElement, "");
@@ -40,11 +38,11 @@
       document.documentElement.style.setProperty("--full-width-right-distance", "".concat(negativeRightMargin, "px"));
     }
   };
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener("DOMContentLoaded", function () {
     Drupal.behaviors.azParagraphsPushSidebarDown.attach();
     Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
   });
-  window.addEventListener('resize', function () {
+  window.addEventListener("resize", function () {
     Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
     Drupal.behaviors.calculateScrollbarWidth.attach();
     Drupal.behaviors.azParagraphsPushSidebarDown.attach();
