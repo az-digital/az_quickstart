@@ -89,9 +89,13 @@ process:
     process:
       delta: delta
       value:
-        plugin: callback
-        callable: strip_tags
-        source: value
+        -
+          plugin: callback
+          callable: strip_tags
+          source: value
+        -
+          plugin: callback
+          callable: html_entity_decode
       summary: summary
       format:
         plugin: default_value
