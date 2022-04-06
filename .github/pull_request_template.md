@@ -16,7 +16,7 @@
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
 
-**Arizona Quickstart** (install profile, custom modules, custom theme)
+### Arizona Quickstart (install profile, custom modules, custom theme)
 - Patch release changes
    - [ ] Bug fix
    - [ ] Accessibility, performance, or security improvement
@@ -30,7 +30,7 @@
    - [ ] High-risk or disruptive change (requires upgrade path, risks regression, etc.)
 - [ ] Other or unknown
 
-**Drupal core**
+### Drupal core
 - Patch release changes
    - [ ] Security update
    - [ ] Patch level release (non-security bug-fix release)
@@ -39,7 +39,7 @@
    - [ ] Major or minor level update
 - [ ] Other or unknown
 
-**Drupal contrib projects**
+### Drupal contrib projects
 - Patch release changes
    - [ ] Security update
    - [ ] Patch or minor level update
