@@ -241,28 +241,6 @@
       "expanded": false,
       "enabled": true,
       "weight": "0"
-    },
-    {
-      "link_id": "23",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Push Sidebar Down Page - Media",
-      "urlpath": "/pages/push-sidebar-down-media",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "8"
-    },
-    {
-      "link_id": "24",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Push Sidebar Down Page - Background",
-      "urlpath": "/pages/push-sidebar-down-background",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "8"
     }
   ]
 }

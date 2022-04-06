@@ -99,24 +99,6 @@
       "az_main_content"  : "7|10",
       "az_media_image"    : "",
       "az_summary" : ""
-    },
-    {
-      "id":11,
-      "title"  : "Push Sidebar Down Page - Media",
-      "path" : "/pages/push-sidebar-down-media",
-      "az_page_category"  : "",
-      "az_main_content"  : "54|19",
-      "az_media_image"    : "",
-      "az_summary" : ""
-    },
-    {
-      "id":12,
-      "title"  : "Push Sidebar Down Page - Background",
-      "path" : "/pages/push-sidebar-down-background",
-      "az_page_category"  : "",
-      "az_main_content"  : "55|19",
-      "az_media_image"    : "",
-      "az_summary" : ""
     }
   ]
 }
