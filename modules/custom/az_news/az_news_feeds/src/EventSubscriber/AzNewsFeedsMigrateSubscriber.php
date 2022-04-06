@@ -58,31 +58,16 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
 
     /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
     $migration = $event->getMigration();
-    if (
-      $migration->id() === 'az_news_feed_stories' ||
-      $migration->id() === 'az_news_feed_stories_files' ||
-      $migration->id() === 'az_news_feed_stories_media'
-    ) {
-      // Change the news.arizona.edu feed url.
+    if ($migration->id() === 'az_news_feed_stories') {
       $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
-      $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
-      $content_path = $az_news_feeds_config->get('uarizona_news_content_path');
       $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
-      $views_contextual_argument = implode('+', array_keys($selected_terms));
-      $urls = $base_uri . $content_path . $views_contextual_argument;
-      $sourceConfig = $migration->getSourceConfiguration();
-      $sourceConfig['urls'] = $urls;
-      $migration->set('source', $sourceConfig);
-
-      if ($migration->id() === 'az_news_feed_stories') {
-        $processConfig = $migration->getProcess();
-        $array_intersect_process = [
-          'plugin' => 'array_intersect',
-          'match'  => array_values($selected_terms),
-        ];
-        $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
-        $migration->set('process', $processConfig);
-      }
+      $processConfig = $migration->getProcess();
+      $array_intersect_process = [
+        'plugin' => 'array_intersect',
+        'match'  => array_values($selected_terms),
+      ];
+      $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
+      $migration->set('process', $processConfig);
     }
   }
 
