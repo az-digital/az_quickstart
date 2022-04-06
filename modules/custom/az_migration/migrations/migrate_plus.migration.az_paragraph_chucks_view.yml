@@ -27,6 +27,16 @@ process:
           bottom_spacing: bottom_spacing
 
 dependencies:
+  module:
+    az_paragraphs_view
   enforced:
     module:
       - az_migration
+
+migration_dependencies:
+  optional:
+    - az_event_categories
+    - az_flexible_page_categories
+    - az_news_tags
+    - az_person_categories
+    - az_person_categories_secondary
