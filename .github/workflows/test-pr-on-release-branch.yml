@@ -40,7 +40,7 @@ jobs:
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
           git fetch
-          git checkout "${RELEASE_BRANCH}"
+          git checkout "${{ matrix.release }}"
           curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1451.patch | git apply --reject --whitespace=fix
           
       - name: Test Seperate Step
