@@ -34,6 +34,7 @@ jobs:
           php-version: '7.4'
 
       - name: Apply PR diff to release branch
+        id: apply
         run: |
           git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
           git config --global user.name "${GITHUB_ACTOR}"
@@ -44,5 +45,7 @@ jobs:
       - name: Test Seperate Step
         run: |
           echo "Test successs!"          
+        if: steps.apply.outcome == 'success'
+        
         env:
           RELEASE_BRANCH: ${{ matrix.release }}
