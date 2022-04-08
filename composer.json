@@ -139,7 +139,7 @@
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2020-06-28/2766369-25.patch",
                 "Incorrect results on grouped exposed filters (1810148)": "https://www.drupal.org/files/issues/2022-02-02/1810148-101.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-2-x.patch",
-                "Changes to a block's text field not saved when ckeditor source mode is active (3095304)": "https://git.drupalcode.org/project/drupal/-/merge_requests/685.diff"
+                "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2020-06-01/3102249-21.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
