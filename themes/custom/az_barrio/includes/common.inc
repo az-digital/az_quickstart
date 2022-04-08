@@ -8,7 +8,7 @@
  */
 
 define('AZ_BOOTSTRAP_STABLE_VERSION', '2.0.13');
-define('AZ_ICONS_STABLE_VERSION', 'main');
+define('AZ_ICONS_STABLE_VERSION', '1.0.0');
 
 /**
  * Persistent variable name for exporting the AZ Bootstrap CSS location.

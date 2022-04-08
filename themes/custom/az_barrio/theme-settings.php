@@ -191,7 +191,11 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     ],
     '#default_value' => theme_get_setting('az_barrio_az_icons_source'),
   ];
-
+  $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_icons_minified'] = [
+    '#type'          => 'checkbox',
+    '#title'         => t('Use minified version of AZ Icons.'),
+    '#default_value' => theme_get_setting('az_icons_minified'),
+  ];
   // AZ Bootstrap settings.
   $form['azbs_settings'] = [
     '#type' => 'details',
