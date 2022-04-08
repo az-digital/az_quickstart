@@ -22,7 +22,7 @@ az-proxima-nova:
 az-icons:
   css:
     theme:
-      /libraries/arizona-bootstrap/css/az-icons-styles.min.css: {}
+      /libraries/az-icons/az-icons-styles.min.css: {}
 arizona-bootstrap:
   css:
     theme:
