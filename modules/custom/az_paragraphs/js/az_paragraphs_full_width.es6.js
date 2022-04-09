@@ -27,7 +27,7 @@
    */
   function pushSidebarsDown () {
     const contentRegion = document.querySelectorAll(
-      ".block-system-main-block"
+      "main.main-content"
     );
     const allFullWidthElements = document.querySelectorAll(
       ".paragraph.full-width-background"

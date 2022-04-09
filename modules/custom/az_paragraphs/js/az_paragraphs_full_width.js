@@ -13,7 +13,7 @@
   ;
 
   function pushSidebarsDown() {
-    var contentRegion = document.querySelectorAll(".block-system-main-block");
+    var contentRegion = document.querySelectorAll("main.main-content");
     var allFullWidthElements = document.querySelectorAll(".paragraph.full-width-background");
     var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
     var contentRegionPosition = contentRegion[0].getBoundingClientRect();
