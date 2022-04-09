@@ -10,8 +10,6 @@
     document.documentElement.style.setProperty("--scrollbar-width", "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
   }
 
-  ;
-
   function pushSidebarsDown() {
     var contentRegion = document.querySelectorAll("main.main-content");
     var allFullWidthElements = document.querySelectorAll(".paragraph.full-width-background");
@@ -26,8 +24,6 @@
     document.documentElement.style.setProperty("--sidebar-top-margin", "".concat(sidebarTopMargin));
   }
 
-  ;
-
   function calculateFullWidthNegativeMargins() {
     var contentRegion = document.querySelectorAll(".block-system-main-block");
     var contentRegionPosition = contentRegion[0].getBoundingClientRect();
@@ -39,7 +35,6 @@
     document.documentElement.style.setProperty("--full-width-right-distance", "".concat(negativeRightMargin, "px"));
   }
 
-  ;
   Drupal.behaviors.azParagraphsFullWidthElements = {
     attach: function attach() {
       calculateScrollbarWidth();

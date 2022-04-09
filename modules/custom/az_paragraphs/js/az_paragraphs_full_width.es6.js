@@ -5,18 +5,16 @@
  */
 
 ((Drupal, window, document) => {
-
-
   /**
    * Calculates scroll bar width if any and assigns the value to the
    * `--scrollbar-width` CSS variable on the html element.
    */
-  function calculateScrollbarWidth () {
+  function calculateScrollbarWidth() {
     document.documentElement.style.setProperty(
       "--scrollbar-width",
       `${window.innerWidth - document.documentElement.clientWidth}px`
     );
-  };
+  }
 
   /**
    * Calculates and sets margin required to push sidebars beneath the last
@@ -25,10 +23,8 @@
    * This function assigns values to the `--sidebar-top-margin` CSS variable on
    * the `html` element.
    */
-  function pushSidebarsDown () {
-    const contentRegion = document.querySelectorAll(
-      "main.main-content"
-    );
+  function pushSidebarsDown() {
+    const contentRegion = document.querySelectorAll("main.main-content");
     const allFullWidthElements = document.querySelectorAll(
       ".paragraph.full-width-background"
     );
@@ -49,7 +45,7 @@
       "--sidebar-top-margin",
       `${sidebarTopMargin}`
     );
-  };
+  }
 
   /**
    * Calculates and sets negative margins required for full with backgrounds.
@@ -57,10 +53,8 @@
    * This function assigns values to the --full-width-left-distance` and
    * `--full-width-right-distance` CSS variables on the `html` element.
    */
-  function calculateFullWidthNegativeMargins () {
-    const contentRegion = document.querySelectorAll(
-      ".block-system-main-block"
-    );
+  function calculateFullWidthNegativeMargins() {
+    const contentRegion = document.querySelectorAll(".block-system-main-block");
     const contentRegionPosition = contentRegion[0].getBoundingClientRect();
     const distanceFromLeft = contentRegionPosition.left;
     const distanceFromRight = contentRegionPosition.right;
@@ -74,7 +68,7 @@
       "--full-width-right-distance",
       `${negativeRightMargin}px`
     );
-  };
+  }
 
   /**
    * Attaches the the functions defined in this file to the document.
@@ -89,7 +83,7 @@
       calculateScrollbarWidth();
       calculateFullWidthNegativeMargins();
       pushSidebarsDown();
-    }
+    },
   };
 
   /**
@@ -100,5 +94,4 @@
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   });
-
 })(Drupal, this, this.document);
