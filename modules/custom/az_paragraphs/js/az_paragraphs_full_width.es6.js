@@ -1,7 +1,6 @@
 /**
  * @file
  * Provides helper functions to ensure proper display of full-width-paragraphs.
- *
  */
 
 ((Drupal, window, document) => {
