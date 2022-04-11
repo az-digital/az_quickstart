@@ -1,6 +1,6 @@
 name: Arizona Quickstart
 type: profile
-description: 'The University of Arizona Quickstart Installation Profile'
+description: 'Test change to Quickstart description.'
 core_version_requirement: ^9
 
 distribution:
