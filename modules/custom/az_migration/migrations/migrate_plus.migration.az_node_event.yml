@@ -141,6 +141,7 @@ process:
     - plugin: az_datetime_to_smart_date
       source_start: value
       source_end: value2
+      timezone: 'America/Phoenix'
 
   uid:
     -

@@ -125,7 +125,12 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
             $end_date = $start_date + ($def_duration * 60);
             $duration = $def_duration;
           }
-
+          if (isset($this->configuration['timezone'])) {
+              $timezone = $this->configuration['timezone'];
+          }
+          else {
+            $timezone = '';
+          }
         }
         $value[$delta] = [
           'value' => $start_date,
@@ -133,7 +138,7 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
           'duration' => $duration,
           'rrule' => NULL,
           'rrule_index' => NULL,
-          'timezone' => '',
+          'timezone' => $timezone,
         ];
       }
     }
