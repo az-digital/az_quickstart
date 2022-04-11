@@ -126,7 +126,7 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
             $duration = $def_duration;
           }
           if (isset($this->configuration['timezone'])) {
-              $timezone = $this->configuration['timezone'];
+            $timezone = $this->configuration['timezone'];
           }
           else {
             $timezone = '';
