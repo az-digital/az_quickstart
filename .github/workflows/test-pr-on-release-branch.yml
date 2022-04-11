@@ -51,6 +51,7 @@ jobs:
           # Clone scaffolding repo into ./app
           git clone --branch ${{ matrix.release }} https://github.com/az-digital/az-quickstart-scaffolding.git ./app
           # Update az-digital/az_quickstart dependency to reference local (patched) copy of Quickstart
+          cd app
           composer config repositories.localqs path ${GITHUB_WORKSPACE}/az_quickstart
           composer require --no-update az-digital/az_quickstart:\*@dev
           composer install         
