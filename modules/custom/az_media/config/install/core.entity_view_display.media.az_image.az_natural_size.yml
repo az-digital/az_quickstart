@@ -6,6 +6,7 @@ dependencies:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
+    - image.style.natural
     - media.type.az_image
   module:
     - field_group
@@ -17,13 +18,11 @@ third_party_settings:
       children:
         - field_media_az_image
         - group_fig_caption
-      parent_name: ''
-      weight: 0
+      parent_name: group_image_wrap
+      weight: 1
       format_type: html_element
       region: content
       format_settings:
-        id: ''
-        classes: ''
         element: figure
         show_label: false
         label_element: h3
@@ -31,13 +30,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+        id: ''
+        classes: center
+        show_empty_fields: false
       label: Figure
     group_fig_caption:
       children:
         - field_az_caption
         - group_cite
       parent_name: group_figure
-      weight: 2
+      weight: 3
       format_type: html_element
       region: content
       format_settings:
@@ -69,6 +71,25 @@ third_party_settings:
         id: ''
         classes: small
       label: Cite
+    group_image_wrap:
+      children:
+        - group_figure
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        id: ''
+        classes: align-natural-image
+        show_empty_fields: false
+      label: 'Figure Wrap'
 id: media.az_image.az_natural_size
 targetEntityType: media
 bundle: az_image
@@ -89,13 +110,13 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_media_az_image:
-    label: visually_hidden
+    label: hidden
     settings:
-      image_style: ''
+      image_style: natural
       image_link: ''
     third_party_settings: {  }
     type: image
-    weight: 1
+    weight: 2
     region: content
 hidden:
   created: true
