@@ -48,6 +48,7 @@ jobs:
           
       - name: Composer Install
         run: |
+          set -x
           # Clone scaffolding repo into ./app
           git clone --branch ${{ matrix.release }} https://github.com/az-digital/az-quickstart-scaffolding.git ./app
           # Update az-digital/az_quickstart dependency to reference local (patched) copy of Quickstart
