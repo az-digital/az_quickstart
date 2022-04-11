@@ -47,7 +47,6 @@ jobs:
           curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1459.patch | git apply --reject --whitespace=fix
           
       - name: Composer Install
-        working-directory: ./az_quickstart
         run: |
           # Clone scaffolding repo into ./app
           git clone --branch ${{ matrix.release }} https://github.com/az-digital/az-quickstart-scaffolding.git ./app
