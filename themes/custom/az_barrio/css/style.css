@@ -16,6 +16,10 @@ header#header_arizona {
   min-height: 10px;
 }
 
+.align-natural-image {
+  display:flex;
+}
+
 /* Sticky footer */
 html.sticky-footer #page {
   display: -webkit-box;
