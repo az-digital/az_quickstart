@@ -71,5 +71,5 @@ jobs:
           composer install         
         if: steps.apply.outcome == 'success'
         
-        env:
-          RELEASE_BRANCH: ${{ matrix.release }}
+      - name: Install Simplytest
+        run: php vendor/bin/drush site:install simplytest --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
