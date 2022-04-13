@@ -6,7 +6,7 @@ dependencies:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
-    - image.style.natural
+    - image.style.az_natural
     - media.type.az_image
   module:
     - field_group
