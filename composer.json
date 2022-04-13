@@ -90,7 +90,7 @@
         "drupal/seckit": "2.0.0",
         "drupal/slick": "2.4.0",
         "drupal/slick_views": "2.5.0",
-        "drupal/smart_date": "3.4.3",
+        "drupal/smart_date": "3.5.1",
         "drupal/smart_title": "1.0-beta1",
         "drupal/smtp": "1.0",
         "drupal/token": "1.9",
@@ -156,6 +156,9 @@
             },
             "drupal/metatag": {
                 "Module to support migrate upgrade": "https://www.drupal.org/files/issues/2020-12-11/support_migrate_upgrade-3187898-2.patch"
+            },
+            "drupal/smart_date": {
+                "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
