@@ -74,7 +74,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     foreach ($data as $name => &$value) {
       $value = $this->addDefaultConfigHash($value);
       if (!$this->validateDependencies($name, $data, $enabled_extensions, $all_config)) {
-        // Couldn't validatge dependency.
+        // Couldn't validate dependency.
         unset($data[$name]);
       }
     }
