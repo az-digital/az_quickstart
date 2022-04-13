@@ -72,4 +72,4 @@ jobs:
         if: steps.apply.outcome == 'success'
         
       - name: Install Simplytest
-        run: php vendor/bin/drush site:install simplytest --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
+        run: php ./app/vendor/bin/drush site:install simplytest --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
