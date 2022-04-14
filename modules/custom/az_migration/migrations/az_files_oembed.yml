@@ -1,0 +1,33 @@
+id: az_files_oembed
+label: Remote Files (oEmbed)
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+source:
+  plugin: d7_file
+  scheme: oembed
+
+process:
+  filename: filename
+  uri:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: uri
+      message: 'Cannot import empty URI, check the source site for missing files.'
+  filemime: filemime
+  status: status
+  created: timestamp
+  changed: timestamp
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: uid
+    -
+      plugin: default_value
+      default_value: 0
+
+destination:
+  plugin: entity:file
