@@ -1,0 +1,6 @@
+langcode: en
+status: true
+dependencies: {  }
+name: az_natural
+label: 'Natural Size'
+effects: {  }
