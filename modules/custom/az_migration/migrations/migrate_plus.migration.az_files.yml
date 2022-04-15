@@ -11,12 +11,7 @@ source:
     old_files_path: ''
 
 process:
-  filename:
-    - plugin: skip_on_empty
-      method: row
-      source: filename
-      message: 'Cannot import empty filename.'
-
+  filename: filename
   source_full_path:
     -
       plugin: concat
@@ -28,17 +23,11 @@ process:
     -
       plugin: urlencode
   uri:
-    -
-      plugin: skip_on_empty
-      method: row
-      source: uri
-      message: 'Cannot import empty URI, check the source site for missing files.'
-    -
-      plugin: file_copy
-      source:
-        - '@source_full_path'
-        - uri
-      file_exists: "use existing"
+    plugin: file_copy
+    source:
+      - '@source_full_path'
+      - uri
+    file_exists: "use existing"
 
   filemime: filemime
   # filesize is dynamically computed when file entities are saved, so there is

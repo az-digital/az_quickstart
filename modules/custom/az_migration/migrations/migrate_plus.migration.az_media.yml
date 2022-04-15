@@ -38,9 +38,7 @@ process:
   # Lookup fid through migration lookup. Should not depend on fid not changing.
   mfid:
     plugin: migration_lookup
-    migration:
-      - az_files
-      - az_files_oembed
+    migration: az_files
     source: fid
   # Bundles have different field names for their target reference.
   field_media_az_audio_file/target_id: '@mfid'
@@ -67,7 +65,13 @@ process:
         plugin: default_value
         default_value: plain_text
   field_media_az_video_file: '@mfid'
-  field_media_az_oembed_video/value: uri
+  field_media_az_oembed_video/value:
+    - plugin: str_replace
+      source: uri
+      search: "oembed://"
+      replace: ''
+    - plugin: callback
+      callable: urldecode
 
   name: filename
   created: timestamp
@@ -81,10 +85,10 @@ migration_dependencies:
   required:
     - az_user
     - az_files
-    - az_files_oembed
 
 dependencies:
   enforced:
     module:
       - az_migration
       - az_media
+      - migrate_plus
