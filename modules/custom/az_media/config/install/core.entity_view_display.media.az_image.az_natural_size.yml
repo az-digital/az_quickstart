@@ -18,7 +18,7 @@ third_party_settings:
       children:
         - field_media_az_image
         - group_fig_caption
-      parent_name: group_image_wrap
+      parent_name: group_natural_flex
       weight: 1
       format_type: html_element
       region: content
@@ -31,7 +31,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: center
+        classes: ''
         show_empty_fields: false
       label: Figure
     group_fig_caption:
@@ -71,7 +71,7 @@ third_party_settings:
         id: ''
         classes: small
       label: Cite
-    group_image_wrap:
+    group_natural_flex:
       children:
         - group_figure
       parent_name: ''
@@ -79,6 +79,9 @@ third_party_settings:
       format_type: html_element
       region: content
       format_settings:
+        show_empty_fields: false
+        id: ''
+        classes: d-flex
         element: div
         show_label: false
         label_element: h3
@@ -86,10 +89,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: align-natural-image
-        show_empty_fields: false
-      label: 'Figure Wrap'
+      label: 'Natural Flex'
 id: media.az_image.az_natural_size
 targetEntityType: media
 bundle: az_image
@@ -112,7 +112,7 @@ content:
   field_media_az_image:
     label: hidden
     settings:
-      image_style: natural
+      image_style: az_natural
       image_link: ''
     third_party_settings: {  }
     type: image
