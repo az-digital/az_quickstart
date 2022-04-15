@@ -6,18 +6,10 @@
  * of these @include files will be combined into a single file.
  */
 
-/* Class for Natural Image block alignment issue */
-.align-natural-image {
-  display:flex;
-}
 
 /* For structuring header utilities*/
 header#header_arizona {
   min-height: 10px;
-}
-
-.align-natural-image {
-  display:flex;
 }
 
 /* Sticky footer */
