@@ -1,0 +1,29 @@
+uuid: ec9cb7b3-5791-4ebe-a525-46b9bc34447c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.ib_media.field_ib_media
+    - node.type.ib_media
+  module:
+    - user
+id: node.ib_media.default
+targetEntityType: node
+bundle: ib_media
+mode: default
+content:
+  field_ib_media:
+    weight: 102
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    type: entity_reference_entity_view
+    region: content
+  links:
+    weight: 100
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

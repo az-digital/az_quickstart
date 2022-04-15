@@ -1,0 +1,41 @@
+uuid: b2f16ee4-7096-4d1c-a77e-43a1185a9475
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+    - media.type.ib_dam_embed
+  module:
+    - ib_dam
+_core:
+  default_config_hash: rY3bCqMOFUDYqHzQJKkJQ23jkrFvgOAbuvtzkTzHha0
+id: media.ib_dam_embed.default
+targetEntityType: media
+bundle: ib_dam_embed
+mode: default
+content:
+  field_media_ib_dam_embed:
+    type: ib_dam_embed
+    weight: 1
+    region: content
+    label: hidden
+    settings:
+      trim_length: null
+      no_link: true
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+  name:
+    type: string
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  created: true
+  thumbnail: true
+  uid: true

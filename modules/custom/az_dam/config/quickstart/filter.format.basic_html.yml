@@ -1,0 +1,74 @@
+uuid: d0c85e92-3483-4935-9664-ec2b98c1af5c
+langcode: en
+status: true
+dependencies:
+  module:
+    - bootstrap_utilities
+    - editor
+    - ib_dam_wysiwyg
+    - media
+_core:
+  default_config_hash: vxZvKWwZReEd1yDpL5Mmxyj5-8fRTjHAGqJaIaq7toA
+name: 'Basic HTML'
+format: basic_html
+weight: -9
+filters:
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -10
+    settings:
+      allowed_html: '<a href hreflang> <em> <strong> <cite> <blockquote cite class="blockquote blockquote-reverse text-right text-center"> <code> <ul type> <ol start type> <li> <dl> <dt> <dd> <h2 id> <h3 id> <h4 id> <h5 id> <h6 id> <p> <br> <span> <img src alt height width data-entity-type data-entity-uuid data-align data-caption> <footer class="blockquote-footer">'
+      filter_html_help: false
+      filter_html_nofollow: false
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: true
+    weight: 7
+    settings: {  }
+  filter_caption:
+    id: filter_caption
+    provider: filter
+    status: true
+    weight: 8
+    settings: {  }
+  editor_file_reference:
+    id: editor_file_reference
+    provider: editor
+    status: true
+    weight: 11
+    settings: {  }
+  bootstrap_utilities_blockquote_filter:
+    id: bootstrap_utilities_blockquote_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: 0
+    settings: {  }
+  bootstrap_utilities_table_filter:
+    id: bootstrap_utilities_table_filter
+    provider: bootstrap_utilities
+    status: false
+    weight: 0
+    settings:
+      table_remove_width_height: '1'
+      table_row_striping: '0'
+      table_bordered: '0'
+      table_row_hover: '0'
+      table_small: '0'
+  media_embed:
+    id: media_embed
+    provider: media
+    status: false
+    weight: 100
+    settings:
+      default_view_mode: default
+      allowed_media_types: {  }
+      allowed_view_modes: {  }
+  ib_dam_wysiwyg:
+    id: ib_dam_wysiwyg
+    provider: ib_dam_wysiwyg
+    status: true
+    weight: 0
+    settings: {  }

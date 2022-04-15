@@ -1,0 +1,135 @@
+uuid: dbbff4a1-e9dc-4942-b91c-6533223d9055
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.az_large
+    - core.entity_view_mode.media.az_medium
+    - core.entity_view_mode.media.az_natural_size
+    - core.entity_view_mode.media.az_small
+    - core.entity_view_mode.media.az_square
+  module:
+    - bootstrap_utilities
+    - editor
+    - entity_embed
+    - ib_dam_wysiwyg
+    - media
+_core:
+  default_config_hash: Pf57ySytPg-TGLPWRmY40p-5YBwtdV07mz5mnKZYCoo
+name: Standard
+format: az_standard
+weight: -8
+filters:
+  filter_htmlcorrector:
+    id: filter_htmlcorrector
+    provider: filter
+    status: true
+    weight: -43
+    settings: {  }
+  filter_html:
+    id: filter_html
+    provider: filter
+    status: true
+    weight: -50
+    settings:
+      allowed_html: '<em> <strong> <s> <abbr> <address> <cite> <blockquote class=""> <br> <div class="" name="" id="" class=* data-*> <ul type class=""> <ol start type class=""> <li class=""> <dl> <dt> <dd> <h1 class="" name="" id=""> <h2 class="" name="" id=""> <h3 class="" name="" id=""> <h4 class="" name="" id=""> <h5 class="" name="" id=""> <h6 class="" name="" id=""> <sup> <sub> <table class=""> <caption> <tbody class=""> <thead class=""> <tfoot class=""> <th class="" scope="" colspan="" rowspan=""> <td class="" colspan="" rowspan=""> <tr class="" colspan="" rowspan=""> <hr class=""> <a href class="" target="" name="" id=""> <span class="" name="" id=""> <img src alt data-entity-type data-entity-uuid> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align="" data-caption data-embed-button alt title> <drupal-media data-view-mode="" data-align="" data-entity-type data-entity-uuid alt title> <p class=""> <footer class="">'
+      filter_html_help: true
+      filter_html_nofollow: false
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: -46
+    settings: {  }
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: -45
+    settings:
+      filter_url_length: 72
+  media_embed:
+    id: media_embed
+    provider: media
+    status: true
+    weight: -41
+    settings:
+      default_view_mode: default
+      allowed_media_types: {  }
+      allowed_view_modes:
+        az_large: az_large
+        az_medium: az_medium
+        az_natural_size: az_natural_size
+        az_small: az_small
+        az_square: az_square
+  entity_embed:
+    id: entity_embed
+    provider: entity_embed
+    status: true
+    weight: -42
+    settings: {  }
+  bootstrap_utilities_blockquote_filter:
+    id: bootstrap_utilities_blockquote_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: -49
+    settings: {  }
+  bootstrap_utilities_table_filter:
+    id: bootstrap_utilities_table_filter
+    provider: bootstrap_utilities
+    status: true
+    weight: -48
+    settings:
+      table_remove_width_height: '1'
+      table_row_striping: '0'
+      table_bordered: '0'
+      table_row_hover: '0'
+      table_small: '0'
+  filter_align:
+    id: filter_align
+    provider: filter
+    status: true
+    weight: -47
+    settings: {  }
+  ib_dam_wysiwyg:
+    id: ib_dam_wysiwyg
+    provider: ib_dam_wysiwyg
+    status: true
+    weight: -40
+    settings: {  }
+  bootstrap_utilities_image_filter:
+    id: bootstrap_utilities_image_filter
+    provider: bootstrap_utilities
+    status: false
+    weight: -37
+    settings: {  }
+  bootstrap_utilities_figure_filter:
+    id: bootstrap_utilities_figure_filter
+    provider: bootstrap_utilities
+    status: false
+    weight: -38
+    settings: {  }
+  editor_file_reference:
+    id: editor_file_reference
+    provider: editor
+    status: false
+    weight: -36
+    settings: {  }
+  filter_caption:
+    id: filter_caption
+    provider: filter
+    status: false
+    weight: -35
+    settings: {  }
+  filter_html_escape:
+    id: filter_html_escape
+    provider: filter
+    status: false
+    weight: -39
+    settings: {  }
+  filter_html_image_secure:
+    id: filter_html_image_secure
+    provider: filter
+    status: false
+    weight: -44
+    settings: {  }

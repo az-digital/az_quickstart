@@ -1,0 +1,193 @@
+uuid: 49a1b786-ff3b-44c9-bf22-898c4b95b0af
+langcode: en
+status: true
+dependencies:
+  module:
+    - ib_dam_media
+id: config_sync.module.ib_dam_media
+snapshotSet: config_sync
+extensionType: module
+extensionName: ib_dam_media
+items:
+  -
+    collection: ''
+    name: core.entity_form_display.media.ib_dam_embed.default
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+          - media.type.ib_dam_embed
+        module:
+          - link
+          - path
+      id: media.ib_dam_embed.default
+      targetEntityType: media
+      bundle: ib_dam_embed
+      mode: default
+      content:
+        created:
+          type: datetime_timestamp
+          weight: 10
+          region: content
+          settings: {  }
+          third_party_settings: {  }
+        field_media_ib_dam_embed:
+          weight: 0
+          settings:
+            placeholder_url: ''
+            placeholder_title: ''
+          third_party_settings: {  }
+          type: link_default
+          region: content
+        name:
+          type: string_textfield
+          weight: -5
+          region: content
+          settings:
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        path:
+          type: path
+          weight: 30
+          region: content
+          settings: {  }
+          third_party_settings: {  }
+        status:
+          type: boolean_checkbox
+          settings:
+            display_label: true
+          weight: 100
+          region: content
+          third_party_settings: {  }
+        uid:
+          type: entity_reference_autocomplete
+          weight: 5
+          settings:
+            match_operator: CONTAINS
+            size: 60
+            placeholder: ''
+          region: content
+          third_party_settings: {  }
+      hidden: {  }
+      _core:
+        default_config_hash: 5z7JVAF7hj_6rtGjz8u6N_YkYqgESCg0-JIL93lY1ok
+  -
+    collection: ''
+    name: core.entity_view_display.media.ib_dam_embed.default
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+          - media.type.ib_dam_embed
+        module:
+          - ib_dam_media
+      id: media.ib_dam_embed.default
+      targetEntityType: media
+      bundle: ib_dam_embed
+      mode: default
+      content:
+        field_media_ib_dam_embed:
+          type: ib_dam_embed
+          weight: 1
+          region: content
+          label: hidden
+          settings:
+            trim_length: 80
+            url_only: false
+            url_plain: false
+            rel: ''
+            target: ''
+          third_party_settings: {  }
+        name:
+          type: string
+          weight: 0
+          region: content
+          label: hidden
+          settings:
+            link_to_entity: false
+          third_party_settings: {  }
+      hidden:
+        created: true
+        thumbnail: true
+        uid: true
+      _core:
+        default_config_hash: rY3bCqMOFUDYqHzQJKkJQ23jkrFvgOAbuvtzkTzHha0
+  -
+    collection: ''
+    name: field.field.media.ib_dam_embed.field_media_ib_dam_embed
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.media.field_media_ib_dam_embed
+          - media.type.ib_dam_embed
+        module:
+          - link
+      id: media.ib_dam_embed.field_media_ib_dam_embed
+      field_name: field_media_ib_dam_embed
+      entity_type: media
+      bundle: ib_dam_embed
+      label: 'Embed Resource Url'
+      description: ''
+      required: true
+      translatable: true
+      default_value: {  }
+      default_value_callback: ''
+      settings:
+        title: 1
+        link_type: 16
+      field_type: link
+      _core:
+        default_config_hash: p1KexYTRAx9iPcnr_0I3rToTWFuUinxf2M7EZeNAJig
+  -
+    collection: ''
+    name: field.storage.media.field_media_ib_dam_embed
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - link
+          - media
+      id: media.field_media_ib_dam_embed
+      field_name: field_media_ib_dam_embed
+      entity_type: media
+      type: link
+      settings: {  }
+      module: link
+      locked: false
+      cardinality: 1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: v0xW1nC9g8gauXZZwTrKrhmhNO4bzuwD5beQ-1udJJ4
+  -
+    collection: ''
+    name: media.type.ib_dam_embed
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - ib_dam_media
+      id: ib_dam_embed
+      label: 'IntelligenceBank DAM Embed'
+      description: 'Used to embed digital assets from IntelligenceBank DAM service.'
+      source: ib_dam_embed
+      queue_thumbnail_downloads: false
+      new_revision: false
+      source_configuration:
+        source_field: field_media_ib_dam_embed
+      field_map:
+        resource_title: name
+        resource_url: field_media_ib_dam_embed
+      _core:
+        default_config_hash: fU_Gpc4sFjPv9BQ935SP8F77Nt0DqJRIbRYQed_Bbis

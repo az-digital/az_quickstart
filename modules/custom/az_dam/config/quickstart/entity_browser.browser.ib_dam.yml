@@ -1,0 +1,28 @@
+uuid: 86e23d29-bcfd-4d90-ac08-d9ba6c8d6957
+langcode: en
+status: true
+dependencies:
+  module:
+    - ib_dam_media
+    - media
+name: ib_dam
+label: 'IB DAM'
+display: modal
+display_configuration:
+  width: ''
+  height: '800'
+  link_text: 'Select IB Assets'
+  auto_open: false
+selection_display: no_display
+selection_display_configuration: {  }
+widget_selector: tabs
+widget_selector_configuration: {  }
+widgets:
+  e51898cc-a603-47f9-966a-024c6e73ea4e:
+    settings:
+      upload_location: 'public://intelligencebank'
+      submit_text: 'Select assets'
+    uuid: e51898cc-a603-47f9-966a-024c6e73ea4e
+    weight: 1
+    label: 'IntelligenceBank Asset Browser'
+    id: ib_dam_search

@@ -1,0 +1,85 @@
+uuid: 3edeafcb-89a2-4215-b036-7d2f30157afe
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.basic_html
+  module:
+    - ckeditor
+_core:
+  default_config_hash: AqlPmO16LvJI4D0Ih6u4GFQIzqr5OnLgAUSjcUGWk2g
+format: basic_html
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Italic
+        -
+          name: Linking
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Media
+          items:
+            - Blockquote
+            - DrupalImage
+        -
+          name: 'Block Formatting'
+          items:
+            - Format
+            - ib_dam_browser
+        -
+          name: Tools
+          items:
+            - Source
+  plugins:
+    language:
+      language_list: un
+    stylescombo:
+      styles: ''
+    bs_grid:
+      use_cdn: true
+      cdn_url: 'https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.2/css/bootstrap-grid.min.css'
+      available_columns:
+        1: '1'
+        2: '2'
+        3: '3'
+        4: '4'
+        5: '5'
+        6: '6'
+        7: '7'
+        8: '8'
+        9: '9'
+        10: '10'
+        11: '11'
+        12: '12'
+      available_breakpoints:
+        xs: xs
+        sm: sm
+        md: md
+        lg: lg
+        xl: xl
+        xxl: xxl
+    ib_dam_browser:
+      upload_location: 'public://intelligencebank'
+      file_extensions: 'jpg jpeg gif png txt doc docx xls pdf ppt pps odt ods odp mp3 mp4'
+      allow_embed: true
+image_upload:
+  status: true
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null

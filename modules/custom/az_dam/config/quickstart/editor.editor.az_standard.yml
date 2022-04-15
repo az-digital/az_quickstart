@@ -1,0 +1,110 @@
+uuid: 2fe82e3f-9580-4c7f-9883-1697338c17a9
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.az_standard
+  module:
+    - ckeditor
+_core:
+  default_config_hash: p5wkWxOoV1gCUiMWuf-xQvDMVX2eCZhaQ_6nQwLnPYE
+format: az_standard
+editor: ckeditor
+settings:
+  toolbar:
+    rows:
+      -
+        -
+          name: Undo/Redo
+          items:
+            - Undo
+            - Redo
+        -
+          name: Formatting
+          items:
+            - Bold
+            - Strike
+            - Italic
+            - Superscript
+            - Subscript
+            - SpecialChar
+        -
+          name: Links
+          items:
+            - DrupalLink
+            - DrupalUnlink
+        -
+          name: Lists
+          items:
+            - BulletedList
+            - NumberedList
+        -
+          name: Alignment
+          items:
+            - JustifyLeft
+            - JustifyCenter
+            - JustifyRight
+        -
+          name: Structure
+          items:
+            - bs_grid
+            - Table
+            - HorizontalRule
+            - Blockquote
+        -
+          name: 'Text styles'
+          items:
+            - Format
+            - Styles
+        -
+          name: Embed
+          items:
+            - DrupalMediaLibrary
+            - az_embed_content
+            - az_embed_content_block
+        -
+          name: Tools
+          items:
+            - Source
+            - Maximize
+            - RemoveFormat
+  plugins:
+    language:
+      language_list: un
+    stylescombo:
+      styles: "a.btn.btn-red|Button Red\r\na.btn.btn-blue|Button Blue\r\na.btn.btn-outline-red|Button Outline Red\r\na.btn.btn-outline-blue|Button Outline Blue\r\na.btn.btn-outline-white|Button Outline White\r\na.btn.btn-link|Button Link\r\nspan.text-white|Text White\r\nspan.text-sky|Text Sky\r\nspan.text-oasis|Text Oasis\r\nspan.text-azurite|Text Azurite\r\nspan.text-blue|Text Blue\r\nspan.text-midnight|Text Midnight\r\nspan.text-dark-silver|Text Dark Silver\r\nspan.text-ash|Text Ash\r\nspan.text-sans|Sanserif Text\r\nspan.text-capitalize|Capitalized Text\r\nspan.text-uppercase|UPPERCASE TEXT\r\nspan.text-lowercase|lowercase text\r\nul.ul-triangles|Triangle Bullets\r\nul.nav.nav-pills|Unordered List Pills\r\nspan.badge.badge-red|Label Red\r\nspan.badge.badge-blue|Label Blue\r\nspan.badge.badge-success|Label Green\r\nspan.badge.badge-info|Label Sky\r\nspan.badge.badge-warning|Label Warning\r\nspan.badge.badge-danger|Label Danger\r\nspan.small|Text Size Small\r\nspan.lead|Text Size Lead\r\nspan.h1|Text Size H1\r\nspan.h2|Text Size H2\r\nspan.h3|Text Size H3\r\nspan.h4|Text Size H4\r\nspan.h5|Text Size H5\r\nspan.h6|Text Size H6\r\nspan.align-top|Text Align Top\r\nspan.align-middle|Text Align Middle\r\nspan.align-bottom|Text Align Bottom\r\nspan.mt-0|Zero Margin Top\r\nspan.mb-0|Zero Margin Bottom\r\nblockquote.blockquote|Blockquote\r\nblockquote.blockquote.text-center|Blockquote Center\r\nblockquote.blockquote.text-right|Blockquote Right\r\nblockquote.blockquote.blockquote-reverse.text-right|Blockquote Reverse\r\nfooter.blockquote-footer|Blockquote Footer"
+    bs_grid:
+      use_cdn: false
+      cdn_url: ''
+      available_columns:
+        1: '1'
+        2: '2'
+        3: '3'
+        4: '4'
+        5: '5'
+        6: '6'
+        7: '7'
+        8: '8'
+        9: '9'
+        10: '10'
+        11: '11'
+        12: '12'
+      available_breakpoints:
+        xs: xs
+        sm: sm
+        md: md
+        lg: lg
+        xl: 0
+        xxl: 0
+    ib_dam_browser:
+      upload_location: 'public://intelligencebank'
+      file_extensions: 'jpg jpeg gif png txt doc docx xls pdf ppt pps odt ods odp mp3 mp4 mov'
+      allow_embed: true
+image_upload:
+  status: false
+  scheme: public
+  directory: inline-images
+  max_size: ''
+  max_dimensions:
+    width: null
+    height: null

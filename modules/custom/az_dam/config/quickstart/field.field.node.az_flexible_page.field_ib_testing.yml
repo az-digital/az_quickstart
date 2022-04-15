@@ -1,0 +1,39 @@
+uuid: bd1e7524-058a-44c1-9566-47f129b28d8a
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_ib_testing
+    - media.type.az_audio
+    - media.type.az_document
+    - media.type.az_image
+    - media.type.az_remote_video
+    - media.type.az_video
+    - media.type.ib_dam_embed
+    - node.type.az_flexible_page
+id: node.az_flexible_page.field_ib_testing
+field_name: field_ib_testing
+entity_type: node
+bundle: az_flexible_page
+label: 'IB DAM Media'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_audio: az_audio
+      az_document: az_document
+      az_image: az_image
+      ib_dam_embed: ib_dam_embed
+      az_remote_video: az_remote_video
+      az_video: az_video
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: az_audio
+field_type: entity_reference

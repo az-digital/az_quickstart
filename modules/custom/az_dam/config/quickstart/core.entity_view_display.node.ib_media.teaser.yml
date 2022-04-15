@@ -1,0 +1,22 @@
+uuid: 0cd3754d-0e05-4123-bd37-1e14a12e3f99
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.ib_media.field_ib_media
+    - node.type.ib_media
+  module:
+    - user
+id: node.ib_media.teaser
+targetEntityType: node
+bundle: ib_media
+mode: teaser
+content:
+  links:
+    weight: 100
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+hidden:
+  field_ib_media: true

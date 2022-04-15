@@ -1,0 +1,18 @@
+uuid: 64a83cac-4f3c-4eb5-aa4e-d0847332b015
+langcode: en
+status: true
+dependencies:
+  module:
+    - menu_ui
+third_party_settings:
+  menu_ui:
+    available_menus:
+      - main
+    parent: 'main:'
+name: 'IB Demo Page'
+type: ib_demo_page
+description: ''
+help: ''
+new_revision: true
+preview_mode: 0
+display_submitted: false
