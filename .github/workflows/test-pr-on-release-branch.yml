@@ -62,17 +62,17 @@ jobs:
           echo "${PR_NUMBER}"
           curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1408.patch | git apply --reject --whitespace=fix
           
-      - name: Composer Install
-        run: |
-          set -x
-          # Clone scaffolding repo into ./app
-          git clone --branch ${{ matrix.release }} https://github.com/az-digital/az-quickstart-scaffolding.git ./app
-          # Update az-digital/az_quickstart dependency to reference local (patched) copy of Quickstart
-          cd app
-          composer config repositories.localqs path ${GITHUB_WORKSPACE}/az_quickstart
-          composer require --no-update az-digital/az_quickstart:\*@dev
-          composer install         
-        if: steps.apply.outcome == 'success'
+      # - name: Composer Install
+      #   run: |
+      #     set -x
+      #     # Clone scaffolding repo into ./app
+      #     git clone --branch ${{ matrix.release }} https://github.com/az-digital/az-quickstart-scaffolding.git ./app
+      #     # Update az-digital/az_quickstart dependency to reference local (patched) copy of Quickstart
+      #     cd app
+      #     composer config repositories.localqs path ${GITHUB_WORKSPACE}/az_quickstart
+      #     composer require --no-update az-digital/az_quickstart:\*@dev
+      #     composer install         
+      #   if: steps.apply.outcome == 'success'
         
       # - name: Install Simplytest
       #   run: php ./app/vendor/bin/drush site:install simplytest --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
