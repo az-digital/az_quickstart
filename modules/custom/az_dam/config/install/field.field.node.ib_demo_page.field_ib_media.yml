@@ -1,21 +1,20 @@
-uuid: bd1e7524-058a-44c1-9566-47f129b28d8a
 langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_ib_testing
+    - field.storage.node.field_ib_media
     - media.type.az_audio
     - media.type.az_document
     - media.type.az_image
     - media.type.az_remote_video
     - media.type.az_video
     - media.type.ib_dam_embed
-    - node.type.az_flexible_page
-id: node.az_flexible_page.field_ib_testing
-field_name: field_ib_testing
+    - node.type.ib_demo_page
+id: node.ib_demo_page.field_ib_media
+field_name: field_ib_media
 entity_type: node
-bundle: az_flexible_page
-label: 'IB DAM Media'
+bundle: ib_demo_page
+label: 'IB Media'
 description: ''
 required: false
 translatable: false

@@ -1,4 +1,3 @@
-uuid: 54899adf-0d2e-4225-92e6-77e52aecec40
 langcode: en
 status: true
 dependencies:
@@ -9,10 +8,10 @@ third_party_settings:
     available_menus:
       - main
     parent: 'main:'
-name: 'IB Media'
-type: ib_media
+name: 'IB Demo Page'
+type: ib_demo_page
 description: ''
 help: ''
 new_revision: true
-preview_mode: 1
-display_submitted: true
+preview_mode: 0
+display_submitted: false

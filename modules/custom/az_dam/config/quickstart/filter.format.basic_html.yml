@@ -1,4 +1,3 @@
-uuid: d0c85e92-3483-4935-9664-ec2b98c1af5c
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - editor
     - ib_dam_wysiwyg
     - media
-_core:
-  default_config_hash: vxZvKWwZReEd1yDpL5Mmxyj5-8fRTjHAGqJaIaq7toA
 name: 'Basic HTML'
 format: basic_html
 weight: -9

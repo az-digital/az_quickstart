@@ -1,4 +1,3 @@
-uuid: 315a190d-a53f-4eb9-9e0f-9e3a95b8f13b
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - media.type.ib_dam_embed
   module:
     - link
-_core:
-  default_config_hash: p1KexYTRAx9iPcnr_0I3rToTWFuUinxf2M7EZeNAJig
 id: media.ib_dam_embed.field_media_ib_dam_embed
 field_name: field_media_ib_dam_embed
 entity_type: media

@@ -1,4 +1,3 @@
-uuid: b2f16ee4-7096-4d1c-a77e-43a1185a9475
 langcode: en
 status: true
 dependencies:
@@ -7,8 +6,6 @@ dependencies:
     - media.type.ib_dam_embed
   module:
     - ib_dam
-_core:
-  default_config_hash: rY3bCqMOFUDYqHzQJKkJQ23jkrFvgOAbuvtzkTzHha0
 id: media.ib_dam_embed.default
 targetEntityType: media
 bundle: ib_dam_embed

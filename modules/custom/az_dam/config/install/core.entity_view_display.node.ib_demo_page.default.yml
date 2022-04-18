@@ -1,32 +1,37 @@
-uuid: 37e02b5e-33a3-48e6-986c-d798602aff9a
 langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.teaser
     - field.field.node.ib_demo_page.body
     - field.field.node.ib_demo_page.field_ib_media
     - node.type.ib_demo_page
   module:
     - text
     - user
-id: node.ib_demo_page.teaser
+id: node.ib_demo_page.default
 targetEntityType: node
 bundle: ib_demo_page
-mode: teaser
+mode: default
 content:
   body:
     label: hidden
-    type: text_summary_or_trimmed
+    type: text_default
     weight: 101
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_ib_media:
+    type: entity_reference_entity_view
+    weight: 102
+    label: hidden
     settings:
-      trim_length: 600
+      view_mode: default
+      link: false
     third_party_settings: {  }
     region: content
   links:
     weight: 100
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
-hidden:
-  field_ib_media: true
+hidden: {  }

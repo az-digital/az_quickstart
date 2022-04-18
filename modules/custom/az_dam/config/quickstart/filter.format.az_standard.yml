@@ -1,4 +1,3 @@
-uuid: dbbff4a1-e9dc-4942-b91c-6533223d9055
 langcode: en
 status: true
 dependencies:
@@ -14,8 +13,6 @@ dependencies:
     - entity_embed
     - ib_dam_wysiwyg
     - media
-_core:
-  default_config_hash: Pf57ySytPg-TGLPWRmY40p-5YBwtdV07mz5mnKZYCoo
 name: Standard
 format: az_standard
 weight: -8

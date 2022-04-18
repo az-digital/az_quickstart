@@ -1,11 +1,8 @@
-uuid: 810cdd1a-2e58-4dca-8624-b7679c64604d
 langcode: en
 status: true
 dependencies:
   module:
     - ib_dam_media
-_core:
-  default_config_hash: fU_Gpc4sFjPv9BQ935SP8F77Nt0DqJRIbRYQed_Bbis
 id: ib_dam_embed
 label: 'IntelligenceBank DAM Embed'
 description: 'Used to embed digital assets from IntelligenceBank DAM service.'
