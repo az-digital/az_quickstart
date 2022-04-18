@@ -58,7 +58,7 @@ jobs:
           git config --global user.name "${GITHUB_ACTOR}"
           git fetch
           git checkout "${{ matrix.release }}"
-          AZ_TRIMMED_REF="${GITHUB_REF}"
+          AZ_TRIMMED_REF=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo "${AZ_TRIMMED_REF}"
           curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1408.patch | git apply --reject --whitespace=fix
           
