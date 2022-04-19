@@ -61,11 +61,12 @@ jobs:
           git checkout "${{ matrix.release }}"
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo "${PR_NUMBER}"
-          curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1408.diff | git apply --reject --whitespace=fix
+          curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1408.path | git apply --reject --whitespace=fix
           
           
       - name: Composer Install
         id: install
+        if: steps.apply.outcome == 'failure'
         run: |
           set -x
           # Clone scaffolding repo into ./app
@@ -75,8 +76,7 @@ jobs:
           composer config repositories.localqs path ${GITHUB_WORKSPACE}/az_quickstart
           composer require --no-update az-digital/az_quickstart:\*@dev
           composer install         
-        if: steps.apply.outcome == 'failure'
-        
+       
       - name: Install Simplytest
         run: php vendor/bin/drush site:install az_quickstart --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
 
