@@ -22,8 +22,9 @@ jobs:
     strategy:
       matrix:
         release:
-          - "2.1.x"
-          - "2.2.x"
+          #- "2.1.x"
+          #- "2.2.x"
+          - "issue/1491"
     services:
       mysql:
         image: mysql:5.7
