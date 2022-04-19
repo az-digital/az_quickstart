@@ -19,13 +19,57 @@
             "url": "https://packages.drupal.org/8"
         },
         {
-            "type": "composer",
-            "url": "https://asset-packagist.org"
-        },
-        {
             "type": "vcs",
             "url": "https://github.com/az-digital/phpcs-security-audit",
             "no-api": true
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "bower-asset/chosen",
+                "version": "1.8.7",
+                "type": "drupal-library",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/harvesthq/chosen-package/archive/refs/tags/v1.8.7.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "npm-asset/blazy",
+                "version": "1.8.2",
+                "type": "drupal-library",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/dinbror/blazy/archive/refs/tags/1.8.2.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "npm-asset/jquery-ui-touch-punch",
+                "version": "0.2.3",
+                "type": "drupal-library",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/furf/jquery-ui-touch-punch/archive/refs/heads/master.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "npm-asset/slick-carousel",
+                "version": "1.8.0",
+                "type": "drupal-library",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/kenwheeler/slick/archive/refs/tags/1.8.0.zip"
+                }
+            }
         }
     ],
     "require": {
