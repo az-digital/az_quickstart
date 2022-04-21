@@ -93,4 +93,14 @@
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   });
+
+  /**
+   * Recalculates values for CSS variables on youtube iframe ready.
+   */
+   window.addEventListener("onYouTubeIframeAPIReady", () => {
+    calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins();
+    pushSidebarsDown();
+  });
+
 })(Drupal, this, this.document);

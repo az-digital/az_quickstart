@@ -47,4 +47,9 @@
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   });
+  window.addEventListener("onYouTubeIframeAPIReady", function () {
+    calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins();
+    pushSidebarsDown();
+  });
 })(Drupal, this, this.document);
