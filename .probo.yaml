@@ -57,9 +57,9 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
       - chown www-data:www-data -R /var/www/html/sites/default/files
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:enable environment_indicator
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n cset environment_indicator.indicator name "${BRANCH_NAME} (ProboCI)"
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n cset environment_indicator.indicator bg_color "#440027"
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n cset environment_indicator.indicator fg_color "#ffffff"
+      - chmod 777 /var/www/html/sites/default/settings.php
+      - echo "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';\n\$config['environment_indicator.indicator']['fg_color'] = '#ffffff';" >> /var/www/html/sites/default/settings.php
+      - chmod 444 /var/www/html/sites/default/settings.php
   - name: Check for PHP errors and notices
     plugin: Script
     script:
