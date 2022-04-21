@@ -87,11 +87,14 @@ class AZConfigOverride {
     $module_keys = array_flip($modules);
     $extensions = array_intersect_key($module_list, $module_keys);
 
+    // Previously enabled extensions.
+    $old_extensions = array_diff_key($module_list, $module_keys);
+
     // Ask the override provider for direct overrides available.
     foreach ($providers as $provider) {
       // Only query config for the Quickstart provider.
       if ($provider instanceof QuickstartConfigProvider) {
-        $overrides = $provider->getOverrideConfig($extensions);
+        $overrides = $provider->getOverrideConfig($extensions, $old_extensions);
 
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {
