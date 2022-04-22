@@ -52,7 +52,7 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
     if (isset($this->configuration['default_duration']) && !is_numeric($this->configuration['default_duration'])) {
       throw new InvalidPluginDefinitionException(
         $this->getPluginId(),
-        "Configuration option 'default_duration' should be a numeric represention of a length of time in seconds,
+        "Configuration option 'default_duration' should be a numeric represention of a length of time in minutes,
         for example 60 is one minute."
       );
     }
