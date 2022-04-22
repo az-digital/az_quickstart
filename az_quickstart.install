@@ -39,13 +39,19 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 
-  // Install the Patheon Advanced Page Cache Module when running on Pantheon.
+  // Install Pantheon module dependencies when running on Pantheon.
   if (defined('PANTHEON_ENVIRONMENT')) {
-    try {
-      \Drupal::service('module_installer')->install(['pantheon_advanced_page_cache']);
-    }
-    catch (MissingDependencyException $e) {
-      \Drupal::logger('az_quickstart')->warning('Pantheon Advanced Page Cache module not available to install.');
+    $pantheon_modules = [
+      'pantheon_advanced_page_cache',
+      'environment_indicator',
+    ];
+    foreach ($pantheon_modules as $module) {
+      try {
+        \Drupal::service('module_installer')->install([$module]);
+      }
+      catch (MissingDependencyException $e) {
+        \Drupal::logger('az_quickstart')->warning('@module module not available to install.', ['@module' => $module]);
+      }
     }
   }
 }
@@ -202,5 +208,21 @@ function az_quickstart_update_920102() {
     else {
       return t('Legacy global footer blocks not deleted because config differences detected. Blocks will need to be manually deleted with drush in order to install Quickstart Global Footer module.');
     }
+  }
+}
+
+/**
+ * Ensure Pantheon sites have the environment_indicator module installed.
+ */
+function az_quickstart_update_920103() {
+  if (defined('PANTHEON_ENVIRONMENT')) {
+    try {
+      \Drupal::service('module_installer')->install(['environment_indicator']);
+    }
+    catch (MissingDependencyException $e) {
+      return t('Environment Indicator module not available to install.');
+    }
+
+    return t('Environment Indicator module installed.');
   }
 }
