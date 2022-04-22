@@ -102,5 +102,4 @@
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   });
-  
 })(Drupal, this, this.document);
