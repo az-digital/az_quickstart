@@ -97,7 +97,7 @@
   /**
    * Recalculates values for CSS variables on youtube iframe ready.
    */
-   window.addEventListener("onYouTubeIframeAPIReady", () => {
+  window.addEventListener("onYouTubeIframeAPIReady", () => {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
