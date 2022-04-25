@@ -4,6 +4,7 @@ dependencies:
   module:
     - node
 id: node.az_feature
-label: Feature
+label: 'Feature'
 targetEntityType: node
 cache: true
+
