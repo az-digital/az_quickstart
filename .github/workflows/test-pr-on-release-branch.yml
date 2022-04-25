@@ -1,5 +1,7 @@
 name: Test PR on Release Branch
 on: push
+assets:
+  - test-credentials.sh
     # pull_request:
     #   types:
     #     - opened
@@ -89,8 +91,8 @@ jobs:
           sudo chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
           sudo CHROMEDRIVER_VERSION=LATEST_$(/usr/bin/google-chrome --product-version | cut -d . -f 1-3) npm install --no-progress --unsafe-perm --global chromedriver
           sudo apt-get install daemonize
-          # source $ASSET_DIR/test-credentials.sh
-          source ./app/test-credentials.sh
+          source $ASSET_DIR/test-credentials.sh
+          # source ./app/test-credentials.sh
           export SIMPLETEST_BASE_URL="http://localhost"
           export SIMPLETEST_DB="mysql://${TEST_DATABASE_USER}:${TEST_DATABASE_PASS}@localhost/${TEST_DATABASE_NAME}"
           export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
