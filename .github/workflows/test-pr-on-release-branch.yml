@@ -1,7 +1,5 @@
 name: Test PR on Release Branch
 on: push
-assets:
-  - test-credentials.sh
     # pull_request:
     #   types:
     #     - opened
