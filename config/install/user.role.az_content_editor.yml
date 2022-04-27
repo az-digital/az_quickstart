@@ -12,6 +12,7 @@ permissions:
   - 'access content overview'
   - 'access contextual links'
   - 'access draggableviews'
+  - 'access environment indicator'
   - 'access files overview'
   - 'access in-place editing'
   - 'access media overview'
