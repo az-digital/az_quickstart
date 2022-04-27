@@ -4,4 +4,6 @@ description:  'IntelligenceBank Drupal connector configuration'
 core_version_requirement: ^9
 package: The University of Arizona
 dependencies:
-  - intelligencebank:intelligencebank
+  - ib_dam:ib_dam
+  - ib_dam:ib_dam_media
+  - ib_dam:ib_dam_wysiwyg
