@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.feature
+    - core.entity_view_mode.node.az_feature
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
@@ -204,7 +204,7 @@ third_party_settings:
         - mt-2
         - mb-1
       smart_title__link: false
-id: node.az_news.feature
+id: node.az_news.az_feature
 targetEntityType: node
 bundle: az_news
 mode: feature

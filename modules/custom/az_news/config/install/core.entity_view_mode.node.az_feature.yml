@@ -7,4 +7,3 @@ id: node.az_feature
 label: 'Feature'
 targetEntityType: node
 cache: true
-
