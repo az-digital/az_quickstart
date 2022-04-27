@@ -104,6 +104,7 @@ steps:
   - name: Migration Tests
     plugin: Script
     script:
+      - set -e
       - source ${ASSET_DIR}/migration.sh
       - terminus connection:info ${MIGRATION_SOURCE_SITE_NAME}.dev --fields 'mysql_host,mysql_password,mysql_port,mysql_database,mysql_username' --format=json > /tmp/migration_config.json
       - mkdir -p /var/www/html/sites/migration && cd /var/www/html/sites
