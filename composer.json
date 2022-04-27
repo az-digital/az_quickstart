@@ -52,7 +52,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.2.18",
+        "drupal/core-recommended": "9.3.0",
         "drupal/crop": "2.1",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.4",
@@ -136,11 +136,9 @@
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://git.drupalcode.org/project/drupal/-/merge_requests/1489.diff",
                 "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff",
-                "Allow menu_link source plugin to filter menu links by menu name (#3064016)": "https://git.drupalcode.org/project/drupal/-/commit/510b5904fcd2498800b733d4e3015003eed23c81.diff",
-                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2020-06-28/2766369-25.patch",
+                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Incorrect results on grouped exposed filters (1810148)": "https://www.drupal.org/files/issues/2022-02-02/1810148-101.patch",
-                "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-2-x.patch",
-                "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2020-06-01/3102249-21.patch"
+                "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
