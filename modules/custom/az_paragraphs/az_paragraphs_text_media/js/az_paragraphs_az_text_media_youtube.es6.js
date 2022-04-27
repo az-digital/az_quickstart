@@ -51,6 +51,7 @@
                 showinfo: 0,
                 rel: 0,
                 wmode: 'transparent',
+                origin: window.location.href,
               },
               events: {
                 onReady: window.onPlayerReady,
