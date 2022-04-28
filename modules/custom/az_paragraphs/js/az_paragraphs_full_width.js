@@ -47,7 +47,7 @@
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   });
-  window.addEventListener("onPlayerReady", function () {
+  window.addEventListener('azVideoPlay', function (event) {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();

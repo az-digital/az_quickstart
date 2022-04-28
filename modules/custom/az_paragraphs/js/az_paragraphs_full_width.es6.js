@@ -93,13 +93,12 @@
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   });
-
   /**
-   * Recalculates values for CSS variables on youtube iframe ready.
+   * Recalculates values for CSS variables when azVideoPlay fires.
    */
-  window.addEventListener("onYouTubeIframeAPIReady", () => {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
+  window.addEventListener('azVideoPlay', (event) => {
+      calculateScrollbarWidth();
+      calculateFullWidthNegativeMargins();
+      pushSidebarsDown();
   });
 })(Drupal, this, this.document);
