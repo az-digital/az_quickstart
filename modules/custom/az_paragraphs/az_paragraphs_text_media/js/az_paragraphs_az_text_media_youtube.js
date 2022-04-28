@@ -126,7 +126,7 @@
 
           event.target.seekTo(bgVideos[id].start);
           event.target.playVideo();
-          var azVideoPlayEvent = new Event('azVideoPlay');
+          var azVideoPlayEvent = new Event("azVideoPlay");
           dispatchEvent(azVideoPlayEvent);
         };
 

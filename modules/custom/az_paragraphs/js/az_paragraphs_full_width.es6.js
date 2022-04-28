@@ -96,9 +96,9 @@
   /**
    * Recalculates values for CSS variables when azVideoPlay fires.
    */
-  window.addEventListener('azVideoPlay', (event) => {
-      calculateScrollbarWidth();
-      calculateFullWidthNegativeMargins();
-      pushSidebarsDown();
+  window.addEventListener("azVideoPlay", () => {
+    calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins();
+    pushSidebarsDown();
   });
 })(Drupal, this, this.document);
