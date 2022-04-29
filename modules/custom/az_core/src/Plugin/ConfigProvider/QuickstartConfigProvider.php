@@ -118,8 +118,23 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       $data = $profile_storage->readMultiple(array_keys($data)) + $data;
     }
 
+    // Get permissions defined.
+    // @phpstan-ignore-next-line
+    $permission_definitions = \Drupal::service('user.permissions')->getPermissions();
+    $permissions = array_keys($permission_definitions);
+
     // Add the configuration changes.
-    foreach ($data as $name => $value) {
+    foreach ($data as $name => &$value) {
+      // Is this a permission configuration file?
+      if (strpos($name, 'user.role.') === 0) {
+        // Trim active permissions list to what's expected.
+        if (!empty($value['permissions'])) {
+          $value['permissions'] = array_intersect($permissions, $value['permissions']);
+          sort($value['permissions']);
+        }
+      }
+
+      // Add transformed config hash.
       $value = $this->addDefaultConfigHash($value);
       $this->providerStorage->write($name, $value);
     }
