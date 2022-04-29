@@ -99,7 +99,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'row no-gutters'
+        classes: 'row'
         show_empty_fields: false
       label: Row
     group_text_column:
