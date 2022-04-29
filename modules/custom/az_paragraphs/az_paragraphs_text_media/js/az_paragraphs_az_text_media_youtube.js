@@ -11,24 +11,24 @@
       if (window.screen && window.screen.width > 768) {
         var defaults = {
           ratio: 16 / 9,
-          videoId: "",
+          videoId: '',
           mute: true,
           repeat: true,
           width: $(window).width(),
-          playButtonClass: "az-video-play",
-          pauseButtonClass: "az-video-pause",
-          muteButtonClass: "az-video-mute",
-          volumeUpClass: "az-video-volume-up",
-          volumeDownClass: "az-video-volume-down",
+          playButtonClass: 'az-video-play',
+          pauseButtonClass: 'az-video-pause',
+          muteButtonClass: 'az-video-mute',
+          volumeUpClass: 'az-video-volume-up',
+          volumeDownClass: 'az-video-volume-down',
           increaseVolumeBy: 10,
           start: 0,
           minimumSupportedWidth: 600
         };
         var bgVideos = settings.azFieldsMedia.bgVideos;
-        var bgVideoParagraphs = document.getElementsByClassName("az-js-video-background");
-        var tag = document.createElement("script");
-        var firstScriptTag = document.getElementsByTagName("script")[0];
-        tag.src = "https://www.youtube.com/iframe_api";
+        var bgVideoParagraphs = document.getElementsByClassName('az-js-video-background');
+        var tag = document.createElement('script');
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        tag.src = 'https://www.youtube.com/iframe_api';
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
         window.onYouTubeIframeAPIReady = function () {
@@ -39,7 +39,7 @@
             var youtubeId = thisContainer.dataset.youtubeid;
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
             var options = bgVideos[youtubeId];
-            var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
+            var videoPlayer = thisContainer.getElementsByClassName('az-video-player')[0];
             var YouTubePlayer = window.YT;
             thisContainer.player = new YouTubePlayer.Player(videoPlayer, {
               width: options.width,
@@ -50,26 +50,26 @@
                 controls: 0,
                 showinfo: 0,
                 rel: 0,
-                wmode: "transparent"
+                wmode: 'transparent'
               },
               events: {
                 onReady: window.onPlayerReady,
                 onStateChange: window.onPlayerStateChange
               }
             });
-            var playButton = bgVideoParagraphs[index].getElementsByClassName("az-video-play")[0];
-            playButton.addEventListener("click", function (event) {
+            var playButton = bgVideoParagraphs[index].getElementsByClassName('az-video-play')[0];
+            playButton.addEventListener('click', function (event) {
               event.preventDefault();
               bgVideoParagraphs[index].player.playVideo();
-              parentParagraph.classList.remove("az-video-paused");
-              parentParagraph.classList.add("az-video-playing");
+              parentParagraph.classList.remove('az-video-paused');
+              parentParagraph.classList.add('az-video-playing');
             });
-            var pauseButton = bgVideoParagraphs[index].getElementsByClassName("az-video-pause")[0];
-            pauseButton.addEventListener("click", function (event) {
+            var pauseButton = bgVideoParagraphs[index].getElementsByClassName('az-video-pause')[0];
+            pauseButton.addEventListener('click', function (event) {
               event.preventDefault();
               bgVideoParagraphs[index].player.pauseVideo();
-              parentParagraph.classList.remove("az-video-playing");
-              parentParagraph.classList.add("az-video-paused");
+              parentParagraph.classList.remove('az-video-playing');
+              parentParagraph.classList.add('az-video-paused');
             });
           });
         };
@@ -77,7 +77,7 @@
         var setDimensions = function setDimensions(container) {
           var parentParagraph = container.parentNode;
           var youtubeId = container.dataset.youtubeid;
-          var thisPlayer = container.getElementsByClassName("az-video-player")[0];
+          var thisPlayer = container.getElementsByClassName('az-video-player')[0];
           thisPlayer.style.zIndex = -100;
           var style = container.dataset.style;
           var width = container.offsetWidth;
@@ -89,7 +89,7 @@
           parentHeight = "".concat(parentHeight.toString(), "px");
           container.style.height = parentHeight;
 
-          if (style === "bottom") {
+          if (style === 'bottom') {
             container.style.top = 0;
           }
 
@@ -142,15 +142,15 @@
 
           if (event.data === 1) {
             resize();
-            parentContainer.classList.add("az-video-playing");
-            parentContainer.classList.remove("az-video-loading");
+            parentContainer.classList.add('az-video-playing');
+            parentContainer.classList.remove('az-video-loading');
           }
         };
 
-        $(window).on("load", function () {
+        $(window).on('load', function () {
           resize();
         });
-        $(window).on("resize.bgVideo", function () {
+        $(window).on('resize.bgVideo', function () {
           resize();
         });
       }

@@ -10,7 +10,7 @@
     attach: function attach(context, settings) {
       var filterInformation = drupalSettings.azCalendarFilter;
 
-      if (!drupalSettings.hasOwnProperty("calendarFilterRanges")) {
+      if (!drupalSettings.hasOwnProperty('calendarFilterRanges')) {
         drupalSettings.calendarFilterRanges = [];
       }
 
@@ -22,20 +22,20 @@
           var ranges = filterInformation[property];
 
           for (var i = 0; i < ranges.length; i++) {
-            drupalSettings.calendarFilterRanges[property].push([$.datepicker.parseDate("@", ranges[i][0] * 1000), $.datepicker.parseDate("@", ranges[i][1] * 1000)]);
+            drupalSettings.calendarFilterRanges[property].push([$.datepicker.parseDate('@', ranges[i][0] * 1000), $.datepicker.parseDate('@', ranges[i][1] * 1000)]);
           }
         }
       });
-      $(".az-calendar-filter-calendar").datepicker("refresh");
-      $(".az-calendar-filter-wrapper", context).once("azCalendarFilter").each(function () {
+      $('.az-calendar-filter-calendar').datepicker('refresh');
+      $('.az-calendar-filter-wrapper', context).once('azCalendarFilter').each(function () {
         var $wrapper = $(this);
-        var rangeKey = $wrapper.data("az-calendar-filter");
+        var rangeKey = $wrapper.data('az-calendar-filter');
         var rangeStart = null;
         var rangeEnd = null;
         $wrapper.append('<div class="az-calendar-filter-buttons"></div><div class="az-calendar-filter-calendar"></div>');
-        var $buttonWrapper = $wrapper.children(".az-calendar-filter-buttons");
-        var $calendar = $wrapper.children(".az-calendar-filter-calendar");
-        var $submitButton = $wrapper.closest(".views-exposed-form").find("button.form-submit");
+        var $buttonWrapper = $wrapper.children('.az-calendar-filter-buttons');
+        var $calendar = $wrapper.children('.az-calendar-filter-calendar');
+        var $submitButton = $wrapper.closest('.views-exposed-form').find('button.form-submit');
         var task = null;
 
         function triggerFilterChange($ancestor, delay) {
@@ -44,8 +44,8 @@
           }
 
           task = setTimeout(function () {
-            if (!$submitButton.prop("disabled")) {
-              $ancestor.find("input").eq(0).change();
+            if (!$submitButton.prop('disabled')) {
+              $ancestor.find('input').eq(0).change();
               $submitButton.click();
               task = null;
             } else {
@@ -55,27 +55,27 @@
         }
 
         function updateCalendarFilters(startDate, endDate) {
-          var $ancestor = $wrapper.closest(".views-widget-az-calendar-filter");
+          var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');
           var dates = [startDate, endDate];
 
           for (var i = 0; i < dates.length; i++) {
             var month = dates[i].getMonth() + 1;
             var day = dates[i].getDate();
             var year = dates[i].getFullYear();
-            $ancestor.find("input").eq(i).val("".concat(year, "-").concat(month, "-").concat(day));
+            $ancestor.find('input').eq(i).val("".concat(year, "-").concat(month, "-").concat(day));
           }
 
           triggerFilterChange($ancestor, 0);
-          $ancestor.find(".btn").removeClass("active").attr("aria-pressed", "false");
+          $ancestor.find('.btn').removeClass('active').attr('aria-pressed', 'false');
         }
 
         $calendar.datepicker({
-          dateFormat: "m-d-yy",
+          dateFormat: 'm-d-yy',
           showOtherMonths: true,
           selectOtherMonths: true,
-          dayNamesMin: ["S", "M", "T", "W", "T", "F", "S"],
+          dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
           beforeShowDay: function beforeShowDay(date) {
-            var dateClass = "calendar-filter-day-no-events";
+            var dateClass = 'calendar-filter-day-no-events';
             var time = date.getTime();
             var withinRange = false;
 
@@ -84,7 +84,7 @@
                 withinRange = true;
 
                 if (rangeStart === rangeEnd) {
-                  return [true, "calendar-filter-window"];
+                  return [true, 'calendar-filter-window'];
                 }
               }
             }
@@ -94,7 +94,7 @@
 
               for (var i = 0; i < ranges.length; i++) {
                 if (ranges[i][0].getTime() <= time && ranges[i][1].getTime() >= time) {
-                  dateClass = withinRange ? "calendar-filter-window" : "calendar-filter-day-events";
+                  dateClass = withinRange ? 'calendar-filter-window' : 'calendar-filter-day-events';
                 }
               }
             }
@@ -109,17 +109,17 @@
             updateCalendarFilters(startDay, endDay);
           },
           onSelect: function onSelect(datetext) {
-            var newDate = $.datepicker.parseDate("m-d-yy", datetext);
+            var newDate = $.datepicker.parseDate('m-d-yy', datetext);
             rangeStart = newDate.getTime();
             rangeEnd = newDate.getTime();
             updateCalendarFilters(newDate, newDate);
           }
         });
-        $calendar.children(".ui-corner-all").removeClass("ui-corner-all");
+        $calendar.children('.ui-corner-all').removeClass('ui-corner-all');
         $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-today btn-block">Today</button>');
         $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-week btn-block">This Week</button>');
         $buttonWrapper.append('<button type="button" class="btn btn-hollow-primary calendar-filter-button calendar-filter-month btn-block mb-2">This Month</button>');
-        $buttonWrapper.children(".calendar-filter-button").on("click", function (e) {
+        $buttonWrapper.children('.calendar-filter-button').on('click', function (e) {
           var $pressed = $(e.currentTarget);
           var current = new Date(Date.now());
           var today = new Date(current.getFullYear(), current.getMonth(), current.getDate());
@@ -130,21 +130,21 @@
           var startDay = today;
           var endDay = today;
 
-          if ($pressed.hasClass("calendar-filter-week")) {
+          if ($pressed.hasClass('calendar-filter-week')) {
             startDay = new Date(year, month, diff);
             endDay = new Date(year, month, diff + 6);
-          } else if ($pressed.hasClass("calendar-filter-month")) {
+          } else if ($pressed.hasClass('calendar-filter-month')) {
             startDay = new Date(year, month, 1);
             endDay = new Date(year, month + 1, 0);
           }
 
-          $calendar.datepicker("setDate", startDay);
-          $calendar.datepicker("setDate", null);
+          $calendar.datepicker('setDate', startDay);
+          $calendar.datepicker('setDate', null);
           rangeStart = startDay.getTime();
           rangeEnd = endDay.getTime();
           updateCalendarFilters(startDay, endDay);
-          $(".az-calendar-filter-calendar").datepicker("refresh");
-          $pressed.addClass("active").attr("aria-pressed", "true");
+          $('.az-calendar-filter-calendar').datepicker('refresh');
+          $pressed.addClass('active').attr('aria-pressed', 'true');
         });
       });
     }

@@ -531,7 +531,8 @@ These plugins are designed to be reusable in custom migrations.
 - [ParagraphsMappingFlexiblePage (paragraphs_mapping_flexible_page)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
 - [ParagraphsBehavior (paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehavior.php) (Deprecated: use `az_paragraphs_behavior_settings`)
 - [ParagraphsBehaviorSettings (az_paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehaviorSettings.php)
-  
+- [ViewsReferenceMapping (az_views_reference_mapping)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ViewsReferenceMapping.php)
+
 ### Source plugins
 
 - [AZFileHandle (az_file_migration)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/source/AZFileHandle.php)
@@ -544,7 +545,7 @@ These plugins are designed to be reusable in custom migrations.
 These plugins are used in various built-in Quickstart migrations but were not designed with reusability in mind.
 
 - `paragraphs_callout_field_merge`
-- `paragraphs_chunks_view_display_mapping`
+- `paragraphs_chunks_view_display_mapping` (Deprecated: use `az_views_reference_mapping`)
 - `paragraphs_column_image_field_merge`
 - `paragraphs_extra_info_field_merge`
 - `paragraphs_file_download_field_merge`
