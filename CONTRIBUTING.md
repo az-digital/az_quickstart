@@ -165,6 +165,14 @@ When you install either of the recommended environments with the configuration
 provided by this project, you will have our testing environment built in, but it
 can still be a bit complicated.
 
+## Testing with phpstan prior to making a pull request
+PHPStan focuses on finding errors in your code without actually running it. It
+catches whole classes of bugs even before you write tests for the code. It moves
+PHP closer to compiled languages in the sense that the correctness of each line
+of the code can be checked before you run the actual line.
+
+`lando phpstan`
+`ddev phpstan`
 ### Local testing on Lando
 With lando running and quickstart installed and the branch with the changes you
 want to run tests on checked out.

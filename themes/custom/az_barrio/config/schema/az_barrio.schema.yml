@@ -358,3 +358,9 @@ az_barrio.settings:
     footer_logo_path:
       type: path
       label: 'Footer logo path'
+    header_one_col_classes:
+      type: string
+      label: 'Header column one classes'
+    header_two_col_classes:
+      type: string
+      label: 'Header column two classes'

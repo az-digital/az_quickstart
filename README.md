@@ -199,6 +199,7 @@ is the report at `/admin/reports/status#error` once you have logged in. There
 will probably be a Trusted Host Settings error, needing a manual change to your
 settings file, and notice of some directory permissions that need relaxed to
 allow the web server to write there.
+
 ### Distribution update
 
 When updating your codebase on an existing site, you should always check if
@@ -211,5 +212,24 @@ You should be able to see the upstream updates to be applied, after updating
 your codebase by employing the "Merge" strategy available under the "Advanced"
 accordion on that page.
 
+### Using Xdebug with Lando and VSCode
 
+This repository contains the necessary config to run Xdebug inside a lando
+application container.
 
+To start a debugging session, perform the following steps:
+1. In VSCode, go to the extensions tab.
+2. Type `@recommended` in the search bar.
+3. Install all workspace recommended extensions.
+4. Start lando with `lando start`.
+5. Start Xdebug with `lando xdebug-on`.
+6. At the bottom left of your VSCode window, click the little green icon.
+7. Choose `Attach to Running Container...` and select the `appserver` for your running lando instance.
+8. Once the new VScode window pops up, go back to the extensions tab.
+9. Type `@recommended` in the search bar.
+10. Install all workspace recommended extensions.
+11. In VSCode, go to the debugging tab.
+12. Click the green triangle next to `Listen for XDebug` at the top right.
+13. In VSCode, go back to the code tab.
+14. Set any desired breakpoints.
+15. You may now proceed with debugging.
