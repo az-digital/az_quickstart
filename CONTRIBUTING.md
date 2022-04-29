@@ -153,7 +153,7 @@ ddev phpunit
 ## Paragraph Styles
 
 Much of the content editor experience for pages in Quickstart consists of constructing pages using paragraph items as content building blocks. In crafting
-new paragraph types, it will often be necessary to include settings that are tracked as part of individual paragraph items that control the display of the related paragraph item. The recommended approach for including this sort of setting is with [Paragraph Behavior Plugins] (https://www.drupal.org/project/paragraphs/issues/2832884).
+new paragraph types, it will often be necessary to include settings that are tracked as part of individual paragraph items that control the display of the related paragraph item. The recommended approach for including this sort of setting is with [Paragraph Behavior Plugins](https://www.drupal.org/project/paragraphs/issues/2832884).
 
 This allows developers to attach [Form API](https://www.drupal.org/docs/drupal-apis/form-api) elements to the paragraph form and handles saving this configuration on a per-paragraph basis.
 
