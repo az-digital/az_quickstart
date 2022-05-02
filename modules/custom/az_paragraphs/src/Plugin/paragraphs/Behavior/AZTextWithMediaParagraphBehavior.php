@@ -2,11 +2,9 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -180,7 +178,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
     $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . '-' . $paragraph->id());
     if (!empty($variables['attributes']) && !empty($variables['attributes']['class']) && !is_array($variables['attributes']['class'])) {
-      $variables['attributes']['class'] = [];
+      $variables['attributes']['class'] = [$variables['attributes']['class']];
     }
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
@@ -252,18 +250,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    // Get plugin configuration.
-    $config = $this->getSettings($paragraph);
-    // Apply bottom spacing if set.
-    if (!empty($config['az_display_settings']['bottom_spacing'])) {
-      $build['#attributes']['class'][] = $config['az_display_settings']['bottom_spacing'];
-    }
   }
 
 }

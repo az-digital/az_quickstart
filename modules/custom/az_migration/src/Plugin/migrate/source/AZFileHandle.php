@@ -72,6 +72,7 @@ class AZFileHandle extends File {
     $path = str_replace(['public:/', 'private:/', 'temporary:/'],
     [$this->publicPath, $this->privatePath, $this->temporaryPath],
     $row->getSourceProperty('uri'));
+    // Set the filepath for the source files.
     $row->setSourceProperty('filepath', $path);
 
     return parent::prepareRow($row);

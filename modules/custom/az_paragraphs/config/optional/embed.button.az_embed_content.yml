@@ -22,5 +22,7 @@ type_settings:
     - 'view_mode:node.teaser'
   entity_browser: ''
   entity_browser_settings: {  }
-icon: {  }
+icon:
+  data: iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAz0lEQVRYhe2W4Q2CMBBGn8YxGETDGriHi5iwB65B0kHYA/8UbbAHPW0FtC+5cJBre/S+Ngf/zi7h3AVwtL4BuoRreamA3lolBe2/ls5aEzh4vonbJXCzT7fmAKXgw4wmeqW5iYeOefzkKkswYICrYi4DnJ33ErhYvwbaUazIsE2NYnEfv3UMG/SiDGJKA5/iakKseWgC7XzICx3PO0JFLBEGkVID2zgFKTUQNYHaWnQWvweyBjajgWRM7UCBvj1zOb07UNuSqVqwMYuXIJO5AwPmbJF9Gh3mAAAAAElFTkSuQmCC
+  uri: 'public://embed_buttons/sharp_post_add_black_24dp.png'
 icon_uuid: null

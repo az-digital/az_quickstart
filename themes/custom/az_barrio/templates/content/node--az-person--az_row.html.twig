@@ -90,7 +90,7 @@
       {% endif %}
       </div>
       <div class="col-12 col-md-5">
-        <h3 class="h5 mt-0"><a href="{{ url }}">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</a></h3>
+        <h3 class="h5 mt-0"><a href="{{ url }}">{{ content.field_az_fname.0 }} {{ content.field_az_lname.0 }}</a></h3>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
             <span class="d-block">{{ item }}</span>

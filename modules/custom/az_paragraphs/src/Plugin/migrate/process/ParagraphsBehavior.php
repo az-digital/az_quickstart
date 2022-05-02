@@ -9,6 +9,15 @@ use Drupal\migrate\Row;
 /**
  * Configure Behavior for paragraphs.
  *
+ * @deprecated in az_quickstart:2.2.0 and is removed from az_quickstart:2.3.0.
+ *   Use the
+ *   \Drupal\az_paragraphs\Plugin\migrate\process\ParagraphsBehaviorSettings
+ *   process plugin instead following its migration patterns.
+ * // @codingStandardsIgnoreStart
+ * @see https://github.com/az-digital/az_quickstart/pull/1345
+ * @see https://github.com/az-digital/az_quickstart/issues/1348
+ * // @codingStandardsIgnoreEnd
+ *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_behavior_settings"
  * )
