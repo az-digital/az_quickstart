@@ -84,7 +84,7 @@ jobs:
         run: |
           # ./app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
           set -x
-          php -S 127.0.0.1:8080 -t web &
+          php -S http://localhost:8080 -t web &
           sudo mkdir -p /var/www/html/sites/simpletest
           sudo chown www-data:www-data -R /var/www/html/sites/simpletest
           sudo mkdir -p /var/www/html/sites/default/files/simpletest
