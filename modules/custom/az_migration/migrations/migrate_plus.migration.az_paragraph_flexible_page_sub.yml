@@ -6,6 +6,9 @@ migration_tags:
 status: true
 
 source:
+  constants:
+    prefix: "<p class='lead'>"
+    suffix: "</p>"
   plugin: d7_node
   node_type: uaqs_flexible_page
 
@@ -20,9 +23,15 @@ process:
     - plugin: skip_on_empty
       method: row
     - plugin: sub_process
+      include_source: true
       process:
         delta: delta
-        value: value
+        value:
+          - plugin: concat
+            source:
+              - source/constants/prefix
+              - value
+              - source/constants/suffix
         format:
           plugin: default_value
           default_value: az_standard
