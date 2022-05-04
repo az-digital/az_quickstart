@@ -1,8 +1,8 @@
 name: Test PR on Release Branch
-on: push
-    # pull_request:
-    #   types:
-    #     - opened
+on: #push
+    pull_request:
+      types:
+        - opened
     
   #  workflow_dispatch:
   #   inputs:
@@ -61,7 +61,7 @@ jobs:
           git checkout "${{ matrix.release }}"
           PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
           echo "${PR_NUMBER}"
-          curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/1408.diff | git apply --reject --whitespace=fix --allow-empty
+          curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/${{PR_NUMBER}}.diff | git apply --reject --whitespace=fix --allow-empty
           
           
       - name: Composer Install
