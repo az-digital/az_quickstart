@@ -286,3 +286,26 @@ lando drupal site:mode dev
 ```
 ddev drush en -y devel && ddev drupal site:mode dev
 ```
+
+## Configuration Management and Database Updates
+
+A question that frequently arises for Quickstart contributors is whether a change that they are making requires a database update or if configuration file changes are sufficient.
+
+### Context
+
+`az-digital/az_quickstart` is a Drupal distribution that is hosted on many different environments by a multitude of teams with differing philosophies on
+change management when it comes to their Quickstart websites. This means that the Arizona Digital team should use the following guidelines when making changes to the Quickstart codebase.
+
+### Configuration changes that require database updates
+
+Configuration changes will require database updates if:
+-  Your code adds a new setting that never existed before.
+-  It would be best if the new setting is immediately set to the default
+   regardless of downstream decisions.
+-  Your code replaces an existing setting and has a new key name.
+
+### Configuration changes that do not require database updates
+
+Configuration changes will not require database updates if:
+- Your code adds another option to an existing setting and doesn't need to be selected by default.
+- Your code changes an existing setting, but doesn't have breaking implications if configuration updates aren't applied right away downstream.
