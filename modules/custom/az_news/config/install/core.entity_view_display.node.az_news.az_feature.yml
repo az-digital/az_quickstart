@@ -41,7 +41,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'card card-borderless card-clickable mb-6'
+        classes: 'card card-borderless card-clickable mb-5'
         show_empty_fields: false
       label: 'Card clickable'
     group_title_block:
