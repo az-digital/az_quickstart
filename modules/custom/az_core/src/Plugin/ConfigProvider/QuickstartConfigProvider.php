@@ -153,11 +153,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       $data = $profile_storage->readMultiple(array_keys($data)) + $data;
     }
 
-    // Get permissions defined.
-    // @phpstan-ignore-next-line
-    $permission_definitions = \Drupal::service('user.permissions')->getPermissions();
-    $permissions = array_keys($permission_definitions);
-
     // Remove permission that don't exist.
     $data = $this->trimPermissions($data);
 
