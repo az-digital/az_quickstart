@@ -202,6 +202,52 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    // Check for empty front page path.
+    if ($form_state->isValueEmpty('site_frontpage')) {
+      // Set to default "user/login".
+      $form_state->setValueForElement($form['front_page']['site_frontpage'], '/user/login');
+    }
+    else {
+      // Get the normal path of the front page.
+      $form_state->setValueForElement($form['front_page']['site_frontpage'], $this->aliasManager->getPathByAlias($form_state->getValue('site_frontpage')));
+    }
+    // Validate front page path.
+    if (($value = $form_state->getValue('site_frontpage')) && $value[0] !== '/') {
+      $form_state->setErrorByName('site_frontpage', $this->t("The path '%path' has to start with a slash.", ['%path' => $form_state->getValue('site_frontpage')]));
+
+    }
+    if (!$this->pathValidator->isValid($form_state->getValue('site_frontpage'))) {
+      $form_state->setErrorByName('site_frontpage', $this->t("Either the path '%path' is invalid or you do not have access to it.", ['%path' => $form_state->getValue('site_frontpage')]));
+    }
+    // Get the normal paths of both error pages.
+    if (!$form_state->isValueEmpty('site_403')) {
+      $form_state->setValueForElement($form['error_page']['site_403'], $this->aliasManager->getPathByAlias($form_state->getValue('site_403')));
+    }
+    if (!$form_state->isValueEmpty('site_404')) {
+      $form_state->setValueForElement($form['error_page']['site_404'], $this->aliasManager->getPathByAlias($form_state->getValue('site_404')));
+    }
+    if (($value = $form_state->getValue('site_403')) && $value[0] !== '/') {
+      $form_state->setErrorByName('site_403', $this->t("The path '%path' has to start with a slash.", ['%path' => $form_state->getValue('site_403')]));
+    }
+    if (($value = $form_state->getValue('site_404')) && $value[0] !== '/') {
+      $form_state->setErrorByName('site_404', $this->t("The path '%path' has to start with a slash.", ['%path' => $form_state->getValue('site_404')]));
+    }
+    // Validate 403 error path.
+    if (!$form_state->isValueEmpty('site_403') && !$this->pathValidator->isValid($form_state->getValue('site_403'))) {
+      $form_state->setErrorByName('site_403', $this->t("Either the path '%path' is invalid or you do not have access to it.", ['%path' => $form_state->getValue('site_403')]));
+    }
+    // Validate 404 error path.
+    if (!$form_state->isValueEmpty('site_404') && !$this->pathValidator->isValid($form_state->getValue('site_404'))) {
+      $form_state->setErrorByName('site_404', $this->t("Either the path '%path' is invalid or you do not have access to it.", ['%path' => $form_state->getValue('site_404')]));
+    }
+
+    parent::validateForm($form, $form_state);
+  }
+
+  /**
    * Validates the monitoring page path.
    *
    * @param array $element
@@ -234,6 +280,9 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('system.site')
       ->set('name', $form_state->getValue('site_name'))
+      ->set('page.front', $form_state->getValue('site_frontpage'))
+      ->set('page.403', $form_state->getValue('site_403'))
+      ->set('page.404', $form_state->getValue('site_404'))
       ->save();
 
     $this->config('az_core.settings')
