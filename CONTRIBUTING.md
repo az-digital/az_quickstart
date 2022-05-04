@@ -293,8 +293,7 @@ A question that frequently arises for Quickstart contributors is whether a chang
 
 ### Context
 
-`az-digital/az_quickstart` is a Drupal distribution that is hosted on many different environments by a multitude of teams with differing philosophies on
-change management when it comes to their Quickstart websites. This means that the Arizona Digital team should use the following guidelines when making changes to the Quickstart codebase.
+`az-digital/az_quickstart` is a Drupal distribution that is hosted on many different platforms by a variety of teams employing different strategies and cadences when it comes to updating their Quickstart websites. This necessitates relatively strict guidelines that should be followed by the Arizona Digital team when making changes to Quickstart itself.
 
 ### Configuration changes that require database updates
 
