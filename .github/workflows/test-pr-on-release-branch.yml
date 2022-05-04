@@ -81,7 +81,7 @@ jobs:
         run: php ./app/vendor/bin/drush site:install az_quickstart --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
 
       - name: PHP Unit Tests
-        working_directory: ./app
+        working-directory: ./app
         run: |
           # ./app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
           set -x
