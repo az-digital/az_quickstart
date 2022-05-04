@@ -10,8 +10,8 @@
    */
   function calculateScrollbarWidth() {
     document.documentElement.style.setProperty(
-      "--scrollbar-width",
-      `${window.innerWidth - document.documentElement.clientWidth}px`
+      '--scrollbar-width',
+      `${window.innerWidth - document.documentElement.clientWidth}px`,
     );
   }
 
@@ -23,16 +23,16 @@
    * the `html` element.
    */
   function pushSidebarsDown() {
-    const contentRegion = document.querySelectorAll("main.main-content");
+    const contentRegion = document.querySelectorAll('main.main-content');
     const allFullWidthElements = document.querySelectorAll(
-      ".paragraph.full-width-background"
+      '.paragraph.full-width-background',
     );
     const lastFullWidthElement =
       allFullWidthElements[allFullWidthElements.length - 1];
     const contentRegionPosition = contentRegion[0].getBoundingClientRect();
     const style =
       allFullWidthElements[0].currentStyle ||
-      window.getComputedStyle(lastFullWidthElement, "");
+      window.getComputedStyle(lastFullWidthElement, '');
     const bottomMargin = style.marginBottom;
     const contentRegionTop = contentRegionPosition.top;
     const lastFullWidthElementPosition =
@@ -41,8 +41,8 @@
     const sidebarTopMargin =
       lastFullWidthElementBottom - contentRegionTop + bottomMargin;
     document.documentElement.style.setProperty(
-      "--sidebar-top-margin",
-      `${sidebarTopMargin}`
+      '--sidebar-top-margin',
+      `${sidebarTopMargin}`,
     );
   }
 
@@ -53,19 +53,19 @@
    * `--full-width-right-distance` CSS variables on the `html` element.
    */
   function calculateFullWidthNegativeMargins() {
-    const contentRegion = document.querySelectorAll(".block-system-main-block");
+    const contentRegion = document.querySelectorAll('.block-system-main-block');
     const contentRegionPosition = contentRegion[0].getBoundingClientRect();
     const distanceFromLeft = contentRegionPosition.left;
     const distanceFromRight = contentRegionPosition.right;
     const negativeLeftMargin = 0 - distanceFromLeft;
     const negativeRightMargin = 0 - distanceFromRight;
     document.documentElement.style.setProperty(
-      "--full-width-left-distance",
-      `${negativeLeftMargin}px`
+      '--full-width-left-distance',
+      `${negativeLeftMargin}px`,
     );
     document.documentElement.style.setProperty(
-      "--full-width-right-distance",
-      `${negativeRightMargin}px`
+      '--full-width-right-distance',
+      `${negativeRightMargin}px`,
     );
   }
 
@@ -88,7 +88,7 @@
   /**
    * Recalculates values for CSS variables on window resize.
    */
-  window.addEventListener("resize", () => {
+  window.addEventListener('resize', () => {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
@@ -96,7 +96,7 @@
   /**
    * Recalculates values for CSS variables when azVideoPlay fires.
    */
-  window.addEventListener("azVideoPlay", () => {
+  window.addEventListener('azVideoPlay', () => {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
