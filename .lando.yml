@@ -62,10 +62,7 @@ tooling:
   # in a race condition if Drupal is installed during the run phase.
   install:
     service: appserver
-    cmd: /app/vendor/bin/drush --root=/app/web site:install
-    --account-mail=noreply@email.arizona.edu --account-name=azadmin
-    --account-pass=azadmin
-    --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose
+    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose
   # Enable theme debugging and devel.
   devel:
     service: appserver
