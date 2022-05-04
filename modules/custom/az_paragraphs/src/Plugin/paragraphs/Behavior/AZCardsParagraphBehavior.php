@@ -33,7 +33,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'col-lg-4' => $this->t('3'),
         'col-lg-3' => $this->t('4'),
       ],
-      '#default_value' => $config['card_width'] ?? 'col-md-4 col-lg-4',
+      '#default_value' => $config['card_width'] ?? 'col-lg-4',
       '#description' => $this->t('Choose how many cards appear per row. Additional cards will wrap to a new row. This selection sets the cards per row on desktops with automatic defaults set for tablet and phone. Override cards per row on tablet and phone in Additional options.'),
     ];
 
