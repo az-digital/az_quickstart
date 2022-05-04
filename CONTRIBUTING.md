@@ -300,8 +300,7 @@ change management when it comes to their Quickstart websites. This means that th
 
 Configuration changes will require database updates if:
 -  Your code adds a new setting that never existed before.
--  It would be best if the new setting is immediately set to the default
-   regardless of downstream decisions.
+-  You are changing a default setting and it would be best for it to be the new default on sites immediately, regardless of downstream decisions.
 -  Your code replaces an existing setting and has a new key name.
 
 ### Configuration changes that do not require database updates
