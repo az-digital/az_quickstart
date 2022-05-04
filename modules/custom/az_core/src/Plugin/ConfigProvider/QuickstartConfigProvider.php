@@ -27,7 +27,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
    * {@inheritdoc}
    */
   public function addConfigToCreate(array &$config_to_create, StorageInterface $storage, $collection, $prefix = '', array $profile_storages = []) {
-    // Remove permission that don't exist.
+    // Remove permissions that don't exist.
     $config_to_create = $this->trimPermissions($config_to_create);
   }
 
@@ -153,7 +153,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       $data = $profile_storage->readMultiple(array_keys($data)) + $data;
     }
 
-    // Remove permission that don't exist.
+    // Remove permissions that don't exist.
     $data = $this->trimPermissions($data);
 
     // Add the configuration changes.
