@@ -134,7 +134,7 @@
                 "Allow text field to enforce a specific text format (784672)": "https://gist.githubusercontent.com/joeparsons/7b151cea0e897421e6e2a1b1030b58ae/raw/6070b9ae1af3681d8c2d7b4dc15e0b146911035e/784672-217-9-4-x.patch",
                 "Allow editing area in Claro to span full width (3184667)": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://git.drupalcode.org/project/drupal/-/merge_requests/1489.diff",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
                 "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Incorrect results on grouped exposed filters (1810148)": "https://www.drupal.org/files/issues/2022-02-02/1810148-101.patch",
