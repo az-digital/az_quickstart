@@ -27,7 +27,42 @@ class QuickstartConfigProvider extends ConfigProviderBase {
    * {@inheritdoc}
    */
   public function addConfigToCreate(array &$config_to_create, StorageInterface $storage, $collection, $prefix = '', array $profile_storages = []) {
-    // The caller will aready have loaded config for install.
+    // Remove permission that don't exist.
+    $config_to_create = $this->trimPermissions($config_to_create);
+  }
+
+  /**
+   * Trim invalid permissions from configuration data.
+   *
+   * @param array $config
+   *   A list of the configuration data keyed by configuration object name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  protected function trimPermissions(array $config) {
+    // Get permissions defined.
+    // @todo Use injection on user.permissions.
+    // @phpstan-ignore-next-line
+    $permission_definitions = \Drupal::service('user.permissions')->getPermissions();
+    $permissions = array_keys($permission_definitions);
+
+    // Add the configuration changes.
+    foreach ($config as $name => &$value) {
+      // Is this a permission configuration file?
+      if (strpos($name, 'user.role.') === 0) {
+        // Trim active permissions list to what's expected.
+        if (!empty($value['permissions'])) {
+          $value['permissions'] = array_intersect($permissions, $value['permissions']);
+          sort($value['permissions']);
+        }
+      }
+
+      // Add transformed config hash.
+      $value = $this->addDefaultConfigHash($value);
+    }
+
+    return $config;
   }
 
   /**
@@ -123,18 +158,11 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     $permission_definitions = \Drupal::service('user.permissions')->getPermissions();
     $permissions = array_keys($permission_definitions);
 
-    // Add the configuration changes.
-    foreach ($data as $name => &$value) {
-      // Is this a permission configuration file?
-      if (strpos($name, 'user.role.') === 0) {
-        // Trim active permissions list to what's expected.
-        if (!empty($value['permissions'])) {
-          $value['permissions'] = array_intersect($permissions, $value['permissions']);
-          sort($value['permissions']);
-        }
-      }
+    // Remove permission that don't exist.
+    $data = $this->trimPermissions($data);
 
-      // Add transformed config hash.
+    // Add the configuration changes.
+    foreach ($data as $name => $value) {
       $value = $this->addDefaultConfigHash($value);
       $this->providerStorage->write($name, $value);
     }
