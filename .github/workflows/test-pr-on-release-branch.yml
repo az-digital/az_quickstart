@@ -77,25 +77,26 @@ jobs:
           composer require --no-update az-digital/az_quickstart:\*@dev
           composer install         
        
-      - name: Install Drush
+      - name: Install Quickstart with Drush
         run: php ./app/vendor/bin/drush site:install az_quickstart --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
 
       - name: PHP Unit Tests
+        working_directory: ./app
         run: |
           # ./app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
           set -x
           php -S 127.0.0.1:8080 -t web &
           # php -S http://localhost:8080 -t web &
-          sudo mkdir -p /var/www/html/sites/simpletest
-          sudo chown www-data:www-data -R /var/www/html/sites/simpletest
-          sudo mkdir -p /var/www/html/sites/default/files/simpletest
-          sudo chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
+          mkdir -p web/sites/simpletest
+          chmod 777  web/sites/simpletest
+          # sudo mkdir -p /var/www/html/sites/default/files/simpletest
+          # sudo chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
           export SIMPLETEST_BASE_URL="http://127.0.0.1:8080"
           # export SIMPLETEST_BASE_URL="http://localhost:8080"
           export SIMPLETEST_DB="mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db"
           export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
           # export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://localhost:${{ job.services.chromedriver.ports[9515] }}"]'
-          find ./app/web/profiles/custom/az_quickstart/ -name "*Test.php" | ./app/vendor/bin/fastest -vvv "./app/vendor/bin/phpunit {} --configuration ./app/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap ./app/web/core/tests/bootstrap.php ./app/web/profiles/custom/az_quickstart;"
+          find ./web/profiles/custom/az_quickstart/ -name "*Test.php" | ./vendor/bin/fastest -vvv "./vendor/bin/phpunit {} --configuration ./web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap ./web/core/tests/bootstrap.php ./web/profiles/custom/az_quickstart;"
 
       # - name: PHP Unit Tests
       #   run: |
