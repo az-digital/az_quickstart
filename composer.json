@@ -84,7 +84,7 @@
         "drupal/paragraphs": "1.12",
         "drupal/paragraphs_admin": "1.2",
         "drupal/pathauto": "1.8",
-        "drupal/quick_node_clone": "1.14",
+        "drupal/quick_node_clone": "1.15",
         "drupal/redirect": "1.7.0",
         "drupal/role_delegation": "1.1",
         "drupal/search_exclude": "2.0.0-beta2",
