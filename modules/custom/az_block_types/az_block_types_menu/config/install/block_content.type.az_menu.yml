@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_block_types_menu
+id: az_menu
+label: 'Menu'
+revision: 1
+description: 'Add a menu anywhere.'

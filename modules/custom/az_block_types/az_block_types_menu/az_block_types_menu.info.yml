@@ -1,0 +1,8 @@
+name: 'Quickstart Block Types - Menu'
+type: module
+description: 'Adds a block for placing menus anywhere.'
+core_version_requirement: ^9
+package: The University of Arizona
+dependencies:
+  - az_block_types
+  - field_menu:field_menu

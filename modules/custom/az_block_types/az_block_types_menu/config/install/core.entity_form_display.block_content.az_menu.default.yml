@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_block_types_menu
+  config:
+    - block_content.type.az_menu
+    - field.field.block_content.az_menu.field_az_menu
+  module:
+    - field_menu
+id: block_content.az_menu.default
+targetEntityType: block_content
+bundle: az_menu
+mode: default
+content:
+  field_az_menu:
+    type: field_menu_tree_widget
+    weight: 1
+    region: content
+    settings:
+      max_depth: 0
+      menu_item_key: ''
+      include_root: false
+      menu_title: ''
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

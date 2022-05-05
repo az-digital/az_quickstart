@@ -65,6 +65,7 @@
         "drupal/externalauth": "1.4.0",
         "drupal/field_group": "3.2.0",
         "drupal/field_group_link": "3.0.0",
+        "drupal/field_menu": "2.0",
         "drupal/google_tag": "1.4",
         "drupal/honeypot": "2.0.2",
         "drupal/image_widget_crop": "2.3",
