@@ -278,20 +278,13 @@ Simply use the following command once your site is installed:
 ```
 lando devel
 ```
-Alternatively, you can do this manually by following these steps:
-First you have to make the folder containing /app/web/sites/default/services.yml writable.
-```
-lando ssh --user root
-chmod 755 -R /app/web/sites/default
-exit
-```
-Then enable devel module and put the site into dev mode via drupal console.
-```
-lando drush en -y devel
-lando drupal site:mode dev
-```
 
 ### DDev
+There is a provided ddev tooling for enabling the `devel` module, and enabling
+theme debugging.
+
+Simply use the following command once your site is installed:
+
 ```
-ddev drush en -y devel && ddev drupal site:mode dev
+ddev devel
 ```
