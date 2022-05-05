@@ -69,7 +69,6 @@ tooling:
     user: root
     cmd:
       - echo "Enabling theme debugging and devel..."
-      - chmod 755 -R /app/web/sites/default
       - /app/vendor/bin/drush --root=/app/web en -y devel
       - /app/vendor/bin/drupal --root=/app/web site:mode dev
       - chmod 644 -R /app/web/sites/default
