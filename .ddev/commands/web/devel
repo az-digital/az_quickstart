@@ -1,0 +1,9 @@
+#!/bin/sh
+
+## Description: Enable theme debugging and devel module.
+## Usage: devel
+## Example: "ddev devel"
+
+echo "Enabling theme debugging and devel..."
+drush --root=/var/www/html/web en -y devel
+vendor/bin/drupal site:mode dev
