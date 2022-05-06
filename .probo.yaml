@@ -93,7 +93,7 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal --root=/var/www/html config:export --directory="config-export" --remove-uuid --remove-config-hash
       # Update Quickstart config files.
       - cd /tmp
-      - git clone https://github.com/az-digital/az_quicsktart.git --branch="$BRANCH_NAME"
+      - git clone --branch $BRANCH_NAME https://github.com/az-digital/az_quickstart.git
       - export AZQS_CONFIG_FILES="/tmp/az_quickstart/**/config/**/*.yml"
       - export AZQS_CONFIG_EXPORT_PATH="$SRC_DIR/az-quickstart-scaffolding/config-export"
       - /bin/bash /var/www/html/profiles/custom/az_quickstart/scripts/export-config.sh
