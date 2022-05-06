@@ -28,7 +28,7 @@ dependencies:
     - text
     - user
 third_party_settings:
-  field_group:
+  group_card:
     group_row:
       children:
         - group_link
