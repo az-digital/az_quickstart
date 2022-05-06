@@ -131,8 +131,8 @@ tooling:
       # - /app/vendor/bin/drush --root=/app/web config:delete -y field.field.node.az_flexible_page.field_az_metatag
       # - /app/vendor/bin/drush --root=/app/web config:delete -y field.field.node.az_news.field_az_metatag
       # - /app/vendor/bin/drush --root=/app/web config:delete -y field.field.node.az_person.field_az_metatag
-      - /app/vendor/bin/drush --root=/app/web config:delete -y field.storage.node.field_az_metatag
-      - /app/vendor/bin/drush --root=/app/web pm:uninstall -y metatag
+      # - /app/vendor/bin/drush --root=/app/web config:delete -y field.storage.node.field_az_metatag
+      # - /app/vendor/bin/drush --root=/app/web pm:uninstall -y metatag
       # Clear cache.
       - /app/vendor/bin/drush --root=/app/web cr
       # Export config.
