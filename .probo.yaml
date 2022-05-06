@@ -92,12 +92,11 @@ steps:
       - mkdir -p $SRC_DIR/az-quickstart-scaffolding/config-export
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal --root=/var/www/html config:export --directory="config-export" --remove-uuid --remove-config-hash
       # Update Quickstart config files.
-      - chmod -R 777 /var/www/html/profiles/custom/az_quickstart
-      - export AZQS_CONFIG_FILES="/var/www/html/profiles/custom/az_quickstart/**/config/**/*.yml"
+      - cd /tmp
+      - git clone https://github.com/az-digital/az_quicsktart.git --branch="$BRANCH_NAME"
+      - export AZQS_CONFIG_FILES="/tmp/az_quickstart/**/config/**/*.yml"
       - export AZQS_CONFIG_EXPORT_PATH="$SRC_DIR/az-quickstart-scaffolding/config-export"
       - /bin/bash /var/www/html/profiles/custom/az_quickstart/scripts/export-config.sh
-      - chmod -R 644 /var/www/html/profiles/custom/az_quickstart
-      - cd /var/www/html/profiles/custom/az_quickstart
       - git diff ./**/config/**/*.yml
   - name: Run PHPUnit Tests
     plugin: Script
