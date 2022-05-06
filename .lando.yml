@@ -109,6 +109,54 @@ tooling:
       # Now issue a composer update/install for the scaffolding folder to pull in new dependencies.
       # "true" command consumes passed Lando arguments that were only intended to be passed to the previous call.
       - /usr/local/bin/composer --working-dir=/app --no-scripts update && /usr/local/bin/composer --working-dir=/app install && true
+  config-export:
+    service: appserver
+    cmd:
+      # Export config.
+      - /app/vendor/bin/drupal --root=/app/web config:export --directory="profiles/custom/az_quickstart/config-export" --remove-uuid --remove-config-hash
+      # Update Quickstart config files.
+      - mkdir -p /app/web/profiles/custom/az_quickstart/config-export
+      - /bin/bash /app/web/profiles/custom/az_quickstart/scripts/export-config.sh
+    env:
+      AZQS_CONFIG_FILES: "/app/web/profiles/custom/az_quickstart/**/config/**/*.yml"
+      AZQS_CONFIG_EXPORT_PATH: "/app/web/profiles/custom/az_quickstart/config-export"
+  config-export-full:
+    service: appserver
+    cmd:
+      # Install optional modules with config.
+      - /app/vendor/bin/drush --root=/app/web pm:enable -y az_carousel az_migration az_paragraphs_html access_unpublished antibot seckit
+      # Uninstall az_seo module.
+      # - /app/vendor/bin/drush --root=/app/web pm:uninstall -y az_seo
+      # - /app/vendor/bin/drush --root=/app/web config:delete -y field.field.node.az_event.field_az_metatag
+      # - /app/vendor/bin/drush --root=/app/web config:delete -y field.field.node.az_flexible_page.field_az_metatag
+      # - /app/vendor/bin/drush --root=/app/web config:delete -y field.field.node.az_news.field_az_metatag
+      # - /app/vendor/bin/drush --root=/app/web config:delete -y field.field.node.az_person.field_az_metatag
+      - /app/vendor/bin/drush --root=/app/web config:delete -y field.storage.node.field_az_metatag
+      - /app/vendor/bin/drush --root=/app/web pm:uninstall -y metatag
+      # Clear cache.
+      - /app/vendor/bin/drush --root=/app/web cr
+      # Export config.
+      - mkdir -p /app/web/profiles/custom/az_quickstart/config-export
+      - /app/vendor/bin/drupal --root=/app/web config:export --directory="web/profiles/custom/az_quickstart/config-export" --remove-uuid --remove-config-hash
+      # Update Quickstart config files.
+      - /bin/bash /app/web/profiles/custom/az_quickstart/scripts/export-config.sh
+    env:
+      AZQS_CONFIG_FILES: "/app/web/profiles/custom/az_quickstart/**/config/**/*.yml"
+      AZQS_CONFIG_EXPORT_PATH: "/app/web/profiles/custom/az_quickstart/config-export"
+  # config-export-seo:
+  #   service: appserver
+  #   cmd:
+  #     # Install az_seo module.
+  #     - /app/vendor/bin/drush --root=/app/web pm:enable -y az_seo
+  #     - /app/vendor/bin/drush --root=/app/web cr
+  #     # Export config.
+  #     - mkdir -p /app/web/profiles/custom/az_quickstart/config-export
+  #     - /app/vendor/bin/drupal --root=/app/web config:export --directory="profiles/custom/az_quickstart/config-export" --remove-uuid --remove-config-hash
+  #     # Update Quickstart SEO config files.
+  #     - /app/web/profiles/custom/az_quickstart/scripts/export-config.sh
+  #   env:
+  #     AZQS_CONFIG_FILES: "/app/web/profiles/custom/az_quickstart/**/az_seo/config/**/*.yml"
+  #     AZQS_CONFIG_EXPORT_PATH: "/app/web/profiles/custom/az_quickstart/config-export"
   xdebug-on:
     service: appserver
     description: Enable xdebug for Apache.
