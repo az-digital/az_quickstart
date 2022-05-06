@@ -89,12 +89,13 @@ steps:
       # Clear cache.
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush cr
       # Export config.
-      - mkdir -p /tmp/config-export
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal --root=/var/www/html config:export --directory="/tmp/config-export" --remove-uuid --remove-config-hash
+      - mkdir -p $SRC_DIR/az-quickstart-scaffolding/config-export
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drupal --root=/var/www/html config:export --directory="config-export" --remove-uuid --remove-config-hash
       # Update Quickstart config files.
       - export AZQS_CONFIG_FILES="/var/www/html/profiles/custom/az_quickstart/**/config/**/*.yml"
-      - export AZQS_CONFIG_EXPORT_PATH="/tmp/config-export"
+      - export AZQS_CONFIG_EXPORT_PATH="$SRC_DIR/az-quickstart-scaffolding/config-export"
       - /bin/bash /var/www/html/profiles/custom/az_quickstart/scripts/export-config.sh
+      - cd /var/www/html/profiles/custom/az_quickstart
       - git diff
   - name: Run PHPUnit Tests
     plugin: Script
