@@ -98,7 +98,7 @@ steps:
       - export AZQS_CONFIG_FILES="/tmp/az_quickstart/**/config/**/*.yml"
       - export AZQS_CONFIG_EXPORT_PATH="$SRC_DIR/az-quickstart-scaffolding/config-export"
       - /bin/bash /var/www/html/profiles/custom/az_quickstart/scripts/export-config.sh
-      - git diff ./**/config/**/*.yml
+      - git diff **/config/**/*.yml
   - name: Run PHPUnit Tests
     plugin: Script
     script:
