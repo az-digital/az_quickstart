@@ -28,8 +28,8 @@ dependencies:
     - text
     - user
 third_party_settings:
-  group_card:
-    group_row:
+  field_group:
+    group_card:
       children:
         - group_link
       parent_name: ''
