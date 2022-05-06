@@ -95,6 +95,8 @@ class AZConfigOverride {
       // Only query config for the Quickstart provider.
       if ($provider instanceof QuickstartConfigProvider) {
         $overrides = $provider->getOverrideConfig($extensions, $old_extensions);
+        $permissions = $provider->findProfilePermissions($extensions);
+        $overrides = $permissions + $overrides;
 
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {

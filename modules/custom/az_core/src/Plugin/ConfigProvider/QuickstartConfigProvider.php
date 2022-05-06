@@ -32,6 +32,75 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   }
 
   /**
+   * Find newly available permissions from profile.
+   *
+   * @param \Drupal\Core\Extension\Extension[] $extensions
+   *   An associative array of Extension objects, keyed by extension name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  public function findProfilePermissions(array $extensions = []) {
+
+    // Get active configuration to look for users.
+    $existing_config = $this->getActiveStorages()->listAll();
+    // phpcs:ignore
+    $existing_users = array_filter($existing_config, function ($name) {
+      return (strpos($name, 'user.role.') === 0);
+    });
+    $user_config = $this->getActiveStorages()->readMultiple($existing_users);
+
+    // Build list of permissions by providers (eg. module)
+    // @todo Use injection on user.permissions.
+    // @phpstan-ignore-next-line
+    $permissions_definitions = \Drupal::service('user.permissions')->getPermissions();
+    $permissions_by_provider = [];
+    foreach ($permissions_definitions as $key => $permission) {
+      $permissions_by_provider[$permission['provider']][] = $key;
+    }
+    // Filter list only to newly active permissions.
+    $permissions_by_provider = array_intersect_key($permissions_by_provider, $extensions);
+    $new_perms = [];
+    foreach ($permissions_by_provider as $perms) {
+      $new_perms = $new_perms + $perms;
+    }
+    sort($new_perms);
+
+    $profile_storages = $this->getProfileStorages();
+    // Check to see if the corresponding profile storage has any overrides.
+    foreach ($user_config as $key => $data) {
+      $current_perms = $data['permissions'] ?? [];
+      $label = $data['label'] ?? 'Unnamed Role';
+      foreach ($profile_storages as $profile_storage) {
+        $profile_data = $profile_storage->read($key);
+        if (!empty($profile_data['permissions'])) {
+          // Remove permissions that don't exist.
+          $profile_perms = array_intersect($profile_data['permissions'], $new_perms);
+          // Remove permissions that already are used.
+          $profile_perms = array_diff($profile_perms, $current_perms);
+          sort($profile_perms);
+
+          // Message about permissions.
+          foreach ($profile_perms as $perm) {
+            // @todo Use injection on user.permissions.
+            // @phpstan-ignore-next-line
+            \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
+            [
+              '%perm' => $perm,
+              '%label' => $label,
+            ]));
+          }
+          if (!empty($profile_perms)) {
+            $user_config[$key]['permissions'] = array_unique(array_merge($current_perms, $profile_perms));
+          }
+        }
+      }
+    }
+
+    return $this->trimPermissions($user_config);
+  }
+
+  /**
    * Trim invalid permissions from configuration data.
    *
    * @param array $config
