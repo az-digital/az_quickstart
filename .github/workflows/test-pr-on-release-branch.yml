@@ -1,20 +1,9 @@
 name: Test PR on Release Branch
-on: #push
+on:
     pull_request:
       types:
         - opened
     
-  #  workflow_dispatch:
-  #   inputs:
-  #     release_branch:
-  #       description: The release branch to test this PR on
-  #       required: true
-  #       type: choice
-  #       options: 
-  #         - 2.1.x
-  #         - 2.2.x
-
-
 jobs:
   test-pr-on-branch:
     name: Test PR on Release Branch
@@ -22,9 +11,9 @@ jobs:
     strategy:
       matrix:
         release:
+          - "2.0.x"
           - "2.1.x"
           - "2.2.x"
-          # - "issue/1491"
     services:
       mysql:
         image: mysql:5.7
@@ -83,38 +72,11 @@ jobs:
       - name: PHP Unit Tests
         working-directory: ./app
         run: |
-          # ./app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
           set -x
           php -S 127.0.0.1:8080 -t web &
-          # php -S http://localhost:8080 -t web &
           mkdir -p web/sites/simpletest
           chmod 777  web/sites/simpletest
-          # sudo mkdir -p /var/www/html/sites/default/files/simpletest
-          # sudo chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
           export SIMPLETEST_BASE_URL="http://127.0.0.1:8080"
-          # export SIMPLETEST_BASE_URL="http://localhost:8080"
           export SIMPLETEST_DB="mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db"
           export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
-          # export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://localhost:${{ job.services.chromedriver.ports[9515] }}"]'
           find ./web/profiles/custom/az_quickstart/ -name "*Test.php" | ./vendor/bin/fastest -vvv "./vendor/bin/phpunit {} --configuration ./web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap ./web/core/tests/bootstrap.php ./web/profiles/custom/az_quickstart;"
-
-      # - name: PHP Unit Tests
-      #   run: |
-      #     set -x
-      #     sudo mkdir -p /var/www/html/sites/simpletest
-      #     sudo chown www-data:www-data -R /var/www/html/sites/simpletest
-      #     sudo mkdir -p /var/www/html/sites/default/files/simpletest
-      #     sudo chown www-data:www-data -R /var/www/html/sites/default/files/simpletest
-      #     sudo CHROMEDRIVER_VERSION=LATEST_$(/usr/bin/google-chrome --product-version | cut -d . -f 1-3) npm install --no-progress --unsafe-perm --global chromedriver
-      #     sudo apt-get install daemonize
-      #     source $ASSET_DIR/test-credentials.sh
-      #     # source ./app/test-credentials.sh
-      #     export SIMPLETEST_BASE_URL="http://localhost"
-      #     export SIMPLETEST_DB="mysql://${TEST_DATABASE_USER}:${TEST_DATABASE_PASS}@localhost/${TEST_DATABASE_NAME}"
-      #     export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
-      #     daemonize /usr/local/bin/chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1"
-      #     ls
-      #     cd az_quickstart
-      #     export RUN_TESTS_CONCURRENCY=10
-      #     mysqladmin create ${TEST_DATABASE_NAME}
-      #     sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -p 10 -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
