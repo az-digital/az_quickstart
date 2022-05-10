@@ -20,7 +20,8 @@ class AZParagraphsItem extends ParagraphsItem {
   public function query() {
     $query = $this->select('paragraphs_item', 'p')
       ->fields('p',
-        ['item_id',
+        [
+          'item_id',
           'bundle',
           'field_name',
           'archived',
@@ -58,10 +59,37 @@ class AZParagraphsItem extends ParagraphsItem {
    * {@inheritdoc}
    */
   public function prepareRow(Row $row) {
+    [
+      'item_id' => $paragraph_id,
+      'revision_id' => $paragraph_revision_id,
+      'field_name' => $paragraph_parent_field_name,
+      'bundle' => $bundle,
+    ] = $row->getSource();
 
-    // Get Item Id and revision Id of paragraph.
-    $item_id = $row->getSourceProperty('item_id');
-    $revision_id = $row->getSourceProperty('revision_id');
+    $keep_row = TRUE;
+
+    // We have to find the corresponding parent entity (which might be an
+    // another paragraph). Active revision only.
+    try {
+      $parent_data_query = $this->getDatabase()->select(static::PARENT_FIELD_TABLE_PREFIX . $paragraph_parent_field_name, 'fd');
+      $parent_data_query->addField('fd', 'entity_type', 'parent_type');
+      $parent_data_query->addField('fd', 'entity_id', 'parent_id');
+      $parent_data = $parent_data_query
+        ->condition("fd.{$paragraph_parent_field_name}_value", $paragraph_id)
+        ->condition("fd.{$paragraph_parent_field_name}_revision_id", $paragraph_revision_id)
+        ->execute()->fetchAssoc();
+    }
+    catch (DatabaseExceptionWrapper $e) {
+      // The paragraphs field data|revision table is missing, we cannot get
+      // the parent entity identifiers. This is a corrupted database.
+      $keep_row = FALSE;
+    }
+
+    if (!is_iterable($parent_data)) {
+      // We cannot get the parent entity identifiers
+      $keep_row = FALSE;
+    }
+    $row->setSourceProperty('keep', $keep_row);
 
     // Checking the field collection fields present in the paragraph.
     if (!empty($row->getSourceProperty('field_collection_names'))) {
@@ -70,7 +98,7 @@ class AZParagraphsItem extends ParagraphsItem {
       foreach ($field_collection_field_names as $field) {
 
         // Geting field collention values for the paragraph.
-        $field_collection_data = $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id);
+        $field_collection_data = $this->getFieldValues('paragraphs_item', $field, $paragraph_id, $paragraph_revision_id);
 
         // Get Field API field values for each field collection item.
         $field_names = array_keys($this->getFields('field_collection_item', $field));
