@@ -2,21 +2,21 @@
 
 /**
  * @file
- * Az_paragraphs_cards.install
- * 
- * Install, update and uninstall functions for az_paragraphs_cards install 
+ * Az_paragraphs_cards.install.
+ *
+ * Install, update and uninstall functions for az_paragraphs_cards install
  * profile.
  */
 
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
- * Update breakpoint values for card decks so they match Bootstrap 4. Only 
+ * Update breakpoint values for card decks so they match Bootstrap 4. Only
  * tablet and desktop need to be updated.
  */
 function az_paragraphs_cards_update_9201() {
 
-	if (\Drupal::service('module_handler')->moduleExists('az_paragraphs')) {
+  if (\Drupal::service('module_handler')->moduleExists('az_paragraphs')) {
 
 		if (!isset($sandbox['total'])) {
 	    $count = \Drupal::entityQuery('paragraph')
@@ -26,7 +26,7 @@ function az_paragraphs_cards_update_9201() {
 	    $sandbox['total'] = $count;
 	    $sandbox['current'] = 0;
 	    $sandbox['updated_count'] = 0;
-	  }
+    }
 
 		$paragraphs_per_batch = 25;
 
@@ -81,4 +81,5 @@ function az_paragraphs_cards_update_9201() {
 	  return t('Breakpoint settings updated on %count Card paragraphs.', ['%count' => $sandbox['updated_count']]);
 
 	}
+
 }
