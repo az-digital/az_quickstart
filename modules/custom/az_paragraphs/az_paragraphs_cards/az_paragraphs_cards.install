@@ -18,68 +18,68 @@ function az_paragraphs_cards_update_9201() {
 
   if (\Drupal::service('module_handler')->moduleExists('az_paragraphs')) {
 
-		if (!isset($sandbox['total'])) {
-	    $count = \Drupal::entityQuery('paragraph')
-	      ->condition('type', 'az_cards')
-	      ->count()
-	      ->execute();
-	    $sandbox['total'] = $count;
-	    $sandbox['current'] = 0;
-	    $sandbox['updated_count'] = 0;
+    if (!isset($sandbox['total'])) {
+      $count = \Drupal::entityQuery('paragraph')
+        ->condition('type', 'az_cards')
+        ->count()
+        ->execute();
+      $sandbox['total'] = $count;
+      $sandbox['current'] = 0;
+      $sandbox['updated_count'] = 0;
     }
 
-		$paragraphs_per_batch = 25;
+    $paragraphs_per_batch = 25;
 
-	  $paragaph_ids = \Drupal::entityQuery('paragraph')
-	  	->condition('type', 'az_cards')
-	    ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
-	    ->execute();
+    $paragaph_ids = \Drupal::entityQuery('paragraph')
+      ->condition('type', 'az_cards')
+      ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
+      ->execute();
 
-	  foreach ($paragraph_ids as $id) {
-	    $paragraph = Paragraph::load($id);
-	    if (!empty($paragraph)) {
-	      $behavior_settings = $paragraph->getAllBehaviorSettings();
+    foreach ($paragraph_ids as $id) {
+      $paragraph = Paragraph::load($id);
+      if (!empty($paragraph)) {
+        $behavior_settings = $paragraph->getAllBehaviorSettings();
 
-	      /* Update "desktop" settings. */
-	      if (isset($behavior_settings['card_width'])) {
-	      	switch ($behavior_settings['card_width']) {
-	       		case 'col-md-12 col-lg-12':
-	       			$behavior_settings['card_width'] = 'col-lg-12';
-						case 'col-md-6 col-lg-6':
-							$behavior_settings['card_width'] = 'col-lg-6';
-						case 'col-md-4 col-lg-4':
-							$behavior_settings['card_width'] = 'col-lg-4';
-						case 'col-md-3 col-lg-3':
-							$behavior_settings['card_width'] = 'col-lg-3';
-	       	}
-	      }
+        /* Update "desktop" settings. */
+        if (isset($behavior_settings['card_width'])) {
+          switch ($behavior_settings['card_width']) {
+            case 'col-md-12 col-lg-12':
+              $behavior_settings['card_width'] = 'col-lg-12';
+            case 'col-md-6 col-lg-6':
+              $behavior_settings['card_width'] = 'col-lg-6';
+            case 'col-md-4 col-lg-4':
+              $behavior_settings['card_width'] = 'col-lg-4';
+            case 'col-md-3 col-lg-3':
+              $behavior_settings['card_width'] = 'col-lg-3';
+          }
+        }
 
-	      /* Update "tablet" settings. */
-	      if (isset($behavior_settings['az_display_settings']['card_width_sm'])) {
-	      	switch ($behavior_settings['az_display_settings']['card_width_sm']) {
-	       		case 'col-sm-12':
-	       			$behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-12';
-						case 'col-sm-6':
-							$behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-6';
-						case 'col-sm-4':
-							$behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-4';
-						case 'col-sm-3':
-							$behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-3';
-	       	}
-	      }
+        /* Update "tablet" settings. */
+        if (isset($behavior_settings['az_display_settings']['card_width_sm'])) {
+          switch ($behavior_settings['az_display_settings']['card_width_sm']) {
+            case 'col-sm-12':
+              $behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-12';
+            case 'col-sm-6':
+              $behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-6';
+            case 'col-sm-4':
+              $behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-4';
+            case 'col-sm-3':
+              $behavior_settings['az_display_settings']['card_width_sm'] = 'col-md-3';
+          }
+        }
 
-	      $paragraph->setAllBehaviorSettings($behavior_settings);
-	      $paragraph->save();
-	      $sandbox['updated_count']++;
-	      }
-	    }
-	    $sandbox['current']++;
-	  }
+        $paragraph->setAllBehaviorSettings($behavior_settings);
+        $paragraph->save();
+        $sandbox['updated_count']++;
+      }
+    }
+    $sandbox['current']++;
+  }
 
-	  $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
+  $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
 
-	  return t('Breakpoint settings updated on %count Card paragraphs.', ['%count' => $sandbox['updated_count']]);
+  return t('Breakpoint settings updated on %count Card paragraphs.', ['%count' => $sandbox['updated_count']]);
 
-	}
+}
 
 }
