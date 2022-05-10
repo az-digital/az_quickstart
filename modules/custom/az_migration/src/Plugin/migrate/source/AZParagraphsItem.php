@@ -86,7 +86,7 @@ class AZParagraphsItem extends ParagraphsItem {
     }
 
     if (!is_iterable($parent_data)) {
-      // We cannot get the parent entity identifiers
+      // We cannot get the parent entity identifiers.
       $keep_row = FALSE;
     }
     $row->setSourceProperty('keep', $keep_row);
