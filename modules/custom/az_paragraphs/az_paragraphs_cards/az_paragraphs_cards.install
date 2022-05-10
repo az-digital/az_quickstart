@@ -11,8 +11,7 @@
 use Drupal\paragraphs\Entity\Paragraph;
 
 /**
- * Update breakpoint values for card decks so they match Bootstrap 4. Only
- * tablet and desktop need to be updated.
+ * Update card deck breakpoints for tablet and desktop media queries.
  */
 function az_paragraphs_cards_update_9201() {
 
@@ -79,7 +78,5 @@ function az_paragraphs_cards_update_9201() {
   $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
 
   return t('Breakpoint settings updated on %count Card paragraphs.', ['%count' => $sandbox['updated_count']]);
-
-}
 
 }
