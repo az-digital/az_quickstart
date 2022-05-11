@@ -15,7 +15,6 @@ use Drupal\paragraphs\Entity\Paragraph;
  */
 function az_paragraphs_cards_update_9201() {
 
-  if (\Drupal::service('module_handler')->moduleExists('az_paragraphs')) {
 
     if (!isset($sandbox['total'])) {
       $count = \Drupal::entityQuery('paragraph')
