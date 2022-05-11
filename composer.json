@@ -128,10 +128,10 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://git.drupalcode.org/project/drupal/-/merge_requests/1153.diff",
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://www.drupal.org/files/issues/2022-05-05/2259567-160-9-3-x.patch",
                 "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Allow text field to enforce a specific text format (784672)": "https://gist.githubusercontent.com/joeparsons/7b151cea0e897421e6e2a1b1030b58ae/raw/6070b9ae1af3681d8c2d7b4dc15e0b146911035e/784672-217-9-4-x.patch",
+                "Allow text field to enforce a specific text format (784672)": "https://www.drupal.org/files/issues/2022-03-27/784672-227.patch",
                 "Allow editing area in Claro to span full width (3184667)": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
