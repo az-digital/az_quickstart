@@ -1,12 +1,12 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_block_types_menu
   config:
     - block_content.type.az_menu
     - field.field.block_content.az_menu.field_az_menu
+  enforced:
+    module:
+      - az_block_types_menu
   module:
     - field_menu
 id: block_content.az_menu.default
@@ -18,7 +18,7 @@ content:
     type: field_menu_tree_formatter
     weight: 0
     region: content
-    label: above
+    label: hidden
     settings: {  }
     third_party_settings: {  }
 hidden: {  }
