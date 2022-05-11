@@ -3,11 +3,9 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Process Plugin to handle migrating Drupal datetime field to smart_date field.
@@ -36,7 +34,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   id = "az_datetime_to_smart_date"
  * )
  */
-class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+class DateTimeToSmartDate extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}
@@ -56,19 +54,6 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
         for example 60 is one minute."
       );
     }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-    );
-
-    return $instance;
   }
 
   /**
