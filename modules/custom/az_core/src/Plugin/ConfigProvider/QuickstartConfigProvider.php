@@ -42,13 +42,13 @@ class QuickstartConfigProvider extends ConfigProviderBase {
    */
   public function findProfilePermissions(array $extensions = []) {
 
-    // Get active configuration to look for users.
+    // Get active configuration to look for roles.
     $existing_config = $this->getActiveStorages()->listAll();
     // phpcs:ignore
-    $existing_users = array_filter($existing_config, function ($name) {
+    $existing_roles = array_filter($existing_config, function ($name) {
       return (strpos($name, 'user.role.') === 0);
     });
-    $user_config = $this->getActiveStorages()->readMultiple($existing_users);
+    $role_config = $this->getActiveStorages()->readMultiple($existing_roles);
 
     // Build list of permissions by providers (eg. module)
     // @todo Use injection on user.permissions.
@@ -68,7 +68,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     $profile_storages = $this->getProfileStorages();
     // Check to see if the corresponding profile storage has any overrides.
-    foreach ($user_config as $key => $data) {
+    foreach ($role_config as $key => $data) {
       $current_perms = $data['permissions'] ?? [];
       $label = $data['label'] ?? 'Unnamed Role';
       foreach ($profile_storages as $profile_storage) {
@@ -91,13 +91,13 @@ class QuickstartConfigProvider extends ConfigProviderBase {
             ]));
           }
           if (!empty($profile_perms)) {
-            $user_config[$key]['permissions'] = array_unique(array_merge($current_perms, $profile_perms));
+            $role_config[$key]['permissions'] = array_unique(array_merge($current_perms, $profile_perms));
           }
         }
       }
     }
 
-    return $this->trimPermissions($user_config);
+    return $this->trimPermissions($role_config);
   }
 
   /**
