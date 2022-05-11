@@ -1,9 +1,6 @@
 langcode: en
 status: true
-dependencies:
-  module:
-    - ctools
-    - google_tag
+dependencies: {  }
 id: az_comprehensive
 label: 'AZ Comprehensive'
 weight: 0
@@ -42,16 +39,4 @@ status_toggle: 'exclude listed'
 status_list: |-
   403
   404
-conditions:
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
-    bundles: {  }
-    negate: false
-    context_mapping:
-      node: '@node.node_route_context:node'
-  'entity_bundle:taxonomy_term':
-    id: 'entity_bundle:taxonomy_term'
-    bundles: {  }
-    negate: false
-    context_mapping:
-      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+conditions: {  }

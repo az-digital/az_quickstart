@@ -31,7 +31,7 @@ user_accounts:
   prevent_normal_login: true
   auto_register: false
   email_assignment_strategy: 0
-  email_hostname: 'arizona.edu'
+  email_hostname: arizona.edu
   email_attribute: ''
   auto_assigned_roles: {  }
   restrict_password_management: true

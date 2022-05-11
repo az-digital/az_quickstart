@@ -21,4 +21,3 @@ visibility:
     id: request_path
     pages: "/person/*\r\n/news/*"
     negate: true
-
