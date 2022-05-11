@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=7.3",
-        "az-digital/arizona-bootstrap": "2.0.13",
+        "az-digital/arizona-bootstrap": "2.0.14",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
@@ -111,7 +111,7 @@
             "dev-main": "2.3.x-dev"
         },
         "patches": {
-            "drupal/antibot" : {
+            "drupal/antibot": {
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
             },
             "drupal/better_exposed_filters": {
