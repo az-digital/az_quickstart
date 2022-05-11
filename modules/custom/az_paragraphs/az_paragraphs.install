@@ -35,7 +35,7 @@ function az_paragraphs_update_920301() {
     if (!empty($paragraph)) {
       $behavior_settings = $paragraph->getAllBehaviorSettings();
 
-      /* Update "desktop" settings. */
+      // Update "desktop" settings.
       if (isset($behavior_settings['az_cards_paragraph_behavior']['card_width'])) {
         $desktop_mappings = [
           'col-md-12 col-lg-12' => 'col-lg-12',
