@@ -4,7 +4,6 @@ namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -57,7 +56,6 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
       );
     }
   }
-
 
   /**
    * {@inheritdoc}
