@@ -22,12 +22,14 @@ dependencies:
   module:
     - az_core
     - block
+    - block_class
     - block_content_permissions
     - content_moderation
     - draggableviews
     - easy_breadcrumb
     - filter
     - media
+    - metatag
     - node
     - redirect
     - search
