@@ -64,6 +64,9 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     foreach ($permissions_by_provider as $perms) {
       $new_perms = $new_perms + $perms;
     }
+    if (empty($new_perms)) {
+      return [];
+    }
     sort($new_perms);
 
     $profile_storages = $this->getProfileStorages();
