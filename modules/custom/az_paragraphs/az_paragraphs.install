@@ -13,7 +13,7 @@ use Drupal\paragraphs\Entity\Paragraph;
 /**
  * Update card deck breakpoints for tablet and desktop media queries.
  */
-function az_paragraphs_update_920301() {
+function az_paragraphs_update_920301(&$sandbox) {
 
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
@@ -36,28 +36,28 @@ function az_paragraphs_update_920301() {
       $behavior_settings = $paragraph->getAllBehaviorSettings();
 
       // Update "desktop" settings.
-      if (isset($behavior_settings['az_cards_paragraph_behavior']['card_width'])) {
+      if ($desktop_card_width = $behavior_settings['az_cards_paragraph_behavior']['card_width']) {
         $desktop_mappings = [
           'col-md-12 col-lg-12' => 'col-lg-12',
           'col-md-6 col-lg-6' => 'col-lg-6',
           'col-md-4 col-lg-4' => 'col-lg-4',
           'col-md-3 col-lg-3' => 'col-lg-3',
         ];
-        if (isset($desktop_mappings[$behavior_settings['az_cards_paragraph_behavior']['card_width']])) {
-          $behavior_settings['az_cards_paragraph_behavior']['card_width'] = $desktop_mappings[$behavior_settings['az_cards_paragraph_behavior']['card_width']];
+        if (isset($desktop_mappings[$desktop_card_width])) {
+          $behavior_settings['az_cards_paragraph_behavior']['card_width'] = $desktop_mappings[$desktop_card_width];
         }
       }
 
       // Update "tablet" settings.
-      if (isset($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'])) {
+      if ($tablet_card_width = $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm']) {
         $tablet_mappings = [
           'col-sm-12' => 'col-md-12',
           'col-sm-6' => 'col-md-6',
           'col-sm-4' => 'col-md-4',
           'col-sm-3' => 'col-md-3',
         ];
-        if (isset($tablet_mappings[$behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm']])) {
-          $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = $tablet_mappings[$behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm']];
+        if (isset($tablet_mappings[$tablet_card_width])) {
+          $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = $tablet_mappings[$tablet_card_width];
         }
       }
 
@@ -65,8 +65,8 @@ function az_paragraphs_update_920301() {
       $paragraph->save();
       $sandbox['updated_count']++;
     }
+    $sandbox['current']++;
   }
-  $sandbox['current']++;
 
   $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
 
