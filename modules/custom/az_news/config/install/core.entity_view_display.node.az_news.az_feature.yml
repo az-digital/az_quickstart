@@ -1,9 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_news
   config:
     - core.entity_view_mode.node.az_feature
     - field.field.node.az_news.field_az_attachments
@@ -14,14 +11,17 @@ dependencies:
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
     - field.field.node.az_news.field_az_subheading
     - field.field.node.az_news.field_az_summary
     - node.type.az_news
+  enforced:
+    module:
+      - az_news
   module:
-    - az_core
     - date_ap_style
     - field_group
     - smart_title
@@ -48,10 +48,10 @@ third_party_settings:
         classes: 'card card-borderless card-clickable mb-5'
         show_empty_fields: false
       label: 'Card clickable'
-    group_title_block:
+    group_photo_column:
       children:
         - field_az_media_image
-      parent_name: group_title_column
+      parent_name: group_row
       weight: 8
       format_type: html_element
       region: content
@@ -70,7 +70,7 @@ third_party_settings:
     group_text_muted:
       children:
         - field_az_published
-      parent_name: group_body_row
+      parent_name: group_text_column
       weight: 8
       format_type: html_element
       region: content
@@ -86,10 +86,10 @@ third_party_settings:
         classes: 'text-muted font-weight-normal'
         show_empty_fields: false
       label: 'Text Muted'
-    group_title_column:
+    group_row:
       children:
-        - group_body_row
-        - group_title_block
+        - group_text_column
+        - group_photo_column
       parent_name: group_link
       weight: 7
       format_type: html_element
@@ -103,30 +103,13 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: 'row'
+        classes: row
         show_empty_fields: false
       label: Row
-    group_text_column:
-      children: {  }
-      parent_name: ''
-      weight: 13
-      format_type: html_element
-      region: hidden
-      format_settings:
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: 'col-lg-10 offset-lg-1'
-      label: 'Text Column'
     group_lead:
       children:
         - field_az_summary
-      parent_name: group_body_row
+      parent_name: group_text_column
       weight: 11
       format_type: html_element
       region: content
@@ -142,13 +125,13 @@ third_party_settings:
         classes: 'lead font-weight-normal'
         show_empty_fields: false
       label: lead
-    group_body_row:
+    group_text_column:
       children:
         - group_text_muted
         - smart_title
         - group_lead
-        - group_photo_container
-      parent_name: group_title_column
+        - group_read_article
+      parent_name: group_row
       weight: 7
       format_type: html_element
       region: content
@@ -164,10 +147,10 @@ third_party_settings:
         classes: 'col order-2 order-md-1'
         show_empty_fields: false
       label: 'Text column'
-    group_photo_container:
+    group_read_article:
       children:
         - links
-      parent_name: group_body_row
+      parent_name: group_text_column
       weight: 12
       format_type: html_element
       region: content
@@ -185,8 +168,8 @@ third_party_settings:
       label: 'Read article'
     group_link:
       children:
-        - group_title_column
-      parent_name: group_row
+        - group_row
+      parent_name: group_card
       weight: 6
       format_type: link
       region: hidden
@@ -263,6 +246,7 @@ hidden:
   field_az_expiration_date: true
   field_az_link: true
   field_az_main_content: true
+  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
