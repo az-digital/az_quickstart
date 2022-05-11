@@ -86,6 +86,6 @@ function az_paragraphs_update_9201() {
 
   $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
 
-  return t('Breakpoint settings updated on %count Card paragraphs.', ['%count' => $sandbox['updated_count']]);
+  return t('Breakpoint settings updated on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
 
 }
