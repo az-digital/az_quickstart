@@ -145,6 +145,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
         // Make sure dependencies are unique.
         foreach ($value['dependencies'] as $dependency_type => &$dependencies) {
           $dependencies = array_values(array_unique($dependencies));
+          sort($dependencies);
         }
       }
 
