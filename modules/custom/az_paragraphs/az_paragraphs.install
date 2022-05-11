@@ -13,7 +13,7 @@ use Drupal\paragraphs\Entity\Paragraph;
 /**
  * Update card deck breakpoints for tablet and desktop media queries.
  */
-function az_paragraphs_update_9201() {
+function az_paragraphs_update_920301() {
 
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
