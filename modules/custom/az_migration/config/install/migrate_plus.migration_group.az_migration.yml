@@ -1,25 +1,16 @@
-# The machine name of the group, by which it is referenced in individual migrations.
-id: az_migration
-
-# A human-friendly label for the group.
-label: AZ Quickstart Migrations
-
-# More information about the group.
-description: Common configuration for simple migrations.
-
-# Short description of the type of source, e.g. "Drupal 6" or "WordPress".
-source_type: Drupal 7 Site
-
-# Here we add any default configuration settings to be shared among all
-# migrations in the group.
-shared_configuration:
- source:
-   key: migrate
-
-# We add dependencies just to make sure everything we need will be available
+langcode: en
+status: true
 dependencies:
- enforced:
-   module:
-     - az_migration
-     - migrate_drupal
-     - migrate_tools
+  enforced:
+    module:
+      - az_migration
+      - migrate_drupal
+      - migrate_tools
+id: az_migration
+label: 'AZ Quickstart Migrations'
+description: 'Common configuration for simple migrations.'
+source_type: 'Drupal 7 Site'
+module: null
+shared_configuration:
+  source:
+    key: migrate

@@ -22,8 +22,10 @@ settings:
   follow_parent: active
   level: 2
   depth: 0
-  expand: false
+  expand_all_items: false
   parent: 'main:'
   suggestion: sidebar
   label_type: root
+  label_link: false
+  expand: false
 visibility: {  }
