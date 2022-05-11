@@ -37,23 +37,15 @@ function az_paragraphs_update_920301() {
 
       /* Update "desktop" settings. */
       if (isset($behavior_settings['az_cards_paragraph_behavior']['card_width'])) {
-        switch ($behavior_settings['az_cards_paragraph_behavior']['card_width']) {
-          case 'col-md-12 col-lg-12':
-            $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-12';
-            break;
-
-          case 'col-md-6 col-lg-6':
-            $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-6';
-            break;
-
-          case 'col-md-4 col-lg-4':
-            $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-4';
-            break;
-
-          case 'col-md-3 col-lg-3':
-            $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-3';
-            break;
-        }
+        $desktop_mappings = [
+          'col-md-12 col-lg-12' => 'col-lg-12',
+          'col-md-6 col-lg-6' => 'col-lg-6',
+          'col-md-4 col-lg-4' => 'col-lg-4',
+          'col-md-3 col-lg-3' => 'col-lg-3',
+         ];
+         if (isset($desktop_mappings[$behavior_settings['az_cards_paragraph_behavior']['card_width']]) {
+           $behavior_settings['az_cards_paragraph_behavior']['card_width'] = $desktop_mappings[$behavior_settings['az_cards_paragraph_behavior']['card_width']];
+         }
       }
 
       /* Update "tablet" settings. */
