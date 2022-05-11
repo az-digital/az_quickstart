@@ -7,6 +7,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Process Plugin to handle migrating Drupal datetime field to smart_date field.
@@ -55,6 +56,19 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
         for example 60 is one minute."
       );
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = new static(
+      $configuration,
+      $plugin_id,
+      $plugin_definition,
+    );
+
+    return $instance;
   }
 
   /**
