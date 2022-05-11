@@ -38,22 +38,22 @@ function az_paragraphs_cards_update_9201() {
         $behavior_settings = $paragraph->getAllBehaviorSettings();
 
         /* Update "desktop" settings. */
-        if (isset($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width'])) {
-          switch ($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width']) {
+        if (isset($behavior_settings['az_cards_paragraph_behavior']['card_width'])) {
+          switch ($behavior_settings['az_cards_paragraph_behavior']['card_width']) {
             case 'col-md-12 col-lg-12':
-              $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width'] = 'col-lg-12';
+              $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-12';
               break;
 
             case 'col-md-6 col-lg-6':
-              $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width'] = 'col-lg-6';
+              $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-6';
               break;
 
             case 'col-md-4 col-lg-4':
-              $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width'] = 'col-lg-4';
+              $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-4';
               break;
 
             case 'col-md-3 col-lg-3':
-              $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width'] = 'col-lg-3';
+              $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-lg-3';
               break;
           }
         }
