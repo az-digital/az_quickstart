@@ -50,23 +50,15 @@ function az_paragraphs_update_920301() {
 
       /* Update "tablet" settings. */
       if (isset($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'])) {
-        switch ($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm']) {
-          case 'col-sm-12':
-            $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-md-12';
-            break;
-
-          case 'col-sm-6':
-            $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-md-6';
-            break;
-
-          case 'col-sm-4':
-            $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-md-4';
-            break;
-
-          case 'col-sm-3':
-            $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-md-3';
-            break;
-        }
+        $tablet_mappings = [
+          'col-sm-12' => 'col-md-12',
+          'col-sm-6' => 'col-md-6',
+          'col-sm-4' => 'col-md-4',
+          'col-sm-3' => 'col-md-3',
+         ];
+         if (isset($tablet_mappings[$behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm']])) {
+           $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = $tablet_mappings[$behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm']];
+         }
       }
 
       $paragraph->setAllBehaviorSettings($behavior_settings);
