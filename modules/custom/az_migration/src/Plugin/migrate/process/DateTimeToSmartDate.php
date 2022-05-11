@@ -58,18 +58,6 @@ class DateTimeToSmartDate extends ProcessPluginBase implements ContainerFactoryP
     }
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-    );
-
-    return $instance;
-  }
 
   /**
    * {@inheritdoc}
