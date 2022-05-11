@@ -18,7 +18,6 @@ function az_paragraphs_cards_update_9201() {
 
     if (!isset($sandbox['total'])) {
       $count = \Drupal::entityQuery('paragraph')
-        ->condition('type', 'az_cards')
         ->count()
         ->execute();
       $sandbox['total'] = $count;
