@@ -123,10 +123,28 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     foreach ($config as $name => &$value) {
       // Is this a permission configuration file?
       if (strpos($name, 'user.role.') === 0) {
+        // Dependencies TBD based on permissions.
+        $value['dependencies'] = [];
         // Trim active permissions list to what's expected.
         if (!empty($value['permissions'])) {
           $value['permissions'] = array_intersect($permissions, $value['permissions']);
           sort($value['permissions']);
+        }
+
+        // Add dependencies based on permissions.
+        foreach ($value['permissions'] as $perm) {
+          $value['dependencies']['module'][] = $permission_definitions[$perm]['provider'];
+          if (!empty($permission_definitions[$perm]['dependencies'])) {
+            foreach ($permission_definitions[$perm]['dependencies'] as $dependency_type => $list) {
+              foreach ($list as $dependency) {
+                $value['dependencies'][$dependency_type][] = $dependency;
+              }
+            }
+          }
+        }
+        // Make sure dependencies are unique.
+        foreach ($value['dependencies'] as $dependency_type => &$dependencies) {
+          $dependencies = array_values(array_unique($dependencies));
         }
       }
 
