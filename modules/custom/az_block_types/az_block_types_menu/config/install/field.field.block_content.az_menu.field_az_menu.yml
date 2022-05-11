@@ -6,6 +6,9 @@ dependencies:
     - field.storage.block_content.field_az_menu
   module:
     - field_menu
+  enforced:
+    module:
+      - az_block_types_menu
 id: block_content.az_menu.field_az_menu
 field_name: field_az_menu
 entity_type: block_content
