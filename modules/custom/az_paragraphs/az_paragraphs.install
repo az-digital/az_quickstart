@@ -8,8 +8,6 @@
  * profile.
  */
 
-use Drupal\paragraphs\Entity\Paragraph;
-
 /**
  * Update card deck breakpoints for tablet and desktop media queries.
  */
