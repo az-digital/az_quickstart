@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Az_paragraphs_cards.install.
+ * Az_paragraphs.install.
  *
  * Install, update and uninstall functions for az_paragraphs_cards install
  * profile.
