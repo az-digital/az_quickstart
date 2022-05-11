@@ -135,6 +135,9 @@
           }
           event.target.seekTo(bgVideos[id].start);
           event.target.playVideo();
+          // Create and dispatch a new event when video starts playing.
+          const azVideoPlayEvent = new Event('azVideoPlay');
+          dispatchEvent(azVideoPlayEvent);
         };
 
         window.onPlayerStateChange = (event) => {

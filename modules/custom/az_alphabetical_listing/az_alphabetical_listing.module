@@ -25,7 +25,7 @@ function az_alphabetical_listing_theme_registry_alter(&$theme_registry) {
   // Iterate through all found template file objects.
   foreach ($template_file_objects as $key => $template_file_object) {
     // If the template has not already been overridden by a theme.
-    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+    if (!isset($theme_registry[$key]['theme path']) || strpos($theme_registry[$key]['theme path'], 'themes/') === FALSE) {
       // Copy default node registry entry for node entries.
       if (strpos($key, 'node') === 0) {
         $theme_registry[$key] = $theme_registry['node'];

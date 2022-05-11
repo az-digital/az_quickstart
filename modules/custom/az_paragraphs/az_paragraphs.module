@@ -41,7 +41,7 @@ function az_paragraphs_theme_registry_alter(&$theme_registry) {
   // Iterate through all found template file objects.
   foreach ($template_file_objects as $key => $template_file_object) {
     // If the template has not already been overridden by a theme.
-    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+    if (!isset($theme_registry[$key]['theme path']) || strpos($theme_registry[$key]['theme path'], 'themes/') === FALSE) {
       // Copy default paragraph registry entry for paragraph entries.
       if (strpos($key, 'paragraph__') === 0) {
         $theme_registry[$key] = $theme_registry['paragraph'];
