@@ -40,12 +40,12 @@ type_settings:
         - draft
         - published
     az_unpublish:
-      label: 'Unpublish'
+      label: Unpublish
       to: unpublished
       weight: 1
       from:
         - unpublished
         - published
         - draft
-
   default_moderation_state: draft
+  entity_types: {  }

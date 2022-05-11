@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - help
+    - system
   theme:
     - az_barrio
 id: az_barrio_help
