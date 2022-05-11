@@ -26,6 +26,11 @@ class ConfigOverrideTest extends BrowserTestBase {
   protected $strictConfigSchema = FALSE;
 
   /**
+   * @var string
+   */
+  protected $defaultTheme = 'stark';
+
+  /**
    * Modules to enable.
    *
    * @var array
@@ -43,7 +48,7 @@ class ConfigOverrideTest extends BrowserTestBase {
 
     // Check that the cas server hostname has been overridden.
     $hostname = $this->config('cas.settings')->get('server.hostname');
-    $this->assertEquals('webauth.arizona.edu', $hostname);
+    $this->assertEquals('shibboleth.arizona.edu', $hostname);
   }
 
 }

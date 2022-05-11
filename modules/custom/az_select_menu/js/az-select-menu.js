@@ -24,72 +24,72 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       for (var i = 0; i < settings.azSelectMenu.ids.length; i++) {
         var selectFormId = settings.azSelectMenu.ids[i];
         var selectForm = document.querySelector("#".concat(selectFormId));
-        once("azSelectMenu", selectForm, context).forEach(function (element) {
+        once('azSelectMenu', selectForm, context).forEach(function (element) {
           $(element).popover();
-          element.addEventListener("focus", function (event) {
+          element.addEventListener('focus', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          element.addEventListener("change", function (event) {
+          element.addEventListener('change', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          element.addEventListener("mouseenter", function (event) {
+          element.addEventListener('mouseenter', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          var button = element.querySelector("button");
-          button.addEventListener("click", function (event) {
+          var button = element.querySelector('button');
+          button.addEventListener('click', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("touchstart", function (event) {
+          button.addEventListener('touchstart', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("mouseenter", function (event) {
+          button.addEventListener('mouseenter', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("mouseleave", function (event) {
+          button.addEventListener('mouseleave', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("focus", function (event) {
+          button.addEventListener('focus', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("blur", function (event) {
+          button.addEventListener('blur', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          document.addEventListener("touchstart", function (event) {
+          document.addEventListener('touchstart', function (event) {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          element.classList.add("processed");
+          element.classList.add('processed');
         });
       }
     }
   };
 
   Drupal.azSelectMenu.handleEvents = function (event) {
-    if (event.type === "touchstart") {
-      if (event.target.classList.contains("js_select_menu_button")) {
+    if (event.type === 'touchstart') {
+      if (event.target.classList.contains('js_select_menu_button')) {
         event.stopPropagation();
       } else {
-        $(".az-select-menu").popover("hide");
+        $('.az-select-menu').popover('hide');
         return;
       }
     }
 
-    var selectForm = event.target.closest("form");
+    var selectForm = event.target.closest('form');
     var $selectForm = $(selectForm);
-    var selectElement = selectForm.querySelector("select");
+    var selectElement = selectForm.querySelector('select');
 
     var _selectElement$select = _slicedToArray(selectElement.selectedOptions, 1),
         optionsSelected = _selectElement$select[0];
 
     var selectElementHref = optionsSelected.dataset.href;
-    var button = selectForm.querySelector("button");
+    var button = selectForm.querySelector('button');
 
-    if (selectElementHref !== "") {
-      $selectForm.popover("hide");
-      button.classList.remove("disabled");
-      button.setAttribute("aria-disabled", "false");
+    if (selectElementHref !== '') {
+      $selectForm.popover('hide');
+      button.classList.remove('disabled');
+      button.setAttribute('aria-disabled', 'false');
 
       switch (event.type) {
-        case "click":
+        case 'click':
           event.stopImmediatePropagation();
           window.location = selectElementHref;
           break;
@@ -98,31 +98,31 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           break;
       }
     } else {
-      button.classList.add("disabled");
-      button.setAttribute("aria-disabled", "true");
-      selectElement.setAttribute("aria-disabled", "true");
+      button.classList.add('disabled');
+      button.setAttribute('aria-disabled', 'true');
+      selectElement.setAttribute('aria-disabled', 'true');
 
       switch (event.type) {
-        case "click":
-          if (event.target.classList.contains("js_select_menu_button")) {
-            $selectForm.popover("show");
+        case 'click':
+          if (event.target.classList.contains('js_select_menu_button')) {
+            $selectForm.popover('show');
             selectElement.focus();
           }
 
           break;
 
-        case "focus":
-        case "mouseenter":
-          if (event.target.classList.contains("js_select_menu_button")) {
-            $selectForm.popover("show");
+        case 'focus':
+        case 'mouseenter':
+          if (event.target.classList.contains('js_select_menu_button')) {
+            $selectForm.popover('show');
           } else {
-            $selectForm.popover("hide");
+            $selectForm.popover('hide');
           }
 
           break;
 
-        case "mouseleave":
-          $selectForm.popover("hide");
+        case 'mouseleave':
+          $selectForm.popover('hide');
           break;
 
         default:

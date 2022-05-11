@@ -41,20 +41,77 @@ process:
   field_az_text_area/format:
     plugin: default_value
     default_value: az_standard
-
-  field_uaqs_setting_bg_attach_value: field_uaqs_setting_bg_attach/0/value
-
+  bg_attach_value_processed:
+    - plugin: extract
+      source: field_uaqs_setting_bg_attach
+      index:
+        - 0
+        - value
+      default: ''
+    - plugin: static_map
+      default_value: ''
+      map:
+        bg-attachment-fixed: 'bg-fixed'
+        bg-fixed: 'bg-fixed'
+        bg-attachment-scroll: ''
+  bg_color_processed:
+    - plugin: extract
+      source: field_uaqs_setting_text_bg_color
+      index:
+        - 0
+        - value
+      default: light
+    - plugin: static_map
+      default_value: 'light'
+      map:
+        bg-transparent: transparent
+        bg-trans-white: light
+        bg-trans-sky: light
+        bg-trans-arizona-blue: dark
+        bg-trans-black: dark
+        dark: dark
+        light: light
+  view_mode_processed:
+    - plugin: static_map
+      source: view_mode
+      default_value: 'col-md-8 col-lg-6'
+      map:
+        uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
+        uaqs_bg_img_content_center: 'col-xs-12'
+        uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4'
+        uaqs_bg_img_content_bottom: ''
+  content_style_processed:
+    - plugin: static_map
+      source: view_mode
+      default_value: 'box'
+      map:
+        uaqs_bg_img_content_bottom: 'bottom'
+        uaqs_bg_img_content_right: 'box'
+        uaqs_bg_img_content_left: 'box'
+        uaqs_bg_img_content_center: 'box'
+  bottom_spacing_processed:
+    - plugin: default_value
+      default_value: 'mb-0'
+      source: bottom_spacing
   processed_full_width:
     plugin: default_value
     default_value: 'full-width-background'
+  text_media_spacing_processed:
+    - plugin: default_value
+      default_value: 'y-5'
 
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    bg_text_color: field_uaqs_setting_text_bg_color
-    bg_attach: '@field_uaqs_setting_bg_attach_value'
-    position: view_mode
-    full_width: '@processed_full_width'
-    content_style: bottom
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_text_media_paragraph_behavior:
+        bg_color: '@bg_color_processed'
+        bg_attachment: '@bg_attach_value_processed'
+        position: '@view_mode_processed'
+        full_width: '@processed_full_width'
+        style: '@content_style_processed'
+        text_media_spacing: '@text_media_spacing_processed'
+        az_display_settings:
+            bottom_spacing: '@bottom_spacing_processed'
 
 dependencies:
   enforced:
