@@ -48,7 +48,7 @@ function az_paragraphs_update_920301() {
          }
       }
 
-      /* Update "tablet" settings. */
+      // Update "tablet" settings.
       if (isset($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'])) {
         $tablet_mappings = [
           'col-sm-12' => 'col-md-12',
