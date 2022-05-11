@@ -86,7 +86,6 @@ function az_paragraphs_cards_update_9201() {
       }
     }
     $sandbox['current']++;
-  }
 
   $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
 
