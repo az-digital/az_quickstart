@@ -1,6 +1,8 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - role_delegation
 id: az_user_admin
 label: 'User administrator'
 weight: 4
