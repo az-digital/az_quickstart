@@ -21,6 +21,9 @@ source:
     -
       name: az_text_area
       selector: az_text_area
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
