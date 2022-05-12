@@ -27,4 +27,3 @@ settings:
       direction: ASC
     auto_create: false
 field_type: entity_reference
-

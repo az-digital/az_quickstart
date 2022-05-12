@@ -1,9 +1,12 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_core
   module:
     - node
-id: node.az_minimal_media_list
-label: 'Minimal Media List'
+id: node.az_feature
+label: 'Feature'
 targetEntityType: node
 cache: true
