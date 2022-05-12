@@ -21,4 +21,3 @@ settings:
   allowed_formats:
     - plain_text
 field_type: text_long
-
