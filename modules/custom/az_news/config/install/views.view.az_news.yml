@@ -5,7 +5,6 @@ dependencies:
     - core.entity_view_mode.node.az_card
     - core.entity_view_mode.node.az_feature
     - core.entity_view_mode.node.az_marquee
-    - core.entity_view_mode.node.az_media_list
     - core.entity_view_mode.node.az_medium_media_list
     - core.entity_view_mode.node.az_minimal_media_list
     - node.type.az_news
@@ -87,7 +86,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_media_list
+          view_mode: az_feature
       fields:
         title:
           id: title
