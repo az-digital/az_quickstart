@@ -3,8 +3,8 @@ status: true
 dependencies: {  }
 id: center_mode
 name: center_mode
-label: 'Center Mode'
 weight: 0
+label: 'Center Mode'
 group: ''
 skin: ''
 breakpoints: 1
