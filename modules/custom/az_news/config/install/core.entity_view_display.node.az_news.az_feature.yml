@@ -198,7 +198,7 @@ content:
     weight: 6
     label: hidden
     settings:
-      view_mode: az_large
+      view_mode: az_card_image
       link: false
     third_party_settings: {  }
     type: entity_reference_entity_view
