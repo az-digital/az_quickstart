@@ -3,11 +3,13 @@ status: true
 dependencies:
   config:
     - field.field.node.az_flexible_page.field_az_main_content
+    - field.field.node.az_flexible_page.field_az_media_image
+    - field.field.node.az_flexible_page.field_az_page_category
+    - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
   module:
     - entity_reference_revisions
     - user
-third_party_settings: {  }
 id: node.az_flexible_page.default
 targetEntityType: node
 bundle: az_flexible_page
@@ -27,4 +29,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_az_media_image: true
+  field_az_page_category: true
+  field_az_summary: true
