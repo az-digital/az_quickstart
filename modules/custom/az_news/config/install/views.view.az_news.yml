@@ -86,7 +86,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_feature
+          view_mode: az_media_list
       fields:
         title:
           id: title
@@ -270,6 +270,11 @@ display:
         pager: false
         pager_options: false
         sorts: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_feature
       pager_options: null
       sorts:
         sticky:
