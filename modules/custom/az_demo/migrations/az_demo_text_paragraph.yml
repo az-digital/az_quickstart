@@ -36,11 +36,7 @@ process:
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
-      az_text_background_paragraph_behavior:
-        text_background_color: bg_color
-        text_background_full_width: full_width
-        text_background_pattern: bg_pattern
-        text_background_padding: bg_padding
+      az_default_paragraph_behavior:
         az_display_settings:
             bottom_spacing: bottom_spacing
 
