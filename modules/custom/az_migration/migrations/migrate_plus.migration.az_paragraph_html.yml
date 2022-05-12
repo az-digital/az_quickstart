@@ -55,9 +55,7 @@ process:
     paragraph_behavior_plugins:
       az_default_paragraph_behavior:
         az_display_settings:
-          bottom_spacing:
-            - plugin: default_value
-              default_value: mb-0
+          bottom_spacing: bottom_spacing
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'

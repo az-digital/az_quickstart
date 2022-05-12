@@ -1,4 +1,4 @@
-name: az_quickstart
+name: merge-conflicts
 recipe: drupal9
 config:
   php: '7.4'
