@@ -87,7 +87,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_feature
+          view_mode: az_media_list
       fields:
         title:
           id: title
