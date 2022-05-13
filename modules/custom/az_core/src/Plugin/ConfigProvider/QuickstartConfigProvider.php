@@ -50,7 +50,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   public function findProfilePermissions(array $extensions = []) {
 
     // Build list of permissions by providers (eg. module)
-    $permission_definitions = $this->getPermissionDefinitions();
+    $permissions_definitions = $this->getPermissionDefinitions();
     $permissions_by_provider = [];
     foreach ($permissions_definitions as $key => $permission) {
       $permissions_by_provider[$permission['provider']][] = $key;
