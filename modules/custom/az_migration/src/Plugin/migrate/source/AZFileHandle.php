@@ -3,6 +3,7 @@
 namespace Drupal\az_migration\Plugin\migrate\source;
 
 use Drupal\migrate\Row;
+//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
 use Drupal\file\Plugin\migrate\source\d7\File;
 
 /**

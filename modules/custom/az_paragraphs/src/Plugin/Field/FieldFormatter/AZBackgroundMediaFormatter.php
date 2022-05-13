@@ -5,6 +5,7 @@ namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
+//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
 use Drupal\file\FileInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
