@@ -98,6 +98,7 @@ class AZConfigOverride {
         $permissions = $provider->findProfilePermissions($extensions);
         $overrides = $permissions + $overrides;
 
+        $snapshots = [];
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {
           $config = $this->configFactory->getEditable($name);
@@ -110,10 +111,15 @@ class AZConfigOverride {
             $type = $provided_by[0];
             $owner = $provided_by[1];
 
-            // Update the config_snapshot of the module that owns the config.
-            $this->configSyncSnapshotter->refreshExtensionSnapshot($type, [$owner],
-              ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
+            // Record we need to do a snapshot.
+            $snapshots[$type][] = $owner;
           }
+        }
+
+        // Update the config_snapshot of the modules that owned the config.
+        foreach ($snapshots as $type => $owners) {
+          $this->configSyncSnapshotter->refreshExtensionSnapshot($type, $owners,
+            ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
         }
       }
     }
