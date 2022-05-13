@@ -142,7 +142,7 @@ third_party_settings:
       format_settings:
         show_empty_fields: false
         id: ''
-        classes: 'lead font-weight-normal'
+        classes: 'lead'
         element: div
         show_label: false
         label_element: h3
@@ -198,10 +198,10 @@ content:
     weight: 6
     label: hidden
     settings:
-      view_mode: az_large
-      link: false
+      image_style: az_medium
+      image_link: ''
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    type: media_thumbnail
     region: content
   field_az_published:
     weight: 1
