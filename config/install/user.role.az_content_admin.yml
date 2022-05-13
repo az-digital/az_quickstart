@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - filter.format.full_html
     - media.type.az_audio
     - media.type.az_document
     - media.type.az_image
@@ -26,6 +27,7 @@ dependencies:
     - content_moderation
     - draggableviews
     - easy_breadcrumb
+    - filter
     - media
     - metatag
     - node
