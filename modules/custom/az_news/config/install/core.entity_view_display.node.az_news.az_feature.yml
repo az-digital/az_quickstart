@@ -201,7 +201,7 @@ content:
       image_style: az_medium
       image_link: ''
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    type: media_thumbnail
     region: content
   field_az_published:
     weight: 1
