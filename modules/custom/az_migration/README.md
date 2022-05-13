@@ -524,13 +524,16 @@ Migrate plugins provided by Quickstart modules.
 These plugins are designed to be reusable in custom migrations.
 
 ### Process plugins
-  
+
 - [EntityEmbedProcess (az_entity_embed_process)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/EntityEmbedProcess.php)
 - [MigratedPathLookup (az_migrated_path_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/MigratedPathLookup.php)
 - [TextFormatRecognizer (text_format_recognizer)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/TextFormatRecognizer.php)
 - [ParagraphsMappingFlexiblePage (paragraphs_mapping_flexible_page)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
-- [ParagraphsBehavior (paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehavior.php) (Deprecated: use `az_paragraphs_behavior_settings`)
+- [ParagraphsBehavior
+  (paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/2.2.x/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehavior.php)
+  (**Deprecated in 2.2.x, Removed in 2.3.x: use `az_paragraphs_behavior_settings`**)
 - [ParagraphsBehaviorSettings (az_paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehaviorSettings.php)
+- [DateTimeToSmartDate (az_drupal_date_to_smart_date)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/DateTimeToSmartDate.php)
 - [ViewsReferenceMapping (az_views_reference_mapping)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ViewsReferenceMapping.php)
 
 ### Source plugins

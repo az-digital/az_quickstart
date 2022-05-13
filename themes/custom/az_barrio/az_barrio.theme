@@ -9,11 +9,12 @@
 include_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\block\Entity\Block;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -103,9 +104,25 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['az_barrio_navbar_offcanvas'] = (theme_get_setting('az_barrio_navbar_offcanvas')) ? TRUE : FALSE;
   if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
+    $variables['navbar_offcanvas_attributes'] = new Attribute([
+      'id' => 'navbar-top',
+      'class' => [
+        'navbar-offcanvas'
+      ]
+    ]);
+    if ($variables['page']['navigation']) {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'has-navigation-region';
+    }
+    else {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'no-navigation-region';
+    }
+    if ($variables['page']['navigation_offcanvas']) {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'has-off-canvas-region';
+    }
+    else {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'no-off-canvas-region';
+    }
   }
-  $variables['navbar_offcanvas_attributes']['id'] = 'navbar-top';
-  $variables['navbar_offcanvas_attributes']['class'][] = 'navbar-offcanvas';
 
   // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
