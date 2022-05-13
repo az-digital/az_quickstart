@@ -52,6 +52,7 @@
                 rel: 0,
                 wmode: 'transparent',
                 origin: window.location.href,
+                enablejsapi: 1,
               },
               events: {
                 onReady: window.onPlayerReady,
