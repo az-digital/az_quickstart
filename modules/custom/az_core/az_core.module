@@ -94,7 +94,7 @@ function az_core_modules_installed($modules, $is_syncing) {
 function az_core_modules_uninstalled($modules) {
 
   // Import overrides that exist for the enabled modules.
-  $overrider = Drupal::service('az_core.override_import');
+  $overrider = \Drupal::service('az_core.override_import');
   if ($overrider) {
     $overrider->importOverrides([]);
   }

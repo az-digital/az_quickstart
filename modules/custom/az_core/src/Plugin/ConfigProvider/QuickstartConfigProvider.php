@@ -43,9 +43,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   public function findProfilePermissions(array $extensions = []) {
 
     // Build list of permissions by providers (eg. module)
-    // @todo Use injection on user.permissions.
-    // @phpstan-ignore-next-line
-    $permissions_definitions = \Drupal::service('user.permissions')->getPermissions();
+    $permission_definitions = $this->getPermissionDefinitions();
     $permissions_by_provider = [];
     foreach ($permissions_definitions as $key => $permission) {
       $permissions_by_provider[$permission['provider']][] = $key;
@@ -114,9 +112,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
    */
   protected function trimPermissions(array $config) {
     // Get permissions defined.
-    // @todo Use injection on user.permissions.
-    // @phpstan-ignore-next-line
-    $permission_definitions = \Drupal::service('user.permissions')->getPermissions();
+    $permission_definitions = $this->getPermissionDefinitions();
     $permissions = array_keys($permission_definitions);
 
     // Add the configuration changes.
@@ -154,6 +150,28 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     }
 
     return $config;
+  }
+  /**
+   * List of permissions defined.
+   *
+   * @var array
+   */
+  protected $permissionDefinitions = [];
+
+  /**
+   * Get permissions defined.
+   *
+   * @return array
+   *   An array of permission definitions.
+   */
+  protected function getPermissionDefinitions() {
+    if (empty($this->permissionDefinitions)) {
+      // @todo Use injection on user.permissions.
+      // @phpstan-ignore-next-line
+      $this->permissionDefinitions = \Drupal::service('user.permissions')->getPermissions();
+    }
+    return $this->permissionDefinitions;
+  }
   }
 
   /**
