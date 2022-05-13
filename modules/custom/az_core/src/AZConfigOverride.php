@@ -118,8 +118,11 @@ class AZConfigOverride {
 
         // Update the config_snapshot of the modules that owned the config.
         foreach ($snapshots as $type => $owners) {
-          $this->configSyncSnapshotter->refreshExtensionSnapshot($type, $owners,
-            ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
+          $owners = array_unique($owners);
+          foreach ($owners as $owner) {
+            $this->configSyncSnapshotter->refreshExtensionSnapshot($type, [$owner],
+              ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
+          }
         }
       }
     }
