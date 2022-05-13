@@ -24,6 +24,13 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   const ID = 'config/quickstart';
 
   /**
+   * List of permissions defined.
+   *
+   * @var array
+   */
+  protected $permissionDefinitions = [];
+
+  /**
    * {@inheritdoc}
    */
   public function addConfigToCreate(array &$config_to_create, StorageInterface $storage, $collection, $prefix = '', array $profile_storages = []) {
@@ -151,12 +158,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     return $config;
   }
-  /**
-   * List of permissions defined.
-   *
-   * @var array
-   */
-  protected $permissionDefinitions = [];
 
   /**
    * Get permissions defined.
@@ -171,7 +172,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       $this->permissionDefinitions = \Drupal::service('user.permissions')->getPermissions();
     }
     return $this->permissionDefinitions;
-  }
   }
 
   /**
