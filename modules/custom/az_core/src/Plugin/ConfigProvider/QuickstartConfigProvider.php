@@ -150,6 +150,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
           $dependencies = array_values(array_unique($dependencies));
           sort($dependencies);
         }
+        ksort($value['dependencies']);
       }
 
       // Add transformed config hash.
