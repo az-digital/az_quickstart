@@ -55,7 +55,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: ' border-bottom align-text-top mb-4'
+        classes: 'border-bottom align-text-top mb-4'
         id: ''
         element: div
         show_label: false
@@ -124,7 +124,7 @@ third_party_settings:
     group_lead:
       children:
         - field_az_subheading
-      label: lead
+      label: Lead
       parent_name: group_text_column
       region: content
       weight: 4
