@@ -27,11 +27,14 @@ third_party_settings:
     group_row:
       children:
         - group_link
+      label: 'Card Clickable'
       parent_name: group_content
+      region: content
       weight: 3
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'card card-borderless card-clickable p-0 mb-4'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -39,16 +42,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'card card-borderless card-clickable p-0 mb-4'
-      label: 'Card Clickable'
     group_title_block:
       children: {  }
+      label: 'Title Block'
       parent_name: ''
+      region: hidden
       weight: 16
       format_type: html_element
-      region: hidden
       format_settings:
+        classes: 'border-bottom align-text-top mb-4'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -56,17 +59,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: ' border-bottom align-text-top mb-4'
-      label: 'Title Block'
     group_text_muted:
       children:
         - field_az_published
+      label: 'Text Muted'
       parent_name: group_link
+      region: content
       weight: 4
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'text-muted font-weight-normal mb-0'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -74,16 +77,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'text-muted font-weight-normal mb-0'
-      label: 'Text Muted'
     group_title_column:
       children: {  }
+      label: 'Title Column'
       parent_name: ''
+      region: hidden
       weight: 15
       format_type: html_element
-      region: hidden
       format_settings:
+        classes: col-12
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -91,16 +94,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: col-12
-      label: 'Title Column'
     group_text_column:
       children: {  }
+      label: 'Text Column'
       parent_name: ''
+      region: hidden
       weight: 12
       format_type: html_element
-      region: hidden
       format_settings:
+        classes: ''
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -108,16 +111,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: ''
-      label: 'Text Column'
     group_lead:
       children: {  }
+      label: Lead
       parent_name: ''
+      region: hidden
       weight: 14
       format_type: html_element
-      region: hidden
       format_settings:
+        classes: lead
+        id: ''
         element: p
         show_label: false
         label_element: h3
@@ -125,18 +128,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: lead
-      label: lead
     group_body_row:
       children: {  }
+      label: 'Body Row'
       parent_name: ''
+      region: hidden
       weight: 11
       format_type: html_element
-      region: hidden
       format_settings:
-        id: ''
         classes: row
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -144,15 +145,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'Body Row'
     group_photo_container:
       children:
         - field_az_media_image
+      label: 'Card Image'
       parent_name: group_link
+      region: content
       weight: 3
       format_type: html_element
-      region: content
       format_settings:
+        classes: card-img
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -160,16 +163,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: card-img
-      label: 'Card Image'
     group_fig_caption:
       children: {  }
+      label: Container
       parent_name: ''
+      region: hidden
       weight: 13
       format_type: html_element
-      region: hidden
       format_settings:
+        classes: mt-0
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -177,34 +180,34 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: mt-0
-      label: Container
     group_link:
       children:
         - group_photo_container
         - group_text_muted
         - group_heading
         - group_read_more
+      label: Link
       parent_name: group_row
+      region: content
       weight: 4
       format_type: link
-      region: content
       format_settings:
+        classes: 'card-body p-0'
+        id: ''
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
-        id: ''
-        classes: 'card-body p-0'
-      label: Link
     group_heading:
       children:
         - smart_title
+      label: Heading
       parent_name: group_link
+      region: content
       weight: 5
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'card-title text-midnight h3 mb-0 mt-0'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -212,19 +215,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'card-title text-midnight h3 mb-0 mt-0'
-      label: Heading
     group_summary:
       children:
         - field_az_summary
+      label: Summary
       parent_name: ''
+      region: hidden
       weight: 1
       format_type: html_element
-      region: hidden
       format_settings:
-        id: ''
         classes: 'card-text font-weight-normal mt-2'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -232,15 +233,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: Summary
     group_read_more:
       children:
         - links
+      label: 'Read more'
       parent_name: group_link
+      region: content
       weight: 6
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'card-clickable-link mt-1'
+        id: ''
         element: div
         show_label: true
         label_element: div
@@ -248,17 +251,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'card-clickable-link mt-1'
-      label: 'Read more'
     group_content:
       children:
         - group_row
+      label: Content
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
+        classes: ''
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -266,31 +269,28 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: ''
-      label: Content
   smart_title:
     enabled: true
     settings:
+      smart_title__link: false
       smart_title__tag: ''
       smart_title__classes: {  }
-      smart_title__link: false
 id: node.az_news.az_marquee
 targetEntityType: node
 bundle: az_news
 mode: az_marquee
 content:
   field_az_media_image:
-    weight: 1
+    type: entity_reference_entity_view
     label: hidden
     settings:
       view_mode: az_large
       link: false
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    weight: 1
     region: content
   field_az_published:
-    weight: 6
+    type: timestamp_ap_style
     label: hidden
     settings:
       always_display_year: '1'
@@ -304,18 +304,18 @@ content:
       use_all_day: 0
       capitalize_noon_and_midnight: 0
     third_party_settings: {  }
-    type: timestamp_ap_style
+    weight: 6
     region: content
   links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 8
     region: content
+  smart_title:
     settings: {  }
     third_party_settings: {  }
-  smart_title:
     weight: 2
     region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   field_az_attachments: true
   field_az_body: true

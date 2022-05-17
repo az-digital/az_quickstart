@@ -16,8 +16,8 @@ plugin: 'menu_block:main'
 settings:
   id: 'menu_block:main'
   label: 'Sidebar menu'
-  provider: menu_block
   label_display: visible
+  provider: menu_block
   follow: false
   follow_parent: active
   level: 2
