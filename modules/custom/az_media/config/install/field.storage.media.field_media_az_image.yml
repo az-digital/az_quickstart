@@ -1,13 +1,13 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - media
   module:
     - file
     - image
     - media
+  enforced:
+    module:
+      - media
 id: media.field_media_az_image
 field_name: field_media_az_image
 entity_type: media
