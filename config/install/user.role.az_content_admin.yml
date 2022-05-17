@@ -2,7 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - filter.format.full_html
     - media.type.az_audio
     - media.type.az_document
     - media.type.az_image
@@ -17,9 +16,9 @@ dependencies:
     - taxonomy.vocabulary.az_page_categories
     - taxonomy.vocabulary.az_person_categories
     - taxonomy.vocabulary.az_person_categories_secondary
-    - taxonomy.vocabulary.tags
     - workflows.workflow.editorial
   module:
+    - access_unpublished
     - az_core
     - block
     - block_class
@@ -27,7 +26,6 @@ dependencies:
     - content_moderation
     - draggableviews
     - easy_breadcrumb
-    - filter
     - media
     - metatag
     - node
@@ -42,13 +40,11 @@ weight: 3
 is_admin: false
 permissions:
   - 'access draggableviews'
-  - 'access news feeds'
   - 'access site reports'
   - 'access taxonomy overview'
   - 'access tokens overview'
   - 'administer block classes'
   - 'administer blocks'
-  - 'administer book outlines'
   - 'administer easy breadcrumb'
   - 'administer menu'
   - 'administer meta tags'
@@ -58,16 +54,12 @@ permissions:
   - 'administer taxonomy'
   - 'administer xmlsitemap'
   - 'bypass node access'
-  - 'create content translations'
-  - 'create new books'
   - 'create terms in az_event_categories'
   - 'create terms in az_news_tags'
   - 'create terms in az_page_categories'
   - 'create terms in az_person_categories'
   - 'create terms in az_person_categories_secondary'
-  - 'create terms in tags'
   - 'delete any az_audio media'
-  - 'delete any az_carousel_item content'
   - 'delete any az_document media'
   - 'delete any az_event content'
   - 'delete any az_flexible_block block content'
@@ -78,41 +70,22 @@ permissions:
   - 'delete any az_quick_links block content'
   - 'delete any az_remote_video media'
   - 'delete any az_video media'
-  - 'delete any book content'
-  - 'delete any webform'
-  - 'delete any webform content'
-  - 'delete any webform submission'
-  - 'delete content translations'
-  - 'delete own az_carousel_item content'
   - 'delete terms in az_event_categories'
   - 'delete terms in az_news_tags'
   - 'delete terms in az_page_categories'
   - 'delete terms in az_person_categories'
   - 'delete terms in az_person_categories_secondary'
-  - 'delete terms in tags'
   - 'delete token'
-  - 'delete webform submissions any node'
-  - 'delete webform submissions own node'
-  - 'edit any webform'
-  - 'edit any webform submission'
   - 'edit own az_audio media'
   - 'edit terms in az_event_categories'
   - 'edit terms in az_news_tags'
   - 'edit terms in az_page_categories'
   - 'edit terms in az_person_categories'
   - 'edit terms in az_person_categories_secondary'
-  - 'edit terms in tags'
-  - 'edit webform assets'
-  - 'edit webform submissions any node'
-  - 'edit webform submissions own node'
-  - 'rabbit hole bypass node'
   - 'renew token'
-  - 'update content translations'
   - 'use advanced search'
   - 'use editorial transition az_publish'
   - 'use editorial transition az_unpublish'
   - 'use editorial transition create_new_draft'
-  - 'use text format full_html'
   - 'view any unpublished content'
   - 'view latest version'
-  - 'view post access counter'
