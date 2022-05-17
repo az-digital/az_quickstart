@@ -190,6 +190,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: title
           entity_type: node
           entity_field: title
           plugin_id: standard

@@ -6,7 +6,7 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
+include_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\block\Entity\Block;
 use Drupal\Core\Form\FormStateInterface;
@@ -416,7 +416,7 @@ function az_barrio_primary_logo() {
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $primary_logo_path_parts['extension'] === 'svg') {
       $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_path['url']);
-      $rendered_image = render($svg);
+      $rendered_image = \Drupal::service('renderer')->render($svg);
       $image_markup = Markup::create($rendered_image);
       $primary_logo_link_classes[] = 'qs-logo-svg-inline';
       $return = Link::createFromRoute($image_markup, '<front>', [], [
@@ -486,7 +486,7 @@ function az_barrio_footer_logo() {
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_footer_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
       $svg = file_get_contents($filepath);
-      $rendered_image = render($svg);
+      $rendered_image = \Drupal::service('renderer')->render($svg);
       $image_markup = Markup::create($rendered_image);
       $attr['attributes']['class'][] = 'qs-logo-svg-inline';
       // Footer link destination is empty (default value)
