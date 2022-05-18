@@ -2,6 +2,7 @@
 
 namespace Drupal\az_select_menu\Plugin\Block;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
@@ -126,11 +127,12 @@ class AzSelectMenu extends MenuBlock {
   public function build() {
 
     $build = parent::build();
-    $menu_name = 'az-select-menu-' . $build['#menu_name'];
+    $block_id_prefix = 'az-select-menu-' . Html::getId($build['#menu_block_configuration']['id']);
+    $menu_name = $block_id_prefix . '-' . Html::getId($build['#menu_name']);
 
     $form_attributes = new Attribute([
       'id' => $menu_name . '-form',
-      'data-formname' => $build['#menu_name'],
+      'data-formname' => $menu_name . '-form',
       'data-formtype' => 'az-select-menu',
       'data-toggle' => 'popover',
       'data-trigger' => 'focus',
