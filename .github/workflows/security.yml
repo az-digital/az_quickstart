@@ -55,7 +55,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
-          php-version: '7.4'
+          php-version: '8.1'
       - name: Set variables
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Install dependencies
