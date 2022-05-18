@@ -130,7 +130,6 @@ class AzSelectMenu extends MenuBlock {
     $block_id_prefix = 'az-select-menu-' . Html::getId($build['#menu_block_configuration']['id']);
     $menu_name = $block_id_prefix . '-' . Html::getId($build['#menu_name']);
 
-
     $form_attributes = new Attribute([
       'id' => $menu_name . '-form',
       'data-formname' => $menu_name . '-form',
