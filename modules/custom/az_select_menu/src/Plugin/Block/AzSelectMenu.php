@@ -2,6 +2,7 @@
 
 namespace Drupal\az_select_menu\Plugin\Block;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
