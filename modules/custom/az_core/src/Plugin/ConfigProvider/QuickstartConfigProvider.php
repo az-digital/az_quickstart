@@ -24,10 +24,155 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   const ID = 'config/quickstart';
 
   /**
+   * List of permissions defined.
+   *
+   * @var array
+   */
+  protected $permissionDefinitions = [];
+
+  /**
    * {@inheritdoc}
    */
   public function addConfigToCreate(array &$config_to_create, StorageInterface $storage, $collection, $prefix = '', array $profile_storages = []) {
-    // The caller will aready have loaded config for install.
+    // Remove permissions that don't exist.
+    $config_to_create = $this->trimPermissions($config_to_create);
+  }
+
+  /**
+   * Find newly available permissions from profile.
+   *
+   * @param \Drupal\Core\Extension\Extension[] $extensions
+   *   An associative array of Extension objects, keyed by extension name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  public function findProfilePermissions(array $extensions = []) {
+
+    // Build list of permissions by providers (eg. module)
+    $permissions_definitions = $this->getPermissionDefinitions();
+    $permissions_by_provider = [];
+    foreach ($permissions_definitions as $key => $permission) {
+      $permissions_by_provider[$permission['provider']][] = $key;
+    }
+    // Filter list only to newly active permissions.
+    $permissions_by_provider = array_intersect_key($permissions_by_provider, $extensions);
+    $new_perms = [];
+    foreach ($permissions_by_provider as $perms) {
+      $new_perms = $new_perms + $perms;
+    }
+    if (empty($new_perms)) {
+      return [];
+    }
+    sort($new_perms);
+
+    // Get active configuration to look for roles.
+    $existing_config = $this->getActiveStorages()->listAll();
+    // phpcs:ignore
+    $existing_roles = array_filter($existing_config, function ($name) {
+      return (strpos($name, 'user.role.') === 0);
+    });
+    $role_config = $this->getActiveStorages()->readMultiple($existing_roles);
+
+    $profile_storages = $this->getProfileStorages();
+    // Check to see if the corresponding profile storage has any overrides.
+    foreach ($role_config as $key => $data) {
+      $current_perms = $data['permissions'] ?? [];
+      $label = $data['label'] ?? 'Unnamed Role';
+      foreach ($profile_storages as $profile_storage) {
+        $profile_data = $profile_storage->read($key);
+        if (!empty($profile_data['permissions'])) {
+          // Remove permissions that don't exist.
+          $profile_perms = array_intersect($profile_data['permissions'], $new_perms);
+          // Remove permissions that already are used.
+          $profile_perms = array_diff($profile_perms, $current_perms);
+          sort($profile_perms);
+
+          // Message about permissions.
+          foreach ($profile_perms as $perm) {
+            // @todo Use injection on user.permissions.
+            // @phpstan-ignore-next-line
+            \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
+            [
+              '%perm' => $perm,
+              '%label' => $label,
+            ]));
+          }
+          if (!empty($profile_perms)) {
+            $role_config[$key]['permissions'] = array_unique(array_merge($current_perms, $profile_perms));
+          }
+        }
+      }
+    }
+
+    return $this->trimPermissions($role_config);
+  }
+
+  /**
+   * Trim invalid permissions from configuration data.
+   *
+   * @param array $config
+   *   A list of the configuration data keyed by configuration object name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  protected function trimPermissions(array $config) {
+    // Get permissions defined.
+    $permission_definitions = $this->getPermissionDefinitions();
+    $permissions = array_keys($permission_definitions);
+
+    // Add the configuration changes.
+    foreach ($config as $name => &$value) {
+      // Is this a permission configuration file?
+      if (strpos($name, 'user.role.') === 0) {
+        // Dependencies TBD based on permissions.
+        $value['dependencies'] = [];
+        // Trim active permissions list to what's expected.
+        if (!empty($value['permissions'])) {
+          $value['permissions'] = array_intersect($permissions, $value['permissions']);
+          sort($value['permissions']);
+        }
+
+        // Add dependencies based on permissions.
+        foreach ($value['permissions'] as $perm) {
+          $value['dependencies']['module'][] = $permission_definitions[$perm]['provider'];
+          if (!empty($permission_definitions[$perm]['dependencies'])) {
+            foreach ($permission_definitions[$perm]['dependencies'] as $dependency_type => $list) {
+              foreach ($list as $dependency) {
+                $value['dependencies'][$dependency_type][] = $dependency;
+              }
+            }
+          }
+        }
+        // Make sure dependencies are unique.
+        foreach ($value['dependencies'] as $dependency_type => &$dependencies) {
+          $dependencies = array_values(array_unique($dependencies));
+          sort($dependencies);
+        }
+        ksort($value['dependencies']);
+      }
+
+      // Add transformed config hash.
+      $value = $this->addDefaultConfigHash($value);
+    }
+
+    return $config;
+  }
+
+  /**
+   * Get permissions defined.
+   *
+   * @return array
+   *   An array of permission definitions.
+   */
+  protected function getPermissionDefinitions() {
+    if (empty($this->permissionDefinitions)) {
+      // @todo Use injection on user.permissions.
+      // @phpstan-ignore-next-line
+      $this->permissionDefinitions = \Drupal::service('user.permissions')->getPermissions();
+    }
+    return $this->permissionDefinitions;
   }
 
   /**
@@ -117,6 +262,9 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     foreach ($profile_storages as $profile_storage) {
       $data = $profile_storage->readMultiple(array_keys($data)) + $data;
     }
+
+    // Remove permissions that don't exist.
+    $data = $this->trimPermissions($data);
 
     // Add the configuration changes.
     foreach ($data as $name => $value) {

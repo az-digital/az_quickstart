@@ -221,6 +221,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_event_date_value
           granularity: second
           plugin_id: date
       title: Calendar

@@ -20,7 +20,7 @@ steps:
       - composer install -o
   - name: Run PHP_CodeSniffer coding standards checks
     plugin: Shell
-    command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -p --colors web/profiles/custom/az_quickstart'
+    command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -sp --colors web/profiles/custom/az_quickstart'
   - name: Run PHPStan code quality checks
     plugin: Script
     script:
