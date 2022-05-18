@@ -61,7 +61,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: ' border-bottom align-text-top mb-4'
+        classes: 'border-bottom align-text-top mb-4'
       label: 'Title Block'
     group_text_muted:
       children:
@@ -137,7 +137,7 @@ third_party_settings:
         speed: fast
         id: ''
         classes: lead
-      label: lead
+      label: Lead
     group_body_row:
       children:
         - group_text_column
