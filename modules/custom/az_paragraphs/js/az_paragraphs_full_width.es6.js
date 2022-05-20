@@ -39,11 +39,13 @@
       lastFullWidthElement.getBoundingClientRect();
     const lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
     const sidebarTopMargin =
-      lastFullWidthElementBottom - contentRegionTop + bottomMargin + "px";
-    document.documentElement.style.setProperty(
-      '--sidebar-top-margin',
-      `${sidebarTopMargin}`,
-    );
+      lastFullWidthElementBottom - contentRegionTop + bottomMargin;
+    if (sidebarTopMargin) {
+      document.documentElement.style.setProperty(
+        '--sidebar-top-margin',
+        `${sidebarTopMargin}px`,
+      );
+    }
   }
 
   /**

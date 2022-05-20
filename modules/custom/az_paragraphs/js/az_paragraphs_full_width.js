@@ -20,8 +20,11 @@
     var contentRegionTop = contentRegionPosition.top;
     var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
     var lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
-    var sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin + "px";
-    document.documentElement.style.setProperty('--sidebar-top-margin', "".concat(sidebarTopMargin));
+    var sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin;
+
+    if (sidebarTopMargin) {
+      document.documentElement.style.setProperty('--sidebar-top-margin', "".concat(sidebarTopMargin, "px"));
+    }
   }
 
   function calculateFullWidthNegativeMargins() {
