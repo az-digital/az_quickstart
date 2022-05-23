@@ -17,6 +17,7 @@ install:
   - az_paragraphs_text_media
   - az_paragraphs_view
   - az_core
+  - az_dam
   - az_flexible_page
   - az_flexible_block
   - az_block_types_quick_links
