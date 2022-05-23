@@ -1,0 +1,10 @@
+az_dam.add_dam_item_page:
+  appears_on:
+    - entity.media.collection
+    - view.media_library.page
+    - view.media_library.widget_table
+  route_name: entity_browser.az_dam
+  title: 'Add DAM assets'
+  weight: 100
+
+

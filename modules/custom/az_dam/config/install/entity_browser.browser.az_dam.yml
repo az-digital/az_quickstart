@@ -1,0 +1,33 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - ib_dam_media
+    - media
+  enforced:
+    module:
+      - az_dam
+name: az_dam
+label: 'Dam Search'
+display: standalone
+display_configuration:
+  path: /admin/content/media/az-dam
+selection_display: multi_step_display
+selection_display_configuration:
+  entity_type: media_type
+  display: rendered_entity
+  display_settings:
+    view_mode: default
+  select_text: 'Use selected'
+  selection_hidden: false
+widget_selector: single
+widget_selector_configuration: {  }
+widgets:
+  e4f2bf7e-ce3f-499e-8d2b-698219735ccf:
+    id: ib_dam_search
+    uuid: e4f2bf7e-ce3f-499e-8d2b-698219735ccf
+    label: 'DAM Search'
+    weight: 1
+    settings:
+      submit_text: 'Select DAM assets'
+      upload_location: 'public://az_dam'

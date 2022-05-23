@@ -7,4 +7,3 @@ package: The University of Arizona
 dependencies:
   - ib_dam:ib_dam
   - ib_dam:ib_dam_media
-  - ib_dam:ib_dam_wysiwyg

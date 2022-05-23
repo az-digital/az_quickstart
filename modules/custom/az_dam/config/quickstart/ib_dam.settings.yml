@@ -1,0 +1,6 @@
+dependencies:
+  enforced:
+    module:
+      - az_dam
+debug: true
+staging: true
