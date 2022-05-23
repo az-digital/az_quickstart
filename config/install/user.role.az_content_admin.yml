@@ -70,7 +70,6 @@ permissions:
   - 'edit webform assets'
   - 'edit webform submissions any node'
   - 'edit webform submissions own node'
-  - 'rabbit hole bypass node'
   - 'renew token'
   - 'update content translations'
   - 'use advanced search'
