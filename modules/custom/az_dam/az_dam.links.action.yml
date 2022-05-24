@@ -6,5 +6,3 @@ az_dam.add_dam_item_page:
   route_name: entity_browser.az_dam
   title: 'Add DAM assets'
   weight: 100
-
-
