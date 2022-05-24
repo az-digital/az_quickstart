@@ -2,5 +2,5 @@ dependencies:
   enforced:
     module:
       - az_dam
-debug: true
+debug: false
 staging: true
