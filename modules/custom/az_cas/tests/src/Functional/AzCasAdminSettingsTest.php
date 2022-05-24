@@ -43,7 +43,7 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->adminUser = $this->drupalCreateUser(['administer account settings']);
     $this->drupalLogin($this->adminUser);

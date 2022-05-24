@@ -33,14 +33,14 @@ class AzBarrioTest extends BrowserTestBase {
   /**
    * The created user.
    *
-   * @var User
+   * @var \Drupal\user\Entity\User
    */
   protected $adminUser;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a test user.

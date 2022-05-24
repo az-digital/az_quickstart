@@ -59,7 +59,7 @@ class AZParagraphsJavascriptTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Set up our initial permissions.
@@ -89,6 +89,7 @@ class AZParagraphsJavascriptTest extends WebDriverTestBase {
     // Make sure that our node was created.
     $this->assertNotNull($this->node);
 
+    /** @var \Drupal\FunctionalJavascriptTests\WebDriverWebAssert $assert */
     $assert = $this->assertSession();
     $page = $this->getSession()->getPage();
 

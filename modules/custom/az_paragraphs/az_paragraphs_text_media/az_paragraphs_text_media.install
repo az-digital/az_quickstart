@@ -12,7 +12,7 @@ use Drupal\paragraphs\Entity\Paragraph;
  *
  * This affects all existing Text on Media paragraphs on this site.
  */
-function az_paragraphs_text_media_update_9201() {
+function az_paragraphs_text_media_update_9201(&$sandbox) {
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
       ->condition('type', 'az_text_media')

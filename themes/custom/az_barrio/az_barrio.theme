@@ -68,12 +68,10 @@ function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 /**
  * Attaches form id to all form elements.
  *
- * @param $form
+ * @param array $form
  *   The form or form element which children should have form id attached.
- * @param $form_id
+ * @param string $form_id
  *   The form id attached to form elements.
- *
- * @return array
  */
 function az_barrio_attach_form_id(&$form, $form_id) {
   if ($form_id === 'search_block_form') {

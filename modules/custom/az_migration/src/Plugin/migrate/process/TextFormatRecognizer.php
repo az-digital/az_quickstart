@@ -90,23 +90,24 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
 
       // Render as full html first.
       $full = trim(_filter_autop(check_markup($value, 'full_html')));
-      // Attempt to parse the resultant html.
-      $full = @\DOMDocument::loadHTML($full);
+      // Attempt to parse the resultant html and convert back to canonical html
+      // if successful.
+      $fullDoc = new \DOMDocument();
+      if (@$fullDoc->loadHTML($full)) {
+        $full = $fullDoc->saveXML();
+      }
 
       // Render the text according to the format.
-      // Attempt to put autoparagraphs back in after the fact, since they
-      // Are likely to exist in the source regardless of intent.
+      // Attempt to put autoparagraphs back in after the fact, since they are
+      // likely to exist in the source regardless of intent.
       $markup = trim(_filter_autop(check_markup($value, $format)));
-      // Attempt to parse the resultant html.
-      $markup = @\DOMDocument::loadHTML($markup);
+      // Attempt to parse the resultant html and convert back to canonical html
+      // if successful.
+      $markupDoc = new \DOMDocument();
+      if (@$markupDoc->loadHTML($markup)) {
+        $markup = $markupDoc->saveXML();
+      }
 
-      // Let's convert back to canonical HTML if parsing was successful.
-      if (!empty($full)) {
-        $full = $full->saveXML();
-      }
-      if (!empty($markup)) {
-        $markup = $markup->saveXML();
-      }
       // Let's compare canonical markup after going back from parsed html.
       // If the HTML nodes were comparable, output should be the same.
       if ($full === $markup) {

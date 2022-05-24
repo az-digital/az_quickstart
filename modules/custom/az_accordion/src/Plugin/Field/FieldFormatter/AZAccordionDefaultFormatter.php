@@ -90,6 +90,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
+    /** @var \Drupal\Core\Field\FieldItemInterface $item */
     foreach ($items as $delta => $item) {
 
       // Format title.
@@ -98,21 +99,20 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $accordion_classes = 'accordion';
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
+
       $parent = $item->getEntity();
 
       // Get settings from parent paragraph.
-      if (!empty($parent)) {
-        if ($parent instanceof ParagraphInterface) {
-          // Get the behavior settings for the parent.
-          $parent_config = $parent->getAllBehaviorSettings();
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
 
-          // See if the parent behavior defines some accordion-specific
-          // settings.
-          if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
-            // @todo implement az_accordion_paragraph_behavior handling.
-          }
-
+        // See if the parent behavior defines some accordion-specific
+        // settings.
+        if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
+          // @todo implement az_accordion_paragraph_behavior handling.
         }
+
       }
 
       // Handle class keys that contained multiple classes.
@@ -123,11 +123,11 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $element[] = [
         '#theme' => 'az_accordion',
         '#title' => $title,
-        '#body' => check_markup($item->body, $item->body_format),
+        '#body' => check_markup($item->get('body'), $item->get('body_format')),
         '#attributes' => ['class' => $accordion_classes],
         '#accordion_item_id' => Html::getUniqueId('az_accordion'),
-        '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
-        '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
+        '#collapsed' => $item->get('collapsed') ? 'collapse' : 'collapse show',
+        '#aria_expanded' => !$item->get('collapsed') ? 'true' : 'false',
         '#aria_controls' => Html::getUniqueId('az_accordion_aria_controls'),
       ];
 

@@ -93,6 +93,7 @@ function az_news_update_9202(&$sandbox) {
  */
 function az_news_update_9203() {
   $field_name = 'field_az_caption';
+  /** @var \Drupal\field\FieldConfigInterface $field */
   $field = FieldConfig::loadbyName('node', 'az_news', $field_name);
   if ($field) {
     $field->delete();

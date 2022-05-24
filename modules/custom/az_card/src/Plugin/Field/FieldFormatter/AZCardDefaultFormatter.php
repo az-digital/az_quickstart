@@ -97,6 +97,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
+    /** @var \Drupal\Core\Field\FieldItemInterface $item */
     foreach ($items as $delta => $item) {
 
       // Format title.
@@ -112,11 +113,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
       // Link.
       $link_render_array = [];
-      if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
+      if ($item->get('link_title') || $item->get('link_uri')) {
+        $link_url = $this->pathValidator->getUrlIfValid($item->get('link_uri'));
         $link_render_array = [
           '#type' => 'link',
-          '#title' => $item->link_title ?? '',
+          '#title' => $item->get('link_title') ?? '',
           '#url' => $link_url ? $link_url : '#',
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
@@ -132,28 +133,25 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $parent = $item->getEntity();
 
       // Get settings from parent paragraph.
-      if (!empty($parent)) {
-        if ($parent instanceof ParagraphInterface) {
-          // Get the behavior settings for the parent.
-          $parent_config = $parent->getAllBehaviorSettings();
-          // See if the parent behavior defines some card-specific settings.
-          if (!empty($parent_config['az_cards_paragraph_behavior'])) {
-            $card_defaults = $parent_config['az_cards_paragraph_behavior'];
-            // Is the card clickable?
-            if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
-              $link_render_array['#attributes']['class'][] = 'stretched-link';
-            }
-
-            // Set card classes according to behavior settings.
-            $column_classes = [];
-            if (!empty($card_defaults['az_display_settings'])) {
-              $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
-              $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
-            }
-            $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
-            $card_classes = $card_defaults['card_style'] ?? 'card';
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+        // See if the parent behavior defines some card-specific settings.
+        if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+          $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+          // Is the card clickable?
+          if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
+            $link_render_array['#attributes']['class'][] = 'stretched-link';
           }
 
+          // Set card classes according to behavior settings.
+          $column_classes = [];
+          if (!empty($card_defaults['az_display_settings'])) {
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
+          }
+          $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
+          $card_classes = $card_defaults['card_style'] ?? 'card';
         }
       }
 
@@ -169,7 +167,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#theme' => 'az_card',
         '#media' => $media_render_array,
         '#title' => $title,
-        '#body' => check_markup($item->body, $item->body_format),
+        '#body' => check_markup($item->get('body'), $item->get('body_format')),
         '#link' => $link_render_array,
         '#attributes' => ['class' => $card_classes],
       ];

@@ -168,7 +168,7 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
       $arguments = [];
       $rawArguments = explode('/', $value['vargs']);
       foreach ($rawArguments as $rawArgument) {
-        /** @var stdClass $parsed */
+        /** @var \stdClass $parsedArgument */
         $parsedArgument = ViewsHandler::breakString($rawArgument);
         $arguments[] = $parsedArgument;
       }
@@ -186,19 +186,17 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         }
         $migratedArguments[] = $argument;
       }
-      if (!empty($migratedArguments)) {
-        $transformedArguments = [];
-        foreach ($migratedArguments as $argument) {
-          if (!empty($argument->operator) && count($argument->value) > 1) {
-            $separator = ($argument->operator === 'and') ? ',' : '+';
-            $transformedArguments[] = implode($separator, $argument->value);
-          }
-          else {
-            $transformedArguments[] = reset($argument->value);
-          }
+      $transformedArguments = [];
+      foreach ($migratedArguments as $argument) {
+        if (!empty($argument->operator) && count($argument->value) > 1) {
+          $separator = ($argument->operator === 'and') ? ',' : '+';
+          $transformedArguments[] = implode($separator, $argument->value);
         }
-        $viewData['argument'] = implode('/', $transformedArguments);
+        else {
+          $transformedArguments[] = reset($argument->value);
+        }
       }
+      $viewData['argument'] = implode('/', $transformedArguments);
     }
     $transformedValue['data'] = serialize($viewData);
 
