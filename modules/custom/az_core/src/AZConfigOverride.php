@@ -9,6 +9,7 @@ use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
 use Drupal\config_sync\ConfigSyncSnapshotter;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 use Drupal\config_update\ConfigListByProviderInterface;
+use Drupal\Core\Extension\ModuleHandler;
 
 /**
  * Class AZConfigOverride.
@@ -58,14 +59,22 @@ class AZConfigOverride {
   protected $extensionListModule;
 
   /**
+   * Drupal\Core\Extension\ModuleExtensionList definition.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandler
+   */
+  protected $moduleHandler;
+
+  /**
    * Constructs a new AZConfigOverride object.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister) {
+  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler) {
     $this->configFactory = $config_factory;
     $this->extensionListModule = $extension_list_module;
     $this->configCollector = $config_collector;
     $this->configSyncSnapshotter = $config_sync_snapshotter;
     $this->configUpdateLister = $config_update_lister;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -95,8 +104,11 @@ class AZConfigOverride {
       // Only query config for the Quickstart provider.
       if ($provider instanceof QuickstartConfigProvider) {
         $overrides = $provider->getOverrideConfig($extensions, $old_extensions);
-        $permissions = $provider->findProfilePermissions($extensions);
-        $overrides = $permissions + $overrides;
+        // Only load permissions in partial steps if profile is done.
+        if ($this->moduleHandler->moduleExists('az_quickstart')) {
+          $permissions = $provider->findProfilePermissions($extensions);
+          $overrides = $permissions + $overrides;
+        }
 
         $snapshots = [];
         // Edit active configuration for each explicit override.
