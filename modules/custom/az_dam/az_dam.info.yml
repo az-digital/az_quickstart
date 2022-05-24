@@ -1,6 +1,6 @@
 name: 'Quickstart DAM'
 type: module
-description:  'The connector for the centralized digital asset management system(IntelligenceBank DAM).'
+description:  'The connector for the centralized digital asset management system (IntelligenceBank DAM).'
 core_version_requirement: ^9
 package: The University of Arizona
 dependencies:
