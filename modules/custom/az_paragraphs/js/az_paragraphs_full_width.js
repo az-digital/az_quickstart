@@ -16,12 +16,15 @@
     var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
     var contentRegionPosition = contentRegion[0].getBoundingClientRect();
     var style = allFullWidthElements[0].currentStyle || window.getComputedStyle(lastFullWidthElement, '');
-    var bottomMargin = style.marginBottom;
+    var bottomMargin = parseFloat(style.marginBottom);
     var contentRegionTop = contentRegionPosition.top;
     var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
     var lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
     var sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin;
-    document.documentElement.style.setProperty('--sidebar-top-margin', "".concat(sidebarTopMargin));
+
+    if (sidebarTopMargin) {
+      document.documentElement.style.setProperty('--sidebar-top-margin', "".concat(sidebarTopMargin, "px"));
+    }
   }
 
   function calculateFullWidthNegativeMargins() {
