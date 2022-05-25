@@ -12,14 +12,8 @@ label: 'Dam Search'
 display: standalone
 display_configuration:
   path: /admin/content/media/az-dam
-selection_display: multi_step_display
-selection_display_configuration:
-  entity_type: media_type
-  display: rendered_entity
-  display_settings:
-    view_mode: default
-  select_text: 'Use selected'
-  selection_hidden: false
+selection_display: no_display
+selection_display_configuration: {  }
 widget_selector: single
 widget_selector_configuration: {  }
 widgets:
