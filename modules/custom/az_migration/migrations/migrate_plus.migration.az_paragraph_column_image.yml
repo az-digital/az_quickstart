@@ -15,12 +15,6 @@ destination:
 
 process:
 
-  keep:
-    plugin: skip_on_empty
-    method: row
-    source: keep
-    message: 'Skipping!'
-
   temp_photo:
     plugin: sub_process
     source: field_uaqs_photo
