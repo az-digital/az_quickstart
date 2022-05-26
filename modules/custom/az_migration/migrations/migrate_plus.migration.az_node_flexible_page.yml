@@ -13,6 +13,36 @@ destination:
   plugin: entity:node
   bundle: az_flexible_page
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_flexible_page
+
+migration_dependencies:
+  required:
+    - az_user
+  optional:
+    - az_image
+    - az_paragraph_callout
+    - az_paragraph_carousel
+    - az_paragraph_chucks_view
+    - az_paragraph_column_image
+    - az_paragraph_extra_info
+    - az_paragraph_file_download
+    - az_paragraph_full_width_bg_wrapper
+    - az_paragraph_full_width_media_row
+    - az_paragraph_gallery
+    - az_paragraph_headed_text
+    - az_paragraph_html
+    - az_paragraph_jumbotron
+    - az_paragraph_panel_group
+    - az_paragraph_plain_text
+    - az_paragraph_single_card
+    - az_paragraph_well
+    - az_paragraph_card_deck
+    - az_paragraph_flexible_page_sub
+
 process:
   type:
     plugin: default_value
@@ -50,7 +80,7 @@ process:
         plugin: migration_lookup
         source: fid
         migration:
-          - az_media
+          - az_image
 
   uid:
     -
@@ -132,32 +162,3 @@ process:
         - '@tmp_flexible_subpage'
         - '@temp_pid'
 
-dependencies:
-  enforced:
-    module:
-      - az_migration
-      - az_flexible_page
-
-migration_dependencies:
-  required:
-    - az_user
-    - az_files
-  optional:
-    - az_paragraph_callout
-    - az_paragraph_carousel
-    - az_paragraph_chucks_view
-    - az_paragraph_column_image
-    - az_paragraph_extra_info
-    - az_paragraph_file_download
-    - az_paragraph_full_width_bg_wrapper
-    - az_paragraph_full_width_media_row
-    - az_paragraph_gallery
-    - az_paragraph_headed_text
-    - az_paragraph_html
-    - az_paragraph_jumbotron
-    - az_paragraph_panel_group
-    - az_paragraph_plain_text
-    - az_paragraph_single_card
-    - az_paragraph_well
-    - az_paragraph_card_deck
-    - az_paragraph_flexible_page_sub

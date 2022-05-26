@@ -5,6 +5,12 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_person
+
 source:
   plugin: d7_taxonomy_term
   bundle: uaqs_person_category
@@ -40,9 +46,3 @@ process:
     source: '@parent_id'
 
   changed: timestamp
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-      - az_person

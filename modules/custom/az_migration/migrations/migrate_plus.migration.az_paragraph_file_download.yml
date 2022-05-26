@@ -13,6 +13,16 @@ destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_text
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  optional:
+    - az_image
+    - az_document
+
 process:
   temp_download_file:
     -
@@ -23,7 +33,7 @@ process:
           plugin: migration_lookup
           source: fid
           migration:
-            - az_media
+            - az_document
 
   temp_download_preview:
     -
@@ -34,7 +44,7 @@ process:
           plugin: migration_lookup
           source: fid
           migration:
-            - az_media
+            - az_image
 
   field_az_text_area/value:
     -
@@ -55,13 +65,3 @@ process:
       az_default_paragraph_behavior:
         az_display_settings:
           bottom_spacing: bottom_spacing
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_files

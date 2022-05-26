@@ -1,0 +1,78 @@
+
+id: az_remote_video
+label: Remote Video
+migration_group: az_migration
+audit: true
+migration_tags:
+  - Drupal 7
+  - Content
+  - Quickstart Content Migration
+  - Media
+
+migration_dependencies:
+  required:
+    - az_user
+    - az_files
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+source:
+  plugin: d7_file_entity_item
+  type: video
+
+destination:
+  plugin: entity:media
+
+process:
+  pseudo_check_if_oembed:
+    - plugin: skip_on_value
+      not_equals: true
+      value:
+        - "video/oembed"
+      method: row
+      source: filemime
+  bundle:
+    - plugin: default_value
+      default_value: 'az_remote_video'
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: uid
+    -
+      plugin: default_value
+      default_value: 0
+  created: timestamp
+  changed: timestamp
+  status: status
+  name:
+    - plugin: skip_on_empty
+      source: filename
+      method: process
+  'field_media_az_oembed_video/0/value':
+    - plugin: str_replace
+      source: uri
+      search: "oembed://"
+      replace: ''
+    - plugin: callback
+      callable: urldecode
+  field_media_az_image:
+    - plugin: gate
+      source: field_uaqs_photo
+      use_as_key: filemime
+      valid_keys:
+        - video/oembed
+      key_direction: unlock
+    - plugin: sub_process
+      source: field_uaqs_photo
+      process:
+        delta: delta
+        target_id:
+          - plugin: migration_lookup
+            source: fid
+            migration:
+              - az_files

@@ -5,6 +5,11 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_full_width_bg_wrapper
@@ -81,8 +86,3 @@ process:
         text_background_padding: '@text_background_padding_processed'
         az_display_settings:
             bottom_spacing: bottom_spacing
-
-dependencies:
-  enforced:
-    module:
-      - az_migration

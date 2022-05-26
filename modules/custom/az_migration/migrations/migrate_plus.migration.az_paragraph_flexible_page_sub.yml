@@ -4,6 +4,10 @@ migration_group: az_migration
 migration_tags:
   - Quickstart Content Migration
 status: true
+dependencies:
+  enforced:
+    module:
+      - az_migration
 
 source:
   constants:
@@ -15,7 +19,6 @@ source:
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_text
-
 process:
   field_az_text_area:
     - plugin: single_value
@@ -41,13 +44,3 @@ process:
       az_default_paragraph_behavior:
         az_display_settings:
           bottom_spacing: bottom_spacing
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_files

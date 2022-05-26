@@ -1,0 +1,59 @@
+id: az_video
+label: Images
+migration_group: az_migration
+audit: true
+migration_tags:
+  - Drupal 7
+  - Content
+  - Quickstart Content Migration
+  - Media
+
+migration_dependencies:
+  required:
+    - az_user
+    - az_files
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+source:
+  plugin: d7_file_entity_item
+  type: video
+
+destination:
+  plugin: entity:media
+
+process:
+  pseudo_check_if_oembed:
+    - plugin: skip_on_value
+      value:
+        - "video/oembed"
+      method: row
+      source: filemime
+  bundle:
+    - plugin: default_value
+      default_value: 'az_video'
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: uid
+    -
+      plugin: default_value
+      default_value: 0
+  field_media_az_video_file/target_id:
+      - plugin: migration_lookup
+        migration:
+          - az_files
+        source: fid
+
+  created: timestamp
+  changed: timestamp
+  status: status
+  name:
+    - plugin: skip_on_empty
+      source: filename
+      method: process

@@ -5,6 +5,11 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
 source:
   plugin: d7_node
   node_type: uaqs_page
@@ -49,8 +54,3 @@ process:
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-
-dependencies:
-  enforced:
-    module:
-      - az_migration

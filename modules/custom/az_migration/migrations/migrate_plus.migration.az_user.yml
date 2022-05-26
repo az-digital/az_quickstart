@@ -10,6 +10,17 @@ migration_tags:
   - Quickstart Content Migration
 
 class: Drupal\user\Plugin\migrate\User
+
+migration_dependencies:
+  optional:
+    - d7_field_instance
+    - d7_file
+    - language
+    - default_language
+    - user_picture_field_instance
+    - user_picture_entity_display
+    - user_picture_entity_form_display
+
 source:
   plugin: d7_user
 process:
@@ -53,12 +64,3 @@ process:
       migration: d7_file
 destination:
   plugin: entity:user
-migration_dependencies:
-  optional:
-    - d7_field_instance
-    - d7_file
-    - language
-    - default_language
-    - user_picture_field_instance
-    - user_picture_entity_display
-    - user_picture_entity_form_display

@@ -5,6 +5,11 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_single_card
@@ -85,8 +90,3 @@ process:
             bottom_spacing: bottom_spacing
             card_width_sm: 'col-sm-12'
             card_width_xs: 'col-12'
-
-dependencies:
-  enforced:
-    module:
-      - az_migration

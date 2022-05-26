@@ -5,6 +5,11 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_headed_text
@@ -29,8 +34,3 @@ process:
 
   behavior_settings:
     plugin: paragraphs_behavior_settings
-
-dependencies:
-  enforced:
-    module:
-      - az_migration

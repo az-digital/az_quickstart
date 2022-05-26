@@ -212,22 +212,35 @@ drush mr az_files
 
 ## Media migration
 
+Requires that the **source site** has the [file_entity](https://www.drupal.org/project/file_entity) module installed.
+
+We break up media migrations by type, just like with nodes.
+
+There are four media types in Quickstart 1:
+- audio
+- document
+- image
+- video
+
+These are mapped to 5 media entity types in Quickstart 2:
+- [az_audio]()
+- [az_document]
+- [az_image]()
+- [az_remote_video]()
+- [az_video]()
+
 Source site pre-migration tasks :
 
 * Delete any files you don’t want migrated.
 * Check for any custom or overridden fields on file_entities.
 * Check for any custom file entity types.
 
-Migrate the related files using the below command :
-```
-drush mim az_media
-```
+To run all media migrations as a group, you can use this command:
 
-To rollback the migrated file :
 ```
-drush mr az_media
-```
+drush mim --execute-dependencies --group=az_migration --tag="Media"
 
+```
 ## Person migrations
 
 ### Person category migration

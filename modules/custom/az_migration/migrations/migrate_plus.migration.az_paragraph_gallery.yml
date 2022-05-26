@@ -5,6 +5,19 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  optional:
+    - az_audio
+    - az_document
+    - az_image
+    - az_remote_video
+    - az_video
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_gallery
@@ -25,7 +38,11 @@ process:
           plugin: migration_lookup
           source: fid
           migration:
-            - az_media
+            - az_audio
+            - az_document
+            - az_image
+            - az_remote_video
+            - az_video
   gallery_display_processed:
     plugin: default_value
     default_value: 'grid'
@@ -36,13 +53,3 @@ process:
         gallery_display: '@gallery_display_processed'
         az_display_settings:
             bottom_spacing: bottom_spacing
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_files

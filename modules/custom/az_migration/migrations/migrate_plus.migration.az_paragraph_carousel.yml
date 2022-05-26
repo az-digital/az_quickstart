@@ -5,6 +5,15 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  optional:
+    - az_image
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_carousel
@@ -35,7 +44,7 @@ process:
           -
             plugin: migration_lookup
             migration:
-              - az_media
+              - az_image
         target_id: '@media'
         caption:
           -
@@ -60,13 +69,3 @@ process:
         gallery_display: '@gallery_display_processed'
         az_display_settings:
             bottom_spacing: bottom_spacing
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_files

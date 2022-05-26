@@ -5,6 +5,11 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_content_chunks_html
@@ -59,8 +64,3 @@ process:
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
-
-dependencies:
-  enforced:
-    module:
-      - az_migration

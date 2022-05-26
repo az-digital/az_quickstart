@@ -5,6 +5,11 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_jumbotron
@@ -26,8 +31,3 @@ process:
       az_default_paragraph_behavior:
         az_display_settings:
           bottom_spacing: bottom_spacing
-
-dependencies:
-  enforced:
-    module:
-      - az_migration

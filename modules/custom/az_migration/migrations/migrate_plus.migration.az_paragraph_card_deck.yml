@@ -14,8 +14,16 @@ destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_cards
 
-process:
+dependencies:
+  enforced:
+    module:
+      - az_migration
 
+migration_dependencies:
+  optional:
+    - az_image
+
+process:
   field_az_cards:
     source: field_uaqs_cards_values
     plugin: sub_process
@@ -83,7 +91,7 @@ process:
         -
           plugin: migration_lookup
           migration:
-            - az_media
+            - az_image
 
   card_width_processed:
     plugin: default_value
@@ -128,13 +136,3 @@ process:
             bottom_spacing: bottom_spacing
             card_width_sm: '@card_width_sm_processed'
             card_width_xs: '@card_width_xs_processed'
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_files

@@ -13,6 +13,19 @@ destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_text
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  optional:
+    - az_audio
+    - az_document
+    - az_image
+    - az_remote_video
+    - az_video
+
 process:
   field_az_text_area/value:
     plugin: paragraphs_extra_info_field_merge
@@ -26,13 +39,3 @@ process:
       az_default_paragraph_behavior:
         az_display_settings:
           bottom_spacing: bottom_spacing
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_files
