@@ -59,38 +59,38 @@ function az_core_toolbar() {
     'az_links' => [
       '#theme' => 'links__toolbar_az_core',
       '#links' => [
-          'docs' => [
-            'title' => t('Documentation'),
-            'url' => Url::fromUri('https://quickstart.arizona.edu'),
-            'attributes' => [
-              'title' => t('Arizona Quickstart 2 Documentation'),
-              'target' => t('_blank'),
-            ],
-          ],
-          'settings' => [
-            'title' => t('Settings'),
-            'url' => Url::fromRoute('az_core.az_quickstart'),
-            'attributes' => [
-              'title' => t('Arizona Quickstart 2 Settings'),
-            ],
-          ],
-          'analytics' => [
-            'title' => t('Analytics Dashboard'),
-            'url' => Url::fromUri('https://datastudio.google.com/u/0/reporting/938c3f2a-6dbf-4968-9edd-8963450b4200/page/kTLWB', [
-              'query' => [
-                'params' => '{"df62":"include%EE%80%800%EE%80%80IN%EE%80%80' . $siteurl . '/"}',
-              ],
-              'absolute' => TRUE,
-            ]),
-            'attributes' => [
-              'title' => t('Site Anayltics Dashboard'),
-              'target' => t('_blank'),
-            ],
+        'docs' => [
+          'title' => t('Documentation'),
+          'url' => Url::fromUri('https://quickstart.arizona.edu'),
+          'attributes' => [
+            'title' => t('Arizona Quickstart 2 Documentation'),
+            'target' => t('_blank'),
           ],
         ],
+        'settings' => [
+          'title' => t('Settings'),
+          'url' => Url::fromRoute('az_core.az_quickstart'),
+          'attributes' => [
+            'title' => t('Arizona Quickstart 2 Settings'),
+          ],
+        ],
+        'analytics' => [
+          'title' => t('Analytics Dashboard'),
+          'url' => Url::fromUri('https://datastudio.google.com/u/0/reporting/938c3f2a-6dbf-4968-9edd-8963450b4200/page/kTLWB', [
+            'query' => [
+              'params' => '{"df62":"include%EE%80%800%EE%80%80IN%EE%80%80' . $siteurl . '/"}',
+            ],
+            'absolute' => TRUE,
+          ]),
+          'attributes' => [
+            'title' => t('Site Anayltics Dashboard'),
+            'target' => t('_blank'),
+          ],
+        ],
+      ],
       '#attributes' => [
-          'class' => ['toolbar-menu'],
-        ],
+        'class' => ['toolbar-menu'],
+      ],
     ],
   ];
 
