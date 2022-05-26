@@ -33,17 +33,19 @@
     const style =
       allFullWidthElements[0].currentStyle ||
       window.getComputedStyle(lastFullWidthElement, '');
-    const bottomMargin = style.marginBottom;
+    const bottomMargin = parseFloat(style.marginBottom);
     const contentRegionTop = contentRegionPosition.top;
     const lastFullWidthElementPosition =
       lastFullWidthElement.getBoundingClientRect();
     const lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
     const sidebarTopMargin =
       lastFullWidthElementBottom - contentRegionTop + bottomMargin;
-    document.documentElement.style.setProperty(
-      '--sidebar-top-margin',
-      `${sidebarTopMargin}`,
-    );
+    if (sidebarTopMargin) {
+      document.documentElement.style.setProperty(
+        '--sidebar-top-margin',
+        `${sidebarTopMargin}px`,
+      );
+    }
   }
 
   /**
