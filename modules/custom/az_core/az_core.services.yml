@@ -6,4 +6,4 @@ services:
       - { name: page_cache_response_policy }
   az_core.override_import:
     class: Drupal\az_core\AZConfigOverride
-    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector', '@config_sync.snapshotter', '@config_update.config_list']
+    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector', '@config_sync.snapshotter', '@config_update.config_list', '@module_handler']

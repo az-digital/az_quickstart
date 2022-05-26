@@ -9,6 +9,7 @@ use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
 use Drupal\config_sync\ConfigSyncSnapshotter;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 use Drupal\config_update\ConfigListByProviderInterface;
+use Drupal\Core\Extension\ModuleHandler;
 
 /**
  * Class AZConfigOverride.
@@ -58,14 +59,22 @@ class AZConfigOverride {
   protected $extensionListModule;
 
   /**
+   * Drupal\Core\Extension\ModuleExtensionList definition.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandler
+   */
+  protected $moduleHandler;
+
+  /**
    * Constructs a new AZConfigOverride object.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister) {
+  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler) {
     $this->configFactory = $config_factory;
     $this->extensionListModule = $extension_list_module;
     $this->configCollector = $config_collector;
     $this->configSyncSnapshotter = $config_sync_snapshotter;
     $this->configUpdateLister = $config_update_lister;
+    $this->moduleHandler = $module_handler;
   }
 
   /**
@@ -87,12 +96,21 @@ class AZConfigOverride {
     $module_keys = array_flip($modules);
     $extensions = array_intersect_key($module_list, $module_keys);
 
+    // Previously enabled extensions.
+    $old_extensions = array_diff_key($module_list, $module_keys);
+
     // Ask the override provider for direct overrides available.
     foreach ($providers as $provider) {
       // Only query config for the Quickstart provider.
       if ($provider instanceof QuickstartConfigProvider) {
-        $overrides = $provider->getOverrideConfig($extensions);
+        $overrides = $provider->getOverrideConfig($extensions, $old_extensions);
+        // Only load permissions in partial steps if profile is done.
+        if ($this->moduleHandler->moduleExists('az_quickstart')) {
+          $permissions = $provider->findProfilePermissions($extensions);
+          $overrides = $permissions + $overrides;
+        }
 
+        $snapshots = [];
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {
           $config = $this->configFactory->getEditable($name);
@@ -105,7 +123,15 @@ class AZConfigOverride {
             $type = $provided_by[0];
             $owner = $provided_by[1];
 
-            // Update the config_snapshot of the module that owns the config.
+            // Record we need to do a snapshot.
+            $snapshots[$type][] = $owner;
+          }
+        }
+
+        // Update the config_snapshot of the modules that owned the config.
+        foreach ($snapshots as $type => $owners) {
+          $owners = array_unique($owners);
+          foreach ($owners as $owner) {
             $this->configSyncSnapshotter->refreshExtensionSnapshot($type, [$owner],
               ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
           }

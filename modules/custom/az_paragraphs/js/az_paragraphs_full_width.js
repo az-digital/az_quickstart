@@ -6,45 +6,53 @@
 **/
 
 (function (Drupal, window, document) {
-  Drupal.behaviors.calculateScrollbarWidth = {
+  function calculateScrollbarWidth() {
+    document.documentElement.style.setProperty('--scrollbar-width', "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
+  }
+
+  function pushSidebarsDown() {
+    var contentRegion = document.querySelectorAll('main.main-content');
+    var allFullWidthElements = document.querySelectorAll('.paragraph.full-width-background');
+    var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
+    var contentRegionPosition = contentRegion[0].getBoundingClientRect();
+    var style = allFullWidthElements[0].currentStyle || window.getComputedStyle(lastFullWidthElement, '');
+    var bottomMargin = parseFloat(style.marginBottom);
+    var contentRegionTop = contentRegionPosition.top;
+    var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
+    var lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
+    var sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin;
+
+    if (sidebarTopMargin) {
+      document.documentElement.style.setProperty('--sidebar-top-margin', "".concat(sidebarTopMargin, "px"));
+    }
+  }
+
+  function calculateFullWidthNegativeMargins() {
+    var contentRegion = document.querySelectorAll('.block-system-main-block');
+    var contentRegionPosition = contentRegion[0].getBoundingClientRect();
+    var distanceFromLeft = contentRegionPosition.left;
+    var distanceFromRight = contentRegionPosition.right;
+    var negativeLeftMargin = 0 - distanceFromLeft;
+    var negativeRightMargin = 0 - distanceFromRight;
+    document.documentElement.style.setProperty('--full-width-left-distance', "".concat(negativeLeftMargin, "px"));
+    document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
+  }
+
+  Drupal.behaviors.azParagraphsFullWidthElements = {
     attach: function attach() {
-      document.documentElement.style.setProperty("--scrollbar-width", "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
+      calculateScrollbarWidth();
+      calculateFullWidthNegativeMargins();
+      pushSidebarsDown();
     }
   };
-  Drupal.behaviors.azParagraphsPushSidebarDown = {
-    attach: function attach() {
-      var contentRegion = document.getElementById("content");
-      var allFullWidthElements = document.querySelectorAll(".paragraph.full-width-background");
-      var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
-      var contentRegionPosition = contentRegion.getBoundingClientRect();
-      var style = allFullWidthElements[0].currentStyle || window.getComputedStyle(lastFullWidthElement, "");
-      var bottomMargin = style.marginBottom;
-      var contentRegionTop = contentRegionPosition.top;
-      var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
-      var lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
-      var sidebarTopMargin = lastFullWidthElementBottom - contentRegionTop + bottomMargin;
-      document.documentElement.style.setProperty("--sidebar-top-margin", "".concat(sidebarTopMargin));
-    }
-  };
-  Drupal.behaviors.calculateFullWidthNegativeMargins = {
-    attach: function attach() {
-      var contentRegion = document.getElementById("block-az-barrio-content");
-      var contentRegionPosition = contentRegion.getBoundingClientRect();
-      var distanceFromLeft = contentRegionPosition.left;
-      var distanceFromRight = contentRegionPosition.right;
-      var negativeLeftMargin = 0 - distanceFromLeft;
-      var negativeRightMargin = 0 - distanceFromRight;
-      document.documentElement.style.setProperty("--full-width-left-distance", "".concat(negativeLeftMargin, "px"));
-      document.documentElement.style.setProperty("--full-width-right-distance", "".concat(negativeRightMargin, "px"));
-    }
-  };
-  document.addEventListener("DOMContentLoaded", function () {
-    Drupal.behaviors.azParagraphsPushSidebarDown.attach();
-    Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
+  window.addEventListener('resize', function () {
+    calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins();
+    pushSidebarsDown();
   });
-  window.addEventListener("resize", function () {
-    Drupal.behaviors.calculateFullWidthNegativeMargins.attach();
-    Drupal.behaviors.calculateScrollbarWidth.attach();
-    Drupal.behaviors.azParagraphsPushSidebarDown.attach();
+  window.addEventListener('azVideoPlay', function () {
+    calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins();
+    pushSidebarsDown();
   });
 })(Drupal, this, this.document);

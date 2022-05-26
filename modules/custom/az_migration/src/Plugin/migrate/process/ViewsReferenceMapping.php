@@ -178,7 +178,7 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         foreach ($argument->value as $i => $argValue) {
           $ids = $this->migrateLookup->lookup($argumentMigrations, [$argValue]);
           $id = reset($ids);
-          // TODO: Create stub if no matching ID found?
+          // @todo Create stub if no matching ID found?
           if (!empty($id)) {
             $migratedId = reset($id);
             $argument->value[$i] = $migratedId;
@@ -190,7 +190,7 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         $transformedArguments = [];
         foreach ($migratedArguments as $argument) {
           if (!empty($argument->operator) && count($argument->value) > 1) {
-            $separator = ($argument->operator == 'and') ? ',' : '+';
+            $separator = ($argument->operator === 'and') ? ',' : '+';
             $transformedArguments[] = implode($separator, $argument->value);
           }
           else {
