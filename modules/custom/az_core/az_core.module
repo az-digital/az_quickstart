@@ -52,18 +52,18 @@ function az_core_toolbar() {
     '#weight' => 101,
   ];
 
-  $siteurl=\Drupal::request()->getHost();
+  $siteurl = \Drupal::request()->getHost();
 
   $items['az_dashboard'] = [
     '#type' => 'toolbar_item',
     'tab' => [
       '#type' => 'link',
       '#title' => t('Analytics Dashboard'),
-      '#url' => Url::fromUri('https://datastudio.google.com/u/0/reporting/938c3f2a-6dbf-4968-9edd-8963450b4200/page/kTLWB',[
-        'query'=>[
-          'params'=>'{"df62":"include%EE%80%800%EE%80%80IN%EE%80%80' . $siteurl .'/"}',
+      '#url' => Url::fromUri('https://datastudio.google.com/u/0/reporting/938c3f2a-6dbf-4968-9edd-8963450b4200/page/kTLWB', [
+        'query' => [
+          'params' => '{"df62":"include%EE%80%800%EE%80%80IN%EE%80%80' . $siteurl . '/"}',
         ],
-        'absolute'=>TRUE
+        'absolute' => TRUE,
       ]),
       '#attributes' => [
         'target' => t('_blank'),
