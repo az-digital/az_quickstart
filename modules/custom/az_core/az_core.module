@@ -57,8 +57,8 @@ function az_core_toolbar() {
   $items['az_quickstart']['tray'] = [
     '#heading' => t('Quickstart links'),
     'az_links' => [
-        '#theme' => 'links__toolbar_az_core',
-        '#links' => [
+      '#theme' => 'links__toolbar_az_core',
+      '#links' => [
           'docs' => [
             'title' => t('Documentation'),
             'url' => Url::fromUri('https://quickstart.arizona.edu'),
@@ -88,7 +88,7 @@ function az_core_toolbar() {
             ],
           ],
         ],
-        '#attributes' => [
+      '#attributes' => [
           'class' => ['toolbar-menu'],
         ],
     ],
