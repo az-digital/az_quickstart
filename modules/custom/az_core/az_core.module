@@ -83,7 +83,7 @@ function az_core_toolbar() {
             'absolute' => TRUE,
           ]),
           'attributes' => [
-            'title' => t('Site Anayltics Dashboard'),
+            'title' => t('Site Analytics Dashboard'),
             'target' => t('_blank'),
           ],
         ],
