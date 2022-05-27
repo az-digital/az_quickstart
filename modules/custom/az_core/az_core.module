@@ -69,7 +69,7 @@ function az_core_toolbar() {
         ],
         'settings' => [
           'title' => t('Settings'),
-          'url' => Url::fromRoute('az_core.az_quickstart'),
+          'url' => Url::fromRoute('az_core.az_settings'),
           'attributes' => [
             'title' => t('Arizona Quickstart 2 Settings'),
           ],
