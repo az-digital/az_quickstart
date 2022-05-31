@@ -223,11 +223,11 @@ There are four media types in Quickstart 1:
 - video
 
 These are mapped to 5 media entity types in Quickstart 2:
-- [az_audio]()
-- [az_document]
-- [az_image]()
-- [az_remote_video]()
-- [az_video]()
+- [az_audio](modules/custom/az_migration/migrations/az_audio.yml)
+- [az_document](modules/custom/az_migration/migrations/az_document.yml)
+- [az_image](modules/custom/az_migration/migrations/az_image.yml)
+- [az_remote_video](modules/custom/az_migration/migrations/az_remote_video.yml)
+- [az_video](modules/custom/az_migration/migrations/az_video.yml)
 
 Source site pre-migration tasks :
 
