@@ -7,38 +7,6 @@ migration_tags:
   - Content
   - Quickstart Content Migration
   - Media
-source:
-  plugin: d7_file_entity_item
-  type: document
-  CONSTANTS:
-    BUNDLE_PREFIX: 'az_'
-process:
-  uid:
-    -
-      plugin: migration_lookup
-      migration: az_user
-      no_stub: true
-      source: uid
-    -
-      plugin: default_value
-      default_value: 0
-  bundle:
-    - plugin: concat
-      source:
-        - CONSTANTS/BUNDLE_PREFIX
-        - bundle
-  field_media_az_document/target_id:
-      - plugin: migration_lookup
-        migration:
-          - az_files
-        source: fid
-  created: timestamp
-  changed: timestamp
-  status: status
-
-
-destination:
-  plugin: entity:media
 
 migration_dependencies:
   required:
@@ -50,3 +18,32 @@ dependencies:
     module:
       - az_migration
       - az_media
+
+source:
+  plugin: d7_file_entity_item
+  type: document
+
+destination:
+  plugin: entity:media
+
+process:
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: uid
+    -
+      plugin: default_value
+      default_value: 0
+  bundle:
+    - plugin: default_value
+      default_value: az_document
+  field_media_az_document/target_id:
+      - plugin: migration_lookup
+        migration:
+          - az_files
+        source: fid
+  created: timestamp
+  changed: timestamp
+  status: status

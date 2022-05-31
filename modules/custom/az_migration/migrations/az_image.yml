@@ -7,11 +7,22 @@ migration_tags:
   - Content
   - Quickstart Content Migration
   - Media
+
+migration_dependencies:
+  required:
+    - az_user
+    - az_files
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_media
+
 source:
   plugin: d7_file_entity_item
   type: image
-  CONSTANTS:
-    BUNDLE_PREFIX: 'az_'
+
 process:
   uid:
     -
@@ -23,10 +34,8 @@ process:
       plugin: default_value
       default_value: 0
   bundle:
-    - plugin: concat
-      source:
-        - CONSTANTS/BUNDLE_PREFIX
-        - bundle
+    - plugin: default_value
+      default_value: az_image
   field_media_az_image/alt:
     - plugin: skip_on_empty
       method: process
@@ -68,17 +77,5 @@ process:
   changed: timestamp
   status: status
 
-
 destination:
   plugin: entity:media
-
-migration_dependencies:
-  required:
-    - az_user
-    - az_files
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-      - az_media
