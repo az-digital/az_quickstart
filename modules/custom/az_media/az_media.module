@@ -103,9 +103,9 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
     $srcset = explode(', ', $attr['srcset']);
 
     foreach ($srcset as $src_i => $src) {
-      list($src, $res) = explode(' ', $src);
+      [$src, $res] = explode(' ', $src);
 
-      $media = isset($attr['media']) ? $attr['media'] : '';
+      $media = $attr['media'] ?? '';
 
       // Add "retina" to media query if this is a 2x image.
       if ($res && $res === '2x' && !empty($media)) {

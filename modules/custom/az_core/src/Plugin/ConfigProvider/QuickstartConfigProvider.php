@@ -259,7 +259,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     // Parent version does not account for simple config module dependencies.
     if (!isset($data['dependencies'])) {
       // Simple config or a config entity without dependencies.
-      list($provider) = explode('.', $config_name, 2);
+      [$provider] = explode('.', $config_name, 2);
       return in_array($provider, $enabled_extensions, TRUE);
     }
     return parent::validateDependencies($config_name, $data, $enabled_extensions, $all_config);
