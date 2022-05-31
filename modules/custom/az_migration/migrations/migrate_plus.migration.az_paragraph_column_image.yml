@@ -19,7 +19,7 @@ process:
     plugin: skip_on_empty
     method: row
     source: keep
-    message: 'Skipping!'
+    message: 'Could not determine parent entity. Skipping.'
 
   temp_photo:
     plugin: sub_process
