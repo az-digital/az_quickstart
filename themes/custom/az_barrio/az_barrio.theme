@@ -261,6 +261,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     ];
     $az_bootstrap_js_info = [
       'preprocess' => FALSE,
+      'weight' => -20,
     ];
 
     // AZ Bootstrap source.
