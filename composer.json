@@ -156,7 +156,7 @@
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
             "drupal/paragraphs": {
-                "Paragraph Migrations broken by archived flag (3268555)": "https://gist.githubusercontent.com/joeparsons/db6221a6a094d022d6a976eb6b33579f/raw/1da6133a846ad3a235b25342a96bb5bf17d621f7/3268555.patch"
+                "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
             },
             "drupal/smart_date": {
                 "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"
