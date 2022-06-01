@@ -9,7 +9,12 @@ dependencies:
   enforced:
     module:
       - az_migration
-      - az_paragraphs
+      - az_paragraphs_text_media
+
+migration_dependencies:
+  optional:
+    - az_image
+    - az_remote_video
 
 source:
   plugin: az_paragraphs_item
@@ -37,7 +42,8 @@ process:
         plugin: migration_lookup
         source: fid
         migration:
-          - az_media
+          - az_image
+          - az_remote_video
 
   bg_attach_processed:
     - plugin: get

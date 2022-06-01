@@ -5,6 +5,16 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_paragraphs_text
+
+migration_dependencies:
+  optional:
+    - az_image
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_column_image
@@ -12,15 +22,6 @@ source:
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_text
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  optional:
-    - az_image
 
 process:
 

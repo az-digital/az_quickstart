@@ -4,10 +4,12 @@ migration_group: az_migration
 migration_tags:
   - Quickstart Content Migration
 status: true
+
 dependencies:
   enforced:
     module:
       - az_migration
+      - az_paragraphs_text
 
 source:
   constants:

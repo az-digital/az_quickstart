@@ -9,6 +9,12 @@ dependencies:
   enforced:
     module:
       - az_migration
+      - az_paragraphs_accordion
+
+migration_dependencies:
+  required:
+    - az_user
+    - az_files
 
 source:
   plugin: az_paragraphs_item

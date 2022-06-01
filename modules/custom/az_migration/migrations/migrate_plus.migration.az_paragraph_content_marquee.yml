@@ -5,6 +5,17 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_paragraphs_text_media
+
+migration_dependencies:
+  optional:
+    - az_image
+    - az_remote_video
+
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_content_chunks_marquee
@@ -12,16 +23,6 @@ source:
 destination:
   plugin: 'entity_reference_revisions:paragraph'
   default_bundle: az_text_media
-
-dependencies:
-  enforced:
-    module:
-      - az_migration
-
-migration_dependencies:
-  optional:
-    - az_image
-    - az_remote_video
 
 process:
   field_az_title:

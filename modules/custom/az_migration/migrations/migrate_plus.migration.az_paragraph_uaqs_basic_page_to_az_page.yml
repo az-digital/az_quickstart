@@ -9,6 +9,18 @@ dependencies:
   enforced:
     module:
       - az_migration
+      - az_paragraphs_text
+  optional:
+    module:
+      - az_paragraphs_html
+
+migration_dependencies:
+  optional:
+    - az_audio
+    - az_document
+    - az_image
+    - az_remote_video
+    - az_video
 
 source:
   plugin: d7_node
@@ -23,13 +35,10 @@ process:
     passed: 'az_text'
     failed: 'az_html'
     module_missing: 'az_text'
-
   type:
-    -
-      plugin: array_shift
+    - plugin: array_shift
       source: '@destination_bundle'
-    -
-      plugin: default_value
+    - plugin: default_value
       default_value: 'az_text'
 
   field_az_full_html:

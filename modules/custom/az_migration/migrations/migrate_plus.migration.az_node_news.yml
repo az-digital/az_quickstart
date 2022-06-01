@@ -5,14 +5,6 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
-source:
-  plugin: az_node
-  node_type: uaqs_news
-
-destination:
-  plugin: entity:node
-  bundle: az_news
-
 dependencies:
   enforced:
     module:
@@ -31,6 +23,14 @@ migration_dependencies:
     - az_paragraph_column_image
     - az_paragraph_headed_text
     - az_user
+
+source:
+  plugin: az_node
+  node_type: uaqs_news
+
+destination:
+  plugin: entity:node
+  bundle: az_news
 
 process:
   type:

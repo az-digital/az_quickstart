@@ -9,6 +9,18 @@ dependencies:
   enforced:
     module:
       - az_migration
+      - az_paragraphs_text
+  optional:
+    module:
+      - az_paragraphs_html
+
+migration_dependencies:
+  optional:
+    - az_audio
+    - az_document
+    - az_image
+    - az_remote_video
+    - az_video
 
 source:
   plugin: az_paragraphs_item

@@ -9,6 +9,7 @@ dependencies:
   enforced:
     module:
       - az_migration
+      - az_paragraphs_text
 
 source:
   plugin: az_paragraphs_item

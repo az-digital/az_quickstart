@@ -9,10 +9,13 @@ dependencies:
   enforced:
     module:
       - az_migration
+      - az_paragraphs_photo_gallery
 
 migration_dependencies:
   optional:
     - az_image
+    - az_remote_video
+    - az_video
 
 source:
   plugin: az_paragraphs_item
@@ -24,7 +27,6 @@ destination:
   default_bundle: az_photo_gallery
 
 process:
-
   field_az_photos:
     -
       source: field_uaqs_carousel_values
@@ -45,6 +47,8 @@ process:
             plugin: migration_lookup
             migration:
               - az_image
+              - az_remote_video
+              - az_video
         target_id: '@media'
         caption:
           -
