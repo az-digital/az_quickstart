@@ -9,7 +9,7 @@ field_name: field_az_email
 entity_type: node
 bundle: az_person
 label: Email
-description: ''
+description: 'If possible, please use addresses ending with <i>@arizona.edu</i> rather than <i>@email.arizona.edu</i>.'
 required: false
 translatable: false
 default_value: {  }
