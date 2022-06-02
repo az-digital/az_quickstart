@@ -17,12 +17,12 @@ function az_paragraphs_update_920301(&$sandbox) {
     $count = \Drupal::entityQuery('paragraph')
       ->count()
       ->execute();
-    $sandbox['total'] = $count;
-    $sandbox['current'] = 0;
-    $sandbox['updated_count'] = 0;
     if ($count === '0') {
       return t('No updates needed.');
     }
+    $sandbox['total'] = $count;
+    $sandbox['current'] = 0;
+    $sandbox['updated_count'] = 0;
   }
 
   $paragraphs_per_batch = 25;
