@@ -73,7 +73,6 @@ process:
         bg-trans-black: dark
         dark: dark
         light: light
-
   view_mode_processed:
     - plugin: static_map
       source: view_mode
@@ -81,7 +80,6 @@ process:
         uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
         uaqs_bg_img_content_center: 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3'
         uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6'
-    - plugin: default_value
       default_value: 'col-md-8 col-lg-6'
   content_style_processed:
     - plugin: default_value
