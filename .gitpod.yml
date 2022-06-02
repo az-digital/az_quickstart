@@ -2,7 +2,7 @@
 image: devwithlando/gitpod:1
 
 tasks:
-  - name: Setup Drupal Dev Env
+  - name: Setup Quickstart Dev Env
     command: |
       lando start
       lando install
