@@ -17,9 +17,6 @@ function az_paragraphs_update_920301(&$sandbox) {
     $count = \Drupal::entityQuery('paragraph')
       ->count()
       ->execute();
-    if ($count === '0') {
-      return t('No updates needed.');
-    }
     $sandbox['total'] = $count;
     $sandbox['current'] = 0;
     $sandbox['updated_count'] = 0;
@@ -75,7 +72,7 @@ function az_paragraphs_update_920301(&$sandbox) {
     $sandbox['current']++;
   }
 
-  $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
+  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
 
   return t('Breakpoint settings updated on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
 
