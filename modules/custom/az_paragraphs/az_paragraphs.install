@@ -20,6 +20,9 @@ function az_paragraphs_update_920301(&$sandbox) {
     $sandbox['total'] = $count;
     $sandbox['current'] = 0;
     $sandbox['updated_count'] = 0;
+    if ($count === '0') {
+      return t('No updates needed.');
+    }
   }
 
   $paragraphs_per_batch = 25;
@@ -28,9 +31,6 @@ function az_paragraphs_update_920301(&$sandbox) {
     ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
     ->execute();
 
-  if (empty($paragraph_ids)) {
-    return t('No updates needed.');
-  }
 
   foreach ($paragraph_ids as $id) {
     $paragraph = \Drupal::entityTypeManager()->getStorage('paragraph')->load($id);
