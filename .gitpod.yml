@@ -3,15 +3,8 @@ image: devwithlando/gitpod:1
 
 tasks:
   - name: Setup Drupal Dev Env
-    #init: |
-    # docker build -t devwithlando/php:8.0-apache-4 .
-    # docker build -t devwithlando/phpmyadmin:5.1.1 .
     command: |
       lando start
-      # lando composer require drush/drush
-      # lando composer install
-      # chmod ug+w -R /workspace/drupal-dev-environment/sites/default/
-      # lando drush si -y --account-pass=admin --site-name='lando_drupal9' --db-url=mysql://drupal9:drupal9@database/drupal9 demo_umami
       lando install
       gp preview $(gp url $(lando info --format=json | jq -r ".[0].urls[0]" | sed -e 's#http://localhost:\(\)#\1#'))
 
