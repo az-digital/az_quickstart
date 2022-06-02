@@ -72,7 +72,7 @@ function az_paragraphs_update_920301(&$sandbox) {
     $sandbox['current']++;
   }
 
-  $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
+  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
 
   return t('Breakpoint settings updated on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
 
