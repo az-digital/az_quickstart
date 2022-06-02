@@ -1,0 +1,46 @@
+# Learn more about this file at https://www.gitpod.io/docs/references/gitpod-yml
+image: devwithlando/gitpod:1
+
+tasks:
+  - name: Setup Drupal Dev Env
+    init: |
+      docker build -t devwithlando/php:8.0-apache-4 .
+      docker build -t devwithlando/phpmyadmin:5.1.1 .
+    command: |
+      lando start
+      lando composer require drush/drush
+      lando composer install
+      chmod ug+w -R /workspace/drupal-dev-environment/sites/default/
+      lando drush si -y --account-pass=admin --site-name='lando_drupal9' --db-url=mysql://drupal9:drupal9@database/drupal9 demo_umami
+      gp preview $(gp url $(lando info --format=json | jq -r ".[0].urls[0]" | sed -e 's#http://localhost:\(\)#\1#'))
+  
+ports:
+  - port: 3306
+    onOpen: ignore
+  - port: 80
+    onOpen: ignore
+  - port: 443
+    onOpen: ignore
+
+github:
+  prebuilds:
+    master: true
+    branches: false
+    pullRequests: true
+    pullRequestsFromForks: true
+    addCheck: true
+    addComment: false
+    addBadge: true
+
+vscode:
+  extensions:
+    - felixfbecker.php-debug
+    - dbaeumer.vscode-eslint
+    - eamodio.gitlens
+    - EditorConfig.EditorConfig
+    - esbenp.prettier-vscode
+    - stylelint.vscode-stylelint
+    - tombonnike.vscode-status-bar-format-toggle
+    - usernamehw.errorlens
+    - mblode.twig-language
+    - skippednote.VS-code-drupal
