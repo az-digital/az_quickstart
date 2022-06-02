@@ -19,7 +19,7 @@ ports:
 github:
   prebuilds:
     master: true
-    branches: false
+    branches: true
     pullRequests: true
     pullRequestsFromForks: false
     addCheck: true
@@ -38,3 +38,4 @@ vscode:
     - usernamehw.errorlens
     - mblode.twig-language
     - skippednote.VS-code-drupal
+    - xdebug.php-debug
