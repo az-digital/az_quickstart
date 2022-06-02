@@ -21,7 +21,7 @@ github:
     master: true
     branches: false
     pullRequests: true
-    pullRequestsFromForks: true
+    pullRequestsFromForks: false
     addCheck: true
     addComment: false
     addBadge: true
