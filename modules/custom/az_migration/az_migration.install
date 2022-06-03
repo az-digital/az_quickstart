@@ -6,7 +6,7 @@
  */
 
 /**
- * Ensure the (Migrate Magician) migmag module is installed.
+ * Ensure the migmag (Migrate Magician) module is installed.
  */
 function az_migration_update_920301() {
   \Drupal::service('module_installer')->install(['migmag']);
