@@ -54,7 +54,19 @@
           const $submitButton = $wrapper
             .closest('.views-exposed-form')
             .find('button.form-submit');
+          const $dropDown = $wrapper
+            .closest('.views-exposed-form')
+            .find('.form-select');
           let task = null;
+
+          $dropDown.addClass('d-block');
+          $dropDown
+            .on('change', (e) => {
+              const $ancestor = $wrapper.closest(
+                '.views-widget-az-calendar-filter',
+              );
+              triggerFilterChange($ancestor, 0);
+            });
 
           // Set task to trigger filter element change.
           function triggerFilterChange($ancestor, delay) {

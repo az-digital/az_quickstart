@@ -36,7 +36,13 @@
         var $buttonWrapper = $wrapper.children('.az-calendar-filter-buttons');
         var $calendar = $wrapper.children('.az-calendar-filter-calendar');
         var $submitButton = $wrapper.closest('.views-exposed-form').find('button.form-submit');
+        var $dropDown = $wrapper.closest('.views-exposed-form').find('.form-select');
         var task = null;
+        $dropDown.addClass('d-block');
+        $dropDown.on('change', function (e) {
+          var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');
+          triggerFilterChange($ancestor, 0);
+        });
 
         function triggerFilterChange($ancestor, delay) {
           if (task != null) {
