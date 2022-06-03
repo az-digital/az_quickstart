@@ -7,7 +7,7 @@ migration_tags:
   - Content
   - Quickstart Content Migration
 source:
-  plugin: d7_file_entity_item
+  plugin: az_file_entity
   constants:
     bundle_prefix: az
 process:

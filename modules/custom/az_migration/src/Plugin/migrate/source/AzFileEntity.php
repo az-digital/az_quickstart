@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   of that particular type.
  *
  * @MigrateSource(
- *   id = "d7_file_entity_item",
+ *   id = "az_file_entity",
  *   source_module = "file_entity",
  * )
  */
