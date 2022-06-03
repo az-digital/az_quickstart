@@ -134,10 +134,6 @@ class AzFileEntity extends FieldableEntity {
       'scheme' => $scheme,
     ] = $row->getSource();
 
-    if (!($dealer_plugin = $this->fileEntityDealerManager->createInstanceFromTypeAndScheme($type, $scheme))) {
-      return FALSE;
-    }
-
     // Get Field API field values.
     $fields = $this->getFields('file', $type);
     $file_id = $row->getSourceProperty('fid');
@@ -145,8 +141,7 @@ class AzFileEntity extends FieldableEntity {
       $row->setSourceProperty($field_name, $this->getFieldValues('file', $field_name, $file_id));
     }
 
-    $row->setSourceProperty('bundle', $dealer_plugin->getDestinationMediaTypeId());
-    $dealer_plugin->prepareMediaEntityRow($row, $this->getDatabase());
+    $row->setSourceProperty('bundle', $type);
 
     return parent::prepareRow($row);
   }
@@ -304,7 +299,7 @@ class AzFileEntity extends FieldableEntity {
    *   Database connection to check.
    *
    * @return bool
-   *   Whether the connection is a SQLite connection.
+   *   Whether the connection is an SQLite connection.
    */
   protected function dbIsSqLite(Connection $connection): bool {
     $connection_options = $connection->getConnectionOptions();
