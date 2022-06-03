@@ -59,15 +59,6 @@
             .find('.form-select');
           let task = null;
 
-          $dropDown.addClass('d-block');
-          $dropDown
-            .on('change', (e) => {
-              const $ancestor = $wrapper.closest(
-                '.views-widget-az-calendar-filter',
-              );
-              triggerFilterChange($ancestor, 0);
-            });
-
           // Set task to trigger filter element change.
           function triggerFilterChange($ancestor, delay) {
             if (task != null) {
@@ -87,6 +78,15 @@
               }
             }, delay);
           }
+
+          // Handle dropdown, if present.
+          $dropDown.addClass('d-block');
+          $dropDown.on('change', () => {
+            const $ancestor = $wrapper.closest(
+              '.views-widget-az-calendar-filter',
+            );
+            triggerFilterChange($ancestor, 0);
+          });
 
           // Function to update a filter's internal date fields from datepicker.
           function updateCalendarFilters(startDate, endDate) {

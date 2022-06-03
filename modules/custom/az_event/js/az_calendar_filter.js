@@ -38,11 +38,6 @@
         var $submitButton = $wrapper.closest('.views-exposed-form').find('button.form-submit');
         var $dropDown = $wrapper.closest('.views-exposed-form').find('.form-select');
         var task = null;
-        $dropDown.addClass('d-block');
-        $dropDown.on('change', function (e) {
-          var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');
-          triggerFilterChange($ancestor, 0);
-        });
 
         function triggerFilterChange($ancestor, delay) {
           if (task != null) {
@@ -59,6 +54,12 @@
             }
           }, delay);
         }
+
+        $dropDown.addClass('d-block');
+        $dropDown.on('change', function () {
+          var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');
+          triggerFilterChange($ancestor, 0);
+        });
 
         function updateCalendarFilters(startDate, endDate) {
           var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');
