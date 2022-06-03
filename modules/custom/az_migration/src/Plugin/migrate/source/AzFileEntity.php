@@ -4,7 +4,6 @@ namespace Drupal\az_migration\Plugin\migrate\source;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\State\StateInterface;
-use Drupal\az_migration\FileEntityDealerManagerInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 use Drupal\migrate_drupal\Plugin\migrate\source\d7\FieldableEntity;
@@ -25,13 +24,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AzFileEntity extends FieldableEntity {
 
   /**
-   * The file entity dealer plugin manager.
-   *
-   * @var \Drupal\az_migration\FileEntityDealerManagerInterface
-   */
-  protected $fileEntityDealerManager;
-
-  /**
    * Constructs a FileEntityItem instance.
    *
    * @param array $configuration
@@ -46,16 +38,13 @@ class AzFileEntity extends FieldableEntity {
    *   The state service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
-   * @param \Drupal\az_migration\FileEntityDealerManagerInterface $file_entity_dealer_manager
-   *   The file entity dealer plugin manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, StateInterface $state, EntityTypeManagerInterface $entity_type_manager, FileEntityDealerManagerInterface $file_entity_dealer_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration, StateInterface $state, EntityTypeManagerInterface $entity_type_manager ) {
     $configuration += [
       'type' => NULL,
       'scheme' => $configuration['uri_prefix'] ?? NULL,
     ];
     parent::__construct($configuration, $plugin_id, $plugin_definition, $migration, $state, $entity_type_manager);
-    $this->fileEntityDealerManager = $file_entity_dealer_manager;
   }
 
   /**
@@ -69,7 +58,6 @@ class AzFileEntity extends FieldableEntity {
       $migration,
       $container->get('state'),
       $container->get('entity_type.manager'),
-      $container->get('plugin.manager.file_entity_dealer')
     );
   }
 
