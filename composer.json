@@ -81,7 +81,7 @@
         "drupal/migrate_plus": "5.3.0",
         "drupal/migrate_queue_importer": "2.0",
         "drupal/migrate_tools": "5.1.0",
-        "drupal/paragraphs": "1.12",
+        "drupal/paragraphs": "1.14.0",
         "drupal/paragraphs_admin": "1.2",
         "drupal/pathauto": "1.10.0",
         "drupal/quick_node_clone": "1.15",
@@ -154,6 +154,9 @@
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
+            },
+            "drupal/paragraphs": {
+                "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
             },
             "drupal/smart_date": {
                 "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"
