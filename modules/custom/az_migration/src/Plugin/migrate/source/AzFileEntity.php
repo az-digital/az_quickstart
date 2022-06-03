@@ -232,6 +232,23 @@ class AzFileEntity extends FieldableEntity {
   }
 
   /**
+   * Returns the expression for the DB for getting the URI scheme.
+   *
+   * @param \Drupal\Core\Database\Connection|null $connection
+   *   Database connection of the source Drupal 7 instance.
+   *
+   * @return string
+   *   The expression for the DB for getting the URI scheme.
+   */
+  protected function getSchemeExpression($connection = NULL) {
+    $db = $connection ?? $this->getDatabase();
+    assert($db instanceof Connection);
+    return $this->dbIsSqLite($db)
+      ? "SUBSTRING(fm.uri, 1, INSTR(fm.uri, '://') - 1)"
+      : "SUBSTRING(fm.uri, 1, POSITION('://' IN fm.uri) - 1)";
+  }
+
+  /**
    * Returns the subquery for the user picture-only file IDs.
    *
    * @param \Drupal\Core\Database\Connection $connection
