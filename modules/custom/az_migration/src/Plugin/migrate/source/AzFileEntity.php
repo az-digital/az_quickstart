@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\source;
 
+use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\State\StateInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
