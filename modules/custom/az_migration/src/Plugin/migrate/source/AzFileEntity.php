@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   source_module = "file_entity",
  * )
  */
-class FileEntityItem extends FieldableEntity {
+class AzFileEntity extends FieldableEntity {
 
   /**
    * The file entity dealer plugin manager.
