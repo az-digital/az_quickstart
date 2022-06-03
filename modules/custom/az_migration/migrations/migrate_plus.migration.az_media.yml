@@ -1,5 +1,5 @@
 id: az_media
-label: All Media (media_migration)
+label: All Media
 migration_group: az_migration
 audit: true
 migration_tags:
