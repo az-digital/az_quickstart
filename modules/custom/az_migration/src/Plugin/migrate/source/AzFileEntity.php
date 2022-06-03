@@ -232,23 +232,6 @@ class AzFileEntity extends FieldableEntity {
   }
 
   /**
-   * Returns the expression for the DB for getting the URI scheme.
-   *
-   * @param \Drupal\Core\Database\Connection|null $connection
-   *   Database connection of the source Drupal 7 instance.
-   *
-   * @return string
-   *   The expression for the DB for getting the URI scheme.
-   */
-  protected function getSchemeExpression($connection = NULL) {
-    $db = $connection ?? $this->getDatabase();
-    assert($db instanceof Connection);
-    return $this->dbIsSqLite($db)
-      ? "SUBSTRING(fm.uri, 1, INSTR(fm.uri, '://') - 1)"
-      : "SUBSTRING(fm.uri, 1, POSITION('://' IN fm.uri) - 1)";
-  }
-
-  /**
    * Returns the subquery for the user picture-only file IDs.
    *
    * @param \Drupal\Core\Database\Connection $connection
@@ -311,6 +294,22 @@ class AzFileEntity extends FieldableEntity {
    */
   protected function dbIsPostgresql(Connection $connection): bool {
     return ($connection->getConnectionOptions()['driver'] ?? NULL) === 'pgsql';
+  }
+
+  /**
+   * Determines whether the connection is a SQLite connection.
+   *
+   * @param \Drupal\Core\Database\Connection $connection
+   *   Database connection to check.
+   *
+   * @return bool
+   *   Whether the connection is a SQLite connection.
+   */
+  protected function dbIsSqLite(Connection $connection): bool {
+    $connection_options = $connection->getConnectionOptions();
+    return ($connection_options['driver'] ?? NULL) === 'sqlite' ||
+      // For in-memory connections.
+      preg_match('/\bsqlite\b/', $connection_options['namespace'] ?? '');
   }
 
   /**
