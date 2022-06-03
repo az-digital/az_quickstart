@@ -93,6 +93,24 @@ class AzFileEntity extends FieldableEntity {
   }
 
   /**
+   * Returns the file extension expression for the current DB.
+   *
+   * @param \Drupal\Core\Database\Connection|null $connection
+   *   Database connection of the source Drupal 7 instance.
+   *
+   * @return string
+   *   The expression for getting the file extension.
+   */
+  protected function getExtensionExpression($connection = NULL) {
+    $db = $connection ?? $this->getDatabase();
+    assert($db instanceof Connection);
+
+    return $this->dbIsSqLite($db)
+      ? "REPLACE(fm.uri, RTRIM(fm.uri, REPLACE(fm.uri, '.', '')), '')"
+      : "SUBSTRING(fm.uri FROM CHAR_LENGTH(fm.uri) - POSITION('.' IN REVERSE(fm.uri)) + 2)";
+  }
+
+  /**
    * {@inheritdoc}
    */
   protected function prepareQuery() {

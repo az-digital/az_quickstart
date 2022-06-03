@@ -74,6 +74,7 @@
         "drupal/media_library_edit": "2.2.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
+        "drupal/media_migration": "1.0.0-alpha14",
         "drupal/menu_block": "1.7.0",
         "drupal/menu_link_attributes": "1.2",
         "drupal/metatag": "1.19.0",
@@ -150,6 +151,9 @@
             },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
+            },
+            "drupal/media_migration": {
+                "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
             "drupal/smart_date": {
                 "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"
