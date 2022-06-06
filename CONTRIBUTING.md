@@ -279,7 +279,7 @@ lando theme-debug
 ```
 
 ### DDev
-There is a provided ddev tooling for enabling theme debugging.
+Quickstart provides DDev tooling for enabling theme debugging.
 
 Simply use the following command once your site is installed:
 
