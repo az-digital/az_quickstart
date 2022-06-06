@@ -7,6 +7,7 @@ weight: 2
 is_admin: false
 permissions:
   - 'access administration pages'
+  - 'access az_dam entity browser pages'
   - 'access any webform configuration'
   - 'access coffee'
   - 'access content overview'
