@@ -270,7 +270,7 @@ Developing within Drupal can be a real challenge without debugging enabled.
 You can easily enable them by using the following commands.
 
 ### Lando
-There is a provided lando tooling for enabling theme debugging.
+There Lando tooling provided for enabling theme debugging.
 
 Simply use the following command once your site is installed:
 
