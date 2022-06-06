@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_splitscreen_ordering
+    - paragraphs.paragraphs_type.az_splitscreen
+  module:
+    - options
+id: paragraph.az_splitscreen.field_az_splitscreen_ordering
+field_name: field_az_splitscreen_ordering
+entity_type: paragraph
+bundle: az_splitscreen
+label: Order
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
