@@ -30,11 +30,11 @@
     ],
     "require": {
         "php": ">=7.3",
-        "az-digital/arizona-bootstrap": "2.0.13",
+        "az-digital/arizona-bootstrap": "2.0.14",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
-        "drupal/access_unpublished": "1.3.0",
+        "drupal/access_unpublished": "1.4.0",
         "drupal/antibot": "2.0.0",
         "drupal/auto_entitylabel": "3.0-beta4",
         "drupal/background_image_formatter": "1.7",
@@ -44,7 +44,7 @@
         "drupal/bootstrap_barrio": "4.30",
         "drupal/bootstrap_utilities": "1.1.0",
         "drupal/cas": "1.7",
-        "drupal/chosen": "3.0.1",
+        "drupal/chosen": "3.0.2",
         "drupal/ckeditor_bs_grid": "2.0.7",
         "drupal/coffee": "1.2",
         "drupal/config_distro": "1.0-alpha4",
@@ -52,20 +52,21 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.2.16",
-        "drupal/crop": "2.1",
+        "drupal/core-recommended": "9.3.14",
+        "drupal/crop": "2.2.0",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.4",
         "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "2.0.2",
-        "drupal/embed": "1.4",
+        "drupal/embed": "1.5.0",
         "drupal/entity_embed": "1.2",
+        "drupal/environment_indicator": "4.0.6",
         "drupal/exclude_node_title": "1.3.0",
         "drupal/externalauth": "1.4.0",
         "drupal/field_group": "3.2.0",
         "drupal/field_group_link": "3.0.0",
-        "drupal/google_tag": "1.4",
-        "drupal/honeypot": "2.0.2",
+        "drupal/google_tag": "1.5.0",
+        "drupal/honeypot": "2.1.0",
         "drupal/image_widget_crop": "2.3",
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.2.0",
@@ -73,22 +74,22 @@
         "drupal/media_library_edit": "2.2.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
-        "drupal/media_migration": "1.0.0-alpha13",
+        "drupal/media_migration": "1.0.0-alpha14",
         "drupal/menu_block": "1.7.0",
         "drupal/menu_link_attributes": "1.2",
         "drupal/metatag": "1.19.0",
-        "drupal/migrate_plus": "5.2.0",
+        "drupal/migrate_plus": "5.3.0",
         "drupal/migrate_queue_importer": "2.0",
         "drupal/migrate_tools": "5.1.0",
-        "drupal/paragraphs": "1.12",
+        "drupal/paragraphs": "1.14.0",
         "drupal/paragraphs_admin": "1.2",
-        "drupal/pathauto": "1.8",
-        "drupal/quick_node_clone": "1.14",
+        "drupal/pathauto": "1.10.0",
+        "drupal/quick_node_clone": "1.15",
         "drupal/redirect": "1.7.0",
-        "drupal/role_delegation": "1.1",
+        "drupal/role_delegation": "1.2.0",
         "drupal/search_exclude": "2.0.0-beta2",
         "drupal/seckit": "2.0.0",
-        "drupal/slick": "2.4.0",
+        "drupal/slick": "2.6.0",
         "drupal/slick_views": "2.6.0",
         "drupal/smart_date": "3.5.1",
         "drupal/smart_title": "1.0-beta1",
@@ -96,7 +97,7 @@
         "drupal/token": "1.10.0",
         "drupal/views_bootstrap": "4.3",
         "drupal/viewsreference": "2.0-beta2",
-        "drupal/webform": "6.1.2",
+        "drupal/webform": "6.1.3",
         "drupal/xmlsitemap": "1.2.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
@@ -107,10 +108,10 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.3.x-dev"
+            "dev-main": "2.4.x-dev"
         },
         "patches": {
-            "drupal/antibot" : {
+            "drupal/antibot": {
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
             },
             "drupal/better_exposed_filters": {
@@ -127,18 +128,17 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo": "https://www.drupal.org/files/issues/2021-09-02/2259567-146-9-2-x.patch",
-                "Ajax CSS load order issue": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
-                "Layout builder revisions issue": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Allow text field to enforce a specific text format.": "https://www.drupal.org/files/issues/2021-03-26/784672-182.patch",
-                "Allow editing area in Claro to span full width": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
-                "Unable to select single view display for view settings": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
-                "Unrelated error message when running tests with database errors (3163925)": "https://git.drupalcode.org/project/drupal/-/merge_requests/212.diff",
-                "Allow menu_link source plugin to filter menu links by menu name (#3064016)": "https://git.drupalcode.org/project/drupal/-/commit/510b5904fcd2498800b733d4e3015003eed23c81.diff",
-                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2020-06-28/2766369-25.patch",
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://www.drupal.org/files/issues/2022-05-05/2259567-160-9-3-x.patch",
+                "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
+                "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
+                "Allow text field to enforce a specific text format (784672)": "https://www.drupal.org/files/issues/2022-03-27/784672-227.patch",
+                "Allow editing area in Claro to span full width (3184667)": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
+                "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
+                "Unrelated error message when running tests with database errors (3163925)": "https://www.drupal.org/files/issues/2022-05-12/3163925-19-9-2-x.patch",
+                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Incorrect results on grouped exposed filters (1810148)": "https://www.drupal.org/files/issues/2022-02-02/1810148-101.patch",
-                "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-2-x.patch",
+                "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2020-06-01/3102249-21.patch"
             },
             "drupal/config_distro": {
@@ -154,6 +154,9 @@
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
+            },
+            "drupal/paragraphs": {
+                "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
             },
             "drupal/smart_date": {
                 "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"

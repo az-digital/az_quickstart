@@ -104,3 +104,11 @@ function az_news_update_9203() {
       ->addMessage($field_name . ' not found on az_news content type.');
   }
 }
+
+/**
+ * Ensure the better_exposed_filters module is installed.
+ */
+function az_news_update_920301() {
+  \Drupal::service('module_installer')->install(['better_exposed_filters']);
+  return t('Better Exposed Filters module installed.');
+}

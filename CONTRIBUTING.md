@@ -160,6 +160,14 @@ When you install either of the recommended environments with the configuration
 provided by this project, you will have our testing environment built in, but it
 can still be a bit complicated.
 
+## Testing with phpstan prior to making a pull request
+PHPStan focuses on finding errors in your code without actually running it. It
+catches whole classes of bugs even before you write tests for the code. It moves
+PHP closer to compiled languages in the sense that the correctness of each line
+of the code can be checked before you run the actual line.
+
+`lando phpstan`
+`ddev phpstan`
 ### Local testing on Lando
 With lando running and quickstart installed and the branch with the changes you
 want to run tests on checked out.
@@ -278,3 +286,24 @@ lando drupal site:mode dev
 ```
 ddev drush en -y devel && ddev drupal site:mode dev
 ```
+
+## Configuration Management and Database Updates
+
+A question that frequently arises for Quickstart contributors is whether a change that they are making requires a database update or if configuration file changes are sufficient.
+
+### Context
+
+`az-digital/az_quickstart` is a Drupal distribution that is hosted on many different platforms by a variety of teams employing different strategies and cadences when it comes to updating their Quickstart websites. This necessitates relatively strict guidelines that should be followed by the Arizona Digital team when making changes to Quickstart itself.
+
+### Configuration changes that require database updates
+
+Configuration changes will require database updates if:
+-  Your code adds a new setting that never existed before.
+-  You are changing a default setting and it would be best for it to be the new default on sites immediately, regardless of downstream decisions.
+-  Your code replaces an existing setting and has a new key name.
+
+### Configuration changes that do not require database updates
+
+Configuration changes will not require database updates if:
+- Your code adds another option to an existing setting and doesn't need to be selected by default.
+- Your code changes an existing setting, but doesn't have breaking implications if configuration updates aren't applied right away downstream.

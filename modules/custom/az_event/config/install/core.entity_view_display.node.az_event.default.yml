@@ -27,11 +27,14 @@ third_party_settings:
     group_span_subtitle:
       children:
         - field_az_subheading
+      label: 'span subtitle'
       parent_name: ''
+      region: content
       weight: 2
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'lead mb-3'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -39,19 +42,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'lead mb-3'
-      label: 'span subtitle'
     group_category:
       children:
         - field_az_event_category
+      label: 'Category Div'
       parent_name: ''
+      region: content
       weight: 4
       format_type: html_element
-      region: content
       format_settings:
+        classes: clearfix
         id: ''
-        classes: 'clearfix'
         element: div
         show_label: false
         label_element: h3
@@ -59,18 +60,18 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'Category Div'
     group_row_1:
       children:
         - group_col_1
         - group_col_2
+      label: 'row 1'
       parent_name: ''
+      region: content
       weight: 5
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: row
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -78,18 +79,18 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'row 1'
     group_row_2:
       children:
         - group_col_3
         - group_col_4
+      label: 'row 2'
       parent_name: ''
+      region: content
       weight: 6
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: row
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -97,17 +98,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'row 2'
     group_col_1:
       children:
         - field_az_event_date
+      label: 'column 1'
       parent_name: group_row_1
+      region: content
       weight: 13
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: col-md-6
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -115,17 +116,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'column 1'
     group_col_2:
       children:
         - field_az_location
+      label: 'column 2'
       parent_name: group_row_1
+      region: content
       weight: 14
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: col-md-6
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -133,17 +134,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'column 2'
     group_col_3:
       children:
         - field_az_contacts
+      label: 'column 3'
       parent_name: group_row_2
+      region: content
       weight: 8
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: col-md-6
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -151,17 +152,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'column 3'
     group_col_4:
       children:
         - field_az_attachments
+      label: 'column 4'
       parent_name: group_row_2
+      region: content
       weight: 9
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: col-md-6
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -169,7 +170,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'column 4'
   smart_title:
     enabled: false
 id: node.az_event.default
@@ -179,40 +179,38 @@ mode: default
 content:
   field_az_attachments:
     type: file_default
-    weight: 0
-    region: content
     label: above
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
+    weight: 0
+    region: content
   field_az_body:
-    weight: 3
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 3
     region: content
   field_az_contacts:
     type: entity_reference_revisions_entity_view
-    weight: 23
     label: above
     settings:
       view_mode: default
       link: ''
     third_party_settings: {  }
+    weight: 23
     region: content
   field_az_event_category:
-    weight: 22
+    type: entity_reference_label
     label: hidden
     settings:
       link: true
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 22
     region: content
   field_az_event_date:
     type: daterange_ap_style
-    weight: 14
-    region: content
     label: above
     settings:
       always_display_year: '1'
@@ -227,10 +225,10 @@ content:
       capitalize_noon_and_midnight: 0
       display_day: null
     third_party_settings: {  }
+    weight: 14
+    region: content
   field_az_location:
     type: link
-    weight: 23
-    region: content
     label: above
     settings:
       trim_length: 80
@@ -239,27 +237,29 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
+    weight: 23
+    region: content
   field_az_photos:
     type: entity_reference_entity_view
-    weight: 1
     label: hidden
     settings:
       view_mode: az_large
       link: false
     third_party_settings: {  }
+    weight: 1
     region: content
   field_az_subheading:
-    weight: 15
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 15
     region: content
   links:
-    weight: 0
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   az_event_day: true
   az_event_month: true
