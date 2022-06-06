@@ -44,4 +44,23 @@ class AZNode extends D7Node {
     return parent::prepareRow($row);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function query() {
+    $query = parent::query();
+    if (array_key_exists("filter_date", $this->configuration)) {
+      if (is_int($this->configuration['filter_date'])) {
+        $date_cutoff = $this->configuration['filter_date'];
+      }
+      else {
+        $date_cutoff = (new \DateTime($this->configuration['filter_date']))->getTimestamp();
+      }
+
+      $query->condition('n.changed', $date_cutoff, '>');
+    }
+
+    return $query;
+  }
+
 }
