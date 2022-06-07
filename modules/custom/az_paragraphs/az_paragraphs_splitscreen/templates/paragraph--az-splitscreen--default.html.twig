@@ -62,7 +62,9 @@
         <img src="{{ file_url(paragraph.field_az_media.entity.field_media_az_image.entity.fileuri) }}" alt"{{ paragraph.field_az_media.entity.field_media_az_image.alt }}">
       </div>
       <div class="az-splitscreen-content d-flex align-items-center px-4 px-lg-6 {{ text_with_background.text_background_padding }}">
-        {{ paragraph.field_az_text_area.value|raw }}
+        <div class="az-splitscreen-text">
+          {{ paragraph.field_az_text_area.value|raw }}
+        </div>
       </div>
     {% endblock %}
   </div>
