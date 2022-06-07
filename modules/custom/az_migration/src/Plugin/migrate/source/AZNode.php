@@ -71,7 +71,7 @@ class AZNode extends D7Node {
      * it into correct format
      */
     if (array_key_exists("filter_date", $this->configuration)) {
-      if ($this->is_timestamp($this->configuration['filter_date'])) {
+      if ($this->isTimestamp($this->configuration['filter_date'])) {
         $date_cutoff = $this->configuration['filter_date'];
       }
       else {
@@ -92,7 +92,8 @@ class AZNode extends D7Node {
    * @param mixed $timestamp
    *   The string that we are checking.
    *
-   * @return bool True or False
+   * @return bool
+   *   True or False
    *
    * @code
    * $this->is_timestamp('2019-1-11');
@@ -103,7 +104,7 @@ class AZNode extends D7Node {
    * // returns TRUE;
    * @endcode
    */
-  private function is_timestamp($timestamp): bool {
+  private function isTimestamp($timestamp): bool {
     return ((string) (int) $timestamp === $timestamp)
      && ($timestamp <= PHP_INT_MAX)
      && ($timestamp >= ~PHP_INT_MAX)
