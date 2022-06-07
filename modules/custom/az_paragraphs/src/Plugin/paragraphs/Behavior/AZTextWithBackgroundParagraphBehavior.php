@@ -62,7 +62,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-gray-700' => $this->t('Gray 700'),
         'bg-gray-800' => $this->t('Gray 800'),
         'bg-gray-900' => $this->t('Gray 900'),
-        'bg-black' => $this->t('Black')
+        'bg-black' => $this->t('Black'),
       ],
       '#default_value' => $config['text_background_color'] ?? '',
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',

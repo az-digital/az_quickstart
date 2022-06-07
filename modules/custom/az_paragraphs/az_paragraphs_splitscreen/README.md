@@ -8,3 +8,7 @@ This is an add-on module that can be enabled on an AZ Quickstart 2 site. Enablin
 - Vertical spacing of textual content
 - Bottom spacing of the component
 - Full or content width
+
+## Permissions
+
+- A user with administrator privileges must enable this module on your site.

@@ -1,10 +1,12 @@
 <?php
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\EntityInterface;
+
 /**
  * @file
  * Contains az_paragraphs_splitscreen.module.
  */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 
 /**
  * Implements hook_ENTITY_TYPE_view_alter().
