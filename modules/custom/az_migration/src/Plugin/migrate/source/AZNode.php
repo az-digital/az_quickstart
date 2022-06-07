@@ -84,14 +84,14 @@ class AZNode extends D7Node {
     return $query;
   }
 
- /**
+  /**
    * Check if the passed string or integer is a valid timestamp.
    *
    * This should filter out datetime strings.
    *
    * @param mixed $timestamp
-   *  The string that we are checking.
-   * 
+   *   The string that we are checking.
+   *
    * @return bool True or False
    *
    * @code
@@ -102,13 +102,12 @@ class AZNode extends D7Node {
    * $this->is_timestamp(1654554652);
    * // returns TRUE;
    * @endcode
-   *
    */
-   private function is_timestamp($timestamp): bool {
-     return ((string) (int) $timestamp === $timestamp)
+  private function is_timestamp($timestamp): bool {
+    return ((string) (int) $timestamp === $timestamp)
      && ($timestamp <= PHP_INT_MAX)
      && ($timestamp >= ~PHP_INT_MAX)
      && (!strtotime($timestamp));
-   }  
+  }
 
 }
