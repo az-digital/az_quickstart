@@ -33,10 +33,6 @@ function az_paragraphs_splitscreen_theme_registry_alter(&$theme_registry) {
       if (strpos($key, 'paragraph__') === 0) {
         $theme_registry[$key] = $theme_registry['paragraph'];
       }
-      // Copy default field registry entry for field entries.
-      if (strpos($key, 'field') === 0) {
-        $theme_registry[$key] = $theme_registry['field'];
-      }
       // Alter the theme path and template elements.
       $theme_registry[$key]['theme path'] = $module_path;
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
