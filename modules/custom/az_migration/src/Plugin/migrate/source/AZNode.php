@@ -14,7 +14,7 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *  - alias: string containing the content's relative path alias beginning
  *    with '/'
  *  - filter_date: Accepts a single value, either a numeric
- *    value representing a UNIX timestamp or a string value
+ *    STRING value representing a UNIX timestamp or a string value
  *    representing a calendar date in the YYYY-MM-DD format.
  *    This is used as the "cutoff" date, or the oldest possible
  *    date to accept content, based on the **last update date**.
@@ -71,7 +71,7 @@ class AZNode extends D7Node {
      * it into correct format
      */
     if (array_key_exists("filter_date", $this->configuration)) {
-      if (is_int($this->configuration['filter_date'])) {
+      if ($this->is_timestamp($this->configuration['filter_date'])) {
         $date_cutoff = $this->configuration['filter_date'];
       }
       else {
@@ -83,5 +83,32 @@ class AZNode extends D7Node {
 
     return $query;
   }
+
+ /**
+   * Check if the passed string or integer is a valid timestamp.
+   *
+   * This should filter out datetime strings.
+   *
+   * @param mixed $timestamp
+   *  The string that we are checking.
+   * 
+   * @return bool True or False
+   *
+   * @code
+   * $this->is_timestamp('2019-1-11');
+   * // returns FALSE;
+   * $this->is_timestamp('1654554652');
+   * // returns TRUE;
+   * $this->is_timestamp(1654554652);
+   * // returns TRUE;
+   * @endcode
+   *
+   */
+   private function is_timestamp($timestamp): bool {
+     return ((string) (int) $timestamp === $timestamp)
+     && ($timestamp <= PHP_INT_MAX)
+     && ($timestamp >= ~PHP_INT_MAX)
+     && (!strtotime($timestamp));
+   }  
 
 }
