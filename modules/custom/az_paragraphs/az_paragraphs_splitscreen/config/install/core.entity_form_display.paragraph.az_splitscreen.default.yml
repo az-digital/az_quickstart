@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.az_splitscreen.field_az_media
-    - field.field.paragraph.az_splitscreen.field_az_splitscreen_ordering
     - field.field.paragraph.az_splitscreen.field_az_text_area
     - paragraphs.paragraphs_type.az_splitscreen
   module:
@@ -24,12 +23,6 @@ content:
     third_party_settings:
       media_library_edit:
         show_edit: '1'
-  field_az_splitscreen_ordering:
-    type: options_buttons
-    weight: 0
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   field_az_text_area:
     type: text_textarea
     weight: 2

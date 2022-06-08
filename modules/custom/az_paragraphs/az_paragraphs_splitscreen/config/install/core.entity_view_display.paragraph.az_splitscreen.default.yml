@@ -3,11 +3,9 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.az_splitscreen.field_az_media
-    - field.field.paragraph.az_splitscreen.field_az_splitscreen_ordering
     - field.field.paragraph.az_splitscreen.field_az_text_area
     - paragraphs.paragraphs_type.az_splitscreen
   module:
-    - options
     - text
 id: paragraph.az_splitscreen.default
 targetEntityType: paragraph
@@ -21,13 +19,6 @@ content:
       link: true
     third_party_settings: {  }
     weight: 6
-    region: content
-  field_az_splitscreen_ordering:
-    type: list_default
-    label: hidden
-    settings: {  }
-    third_party_settings: {  }
-    weight: 7
     region: content
   field_az_text_area:
     type: text_default

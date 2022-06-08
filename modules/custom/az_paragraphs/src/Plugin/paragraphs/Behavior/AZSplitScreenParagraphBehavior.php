@@ -11,13 +11,20 @@ use Drupal\paragraphs\ParagraphInterface;
  * Provides a behavior for text with background.
  *
  * @ParagraphsBehavior(
- *   id = "az_text_background_paragraph_behavior",
- *   label = @Translation("Quickstart Text with Background Paragraph Behavior"),
- *   description = @Translation("Provides class selection for text with background."),
+ *   id = "az_split_screen_paragraph_behavior",
+ *   label = @Translation("Quickstart Split Screen Paragraph Behavior"),
+ *   description = @Translation("Provides class selection for split screen."),
  *   weight = 0
  * )
  */
-class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior {
+class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
+
+  public static function mapOrderingOptionsToClasses() {
+    return [
+      'order_0' => 'order-0',
+      'order_1' => 'order-0 order-md-1',
+    ];
+  }
 
   /**
    * {@inheritdoc}
@@ -31,6 +38,17 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       '#default_value' => $config['text_background_full_width'] ?? '',
       '#description' => $this->t('Makes the background full width if checked.'),
       '#return_value' => 'full-width-background',
+    ];
+
+    $form['split_screen_ordering'] = [
+      '#title' => $this->t('Image Order'),
+      '#type' => 'select',
+      '#default_value' => $config['split_screen_ordering'] ?? 'order_0',
+      '#description' => $this->t('Determines the ordering of the split screen image.'),
+       '#options' => [
+        'order_0' => $this->t('Image Left'),
+        'order_1' => $this->t('Image Right'),
+      ],
     ];
 
     $form['text_background_color'] = [
@@ -61,45 +79,6 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       ]),
     ];
 
-    $form['text_background_pattern'] = [
-      '#title' => $this->t('Background Pattern'),
-      '#type' => 'select',
-      '#options' => [
-        '' => $this->t('None'),
-        'bg-triangles-top-left' => $this->t('Triangles Left'),
-        'bg-triangles-centered' => $this->t('Triangles Centered'),
-        'bg-triangles-top-right' => $this->t('Triangles Right'),
-        'bg-trilines' => $this->t('Trilines'),
-      ],
-      '#default_value' => $config['text_background_pattern'] ?? '',
-      '#description' => $this->t('<br><big><strong>Important:</strong></big> Patterns are intended to be used sparingly.<ul><li>Please ensure sufficient contrast between text and its background.</li><li> More detail on background pattern options can be found in the @arizona_bootstrap_docs_bg_wrappers_link.</li></ul>',
-        [
-          '@arizona_bootstrap_docs_bg_wrappers_link' => Link::fromTextAndUrl('Arizona Bootstrap Background Wrappers documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/components/background-wrappers/', ['attributes' => ['target' => '_blank']]))->toString(),
-        ]),
-    ];
-
-    $form['text_background_padding'] = [
-      '#title' => $this->t('Space Around Content'),
-      '#type' => 'select',
-      '#options' => [
-        'py-0' => $this->t('Zero'),
-        'py-1' => $this->t('1 (0.25rem | ~4px)'),
-        'py-2' => $this->t('2 (0.5rem | ~8px)'),
-        'py-3' => $this->t('3 (1.0rem | ~16px)'),
-        'py-4' => $this->t('4 (1.5rem | ~24px)'),
-        'py-5' => $this->t('5 (3.0rem | ~48px) - Default'),
-        'py-6' => $this->t('6 (4.0rem | ~64px)'),
-        'py-7' => $this->t('7 (5.0rem | ~80px)'),
-        'py-8' => $this->t('8 (6.0rem | ~96px)'),
-        'py-9' => $this->t('9 (7.0rem | ~112px)'),
-        'py-10' => $this->t('10 (8.0rem | ~128px)'),
-        'py-20' => $this->t('20 (16.0rem | ~256px)'),
-        'py-30' => $this->t('30 (24.0rem | ~384px)'),
-      ],
-      '#default_value' => $config['text_background_padding'] ?? 'py-5',
-      '#description' => $this->t('Adds padding above and below the text.'),
-    ];
-
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // This places the form fields on the content tab rather than behavior tab.
@@ -114,33 +93,19 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
   public function preprocess(&$variables) {
     parent::preprocess($variables);
 
+
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
 
     // Get plugin configuration and save in vars for twig to use.
-    $config = $this->getSettings($paragraph);
+    $config = $this->getSettings($paragraph);    
 
-    // Add responsive padding classes.
-    if (isset($config['text_background_padding'])) {
-      $padding_classes = [];
-      switch ($config['text_background_padding']) {
-        case 'py-20':
-          $padding_classes[] = 'py-10';
-          $padding_classes[] = 'py-md-20';
-          break;
+    // Set order classes
+    $order_class = $this->mapOrderingOptionsToClasses();
 
-        case 'py-30':
-          $padding_classes[] = 'py-10';
-          $padding_classes[] = 'py-md-30';
-          break;
+    $variables['split_screen'] = $config;
 
-        default:
-          $padding_classes[] = $config['text_background_padding'];
-      }
-      $config['text_background_padding'] = implode(' ', $padding_classes);
-    }
-
-    $variables['text_with_background'] = $config;
+    $variables['split_screen']['split_screen_ordering'] = $order_class[$config['split_screen_ordering']];
   }
 
 }
