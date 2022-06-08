@@ -12,6 +12,10 @@
 	object-fit: cover;
 }
 
+.az-splitscreen-image .field--type-entity-reference {
+	margin: 0;
+}
+
 
 /* Desktop Styles */
 @media screen and (min-width: 768px) {

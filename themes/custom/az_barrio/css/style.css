@@ -670,6 +670,8 @@ fieldset.collapsed {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Field overrides */
 .field--type-image img,
 .field--name-field-user-picture img {
   margin: initial;

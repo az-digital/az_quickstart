@@ -8,4 +8,3 @@ dependencies:
   - paragraphs
   - az_core
   - az_paragraphs
-  - az_paragraphs_text_background
