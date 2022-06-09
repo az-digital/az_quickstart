@@ -10,7 +10,6 @@ dependencies:
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
-    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -37,7 +36,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: row
-        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -151,7 +149,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'row mb-5'
-        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -277,7 +274,6 @@ content:
 hidden:
   field_az_expiration_date: true
   field_az_link: true
-  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_summary: true
