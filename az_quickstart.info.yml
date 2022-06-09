@@ -75,6 +75,10 @@ install:
   - search_exclude:search_exclude
   - draggableviews:draggableviews
   - role_delegation:role_delegation
+  - admin_toolbar:admin_toolbar
+  - admin_toolbar:admin_toolbar_tools
+  - admin_toolbar:admin_toolbar_links_access_filter
+  - admin_toolbar_content:admin_toolbar_content
 
 themes:
   - az_barrio
