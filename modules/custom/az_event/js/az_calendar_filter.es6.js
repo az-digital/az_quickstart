@@ -80,7 +80,6 @@
           }
 
           // Handle dropdown, if present.
-          $dropDown.addClass('d-block');
           $dropDown.on('change', () => {
             const $ancestor = $wrapper.closest(
               '.views-widget-az-calendar-filter',

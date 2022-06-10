@@ -55,7 +55,6 @@
           }, delay);
         }
 
-        $dropDown.addClass('d-block');
         $dropDown.on('change', function () {
           var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');
           triggerFilterChange($ancestor, 0);
