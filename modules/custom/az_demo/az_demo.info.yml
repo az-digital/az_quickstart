@@ -11,6 +11,7 @@ dependencies:
   - az_paragraphs_text
   - az_paragraphs_text_background
   - az_paragraphs_text_media
+  - az_paragraphs_splitscreen
   - az_person
   - az_media
   - migrate:migrate
