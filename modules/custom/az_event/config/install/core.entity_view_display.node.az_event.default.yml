@@ -28,9 +28,9 @@ third_party_settings:
       children:
         - field_az_subheading
       label: 'span subtitle'
-      parent_name: group_margin_bottom
+      parent_name: group_wrapper
       region: content
-      weight: 3
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'lead mb-3'
@@ -46,9 +46,9 @@ third_party_settings:
       children:
         - field_az_event_category
       label: 'Category Div'
-      parent_name: group_margin_bottom
+      parent_name: group_wrapper
       region: content
-      weight: 5
+      weight: 10
       format_type: html_element
       format_settings:
         classes: clearfix
@@ -65,9 +65,9 @@ third_party_settings:
         - group_col_1
         - group_col_2
       label: 'row 1'
-      parent_name: group_margin_bottom
+      parent_name: group_wrapper
       region: content
-      weight: 6
+      weight: 11
       format_type: html_element
       format_settings:
         classes: row
@@ -84,9 +84,9 @@ third_party_settings:
         - group_col_3
         - group_col_4
       label: 'row 2'
-      parent_name: group_margin_bottom
+      parent_name: group_wrapper
       region: content
-      weight: 7
+      weight: 12
       format_type: html_element
       format_settings:
         classes: row
@@ -171,7 +171,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_margin_bottom:
+    group_wrapper:
       children:
         - links
         - field_az_photos
@@ -180,7 +180,7 @@ third_party_settings:
         - group_category
         - group_row_1
         - group_row_2
-      label: 'Margin bottom'
+      label: Wrapper
       parent_name: ''
       region: content
       weight: 0
@@ -216,7 +216,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 9
     region: content
   field_az_contacts:
     type: entity_reference_revisions_entity_view
@@ -272,7 +272,7 @@ content:
       view_mode: az_large
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 7
     region: content
   field_az_subheading:
     type: text_default
@@ -284,7 +284,7 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 6
     region: content
 hidden:
   az_event_day: true
