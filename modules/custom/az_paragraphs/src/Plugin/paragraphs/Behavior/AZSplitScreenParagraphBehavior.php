@@ -38,7 +38,7 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#default_value' => $config['ordering'] ?? 'order_0',
       '#description' => $this->t('Determines the ordering of the split screen image.'),
-       '#options' => [
+      '#options' => [
         'order_0' => $this->t('Image Left'),
         'order_1' => $this->t('Image Right'),
       ],

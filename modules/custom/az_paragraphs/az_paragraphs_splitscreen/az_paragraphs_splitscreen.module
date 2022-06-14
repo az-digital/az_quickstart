@@ -54,9 +54,9 @@ function az_paragraphs_splitscreen_theme_registry_alter(&$theme_registry) {
  */
 function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
 
-  if ($group->group_name == 'group_split_screen') {
+  if ($group->group_name === 'group_split_screen') {
     $paragraph = $rendering_object['#paragraph'];
-    if ( $paragraph instanceof ParagraphInterface) {
+    if ($paragraph instanceof ParagraphInterface) {
       $order_class_mapping = [
         'order_0' => 'order-0',
         'order_1' => 'order-0 order-md-1',
@@ -64,11 +64,10 @@ function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element,
       $paragraph_settings = $paragraph->getAllBehaviorSettings();
       if (!empty($paragraph_settings['az_split_screen'])) {
         $splitscreen_settings = $paragraph_settings['az_split_screen'];
-        $order_settings =  $splitscreen_settings['ordering'];
-        $order_classes =  $order_class_mapping[$order_settings];
+        $order_settings = $splitscreen_settings['ordering'];
+        $order_classes = $order_class_mapping[$order_settings];
         $element['#attributes']['class'][] = $order_classes;
       }
     }
   }
 }
-
