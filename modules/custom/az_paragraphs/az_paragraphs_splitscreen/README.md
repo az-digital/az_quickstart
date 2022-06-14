@@ -13,6 +13,8 @@ with the option to define:
 
 ## Permissions
 
-**Sites that existed before QS 2.4**
-
 - A user with administrator privileges must enable this module on your site.
+
+## Media handling
+
+This uses the natural image style, users must size the image they are using manually.
