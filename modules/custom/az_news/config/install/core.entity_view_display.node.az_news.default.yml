@@ -25,7 +25,7 @@ dependencies:
     - text
     - user
 third_party_settings:
-  field_group: 
+  field_group:
     group_row:
       children:
         - group_title_column
