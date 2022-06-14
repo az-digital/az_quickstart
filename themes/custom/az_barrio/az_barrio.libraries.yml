@@ -1,7 +1,7 @@
 global-styling:
   version: 1.x
   css:
-    component:
+    theme:
       css/style.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap
