@@ -99,6 +99,16 @@
       "az_main_content"  : "7|10",
       "az_media_image"    : "",
       "az_summary" : ""
+    },
+    {
+      "id":11,
+      "title"  : "Split Screen",
+      "path" : "/pages/split-screen",
+      "exclude_title" : false,
+      "az_page_category"  : "",
+      "az_main_content"  : "54|55|56|57|58|59|60|61|62|63|64|65|66",
+      "az_media_image"    : "",
+      "az_summary" : ""
     }
   ]
 }

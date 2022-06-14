@@ -10,6 +10,9 @@ dependencies:
     - field_group
     - media
     - text
+  enforced:
+    module:
+      - az_paragraphs_splitscreen
 third_party_settings:
   field_group:
     group_split_screen:

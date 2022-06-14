@@ -7,6 +7,9 @@ dependencies:
     - paragraphs.paragraphs_type.az_splitscreen
   module:
     - text
+  enforced:
+    module:
+      - az_paragraphs_splitscreen
 id: paragraph.az_splitscreen.field_az_text_area
 field_name: field_az_text_area
 entity_type: paragraph
