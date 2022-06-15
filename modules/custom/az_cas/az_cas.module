@@ -109,7 +109,7 @@ function az_cas_form_user_login_form_alter(&$form, FormStateInterface $form_stat
  * Modify the hook load order.
  */
 function az_cas_module_implements_alter(&$implementations, $hook) {
-  if ($hook == 'form_alter' && isset($implementations['az_cas'])) {
+  if ($hook === 'form_alter' && isset($implementations['az_cas'])) {
 
     // Move az_cas_form_alter() to the end of the list.
     // \Drupal::moduleHandler()->getImplementations()
@@ -121,4 +121,3 @@ function az_cas_module_implements_alter(&$implementations, $hook) {
     $implementations['az_cas'] = $group;
   }
 }
-
