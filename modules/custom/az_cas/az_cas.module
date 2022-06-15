@@ -9,6 +9,7 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\user\RoleInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_help().
@@ -69,3 +70,55 @@ function az_cas_validate_roles(array &$form, FormStateInterface $form_state) {
     );
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Modify the user login form to put CAS login below Drupal login.
+ */
+function az_cas_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
+  $config = Drupal::config('cas.settings');
+
+  // Cached form must be busted if we alter CAS settings.
+  $form['#cache']['tags'] = array_merge($form['#cache']['tags'], $config->getCacheTags());
+
+  // Add a link to login via CAS on the user login form.
+  $enabled = $config->get('login_link_enabled');
+  if ($enabled) {
+    unset($form['cas_login_link']);
+    $url = new Url('cas.login', [], [
+      'attributes' => [
+        'class' => ['cas-login-link'],
+      ],
+    ]);
+
+    $form['cas_login_link'] = [
+      '#type' => 'link',
+      '#url' => $url,
+      '#title' => $config->get('login_link_label'),
+      '#weight' => 100,
+    ];
+  }
+
+  $form['#validate'][] = '_cas_user_login_validate';
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Modify the hook load order.
+ */
+function az_cas_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'form_alter' && isset($implementations['az_cas'])) {
+
+    // Move az_cas_form_alter() to the end of the list.
+    // \Drupal::moduleHandler()->getImplementations()
+    // iterates through $implementations with a foreach loop which PHP iterates
+    // in the order that the items were added, so to move an item to the end of
+    // the array, we remove it and then add it.
+    $group = $implementations['az_cas'];
+    unset($implementations['az_cas']);
+    $implementations['az_cas'] = $group;
+  }
+}
+
