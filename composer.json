@@ -52,7 +52,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.4.0-beta1",
+        "drupal/core-recommended": "9.4.0",
         "drupal/crop": "2.2.0",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.4",
@@ -66,7 +66,7 @@
         "drupal/field_group": "3.2.0",
         "drupal/field_group_link": "3.0.0",
         "drupal/google_tag": "1.5.0",
-        "drupal/honeypot": "2.1.0",
+        "drupal/honeypot": "2.1.1",
         "drupal/image_widget_crop": "2.3",
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.2.0",
@@ -81,7 +81,7 @@
         "drupal/migrate_plus": "5.3.0",
         "drupal/migrate_queue_importer": "2.0",
         "drupal/migrate_tools": "5.1.0",
-        "drupal/paragraphs": "1.14",
+        "drupal/paragraphs": "1.14.0",
         "drupal/paragraphs_admin": "1.2",
         "drupal/pathauto": "1.10.0",
         "drupal/quick_node_clone": "1.15",
@@ -152,6 +152,9 @@
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
+            },
+            "drupal/paragraphs": {
+                "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
             },
             "drupal/smart_date": {
                 "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"
