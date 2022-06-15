@@ -49,8 +49,8 @@
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
     not paragraph.isPublished() ? 'paragraph--unpublished',
-    split_screen.text_background_color,
-    split_screen.text_background_full_width,
+    split_screen.bg_color,
+    split_screen.full_width,
   ]
 %}
 
@@ -58,14 +58,6 @@
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       {{ content }}
-     {#  <div class="az-splitscreen-image d-flex {{ split_screen.split_screen_ordering }}">
-        <img src="{{ file_url(paragraph.field_az_media.entity.field_media_az_image.entity.fileuri) }}" alt="{{ paragraph.field_az_media.entity.field_media_az_image.alt }}">
-      </div>
-      <div class="az-splitscreen-content d-flex align-items-center p-4 p-lg-6">
-        <div class="az-splitscreen-text">
-          {{ paragraph.field_az_text_area.value|raw }}
-        </div>
-      </div> #}
     {% endblock %}
   </div>
 {% endblock paragraph %}

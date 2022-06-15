@@ -11,7 +11,6 @@
 	height: 100%;
 	object-fit: cover;
 }
-
 .az-splitscreen-image .field--type-entity-reference {
 	margin: 0;
 }
@@ -24,6 +23,9 @@
 	}
 	.az-splitscreen-image {
 		width: 40%;
+	}
+	.az-splitscreen-image .field--name-field-az-media {
+		flex: 1;
 	}
 }
 @media screen and (min-width: 992px) {

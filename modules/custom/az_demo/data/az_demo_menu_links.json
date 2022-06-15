@@ -133,6 +133,17 @@
       "weight": "5"
     },
     {
+      "link_id": "23",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Split Screen",
+      "urlpath": "/pages/split-screen",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "5"
+    },
+    {
       "link_id": "13",
       "parent_link_id": "6",
       "menu": "main",

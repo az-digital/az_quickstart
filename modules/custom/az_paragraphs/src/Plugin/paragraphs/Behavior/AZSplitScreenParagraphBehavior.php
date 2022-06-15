@@ -11,7 +11,7 @@ use Drupal\paragraphs\ParagraphInterface;
  * Provides a behavior for text with background.
  *
  * @ParagraphsBehavior(
- *   id = "az_split_screen_paragraph_behavior",
+ *   id = "az_split_screen",
  *   label = @Translation("Quickstart Split Screen Paragraph Behavior"),
  *   description = @Translation("Provides class selection for split screen."),
  *   weight = 0
@@ -19,39 +19,32 @@ use Drupal\paragraphs\ParagraphInterface;
  */
 class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
 
-  public static function mapOrderingOptionsToClasses() {
-    return [
-      'order_0' => 'order-0',
-      'order_1' => 'order-0 order-md-1',
-    ];
-  }
-
   /**
    * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
-    $form['text_background_full_width'] = [
+    $form['full_width'] = [
       '#title' => $this->t('Full Width'),
       '#type' => 'checkbox',
-      '#default_value' => $config['text_background_full_width'] ?? '',
+      '#default_value' => $config['full_width'] ?? '',
       '#description' => $this->t('Makes the background full width if checked.'),
       '#return_value' => 'full-width-background',
     ];
 
-    $form['split_screen_ordering'] = [
+    $form['ordering'] = [
       '#title' => $this->t('Image Order'),
       '#type' => 'select',
-      '#default_value' => $config['split_screen_ordering'] ?? 'order_0',
+      '#default_value' => $config['ordering'] ?? 'order_0',
       '#description' => $this->t('Determines the ordering of the split screen image.'),
-       '#options' => [
+      '#options' => [
         'order_0' => $this->t('Image Left'),
         'order_1' => $this->t('Image Right'),
       ],
     ];
 
-    $form['text_background_color'] = [
+    $form['bg_color'] = [
       '#title' => $this->t('Background Color'),
       '#type' => 'select',
       '#options' => [
@@ -71,7 +64,7 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
         'bg-silver' => $this->t('Silver'),
         'bg-ash' => $this->t('Ash'),
       ],
-      '#default_value' => $config['text_background_color'] ?? '',
+      '#default_value' => $config['bg_color'] ?? '',
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
       [
         '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
@@ -93,19 +86,12 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function preprocess(&$variables) {
     parent::preprocess($variables);
 
-
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
 
     // Get plugin configuration and save in vars for twig to use.
-    $config = $this->getSettings($paragraph);    
-
-    // Set order classes
-    $order_class = $this->mapOrderingOptionsToClasses();
-
+    $config = $this->getSettings($paragraph);
     $variables['split_screen'] = $config;
-
-    $variables['split_screen']['split_screen_ordering'] = $order_class[$config['split_screen_ordering']];
   }
 
 }

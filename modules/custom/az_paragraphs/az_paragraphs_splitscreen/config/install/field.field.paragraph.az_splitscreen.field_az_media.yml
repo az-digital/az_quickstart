@@ -5,6 +5,9 @@ dependencies:
     - field.storage.paragraph.field_az_media
     - media.type.az_image
     - paragraphs.paragraphs_type.az_splitscreen
+  enforced:
+    module:
+      - az_paragraphs_splitscreen
 id: paragraph.az_splitscreen.field_az_media
 field_name: field_az_media
 entity_type: paragraph
