@@ -49,8 +49,37 @@ function az_core_toolbar() {
         ],
       ],
     ],
+    'tray' => [
+      '#heading' => t('Quickstart links'),
+      'az_links' => [
+        '#theme' => 'links__toolbar_az_core',
+        '#links' => [
+          'docs' => [
+            'title' => t('Documentation'),
+            'url' => Url::fromUri('https://quickstart.arizona.edu'),
+            'attributes' => [
+              'title' => t('Arizona Quickstart 2 Documentation'),
+              'target' => t('_blank'),
+            ],
+          ],
+        ],
+        '#attributes' => [
+          'class' => ['toolbar-menu'],
+        ],
+      ],
+    ],
     '#weight' => 101,
   ];
+
+  if (\Drupal::currentUser()->hasPermission('administer quickstart configuration')) {
+    $items['az_quickstart']['tray']['az_links']['#links']['settings'] = [
+      'title' => t('Settings'),
+      'url' => Url::fromRoute('az_core.az_settings'),
+      'attributes' => [
+        'title' => t('Arizona Quickstart 2 Settings'),
+      ],
+    ];
+  }
 
   return $items;
 }

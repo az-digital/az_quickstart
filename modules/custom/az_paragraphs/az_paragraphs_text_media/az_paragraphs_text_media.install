@@ -44,7 +44,7 @@ function az_paragraphs_text_media_update_9201(&$sandbox) {
     $sandbox['current']++;
   }
 
-  $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
+  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
 
   return t('Default padding/margin setting added to %count Text on Media paragraphs.', ['%count' => $sandbox['updated_count']]);
 }
