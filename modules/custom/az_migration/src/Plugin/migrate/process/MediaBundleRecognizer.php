@@ -59,7 +59,7 @@ class MediaBundleRecognizer extends ProcessPluginBase implements ContainerFactor
     }
 
     $mimetype = $row->getSourceProperty('filemime');
-    if ($mimetype === 'video/oembed'){
+    if ($mimetype === 'video/oembed' ){
       $value = $prefix . 'remote_video';
     }
     else {
