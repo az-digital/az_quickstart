@@ -2,7 +2,6 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
