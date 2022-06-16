@@ -37,19 +37,6 @@ class MediaBundleRecognizer extends ProcessPluginBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-    );
-
-    return $instance;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     $prefix = '';
     if (!empty($this->configuration['prefix'])) {
