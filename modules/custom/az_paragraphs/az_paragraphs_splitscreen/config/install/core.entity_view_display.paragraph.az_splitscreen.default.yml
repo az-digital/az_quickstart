@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.field.paragraph.az_splitscreen.field_az_media
     - field.field.paragraph.az_splitscreen.field_az_text_area
-    - image.style.az_natural
+    - image.style.az_large
     - paragraphs.paragraphs_type.az_splitscreen
   module:
     - field_group
