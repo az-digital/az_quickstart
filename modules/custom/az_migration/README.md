@@ -555,6 +555,7 @@ These plugins are used in various built-in Quickstart migrations but were not de
 - `paragraphs_fw_media_row_field_merge`
 - `az_paragraphs_media_caption`
 - `az_media_bundle_recognizer`
+
 # Useful modules
 
 When debugging migrations, the [Migrate
