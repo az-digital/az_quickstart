@@ -54,12 +54,12 @@ class MediaBundleRecognizer extends ProcessPluginBase implements ContainerFactor
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     $prefix = '';
     if (!empty($this->configuration['prefix'])) {
-      //Set the prefix if it exists.
+      // Set the prefix if it exists.
       $prefix = $this->configuration['prefix'];
     }
 
     $mimetype = $row->getSourceProperty('filemime');
-    if ($mimetype === 'video/oembed'){
+    if ($mimetype === 'video/oembed') {
       $value = $prefix . 'remote_video';
     }
     else {
