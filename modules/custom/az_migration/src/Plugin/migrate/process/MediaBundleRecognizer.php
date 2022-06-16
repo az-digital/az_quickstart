@@ -26,7 +26,6 @@ use Drupal\migrate\Row;
  *   destination_bundle:
  *     plugin:  az_media_bundle_recognizer
  *     prefix: 'az_'
- *
  * @endcode
  *
  * @MigrateProcessPlugin(
