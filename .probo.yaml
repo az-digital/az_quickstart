@@ -37,7 +37,7 @@ steps:
       - yarn run eslint --color .
   - name: Install Arizona Quickstart
     plugin: Drupal
-    drupalVersion: 8
+    drupalVersion: 9
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
