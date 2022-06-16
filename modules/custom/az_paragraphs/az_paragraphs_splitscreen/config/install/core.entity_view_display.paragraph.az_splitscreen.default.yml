@@ -82,7 +82,7 @@ content:
     label: hidden
     settings:
       image_link: ''
-      image_style: az_natural
+      image_style: az_large
     third_party_settings: {  }
     weight: 1
     region: content
