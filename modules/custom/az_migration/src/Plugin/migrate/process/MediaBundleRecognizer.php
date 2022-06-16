@@ -32,7 +32,7 @@ use Drupal\migrate\Row;
  *
  * @ return String that represents a bundle machine name.
  */
-class MediaBundleRecognizer extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+class MediaBundleRecognizer extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}
