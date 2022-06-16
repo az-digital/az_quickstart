@@ -30,7 +30,7 @@ use Drupal\migrate\Row;
  *   id = "az_media_bundle_recognizer"
  * )
  *
- * @ return String that represents a bundle machine name.
+ * @return String that represents a bundle machine name.
  */
 class MediaBundleRecognizer extends ProcessPluginBase {
 
