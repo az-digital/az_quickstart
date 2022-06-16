@@ -55,7 +55,6 @@ class MediaBundleRecognizer extends ProcessPluginBase {
     }
 
     return $value;
-
   }
 
 }
