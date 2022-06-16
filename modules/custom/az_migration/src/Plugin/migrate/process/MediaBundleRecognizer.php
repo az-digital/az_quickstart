@@ -9,8 +9,12 @@ use Drupal\migrate\Row;
 /**
  * Process plugin to recognize which media bundle to use.
  *
+ * This process plugin was added for the sake of backwards compatibility, 
+ * and it is advised that any custom media migrations be created on a bundle by bundle
+ * basis.
+ *
  * Available configuration keys
- * - prefix: The prefix to use when determining the entity type.
+ * - prefix: The prefix to use when determining the entity type (optional).
  *
  * Examples:
  *
@@ -22,7 +26,6 @@ use Drupal\migrate\Row;
  *   destination_bundle:
  *     plugin:  az_media_bundle_recognizer
  *     prefix: 'az_'
- *
  * @endcode
  *
  * @MigrateProcessPlugin(
@@ -52,7 +55,6 @@ class MediaBundleRecognizer extends ProcessPluginBase {
     }
 
     return $value;
-
   }
 
 }
