@@ -2,8 +2,6 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -31,22 +29,9 @@ use Drupal\migrate\Row;
  *   id = "az_media_bundle_recognizer"
  * )
  *
- * @ return String that represents a bundle machine name.
+ * @return String that represents a bundle machine name.
  */
-class MediaBundleRecognizer extends ProcessPluginBase implements ContainerFactoryPluginInterface {
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
-    $instance = new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-    );
-
-    return $instance;
-  }
+class MediaBundleRecognizer extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}
