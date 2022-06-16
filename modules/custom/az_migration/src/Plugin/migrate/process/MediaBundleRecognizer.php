@@ -10,7 +10,7 @@ use Drupal\migrate\Row;
  * Process plugin to recognize which media bundle to use.
  *
  * Available configuration keys
- * - prefix: The prefix to use when determining the entity type.
+ * - prefix: The prefix to use when determining the entity type (optional).
  *
  * Examples:
  *
