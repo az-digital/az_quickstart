@@ -14,7 +14,3 @@ with the option to define:
 ## Permissions
 
 - A user with administrator privileges must enable this module on your site.
-
-## Media handling
-
-This uses the natural image style, users must size the image they are using manually.
