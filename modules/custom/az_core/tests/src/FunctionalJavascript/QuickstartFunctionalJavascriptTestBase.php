@@ -3,7 +3,7 @@
 namespace Drupal\Tests\az_core\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
-use Drupal\Tests\az_core\AllowDrupalLoginSetupTrait;
+use Drupal\Tests\az_core\Traits\AllowDrupalLoginSetupTrait;
 
 /**
  * Provides helper methods for Quickstart tests.

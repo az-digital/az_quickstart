@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\az_core;
+namespace Drupal\Tests\az_core\Traits;
 
 /**
  * Turns off az_cas disable_login_form setting.
