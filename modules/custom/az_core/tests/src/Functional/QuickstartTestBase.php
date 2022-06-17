@@ -21,6 +21,10 @@ abstract class QuickstartTestBase extends BrowserTestBase {
     $config
       ->set('disable_login_form', FALSE)
       ->save();
+
+    // The menu router info needs to be rebuilt after updating this setting so
+    // the routeSubscriber runs again.
+    $this->container->get('router.builder')->rebuild();
   }
 
 }
