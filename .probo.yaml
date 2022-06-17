@@ -55,7 +55,7 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y az_cas.settings disable_login_form false
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y az_cas.settings disable_login_form 0
       - chown www-data:www-data -R /var/www/html/sites/default/files
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:enable environment_indicator
       - chmod 777 /var/www/html/sites/default/settings.php
@@ -121,6 +121,6 @@ steps:
       - drush -y cset az_migration.settings migrate_d7_protocol "https"
       - drush -y cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io/"
       - drush -y cset az_migration.settings migrate_d7_public_path "sites/default/files"
-      - drush -y cset az_cas.settings disable_login_form false
+      - drush -y cset az_cas.settings disable_login_form 0
       - drush mim --group=az_migration
       - echo "https://${BUILD_ID}--site-migration.probo.build/"
