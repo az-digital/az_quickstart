@@ -3,14 +3,14 @@
 namespace Drupal\Tests\az_demo\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\az_core\Functional\QuickstartTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Verify successful importing of demo content.
  *
  * @group az_demo
  */
-class AZDemoContentTest extends QuickstartTestBase {
+class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.

@@ -9,7 +9,7 @@ use Drupal\Core\Url;
  *
  * @group az_core
  */
-class ClearCacheTest extends QuickstartTestBase {
+class ClearCacheTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.

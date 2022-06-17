@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\az_paragraphs\Functional;
 
-use Drupal\Tests\az_core\Functional\QuickstartTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Run tests of paragraph bundles.
@@ -11,7 +11,7 @@ use Drupal\Tests\az_core\Functional\QuickstartTestBase;
  *
  * @group az_paragraphs
  */
-class AZParagraphsTest extends QuickstartTestBase {
+class AZParagraphsTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.

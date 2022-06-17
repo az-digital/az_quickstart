@@ -1,13 +1,11 @@
 <?php
 
-namespace Drupal\Tests\az_core\Functional;
-
-use Drupal\Tests\BrowserTestBase;
+namespace Drupal\Tests\az_core;
 
 /**
- * Provides helper methods for Quickstart tests.
+ * Turns off az_cas disable_login_form setting.
  */
-abstract class QuickstartTestBase extends BrowserTestBase {
+trait AllowDrupalLoginSetupTrait {
 
   /**
    * {@inheritdoc}

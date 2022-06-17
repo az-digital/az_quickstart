@@ -9,7 +9,7 @@ use Drupal\Core\Url;
  *
  * @group az_core
  */
-class MonitoringPageTest extends QuickstartTestBase {
+class MonitoringPageTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.

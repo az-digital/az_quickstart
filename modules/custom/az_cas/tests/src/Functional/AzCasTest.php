@@ -3,14 +3,14 @@
 namespace Drupal\Tests\az_cas\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\az_core\Functional\QuickstartTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Tests for the AZ CAS module.
  *
  * @group az_cas
  */
-class AzCasTest extends QuickstartTestBase {
+class AzCasTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
