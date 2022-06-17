@@ -2,14 +2,14 @@
 
 namespace Drupal\Tests\az_barrio\Functional;
 
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartTestBase;
 
 /**
  * Tests the Arizona Barrio theme.
  *
  * @group az_barrio
  */
-class AzBarrioTest extends BrowserTestBase {
+class AzBarrioTest extends QuickstartTestBase {
 
   /**
    * The profile to install as a basis for testing.
