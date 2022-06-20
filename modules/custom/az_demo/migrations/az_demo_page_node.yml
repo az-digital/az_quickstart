@@ -69,6 +69,7 @@ process:
         - az_demo_text_paragraph
         - az_demo_text_background_paragraph
         - az_demo_text_media_paragraph
+        - az_demo_splitscreen_paragraph
       source: '@pseudo_exploded_paragraphs'
 
 
@@ -96,6 +97,7 @@ migration_dependencies:
     - az_demo_text_paragraph
     - az_demo_text_background_paragraph
     - az_demo_text_media_paragraph
+    - az_demo_splitscreen_paragraph
 
 dependencies:
   enforced:

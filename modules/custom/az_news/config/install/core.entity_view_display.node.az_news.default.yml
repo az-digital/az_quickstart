@@ -148,7 +148,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: row
+        classes: 'row mb-5'
         id: ''
         element: div
         show_label: false
