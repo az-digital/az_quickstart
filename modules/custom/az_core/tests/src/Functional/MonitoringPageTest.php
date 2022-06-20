@@ -3,14 +3,13 @@
 namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
 
 /**
  * Test to ensure that monitoring page works correctly.
  *
  * @group az_core
  */
-class MonitoringPageTest extends BrowserTestBase {
+class MonitoringPageTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
