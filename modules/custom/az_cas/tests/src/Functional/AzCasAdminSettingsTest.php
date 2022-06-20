@@ -72,11 +72,13 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
 
     $this->drupalGet('user/login');
     if ($disable_login_form) {
-      $this->assertSession()->pageTextContains('Access denied');
+      $this->assertSession()->pageTextNotContains('Username');
+      $this->assertSession()->pageTextNotContains('Password');
       $this->assertSession()->pageTextNotContains('Log in');
     }
     else {
-      $this->assertSession()->pageTextNotContains('Access denied');
+      $this->assertSession()->pageTextContains('Username');
+      $this->assertSession()->pageTextContains('Password');
       $this->assertSession()->pageTextContains('Log in');
     }
   }
