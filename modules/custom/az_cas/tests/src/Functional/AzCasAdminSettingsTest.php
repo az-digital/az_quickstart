@@ -74,12 +74,12 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
     if ($disable_login_form) {
       $this->assertSession()->pageTextNotContains('Username');
       $this->assertSession()->pageTextNotContains('Password');
-      $this->assertSession()->pageTextNotContains('Log in');
+      $this->assertSession()->buttonExists('Log in');
     }
     else {
       $this->assertSession()->pageTextContains('Username');
       $this->assertSession()->pageTextContains('Password');
-      $this->assertSession()->pageTextContains('Log in');
+      $this->assertSession()->buttonNotExists('Log in');
     }
   }
 
