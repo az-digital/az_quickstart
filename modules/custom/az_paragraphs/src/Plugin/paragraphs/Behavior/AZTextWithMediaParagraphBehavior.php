@@ -248,6 +248,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
       $title_classes[] = 'text-blue';
     }
+    if ((!empty($config['style']) && $config['style'] !== 'bottom') && (!empty($config['bg_color']) && $config['bg_color'] !== 'dark')) {
+      $content_classes = [
+        'bg-white',
+        'shadow',
+        'mb-4',
+    }
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
   }
