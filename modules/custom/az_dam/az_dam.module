@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains az_dam.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Custom submit handler to redirect to /admin/content/media.
+ */
+function az_dam_form_submit(array $form, FormStateInterface $form_state) {
+  $url = Url::fromRoute('entity.media.collection');
+  $form_state->setRedirectUrl($url);
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function az_dam_form_entity_browser_az_dam_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#submit'][] = 'az_dam_form_submit';
+}
