@@ -399,7 +399,7 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-.search-block-form .input-group-append button .az-search-block {
+.search-block-form .input-group-append .az-search-block button {
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
