@@ -130,6 +130,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
+      $attached = [];
 
       // Get settings from parent paragraph.
       if (!empty($parent)) {
@@ -153,6 +154,15 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
               $card_classes .= ' shadow';
+              if ($item->link_title || $item->link_uri) {
+                $attached['html_head'][] = [
+                  [
+                    '#tag' => 'style',
+                    '#value' => ".card:hover .card-title { text-decoration: underline; }",
+                  ],
+                  'az-paragraphs-clickable-card-hover-css'
+                ];
+              }
             }
 
           }
@@ -175,6 +185,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#body' => check_markup($item->body, $item->body_format),
         '#link' => $link_render_array,
         '#attributes' => ['class' => $card_classes],
+        '#attached' => $attached,
       ];
 
       $element['#items'][$delta] = new \stdClass();
