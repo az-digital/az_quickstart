@@ -237,7 +237,19 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }
     }
-
+    if ($config['style'] === 'bottom' && $config['bg_color'] === 'light') {
+      unset($content_classes['light']);
+      $content_classes[] =  'bg-white';
+      $content_classes[] =  'shadow';
+      $content_classes[] =  'mb-4';
+    }
+    if ($config['style'] === 'bottom' && $config['bg_color'] === 'dark') {
+      unset($content_classes['dark']);
+      $content_classes[] =  'bg-black';
+      $content_classes[] =  'shadow';
+      $content_classes[] =  'mb-4'; 
+    }
+    
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
     // Get title classes.
@@ -247,13 +259,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
       $title_classes[] = 'text-blue';
-    }
-    if ((!empty($config['style']) && $config['style'] !== 'bottom') && (!empty($config['bg_color']) && $config['bg_color'] !== 'dark')) {
-      $content_classes = [
-        'bg-white',
-        'shadow',
-        'mb-4',
-      ];
     }
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
