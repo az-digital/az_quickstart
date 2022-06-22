@@ -6,9 +6,10 @@
  * Available variables:
  * - attributes: Card element attributes.
  * - media: The media field of a card.
- * - title: The title field of a card..
+ * - title: The title field of a card.
  * - body: The body field of a card.
  * - link: The link field on a card.
+ * - title_style: The title style to use.
  *
  * @ingroup themeable
  */
@@ -18,10 +19,19 @@
 
 <div{{ attributes }}>
   {% if media %}
-    {{ media }}
+    {% if title and title_style == 'title-on-image' %}
+      <div class="card border-0 overflow-hidden">
+        {{ media }}
+        <div class="card-img-overlay p-0 d-flex flex-column">
+         <h3 class="h5 bold mt-auto card-title bg-gradient-black text-white mb-0">{{ title }}</h3>
+      </div>
+   </div>
+    {% else %}
+      {{ media }}
+    {% endif %}
   {% endif %}
   <div class="card-body d-flex flex-column">
-    {% if title %}
+    {% if title and title_style == 'default' %}
       <h3 class="h5 bold mt-0 card-title">{{ title }}</h3>
     {% endif %}
     {% if body %}

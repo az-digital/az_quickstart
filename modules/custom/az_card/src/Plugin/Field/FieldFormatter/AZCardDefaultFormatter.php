@@ -159,6 +159,15 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
               }
             }
 
+            // Title style.
+            if (isset($card_defaults['card_title_style'])) {
+              $item->title_style = $card_defaults['card_title_style'];
+              if (!empty($media_render_array)) {
+                if ($item->title && $item->title_style === 'title-on-image') {
+                  array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
+                }
+              }
+            }
           }
 
         }
