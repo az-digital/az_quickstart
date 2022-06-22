@@ -1,0 +1,206 @@
+id: az_courses
+label: Courses
+migration_tags:
+  - Courses
+source:
+  plugin: url
+  data_fetcher_plugin: retry_http
+  data_parser_plugin: simple_xml
+  skip_count: True
+  namespaces:
+    n: "http://uamobile.arizona.edu/schema/UA_Courses"
+    ns1: "http://uamobile.arizona.edu/schema/UA_Courses"
+  constants:
+    space: ' '
+  urls: [ ]
+  item_selector: '//*[local-name()="CourseDetail"]'
+  fields:
+     -
+      name: class_number
+      label: Class Number
+      selector: ns1:class_nbr
+     -
+      name: title
+      label: Title
+      selector: ns1:title
+     -
+      name: description
+      label: Description
+      selector: ns1:descrLong
+     -
+      name: subject_code
+      label: Subject Code
+      selector: ns1:subject_code
+     -
+      name: section_code
+      label: Section Code
+      selector: ns1:section
+     -
+      name: catalog_number
+      label: Catalog Number
+      selector: ns1:catalog_nbr
+     -
+      name: course_type
+      label: Course Type
+      selector: ns1:course_type_descr
+     -
+      name: enrollment_current
+      label: Enrollment Current
+      selector: ns1:enroll_cur
+     -
+      name: enrollment_cap
+      label: Enrollment Cap
+      selector: ns1:enroll_cap
+     -
+      name: enrollment_status
+      label: Enrollment Status
+      selector: ns1:enroll_stat_descr
+     -
+      name: course_attributes
+      label: Course Attributes
+      selector: ns1:CourseAttrPropsCollection/ns1:CourseAttrProps/ns1:course_attr_value_descr_formal
+     -
+      name: locations
+      label: Locations
+      selector: ns1:MeetingCollection/ns1:Meeting/ns1:location
+     -
+      name: instructors
+      label: Instructors
+      selector: ns1:MeetingCollection/ns1:Meeting/ns1:InstructorCollection/ns1:Instructor/ns1:netid
+     -
+      name: days
+      label: Days of the Week
+      selector: ns1:MeetingCollection/ns1:Meeting/ns1:days_of_week
+     -
+      name: start_time
+      label: Start Time
+      selector: ns1:MeetingCollection/ns1:Meeting/ns1:start_time
+     -
+      name: end_time
+      label: End Time
+      selector: ns1:MeetingCollection/ns1:Meeting/ns1:end_time
+     -
+      name: start_date
+      label: Start Date
+      selector: ns1:MeetingCollection/ns1:Meeting/ns1:start_date
+     -
+      name: end_date
+      label: End Date
+      selector: ns1:MeetingCollection/ns1:Meeting/ns1:end_date
+     -
+      name: units
+      label: Units
+      selector: ns1:units
+     -
+      name: term_code
+      label: Term Code
+      selector: ../ns1:term_code
+  ids:
+    subject_code:
+      type: string
+    catalog_number:
+      type: string
+    section_code:
+      type: string
+    term_code:
+      type: string
+process:
+  field_az_course_title: title
+  field_az_course_description/value: description
+  field_az_subject_code: subject_code
+  field_az_catalog_number: catalog_number
+  field_az_section_code: section_code
+  field_az_course_location: locations
+  field_az_course_instructor:
+    source: instructors
+    plugin: instructor_link
+  field_az_course_type:
+    plugin: entity_generate
+    source: course_type
+    entity_type: taxonomy_term
+    bundle_key: vid
+    bundle: az_course_types
+    value_key: name
+    ignore_case: true
+  field_az_course_attributes:
+    plugin: entity_generate
+    source: course_attributes
+    entity_type: taxonomy_term
+    bundle_key: vid
+    bundle: az_course_attributes
+    value_key: name
+    ignore_case: true
+  field_az_course_term:
+    -
+      plugin: peoplesoft_year
+      source: term_code
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_course_terms
+      value_key: name
+      ignore_case: true
+  field_az_enrollment: enrollment_current
+  field_az_enrollment_cap: enrollment_cap
+  field_az_enrollment_status: enrollment_status
+  field_az_course_units: units
+  field_az_course_days: days
+  field_az_course_times:
+    -
+      plugin: course_transpose
+      source:
+        - start_time
+        - end_time
+    -
+      plugin: sub_process
+      process:
+        start:
+          plugin: extract
+          source:
+            - 0
+          index:
+            - 0
+        end:
+          plugin: extract
+          source:
+            - 1
+          index:
+            - 0
+  field_az_course_dates:
+    -
+      plugin: course_transpose
+      source:
+        - start_date
+        - end_date
+    -
+      plugin: sub_process
+      process:
+        value:
+          -
+            plugin: extract
+            source:
+              - 0
+            index:
+              - 0
+          -
+            plugin: format_date
+            from_format: 'm/d/Y'
+            to_format: 'Y-m-d'
+        end_value:
+          -
+            plugin: extract
+            source:
+              - 1
+            index:
+              - 0
+          -
+            plugin: format_date
+            from_format: 'm/d/Y'
+            to_format: 'Y-m-d'
+
+
+destination:
+  plugin: entity:node
+  default_bundle: az_course
+migration_dependencies:
