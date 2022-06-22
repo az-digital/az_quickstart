@@ -48,7 +48,8 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Background Color'),
       '#type' => 'select',
       '#options' => [
-        '' => $this->t('None'),
+        'bg-white' => $this->t('White'),
+        'bg-transparent' => $this->t('Transparent'),
         'bg-red' => $this->t('Arizona Red'),
         'bg-blue' => $this->t('Arizona Blue'),
         'bg-sky' => $this->t('Sky'),
@@ -67,7 +68,7 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
         'bg-silver' => $this->t('Silver'),
         'bg-ash' => $this->t('Ash'),
       ],
-      '#default_value' => $config['bg_color'] ?? '',
+      '#default_value' => $config['bg_color'] ?? 'bg-white',
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
       [
         '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
