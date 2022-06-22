@@ -1,0 +1,234 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_course.field_az_catalog_number
+    - field.field.node.az_course.field_az_course_attributes
+    - field.field.node.az_course.field_az_course_dates
+    - field.field.node.az_course.field_az_course_days
+    - field.field.node.az_course.field_az_course_description
+    - field.field.node.az_course.field_az_course_instructor
+    - field.field.node.az_course.field_az_course_location
+    - field.field.node.az_course.field_az_course_term
+    - field.field.node.az_course.field_az_course_times
+    - field.field.node.az_course.field_az_course_title
+    - field.field.node.az_course.field_az_course_types
+    - field.field.node.az_course.field_az_course_units
+    - field.field.node.az_course.field_az_enrollment
+    - field.field.node.az_course.field_az_enrollment_cap
+    - field.field.node.az_course.field_az_enrollment_status
+    - field.field.node.az_course.field_az_section_code
+    - field.field.node.az_course.field_az_subject_and_catalog
+    - field.field.node.az_course.field_az_subject_code
+    - node.type.az_course
+  module:
+    - datetime_range
+    - link
+    - path
+    - text
+    - time_picker
+id: node.az_course.default
+targetEntityType: node
+bundle: az_course
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_catalog_number:
+    type: string_textfield
+    weight: 123
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_attributes:
+    type: entity_reference_autocomplete
+    weight: 136
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_dates:
+    type: daterange_default
+    weight: 134
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_course_days:
+    type: string_textfield
+    weight: 132
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_description:
+    type: text_textarea
+    weight: 121
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_instructor:
+    type: link_default
+    weight: 138
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_course_location:
+    type: string_textfield
+    weight: 126
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_term:
+    type: entity_reference_autocomplete
+    weight: 137
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_times:
+    type: time_range_picker_widget
+    weight: 133
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_course_title:
+    type: string_textfield
+    weight: 122
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_types:
+    type: entity_reference_autocomplete
+    weight: 135
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_course_units:
+    type: number
+    weight: 131
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_enrollment:
+    type: number
+    weight: 128
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_enrollment_cap:
+    type: number
+    weight: 129
+    region: content
+    settings:
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_enrollment_status:
+    type: string_textfield
+    weight: 130
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_section_code:
+    type: string_textfield
+    weight: 124
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_subject_and_catalog:
+    type: string_textfield
+    weight: 139
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_subject_code:
+    type: string_textfield
+    weight: 125
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 30
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 15
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 120
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 16
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 5
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 50
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden: {  }

@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: az_course_url_pattern
+label: 'Course Content Type'
+type: 'canonical_entities:node'
+pattern: 'course/[node:title]'
+selection_criteria:
+  a6f9d5af-06ec-416a-96c7-56df1b950d44:
+    id: 'entity_bundle:node'
+    negate: false
+    uuid: a6f9d5af-06ec-416a-96c7-56df1b950d44
+    context_mapping:
+      node: node
+    bundles:
+      az_course: az_course
+selection_logic: and
+weight: -5
+relationships: {  }

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_course_times
+    - node.type.az_course
+  module:
+    - time_picker
+id: node.az_course.field_az_course_times
+field_name: field_az_course_times
+entity_type: node
+bundle: az_course
+label: 'Course Time'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: time_range_picker

@@ -5,7 +5,6 @@ core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
   - auto_entitylabel
-  - comment
   - datetime_range
   - field
   - field_group
