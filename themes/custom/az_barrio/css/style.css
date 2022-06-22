@@ -399,7 +399,7 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-.search-block-form .input-group-append button#edit-submit {
+.search-block-form .input-group-append button {
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -407,8 +407,8 @@ padding: 0.625rem .75rem;
   padding: 0 8px;
 }
 
-form.search-block-form .input-group .input-group-append button#edit-submit:hover,
-form.search-block-form .input-group .input-group-append button#edit-submit:focus {
+form.search-block-form .input-group .input-group-append button:hover,
+form.search-block-form .input-group .input-group-append button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
