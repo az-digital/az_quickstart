@@ -109,6 +109,11 @@ process:
   field_az_course_description/value: description
   field_az_subject_code: subject_code
   field_az_catalog_number: catalog_number
+  field_az_subject_and_catalog:
+    plugin: concat
+    source:
+      - subject_code
+      - catalog_number
   field_az_section_code: section_code
   field_az_course_location: locations
   field_az_course_instructor:
