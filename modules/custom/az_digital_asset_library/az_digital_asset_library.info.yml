@@ -1,6 +1,6 @@
 name: 'Quickstart Digital Asset Library'
 type: module
-description:  'The connector for the centralized University of Arizona Digital Asset Library (IntelligenceBank DAM).'
+description: 'The connector for the centralized University of Arizona Digital Asset Library (IntelligenceBank DAM).'
 core_version_requirement: ^9
 package: The University of Arizona
 dependencies:
