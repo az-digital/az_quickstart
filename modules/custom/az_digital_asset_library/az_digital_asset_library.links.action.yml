@@ -1,4 +1,4 @@
-az_digital_asset_library.add_dam_item_page:
+az_digital_asset_library.add_asset_page:
   appears_on:
     - entity.media.collection
     - view.media_library.page
