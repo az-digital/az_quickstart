@@ -154,7 +154,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
               $card_classes .= ' shadow mb-4';
-              if ($item->link_title || $item->link_uri) {
+              if ($item->link_uri) {
                 $attached['library'][] = 'az_card/az_card_title_hover';
               }
             }
