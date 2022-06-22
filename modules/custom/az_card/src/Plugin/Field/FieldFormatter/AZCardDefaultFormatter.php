@@ -161,9 +161,9 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
             // Title style.
             if (isset($card_defaults['card_title_style'])) {
-              $item->title_style = $card_defaults['card_title_style'];
+              $title_style = $card_defaults['card_title_style'];
               if (!empty($media_render_array)) {
-                if ($item->title && $item->title_style === 'title-on-image') {
+                if ($item->title && $title_style === 'title-on-image') {
                   array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
                 }
               }
@@ -187,6 +187,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#title' => $title,
         '#body' => check_markup($item->body, $item->body_format),
         '#link' => $link_render_array,
+        '#title_style' => $title_style ?? 'default',
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,
       ];
