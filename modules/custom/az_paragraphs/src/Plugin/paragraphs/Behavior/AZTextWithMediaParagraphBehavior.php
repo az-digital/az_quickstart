@@ -44,6 +44,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'position' => '',
       'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
+      'title_alignment' => 'text-left',
     ];
   }
 
@@ -147,6 +148,17 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         ],
       ],
     ];
+    $form['title_alignment'] = [
+      '#title' => $this->t('Title alignment'),
+      '#type' => 'select',
+      '#options' => [
+        'text-left' => $this->t('Left'),
+        'text-center' => $this->t('Center'),
+        'text-right' => $this->t('Right'),
+      ],
+      '#default_value' => $config['title_alignment'],
+      '#description' => $this->t('The alignment of the title.'),
+    ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
@@ -201,6 +213,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     // Set column classes.
     $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
+    
     // Get content classes.
     $content_classes = [
       'content',
@@ -238,26 +251,26 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       }
     }
     if ($config['style'] === 'bottom' && $config['bg_color'] === 'light') {
-      $key = array_search('light’,$content_classes);
+      $key = array_search('light',$content_classes);
       unset($content_classes[$key]);
       $content_classes[] = 'bg-white';
       $content_classes[] = 'shadow';
       $content_classes[] = 'mb-4';
     }
     if ($config['style'] === 'bottom' && $config['bg_color'] === 'dark') {
-      $key = array_search('dark’,$content_classes);
+      $key = array_search('dark',$content_classes);
       unset($content_classes[$key]);
       $content_classes[] = 'bg-black';
       $content_classes[] = 'shadow';
       $content_classes[] = 'mb-4';
     }
-
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
     // Get title classes.
     $title_classes = [
       'mt-0',
       'bold',
+      HTML::getClass($config['title_alignment']),
     ];
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
       $title_classes[] = 'text-blue';
