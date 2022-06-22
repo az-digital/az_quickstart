@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains az_dam.module.
+ * Contains az_digital_asset_library.module.
  */
 
 use Drupal\Core\Form\FormStateInterface;
@@ -11,7 +11,7 @@ use Drupal\Core\Url;
 /**
  * Custom submit handler to redirect to /admin/content/media.
  */
-function az_dam_form_submit(array $form, FormStateInterface $form_state) {
+function az_digital_asset_library_form_submit(array $form, FormStateInterface $form_state) {
   $url = Url::fromRoute('entity.media.collection');
   $form_state->setRedirectUrl($url);
 }
@@ -24,10 +24,6 @@ function az_dam_form_submit(array $form, FormStateInterface $form_state) {
  * See
  * @link https://git.drupalcode.org/project/intelligencebank/-/blob/8.x-2.x/modules/ib_dam_media/src/Plugin/EntityBrowser/Widget/IbDamEbWidget.php#L249 @endlink.
  */
-function az_dam_form_entity_browser_az_dam_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $form['widget']['ib_dam_app_el']['#allow_embed'] = TRUE;
-  $widget_context = $form_state->get(['entity_browser', 'widget_context']);
-  $widget_context['ib_dam_media']['allow_embed'] = TRUE;
-  $form_state->set(['entity_browser', 'widget_context'], $widget_context);
-  $form['#submit'][] = 'az_dam_form_submit';
+function az_digital_asset_library_form_entity_browser_az_digital_asset_library_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#submit'][] = 'az_digital_asset_library_form_submit';
 }

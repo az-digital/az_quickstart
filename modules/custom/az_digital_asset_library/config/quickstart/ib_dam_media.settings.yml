@@ -1,7 +1,7 @@
 dependencies:
   enforced:
     module:
-      - az_dam
+      - az_digital_asset_library
 media_types:
   image:
     source_type: image

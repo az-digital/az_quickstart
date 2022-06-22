@@ -6,12 +6,12 @@ dependencies:
     - media
   enforced:
     module:
-      - az_dam
-name: az_dam
-label: 'Dam Search'
+      - az_digital_asset_library
+name: az_digital_asset_library
+label: 'Search The University of Arizona Digital Asset Library'
 display: standalone
 display_configuration:
-  path: /admin/content/media/az-dam
+  path: /admin/content/media/az-digital-asset-library
 selection_display: no_display
 selection_display_configuration: {  }
 widget_selector: single
@@ -20,8 +20,8 @@ widgets:
   e4f2bf7e-ce3f-499e-8d2b-698219735ccf:
     id: ib_dam_search
     uuid: e4f2bf7e-ce3f-499e-8d2b-698219735ccf
-    label: 'DAM Search'
+    label: 'Search The University of Arizona Digital Asset Library'
     weight: 1
     settings:
-      submit_text: 'Select DAM assets'
-      upload_location: 'public://az_dam'
+      submit_text: 'Select Arizona Digital Asset'
+      upload_location: 'public://az_digital_asset_library'
