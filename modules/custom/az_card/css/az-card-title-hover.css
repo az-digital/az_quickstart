@@ -1,3 +1,8 @@
 .card:hover .card-title {
   text-decoration: underline;
 }
+
+.card:hover img {
+  transform: scale(1.03);
+  transition: ease .25s;
+}
