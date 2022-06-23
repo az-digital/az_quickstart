@@ -228,7 +228,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     // Set column classes.
     $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
-    
     // Get content classes.
     $content_classes = [
       'content',
