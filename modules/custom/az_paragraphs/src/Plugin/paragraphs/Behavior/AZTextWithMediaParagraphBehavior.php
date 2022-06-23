@@ -265,7 +265,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       }
     }
     if ($config['style'] === 'bottom' && $config['bg_color'] === 'light') {
-      $key = array_search('light',$content_classes);
+      $key = array_search('light', $content_classes);
       unset($content_classes[$key]);
       $content_classes[] = 'bg-white';
       $content_classes[] = 'shadow';
