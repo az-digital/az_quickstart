@@ -44,6 +44,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'position' => '',
       'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
+      'title_level' => 'h2',
       'title_alignment' => 'text-left',
     ];
   }
@@ -147,6 +148,20 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
         ],
       ],
+    ];
+    $form['title_level'] = [
+      '#title' => $this->t('Title heading level'),
+      '#type' => 'select',
+      '#options' => [
+        'h1' => $this->t('Page title (H1)'),
+        'h2' => $this->t('Section heading (H2)'),
+        'h3' => $this->t('Subsection heading (H3)'),
+        'h4' => $this->t('Subsection heading (H4)'),
+        'h5' => $this->t('Subsection heading (H5)'),
+        'h6' => $this->t('Subsection heading (H6)'),
+      ],
+      '#default_value' => $config['title_level'],
+      '#description' => $this->t('The heading level of the title. <a href="https://quickstart.arizona.edu/best-practices/using-headings" target="_blank">Learn about best web practices</a>.'),
     ];
     $form['title_alignment'] = [
       '#title' => $this->t('Title alignment'),
