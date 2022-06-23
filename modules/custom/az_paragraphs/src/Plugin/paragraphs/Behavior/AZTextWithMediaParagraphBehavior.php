@@ -85,7 +85,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'light' => $this->t('Light'),
         'dark' => $this->t('Dark'),
-        'transparent' => $this->t('Transparent'),
+        'bg-transparent' => $this->t('Transparent'),
       ],
       '#default_value' => $config['bg_color'],
       '#description' => $this->t('The color of the content background.'),
