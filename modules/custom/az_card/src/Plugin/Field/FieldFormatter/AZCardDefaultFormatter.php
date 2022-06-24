@@ -167,6 +167,10 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
                   array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
                 }
               }
+              // Force default title style if media field is not populated.
+              else {
+                $title_style = 'default';
+              }
             }
           }
 

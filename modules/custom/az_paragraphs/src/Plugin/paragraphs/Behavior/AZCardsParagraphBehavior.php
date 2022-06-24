@@ -55,7 +55,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'default' => $this->t('Title within card (default)'),
         'title-on-image' => $this->t('Title on image'),
       ],
-      '#default_value' => isset($config['card_title_style']) ? $config['card_title_style'] : 'default',
+      '#default_value' => $config['card_title_style'] ?? 'default',
       '#description' => $this->t('Select a card title style.'),
     ];
 
