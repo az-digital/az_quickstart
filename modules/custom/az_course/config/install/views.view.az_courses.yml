@@ -354,7 +354,7 @@ display:
         filter_groups: false
       display_description: ''
       display_extenders: {  }
-      path: undergraduate/courses
+      path: courses/undergraduate
     cache_metadata:
       max-age: -1
       contexts:
@@ -445,7 +445,7 @@ display:
         filter_groups: false
       display_description: ''
       display_extenders: {  }
-      path: graduate/courses
+      path: courses/graduate
     cache_metadata:
       max-age: -1
       contexts:
