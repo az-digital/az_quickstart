@@ -1,4 +1,4 @@
-image: proboci/ubuntu:18.04-php7.4
+image: proboci/ubuntu:20.04-php8.1
 assets:
   - test-credentials.sh
   - migration.settings.php
@@ -37,7 +37,7 @@ steps:
       - yarn run eslint --color .
   - name: Install Arizona Quickstart
     plugin: Drupal
-    drupalVersion: 8
+    drupalVersion: 9
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
