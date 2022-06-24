@@ -85,7 +85,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
 
     $executable = new CourseMigrateBatchExecutable($migration, $message, $options);
 
-    if (empty($context['sandbox']['total'])) {
+    if (empty($context['results'][$migration->id()])) {
       $context['sandbox']['total'] = $executable->getSource()->count();
       $context['sandbox']['batch_limit'] = $executable->calculateBatchLimit($context);
       $context['results'][$migration->id()] = [

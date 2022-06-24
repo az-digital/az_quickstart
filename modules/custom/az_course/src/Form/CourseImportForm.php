@@ -166,20 +166,27 @@ class CourseImportForm extends ConfigFormBase {
    */
   public function runMigrate(array &$form, FormStateInterface $form_state) {
 
-    $courses = \Drupal::config('az_course.settings')->get('courses');
+    $courses = $form_state->getValue('courses');
+    $courses = preg_split("/[\n\r]+/", $courses);
+
+    $this->config('az_course.settings')
+      ->set('courses', $courses)
+      ->save();
+
+    $courses = $this->config('az_course.settings')->get('courses');
     if (!empty($courses)) {
       $matches = [];
       $course_urls = [];
       // Convert courses listed into actual URLs to migrate.
       foreach ($courses as $course) {
         if (preg_match("/^[[:space:]]*([[:alpha:]]+)[[:space:]]+([[:alnum:]]+)[[:space:]]*$/", $course, $matches)) {
-          $urls = \Drupal::service('az_course.search')->fetchUrls($matches[1], $matches[2]);
+          $urls = $this->courseSearch->fetchUrls($matches[1], $matches[2]);
           foreach ($urls as $url) {
             $course_urls[] = $url;
           }
         }
         elseif (preg_match("/^[[:space:]]*([[:alpha:]]+)[[:space:]]*$/", $course, $matches)) {
-          $options = \Drupal::service('az_course.search')->fetchOptions($matches[1]);
+          $options = $this->courseSearch->fetchOptions($matches[1]);
           foreach ($options as $o) {
             $course_urls[] = $o;
           }
