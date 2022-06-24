@@ -5,18 +5,17 @@ core_version_requirement: ^8.8 || ^9
 package: 'The University of Arizona'
 dependencies:
   - auto_entitylabel
-  - datetime_range
   - field
   - field_group
   - image
-  - cas
-  - time_picker
   - menu_ui
   - migrate
   - migrate_plus
   - migrate_tools
   - node
   - path
+  - pathauto
+  - smart_title
   - search
   - taxonomy
   - token

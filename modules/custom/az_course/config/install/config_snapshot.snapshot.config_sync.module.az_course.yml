@@ -1,0 +1,1235 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_course
+id: config_sync.module.az_course
+snapshotSet: config_sync
+extensionType: module
+extensionName: az_course
+items:
+  -
+    collection: ''
+    name: auto_entitylabel.settings.node.az_course
+    data:
+      status: 1
+      pattern: '[node:field_az_subject_code] [node:field_az_catalog_number] [node:field_az_course_title]'
+      escape: false
+      preserve_titles: false
+      dependencies:
+        config:
+          - node.type.az_course
+      save: 0
+      chunk: '50'
+      _core:
+        default_config_hash: oTL1d5m3dm2wWJ-dzxmrF-tU940DK44JS0ybQh-H37o
+  -
+    collection: ''
+    name: core.base_field_override.node.az_course.promote
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - node.type.az_course
+      id: node.az_course.promote
+      field_name: promote
+      entity_type: node
+      bundle: az_course
+      label: 'Promoted to front page'
+      description: ''
+      required: false
+      translatable: true
+      default_value:
+        -
+          value: 0
+      default_value_callback: ''
+      settings:
+        on_label: 'On'
+        off_label: 'Off'
+      field_type: boolean
+      _core:
+        default_config_hash: uFDIf_hHwNNez10IV5tDOjEN3n-hiWQGbPqpzCZE04w
+  -
+    collection: ''
+    name: core.entity_form_display.node.az_course.default
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.field.node.az_course.field_az_catalog_number
+          - field.field.node.az_course.field_az_course_attributes
+          - field.field.node.az_course.field_az_course_description
+          - field.field.node.az_course.field_az_course_instructor
+          - field.field.node.az_course.field_az_course_term
+          - field.field.node.az_course.field_az_course_title
+          - field.field.node.az_course.field_az_course_types
+          - field.field.node.az_course.field_az_subject_and_catalog
+          - field.field.node.az_course.field_az_subject_code
+          - node.type.az_course
+        module:
+          - link
+          - path
+          - text
+      id: node.az_course.default
+      targetEntityType: node
+      bundle: az_course
+      mode: default
+      content:
+        created:
+          type: datetime_timestamp
+          weight: 10
+          region: content
+          settings: {  }
+          third_party_settings: {  }
+        field_az_catalog_number:
+          type: string_textfield
+          weight: 123
+          region: content
+          settings:
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        field_az_course_attributes:
+          type: entity_reference_autocomplete
+          weight: 136
+          region: content
+          settings:
+            match_operator: CONTAINS
+            match_limit: 10
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        field_az_course_description:
+          type: text_textarea
+          weight: 121
+          region: content
+          settings:
+            rows: 5
+            placeholder: ''
+          third_party_settings: {  }
+        field_az_course_instructor:
+          type: link_default
+          weight: 138
+          region: content
+          settings:
+            placeholder_url: ''
+            placeholder_title: ''
+          third_party_settings: {  }
+        field_az_course_term:
+          type: entity_reference_autocomplete
+          weight: 137
+          region: content
+          settings:
+            match_operator: CONTAINS
+            match_limit: 10
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        field_az_course_title:
+          type: string_textfield
+          weight: 122
+          region: content
+          settings:
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        field_az_course_types:
+          type: entity_reference_autocomplete
+          weight: 135
+          region: content
+          settings:
+            match_operator: CONTAINS
+            match_limit: 10
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        field_az_subject_and_catalog:
+          type: string_textfield
+          weight: 139
+          region: content
+          settings:
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        field_az_subject_code:
+          type: string_textfield
+          weight: 125
+          region: content
+          settings:
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        path:
+          type: path
+          weight: 30
+          region: content
+          settings: {  }
+          third_party_settings: {  }
+        promote:
+          type: boolean_checkbox
+          weight: 15
+          region: content
+          settings:
+            display_label: true
+          third_party_settings: {  }
+        status:
+          type: boolean_checkbox
+          weight: 120
+          region: content
+          settings:
+            display_label: true
+          third_party_settings: {  }
+        sticky:
+          type: boolean_checkbox
+          weight: 16
+          region: content
+          settings:
+            display_label: true
+          third_party_settings: {  }
+        title:
+          type: string_textfield
+          weight: -5
+          region: content
+          settings:
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        uid:
+          type: entity_reference_autocomplete
+          weight: 5
+          region: content
+          settings:
+            match_operator: CONTAINS
+            match_limit: 10
+            size: 60
+            placeholder: ''
+          third_party_settings: {  }
+        url_redirects:
+          weight: 50
+          region: content
+          settings: {  }
+          third_party_settings: {  }
+      hidden: {  }
+      _core:
+        default_config_hash: ZCkg0OUSx2eqAhyTqsui0m0-xMVhuSiVnJoYSfImuZU
+  -
+    collection: ''
+    name: core.entity_view_display.node.az_course.default
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.field.node.az_course.field_az_catalog_number
+          - field.field.node.az_course.field_az_course_attributes
+          - field.field.node.az_course.field_az_course_description
+          - field.field.node.az_course.field_az_course_instructor
+          - field.field.node.az_course.field_az_course_term
+          - field.field.node.az_course.field_az_course_title
+          - field.field.node.az_course.field_az_course_types
+          - field.field.node.az_course.field_az_subject_and_catalog
+          - field.field.node.az_course.field_az_subject_code
+          - node.type.az_course
+        module:
+          - text
+          - user
+      id: node.az_course.default
+      targetEntityType: node
+      bundle: az_course
+      mode: default
+      content:
+        field_az_course_description:
+          type: text_default
+          label: hidden
+          settings: {  }
+          third_party_settings: {  }
+          weight: 1
+          region: content
+        links:
+          settings: {  }
+          third_party_settings: {  }
+          weight: 0
+          region: content
+      hidden:
+        field_az_catalog_number: true
+        field_az_course_attributes: true
+        field_az_course_instructor: true
+        field_az_course_term: true
+        field_az_course_title: true
+        field_az_course_types: true
+        field_az_subject_and_catalog: true
+        field_az_subject_code: true
+      _core:
+        default_config_hash: jERGdNwL3WxVm1pyFSblPN5U5wtSQrkGWhpWs89MlE8
+  -
+    collection: ''
+    name: core.entity_view_display.node.az_course.teaser
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - core.entity_view_mode.node.teaser
+          - field.field.node.az_course.field_az_catalog_number
+          - field.field.node.az_course.field_az_course_attributes
+          - field.field.node.az_course.field_az_course_description
+          - field.field.node.az_course.field_az_course_instructor
+          - field.field.node.az_course.field_az_course_term
+          - field.field.node.az_course.field_az_course_title
+          - field.field.node.az_course.field_az_course_types
+          - field.field.node.az_course.field_az_subject_and_catalog
+          - field.field.node.az_course.field_az_subject_code
+          - node.type.az_course
+        module:
+          - text
+          - user
+      id: node.az_course.teaser
+      targetEntityType: node
+      bundle: az_course
+      mode: teaser
+      content:
+        field_az_course_description:
+          type: text_default
+          label: above
+          settings: {  }
+          third_party_settings: {  }
+          weight: 1
+          region: content
+        links:
+          settings: {  }
+          third_party_settings: {  }
+          weight: 0
+          region: content
+      hidden:
+        field_az_catalog_number: true
+        field_az_course_attributes: true
+        field_az_course_instructor: true
+        field_az_course_term: true
+        field_az_course_title: true
+        field_az_course_types: true
+        field_az_subject_and_catalog: true
+        field_az_subject_code: true
+      _core:
+        default_config_hash: HWwOivBriTS4kj48XLqZIAD5eBjD1R1FA_RvaASWVns
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_catalog_number
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_catalog_number
+          - node.type.az_course
+      id: node.az_course.field_az_catalog_number
+      field_name: field_az_catalog_number
+      entity_type: node
+      bundle: az_course
+      label: 'Catalog Number'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings: {  }
+      field_type: string
+      _core:
+        default_config_hash: ujSbZxyyQ2hZh2ArxcdGYo48LK39NUZlLIwrwH9_OZw
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_course_attributes
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_course_attributes
+          - node.type.az_course
+          - taxonomy.vocabulary.az_course_attributes
+      id: node.az_course.field_az_course_attributes
+      field_name: field_az_course_attributes
+      entity_type: node
+      bundle: az_course
+      label: 'Course Attributes'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings:
+        handler: 'default:taxonomy_term'
+        handler_settings:
+          target_bundles:
+            az_course_attributes: az_course_attributes
+          sort:
+            field: name
+            direction: asc
+          auto_create: false
+          auto_create_bundle: ''
+      field_type: entity_reference
+      _core:
+        default_config_hash: Zl-MABCnmXxVvgt7QJCGiE95sXn2TC-zuxuzSChaaJc
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_course_description
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_course_description
+          - filter.format.az_standard
+          - node.type.az_course
+        module:
+          - text
+      id: node.az_course.field_az_course_description
+      field_name: field_az_course_description
+      entity_type: node
+      bundle: az_course
+      label: 'Course Description'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings:
+        allowed_formats:
+          - az_standard
+      field_type: text_long
+      _core:
+        default_config_hash: 6Veq4VaUTpsURubzXJabD6pdzVWTzfBwCyuChyEgt9s
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_course_instructor
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_course_instructor
+          - node.type.az_course
+        module:
+          - link
+      id: node.az_course.field_az_course_instructor
+      field_name: field_az_course_instructor
+      entity_type: node
+      bundle: az_course
+      label: 'Course Instructor'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings:
+        title: 1
+        link_type: 17
+      field_type: link
+      _core:
+        default_config_hash: dZg4NW41j3VodI_e3aBZTpGGjfzb834Ey87OnSiefqM
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_course_term
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_course_term
+          - node.type.az_course
+          - taxonomy.vocabulary.az_course_terms
+      id: node.az_course.field_az_course_term
+      field_name: field_az_course_term
+      entity_type: node
+      bundle: az_course
+      label: 'Course Term'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings:
+        handler: 'default:taxonomy_term'
+        handler_settings:
+          target_bundles:
+            az_course_terms: az_course_terms
+          sort:
+            field: name
+            direction: asc
+          auto_create: false
+          auto_create_bundle: ''
+      field_type: entity_reference
+      _core:
+        default_config_hash: 3_apjdK3y3tZCezYVzuzyurMFHOTrWf-AkW_2BgQG-Y
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_course_title
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_course_title
+          - node.type.az_course
+      id: node.az_course.field_az_course_title
+      field_name: field_az_course_title
+      entity_type: node
+      bundle: az_course
+      label: 'Course TItle'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings: {  }
+      field_type: string
+      _core:
+        default_config_hash: XB6XkIsMSR3d1oUsxZKWwmuTwWnUUnF_4zjHCxeZ4Dk
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_course_types
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_course_types
+          - node.type.az_course
+          - taxonomy.vocabulary.az_course_types
+      id: node.az_course.field_az_course_types
+      field_name: field_az_course_types
+      entity_type: node
+      bundle: az_course
+      label: 'Course Types'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings:
+        handler: 'default:taxonomy_term'
+        handler_settings:
+          target_bundles:
+            az_course_types: az_course_types
+          sort:
+            field: name
+            direction: asc
+          auto_create: false
+          auto_create_bundle: ''
+      field_type: entity_reference
+      _core:
+        default_config_hash: oBo-SqbmQYrZkcjAusFaPoHv5Ka_lqKgyhRc5nHKOnc
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_subject_and_catalog
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_subject_and_catalog
+          - node.type.az_course
+      id: node.az_course.field_az_subject_and_catalog
+      field_name: field_az_subject_and_catalog
+      entity_type: node
+      bundle: az_course
+      label: 'Subject and Catalog'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings: {  }
+      field_type: string
+      _core:
+        default_config_hash: MKcUjPMNuZuwL5CwQe1WpKQaYR8Su-iegLfdIoclvXE
+  -
+    collection: ''
+    name: field.field.node.az_course.field_az_subject_code
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_subject_code
+          - node.type.az_course
+      id: node.az_course.field_az_subject_code
+      field_name: field_az_subject_code
+      entity_type: node
+      bundle: az_course
+      label: 'Subject Code'
+      description: ''
+      required: false
+      translatable: false
+      default_value: {  }
+      default_value_callback: ''
+      settings: {  }
+      field_type: string
+      _core:
+        default_config_hash: yEptaVV58qrP9TLEUhTSzYNpNV1jiQOTvL1xDgDK36Y
+  -
+    collection: ''
+    name: field.storage.node.field_az_catalog_number
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+      id: node.field_az_catalog_number
+      field_name: field_az_catalog_number
+      entity_type: node
+      type: string
+      settings:
+        max_length: 255
+        case_sensitive: false
+        is_ascii: false
+      module: core
+      locked: false
+      cardinality: 1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: xgot5U-VTIaMVJceVmWFJR34Erq5qQwSsdmZ2hrVlr0
+  -
+    collection: ''
+    name: field.storage.node.field_az_course_attributes
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+          - taxonomy
+      id: node.field_az_course_attributes
+      field_name: field_az_course_attributes
+      entity_type: node
+      type: entity_reference
+      settings:
+        target_type: taxonomy_term
+      module: core
+      locked: false
+      cardinality: -1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: 9xC6cDYviGyfUvjBdcExVr5g5eMICAV23OQ1heoqSGE
+  -
+    collection: ''
+    name: field.storage.node.field_az_course_description
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+          - text
+      id: node.field_az_course_description
+      field_name: field_az_course_description
+      entity_type: node
+      type: text_long
+      settings: {  }
+      module: text
+      locked: false
+      cardinality: 1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: 1nZeG4gV6dABS5Kyw0GdJQoCn_sGnI8CduRPgF1jSpg
+  -
+    collection: ''
+    name: field.storage.node.field_az_course_instructor
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - link
+          - node
+      id: node.field_az_course_instructor
+      field_name: field_az_course_instructor
+      entity_type: node
+      type: link
+      settings: {  }
+      module: link
+      locked: false
+      cardinality: -1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: DZNmMwrlGdlNs-1pt6W4k54Woq_24bhCugSZtjBrCNY
+  -
+    collection: ''
+    name: field.storage.node.field_az_course_term
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+          - taxonomy
+      id: node.field_az_course_term
+      field_name: field_az_course_term
+      entity_type: node
+      type: entity_reference
+      settings:
+        target_type: taxonomy_term
+      module: core
+      locked: false
+      cardinality: 1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: KhcM4KPPa81dd5YURlavyRAwi-znOsXyOljg_1_xDfU
+  -
+    collection: ''
+    name: field.storage.node.field_az_course_title
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+      id: node.field_az_course_title
+      field_name: field_az_course_title
+      entity_type: node
+      type: string
+      settings:
+        max_length: 255
+        case_sensitive: false
+        is_ascii: false
+      module: core
+      locked: false
+      cardinality: 1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: rviVPzTUyP7HMQs71ZiOG-p-D_cwOcbILwguIhKtQck
+  -
+    collection: ''
+    name: field.storage.node.field_az_course_types
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+          - taxonomy
+      id: node.field_az_course_types
+      field_name: field_az_course_types
+      entity_type: node
+      type: entity_reference
+      settings:
+        target_type: taxonomy_term
+      module: core
+      locked: false
+      cardinality: -1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: TcTIDhCZ3tyGmIGjjelXCnpYEjJ1FBBLVG3lAb-6PDc
+  -
+    collection: ''
+    name: field.storage.node.field_az_subject_and_catalog
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+      id: node.field_az_subject_and_catalog
+      field_name: field_az_subject_and_catalog
+      entity_type: node
+      type: string
+      settings:
+        max_length: 255
+        case_sensitive: false
+        is_ascii: false
+      module: core
+      locked: false
+      cardinality: 1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: KICOvbZ-cpxCkR3-_zmAoP_J7RrXehP1K3Jk1W4mMTc
+  -
+    collection: ''
+    name: field.storage.node.field_az_subject_code
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+      id: node.field_az_subject_code
+      field_name: field_az_subject_code
+      entity_type: node
+      type: string
+      settings:
+        max_length: 255
+        case_sensitive: false
+        is_ascii: false
+      module: core
+      locked: false
+      cardinality: 1
+      translatable: true
+      indexes: {  }
+      persist_with_no_fields: false
+      custom_storage: false
+      _core:
+        default_config_hash: oYz9wFyD7k_ePu9yYyhCGjKiGcDWimQdK4lTBeGbdEA
+  -
+    collection: ''
+    name: node.type.az_course
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - menu_ui
+      third_party_settings:
+        menu_ui:
+          available_menus: {  }
+          parent: ''
+      name: Course
+      type: az_course
+      description: 'Contains course information.'
+      help: ''
+      new_revision: false
+      preview_mode: 1
+      display_submitted: false
+      _core:
+        default_config_hash: A2ERXMomDEApdiZ430vrAQsm67neOlnAjMn6JUeK8DU
+  -
+    collection: ''
+    name: pathauto.pattern.az_course_url_pattern
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        module:
+          - node
+      id: az_course_url_pattern
+      label: 'Course Content Type'
+      type: 'canonical_entities:node'
+      pattern: 'course/[node:title]'
+      selection_criteria:
+        a6f9d5af-06ec-416a-96c7-56df1b950d44:
+          id: 'entity_bundle:node'
+          negate: false
+          uuid: a6f9d5af-06ec-416a-96c7-56df1b950d44
+          context_mapping:
+            node: node
+          bundles:
+            az_course: az_course
+      selection_logic: and
+      weight: -5
+      relationships: {  }
+      _core:
+        default_config_hash: iPMgmS101grOJxOwCmjJndvpsGXInUc1sb5i_gosqzY
+  -
+    collection: ''
+    name: taxonomy.vocabulary.az_course_attributes
+    data:
+      langcode: en
+      status: true
+      dependencies: {  }
+      name: 'Course Attributes'
+      vid: az_course_attributes
+      description: ''
+      weight: 0
+      _core:
+        default_config_hash: 1D-i4MycNXm_d41v8gLJ3qtT_En-pUwRSoK02wFUJg0
+  -
+    collection: ''
+    name: taxonomy.vocabulary.az_course_terms
+    data:
+      langcode: en
+      status: true
+      dependencies: {  }
+      name: 'Course Terms'
+      vid: az_course_terms
+      description: ''
+      weight: 0
+      _core:
+        default_config_hash: l4sR9b5-k4H9B15Yt7ZYvwe1lyTLwEg62qwNKBU1KPo
+  -
+    collection: ''
+    name: taxonomy.vocabulary.az_course_types
+    data:
+      langcode: en
+      status: true
+      dependencies: {  }
+      name: 'Course Types'
+      vid: az_course_types
+      description: ''
+      weight: 0
+      _core:
+        default_config_hash: KVMY6s8NudtCxQxrkZfm7JZ9G_pQ59GHJ8k2XHqqBhA
+  -
+    collection: ''
+    name: views.view.az_courses
+    data:
+      langcode: en
+      status: true
+      dependencies:
+        config:
+          - field.storage.node.field_az_course_description
+          - node.type.az_course
+        module:
+          - node
+          - text
+          - user
+      id: az_courses
+      label: 'AZ Courses'
+      module: views
+      description: ''
+      tag: ''
+      base_table: node_field_data
+      base_field: nid
+      display:
+        default:
+          id: default
+          display_title: Default
+          display_plugin: default
+          position: 0
+          display_options:
+            title: 'AZ Courses'
+            fields:
+              title:
+                id: title
+                table: node_field_data
+                field: title
+                relationship: none
+                group_type: group
+                admin_label: ''
+                entity_type: node
+                entity_field: title
+                plugin_id: field
+                label: ''
+                exclude: true
+                alter:
+                  alter_text: false
+                  text: ''
+                  make_link: false
+                  path: ''
+                  absolute: false
+                  external: false
+                  replace_spaces: false
+                  path_case: none
+                  trim_whitespace: false
+                  alt: ''
+                  rel: ''
+                  link_class: ''
+                  prefix: ''
+                  suffix: ''
+                  target: ''
+                  nl2br: false
+                  max_length: 0
+                  word_boundary: true
+                  ellipsis: true
+                  more_link: false
+                  more_link_text: ''
+                  more_link_path: ''
+                  strip_tags: false
+                  trim: false
+                  preserve_tags: ''
+                  html: false
+                element_type: ''
+                element_class: ''
+                element_label_type: ''
+                element_label_class: ''
+                element_label_colon: false
+                element_wrapper_type: ''
+                element_wrapper_class: ''
+                element_default_classes: true
+                empty: ''
+                hide_empty: false
+                empty_zero: false
+                hide_alter_empty: true
+                click_sort_column: value
+                type: string
+                settings:
+                  link_to_entity: false
+                group_column: value
+                group_columns: {  }
+                group_rows: true
+                delta_limit: 0
+                delta_offset: 0
+                delta_reversed: false
+                delta_first_last: false
+                multi_type: separator
+                separator: ', '
+                field_api_classes: false
+              field_az_course_description:
+                id: field_az_course_description
+                table: node__field_az_course_description
+                field: field_az_course_description
+                relationship: none
+                group_type: group
+                admin_label: ''
+                plugin_id: field
+                label: ''
+                exclude: true
+                alter:
+                  alter_text: false
+                  text: ''
+                  make_link: false
+                  path: ''
+                  absolute: false
+                  external: false
+                  replace_spaces: false
+                  path_case: none
+                  trim_whitespace: false
+                  alt: ''
+                  rel: ''
+                  link_class: ''
+                  prefix: ''
+                  suffix: ''
+                  target: ''
+                  nl2br: false
+                  max_length: 0
+                  word_boundary: true
+                  ellipsis: true
+                  more_link: false
+                  more_link_text: ''
+                  more_link_path: ''
+                  strip_tags: false
+                  trim: false
+                  preserve_tags: ''
+                  html: false
+                element_type: ''
+                element_class: ''
+                element_label_type: ''
+                element_label_class: ''
+                element_label_colon: false
+                element_wrapper_type: ''
+                element_wrapper_class: ''
+                element_default_classes: true
+                empty: ''
+                hide_empty: false
+                empty_zero: false
+                hide_alter_empty: true
+                click_sort_column: value
+                type: text_default
+                settings: {  }
+                group_column: value
+                group_columns: {  }
+                group_rows: true
+                delta_limit: 0
+                delta_offset: 0
+                delta_reversed: false
+                delta_first_last: false
+                multi_type: separator
+                separator: ', '
+                field_api_classes: false
+              nothing:
+                id: nothing
+                table: views
+                field: nothing
+                relationship: none
+                group_type: group
+                admin_label: ''
+                plugin_id: custom
+                label: ''
+                exclude: false
+                alter:
+                  alter_text: true
+                  text: "<h5 class=\"card-title mt-0\">{{ title }}</h5>\r\n<p>{{ field_az_course_description }}</p>"
+                  make_link: false
+                  path: ''
+                  absolute: false
+                  external: false
+                  replace_spaces: false
+                  path_case: none
+                  trim_whitespace: false
+                  alt: ''
+                  rel: ''
+                  link_class: ''
+                  prefix: ''
+                  suffix: ''
+                  target: ''
+                  nl2br: false
+                  max_length: 0
+                  word_boundary: true
+                  ellipsis: true
+                  more_link: false
+                  more_link_text: ''
+                  more_link_path: ''
+                  strip_tags: false
+                  trim: false
+                  preserve_tags: ''
+                  html: false
+                element_type: ''
+                element_class: ''
+                element_label_type: ''
+                element_label_class: ''
+                element_label_colon: false
+                element_wrapper_type: ''
+                element_wrapper_class: ''
+                element_default_classes: true
+                empty: ''
+                hide_empty: false
+                empty_zero: false
+                hide_alter_empty: false
+            pager:
+              type: mini
+              options:
+                offset: 0
+                items_per_page: 0
+                total_pages: null
+                id: 0
+                tags:
+                  next: ››
+                  previous: ‹‹
+                expose:
+                  items_per_page: false
+                  items_per_page_label: 'Items per page'
+                  items_per_page_options: '5, 10, 25, 50'
+                  items_per_page_options_all: false
+                  items_per_page_options_all_label: '- All -'
+                  offset: false
+                  offset_label: Offset
+            exposed_form:
+              type: basic
+              options:
+                submit_button: Apply
+                reset_button: false
+                reset_button_label: Reset
+                exposed_sorts_label: 'Sort by'
+                expose_sort_order: true
+                sort_asc_label: Asc
+                sort_desc_label: Desc
+            access:
+              type: perm
+              options:
+                perm: 'access content'
+            cache:
+              type: tag
+              options: {  }
+            empty: {  }
+            sorts:
+              field_az_subject_code_value:
+                id: field_az_subject_code_value
+                table: node__field_az_subject_code
+                field: field_az_subject_code_value
+                relationship: none
+                group_type: group
+                admin_label: ''
+                plugin_id: standard
+                order: ASC
+                expose:
+                  label: ''
+                  field_identifier: ''
+                exposed: false
+              field_az_catalog_number_value:
+                id: field_az_catalog_number_value
+                table: node__field_az_catalog_number
+                field: field_az_catalog_number_value
+                relationship: none
+                group_type: group
+                admin_label: ''
+                plugin_id: standard
+                order: ASC
+                expose:
+                  label: ''
+                  field_identifier: ''
+                exposed: false
+            arguments: {  }
+            filters:
+              status:
+                id: status
+                table: node_field_data
+                field: status
+                entity_type: node
+                entity_field: status
+                plugin_id: boolean
+                value: '1'
+                group: 1
+                expose:
+                  operator: ''
+                  operator_limit_selection: false
+                  operator_list: {  }
+              type:
+                id: type
+                table: node_field_data
+                field: type
+                entity_type: node
+                entity_field: type
+                plugin_id: bundle
+                value:
+                  az_course: az_course
+                expose:
+                  operator_limit_selection: false
+                  operator_list: {  }
+            style:
+              type: default
+              options:
+                grouping:
+                  -
+                    field: nothing
+                    rendered: true
+                    rendered_strip: false
+                row_class: ''
+                default_row_class: true
+            row:
+              type: fields
+            query:
+              type: views_query
+              options:
+                query_comment: ''
+                disable_sql_rewrite: false
+                distinct: false
+                replica: false
+                query_tags: {  }
+            relationships: {  }
+            header: {  }
+            footer: {  }
+            display_extenders: {  }
+          cache_metadata:
+            max-age: -1
+            contexts:
+              - 'languages:language_content'
+              - 'languages:language_interface'
+              - url.query_args
+              - 'user.node_grants:view'
+              - user.permissions
+            tags:
+              - 'config:field.storage.node.field_az_course_description'
+        page_1:
+          id: page_1
+          display_title: Page
+          display_plugin: page
+          position: 1
+          display_options:
+            display_extenders: {  }
+            path: courses
+          cache_metadata:
+            max-age: -1
+            contexts:
+              - 'languages:language_content'
+              - 'languages:language_interface'
+              - url.query_args
+              - 'user.node_grants:view'
+              - user.permissions
+            tags:
+              - 'config:field.storage.node.field_az_course_description'
+      _core:
+        default_config_hash: iVZ-y5payUPS0e0rQ6ZqMmyuFcgKMTZdb5WQBuaWT2s
