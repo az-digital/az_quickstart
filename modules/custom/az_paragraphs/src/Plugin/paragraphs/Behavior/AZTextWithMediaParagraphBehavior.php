@@ -265,20 +265,20 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       }
     }
     if ($config['style'] === 'bottom') {
-      $bottom_classes_map = [
-        'light' => [
-          'bg-white',
-          'shadow',
-          'mb-4',
-        ],
-        'dark' => [
-          'bg-black',
-          'shadow',
-          'mb-4',
-        ],
-      ];
-      array_merge($content_classes, $bottom_classes_map[$config['bg_color']]);
-      $key = array_search($config['bg_color'], $content_classes);
+	    $bottom_classes_map = [
+	      'light' => [
+	        'bg-white',
+	        'shadow',
+	        'mb-4',
+	      ],
+	      'dark' => [
+	        'bg-black',
+	        'shadow',
+	        'mb-4',
+	      ],
+	    ];
+  	  array_merge($content_classes, $bottom_classes_map[$config['bg_color']]);
+		  $key = array_search($config['bg_color'], $content_classes);
       unset($content_classes[$key]);
     }
     // Set content classes.
