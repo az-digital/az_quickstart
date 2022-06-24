@@ -25,19 +25,6 @@ function az_course_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
- * Implements hook_preprocess_HOOK().
- */
-function az_course_preprocess_views_view_table(array &$variables) {
-
-  if (isset($variables['view'])) {
-    $view = $variables['view'];
-    if ($view->id() === 'az_courses') {
-      $variables['course_table'] = Html::getUniqueId('course_table');
-    }
-  }
-}
-
-/**
  * Implements hook_migration_plugins_alter().
  */
 function az_course_migration_plugins_alter(array &$migrations) {
