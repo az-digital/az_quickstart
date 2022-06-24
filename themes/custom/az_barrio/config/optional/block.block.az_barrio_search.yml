@@ -2,9 +2,13 @@ langcode: en
 status: true
 dependencies:
   module:
+    - block_class
     - search
   theme:
     - az_barrio
+third_party_settings:
+  block_class:
+    classes: az-search-block
 id: az_barrio_search
 theme: az_barrio
 region: header_ua_utilities
