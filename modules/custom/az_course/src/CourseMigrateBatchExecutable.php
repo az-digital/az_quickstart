@@ -118,18 +118,21 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
     ];
 
     // Do some housekeeping.
-    // We have to assume we finish the batch since there is no partial
-    // progress on a batch (one URL.)
-    $context['finished'] = 1;
-    $context['sandbox']['counter'] = $context['results'][$migration->id()]['@numitems'];
-    if ($context['sandbox']['counter'] <= $context['sandbox']['total']) {
-      $context['finished'] = ((float) $context['sandbox']['counter'] / (float) $context['sandbox']['total']);
-      $context['message'] = t('Importing %migration (@percent%).', [
-        '%migration' => $migration->label(),
-        '@percent' => (int) ($context['finished'] * 100),
-      ]);
+    if ($executable->getProcessedCount() > 0) {
+      // Batch finished if we got one class from the URL.
+      // Normal MigrateBatchExecutable doesn't handle the URL_based aspect.
+      $context['finished'] = 1;
     }
-
+    else {
+      $context['sandbox']['counter'] = $context['results'][$migration->id()]['@numitems'];
+      if ($context['sandbox']['counter'] <= $context['sandbox']['total']) {
+        $context['finished'] = ((float) $context['sandbox']['counter'] / (float) $context['sandbox']['total']);
+        $context['message'] = t('Importing %migration (@percent%).', [
+          '%migration' => $migration->label(),
+          '@percent' => (int) ($context['finished'] * 100),
+        ]);
+      }
+    }
   }
 
 }
