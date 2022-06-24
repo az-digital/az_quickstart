@@ -129,4 +129,3 @@ process:
 destination:
   plugin: entity:node
   default_bundle: az_course
-migration_dependencies:

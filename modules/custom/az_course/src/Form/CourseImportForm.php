@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\MigrateExecutable;
-use Drupal\migrate_tools\MigrateBatchExecutable;
+use Drupal\az_course\CourseMigrateBatchExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -166,14 +166,41 @@ class CourseImportForm extends ConfigFormBase {
    */
   public function runMigrate(array &$form, FormStateInterface $form_state) {
 
+    $courses = \Drupal::config('az_course.settings')->get('courses');
+    if (!empty($courses)) {
+      $matches = [];
+      $course_urls = [];
+      // Convert courses listed into actual URLs to migrate.
+      foreach ($courses as $course) {
+        if (preg_match("/^[[:space:]]*([[:alpha:]]+)[[:space:]]+([[:alnum:]]+)[[:space:]]*$/", $course, $matches)) {
+          $urls = \Drupal::service('az_course.search')->fetchUrls($matches[1], $matches[2]);
+          foreach ($urls as $url) {
+            $course_urls[] = $url;
+          }
+        }
+        elseif (preg_match("/^[[:space:]]*([[:alpha:]]+)[[:space:]]*$/", $course, $matches)) {
+          $options = \Drupal::service('az_course.search')->fetchOptions($matches[1]);
+          foreach ($options as $o) {
+            $course_urls[] = $o;
+          }
+        }
+      }
+    }
+
+    // Pass expected urls to batched executable.
     $migration = $this->pluginManagerMigration->createInstance("az_courses");
     if (!empty($migration)) {
       $options = [
         'limit' => 0,
         'update' => 1,
         'force' => 0,
+        'configuration' => [
+          'source' => [
+            'urls' => $course_urls,
+          ],
+        ],
       ];
-      $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
+      $executable = new CourseMigrateBatchExecutable($migration, new MigrateMessage(), $options);
       $executable->batchImport();
     }
   }
