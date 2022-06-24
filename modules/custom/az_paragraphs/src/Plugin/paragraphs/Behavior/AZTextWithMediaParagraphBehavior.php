@@ -265,20 +265,21 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       }
     }
     if ($config['style'] === 'bottom') {
-      if ($config['bg_color'] === 'light') {
-        $key = array_search('light', $content_classes);
-        unset($content_classes[$key]);
-        $content_classes[] = 'bg-white';
-        $content_classes[] = 'shadow';
-        $content_classes[] = 'mb-4';
-      }
-      elseif ($config['bg_color'] === 'dark') {
-        $key = array_search('dark', $content_classes);
-        unset($content_classes[$key]);
-        $content_classes[] = 'bg-black';
-        $content_classes[] = 'shadow';
-        $content_classes[] = 'mb-4';
-      }
+	    $bottom_classes_map = [
+	      'light' => [
+	        'bg-white',
+	        'shadow',
+	        'mb-4',
+	      ],
+	      'dark' => [
+	        'bg-black',
+	        'shadow',
+	        'mb-4',
+	      ],
+	    ];
+  	  array_merge($content_classes, $bottom_classes_map[$config['bg_color']]);
+		  $key = array_search($config['bg_color'], $content_classes);
+      unset($content_classes[$key]);
     }
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
