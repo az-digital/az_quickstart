@@ -543,6 +543,7 @@ These plugins are designed to be reusable in custom migrations.
 
 These plugins are used in various built-in Quickstart migrations but were not designed with reusability in mind.
 
+- `az_media_bundle_recognizer`
 - `paragraphs_callout_field_merge`
 - `paragraphs_chunks_view_display_mapping`
 - `paragraphs_column_image_field_merge`
@@ -550,7 +551,6 @@ These plugins are used in various built-in Quickstart migrations but were not de
 - `paragraphs_file_download_field_merge`
 - `paragraphs_fw_media_row_field_merge`
 - `az_paragraphs_media_caption`
-
 
 # Useful modules
 
