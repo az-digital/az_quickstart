@@ -10,7 +10,7 @@ trait AllowDrupalLoginSetupTrait {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() : void {
+  protected function setUp(): void {
     parent::setUp();
 
     // Turn off az_cas disable_login_form setting.
