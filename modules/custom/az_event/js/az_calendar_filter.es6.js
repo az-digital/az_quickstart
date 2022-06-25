@@ -54,6 +54,9 @@
           const $submitButton = $wrapper
             .closest('.views-exposed-form')
             .find('button.form-submit');
+          const $dropDown = $wrapper
+            .closest('.views-exposed-form')
+            .find('.form-select');
           let task = null;
 
           // Set task to trigger filter element change.
@@ -75,6 +78,14 @@
               }
             }, delay);
           }
+
+          // Handle dropdown, if present.
+          $dropDown.on('change', () => {
+            const $ancestor = $wrapper.closest(
+              '.views-widget-az-calendar-filter',
+            );
+            triggerFilterChange($ancestor, 0);
+          });
 
           // Function to update a filter's internal date fields from datepicker.
           function updateCalendarFilters(startDate, endDate) {
