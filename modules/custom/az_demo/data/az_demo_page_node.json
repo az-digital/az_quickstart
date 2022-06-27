@@ -119,6 +119,16 @@
       "az_main_content"  : "69|70|71|72|73|74|75",
       "az_media_image"    : "june_bugs.jpeg",
       "az_summary" : ""
+    },
+    {
+      "id":13,
+      "title"  : "Text with Background no sidebar",
+      "path" : "/pages/text-background-no-sidebar",
+      "exclude_title" : true,
+      "az_page_category"  : "",
+      "az_main_content"  : "76|77|78",
+      "az_media_image"    : "",
+      "az_summary" : ""
     }
   ]
 }
