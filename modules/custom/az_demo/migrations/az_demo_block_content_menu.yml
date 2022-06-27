@@ -1,0 +1,51 @@
+id: az_demo_block_content_menu
+label: AZ Quickstart Demo Menu Blocks
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+migration_dependencies: []
+  # required:
+  #   - az_demo_image_file
+  #   - az_demo_news_tags
+dependencies:
+  enforced:
+    module:
+      - az_demo
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_block_content_menu.json
+  item_selector: menu_blocks
+  ids:
+    id:
+      type: integer
+  fields:
+    - name: id
+      selector: id
+    - name: info
+      selector: info
+    - name: uuid
+      selector: uuid
+    - name: field_menu
+      selector: field_menu
+process:
+  type:
+    plugin: default_value
+    default_value: az_menu
+  info: info
+  uuid: uuid
+  field_az_menu:
+    plugin: sub_process
+    source: field_menu
+    process:
+      menu_title: menu_title
+      menu_item_key: menu_item_key
+      max_depth: max_depth
+      include_root: include_root
+
+destination:
+  plugin: entity:block_content
+  bundle: az_menu
+

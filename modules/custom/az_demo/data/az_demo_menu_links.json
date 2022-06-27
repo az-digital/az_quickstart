@@ -155,6 +155,17 @@
       "weight": "6"
     },
     {
+      "link_id": "26",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Menu Blocks",
+      "urlpath": "/pages/menu-blocks",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "11"
+    },
+    {
       "link_id": "14",
       "parent_link_id": "6",
       "menu": "main",

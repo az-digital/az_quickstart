@@ -64,6 +64,16 @@
             "id":27,
             "az_text_area" : "<h2>Embed a File<\/h2>\r\n",
             "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":79,
+            "az_text_area" : "<drupal-entity data-align=\"center\" data-embed-button=\"az_embed_content_block\" data-entity-embed-display=\"view_mode:block_content.full\" data-entity-type=\"block_content\" data-entity-uuid=\"8d5d7e34-7d98-489d-8415-fc0c72a6568f\"><\/drupal-entity>",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":80,
+            "az_text_area" : "<drupal-entity data-align=\"center\" data-embed-button=\"az_embed_content_block\" data-entity-embed-display=\"view_mode:block_content.full\" data-entity-type=\"block_content\" data-entity-uuid=\"0b54c321-0c56-4ef2-8dd1-72b661a150c2\"><\/drupal-entity>",
+            "bottom_spacing" : "mb-0"
         }
     ]
 }
