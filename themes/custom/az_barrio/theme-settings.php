@@ -8,7 +8,7 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-require_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
+require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\Exception\FileException;

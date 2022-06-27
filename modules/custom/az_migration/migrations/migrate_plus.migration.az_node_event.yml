@@ -136,29 +136,12 @@ process:
           index:
             - 1
   field_az_event_date:
-    plugin: sub_process
-    source: field_uaqs_date
-    process:
-      delta: delta
-      value:
-        -
-          plugin: concat
-          source:
-            - value
-            - ' UTC'
-        -
-          plugin: callback
-          callable: strtotime
-      end_value:
-        -
-          plugin: concat
-          source:
-            - value2
-            - ' UTC'
-        -
-          plugin: callback
-          callable: strtotime
-      rrule: rrule
+    - plugin: single_value
+      source: field_uaqs_date
+    - plugin: az_datetime_to_smart_date
+      source_start: value
+      source_end: value2
+      timezone: 'America/Phoenix'
 
   uid:
     -

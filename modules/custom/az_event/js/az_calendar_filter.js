@@ -36,6 +36,7 @@
         var $buttonWrapper = $wrapper.children('.az-calendar-filter-buttons');
         var $calendar = $wrapper.children('.az-calendar-filter-calendar');
         var $submitButton = $wrapper.closest('.views-exposed-form').find('button.form-submit');
+        var $dropDown = $wrapper.closest('.views-exposed-form').find('.form-select');
         var task = null;
 
         function triggerFilterChange($ancestor, delay) {
@@ -53,6 +54,11 @@
             }
           }, delay);
         }
+
+        $dropDown.on('change', function () {
+          var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');
+          triggerFilterChange($ancestor, 0);
+        });
 
         function updateCalendarFilters(startDate, endDate) {
           var $ancestor = $wrapper.closest('.views-widget-az-calendar-filter');

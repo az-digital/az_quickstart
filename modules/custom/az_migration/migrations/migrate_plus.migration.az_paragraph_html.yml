@@ -10,6 +10,12 @@ source:
   bundle: uaqs_content_chunks_html
 
 process:
+  keep_row:
+    plugin: skip_on_empty
+    method: row
+    source: keep
+    message: 'Could not determine parent entity. Skipping.'
+
   destination_bundle:
     plugin: text_format_recognizer
     format: 'az_standard'

@@ -1,19 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_media
+      - az_news_feeds
+      - migrate_tools
 id: az_news_feed_stories_files
-label: UArizona News Stories - Files
-migration_group: az_news_feeds
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
-  - Quickstart News Feeds
-
-destination:
-  plugin: entity:file
-
+  - 'Quickstart News Feeds'
+migration_group: az_news_feeds
+label: 'UArizona News Stories - Files'
 source:
   ids:
     fid:
       type: integer
     uuid:
       type: uuid
-
   fields:
     -
       name: fid
@@ -25,11 +31,9 @@ source:
       selector: /story/uuid
     -
       name: image
-      label: 'Image'
+      label: Image
       selector: /story/img-thumb
-
 process:
-
   filename:
     -
       plugin: skip_on_empty
@@ -46,44 +50,32 @@ process:
     -
       plugin: callback
       callable: basename
-
   destination_path:
     -
       plugin: concat
       source:
         - constants/DRUPAL_FILE_DIRECTORY
         - '@filename'
-
-
   uri:
     -
       plugin: skip_on_empty
       method: process
       source: image/src
-
     -
       plugin: file_copy
       source:
         - image/src
         - '@destination_path'
-      file_exists: use existing
+      file_exists: 'use existing'
       move: false
       skip_process_on_failure: true
-
   field_media_az_image/target_id:
-    - 
+    -
       plugin: entity_generate
       source: '@uri'
       entity_type: file
       value_key: uri
-
   field_media_az_image/alt: image/alt
-
-dependencies:
-  module:
-    - az_news_feeds
-  enforced:
-    module:
-      - az_media
-      - az_news_feeds
-      - migrate_tools
+destination:
+  plugin: 'entity:file'
+migration_dependencies: null

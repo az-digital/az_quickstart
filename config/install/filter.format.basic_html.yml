@@ -4,12 +4,9 @@ dependencies:
   module:
     - bootstrap_utilities
     - editor
-    - media
 name: 'Basic HTML'
 format: basic_html
 weight: 0
-roles:
-  - administrator
 filters:
   filter_html:
     id: filter_html

@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_form_mode.media.media_library
+    - field.field.media.az_remote_video.field_media_az_image
     - field.field.media.az_remote_video.field_media_az_oembed_video
     - media.type.az_remote_video
 id: media.az_remote_video.media_library
@@ -12,6 +13,7 @@ mode: media_library
 content: {  }
 hidden:
   created: true
+  field_media_az_image: true
   field_media_az_oembed_video: true
   name: true
   path: true

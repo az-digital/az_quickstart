@@ -6,6 +6,7 @@ package: 'The University of Arizona'
 dependencies:
   - paragraphs:paragraphs
   - az_card
+  - az_core
   - az_media
   - drupal:text
   - drupal:telephone

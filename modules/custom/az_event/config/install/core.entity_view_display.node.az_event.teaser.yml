@@ -26,10 +26,10 @@ bundle: az_event
 mode: teaser
 content:
   links:
-    weight: 100
-    region: content
     settings: {  }
     third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   az_event_day: true
   az_event_month: true
