@@ -5,7 +5,10 @@
  * Contains az_demo.module.
  */
 
+use Drupal\block\Entity\Block;
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Implements hook_help().
@@ -21,4 +24,33 @@ function az_demo_help($route_name, RouteMatchInterface $route_match) {
 
     default:
   }
+}
+
+/**
+ * Implements hook_block_access().
+ *
+ * Hide blocks by specific path.
+ */
+function az_demo_block_access(Block $block, $operation, AccountInterface $account) {
+  $current_path = \Drupal::service('path.current')->getPath();
+  $paths_to_block_by_block_id = blocks_to_hide_by_path();
+  if ($operation === 'view') {
+    foreach ($paths_to_block_by_block_id as $block_id => $path) {
+      if ($current_path === $path && $block->id() === $block_id) {
+        return AccessResult::forbiddenIf(TRUE)->addCacheableDependency($block);
+      }
+    }
+  }
+}
+
+/**
+ * Blocks to hide at specific paths.
+ *
+ * @return array
+ *   Contains an array keyed with block ID and with a path as a value..
+ */
+function blocks_to_hide_by_path(): array {
+  return [
+    'az_barrio_sidebar_menu' => '/pages/splitscreen-no-sidebar',
+  ];
 }

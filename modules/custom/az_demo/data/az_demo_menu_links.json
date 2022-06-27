@@ -144,6 +144,17 @@
       "weight": "5"
     },
     {
+      "link_id": "24",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "SplitScreen No Sidebar",
+      "urlpath": "/pages/splitscreen-no-sidebar",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "6"
+    },
+    {
       "link_id": "13",
       "parent_link_id": "6",
       "menu": "main",
@@ -152,7 +163,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "6"
+      "weight": "7"
     },
     {
       "link_id": "14",
@@ -163,7 +174,7 @@
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "7"
+      "weight": "8"
     },
     {
       "link_id": "15",

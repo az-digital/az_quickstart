@@ -109,6 +109,16 @@
       "az_main_content"  : "54|55|56|57|58|59|60|61|62|63|64|65|66|67|68",
       "az_media_image"    : "",
       "az_summary" : ""
+    },
+    {
+      "id":12,
+      "title"  : "Split Screen no sidebar",
+      "path" : "/pages/splitscreen-no-sidebar",
+      "exclude_title" : true,
+      "az_page_category"  : "",
+      "az_main_content"  : "69|70|71|72|73|74|75",
+      "az_media_image"    : "june_bugs.jpeg",
+      "az_summary" : ""
     }
   ]
 }
