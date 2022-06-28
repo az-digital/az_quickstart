@@ -122,7 +122,7 @@
     },
     {
       "id":13,
-      "title"  : "Text with Background no sidebar",
+      "title"  : "Text with Background No Sidebar",
       "path" : "/pages/text-background-no-sidebar",
       "exclude_title" : true,
       "az_page_category"  : "",
