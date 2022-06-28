@@ -30,15 +30,17 @@
       {{ media }}
     {% endif %}
   {% endif %}
-  <div class="card-body d-flex flex-column">
-    {% if title and title_style == 'default' %}
-      <h3 class="h5 bold mt-0 card-title">{{ title }}</h3>
-    {% endif %}
-    {% if body %}
-      <div class="card-text">{{ body }}</div>
-    {% endif %}
-    {% if link %}
-      <div class="mt-auto">{{ link }}</div>
-    {% endif %}
-  </div>
+  {% if title_style == 'default' or (title_style == 'title-on-image' and (body or link)) %}
+    <div class="card-body d-flex flex-column">
+      {% if title and title_stlye == 'default' %}
+        <h3 class="h5 bold mt-0 card-title">{{ title }}</h3>
+      {% endif %}
+      {% if body %}
+        <div class="card-text">{{ body }}</div>
+      {% endif %}
+      {% if link %}
+        <div class="mt-auto">{{ link }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
 </div>

@@ -1,8 +1,8 @@
-.card.card-with-link:hover .card-title {
+.card-with-link:hover .card-title {
   text-decoration: underline;
 }
 
-.card.card-with-link:hover img {
+.card-with-link:hover img {
   transform: scale(1.03);
   transition: ease .25s;
 }
