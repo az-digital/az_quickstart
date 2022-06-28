@@ -155,7 +155,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
               $link_render_array['#attributes']['class'][] = 'stretched-link';
               $card_classes .= ' shadow mb-4';
               if ($item->link_uri) {
-                $card_class .= ' card-with-link';
+                $card_classes .= ' card-with-link';
                 $attached['library'][] = 'az_card/az_card_title_hover';
               }
             }
