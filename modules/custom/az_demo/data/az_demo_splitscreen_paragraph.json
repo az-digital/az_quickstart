@@ -136,6 +136,69 @@
             "ordering" : "order_0",
             "bg_color" : "bg-ash",
             "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":69,
+            "az_text_area" : "<h2>Gray 200 Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-blue\" href=\"#\">Button<\/a><\/p>",
+            "filename" : "lynx.jpg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-gray-200",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":70,
+            "az_text_area" : "<h2>Warm Gray Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-outline-blue\" href=\"https:\/\/insects.arizona.edu\">Bug out!<\/a><\/p>",
+            "filename" : "june_bugs.jpeg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-warm-gray",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":71,
+            "az_text_area" : "<p class=\"text-align-center\">Beyond employment, are you looking to design your ideal career and life? With more than 100 majors, we have the academics and faculty to help you connect what you are learning with your aspirations to make the world better. Coupled with outstanding tutoring, support, and engagement inside and outside the classroom, you will succeed no matter what your career plans are.<\/p><p class=\"text-align-center\"><a href=\"https:\/\/www.arizona.edu\/majors\">View majors<\/a><\/p>",
+            "filename" : "mecklerphoto_mens-wearhouse.jpeg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-sky",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":72,
+            "az_text_area" : "<blockquote class=\"border-white\">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"<p class=\"blockquote-footer\"><em>First Last<\/em><\/p><\/blockquote>",
+            "filename" : "study.jpeg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-blue",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":73,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "arizona_campus_fireworks.jpg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-chili",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":74,
+            "az_text_area" : "<h2>Gray 100 Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-blue\" href=\"#\">Button<\/a><\/p>",
+            "filename" : "lynx.jpg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-gray-100",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":75,
+            "az_text_area" : "<h2>Gray 300 Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-blue\" href=\"#\">Button<\/a><\/p>",
+            "filename" : "june_bugs.jpeg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-gray-300",
+            "bottom_spacing" : "mb-0"
         }
     ]
 }
