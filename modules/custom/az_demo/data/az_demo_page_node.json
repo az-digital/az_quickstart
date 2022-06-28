@@ -113,7 +113,7 @@
     {
       "id":12,
       "title"  : "Split Screen no sidebar",
-      "path" : "/pages/splitscreen-no-sidebar",
+      "path" : "/pages/split-screen-no-sidebar",
       "exclude_title" : true,
       "az_page_category"  : "",
       "az_main_content"  : "69|70|71|72|73|74|75",
