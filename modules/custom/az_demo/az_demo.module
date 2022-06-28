@@ -54,7 +54,7 @@ function az_demo_block_access(Block $block, $operation, AccountInterface $accoun
 function blocks_to_hide_by_path(): array {
   return [
     'az_barrio_sidebar_menu' => [
-      '/pages/splitscreen-no-sidebar',
+      '/pages/split-screen-no-sidebar',
       '/pages/text-background-no-sidebar',
     ],
   ];
