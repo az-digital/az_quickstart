@@ -4,6 +4,7 @@
           "id": 80,
           "card_width": "col-lg-6",
           "card_style": "card",
+          "card_title_style": "default",
           "card_clickable": false,
           "az_cards": [
             {
@@ -31,8 +32,9 @@
       },
       {
         "id": 81,
-        "card_width": "col-md-4",
+        "card_width": "col-lg-4",
         "card_style": "card card-borderless",
+        "card_title_style": "default",
         "card_clickable": true,
         "az_cards": [
           {
@@ -66,7 +68,47 @@
             "link_style": "btn-block"
           }
         ],
-        "bottom_spacing" : "mb-5"
-    }
+        "bottom_spacing" : "mb-0"
+    },
+    {
+      "id": 82,
+      "card_width": "col-lg-4",
+      "card_style": "card",
+      "card_title_style": "title-on-image",
+      "card_clickable": true,
+      "az_cards": [
+        {
+          "delta": 0,
+          "title": "No body",
+          "body":"",
+          "link_title": "Card Link",
+          "link_url": "#",
+          "media": "runners_brains.jpeg",
+          "background": "bg-blue",
+          "link_style": "btn btn-block"
+        },
+        {
+          "delta": 1,
+          "title": "No link title",
+          "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+          "link_title": "",
+          "link_url": "#",
+          "media": "mans_best_friend.jpeg",
+          "background": "bg-river",
+          "link_style": "btn-block"
+        },
+        {
+          "delta": 2,
+          "title": "No image",
+          "body":"<p>Default title style is used when no image is present.</p>",
+          "link_title": "Card Link",
+          "link_url": "#",
+          "media": "",
+          "background": "bg-gray-300",
+          "link_style": "btn-block"
+        }
+      ],
+      "bottom_spacing" : "mb-5"
+  }
   ]
 }
