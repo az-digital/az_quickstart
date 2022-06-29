@@ -7,7 +7,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Tranforms a PeopleSoft year code into a text term name.
+ * Transforms a PeopleSoft year code into a text term name.
  *
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
  *
