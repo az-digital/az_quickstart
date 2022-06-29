@@ -8,7 +8,7 @@ id: node.az_course.field_az_course_title
 field_name: field_az_course_title
 entity_type: node
 bundle: az_course
-label: 'Course TItle'
+label: 'Course Title'
 description: ''
 required: false
 translatable: false
