@@ -61,7 +61,7 @@ class CourseSearch {
   }
 
   /**
-   * Find service URL options for a search string, typically a subject code..
+   * Find service URL options for a search string, typically a subject code.
    *
    * @param string $search
    *   A search string, typically a subject code, e.g. MATH.
