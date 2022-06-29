@@ -207,7 +207,7 @@ class AZCardWidget extends WidgetBase {
     $element['media'] = [
       '#type' => 'media_library',
       '#title' => $this->t('Card Media'),
-      '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
+      '#default_value' => $items[$delta]->media ?? NULL,
       '#allowed_bundles' => ['az_image'],
       '#delta' => $delta,
       '#cardinality' => 1,
@@ -216,21 +216,21 @@ class AZCardWidget extends WidgetBase {
     $element['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Title'),
-      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
+      '#default_value' => $items[$delta]->title ?? NULL,
       '#maxlength' => 255,
     ];
 
     $element['body'] = [
       '#type' => 'text_format',
       '#title' => $this->t('Card Body'),
-      '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
+      '#default_value' => $items[$delta]->body ?? NULL,
       '#format' => $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
     ];
 
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
-      '#default_value' => isset($items[$delta]->link_title) ? $items[$delta]->link_title : NULL,
+      '#default_value' => $items[$delta]->link_title ?? NULL,
     ];
 
     $element['link_uri'] = [
@@ -238,7 +238,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Card Link URL'),
       '#element_validate' => [[$this, 'validateCardLink']],
-      '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
+      '#default_value' => $items[$delta]->link_uri ?? NULL,
       '#maxlength' => 2048,
     ];
 
@@ -457,7 +457,7 @@ class AZCardWidget extends WidgetBase {
       $form_state->setUserInput($formInputs);
     }
 
-    $element_id = isset($form[$field_name]['#id']) ? $form[$field_name]['#id'] : '';
+    $element_id = $form[$field_name]['#id'] ?? '';
     if (!$element_id) {
       $element_id = $parent_element['#id'];
     }

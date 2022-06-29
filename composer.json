@@ -29,8 +29,8 @@
         }
     ],
     "require": {
-        "php": ">=7.3",
-        "az-digital/arizona-bootstrap": "2.0.14",
+        "php": ">=7.4",
+        "az-digital/arizona-bootstrap": "2.0.15",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
@@ -44,7 +44,7 @@
         "drupal/bootstrap_barrio": "4.30",
         "drupal/bootstrap_utilities": "1.1.0",
         "drupal/cas": "1.7",
-        "drupal/chosen": "3.0.2",
+        "drupal/chosen": "3.0.3",
         "drupal/ckeditor_bs_grid": "2.0.7",
         "drupal/coffee": "1.2",
         "drupal/config_distro": "1.0-alpha4",
@@ -52,7 +52,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.3.16",
+        "drupal/core-recommended": "9.4.1",
         "drupal/crop": "2.2.0",
         "drupal/ctools": "3.7",
         "drupal/date_ap_style": "1.4",
@@ -71,7 +71,7 @@
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.2.0",
         "drupal/link_class": "2.0.0",
-        "drupal/media_library_edit": "2.2.0",
+        "drupal/media_library_edit": "2.3.0",
         "drupal/media_library_form_element": "2.0.3",
         "drupal/media_library_theme_reset": "1.1.0",
         "drupal/media_migration": "1.0.0-alpha14",
@@ -108,7 +108,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.4.x-dev"
+            "dev-main": "2.5.x-dev"
         },
         "patches": {
             "drupal/antibot": {
@@ -131,13 +131,11 @@
                 "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://www.drupal.org/files/issues/2022-05-05/2259567-160-9-3-x.patch",
                 "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Allow text field to enforce a specific text format (784672)": "https://www.drupal.org/files/issues/2022-03-27/784672-227.patch",
-                "Allow editing area in Claro to span full width (3184667)": "https://www.drupal.org/files/issues/2020-12-16/3184667-8.patch",
+                "Allow text field to enforce a specific text format (784672)": "https://www.drupal.org/files/issues/2022-05-13/784672-231.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
                 "Unrelated error message when running tests with database errors (3163925)": "https://www.drupal.org/files/issues/2022-05-12/3163925-19-9-2-x.patch",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
-                "Incorrect results on grouped exposed filters (1810148)": "https://www.drupal.org/files/issues/2022-02-02/1810148-101.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2020-06-01/3102249-21.patch"
             },
