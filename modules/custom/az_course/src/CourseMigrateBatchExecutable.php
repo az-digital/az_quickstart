@@ -38,7 +38,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
         }
       }
 
-      // Take expected source urls and run them one per batch.This is the
+      // Take expected source urls and run them one per batch. This is the
       // minimum we can do, as we have one class per URL.
       $urls = [];
       if (!empty($options['configuration']['source']['urls'])) {
