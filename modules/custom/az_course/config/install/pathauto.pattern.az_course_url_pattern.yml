@@ -6,12 +6,12 @@ dependencies:
 id: az_course_url_pattern
 label: 'Course Content Type'
 type: 'canonical_entities:node'
-pattern: 'course/[node:field_az_subject_code][node:field_az_catalog_number]'
+pattern: 'course/[node:field_az_subject_code]/[node:field_az_catalog_number]'
 selection_criteria:
-  452b17fd-6584-4f47-acff-0c0e10ea40de:
+  9041900a-eac7-4736-88fc-3e9d47aa8851:
     id: 'entity_bundle:node'
     negate: false
-    uuid: 452b17fd-6584-4f47-acff-0c0e10ea40de
+    uuid: 9041900a-eac7-4736-88fc-3e9d47aa8851
     context_mapping:
       node: node
     bundles:
