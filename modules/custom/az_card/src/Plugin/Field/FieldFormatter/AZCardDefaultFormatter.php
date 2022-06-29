@@ -97,7 +97,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
-    /** @var \Drupal\Core\Field\FieldItemInterface $item */
+    /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
     foreach ($items as $delta => $item) {
 
       // Format title.
@@ -113,11 +113,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
       // Link.
       $link_render_array = [];
-      if ($item->get('link_title') || $item->get('link_uri')) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->get('link_uri'));
+      if ($item->link_title || $item->link_uri) {
+        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
         $link_render_array = [
           '#type' => 'link',
-          '#title' => $item->get('link_title') ?? '',
+          '#title' => $item->link_title ?? '',
           '#url' => $link_url ? $link_url : '#',
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
@@ -153,6 +153,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
           $card_classes = $card_defaults['card_style'] ?? 'card';
         }
+
       }
 
       // Handle class keys that contained multiple classes.
@@ -167,7 +168,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         '#theme' => 'az_card',
         '#media' => $media_render_array,
         '#title' => $title,
-        '#body' => check_markup($item->get('body'), $item->get('body_format')),
+        '#body' => check_markup($item->body, $item->body_format),
         '#link' => $link_render_array,
         '#attributes' => ['class' => $card_classes],
       ];
