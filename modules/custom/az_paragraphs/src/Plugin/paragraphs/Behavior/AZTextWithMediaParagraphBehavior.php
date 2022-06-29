@@ -91,16 +91,16 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('The color of the content background.'),
     ];
     $form['position'] = [
-      '#title' => $this->t('Content position'),
+      '#title' => $this->t('Content alignment'),
       '#type' => 'select',
       '#options' => [
-        'col-md-8 col-lg-6' => $this->t('Position left'),
-        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Position center'),
-        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Position right'),
+        'col-md-8 col-lg-6' => $this->t('Content left'),
+        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Content center'),
+        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Content right'),
         'col-xs-12' => $this->t('Full-width'),
       ],
       '#default_value' => $config['position'],
-      '#description' => $this->t('The position of the content on the media.'),
+      '#description' => $this->t('The alignment of the content on the media.'),
       '#states' => [
         'invisible' => [
           ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
@@ -167,9 +167,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Title alignment'),
       '#type' => 'select',
       '#options' => [
-        'text-left' => $this->t('Left'),
-        'text-center' => $this->t('Center'),
-        'text-right' => $this->t('Right'),
+        'text-left' => $this->t('Title left'),
+        'text-center' => $this->t('Title center'),
+        'text-right' => $this->t('Title right'),
       ],
       '#default_value' => $config['title_alignment'],
       '#description' => $this->t('The alignment of the title.'),
@@ -294,9 +294,6 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
     if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
       $title_classes[] = 'text-blue';
-    }
-    if ($config['title_level'] !== 'h1' && $config['title_level'] !== 'h2') {
-      $title_classes[] = 'h2';
     }
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
