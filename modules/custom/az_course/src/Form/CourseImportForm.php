@@ -85,7 +85,7 @@ class CourseImportForm extends ConfigFormBase {
     $form['courses'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Courses to Import'),
-      '#description' => $this->t('Courses will be imported when az_courses migration is run. List courses to import, one per line, in format "ENGL 101" or "ENGL" for entire subject.'),
+      '#description' => $this->t('Courses will be imported when az_courses migration is run either by drush or pushing the "Import Courses" button. List courses to import, one per line, in format "ENGL 101" or "ENGL" for entire subject.'),
       '#required' => FALSE,
       '#default_value' => $default,
       '#resizable' => 'vertical',
