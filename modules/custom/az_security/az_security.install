@@ -4,3 +4,15 @@
  * @file
  * Install, update and uninstall functions for az_security module.
  */
+
+/**
+ * Delete seckit settings if they were mistakenly installed.
+ */
+function az_security_update_920101() {
+  $module_handler = \Drupal::service('module_handler');
+  if (!$module_handler->moduleExists('seckit')) {
+    // Remove seckit settings if they were installed too early.
+    $config_factory = \Drupal::service('config.factory');
+    $config_factory->getEditable('seckit.settings')->delete();
+  }
+}

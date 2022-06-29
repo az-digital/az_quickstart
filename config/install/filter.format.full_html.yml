@@ -8,9 +8,6 @@ dependencies:
 name: 'Full HTML'
 format: full_html
 weight: 2
-roles:
-  - administrator
-  - az_content_admin
 filters:
   filter_htmlcorrector:
     id: filter_htmlcorrector
@@ -58,5 +55,5 @@ filters:
     weight: 100
     settings:
       default_view_mode: default
-      allowed_media_types: {  }
       allowed_view_modes: {  }
+      allowed_media_types: {  }

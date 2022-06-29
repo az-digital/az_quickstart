@@ -11,40 +11,40 @@
       for (let i = 0; i < settings.azSelectMenu.ids.length; i++) {
         const selectFormId = settings.azSelectMenu.ids[i];
         const selectForm = document.querySelector(`#${selectFormId}`);
-        once("azSelectMenu", selectForm, context).forEach((element) => {
+        once('azSelectMenu', selectForm, context).forEach((element) => {
           $(element).popover();
-          element.addEventListener("focus", (event) => {
+          element.addEventListener('focus', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          element.addEventListener("change", (event) => {
+          element.addEventListener('change', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          element.addEventListener("mouseenter", (event) => {
+          element.addEventListener('mouseenter', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          const button = element.querySelector("button");
-          button.addEventListener("click", (event) => {
+          const button = element.querySelector('button');
+          button.addEventListener('click', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("touchstart", (event) => {
+          button.addEventListener('touchstart', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("mouseenter", (event) => {
+          button.addEventListener('mouseenter', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("mouseleave", (event) => {
+          button.addEventListener('mouseleave', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("focus", (event) => {
+          button.addEventListener('focus', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          button.addEventListener("blur", (event) => {
+          button.addEventListener('blur', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          document.addEventListener("touchstart", (event) => {
+          document.addEventListener('touchstart', (event) => {
             Drupal.azSelectMenu.handleEvents(event);
           });
-          element.classList.add("processed");
+          element.classList.add('processed');
         });
       }
     },
@@ -61,29 +61,29 @@
   Drupal.azSelectMenu.handleEvents = (event) => {
     // Hide the popover when user touches any part of the screen, except the
     // select form button regardless of state.
-    if (event.type === "touchstart") {
-      if (event.target.classList.contains("js_select_menu_button")) {
+    if (event.type === 'touchstart') {
+      if (event.target.classList.contains('js_select_menu_button')) {
         event.stopPropagation();
       } else {
-        $(".az-select-menu").popover("hide");
+        $('.az-select-menu').popover('hide');
         return;
       }
     }
 
-    const selectForm = event.target.closest("form");
+    const selectForm = event.target.closest('form');
     const $selectForm = $(selectForm);
-    const selectElement = selectForm.querySelector("select");
+    const selectElement = selectForm.querySelector('select');
     const [optionsSelected] = selectElement.selectedOptions;
     const selectElementHref = optionsSelected.dataset.href;
-    const button = selectForm.querySelector("button");
+    const button = selectForm.querySelector('button');
 
     //  If a navigable link is selected in the dropdown.
-    if (selectElementHref !== "") {
-      $selectForm.popover("hide");
-      button.classList.remove("disabled");
-      button.setAttribute("aria-disabled", "false");
+    if (selectElementHref !== '') {
+      $selectForm.popover('hide');
+      button.classList.remove('disabled');
+      button.setAttribute('aria-disabled', 'false');
       switch (event.type) {
-        case "click":
+        case 'click':
           // If the link works, don't allow the button to focus.
           event.stopImmediatePropagation();
           window.location = selectElementHref;
@@ -95,28 +95,28 @@
 
     //  Don't follow link if using the nolink setting.
     else {
-      button.classList.add("disabled");
-      button.setAttribute("aria-disabled", "true");
-      selectElement.setAttribute("aria-disabled", "true");
+      button.classList.add('disabled');
+      button.setAttribute('aria-disabled', 'true');
+      selectElement.setAttribute('aria-disabled', 'true');
       switch (event.type) {
-        case "click":
-          if (event.target.classList.contains("js_select_menu_button")) {
-            $selectForm.popover("show");
+        case 'click':
+          if (event.target.classList.contains('js_select_menu_button')) {
+            $selectForm.popover('show');
             selectElement.focus();
           }
           break;
 
-        case "focus":
-        case "mouseenter":
-          if (event.target.classList.contains("js_select_menu_button")) {
-            $selectForm.popover("show");
+        case 'focus':
+        case 'mouseenter':
+          if (event.target.classList.contains('js_select_menu_button')) {
+            $selectForm.popover('show');
           } else {
-            $selectForm.popover("hide");
+            $selectForm.popover('hide');
           }
           break;
 
-        case "mouseleave":
-          $selectForm.popover("hide");
+        case 'mouseleave':
+          $selectForm.popover('hide');
           break;
         default:
           break;

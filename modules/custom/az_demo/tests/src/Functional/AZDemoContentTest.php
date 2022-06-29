@@ -3,14 +3,14 @@
 namespace Drupal\Tests\az_demo\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Verify successful importing of demo content.
  *
  * @group az_demo
  */
-class AZDemoContentTest extends BrowserTestBase {
+class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -23,6 +23,11 @@ class AZDemoContentTest extends BrowserTestBase {
    * @var bool
    */
   protected $strictConfigSchema = FALSE;
+
+  /**
+   * @var string
+   */
+  protected $defaultTheme = 'az_barrio';
 
   /**
    * Modules to enable.

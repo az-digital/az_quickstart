@@ -28,21 +28,21 @@ class AZAccordionWidget extends WidgetBase {
     $element['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Accordion Item Title'),
-      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
+      '#default_value' => $items[$delta]->title ?? NULL,
       '#maxlength' => 255,
     ];
 
     $element['body'] = [
       '#type' => 'text_format',
       '#title' => $this->t('Accordion Item Body'),
-      '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
+      '#default_value' => $items[$delta]->body ?? NULL,
       '#format' => $items[$delta]->body_format ?? 'az_standard',
     ];
 
     $element['collapsed'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Collapsed by Default'),
-      '#default_value' => isset($items[$delta]->collapsed) ? $items[$delta]->collapsed : TRUE,
+      '#default_value' => $items[$delta]->collapsed ?? TRUE,
     ];
 
     $element['#theme_wrappers'] = ['container', 'form_element'];

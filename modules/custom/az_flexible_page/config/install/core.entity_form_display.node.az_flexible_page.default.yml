@@ -20,33 +20,33 @@ third_party_settings:
       children:
         - field_az_media_image
         - field_az_summary
+      label: 'Summary fields'
+      region: content
       parent_name: ''
       weight: 2
       format_type: details_sidebar
-      region: content
       format_settings:
-        id: ''
         classes: ''
-        description: 'These fields appear in display modes other that the full page view mode.'
+        id: ''
         open: false
+        description: 'These fields appear in display modes other that the full page view mode.'
         required_fields: true
         weight: 0
-      label: 'Summary fields'
     group_categorization:
       children:
         - field_az_page_category
+      label: Categorization
+      region: content
       parent_name: ''
       weight: 3
       format_type: details_sidebar
-      region: content
       format_settings:
-        id: ''
         classes: ''
-        description: 'Select the categories you would like this flexible page to appear in throughout the site. You can <a href="/admin/structure/taxonomy/manage/az_page_categories/overview">add categories</a> as needed.'
+        id: ''
         open: false
+        description: 'Select the categories you would like this flexible page to appear in throughout the site. You can <a href="/admin/structure/taxonomy/manage/az_page_categories/overview">add categories</a> as needed.'
         required_fields: true
         weight: 0
-      label: Categorization
 id: node.az_flexible_page.default
 targetEntityType: node
 bundle: az_flexible_page
@@ -61,6 +61,7 @@ content:
   field_az_main_content:
     type: paragraphs
     weight: 1
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -76,30 +77,29 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
-    region: content
   field_az_media_image:
+    type: media_library_widget
     weight: 9
+    region: content
     settings:
       media_types: {  }
     third_party_settings:
       media_library_edit:
         show_edit: '1'
-    type: media_library_widget
-    region: content
   field_az_page_category:
+    type: options_select
     weight: 11
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_az_summary:
+    type: text_textarea
     weight: 10
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
-    region: content
   path:
     type: path
     weight: 8
@@ -108,24 +108,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 6
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 10
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 7
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -138,12 +138,12 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 4
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 9

@@ -198,6 +198,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight
           draggable_views_reference: 'az_reorder:reorder_carousel_items'
           draggable_views_null_order: after
           plugin_id: draggable_views_sort_default
@@ -215,6 +216,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: created
           granularity: second
       title: 'AZ Carousel'
       header: {  }
@@ -252,6 +254,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight
           draggable_views_reference: 'az_carousel:reorder_carousel_items'
           draggable_views_null_order: after
           plugin_id: draggable_views_sort_default
@@ -269,6 +272,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: created
           granularity: second
       defaults:
         sorts: false
@@ -596,6 +600,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight
           draggable_views_reference: this
           draggable_views_null_order: after
           plugin_id: draggable_views_sort_default

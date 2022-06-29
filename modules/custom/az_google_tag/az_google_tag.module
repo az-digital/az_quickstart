@@ -1,0 +1,30 @@
+<?php
+
+/**
+ * @file
+ * Contains az_google_tag.module.
+ */
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_toolbar_alter().
+ */
+function az_google_tag_toolbar_alter(&$items) {
+  if (\Drupal::service('module_handler')->moduleExists('az_core')) {
+    $site_url = \Drupal::request()->getHost();
+    $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = [
+      'title' => t('Analytics Dashboard'),
+      'url' => Url::fromUri('https://datastudio.google.com/u/0/reporting/938c3f2a-6dbf-4968-9edd-8963450b4200/page/kTLWB', [
+        'query' => [
+          'params' => '{"df62":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '/"}',
+        ],
+        'absolute' => TRUE,
+      ]),
+      'attributes' => [
+        'title' => t('Site Analytics Dashboard'),
+        'target' => t('_blank'),
+      ],
+    ];
+  }
+}

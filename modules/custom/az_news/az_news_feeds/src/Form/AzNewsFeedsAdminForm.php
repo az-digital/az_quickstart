@@ -92,7 +92,6 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
-    $config = $this->config('migrate_plus.migration_group.az_news_feeds');
     $selected_categories = $az_news_feeds_config->get('uarizona_news_terms');
     $selected_categories = array_keys($selected_categories);
     $term_options = $this->getRemoteTermOptions();
@@ -143,6 +142,17 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     }
     $az_news_feeds_config
       ->set('uarizona_news_terms', $selected_terms)
+      ->save();
+
+    // Update the news.arizona.edu feed url in the migration group config.
+    $group_config = $this->configFactory->getEditable('migrate_plus.migration_group.az_news_feeds');
+    $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
+    $content_path = $az_news_feeds_config->get('uarizona_news_content_path');
+    $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
+    $views_contextual_argument = implode('+', array_keys($selected_terms));
+    $urls = $base_uri . $content_path . $views_contextual_argument;
+    $group_config
+      ->set('shared_configuration.source.urls', $urls)
       ->save();
 
     drupal_flush_all_caches();

@@ -36,33 +36,33 @@ third_party_settings:
         - field_az_summary
         - field_az_expiration_date
         - field_az_link
+      label: 'Summary fields'
+      region: content
       parent_name: ''
       weight: 10
       format_type: details_sidebar
-      region: content
       format_settings:
-        id: ''
         classes: 'group-summary field-group-tab'
-        direction: vertical
+        id: ''
         open: false
         required_fields: true
         weight: 0
-      label: 'Summary fields'
+        direction: vertical
     group_az_extra_fields:
       children:
         - field_az_attachments
+      label: 'Extra Fields'
+      region: content
       parent_name: ''
       weight: 11
       format_type: details_sidebar
-      region: content
       format_settings:
-        id: ''
         classes: ''
-        description: ''
+        id: ''
         open: false
+        description: ''
         required_fields: true
         weight: 0
-      label: 'Extra Fields'
 id: node.az_news.default
 targetEntityType: node
 bundle: az_news
@@ -75,30 +75,32 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_az_attachments:
+    type: file_generic
     weight: 14
+    region: content
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
-    type: file_generic
-    region: content
   field_az_body:
+    type: text_textarea
     weight: 6
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
-    region: content
   field_az_byline:
+    type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_az_contacts:
+    type: entity_reference_paragraphs
     weight: 9
+    region: content
     settings:
       title: Contact
       title_plural: Contacts
@@ -107,28 +109,27 @@ content:
       form_display_mode: default
       default_paragraph_type: _none
     third_party_settings: {  }
-    type: entity_reference_paragraphs
-    region: content
   field_az_expiration_date:
+    type: datetime_datelist
     weight: 14
+    region: content
     settings:
+      increment: 30
       date_order: YMD
       time_type: '12'
-      increment: 30
     third_party_settings: {  }
-    type: datetime_datelist
-    region: content
   field_az_link:
+    type: link_default
     weight: 15
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
   field_az_main_content:
     type: paragraphs
     weight: 7
+    region: content
     settings:
       title: Paragraph
       title_plural: Paragraphs
@@ -144,16 +145,15 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
-    region: content
   field_az_media_image:
+    type: media_library_widget
     weight: 4
+    region: content
     settings:
       media_types: {  }
     third_party_settings:
       media_library_edit:
         show_edit: '1'
-    type: media_library_widget
-    region: content
   field_az_metatag:
     type: metatag_firehose
     weight: 19
@@ -162,17 +162,17 @@ content:
       sidebar: true
     third_party_settings: {  }
   field_az_news_tags:
-    weight: 8
-    settings: {  }
-    third_party_settings: {  }
     type: options_select
+    weight: 8
     region: content
-  field_az_published:
-    weight: 1
     settings: {  }
     third_party_settings: {  }
+  field_az_published:
     type: datetime_default
+    weight: 1
     region: content
+    settings: {  }
+    third_party_settings: {  }
   field_az_short_title:
     type: string_textfield
     weight: 12
@@ -182,21 +182,21 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_az_subheading:
+    type: text_textfield
     weight: 3
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: text_textfield
-    region: content
   field_az_summary:
+    type: text_textarea
     weight: 13
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
-    region: content
   path:
     type: path
     weight: 16
@@ -205,24 +205,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 14
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 18
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 15
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -235,12 +235,12 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 12
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 17

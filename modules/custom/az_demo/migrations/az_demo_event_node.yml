@@ -113,11 +113,12 @@ process:
       to_timezone: 'America/Phoenix'
 
   az_event_date_rrule:
-    -
-      plugin: migration_lookup
+    - plugin: skip_on_empty
+      method: process
+      source: az_event_date_rrule
+    - plugin: migration_lookup
       migration:
         - az_demo_event_rrule
-      source: az_event_date_rrule
 
   field_az_event_date/rrule:
     -

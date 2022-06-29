@@ -49,15 +49,17 @@
 
     <form {{form_attributes}}>
         <div class="input-group">
-          <span class="input-group-addon input-group-addon-no-border">
-            <div class="select-menu-label">{{menu_block_configuration.az_select_menu.preform_text}}</div>
-          </span>
-          <label class="sr-only select-menu-label-sr">{{menu_block_configuration.az_select_menu.button_text_sr_only}}</label>
+          {% if menu_block_configuration.az_select_menu.preform_text %}
+            <span class="input-group-addon input-group-addon-no-border">
+              <div class="select-menu-label">{{menu_block_configuration.az_select_menu.preform_text}}</div>
+            </span>
+          {% endif %}
+          <label class="sr-only select-menu-label-sr">{{menu_block_configuration.az_select_menu.preform_text_sr_only}}</label>
           {% import _self as menus %}
           {% if items %}
             <select {{ select_attributes }}>
-            {% if menu_block_configuration.az_select_menu.empty_option and  menu_block_configuration.az_select_menu.empty_option_label %}
-             <option data-href="">{{menu_block_configuration.az_select_menu.empty_option_label}}</option>
+            {% if menu_block_configuration.az_select_menu.empty_option and menu_block_configuration.az_select_menu.empty_option_label %}
+              <option data-href="">{{menu_block_configuration.az_select_menu.empty_option_label}}</option>
             {% endif %}
             {% for item in items %}
               <option data-href="{{item.url}}">{{item.title}}</option>

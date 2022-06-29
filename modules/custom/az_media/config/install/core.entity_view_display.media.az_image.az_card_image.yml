@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.media.az_card_image
     - field.field.media.az_image.field_az_caption
+    - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
     - image.style.az_card_image
     - media.type.az_image
@@ -26,6 +27,7 @@ content:
 hidden:
   created: true
   field_az_caption: true
+  field_az_credit: true
   name: true
   thumbnail: true
   uid: true

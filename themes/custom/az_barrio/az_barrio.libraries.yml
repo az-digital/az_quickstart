@@ -1,7 +1,7 @@
 global-styling:
   version: 1.x
   css:
-    component:
+    theme:
       css/style.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap
@@ -29,6 +29,11 @@ arizona-bootstrap:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
   js:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
+  dependencies:
+    - core/jquery
+button-no-conflict:
+  js:
+    js/button-no-conflict.js: {}
   dependencies:
     - core/jquery
 material-design-icons-sharp:
