@@ -1,0 +1,4 @@
+roles:
+  az_content_editor: safe
+  az_content_admin: safe
+  az_user_admin: safe
