@@ -74,6 +74,11 @@
           "id":29,
           "az_text_area" : "<h2>Clickable Title-on-Image Cards</h2>\r\n",
           "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":30,
+            "az_text_area" : "<h2>Borderless Title-on-Image Cards</h2>\r\n",
+            "bottom_spacing" : "mb-0"
         }
     ]
 }

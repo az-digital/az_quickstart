@@ -84,8 +84,8 @@
           "link_title": "Card Link",
           "link_url": "#",
           "media": "runners_brains.jpeg",
-          "background": "bg-blue",
-          "link_style": "btn btn-block"
+          "background": "bg-warm-gray",
+          "link_style": "btn btn-blue btn-block"
         },
         {
           "delta": 1,
@@ -94,7 +94,7 @@
           "link_title": "",
           "link_url": "#",
           "media": "mans_best_friend.jpeg",
-          "background": "bg-river",
+          "background": "bg-white",
           "link_style": "btn-block"
         },
         {
@@ -104,11 +104,41 @@
           "link_title": "Card Link",
           "link_url": "#",
           "media": "",
-          "background": "bg-gray-300",
+          "background": "bg-azurite",
           "link_style": "btn-block"
         }
       ],
       "bottom_spacing" : "mb-5"
-  }
+    },
+    {
+        "id": 83,
+        "card_width": "col-lg-6",
+        "card_style": "card card-borderless",
+        "card_title_style": "title-on-image",
+        "card_clickable": false,
+        "az_cards": [
+          {
+            "delta": 0,
+            "title": "No link title",
+            "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "link_title": "",
+            "link_url": "#",
+            "media": "mans_best_friend.jpeg",
+            "background": "bg-river",
+            "link_style": "btn-block"
+          },
+          {
+            "delta": 1,
+            "title": "No link",
+            "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+            "link_title": "",
+            "link_url": "",
+            "media": "",
+            "background": "bg-cool-gray",
+            "link_style": "btn-block"
+          }
+        ],
+        "bottom_spacing" : "mb-5"
+    }
   ]
 }
