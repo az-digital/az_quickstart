@@ -3,4 +3,4 @@ dependencies:
     module:
       - az_digital_asset_library
 debug: false
-staging: true
+staging: false
