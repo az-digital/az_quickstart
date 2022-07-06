@@ -59,6 +59,7 @@
         "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "2.0.2",
         "drupal/embed": "1.5.0",
+        "drupal/entity_browser": "2.6",
         "drupal/entity_embed": "1.2",
         "drupal/environment_indicator": "4.0.6",
         "drupal/exclude_node_title": "1.3.0",
@@ -68,6 +69,7 @@
         "drupal/google_tag": "1.5.0",
         "drupal/honeypot": "2.1.1",
         "drupal/image_widget_crop": "2.3",
+        "drupal/intelligencebank": "2.5",
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.2.0",
         "drupal/link_class": "2.0.0",
@@ -149,6 +151,9 @@
             },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
+            },
+            "drupal/intelligencebank": {
+                "Disable thumbnail download. (3284562)": "https://www.drupal.org/files/issues/2022-06-20/3284562-5.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
