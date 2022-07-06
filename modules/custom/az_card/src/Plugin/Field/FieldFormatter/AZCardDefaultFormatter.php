@@ -97,6 +97,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
+    /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
     foreach ($items as $delta => $item) {
 
       // Format title.
@@ -132,51 +133,58 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $attached = [];
 
       // Get settings from parent paragraph.
-      if (!empty($parent)) {
-        if ($parent instanceof ParagraphInterface) {
-          // Get the behavior settings for the parent.
-          $parent_config = $parent->getAllBehaviorSettings();
-          // See if the parent behavior defines some card-specific settings.
-          if (!empty($parent_config['az_cards_paragraph_behavior'])) {
-            $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+        // See if the parent behavior defines some card-specific settings.
+        if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+          $card_defaults = $parent_config['az_cards_paragraph_behavior'];
 
-            // Set card classes according to behavior settings.
-            $column_classes = [];
-            if (!empty($card_defaults['az_display_settings'])) {
-              $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
-              $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
+          // Set card classes according to behavior settings.
+          $column_classes = [];
+          if (!empty($card_defaults['az_display_settings'])) {
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
+          }
+          $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
+          $card_classes = $card_defaults['card_style'] ?? 'card';
+
+          // Is the card clickable?
+          if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
+            if (!empty($link_render_array)) {
+              $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-            $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
-            $card_classes = $card_defaults['card_style'] ?? 'card';
-
-            // Is the card clickable?
-            if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
-              if (!empty($link_render_array)) {
-                $link_render_array['#attributes']['class'][] = 'stretched-link';
-              }
-              $card_classes .= ' shadow';
-              if ($item->link_uri) {
-                $card_classes .= ' card-with-link';
-                $attached['library'][] = 'az_card/az_card_title_hover';
-              }
-            }
-
-            // Title style.
-            if (isset($card_defaults['card_title_style'])) {
-              $title_style = $card_defaults['card_title_style'];
-              if (!empty($media_render_array)) {
-                if ($item->title && $title_style === 'title-on-image') {
-                  array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
-                }
-              }
-              // Force default title style if media field is not populated.
-              else {
-                $title_style = 'default';
-              }
+            $card_classes .= ' shadow';
+            if ($item->link_uri) {
+              $card_classes .= ' card-with-link';
+              $attached['library'][] = 'az_card/az_card_title_hover';
             }
           }
 
+          // Title style.
+          if (isset($card_defaults['card_title_style'])) {
+            $title_style = $card_defaults['card_title_style'];
+            if (!empty($media_render_array)) {
+              if ($item->title && $title_style === 'title-on-image') {
+                array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
+              }
+            }
+            // Force default title style if media field is not populated.
+            else {
+              $title_style = 'default';
+            }
+          }
+
+          // Set card classes according to behavior settings.
+          $column_classes = [];
+          if (!empty($card_defaults['az_display_settings'])) {
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
+          }
+          $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
+          $card_classes = $card_defaults['card_style'] ?? 'card';
         }
+
       }
 
       // Handle class keys that contained multiple classes.

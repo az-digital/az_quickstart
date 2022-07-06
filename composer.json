@@ -59,6 +59,7 @@
         "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "2.0.2",
         "drupal/embed": "1.5.0",
+        "drupal/entity_browser": "2.6",
         "drupal/entity_embed": "1.2",
         "drupal/environment_indicator": "4.0.6",
         "drupal/exclude_node_title": "1.3.0",
@@ -68,6 +69,7 @@
         "drupal/google_tag": "1.5.0",
         "drupal/honeypot": "2.1.1",
         "drupal/image_widget_crop": "2.3",
+        "drupal/intelligencebank": "2.5",
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.2.0",
         "drupal/link_class": "2.0.0",
@@ -144,14 +146,23 @@
                 "missing parent class": "https://git.drupalcode.org/issue/config_distro-3199197/-/commit/c312096d486caa2f01703ca7de1abf2285b6fac8.diff",
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
             },
+            "drupal/config_provider": {
+                "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
+            },
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
             },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
+            "drupal/intelligencebank": {
+                "Disable thumbnail download. (3284562)": "https://www.drupal.org/files/issues/2022-06-20/3284562-5.patch"
+            },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
+            },
+            "drupal/migrate_plus": {
+                "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch"
             },
             "drupal/paragraphs": {
                 "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"

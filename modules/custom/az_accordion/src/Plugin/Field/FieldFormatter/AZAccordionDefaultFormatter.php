@@ -90,6 +90,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
+    /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
 
       // Format title.
@@ -101,17 +102,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $parent = $item->getEntity();
 
       // Get settings from parent paragraph.
-      if (!empty($parent)) {
-        if ($parent instanceof ParagraphInterface) {
-          // Get the behavior settings for the parent.
-          $parent_config = $parent->getAllBehaviorSettings();
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
 
-          // See if the parent behavior defines some accordion-specific
-          // settings.
-          if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
-            // @todo implement az_accordion_paragraph_behavior handling.
-          }
-
+        // See if the parent behavior defines some accordion-specific
+        // settings.
+        if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
+          // @todo implement az_accordion_paragraph_behavior handling.
         }
       }
 
