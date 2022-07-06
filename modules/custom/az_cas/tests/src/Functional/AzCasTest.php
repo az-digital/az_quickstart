@@ -94,9 +94,19 @@ class AzCasTest extends QuickstartFunctionalTestBase {
       $config->get('server.cert')
     );
     $this->assertSession()->fieldValueEquals(
-      'gateway[check_frequency]',
+      'gateway[enabled]',
       // This is the az_cas overridden value.
-      $config->get('gateway.check_frequency')
+      $config->get('gateway.enabled')
+    );
+    $this->assertSession()->fieldValueEquals(
+      'gateway[recheck_time]',
+      // This is the az_cas overridden value.
+      $config->get('gateway.recheck_time')
+    );
+    $this->assertSession()->fieldValueEquals(
+      'gateway[method]',
+      // This is the az_cas overridden value.
+      $config->get('gateway.method')
     );
     $this->assertSession()->fieldValueEquals(
       'gateway[paths][negate]',
