@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.az_course.field_az_academic_program
+    - field.field.node.az_course.field_az_catalog_number
+    - field.field.node.az_course.field_az_course_attributes
+    - field.field.node.az_course.field_az_course_description
+    - field.field.node.az_course.field_az_course_instructor
+    - field.field.node.az_course.field_az_course_term
+    - field.field.node.az_course.field_az_course_title
+    - field.field.node.az_course.field_az_course_types
+    - field.field.node.az_course.field_az_subject_and_catalog
+    - field.field.node.az_course.field_az_subject_code
+    - node.type.az_course
+  module:
+    - smart_title
+    - user
+third_party_settings:
+  smart_title:
+    enabled: false
+id: node.az_course.teaser
+targetEntityType: node
+bundle: az_course
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_az_academic_program: true
+  field_az_catalog_number: true
+  field_az_course_attributes: true
+  field_az_course_description: true
+  field_az_course_instructor: true
+  field_az_course_term: true
+  field_az_course_title: true
+  field_az_course_types: true
+  field_az_subject_and_catalog: true
+  field_az_subject_code: true
+  smart_title: true
