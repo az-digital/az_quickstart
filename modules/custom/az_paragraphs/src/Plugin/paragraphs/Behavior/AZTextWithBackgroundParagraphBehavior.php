@@ -116,7 +116,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
 
     /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
     $paragraph = $variables['paragraph'];
-    
+
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
 
@@ -124,7 +124,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     if (isset($config['text_background_full_width'])) {
       $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
     }
-    
+
     // Add responsive padding classes.
     if (isset($config['text_background_padding'])) {
       $padding_classes = [];

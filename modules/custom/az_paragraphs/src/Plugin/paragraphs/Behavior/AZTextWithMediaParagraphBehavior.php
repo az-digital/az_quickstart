@@ -240,7 +240,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     if (isset($config['text_background_full_width'])) {
       $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
     }
-    
+
     // Add responsive spacing classes.
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
       $spacing_prefix = '';
