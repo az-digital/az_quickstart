@@ -1,9 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_block_types_menu
   config:
     - block_content.type.az_menu
     - field.field.block_content.az_menu.field_az_menu
@@ -19,12 +16,13 @@ content:
     weight: 1
     region: content
     settings:
-      max_depth: 0
-      menu_item_key: ''
-      include_root: false
       menu_title: ''
-      depth: ''
-      level: ''
+      menu: ''
+      level: 2
+      depth: 1
+      expand_all_items: false
+      follow: false
+      follow_parent: child
     third_party_settings: {  }
   info:
     type: string_textfield

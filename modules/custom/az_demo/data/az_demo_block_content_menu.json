@@ -7,9 +7,12 @@
       "field_menu": [
         {
           "menu_title": "",
-          "menu": "main:",
+          "menu": "main",
           "depth": 1,
-          "level": 2
+          "level": 2,
+          "expand_all_items": false,
+          "follow": false,
+          "follow_parent": "child"
         }
       ]
     }

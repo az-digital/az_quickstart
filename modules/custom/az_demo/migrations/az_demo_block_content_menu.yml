@@ -44,6 +44,9 @@ process:
       menu: menu
       depth: depth
       level: level
+      expand_all_items: expand_all_items
+      follow: follow
+      follow_parent: follow_parent
 
 destination:
   plugin: entity:block_content
