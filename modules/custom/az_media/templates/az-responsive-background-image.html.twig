@@ -58,7 +58,6 @@
     {% for media_query in media_queries %}
       @media {{ media_query.media }} {
         {{ selector }} {
-{{ dump(media_query) }}
           background-image: url({{ media_query.src|raw }}){{ important }};
         }
       }
