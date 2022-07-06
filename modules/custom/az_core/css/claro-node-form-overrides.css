@@ -1,0 +1,22 @@
+@media screen and (min-width: 61rem) {
+  .layout-region--node-main .layout-region__content, .layout-region--node-footer .layout-region__content {
+    max-width: 100% !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+  }
+}
+
+@media screen and (min-width: 61rem) {
+  .layout-region--node-main, .layout-region--node-footer {
+    float: left !important;
+    width: 65% !important;
+    padding-right: 1.5rem !important;
+  }
+}
+
+@media screen and (min-width: 61rem) {
+  .layout-region--node-secondary {
+    float: right !important;
+    width: 35% !important;
+  }
+}
