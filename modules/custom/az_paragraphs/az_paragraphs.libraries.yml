@@ -25,7 +25,6 @@ az_paragraphs.az_text_background:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
     - az_barrio/button-no-conflict
-    - az_paragraphs/az_paragraphs.az_paragraphs_full_width
 az_paragraphs.az_text_media:
   version: VERSION
   css:
@@ -35,7 +34,6 @@ az_paragraphs.az_text_media:
     - az_barrio/global-styling
     - az_barrio/arizona-bootstrap
     - az_barrio/button-no-conflict
-    - az_paragraphs/az_paragraphs.az_paragraphs_full_width
 az_paragraphs.az_photo_gallery:
   version: VERSION
   css:
