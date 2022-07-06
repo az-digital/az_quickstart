@@ -23,7 +23,7 @@ function az_media_ckeditor_css_alter(array &$css, Editor $editor) {
  * Implements hook_form_alter().
  */
 function az_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  /** @var Drupal\Core\Entity\FieldableEntityInterface $entity */
+  /** @var \Drupal\Core\Entity\FieldableEntityInterface $formObject */
   $formObject = $form_state->getFormObject();
   if ($formObject instanceof EntityFormInterface) {
     $entity = $formObject->getEntity();
@@ -157,6 +157,7 @@ function az_media_theme() {
  */
 function az_media_entity_presave(EntityInterface $entity) {
   if ($entity->getEntityTypeId() === 'media' && $entity->bundle() === 'az_remote_video' && isset($entity->field_media_az_image->entity)) {
+    // @phpstan-ignore-next-line
     $entity->thumbnail->target_id = $entity->field_media_az_image->target_id;
   }
 }

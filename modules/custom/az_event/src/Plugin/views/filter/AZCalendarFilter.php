@@ -65,12 +65,13 @@ class AZCalendarFilter extends Date {
       return $cells;
     }
     $view = Views::getView($this->view->id());
-    $view = Views::executableFactory()->get($this->view->storage);
-    $view->cellQuery = TRUE;
-
     if (empty($view)) {
       return $cells;
     }
+    $view = Views::executableFactory()->get($this->view->storage);
+    // @phpstan-ignore-next-line
+    $view->cellQuery = TRUE;
+
     $view->setDisplay($this->view->current_display);
 
     // Turn off the pager for the cell query.
@@ -144,7 +145,9 @@ class AZCalendarFilter extends Date {
     }
 
     // Add aliases to gather cell data.
+    // @phpstan-ignore-next-line
     $this->query->addField($this->tableAlias, $this->realField . '_value', 'az_calendar_filter_start');
+    // @phpstan-ignore-next-line
     $this->query->addField($this->tableAlias, $this->realField . '_end_value', 'az_calendar_filter_end');
 
     $field2 = "$this->tableAlias.$this->realField" . '_end_value';
@@ -170,6 +173,7 @@ class AZCalendarFilter extends Date {
     // Compute date overlap between ranges.
     // This is safe because we are manually scrubbing the values.
     // It is necessary to do it this way since $a and $b might be formulae.
+    // @phpstan-ignore-next-line
     $this->query->addWhereExpression($this->options['group'], "$field <= $b AND $field2 >= $a");
   }
 

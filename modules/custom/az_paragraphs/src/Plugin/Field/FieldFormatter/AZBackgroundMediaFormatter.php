@@ -410,12 +410,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $paragraph_settings = [];
     $parent = $items->getEntity();
     // Get settings from parent paragraph.
-    if (!empty($parent)) {
-      if ($parent instanceof ParagraphInterface) {
-        $paragraph_settings = $parent->getAllBehaviorSettings();
-        if (!empty($paragraph_settings['az_text_media_paragraph_behavior'])) {
-          $paragraph_settings_all = $paragraph_settings['az_text_media_paragraph_behavior'];
-        }
+    if ($parent instanceof ParagraphInterface) {
+      $paragraph_settings = $parent->getAllBehaviorSettings();
+      if (!empty($paragraph_settings['az_text_media_paragraph_behavior'])) {
+        $paragraph_settings_all = $paragraph_settings['az_text_media_paragraph_behavior'];
       }
     }
     return $paragraph_settings;
@@ -447,7 +445,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           break;
 
         default:
-          $all_settings['css_settings']['attachment'] = $default_settings['css_settings']['attachment'];
+          $all_settings['css_settings']['attachment'] = $this->defaultSettings()['css_settings']['attachment'];
       }
     }
     return $all_settings;
@@ -561,8 +559,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $az_background_media[] = $text_on_bottom;
 
       }
-      return $az_background_media;
     }
+    return $az_background_media;
   }
 
   /**
