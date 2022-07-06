@@ -61,6 +61,8 @@ class DateTimeToSmartDate extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
+    $duration = 0;
+    $timezone = '';
     if (isset($this->configuration['default_duration'])) {
       $def_duration = (int) $this->configuration['default_duration'];
     }
@@ -112,9 +114,6 @@ class DateTimeToSmartDate extends ProcessPluginBase {
           }
           if (isset($this->configuration['timezone'])) {
             $timezone = $this->configuration['timezone'];
-          }
-          else {
-            $timezone = '';
           }
         }
         $value[$delta] = [

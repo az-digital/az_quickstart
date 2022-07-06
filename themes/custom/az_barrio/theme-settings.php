@@ -113,7 +113,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   ];
-  unset($form['fonts']['bootstrap_icons']['bootstrap_barrio_bootstrap_icons']);
   unset($form['fonts']['icons']['bootstrap_barrio_icons']);
   unset($form['fonts']['bootstrap_icons']);
   $form['fonts']['icons'] = [

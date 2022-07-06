@@ -60,7 +60,7 @@ class AZParagraphsTest extends QuickstartFunctionalTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Set up our initial permissions.
