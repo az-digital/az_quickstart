@@ -16,7 +16,7 @@ use Drupal\paragraphs\Entity\Paragraph;
  * Add default text_background_padding behavior setting to existing Text with
  * Background paragraphs.
  */
-function az_paragraphs_text_background_update_9201() {
+function az_paragraphs_text_background_update_9201(&$sandbox) {
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
       ->condition('type', 'az_text_background')

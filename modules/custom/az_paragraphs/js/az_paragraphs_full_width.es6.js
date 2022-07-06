@@ -17,19 +17,19 @@
 
   /**
    * Calculates and sets margin required to push sidebars beneath the last
-   * full-width paragraph on the page.
+   * full-width paragraph in the Content region of the page.
    *
    * This function assigns values to the `--sidebar-top-margin` CSS variable on
    * the `html` element.
    */
   function pushSidebarsDown() {
-    const contentRegion = document.querySelectorAll('main.main-content');
-    const allFullWidthElements = document.querySelectorAll(
+    const contentRegion = document.querySelector('main.main-content');
+    const allFullWidthElements = contentRegion.querySelectorAll(
       '.paragraph.full-width-background',
     );
     const lastFullWidthElement =
       allFullWidthElements[allFullWidthElements.length - 1];
-    const contentRegionPosition = contentRegion[0].getBoundingClientRect();
+    const contentRegionPosition = contentRegion.getBoundingClientRect();
     const style =
       allFullWidthElements[0].currentStyle ||
       window.getComputedStyle(lastFullWidthElement, '');
