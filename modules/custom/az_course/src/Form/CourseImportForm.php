@@ -102,7 +102,7 @@ class CourseImportForm extends ConfigFormBase {
 
     $form['run'] = [
       '#type' => 'submit',
-      '#value' => t('Import Courses'),
+      '#value' => t('Save and Import Courses'),
       '#submit' => ['::runMigrate'],
       '#weight' => '4',
     ];
