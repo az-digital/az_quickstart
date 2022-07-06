@@ -15,9 +15,17 @@ entity_type: block_content
 bundle: az_menu
 label: Menu
 description: ''
-required: false
+required: true
 translatable: false
-default_value: {  }
+default_value:
+  -
+    menu: admin
+    menu_title: ''
+    follow_parent: false
+    level: '2'
+    depth: '0'
+    follow: 0
+    expand_all_items: 0
 default_value_callback: ''
 settings:
   menu_type_checkbox:

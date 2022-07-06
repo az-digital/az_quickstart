@@ -41,9 +41,9 @@ process:
     source: field_menu
     process:
       menu_title: menu_title
-      menu_item_key: menu_item_key
-      max_depth: max_depth
-      include_root: include_root
+      menu: menu
+      depth: depth
+      level: level
 
 destination:
   plugin: entity:block_content

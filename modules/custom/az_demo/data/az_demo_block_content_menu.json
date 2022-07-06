@@ -1,27 +1,17 @@
 {
-    "menu_blocks": [
-      {
-        "id":1,
-        "info" : "Sidebar Menu",
-        "uuid" : "8d5d7e34-7d98-489d-8415-fc0c72a6568f",
-        "field_menu": [{
+  "menu_blocks": [
+    {
+      "id":1,
+      "info" : "Sidebar Menu",
+      "uuid" : "8d5d7e34-7d98-489d-8415-fc0c72a6568f",
+      "field_menu": [
+        {
           "menu_title": "",
-          "menu_item_key": "main:",
-          "max_depth": 0,
-          "include_root": 0
-        }]
-      },
-      {
-        "id":2,
-        "info" : "Footer Menu",
-        "uuid" : "0b54c321-0c56-4ef2-8dd1-72b661a150c2",
-        "field_menu": [{
-          "menu_title": "",
-          "menu_item_key": "main:",
-          "max_depth": 0,
-          "include_root": 0
-        }]
-      }
-    ]
+          "menu": "main:",
+          "depth": 1,
+          "level": 2
+        }
+      ]
+    }
+  ]
 }
-  

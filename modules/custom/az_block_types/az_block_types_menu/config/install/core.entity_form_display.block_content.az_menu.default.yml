@@ -23,6 +23,8 @@ content:
       menu_item_key: ''
       include_root: false
       menu_title: ''
+      depth: ''
+      level: ''
     third_party_settings: {  }
   info:
     type: string_textfield
