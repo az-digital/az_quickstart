@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Contains az_digital_asset_library.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Custom submit handler to redirect to /admin/content/media.
+ */
+function az_digital_asset_library_form_submit(array $form, FormStateInterface $form_state) {
+  $url = Url::fromRoute('entity.media.collection');
+  $form_state->setRedirectUrl($url);
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * Add custom submit handler to form.
+ * Allow using remote media.
+ * See
+ * @link https://git.drupalcode.org/project/intelligencebank/-/blob/8.x-2.x/modules/ib_dam_media/src/Plugin/EntityBrowser/Widget/IbDamEbWidget.php#L249 @endlink.
+ */
+function az_digital_asset_library_form_entity_browser_az_digital_asset_library_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#submit'][] = 'az_digital_asset_library_form_submit';
+}
