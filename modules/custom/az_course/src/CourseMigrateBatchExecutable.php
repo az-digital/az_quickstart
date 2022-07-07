@@ -21,21 +21,16 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
         $migration->getIdMap()->prepareUpdate();
       }
 
-      if (!empty($options['force'])) {
-        $migration->set('requirements', []);
-      }
-      else {
-        $dependencies = $migration->getMigrationDependencies();
-        if (!empty($dependencies['required'])) {
-          $required_migrations = $this->migrationPluginManager->createInstances($dependencies['required']);
-          // For dependent migrations will need to be migrate all items.
-          $operations = array_merge($operations, $this->batchOperations($required_migrations, $operation, [
-            'limit' => 0,
-            'update' => $options['update'],
-            'force' => $options['force'],
-            'sync' => $options['sync'],
-          ]));
-        }
+      $dependencies = $migration->getMigrationDependencies();
+      if (!empty($dependencies['required'])) {
+        $required_migrations = $this->migrationPluginManager->createInstances($dependencies['required']);
+        // For dependent migrations will need to be migrate all items.
+        $operations = array_merge($operations, $this->batchOperations($required_migrations, $operation, [
+          'limit' => 0,
+          'update' => $options['update'],
+          'force' => $options['force'],
+          'sync' => $options['sync'],
+        ]));
       }
 
       // Take expected source urls and run them one per batch. This is the
