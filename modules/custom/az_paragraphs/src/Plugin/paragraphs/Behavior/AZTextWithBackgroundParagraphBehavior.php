@@ -121,7 +121,7 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     $config = $this->getSettings($paragraph);
 
     // If this paragraph is full-width, add the full-width library.
-    if (isset($config['text_background_full_width'])) {
+    if (isset($config['text_background_full_width']) && $config['text_background_full_width'] === 'full-width-background') {
       $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
     }
 
