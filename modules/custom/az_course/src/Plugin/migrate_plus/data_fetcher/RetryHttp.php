@@ -48,9 +48,6 @@ class RetryHttp extends Http {
           $options = array_merge($options, $this->configuration['request_options']);
         }
         $response = $this->httpClient->get($url, $options);
-        if (empty($response)) {
-          throw new MigrateException('No response at ' . $url . '.');
-        }
         return $response;
       }
       catch (RequestException $e) {
