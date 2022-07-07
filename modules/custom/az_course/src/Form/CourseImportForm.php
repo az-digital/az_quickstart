@@ -174,9 +174,9 @@ class CourseImportForm extends ConfigFormBase {
       ->save();
 
     $courses = $this->config('az_course.settings')->get('courses');
+    $course_urls = [];
     if (!empty($courses)) {
       $matches = [];
-      $course_urls = [];
       // Convert courses listed into actual URLs to migrate.
       foreach ($courses as $course) {
         if (preg_match("/^[[:space:]]*([[:alpha:]]+)[[:space:]]+([[:alnum:]]+)[[:space:]]*$/", $course, $matches)) {
@@ -196,20 +196,18 @@ class CourseImportForm extends ConfigFormBase {
 
     // Pass expected urls to batched executable.
     $migration = $this->pluginManagerMigration->createInstance("az_courses");
-    if (!empty($migration)) {
-      $options = [
-        'limit' => 0,
-        'update' => 1,
-        'force' => 0,
-        'configuration' => [
-          'source' => [
-            'urls' => $course_urls,
-          ],
+    $options = [
+      'limit' => 0,
+      'update' => 1,
+      'force' => 0,
+      'configuration' => [
+        'source' => [
+          'urls' => $course_urls,
         ],
-      ];
-      $executable = new CourseMigrateBatchExecutable($migration, new MigrateMessage(), $options);
-      $executable->batchImport();
-    }
+      ],
+    ];
+    $executable = new CourseMigrateBatchExecutable($migration, new MigrateMessage(), $options);
+    $executable->batchImport();
   }
 
   /**

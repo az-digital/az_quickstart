@@ -28,7 +28,7 @@ class CourseSearch {
   /**
    * Constructs a CourseSearch service.
    *
-   * @param GuzzleHttp\ClientInterface $http_client
+   * @param \GuzzleHttp\ClientInterface $http_client
    *   A guzzle client for making http requests.
    */
   public function __construct(ClientInterface $http_client) {
@@ -81,10 +81,7 @@ class CourseSearch {
     $queryUrl = Url::fromUri('https://uacourses-api.uaccess.arizona.edu/search', ['query' => ['search_text' => $search]]);
     $queryUrl = $queryUrl->toString();
     try {
-      $response = $this->httpClient->get($queryUrl);
-      if (empty($response)) {
-        \Drupal::logger('az_course')->error("No response.");
-      }
+      $response = $this->httpClient->request('GET', $queryUrl);
       $body = $response->getBody();
       $xml = new \XMLReader();
       if ($xml->xml($body)) {
