@@ -43,7 +43,7 @@
         "drupal/block_content_permissions": "1.10",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/bootstrap_utilities": "1.1.0",
-        "drupal/cas": "1.7",
+        "drupal/cas": "2.0.0",
         "drupal/chosen": "3.0.3",
         "drupal/ckeditor_bs_grid": "2.0.7",
         "drupal/coffee": "1.2",
@@ -123,8 +123,7 @@
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/trackleft/6b7752228979c6932e8d09e01381dd28/raw/70bd7ed90ab487b454a1106aa9935a335b7d4f49/gistfile1.txt"
             },
             "drupal/cas": {
-                "ServiceNotFoundException when logging out": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
-                "Module add migration for D7": "https://www.drupal.org/files/issues/2021-02-24/add-migration-for-d7-3038662-10.patch"
+                "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
             },
             "drupal/config_sync": {
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
