@@ -83,9 +83,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Content background color'),
       '#type' => 'select',
       '#options' => [
-        'light' => $this->t('Light'),
-        'dark' => $this->t('Dark'),
-        'transparent' => $this->t('Transparent'),
+        'bg-transparent-white' => $this->t('Light'),
+        'bg-transparent-black' => $this->t('Dark'),
+        'bg-transparent' => $this->t('Transparent'),
       ],
       '#default_value' => $config['bg_color'],
       '#description' => $this->t('The color of the content background.'),
@@ -297,7 +297,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'bold',
       HTML::getClass($config['title_alignment']),
     ];
-    if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
+    if (!empty($config['bg_color']) && $config['bg_color'] !== 'bg-transparent-black') {
       $title_classes[] = 'text-blue';
     }
     // Set title classes.
