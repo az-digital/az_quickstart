@@ -27,6 +27,9 @@
     const allFullWidthElements = contentRegion.querySelectorAll(
       '.paragraph.full-width-background',
     );
+    if (allFullWidthElements.length === 0) {
+      return;
+    }
     const lastFullWidthElement =
       allFullWidthElements[allFullWidthElements.length - 1];
     const contentRegionPosition = contentRegion.getBoundingClientRect();
