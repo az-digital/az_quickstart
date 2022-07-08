@@ -64,6 +64,11 @@
             "id":27,
             "az_text_area" : "<h2>Embed a File<\/h2>\r\n",
             "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":28,
+            "az_text_area" : "<h2>Clickable Borderless Cards</h2>\r\n",
+            "bottom_spacing" : "mb-0"
         }
     ]
 }
