@@ -1,0 +1,6 @@
+claro-node-form-overrides:
+  css:
+    layout:
+      css/claro-node-form-overrides.css: {}
+  dependencies:
+    - claro/node-form
