@@ -13,6 +13,11 @@
   function pushSidebarsDown() {
     var contentRegion = document.querySelector('main.main-content');
     var allFullWidthElements = contentRegion.querySelectorAll('.paragraph.full-width-background');
+
+    if (allFullWidthElements.length === 0) {
+      return;
+    }
+
     var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
     var contentRegionPosition = contentRegion.getBoundingClientRect();
     var style = allFullWidthElements[0].currentStyle || window.getComputedStyle(lastFullWidthElement, '');

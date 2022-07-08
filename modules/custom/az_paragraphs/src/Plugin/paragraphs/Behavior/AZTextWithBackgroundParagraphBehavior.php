@@ -120,6 +120,11 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
 
+    // If this paragraph is full-width, add the full-width library.
+    if (isset($config['text_background_full_width']) && $config['text_background_full_width'] === 'full-width-background') {
+      $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
+    }
+
     // Add responsive padding classes.
     if (isset($config['text_background_padding'])) {
       $padding_classes = [];
