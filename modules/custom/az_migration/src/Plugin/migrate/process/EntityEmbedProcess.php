@@ -8,6 +8,7 @@ use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 use Drupal\Core\Database\Database;
+use Masterminds\HTML5;
 
 /**
  * Process Plugin to handle embedded entities in HTML text.
@@ -208,8 +209,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $dom = new \DOMDocument();
-    $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    $html5 = new HTML5(['disable_html_ns' => TRUE]);
+    $dom = $html5->loadHTML($value);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
     // Configuration of custom content.
@@ -288,7 +289,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       }
     }
 
-    $value = $dom->SaveHTML();
+    $value = $html5->saveHTML($dom->documentElement);
     return $value;
   }
 
