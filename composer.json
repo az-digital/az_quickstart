@@ -159,7 +159,7 @@
             },
             "drupal/intelligencebank": {
                 "Disable thumbnail download. (3284562)": "https://www.drupal.org/files/issues/2022-06-20/3284562-5.patch",
-                "Don't install a new media type by default. (3295615)": "https://git.drupalcode.org/project/intelligencebank/-/merge_requests/9.diffq",
+                "Don't install a new media type by default. (3295615)": "https://git.drupalcode.org/project/intelligencebank/-/merge_requests/9.diffq"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
