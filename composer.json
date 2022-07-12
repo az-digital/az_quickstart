@@ -158,7 +158,6 @@
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
             "drupal/intelligencebank": {
-                "Disable thumbnail download. (3284562)": "https://www.drupal.org/files/issues/2022-06-20/3284562-5.patch",
                 "Don't install a new media type by default. (3295615)": "https://git.drupalcode.org/project/intelligencebank/-/merge_requests/9.diffq"
             },
             "drupal/media_migration": {
