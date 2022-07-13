@@ -48,6 +48,17 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Select a card style.'),
     ];
 
+    $form['card_title_style'] = [
+      '#title' => $this->t('Card title style'),
+      '#type' => 'select',
+      '#options' => [
+        'default' => $this->t('Title within card (default)'),
+        'title-on-image' => $this->t('Title on image'),
+      ],
+      '#default_value' => $config['card_title_style'] ?? 'default',
+      '#description' => $this->t('Select a card title style.'),
+    ];
+
     $form['card_clickable'] = [
       '#title' => $this->t('Clickable cards'),
       '#type' => 'checkbox',
