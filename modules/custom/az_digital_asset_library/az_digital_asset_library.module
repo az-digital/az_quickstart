@@ -17,7 +17,7 @@ function az_digital_asset_library_form_submit(array $form, FormStateInterface $f
 }
 
 /**
- * Implements hook_form_ID_alter().
+ * Implements hook_FORM_ID_alter().
  *
  * Add custom submit handler to form.
  * Allow using remote media.
