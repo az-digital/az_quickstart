@@ -3,8 +3,10 @@
 (($, Drupal) => {
   Drupal.behaviors.azBarrioButtonNoConflict = {
     attach: () => {
-      const bootstrapButton = $.fn.button.noConflict();
-      $.fn.bootstrapBtn = bootstrapButton;
+      if ($.fn.button && $.fn.button.noConflict !== undefined) {
+        const bootstrapButton = $.fn.button.noConflict();
+        $.fn.bootstrapBtn = bootstrapButton;
+      }
     },
   };
 })(jQuery, Drupal);
