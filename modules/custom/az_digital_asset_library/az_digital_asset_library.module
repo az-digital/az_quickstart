@@ -31,7 +31,7 @@ function az_digital_asset_library_form_entity_browser_az_digital_asset_library_f
 /**
  * Implements hook_preprocess_HOOK().
  *
- * Hide default provided media type by IntelligenceBank from media select dialog.
+ * Hide default media type provided by IntelligenceBank from media select dialog.
  *
  * See @link https://github.com/az-digital/az_quickstart/issues/1741
  */
