@@ -69,7 +69,7 @@
         "drupal/google_tag": "1.5.0",
         "drupal/honeypot": "2.1.1",
         "drupal/image_widget_crop": "2.3",
-        "drupal/intelligencebank": "2.5",
+        "drupal/intelligencebank": "3.0-beta1",
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.2.0",
         "drupal/link_class": "2.0.0",
@@ -156,9 +156,6 @@
             },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
-            },
-            "drupal/intelligencebank": {
-                "Disable thumbnail download. (3284562)": "https://www.drupal.org/files/issues/2022-06-20/3284562-5.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
