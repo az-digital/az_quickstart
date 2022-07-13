@@ -8,8 +8,10 @@
 (function ($, Drupal) {
   Drupal.behaviors.azBarrioButtonNoConflict = {
     attach: function attach() {
-      var bootstrapButton = $.fn.button.noConflict();
-      $.fn.bootstrapBtn = bootstrapButton;
+      if ($.fn.button && $.fn.button.noConflict !== undefined) {
+        var bootstrapButton = $.fn.button.noConflict();
+        $.fn.bootstrapBtn = bootstrapButton;
+      }
     }
   };
 })(jQuery, Drupal);
