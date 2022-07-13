@@ -36,11 +36,7 @@ function az_digital_asset_library_form_entity_browser_az_digital_asset_library_f
  * See @link https://github.com/az-digital/az_quickstart/issues/1741
  */
 function az_digital_asset_library_preprocess_links__media_library_menu(&$variables) {
-  if (
-    isset($variables['links']) &&
-    isset($variables['links']['media-library-menu-ib_dam_embed']) &&
-    isset($variables['links']['media-library-menu-ib_dam_embed']['link'])
-    ) {
+  if (isset($variables['links']['media-library-menu-ib_dam_embed']['link'])) {
     $variables['links']['media-library-menu-ib_dam_embed']['link']['#access'] = FALSE;
   }
 }
@@ -53,7 +49,7 @@ function az_digital_asset_library_preprocess_links__media_library_menu(&$variabl
  * See @link https://github.com/az-digital/az_quickstart/issues/1741
  */
 function az_digital_asset_library_preprocess_entity_add_list(&$variables) {
-  if (isset($variables['bundles']) && isset($variables['bundles']['ib_dam_embed'])) {
+  if (isset($variables['bundles']['ib_dam_embed'])) {
     unset($variables['bundles']['ib_dam_embed']);
   }
 }
