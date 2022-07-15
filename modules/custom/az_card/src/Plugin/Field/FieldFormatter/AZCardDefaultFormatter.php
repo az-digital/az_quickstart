@@ -186,11 +186,18 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $card_classes .= ' ' . $item->options['class'];
       }
 
-      $element[] = [
+      $element[$delta] = [
         '#theme' => 'az_card',
         '#media' => $media_render_array,
         '#title' => $title,
-        '#body' => check_markup($item->body, $item->body_format),
+        // The ProcessedText element handles cache context & tag bubbling.
+        // @see \Drupal\filter\Element\ProcessedText::preRenderText()
+        '#body' => [
+          '#type' => 'processed_text',
+          '#text' => $item->body,
+          '#format' => $item->body_format,
+          '#langcode' => $item->getLangcode(),
+        ],
         '#link' => $link_render_array,
         '#title_style' => $title_style ?? 'default',
         '#attributes' => ['class' => $card_classes],
