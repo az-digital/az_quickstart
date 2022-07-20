@@ -120,10 +120,17 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
 
-      $element[] = [
+      $element[$delta] = [
         '#theme' => 'az_accordion',
         '#title' => $title,
-        '#body' => check_markup($item->body, $item->body_format),
+        // The ProcessedText element handles cache context & tag bubbling.
+        // @see \Drupal\filter\Element\ProcessedText::preRenderText()
+        '#body' => [
+          '#type' => 'processed_text',
+          '#text' => $item->body,
+          '#format' => $item->body_format,
+          '#langcode' => $item->getLangcode(),
+        ],
         '#attributes' => ['class' => $accordion_classes],
         '#accordion_item_id' => Html::getUniqueId('az_accordion'),
         '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
