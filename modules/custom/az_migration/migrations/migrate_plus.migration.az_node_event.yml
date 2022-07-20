@@ -44,25 +44,14 @@ process:
       format: format
 
   field_az_link:
-    plugin: sub_process
+    plugin: field_link
     source: field_uaqs_link
-    process:
-      delta: delta
-      uri:
-        -
-           plugin: str_replace
-           search: '[node:url]'
-           replace: ''
-           source: url
-      title: title
+    uri_scheme: "https://"
 
   field_az_location:
-    plugin: sub_process
+    plugin: field_link
     source: field_uaqs_location
-    process:
-      delta: delta
-      uri: url
-      title: title
+    uri_scheme: "https://"
 
   field_az_body:
     plugin: sub_process
