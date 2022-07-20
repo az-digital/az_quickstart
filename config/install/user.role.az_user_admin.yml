@@ -3,7 +3,6 @@ status: true
 dependencies:
   module:
     - administerusersbyrole
-    - role_delegation
 id: az_user_admin
 label: 'User administrator'
 weight: 4
