@@ -7,6 +7,7 @@ weight: 2
 is_admin: false
 permissions:
   - 'access administration pages'
+  - 'access az_digital_asset_library entity browser pages'
   - 'access any webform configuration'
   - 'access coffee'
   - 'access content overview'
@@ -37,6 +38,7 @@ permissions:
   - 'create and edit custom blocks'
   - 'create az_audio media'
   - 'create az_carousel_item content'
+  - 'create az_course content'
   - 'create az_document media'
   - 'create az_event content'
   - 'create az_flexible_block block content'
@@ -57,6 +59,7 @@ permissions:
   - 'delete media'
   - 'delete own az_audio media'
   - 'delete own az_carousel_item content'
+  - 'delete own az_course content'
   - 'delete own az_document media'
   - 'delete own az_event content'
   - 'delete own az_flexible_page content'

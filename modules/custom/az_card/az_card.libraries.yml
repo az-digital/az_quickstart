@@ -2,3 +2,7 @@ az_card:
   css:
     component:
       css/az-card-widget.css: {}
+az_card_title_hover:
+  css:
+    component:
+      css/az-card-title-hover.css: {}

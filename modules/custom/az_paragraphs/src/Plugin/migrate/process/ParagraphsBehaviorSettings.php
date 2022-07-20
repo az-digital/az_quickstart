@@ -2,6 +2,7 @@
 
 namespace Drupal\az_paragraphs\Plugin\migrate\process;
 
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\MigrateExecutableInterface;
@@ -63,17 +64,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *         - 0
  *         - value
  *     - plugin: static_map
- *       default: 'light'
+ *       default: 'bg-transparent-white'
  *       map:
- *         bg-transparent: transparent
- *         bg-trans-white: light
- *         bg-trans-sky: light
- *         bg-trans-arizona-blue: dark
- *         bg-trans-black: dark
- *         dark: dark
- *         light: light
+ *         bg-transparent: bg-transparent
+ *         bg-trans-white: bg-transparent-white
+ *         bg-trans-sky: bg-transparent-white
+ *         bg-trans-arizona-blue: bg-transparent-black
+ *         bg-trans-black: bg-transparent-black
+ *         dark: bg-transparent-black
+ *         light: bg-transparent-white
  *     - plugin: default_value
- *       default_value: 'light'
+ *       default_value: 'bg-transparent-white'
  *   view_mode_processed:
  *     - plugin: static_map
  *       source: view_mode
