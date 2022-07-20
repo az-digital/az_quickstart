@@ -166,6 +166,9 @@
             "drupal/paragraphs": {
                 "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
             },
+            "drupal/role_delegation": {
+                "Impossible to use Bulk update without Administer users permission (3075916)": "https://www.drupal.org/files/issues/2020-06-30/3075916-11.patch"
+            },            
             "drupal/smart_date": {
                 "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"
             },
