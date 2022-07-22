@@ -84,20 +84,6 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
   ];
 
   /**
-   * Mapping of source type to destination type for stubbing.
-   *
-   * @var array
-   */
-  public static function stubTypes() {
-    return [
-      'media' => [
-        'bundle' => 'az_image',
-        'name' => 'Stub'
-      ],
-    ];
-  }
-
-  /**
    * Mapping of type and view mode to new view mode.
    *
    * @var array
@@ -179,10 +165,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     $changed = $dom->createElement($tag);
     $changed->setAttribute('data-entity-type', $type);
     $ids = $this->migrateLookup->lookup($migration, [$id]);
-    $stub_types =  $this->stubTypes();
-    $stub_defaults = $stub_types[$type];
     if (empty($ids)) {
-      $ids = $this->migrateStub->createStub($migration, [$id], $stub_defaults);
+      $ids = $this->migrateStub->createStub($migration, [$id]);
     }
     // We eventually found our id, by lookup or stubbing it.
     if (!empty($ids)) {
