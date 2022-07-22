@@ -9,6 +9,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 use Drupal\Core\Database\Database;
 use Masterminds\HTML5;
+use Masterminds\HTML5\Parser\StringInputStream;
 
 /**
  * Process Plugin to handle embedded entities in HTML text.
@@ -42,6 +43,7 @@ use Masterminds\HTML5;
  *       view_modes:
  *         original_view_mode1: new_view_mode1
  *         original_view_mode2: new_view_mode2
+ *
  * @endcode
  */
 class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPluginInterface {
@@ -80,6 +82,20 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     'uaqs_news' => 'az_node_news',
     'uaqs_person' => 'az_node_person',
   ];
+
+  /**
+   * Mapping of source type to destination type for stubbing.
+   *
+   * @var array
+   */
+  public static function stubTypes() {
+    return [
+      'media' => [
+        'bundle' => 'az_image',
+        'name' => 'Stub'
+      ],
+    ];
+  }
 
   /**
    * Mapping of type and view mode to new view mode.
@@ -163,8 +179,10 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     $changed = $dom->createElement($tag);
     $changed->setAttribute('data-entity-type', $type);
     $ids = $this->migrateLookup->lookup($migration, [$id]);
+    $stub_types =  $this->stubTypes();
+    $stub_defaults = $stub_types[$type];
     if (empty($ids)) {
-      $ids = $this->migrateStub->createStub($migration, [$id]);
+      $ids = $this->migrateStub->createStub($migration, [$id], $stub_defaults);
     }
     // We eventually found our id, by lookup or stubbing it.
     if (!empty($ids)) {
@@ -209,8 +227,17 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
+    $value_is_array = is_array($value);
+    $text = (string) ($value_is_array ? $value['value'] : $value);
+    if (strpos($text, '<drupal-entity ') === FALSE) {
+      return $value;
+    }
+
+    // Document why HTML5 instead of DomDocument.
     $html5 = new HTML5(['disable_html_ns' => TRUE]);
-    $dom = $html5->loadHTML($value);
+    $dom_text = '<html><body>' . $text . '</body></html>';
+    $dom = $html5->parse($dom_text);
+
     $elements = $dom->getElementsByTagName("drupal-entity");
 
     // Configuration of custom content.
@@ -288,8 +315,13 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         $element->parentNode->replaceChild($post, $element);
       }
     }
-
-    $value = $html5->saveHTML($dom->documentElement);
+    $result = $html5->saveHTML($dom->documentElement->firstChild->childNodes);
+    if ($value_is_array) {
+      $value['value'] = $result;
+    }
+    else {
+      $value = $result;
+    }
     return $value;
   }
 
