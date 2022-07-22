@@ -43,7 +43,6 @@ use Masterminds\HTML5\Parser\StringInputStream;
  *       view_modes:
  *         original_view_mode1: new_view_mode1
  *         original_view_mode2: new_view_mode2
- *
  * @endcode
  */
 class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPluginInterface {
