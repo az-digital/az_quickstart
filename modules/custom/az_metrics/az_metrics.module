@@ -24,9 +24,9 @@ function az_metrics_data() {
 
   $data = [
     'domains' => $domainList,
-    'mail' => \Drupal::config('system.site')->get('mail', ''),
-    'name' => \Drupal::config('system.site')->get('name', ''),
-    'uuid' => \Drupal::config('system.site')->get('uuid', ''),
+    'mail' => \Drupal::config('system.site')->get('mail'),
+    'name' => \Drupal::config('system.site')->get('name'),
+    'uuid' => \Drupal::config('system.site')->get('uuid'),
   ];
 
   return $data;

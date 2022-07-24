@@ -67,7 +67,7 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
    */
   protected function getSettings(ParagraphInterface $paragraph) {
     $settings = $paragraph->getAllBehaviorSettings();
-    return isset($settings[$this->pluginId]) ? $settings[$this->pluginId] : [];
+    return $settings[$this->pluginId] ?? [];
   }
 
   /**
@@ -166,7 +166,7 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
 
     // Apply bottom spacing if set.
     if (!empty($config['az_display_settings']['bottom_spacing'])) {
-      $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
+      $build['#attributes']['class'][] = $config['az_display_settings']['bottom_spacing'];
     }
 
   }

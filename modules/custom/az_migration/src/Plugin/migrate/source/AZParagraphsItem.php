@@ -29,6 +29,8 @@ class AZParagraphsItem extends ParagraphsItem {
         ])
       ->fields('pr', ['revision_id']);
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
+    // Omit archived (deleted) paragraphs.
+    $query->condition('p.archived', 0);
     // This configuration item may be set by a deriver to restrict the
     // bundles retrieved.
     if ($this->configuration['bundle']) {
@@ -73,21 +75,25 @@ class AZParagraphsItem extends ParagraphsItem {
         // Get Field API field values for each field collection item.
         $field_names = array_keys($this->getFields('field_collection_item', $field));
 
+        $field_collection_field_values = [];
         foreach ($field_names as $field_collection_field_name) {
-          $i = 0;
-          $field_collection_field_values = [];
-          foreach ($field_collection_data as $field_collection_data_item) {
-            $field_collection_value = $this->getFieldValues('field_collection_item',
-                                      $field_collection_field_name, $field_collection_data_item['value'],
-                                      $field_collection_data_item['revision_id']);
+          foreach ($field_collection_data as $delta => $field_collection_data_item) {
+            $field_collection_value = $this->getFieldValues(
+              'field_collection_item',
+              $field_collection_field_name,
+              $field_collection_data_item['value'],
+              $field_collection_data_item['revision_id']
+            );
             foreach ($field_collection_value as $field_collection_value_item) {
-              $field_collection_value_item['delta'] = $i;
-              $field_collection_field_values[] = $field_collection_value_item;
-              $i++;
+              $field_collection_field_values[$delta]['delta'] = $delta;
+              $field_collection_field_values[$delta][$field_collection_field_name][] = $field_collection_value_item;
             }
           }
-          $row->setSourceProperty($field_collection_field_name, $field_collection_field_values);
         }
+        ksort($field_collection_field_values);
+        $source_property_name = $field . '_values';
+        $row->setSourceProperty($source_property_name, $field_collection_field_values);
+
       }
     }
     return parent::prepareRow($row);

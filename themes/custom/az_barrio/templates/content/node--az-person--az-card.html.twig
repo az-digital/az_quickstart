@@ -61,7 +61,7 @@
 #}
 
 {{ attach_library('bootstrap_barrio/node') }}
-
+{% set url = (node.field_az_link.0.url) ? node.field_az_link.0.url : url %}
 {%
   set classes = [
     'node',
@@ -87,7 +87,7 @@
         </a>
       {% endif %}
       <div class="card-body">
-        <h3 class="h5 mt-0"><a href="{{ url }}">{{ content.field_az_fname.0 }}&nbsp;{{ content.field_az_lname.0 }}</a></h3>
+        <h3 class="h5 mt-0"><a href="{{ url }}">{{ content.field_az_fname.0 }} {{ content.field_az_lname.0 }}</a></h3>
         {% if content.field_az_titles[0] %}
           {% for key, item in content.field_az_titles if key|first != '#' %}
             <span class="d-block">{{ item }}</span>
@@ -100,7 +100,11 @@
           <li class="list-group-item border-0 py-0">{{ item }}</li>
         {% endfor %}
       {% endif %}
-        <li class="list-group-item border-0 py-0">{{ content.field_az_email }}</li>
+      {% if content.field_az_email.0 %}
+        <li class="list-group-item border-0 py-0">
+          <div class="text-truncate">{{ content.field_az_email.0 }}</div>
+        </li>
+      {% endif %}
       {% if content.field_az_pronouns.0 %}
         <li class="list-group-item border-0 py-0">Pronouns: {{ content.field_az_pronouns.0|render|lower }}</li>
       {% endif %}

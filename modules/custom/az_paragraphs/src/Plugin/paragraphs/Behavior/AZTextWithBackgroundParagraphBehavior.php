@@ -37,7 +37,8 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
       '#title' => $this->t('Background Color'),
       '#type' => 'select',
       '#options' => [
-        '' => $this->t('None'),
+        'bg-white' => $this->t('White'),
+        'bg-transparent' => $this->t('Transparent'),
         'bg-red' => $this->t('Arizona Red'),
         'bg-blue' => $this->t('Arizona Blue'),
         'bg-sky' => $this->t('Sky'),
@@ -48,12 +49,15 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
         'bg-chili' => $this->t('Chili'),
         'bg-cool-gray' => $this->t('Cool Gray'),
         'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-gray-100' => $this->t('Gray 100'),
+        'bg-gray-200' => $this->t('Gray 200'),
+        'bg-gray-300' => $this->t('Gray 300'),
         'bg-leaf' => $this->t('Leaf'),
         'bg-river' => $this->t('River'),
         'bg-silver' => $this->t('Silver'),
         'bg-ash' => $this->t('Ash'),
       ],
-      '#default_value' => $config['text_background_color'] ?? '',
+      '#default_value' => $config['text_background_color'] ?? 'bg-white',
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
       [
         '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
@@ -120,23 +124,30 @@ class AZTextWithBackgroundParagraphBehavior extends AZDefaultParagraphsBehavior 
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
 
-    // Add responsive padding classes.
-    $padding_classes = [];
-    switch ($config['text_background_padding']) {
-      case 'py-20':
-        $padding_classes[] = 'py-10';
-        $padding_classes[] = 'py-md-20';
-        break;
-
-      case 'py-30':
-        $padding_classes[] = 'py-10';
-        $padding_classes[] = 'py-md-30';
-        break;
-
-      default:
-        $padding_classes[] = $config['text_background_padding'];
+    // If this paragraph is full-width, add the full-width library.
+    if (isset($config['text_background_full_width']) && $config['text_background_full_width'] === 'full-width-background') {
+      $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
     }
-    $config['text_background_padding'] = implode(' ', $padding_classes);
+
+    // Add responsive padding classes.
+    if (isset($config['text_background_padding'])) {
+      $padding_classes = [];
+      switch ($config['text_background_padding']) {
+        case 'py-20':
+          $padding_classes[] = 'py-10';
+          $padding_classes[] = 'py-md-20';
+          break;
+
+        case 'py-30':
+          $padding_classes[] = 'py-10';
+          $padding_classes[] = 'py-md-30';
+          break;
+
+        default:
+          $padding_classes[] = $config['text_background_padding'];
+      }
+      $config['text_background_padding'] = implode(' ', $padding_classes);
+    }
 
     $variables['text_with_background'] = $config;
   }

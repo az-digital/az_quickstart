@@ -8,7 +8,7 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-require_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
+require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\Exception\FileException;
@@ -113,7 +113,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   ];
-  unset($form['fonts']['bootstrap_icons']['bootstrap_barrio_bootstrap_icons']);
   unset($form['fonts']['icons']['bootstrap_barrio_icons']);
   unset($form['fonts']['bootstrap_icons']);
   $form['fonts']['icons'] = [
@@ -246,6 +245,26 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
+  ];
+  // Responsive Header Grid.
+  $form['layout']['header_grid'] = [
+    '#type' => 'details',
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#title' => t('Responsive Header Grid'),
+    '#description' => t('The header typically contains two columns on small screen sizes and larger with the "Site branding" region on the left and with "Header 1" and "Header 2" on the right.'),
+  ];
+  $form['layout']['header_grid']['header_one_col_classes'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column one classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the Site branding region. Should contain a string with classes separated by a space.'),
+    '#default_value' => theme_get_setting('header_one_col_classes'),
+  ];
+  $form['layout']['header_grid']['header_two_col_classes'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column two classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
+    '#default_value' => theme_get_setting('header_two_col_classes'),
   ];
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];

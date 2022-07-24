@@ -1,7 +1,8 @@
 {
   "extends": [
-    "airbnb",
-    "plugin:prettier/recommended"
+    "airbnb-base",
+    "plugin:prettier/recommended",
+    "plugin:yml/recommended"
   ],
   "root": true,
   "env": {
@@ -18,17 +19,14 @@
     "Cookies": true,
     "Backbone": true,
     "Modernizr": true,
+    "loadjs": true,
     "Popper": true,
     "Shepherd": true,
     "Sortable": true,
     "once": true,
     "CKEDITOR": true,
+    "CKEditor5": true,
     "tabbable": true
-  },
-  "settings": {
-    "react": {
-      "version": "latest"
-    }
   },
   "rules": {
     "prettier/prettier": "error",

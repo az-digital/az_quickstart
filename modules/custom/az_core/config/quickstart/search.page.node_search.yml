@@ -4,7 +4,7 @@ dependencies:
   module:
     - node
 id: node_search
-label: Content (old)
+label: 'Content (old)'
 path: default
 weight: -10
 plugin: node_search

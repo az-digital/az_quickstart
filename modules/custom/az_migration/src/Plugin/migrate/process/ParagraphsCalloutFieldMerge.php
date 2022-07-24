@@ -7,7 +7,41 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process plugin to merge field for callout paragraphs.
+ * Process Plugin to handle Callout Paragraphs from QS1.
+ *
+ * Quickstart 1 to Quickstart2 Process plugin to extract specific field values
+ * from the source, (uaqs_callout paragraphs), and transforming those values
+ * by wrapping them in specific arizona-bootstrap markup.
+ *
+ * NOTE: This plugin is only designed to be used with uaqs_callout source
+ * paragraphs and is not generically reusable for other use cases.
+ *
+ * Expects the source value to contain the following fields:
+ *  - title: A Drupal 7 plain text field array.
+ *  - text: A Drupal 7 text area field array.
+ *  - background: A Drupal 7 field array.
+ *  - border: A Drupal 7 field array.
+ *
+ * Available configuration keys
+ * - N/A
+ *
+ * @code
+ * source:
+ *   plugin: az_paragraphs_item
+ *   bundle: uaqs_callout
+ *
+ * destination:
+ *   plugin: 'entity_reference_revisions:paragraph'
+ *   default_bundle: az_text
+ *
+ * process:
+ *   field_az_text_area/value:
+ *     plugin: paragraphs_callout_field_merge
+ *     title: title_field
+ *     text: field_uaqs_summary
+ *     background: field_uaqs_callout_background
+ *     border: field_uaqs_callout_border_color
+ * @endcode
  *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_callout_field_merge"

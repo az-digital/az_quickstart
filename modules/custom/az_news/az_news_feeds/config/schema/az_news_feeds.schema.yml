@@ -1,0 +1,29 @@
+# Schema for the configuration files of the Quickstart News Feeds module.
+
+az_news_feeds.settings:
+  type: config_object
+  label: 'UArizona News Feed Settings'
+  mapping:
+    uarizona_news_base_uri:
+      type: string
+      label: 'Base site url where feeds live.'
+    uarizona_news_category_path: 
+      type: string
+      label: 'Path to category feed'
+    uarizona_news_feed_path:
+      type: string
+      label: 'Path to the content feed'
+    uarizona_news_terms:
+      type: sequence
+      label: 'Selected terms query'
+      nullable: true
+      sequence:
+        type: string
+        label: 'Term'
+    uarizona_news_vocabularies:
+      type: sequence
+      label: 'Selected vocabulary query'
+      nullable: true
+      sequence:
+        type: string
+        label: 'Vocabulary'

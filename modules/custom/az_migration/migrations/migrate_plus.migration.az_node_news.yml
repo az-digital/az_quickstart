@@ -243,10 +243,21 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
+  
   path/pathauto:
-    plugin: default_value
-    default_value: 0
-  path/alias: alias
+    - 
+      plugin: skip_on_empty
+      source: alias
+      method: process
+    -
+      plugin: default_value
+      default_value: 0
+
+  path/alias:
+    - 
+      plugin: skip_on_empty
+      source: alias
+      method: process
 
 dependencies:
   enforced:

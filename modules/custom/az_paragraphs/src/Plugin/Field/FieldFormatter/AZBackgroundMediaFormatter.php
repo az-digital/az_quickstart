@@ -5,6 +5,7 @@ namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
+//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
 use Drupal\file\FileInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -409,12 +410,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $paragraph_settings = [];
     $parent = $items->getEntity();
     // Get settings from parent paragraph.
-    if (!empty($parent)) {
-      if ($parent instanceof ParagraphInterface) {
-        $paragraph_settings = $parent->getAllBehaviorSettings();
-        if (!empty($paragraph_settings['az_text_media_paragraph_behavior'])) {
-          $paragraph_settings_all = $paragraph_settings['az_text_media_paragraph_behavior'];
-        }
+    if ($parent instanceof ParagraphInterface) {
+      $paragraph_settings = $parent->getAllBehaviorSettings();
+      if (!empty($paragraph_settings['az_text_media_paragraph_behavior'])) {
+        $paragraph_settings_all = $paragraph_settings['az_text_media_paragraph_behavior'];
       }
     }
     return $paragraph_settings;
@@ -446,7 +445,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           break;
 
         default:
-          $all_settings['css_settings']['attachment'] = $default_settings['css_settings']['attachment'];
+          $all_settings['css_settings']['attachment'] = $this->defaultSettings()['css_settings']['attachment'];
       }
     }
     return $all_settings;
@@ -512,7 +511,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#attributes' => [
           'id' => [$video_oembed_id . '-bg-video-container'],
           'class' => [
-            'az-video-loading',
             'az-video-background',
             'az-js-video-background',
           ],
@@ -527,12 +525,24 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
         $az_background_media[] = $background_video;
+        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+          $image_renderable = [
+            '#theme' => 'responsive_image_formatter',
+            '#responsive_image_style_id' => 'az_full_width_background',
+            '#item' => $media->thumbnail,
+            '#item_attributes' => [
+              'class' => ['img-fluid', ' w-100', 'invisible'],
+            ],
+          ];
+          $az_background_media[] = $image_renderable;
+        }
       }
       elseif ($settings['style'] === 'bottom') {
         $image_renderable = [
-          '#theme' => 'image',
-          '#uri' => file_create_url($file_uri),
-          '#attributes' => [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => 'az_full_width_background',
+          '#item' => $media->thumbnail,
+          '#item_attributes' => [
             'class' => ['img-fluid'],
           ],
         ];
@@ -549,8 +559,8 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $az_background_media[] = $text_on_bottom;
 
       }
-      return $az_background_media;
     }
+    return $az_background_media;
   }
 
   /**
@@ -579,6 +589,17 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
+      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+        $image_renderable = [
+          '#theme' => 'responsive_image_formatter',
+          '#responsive_image_style_id' => 'az_full_width_background',
+          '#item' => $media->field_media_az_image,
+          '#item_attributes' => [
+            'class' => ['img-fluid', ' w-100', 'invisible'],
+          ],
+        ];
+        $az_background_media[] = $image_renderable;
+      }
 
       $az_background_media[] = $responsive_image_style_element;
     }

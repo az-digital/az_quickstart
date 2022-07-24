@@ -7,7 +7,7 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_remote_video
   module:
-    - image
+    - image_widget_crop
     - media
     - path
 id: media.az_remote_video.default
@@ -24,10 +24,20 @@ content:
   field_media_az_image:
     weight: 1
     settings:
-      progress_indicator: throbber
+      show_default_crop: true
+      warn_multiple_usages: true
       preview_image_style: thumbnail
+      crop_preview_image_style: crop_thumbnail
+      crop_list:
+        - az_full_width_bg_extra_small
+        - az_full_width_bg_large
+        - az_full_width_bg_medium
+        - az_full_width_bg_small
+      progress_indicator: throbber
+      crop_types_required: {  }
+      show_crop_area: false
     third_party_settings: {  }
-    type: image_image
+    type: image_widget_crop
     region: content
   field_media_az_oembed_video:
     type: oembed_textfield

@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.az-footer-resources
+  module:
+    - block_class
+    - menu_block
+  theme:
+    - az_barrio
+  enforced:
+    module:
+      - az_global_footer
+third_party_settings:
+  block_class:
+    classes: 'col-12 col-sm-6 col-md-2'
+id: az_barrio_footer_menu_resources
+theme: az_barrio
+region: footer_sub_menus
+weight: -9
+provider: null
+plugin: 'menu_block:az-footer-resources'
+settings:
+  id: 'menu_block:az-footer-resources'
+  label: Resources
+  provider: menu_block
+  label_display: visible
+  follow: false
+  follow_parent: child
+  level: 1
+  depth: 0
+  expand_all_items: false
+  parent: 'az-footer-resources:'
+  suggestion: sub_footer
+  label_type: block
+  label_link: false
+visibility: {  }

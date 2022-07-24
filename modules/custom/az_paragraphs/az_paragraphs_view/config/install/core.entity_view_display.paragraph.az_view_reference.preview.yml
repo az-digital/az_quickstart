@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.paragraph.preview
+    - field.field.paragraph.az_view_reference.field_az_title
+    - field.field.paragraph.az_view_reference.field_az_view_reference
+    - paragraphs.paragraphs_type.az_view_reference
+  module:
+    - field_group
+    - viewsreference
+third_party_settings:
+  field_group:
+    group_title:
+      children:
+        - field_az_title
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      region: content
+      format_settings:
+        id: ''
+        classes: ''
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+      label: Title
+id: paragraph.az_view_reference.preview
+targetEntityType: paragraph
+bundle: az_view_reference
+mode: preview
+content:
+  field_az_title:
+    weight: 1
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_az_view_reference:
+    weight: 2
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: viewsreference_label_formatter
+    region: content
+hidden: {  }

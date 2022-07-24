@@ -6,6 +6,11 @@
  * of these @include files will be combined into a single file.
  */
 
+/* For structuring header utilities*/
+header#header_arizona {
+  min-height: 10px;
+}
+
 /* Sticky footer */
 html.sticky-footer #page {
   display: -webkit-box;
@@ -24,6 +29,10 @@ html.sticky-footer #main-wrapper {
   -ms-flex: 1 0 auto;
   flex: 1 0 auto;
   width: 100%;
+}
+/* Footer Social Media Icons */
+.az-icon-spacing::before {
+  margin-right:  .4rem;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
@@ -390,7 +399,7 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-.search-block-form .input-group-append button#edit-submit {
+.search-block-form .input-group-append button {
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -398,8 +407,8 @@ padding: 0.625rem .75rem;
   padding: 0 8px;
 }
 
-form.search-block-form .input-group .input-group-append button#edit-submit:hover,
-form.search-block-form .input-group .input-group-append button#edit-submit:focus {
+form.search-block-form .input-group .input-group-append button:hover,
+form.search-block-form .input-group .input-group-append button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
@@ -661,6 +670,8 @@ fieldset.collapsed {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Field overrides */
 .field--type-image img,
 .field--name-field-user-picture img {
   margin: initial;

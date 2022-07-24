@@ -145,6 +145,7 @@ class AZCardWidget extends WidgetBase {
           $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
         '#attributes' => ['class' => ['card']],
       ];
+
       // Add card class from options.
       if (!empty($items[$delta]->options['class'])) {
         $element['preview_container']['card_preview']['#attributes']['class'][] = $items[$delta]->options['class'];
@@ -173,6 +174,11 @@ class AZCardWidget extends WidgetBase {
       }
     }
 
+    // Add link class from options.
+    if (!empty($items[$delta]->options['link_style'])) {
+      $element['preview_container']['card_preview']['#link']['#attributes']['class'] = explode(' ', $items[$delta]->options['link_style']);
+    }
+
     $element['options'] = [
       '#type' => 'select',
       '#options' => [
@@ -188,6 +194,9 @@ class AZCardWidget extends WidgetBase {
         'bg-chili' => $this->t('Chili'),
         'bg-cool-gray' => $this->t('Cool Gray'),
         'bg-warm-gray' => $this->t('Warm Gray'),
+        'bg-gray-100' => $this->t('Gray 100'),
+        'bg-gray-200' => $this->t('Gray 200'),
+        'bg-gray-300' => $this->t('Gray 300'),
         'bg-leaf' => $this->t('Leaf'),
         'bg-river' => $this->t('River'),
         'bg-silver' => $this->t('Silver'),
@@ -201,7 +210,7 @@ class AZCardWidget extends WidgetBase {
     $element['media'] = [
       '#type' => 'media_library',
       '#title' => $this->t('Card Media'),
-      '#default_value' => isset($items[$delta]->media) ? $items[$delta]->media : NULL,
+      '#default_value' => $items[$delta]->media ?? NULL,
       '#allowed_bundles' => ['az_image'],
       '#delta' => $delta,
       '#cardinality' => 1,
@@ -210,21 +219,21 @@ class AZCardWidget extends WidgetBase {
     $element['title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Title'),
-      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : NULL,
+      '#default_value' => $items[$delta]->title ?? NULL,
       '#maxlength' => 255,
     ];
 
     $element['body'] = [
       '#type' => 'text_format',
       '#title' => $this->t('Card Body'),
-      '#default_value' => isset($items[$delta]->body) ? $items[$delta]->body : NULL,
+      '#default_value' => $items[$delta]->body ?? NULL,
       '#format' => $items[$delta]->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
     ];
 
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
-      '#default_value' => isset($items[$delta]->link_title) ? $items[$delta]->link_title : NULL,
+      '#default_value' => $items[$delta]->link_title ?? NULL,
     ];
 
     $element['link_uri'] = [
@@ -232,7 +241,22 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Card Link URL'),
       '#element_validate' => [[$this, 'validateCardLink']],
-      '#default_value' => isset($items[$delta]->link_uri) ? $items[$delta]->link_uri : NULL,
+      '#default_value' => $items[$delta]->link_uri ?? NULL,
+      '#maxlength' => 2048,
+    ];
+
+    $element['link_style'] = [
+      '#type' => 'select',
+      '#options' => [
+        'btn-block' => $this->t('Text link'),
+        'btn btn-block btn-red' => $this->t('Red button'),
+        'btn btn-block btn-blue' => $this->t('Blue button'),
+        'btn btn-block btn-outline-red' => $this->t('Red outline button'),
+        'btn btn-block btn-outline-blue' => $this->t('Blue outline button'),
+        'btn btn-block btn-outline-white' => $this->t('White outline button'),
+      ],
+      '#title' => $this->t('Card Link Style'),
+      '#default_value' => (!empty($items[$delta]->options['link_style'])) ? $items[$delta]->options['link_style'] : 'btn-block',
     ];
 
     if (!$items[$delta]->isEmpty()) {
@@ -436,7 +460,7 @@ class AZCardWidget extends WidgetBase {
       $form_state->setUserInput($formInputs);
     }
 
-    $element_id = isset($form[$field_name]['#id']) ? $form[$field_name]['#id'] : '';
+    $element_id = $form[$field_name]['#id'] ?? '';
     if (!$element_id) {
       $element_id = $parent_element['#id'];
     }
@@ -516,8 +540,11 @@ class AZCardWidget extends WidgetBase {
       if ($value['link_uri'] === '') {
         $values[$delta]['link_uri'] = NULL;
       }
-      if (!empty($value['options'])) {
-        $values[$delta]['options'] = ['class' => $value['options']];
+      if (!empty($value['options']) || !empty($value['link_style'])) {
+        $values[$delta]['options'] = [
+          'class' => $value['options'],
+          'link_style' => $value['link_style'],
+        ];
       }
       $values[$delta]['body'] = $value['body']['value'];
       $values[$delta]['body_format'] = $value['body']['format'];

@@ -347,6 +347,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight
           plugin_id: standard
         field_az_person_category_target_id:
           id: field_az_person_category_target_id
@@ -359,6 +360,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_person_category_target_id
           plugin_id: standard
         field_az_lname_value:
           id: field_az_lname_value
@@ -371,6 +373,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_lname_value
           plugin_id: standard
         field_az_fname_value:
           id: field_az_fname_value
@@ -383,6 +386,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_fname_value
           plugin_id: standard
       title: 'Reorder People'
       header: {  }

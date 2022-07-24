@@ -2,11 +2,9 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
-use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -46,6 +44,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'position' => '',
       'text_media_spacing' => 'y-5',
       'bg_attachment' => '',
+      'title_level' => 'h2',
+      'title_alignment' => 'text-left',
     ];
   }
 
@@ -83,24 +83,24 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Content background color'),
       '#type' => 'select',
       '#options' => [
-        'light' => $this->t('Light'),
-        'dark' => $this->t('Dark'),
-        'transparent' => $this->t('Transparent'),
+        'bg-transparent-white' => $this->t('Light'),
+        'bg-transparent-black' => $this->t('Dark'),
+        'bg-transparent' => $this->t('Transparent'),
       ],
       '#default_value' => $config['bg_color'],
       '#description' => $this->t('The color of the content background.'),
     ];
     $form['position'] = [
-      '#title' => $this->t('Content position'),
+      '#title' => $this->t('Content alignment'),
       '#type' => 'select',
       '#options' => [
-        'col-md-8 col-lg-6' => $this->t('Position left'),
-        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Position center'),
-        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Position right'),
-        'col-xs-12' => $this->t('None'),
+        'col-md-8 col-lg-6' => $this->t('Content left'),
+        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Content center'),
+        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Content right'),
+        'col-xs-12' => $this->t('Full-width'),
       ],
       '#default_value' => $config['position'],
-      '#description' => $this->t('The position of the content on the media.'),
+      '#description' => $this->t('The alignment of the content on the media.'),
       '#states' => [
         'invisible' => [
           ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
@@ -139,6 +139,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
         'y-10' => $this->t('10 (8.0rem | ~128px)'),
         'y-20' => $this->t('20 (16.0rem | ~256px)'),
         'y-30' => $this->t('30 (24.0rem | ~384px)'),
+        'az-aspect-ratio' => $this->t('Media Aspect Ratio'),
       ],
       '#default_value' => $config['text_media_spacing'],
       '#description' => $this->t('Adds spacing above and below the text.'),
@@ -147,6 +148,31 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           ':input[id="' . $style_unique_id . '"]' => ['value' => 'bottom'],
         ],
       ],
+    ];
+    $form['title_level'] = [
+      '#title' => $this->t('Title heading level'),
+      '#type' => 'select',
+      '#options' => [
+        'h1' => $this->t('Page title (H1)'),
+        'h2' => $this->t('Section heading (H2)'),
+        'h3' => $this->t('Subsection heading (H3)'),
+        'h4' => $this->t('Subsection heading (H4)'),
+        'h5' => $this->t('Subsection heading (H5)'),
+        'h6' => $this->t('Subsection heading (H6)'),
+      ],
+      '#default_value' => $config['title_level'],
+      '#description' => $this->t('The heading level of the title. <a href="https://quickstart.arizona.edu/best-practices/using-headings" target="_blank">Learn about best web practices</a>.'),
+    ];
+    $form['title_alignment'] = [
+      '#title' => $this->t('Title alignment'),
+      '#type' => 'select',
+      '#options' => [
+        'text-left' => $this->t('Title left'),
+        'text-center' => $this->t('Title center'),
+        'text-right' => $this->t('Title right'),
+      ],
+      '#default_value' => $config['title_alignment'],
+      '#description' => $this->t('The alignment of the title.'),
     ];
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -179,7 +205,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $paragraph_status = $paragraph->status->value ? 'published' : 'unpublished';
     $variables['attributes']['id'] = HTML::getId($paragraph->bundle() . '-' . $paragraph->id());
     if (!empty($variables['attributes']) && !empty($variables['attributes']['class']) && !is_array($variables['attributes']['class'])) {
-      $variables['attributes']['class'] = [];
+      $variables['attributes']['class'] = [$variables['attributes']['class']];
     }
     $variables['attributes']['class'][] = 'paragraph';
     $variables['attributes']['class'][] = 'position-relative';
@@ -210,6 +236,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       HTML::getClass($config['style']),
     ];
 
+    // If this paragraph is full-width, add the full-width library.
+    if (isset($config['full_width']) && $config['full_width'] === 'full-width-background') {
+      $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
+    }
+
     // Add responsive spacing classes.
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
       $spacing_prefix = '';
@@ -230,35 +261,47 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           $content_classes[] = HTML::getClass($spacing_prefix . 'y-md-30');
           break;
 
+        case 'az-aspect-ratio':
+          $variables['attributes']['class'][] = 'az-aspect-ratio';
+          break;
+
         default:
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }
     }
-
+    if ($config['style'] === 'bottom') {
+      if ($config['bg_color'] === 'bg-transparent-white') {
+        $key = array_search('bg-transparent-white', $content_classes);
+        unset($content_classes[$key]);
+        $content_classes[] = 'bg-white';
+        $content_classes[] = 'shadow';
+        $content_classes[] = 'mb-4';
+      }
+      elseif ($config['bg_color'] === 'bg-transparent-black') {
+        $key = array_search('bg-transparent-black', $content_classes);
+        unset($content_classes[$key]);
+        $content_classes[] = 'bg-black';
+        $content_classes[] = 'shadow';
+        $content_classes[] = 'mb-4';
+      }
+    }
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
+    // Set title element if a heading level other than h2 (the default) was selected.
+    if ($config['title_level'] !== 'h2') {
+      $variables['elements']['#fieldgroups']['group_az_title']->format_settings['element'] = $config['title_level'];
+    }
     // Get title classes.
     $title_classes = [
       'mt-0',
       'bold',
+      HTML::getClass($config['title_alignment']),
     ];
-    if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
+    if (!empty($config['bg_color']) && $config['bg_color'] !== 'bg-transparent-black') {
       $title_classes[] = 'text-blue';
     }
     // Set title classes.
     $variables['elements']['#fieldgroups']['group_az_title']->format_settings['classes'] = implode(' ', $title_classes);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function view(array &$build, Paragraph $paragraph, EntityViewDisplayInterface $display, $view_mode) {
-    // Get plugin configuration.
-    $config = $this->getSettings($paragraph);
-    // Apply bottom spacing if set.
-    if (!empty($config['az_display_settings']['bottom_spacing'])) {
-      $build['#attributes']['class'] = $config['az_display_settings']['bottom_spacing'];
-    }
   }
 
 }
