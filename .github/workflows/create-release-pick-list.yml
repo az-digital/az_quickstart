@@ -1,0 +1,19 @@
+name: Create Release Pick List
+on:
+   workflow_dispatch:
+    inputs:
+      version:
+        description: The version to tag and release
+        required: true
+jobs:
+  echo-input:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/github-script@v6
+        env:
+          SHA: '${{ github.event.inputs.version }}'
+        with:
+          script: |
+            const script = require('./scripts/create-release-get-pick-list.js')
+            await script({github, context, core})
