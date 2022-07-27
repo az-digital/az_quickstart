@@ -198,6 +198,7 @@ class AZCardWidget extends WidgetBase {
         'bg-river' => $this->t('River'),
         'bg-silver' => $this->t('Silver'),
         'bg-ash' => $this->t('Ash'),
+        'bg-mesa' => $this->t('Mesa'),
       ],
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
