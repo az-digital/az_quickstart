@@ -231,7 +231,7 @@ function az_quickstart_update_920103() {
  * Ensure Pathauto patterns have been properly updated for Drupal 9.3.0+.
  *
  * Duplicates pathauto_update_8108() to ensure that sites created since
- * Quickstart 2.3.0 have their Pathauto pattern configuration entities  updated.
+ * Quickstart 2.3.0 have their Pathauto pattern configuration entities updated.
  */
 function az_quickstart_update_920301() {
   // Load all pattern configuration entities.
