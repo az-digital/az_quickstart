@@ -54,7 +54,7 @@
         "drupal/config_update": "1.7",
         "drupal/core-recommended": "9.4.3",
         "drupal/crop": "2.2.0",
-        "drupal/ctools": "3.10.0",
+        "drupal/ctools": "3.9.0",
         "drupal/date_ap_style": "1.5.0",
         "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "2.0.3",
@@ -168,10 +168,6 @@
             },
             "drupal/paragraphs": {
                 "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
-            },
-            "drupal/pathauto": {
-                "Drupal 10 compatibility, require Drupal 9.3 (3266631)": "https://git.drupalcode.org/project/pathauto/-/commit/b71509771d9071a81d4a9bd99babb5df3d6f5db9.diff",
-                "Remove dependency on CTools (3222775)": "https://www.drupal.org/files/issues/2022-06-25/3222775-16.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
