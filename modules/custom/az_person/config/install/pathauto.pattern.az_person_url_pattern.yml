@@ -8,10 +8,10 @@ label: 'Person Content Type'
 type: 'canonical_entities:node'
 pattern: 'person/[node:title]'
 selection_criteria:
-  ae526991-c3db-4048-97bd-91e8060f8958:
+  b204ad38-c993-453e-b9ba-4200941238f4:
     id: 'entity_bundle:node'
     negate: false
-    uuid: ae526991-c3db-4048-97bd-91e8060f8958
+    uuid: b204ad38-c993-453e-b9ba-4200941238f4
     context_mapping:
       node: node
     bundles:

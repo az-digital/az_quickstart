@@ -8,10 +8,10 @@ label: 'News Content Type'
 type: 'canonical_entities:node'
 pattern: 'news/[node:title]'
 selection_criteria:
-  f3ee6f89-c582-492f-b275-56899271f46d:
+  07e97b57-dc82-453f-8cc0-5495a8e14ceb:
     id: 'entity_bundle:node'
     negate: false
-    uuid: f3ee6f89-c582-492f-b275-56899271f46d
+    uuid: 07e97b57-dc82-453f-8cc0-5495a8e14ceb
     context_mapping:
       node: node
     bundles:
