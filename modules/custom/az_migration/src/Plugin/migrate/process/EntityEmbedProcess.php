@@ -9,7 +9,6 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 use Drupal\Core\Database\Database;
 use Masterminds\HTML5;
-use Masterminds\HTML5\Parser\StringInputStream;
 
 /**
  * Process Plugin to handle embedded entities in HTML text.
