@@ -210,11 +210,6 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $value_is_array = is_array($value);
-    $text = (string) ($value_is_array ? $value['value'] : $value);
-    if (strpos($text, '<drupal-entity ') === FALSE) {
-      return $value;
-    }
 
     // Document why HTML5 instead of DomDocument.
     $html5 = new HTML5(['disable_html_ns' => TRUE]);
