@@ -209,13 +209,14 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
+    // Return $value if there are no <drupal-entity> elements.
     if (strpos($value, '<drupal-entity ') === FALSE) {
       return $value;
     }
+
     $html5 = new HTML5(['disable_html_ns' => TRUE]);
     $dom_text = '<html><body>' . $value . '</body></html>';
     $dom = $html5->parse($dom_text);
-
     $elements = $dom->getElementsByTagName("drupal-entity");
 
     // Configuration of custom content.
