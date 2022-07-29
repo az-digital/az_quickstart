@@ -299,7 +299,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       }
     }
     $result = $html5->saveHTML($dom->documentElement->firstChild->childNodes);
-    return $value;
+    return $result;
   }
 
 }
