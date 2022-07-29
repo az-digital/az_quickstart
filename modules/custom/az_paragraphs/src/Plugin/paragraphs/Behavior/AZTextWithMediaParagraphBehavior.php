@@ -237,7 +237,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
 
     // If this paragraph is full-width, add the full-width library.
-    if (isset($config['text_background_full_width']) && $config['text_background_full_width'] === 'full-width-background') {
+    if (isset($config['full_width']) && $config['full_width'] === 'full-width-background') {
       $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
     }
 
@@ -270,15 +270,15 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       }
     }
     if ($config['style'] === 'bottom') {
-      if ($config['bg_color'] === 'light') {
-        $key = array_search('light', $content_classes);
+      if ($config['bg_color'] === 'bg-transparent-white') {
+        $key = array_search('bg-transparent-white', $content_classes);
         unset($content_classes[$key]);
         $content_classes[] = 'bg-white';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
-      elseif ($config['bg_color'] === 'dark') {
-        $key = array_search('dark', $content_classes);
+      elseif ($config['bg_color'] === 'bg-transparent-black') {
+        $key = array_search('bg-transparent-black', $content_classes);
         unset($content_classes[$key]);
         $content_classes[] = 'bg-black';
         $content_classes[] = 'shadow';

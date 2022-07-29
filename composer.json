@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "az-digital/arizona-bootstrap": "2.0.15",
+        "az-digital/arizona-bootstrap": "2.0.16",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
@@ -52,10 +52,10 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.4.2",
+        "drupal/core-recommended": "9.4.3",
         "drupal/crop": "2.2.0",
-        "drupal/ctools": "4.0.0",
-        "drupal/date_ap_style": "1.4",
+        "drupal/ctools": "4.0.1",
+        "drupal/date_ap_style": "1.5.0",
         "drupal/draggableviews": "2.0.1",
         "drupal/easy_breadcrumb": "2.0.3",
         "drupal/embed": "1.5.0",
@@ -69,7 +69,7 @@
         "drupal/google_tag": "1.5.0",
         "drupal/honeypot": "2.1.1",
         "drupal/image_widget_crop": "2.3",
-        "drupal/intelligencebank": "2.5",
+        "drupal/intelligencebank": "3.0-beta1",
         "drupal/jquery_ui": "1.4",
         "drupal/jquery_ui_datepicker": "1.2.0",
         "drupal/link_class": "2.0.0",
@@ -158,7 +158,7 @@
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
             "drupal/intelligencebank": {
-                "Disable thumbnail download. (3284562)": "https://www.drupal.org/files/issues/2022-06-20/3284562-5.patch"
+                "Don't modify entity_embed dialog in non Entity Browser contexts (3299165)": "https://www.drupal.org/files/issues/2022-07-22/3299165-4.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
@@ -168,6 +168,9 @@
             },
             "drupal/paragraphs": {
                 "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
+            },
+            "drupal/role_delegation": {
+                "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
             },
             "drupal/smart_date": {
                 "PHP error when creating smart_date_rule entities that are not attached to entities (3274881)": "https://www.drupal.org/files/issues/2022-04-12/issue-3274881-6-mr.patch"
