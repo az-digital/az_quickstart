@@ -1,0 +1,5 @@
+/* Do not traverse card preview links. */
+
+.az-card-no-follow {
+    cursor: not-allowed;
+}

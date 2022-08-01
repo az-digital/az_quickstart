@@ -64,7 +64,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return ['foo' => 'bar'] + parent::defaultSettings();
+    return ['interactive_links' => TRUE] + parent::defaultSettings();
   }
 
   /**
@@ -73,11 +73,10 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
-    // @todo Card style selection (based on custom config entities).
-    $element['foo'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $settings['foo'],
+    $element['interactive_links'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Interactive Links'),
+      '#default_value' => $settings['interactive_links'],
     ];
     return $element;
   }
@@ -87,7 +86,12 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    */
   public function settingsSummary() {
     $settings = $this->getSettings();
-    $summary[] = $this->t('Foo: @foo', ['@foo' => $settings['foo']]);
+
+    $interactive = 'No';
+    if (!empty($settings['interactive_links'])) {
+      $interactive = 'Yes';
+    }
+    $summary[] = $this->t('Interactive: @interactive', ['@interactive' => $interactive]);
     return $summary;
   }
 
@@ -95,6 +99,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    $settings = $this->getSettings();
     $element = [];
 
     /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
@@ -111,6 +116,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
       }
 
+      $attached = [];
+
       // Link.
       $link_render_array = [];
       if ($item->link_title || $item->link_uri) {
@@ -124,13 +131,17 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         if (!empty($item->options['link_style'])) {
           $link_render_array['#attributes']['class'] = explode(' ', $item->options['link_style']);
         }
+        if (empty($settings['interactive_links'])) {
+          $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
+          $link_render_array['#attributes']['onClick'] = "return false;";
+          $attached['library'][] = 'az_card/az_card_no_follow';
+        }
       }
 
       $card_classes = 'card';
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
-      $attached = [];
 
       // Get settings from parent paragraph.
       if ($parent instanceof ParagraphInterface) {
