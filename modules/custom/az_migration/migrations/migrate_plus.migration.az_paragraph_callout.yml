@@ -8,6 +8,10 @@ status: true
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_callout
+  content_moderation:
+    plugin: configuration_value
+    name: az_migration.settings
+    key: az_source_content_moderated
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'

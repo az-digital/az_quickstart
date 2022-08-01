@@ -30,7 +30,9 @@ class AZParagraphsItem extends ParagraphsItem {
       ->fields('pr', ['revision_id']);
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
     // Omit archived (deleted) paragraphs.
-    $query->condition('p.archived', 0);
+    if(!$this->configuration['content_moderation']){
+      $query->condition('p.archived', 0);
+    }
     // This configuration item may be set by a deriver to restrict the
     // bundles retrieved.
     if ($this->configuration['bundle']) {
