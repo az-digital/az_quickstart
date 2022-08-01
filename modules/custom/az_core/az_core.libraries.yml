@@ -4,3 +4,7 @@ claro-node-form-overrides:
       css/claro-node-form-overrides.css: {}
   dependencies:
     - claro/node-form
+az-core-toolbar:
+  css:
+    component:
+      css/az-core-toolbar.css: {}

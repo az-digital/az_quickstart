@@ -50,6 +50,16 @@ function az_core_toolbar() {
         ],
       ],
     ],
+    '#wrapper_attributes' => [
+      'class' => [
+        'az-version-indicator',
+      ],
+    ],
+    '#attached' => [
+      'library' => [
+        'az_core/az-core-toolbar',
+      ],
+    ],
     'tray' => [
       '#heading' => t('Quickstart links'),
       'az_links' => [
