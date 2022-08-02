@@ -3,15 +3,12 @@ label: AZ Paragraph Callout
 migration_group: az_migration
 migration_tags:
   - Quickstart Content Migration
+  - Quickstart Paragraphs
 status: true
 
 source:
   plugin: az_paragraphs_item
   bundle: uaqs_callout
-  content_moderation:
-    plugin: configuration_value
-    name: az_migration.settings
-    key: az_source_content_moderated
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'

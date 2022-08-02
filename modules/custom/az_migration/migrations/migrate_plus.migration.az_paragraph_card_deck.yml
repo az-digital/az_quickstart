@@ -3,6 +3,7 @@ label: AZ Paragraph Card Deck
 migration_group: az_migration
 migration_tags:
   - Quickstart Content Migration
+  - Quickstart Paragraphs
 status: true
 
 source:
