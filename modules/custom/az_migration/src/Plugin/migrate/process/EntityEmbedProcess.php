@@ -167,7 +167,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     }
     // If the file was deleted on the source site, we replace the embed tag with
     // a placeholder, otherwise we use the found ID.
-    if (!empty($ids) && is_array($ids)) {
+    if ($ids && is_array($ids)) {
       $id = reset($ids);
       if (!empty($id)) {
         $eid = reset($id);
