@@ -162,7 +162,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     $changed = $dom->createElement($tag);
     $changed->setAttribute('data-entity-type', $type);
     $ids = $this->migrateLookup->lookup($migration, [$id]);
-    if (empty($ids)) {
+    if (!$ids) {
       $ids = "deleted_file";
     }
     // If the file was deleted on the source site, we replace the embed tag with
