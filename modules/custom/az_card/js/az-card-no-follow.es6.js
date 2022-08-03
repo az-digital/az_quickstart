@@ -4,9 +4,11 @@
  * under certain circumstances.
  */
 
- ((document) => {
+((document) => {
   /**
    * Disables links for cards.
+   *
+   * @param {ClickEvent} event - Click event.
    */
   function noFollow(event) {
     event.preventDefault();
@@ -19,5 +21,4 @@
   [...cards].forEach((card) => {
     card.addEventListener('click', noFollow);
   });
-
 })(this.document);
