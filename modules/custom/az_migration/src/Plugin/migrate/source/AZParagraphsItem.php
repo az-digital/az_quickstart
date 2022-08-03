@@ -44,7 +44,7 @@ class AZParagraphsItem extends ParagraphsItem {
       ->fields('pr', ['revision_id']);
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
 
-    if (empty($this->sourceContentModerated) || $this->sourceContentModerated === 'false' || $this->sourceContentModerated === FALSE || $this->sourceContentModerated === 0) {
+    if (empty($this->sourceContentModerated)) {
       // Omit archived (deleted) paragraphs.
       $query->condition('p.archived', 0);
     }
