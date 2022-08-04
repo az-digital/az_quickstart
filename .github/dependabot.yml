@@ -6,3 +6,5 @@ updates:
       interval: "daily"
     reviewers:
       - "az-digital/developers"
+    # Allow up to 10 open pull requests
+    open-pull-requests-limit: 10
