@@ -11,7 +11,6 @@ az_card_no_follow:
   dependencies:
     - core/drupal.nodelist.foreach
 
-
 az_card_title_hover:
   css:
     component:
