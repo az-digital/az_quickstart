@@ -133,7 +133,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
         if (empty($settings['interactive_links'])) {
           $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
-          $link_render_array['#attributes']['onclick'] = "return false;";
           $attached['library'][] = 'az_card/az_card_no_follow';
         }
       }
