@@ -77,6 +77,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       '#type' => 'checkbox',
       '#title' => $this->t('Interactive Links'),
       '#default_value' => $settings['interactive_links'],
+      '#description' => $this->t('If set, card links are clickable. Uncheck this setting to disable all card links. A common use-case is on the "Preview" view mode to prevent users from losing edit data if accidentally clicking on cards from the edit form.');
     ];
     return $element;
   }
