@@ -368,6 +368,25 @@ td.menu-disabled {
   }
 }
 
+.breadcrumb-item+.breadcrumb-item:before {
+  float: left;
+  padding-right: 0.5rem;
+  color: #000000;
+  content: “\e5cc”;
+  font-family: ‘Material Icons Sharp’;
+}
+
+.breadcrumb {
+  font-size: small;
+  display: inline-flex;
+  padding: 2px 5px;
+  margin: 5px 0;
+  background-color: #e9ecef;
+}
+.breadcrumb-item.active {
+-/* color: #6c757d; */-
+}
+  
 a.btn.btn-redbar {
   padding: .5rem 0 0 0;
 }

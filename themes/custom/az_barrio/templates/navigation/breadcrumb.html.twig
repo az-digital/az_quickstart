@@ -7,13 +7,15 @@
  * - breadcrumb: Breadcrumb trail items.
  */
 #}
-
 {% if breadcrumb %}
   <nav role="navigation" aria-label="breadcrumb">
     <ol class="breadcrumb">
+      <span class="material-icons-sharp">
+        home
+      </span>
     {% for item in breadcrumb %}
       {% if item.url %}
-        <li class="breadcrumb-item">
+        <li class="breadcrumb-item ml-1">
           <a href="{{ item.url }}">{{ item.text }}</a>
         </li>
       {% else %}
