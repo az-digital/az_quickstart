@@ -7,7 +7,7 @@ dependencies:
     - az_barrio
 id: az_barrio_page_title
 theme: az_barrio
-region: content
+region: content_top
 weight: -50
 provider: null
 plugin: page_title_block
