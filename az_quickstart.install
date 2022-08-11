@@ -230,6 +230,6 @@ function az_quickstart_update_920103() {
 /**
  * Install linkit.
  */
-function az_quickstart_update_920104() {
+function az_quickstart_update_920301() {
   \Drupal::service('module_installer')->install(['linkit']);
 }
