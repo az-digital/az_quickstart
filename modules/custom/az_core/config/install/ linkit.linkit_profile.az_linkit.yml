@@ -1,0 +1,44 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.linkit_result_thumbnail
+  module:
+    - file
+    - image
+    - node
+label: 'Quickstart LinkIt'
+id: az_linkit
+description: 'Provides easy linking to Quickstart content and media for site editors.'
+matchers:
+  3a30add7-6018-45d3-afea-c0c311ac4bc9:
+    id: 'entity:node'
+    uuid: 3a30add7-6018-45d3-afea-c0c311ac4bc9
+    settings:
+      metadata: '[node:nid] | Section: [node:menu-link:parents:first]'
+      bundles:
+        az_event: az_event
+        az_flexible_page: az_flexible_page
+        az_news: az_news
+        az_person: az_person
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+    weight: 0
+  829301bf-f4fa-42e3-a3fe-4c89a8868633:
+    id: 'entity:file'
+    uuid: 829301bf-f4fa-42e3-a3fe-4c89a8868633
+    settings:
+      metadata: 'Created: [file:created] | Modified: [file:changed] | ID: [file:fid]'
+      bundles: null
+      group_by_bundle: null
+      substitution_type: file
+      limit: 100
+      file_extensions: 'pdf doc docx pps ppt xlsx xls'
+      file_status: 1
+      images:
+        show_dimensions: false
+        show_thumbnail: true
+        thumbnail_image_style: linkit_result_thumbnail
+    weight: 0

@@ -226,3 +226,10 @@ function az_quickstart_update_920103() {
     return t('Environment Indicator module installed.');
   }
 }
+
+/**
+ * Install linkit.
+ */
+function az_quickstart_update_920104() {
+  \Drupal::service('module_installer')->install(['linkit']);
+}

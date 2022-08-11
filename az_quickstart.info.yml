@@ -75,6 +75,7 @@ install:
   - search_exclude:search_exclude
   - draggableviews:draggableviews
   - role_delegation:role_delegation
+  - drupal:linkit
 
 themes:
   - az_barrio
