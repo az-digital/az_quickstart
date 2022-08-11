@@ -40,9 +40,6 @@ settings:
           items:
             - Source
   plugins:
-    drupallink:
-      linkit_enabled: true
-      linkit_profile: az_linkit
     stylescombo:
       styles: ''
 image_upload:
