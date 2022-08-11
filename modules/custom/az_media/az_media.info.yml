@@ -14,3 +14,4 @@ dependencies:
   - image_widget_crop:image_widget_crop
   - bootstrap_utilities:bootstrap_utilities
   - media_library_edit:media_library_edit
+  - az_core
