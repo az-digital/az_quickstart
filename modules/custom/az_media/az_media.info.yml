@@ -15,3 +15,4 @@ dependencies:
   - bootstrap_utilities:bootstrap_utilities
   - media_library_edit:media_library_edit
   - az_core
+  - linkit:linkit
