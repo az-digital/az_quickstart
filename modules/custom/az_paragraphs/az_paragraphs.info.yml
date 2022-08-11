@@ -11,3 +11,4 @@ dependencies:
   - drupal:text
   - drupal:telephone
   - entity_embed:entity_embed
+  - linkit:linkit
