@@ -208,6 +208,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
+    $value = mb_convert_encoding($value, 'UTF-8');
     $dom = new \DOMDocument();
     $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $elements = $dom->getElementsByTagName("drupal-entity");
