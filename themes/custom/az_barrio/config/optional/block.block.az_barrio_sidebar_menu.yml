@@ -9,7 +9,7 @@ dependencies:
     - az_barrio
 id: az_barrio_sidebar_menu
 theme: az_barrio
-region: sidebar
+region: sidebar_first
 weight: 0
 provider: null
 plugin: 'menu_block:main'
@@ -20,11 +20,12 @@ settings:
   provider: menu_block
   follow: false
   follow_parent: active
-  label_link: false
-  label_type: root
   level: 2
   depth: 0
   expand_all_items: false
   parent: 'main:'
   suggestion: sidebar
+  label_type: root
+  label_link: false
+  expand: false
 visibility: {  }
