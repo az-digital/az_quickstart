@@ -367,9 +367,6 @@ td.menu-disabled {
     display: none;
   }
 }
-#block-az-barrio-sidebar-menu-menu {
-  margin-top: 0 !important;
-}
 
 a.btn.btn-redbar {
   padding: .5rem 0 0 0;
