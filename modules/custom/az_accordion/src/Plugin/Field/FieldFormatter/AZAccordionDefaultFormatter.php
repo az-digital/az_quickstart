@@ -125,7 +125,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#body' => [
           '#type' => 'processed_text',
-          '#text' => $item->body,
+          '#text' => $item->body ?? '',
           '#format' => $item->body_format,
           '#langcode' => $item->getLangcode(),
         ],
