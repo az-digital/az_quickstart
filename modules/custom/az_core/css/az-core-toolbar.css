@@ -1,7 +1,0 @@
-/*
-  Adds CSS for AZ Quickstart toolbar.
-*/
-
-.toolbar .toolbar-bar .az-version-indicator.toolbar-tab {
-  float: right;
-}
