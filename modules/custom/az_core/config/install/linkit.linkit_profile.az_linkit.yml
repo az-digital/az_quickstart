@@ -9,7 +9,7 @@ dependencies:
     - node
   enforced:
     module:
-      az_core
+      - az_core
 label: 'Quickstart LinkIt'
 id: az_linkit
 description: 'Provides easy linking to Quickstart content and media for site editors.'
