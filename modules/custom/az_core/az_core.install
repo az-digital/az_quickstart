@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for az_core.
+ */
+
+/**
+ * Install linkit.
+ */
+function az_core_update_920301() {
+  \Drupal::service('module_installer')->install(['linkit']);
+}
