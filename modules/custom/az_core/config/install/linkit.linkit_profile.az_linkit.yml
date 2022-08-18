@@ -2,11 +2,14 @@ langcode: en
 status: true
 dependencies:
   config:
-    - image.style.linkit_result_thumbnail
+    - image.style.az_tiny_thumbnail
   module:
     - file
     - image
     - node
+  enforced:
+    module:
+      az_core
 label: 'Quickstart LinkIt'
 id: az_linkit
 description: 'Provides easy linking to Quickstart content and media for site editors.'
@@ -37,7 +40,7 @@ matchers:
       images:
         show_dimensions: false
         show_thumbnail: true
-        thumbnail_image_style: linkit_result_thumbnail
+        thumbnail_image_style: az_tiny_thumbnail
     weight: 0
   b1491acc-6a1b-4122-998c-311aaa699e48:
     id: 'entity:node'
@@ -67,7 +70,7 @@ matchers:
     id: 'entity:node'
     uuid: 5b479f8e-72a3-4398-91d2-fbd9e07b7cb0
     settings:
-      metadata: '[node:field_az_media_image:entity:thumbnail:linkit_result_thumbnail]'
+      metadata: '[node:field_az_media_image:entity:thumbnail:az_tiny_thumbnail]'
       bundles:
         az_person: az_person
       group_by_bundle: true
