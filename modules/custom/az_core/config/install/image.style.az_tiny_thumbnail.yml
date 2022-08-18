@@ -7,7 +7,7 @@ dependencies:
     - image
   enforced:
     module:
-      az_core
+      - az_core
 name: az_tiny_thumbnail
 label: 'Tiny thumbnail (50x50)'
 effects:
