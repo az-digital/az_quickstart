@@ -213,9 +213,9 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       return $value;
     }
     // Convert $value to UTF-8.
-    $value = mb_convert_encoding($value, 'UTF-8');
+    $value = mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8');
 
-    $dom = new \DOMDocument();
+    $dom = new \DOMDocument('1.0', 'UTF-8');
     $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
