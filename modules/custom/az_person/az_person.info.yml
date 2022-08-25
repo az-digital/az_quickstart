@@ -5,6 +5,7 @@ core_version_requirement: ^9
 package: The University of Arizona
 dependencies:
   - auto_entitylabel:auto_entitylabel
+  - az_alphabetical_listing
   - az_core
   - az_media
   - drupal:block
