@@ -6,13 +6,15 @@
       "uuid" : "8d5d7e34-7d98-489d-8415-fc0c72a6568f",
       "field_menu": [
         {
-          "menu_title": "",
+          "title": "",
           "menu": "main",
           "depth": 1,
           "level": 2,
           "expand_all_items": false,
           "follow": false,
-          "follow_parent": "child"
+          "follow_parent": "child",
+          "parent": "",
+          "parent_render": false
         }
       ]
     }

@@ -5,6 +5,6 @@ dependencies:
     module:
       - az_block_types_menu
 id: az_menu
-label: 'Menu'
+label: 'Menu Block'
 revision: 1
-description: 'Add a menu anywhere.'
+description: 'Add a menu anywhere with a block.'

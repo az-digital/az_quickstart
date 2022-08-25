@@ -40,13 +40,15 @@ process:
     plugin: sub_process
     source: field_menu
     process:
-      menu_title: menu_title
+      title: title
       menu: menu
       depth: depth
       level: level
       expand_all_items: expand_all_items
       follow: follow
       follow_parent: follow_parent
+      parent: parent
+      parent_render: parent_render
 
 destination:
   plugin: entity:block_content

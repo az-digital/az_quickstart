@@ -13,7 +13,7 @@ mode: default
 content:
   field_az_menu:
     type: field_menu_tree_widget
-    weight: 1
+    weight: 0
     region: content
     settings:
       menu_title: ''
@@ -22,14 +22,9 @@ content:
       depth: 1
       expand_all_items: false
       follow: false
-      follow_parent: child
+      follow_parent: ''
+      parent: ''
+      parent_render: false
     third_party_settings: {  }
-  info:
-    type: string_textfield
-    weight: 0
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-hidden: {  }
+hidden:
+  info: true
