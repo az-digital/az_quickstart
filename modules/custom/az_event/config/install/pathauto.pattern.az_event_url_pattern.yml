@@ -9,13 +9,13 @@ type: 'canonical_entities:node'
 pattern: 'events/[node:title]'
 selection_criteria:
   62829e66-f973-46f9-aa96-aa6372276a42:
-    id: node_type
-    bundles:
-      az_event: az_event
+    id: 'entity_bundle:node'
     negate: false
+    uuid: 62829e66-f973-46f9-aa96-aa6372276a42
     context_mapping:
       node: node
-    uuid: 62829e66-f973-46f9-aa96-aa6372276a42
+    bundles:
+      az_event: az_event
 selection_logic: and
 weight: -5
 relationships: {  }

@@ -18,10 +18,10 @@ widget_selector: single
 widget_selector_configuration: {  }
 widgets:
   e4f2bf7e-ce3f-499e-8d2b-698219735ccf:
-    id: ib_dam_search
-    uuid: e4f2bf7e-ce3f-499e-8d2b-698219735ccf
-    label: 'Search The University of Arizona Digital Asset Library'
-    weight: 1
     settings:
-      submit_text: 'Select Arizona Digital Asset'
       upload_location: 'public://az_digital_asset_library'
+      submit_text: 'Select Arizona Digital Asset'
+    uuid: e4f2bf7e-ce3f-499e-8d2b-698219735ccf
+    weight: 1
+    label: 'Search The University of Arizona Digital Asset Library'
+    id: ib_dam_search
