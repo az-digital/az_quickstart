@@ -83,9 +83,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Content background color'),
       '#type' => 'select',
       '#options' => [
-        'light' => $this->t('Light'),
-        'dark' => $this->t('Dark'),
-        'transparent' => $this->t('Transparent'),
+        'bg-transparent-white' => $this->t('Light'),
+        'bg-transparent-black' => $this->t('Dark'),
+        'bg-transparent' => $this->t('Transparent'),
       ],
       '#default_value' => $config['bg_color'],
       '#description' => $this->t('The color of the content background.'),
@@ -236,6 +236,11 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       HTML::getClass($config['style']),
     ];
 
+    // If this paragraph is full-width, add the full-width library.
+    if (isset($config['full_width']) && $config['full_width'] === 'full-width-background') {
+      $variables['#attached']['library'][] = 'az_paragraphs/az_paragraphs.az_paragraphs_full_width';
+    }
+
     // Add responsive spacing classes.
     if (!empty($config['style']) && $config['style'] !== 'bottom') {
       $spacing_prefix = '';
@@ -265,15 +270,15 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       }
     }
     if ($config['style'] === 'bottom') {
-      if ($config['bg_color'] === 'light') {
-        $key = array_search('light', $content_classes);
+      if ($config['bg_color'] === 'bg-transparent-white') {
+        $key = array_search('bg-transparent-white', $content_classes);
         unset($content_classes[$key]);
         $content_classes[] = 'bg-white';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
-      elseif ($config['bg_color'] === 'dark') {
-        $key = array_search('dark', $content_classes);
+      elseif ($config['bg_color'] === 'bg-transparent-black') {
+        $key = array_search('bg-transparent-black', $content_classes);
         unset($content_classes[$key]);
         $content_classes[] = 'bg-black';
         $content_classes[] = 'shadow';
@@ -292,7 +297,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'bold',
       HTML::getClass($config['title_alignment']),
     ];
-    if (!empty($config['bg_color']) && $config['bg_color'] !== 'dark') {
+    if (!empty($config['bg_color']) && $config['bg_color'] !== 'bg-transparent-black') {
       $title_classes[] = 'text-blue';
     }
     // Set title classes.

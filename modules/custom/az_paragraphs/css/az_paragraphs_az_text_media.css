@@ -13,19 +13,6 @@
 .bg-fixed {
   background-attachment: fixed;
 }
-.dark {
-  background: rgba(0,0,0,.8);
-  color: #fff;
-}
-.dark h2 {
-  color: #fff;
-}
-.light {
-  background: rgba(255,255,255,.8);
-}
-.transparent {
-  background: none;
-}
 .az-video-playing,
 .az-video-playing .text-on-video {
   background: none !important;
