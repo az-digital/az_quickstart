@@ -3,7 +3,6 @@ status: true
 dependencies:
   module:
     - menu_ui
-    - az_alphabetical_index
 third_party_settings:
   menu_ui:
     available_menus:
