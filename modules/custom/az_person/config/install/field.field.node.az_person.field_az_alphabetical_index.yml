@@ -10,7 +10,7 @@ id: node.az_person.field_az_alphabetical_index
 field_name: field_az_alphabetical_index
 entity_type: node
 bundle: az_person
-label: 'Index Letter'
+label: 'Alphabetical Index Letter'
 description: ''
 required: false
 translatable: true
