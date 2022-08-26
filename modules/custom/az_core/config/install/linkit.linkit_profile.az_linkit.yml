@@ -46,7 +46,7 @@ matchers:
     id: 'entity:node'
     uuid: b1491acc-6a1b-4122-998c-311aaa699e48
     settings:
-      metadata: 'Date: [node:field_az_event_date:value:custom:m/d/Y - g:i a]'
+      metadata: 'Date: [node:field_az_event_date:value-custom:m/d/Y - g:i a]'
       bundles:
         az_event: az_event
       group_by_bundle: true
@@ -58,7 +58,7 @@ matchers:
     id: 'entity:node'
     uuid: 1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879
     settings:
-      metadata: 'Publication date: [node:field_az_published]'
+      metadata: 'Publication date: [node:field_az_published:date:custom:m/d/Y - g:i a]'
       bundles:
         az_news: az_news
       group_by_bundle: true
@@ -70,7 +70,7 @@ matchers:
     id: 'entity:node'
     uuid: 5b479f8e-72a3-4398-91d2-fbd9e07b7cb0
     settings:
-      metadata: '[node:field_az_media_image:entity:thumbnail:az_tiny_thumbnail]'
+      metadata: '[node:field_az_titles]'
       bundles:
         az_person: az_person
       group_by_bundle: true
