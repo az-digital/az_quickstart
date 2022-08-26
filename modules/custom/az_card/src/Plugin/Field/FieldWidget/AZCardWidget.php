@@ -182,6 +182,10 @@ class AZCardWidget extends WidgetBase {
       $element['preview_container']['card_preview']['#link']['#attributes']['class'] = explode(' ', $item->options['link_style']);
     }
 
+    if (!empty($element['preview_container']['card_preview']['#link'])) {
+      $element['preview_container']['card_preview']['#link']['#attributes']['class'][] = 'az-card-no-follow';
+    }
+
     $element['options'] = [
       '#type' => 'select',
       '#options' => [
