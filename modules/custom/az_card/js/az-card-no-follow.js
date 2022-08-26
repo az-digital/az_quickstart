@@ -17,14 +17,18 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToAr
 
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
-(function (document) {
-  function noFollow(event) {
-    event.preventDefault();
-  }
+(function (Drupal) {
+  Drupal.behaviors.azCardNoFollow = {
+    attach: function attach(context) {
+      function noFollow(event) {
+        event.preventDefault();
+      }
 
-  var cards = document.querySelectorAll('.az-card-no-follow');
+      var cards = context.querySelectorAll('.az-card-no-follow');
 
-  _toConsumableArray(cards).forEach(function (card) {
-    card.addEventListener('click', noFollow);
-  });
-})(this.document);
+      _toConsumableArray(cards).forEach(function (card) {
+        card.addEventListener('click', noFollow);
+      });
+    }
+  };
+})(this.Drupal);

@@ -4,21 +4,33 @@
  * under certain circumstances.
  */
 
-((document) => {
+((Drupal) => {
   /**
-   * Disables links for cards.
+   * Behavior for card no-follow preview links.
    *
-   * @param {ClickEvent} event - Click event.
+   * @type {Drupal~behavior}
+   *
+   * @prop {Drupal~behaviorAttach} attach
+   *   Attaches to card preview links in node edit form.
    */
-  function noFollow(event) {
-    event.preventDefault();
-  }
+  Drupal.behaviors.azCardNoFollow = {
+    attach(context) {
+      /**
+       * Disables links for cards.
+       *
+       * @param {ClickEvent} event - Click event.
+       */
+      function noFollow(event) {
+        event.preventDefault();
+      }
 
-  /**
-   * Adds event listeners to card links.
-   */
-  const cards = document.querySelectorAll('.az-card-no-follow');
-  [...cards].forEach((card) => {
-    card.addEventListener('click', noFollow);
-  });
-})(this.document);
+      /**
+       * Adds event listeners to card links.
+       */
+      const cards = context.querySelectorAll('.az-card-no-follow');
+      [...cards].forEach((card) => {
+        card.addEventListener('click', noFollow);
+      });
+    },
+  };
+})(this.Drupal);
