@@ -61,7 +61,8 @@ process:
     process:
       delta: delta
       uri:
-      - plugin: str_replace
+      -
+        plugin: str_replace
         source: url
         search: '[node:url]'
         replace: ''
@@ -69,18 +70,20 @@ process:
       attributes: attributes
 
   field_az_link:
-    - plugin: field_link
-      source: '@preprocess_field_uaqs_link'
-      uri_scheme: "https://"
+    plugin: field_link
+    source: '@preprocess_field_uaqs_link'
+    uri_scheme: "https://"
 
   'field_az_link/0/uri':
-    - plugin: str_replace
+    -
+      plugin: str_replace
       source: field_az_link/0/uri
       search: 'route:<nolink>'
       replace: ''
 
   field_az_location:
-    - plugin: field_link
+    -
+      plugin: field_link
       source: field_uaqs_location
       uri_scheme: "https://"
 
@@ -181,10 +184,12 @@ process:
   sticky: sticky
 
   path/pathauto:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: alias
       method: process
-    - plugin: default_value
+    -
+      plugin: default_value
       default_value: 0
 
   path/alias: alias

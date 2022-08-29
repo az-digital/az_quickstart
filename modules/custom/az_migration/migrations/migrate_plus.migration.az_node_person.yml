@@ -5,21 +5,6 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
-dependencies:
-  enforced:
-    module:
-      - az_migration
-  module:
-    - az_person
-
-migration_dependencies:
-  required:
-    - az_media
-    - az_user
-  optional:
-    - az_person_categories
-    - az_person_categories_secondary
-
 source:
   plugin: az_node
   node_type: uaqs_person
@@ -27,6 +12,10 @@ source:
 destination:
   plugin: entity:node
   bundle: az_person
+  migration_dependencies:
+    required:
+      - az_person_categories
+      - az_person_categories_secondary
 
 process:
   type:
@@ -159,9 +148,9 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
-
+  
   path/pathauto:
-    -
+    - 
       plugin: skip_on_empty
       source: alias
       method: process
@@ -170,7 +159,7 @@ process:
       default_value: 0
 
   path/alias:
-    -
+    - 
       plugin: skip_on_empty
       source: alias
       method: process
@@ -188,3 +177,14 @@ process:
       source: field_uaqs_person_categories
       migration:
         - az_person_categories_secondary
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_person
+
+migration_dependencies:
+  required:
+    - az_user
+    - az_files
