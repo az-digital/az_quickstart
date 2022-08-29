@@ -45,7 +45,8 @@ process:
       format: format
 
   field_az_link:
-    - plugin: field_link
+    -
+      plugin: field_link
       source: field_uaqs_link
       uri_scheme: "https://"
 
