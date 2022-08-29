@@ -5,6 +5,18 @@ migration_tags:
   - Quickstart Content Migration
 status: true
 
+dependencies:
+  enforced:
+    module:
+      - az_migration
+  module:
+    - az_carousel
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_user
+
 source:
   plugin: az_node
   node_type: uaqs_carousel_item
@@ -31,32 +43,18 @@ process:
       delta: delta
       value: value
       format: format
-  preprocess_field_uaqs_link:
-    plugin: sub_process
-    source: field_uaqs_link
-    process:
-      delta: delta
-      uri:
-      - plugin: str_replace
-        source: url
-        search: '[node:url]'
-        replace: ''
-      title: title
-      attributes: attributes
+
   field_az_link:
     - plugin: field_link
-      source: '@preprocess_field_uaqs_link'
+      source: field_uaqs_link
       uri_scheme: "https://"
-  'field_az_link/0/uri':
-    - plugin: str_replace
-      source: field_az_link/0/uri
-      search: 'route:<nolink>'
-      replace: ''
+
   'field_az_link/0/options':
     plugin: default_value
     default_value:
       attributes:
         class: 'btn btn-outline-white btn-sm'
+
   field_az_carousel_short_summary:
     plugin: sub_process
     source: field_uaqs_summary_short
@@ -96,7 +94,7 @@ process:
   sticky: sticky
 
   path/pathauto:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
@@ -105,13 +103,7 @@ process:
       default_value: 0
 
   path/alias:
-    - 
+    -
       plugin: skip_on_empty
       source: alias
       method: process
-
-migration_dependencies:
-  required:
-    - az_user
-    - az_files
-    - az_media
