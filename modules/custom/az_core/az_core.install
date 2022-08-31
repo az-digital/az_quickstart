@@ -8,6 +8,6 @@
 /**
  * Install linkit.
  */
-function az_core_update_920301() {
+function az_core_update_920501() {
   \Drupal::service('module_installer')->install(['linkit']);
 }
