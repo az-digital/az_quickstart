@@ -245,12 +245,14 @@ class AZCardWidget extends WidgetBase {
     ];
 
     $element['link_uri'] = [
-      // Url FAPI element does not support internal paths.
-      '#type' => 'textfield',
+      '#type' => 'linkit',
+      '#autocomplete_route_name' => 'linkit.autocomplete',
+      '#autocomplete_route_parameters' => [
+        'linkit_profile_id' => 'az_linkit',
+      ],
       '#title' => $this->t('Card Link URL'),
       '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => $item->link_uri ?? NULL,
-      '#maxlength' => 2048,
     ];
 
     $element['link_style'] = [
