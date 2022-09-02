@@ -160,7 +160,8 @@
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
             "drupal/linkit": {
-                "Multiple Linkit elements breaks": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch"
+                "Multiple Linkit elements breaks (2925828)": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch",
+                "Deprecated function Return type of SimpleSuggestion::jsonSerialize() (3262401)": "https://www.drupal.org/files/issues/2022-04-26/linkit-jsonserialize-3262401-11.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
