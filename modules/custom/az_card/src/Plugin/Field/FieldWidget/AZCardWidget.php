@@ -253,6 +253,7 @@ class AZCardWidget extends WidgetBase {
       '#title' => $this->t('Card Link URL'),
       '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => $item->link_uri ?? NULL,
+      '#maxlength' => 2048,
     ];
 
     $element['link_style'] = [
