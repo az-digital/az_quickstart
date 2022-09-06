@@ -1,0 +1,27 @@
+{
+  "block_blocks": [
+    {
+      "id":1,
+      "info" : "Sidebar Menu",
+      "uuid" : "8d5d7e34-7d98-489d-8415-fc0c72a6568f",
+      "field_az_block": {
+        "plugin_id": "menu_block:main",
+        "settings": {
+         "id" : "menu_block:main",
+         "label" : "Main navigation",
+         "label_display" : "visible",
+         "provider" : "menu_block",
+         "follow" : "0",
+         "follow_parent" : "child",
+         "level" : "1",
+         "depth" : "0",
+         "expand_all_items" : "",
+         "parent" : "main:",
+         "suggestion" : "main",
+         "label_type" : "block",
+         "label_link" : "0"
+        }
+      }
+    }
+  ]
+}

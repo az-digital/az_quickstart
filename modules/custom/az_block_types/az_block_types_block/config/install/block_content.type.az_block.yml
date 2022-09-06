@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_block
+label: 'Embeddable Block'
+revision: 0
+description: 'An embeddable block.'

@@ -1,0 +1,9 @@
+name: 'Quickstart Block Types - Block'
+type: module
+description: 'Adds a block for placing blocks anywhere.'
+core_version_requirement: ^9
+package: The University of Arizona
+dependencies:
+  - az_block_types
+  - block_field:block_field
+  - menu_block:menu_block

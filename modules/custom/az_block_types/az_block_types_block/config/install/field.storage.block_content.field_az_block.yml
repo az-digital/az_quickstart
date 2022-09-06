@@ -3,16 +3,13 @@ status: true
 dependencies:
   module:
     - block_content
-    - field_menu
-  enforced:
-    module:
-      - az_block_types_menu
-id: block_content.field_az_menu
-field_name: field_az_menu
+    - block_field
+id: block_content.field_az_block
+field_name: field_az_block
 entity_type: block_content
-type: field_menu
+type: block_field
 settings: {  }
-module: field_menu
+module: block_field
 locked: false
 cardinality: 1
 translatable: true
