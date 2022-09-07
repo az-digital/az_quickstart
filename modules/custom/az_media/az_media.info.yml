@@ -4,6 +4,7 @@ description: Media entity types & image styles.
 core_version_requirement: ^9
 package: The University of Arizona
 dependencies:
+  - az_core
   - crop:crop
   - drupal:image
   - drupal:media
