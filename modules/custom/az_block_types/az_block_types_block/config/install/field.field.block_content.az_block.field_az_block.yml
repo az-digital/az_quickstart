@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_block_types_block
   config:
     - block_content.type.az_block
     - field.storage.block_content.field_az_block

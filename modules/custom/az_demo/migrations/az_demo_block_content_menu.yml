@@ -31,13 +31,14 @@ process:
   type:
     plugin: default_value
     default_value: az_block
-  # info: info
+  info: info
   uuid: uuid
-  # field_az_block:
-  #   plugin: sub_process
-  #   source: field_az_block
-  #   process:
-  #     target_id: block_id
+  field_az_block:
+    plugin: sub_process
+    source: field_az_block
+    process:
+      plugin_id: plugin_id
+      settings: settings
 
 destination:
   plugin: entity:block_content
