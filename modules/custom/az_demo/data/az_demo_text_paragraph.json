@@ -82,7 +82,7 @@
         },
         {
           "id":79,
-          "az_text_area" : "<drupal-entity data-align=\"center\" data-embed-button=\"az_embed_content_block\" data-entity-embed-display=\"view_mode:block_content.full\" data-entity-type=\"block_content\" data-entity-uuid=\"8d5d7e34-7d98-489d-8415-fc0c72a6568f\"><\/drupal-entity>",
+          "az_text_area" : "<h3>Settings:</h3><ul><strong>Theme hook suggestion</strong>:vertical_pills <li></li></ul><drupal-entity data-align=\"center\" data-embed-button=\"az_embed_content_block\" data-entity-embed-display=\"view_mode:block_content.full\" data-entity-type=\"block_content\" data-entity-uuid=\"8d5d7e34-7d98-489d-8415-fc0c72a6568f\"><\/drupal-entity>",
           "bottom_spacing" : "mb-0"
         }
     ]
