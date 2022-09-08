@@ -13,7 +13,6 @@ type_settings:
   entity_type: block_content
   bundles: {  }
   display_plugins:
-    - 'view_mode:block_content.az_vertical_pills'
     - 'view_mode:block_content.full'
   entity_browser: ''
   entity_browser_settings: {  }
