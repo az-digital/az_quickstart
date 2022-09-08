@@ -30,7 +30,7 @@ source:
 process:
   type:
     plugin: default_value
-    default_value: az_block
+    default_value: az_custom_menu_block
   info: info
   uuid: uuid
   field_az_block:
@@ -42,5 +42,5 @@ process:
 
 destination:
   plugin: entity:block_content
-  bundle: az_block
+  bundle: az_custom_menu_block
 

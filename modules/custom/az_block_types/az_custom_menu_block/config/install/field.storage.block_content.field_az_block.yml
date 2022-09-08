@@ -3,7 +3,7 @@ status: true
 dependencies:
   enforced:
     module:
-      - az_block_types_block
+      - az_custom_menu_block
   module:
     - block_content
     - block_field

@@ -3,15 +3,15 @@ status: true
 dependencies:
   enforced:
     module:
-      - az_block_types_block
+      - az_custom_menu_block
   config:
-    - block_content.type.az_block
-    - field.field.block_content.az_block.field_az_block
+    - block_content.type.az_custom_menu_block
+    - field.field.block_content.az_custom_menu_block.field_az_block
   module:
     - block_field
-id: block_content.az_block.default
+id: block_content.az_custom_menu_block.default
 targetEntityType: block_content
-bundle: az_block
+bundle: az_custom_menu_block
 mode: default
 content:
   field_az_block:

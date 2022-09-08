@@ -1,4 +1,4 @@
-name: 'Quickstart Block Types - Block'
+name: 'Quickstart Block Types - Menu'
 type: module
 description: 'Adds a block for placing blocks anywhere.'
 core_version_requirement: ^9
