@@ -1,4 +1,4 @@
-name: 'Quickstart Block Types - Menu'
+name: 'Quickstart Block Types - Menu Block'
 type: module
 description: 'Adds an embeddable content block for placing menu blocks anywhere.'
 core_version_requirement: ^9
