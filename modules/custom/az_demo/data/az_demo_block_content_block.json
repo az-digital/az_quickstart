@@ -1,5 +1,5 @@
 {
-  "block_blocks": [
+  "blocks": [
     {
       "id":1,
       "info" : "Vertical Pills 1",
@@ -10,15 +10,15 @@
           "settings": {
           "id" : "menu_block:main",
           "label" : "Main navigation",
-          "label_display" : "visible",
+          "label_display" : false,
           "provider" : "menu_block",
           "follow" : "0",
           "follow_parent" : "child",
-          "level" : "1",
-          "depth" : "0",
-          "expand_all_items" : "",
+          "level" : "2",
+          "depth" : "2",
+          "expand_all_items" : false,
           "parent" : "main:",
-          "suggestion" : "",
+          "suggestion" : "vertical_pills",
           "label_type" : "block",
           "label_link" : "0"
           }
@@ -35,15 +35,15 @@
           "settings": {
             "id" : "menu_block:main",
             "label" : "Main navigation",
-            "label_display" : "visible",
+            "label_display" : false,
             "provider" : "menu_block",
             "follow" : "0",
             "follow_parent" : "child",
-            "level" : "1",
+            "level" : "2",
             "depth" : "0",
-            "expand_all_items" : "",
+            "expand_all_items" : "0",
             "parent" : "main:",
-            "suggestion" : "",
+            "suggestion" : "vertical_pills",
             "label_type" : "block",
             "label_link" : "0"
           }
@@ -54,21 +54,22 @@
       "id":3,
       "info" : "Vertical Pills 3",
       "uuid" : "462e3902-55a4-4c2a-b7d5-b5814e394b9c",
+      "menu_parent_link_id": "26",
       "field_az_block": [
         {
           "plugin_id": "menu_block:main",
           "settings": {
             "id" : "menu_block:main",
             "label" : "Main navigation",
-            "label_display" : "visible",
+            "label_display" : false,
             "provider" : "menu_block",
             "follow" : "0",
             "follow_parent" : "child",
             "level" : "1",
             "depth" : "0",
-            "expand_all_items" : "",
-            "parent" : "main:",
-            "suggestion" : "",
+            "expand_all_items" : "1",
+            "parent" : "see menu_parent_link_id above",
+            "suggestion" : "vertical_pills",
             "label_type" : "block",
             "label_link" : "0"
           }
