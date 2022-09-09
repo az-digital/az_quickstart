@@ -1,6 +1,6 @@
 name: 'Quickstart Block Types - Menu'
 type: module
-description: 'Adds a block for placing blocks anywhere.'
+description: 'Adds an embeddable content block for placing menu blocks anywhere.'
 core_version_requirement: ^9
 package: The University of Arizona
 dependencies:
