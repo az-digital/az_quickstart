@@ -38,7 +38,7 @@ class AzCustomMenuBlockKernelViewSubscriber implements EventSubscriberInterface 
    * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
    *   The event to process.
    */
-  public function onKernelView(ViewEvent $event) {
+  public function onView(ViewEvent $event) {
     switch ($this->currentRouteMatch->getRouteName()) {
       case 'block.admin_library':
       case 'context.reaction.blocks.library':
