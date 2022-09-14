@@ -3,7 +3,6 @@
 namespace Drupal\az_custom_menu_block\Plugin\Block;
 
 use Drupal\menu_block\Plugin\Block\MenuBlock;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Provides an extended Menu block.
@@ -19,6 +18,7 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class AzCustomMenuBlock extends MenuBlock {
+
   /**
    * {@inheritdoc}
    */
@@ -27,5 +27,5 @@ class AzCustomMenuBlock extends MenuBlock {
     $defaults['suggestion'] = strtr('vertical_pills', '-', '_');
     return $defaults;
   }
-}
 
+}
