@@ -18,7 +18,7 @@
           "depth" : "2",
           "expand_all_items" : false,
           "parent" : "main:",
-          "suggestion" : "vertical_pills",
+          "suggestion" : "sidebar",
           "label_type" : "block",
           "label_link" : "0"
           }
@@ -43,7 +43,7 @@
             "depth" : "0",
             "expand_all_items" : "0",
             "parent" : "main:",
-            "suggestion" : "vertical_pills",
+            "suggestion" : "sidebar",
             "label_type" : "block",
             "label_link" : "0"
           }
@@ -69,7 +69,7 @@
             "depth" : "0",
             "expand_all_items" : "1",
             "parent" : "see menu_parent_link_id above",
-            "suggestion" : "vertical_pills",
+            "suggestion" : "sidebar",
             "label_type" : "block",
             "label_link" : "0"
           }
