@@ -24,7 +24,7 @@ class AzCustomMenuBlock extends MenuBlock {
    */
   public function defaultConfiguration() {
     $defaults = parent::defaultConfiguration();
-    $defaults['suggestion'] = strtr('vertical_pills', '-', '_');
+    $defaults['suggestion'] = strtr('sidebar', '-', '_');
     return $defaults;
   }
 
