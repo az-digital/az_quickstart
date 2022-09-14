@@ -1,0 +1,6 @@
+services:
+  az_custom_menu_block.az_kernel_view_subscriber:
+    class: Drupal\az_custom_menu_block\EventSubscriber\AzCustomMenuBlockKernelViewSubscriber
+    arguments: ['@current_route_match']
+    tags:
+      - { name: event_subscriber }
