@@ -49,7 +49,7 @@ class AzCustomMenuBlockKernelViewSubscriber implements EventSubscriberInterface 
           // Remove rows for any block provided by the system_menu_block plugin.
           $routeParameters = $row['operations']['data']['#links']['add']['url']->getRouteParameters();
           $plugin_id = !empty($routeParameters['plugin_id']) ? $routeParameters['plugin_id'] : $routeParameters['block_id'];
-          if (strpos($plugin_id, 'menu_block:') === 0) {
+          if (strpos($plugin_id, 'az_menu_block:') === 0) {
             unset($result['blocks']['#rows'][$key]);
           }
         }
