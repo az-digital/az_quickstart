@@ -142,7 +142,7 @@
     },
     {
       "id":15,
-      "title"  : "Menu Blocks",
+      "title"  : "Menu Blocks - First Child",
       "path" : "/pages/menu-blocks/first-child",
       "exclude_title" : true,
       "az_page_category"  : "",
