@@ -4,7 +4,7 @@ namespace Drupal\az_custom_menu_block\EventSubscriber;
 
 use Drupal\Core\Routing\RouteMatchInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
@@ -35,10 +35,10 @@ class AzCustomMenuBlockKernelViewSubscriber implements EventSubscriberInterface 
   /**
    * Alters the block library modal.
    *
-   * @param \Symfony\Component\HttpKernel\Event\GetResponseEvent $event
+   * @param \Symfony\Component\HttpKernel\Event\RequestEvent $event
    *   The event to process.
    */
-  public function onView(GetResponseEvent $event) {
+  public function onView(RequestEvent $event) {
     switch ($this->currentRouteMatch->getRouteName()) {
       case 'block.admin_library':
       case 'context.reaction.blocks.library':
