@@ -35,8 +35,7 @@ class AzCustomMenuBlockKernelViewSubscriber implements EventSubscriberInterface 
   /**
    * Alters the block library modal.
    *
-   * @param \Symfony\Component\HttpKernel\Event\ViewEvent;
- $event
+   * @param \Symfony\Component\HttpKernel\Event\ViewEvent $event
    *   The event to process.
    */
   public function onKernelView(ViewEvent $event) {
