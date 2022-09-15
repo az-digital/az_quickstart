@@ -545,9 +545,9 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
   if (\Drupal::moduleHandler()->moduleExists('easy_breadcrumb')) {
     $add_home_class = FALSE;
     $config = \Drupal::config('easy_breadcrumb.settings');
-    if ($config->get('hide_single_home_item')) {
+    if ($config->get('include_home_segment')) {
       if (\Drupal::service('path.matcher')->isFrontPage()) {
-        if ($config->get('home_segment_keep')) {
+        if ($config->get('hide_single_home_item')) {
           $add_home_class = TRUE;
         }
       }
