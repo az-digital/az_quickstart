@@ -37,7 +37,7 @@
     {% if menu_level == 0 %}
       <ul{{ attributes.addClass(nav_pills_ul_classes)}}>
     {% else %}
-      <ul{{ attributes.addClass(nav_pills_ul_classes).addClass(menu)}}>
+      <ul{{ attributes.addClass(nav_pills_ul_classes).addClass('menu') }}>
     {% endif %}
     {% for item in items %}
       {%
