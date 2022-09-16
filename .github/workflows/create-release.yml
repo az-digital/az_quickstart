@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
       - name: Setup PHP
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
