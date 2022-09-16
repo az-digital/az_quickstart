@@ -7,7 +7,6 @@ include_title_segment: false
 language_path_prefix_as_segment: false
 use_menu_title_as_fallback: true
 use_page_title_as_menu_title_fallback: true
-menu_title_preferred_menu: ''
 remove_repeated_segments: true
 term_hierarchy: false
 absolute_paths: false
