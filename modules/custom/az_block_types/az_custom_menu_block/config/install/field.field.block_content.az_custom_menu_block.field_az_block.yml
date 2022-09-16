@@ -23,6 +23,6 @@ settings:
   selection: blocks
   selection_settings:
     plugin_ids:
-      'az_menu_block:main': 'az_menu_block:main'
-      'az_menu_block:az-utility-links': 'az_menu_block:az-utility-links'
+      'menu_block:main': 'menu_block:main'
+      'menu_block:az-utility-links': 'menu_block:az-utility-links'
 field_type: block_field

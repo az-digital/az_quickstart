@@ -31,11 +31,15 @@
       'nav',
       'flex-column',
       'nav-pills',
-      'list-group',
+      'bg-white',
     ]
   %}
   {% if items %}
-    <ul{{ attributes.addClass(nav_pills_ul_classes) }}>
+    {% if menu_level == 0 %}
+          <ul{{ attributes.addClass(nav_pills_ul_classes)}}>
+        {% else %}
+          <ul{{ attributes.addClass(nav_pills_ul_classes).addClass(menu)}}>
+    {% endif %}
     {% for item in items %}
       {%
         set classes = [
