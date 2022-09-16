@@ -6,7 +6,7 @@
       "uuid" : "8d5d7e34-7d98-489d-8415-fc0c72a6568f",
       "field_az_block": [
         {
-          "plugin_id": "az_menu_block:main",
+          "plugin_id": "menu_block:main",
           "settings": {
           "id" : "menu_block:main",
           "label" : "Main navigation",
@@ -31,7 +31,7 @@
       "uuid" : "3a7fffab-e13b-429e-9405-f2bb89c83d63",
       "field_az_block": [
         {
-          "plugin_id": "az_menu_block:main",
+          "plugin_id": "menu_block:main",
           "settings": {
             "id" : "menu_block:main",
             "label" : "Main navigation",
@@ -57,7 +57,7 @@
       "menu_parent_link_id": "26",
       "field_az_block": [
         {
-          "plugin_id": "az_menu_block:main",
+          "plugin_id": "menu_block:main",
           "settings": {
             "id" : "menu_block:main",
             "label" : "Main navigation",
