@@ -27,6 +27,7 @@ jobs:
           git add az_quickstart.info.yml
           git commit -m "Preparing to tag ${{ github.event.inputs.version }}."
           git push
+          echo "RELEASE_SHA=$(git rev-parse HEAD)" >> ${GITHUB_ENV}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -35,6 +36,7 @@ jobs:
         with:
           tag_name: ${{ github.event.inputs.version }}
           release_name: ${{ github.event.inputs.version }}
+          commitish: ${{ env.RELEASE_SHA }}
           draft: false
           prerelease: false
       - name: Remove version from info file
