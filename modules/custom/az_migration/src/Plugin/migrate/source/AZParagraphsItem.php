@@ -45,7 +45,7 @@ class AZParagraphsItem extends ParagraphsItem {
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
 
     if (empty($this->allowArchivedParagraphs)) {
-      // Omit archived (deleted) paragraphs.
+      // Omit archived (deleted or stale) paragraphs.
       $query->condition('p.archived', 0);
     }
     // This configuration item may be set by a deriver to restrict the
