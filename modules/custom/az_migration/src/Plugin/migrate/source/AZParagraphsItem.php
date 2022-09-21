@@ -23,14 +23,14 @@ class AZParagraphsItem extends ParagraphsItem {
    *
    * @var bool
    */
-  protected $sourceContentModerated;
+  protected $allowArchivedParagraphs;
 
   /**
    * {@inheritdoc}
    */
   public function query() {
     // @phpstan-ignore-next-line
-    $this->sourceContentModerated = \Drupal::config('az_migration.settings')->get('az_source_content_moderated');
+    $this->allowArchivedParagraphs = \Drupal::config('az_migration.settings')->get('az_migrate_allow_archived_paragraphs');
 
     $query = $this->select('paragraphs_item', 'p')
       ->fields('p',
@@ -44,7 +44,7 @@ class AZParagraphsItem extends ParagraphsItem {
       ->fields('pr', ['revision_id']);
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
 
-    if (empty($this->sourceContentModerated)) {
+    if (empty($this->allowArchivedParagraphs)) {
       // Omit archived (deleted) paragraphs.
       $query->condition('p.archived', 0);
     }
