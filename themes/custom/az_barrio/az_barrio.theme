@@ -546,14 +546,7 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
     $add_home_class = FALSE;
     $config = \Drupal::config('easy_breadcrumb.settings');
     if ($config->get('include_home_segment')) {
-      if (\Drupal::service('path.matcher')->isFrontPage()) {
-        if ($config->get('hide_single_home_item')) {
-          $add_home_class = TRUE;
-        }
-      }
-      else {
-        $add_home_class = TRUE;
-      }
+      $add_home_class = TRUE;
     }
 
     foreach ($variables['breadcrumb'] as $key => &$item) {
