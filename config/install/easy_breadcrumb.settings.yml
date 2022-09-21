@@ -1,9 +1,9 @@
 applies_admin_routes: false
-include_home_segment: false
+include_home_segment: true
 alternative_title_field: 'field_breadcrumb_title'
 home_segment_title: Home
 home_segment_keep: false
-include_title_segment: false
+include_title_segment: true
 language_path_prefix_as_segment: false
 use_menu_title_as_fallback: true
 use_page_title_as_menu_title_fallback: true
@@ -27,7 +27,7 @@ capitalizator_forced_words_first_letter: false
 capitalizator_forced_words_case_sensitivity: true
 add_structured_data_json_ld: false
 use_site_title: false
-include_invalid_paths: false
+include_invalid_paths: true
 excluded_paths: ''
 replaced_titles: ''
 custom_paths: ''
