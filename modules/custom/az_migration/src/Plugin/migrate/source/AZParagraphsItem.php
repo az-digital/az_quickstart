@@ -113,7 +113,12 @@ class AZParagraphsItem extends ParagraphsItem {
 
       }
     }
-    return parent::prepareRow($row);
+
+    foreach (array_keys($this->getFields('paragraphs_item', $row->getSourceProperty('bundle'))) as $field) {
+      $row->setSourceProperty($field, $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id));
+    }
+
+    return $row;
   }
 
 }
