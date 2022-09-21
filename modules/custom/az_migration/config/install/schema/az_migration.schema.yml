@@ -1,6 +1,6 @@
 az_migration.settings:
   type: config_object
-  label: 'AZ Migration settings'
+  label: 'AZ Migration Settings'
   mapping:
     migrate_d7_protocol:
       type: string
