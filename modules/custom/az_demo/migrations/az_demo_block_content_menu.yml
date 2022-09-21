@@ -74,4 +74,3 @@ process:
 destination:
   plugin: entity:block_content
   bundle: az_custom_menu_block
-

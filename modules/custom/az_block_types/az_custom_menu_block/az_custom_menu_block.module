@@ -15,7 +15,7 @@ use Drupal\Core\Form\FormStateInterface;
  */
 function az_custom_menu_block_form_block_content_az_custom_menu_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
-  // Default suggesition value.
+  // Default suggestion value.
   $suggestion = 'sidebar';
 
   // Get the choice for block plugin.
