@@ -129,6 +129,36 @@
       "az_main_content"  : "76|77|78",
       "az_media_image"    : "",
       "az_summary" : ""
+    },
+    {
+      "id":14,
+      "title"  : "Menu Blocks",
+      "path" : "/pages/menu-blocks",
+      "exclude_title" : false,
+      "az_page_category"  : "",
+      "az_main_content"  : "79|80|81",
+      "az_media_image"    : "",
+      "az_summary" : ""
+    },
+    {
+      "id":15,
+      "title"  : "Menu Blocks - First Child",
+      "path" : "/pages/menu-blocks/first-child",
+      "exclude_title" : true,
+      "az_page_category"  : "",
+      "az_main_content"  : "79|80|81",
+      "az_media_image"    : "",
+      "az_summary" : ""
+    },
+    {
+      "id":16,
+      "title"  : "Menu Blocks - First Grandchild",
+      "path" : "/pages/menu-blocks/first-child/first-grandchild",
+      "exclude_title" : true,
+      "az_page_category"  : "",
+      "az_main_content"  : "79|80|81",
+      "az_media_image"    : "",
+      "az_summary" : ""
     }
   ]
 }
