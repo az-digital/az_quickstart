@@ -30,7 +30,7 @@ class AZParagraphsItem extends ParagraphsItem {
    */
   public function query() {
     // @phpstan-ignore-next-line
-    $this->allowArchivedParagraphs = \Drupal::config('az_migration.settings')->get('az_migrate_allow_archived_paragraphs');
+    $this->allowArchivedParagraphs = \Drupal::config('az_migration.settings')->get('allow_archived_paragraphs');
 
     $query = $this->select('paragraphs_item', 'p')
       ->fields('p',
@@ -44,7 +44,7 @@ class AZParagraphsItem extends ParagraphsItem {
       ->fields('pr', ['revision_id']);
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
 
-    if (empty($this->allowArchivedParagraphs)) {
+    if (!$this->allowArchivedParagraphs) {
       // Omit archived (deleted or stale) paragraphs.
       $query->condition('p.archived', 0);
     }

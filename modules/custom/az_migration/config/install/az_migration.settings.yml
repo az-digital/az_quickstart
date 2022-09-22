@@ -4,4 +4,4 @@ migrate_d7_public_path: sites/default/files
 migrate_d7_private_path: null
 migrate_d7_temporary_path: tmp
 # If the source site is using content moderation, set az_source_content_moderated to true.
-az_migrate_allow_archived_paragraphs: false
+allow_archived_paragraphs: false
