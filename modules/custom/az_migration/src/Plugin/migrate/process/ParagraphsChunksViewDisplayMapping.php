@@ -93,15 +93,6 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
         'page_1' => 'row',
       ],
     ];
-
-    $uaqs_hero_carousel = [
-      'view' => 'az_carousel',
-      'display' => [
-        'default' => 'front_carousel_block',
-        'hero_block' => 'front_carousel_block',
-        'hero_nav' => 'front_carousel_block',
-      ],
-    ];
     $uaqs_content_chunks_views_page_by_category = [
       'view' => 'az_page_by_category',
       'display' => [
@@ -115,7 +106,6 @@ class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
       'uaqs_news' => $uaqs_news,
       'uaqs_person_directory' => $uaqs_person_directory,
       'uaqs_content_chunks_views_page_by_category' => $uaqs_content_chunks_views_page_by_category,
-      'uaqs_hero_carousel' => $uaqs_hero_carousel,
     ];
 
     if (isset($view_mapping[$view_display[0]])) {
