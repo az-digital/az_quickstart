@@ -56,6 +56,7 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y az_cas.settings disable_login_form 0
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y system.logging error_level "verbose"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush cache:rebuild
       - chown www-data:www-data -R /var/www/html/sites/default/files
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:enable environment_indicator
@@ -82,7 +83,7 @@ steps:
       - curl -sS -o /dev/null http://localhost/calendar
       - curl -sS -o /dev/null http://localhost/pages/annual-events
       # Check for PHP watchdog entries
-      - if [ -z "$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:list --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+      - if [ -z "$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
   - name: Run PHPUnit Tests
     plugin: Script
     script:
