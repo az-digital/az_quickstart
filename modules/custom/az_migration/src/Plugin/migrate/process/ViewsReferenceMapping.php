@@ -126,9 +126,7 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         'hero_block' => 'front_carousel_block',
         'hero_nav' => 'front_carousel_block',
       ],
-      'argument_migrations' => [
-        '',
-      ],
+      'argument_migrations' => [],
     ],
   ];
 
