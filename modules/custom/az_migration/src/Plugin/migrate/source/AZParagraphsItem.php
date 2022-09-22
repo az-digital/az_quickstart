@@ -19,7 +19,7 @@ use Drupal\paragraphs\Plugin\migrate\source\d7\ParagraphsItem;
 class AZParagraphsItem extends ParagraphsItem {
 
   /**
-   * Whether the source content is under moderation.
+   * Whether to migrate archived paragraphs.
    *
    * @var bool
    */
