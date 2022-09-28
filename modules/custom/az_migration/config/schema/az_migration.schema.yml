@@ -7,7 +7,7 @@ az_migration.settings:
       label: 'Protocol'
     migrate_d7_filebasepath:
       type: string
-      label: 'Base URL of site where source files live,minus protocol, no trailing slash.'
+      label: 'Base URL of site where source files live, minus protocol, no trailing slash.'
     migrate_d7_public_path:
       type: string
       label: 'Path to public source files, no trailing or leading slash.'
