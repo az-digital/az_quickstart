@@ -1,0 +1,6 @@
+name: 'AZ Core Config Test'
+type: module
+description: 'Tests Quickstart (override) config provider.'
+package: Testing
+dependencies:
+  - drupal:dblog

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_test
+label: 'Test date format for AZ Core config override test'
+locked: true
+pattern: 'Y - H:i'
