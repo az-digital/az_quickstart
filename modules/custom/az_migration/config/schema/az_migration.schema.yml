@@ -7,16 +7,16 @@ az_migration.settings:
       label: 'Protocol'
     migrate_d7_filebasepath:
       type: string
-      label: 'URL minus schema, no trailing slash.'
+      label: 'Base URL of site where source files live,minus protocol, no trailing slash.'
     migrate_d7_public_path:
       type: string
-      label: 'path to public source files, no trailing or leading slash.'
+      label: 'Path to public source files, no trailing or leading slash.'
     migrate_d7_private_path:
       type: string
-      label: 'path to private source files, no trailing or leading slash.'
+      label: 'Path to private source files, no trailing or leading slash.'
     migrate_d7_temporary_path:
       type: string
-      label: 'tmp filepath.'
-    az_migrate_allow_archived_paragraphs:
+      label: 'Temporary filepath.'
+    allow_archived_paragraphs:
       type: boolean
-      label: 'Should we migrate archived paragraphs, not including orphans.'
+      label: 'Migrate archived paragraphs, not including orphans.'
