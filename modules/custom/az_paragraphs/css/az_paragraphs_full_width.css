@@ -1,6 +1,9 @@
 .nav-link, .nav-pills .nav-link, .nav-tabs .nav-link {
   background-color: white;
 }
+:root {
+  --sidebar-top-margin: 0;
+}
 @media (min-width: 768px) {
     #sidebar_second,
     #sidebar_first {

@@ -2,9 +2,13 @@ langcode: en
 status: true
 dependencies:
   module:
+    - block_class
     - system
   theme:
     - az_barrio
+third_party_settings:
+  block_class:
+    classes: null
 id: az_barrio_breadcrumbs
 theme: az_barrio
 region: breadcrumb
@@ -14,6 +18,10 @@ plugin: system_breadcrumb_block
 settings:
   id: system_breadcrumb_block
   label: Breadcrumbs
-  provider: system
   label_display: '0'
-visibility: {  }
+  provider: system
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: '<front>'

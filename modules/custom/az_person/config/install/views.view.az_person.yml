@@ -179,6 +179,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight_1
           entity_type: taxonomy_term
           entity_field: weight
           plugin_id: standard
@@ -193,6 +194,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight
           draggable_views_reference: 'azqs_reorder:page_1'
           draggable_views_null_order: after
           plugin_id: standard
@@ -207,6 +209,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_lname_value
           plugin_id: standard
         field_az_fname_value:
           id: field_az_fname_value
@@ -219,6 +222,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_fname_value
           plugin_id: standard
       title: Directory
       header: {  }
@@ -385,6 +389,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight
           draggable_views_reference: 'az_reorder:reorder_people'
           draggable_views_null_order: after
           draggable_views_pass_arguments: 0
@@ -400,6 +405,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_lname_value
           plugin_id: standard
         field_az_fname_value:
           id: field_az_fname_value
@@ -412,6 +418,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_fname_value
           plugin_id: standard
     cache_metadata:
       max-age: -1
@@ -463,6 +470,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: weight
           draggable_views_reference: 'az_reorder:reorder_people'
           draggable_views_null_order: after
           draggable_views_pass_arguments: 0
@@ -478,6 +486,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_lname_value
           plugin_id: standard
         field_az_fname_value:
           id: field_az_fname_value
@@ -490,6 +499,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_fname_value
           plugin_id: standard
       relationships: {  }
       style_options: null

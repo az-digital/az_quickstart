@@ -17,33 +17,40 @@
 
   /**
    * Calculates and sets margin required to push sidebars beneath the last
-   * full-width paragraph on the page.
+   * full-width paragraph in the Content region of the page.
    *
    * This function assigns values to the `--sidebar-top-margin` CSS variable on
    * the `html` element.
    */
   function pushSidebarsDown() {
-    const contentRegion = document.querySelectorAll('main.main-content');
-    const allFullWidthElements = document.querySelectorAll(
-      '.paragraph.full-width-background',
-    );
-    const lastFullWidthElement =
-      allFullWidthElements[allFullWidthElements.length - 1];
-    const contentRegionPosition = contentRegion[0].getBoundingClientRect();
-    const style =
-      allFullWidthElements[0].currentStyle ||
-      window.getComputedStyle(lastFullWidthElement, '');
-    const bottomMargin = style.marginBottom;
-    const contentRegionTop = contentRegionPosition.top;
-    const lastFullWidthElementPosition =
-      lastFullWidthElement.getBoundingClientRect();
-    const lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
-    const sidebarTopMargin =
-      lastFullWidthElementBottom - contentRegionTop + bottomMargin;
-    document.documentElement.style.setProperty(
-      '--sidebar-top-margin',
-      `${sidebarTopMargin}`,
-    );
+    const contentRegion = document.querySelector('main.main-content');
+    if (contentRegion !== null) {
+      const allFullWidthElements = contentRegion.querySelectorAll(
+        '.paragraph.full-width-background',
+      );
+      if (allFullWidthElements.length === 0) {
+        return;
+      }
+      const lastFullWidthElement =
+        allFullWidthElements[allFullWidthElements.length - 1];
+      const contentRegionPosition = contentRegion.getBoundingClientRect();
+      const style =
+        allFullWidthElements[0].currentStyle ||
+        window.getComputedStyle(lastFullWidthElement, '');
+      const bottomMargin = parseFloat(style.marginBottom);
+      const contentRegionTop = contentRegionPosition.top;
+      const lastFullWidthElementPosition =
+        lastFullWidthElement.getBoundingClientRect();
+      const lastFullWidthElementBottom = lastFullWidthElementPosition.bottom;
+      const sidebarTopMargin =
+        lastFullWidthElementBottom - contentRegionTop + bottomMargin;
+      if (sidebarTopMargin) {
+        document.documentElement.style.setProperty(
+          '--sidebar-top-margin',
+          `${sidebarTopMargin}px`,
+        );
+      }
+    }
   }
 
   /**
@@ -54,19 +61,21 @@
    */
   function calculateFullWidthNegativeMargins() {
     const contentRegion = document.querySelectorAll('.block-system-main-block');
-    const contentRegionPosition = contentRegion[0].getBoundingClientRect();
-    const distanceFromLeft = contentRegionPosition.left;
-    const distanceFromRight = contentRegionPosition.right;
-    const negativeLeftMargin = 0 - distanceFromLeft;
-    const negativeRightMargin = 0 - distanceFromRight;
-    document.documentElement.style.setProperty(
-      '--full-width-left-distance',
-      `${negativeLeftMargin}px`,
-    );
-    document.documentElement.style.setProperty(
-      '--full-width-right-distance',
-      `${negativeRightMargin}px`,
-    );
+    if (contentRegion !== null) {
+      const contentRegionPosition = contentRegion[0].getBoundingClientRect();
+      const distanceFromLeft = contentRegionPosition.left;
+      const distanceFromRight = contentRegionPosition.right;
+      const negativeLeftMargin = 0 - distanceFromLeft;
+      const negativeRightMargin = 0 - distanceFromRight;
+      document.documentElement.style.setProperty(
+        '--full-width-left-distance',
+        `${negativeLeftMargin}px`,
+      );
+      document.documentElement.style.setProperty(
+        '--full-width-right-distance',
+        `${negativeRightMargin}px`,
+      );
+    }
   }
 
   /**

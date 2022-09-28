@@ -14,6 +14,12 @@ destination:
   default_bundle: az_text_background
 
 process:
+  keep_row:
+    plugin: skip_on_empty
+    method: row
+    source: keep
+    message: 'Could not determine parent entity. Skipping.'
+
   field_az_text_area:
     -
       plugin: sub_process
@@ -48,6 +54,7 @@ process:
         bg-river: bg-river
         bg-silver: bg-silver
         bg-ash: bg-ash
+        bg-mesa: bg-mesa
   text_background_full_width_processed:
     plugin: default_value
     default_value: 'full-width-background'

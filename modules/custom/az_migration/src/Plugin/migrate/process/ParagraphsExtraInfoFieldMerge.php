@@ -21,7 +21,8 @@ use Drupal\migrate\Row;
  *    `value` key.
  *  - field_uaqs_body: An indexed array of associative arrays with a
  *    `value` key.
- *  - field_uaqs_link: An indexed array of associative arrays with the following keys:
+ *  - field_uaqs_link: An indexed array of associative arrays with the following
+ *    keys:
  *    - url
  *    - attributes: An associative array with the following keys:
  *      - class: Link classes.

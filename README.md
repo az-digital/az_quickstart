@@ -201,3 +201,15 @@ To start a debugging session, perform the following steps:
 13. In VSCode, go back to the code tab.
 14. Set any desired breakpoints.
 15. You may now proceed with debugging.
+
+### Distribution update
+
+When updating your codebase on an existing site, you should always check if
+there are distribution updates that need to be applied.
+
+This can be done by users with the administrator role on your website at this
+path: `/admin/config/development/distro`
+
+You should be able to see the upstream updates to be applied, after updating
+your codebase by employing the "Merge" strategy available under the "Advanced"
+accordion on that page.

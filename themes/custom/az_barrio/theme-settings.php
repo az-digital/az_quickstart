@@ -8,7 +8,7 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-require_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
+require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\Exception\FileException;
@@ -113,7 +113,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   ];
-  unset($form['fonts']['bootstrap_icons']['bootstrap_barrio_bootstrap_icons']);
   unset($form['fonts']['icons']['bootstrap_barrio_icons']);
   unset($form['fonts']['bootstrap_icons']);
   $form['fonts']['icons'] = [

@@ -11,20 +11,20 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 class AZMailCommands extends DrushCommands {
 
   /**
-   * The config for the smtp module.
+   * The configFactory service.
    *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  protected $config;
+  protected $configFactory;
 
   /**
    * Constructs a AZMailCommands object.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config
-   *   The factory for configuration objects.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The configFactory service.
    */
-  public function __construct(ConfigFactoryInterface $config) {
-    $this->config = $config->getEditable('smtp.settings');
+  public function __construct(ConfigFactoryInterface $config_factory) {
+    $this->configFactory = $config_factory;
   }
 
   /**
@@ -43,9 +43,10 @@ class AZMailCommands extends DrushCommands {
    * Converts a regular AWS IAM secret key to an SMTP password for SES.
    */
   public function setSmtpPassword($region, $secret) {
-    $smtp_password = $this->sesHash($secret, $region);
-    $this->config->set('smtp_password', $smtp_password);
-    $this->config->save();
+    $smtpConfig = $this->configFactory->getEditable('smtp.settings');
+    $smtpPassword = $this->sesHash($secret, $region);
+    $smtpConfig->set('smtp_password', $smtpPassword);
+    $smtpConfig->save();
   }
 
   /**

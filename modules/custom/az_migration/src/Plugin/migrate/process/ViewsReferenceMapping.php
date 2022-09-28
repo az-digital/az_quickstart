@@ -119,6 +119,23 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         'az_flexible_page_categories',
       ],
     ],
+    'uaqs_alphabetical_listing' => [
+      'view' => 'az_alphabetical_listing',
+      'display' => [
+        'default' => 'az_alphabetical_listing_main',
+        'page' => 'az_alphabetical_listing_main',
+      ],
+      'argument_migrations' => [],
+    ],
+    'uaqs_hero_carousel' => [
+      'view' => 'az_carousel',
+      'display' => [
+        'default' => 'front_carousel_block',
+        'hero_block' => 'front_carousel_block',
+        'hero_nav' => 'front_carousel_block',
+      ],
+      'argument_migrations' => [],
+    ],
   ];
 
   /**
@@ -168,7 +185,7 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
       $arguments = [];
       $rawArguments = explode('/', $value['vargs']);
       foreach ($rawArguments as $rawArgument) {
-        /** @var stdClass $parsed */
+        /** @var \stdClass $parsedArgument */
         $parsedArgument = ViewsHandler::breakString($rawArgument);
         $arguments[] = $parsedArgument;
       }
@@ -178,7 +195,7 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         foreach ($argument->value as $i => $argValue) {
           $ids = $this->migrateLookup->lookup($argumentMigrations, [$argValue]);
           $id = reset($ids);
-          // TODO: Create stub if no matching ID found?
+          // @todo Create stub if no matching ID found?
           if (!empty($id)) {
             $migratedId = reset($id);
             $argument->value[$i] = $migratedId;
@@ -186,19 +203,17 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         }
         $migratedArguments[] = $argument;
       }
-      if (!empty($migratedArguments)) {
-        $transformedArguments = [];
-        foreach ($migratedArguments as $argument) {
-          if (!empty($argument->operator) && count($argument->value) > 1) {
-            $separator = ($argument->operator == 'and') ? ',' : '+';
-            $transformedArguments[] = implode($separator, $argument->value);
-          }
-          else {
-            $transformedArguments[] = reset($argument->value);
-          }
+      $transformedArguments = [];
+      foreach ($migratedArguments as $argument) {
+        if (!empty($argument->operator) && count($argument->value) > 1) {
+          $separator = ($argument->operator === 'and') ? ',' : '+';
+          $transformedArguments[] = implode($separator, $argument->value);
         }
-        $viewData['argument'] = implode('/', $transformedArguments);
+        else {
+          $transformedArguments[] = reset($argument->value);
+        }
       }
+      $viewData['argument'] = implode('/', $transformedArguments);
     }
     $transformedValue['data'] = serialize($viewData);
 
