@@ -118,7 +118,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h3 mt-3'
+        label_element_classes: 'h3'
         attributes: ''
         effect: none
         speed: fast
@@ -137,7 +137,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h3 mt-3'
+        label_element_classes: 'h3'
         attributes: ''
         effect: none
         speed: fast
