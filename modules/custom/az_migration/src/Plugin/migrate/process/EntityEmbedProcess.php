@@ -161,6 +161,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     // Set up our replacement element.
     $changed = $dom->createElement($tag);
     $changed->setAttribute('data-entity-type', $type);
+    $ids = $this->migrateLookup->lookup($migration, [$id]);
     if (empty($ids)) {
       $ids = $this->migrateStub->createStub($migration, [$id]);
     }
