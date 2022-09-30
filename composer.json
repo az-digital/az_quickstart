@@ -168,9 +168,6 @@
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch"
             },
-            "drupal/paragraphs": {
-                "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
-            },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
             },
