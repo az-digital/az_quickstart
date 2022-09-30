@@ -34,7 +34,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'lead mb-3'
-        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -53,7 +52,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'clearfix pt-2'
-        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -73,7 +71,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'row mb-5'
-        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -112,7 +109,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: col-md-6
-        show_empty_fields: false
         id: ''
         element: div
         show_label: true
@@ -131,7 +127,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: col-md-6
-        show_empty_fields: false
         id: ''
         element: div
         show_label: true
@@ -150,7 +145,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: col-md-6
-        show_empty_fields: false
         id: ''
         element: div
         show_label: true
@@ -169,7 +163,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: col-md-6
-        show_empty_fields: false
         id: ''
         element: div
         show_label: true
