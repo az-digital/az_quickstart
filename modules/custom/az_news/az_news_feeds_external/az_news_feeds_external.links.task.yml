@@ -1,0 +1,5 @@
+az_news_feeds_external.admin:
+  title: 'Configure UArizona External News Importer'
+  route_name: az_news_feeds_external.admin_importers
+  parent_id: system.admin_content
+  weight: 100

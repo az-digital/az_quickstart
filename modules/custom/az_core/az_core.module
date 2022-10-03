@@ -191,6 +191,10 @@ function az_core_token_info() {
           'name' => t("AZ Canonical URL"),
           'description' => t("Returns the URI value of field_az_link if present on the node or the default node URI if not."),
         ],
+        'az-canonical-summary-link-title' => [
+          'name' => t("AZ Canonical Summary Link Title"),
+          'description' => t("Returns the link title value of field_az_link if present on the node or nothing if not."),
+        ],
       ],
     ],
   ];
@@ -208,11 +212,39 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
         case 'az-canonical-url':
           $replacements[$original] = az_core_canonical_url($data);
           break;
-      }
+          case 'az-canonical-summary-link-title':
+            $replacements[$original] = az_core_canonical_summary_link_title($data);
+          break;
+        }
     }
   }
 
   return $replacements;
+}
+
+/**
+ * Token replacement callback providing the canonical summary link title for a node.
+ *
+ * Returns the link title value of field_az_link if present on the node or nothing
+ * if not.
+ *
+ * @param array $data
+ *   Node data from hook_tokens().
+ *
+ * @return string
+ *   The node's canononical link title.
+ */
+function az_core_canonical_summary_link_title(array $data) {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $data['node'];
+  /** @var \Drupal\Core\Url $url */
+  $read_more_text = 'Read more';
+
+  if (!empty($node->field_az_link[0]->title)) {
+    $read_more_text .= ' at ' . $node->field_az_link[0]->title;
+  }
+
+  return $read_more_text;
 }
 
 /**

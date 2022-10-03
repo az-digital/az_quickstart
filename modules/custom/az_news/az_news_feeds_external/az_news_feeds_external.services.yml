@@ -1,0 +1,7 @@
+services:
+  # Listens to migration events.
+  az_news_feeds_external.migrate_events_subscriber:
+    class: 'Drupal\az_news_feeds_external\EventSubscriber\AzNewsFeedsExternalMigrateSubscriber'
+    arguments: ['@config.factory']
+    tags:
+      - { name: 'event_subscriber' }

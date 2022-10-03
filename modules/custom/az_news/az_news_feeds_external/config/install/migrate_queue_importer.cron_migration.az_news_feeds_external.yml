@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_news_feeds_external
+id: az_news_feeds_external
+label: 'AZ Quickstart External News'
+migration: az_news_feeds_external_stories
+time: 1800
+update: true
+sync: false
+ignore_dependencies: 0

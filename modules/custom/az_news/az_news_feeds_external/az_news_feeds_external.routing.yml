@@ -1,0 +1,8 @@
+az_news_feeds_external.admin_importers:
+  path: '/admin/content/az-news-feeds-external'
+  defaults:
+    _form: '\Drupal\az_news_feeds_external\Form\AzNewsFeedsExternalAdminForm'
+    _title: 'Configure UArizona External News Importer'
+  requirements:
+    _permission: 'administer quickstart configuration'
+
