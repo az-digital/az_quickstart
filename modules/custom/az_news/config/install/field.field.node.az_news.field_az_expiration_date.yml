@@ -6,6 +6,9 @@ dependencies:
     - node.type.az_news
   module:
     - datetime
+  enforced:
+    module:
+      - az_news
 id: node.az_news.field_az_expiration_date
 field_name: field_az_expiration_date
 entity_type: node

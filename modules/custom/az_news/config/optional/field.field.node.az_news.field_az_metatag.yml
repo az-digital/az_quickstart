@@ -6,6 +6,10 @@ dependencies:
     - node.type.az_news
   module:
     - metatag
+  enforced:
+    module:
+      - az_news
+      - metatag
 id: node.az_news.field_az_metatag
 field_name: field_az_metatag
 entity_type: node

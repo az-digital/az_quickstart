@@ -3,6 +3,9 @@ status: true
 dependencies:
   config:
     - node.type.az_news
+  enforced:
+    module:
+      - az_news
 id: node.az_news.promote
 field_name: promote
 entity_type: node

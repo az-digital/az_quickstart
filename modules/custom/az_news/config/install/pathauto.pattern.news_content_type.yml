@@ -3,6 +3,9 @@ status: true
 dependencies:
   module:
     - node
+  enforced:
+    module:
+      - az_news
 id: news_content_type
 label: 'News Content Type'
 type: 'canonical_entities:node'

@@ -24,6 +24,9 @@ dependencies:
     - smart_title
     - text
     - user
+  enforced:
+    module:
+      - az_news
 third_party_settings:
   field_group:
     group_row:

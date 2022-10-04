@@ -26,6 +26,9 @@ dependencies:
     - paragraphs
     - path
     - text
+  enforced:
+    module:
+      - az_news
 third_party_settings:
   field_group:
     group_summary:
