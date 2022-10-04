@@ -223,10 +223,11 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
 }
 
 /**
- * Token replacement callback providing the canonical summary link title for a node.
+ * Token replacement callback providing the canonical summary link title for a
+ * node.
  *
- * Returns the link title value of field_az_link if present on the node or nothing
- * if not.
+ * Returns the link title value of field_az_link if present on the node or
+ * "Read more" if not.
  *
  * @param array $data
  *   Node data from hook_tokens().
