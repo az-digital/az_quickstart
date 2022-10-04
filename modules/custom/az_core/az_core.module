@@ -212,10 +212,10 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
         case 'az-canonical-url':
           $replacements[$original] = az_core_canonical_url($data);
           break;
-          case 'az-canonical-summary-link-title':
+        case 'az-canonical-summary-link-title':
             $replacements[$original] = az_core_canonical_summary_link_title($data);
           break;
-        }
+      }
     }
   }
 
