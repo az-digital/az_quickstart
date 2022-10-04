@@ -237,7 +237,6 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
 function az_core_canonical_summary_link_title(array $data) {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'];
-  /** @var \Drupal\Core\Url $url */
   $read_more_text = 'Read more';
 
   if (!empty($node->field_az_link[0]->title)) {
