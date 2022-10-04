@@ -12,7 +12,6 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Component\Utility\Html;
 use Drupal\node\Entity\NodeType;
 
-
 /**
  * Implements hook_theme().
  */
@@ -59,9 +58,9 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
       $build['az_news_read_more'][] = [
         '#type' => 'markup',
         '#markup' => Html::escape($token_service
-        ->replace('[node:az-canonical-summary-link-title]', [
-          'node' => $entity,
-        ], [], $bubbleable_metadata)),
+          ->replace('[node:az-canonical-summary-link-title]', [
+            'node' => $entity,
+          ], [], $bubbleable_metadata)),
       ];
     }
     $bubbleable_metadata->applyTo($build);
