@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=7.4",
-        "az-digital/arizona-bootstrap": "2.0.17",
+        "az-digital/arizona-bootstrap": "2.0.18",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
@@ -39,7 +39,7 @@
         "drupal/auto_entitylabel": "3.0-beta4",
         "drupal/background_image_formatter": "1.7",
         "drupal/better_exposed_filters": "5.0",
-        "drupal/block_class": "2.0.3",
+        "drupal/block_class": "2.0.7",
         "drupal/block_content_permissions": "1.10",
         "drupal/block_field": "1.0-rc3",
         "drupal/bootstrap_barrio": "4.30",
@@ -65,7 +65,7 @@
         "drupal/environment_indicator": "4.0.9",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.2",
-        "drupal/field_group": "3.2.0",
+        "drupal/field_group": "3.3.0",
         "drupal/field_group_link": "3.0.0",
         "drupal/google_tag": "1.5.0",
         "drupal/honeypot": "2.1.1",
@@ -82,7 +82,7 @@
         "drupal/media_migration": "1.0.0-alpha14",
         "drupal/menu_block": "1.7.0",
         "drupal/menu_link_attributes": "1.2",
-        "drupal/metatag": "1.21.0",
+        "drupal/metatag": "1.22.0",
         "drupal/migrate_plus": "5.3.0",
         "drupal/migrate_queue_importer": "2.0",
         "drupal/migrate_tools": "5.1.0",
@@ -155,9 +155,6 @@
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
             },
-            "drupal/field_group": {
-                "Recursion tracker doesn't work on 9.4.x (3290992)": "https://www.drupal.org/files/issues/2022-06-17/3290992-fix-recursion-tracking.patch"
-            },
             "drupal/image_widget_crop": {
                 "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
             },
@@ -170,9 +167,6 @@
             },
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch"
-            },
-            "drupal/paragraphs": {
-                "Paragraph Migrations broken by archived flag (3268555)": "https://www.drupal.org/files/issues/2022-05-31/3268555-6-workaround.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"

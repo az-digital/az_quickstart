@@ -4,6 +4,9 @@ services:
     arguments: ['@current_route_match']
     tags:
       - { name: page_cache_response_policy }
+  logger.channel.az_core:
+    parent: logger.channel_base
+    arguments: ['az_core']
   az_core.override_import:
     class: Drupal\az_core\AZConfigOverride
-    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector', '@config_sync.snapshotter', '@config_update.config_list', '@module_handler']
+    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector', '@config_sync.snapshotter', '@config_update.config_list', '@module_handler', '@logger.channel.az_core']
