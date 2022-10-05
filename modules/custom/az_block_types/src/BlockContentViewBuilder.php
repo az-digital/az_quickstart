@@ -21,4 +21,3 @@ class BlockContentViewBuilder extends CoreBlockContentViewBuilder {
   }
 
 }
-
