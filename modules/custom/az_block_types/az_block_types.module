@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Render\Element;
-use Drupal\block_content_suggestions\BlockContentViewBuilder;
+use Drupal\az_block_types\BlockContentViewBuilder;
 
 /**
  * Implements hook_theme().
