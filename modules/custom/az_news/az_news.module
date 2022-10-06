@@ -36,7 +36,7 @@ function az_news_entity_extra_field_info() {
     // Month pseudo field.
     $extra['node'][$bundle->id()]['display']['az_news_read_more'] = [
       'label' => t('Read more pseudo link.'),
-      'description' => "This is a pseudo field from az_news.",
+      'description' => "This is a pseudo field from az_news",
       'weight' => 50,
       'visible' => FALSE,
     ];
