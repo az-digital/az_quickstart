@@ -80,6 +80,42 @@ Add new feature X...<at most 72 characters>
 
 Closes #123 by creating y and z. This can be a paragraph of explanation.
 ```
+## Adding patches for contrib modules included in `az_quickstart`
+
+Adding patches to this project for contrib modules or themes can be acheived by
+following the instructions below:
+
+#### NOTE: This method allows applying patches to composer packages whose install path is not the  traditional `vendor` directory because of the use of the `composer-installers` and `composer-installers-extender` composer plugins.
+
+1. If the contrib module/theme (or core) you are patching is already patched,
+   simply find the folder for that module in the `/patches/composer/drupal`
+   folder at the root of this repository. Otherwise, create a new folder within
+   `/patches/composer/drupal` using the module/theme machine name for example:
+        ```/patches/composer/drupal/views```
+2. Place the patch file within the module folder. This can be done in a variety
+   of ways, but if the patch currently exists on drupal.org, the easiest way is
+   to use a CLI tool like `wget`
+3. Tell composer about your patch in the `patches` section within the
+   `composer.json` file located at the root of this repository.
+
+A good practice is to only use patches that are associated with an issue on
+drupal.org. If there is not an issue on drupal.org, please create one and then
+create a patch, and share it with the community for review and hopefully merged
+into the module that you are patching.
+
+The description of the patch should be formatted with the drupal.org issue
+title, followed by the issue number in paranthesis.
+
+ ```
+ <issue title>(<issue-number>#<comment-number>)
+ ```
+
+The path to the patch file is relative to the root of the site as it is built.
+
+```
+web/profiles/custom/az_quickstart/patches/composer/drupal/<modulename> <issue-number>#<comment-number>.patch
+```
+
 
 ## Local development
 
