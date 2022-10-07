@@ -113,7 +113,7 @@ title, followed by the issue number in paranthesis.
 The path to the patch file is relative to the root of the site as it is built.
 
 ```
-web/profiles/custom/az_quickstart/patches/composer/drupal/<modulename> <issue-number>#<comment-number>.patch
+web/profiles/custom/az_quickstart/patches/composer/drupal/<modulename>/<issue-number>#<comment-number>.patch
 ```
 
 
