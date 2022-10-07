@@ -238,17 +238,12 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
-    "config":
-    {
+    "config": {
         "sort-packages": true,
-        "allow-plugins":
-        {
-            "composer/installers": true
-            ,
-            "cweagans/composer-patches": false
-            ,
-            "dealerdirect/phpcodesniffer-composer-installer": true
-            ,
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": false,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "drupal/console-extend-plugin": true
         }
     }
