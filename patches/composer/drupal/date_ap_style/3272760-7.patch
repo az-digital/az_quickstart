@@ -1,0 +1,27 @@
+diff --git a/src/ApStyleDateFormatter.php b/src/ApStyleDateFormatter.php
+index 8135cf1..f622f9c 100644
+--- a/src/ApStyleDateFormatter.php
++++ b/src/ApStyleDateFormatter.php
+@@ -311,16 +311,20 @@ class ApStyleDateFormatter {
+       }
+ 
+       if (isset($options['display_time']) && $options['display_time']) {
++        $display_all_day = FALSE;
+         if (isset($options['use_all_day']) && $options['use_all_day']) {
+           if (isset($fieldtype) && $fieldtype === 'smartdate') {
+             if ($start_stamp->format('H:i') === '00:00' && $end_stamp->format('H:i') === '23:59') {
+-              $time_output = $this->t('All Day');
++              $display_all_day = TRUE;
+             }
+           }
+           elseif ($start_stamp->format('H:i') == '00:00' || $start_stamp->format('gia') == $end_stamp->format('gia')) {
+-            $time_output = $this->t('All Day');
++            $display_all_day = TRUE;
+           }
+         }
++        if ($display_all_day) {
++          $time_output = $this->t('All Day');
++        }
+         else {
+           $capital = (isset($options['capitalize_noon_and_midnight']) && $options['capitalize_noon_and_midnight']);
+           // Don't display the minutes if it's the top of the hour.

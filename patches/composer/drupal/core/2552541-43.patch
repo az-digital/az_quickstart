@@ -1,0 +1,102 @@
+diff --git a/core/modules/views/config/schema/views.data_types.schema.yml b/core/modules/views/config/schema/views.data_types.schema.yml
+index 708e12f..9b68861 100644
+--- a/core/modules/views/config/schema/views.data_types.schema.yml
++++ b/core/modules/views/config/schema/views.data_types.schema.yml
+@@ -169,6 +169,9 @@ views_display:
+         style:
+           type: boolean
+           label: 'Style'
++        style_options:
++          type: boolean
++          label: 'Style options'
+         row:
+           type: boolean
+           label: 'Row'
+@@ -190,6 +193,9 @@ views_display:
+         filter_groups:
+           type: boolean
+           label: 'Filter groups'
++        pager_options:
++          type: boolean
++          label: 'Pager options'
+         header:
+           type: boolean
+           label: 'Header'
+@@ -231,6 +237,12 @@ views_display:
+     link_url:
+       type: string
+       label: 'Link URL'
++    pager_options:
++      type: boolean
++      label: 'Pager options'
++    style_options:
++      type: boolean
++      label: 'Style options'
+     header:
+       type: sequence
+       label: 'Header'
+diff --git a/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php b/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php
+index 40e264b..1d9b2c7 100644
+--- a/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php
++++ b/core/modules/views/src/Plugin/views/display/DisplayPluginBase.php
+@@ -417,10 +417,12 @@ public function defaultableSections($section = NULL) {
+       'link_display' => ['link_display', 'link_url'],
+ 
+       // Force these to cascade properly.
+-      'style' => ['style', 'row'],
+-      'row' => ['style', 'row'],
++      'style' => ['style', 'row', 'style_options'],
++      'row' => ['style', 'row', 'style_options'],
++      'style_options' => ['style', 'row', 'style_options'],
+ 
+-      'pager' => ['pager'],
++      'pager' => ['pager', 'pager_options'],
++      'pager_options' => ['pager', 'pager_options'],
+ 
+       'exposed_form' => ['exposed_form'],
+ 
+@@ -471,6 +473,7 @@ protected function defineOptions() {
+           'hide_attachment_summary' => TRUE,
+           'show_admin_links' => TRUE,
+           'pager' => TRUE,
++          'pager_options' => TRUE,
+           'use_more' => TRUE,
+           'use_more_always' => TRUE,
+           'use_more_text' => TRUE,
+@@ -481,6 +484,7 @@ protected function defineOptions() {
+           'group_by' => TRUE,
+ 
+           'style' => TRUE,
++          'style_options' => TRUE,
+           'row' => TRUE,
+ 
+           'header' => TRUE,
+@@ -641,6 +645,9 @@ protected function defineOptions() {
+     ];
+ 
+     if (!$this->usesPager()) {
++      $options['defaults']['default']['use_pager'] = FALSE;
++      $options['defaults']['default']['items_per_page'] = FALSE;
++      $options['defaults']['default']['offset'] = FALSE;
+       $options['defaults']['default']['pager'] = FALSE;
+       $options['pager']['contains']['type']['default'] = 'some';
+     }
+diff --git a/core/modules/views/tests/src/Functional/Plugin/PagerTest.php b/core/modules/views/tests/src/Functional/Plugin/PagerTest.php
+index 1c83495..b810516 100644
+--- a/core/modules/views/tests/src/Functional/Plugin/PagerTest.php
++++ b/core/modules/views/tests/src/Functional/Plugin/PagerTest.php
+@@ -146,11 +146,12 @@ public function testStorePagerSettings() {
+     $this->drupalGet('admin/structure/views/view/test_store_pager_settings/edit/page_1');
+     $this->assertText('20 items', 'The original value remains unchanged.');
+ 
+-    // Test that the override element is only displayed on pager plugin selection form.
++    // Test that the override element is displayed on pager plugin selection and
++    // pager settings form.
+     $this->drupalGet('admin/structure/views/nojs/display/test_store_pager_settings/page_1/pager');
+     $this->assertSession()->fieldValueEquals('override[dropdown]', 'page_1');
+     $this->drupalGet('admin/structure/views/nojs/display/test_store_pager_settings/page_1/pager_options');
+-    $this->assertSession()->fieldNotExists('override[dropdown]');
++    $this->assertSession()->fieldExists('override[dropdown]');
+ 
+     $this->assertFieldByXPath('//input[@name="pager_options[items_per_page]" and @type="number" and @min="0"]', 20, '"Items per page" field was found.');
+     $this->assertFieldByXPath('//input[@name="pager_options[offset]" and @type="number" and @min="0"]', 0, '"Offset" field was found.');

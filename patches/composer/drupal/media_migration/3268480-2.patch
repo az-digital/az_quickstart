@@ -1,0 +1,60 @@
+diff --git a/src/Plugin/migrate/D7FileConfigDeriver.php b/src/Plugin/migrate/D7FileConfigDeriver.php
+index 342b058..9885e0c 100644
+--- a/src/Plugin/migrate/D7FileConfigDeriver.php
++++ b/src/Plugin/migrate/D7FileConfigDeriver.php
+@@ -64,9 +64,8 @@ class D7FileConfigDeriver extends DeriverBase implements ContainerDeriverInterfa
+    * {@inheritdoc}
+    */
+   public function getDerivativeDefinitions($base_plugin_definition) {
+-    $plain_file_types = static::getSourcePlugin('d7_file_plain_type');
+-
+     try {
++      $plain_file_types = static::getSourcePlugin('d7_file_plain_type');
+       $plain_file_types->checkRequirements();
+     }
+     catch (RequirementsException $e) {
+diff --git a/src/Plugin/migrate/D7FileDeriver.php b/src/Plugin/migrate/D7FileDeriver.php
+index 7621f75..a11fe4e 100644
+--- a/src/Plugin/migrate/D7FileDeriver.php
++++ b/src/Plugin/migrate/D7FileDeriver.php
+@@ -29,9 +29,8 @@ class D7FileDeriver extends D7FileConfigDeriver {
+    * {@inheritdoc}
+    */
+   public function getDerivativeDefinitions($base_plugin_definition) {
+-    $plain_file_types = static::getSourcePlugin('d7_file_plain_type');
+-
+     try {
++      $plain_file_types = static::getSourcePlugin('d7_file_plain_type');
+       $plain_file_types->checkRequirements();
+     }
+     catch (RequirementsException $e) {
+diff --git a/src/Plugin/migrate/D7FileEntityConfigDeriver.php b/src/Plugin/migrate/D7FileEntityConfigDeriver.php
+index b035d1a..1969611 100644
+--- a/src/Plugin/migrate/D7FileEntityConfigDeriver.php
++++ b/src/Plugin/migrate/D7FileEntityConfigDeriver.php
+@@ -57,9 +57,8 @@ class D7FileEntityConfigDeriver extends DeriverBase implements ContainerDeriverI
+    * {@inheritdoc}
+    */
+   public function getDerivativeDefinitions($base_plugin_definition) {
+-    $file_entity_types = static::getSourcePlugin('d7_file_entity_type');
+-
+     try {
++      $file_entity_types = static::getSourcePlugin('d7_file_entity_type');
+       $file_entity_types->checkRequirements();
+     }
+     catch (RequirementsException $e) {
+diff --git a/src/Plugin/migrate/D7FileEntityDeriver.php b/src/Plugin/migrate/D7FileEntityDeriver.php
+index 5eef082..e059300 100644
+--- a/src/Plugin/migrate/D7FileEntityDeriver.php
++++ b/src/Plugin/migrate/D7FileEntityDeriver.php
+@@ -83,9 +83,8 @@ class D7FileEntityDeriver extends D7FileEntityConfigDeriver {
+    * {@inheritdoc}
+    */
+   public function getDerivativeDefinitions($base_plugin_definition) {
+-    $file_entity_types = static::getSourcePlugin('d7_file_entity_type');
+-
+     try {
++      $file_entity_types = static::getSourcePlugin('d7_file_entity_type');
+       $file_entity_types->checkRequirements();
+     }
+     catch (RequirementsException $e) {

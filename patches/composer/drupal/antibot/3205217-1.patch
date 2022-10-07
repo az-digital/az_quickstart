@@ -1,0 +1,20 @@
+Index: js/antibot.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/js/antibot.js b/js/antibot.js
+--- a/js/antibot.js	(revision 302d1d85b3cfb7fe34e8adeb1ffec72b0877392c)
++++ b/js/antibot.js	(revision 39cc66631755e2962dbf68ceb621d3bfd5cecf37)
+@@ -12,9 +12,10 @@
+   "use strict";
+ 
+   Drupal.antibot = {};
+ 
+   Drupal.behaviors.antibot = {
+-    attach: function (context) {
++    attach: function (context, settings) {
++      drupalSettings = settings;
+       // Assume the user is not human, despite JS being enabled.
+       drupalSettings.antibot.human = false;
+ 

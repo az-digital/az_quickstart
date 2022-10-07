@@ -1,0 +1,24 @@
+diff --git a/src/Plugin/migrate_plus/data_parser/SimpleXml.php b/src/Plugin/migrate_plus/data_parser/SimpleXml.php
+index 5e09822..9caef8c 100644
+--- a/src/Plugin/migrate_plus/data_parser/SimpleXml.php
++++ b/src/Plugin/migrate_plus/data_parser/SimpleXml.php
+@@ -65,6 +65,7 @@ class SimpleXml extends DataParserPluginBase {
+     // If we've found the desired element, populate the currentItem and
+     // currentId with its data.
+     if ($target_element !== FALSE && !is_null($target_element)) {
++      $this->registerNamespaces($target_element);
+       foreach ($this->fieldSelectors() as $field_name => $xpath) {
+         foreach ($target_element->xpath($xpath) as $value) {
+           if ($value->children() && !trim((string) $value)) {
+diff --git a/src/Plugin/migrate_plus/data_parser/Xml.php b/src/Plugin/migrate_plus/data_parser/Xml.php
+index 2737850..83ecb57 100644
+--- a/src/Plugin/migrate_plus/data_parser/Xml.php
++++ b/src/Plugin/migrate_plus/data_parser/Xml.php
+@@ -235,6 +235,7 @@ class Xml extends DataParserPluginBase {
+     // If we've found the desired element, populate the currentItem and
+     // currentId with its data.
+     if ($target_element !== FALSE && !is_null($target_element)) {
++      $this->registerNamespaces($target_element);
+       foreach ($this->fieldSelectors() as $field_name => $xpath) {
+         $prefix = substr($xpath, 0, 3);
+         if (in_array($prefix, ['../', '..\\'])) {

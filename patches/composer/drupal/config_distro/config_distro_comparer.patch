@@ -1,0 +1,21 @@
+diff --git a/src/Form/ConfigDistroImportForm.php b/src/Form/ConfigDistroImportForm.php
+index aff2f08..9410401 100644
+--- a/src/Form/ConfigDistroImportForm.php
++++ b/src/Form/ConfigDistroImportForm.php
+@@ -41,11 +41,11 @@ class ConfigDistroImportForm extends ConfigSync {
+    */
+   public function buildForm(array $form, FormStateInterface $form_state) {
+     $form = parent::buildForm($form, $form_state);
+-    // @todo: why is this empty?
+-    $storage_comparer = $form_state->get('storage_comparer');
+-    if (!isset($storage_comparer)) {
+-      $storage_comparer = new StorageComparer($this->syncStorage, $this->activeStorage, $this->configManager);
+-    }
++
++    $storage_comparer = new StorageComparer($this->syncStorage, $this->activeStorage);
++    // Store the comparer for use in the submit.
++    $form_state->set('storage_comparer', $storage_comparer);
++
+     foreach ($storage_comparer->getAllCollectionNames() as $collection) {
+       if (isset($form[$collection])) {
+         foreach (array_keys($form[$collection]) as $config_change_type) {

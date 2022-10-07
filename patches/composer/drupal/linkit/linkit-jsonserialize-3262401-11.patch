@@ -1,0 +1,48 @@
+diff --git a/src/Suggestion/DescriptionSuggestion.php b/src/Suggestion/DescriptionSuggestion.php
+index 30d6ad0..2fe03d8 100644
+--- a/src/Suggestion/DescriptionSuggestion.php
++++ b/src/Suggestion/DescriptionSuggestion.php
+@@ -34,6 +34,7 @@ class DescriptionSuggestion extends SimpleSuggestion implements SuggestionDescri
+   /**
+    * {@inheritdoc}
+    */
++  #[\ReturnTypeWillChange]
+   public function jsonSerialize() {
+ 
+     return parent::jsonSerialize() + [
+diff --git a/src/Suggestion/EntitySuggestion.php b/src/Suggestion/EntitySuggestion.php
+index 772db11..bd55db3 100644
+--- a/src/Suggestion/EntitySuggestion.php
++++ b/src/Suggestion/EntitySuggestion.php
+@@ -70,6 +70,7 @@ class EntitySuggestion extends DescriptionSuggestion {
+   /**
+    * {@inheritdoc}
+    */
++  #[\ReturnTypeWillChange]
+   public function jsonSerialize() {
+     return parent::jsonSerialize() + [
+       'entity_uuid' => $this->entityUuid,
+diff --git a/src/Suggestion/SimpleSuggestion.php b/src/Suggestion/SimpleSuggestion.php
+index 4906390..db27880 100644
+--- a/src/Suggestion/SimpleSuggestion.php
++++ b/src/Suggestion/SimpleSuggestion.php
+@@ -76,6 +76,7 @@ class SimpleSuggestion implements SuggestionInterface {
+   /**
+    * {@inheritdoc}
+    */
++  #[\ReturnTypeWillChange]
+   public function jsonSerialize() {
+     return [
+       'label' => $this->getLabel(),
+diff --git a/src/Suggestion/SuggestionCollection.php b/src/Suggestion/SuggestionCollection.php
+index de20548..9117009 100644
+--- a/src/Suggestion/SuggestionCollection.php
++++ b/src/Suggestion/SuggestionCollection.php
+@@ -47,6 +47,7 @@ class SuggestionCollection implements \JsonSerializable {
+   /**
+    * {@inheritdoc}
+    */
++  #[\ReturnTypeWillChange]
+   public function jsonSerialize() {
+     return [
+       'suggestions' => $this->suggestions,
