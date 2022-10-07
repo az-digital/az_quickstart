@@ -117,62 +117,62 @@
         },
         "patches": {
             "drupal/antibot": {
-                "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
+                "drupalSettings not updated on rendering form in Ajax (3205217)": "web/profiles/custom/az_quickstart/patches/composer/drupal/antibot/3205217-1.patch"
             },
             "drupal/better_exposed_filters": {
-                "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-02-16/3210947-12.patch"
+                "Remove jquery_ui_slider (3210947)": "web/profiles/custom/az_quickstart/patches/composer/drupal/better_exposed_filters/3210947-12.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Fix schema (3217958)": "https://gist.githubusercontent.com/trackleft/6b7752228979c6932e8d09e01381dd28/raw/70bd7ed90ab487b454a1106aa9935a335b7d4f49/gistfile1.txt"
+                "Fix schema (3217958)": "web/profiles/custom/az_quickstart/patches/composer/drupal/bootstrap_barrio/3217958.txt"
             },
             "drupal/cas": {
-                "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
-                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2022-08-04/3190842-only-get-session-id-when-necessary.patch"
+                "ServiceNotFoundException when logging out (2948185)": "web/profiles/custom/az_quickstart/patches/composer/drupal/cas/cas_logout_error-2948185-2.patch",
+                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "web/profiles/custom/az_quickstart/patches/composer/drupal/cas/3190842-only-get-session-id-when-necessary.patch"
             },
             "drupal/config_sync": {
-                "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
+                "Config_sync_test core constraint": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_sync/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://www.drupal.org/files/issues/2022-05-05/2259567-160-9-3-x.patch",
-                "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
-                "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Allow text field to enforce a specific text format (784672)": "https://www.drupal.org/files/issues/2022-05-13/784672-231.patch",
-                "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2020-11-11/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
-                "Unrelated error message when running tests with database errors (3163925)": "https://www.drupal.org/files/issues/2022-05-12/3163925-19-9-2-x.patch",
-                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
-                "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
-                "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2020-06-01/3102249-21.patch"
+                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2259567-160-9-3-x.patch",
+                "Ajax CSS load order issue (1461322)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/1461322-25.patch",
+                "Layout builder revisions issue (3033516)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3033516-17.patch",
+                "Allow text field to enforce a specific text format (784672)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/784672-231.patch",
+                "Unable to select single view display for view settings (2552541)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2552541-43.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
+                "Unrelated error message when running tests with database errors (3163925)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3163925-19-9-2-x.patch",
+                "Add skip-method option to file_copy and download process plugins (2766369)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2766369-33.patch",
+                "Move content overview default task link out of content_moderation module (3199682)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3199682-11-9-4-x.patch",
+                "Changing an existing embedded media does not get saved with CKEditor (3102249)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3102249-21.patch"
             },
             "drupal/config_distro": {
-                "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
-                "missing parent class": "https://git.drupalcode.org/issue/config_distro-3199197/-/commit/c312096d486caa2f01703ca7de1abf2285b6fac8.diff",
-                "Storage comparer issue": "https://gist.githubusercontent.com/tadean/4ad67c67a56d9fcec83db8f403ac58d7/raw/9a6762de5b014dffecf06c9a5b311f75c534fce4/config_distro_comparer.patch"
+                "fnmatch issue": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_distro/3144145-replace-fnmatch-with-preg-match-6.patch",
+                "missing parent class": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_distro/c312096d486caa2f01703ca7de1abf2285b6fac8.diff",
+                "Storage comparer issue": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_distro/config_distro_comparer.patch"
             },
             "drupal/config_provider": {
-                "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
+                "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_provider/3281977-2.patch"
             },
             "drupal/date_ap_style": {
-                "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
+                "All Day Setting hides time display (3272760)": "web/profiles/custom/az_quickstart/patches/composer/drupal/date_ap_style/3272760-7.patch"
             },
             "drupal/image_widget_crop": {
-                "Reset crop triggered when ENTER is pressed in the form": "https://www.drupal.org/files/issues/2020-03-04/image_widget_crop-3117828-2.patch"
+                "Reset crop triggered when ENTER is pressed in the form": "web/profiles/custom/az_quickstart/patches/composer/drupal/image_widget_crop/image_widget_crop-3117828-2.patch"
             },
             "drupal/linkit": {
-                "Multiple Linkit elements breaks (2925828)": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch",
-                "Deprecated function Return type of SimpleSuggestion::jsonSerialize() (3262401)": "https://www.drupal.org/files/issues/2022-04-26/linkit-jsonserialize-3262401-11.patch"
+                "Multiple Linkit elements breaks (2925828)": "web/profiles/custom/az_quickstart/patches/composer/drupal/linkit/2925828-10-reroll-6.x.patch",
+                "Deprecated function Return type of SimpleSuggestion::jsonSerialize() (3262401)": "web/profiles/custom/az_quickstart/patches/composer/drupal/linkit/linkit-jsonserialize-3262401-11.patch"
             },
             "drupal/media_migration": {
-                "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
+                "Catch migrate RequirementsExceptions (3268480)": "web/profiles/custom/az_quickstart/patches/composer/drupal/media_migration/3268480-2.patch"
             },
             "drupal/migrate_plus": {
-                "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch"
+                "XML namespacing issue (2933531)": "web/profiles/custom/az_quickstart/patches/composer/drupal/migrate_plus/register_namespaces-2933531-7.patch"
             },
             "drupal/role_delegation": {
-                "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
+                "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "web/profiles/custom/az_quickstart/patches/composer/drupal/role_delegation/3299201-4.patch"
             },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
+                "Add Label field formatter (2938433)": "web/profiles/custom/az_quickstart/patches/composer/drupal/viewsreference/add_label_formatter-2938433-7.patch"
             }
         },
         "drupal-scaffold": {

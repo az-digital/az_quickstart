@@ -1,0 +1,15 @@
+diff --git a/src/Plugin/ConfigProviderInterface.php b/src/Plugin/ConfigProviderInterface.php
+index 2939151..4fea1d3 100644
+--- a/src/Plugin/ConfigProviderInterface.php
++++ b/src/Plugin/ConfigProviderInterface.php
+@@ -85,10 +85,6 @@ interface ConfigProviderInterface extends PluginInspectionInterface {
+    *   An array of storage interfaces containing profile configuration to check
+    *   for overrides.
+    *
+-   * @return array
+-   *   An array of configuration data read from the source storage keyed by the
+-   *   configuration object name.
+-   *
+    * @see \Drupal\config_provider\ConfigProviderConfigInstaller::getConfigToCreate()
+    * @see \Drupal\config_provider\Plugin\ConfigProviderInterface\addInstallableConfig()
+    */

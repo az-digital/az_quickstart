@@ -1,0 +1,32 @@
+diff --git a/src/Service/CasUserManager.php b/src/Service/CasUserManager.php
+index 2c2bd8a..db19f46 100644
+--- a/src/Service/CasUserManager.php
++++ b/src/Service/CasUserManager.php
+@@ -227,7 +227,7 @@ class CasUserManager {
+     }
+ 
+     $this->externalAuth->userLoginFinalize($account, $property_bag->getUsername(), $this->provider);
+-    $this->storeLoginSessionData($this->session->getId(), $ticket);
++    $this->storeLoginSessionData($ticket);
+     $this->session->set('is_cas_user', TRUE);
+     $this->session->set('cas_username', $property_bag->getOriginalUsername());
+ 
+@@ -244,13 +244,15 @@ class CasUserManager {
+   /**
+    * Store the Session ID and ticket for single-log-out purposes.
+    *
+-   * @param string $session_id
+-   *   The session ID, to be used to kill the session later.
+    * @param string $ticket
+    *   The CAS service ticket to be used as the lookup key.
+    */
+-  protected function storeLoginSessionData($session_id, $ticket) {
++  protected function storeLoginSessionData($ticket) {
+     if ($this->settings->get('cas.settings')->get('logout.enable_single_logout') === TRUE) {
++      // TODO: We should not access the session ID here. We at least need to
++      // first persist the session so a proper ID is generated first.
++      // See https://www.drupal.org/project/cas/issues/3190842.
++      $session_id = $this->session->getId();
+       $this->connection->insert('cas_login_data')
+         ->fields(
+           ['sid', 'plainsid', 'ticket', 'created'],

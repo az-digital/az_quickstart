@@ -1,0 +1,56 @@
+diff --git a/core/modules/system/src/Form/ThemeSettingsForm.php b/core/modules/system/src/Form/ThemeSettingsForm.php
+index 51b57e6be1e03dc16b538940a3261a594a289428..c97a58cee72282dd4171a5c51f49ac664c6253e8 100644
+--- a/core/modules/system/src/Form/ThemeSettingsForm.php
++++ b/core/modules/system/src/Form/ThemeSettingsForm.php
+@@ -236,7 +236,9 @@ public function buildForm(array $form, FormStateInterface $form_state, $theme =
+         '#maxlength' => 40,
+         '#description' => $this->t("If you don't have direct file access to the server, use this field to upload your logo."),
+         '#upload_validators' => [
+-          'file_validate_is_image' => [],
++          'file_validate_extensions' => [
++            'png gif jpg jpeg apng svg',
++          ],
+         ],
+       ];
+     }
+diff --git a/core/modules/system/tests/src/Functional/System/ThemeTest.php b/core/modules/system/tests/src/Functional/System/ThemeTest.php
+index 6859bf697ecd2bad9a386667ef06e2361a55f1e1..7854ba948208bb9eb9f7334547002aa4a35e8f98 100644
+--- a/core/modules/system/tests/src/Functional/System/ThemeTest.php
++++ b/core/modules/system/tests/src/Functional/System/ThemeTest.php
+@@ -179,20 +179,24 @@ public function testThemeSettings() {
+       $this->assertSession()->pageTextContains('The custom logo path is invalid.');
+     }
+ 
+-    // Upload a file to use for the logo.
+-    $edit = [
+-      'default_logo' => FALSE,
+-      'logo_path' => '',
+-      'files[logo_upload]' => \Drupal::service('file_system')->realpath($file->uri),
+-    ];
+-    $this->drupalGet('admin/appearance/settings');
+-    $this->submitForm($edit, 'Save configuration');
++    // Upload a file to use for the logo. Try both the test image we've been
++    // using so far and an SVG file.
++    $upload_uris = [$file->uri, 'core/themes/bartik/logo.svg'];
++    foreach ($upload_uris as $upload_uri) {
++      $edit = [
++        'default_logo' => FALSE,
++        'logo_path' => '',
++        'files[logo_upload]' => \Drupal::service('file_system')->realpath($upload_uri),
++      ];
++      $this->drupalGet('admin/appearance/settings');
++      $this->submitForm($edit, 'Save configuration');
+ 
+-    $uploaded_filename = 'public://' . $this->getSession()->getPage()->findField('logo_path')->getValue();
++      $uploaded_filename = 'public://' . $this->getSession()->getPage()->findField('logo_path')->getValue();
+ 
+-    $this->drupalPlaceBlock('system_branding_block', ['region' => 'header']);
+-    $this->drupalGet('');
+-    $this->assertSession()->elementAttributeContains('xpath', '//header//a[@rel="home"]/img', 'src', $file_url_generator->generateString($uploaded_filename));
++      $this->drupalPlaceBlock('system_branding_block', ['region' => 'header']);
++      $this->drupalGet('');
++      $this->assertSession()->elementAttributeContains('xpath', '//header//a[@rel="home"]/img', 'src', $file_url_generator->generateString($uploaded_filename));
++    }
+ 
+     $this->container->get('theme_installer')->install(['bartik']);
+ 

@@ -1,0 +1,41 @@
+diff --git a/js/linkit.autocomplete.js b/js/linkit.autocomplete.js
+index 558278d..7939aef 100644
+--- a/js/linkit.autocomplete.js
++++ b/js/linkit.autocomplete.js
+@@ -168,19 +168,24 @@
+         });
+ 
+         // Use jQuery UI Autocomplete on the textfield.
+-        $autocomplete.autocomplete(autocomplete.options);
+-        $autocomplete.autocomplete('widget').addClass('linkit-ui-autocomplete');
++        $autocomplete.each(function ($index, $autocompleteItem) {
++          var $autocompleteItemRef = $($autocompleteItem);
++          // Use jQuery UI Autocomplete on the textfield.
++          $autocompleteItemRef.autocomplete(autocomplete.options);
++          $autocompleteItemRef.autocomplete('widget').addClass('linkit-ui-autocomplete');
++
++          $autocompleteItemRef.click(function () {
++            $autocompleteItemRef.autocomplete('search', $autocompleteItemRef.val());
++          });
++
++          $autocompleteItemRef.on('compositionstart.autocomplete', function () {
++            autocomplete.options.isComposing = true;
++          });
++          $autocompleteItemRef.on('compositionend.autocomplete', function () {
++            autocomplete.options.isComposing = false;
++          });
++        })
+ 
+-        $autocomplete.click(function () {
+-          $autocomplete.autocomplete('search', $autocomplete.val());
+-        });
+-
+-        $autocomplete.on('compositionstart.autocomplete', function () {
+-          autocomplete.options.isComposing = true;
+-        });
+-        $autocomplete.on('compositionend.autocomplete', function () {
+-          autocomplete.options.isComposing = false;
+-        });
+       }
+     },
+     detach: function (context, settings, trigger) {

@@ -1,0 +1,13 @@
+diff --git a/tests/modules/config_sync_test/config_sync_test.info.yml b/tests/modules/config_sync_test/config_sync_test.info.yml
+index afad55f..437932a 100644
+--- a/tests/modules/config_sync_test/config_sync_test.info.yml
++++ b/tests/modules/config_sync_test/config_sync_test.info.yml
+@@ -3,7 +3,7 @@ type: module
+ description: 'Support module for config_sync module testing.'
+ package: Testing
+ # version: VERSION
+-core: 8.x
++core_version_requirement: ^8.8 || ^9
+ dependencies:
+   - node
+ 

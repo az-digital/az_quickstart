@@ -1,0 +1,110 @@
+diff --git a/core/modules/migrate/src/Plugin/migrate/process/Download.php b/core/modules/migrate/src/Plugin/migrate/process/Download.php
+index a2832b66e8..f7f2a35050 100644
+--- a/core/modules/migrate/src/Plugin/migrate/process/Download.php
++++ b/core/modules/migrate/src/Plugin/migrate/process/Download.php
+@@ -18,6 +18,11 @@
+  * - destination URI, e.g. 'public://images/foo.img'
+  *
+  * Available configuration keys:
++ * - source_exception: (optional) Error behavior when a file cannot be
++ *   downloaded successfully:
++ *   - 'error': (default) Raise an error and stop the migration.
++ *   - 'skip process': Prevents further processing of the input property.
++ *   - 'skip row': Skips the entire row.
+  * - file_exists: (optional) Replace behavior when the destination file already
+  *   exists:
+  *   - 'replace' - (default) Replace the existing file.
+@@ -152,7 +157,8 @@ public function transform($value, MigrateExecutableInterface $migrate_executable
+       $this->httpClient->get($source, $this->configuration['guzzle_options']);
+     }
+     catch (\Exception $e) {
+-      throw new MigrateException("{$e->getMessage()} ($source)");
++      $exception_class = $this->configuration['source_exception'];
++      throw new $exception_class("{$e->getMessage()} ($source)");
+     }
+ 
+     if (is_resource($destination_stream)) {
+diff --git a/core/modules/migrate/src/Plugin/migrate/process/FileCopy.php b/core/modules/migrate/src/Plugin/migrate/process/FileCopy.php
+index f4d006c091..aa17d1c7da 100644
+--- a/core/modules/migrate/src/Plugin/migrate/process/FileCopy.php
++++ b/core/modules/migrate/src/Plugin/migrate/process/FileCopy.php
+@@ -27,6 +27,11 @@
+  * Available configuration keys:
+  * - move: (optional) Boolean, if TRUE, move the file, otherwise copy the file.
+  *   Defaults to FALSE.
++ * - source_exception: (optional) Error behavior when the source file cannot be
++ *   found:
++ *   - 'error': (default) Raise an error and stop the migration.
++ *   - 'skip process': Prevents further processing of the input property.
++ *   - 'skip row': Skips the entire row.
+  * - file_exists: (optional) Replace behavior when the destination file already
+  *   exists:
+  *   - 'replace' - (default) Replace the existing file.
+@@ -133,7 +138,8 @@ public function transform($value, MigrateExecutableInterface $migrate_executable
+ 
+     // Ensure the source file exists, if it's a local URI or path.
+     if (!file_exists($source)) {
+-      throw new MigrateException("File '$source' does not exist");
++      $exception_class = $this->configuration['source_exception'];
++      throw new $exception_class("File '$source' does not exist");
+     }
+ 
+     // If the start and end file is exactly the same, there is nothing to do.
+diff --git a/core/modules/migrate/src/Plugin/migrate/process/FileProcessBase.php b/core/modules/migrate/src/Plugin/migrate/process/FileProcessBase.php
+index bd7921c227..d3c3e40a33 100644
+--- a/core/modules/migrate/src/Plugin/migrate/process/FileProcessBase.php
++++ b/core/modules/migrate/src/Plugin/migrate/process/FileProcessBase.php
+@@ -3,12 +3,20 @@
+ namespace Drupal\migrate\Plugin\migrate\process;
+ 
+ use Drupal\Core\File\FileSystemInterface;
++use Drupal\migrate\MigrateException;
++use Drupal\migrate\MigrateSkipProcessException;
++use Drupal\migrate\MigrateSkipRowException;
+ use Drupal\migrate\ProcessPluginBase;
+ 
+ /**
+  * Provides functionality for file process plugins.
+  *
+  * Available configuration keys:
++ * - source_exception: (optional) Error behavior when a source file cannot be
++ *   found:
++ *   - 'error': (default) Raise an error and stop the migration.
++ *   - 'skip process': Prevents further processing of the input property.
++ *   - 'skip row': Skips the entire row.
+  * - file_exists: (optional) Replace behavior when the destination file already
+  *   exists:
+  *   - 'replace' - (default) Replace the existing file.
+@@ -29,6 +37,20 @@ abstract class FileProcessBase extends ProcessPluginBase {
+    *   The plugin definition.
+    */
+   public function __construct(array $configuration, $plugin_id, array $plugin_definition) {
++    if (array_key_exists('source_exception', $configuration)) {
++      switch ($configuration['source_exception']) {
++        case 'skip process':
++          $configuration['source_exception'] = MigrateSkipProcessException::class;
++          break;
++
++        case 'skip row':
++          $configuration['source_exception'] = MigrateSkipRowException::class;
++          break;
++
++        default:
++          $configuration['source_exception'] = MigrateException::class;
++      }
++    }
+     if (array_key_exists('file_exists', $configuration)) {
+       switch ($configuration['file_exists']) {
+         case 'use existing':
+@@ -43,7 +65,10 @@ public function __construct(array $configuration, $plugin_id, array $plugin_defi
+           $configuration['file_exists'] = FileSystemInterface::EXISTS_REPLACE;
+       }
+     }
+-    $configuration += ['file_exists' => FileSystemInterface::EXISTS_REPLACE];
++    $configuration += [
++      'source_exception' => MigrateException::class,
++      'file_exists' => FileSystemInterface::EXISTS_REPLACE,
++    ];
+     parent::__construct($configuration, $plugin_id, $plugin_definition);
+   }
+ 
