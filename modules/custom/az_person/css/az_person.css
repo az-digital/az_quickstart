@@ -1,3 +1,8 @@
+/* Display - All */
+.node--type-az-person .field--name-field-az-attachments a {
+	word-break: break-word;
+}
+
 /* Display - Full */
 .az-person-categories-list .az-person-category-item + .az-person-category-item {
 	margin-left: 0.5rem;
