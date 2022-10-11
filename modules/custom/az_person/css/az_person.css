@@ -1,3 +1,14 @@
+/* Display - Full */
+.az-person-categories-list .az-person-category-item + .az-person-category-item {
+	margin-left: 0.5rem;
+}
+
+/* Display - Card */
+.az-person-image-link .field--type-entity-reference {
+	margin-bottom: 0;
+}
+
+/* Views */
 .az-person-row {
 	margin: 0 0 1rem;
 	padding-bottom: 1rem;
