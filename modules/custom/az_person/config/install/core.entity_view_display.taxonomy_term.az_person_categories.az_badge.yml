@@ -12,7 +12,7 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: false
-      smart_title__tag: span
+      smart_title__tag: div
       smart_title__classes: {  }
   field_group:
     group_link:
