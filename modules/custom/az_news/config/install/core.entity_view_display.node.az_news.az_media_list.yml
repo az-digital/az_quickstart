@@ -223,7 +223,7 @@ third_party_settings:
         id: ''
         element: div
         show_label: false
-        label_element: h3
+        label_element: ''
         label_element_classes: ''
         attributes: ''
         effect: none
