@@ -233,7 +233,7 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
  *   Node data from hook_tokens().
  *
  * @return string
- *   The node's canononical link title.
+ *   The node's canonical link title.
  */
 function az_core_canonical_summary_link_title(array $data) {
   /** @var \Drupal\node\NodeInterface $node */
