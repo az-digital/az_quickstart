@@ -4,8 +4,8 @@
 }
 
 /* Display - Full */
-.az-person-categories-list .az-person-category-item + .az-person-category-item {
-	margin-left: 0.5rem;
+.az-person-categories-list .az-person-category-item {
+	margin-right: 0.5rem;
 }
 
 /* Views */
