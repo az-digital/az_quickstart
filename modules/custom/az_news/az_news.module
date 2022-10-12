@@ -33,7 +33,7 @@ function az_news_entity_extra_field_info() {
   // Check to see if our content type exists.
   $bundle = NodeType::load('az_news');
   if ($bundle) {
-    // Month pseudo field.
+    // Link title pseudo field.
     $extra['node'][$bundle->id()]['display']['az_news_read_more'] = [
       'label' => t('Read more pseudo link.'),
       'description' => "This is a pseudo field from az_news",
