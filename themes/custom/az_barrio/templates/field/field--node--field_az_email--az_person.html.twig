@@ -29,8 +29,8 @@
     'd-block',
   ]
 %}
-<span{{ attributes.addClass(classes) }}>
+<div{{ attributes.addClass(classes) }}>
   {%- for item in items -%}
     {{ item.content }}
   {%- endfor -%}
-</span>
+</div>

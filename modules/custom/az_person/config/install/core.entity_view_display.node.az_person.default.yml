@@ -223,7 +223,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 12
+    weight: 13
     region: content
   field_az_body:
     type: text_default
@@ -265,7 +265,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 11
+    weight: 12
     region: content
   field_az_lname:
     type: string
@@ -279,7 +279,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: az_card_image
+      view_mode: az_medium
       link: false
     third_party_settings: {  }
     weight: 6
@@ -316,7 +316,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   field_az_titles:
     type: string
