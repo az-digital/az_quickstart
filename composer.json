@@ -44,7 +44,7 @@
         "drupal/block_field": "1.0-rc3",
         "drupal/bootstrap_barrio": "4.30",
         "drupal/bootstrap_utilities": "1.2.0",
-        "drupal/cas": "2.0.2",
+        "drupal/cas": "2.1.0",
         "drupal/chosen": "3.0.3",
         "drupal/ckeditor_bs_grid": "2.0.7",
         "drupal/coffee": "1.2",
