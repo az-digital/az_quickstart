@@ -126,6 +126,9 @@
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/trackleft/6b7752228979c6932e8d09e01381dd28/raw/70bd7ed90ab487b454a1106aa9935a335b7d4f49/gistfile1.txt",
                 "Node template contextual menu issue (3158009)": "https://www.drupal.org/files/issues/2020-07-09/node_contextual.patch"
             },
+            "drupal/draggableviews": {
+                "Introduce Contextual Link to Reorder View Page (3264556)": "https://www.drupal.org/files/issues/2022-03-07/3264556-4.patch"
+            },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
                 "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2022-08-04/3190842-only-get-session-id-when-necessary.patch"
