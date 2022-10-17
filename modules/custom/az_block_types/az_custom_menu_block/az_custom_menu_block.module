@@ -41,7 +41,6 @@ function az_custom_menu_block_preprocess_block(&$variables) {
   ) {
     $variables['title_attributes']['class'][] = 'h4';
     $variables['title_attributes']['class'][] = 'mt-0';
-    }
   }
 }
 
