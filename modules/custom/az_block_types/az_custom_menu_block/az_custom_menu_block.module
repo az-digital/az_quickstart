@@ -5,6 +5,33 @@
  * Contains az_custom_menu_block.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Due to function name we only run on block_content_az_custom_menu_block_form.
+ * This is the creation form for az_custom_menu_block content.
+ */
+function az_custom_menu_block_form_block_content_az_custom_menu_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Default suggestion value.
+  $suggestion = 'sidebar';
+
+  // Get the choice for block plugin.
+  $plugin_id = $form_state->getValue(['field_az_block', '0', 'plugin_id'], '');
+
+  // Verify we seemingly chose a menu block.
+  if (strpos($plugin_id, 'menu_block:') === 0) {
+    // Block_field works by putting the block config form inside the widget.
+    // Verify menu_block suggestion element really seems to be present.
+    if (!empty($form['field_az_block']['widget'][0]['settings']['style']['suggestion'])) {
+      // Update the suggestion default.
+      $form['field_az_block']['widget'][0]['settings']['style']['suggestion']['#default_value'] = $suggestion;
+    }
+  }
+}
+
 /**
  * Implements hook_preprocess_HOOK().
  */
