@@ -37,7 +37,7 @@ function az_custom_menu_block_form_block_content_az_custom_menu_block_form_alter
  */
 function az_custom_menu_block_preprocess_block(&$variables) {
   if ($variables['base_plugin_id'] === 'menu_block') {
-    if ($variables['configuration']['az_custom_menu_block'] &&
+    if (isset($variables['configuration']['az_custom_menu_block']) &&
         $variables['configuration']['az_custom_menu_block'] === 'az_custom_menu_block'
     ) {
       $variables['title_attributes']['class'][] = 'h4';
