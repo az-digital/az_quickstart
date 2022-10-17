@@ -2,6 +2,7 @@
 
 namespace Drupal\az_core;
 
+use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\config_provider\Plugin\ConfigCollector;
@@ -10,6 +11,7 @@ use Drupal\config_sync\ConfigSyncSnapshotter;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 use Drupal\config_update\ConfigListByProviderInterface;
 use Drupal\Core\Extension\ModuleHandler;
+use Drupal\Core\Logger\LoggerChannel;
 
 /**
  * Class AZConfigOverride.
@@ -22,6 +24,8 @@ use Drupal\Core\Extension\ModuleHandler;
  * enabled, e.g. az_cas.
  */
 class AZConfigOverride {
+
+  use ConfigSnapshotStorageTrait;
 
   /**
    * Drupal\config_provider\Plugin\ConfigCollector definition.
@@ -66,15 +70,23 @@ class AZConfigOverride {
   protected $moduleHandler;
 
   /**
+   * LoggerChannel service.
+   *
+   * @var \Drupal\Core\Logger\LoggerChannel
+   */
+  protected $logger;
+
+  /**
    * Constructs a new AZConfigOverride object.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler) {
+  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler, LoggerChannel $logger_channel) {
     $this->configFactory = $config_factory;
     $this->extensionListModule = $extension_list_module;
     $this->configCollector = $config_collector;
     $this->configSyncSnapshotter = $config_sync_snapshotter;
     $this->configUpdateLister = $config_update_lister;
     $this->moduleHandler = $module_handler;
+    $this->logger = $logger_channel;
   }
 
   /**
@@ -124,16 +136,21 @@ class AZConfigOverride {
             $owner = $provided_by[1];
 
             // Record we need to do a snapshot.
-            $snapshots[$type][] = $owner;
+            $snapshots[$type][$owner][$name] = $data;
           }
         }
 
         // Update the config_snapshot of the modules that owned the config.
         foreach ($snapshots as $type => $owners) {
-          $owners = array_unique($owners);
-          foreach ($owners as $owner) {
-            $this->configSyncSnapshotter->refreshExtensionSnapshot($type, [$owner],
-              ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
+          foreach ($owners as $owner => $names) {
+            $snapshot_storage = $this->getConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $type, $owner);
+            foreach ($names as $name => $data) {
+              $this->logger->info("Snapshotting @config_id for @module.", [
+                '@module' => $owner,
+                '@config_id' => $name,
+              ]);
+              $snapshot_storage->write($name, $data);
+            }
           }
         }
       }
