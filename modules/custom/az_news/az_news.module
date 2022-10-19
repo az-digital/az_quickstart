@@ -52,12 +52,11 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
 
   if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_link')) {
     $bubbleable_metadata = new BubbleableMetadata();
-    $token_service = Drupal::token();
     // Read more pseudo field.
     if ($display->getComponent('az_news_read_more')) {
       $build['az_news_read_more'][] = [
         '#type' => 'markup',
-        '#markup' => Html::escape($token_service
+        '#markup' => Html::escape(\Drupal::service('token')
           ->replace('[node:az-canonical-summary-link-title]', [
             'node' => $entity,
           ], [], $bubbleable_metadata)),
