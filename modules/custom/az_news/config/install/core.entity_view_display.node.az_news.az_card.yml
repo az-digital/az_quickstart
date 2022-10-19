@@ -176,11 +176,6 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 5
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }

@@ -60,7 +60,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-
     group_photo_container:
       children:
         - field_az_media_image
@@ -106,24 +105,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h3 mb-0 mt-0'
-        id: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_summary:
-      children:
-        - field_az_summary
-      label: Summary
-      parent_name: ''
-      region: hidden
-      weight: 1
-      format_type: html_element
-      format_settings:
-        classes: 'card-text font-weight-normal mt-2'
         id: ''
         element: div
         show_label: false
