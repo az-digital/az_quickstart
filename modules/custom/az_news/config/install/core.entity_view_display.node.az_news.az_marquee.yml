@@ -133,7 +133,7 @@ third_party_settings:
       label: 'Body Row'
       parent_name: ''
       region: hidden
-      weight: 14
+      weight: 11
       format_type: html_element
       format_settings:
         classes: row
@@ -235,8 +235,8 @@ third_party_settings:
         speed: fast
     group_read_more:
       children:
-        - group_read_more_text
         - links
+        - group_read_more_text
       label: 'Read more'
       parent_name: group_link
       region: content

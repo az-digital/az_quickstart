@@ -155,8 +155,8 @@ third_party_settings:
         speed: fast
     group_read_article:
       children:
-        - group_read_more_text
         - links
+        - group_read_more_text
       label: 'Read article'
       parent_name: group_text_column
       region: content
