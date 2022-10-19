@@ -18,6 +18,9 @@ dependencies:
     - field.field.node.az_news.field_az_summary
     - image.style.az_medium
     - node.type.az_news
+  enforced:
+    module:
+      - az_news
   module:
     - date_ap_style
     - field_group

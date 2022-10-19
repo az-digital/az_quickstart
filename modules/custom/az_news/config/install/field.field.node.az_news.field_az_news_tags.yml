@@ -5,6 +5,9 @@ dependencies:
     - field.storage.node.field_az_news_tags
     - node.type.az_news
     - taxonomy.vocabulary.az_news_tags
+  enforced:
+    module:
+      - az_news
 id: node.az_news.field_az_news_tags
 field_name: field_az_news_tags
 entity_type: node

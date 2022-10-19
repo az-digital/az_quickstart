@@ -5,6 +5,9 @@ dependencies:
     - field.storage.node.field_az_contacts
     - node.type.az_news
     - paragraphs.paragraphs_type.az_contact
+  enforced:
+    module:
+      - az_news
   module:
     - entity_reference_revisions
 id: node.az_news.field_az_contacts

@@ -5,6 +5,9 @@ dependencies:
     - field.storage.node.field_az_subheading
     - filter.format.plain_text
     - node.type.az_news
+  enforced:
+    module:
+      - az_news
   module:
     - text
 id: node.az_news.field_az_subheading

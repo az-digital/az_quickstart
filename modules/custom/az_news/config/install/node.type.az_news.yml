@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_news
   module:
     - menu_ui
 third_party_settings:

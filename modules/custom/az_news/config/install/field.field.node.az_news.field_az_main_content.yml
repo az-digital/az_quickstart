@@ -7,6 +7,9 @@ dependencies:
     - paragraphs.paragraphs_type.az_cards
     - paragraphs.paragraphs_type.az_photo_gallery
     - paragraphs.paragraphs_type.az_text
+  enforced:
+    module:
+      - az_news
   module:
     - entity_reference_revisions
 id: node.az_news.field_az_main_content

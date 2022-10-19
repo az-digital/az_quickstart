@@ -10,6 +10,9 @@ dependencies:
     - core.entity_view_mode.node.az_minimal_media_list
     - node.type.az_news
     - taxonomy.vocabulary.az_news_tags
+  enforced:
+    module:
+      - az_news
   module:
     - better_exposed_filters
     - datetime

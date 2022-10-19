@@ -5,6 +5,9 @@ dependencies:
     - field.storage.node.field_az_body
     - filter.format.az_standard
     - node.type.az_news
+  enforced:
+    module:
+      - az_news
   module:
     - text
 id: node.az_news.field_az_body
