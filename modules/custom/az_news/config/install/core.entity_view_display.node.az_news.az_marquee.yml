@@ -11,7 +11,6 @@ dependencies:
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
-    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -48,7 +47,7 @@ third_party_settings:
       label: 'Title Block'
       parent_name: ''
       region: hidden
-      weight: 19
+      weight: 16
       format_type: html_element
       format_settings:
         classes: 'border-bottom align-text-top mb-4'
@@ -83,7 +82,7 @@ third_party_settings:
       label: 'Title Column'
       parent_name: ''
       region: hidden
-      weight: 18
+      weight: 15
       format_type: html_element
       format_settings:
         classes: col-12
@@ -100,7 +99,7 @@ third_party_settings:
       label: 'Text Column'
       parent_name: ''
       region: hidden
-      weight: 15
+      weight: 12
       format_type: html_element
       format_settings:
         classes: ''
@@ -117,7 +116,7 @@ third_party_settings:
       label: Lead
       parent_name: ''
       region: hidden
-      weight: 17
+      weight: 14
       format_type: html_element
       format_settings:
         classes: lead
@@ -169,7 +168,7 @@ third_party_settings:
       label: Container
       parent_name: ''
       region: hidden
-      weight: 16
+      weight: 13
       format_type: html_element
       format_settings:
         classes: mt-0
@@ -222,7 +221,7 @@ third_party_settings:
       label: Summary
       parent_name: ''
       region: hidden
-      weight: 13
+      weight: 1
       format_type: html_element
       format_settings:
         classes: 'card-text font-weight-normal mt-2'
@@ -336,7 +335,7 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 2
+    weight: 8
     region: content
   smart_title:
     settings: {  }
@@ -352,7 +351,6 @@ hidden:
   field_az_expiration_date: true
   field_az_link: true
   field_az_main_content: true
-  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true

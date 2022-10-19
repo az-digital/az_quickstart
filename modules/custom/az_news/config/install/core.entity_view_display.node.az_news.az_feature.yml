@@ -45,7 +45,7 @@ third_party_settings:
       label: Card
       parent_name: ''
       region: content
-      weight: 0
+      weight: 5
       format_type: html_element
       format_settings:
         classes: 'card card-borderless card-clickable mb-6'
@@ -259,7 +259,7 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 3
+    weight: 0
     region: content
   smart_title:
     settings: {  }

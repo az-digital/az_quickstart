@@ -175,7 +175,7 @@ third_party_settings:
       label: Summary
       parent_name: ''
       region: hidden
-      weight: 13
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'card-text font-weight-normal'
@@ -238,7 +238,7 @@ content:
   az_news_read_more:
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 2
     region: content
   field_az_media_image:
     type: entity_reference_entity_view
@@ -269,7 +269,7 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 11
+    weight: 1
     region: content
   smart_title:
     settings: {  }
