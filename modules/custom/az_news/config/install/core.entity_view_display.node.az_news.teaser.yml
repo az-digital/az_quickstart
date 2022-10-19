@@ -27,7 +27,7 @@ id: node.az_news.teaser
 targetEntityType: node
 bundle: az_news
 mode: teaser
-content:
+content: {  }
 hidden:
   field_az_attachments: true
   field_az_body: true
