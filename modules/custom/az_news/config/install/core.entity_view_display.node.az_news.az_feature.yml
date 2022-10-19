@@ -28,9 +28,6 @@ dependencies:
     - smart_title
     - text
     - user
-  enforced:
-    module:
-      - az_news
 third_party_settings:
   smart_title:
     enabled: true
