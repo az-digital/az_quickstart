@@ -4,9 +4,6 @@ dependencies:
   module:
     - node
     - taxonomy
-  enforced:
-    module:
-      - az_news
 id: node.field_az_news_tags
 field_name: field_az_news_tags
 entity_type: node

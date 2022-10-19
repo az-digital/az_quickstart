@@ -5,9 +5,6 @@ dependencies:
     - field.storage.node.field_az_media_image
     - media.type.az_image
     - node.type.az_news
-  enforced:
-    module:
-      - az_news
 id: node.az_news.field_az_media_image
 field_name: field_az_media_image
 entity_type: node

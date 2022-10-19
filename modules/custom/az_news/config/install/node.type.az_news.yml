@@ -3,9 +3,6 @@ status: true
 dependencies:
   module:
     - menu_ui
-  enforced:
-    module:
-      - az_news
 third_party_settings:
   menu_ui:
     available_menus:

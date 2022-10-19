@@ -6,9 +6,6 @@ dependencies:
     - node.type.az_news
   module:
     - link
-  enforced:
-    module:
-      - az_news
 id: node.az_news.field_az_link
 field_name: field_az_link
 entity_type: node

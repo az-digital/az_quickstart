@@ -17,9 +17,6 @@ dependencies:
     - taxonomy
     - user
     - views_bootstrap
-  enforced:
-    module:
-      - az_news
 id: az_news
 label: 'AZ News'
 module: views

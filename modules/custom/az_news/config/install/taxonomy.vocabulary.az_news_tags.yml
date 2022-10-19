@@ -1,9 +1,6 @@
 langcode: en
 status: true
-dependencies:
-  enforced:
-    module:
-      - az_news
+dependencies: {  }
 name: 'News Tags'
 vid: az_news_tags
 description: 'Taxonomy for categorizing news'
