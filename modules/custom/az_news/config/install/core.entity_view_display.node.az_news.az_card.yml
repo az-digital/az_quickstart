@@ -122,8 +122,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_read_more:
-      children:
-        - links
+      children: {  }
       label: 'Read more'
       parent_name: group_link
       region: content
@@ -199,3 +198,4 @@ hidden:
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
+  links: true

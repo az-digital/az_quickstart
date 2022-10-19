@@ -118,8 +118,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_read_more:
-      children:
-        - links
+      children: {  }
       label: 'Read more'
       parent_name: group_text_column
       region: content
@@ -240,11 +239,6 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
@@ -263,3 +257,4 @@ hidden:
   field_az_short_title: true
   field_az_subheading: true
   field_az_summary: true
+  links: true

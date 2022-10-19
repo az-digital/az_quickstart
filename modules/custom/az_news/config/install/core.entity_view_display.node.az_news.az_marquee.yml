@@ -42,23 +42,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_title_block:
-      children: {  }
-      label: 'Title Block'
-      parent_name: ''
-      region: hidden
-      weight: 16
-      format_type: html_element
-      format_settings:
-        classes: 'border-bottom align-text-top mb-4'
-        id: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_text_muted:
       children:
         - field_az_published
@@ -77,74 +60,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_title_column:
-      children: {  }
-      label: 'Title Column'
-      parent_name: ''
-      region: hidden
-      weight: 15
-      format_type: html_element
-      format_settings:
-        classes: col-12
-        id: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_text_column:
-      children: {  }
-      label: 'Text Column'
-      parent_name: ''
-      region: hidden
-      weight: 12
-      format_type: html_element
-      format_settings:
-        classes: ''
-        id: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_lead:
-      children: {  }
-      label: Lead
-      parent_name: ''
-      region: hidden
-      weight: 14
-      format_type: html_element
-      format_settings:
-        classes: lead
-        id: ''
-        element: p
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_body_row:
-      children: {  }
-      label: 'Body Row'
-      parent_name: ''
-      region: hidden
-      weight: 11
-      format_type: html_element
-      format_settings:
-        classes: row
-        id: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
+
     group_photo_container:
       children:
         - field_az_media_image
@@ -155,23 +71,6 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: card-img
-        id: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_fig_caption:
-      children: {  }
-      label: Container
-      parent_name: ''
-      region: hidden
-      weight: 13
-      format_type: html_element
-      format_settings:
-        classes: mt-0
         id: ''
         element: div
         show_label: false
@@ -234,8 +133,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_read_more:
-      children:
-        - links
+      children: {  }
       label: 'Read more'
       parent_name: group_link
       region: content
@@ -306,11 +204,6 @@ content:
     third_party_settings: {  }
     weight: 6
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 8
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
@@ -329,3 +222,4 @@ hidden:
   field_az_short_title: true
   field_az_subheading: true
   field_az_summary: true
+  links: true
