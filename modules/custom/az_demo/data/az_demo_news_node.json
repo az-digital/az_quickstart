@@ -12,7 +12,8 @@
       "az_attachments"    : "",
       "az_attachments_description" : "",
       "az_expiration_date"  : "2106-02-06 23:28:15",
-      "az_link" : "",
+      "az_link_url" : "",
+      "az_link_title" : "",
       "az_news_tags" : "",
       "az_short_title" : "[node:title]"
     },
@@ -28,7 +29,8 @@
       "az_attachments"    : "",
       "az_attachments_description" : "",
       "az_expiration_date"  : "2106-02-06 23:28:15",
-      "az_link" : "",
+      "az_link_url" : "",
+      "az_link_title" : "",
       "az_news_tags" : "Research",
       "az_short_title" : "[node:title]"
     },
@@ -44,7 +46,8 @@
       "az_attachments"    : "",
       "az_attachments_description" : "",
       "az_expiration_date"  : "2106-02-06 23:28:15",
-      "az_link" : "https://news.arizona.edu/story/jet-stream-changes-could-amplify-weather-extremes-2060s",
+      "az_link_url" : "https://news.arizona.edu/story/jet-stream-changes-could-amplify-weather-extremes-2060s",
+      "az_link_title" : "Read more at UArizona News",
       "az_news_tags" : "Research",
       "az_short_title" : "[node:title]"
     },
@@ -60,7 +63,8 @@
       "az_attachments"    : "",
       "az_attachments_description" : "",
       "az_expiration_date"  : "2106-02-06 23:28:15",
-      "az_link" : "",
+      "az_link_url" : "",
+      "az_link_title" : "",
       "az_news_tags" : "Students|Research",
       "az_short_title" : "[node:title]"
     },
@@ -76,7 +80,8 @@
       "az_attachments"    : "",
       "az_attachments_description" : "",
       "az_expiration_date"  : "2106-02-06 23:28:15",
-      "az_link" : "",
+      "az_link_url" : "",
+      "az_link_title" : "",
       "az_news_tags" : "Campus News",
       "az_short_title" : "[node:title]"
     }
