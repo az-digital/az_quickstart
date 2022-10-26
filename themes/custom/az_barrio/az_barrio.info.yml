@@ -1,6 +1,6 @@
 name: Arizona Barrio
 type: theme
-description: 'Basic structure for a Bootstrap Barrio SubTheme.'
+description: 'UArizona theme employing Arizona Bootstrap.'
 core_version_requirement: ^9
 dependencies:
   - az_core
