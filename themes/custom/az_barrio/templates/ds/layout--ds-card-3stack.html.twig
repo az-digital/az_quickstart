@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Display Suite 4 column template.
+ *
+ * Available variables:
+ * - outer_wrapper: outer wrapper element
+ * - first_wrapper: wrapper element around first region
+ * - second_wrapper: wrapper element around second region
+ * - third_wrapper: wrapper element around third region
+ * - attributes: layout attributes
+ * - first_attributes: attributes for first region
+ * - second_attributes: attributes for second region
+ * - third_attributes: attributes for third region
+ * - fourth_attributes: attributes for fourth region
+ * - first: content of first region
+ * - second: content of second region
+ * - third: content of third region
+ */
+#}
+<{{ outer_wrapper }}{{ attributes.addClass('card', 'clearfix') }}>
+
+  {{ title_suffix.contextual_links }}
+
+  <{{ first_wrapper }}{{ first_attributes.addClass('card-block card-body') }}>
+    {{ first }}
+  </{{ first_wrapper }}>
+
+  <{{ second_wrapper }}{{ second_attributes.addClass('card-img') }}>
+    {{ second }}
+  </{{ second_wrapper }}>
+
+  <{{ third_wrapper }}{{ third_attributes.addClass('card-block card-body') }}>
+    {{ third }}
+  </{{ third_wrapper }}>
+
+</{{ outer_wrapper }}>

@@ -1,3 +1,185 @@
+# Copied from bootstrap_barrio
+barrio-global-styling:
+  version: VERSION
+  js:
+    js/global.js: {}
+    js/affix.js: {}
+  css:
+    component:
+      css/components/affix.css: {}
+      css/components/alerts.css: {}
+      css/components/book.css: {}
+      css/components/comments.css: {}
+      css/components/contextual.css: {}
+      # @see https://www.drupal.org/node/2389735
+      css/components/feed-icon.css: {}
+      css/components/field.css: {}
+      css/components/header.css: {}
+      css/components/help.css: {}
+      css/components/icons.css: {}
+      css/components/image-button.css: {}
+      css/components/item-list.css: {}
+      css/components/list-group.css: {}
+      css/components/node-preview.css: {}
+      css/components/page.css: {}
+      css/components/search-form.css: {}
+      css/components/shortcut.css: {}
+      css/components/sidebar.css: {}
+      css/components/site-footer.css: {}
+      css/components/skip-link.css: {}
+      css/components/table.css: {}
+      css/components/tabledrag.css: {}
+      css/components/tableselect.css: {}
+      css/components/tablesort-indicator.css: {}
+      css/components/ui.widget.css: {}
+      css/components/tabs.css: {}
+      css/components/user.css: { weight: -10 }
+      # @see https://www.drupal.org/node/2389735
+      css/components/vertical-tabs.css: {}
+      css/components/views.css: {}
+      css/components/ui-dialog.css: {}
+      css/components/progress.css: { weight: -10 }
+    theme:
+      css/print.css: { media: print }
+  dependencies:
+    - core/jquery
+    - core/jquery.once
+    - core/drupal
+
+affix:
+  version: VERSION
+  js:
+    js/affix.js: {}
+  css:
+    component:
+      css/components/affix.css: {}
+alerts:
+  version: VERSION
+  css:
+    component:
+      css/components/alerts.css: {}
+book-navigation:
+  version: VERSION
+  css:
+    component:
+      css/components/book-navigation.css: {}
+
+bootstrap-icons:
+  version: VERSION
+  css:
+    component:
+      css/components/bootstrap-icons.css: {}
+
+breadcrumb:
+  version: VERSION
+  css:
+    component:
+      css/components/breadcrumb.css: {}
+
+dropbutton:
+  version: VERSION
+  css:
+    component:
+      css/components/dropbutton.component.css: {}
+      css/components/dropbutton.css: { weight: -10 }
+
+file:
+  version: VERSION
+  css:
+    component:
+      css/components/file.css: { weight: -10 }
+
+form:
+  version: VERSION
+  css:
+    component:
+      css/components/form.css: {}
+
+indented:
+  version: VERSION
+  css:
+    component:
+      css/components/indented.css: {}
+
+maintenance_page:
+  version: VERSION
+  css:
+    theme:
+      css/maintenance-page.css: {}
+  dependencies:
+    - system/maintenance
+    - az_barrio/barrio-global-styling
+
+node:
+  version: VERSION
+  css:
+    component:
+      css/components/node.css: { weight: -10 }
+
+sidebar_collapse:
+  version: VERSION
+  js:
+    js/sidebar-collapse.js: { external: true }
+  css:
+    component:
+      css/components/sidebar-collapse.css: {}
+
+tabs:
+  version: VERSION
+  css:
+    component:
+      css/components/tabs.css: {}
+
+toast:
+  version: VERSION
+  js:
+    js/toast.js: {}
+
+verticaltabs:
+  version: VERSION
+  css:
+    component:
+      css/components/vertical-tabs.css: {}
+
+commerce:
+  version: VERSION
+  css:
+    component:
+      css/components/commerce.css: {}
+
+# Colors
+
+messages_white:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-white.css: {}
+
+messages_gray:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-gray.css: {}
+
+messages_light:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-light.css: {}
+
+messages_dark:
+  version: VERSION
+  css:
+    component:
+      css/colors/messages/messages-dark.css: {}
+
+views.ajax:
+  js:
+    js/modules/views/ajax_view.js: {}
+
+
+# az_barrio libraries
+
 global-styling:
   version: 1.x
   css:

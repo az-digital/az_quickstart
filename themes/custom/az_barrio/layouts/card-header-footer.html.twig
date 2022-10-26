@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a card header footer layout.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('card', 'clearfix') }}>
+
+  <div{{ region_attributes.first.addClass('card-header') }}>
+    {{ content.first }}
+  </div>
+
+  <div{{ region_attributes.second.addClass('card-block card-body') }}>
+    {{ content.second }}
+  </div>
+
+  <div{{ region_attributes.third.addClass('card-footer') }}>
+    {{ content.third }}
+  </div>
+
+</div>

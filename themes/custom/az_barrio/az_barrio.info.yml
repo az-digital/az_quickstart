@@ -4,10 +4,11 @@ description: 'Basic structure for a Bootstrap Barrio SubTheme.'
 core_version_requirement: ^9
 dependencies:
   - az_core
-base theme: bootstrap_barrio
+base theme: false
 block_default_region: 'content'
 
 libraries:
+  - az_barrio/barrio-global-styling
   - az_barrio/global-styling
 
 regions:
@@ -43,9 +44,16 @@ regions:
   az_page_bottom: 'Page bottom'
 
 ckeditor_stylesheets:
+  - css/components/table.css
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
   - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest/css/arizona-bootstrap.min.css
 
 libraries-extend:
+  core/drupal.dropbutton:
+    - az_barrio/dropbutton
+  file/drupal.file:
+    - az_barrio/file
+  views/views.ajax:
+    - az_barrio/views.ajax
   system/base:
     - az_barrio/az-media-display

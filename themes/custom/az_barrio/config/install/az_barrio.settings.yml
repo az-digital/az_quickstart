@@ -73,6 +73,7 @@ bootstrap_barrio_button_size: ''
 bootstrap_barrio_button_outline: 0
 bootstrap_barrio_messages_widget: default
 bootstrap_barrio_table_hover: 1
+bootstrap_barrio_table_style: 'table-striped'
 wordmark: true
 land_acknowledgment: true
 info_security_privacy: true
@@ -100,3 +101,17 @@ footer_logo_link_destination: ''
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
 footer_logo_path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png
+bootstrap_barrio_navbar_toggle: 'navbar-toggleable-lg'
+bootstrap_barrio_navbar_container: 'navbar-toggleable-md'
+bootstrap_barrio_navbar_top_position: ''
+bootstrap_barrio_navbar_top_color: 'navbar-dark'
+bootstrap_barrio_navbar_top_background: 'bg-secondary'
+bootstrap_barrio_navbar_position: ''
+bootstrap_barrio_navbar_color: 'navbar-dark'
+bootstrap_barrio_navbar_background: 'bg-primary'
+bootstrap_barrio_radio: 'custom'
+bootstrap_barrio_checkbox: 'switch'
+bootstrap_barrio_select: 'custom'
+bootstrap_barrio_file: 'custom'
+bootstrap_barrio_system_messages: 'messages_white'
+bootstrap_barrio_bootstrap_icons: 1

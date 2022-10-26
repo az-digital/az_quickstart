@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a card basic layout.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('card', 'clearfix', 'card-block', 'card-body') }}>
+
+  {{ content.first }}
+
+</div>

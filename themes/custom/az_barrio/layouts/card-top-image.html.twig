@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a card image top layout.
+ *
+ * Available variables:
+ * - content: The content for this layout.
+ * - attributes: HTML attributes for the layout <div>.
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('card', 'clearfix') }}>
+
+  <div{{ region_attributes.first.addClass('card-img-top') }}>
+    {{ content.first }}
+  </div>
+
+  <div{{ region_attributes.second.addClass('card-body') }}>
+    {{ content.second }}
+  </div>
+
+</div>

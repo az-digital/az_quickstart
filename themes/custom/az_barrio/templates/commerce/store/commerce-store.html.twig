@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ *
+ * Default template for stores.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the wrapper.
+ * - store: The rendered store fields.
+ *   Use 'store' to print them all, or print a subset such as
+ *   'store.name'. Use the following code to exclude the
+ *   printing of a given field:
+ *   @code
+ *   {{ store|without('name') }}
+ *   @endcode
+ * - store_entity: The store entity.
+ * - store_url: The store URL.
+ *
+ * @ingroup themeable
+ */
+#}
+<article{{ attributes }}>
+  {{ store }}
+</article>

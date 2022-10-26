@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * Display Suite simple card.
+ *
+ * Available variables:
+ * - outer_wrapper: outer wrapper element
+ * - attributes: layout attributes
+ * - first: content of first region
+ */
+#}
+<{{ outer_wrapper }}{{ attributes.addClass('card', 'clearfix', 'card-block', 'card-body') }}>
+
+  {{ title_suffix.contextual_links }}
+
+  {{ first }}
+
+</{{ outer_wrapper }}>

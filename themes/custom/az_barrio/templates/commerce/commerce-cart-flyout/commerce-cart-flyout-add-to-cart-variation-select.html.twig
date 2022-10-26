@@ -1,0 +1,5 @@
+<select class="custom-select">
+  <% _.each(variations, function(variation, key) { %>
+    <option value="<%= variation.uuid %>"><%= variation.title %></option>
+  <% }) %>
+</select>
