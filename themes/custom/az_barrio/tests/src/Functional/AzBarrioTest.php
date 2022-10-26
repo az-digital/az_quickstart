@@ -69,7 +69,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     // Login.
     $this->drupalLogin($this->adminUser);
     $this->drupalGet('admin/appearance');
-    $this->cssSelect('a[title="Set Bootstrap Barrio as default theme"]')[0]->click();
+    $this->cssSelect('a[title="Set Olivero as default theme"]')[0]->click();
     $this->cssSelect('a[title="Uninstall Arizona Barrio theme"]')[0]->click();
     $this->assertSession()->pageTextContains('The Arizona Barrio theme has been uninstalled.');
   }
