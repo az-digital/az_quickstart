@@ -137,6 +137,7 @@
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
             "drupal/core": {
+                "Views Date Filter Datetime Granularity Option (2868014)" : "https://www.drupal.org/files/issues/2022-10-10/2868014-124.patch",
                 "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://www.drupal.org/files/issues/2022-05-05/2259567-160-9-3-x.patch",
                 "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
