@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_html_administrator
+label: 'HTML Administrator'
+weight: 5
+is_admin: false
+permissions:
+  - 'use text format full_html'
