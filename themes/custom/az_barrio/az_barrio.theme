@@ -591,9 +591,9 @@ function az_barrio_theme_suggestions_user_alter(array &$suggestions, array $vari
  */
 function az_barrio_theme_suggestions_page_alter(array &$suggestions, array $variables) {
   // Add a template suggestions for node type.
-  /** @var \Drupal\node\NodeInterface $node */
   if ($node = \Drupal::routeMatch()->getParameter('node')) {
     if (is_numeric($node)) {
+      /** @var \Drupal\node\NodeInterface $node */
       $node = Node::load($node);
     }
 
