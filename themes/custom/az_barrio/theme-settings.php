@@ -24,6 +24,546 @@ use Drupal\Core\StreamWrapper\StreamWrapperManager;
  * Example on how to alter theme settings form
  */
 function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+
+  // Change collapsible fieldsets (now details) to default #open => FALSE.
+  $form['theme_settings']['#open'] = FALSE;
+  $form['logo']['#open'] = FALSE;
+  $form['favicon']['#open'] = FALSE;
+
+  // Vertical tabs.
+  $form['bootstrap'] = [
+    '#type' => 'vertical_tabs',
+    '#prefix' => '<h2><small>' . t('Bootstrap settings') . '</small></h2>',
+    '#weight' => -10,
+  ];
+
+  // Layout.
+  $form['layout'] = [
+    '#type' => 'details',
+    '#title' => t('Layout'),
+    '#group' => 'bootstrap',
+  ];
+
+  // Container.
+  $form['layout']['container'] = [
+    '#type' => 'details',
+    '#title' => t('Container'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['layout']['container']['az_barrio_fluid_container'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Fluid container'),
+    '#default_value' => theme_get_setting('az_barrio_fluid_container'),
+    '#description' => t('Use <code>.container-fluid</code> class. See @bootstrap_fluid_containers_link.', [
+      '@bootstrap_fluid_containers_link' => Link::fromTextAndUrl('Containers in the Bootstrap 4 documentation',
+      Url::fromUri('https://getbootstrap.com/docs/4.3/layout/overview/',
+      ['absolute' => TRUE, 'fragment' => 'containers']))->toString(),
+    ]),
+  ];
+
+  // List of regions.
+  $theme = \Drupal::theme()->getActiveTheme()->getName();
+  $region_list = system_region_list($theme);
+
+  // Only for initial setup if not defined on install.
+  $nowrap = [
+    'breadcrumb',
+    'highlighted',
+    'content',
+    'primary_menu',
+    'header',
+    'sidebar_first',
+    'sidebar_second',
+  ];
+
+  // Region.
+  $form['layout']['region'] = [
+    '#type' => 'details',
+    '#title' => t('Region'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  foreach ($region_list as $name => $description) {
+    if (theme_get_setting('az_barrio_region_clean_' . $name) !== NULL) {
+      $region_clean = theme_get_setting('az_barrio_region_clean_' . $name);
+    }
+    else {
+      $region_clean = in_array($name, $nowrap);
+    }
+    if (theme_get_setting('az_barrio_region_class_' . $name) !== NULL) {
+      $region_class = theme_get_setting('az_barrio_region_class_' . $name);
+    }
+    else {
+      $region_class = $region_clean ? NULL : 'row';
+    }
+
+    $form['layout']['region'][$name] = [
+      '#type' => 'details',
+      '#title' => $description,
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE,
+    ];
+    $form['layout']['region'][$name]['az_barrio_region_clean_' . $name] = [
+      '#type' => 'checkbox',
+      '#title' => t('Clean wrapper for @description region', ['@description' => $description]),
+      '#default_value' => $region_clean,
+    ];
+    $form['layout']['region'][$name]['az_barrio_region_class_' . $name] = [
+      '#type' => 'textfield',
+      '#title' => t('Classes for @description region', ['@description' => $description]),
+      '#default_value' => $region_class,
+      '#size' => 40,
+      '#maxlength' => 40,
+    ];
+  }
+
+  // Sidebar Position.
+  $form['layout']['sidebar_position'] = [
+    '#type' => 'details',
+    '#title' => t('Sidebar position'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['layout']['sidebar_position']['az_barrio_sidebar_position'] = [
+    '#type' => 'select',
+    '#title' => t('Sidebars position'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_position'),
+    '#options' => [
+      'left' => t('Left'),
+      'both' => t('Both sides'),
+      'right' => t('Right'),
+    ],
+  ];
+  $form['layout']['sidebar_position']['az_barrio_content_offset'] = [
+    '#type' => 'select',
+    '#title' => t('Content offset'),
+    '#default_value' => theme_get_setting('az_barrio_content_offset'),
+    '#options' => [
+      0 => t('None'),
+      1 => t('1 cols'),
+      2 => t('2 cols'),
+    ],
+  ];
+
+  // Sidebar first layout.
+  $form['layout']['sidebar_first'] = [
+    '#type' => 'details',
+    '#title' => t('Sidebar First Layout'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['layout']['sidebar_first']['az_barrio_sidebar_collapse'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Sidebar collapse'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_collapse'),
+  ];
+  $form['layout']['sidebar_first']['az_barrio_sidebar_first_width'] = [
+    '#type' => 'select',
+    '#title' => t('Sidebar first width'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_first_width'),
+    '#options' => [
+      2 => t('2 cols'),
+      3 => t('3 cols'),
+      4 => t('4 cols'),
+    ],
+  ];
+  $form['layout']['sidebar_first']['az_barrio_sidebar_first_offset'] = [
+    '#type' => 'select',
+    '#title' => t('Sidebar first offset'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_first_offset'),
+    '#options' => [
+      0 => t('None'),
+      1 => t('1 cols'),
+      2 => t('2 cols'),
+    ],
+  ];
+
+  // Sidebar second layout.
+  $form['layout']['sidebar_second'] = [
+    '#type' => 'details',
+    '#title' => t('Sidebar second layout'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['layout']['sidebar_second']['az_barrio_sidebar_second_width'] = [
+    '#type' => 'select',
+    '#title' => t('Sidebar second width'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_second_width'),
+    '#options' => [
+      2 => t('2 cols'),
+      3 => t('3 cols'),
+      4 => t('4 cols'),
+    ],
+  ];
+  $form['layout']['sidebar_second']['az_barrio_sidebar_second_offset'] = [
+    '#type' => 'select',
+    '#title' => t('Sidebar second offset'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_second_offset'),
+    '#options' => [
+      0 => t('None'),
+      1 => t('1 cols'),
+      2 => t('2 cols'),
+    ],
+  ];
+
+  // Components.
+  $form['components'] = [
+    '#type' => 'details',
+    '#title' => t('Components'),
+    '#group' => 'bootstrap',
+  ];
+
+  // Buttons.
+  $form['components']['buttons'] = [
+    '#type' => 'details',
+    '#title' => t('Buttons'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['components']['buttons']['az_barrio_button'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Convert input submit to button element'),
+    '#default_value' => theme_get_setting('az_barrio_button'),
+    '#description' => t('There is a known issue where Ajax exposed filters do not if this setting is enabled.'),
+  ];
+  $form['components']['buttons']['az_barrio_button_size'] = [
+    '#type' => 'select',
+    '#title' => t('Default button size'),
+    '#default_value' => theme_get_setting('az_barrio_button_size'),
+    '#empty_option' => t('Normal'),
+    '#options' => [
+      'btn-sm' => t('Small'),
+      'btn-lg' => t('Large'),
+    ],
+  ];
+  $form['components']['buttons']['az_barrio_button_outline'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Button with outline format'),
+    '#default_value' => theme_get_setting('az_barrio_button_outline'),
+    '#description' => t('Use <code>.btn-default-outline</code> class. See @bootstrap_outline_buttons_link.', [
+      '@bootstrap_outline_buttons_link' => Link::fromTextAndUrl('Outline buttons in the Bootstrap 4 documentation',
+      Url::fromUri('https://getbootstrap.com/docs/4.3/components/buttons/',
+      ['absolute' => TRUE, 'fragment' => 'outline-buttons']))->toString(),
+    ]),
+  ];
+
+  // Navbar.
+  $form['components']['navbar'] = [
+    '#type' => 'details',
+    '#title' => t('Navbar'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['components']['navbar']['az_barrio_navbar_container'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Navbar width container'),
+    '#description' => t('Check if navbar width will be inside container or fluid width.'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_container'),
+  ];
+  $form['components']['navbar']['az_barrio_navbar_toggle'] = [
+    '#type' => 'select',
+    '#title' => t('Navbar toggle size'),
+    '#description' => t('Select size for navbar to collapse.'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_toggle'),
+    '#options' => [
+      'navbar-toggleable-lg' => t('Large'),
+      'navbar-toggleable-md' => t('Medium'),
+      'navbar-toggleable-sm' => t('Small'),
+      'navbar-toggleable-xs' => t('Extra small'),
+    ],
+  ];
+  $form['components']['navbar']['az_barrio_navbar_top_navbar'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Navbar top is navbar'),
+    '#description' => t('Check if navbar top .navbar class should be added.'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_top_navbar'),
+  ];
+  $form['components']['navbar']['az_barrio_navbar_top_position'] = [
+    '#type' => 'select',
+    '#title' => t('Navbar top position'),
+    '#description' => t('Select your navbar top position.'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_top_position'),
+    '#options' => [
+      'fixed-top' => t('Fixed top'),
+      'fixed-bottom' => t('Fixed bottom'),
+      'sticky-top' => t('Sticky top'),
+    ],
+    '#empty_option' => t('Normal'),
+  ];
+  $form['components']['navbar']['az_barrio_navbar_top_color'] = [
+    '#type' => 'select',
+    '#title' => t('Navbar top link color'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_top_color'),
+    '#options' => [
+      'navbar-light' => t('Light'),
+      'navbar-dark' => t('Dark'),
+    ],
+    '#empty_option' => t('Default'),
+  ];
+  $form['components']['navbar']['az_barrio_navbar_top_background'] = [
+    '#type' => 'select',
+    '#title' => t('Navbar top background color'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_top_background'),
+    '#options' => [
+      'bg-primary' => t('Primary'),
+      'bg-light' => t('Light'),
+      'bg-dark' => t('Dark'),
+    ],
+    '#empty_option' => t('Default'),
+  ];
+  $form['components']['navbar']['az_barrio_navbar_position'] = [
+    '#type' => 'select',
+    '#title' => t('Navbar position'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_position'),
+    '#options' => [
+      'fixed-top' => t('Fixed top'),
+      'fixed-bottom' => t('Fixed bottom'),
+      'sticky-top' => t('Sticky top'),
+    ],
+    '#empty_option' => t('Normal'),
+  ];
+  $form['components']['navbar']['az_barrio_navbar_color'] = [
+    '#type' => 'select',
+    '#title' => t('Navbar link color'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_color'),
+    '#options' => [
+      'navbar-light' => t('Light'),
+      'navbar-dark' => t('Dark'),
+    ],
+    '#empty_option' => t('Default'),
+  ];
+  $form['components']['navbar']['az_barrio_navbar_background'] = [
+    '#type' => 'select',
+    '#title' => t('Navbar background color'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_background'),
+    '#options' => [
+      'bg-primary' => t('Primary'),
+      'bg-light' => t('Light'),
+      'bg-dark' => t('Dark'),
+    ],
+    '#empty_option' => t('Default'),
+  ];
+  // Allow custom classes on Navbars.
+  $form['components']['navbar']['az_barrio_navbar_top_class'] = [
+    '#type' => 'textfield',
+    '#title' => t('Custom classes for Navbar Top'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_top_class'),
+    '#size' => 40,
+    '#maxlength' => 40,
+  ];
+  $form['components']['navbar']['az_barrio_navbar_class'] = [
+    '#type' => 'textfield',
+    '#title' => t('Custom classes for Navbar'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_class'),
+    '#size' => 40,
+    '#maxlength' => 40,
+  ];
+
+  // Messages.
+  $form['components']['alerts'] = [
+    '#type' => 'details',
+    '#title' => t('Messages'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['components']['alerts']['az_barrio_messages_widget'] = [
+    '#type' => 'select',
+    '#title' => t('Messages widget'),
+    '#default_value' => theme_get_setting('az_barrio_messages_widget'),
+    '#options' => [
+      'default' => t('Alerts classic'),
+      'alerts' => t('Alerts bottom'),
+      'toasts' => t('Toasts'),
+    ],
+  ];
+
+  // Form.
+  $form['components']['form'] = [
+    '#type' => 'details',
+    '#title' => t('Form'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['components']['form']['az_barrio_radio'] = [
+    '#type' => 'select',
+    '#title' => t('Radio widget'),
+    '#default_value' => theme_get_setting('az_barrio_radio'),
+    '#options' => [
+      'standard' => t('Standard'),
+      'custom' => t('Custom'),
+    ],
+  ];
+  $form['components']['form']['az_barrio_checkbox'] = [
+    '#type' => 'select',
+    '#title' => t('Checkbox widget'),
+    '#default_value' => theme_get_setting('az_barrio_checkbox'),
+    '#options' => [
+      'standard' => t('Standard'),
+      'custom' => t('Custom'),
+      'switch' => t('Switch'),
+    ],
+  ];
+  $form['components']['form']['az_barrio_select'] = [
+    '#type' => 'select',
+    '#title' => t('Select widget'),
+    '#default_value' => theme_get_setting('az_barrio_select'),
+    '#options' => [
+      'standard' => t('Standard'),
+      'custom' => t('Custom'),
+    ],
+  ];
+  $form['components']['form']['az_barrio_file'] = [
+    '#type' => 'select',
+    '#title' => t('File widget'),
+    '#default_value' => theme_get_setting('az_barrio_file'),
+    '#options' => [
+      'standard' => t('Standard'),
+      'custom' => t('Custom'),
+    ],
+  ];
+
+  // Affix.
+  $form['affix'] = [
+    '#type' => 'details',
+    '#title' => t('Affix'),
+    '#group' => 'bootstrap',
+  ];
+  $form['affix']['navbar_top'] = [
+    '#type' => 'details',
+    '#title' => t('Affix navbar top'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['affix']['navbar_top']['az_barrio_navbar_top_affix'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Affix navbar top'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_top_affix'),
+  ];
+  $form['affix']['navbar'] = [
+    '#type' => 'details',
+    '#title' => t('Affix navbar'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['affix']['navbar']['az_barrio_navbar_affix'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Affix navbar'),
+    '#default_value' => theme_get_setting('az_barrio_navbar_affix'),
+  ];
+  $form['affix']['sidebar_first'] = [
+    '#type' => 'details',
+    '#title' => t('Affix sidebar first'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['affix']['sidebar_first']['az_barrio_sidebar_first_affix'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Affix sidebar first'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_first_affix'),
+  ];
+  $form['affix']['sidebar_second'] = [
+    '#type' => 'details',
+    '#title' => t('Affix sidebar second'),
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+  ];
+  $form['affix']['sidebar_second']['az_barrio_sidebar_second_affix'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Affix sidebar second'),
+    '#default_value' => theme_get_setting('az_barrio_sidebar_second_affix'),
+  ];
+
+  // Scroll Spy.
+  $form['scroll_spy'] = [
+    '#type' => 'details',
+    '#title' => t('Scroll Spy'),
+    '#group' => 'bootstrap',
+  ];
+  $form['scroll_spy']['az_barrio_scroll_spy'] = [
+    '#type' => 'textfield',
+    '#title' => t('Scrollspy element ID'),
+    '#description' => t('Specify a valid jQuery ID for the element containing a .nav that will behave with scrollspy.'),
+    '#default_value' => theme_get_setting('az_barrio_scroll_spy'),
+    '#size' => 40,
+    '#maxlength' => 40,
+  ];
+
+  // Fonts.
+  $form['fonts'] = [
+    '#type' => 'details',
+    '#title' => t('Fonts & icons'),
+    '#group' => 'bootstrap',
+  ];
+  $form['fonts']['fonts'] = [
+    '#type' => 'details',
+    '#title' => t('Fonts'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  $form['fonts']['icons'] = [
+    '#type' => 'details',
+    '#title' => t('Icons'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+
+  // Colors.
+  $form['colors'] = [
+    '#type' => 'details',
+    '#title' => t('Colors'),
+    '#group' => 'bootstrap',
+  ];
+  // System messages.
+  $form['colors']['alerts'] = [
+    '#type' => 'details',
+    '#title' => t('System messages'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  $form['colors']['alerts']['az_barrio_system_messages'] = [
+    '#type' => 'select',
+    '#title' => t('System messages color scheme'),
+    '#default_value' => theme_get_setting('az_barrio_system_messages'),
+    '#empty_option' => t('Default'),
+    '#options' => [
+      'messages_light' => t('Light'),
+      'messages_dark' => t('Dark'),
+    ],
+    '#description' => t('Replace the standard color scheme for system messages with a Google Material Design color scheme.'),
+  ];
+  $form['colors']['tables'] = [
+    '#type' => 'details',
+    '#title' => t('Tables'),
+    '#collapsible' => TRUE,
+    '#collapsed' => FALSE,
+  ];
+  $form['colors']['tables']['az_barrio_table_style'] = [
+    '#type' => 'select',
+    '#title' => t('Table cell style'),
+    '#default_value' => theme_get_setting('az_barrio_table_style'),
+    '#empty_option' => t('Default'),
+    '#options' => [
+      'table-striped' => t('Striped'),
+      'table-bordered' => t('Bordered'),
+    ],
+  ];
+  $form['colors']['tables']['az_barrio_table_hover'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Hover effect over table cells'),
+    '#default_value' => theme_get_setting('az_barrio_table_hover'),
+  ];
+  $form['colors']['tables']['az_barrio_table_head'] = [
+    '#type' => 'select',
+    '#title' => t('Table header color scheme'),
+    '#default_value' => theme_get_setting('az_barrio_table_head'),
+    '#empty_option' => t('Default'),
+    '#options' => [
+      'thead-light' => t('Light'),
+      'thead-dark' => t('Dark'),
+    ],
+  ];
+
   $form['footer_logo']['#open'] = FALSE;
 
   // AZ Barrio settings.
@@ -87,7 +627,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
 
   // Fonts and Icons.
-  unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
@@ -106,20 +645,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
           )->toString(),
         ]
     ),
-  ];
-  $form['fonts']['bootstrap_icons'] = [
-    '#type' => 'details',
-    '#title' => t('Bootstrap icons'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  ];
-  unset($form['fonts']['icons']['bootstrap_barrio_icons']);
-  unset($form['fonts']['bootstrap_icons']);
-  $form['fonts']['icons'] = [
-    '#type' => 'details',
-    '#title' => t('Icons'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
     '#type' => 'checkbox',
