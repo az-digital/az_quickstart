@@ -53,5 +53,5 @@ settings:
     argument: argument
     title: title
     offset: offset
-    pager: 0
+    pager: pager
 field_type: viewsreference
