@@ -55,6 +55,10 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azhtmladmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azhtmladmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_html_admin azhtmladmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y az_cas.settings disable_login_form 0
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y system.logging error_level "verbose"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush cache:rebuild
