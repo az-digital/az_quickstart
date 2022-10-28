@@ -1,7 +1,7 @@
 langcode: en
 status: true
 dependencies: {  }
-id: az_html_administrator
+id: az_html_admin
 label: 'HTML administrator'
 weight: 5
 is_admin: false
