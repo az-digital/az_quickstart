@@ -31,11 +31,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['favicon']['#open'] = FALSE;
 
   // Vertical tabs.
-  $form['bootstrap'] = [
-    '#type' => 'vertical_tabs',
-    '#prefix' => '<h2><small>' . t('Bootstrap settings') . '</small></h2>',
-    '#weight' => -10,
-  ];
 
   // Layout.
   $form['layout'] = [
