@@ -226,3 +226,35 @@ function az_quickstart_update_920103() {
     return t('Environment Indicator module installed.');
   }
 }
+
+/**
+ * Transition bootstrap_barrio variables into az_barrio.
+ */
+function az_quickstart_update_920104() {
+
+  $barrio = $my_config = \Drupal::config('bootstrap_barrio.settings')->get();
+  $az = $my_config = \Drupal::config('az_barrio.settings')->get();
+
+  // Create list of priority overrides. AZ Barrio has priority.
+  $overrides = array_merge($barrio, $az);
+  $updates = $overrides;
+
+  // Transform bootstrap_barrio keys if no equivalent exists yet.
+  foreach ($overrides as $key => $data) {
+    if (strpos($key, 'bootstrap_barrio_') === 0) {
+      unset($updates[$key]);
+      $key = preg_replace('/^bootstrap_barrio_/', 'az_barrio_', $key);
+      // Only port barrio variables if there isn't already an az_barrio one.
+      if (!isset($updates[$key])) {
+        $updates[$key] = $data;
+        \Drupal::logger('az_profile')->notice("Importing @name to az_barrio.settings.", [
+          '@name' => $key,
+        ]);
+      }
+    }
+  }
+
+  $config = \Drupal::configFactory()->getEditable('az_barrio.settings');
+  $config->setData($updates);
+  $config->save();
+}
