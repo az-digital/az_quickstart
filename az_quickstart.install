@@ -230,7 +230,7 @@ function az_quickstart_update_920103() {
 /**
  * Transition bootstrap_barrio variables into az_barrio.
  */
-function az_quickstart_update_920104() {
+function az_quickstart_update_920601() {
 
   $barrio = $my_config = \Drupal::config('bootstrap_barrio.settings')->get();
   $az = $my_config = \Drupal::config('az_barrio.settings')->get();
