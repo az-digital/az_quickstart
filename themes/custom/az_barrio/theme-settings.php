@@ -220,7 +220,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#type' => 'checkbox',
     '#title' => t('Convert input submit to button element'),
     '#default_value' => theme_get_setting('az_barrio_button'),
-    '#description' => t('There is a known issue where Ajax exposed filters do not if this setting is enabled.'),
+    '#description' => t('There is a known issue where Ajax exposed filters do not work if this setting is enabled.'),
   ];
   $form['components']['buttons']['az_barrio_button_size'] = [
     '#type' => 'select',

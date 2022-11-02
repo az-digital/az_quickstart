@@ -62,9 +62,6 @@ function az_barrio_preprocess_form_element(array &$variables) {
     if (is_object($variables['label']['#title']) && !$variables['label']['#title'] instanceof MarkupInterface) {
       $variables['input_title'] = NULL;
     }
-    elseif (is_object($variables['label']['#title'])) {
-      $variables['input_title'] = $variables['label']['#title'];
-    }
     else {
       $variables['input_title'] = $variables['label']['#title'];
     }
@@ -783,7 +780,7 @@ function az_barrio_theme_suggestions_container_alter(array &$suggestions, array 
  */
 function az_barrio_preprocess_maintenance_page(&$variables) {
   // By default, site_name is set to Drupal if no db connection is available
-  // or during site installation. Setting site_name to an empty string makes
+  // during site installation. Setting site_name to an empty string makes
   // the site and update pages look cleaner.
   // @see template_preprocess_maintenance_page
   if (!$variables['db_is_active']) {
