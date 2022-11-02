@@ -28,9 +28,9 @@ third_party_settings:
       children:
         - field_az_subheading
       label: 'Subtitle Div'
-      parent_name: group_wrapper
+      parent_name: ''
       region: content
-      weight: 9
+      weight: 1
       format_type: html_element
       format_settings:
         classes: 'lead mb-3'
@@ -113,7 +113,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h3'
+        label_element_classes: h3
         attributes: ''
         effect: none
         speed: fast
@@ -131,7 +131,7 @@ third_party_settings:
         element: div
         show_label: true
         label_element: h2
-        label_element_classes: 'h3'
+        label_element_classes: h3
         attributes: ''
         effect: none
         speed: fast
@@ -175,14 +175,13 @@ third_party_settings:
       children:
         - field_az_photos
         - group_when_where_row
-        - group_subtitle_div
         - field_az_body
         - group_category_div
         - group_contacts_attach_row
       label: Wrapper
       parent_name: ''
       region: content
-      weight: 0
+      weight: 2
       format_type: html_element
       format_settings:
         classes: mb-5
