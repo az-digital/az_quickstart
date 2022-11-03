@@ -222,8 +222,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         ],
         '#link' => $link_render_array,
         '#title_style' => $title_style ?? 'default',
-        '#title_level' => $title_level ?? 'default',
-        '#title_alignment' => $title_alignment ?? 'default',
+        '#title_level' => $title_level ?? 'h3',
+        '#title_alignment' => $title_alignment ?? 'text-left',
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,
       ];
