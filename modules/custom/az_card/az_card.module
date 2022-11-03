@@ -37,7 +37,7 @@ function az_card_theme($existing, $type, $theme, $path) {
         'link' => NULL,
         'title_style' => 'default',
         'title_alignment' => 'default',
-        // 'title_level' => 'default',
+        'title_level' => 'default',
       ],
       'template' => 'az-card',
     ],

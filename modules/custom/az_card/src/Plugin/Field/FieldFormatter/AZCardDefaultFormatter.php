@@ -138,6 +138,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
       }
 
+      // Title alignment.
+      if (!empty($item->options['title_alignment'])) {
+        $title_alignment = $item->options['title_alignment'];
+      }
+
       $card_classes = 'card';
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
@@ -185,7 +190,14 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
               $title_style = 'default';
             }
           }
+
+          // Title level.
+          if (isset($card_defaults['card_title_level'])) {
+            $title_level = $card_defaults['card_title_level'];
+          }
+
         }
+
       }
 
       // Handle class keys that contained multiple classes.
@@ -210,8 +222,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         ],
         '#link' => $link_render_array,
         '#title_style' => $title_style ?? 'default',
+        '#title_level' => $title_level ?? 'default',
         '#title_alignment' => $title_alignment ?? 'default',
-        // '#title_level' => $title_level ?? 'default',
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,
       ];
