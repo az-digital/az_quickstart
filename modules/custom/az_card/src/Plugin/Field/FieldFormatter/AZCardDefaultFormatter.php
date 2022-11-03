@@ -185,6 +185,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
               $title_style = 'default';
             }
           }
+
+          // Title alignment.
+          if (isset($card_defaults['card_title_level'])) {
+            $card_title_level = $card_defaults['card_title_level'];
+          }
         }
 
       }

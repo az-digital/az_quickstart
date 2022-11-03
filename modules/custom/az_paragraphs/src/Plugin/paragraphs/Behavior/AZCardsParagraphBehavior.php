@@ -59,6 +59,20 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Select a card title style.'),
     ];
 
+    $form['card_title_level'] = [
+      '#title' => $this->t('Card title level'),
+      '#type' => 'select',
+      '#options' => [
+        'h2' => $this->t('Section heading (H2)'),
+        'h3' => $this->t('Subsection heading (H3)'),
+        'h4' => $this->t('Subsection heading (H4)'),
+        'h5' => $this->t('Subsection heading (H5)'),
+        'h6' => $this->t('Subsection heading (H6)'),
+      ],
+      '#default_value' => $config['card_title_level'] ?? 'h3',
+      '#description' => $this->t('The heading level of the card title. <a href="https://quickstart.arizona.edu/best-practices/using-headings" target="_blank">Learn about best web practices</a>.'),
+    ];
+
     $form['card_clickable'] = [
       '#title' => $this->t('Clickable cards'),
       '#type' => 'checkbox',
