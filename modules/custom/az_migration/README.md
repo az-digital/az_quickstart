@@ -68,7 +68,7 @@ You can skip most of the rest of this README unless you run into trouble.
   * Install the module using the below command.
 
   ```
-    drush en az_migration
+    drush install az_migration
   ```
 
   ### Configure the settings.php to connect source database

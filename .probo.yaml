@@ -45,7 +45,7 @@ steps:
   - name: Post-Installation Steps
     plugin: Script
     script:
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:enable az_demo
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_demo
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin"
@@ -59,7 +59,7 @@ steps:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y system.logging error_level "verbose"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush cache:rebuild
       - chown www-data:www-data -R /var/www/html/sites/default/files
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:enable environment_indicator
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install environment_indicator
       - chmod 777 /var/www/html/sites/default/settings.php
       - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';\n\$config['environment_indicator.indicator']['fg_color'] = '#ffffff';" >> /var/www/html/sites/default/settings.php
       - chmod 444 /var/www/html/sites/default/settings.php
@@ -118,8 +118,8 @@ steps:
       - drush site:install az_quickstart --site-name='Quickstart Migration' --account-name=azadmin --account-pass=azadmin --verbose --yes -n
       - chown www-data:www-data -R /var/www/html/sites/migration/files
       - terminus env:wake ${MIGRATION_SOURCE_SITE_NAME}.dev
-      - drush -y en az_migration
-      - drush -y en az_paragraphs_html
+      - drush -y install az_migration
+      - drush -y install az_paragraphs_html
       - drush -y cset az_migration.settings migrate_d7_protocol "https"
       - drush -y cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io/"
       - drush -y cset az_migration.settings migrate_d7_public_path "sites/default/files"
