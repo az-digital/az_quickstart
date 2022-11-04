@@ -21,6 +21,7 @@ function az_metrics_data() {
   foreach ($domainQuery as $d) {
     array_push($domainList, $d->domain);
   }
+
   // Fetch information about installation profile.
   $version = NULL;
   $extension_list = \Drupal::service('extension.list.module');
