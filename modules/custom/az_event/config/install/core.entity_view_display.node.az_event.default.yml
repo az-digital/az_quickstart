@@ -33,7 +33,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'lead mb-3'
+        classes: 'lead mb-4'
         id: ''
         element: div
         show_label: false
