@@ -22,6 +22,8 @@ function az_metrics_data() {
     array_push($domainList, $d->domain);
   }
   // Fetch information about installation profile.
+  $version = NULL;
+  $extension_list = \Drupal::service('extension.list.module');
   $information = $extension_list->getExtensionInfo('az_quickstart');
   if (isset($information['version'])) {
     $version = $information['version'];
