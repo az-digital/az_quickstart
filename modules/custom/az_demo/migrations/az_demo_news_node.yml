@@ -37,8 +37,11 @@ source:
       name: az_body
       selector: az_body
     -
-      name: az_link
-      selector: az_link
+      name: az_link_url
+      selector: az_link_url
+    -
+      name: az_link_title
+      selector: az_link_title
     -
       name: az_subheading
       selector: az_subheading
@@ -70,7 +73,8 @@ process:
 
   title: title
 
-  field_az_link/uri: az_link
+  field_az_link/uri: az_link_url
+  field_az_link/title: az_link_title
 
   field_az_body/value: az_body
   field_az_body/format:
@@ -121,13 +125,6 @@ process:
       plugin: migration_lookup
       migration: az_demo_news_tags
       source: '@pseudo_exploded_tags'
-
-
-  # 'path/pathauto':
-  #   plugin: default_value
-  #   default_value: 0 # Disable pathauto.
-
-  # 'path/alias': path_alias
 
   'field_az_media_image/target_id':
     -
