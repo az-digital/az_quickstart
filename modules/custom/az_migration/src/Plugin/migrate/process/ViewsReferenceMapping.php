@@ -119,6 +119,23 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         'az_flexible_page_categories',
       ],
     ],
+    'uaqs_alphabetical_listing' => [
+      'view' => 'az_alphabetical_listing',
+      'display' => [
+        'default' => 'az_alphabetical_listing_main',
+        'page' => 'az_alphabetical_listing_main',
+      ],
+      'argument_migrations' => [],
+    ],
+    'uaqs_hero_carousel' => [
+      'view' => 'az_carousel',
+      'display' => [
+        'default' => 'front_carousel_block',
+        'hero_block' => 'front_carousel_block',
+        'hero_nav' => 'front_carousel_block',
+      ],
+      'argument_migrations' => [],
+    ],
   ];
 
   /**

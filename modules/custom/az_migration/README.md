@@ -30,6 +30,15 @@ In order to simplify the process of getting started with Quickstart migrations, 
 
 To get started with a Quickstart 2 migration using the scaffolding repo as a project template, follow the steps in that repository's [README](https://github.com/az-digital/az-quickstart-scaffolding#readme) until you get to the "Migration setup in Lando" section and then follow these steps:
 
+_Note: If your source site has workbench moderation enabled and it is using it
+to create a workflow with any content type that has paragraphs (azqs_news,
+azqs_flexible_page), you should use this command to allow archived paragraph
+revisions to be migrated. See https://github.com/az-digital/az_quickstart/issues/1763_
+
+```
+drush cset az_migration.settings allow_archived_paragraphs true
+```
+
 1. Download an archive (dump) of your source site's database.
 2. Place the database dump file into the (project) root directory of your new migration project directory.
 3. Download an archive of your source site's files directory. This is usually in the
@@ -68,7 +77,7 @@ You can skip most of the rest of this README unless you run into trouble.
   * Install the module using the below command.
 
   ```
-    drush en az_migration
+    drush install az_migration
   ```
 
   ### Configure the settings.php to connect source database
