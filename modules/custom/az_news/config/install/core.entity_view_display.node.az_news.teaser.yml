@@ -27,7 +27,12 @@ id: node.az_news.teaser
 targetEntityType: node
 bundle: az_news
 mode: teaser
-content: {  }
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
 hidden:
   field_az_attachments: true
   field_az_body: true
@@ -44,4 +49,3 @@ hidden:
   field_az_subheading: true
   field_az_summary: true
   smart_title: true
-  links: true
