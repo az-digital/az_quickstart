@@ -111,6 +111,15 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       'uaqs_card' => 'az_card',
       'uaqs_marquee' => 'az_marquee',
     ],
+    'bean' => [
+      'default' => 'full',
+      'full' => 'full',
+      'teaser' => 'teaser',
+      'rss' => 'rss',
+      'search_index' => 'search_index',
+      'search_result' => 'search_result',
+      'token' => 'token',
+    ],
   ];
 
   /**
@@ -199,6 +208,12 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         $changed->setAttribute('data-embed-button', "az_embed_content");
         $changed->setAttribute('data-entity-embed-display', "view_mode:node.{$view}");
         break;
+
+      case 'block_content':
+        $changed->setAttribute('data-embed-button', "az_embed_block_content");
+        $changed->setAttribute('data-entity-embed-display', "view_mode:block_content.{$view}");
+        break;
+
     }
     return $changed;
   }
@@ -281,6 +296,25 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
 
           break;
 
+        // Embedded bean. Special consideration, as we need to know which
+        // migration the bean is part of, if any. Migration of an Embedded
+        // bean only is defined if it's a type that can be migrated.
+        case 'bean':
+          // Lookup of content type.
+          $node_type = Database::getConnection('migrate')
+            ->query('SELECT type FROM {bean} WHERE bid = :bid', [':bid' => $id])
+            ->fetchField();
+          if (!empty($bean_type)) {
+            // Map our D7 node type to a migration. If we can't, we have no
+            // guarantee our node is a migrated one.
+            if (!empty($migrations[$bean_type])) {
+              $migration = $migrations[$bean_type];
+              $post = $this->updateEmbedTag($id, 'block_content', 'drupal-entity', $view, $dom, $element, $migration, 'block_content');
+            }
+
+          }
+
+          break;
         // Unimplemented type.
         default:
           break;
