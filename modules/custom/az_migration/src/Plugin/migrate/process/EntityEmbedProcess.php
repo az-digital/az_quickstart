@@ -300,8 +300,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         // migration the bean is part of, if any. Migration of an Embedded
         // bean only is defined if it's a type that can be migrated.
         case 'bean':
-          // Lookup of content type.
-          $node_type = Database::getConnection('migrate')
+          // Lookup of bean type.
+          $bean_type = Database::getConnection('migrate')
             ->query('SELECT type FROM {bean} WHERE bid = :bid', [':bid' => $id])
             ->fetchField();
           if (!empty($bean_type)) {
