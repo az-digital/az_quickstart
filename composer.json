@@ -170,7 +170,7 @@
             },
             "drupal/menu_block": {
                 "Menu block renders when tree is empty as of 8.x-1.8 [regression] (3271218)": "https://www.drupal.org/files/issues/2022-04-29/menu_block_rendered_empty-3271218-17.patch"
-            }
+            },
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch"
             },
