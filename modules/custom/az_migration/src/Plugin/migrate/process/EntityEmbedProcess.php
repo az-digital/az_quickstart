@@ -210,7 +210,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         break;
 
       case 'block_content':
-        $changed->setAttribute('data-embed-button', "az_embed_block_content");
+        $changed->setAttribute('data-embed-button', "az_embed_content_block");
         $changed->setAttribute('data-entity-embed-display', "view_mode:block_content.{$view}");
         break;
 
