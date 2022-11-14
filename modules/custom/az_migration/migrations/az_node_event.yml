@@ -62,11 +62,16 @@ process:
       delta: delta
       uri:
       -
-        plugin: str_replace
+        plugin: skip_on_empty
         source: url
+        method: process
+      -
+        plugin: str_replace
         search: '[node:url]'
         replace: ''
-      title: title
+      title: 
+        plugin: skip_on_empty
+        source: title
       attributes: attributes
 
   field_az_link:
