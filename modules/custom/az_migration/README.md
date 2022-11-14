@@ -239,6 +239,11 @@ drush cache:rebuild
 drush migrate:import az_media --update
 ```
 
+View messages for skipped media items:
+```
+drush migrate:messages az_media
+```
+
 To rollback the migrated media:
 ```
 drush migrate:rollback az_media
