@@ -50,9 +50,7 @@ third_party_settings:
       children:
         - smart_title
         - field_az_titles
-        - field_az_phones
-        - field_az_email
-        - field_az_pronouns
+        - group_margin_top
       label: 'Card Body'
       parent_name: group_card
       region: content
@@ -84,6 +82,27 @@ third_party_settings:
         target: entity
         custom_uri: ''
         target_attribute: default
+    group_margin_top:
+      children:
+        - field_az_phones
+        - field_az_email
+        - field_az_pronouns
+      label: 'Margin Top'
+      parent_name: group_card_body
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: mt-3
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
     settings:
@@ -102,7 +121,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   field_az_media_image:
     type: entity_reference_entity_view
@@ -119,7 +138,7 @@ content:
     settings:
       title: ''
     third_party_settings: {  }
-    weight: 5
+    weight: 6
     region: content
   field_az_pronouns:
     type: string
@@ -127,7 +146,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   field_az_titles:
     type: string
