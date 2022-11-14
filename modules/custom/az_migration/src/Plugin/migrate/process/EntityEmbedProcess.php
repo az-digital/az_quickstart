@@ -316,6 +316,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
           }
 
           break;
+
         // Unimplemented type.
         default:
           break;
