@@ -21,8 +21,6 @@ class AZBean extends FieldableEntity {
    */
   const JOIN = '[b].[vid] = [br].[vid]';
 
-
-
   /**
    * {@inheritdoc}
    */
