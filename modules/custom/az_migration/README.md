@@ -235,6 +235,7 @@ drush migrate:import az_media
 
 Update migrated media after updating the codebase:
 ```
+drush cache:rebuild
 drush migrate:import az_media --update
 ```
 
