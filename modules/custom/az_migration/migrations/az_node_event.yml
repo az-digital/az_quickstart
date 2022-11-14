@@ -72,6 +72,7 @@ process:
       title: 
         plugin: skip_on_empty
         source: title
+        method: process
       attributes: attributes
 
   field_az_link:
