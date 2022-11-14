@@ -72,6 +72,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    * @var array
    */
   const MIGRATION_MAPPING = [
+    'uaqs_flexible_block' => 'az_block_content_flexible_block',
     'uaqs_flexible_page' => 'az_node_flexible_page',
     'uaqs_page' => 'az_node_uaqs_basic_page_to_az_page',
     'uaqs_carousel_item' => 'az_node_carousel',
