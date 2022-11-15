@@ -123,7 +123,7 @@
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
             },
             "drupal/better_exposed_filters": {
-                "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-02-16/3210947-12.patch"
+                "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-11-15/3210947-13.patch"
             },
             "drupal/bootstrap_barrio": {
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/trackleft/6b7752228979c6932e8d09e01381dd28/raw/70bd7ed90ab487b454a1106aa9935a335b7d4f49/gistfile1.txt",
