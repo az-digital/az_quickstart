@@ -111,6 +111,9 @@
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
     },
+    "replace": {
+        "drupal/jquery_ui_touch_punch": "*"
+    },
     "extra": {
         "branch-alias": {
             "dev-main": "2.6.x-dev"
