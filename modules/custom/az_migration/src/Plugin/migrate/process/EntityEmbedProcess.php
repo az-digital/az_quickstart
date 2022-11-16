@@ -216,7 +216,9 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     $value = mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8');
 
     $dom = new \DOMDocument('1.0', 'UTF-8');
-    $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+    // @see https://www.php.net/manual/en/domdocument.savehtml.php#121444 Libxml requires root element.
+    $dom->loadHTML('<entity-embed-process>' . $value . '</entity-embed-process>', LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING | LIBXML_NOERROR);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
     // Configuration of custom content.
@@ -295,7 +297,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       }
     }
 
-    $value = $dom->SaveHTML();
+    // @see https://www.php.net/manual/en/domdocument.savehtml.php#121444 Remove the root tag we added.
+    $value = str_replace(['<entity-embed-process>', '</entity-embed-process>'], '', $dom->saveHTML());
     return $value;
   }
 
