@@ -112,7 +112,7 @@
         "az-digital/az-quickstart-dev": "~1"
     },
     "replace": {
-        "drupal/jquery_ui_touch_punch": "*"
+        "drupal/jquery_ui_slider": "*"
     },
     "extra": {
         "branch-alias": {
