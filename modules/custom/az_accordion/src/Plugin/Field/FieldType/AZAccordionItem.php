@@ -18,6 +18,11 @@ use Drupal\Core\TypedData\DataDefinition;
  *   default_widget = "az_accordion",
  *   default_formatter = "az_accordion_default"
  * )
+ *
+ * @property string $title
+ * @property string $body
+ * @property string $body_format
+ * @property bool $collapsed
  */
 class AZAccordionItem extends FieldItemBase {
 
@@ -27,7 +32,6 @@ class AZAccordionItem extends FieldItemBase {
   public function isEmpty() {
     $title = $this->get('title')->getValue();
     $body = $this->get('body')->getValue();
-    $collapsed = $this->get('collapsed')->getValue();
     return empty($title) && empty($body);
   }
 
@@ -42,7 +46,7 @@ class AZAccordionItem extends FieldItemBase {
       ->setLabel(t('Accordion Item'));
     $properties['body_format'] = DataDefinition::create('string')
       ->setLabel(t('Accordion Item Text Format'));
-    $properties['collapsed'] = DataDefinition::create('string')
+    $properties['collapsed'] = DataDefinition::create('boolean')
       ->setLabel(t('Collapsed by Default'));
 
     return $properties;

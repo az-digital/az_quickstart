@@ -5,6 +5,7 @@
  * Contains az_core.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Url;
@@ -12,6 +13,7 @@ use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Extension\Exception\UnknownExtensionException;
 
 /**
  * Implements hook_help().
@@ -71,14 +73,49 @@ function az_core_toolbar() {
     '#weight' => 101,
   ];
 
+  // Get extension information.
+  $extension_list = \Drupal::service('extension.list.module');
+  $version = NULL;
+  try {
+    // Fetch information about installation profile.
+    $information = $extension_list->getExtensionInfo('az_quickstart');
+    if (isset($information['version'])) {
+      $version = $information['version'];
+
+      // Update links with version information where applicable.
+      $items['az_quickstart']['tab']['#title'] = t('Quickstart @version', ['@version' => $version]);
+      $items['az_quickstart']['tab']['#attributes']['title'] = t('AZ Quickstart @version', ['@version' => $version]);
+    }
+  }
+  catch (UnknownExtensionException $e) {
+    // Do nothing if no profile.
+  }
+
   if (\Drupal::currentUser()->hasPermission('administer quickstart configuration')) {
-    $items['az_quickstart']['tray']['az_links']['#links']['settings'] = [
-      'title' => t('Settings'),
-      'url' => Url::fromRoute('az_core.az_settings'),
-      'attributes' => [
-        'title' => t('Arizona Quickstart 2 Settings'),
+    $admin_items = [
+      'settings' => [
+        'title' => t('Settings'),
+        'url' => Url::fromRoute('az_core.az_settings'),
+        'attributes' => [
+          'title' => t('Arizona Quickstart 2 Settings'),
+        ],
+      ],
+      'releases' => [
+        'title' => t('Releases'),
+        'url' => Url::fromUri('https://github.com/az-digital/az_quickstart/releases'),
+        'attributes' => [
+          'title' => t('Arizona Quickstart 2 Releases'),
+          'target' => t('_blank'),
+        ],
       ],
     ];
+    // Add by union to position at front of links.
+    $items['az_quickstart']['tray']['az_links']['#links'] = $admin_items + $items['az_quickstart']['tray']['az_links']['#links'];
+
+    if (!empty($version)) {
+      $items['az_quickstart']['tray']['az_links']['#links']['releases']['url'] = Url::fromUri("https://github.com/az-digital/az_quickstart/releases/${version}");
+    }
+
   }
 
   return $items;
@@ -154,6 +191,10 @@ function az_core_token_info() {
           'name' => t("AZ Canonical URL"),
           'description' => t("Returns the URI value of field_az_link if present on the node or the default node URI if not."),
         ],
+        'az-canonical-summary-link-title' => [
+          'name' => t("AZ Canonical Summary Link Title"),
+          'description' => t("Returns the link title value of field_az_link if present on the node or nothing if not."),
+        ],
       ],
     ],
   ];
@@ -171,11 +212,39 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
         case 'az-canonical-url':
           $replacements[$original] = az_core_canonical_url($data);
           break;
+
+        case 'az-canonical-summary-link-title':
+          $replacements[$original] = az_core_canonical_summary_link_title($data);
+          break;
       }
     }
   }
 
   return $replacements;
+}
+
+/**
+ * Token replacement callback providing the canonical link title.
+ *
+ * Returns the link title value of field_az_link if present on the node, or
+ * "Read more" if not.
+ *
+ * @param array $data
+ *   Node data from hook_tokens().
+ *
+ * @return string
+ *   The node's canonical link title.
+ */
+function az_core_canonical_summary_link_title(array $data) {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $data['node'];
+  $read_more_text = 'Read more';
+
+  if (!empty($node->field_az_link[0]->title)) {
+    $read_more_text = $node->field_az_link[0]->title;
+  }
+
+  return $read_more_text;
 }
 
 /**
@@ -239,4 +308,13 @@ function az_core_form_block_form_alter(&$form, &$form_state, $form_id) {
     // Modify help text.
     $form['settings']['block_branding']['#description'] = t('Choose which branding elements you want to show in this block instance.  Enabling both the Site logo and the Site name is <strong><em>not recommended</em></strong> per University of Arizona brand guidelines.');
   }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for \Drupal\node\NodeForm.
+ *
+ * Adds style overrides for claro/node-form.
+ */
+function az_core_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
 }

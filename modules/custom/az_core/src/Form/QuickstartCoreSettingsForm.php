@@ -253,7 +253,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * @param array $element
    *   An associative array containing the properties and children of the
    *   generic form element.
-   * @param Drupal\Core\Form\FormStateInterface $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    * @param array $complete_form
    *   The complete form structure.

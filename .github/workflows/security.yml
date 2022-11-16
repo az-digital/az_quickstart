@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
-          php-version: '7.4'
+          php-version: '8.1'
       - name: Set variables
         run: |
           export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
@@ -43,7 +43,7 @@ jobs:
           composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
       - name: Check dependencies for vulnerabilities
-        uses: symfonycorp/security-checker-action@038cecb1ee1bf871d1ef43e873f813d900a1125c
+        uses: symfonycorp/security-checker-action@v3
         with:
           lock: az-quickstart-scaffolding/composer.lock
   code-check:
@@ -55,7 +55,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
-          php-version: '7.4'
+          php-version: '8.1'
       - name: Set variables
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Install dependencies

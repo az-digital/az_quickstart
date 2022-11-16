@@ -6,4 +6,6 @@ label: Contact
 icon_uuid: null
 icon_default: null
 description: ''
-behavior_plugins: {  }
+behavior_plugins:
+  az_default_paragraph_behavior:
+    enabled: true

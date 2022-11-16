@@ -44,14 +44,25 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'card' => $this->t('Bordered cards'),
         'card card-borderless' => $this->t('Borderless cards'),
       ],
-      '#default_value' => isset($config['card_style']) ? $config['card_style'] : 'card',
+      '#default_value' => $config['card_style'] ?? 'card',
       '#description' => $this->t('Select a card style.'),
+    ];
+
+    $form['card_title_style'] = [
+      '#title' => $this->t('Card title style'),
+      '#type' => 'select',
+      '#options' => [
+        'default' => $this->t('Title within card (default)'),
+        'title-on-image' => $this->t('Title on image'),
+      ],
+      '#default_value' => $config['card_title_style'] ?? 'default',
+      '#description' => $this->t('Select a card title style.'),
     ];
 
     $form['card_clickable'] = [
       '#title' => $this->t('Clickable cards'),
       '#type' => 'checkbox',
-      '#default_value' => isset($config['card_clickable']) ? $config['card_clickable'] : FALSE,
+      '#default_value' => $config['card_clickable'] ?? FALSE,
       '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
     ];
 

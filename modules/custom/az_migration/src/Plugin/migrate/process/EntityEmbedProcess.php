@@ -208,7 +208,14 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $dom = new \DOMDocument();
+    // Return $value if there are no <drupal-entity> elements.
+    if (strpos($value, '<drupal-entity ') === FALSE) {
+      return $value;
+    }
+    // Convert $value to UTF-8.
+    $value = mb_convert_encoding($value, 'HTML-ENTITIES', 'UTF-8');
+
+    $dom = new \DOMDocument('1.0', 'UTF-8');
     $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
@@ -259,7 +266,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         // node only is defined if it's a type that can be migrated.
         case 'node':
           // Lookup of content type.
-          $node_type = Database::getConnection('migrate')
+          $node_type = Database::getConnection('default', 'migrate')
             ->query('SELECT type FROM {node} WHERE nid = :nid', [':nid' => $id])
             ->fetchField();
           if (!empty($node_type)) {
