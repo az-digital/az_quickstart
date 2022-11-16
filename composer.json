@@ -144,7 +144,8 @@
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2020-06-01/3102249-21.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
-                "Usability/accessibility of input fields (row weights) in a table view (3159896)": "https://www.drupal.org/files/issues/2022-02-16/3159896-9-4.x-fix-custom-command.patch"
+                "Usability/accessibility of input fields (row weights) in a table view (3159896)": "https://www.drupal.org/files/issues/2022-02-16/3159896-9-4.x-fix-custom-command.patch",
+                "Add type declaration to Html::escape(), ::decodeEntities(), and FormattableMarkup::placeholderEscape() (3255637)": "https://www.drupal.org/files/issues/2022-11-03/3255637-92.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
