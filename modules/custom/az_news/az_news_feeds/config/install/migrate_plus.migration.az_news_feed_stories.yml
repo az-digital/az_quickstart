@@ -63,6 +63,9 @@ process:
     to_format: Y-m-d
     source: date-of-publication
   field_az_link/uri: canonical-url
+  field_az_link/title:
+    plugin: default_value
+    default_value: 'Read more at UArizona News'
   field_az_summary/value:
     plugin: callback
     callable: trim
