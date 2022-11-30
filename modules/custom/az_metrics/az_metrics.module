@@ -23,7 +23,7 @@ function az_metrics_data() {
   }
 
   // Fetch information about installation profile.
-  $version = NULL;
+  $version = 'Untagged version';
   $extension_list = \Drupal::service('extension.list.module');
   $information = $extension_list->getExtensionInfo('az_quickstart');
   if (isset($information['version'])) {
