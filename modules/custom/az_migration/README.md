@@ -226,16 +226,30 @@ Source site pre-migration tasks :
 * Delete any files you don’t want migrated.
 * Check for any custom or overridden fields on file_entities.
 * Check for any custom file entity types.
+* Take note of any file types other than `image`, `audio`, `document`, `video`
 
 Migrate the related files using the below command :
 ```
-drush mim az_media
+drush migrate:import az_media
 ```
 
-To rollback the migrated file :
+Update migrated media after updating the codebase:
 ```
-drush mr az_media
+drush cache:rebuild
+drush migrate:import az_media --update
 ```
+
+View messages for skipped media items:
+```
+drush migrate:messages az_media
+```
+
+To rollback the migrated media:
+```
+drush migrate:rollback az_media
+```
+**Note: If you have custom file_entity types that you would like to migrate, you
+must create a custom migration.**
 
 ## Person migrations
 
