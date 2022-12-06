@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_accordion_group_title
+    - paragraphs.paragraphs_type.az_accordion
+id: paragraph.az_accordion.field_az_accordion_group_title
+field_name: field_az_accordion_group_title
+entity_type: paragraph
+bundle: az_accordion
+label: 'Accordion Group Title'
+description: 'Add an option title to your accordion group (this is useful to separate multiple accordion groups)'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
