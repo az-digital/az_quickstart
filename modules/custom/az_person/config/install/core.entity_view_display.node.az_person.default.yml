@@ -214,7 +214,7 @@ third_party_settings:
       weight: 12
       format_type: html_element
       format_settings:
-        classes: text-break
+        classes: 'text-break mt-3'
         show_empty_fields: false
         id: ''
         element: div
