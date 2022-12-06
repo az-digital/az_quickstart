@@ -1,1 +1,17 @@
-
+tr.odd .az-accordion-elements .form-item {
+    margin-bottom: 8px;
+  }
+  
+  .az-accordion-elements .accordion-preview {
+    max-height: 200px;
+    overflow: hidden;
+  }
+  
+  .az-accordion-elements.az-accordion-elements-closed .form-type--linkit,
+  .az-accordion-elements.az-accordion-elements-closed .form-type--textfield,
+  .az-accordion-elements.az-accordion-elements-closed .form-type--textarea,
+  .az-accordion-elements.az-accordion-elements-closed .filter-wrapper,
+  .az-accordion-elements.az-accordion-elements-closed .form-type--checkbox {
+    display: none;
+  }
+  
