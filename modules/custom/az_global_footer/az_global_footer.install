@@ -38,8 +38,10 @@ function az_global_footer_uninstall() {
 }
 
 /**
- * Replace Global Engagement link(s) in the global footer with International
- * Engagement link(s).
+ * Replace Global Engagement link(s)
+ *
+ * Global Engagement link(s) in the global footer will be replaced with
+ * International Engagement link(s).
  */
 function az_global_footer_update_920501() {
   $updated_count = 0;
