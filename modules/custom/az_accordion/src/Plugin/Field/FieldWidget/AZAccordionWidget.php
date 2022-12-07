@@ -6,6 +6,9 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
 
 /**
  * Defines the 'az_accordion' field widget.
@@ -19,6 +22,42 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  * )
  */
 class AZAccordionWidget extends WidgetBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL) {
+
+    // Create shared settings for widget elements.
+    // This is necessary because widgets have to be AJAX replaced together,
+    // And in general we need a place to store shared settings.
+    $wrapper_id = Html::getUniqueId('az-card-wrapper');
+    $field_name = $this->fieldDefinition->getName();
+    $field_parents = $form['#parents'];
+    $field_state = static::getWidgetState($field_parents, $field_name, $form_state);
+    $field_state['ajax_wrapper_id'] = $wrapper_id;
+
+    // Remove extra field added on form instantiation for existing content.
+    $count = count($items);
+    $field_state['items_count'] = (!empty($field_state['items_count'])) ? $field_state['items_count'] : max(0, $count - 1);
+
+    $field_state['array_parents'] = [];
+    if (empty($field_state['open_status'])) {
+      $field_state['open_status'] = [];
+    }
+
+    // Persist the widget state so formElement() can access it.
+    static::setWidgetState($field_parents, $field_name, $form_state, $field_state);
+
+    $container = parent::form($items, $form, $form_state, $get_delta);
+    $container['widget']['#prefix'] = '<div id="' . $wrapper_id . '">';
+    $container['widget']['#suffix'] = '</div>';
+
+    if (isset($container['widget']['add_more']['#ajax']['wrapper'])) {
+      $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
+    }
+    return $container;
+  }
 
   /**
    * {@inheritdoc}
