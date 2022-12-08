@@ -226,3 +226,11 @@ function az_quickstart_update_920103() {
     return t('Environment Indicator module installed.');
   }
 }
+
+/**
+ * Uninstall the deprecated media_library_theme_reset module.
+ */
+function az_quickstart_update_920401() {
+  $module_list = ['media_library_theme_reset'];
+  \Drupal::service('module_installer')->uninstall($module_list);
+}
