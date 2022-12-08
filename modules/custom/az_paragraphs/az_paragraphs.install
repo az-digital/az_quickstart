@@ -15,6 +15,7 @@ function az_paragraphs_update_920301(&$sandbox) {
 
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
+      ->accessCheck(FALSE)
       ->count()
       ->execute();
     $sandbox['total'] = $count;
