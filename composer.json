@@ -53,7 +53,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.5.0-rc1",
+        "drupal/core-recommended": "9.5.0-rc2",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.11",
         "drupal/date_ap_style": "1.5.0",
@@ -146,8 +146,10 @@
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2022-09-19/3102249-48.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
-                "Usability/accessibility of input fields (row weights) in a table view (3159896)": "https://www.drupal.org/files/issues/2022-02-16/3159896-9-4.x-fix-custom-command.patch",
-                "Add type declaration to Html::escape(), ::decodeEntities(), and FormattableMarkup::placeholderEscape() (3255637)": "https://www.drupal.org/files/issues/2022-11-03/3255637-92.patch"
+                "Usability/accessibility of input fields (row weights) in a table view (3159896)": "https://www.drupal.org/files/issues/2022-02-16/3159896-9-4.x-fix-custom-command.patch"
+            },
+            "drupal/ckeditor_bs_grid": {
+                "CKEditor5 compatibility (3314793)": "https://git.drupalcode.org/project/ckeditor_bs_grid/-/merge_requests/14.diff"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
