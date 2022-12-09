@@ -12,7 +12,6 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
-    - field.field.node.az_person.field_az_metatag
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
@@ -25,7 +24,6 @@ dependencies:
     - link
     - media_library
     - media_library_edit
-    - metatag
     - path
     - telephone
     - text
@@ -153,13 +151,6 @@ content:
     third_party_settings:
       media_library_edit:
         show_edit: '1'
-  field_az_metatag:
-    type: metatag_firehose
-    weight: 21
-    region: content
-    settings:
-      sidebar: true
-    third_party_settings: {  }
   field_az_person_category:
     type: options_buttons
     weight: 1

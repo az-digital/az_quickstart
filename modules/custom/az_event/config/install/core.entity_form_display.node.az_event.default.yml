@@ -9,7 +9,6 @@ dependencies:
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
-    - field.field.node.az_event.field_az_metatag
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -20,7 +19,6 @@ dependencies:
     - link
     - media_library
     - media_library_edit
-    - metatag
     - paragraphs
     - path
     - smart_date
@@ -128,13 +126,6 @@ content:
     settings:
       placeholder_url: ''
       placeholder_title: ''
-    third_party_settings: {  }
-  field_az_metatag:
-    type: metatag_firehose
-    weight: 17
-    region: content
-    settings:
-      sidebar: true
     third_party_settings: {  }
   field_az_photos:
     type: media_library_widget
