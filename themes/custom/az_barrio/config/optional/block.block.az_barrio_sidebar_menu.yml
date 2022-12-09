@@ -7,6 +7,9 @@ dependencies:
     - menu_block
   theme:
     - az_barrio
+third_party_settings:
+  block_class:
+    classes: null
 id: az_barrio_sidebar_menu
 theme: az_barrio
 region: sidebar_first
