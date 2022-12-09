@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -272,8 +273,10 @@ content:
     weight: 5
     region: content
 hidden:
+  az_news_read_more: true
   field_az_expiration_date: true
   field_az_link: true
+  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_summary: true

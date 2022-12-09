@@ -5,6 +5,9 @@ dependencies:
     - help
   theme:
     - claro
+third_party_settings:
+  block_class:
+    classes: null
 id: claro_help
 theme: claro
 region: help

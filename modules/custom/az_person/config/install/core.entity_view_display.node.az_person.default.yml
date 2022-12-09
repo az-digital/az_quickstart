@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_metatag
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
@@ -352,4 +353,5 @@ content:
     region: content
 hidden:
   field_az_link: true
+  field_az_metatag: true
   links: true

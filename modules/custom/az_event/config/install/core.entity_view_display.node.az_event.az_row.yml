@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_metatag
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -266,5 +267,6 @@ hidden:
   field_az_event_category: true
   field_az_link: true
   field_az_location: true
+  field_az_metatag: true
   field_az_photos: true
   field_az_subheading: true
