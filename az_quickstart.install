@@ -231,6 +231,5 @@ function az_quickstart_update_920103() {
  * Uninstall the deprecated media_library_theme_reset module.
  */
 function az_quickstart_update_920401() {
-  $module_list = ['media_library_theme_reset'];
-  \Drupal::service('module_installer')->uninstall($module_list);
+  \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
 }
