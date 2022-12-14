@@ -27,6 +27,7 @@ function az_paragraphs_text_media_update_9201(&$sandbox) {
   $paragraphs_per_batch = 25;
 
   $paragraph_ids = \Drupal::entityQuery('paragraph')
+    ->accessCheck(FALSE)
     ->condition('type', 'az_text_media')
     ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
     ->execute();
@@ -70,6 +71,7 @@ function az_paragraphs_text_media_update_920401(&$sandbox) {
   $paragraphs_per_batch = 25;
 
   $paragraph_ids = \Drupal::entityQuery('paragraph')
+    ->accessCheck(FALSE)
     ->condition('type', 'az_text_media')
     ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
     ->execute();
