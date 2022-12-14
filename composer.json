@@ -108,6 +108,9 @@
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0"
     },
+    "replace": {
+        "twbs/bootstrap": "*"
+    },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
     },
