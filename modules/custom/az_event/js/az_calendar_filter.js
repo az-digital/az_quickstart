@@ -64,10 +64,20 @@
           triggerFilterChange($ancestor, 0);
           $ancestor.find('.btn').removeClass('active').attr('aria-pressed', 'false');
         }
+        var $inputWrapper = $wrapper.closest('.views-widget-az-calendar-filter');
+        var initial = $inputWrapper.find('input').eq(0).val();
+        var calendarInitialDay = new Date();
+        if (typeof initial !== 'undefined') {
+          var initialDates = initial.split('-');
+          if (initialDates.length === 3) {
+            calendarInitialDay = new Date(initialDates[0], initialDates[1] - 1, initialDates[2]);
+          }
+        }
         $calendar.datepicker({
           dateFormat: 'm-d-yy',
           showOtherMonths: true,
           selectOtherMonths: true,
+          defaultDate: calendarInitialDay,
           dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
           beforeShowDay: function beforeShowDay(date) {
             var dateClass = 'calendar-filter-day-no-events';
