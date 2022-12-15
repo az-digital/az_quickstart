@@ -244,5 +244,5 @@ function az_quickstart_update_920602() {
     'quickedit',
     'rdf',
   ];
-  \Drupal::service('module_installer')->uninstall($depreecated_modules);
+  \Drupal::service('module_installer')->uninstall($deprecated_modules);
 }
