@@ -32,7 +32,6 @@ install:
   - drupal:block
   - drupal:breakpoint
   - drupal:ckeditor
-  - drupal:color
   - drupal:config
   - drupal:content_moderation
   - drupal:contextual
@@ -60,7 +59,6 @@ install:
   - drupal:toolbar
   - drupal:field_ui
   - drupal:file
-  - drupal:rdf
   - drupal:views
   - drupal:views_ui
   - drupal:tour
