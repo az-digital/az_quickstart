@@ -235,7 +235,7 @@ function az_quickstart_update_920601() {
 }
 
 /**
- * Uninstall the deprecated Drupal core modules.
+ * Uninstall deprecated Drupal core modules.
  */
 function az_quickstart_update_920602() {
   $deprecated_modules = [
