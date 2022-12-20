@@ -3,6 +3,9 @@ status: true
 dependencies:
   theme:
     - az_barrio
+third_party_settings:
+  block_class:
+    classes: null
 id: az_barrio_local_tasks
 theme: az_barrio
 region: content

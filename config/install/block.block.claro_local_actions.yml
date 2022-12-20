@@ -3,6 +3,9 @@ status: true
 dependencies:
   theme:
     - claro
+third_party_settings:
+  block_class:
+    classes: null
 id: claro_local_actions
 theme: claro
 region: content
