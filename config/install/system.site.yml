@@ -1,5 +1,6 @@
-name: 'Drush Site-Install'
-mail: admin@example.com
+uuid: ''
+name: ''
+mail: ''
 slogan: ''
 page:
   403: ''
