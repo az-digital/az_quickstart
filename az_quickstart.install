@@ -239,6 +239,7 @@ function az_quickstart_update_920601() {
  */
 function az_quickstart_update_920602() {
   $deprecated_modules = [
+    'aggregator',
     'color',
     'hal',
     'quickedit',
