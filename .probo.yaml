@@ -88,6 +88,13 @@ steps:
       - curl -sS -o /dev/null http://localhost/pages/annual-events
       # Check for PHP watchdog entries
       - if [ -z "$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+  - name: Generate upgrade status report
+    plugin: Script
+    script:
+      # Enable upgrade_status module
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install upgrade_status
+      # Enable upgrade_status module
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush upgrade_status:analyze --all
   - name: Run PHPUnit Tests
     plugin: Script
     script:
