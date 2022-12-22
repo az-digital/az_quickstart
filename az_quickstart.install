@@ -233,3 +233,17 @@ function az_quickstart_update_920103() {
 function az_quickstart_update_920601() {
   \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
 }
+
+/**
+ * Uninstall deprecated Drupal core modules.
+ */
+function az_quickstart_update_920602() {
+  $deprecated_modules = [
+    'aggregator',
+    'color',
+    'hal',
+    'quickedit',
+    'rdf',
+  ];
+  \Drupal::service('module_installer')->uninstall($deprecated_modules);
+}
