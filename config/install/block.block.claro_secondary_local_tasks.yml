@@ -3,6 +3,9 @@ status: true
 dependencies:
   theme:
     - claro
+third_party_settings:
+  block_class:
+    classes: null
 id: claro_secondary_local_tasks
 theme: claro
 region: pre_content

@@ -5,6 +5,9 @@ dependencies:
     - system
   theme:
     - claro
+third_party_settings:
+  block_class:
+    classes: null
 id: claro_breadcrumbs
 theme: claro
 region: breadcrumb
