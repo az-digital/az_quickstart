@@ -36,7 +36,7 @@
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.4.0",
         "drupal/antibot": "2.0.2",
-        "drupal/auto_entitylabel": "3.0-beta4",
+        "drupal/auto_entitylabel": "3.0.0",
         "drupal/background_image_formatter": "1.7",
         "drupal/better_exposed_filters": "5.0",
         "drupal/block_class": "2.0.7",
