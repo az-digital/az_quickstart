@@ -243,6 +243,6 @@ function az_quickstart_update_920602() {
     $config->set('az_bootstrap_cdn_version', '2.x')->save(TRUE);
   }
   if ($config->get('az_bootstrap_cdn_version') === 'latest') {
-    $config->set('az_bootstrap_cdn_version', 'latest-2x')->save(TRUE);
+    $config->set('az_bootstrap_cdn_version', 'latest-2.x')->save(TRUE);
   }
 }
