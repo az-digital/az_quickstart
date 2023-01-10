@@ -123,6 +123,7 @@
                 "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-02-16/3210947-12.patch"
             },
             "drupal/bootstrap_barrio": {
+                "Fix barrio webform required field issue": "https://gist.githubusercontent.com/tadean/09ef9559553c788c5637077462b392dd/raw/1190b7d78843af29e2eae31c4601a51e65e5b352/barrio_webform_required_field_issue.patch",
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/trackleft/6b7752228979c6932e8d09e01381dd28/raw/70bd7ed90ab487b454a1106aa9935a335b7d4f49/gistfile1.txt",
                 "Node template contextual menu issue (3158009)": "https://www.drupal.org/files/issues/2020-07-09/node_contextual.patch"
             },
