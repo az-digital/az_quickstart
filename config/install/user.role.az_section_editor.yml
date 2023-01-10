@@ -29,7 +29,7 @@ permissions:
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
-  - 'bypass workbench access permissions'
+  - 'bypass workbench access'
   - 'cancel smart date recur instances'
   - 'clone az_event content'
   - 'clone az_flexible_page content'
