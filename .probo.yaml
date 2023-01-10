@@ -96,7 +96,7 @@ steps:
       # Enable upgrade_status module
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install upgrade_status
       # Enable upgrade_status module
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush upgrade_status:analyze --all
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush upgrade_status:analyze az_quickstart
   - name: Run PHPUnit Tests
     plugin: Script
     script:
