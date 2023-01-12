@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_chicago
+label: Chicago
+targetEntityType: node
+cache: true

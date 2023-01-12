@@ -30,6 +30,7 @@
     ],
     "require": {
         "php": ">=7.4",
+        "adci/full-name-parser": "0.2.4",
         "az-digital/arizona-bootstrap": "2.0.18",
         "bower-asset/chosen": "1.8.7",
         "composer/installers": "^1.9",
@@ -106,7 +107,8 @@
         "drupal/xmlsitemap": "1.4.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
-        "npm-asset/slick-carousel": "1.8.0"
+        "npm-asset/slick-carousel": "1.8.0",
+        "seboettg/citeproc-php": "2.5.1"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -116,6 +118,9 @@
             "dev-main": "2.6.x-dev"
         },
         "patches": {
+            "seboettg/citeproc-php": {
+                "allow citeproc local scoping": "https://gist.githubusercontent.com/tadean/aade069a81fa48b3006aa3369e36be92/raw/5fefd8074fb9a6c404457612b177317f5120734e/citeproc_az_publication.patch"
+            },
             "drupal/antibot": {
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
             },

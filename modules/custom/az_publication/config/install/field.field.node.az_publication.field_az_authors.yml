@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_authors
+    - node.type.az_publication
+id: node.az_publication.field_az_authors
+field_name: field_az_authors
+entity_type: node
+bundle: az_publication
+label: Authors
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

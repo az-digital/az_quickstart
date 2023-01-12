@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.az_publication.field_az_accessed_date
+    - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_publication_date
+    - field.field.node.az_publication.field_az_publication_journal
+    - field.field.node.az_publication.field_az_publication_media
+    - field.field.node.az_publication.field_az_publication_type
+    - node.type.az_publication
+  module:
+    - user
+id: node.az_publication.teaser
+targetEntityType: node
+bundle: az_publication
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  az_publication_bibliography: true
+  field_az_accessed_date: true
+  field_az_authors: true
+  field_az_publication_date: true
+  field_az_publication_journal: true
+  field_az_publication_media: true
+  field_az_publication_type: true

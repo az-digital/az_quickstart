@@ -1,0 +1,77 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_publication.field_az_accessed_date
+    - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_publication_date
+    - field.field.node.az_publication.field_az_publication_journal
+    - field.field.node.az_publication.field_az_publication_media
+    - field.field.node.az_publication.field_az_publication_type
+    - node.type.az_publication
+  module:
+    - datetime
+    - options
+    - user
+id: node.az_publication.default
+targetEntityType: node
+bundle: az_publication
+mode: default
+content:
+  field_az_accessed_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_az_authors:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_az_publication_date:
+    type: datetime_default
+    label: above
+    settings:
+      timezone_override: ''
+      format_type: medium
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_az_publication_journal:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_az_publication_media:
+    type: entity_reference_entity_view
+    label: above
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_az_publication_type:
+    type: list_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  az_publication_bibliography: true

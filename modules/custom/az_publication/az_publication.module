@@ -1,0 +1,130 @@
+<?php
+
+/**
+ * @file
+ * Contains az_publication.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\node\Entity\NodeType;
+use Seboettg\CiteProc\CiteProc;
+use ADCI\FullNameParser\Parser;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function az_publication_entity_extra_field_info() {
+  $extra = [];
+
+  // Check to see if our content type exists.
+  $bundle = NodeType::load('az_publication');
+  if ($bundle) {
+    // Link title pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_publication_bibliography'] = [
+      'label' => t('Bibliography'),
+      'description' => "Bibliographic reference for content",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function az_publication_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  // Only if fields suggest a publication.
+  if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_publication_type') && !empty($entity->field_az_publication_type->value)) {
+    if ($display->getComponent('az_publication_bibliography')) {
+      $blob = new stdClass();
+      $blob->title = $entity->getTitle();
+      $blob->id = $entity->id();
+      $blob->type = $entity->field_az_publication_type->value;
+      // Search for style based on view mode.
+      $style = $view_mode;
+      // Load style if available.
+      $style_path = \Drupal::service('extension.list.module')->getPath('az_publication') . DIRECTORY_SEPARATOR . 'citation-style-language' . DIRECTORY_SEPARATOR . 'styles' . DIRECTORY_SEPARATOR . "{$style}.csl";
+      $style_info = @file_get_contents($style_path);
+
+      if (!empty($style_info)) {
+        // Handle author names.
+        // Don't throw errors.
+        $parser = new Parser([
+          'throws' => FALSE,
+          'mandatory_first_name' => FALSE,
+          'mandatory_last_name' => FALSE,
+        ]);
+        foreach ($entity->field_az_authors as $item) {
+          if (!empty($item->value)) {
+            $name = $parser->parse($item->value);
+            $person = new stdClass();
+            $person->family = $name->getLastName();
+            $person->given = $name->getFirstName();
+            $person->suffix = $name->getSuffix();
+            if (empty($person->family)) {
+              $person->family = $person->given;
+              unset($person->given);
+            }
+
+            $blob->author[] = $person;
+          }
+        }
+        // Handle publication date if available.
+        if (!empty($entity->field_az_publication_date->value)) {
+          $date = new stdClass();
+          $date->{'date-parts'}[] = explode('-', $entity->field_az_publication_date->value);
+          $blob->issued = $date;
+        }
+        // Handle accessed date if available.
+        if (!empty($entity->field_az_accessed_date->value)) {
+          $date = new stdClass();
+          $date->{'date-parts'}[] = explode('-', $entity->field_az_accessed_date->value);
+          $blob->accessed = $date;
+        }
+        // Handle accessed date if available.
+        if (!empty($entity->field_az_publication_media->entity->field_media_az_document->entity)) {
+          $blob->titlelink = $entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE);
+        }
+        // Handle container if available.
+        if (!empty($entity->field_az_publication_journal->value)) {
+          $blob->{'container-title'} = $entity->field_az_publication_journal->value;
+        }
+
+        $additionalMarkup = [
+          "title" => function ($cslItem, $renderedText) {
+            // Rendering extension for title links.
+            if (!empty($cslItem->titlelink)) {
+              $url = Url::fromUserInput($cslItem->titlelink);
+              $link = Link::fromTextAndUrl($renderedText, $url);
+              $buildLink = $link->toRenderable();
+              $renderedText = \Drupal::service('renderer')->render($buildLink);
+              // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
+              $renderedText = str_replace('"', '', $renderedText);
+            }
+            return $renderedText;
+          },
+          "csl-entry" => function ($cslItem, $renderedText) {
+            // Remove citation number tag.
+            // In general it's never a good idea to parse html with regex.
+            // This works ONLY because the output is a known pattern.
+            return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);
+          },
+        ];
+        // Set up CSL rendering.
+        $citeProc = new CiteProc($style_info, "en-US", $additionalMarkup);
+        $biblio = $citeProc->render([$blob], "bibliography");
+        $build['az_publication_bibliography'][] = [
+          '#type' => 'markup',
+          '#markup' => ($biblio),
+        ];
+      }
+    }
+  }
+}

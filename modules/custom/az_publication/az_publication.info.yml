@@ -1,0 +1,22 @@
+name: Quickstart Publication
+description: 'Provides Publication content type'
+core_version_requirement: ^9
+type: module
+package: The University of Arizona
+dependencies:
+  - az_core
+  - block
+  - block_class
+  - datetime
+  - exclude_node_title
+  - field
+  - media
+  - media_library
+  - menu_ui
+  - node
+  - options
+  - paragraphs
+  - path
+  - system
+  - user
+  - views

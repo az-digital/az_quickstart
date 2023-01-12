@@ -33,6 +33,7 @@ settings:
     az_news: az_news
     az_page_by_category: az_page_by_category
     az_person: az_person
+    az_publications: az_publications
     az_reorder: 0
     block_content: 0
     content: 0

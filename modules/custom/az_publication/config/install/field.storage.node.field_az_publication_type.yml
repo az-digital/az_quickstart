@@ -1,0 +1,155 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - options
+id: node.field_az_publication_type
+field_name: field_az_publication_type
+entity_type: node
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: article
+      label: Article
+    -
+      value: article-journal
+      label: 'Journal Article'
+    -
+      value: article-magazine
+      label: 'Magazine Article'
+    -
+      value: article-newspaper
+      label: 'Newspaper Article'
+    -
+      value: bill
+      label: Bill
+    -
+      value: book
+      label: Book
+    -
+      value: broadcast
+      label: Broadcast
+    -
+      value: chapter
+      label: Chapter
+    -
+      value: classic
+      label: Classic
+    -
+      value: collection
+      label: Collection
+    -
+      value: dataset
+      label: Dataset
+    -
+      value: document
+      label: Document
+    -
+      value: entry
+      label: Entry
+    -
+      value: entry-dictionary
+      label: 'Dictionary Entry'
+    -
+      value: entry-encyclopedia
+      label: 'Encyclopedia Entry'
+    -
+      value: event
+      label: Event
+    -
+      value: figure
+      label: Figure
+    -
+      value: graphic
+      label: Graphic
+    -
+      value: hearing
+      label: Hearing
+    -
+      value: interview
+      label: Interview
+    -
+      value: legal_case
+      label: 'Legal Case'
+    -
+      value: legislation
+      label: Legislation
+    -
+      value: manuscript
+      label: Manuscript
+    -
+      value: map
+      label: Map
+    -
+      value: motion_picture
+      label: 'Motion Picture'
+    -
+      value: musical_score
+      label: 'Musical Score'
+    -
+      value: pamphlet
+      label: Pamphlet
+    -
+      value: paper-conference
+      label: 'Conference Paper'
+    -
+      value: patent
+      label: Patent
+    -
+      value: performance
+      label: Performance
+    -
+      value: periodical
+      label: Periodical
+    -
+      value: personal_communication
+      label: 'Personal Communication'
+    -
+      value: post
+      label: Post
+    -
+      value: post-weblog
+      label: 'Weblog Post'
+    -
+      value: regulation
+      label: Regulation
+    -
+      value: report
+      label: Report
+    -
+      value: review
+      label: Review
+    -
+      value: review-book
+      label: 'Book Review'
+    -
+      value: software
+      label: Software
+    -
+      value: song
+      label: Song
+    -
+      value: speech
+      label: Speech
+    -
+      value: standard
+      label: Standard
+    -
+      value: thesis
+      label: Thesis
+    -
+      value: treaty
+      label: Treaty
+    -
+      value: webpage
+      label: Webpage
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
