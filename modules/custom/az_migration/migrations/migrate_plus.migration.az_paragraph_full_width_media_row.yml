@@ -54,9 +54,12 @@ process:
     default_value: 'full-width-background'
 
   field_az_text_area/value:
-    plugin: paragraphs_fw_media_row_field_merge
-    body: field_uaqs_summary
-    link: field_uaqs_links
+    -
+      plugin: paragraphs_fw_media_row_field_merge
+      body: field_uaqs_summary
+      link: field_uaqs_links
+    -
+      plugin: az_entity_embed_process
 
   field_az_text_area/format:
     plugin: default_value
