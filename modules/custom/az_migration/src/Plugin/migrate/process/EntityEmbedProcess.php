@@ -5,9 +5,9 @@ namespace Drupal\az_migration\Plugin\migrate\process;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 use Drupal\Core\Database\Database;
+use Drupal\migrate_plus\Plugin\migrate\process\Dom;
 
 /**
  * Process Plugin to handle embedded entities in HTML text.
@@ -43,7 +43,7 @@ use Drupal\Core\Database\Database;
  *         original_view_mode2: new_view_mode2
  * @endcode
  */
-class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface {
 
   /**
    * The migrate lookup service.
@@ -130,6 +130,24 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+    $configuration += $this->defaultValues();
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defaultValues(): array {
+    return [
+      'method' => 'import',
+      'import_method' => 'html',
+    ] + parent::defaultValues();
+  }
+
+  /**
    * Generate a translated DOM element for the new embed.
    *
    * @param string $id
@@ -208,8 +226,14 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $dom = new \DOMDocument();
-    $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    // Return $value if there are no <drupal-entity> elements.
+    if (strpos($value, '<drupal-entity ') === FALSE) {
+      return $value;
+    }
+    // Convert $value to UTF-8.
+    $value = $this->getNonRootHtml($value);
+    $dom = new \DOMDocument($this->configuration['version'], $this->configuration['encoding']);
+    $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING | LIBXML_NOERROR);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
     // Configuration of custom content.
@@ -259,7 +283,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         // node only is defined if it's a type that can be migrated.
         case 'node':
           // Lookup of content type.
-          $node_type = Database::getConnection('migrate')
+          $node_type = Database::getConnection('default', 'migrate')
             ->query('SELECT type FROM {node} WHERE nid = :nid', [':nid' => $id])
             ->fetchField();
           if (!empty($node_type)) {
@@ -288,7 +312,9 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       }
     }
 
-    $value = $dom->SaveHTML();
+    // @see https://www.php.net/manual/en/domdocument.savehtml.php#121444 Remove the root tags added by getNonRootHtml.
+    $body = $dom->getElementsByTagName('body');
+    $value = str_replace(['<body>', '</body>'], '', $dom->saveHTML($body->item(0)));
     return $value;
   }
 

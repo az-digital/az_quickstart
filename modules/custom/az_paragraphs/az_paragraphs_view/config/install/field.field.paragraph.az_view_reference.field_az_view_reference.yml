@@ -28,6 +28,7 @@ settings:
     attachment: 0
     feed: 0
   preselect_views:
+    az_courses: az_courses
     az_events: az_events
     az_news: az_news
     az_page_by_category: az_page_by_category
@@ -51,6 +52,6 @@ settings:
     limit: limit
     argument: argument
     title: title
-    pager: 0
-    offset: 0
+    offset: offset
+    pager: pager
 field_type: viewsreference

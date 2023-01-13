@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\az_paragraphs\Functional;
 
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Run tests of paragraph bundles.
@@ -11,7 +11,7 @@ use Drupal\Tests\BrowserTestBase;
  *
  * @group az_paragraphs
  */
-class AZParagraphsTest extends BrowserTestBase {
+class AZParagraphsTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -60,7 +60,7 @@ class AZParagraphsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Set up our initial permissions.

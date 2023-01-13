@@ -3,3 +3,5 @@ type: module
 description: 'Custom field plugins and theme template for accordion.'
 core_version_requirement: ^9
 package: 'The University of Arizona'
+dependencies:
+  - drupal:filter

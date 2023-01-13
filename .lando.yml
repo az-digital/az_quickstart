@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal9
 config:
-  php: '7.4'
+  php: '8.1'
   via: apache:2.4
   webroot: web
   database: mariadb:10.4
@@ -49,7 +49,7 @@ services:
       - composer install
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
-    type: node:12
+    type: node:16
     build:
       - yarn install
   chromedriver:
@@ -64,7 +64,17 @@ tooling:
   # in a race condition if Drupal is installed during the run phase.
   install:
     service: appserver
-    cmd: /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose
+    cmd:
+      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose
+      - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
+      - /app/vendor/bin/drush --root=/app/web cache:rebuild
+  # Enable theme debugging.
+  theme-debug:
+    service: appserver
+    user: root
+    cmd:
+      - echo "Enabling theme debugging..."
+      - /app/vendor/bin/drupal --root=/app/web site:mode dev
   # Provide Drush tooling to automatically know the Drupal root.
   drush:
     service: appserver

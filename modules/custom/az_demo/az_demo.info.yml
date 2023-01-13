@@ -4,6 +4,7 @@ description: 'WARNING:Do not enable this on live/production sites, it will alter
 core_version_requirement: ^9
 package: 'The University of Arizona - Experimental'
 dependencies:
+  - az_custom_menu_block
   - az_core
   - az_event
   - az_news
@@ -11,6 +12,7 @@ dependencies:
   - az_paragraphs_text
   - az_paragraphs_text_background
   - az_paragraphs_text_media
+  - az_paragraphs_splitscreen
   - az_person
   - az_media
   - migrate:migrate

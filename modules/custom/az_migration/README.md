@@ -30,6 +30,15 @@ In order to simplify the process of getting started with Quickstart migrations, 
 
 To get started with a Quickstart 2 migration using the scaffolding repo as a project template, follow the steps in that repository's [README](https://github.com/az-digital/az-quickstart-scaffolding#readme) until you get to the "Migration setup in Lando" section and then follow these steps:
 
+_Note: If your source site has workbench moderation enabled and it is using it
+to create a workflow with any content type that has paragraphs (azqs_news,
+azqs_flexible_page), you should use this command to allow archived paragraph
+revisions to be migrated. See https://github.com/az-digital/az_quickstart/issues/1763_
+
+```
+drush cset az_migration.settings allow_archived_paragraphs true
+```
+
 1. Download an archive (dump) of your source site's database.
 2. Place the database dump file into the (project) root directory of your new migration project directory.
 3. Download an archive of your source site's files directory. This is usually in the
@@ -68,7 +77,7 @@ You can skip most of the rest of this README unless you run into trouble.
   * Install the module using the below command.
 
   ```
-    drush en az_migration
+    drush install az_migration
   ```
 
   ### Configure the settings.php to connect source database
@@ -217,16 +226,30 @@ Source site pre-migration tasks :
 * Delete any files you don’t want migrated.
 * Check for any custom or overridden fields on file_entities.
 * Check for any custom file entity types.
+* Take note of any file types other than `image`, `audio`, `document`, `video`
 
 Migrate the related files using the below command :
 ```
-drush mim az_media
+drush migrate:import az_media
 ```
 
-To rollback the migrated file :
+Update migrated media after updating the codebase:
 ```
-drush mr az_media
+drush cache:rebuild
+drush migrate:import az_media --update
 ```
+
+View messages for skipped media items:
+```
+drush migrate:messages az_media
+```
+
+To rollback the migrated media:
+```
+drush migrate:rollback az_media
+```
+**Note: If you have custom file_entity types that you would like to migrate, you
+must create a custom migration.**
 
 ## Person migrations
 
@@ -547,6 +570,7 @@ These plugins are designed to be reusable in custom migrations.
 
 These plugins are used in various built-in Quickstart migrations but were not designed with reusability in mind.
 
+- `az_media_bundle_recognizer`
 - `paragraphs_callout_field_merge`
 - `paragraphs_chunks_view_display_mapping` (Deprecated: use `az_views_reference_mapping`)
 - `paragraphs_column_image_field_merge`
@@ -554,7 +578,6 @@ These plugins are used in various built-in Quickstart migrations but were not de
 - `paragraphs_file_download_field_merge`
 - `paragraphs_fw_media_row_field_merge`
 - `az_paragraphs_media_caption`
-
 
 # Useful modules
 
