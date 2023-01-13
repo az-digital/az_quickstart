@@ -29,7 +29,6 @@ permissions:
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'
-  - 'batch update workbench access'
   - 'cancel smart date recur instances'
   - 'clone az_event content'
   - 'clone az_flexible_page content'
