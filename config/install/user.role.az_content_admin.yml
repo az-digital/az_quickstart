@@ -23,6 +23,7 @@ permissions:
   - 'administer taxonomy'
   - 'administer xmlsitemap'
   - 'batch update workbench access'
+  - 'bypass workbench access'
   - 'bypass node access'
   - 'create content translations'
   - 'create new books'
