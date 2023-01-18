@@ -75,7 +75,7 @@
         "drupal/link_class": "2.0.0",
         "drupal/masquerade": "2.0-beta4",
         "drupal/media_library_edit": "3.0.1",
-        "drupal/media_library_form_element": "2.0.3",
+        "drupal/media_library_form_element": "2.0.6",
         "drupal/media_library_theme_reset": "1.1.0",
         "drupal/media_migration": "1.0.0-alpha14",
         "drupal/menu_block": "1.7.0",
