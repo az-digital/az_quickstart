@@ -85,7 +85,7 @@
         "drupal/metatag": "1.22.0",
         "drupal/migrate_plus": "5.3.0",
         "drupal/migrate_queue_importer": "2.0",
-        "drupal/migrate_tools": "5.1.0",
+        "drupal/migrate_tools": "5.2.0",
         "drupal/paragraphs": "1.15.0",
         "drupal/paragraphs_admin": "1.4.0",
         "drupal/pathauto": "1.11.0",
