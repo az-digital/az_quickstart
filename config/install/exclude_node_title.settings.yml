@@ -5,11 +5,14 @@ type: hidden
 content_types:
   az_event: none
   az_flexible_page: user
+  az_landing_page: user
   az_news: none
   az_person: none
 content_type_modes:
   az_event: {  }
   az_flexible_page:
+    - full
+  az_landing_page:
     - full
   az_news: {  }
   az_person: {  }

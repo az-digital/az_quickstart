@@ -29,7 +29,7 @@ function az_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
     $entity = $formObject->getEntity();
     if (
       $entity->getEntityTypeId() === 'node'
-      && in_array($entity->bundle(), ['az_flexible_page'])
+      && in_array($entity->bundle(), ['az_flexible_page','az_landing_page'])
     ) {
       $form['#attached']['library'][] = 'az_media/az_media_edit';
     }

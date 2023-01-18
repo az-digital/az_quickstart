@@ -98,3 +98,4 @@ dependencies:
   enforced:
     module:
       - az_flexible_page
+      - az_landing_page

@@ -11,6 +11,7 @@ permissions:
   - 'access site-wide contact form'
   - 'access_unpublished node az_event'
   - 'access_unpublished node az_flexible_page'
+  - 'access_unpublished node az_landing_page'
   - 'access_unpublished node az_news'
   - 'access_unpublished node az_person'
   - 'search content'

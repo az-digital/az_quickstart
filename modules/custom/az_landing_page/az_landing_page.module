@@ -1,0 +1,45 @@
+<?php
+
+/**
+ * @file
+ * Contains az_landing_page.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityFormInterface;
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function az_landing_page_preprocess_node__az_landing_page(&$variables) {
+  $variables['#attached']['library'][] = 'az_landing_page/az_landing_page_theme';
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function az_landing_page_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /** @var Drupal\Core\Entity\FieldableEntityInterface $formObject */
+  $formObject = $form_state->getFormObject();
+  if ($formObject instanceof EntityFormInterface) {
+    $entity = $formObject->getEntity();
+    if (
+      $entity->getEntityTypeId() === 'node'
+      && in_array($entity->bundle(), ['az_landing_page'])
+    ) {
+      $form['#attached']['library'][] = 'az_landing_page/az_landing_page_form';
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_landing_page_theme() {
+  return [
+    'page__node__az_landing_page' => [
+      'template' => 'page--node--az-landing-page',
+      'base hook' => 'page'
+    ],
+  ];
+}
