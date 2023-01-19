@@ -17,7 +17,6 @@ Patch releases will be applied to the current development branch first and then 
   - Critical brand changes
   - Add Experimental modules
   - Update Experimental modules
-
 - Third-party code / dependencies
   - Drupal core
     - Security updates
