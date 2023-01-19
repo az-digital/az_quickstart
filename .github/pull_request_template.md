@@ -23,8 +23,7 @@
    - [ ] Critical institutional link or brand change
    - [ ] Adding experimental module
    - [ ] Update experimental module
-   - [ ] Adding new contrib module
-   - [ ] Enable new contrib module by default or database update
+   - [ ] Enable existing module by default or database update
 - **Minor release changes**
    - [ ] New feature
    - [ ] Breaking or visual change to existing behavior
