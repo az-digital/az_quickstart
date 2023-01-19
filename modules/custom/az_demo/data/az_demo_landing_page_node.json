@@ -6,8 +6,8 @@
       "path" : "/landing-page",
       "exclude_title" : true,
       "az_page_category"  : "",
-      "az_main_content"  : "86|87",
-      "az_media_image":"lynx.jpg",
+      "az_main_content"  : "86|87|88",
+      "az_media_image":"arizona_campus_fireworks.jpg",
       "az_summary" : "This is an example landing page."
     }
   ]
