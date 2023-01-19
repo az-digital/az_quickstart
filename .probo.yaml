@@ -67,6 +67,8 @@ steps:
       - chmod 777 /var/www/html/sites/default/settings.php
       - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';\n\$config['environment_indicator.indicator']['fg_color'] = '#ffffff';" >> /var/www/html/sites/default/settings.php
       - chmod 444 /var/www/html/sites/default/settings.php
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_digital_asset_library
+
   - name: Check for PHP errors and notices
     plugin: Script
     script:
