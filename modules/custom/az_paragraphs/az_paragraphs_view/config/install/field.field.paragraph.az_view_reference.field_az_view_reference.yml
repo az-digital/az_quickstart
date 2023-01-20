@@ -52,6 +52,6 @@ settings:
     limit: limit
     argument: argument
     title: title
-    pager: 0
-    offset: 0
+    offset: offset
+    pager: pager
 field_type: viewsreference

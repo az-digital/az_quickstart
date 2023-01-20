@@ -270,21 +270,21 @@ Developing within Drupal can be a real challenge without debugging enabled.
 You can easily enable them by using the following commands.
 
 ### Lando
-First you have to make the folder containing /app/web/sites/default/services.yml writable.
+Quickstart provides Lando tooling for enabling theme debugging.
+
+Simply use the following command once your site is installed:
+
 ```
-lando ssh --user root
-chmod 755 -R /app/web/sites/default
-exit
-```
-Then enable devel module and put the site into dev mode via drupal console.
-```
-lando drush en -y devel
-lando drupal site:mode dev
+lando theme-debug
 ```
 
 ### DDev
+Quickstart provides DDev tooling for enabling theme debugging.
+
+Simply use the following command once your site is installed:
+
 ```
-ddev drush en -y devel && ddev drupal site:mode dev
+ddev theme-debug
 ```
 
 ## Configuration Management and Database Updates
