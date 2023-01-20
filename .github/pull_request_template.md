@@ -27,6 +27,7 @@
    - [ ] New feature
    - [ ] Breaking or visual change to existing behavior
    - [ ] Upgrade experimental module to stable
+   - [ ] Enable existing module by default or database update
    - [ ] Non-critical brand change
    - [ ] New internal API or API improvement with backwards compatibility
    - [ ] Risky or disruptive cleanup to comply with coding standards
