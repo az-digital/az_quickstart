@@ -720,9 +720,9 @@ display:
             more_link: false
             more_link_text: ''
             more_link_path: ''
-            strip_tags: false
+            strip_tags: true
             trim: false
-            preserve_tags: ''
+            preserve_tags: '<img>'
             html: false
           element_type: ''
           element_class: ''
@@ -731,7 +731,7 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -739,7 +739,7 @@ display:
           click_sort_column: target_id
           type: entity_reference_entity_view
           settings:
-            view_mode: az_square
+            view_mode: az_modal_image
           group_column: target_id
           group_columns: {  }
           group_rows: true
@@ -1062,7 +1062,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<div id=\"personModal{{ nid }}\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"personModal{{ nid }}Label\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-lg\" role=\"document\">\r\n        <div class=\"modal-content\">\r\n            <div class=\"modal-header\">\r\n                <a role=\"button\" class=\"close text-decoration-none\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></a>\r\n            </div>\r\n            <div class=\"modal-body\">\r\n                <div class=\"row mb-3\">\r\n                    <div class=\"col-4\">\r\n                        {{ field_az_media_image_1 }}\r\n                    </div>\r\n                    <div class=\"col-8\">\r\n                        <div class=\"modal-title\" id=\"personModal{{ nid }}Label\">{{ title_1 }}</div>\r\n                        {{ field_az_titles }}\r\n                    </div>\r\n                </div>        \r\n                {{ field_az_body }}\r\n            </div>\r\n            <div class=\"modal-footer\">\r\n                <a role=\"button\" class=\"btn btn-blue\" data-dismiss=\"modal\">Close</a>\r\n                {{ view_node }}\r\n              </div>\r\n        </div>\r\n    </div>\r\n</div>\r\n    "
+            text: "<div id=\"personModal{{ nid }}\" class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"personModal{{ nid }}Label\" aria-hidden=\"true\">\r\n    <div class=\"modal-dialog modal-xl\" role=\"document\">\r\n        <div class=\"modal-content p-0\">\r\n            <div class=\"row no-gutters\">\r\n                <div class=\"col-12 col-lg-5 col-xl-4 az-person-modal-image\">\r\n                    {{ field_az_media_image_1 }}\r\n                </div>\r\n                <div class=\"col-12 col-lg-7 col-xl-8 d-flex\">\r\n                    <div class=\"modal-body d-flex flex-column justify-content-between p-3 p-lg-5 pb-0\">\r\n                        <div class=\"az-modal-person-details\">\r\n                            <div class=\"modal-title\" id=\"personModal{{ nid }}Label\">{{ title_1 }}</div>\r\n                            {{ field_az_titles }}\r\n                            <div class=\"mb-3\">\r\n                                {{ field_az_phones_1 }} {{ field_az_phones_1 is not empty and field_az_email is not empty ? \"|\" : \"\" }} {{ field_az_email }}\r\n                            </div>\r\n                            {{ field_az_body }}\r\n                        </div>\r\n                        <div class=\"az-modal-person-buttons\">\r\n                            <div class=\"modal-footer border-0 justify-content-start px-0\">\r\n                                {{ view_node }}\r\n                                <a role=\"button\" class=\"btn btn-outline-blue\" data-dismiss=\"modal\" aria-label=\"Close\">Close</a>\r\n                            </div>\r\n                        </div>\r\n                    </div>\r\n                </div>\r\n            </div>        \r\n        </div>\r\n    </div>\r\n</div>\r\n    "
             make_link: false
             path: ''
             absolute: false
@@ -1161,6 +1161,7 @@ display:
           separator: ''
           hide_empty: false
       defaults:
+        css_class: false
         style: false
         style_options: false
         row: false
@@ -1169,6 +1170,7 @@ display:
         sorts: false
         arguments: true
       relationships: {  }
+      css_class: 'az-person-grid az-person-modal'
       display_description: 'Displays Person nodes in a grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
       display_extenders: {  }
