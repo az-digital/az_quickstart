@@ -5,6 +5,7 @@
  * Contains az_global_footer.install.
  */
 
+use Drupal\menu_link_content\Entity\MenuLinkContent;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 
@@ -34,4 +35,31 @@ function az_global_footer_uninstall() {
     $executable = new MigrateExecutable($migration, new MigrateMessage());
     $executable->rollback();
   }
+}
+
+/**
+ * Replace Global Engagement link(s) in the global footer with International Engagement link(s).
+ */
+function az_global_footer_update_920501() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-topics')
+    ->condition('title', 'Global Engagement')
+    ->condition('link__uri', 'https://global.arizona.edu')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      $menu_link_content->title = 'International Engagement';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://international.arizona.edu';
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Replaced %count Global Engagement menu link(s) in the global footer with International Engagement menu link(s).', ['%count' => $updated_count]);
 }

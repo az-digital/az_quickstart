@@ -22,8 +22,16 @@ function az_metrics_data() {
     array_push($domainList, $d->domain);
   }
 
+  // Fetch information about installation profile.
+  $version = 'Untagged version';
+  $extension_list = \Drupal::service('extension.list.module');
+  $information = $extension_list->getExtensionInfo('az_quickstart');
+  if (isset($information['version'])) {
+    $version = $information['version'];
+  }
   $data = [
     'domains' => $domainList,
+    'quickstart_version' => $version,
     'mail' => \Drupal::config('system.site')->get('mail'),
     'name' => \Drupal::config('system.site')->get('name'),
     'uuid' => \Drupal::config('system.site')->get('uuid'),

@@ -1,0 +1,41 @@
+id: az_paragraph_plain_text
+label: AZ Paragraph Plain Text
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_plain_text
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text
+
+process:
+
+  field_az_text_area:
+    plugin: sub_process
+    source: field_uaqs_text_area
+    process:
+      delta: delta
+      value:
+        plugin: az_entity_embed_process
+        source: value
+      format:
+        plugin: default_value
+        default_value: az_standard
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_migration

@@ -120,6 +120,7 @@ third_party_settings:
     group_read_more:
       children:
         - links
+        - group_read_more_text
       label: 'Read more'
       parent_name: group_text_column
       region: content
@@ -127,11 +128,12 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: card-clickable-link
+        show_empty_fields: false
         id: ''
         element: div
-        show_label: true
-        label_element: div
-        label_element_classes: 'text-chili mt-1 mb-4'
+        show_label: false
+        label_element: ''
+        label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
@@ -203,6 +205,25 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_read_more_text:
+      children:
+        - az_news_read_more
+      label: 'Read more text'
+      parent_name: group_read_more
+      region: content
+      weight: 10
+      format_type: html_element
+      format_settings:
+        classes: 'text-chili mt-1 mb-4'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
     settings:
@@ -214,6 +235,11 @@ targetEntityType: node
 bundle: az_news
 mode: az_medium_media_list
 content:
+  az_news_read_more:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     label: hidden
