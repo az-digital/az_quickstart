@@ -1,8 +1,0 @@
-az_landing_page_form:
-  css:
-    base:
-      css/az_landing_page_edit_form.css: {}
-az_landing_page_theme:
-  css:
-    layout:
-      css/az_landing_page.theme.css: {}
