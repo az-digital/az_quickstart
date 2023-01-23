@@ -39,7 +39,7 @@ function az_landing_page_theme() {
   return [
     'page__node__az_landing_page' => [
       'template' => 'page--node--az-landing-page',
-      'base hook' => 'page',
+      'base hook' => 'page'
     ],
   ];
 }
