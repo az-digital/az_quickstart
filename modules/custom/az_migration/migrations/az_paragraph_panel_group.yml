@@ -42,6 +42,8 @@ process:
           index:
             - 0
             - value
+        -
+          plugin: az_entity_embed_process
       body_format:
         plugin: default_value
         default_value: az_standard
