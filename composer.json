@@ -150,7 +150,7 @@
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
                 "Usability/accessibility of input fields (row weights) in a table view (3159896)": "https://www.drupal.org/files/issues/2022-02-16/3159896-9-4.x-fix-custom-command.patch",
                 "Add type declaration to Html::escape(), ::decodeEntities(), and FormattableMarkup::placeholderEscape() (3255637)": "https://www.drupal.org/files/issues/2022-11-03/3255637-92.patch",
-                "Claro does not override jquery.ui theme for modal close button on hover state. (3335935)": "https://www.drupal.org/files/issues/2023-01-23/3335935-claro-close-hover.patch"
+                "Claro does not override jquery.ui theme for modal close button on hover state. (3335935)": "https://www.drupal.org/files/issues/2023-01-23/3335935-claro-close-hover-5.patch"
             },
             "drupal/config_distro": {
                 "fnmatch issue": "https://www.drupal.org/files/issues/2020-07-04/3144145-replace-fnmatch-with-preg-match-6.patch",
