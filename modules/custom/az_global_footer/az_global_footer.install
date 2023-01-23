@@ -43,6 +43,7 @@ function az_global_footer_uninstall() {
 function az_global_footer_update_920501() {
   $updated_count = 0;
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
     ->condition('menu_name', 'az-footer-topics')
     ->condition('title', 'Global Engagement')
     ->condition('link__uri', 'https://global.arizona.edu')
