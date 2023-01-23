@@ -306,8 +306,8 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
             ->query('SELECT type FROM {bean} WHERE bid = :bid', [':bid' => $id])
             ->fetchField();
           if (!empty($bean_type)) {
-            // Map our D7 node type to a migration. If we can't, we have no
-            // guarantee our node is a migrated one.
+            // Map our D7 bean type to a migration. If we can't, we have no
+            // guarantee our bean is a migrated one.
             if (!empty($migrations[$bean_type])) {
               $migration = $migrations[$bean_type];
               $post = $this->updateEmbedTag($id, 'block_content', 'drupal-entity', $view, $dom, $element, $migration, 'block_content');
