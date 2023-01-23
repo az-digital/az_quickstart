@@ -156,6 +156,7 @@ third_party_settings:
     group_read_article:
       children:
         - links
+        - group_read_more_text
       label: 'Read article'
       parent_name: group_text_column
       region: content
@@ -166,9 +167,9 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: true
-        label_element: div
-        label_element_classes: 'btn btn-red'
+        show_label: false
+        label_element: ''
+        label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
@@ -191,17 +192,43 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_read_more_text:
+      children:
+        - az_news_read_more
+      label: 'Read more text'
+      parent_name: group_read_article
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: 'btn btn-red'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.az_news.az_feature
 targetEntityType: node
 bundle: az_news
 mode: az_feature
 content:
+  az_news_read_more:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_az_media_image:
     type: media_thumbnail
     label: hidden
     settings:
       image_link: ''
       image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 6
     region: content
