@@ -210,17 +210,6 @@
       "weight": "2"
     },
     {
-      "link_id": "29",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Landing Page",
-      "urlpath": "/landing-page",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "12"
-    },
-    {
       "link_id": "14",
       "parent_link_id": "6",
       "menu": "main",

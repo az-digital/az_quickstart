@@ -81,7 +81,6 @@ destination:
 migration_dependencies:
   required:
     - az_demo_page_node
-    - az_demo_landing_page_node
 dependencies:
   enforced:
     module:
