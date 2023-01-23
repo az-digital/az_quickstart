@@ -39,6 +39,8 @@ process:
       index:
         - 0
         - value
+    -
+      plugin: az_entity_embed_process
 
   field_az_cards/link_title:
     -
