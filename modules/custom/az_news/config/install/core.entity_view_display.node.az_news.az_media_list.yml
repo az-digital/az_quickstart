@@ -120,7 +120,8 @@ third_party_settings:
         effect: none
         speed: fast
     group_read_more:
-      children: {  }
+      children:
+        - group_read_more_text
       label: 'Read more'
       parent_name: group_text_column
       region: content
@@ -282,7 +283,6 @@ hidden:
   field_az_attachments: true
   field_az_body: true
   field_az_byline: true
-  field_az_caption: true
   field_az_contacts: true
   field_az_expiration_date: true
   field_az_link: true
