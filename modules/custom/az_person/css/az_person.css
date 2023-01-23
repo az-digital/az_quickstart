@@ -40,3 +40,8 @@
 	object-fit: cover;
 	object-position: center center;
 }
+
+.az-person-modal .modal .close {
+	right: 0;
+	z-index: 30;
+}
