@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-
+concurrency: kitten-deploy
 jobs:
   watch-workflow:
     name: Watch workflow logs
@@ -14,7 +14,7 @@ jobs:
         uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
         with:
           php-version: '8.1'
-          
+
       - name: Install Terminus and authenticate Terminus
         uses: pantheon-systems/terminus-github-actions@1.0.0
         with:
