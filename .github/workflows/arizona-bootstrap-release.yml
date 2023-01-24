@@ -7,7 +7,7 @@ jobs:
   release:
     name: Create PR
     if: ${{ github.event.client_payload.branch == '2.x' }}
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
