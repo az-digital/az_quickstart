@@ -16,7 +16,7 @@ jobs:
           php-version: '8.1'
 
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@1.0.0
+        uses: pantheon-systems/terminus-github-actions@1.1.0
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
@@ -45,7 +45,7 @@ jobs:
           chmod 600 ${HOME}/.ssh/*
           
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@1.0.0
+        uses: pantheon-systems/terminus-github-actions@1.1.0
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
@@ -81,7 +81,7 @@ jobs:
           chmod 600 ${HOME}/.ssh/*
 
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@1.0.0
+        uses: pantheon-systems/terminus-github-actions@1.1.0
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
