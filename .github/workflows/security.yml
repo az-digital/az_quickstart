@@ -43,7 +43,7 @@ jobs:
           composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
       - name: Check dependencies for vulnerabilities
-        uses: symfonycorp/security-checker-action@v3
+        uses: symfonycorp/security-checker-action@v5
         with:
           lock: az-quickstart-scaffolding/composer.lock
   code-check:
