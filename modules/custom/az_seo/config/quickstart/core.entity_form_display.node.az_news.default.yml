@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_news
   config:
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
