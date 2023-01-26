@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@2b77dd6b79c3203adc3e3809cde9687bf5834238
         with:
           php-version: '8.1'
 
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@2b77dd6b79c3203adc3e3809cde9687bf5834238
         with:
           php-version: '8.1'
 
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@2b77dd6b79c3203adc3e3809cde9687bf5834238
         with:
           php-version: '8.1'
 
