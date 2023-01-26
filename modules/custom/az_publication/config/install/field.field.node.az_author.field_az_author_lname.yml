@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_author_lname
+    - node.type.az_author
+id: node.az_author.field_az_author_lname
+field_name: field_az_author_lname
+entity_type: node
+bundle: az_author
+label: 'Last Name'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -1,0 +1,37 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.ief_table
+    - field.field.node.az_author.field_az_author_drop_particle
+    - field.field.node.az_author.field_az_author_fname
+    - field.field.node.az_author.field_az_author_link
+    - field.field.node.az_author.field_az_author_literal
+    - field.field.node.az_author.field_az_author_lname
+    - field.field.node.az_author.field_az_author_nondrop_particle
+    - field.field.node.az_author.field_az_author_parse
+    - field.field.node.az_author.field_az_author_suffix
+    - node.type.az_author
+  module:
+    - user
+id: node.az_author.ief_table
+targetEntityType: node
+bundle: az_author
+mode: ief_table
+content:
+  label:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  field_az_author_drop_particle: true
+  field_az_author_fname: true
+  field_az_author_link: true
+  field_az_author_literal: true
+  field_az_author_lname: true
+  field_az_author_nondrop_particle: true
+  field_az_author_parse: true
+  field_az_author_suffix: true
+  links: true
+  status: true

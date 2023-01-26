@@ -4,19 +4,23 @@ core_version_requirement: ^9
 type: module
 package: The University of Arizona
 dependencies:
-  - az_core
-  - block
-  - block_class
-  - datetime
-  - exclude_node_title
-  - field
-  - media
-  - media_library
-  - menu_ui
-  - node
-  - options
-  - paragraphs
-  - path
-  - system
-  - user
-  - views
+  - 'auto_entitylabel:auto_entitylabel'
+  - 'az_core:az_core'
+  - 'block_class:block_class'
+  - 'drupal:block'
+  - 'drupal:datetime'
+  - 'drupal:field'
+  - 'drupal:link'
+  - 'drupal:media'
+  - 'drupal:media_library'
+  - 'drupal:menu_ui'
+  - 'drupal:node'
+  - 'drupal:options'
+  - 'drupal:path'
+  - 'drupal:system'
+  - 'drupal:user'
+  - 'drupal:views'
+  - 'exclude_node_title:exclude_node_title'
+  - 'field_group:field_group'
+  - 'ief_table_view_mode:ief_table_view_mode'
+  - 'paragraphs:paragraphs'

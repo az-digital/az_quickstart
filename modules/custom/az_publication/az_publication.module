@@ -5,12 +5,13 @@
  * Contains az_publication.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use ADCI\FullNameParser\Parser;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\node\Entity\NodeType;
 use Seboettg\CiteProc\CiteProc;
-use ADCI\FullNameParser\Parser;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
 
@@ -43,6 +44,25 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
   // Only if fields suggest a publication.
   if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_publication_type') && !empty($entity->field_az_publication_type->value)) {
     if ($display->getComponent('az_publication_bibliography')) {
+      // Publicaiton fields to CSL schema mappings.
+      $pmap = [
+        'field_az_publication_container' => 'container-title',
+        'field_az_publication_issue' => 'issue',
+        'field_az_publication_volume' => 'volume',
+        'field_az_publication_version' => 'version',
+        'field_az_publication_location' => 'publisher-place',
+        'field_az_publication_page' => 'page',
+        'field_az_publication_publisher' => 'publisher',
+      ];
+      // Author fields to CSL schema mappings.
+      $amap = [
+        'field_az_author_fname' => 'given',
+        'field_az_author_lname' => 'family',
+        'field_az_author_drop_particle' => 'dropping-particle',
+        'field_az_author_nondrop_particle' => 'non-dropping-particle',
+        'field_az_author_suffix' => 'suffix',
+        'field_az_author_literal' => 'literal',
+      ];
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
@@ -54,26 +74,32 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $style_info = @file_get_contents($style_path);
 
       if (!empty($style_info)) {
-        // Handle author names.
-        // Don't throw errors.
-        $parser = new Parser([
-          'throws' => FALSE,
-          'mandatory_first_name' => FALSE,
-          'mandatory_last_name' => FALSE,
-        ]);
+        // Map authorship information.
+        foreach ($pmap as $source => $destination) {
+          if (!empty($entity->{$source}->value)) {
+            $blob->{$destination} = trim($entity->{$source}->value);
+          }
+        }
         foreach ($entity->field_az_authors as $item) {
-          if (!empty($item->value)) {
-            $name = $parser->parse($item->value);
-            $person = new stdClass();
-            $person->family = $name->getLastName();
-            $person->given = $name->getFirstName();
-            $person->suffix = $name->getSuffix();
-            if (empty($person->family)) {
-              $person->family = $person->given;
-              unset($person->given);
+          if (!empty($item->entity)) {
+            $author = new stdClass();
+            // Only literal name.
+            if (!empty($item->entity->field_az_author_literal->value) && empty($item->entity->field_az_author_parse->value)) {
+              $author->family = trim($item->entity->field_az_author_literal->value);
             }
-
-            $blob->author[] = $person;
+            else {
+              // Map regular string fields.
+              foreach ($amap as $asource => $adestination) {
+                if (!empty($item->entity->{$asource}->value)) {
+                  $author->{$adestination} = trim($item->entity->{$asource}->value);
+                }
+              }
+            }
+            // Special field due to being an URL.
+            if (!empty($item->entity->field_az_author_link->uri)) {
+              $author->authorlink = $item->entity->field_az_author_link->uri;
+            }
+            $blob->author[] = $author;
           }
         }
         // Handle publication date if available.
@@ -88,20 +114,42 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $date->{'date-parts'}[] = explode('-', $entity->field_az_accessed_date->value);
           $blob->accessed = $date;
         }
+        // Handle link field if available.
+        if (!empty($entity->field_az_publication_link->uri)) {
+          $blob->titlelink = $entity->field_az_publication_link->uri;
+        }
         // Handle file link if available.
         if (!empty($entity->field_az_publication_media->entity->field_media_az_document->entity)) {
           $blob->titlelink = $entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE);
-        }
-        // Handle container if available.
-        if (!empty($entity->field_az_publication_journal->value)) {
-          $blob->{'container-title'} = $entity->field_az_publication_journal->value;
         }
 
         $additionalMarkup = [
           "title" => function ($cslItem, $renderedText) {
             // Rendering extension for title links.
             if (!empty($cslItem->titlelink)) {
-              $url = Url::fromUserInput($cslItem->titlelink);
+              try {
+                $url = Url::fromUserInput($cslItem->titlelink);
+              }
+              catch (InvalidArgumentException $e) {
+                $url = Url::fromUri($cslItem->titlelink);
+              }
+              $link = Link::fromTextAndUrl($renderedText, $url);
+              $buildLink = $link->toRenderable();
+              $renderedText = \Drupal::service('renderer')->render($buildLink);
+              // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
+              $renderedText = str_replace('"', '', $renderedText);
+            }
+            return $renderedText;
+          },
+          "author" => function ($cslItem, $renderedText) {
+            // Rendering extension for author links.
+            if (!empty($cslItem->authorlink)) {
+              try {
+                $url = Url::fromUserInput($cslItem->authorlink);
+              }
+              catch (InvalidArgumentException $e) {
+                $url = Url::fromUri($cslItem->authorlink);
+              }
               $link = Link::fromTextAndUrl($renderedText, $url);
               $buildLink = $link->toRenderable();
               $renderedText = \Drupal::service('renderer')->render($buildLink);

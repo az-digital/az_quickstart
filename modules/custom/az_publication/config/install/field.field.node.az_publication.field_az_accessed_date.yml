@@ -11,7 +11,7 @@ field_name: field_az_accessed_date
 entity_type: node
 bundle: az_publication
 label: 'Accessed Date'
-description: ''
+description: 'Date when the resource was accessed for information.'
 required: false
 translatable: false
 default_value: {  }

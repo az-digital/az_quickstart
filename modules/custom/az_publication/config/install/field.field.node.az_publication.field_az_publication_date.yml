@@ -11,7 +11,7 @@ field_name: field_az_publication_date
 entity_type: node
 bundle: az_publication
 label: 'Publication Date'
-description: ''
+description: 'Date when the resource was published.'
 required: false
 translatable: false
 default_value: {  }
