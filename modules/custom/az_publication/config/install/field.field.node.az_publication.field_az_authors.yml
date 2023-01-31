@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_az_authors
-    - node.type.az_author
     - node.type.az_publication
 id: node.az_publication.field_az_authors
 field_name: field_az_authors
@@ -16,13 +15,11 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:node'
+  handler: 'default:az_author'
   handler_settings:
-    target_bundles:
-      az_author: az_author
+    target_bundles: null
     sort:
-      field: title
+      field: name
       direction: ASC
     auto_create: false
-    auto_create_bundle: ''
 field_type: entity_reference

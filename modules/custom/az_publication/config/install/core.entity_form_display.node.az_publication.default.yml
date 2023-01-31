@@ -18,7 +18,7 @@ dependencies:
     - node.type.az_publication
   module:
     - datetime
-    - ief_table_view_mode
+    - inline_entity_form
     - link
     - media_library
     - path
@@ -40,12 +40,12 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_az_authors:
-    type: inline_entity_form_complex_table_view_mode
+    type: inline_entity_form_complex
     weight: 8
     region: content
     settings:
       form_mode: default
-      override_labels: true
+      override_labels: false
       label_singular: Author
       label_plural: Authors
       allow_new: true

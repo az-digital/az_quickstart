@@ -1,4 +1,4 @@
-name: Quickstart Publication
+name: Quickstart Publication (Experimental)
 description: 'Provides Publication content type'
 core_version_requirement: ^9
 type: module
@@ -22,5 +22,5 @@ dependencies:
   - 'drupal:views'
   - 'exclude_node_title:exclude_node_title'
   - 'field_group:field_group'
-  - 'ief_table_view_mode:ief_table_view_mode'
+  - 'inline_entity_form:inline_entity_form'
   - 'paragraphs:paragraphs'

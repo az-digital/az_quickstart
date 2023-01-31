@@ -1,9 +1,0 @@
-status: 1
-pattern: '[node:field_az_author_fname] [node:field_az_author_drop_particle] [node:field_az_author_nondrop_particle] [node:field_az_author_lname] [node:field_az_author_suffix] [node:field_az_author_literal]'
-escape: false
-preserve_titles: false
-save: false
-chunk: 50
-dependencies:
-  config:
-    - node.type.az_author

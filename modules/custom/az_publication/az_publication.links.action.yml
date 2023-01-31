@@ -1,0 +1,5 @@
+entity.az_author.add_form:
+  route_name: entity.az_author.add_form
+  title: 'Add Author'
+  appears_on:
+    - entity.az_author.collection
