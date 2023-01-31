@@ -97,7 +97,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             }
             // Special field due to being an URL.
             if (!empty($item->entity->field_az_author_link->uri)) {
-              $author->authorlink = $item->entity->field_az_author_link->uri;
+              $author->itemlink = $item->entity->field_az_author_link->uri;
             }
             $blob->author[] = $author;
           }
@@ -116,48 +116,34 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         }
         // Handle link field if available.
         if (!empty($entity->field_az_publication_link->uri)) {
-          $blob->titlelink = $entity->field_az_publication_link->uri;
+          $blob->itemlink = $entity->field_az_publication_link->uri;
         }
         // Handle file link if available.
         if (!empty($entity->field_az_publication_media->entity->field_media_az_document->entity)) {
-          $blob->titlelink = $entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE);
+          $blob->itemlink = $entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE);
         }
 
+        // Rendering extension for creating links from titles and authors.
+        $renderlink = function ($cslItem, $renderedText) {
+          // Rendering extension for text with links.
+          if (!empty($cslItem->itemlink)) {
+            try {
+              $url = Url::fromUserInput($cslItem->itemlink);
+            }
+            catch (InvalidArgumentException $e) {
+              $url = Url::fromUri($cslItem->itemlink);
+            }
+            $link = Link::fromTextAndUrl($renderedText, $url);
+            $buildLink = $link->toRenderable();
+            $renderedText = \Drupal::service('renderer')->render($buildLink);
+            // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
+            $renderedText = str_replace('"', '', $renderedText);
+          }
+          return $renderedText;
+        };
         $additionalMarkup = [
-          "title" => function ($cslItem, $renderedText) {
-            // Rendering extension for title links.
-            if (!empty($cslItem->titlelink)) {
-              try {
-                $url = Url::fromUserInput($cslItem->titlelink);
-              }
-              catch (InvalidArgumentException $e) {
-                $url = Url::fromUri($cslItem->titlelink);
-              }
-              $link = Link::fromTextAndUrl($renderedText, $url);
-              $buildLink = $link->toRenderable();
-              $renderedText = \Drupal::service('renderer')->render($buildLink);
-              // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
-              $renderedText = str_replace('"', '', $renderedText);
-            }
-            return $renderedText;
-          },
-          "author" => function ($cslItem, $renderedText) {
-            // Rendering extension for author links.
-            if (!empty($cslItem->authorlink)) {
-              try {
-                $url = Url::fromUserInput($cslItem->authorlink);
-              }
-              catch (InvalidArgumentException $e) {
-                $url = Url::fromUri($cslItem->authorlink);
-              }
-              $link = Link::fromTextAndUrl($renderedText, $url);
-              $buildLink = $link->toRenderable();
-              $renderedText = \Drupal::service('renderer')->render($buildLink);
-              // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
-              $renderedText = str_replace('"', '', $renderedText);
-            }
-            return $renderedText;
-          },
+          "title" => $renderlink,
+          "author" => $renderlink,
           "csl-entry" => function ($cslItem, $renderedText) {
             // Remove citation number tag.
             // In general it's never a good idea to parse html with regex.
