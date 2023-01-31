@@ -92,7 +92,7 @@
         "drupal/quick_node_clone": "1.15",
         "drupal/redirect": "1.8.0",
         "drupal/role_delegation": "1.2.0",
-        "drupal/search_exclude": "2.0.0-beta2",
+        "drupal/search_exclude": "3.0.0-beta1",
         "drupal/seckit": "2.0.1",
         "drupal/slick": "2.7.0",
         "drupal/slick_views": "2.6.0",
