@@ -99,6 +99,10 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             if (!empty($item->entity->field_az_author_link->uri)) {
               $author->itemlink = $item->entity->field_az_author_link->uri;
             }
+            // Special field handling for person reference.
+            if (!empty($item->entity->field_az_author_person->entity)) {
+              $author->itemlink = $item->entity->field_az_author_person->entity->toUrl()->toString();
+            }
             $blob->author[] = $author;
           }
         }
