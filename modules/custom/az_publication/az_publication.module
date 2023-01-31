@@ -177,6 +177,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
   }
 }
 
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
 function az_publication_form_auto_entitylabel_settings_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   // Provide az_author tokens to the auto_entitylabel settings form.

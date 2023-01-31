@@ -54,11 +54,11 @@ use Drupal\user\UserInterface;
  *     "langcode" = "langcode",
  *     "published" = "status",
  *   },
-*   revision_metadata_keys = {
-*     "revision_user" = "revision_uid",
-*     "revision_created" = "revision_timestamp",
-*     "revision_log_message" = "revision_log"
-*   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_uid",
+ *     "revision_created" = "revision_timestamp",
+ *     "revision_log_message" = "revision_log"
+ *   },
  *   links = {
  *     "canonical" = "/admin/structure/az_author/{az_author}",
  *     "add-form" = "/admin/structure/az_author/add",

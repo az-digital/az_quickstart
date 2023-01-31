@@ -93,7 +93,10 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
     $langname = $az_author->language()->getName();
     $languages = $az_author->getTranslationLanguages();
     $has_translations = (count($languages) > 1);
-    $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $az_author->label()]) : $this->t('Revisions for %title', ['%title' => $az_author->label()]);
+    $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', [
+      '@langname' => $langname,
+      '%title' => $az_author->label(),
+    ]) : $this->t('Revisions for %title', ['%title' => $az_author->label()]);
 
     $header = [$this->t('Revision'), $this->t('Operations')];
     $revert_permission = (($account->hasPermission("revert all author revisions") || $account->hasPermission('administer author entities')));
@@ -118,7 +121,7 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
 
         // Use revision link to link to revisions that are not active.
         $date = $this->dateFormatter->format($revision->getRevisionCreationTime(), 'short');
-        if ($vid != $az_author->getRevisionId()) {
+        if ($vid !== $az_author->getRevisionId()) {
           $link = Link::fromTextAndUrl($date, new Url('entity.az_author.revision', [
             'az_author' => $az_author->id(),
             'az_author_revision' => $vid,

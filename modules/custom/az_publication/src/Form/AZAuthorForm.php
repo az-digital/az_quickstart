@@ -34,7 +34,7 @@ class AZAuthorForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var \Drupal\az_publication\Entity\AZAuthor $entity */
+    /** @var \Drupal\az_publication\Entity\AZAuthor $entity */
     $form = parent::buildForm($form, $form_state);
 
     return $form;

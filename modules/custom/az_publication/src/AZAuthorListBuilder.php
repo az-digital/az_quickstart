@@ -26,7 +26,7 @@ class AZAuthorListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var \Drupal\az_publication\Entity\AZAuthor $entity */
+    /** @var \Drupal\az_publication\Entity\AZAuthor $entity */
     $row['id'] = $entity->id();
     $row['name'] = Link::createFromRoute(
       $entity->label(),

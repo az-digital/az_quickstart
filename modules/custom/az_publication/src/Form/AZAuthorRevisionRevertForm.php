@@ -35,7 +35,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    * @var \Drupal\Core\Datetime\DateFormatterInterface
    */
   protected $dateFormatter;
-  
+
   /**
    * The time service.
    *
@@ -115,8 +115,14 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
     ]);
     $this->revision->save();
 
-    $this->logger('content')->notice('Author: reverted %title revision %revision.', ['%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    $this->messenger()->addMessage(t('Author %title has been reverted to the revision from %revision-date.', ['%title' => $this->revision->label(), '%revision-date' => $this->dateFormatter->format($original_revision_timestamp)]));
+    $this->logger('content')->notice('Author: reverted %title revision %revision.', [
+      '%title' => $this->revision->label(),
+      '%revision' => $this->revision->getRevisionId(),
+    ]);
+    $this->messenger()->addMessage(t('Author %title has been reverted to the revision from %revision-date.', [
+      '%title' => $this->revision->label(),
+      '%revision-date' => $this->dateFormatter->format($original_revision_timestamp),
+    ]));
     $form_state->setRedirect(
       'entity.az_author.version_history',
       ['az_author' => $this->revision->id()]

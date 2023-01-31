@@ -6,7 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class AZAuthorSettingsForm.
+ * Provides settings form for az_author entities.
  *
  * @ingroup az_publication
  */

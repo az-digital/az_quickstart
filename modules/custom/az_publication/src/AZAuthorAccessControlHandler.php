@@ -28,7 +28,6 @@ class AZAuthorAccessControlHandler extends EntityAccessControlHandler {
           return AccessResult::allowedIfHasPermission($account, 'view unpublished author entities');
         }
 
-
         return AccessResult::allowedIfHasPermission($account, 'view published author entities');
 
       case 'update':
@@ -50,6 +49,5 @@ class AZAuthorAccessControlHandler extends EntityAccessControlHandler {
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
     return AccessResult::allowedIfHasPermission($account, 'add author entities');
   }
-
 
 }
