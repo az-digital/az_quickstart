@@ -305,8 +305,8 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_person_category'
-  az_person_grid_modal:
-    id: az_person_grid_modal
+  grid_modal:
+    id: grid_modal
     display_title: 'Grid - Modal'
     display_plugin: block
     position: 2
