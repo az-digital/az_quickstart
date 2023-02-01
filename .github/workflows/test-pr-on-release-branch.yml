@@ -1,0 +1,82 @@
+name: Test PR on Release Branch
+on:
+    pull_request:
+      types:
+        - opened
+    
+jobs:
+  test-pr-on-branch:
+    name: Test PR on Release Branch
+    runs-on: ubuntu-18.04
+    strategy:
+      matrix:
+        release:
+          - "2.0.x"
+          - "2.1.x"
+          - "2.2.x"
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+      chromedriver:
+        image: drupalci/webdriver-chromedriver:production
+        ports:
+          - 9515
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          path: az_quickstart
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        with:
+          php-version: '7.4'
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+
+      - name: Apply PR diff to release branch
+        id: apply
+        working-directory: ./az_quickstart
+        run: |
+          set -x
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git fetch
+          git checkout "${{ matrix.release }}"
+          PR_NUMBER=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo "${PR_NUMBER}"
+          curl https://patch-diff.githubusercontent.com/raw/az-digital/az_quickstart/pull/${{PR_NUMBER}}.diff | git apply --reject --whitespace=fix --allow-empty
+          
+          
+      - name: Composer Install
+        id: install
+        if: steps.apply.outcome == 'success'
+        run: |
+          set -x
+          # Clone scaffolding repo into ./app
+          git clone --branch ${{ matrix.release }} https://github.com/az-digital/az-quickstart-scaffolding.git ./app
+          # Update az-digital/az_quickstart dependency to reference local (patched) copy of Quickstart
+          cd app
+          composer config repositories.localqs path ${GITHUB_WORKSPACE}/az_quickstart
+          composer require --no-update az-digital/az_quickstart:\*@dev
+          composer install         
+       
+      - name: Install Quickstart with Drush
+        run: php ./app/vendor/bin/drush site:install az_quickstart --account-pass=admin --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --yes
+
+      - name: PHP Unit Tests
+        working-directory: ./app
+        run: |
+          set -x
+          php -S 127.0.0.1:8080 -t web &
+          mkdir -p web/sites/simpletest
+          chmod 777  web/sites/simpletest
+          export SIMPLETEST_BASE_URL="http://127.0.0.1:8080"
+          export SIMPLETEST_DB="mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db"
+          export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+          find ./web/profiles/custom/az_quickstart/ -name "*Test.php" | ./vendor/bin/fastest -vvv "./vendor/bin/phpunit {} --configuration ./web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap ./web/core/tests/bootstrap.php ./web/profiles/custom/az_quickstart;"
