@@ -1,5 +1,5 @@
 az_course.course_import_form:
-  path: '/admin/config/az-quickstart/courses'
+  path: '/admin/config/az-quickstart/settings/courses'
   defaults:
     _form: '\Drupal\az_course\Form\CourseImportForm'
     _title: 'Import UA Courses'
