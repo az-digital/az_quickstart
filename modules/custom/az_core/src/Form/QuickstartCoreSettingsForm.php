@@ -149,6 +149,20 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#field_prefix' => $this->requestContext->getCompleteBaseUrl(),
     ];
 
+    $form['marketing_page'] = [
+      '#type' => 'details',
+      '#title' => t('Marketing Campaign Pages'),
+      '#open' => TRUE,
+    ];
+
+    $form['marketing_page']['marketing_page_styles_enabled'] = [
+      '#title' => t('Enable Marketing Campaign Page styles'),
+      '#type' => 'checkbox',
+      // Link to Quickstart page on Marketing Campaign pages.
+      '#description' => t("Allows Content Administrators to display pages with a Marketing Campaign style (as landing pages)."),
+      '#default_value' => $az_core_config->get('marketing_page_styles.enabled'),
+    ];
+
     $form['error_page'] = [
       '#type' => 'details',
       '#title' => $this->t('Error pages'),
@@ -288,6 +302,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $this->config('az_core.settings')
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
+      ->set('marketing_page_styles.enabled', $form_state->getValue('marketing_page_styles_enabled'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();

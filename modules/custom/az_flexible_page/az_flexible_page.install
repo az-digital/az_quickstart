@@ -12,3 +12,21 @@ function az_flexible_page_update_9201() {
   $module_list = ['smart_title', 'views_bootstrap'];
   \Drupal::service('module_installer')->install($module_list);
 }
+
+/**
+ * Implements hook_install().
+ */
+function az_flexible_page_install() {
+  \Drupal::state()->set('az_marketing_campaign_page_nids', []);
+  \Drupal::service('config.factory')
+    ->getEditable('az_core.settings')
+    ->set('marketing_page_styles.enabled', FALSE)
+    ->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function az_flexible_page_uninstall() {
+  \Drupal::state()->delete('az_marketing_campaign_page_nids');
+}
