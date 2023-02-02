@@ -18,6 +18,7 @@ dependencies:
   - 'drupal:options'
   - 'drupal:path'
   - 'drupal:system'
+  - 'drupal:text'
   - 'drupal:user'
   - 'drupal:views'
   - 'exclude_node_title:exclude_node_title'

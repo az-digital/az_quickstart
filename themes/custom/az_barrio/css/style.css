@@ -56,6 +56,11 @@ audio:not([controls]) {
   display: none;
 }
 
+/* Temporary citation style. Will be removed. */
+.node--view-mode-full .csl-entry {
+  margin-bottom: 1.2em;
+}
+
 /**
  * Wireframes.
  */
@@ -709,4 +714,3 @@ fieldset.collapsed {
      overflow-y: initial;
   }
 }
-

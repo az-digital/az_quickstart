@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_container
     - field.field.node.az_publication.field_az_publication_date
     - field.field.node.az_publication.field_az_publication_issue
@@ -22,6 +23,7 @@ dependencies:
     - link
     - media_library
     - path
+    - text
 id: node.az_publication.default
 targetEntityType: node
 bundle: az_publication
@@ -55,6 +57,16 @@ content:
       collapsible: true
       collapsed: false
       revision: false
+    third_party_settings: {  }
+  field_az_publication_abstract:
+    type: text_textarea_with_summary
+    weight: 26
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
     third_party_settings: {  }
   field_az_publication_container:
     type: string_textfield
