@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.az_flexible_page.field_az_main_content
+    - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
@@ -47,6 +48,22 @@ third_party_settings:
         description: 'Select the categories you would like this flexible page to appear in throughout the site. You can <a href="/admin/structure/taxonomy/manage/az_page_categories/overview">add categories</a> as needed.'
         required_fields: true
         weight: 0
+    group_marketing_campaign_page:
+      children:
+        - field_az_marketing_page_style
+      label: 'Marketing Campaign Page'
+      region: content
+      parent_name: ''
+      weight: 4
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        open: false
+        description: ''
+        required_fields: false
+        weight: 0
 id: node.az_flexible_page.default
 targetEntityType: node
 bundle: az_flexible_page
@@ -76,6 +93,12 @@ content:
         add_above: '0'
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
+    third_party_settings: {  }
+  field_az_marketing_page_style:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_az_media_image:
     type: media_library_widget

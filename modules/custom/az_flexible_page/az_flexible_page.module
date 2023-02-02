@@ -88,13 +88,11 @@ function az_flexible_page_form_node_form_alter(&$form, FormStateInterface $form_
 
     $form['#attached']['library'][] = 'az_flexible_page/az_flexible_page_form';
 
-    // Remove field for Marketing Campaign Page styles if they aren't globally enabled
-    // or if the user does not have permission to use them.
+    // Remove field for Marketing Campaign Page styles if they aren't globally
+    // enabled or if the user does not have permission to use them.
     if (!(\Drupal::config('az_core.settings')->get('marketing_page_styles.enabled')) ||
       !(\Drupal::currentUser()->hasPermission('use marketing campaign page styles'))) {
       $form['field_az_marketing_page_style']['#access'] = FALSE;
     }
-
-    // $form['actions']['submit']['#submit'][] = 'az_flexible_page_process_marketing_page_setting';
   }
 }
