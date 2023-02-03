@@ -5,8 +5,8 @@ bootstrap_barrio_region_clean_branding: false
 bootstrap_barrio_region_clean_header: false
 bootstrap_barrio_region_clean_header_2: false
 bootstrap_barrio_region_clean_navigation: false
-bootstrap_barrio_region_clean_navigation_2: false
 bootstrap_barrio_region_clean_navigation_offcanvas: false
+bootstrap_barrio_region_clean_navigation_2: false
 bootstrap_barrio_region_clean_help: false
 bootstrap_barrio_region_clean_content_featured: false
 bootstrap_barrio_region_clean_sidebar_first: false
@@ -37,6 +37,7 @@ bootstrap_barrio_region_class_header: col-md
 bootstrap_barrio_region_class_header_2: col-md
 bootstrap_barrio_region_class_navigation: ''
 bootstrap_barrio_region_class_navigation_offcanvas: ''
+bootstrap_barrio_region_class_navigation_2: 'col-md'
 bootstrap_barrio_region_class_help: col-md
 bootstrap_barrio_region_class_content_featured: ''
 bootstrap_barrio_region_class_sidebar_first: ''
