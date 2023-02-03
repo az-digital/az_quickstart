@@ -5,6 +5,7 @@ bootstrap_barrio_region_clean_branding: false
 bootstrap_barrio_region_clean_header: false
 bootstrap_barrio_region_clean_header_2: false
 bootstrap_barrio_region_clean_navigation: false
+bootstrap_barrio_region_clean_navigation_2: false
 bootstrap_barrio_region_clean_navigation_offcanvas: false
 bootstrap_barrio_region_clean_help: false
 bootstrap_barrio_region_clean_content_featured: false

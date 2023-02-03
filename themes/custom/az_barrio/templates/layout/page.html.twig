@@ -40,6 +40,7 @@
  * - page.header: Items for the header region next to logo.
  * - page.header_2: Items for the secondary header region next to logo.
  * - page.navigation: Items for the navigation menu region.
+ * - page.navigation_2: Items for the navigation_2 menu region.
  * - page.content_featured: Items for the featured content region.
  * - page.sidebar_first: Items for the first sidebar.
  * - page.sidebar_second: Items for the second sidebar.
@@ -147,16 +148,21 @@
                     {% if page.navigation_offcanvas %}
                       {{ page.navigation_offcanvas }}
                     {% endif %}
-                </div>
-                {% endif %}
-                  {% if page.navigation %}
-                    {{ page.navigation }}
+                  </div>
                   {% endif %}
+                    {% if page.navigation %}
+                      {{ page.navigation }}
+                    {% endif %}
               {% if az_barrio_navbar_offcanvas %}
                 </nav>
               </div>
               {% endif %}
             </div>
+            {% if page.navigation_2 %}
+              <div class="row">
+                {{ page.navigation_2 }}
+              </div>
+            {% endif %}
             {% if page.help %}
               <div class="row">
                 {{ page.help }}
