@@ -37,6 +37,9 @@ source:
       name: field_az_main_content
       selector: az_main_content
     -
+      name: az_marketing_page_style
+      selector: az_marketing_page_style
+    -
       name: az_summary
       selector: az_summary
 process:
@@ -79,6 +82,8 @@ process:
     process:
       target_id: '0'
       target_revision_id: '1'
+
+  field_az_marketing_page_style: az_marketing_page_style
 
   'field_az_media_image/target_id':
     -

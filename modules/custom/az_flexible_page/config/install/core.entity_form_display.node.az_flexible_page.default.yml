@@ -60,7 +60,7 @@ third_party_settings:
         classes: ''
         id: ''
         open: false
-        description: 'Display this page with a Marketing Campaign Page style.'
+        description: 'Display this page with a Marketing Campaign Page style, hiding the navigation menu and other page regions. See <a href="https://quickstart.arizona.edu/pages">Adding Pages</a> for details about each style.'
         required_fields: true
         weight: 0
 id: node.az_flexible_page.default

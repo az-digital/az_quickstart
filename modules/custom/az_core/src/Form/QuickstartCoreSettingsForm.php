@@ -158,8 +158,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $form['marketing_page']['marketing_page_styles_enabled'] = [
       '#title' => t('Enable Marketing Campaign Page styles'),
       '#type' => 'checkbox',
-      // Link to Quickstart page on Marketing Campaign pages.
-      '#description' => t("Allows Content Administrators to display pages with a Marketing Campaign style (as landing pages)."),
+      '#description' => t("Allows Content Administrators to select a Marketing Campaign Page style for individual pages. These styles hide the navigation menu and other page regions to display the page as a landing page. See <a href=\"https://quickstart.arizona.edu/pages\">Adding Pages</a> for details about each style.'"),
       '#default_value' => $az_core_config->get('marketing_page_styles.enabled'),
     ];
 

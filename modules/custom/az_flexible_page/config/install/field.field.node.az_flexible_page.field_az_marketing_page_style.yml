@@ -11,7 +11,7 @@ field_name: field_az_marketing_page_style
 entity_type: node
 bundle: az_flexible_page
 label: 'Marketing Campaign Page Style'
-description: 'Select a style of Marketing Campaign page'
+description: ''
 required: false
 translatable: false
 default_value: {  }
