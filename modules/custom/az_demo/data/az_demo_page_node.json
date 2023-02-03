@@ -159,6 +159,17 @@
       "az_main_content"  : "79|84|85",
       "az_media_image"    : "",
       "az_summary" : ""
+    },
+    {
+      "id":17,
+      "title" : "Marketing Campaign Page",
+      "path" : "/pages/marketing-campaign-page",
+      "exclude_title" : true,
+      "az_page_category" : "",
+      "az_main_content" : "86|87|88",
+      "az_marketing_page_style" : "1",
+      "az_media_image" : "arizona_campus_fireworks.jpg",
+      "az_summary" : "This is an example Marketing Campaign Page."
     }
   ]
 }

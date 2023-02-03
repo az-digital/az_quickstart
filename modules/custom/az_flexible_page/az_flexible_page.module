@@ -19,13 +19,12 @@ function az_flexible_page_preprocess_node__az_flexible_page(&$variables) {
  * Implements hook_preprocess_HOOK() for flexible page nodes.
  */
 function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
-  // Exit if AZ Marketing Campaign pages are not enabled on the site.
+  // Exit if Marketing Campaign Pages are not enabled globally.
   if (!(\Drupal::config('az_core.settings')->get('marketing_page_styles.enabled'))) {
     return;
   }
 
-  $node = $variables['node'];
-  $marketing_page_style = $node->get('field_az_marketing_page_style')->getString();
+  $marketing_page_style = $variables['node']->get('field_az_marketing_page_style')->getString();
 
   if (!isset($marketing_page_style) || $marketing_page_style === '' || $marketing_page_style === '0') {
     return;
@@ -63,8 +62,15 @@ function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
   // Set the navbar_offcanvas flag to FALSE since that region is disabled.
   $variables['az_barrio_navbar_offcanvas'] = FALSE;
 
-  // Disable footer_sub regions on Standard style only.
-  if ($marketing_page_style === '1') {
+  // Disable site branding region on "Remove Site Branding" style.
+  if ($marketing_page_style === '2') {
+    if ($variables['page']['branding']) {
+      unset($variables['page']['branding']);
+    }
+  }
+
+  // Disable footer_sub regions on all styles except "Display Full Footer".
+  if ($marketing_page_style !== '3') {
     if ($variables['page']['footer_sub']) {
       unset($variables['page']['footer_sub']);
     }

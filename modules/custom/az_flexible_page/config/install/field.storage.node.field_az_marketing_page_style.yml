@@ -15,7 +15,10 @@ settings:
       label: Standard
     -
       value: '2'
-      label: 'Standard - Full Footer'
+      label: 'Remove Site Branding'
+    -
+      value: '3'
+      label: 'Display Full Footer'
   allowed_values_function: ''
 module: options
 locked: false
