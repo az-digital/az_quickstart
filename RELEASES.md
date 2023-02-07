@@ -15,6 +15,8 @@ Patch releases will be applied to the current development branch first and then 
   - Security improvements
   - Critical institutional link changes
   - Critical brand changes
+  - Add Experimental modules
+  - Update Experimental modules
 - Third-party code / dependencies
   - Drupal core
     - Security updates
@@ -30,6 +32,8 @@ Patch releases will be applied to the current development branch first and then 
 The following types of changes are allowed for minor releases in addition to those allowed for patch releases.
 - Functionality and frontend
   - New features
+  - Experimental modules changed to Stable
+  - Enable formally experimental modules by default or via database update.
   - Changes to behavior that existing sites might rely on
   - CSS, markup or template changes
     - Not critical brand changes (see patch release)
