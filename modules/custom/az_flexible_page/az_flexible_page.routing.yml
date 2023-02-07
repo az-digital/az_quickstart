@@ -1,0 +1,7 @@
+az_flexible_page.settings:
+  path: '/admin/config/az-quickstart/settings/az-flexible-page'
+  defaults:
+    _form: '\Drupal\az_flexible_page\Form\AzFlexiblePageSettingsForm'
+    _title: 'AZ Flexible Page Settings'
+  requirements:
+    _permission: 'administer content types'

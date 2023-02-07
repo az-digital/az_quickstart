@@ -12,13 +12,3 @@ function az_flexible_page_update_9201() {
   $module_list = ['smart_title', 'views_bootstrap'];
   \Drupal::service('module_installer')->install($module_list);
 }
-
-/**
- * Implements hook_install().
- */
-function az_flexible_page_install() {
-  \Drupal::service('config.factory')
-    ->getEditable('az_core.settings')
-    ->set('marketing_page_styles.enabled', FALSE)
-    ->save();
-}

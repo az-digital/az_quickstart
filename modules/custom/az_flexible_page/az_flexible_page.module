@@ -20,7 +20,7 @@ function az_flexible_page_preprocess_node__az_flexible_page(&$variables) {
  */
 function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
   // Exit if Marketing Campaign Page styles are not enabled globally.
-  if (!(\Drupal::config('az_core.settings')->get('marketing_page_styles.enabled'))) {
+  if (!(\Drupal::config('az_flexible_page.settings')->get('marketing_page_styles.enabled'))) {
     return;
   }
 
@@ -94,7 +94,7 @@ function az_flexible_page_form_node_form_alter(&$form, FormStateInterface $form_
 
       // Remove field for Marketing Campaign Page styles if they aren't globally
       // enabled or if the user does not have permission to use them.
-      if (!(\Drupal::config('az_core.settings')->get('marketing_page_styles.enabled')) ||
+      if (!(\Drupal::config('az_flexible_page.settings')->get('marketing_page_styles.enabled')) ||
         !(\Drupal::currentUser()->hasPermission('use marketing campaign page styles'))) {
         $form['field_az_marketing_page_style']['#access'] = FALSE;
       }
