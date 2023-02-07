@@ -5,6 +5,8 @@
  * Contains az_publication.module.
  */
 
+use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Datetime\Element\Datetime;
 use Drupal\Core\Form\FormStateInterface;
 use ADCI\FullNameParser\Parser;
 use Drupal\Core\Entity\EntityInterface;
@@ -14,6 +16,9 @@ use Drupal\node\Entity\NodeType;
 use Seboettg\CiteProc\CiteProc;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
+use Drupal\Core\Ajax\AjaxResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -112,9 +117,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         }
         // Handle publication date if available.
         if (!empty($entity->field_az_publication_date->value)) {
-          $date = new stdClass();
-          $date->{'date-parts'}[] = explode('-', $entity->field_az_publication_date->value);
-          $blob->issued = $date;
+          $blob->issued = _az_publication_publication_date_object($entity);
         }
         // Handle accessed date if available.
         if (!empty($entity->field_az_accessed_date->value)) {
@@ -180,4 +183,212 @@ function az_publication_form_auto_entitylabel_settings_form_alter(&$form, FormSt
   if (\Drupal::routeMatch()->getRawParameters()->has('az_author')) {
     $form['auto_entitylabel']['token_help']['#token_types'][] = 'az_author';
   }
+}
+
+/**
+ * Create a CSL schema date object with date-parts based on a entity.
+ *
+ * To send a a publication for CSL processing, dates need to be transformed
+ * into CSL format. This is an object with a date-parts property and the primary
+ * processing needing to be done is making sure the date-parts nested array has
+ * the number of components dictated by the date type, e.g. we do not want to
+ * send a date with three componens if there should be only a year component.
+ * Drupal dates fields are always Y-m-d, so we may need fewer components than
+ * the full date.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   A publication node that needs a date computed.
+ *
+ * @return object
+ *   A computed date object for this entity.
+ */
+function _az_publication_publication_date_object(EntityInterface $entity) {
+  // @see https://github.com/citation-style-language/schema/blob/master/schemas/input/csl-data.json
+  $date = new stdClass();
+  $date_type = (!empty($entity->field_az_publication_date_type->value)) ? $entity->field_az_publication_date_type->value : 'default';
+  // Y-m-d.
+  $slices = 3;
+  // Depending on date type, we should send fewer date components to CSL.
+  switch ($date_type) {
+    case 'year';
+      $slices = 1;
+      break;
+
+    case 'month';
+    case 'season';
+      $slices = 2;
+      break;
+
+    default;
+      $slices = 3;
+      break;
+  }
+  // Handle publishing date.
+  if (!empty($entity->field_az_publication_date->value)) {
+    $components = explode('-', $entity->field_az_publication_date->value);
+    $components = array_slice($components, 0, $slices);
+    $date->{'date-parts'}[] = $components;
+  }
+  // Handle end of date range if appropriate.
+  if (!empty($entity->field_az_publication_date->end_value)) {
+    $components = explode('-', $entity->field_az_publication_date->end_value);
+    $components = array_slice($components, 0, $slices);
+    $date->{'date-parts'}[] = $components;
+  }
+  // Handle approximate dates, e.g. (ca. 2000)
+  if (!empty($entity->field_az_publication_approximate->value)) {
+    $date->{'circa'} = 1;
+  }
+  return $date;
+}
+
+/**
+ * Ajax callback for date type field.
+ *
+ * @param array $form
+ *   The triggering form render array.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state of current form.
+ * @param \Symfony\Component\HttpFoundation\Request $request
+ *   The request object, holding current path and request uri.
+ *
+ * @return array
+ *   Date element render array.
+ */
+function _az_publication_ajax_callback(array &$form, FormStateInterface $form_state, Request $request) {
+  // Return publication date array as this is what will actually change.
+  return $form['field_az_publication_date'];
+}
+
+/**
+ * Adds multiple date format support to publication dates.
+ *
+ * Transforms the field_az_publication_date field into a text field allowing
+ * different date formats depending on which date type is selected. The
+ * bootstrap-datepicker library is attached and a javascript helper added
+ * that pads or removes components from the date as needed based on type.
+ *
+ * @param array $form
+ *   The complete form structure.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param string $form_id
+ *   The form ID of the form.
+ */
+function _az_publication_form_revisions(array &$form, FormStateInterface $form_state, $form_id) {
+
+  $id = 'az-publication-ajax';
+  $date_field = 'field_az_publication_date';
+  $type_field = 'field_az_publication_date_type';
+
+  // Check that date and date field are present.
+  if (!empty($form[$type_field]) && !empty($form[$date_field])) {
+    // Find the current date type value.
+    $date_type = $form_state->getValue([$type_field, '0', 'value']);
+    if (empty($date_type)) {
+      if (!empty($form[$type_field]['widget']['#default_value'][0])) {
+        $date_type = $form[$type_field]['widget']['#default_value'][0];
+      }
+      else {
+        $date_type = 'default';
+      }
+    }
+
+    // Add ajax callback for type field. This triggers the date field to change.
+    $form[$type_field]['widget']['#ajax'] = [
+      'callback' => '_az_publication_ajax_callback',
+      'disable-refocus' => TRUE,
+      'event' => 'change',
+      'wrapper' => $id,
+      'progress' => [
+        'type' => 'throbber',
+      ],
+    ];
+
+    // Add js library and ajax wrapper to date field.
+    $form[$type_field]['widget']['#attached']['library'][] = 'az_publication/az_publication_picker';
+    $form[$date_field]['#prefix'] = "<div id=\"$id\">";
+    $form[$date_field]['#suffix'] = "</div>";
+
+    // Gather settings based on type.
+    switch ($date_type) {
+      case 'month';
+      case 'season';
+        $format = 'Y-m';
+        $viewmode = 'months';
+        break;
+
+      case 'year';
+        $format = 'Y';
+        $viewmode = 'years';
+        break;
+
+      default;
+        $format = 'Y-m-d';
+        $viewmode = 'days';
+        break;
+    }
+
+    // Add classes and settings to the individual date input elements.
+    $components = ['value', 'end_value'];
+    foreach ($components as $component) {
+      $form[$date_field]['widget'][0][$component]['#attributes']['data-drupal-date-format'] = [$format];
+      $form[$date_field]['widget'][0][$component]['#attributes']['data-az-publication-date-mode'] = [$viewmode];
+      $form[$date_field]['widget'][0][$component]['#attributes']['type'] = 'text';
+      $form[$date_field]['widget'][0][$component]['#attributes']['class'][] = 'az-publication-date-picker';
+      $form[$date_field]['widget'][0][$component]['#value_callback'] = '_az_publication_value_callback';
+    }
+  }
+
+}
+
+/**
+ * Accounts for submitted dates not matching Drupal format.
+ *
+ * Drupal expects dates in format Y-m-d, but form elements may be submitted
+ * in formats lacking a month or day. For dates missing a month or day, a 1
+ * is added for that component before the value is sent to core. This means
+ * that a year date gains the month and day components of January 1st, etc.
+ *
+ * @param array $element
+ *   An associative array containing the properties of the element.
+ * @param mixed $input
+ *   The incoming input to populate the form element. If this is FALSE,
+ *   the element's default value should be returned.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ *
+ * @return mixed
+ *   The value to assign to the element.
+ */
+function _az_publication_value_callback(array &$element, $input, FormStateInterface $form_state) {
+  // Check if value is present.
+  if (!empty($input['date'])) {
+    $date = $input['date'];
+    $date = explode('-', $date);
+    // Drupal core expects Y-m-d. We may have less. Pad missing elements.
+    while (count($date) < 3) {
+      array_push($date, '01');
+    }
+    // Put our date back together.
+    $input['date'] = implode('-', $date);
+  }
+  // Depend on the real callback for actual value.
+  return Datetime::valueCallback($element, $input, $form_state);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_publication_form_node_az_publication_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  _az_publication_form_revisions($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_publication_form_node_az_publication_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  _az_publication_form_revisions($form, $form_state, $form_id);
 }

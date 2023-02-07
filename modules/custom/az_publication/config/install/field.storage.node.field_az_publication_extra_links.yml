@@ -2,16 +2,14 @@ langcode: en
 status: true
 dependencies:
   module:
-    - datetime_range
+    - link
     - node
-id: node.field_az_publication_date
-field_name: field_az_publication_date
+id: node.field_az_publication_extra_links
+field_name: field_az_publication_extra_links
 entity_type: node
-type: daterange
-settings:
-  datetime_type: date
-  optional_end_date: true
-module: datetime_range
+type: link
+settings: {  }
+module: link
 locked: false
 cardinality: 1
 translatable: true

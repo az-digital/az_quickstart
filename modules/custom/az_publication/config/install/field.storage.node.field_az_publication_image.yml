@@ -2,16 +2,15 @@ langcode: en
 status: true
 dependencies:
   module:
-    - datetime_range
+    - media
     - node
-id: node.field_az_publication_date
-field_name: field_az_publication_date
+id: node.field_az_publication_image
+field_name: field_az_publication_image
 entity_type: node
-type: daterange
+type: entity_reference
 settings:
-  datetime_type: date
-  optional_end_date: true
-module: datetime_range
+  target_type: media
+module: core
 locked: false
 cardinality: 1
 translatable: true

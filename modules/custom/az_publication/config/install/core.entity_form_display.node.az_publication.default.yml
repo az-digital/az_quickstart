@@ -5,8 +5,12 @@ dependencies:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
     - field.field.node.az_publication.field_az_publication_abstract
+    - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_container
     - field.field.node.az_publication.field_az_publication_date
+    - field.field.node.az_publication.field_az_publication_date_type
+    - field.field.node.az_publication.field_az_publication_extra_links
+    - field.field.node.az_publication.field_az_publication_image
     - field.field.node.az_publication.field_az_publication_issue
     - field.field.node.az_publication.field_az_publication_link
     - field.field.node.az_publication.field_az_publication_location
@@ -19,6 +23,7 @@ dependencies:
     - node.type.az_publication
   module:
     - datetime
+    - datetime_range
     - inline_entity_form
     - link
     - media_library
@@ -37,7 +42,7 @@ content:
     third_party_settings: {  }
   field_az_accessed_date:
     type: datetime_default
-    weight: 18
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -60,13 +65,20 @@ content:
     third_party_settings: {  }
   field_az_publication_abstract:
     type: text_textarea_with_summary
-    weight: 26
+    weight: 25
     region: content
     settings:
       rows: 9
       summary_rows: 3
       placeholder: ''
       show_summary: false
+    third_party_settings: {  }
+  field_az_publication_approximate:
+    type: boolean_checkbox
+    weight: 19
+    region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   field_az_publication_container:
     type: string_textfield
@@ -77,10 +89,31 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_az_publication_date:
-    type: datetime_default
+    type: daterange_default
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_publication_date_type:
+    type: options_select
     weight: 17
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_az_publication_extra_links:
+    type: link_default
+    weight: 22
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_publication_image:
+    type: media_library_widget
+    weight: 24
+    region: content
+    settings:
+      media_types: {  }
     third_party_settings: {  }
   field_az_publication_issue:
     type: string_textfield
@@ -92,7 +125,7 @@ content:
     third_party_settings: {  }
   field_az_publication_link:
     type: link_default
-    weight: 19
+    weight: 21
     region: content
     settings:
       placeholder_url: ''
@@ -108,7 +141,7 @@ content:
     third_party_settings: {  }
   field_az_publication_media:
     type: media_library_widget
-    weight: 20
+    weight: 23
     region: content
     settings:
       media_types: {  }

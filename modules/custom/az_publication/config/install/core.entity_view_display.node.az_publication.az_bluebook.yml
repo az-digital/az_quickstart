@@ -6,8 +6,12 @@ dependencies:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
     - field.field.node.az_publication.field_az_publication_abstract
+    - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_container
     - field.field.node.az_publication.field_az_publication_date
+    - field.field.node.az_publication.field_az_publication_date_type
+    - field.field.node.az_publication.field_az_publication_extra_links
+    - field.field.node.az_publication.field_az_publication_image
     - field.field.node.az_publication.field_az_publication_issue
     - field.field.node.az_publication.field_az_publication_link
     - field.field.node.az_publication.field_az_publication_location
@@ -34,8 +38,12 @@ hidden:
   field_az_accessed_date: true
   field_az_authors: true
   field_az_publication_abstract: true
+  field_az_publication_approximate: true
   field_az_publication_container: true
   field_az_publication_date: true
+  field_az_publication_date_type: true
+  field_az_publication_extra_links: true
+  field_az_publication_image: true
   field_az_publication_issue: true
   field_az_publication_link: true
   field_az_publication_location: true

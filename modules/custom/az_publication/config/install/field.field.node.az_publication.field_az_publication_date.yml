@@ -5,7 +5,7 @@ dependencies:
     - field.storage.node.field_az_publication_date
     - node.type.az_publication
   module:
-    - datetime
+    - datetime_range
 id: node.az_publication.field_az_publication_date
 field_name: field_az_publication_date
 entity_type: node
@@ -17,4 +17,4 @@ translatable: false
 default_value: {  }
 default_value_callback: ''
 settings: {  }
-field_type: datetime
+field_type: daterange
