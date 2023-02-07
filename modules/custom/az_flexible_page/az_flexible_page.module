@@ -16,7 +16,7 @@ function az_flexible_page_preprocess_node__az_flexible_page(&$variables) {
 }
 
 /**
- * Implements hook_preprocess_HOOK() for flexible page nodes.
+ * Implements hook_preprocess_HOOK() for flexible page node page templates.
  */
 function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
   // Exit if Marketing Campaign Page styles are not enabled globally.
