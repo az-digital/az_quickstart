@@ -32,3 +32,22 @@
 		which makes the contextual link unusable. */
 	display: none;
 }
+
+.az-person-modal-image .img-fluid {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center center;
+}
+
+.az-person-modal .modal .close {
+	right: 0;
+	z-index: 30;
+	color: #ffffff;
+	text-shadow: none;
+	opacity: 1;
+}
+
+.az-person-modal .az-person-modal-close {
+	mix-blend-mode: difference;
+}

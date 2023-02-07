@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+label: 'Modal Image'
+id: az_modal_image
+description: 'Image style used within the Person modal view display.'
+aspect_ratio: '5:4'
+soft_limit_width: 568
+soft_limit_height: 630
+hard_limit_width: null
+hard_limit_height: null

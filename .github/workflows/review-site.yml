@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-
+concurrency: kitten-deploy
 jobs:
   watch-workflow:
     name: Watch workflow logs
@@ -11,12 +11,12 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
-          
+
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@1.0.0
+        uses: pantheon-systems/terminus-github-actions@release/v1
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
 
@@ -45,7 +45,7 @@ jobs:
           chmod 600 ${HOME}/.ssh/*
           
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@1.0.0
+        uses: pantheon-systems/terminus-github-actions@release/v1
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
@@ -69,7 +69,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
 
@@ -81,7 +81,7 @@ jobs:
           chmod 600 ${HOME}/.ssh/*
 
       - name: Install Terminus and authenticate Terminus
-        uses: pantheon-systems/terminus-github-actions@1.0.0
+        uses: pantheon-systems/terminus-github-actions@release/v1
         with:
           pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
