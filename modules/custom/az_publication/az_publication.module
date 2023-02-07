@@ -134,6 +134,29 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $blob->itemlink = $entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE);
         }
 
+        $additionalLinks = [];
+        foreach ($entity->field_az_publication_extra_links as $item) {
+          if (!empty($item->uri)) {
+            try {
+              $url = Url::fromUserInput($item->uri, ['absolute' => TRUE]);
+            }
+            catch (InvalidArgumentException $e) {
+              $url = Url::fromUri($item->uri, ['absolute' => TRUE]);
+            }
+            $title = $url->toString();
+            if (!empty($item->title)) {
+              $title = $item->title;
+            }
+            $link = Link::fromTextAndUrl($title, $url);
+            $buildLink = $link->toRenderable();
+            $buildLink['#attributes']['class'] = ['text-decoration-none'];
+            $additionalLinks[] = \Drupal::service('renderer')->render($buildLink);
+          }
+        }
+        $additionalLinks = implode(' ', $additionalLinks);
+        if (!empty($additionalLinks)) {
+          $blob->{'additionalLinks'} = $additionalLinks;
+        }
         // Rendering extension for creating links from titles and authors.
         $renderlink = function ($cslItem, $renderedText) {
           // Rendering extension for text with links.
@@ -146,6 +169,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             }
             $link = Link::fromTextAndUrl($renderedText, $url);
             $buildLink = $link->toRenderable();
+            $buildLink['#attributes']['class'] = ['text-decoration-none'];
             $renderedText = \Drupal::service('renderer')->render($buildLink);
             // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
             $renderedText = str_replace('"', '', $renderedText);
@@ -159,6 +183,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             // Remove citation number tag.
             // In general it's never a good idea to parse html with regex.
             // This works ONLY because the output is a known pattern.
+            if (!empty($cslItem->additionalLinks)) {
+              $renderedText .= ' ' . $cslItem->additionalLinks;
+            }
             return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);
           },
         ];
