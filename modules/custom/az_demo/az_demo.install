@@ -39,7 +39,7 @@ function az_demo_install() {
 
   // Enable Marketing Campaign Page styles.
   \Drupal::service('config.factory')
-    ->getEditable('az_core.settings')
+    ->getEditable('az_flexible_page.settings')
     ->set('marketing_page_styles.enabled', TRUE)
     ->save();
 }
