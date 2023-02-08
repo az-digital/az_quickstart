@@ -27,7 +27,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $aZAuthorStorage;
+  protected $AZAuthorStorage;
 
   /**
    * The date formatter service.
@@ -48,7 +48,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-    $instance->aZAuthorStorage = $container->get('entity_type.manager')->getStorage('az_author');
+    $instance->AZAuthorStorage = $container->get('entity_type.manager')->getStorage('az_author');
     $instance->dateFormatter = $container->get('date.formatter');
     $instance->time = $container->get('datetime.time');
     return $instance;

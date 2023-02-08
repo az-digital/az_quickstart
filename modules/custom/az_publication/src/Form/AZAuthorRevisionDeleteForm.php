@@ -34,7 +34,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $aZAuthorStorage;
+  protected $AZAuthorStorage;
 
   /**
    * The database connection.
@@ -49,7 +49,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->dateFormatter = $container->get('date.formatter');
-    $instance->aZAuthorStorage = $container->get('entity_type.manager')->getStorage('az_author');
+    $instance->AZAuthorStorage = $container->get('entity_type.manager')->getStorage('az_author');
     $instance->connection = $container->get('database');
     return $instance;
   }
