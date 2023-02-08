@@ -19,6 +19,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Ajax\AjaxResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\Component\Utility\Html;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -47,7 +48,10 @@ function az_publication_entity_extra_field_info() {
 function az_publication_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   // Only if fields suggest a publication.
-  if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_publication_type') && !empty($entity->field_az_publication_type->value)) {
+  if ($entity instanceof NodeInterface &&
+      $entity instanceof FieldableEntityInterface &&
+      $entity->hasField('field_az_publication_type') &&
+      !empty($entity->field_az_publication_type->value)) {
     if ($display->getComponent('az_publication_bibliography')) {
       // Publicaiton fields to CSL schema mappings.
       $pmap = [
@@ -89,30 +93,32 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $blob->{$destination} = trim($entity->{$source}->value);
           }
         }
-        foreach ($entity->field_az_authors as $item) {
-          if (!empty($item->entity)) {
-            $author = new stdClass();
-            // Only literal name.
-            if (!empty($item->entity->field_az_author_literal->value) && empty($item->entity->field_az_author_parse->value)) {
-              $author->family = trim($item->entity->field_az_author_literal->value);
-            }
-            else {
-              // Map regular string fields.
-              foreach ($amap as $asource => $adestination) {
-                if (!empty($item->entity->{$asource}->value)) {
-                  $author->{$adestination} = trim($item->entity->{$asource}->value);
+        if (!empty($entity->field_az_authors)) {
+          foreach ($entity->field_az_authors as $item) {
+            if (!empty($item->entity)) {
+              $author = new stdClass();
+              // Only literal name.
+              if (!empty($item->entity->field_az_author_literal->value) && empty($item->entity->field_az_author_parse->value)) {
+                $author->family = trim($item->entity->field_az_author_literal->value);
+              }
+              else {
+                // Map regular string fields.
+                foreach ($amap as $asource => $adestination) {
+                  if (!empty($item->entity->{$asource}->value)) {
+                    $author->{$adestination} = trim($item->entity->{$asource}->value);
+                  }
                 }
               }
+              // Special field due to being an URL.
+              if (!empty($item->entity->field_az_author_link->uri)) {
+                $author->itemlink = $item->entity->field_az_author_link->uri;
+              }
+              // Special field handling for person reference.
+              if (!empty($item->entity->field_az_author_person->entity)) {
+                $author->itemlink = $item->entity->field_az_author_person->entity->toUrl()->toString();
+              }
+              $blob->author[] = $author;
             }
-            // Special field due to being an URL.
-            if (!empty($item->entity->field_az_author_link->uri)) {
-              $author->itemlink = $item->entity->field_az_author_link->uri;
-            }
-            // Special field handling for person reference.
-            if (!empty($item->entity->field_az_author_person->entity)) {
-              $author->itemlink = $item->entity->field_az_author_person->entity->toUrl()->toString();
-            }
-            $blob->author[] = $author;
           }
         }
         // Handle publication date if available.
@@ -135,22 +141,24 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         }
 
         $additionalLinks = [];
-        foreach ($entity->field_az_publication_extra_links as $item) {
-          if (!empty($item->uri)) {
-            try {
-              $url = Url::fromUserInput($item->uri, ['absolute' => TRUE]);
+        if (!empty($entity->field_az_publication_extra_links)) {
+          foreach ($entity->field_az_publication_extra_links as $item) {
+            if (!empty($item->uri)) {
+              try {
+                $url = Url::fromUserInput($item->uri, ['absolute' => TRUE]);
+              }
+              catch (InvalidArgumentException $e) {
+                $url = Url::fromUri($item->uri, ['absolute' => TRUE]);
+              }
+              $title = $url->toString();
+              if (!empty($item->title)) {
+                $title = $item->title;
+              }
+              $link = Link::fromTextAndUrl($title, $url);
+              $buildLink = $link->toRenderable();
+              $buildLink['#attributes']['class'] = ['text-decoration-none'];
+              $additionalLinks[] = \Drupal::service('renderer')->render($buildLink);
             }
-            catch (InvalidArgumentException $e) {
-              $url = Url::fromUri($item->uri, ['absolute' => TRUE]);
-            }
-            $title = $url->toString();
-            if (!empty($item->title)) {
-              $title = $item->title;
-            }
-            $link = Link::fromTextAndUrl($title, $url);
-            $buildLink = $link->toRenderable();
-            $buildLink['#attributes']['class'] = ['text-decoration-none'];
-            $additionalLinks[] = \Drupal::service('renderer')->render($buildLink);
           }
         }
         $additionalLinks = implode(' ', $additionalLinks);
