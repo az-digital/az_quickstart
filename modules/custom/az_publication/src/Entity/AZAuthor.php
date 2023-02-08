@@ -113,6 +113,7 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
     parent::preSave($storage);
 
     foreach (array_keys($this->getTranslationLanguages()) as $langcode) {
+      /** @var \Drupal\az_publication\Entity\AZAuthorInterface $translation */
       $translation = $this->getTranslation($langcode);
 
       // If no owner has been set explicitly, make the anonymous user the owner.
@@ -196,15 +197,17 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
 
     // Add the published field.
     $fields += static::publishedBaseFieldDefinitions($entity_type);
-    $fields['status']
-      ->setDisplayOptions('form', [
-        'type' => 'boolean_checkbox',
-        'settings' => [
-          'display_label' => TRUE,
-        ],
-        'weight' => 120,
-      ])
-      ->setDisplayConfigurable('form', TRUE);
+    if (!empty($fields['status']) && $fields['status'] instanceof BaseFieldDefinition) {
+      $fields['status']
+        ->setDisplayOptions('form', [
+          'type' => 'boolean_checkbox',
+          'settings' => [
+            'display_label' => TRUE,
+          ],
+          'weight' => 120,
+        ])
+        ->setDisplayConfigurable('form', TRUE);
+    }
 
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(t('Authored by'))
