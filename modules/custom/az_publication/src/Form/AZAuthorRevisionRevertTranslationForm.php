@@ -75,7 +75,7 @@ class AZAuthorRevisionRevertTranslationForm extends AZAuthorRevisionRevertForm {
   protected function prepareRevertedRevision(AZAuthorInterface $revision, FormStateInterface $form_state) {
     $revert_untranslated_fields = $form_state->getValue('revert_untranslated_fields');
 
-    /** @var \Drupal\az_publication\Entity\AZAuthorInterface $default_revision */
+    /** @var \Drupal\az_publication\Entity\AZAuthorInterface $latest_revision */
     $latest_revision = $this->authorStorage->load($revision->id());
     $latest_revision_translation = $latest_revision->getTranslation($this->langcode);
 
