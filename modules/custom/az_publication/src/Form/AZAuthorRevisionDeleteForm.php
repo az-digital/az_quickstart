@@ -34,7 +34,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $AZAuthorStorage;
+  protected $authorStorage;
 
   /**
    * The database connection.
@@ -49,7 +49,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->dateFormatter = $container->get('date.formatter');
-    $instance->AZAuthorStorage = $container->get('entity_type.manager')->getStorage('az_author');
+    $instance->authorStorage = $container->get('entity_type.manager')->getStorage('az_author');
     $instance->connection = $container->get('database');
     return $instance;
   }
@@ -88,7 +88,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $az_author_revision = NULL) {
-    $this->revision = $this->AZAuthorStorage->loadRevision($az_author_revision);
+    $this->revision = $this->authorStorage->loadRevision($az_author_revision);
     $form = parent::buildForm($form, $form_state);
 
     return $form;
@@ -98,7 +98,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->AZAuthorStorage->deleteRevision($this->revision->getRevisionId());
+    $this->authorStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Author: deleted %title revision %revision.', [
       '%title' => $this->revision->label(),
