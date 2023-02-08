@@ -61,6 +61,7 @@ class AZAuthorForm extends ContentEntityForm {
         ]));
     }
     $form_state->setRedirect('entity.az_author.canonical', ['az_author' => $entity->id()]);
+    return $status;
   }
 
 }
