@@ -59,6 +59,7 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
    *   The generated route, if available.
    */
   protected function getHistoryRoute(EntityTypeInterface $entity_type) {
+    $route = NULL;
     if ($entity_type->hasLinkTemplate('version-history')) {
       $route = new Route($entity_type->getLinkTemplate('version-history'));
       $route
@@ -68,9 +69,8 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
         ])
         ->setRequirement('_permission', 'view all author revisions')
         ->setOption('_admin_route', TRUE);
-
-      return $route;
     }
+    return $route;
   }
 
   /**
@@ -83,6 +83,7 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
    *   The generated route, if available.
    */
   protected function getRevisionRoute(EntityTypeInterface $entity_type) {
+    $route = NULL;
     if ($entity_type->hasLinkTemplate('revision')) {
       $route = new Route($entity_type->getLinkTemplate('revision'));
       $route
@@ -92,9 +93,8 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
         ])
         ->setRequirement('_permission', 'view all author revisions')
         ->setOption('_admin_route', TRUE);
-
-      return $route;
     }
+    return $route;
   }
 
   /**
@@ -107,6 +107,7 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
    *   The generated route, if available.
    */
   protected function getRevisionRevertRoute(EntityTypeInterface $entity_type) {
+    $route = NULL;
     if ($entity_type->hasLinkTemplate('revision_revert')) {
       $route = new Route($entity_type->getLinkTemplate('revision_revert'));
       $route
@@ -116,9 +117,8 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
         ])
         ->setRequirement('_permission', 'revert all author revisions')
         ->setOption('_admin_route', TRUE);
-
-      return $route;
     }
+    return $route;
   }
 
   /**
@@ -131,6 +131,7 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
    *   The generated route, if available.
    */
   protected function getRevisionDeleteRoute(EntityTypeInterface $entity_type) {
+    $route = NULL;
     if ($entity_type->hasLinkTemplate('revision_delete')) {
       $route = new Route($entity_type->getLinkTemplate('revision_delete'));
       $route
@@ -140,9 +141,8 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
         ])
         ->setRequirement('_permission', 'delete all author revisions')
         ->setOption('_admin_route', TRUE);
-
-      return $route;
     }
+    return $route;
   }
 
   /**
@@ -155,6 +155,7 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
    *   The generated route, if available.
    */
   protected function getRevisionTranslationRevertRoute(EntityTypeInterface $entity_type) {
+    $route = NULL;
     if ($entity_type->hasLinkTemplate('translation_revert')) {
       $route = new Route($entity_type->getLinkTemplate('translation_revert'));
       $route
@@ -164,9 +165,8 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
         ])
         ->setRequirement('_permission', 'revert all author revisions')
         ->setOption('_admin_route', TRUE);
-
-      return $route;
     }
+    return $route;
   }
 
   /**
@@ -179,6 +179,7 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
    *   The generated route, if available.
    */
   protected function getSettingsFormRoute(EntityTypeInterface $entity_type) {
+    $route = NULL;
     if (!$entity_type->getBundleEntityType()) {
       $route = new Route("/admin/structure/{$entity_type->id()}/settings");
       $route
@@ -188,9 +189,8 @@ class AZAuthorHtmlRouteProvider extends AdminHtmlRouteProvider {
         ])
         ->setRequirement('_permission', $entity_type->getAdminPermission())
         ->setOption('_admin_route', TRUE);
-
-      return $route;
     }
+    return $route;
   }
 
 }
