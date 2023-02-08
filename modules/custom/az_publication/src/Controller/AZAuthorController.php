@@ -68,6 +68,7 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
    *   The page title.
    */
   public function revisionPageTitle($az_author_revision) {
+    /** @var \Drupal\az_publication\Entity\AZAuthorInterface $az_author */
     $az_author = $this->entityTypeManager()->getStorage('az_author')
       ->loadRevision($az_author_revision);
     return $this->t('Revision of %title from %date', [
@@ -87,6 +88,7 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
    */
   public function revisionOverview(AZAuthorInterface $az_author) {
     $account = $this->currentUser();
+    /** @var \Drupal\az_publication\AZAuthorStorageInterface $az_author_storage */
     $az_author_storage = $this->entityTypeManager()->getStorage('az_author');
 
     $langcode = $az_author->language()->getId();
