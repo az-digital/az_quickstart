@@ -68,7 +68,7 @@ third_party_settings:
         speed: fast
     group_col_name_titles:
       children:
-        - smart_title
+        - group_title_link
         - field_az_titles
       label: 'Col - Name & Titles'
       parent_name: group_row
@@ -107,6 +107,21 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_title_link:
+      children:
+        - smart_title
+      label: 'Title link'
+      parent_name: group_col_name_titles
+      region: content
+      weight: 4
+      format_type: link
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
+        target_attribute: default
   smart_title:
     enabled: true
     settings:
@@ -158,12 +173,12 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 2
+    weight: 6
     region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 5
     region: content
 hidden:
   field_az_address: true
