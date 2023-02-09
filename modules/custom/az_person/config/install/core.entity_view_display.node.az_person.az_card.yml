@@ -103,13 +103,32 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_title_heading:
+      children:
+        - group_title_link
+      label: 'Title Heading'
+      parent_name: group_card_body
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'h5 mt-0'
+        show_empty_fields: false
+        id: ''
+        element: h3
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
     group_title_link:
       children:
         - smart_title
-      label: 'Title link'
-      parent_name: group_card_body
+      label: 'Title Link'
+      parent_name: group_title_heading
       region: content
-      weight: 12
+      weight: 1
       format_type: link
       format_settings:
         classes: ''
@@ -122,9 +141,8 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: false
-      smart_title__tag: h3
-      smart_title__classes:
-        - h5
+      smart_title__tag: ''
+      smart_title__classes: {}
         - mt-0
 id: node.az_person.az_card
 targetEntityType: node
