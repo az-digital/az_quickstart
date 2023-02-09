@@ -5,10 +5,8 @@
  * Contains az_publication.module.
  */
 
-use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Datetime\Element\Datetime;
 use Drupal\Core\Form\FormStateInterface;
-use ADCI\FullNameParser\Parser;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
@@ -16,9 +14,7 @@ use Drupal\node\Entity\NodeType;
 use Seboettg\CiteProc\CiteProc;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
-use Drupal\Core\Ajax\AjaxResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Drupal\Component\Utility\Html;
 use Drupal\node\NodeInterface;
 
 /**
