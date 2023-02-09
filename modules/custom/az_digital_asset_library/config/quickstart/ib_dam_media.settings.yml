@@ -1,7 +1,3 @@
-dependencies:
-  enforced:
-    module:
-      - az_digital_asset_library
 media_types:
   image:
     source_type: image
@@ -15,3 +11,7 @@ media_types:
   file:
     source_type: file
     media_type: az_document
+dependencies:
+  enforced:
+    module:
+      - az_digital_asset_library
