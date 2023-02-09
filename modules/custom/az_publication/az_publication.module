@@ -87,6 +87,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         'field_az_publication_location' => 'publisher-place',
         'field_az_publication_page' => 'page',
         'field_az_publication_publisher' => 'publisher',
+        'field_az_publication_doi' => 'DOI',
+        'field_az_publication_pmid' => 'PMID',
       ];
       // Author fields to CSL schema mappings.
       $amap = [

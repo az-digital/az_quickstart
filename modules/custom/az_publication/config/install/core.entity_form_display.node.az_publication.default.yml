@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_container
     - field.field.node.az_publication.field_az_publication_date
     - field.field.node.az_publication.field_az_publication_date_type
+    - field.field.node.az_publication.field_az_publication_doi
     - field.field.node.az_publication.field_az_publication_extra_links
     - field.field.node.az_publication.field_az_publication_image
     - field.field.node.az_publication.field_az_publication_issue
@@ -16,6 +17,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_location
     - field.field.node.az_publication.field_az_publication_media
     - field.field.node.az_publication.field_az_publication_page
+    - field.field.node.az_publication.field_az_publication_pmid
     - field.field.node.az_publication.field_az_publication_publisher
     - field.field.node.az_publication.field_az_publication_type
     - field.field.node.az_publication.field_az_publication_version
@@ -65,7 +67,7 @@ content:
     third_party_settings: {  }
   field_az_publication_abstract:
     type: text_textarea_with_summary
-    weight: 25
+    weight: 27
     region: content
     settings:
       rows: 9
@@ -100,6 +102,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_az_publication_doi:
+    type: string_textfield
+    weight: 23
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_az_publication_extra_links:
     type: link_default
     weight: 22
@@ -110,7 +120,7 @@ content:
     third_party_settings: {  }
   field_az_publication_image:
     type: media_library_widget
-    weight: 24
+    weight: 26
     region: content
     settings:
       media_types: {  }
@@ -141,7 +151,7 @@ content:
     third_party_settings: {  }
   field_az_publication_media:
     type: media_library_widget
-    weight: 23
+    weight: 25
     region: content
     settings:
       media_types: {  }
@@ -149,6 +159,14 @@ content:
   field_az_publication_page:
     type: string_textfield
     weight: 16
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_pmid:
+    type: string_textfield
+    weight: 24
     region: content
     settings:
       size: 60
