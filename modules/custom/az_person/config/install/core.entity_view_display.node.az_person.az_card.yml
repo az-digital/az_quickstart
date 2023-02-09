@@ -142,8 +142,7 @@ third_party_settings:
     settings:
       smart_title__link: false
       smart_title__tag: ''
-      smart_title__classes: {}
-        - mt-0
+      smart_title__classes: {  }
 id: node.az_person.az_card
 targetEntityType: node
 bundle: az_person
