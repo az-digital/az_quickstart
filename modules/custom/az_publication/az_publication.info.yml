@@ -6,6 +6,7 @@ package: The University of Arizona
 dependencies:
   - 'auto_entitylabel:auto_entitylabel'
   - 'az_core:az_core'
+  - 'better_exposed_filters:better_exposed_filters'
   - 'block_class:block_class'
   - 'drupal:block'
   - 'drupal:datetime'

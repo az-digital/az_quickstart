@@ -43,6 +43,31 @@ function az_publication_entity_extra_field_info() {
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add block--views-block--viewname suggestion. This suggestion is missing.
+ *
+ * @inheritdoc
+ */
+function az_publication_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  if (!empty($variables['elements']['content']['#view_id'])) {
+    $suggestions[] = 'block__views_block__' . $variables['elements']['content']['#view_id'];
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_publication_theme() {
+  return [
+    'block__views_block__az_publications_person' => [
+      'template' => 'block--views-block--az-publications-person',
+      'base hook' => 'block',
+    ],
+  ];
+}
+
+/**
  * Implements hook_ENTITY_TYPE_view().
  */
 function az_publication_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
