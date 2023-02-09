@@ -104,14 +104,10 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob->id = $entity->id();
       $blob->type = $entity->field_az_publication_type->value;
       // Search for style based on view mode.
-      $style = $view_mode;
-      // Temporarily set default style.
-      if ($style === 'full') {
-        $style = 'az_mla';
-      }
+      $style = "az_publication.az_citation_style." . $view_mode;
       // Load style if available.
-      $style_path = \Drupal::service('extension.list.module')->getPath('az_publication') . DIRECTORY_SEPARATOR . 'citation-style-language' . DIRECTORY_SEPARATOR . 'styles' . DIRECTORY_SEPARATOR . "{$style}.csl";
-      $style_info = @file_get_contents($style_path);
+      $config = \Drupal::config($style);
+      $style_info = $config->get('style');
 
       if (!empty($style_info)) {
         // Map authorship information.
