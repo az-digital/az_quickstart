@@ -5,6 +5,8 @@ namespace Drupal\az_core\Plugin\ConfigProvider;
 use Drupal\config_provider\Plugin\ConfigProviderBase;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
+use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 
 /**
  * Class for providing configuration from a quickstart default directory.
@@ -17,6 +19,8 @@ use Drupal\Core\Config\StorageInterface;
  * )
  */
 class QuickstartConfigProvider extends ConfigProviderBase {
+
+  use ConfigSnapshotStorageTrait;
 
   /**
    * The configuration provider ID.
@@ -204,6 +208,44 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   }
 
   /**
+   * Checks if an active config item matches the distribution snapshot.
+   *
+   * @param string $name
+   *   The string name of a configuration item.
+   *
+   * @return bool
+   *   FALSE if the item is customized, or TRUE if it is synced.
+   */
+  protected function canOverride($name) {
+    /** @var \Drupal\config_update\ConfigListByProviderInterface $lister */
+    $lister = \Drupal::service('config_update.config_list');
+    /** @var \Drupal\config_update\ConfigDiffer $differ */
+    $differ = \Drupal::service('config_update.config_diff');
+
+    // Read active config value for name.
+    $active = $this->getActiveStorages()->read($name);
+    // Find out which module owns the configuration and load the snapshot value.
+    $owner = $lister->getConfigProvider($name);
+    if (!empty($owner[1])) {
+      $snapshot_storage = $this->getConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $owner[0], $owner[1]);
+      $snap = $snapshot_storage->read($name);
+    }
+    // Guard against missing items.
+    $snap = (!empty($snap)) ? $snap : [];
+    $active = (!empty($active)) ? $active : [];
+    // Not relevant for user roles. Permissions created dynamically.
+    if (strpos($name, 'user.role.') !== 0) {
+      // Diff active config and snapshot of module to check for customization.
+      $diff = $differ->diff($active, $snap);
+      // Overrides only allowed if no changes in diff.
+      if (!$diff->isEmpty() && !empty($active)) {
+        return FALSE;
+      }
+    }
+    return TRUE;
+  }
+
+  /**
    * Returns a list of immediate overrides available at module install time.
    *
    * @param \Drupal\Core\Extension\Extension[] $extensions
@@ -218,7 +260,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     // Find the direct overrides for use at module install time.
     $storage = $this->getExtensionInstallStorage(static::ID);
-    $config_names = $this->listConfig($storage, $extensions);
+    $config_names = (!empty($extensions)) ? $this->listConfig($storage, $extensions) : [];
     $data = $storage->readMultiple($config_names);
 
     // Get active configuration to check dependencies with.
@@ -229,13 +271,13 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     // Get the install configuration present for the specified modules.
     // We need to check if an already-enabled module contained passive override.
     $install_storage = $this->getExtensionInstallStorage(InstallStorage::CONFIG_INSTALL_DIRECTORY);
-    $install_config_names = $this->listConfig($install_storage, $extensions);
+    $install_config_names = (!empty($extensions)) ? $this->listConfig($install_storage, $extensions) : [];
 
     // Now compare to quickstart config of already-loaded modules;
     // We are checking to see if an already loaded module contained a change
     // that couldn't be loaded previously for dependency reasons.
     $override_storage = $this->getExtensionInstallStorage(static::ID);
-    $override_config_names = $this->listConfig($override_storage, $old_extensions);
+    $override_config_names = (!empty($old_extensions)) ? $this->listConfig($override_storage, $old_extensions) : [];
     $intersect = array_intersect($override_config_names, $install_config_names);
     $overrides = $storage->readMultiple($intersect);
 
@@ -248,6 +290,16 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       $value = $this->addDefaultConfigHash($value);
       if (!$this->validateDependencies($name, $data, $enabled_extensions, $all_config)) {
         // Couldn't validate dependency.
+        \Drupal::logger('az_core')->notice("Could not validate dependencies of override @name.", [
+          '@name' => $name,
+        ]);
+        unset($data[$name]);
+      }
+      elseif (!$this->canOverride($name)) {
+        // Configuration is customized.
+        \Drupal::logger('az_core')->notice("Disallowing override of customized configuration @name.", [
+          '@name' => $name,
+        ]);
         unset($data[$name]);
       }
     }
