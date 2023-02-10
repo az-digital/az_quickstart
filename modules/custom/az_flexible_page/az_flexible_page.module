@@ -24,7 +24,7 @@ function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
     return;
   }
 
-  $marketing_page_style = $variables['node']->get('field_az_marketing_page_style')->getString();
+  $marketing_page_style = $variables['node']->field_az_marketing_page_style->value;
 
   if (!isset($marketing_page_style) || $marketing_page_style === '') {
     return;
@@ -63,7 +63,7 @@ function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
   $variables['az_barrio_navbar_offcanvas'] = FALSE;
 
   // Disable site branding region on "Standard - No Site Branding" style.
-  if ($marketing_page_style === '2') {
+  if ($marketing_page_style === 'az_marketing_page_standard_no_branding') {
     if ($variables['page']['branding']) {
       unset($variables['page']['branding']);
     }
@@ -71,7 +71,7 @@ function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
 
   // Disable footer_sub regions on all styles except
   // "Standard - Show Full Footer".
-  if ($marketing_page_style !== '3') {
+  if ($marketing_page_style !== 'az_marketing_page_standard_footer') {
     if ($variables['page']['footer_sub']) {
       unset($variables['page']['footer_sub']);
     }

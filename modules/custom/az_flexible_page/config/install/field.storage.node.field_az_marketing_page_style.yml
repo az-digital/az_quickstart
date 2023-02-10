@@ -11,13 +11,13 @@ type: list_string
 settings:
   allowed_values:
     -
-      value: '1'
+      value: 'az_marketing_page_standard'
       label: Standard
     -
-      value: '2'
+      value: 'az_marketing_page_standard_no_branding'
       label: 'Standard - No Site Branding'
     -
-      value: '3'
+      value: 'az_marketing_page_standard_footer'
       label: 'Standard - Show Full Footer'
   allowed_values_function: ''
 module: options
