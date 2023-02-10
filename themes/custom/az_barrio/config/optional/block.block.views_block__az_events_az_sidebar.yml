@@ -4,13 +4,11 @@ dependencies:
   config:
     - views.view.az_events
   module:
+    - block_class
     - system
     - views
   theme:
     - az_barrio
-third_party_settings:
-  block_class:
-    classes: null
 id: views_block__az_events_az_sidebar
 theme: az_barrio
 region: sidebar_second

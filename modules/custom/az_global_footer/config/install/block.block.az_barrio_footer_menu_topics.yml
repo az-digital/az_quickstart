@@ -23,8 +23,8 @@ plugin: 'menu_block:az-footer-topics'
 settings:
   id: 'menu_block:az-footer-topics'
   label: Topics
-  provider: menu_block
   label_display: visible
+  provider: menu_block
   follow: false
   follow_parent: child
   level: 1

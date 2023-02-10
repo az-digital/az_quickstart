@@ -2,12 +2,10 @@ langcode: en
 status: true
 dependencies:
   module:
+    - block_class
     - system
   theme:
     - claro
-third_party_settings:
-  block_class:
-    classes: null
 id: claro_content
 theme: claro
 region: content

@@ -2,12 +2,10 @@ langcode: en
 status: true
 dependencies:
   module:
+    - block_class
     - system
   theme:
     - az_barrio
-third_party_settings:
-  block_class:
-    classes: null
 id: az_barrio_content
 theme: az_barrio
 region: content
