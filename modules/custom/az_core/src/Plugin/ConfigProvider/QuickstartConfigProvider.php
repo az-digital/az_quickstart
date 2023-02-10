@@ -116,15 +116,18 @@ class QuickstartConfigProvider extends ConfigProviderBase {
           $profile_perms = array_diff($profile_perms, $current_perms);
           sort($profile_perms);
 
-          // Message about permissions.
-          foreach ($profile_perms as $perm) {
-            // @todo Use injection on user.permissions.
-            // @phpstan-ignore-next-line
-            \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
-            [
-              '%perm' => $perm,
-              '%label' => $label,
-            ]));
+          // Only generate messages after profile install time.
+          if (empty($extensions['az_quickstart'])) {
+            // Message about permissions.
+            foreach ($profile_perms as $perm) {
+              // @todo Use injection on user.permissions.
+              // @phpstan-ignore-next-line
+              \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
+              [
+                '%perm' => $perm,
+                '%label' => $label,
+              ]));
+            }
           }
           if (!empty($profile_perms)) {
             $role_config[$key]['permissions'] = array_unique(array_merge($current_perms, $profile_perms));
