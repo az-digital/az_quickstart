@@ -125,7 +125,7 @@ third_party_settings:
   smart_title:
     enabled: true
     settings:
-      smart_title__link: true
+      smart_title__link: false
       smart_title__tag: h3
       smart_title__classes:
         - h5
