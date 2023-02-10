@@ -1,0 +1,5 @@
+az_event_trellis.az_event_trellis_settings_task:
+  route_name: az_event_trellis.settings
+  title: 'AZ Trellis Event Importer'
+  base_route: az_core.az_settings
+  weight: 0

@@ -1,0 +1,4 @@
+services:
+  az_event_trellis.trellis_helper:
+    class: Drupal\az_event_trellis\TrellisHelper
+    arguments: ['@config.factory']

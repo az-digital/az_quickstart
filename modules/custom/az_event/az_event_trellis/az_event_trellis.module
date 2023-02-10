@@ -1,0 +1,96 @@
+<?php
+
+/**
+ * @file
+ * Contains az_event_trellis.module.
+ */
+
+use Drupal\az_event_trellis\TrellisHelper;
+use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter() for node_az_event_edit_form.
+ *
+ * Adds warning message and disables event detail form elements on events
+ * imported from Trellis Events.
+ */
+function az_event_trellis_form_node_az_event_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $form_object = $form_state->getFormObject();
+  if ($form_object instanceof EntityFormInterface) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_object->getEntity();
+
+    // $database = \Drupal::database();
+    // $query = $database->select('migrate_map_trellis_events', 'map');
+    // $query->condition('map.destid1', $node->id());
+    // $query->addField('map', 'sourceid1');
+    // $result = $query->execute();
+    // $trellis_id = $result->fetchField();
+    // if ($trellis_id !== FALSE) {
+
+    $trellis_id = $node->get('field_az_trellis_id')->getString();
+    if (!empty($trellis_id)) {
+      $trellis_link_url = TrellisHelper::$eventViewBasePath . $trellis_id . '/view';
+      $trellis_warning = t('This event has been imported from Trellis Events. Event details can only be edited by a Trellis user <a href="@trellis-url">in Trellis Events</a>.', [
+        '@trellis-url' => $trellis_link_url,
+      ]);
+      \Drupal::messenger()->addWarning($trellis_warning);
+
+      $disabled_fields = [
+        'title',
+        'field_az_location',
+        'field_az_event_date',
+        'field_az_link',
+        'field_az_summary',
+        'field_az_photos',
+      ];
+      foreach ($disabled_fields as $field) {
+        $form[$field]['#disabled'] = TRUE;
+      }
+
+      $no_access_fields = [
+        'field_az_subheading',
+        'field_az_body',
+        'field_az_contacts',
+        'field_az_attachments',
+      ];
+      foreach ($no_access_fields as $field) {
+        $form[$field]['#access'] = FALSE;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function az_event_migration_plugins_alter(array &$migrations) {
+
+  if (!empty($migrations['az_trellis_events'])) {
+    // $database = \Drupal::database();
+    // $imported_event_ids = $database->query("SELECT sourceid1 FROM {migrate_map_trellis_events}")->fetchAll();
+
+    $query = \Drupal::entityQuery('node')
+      ->condition('type', 'az_event')
+      ->exists('field_az_trellis_id');
+    $nids = $query->execute();
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $nodes = $node_storage->loadMultiple($nids);
+
+    $event_api_urls = [];
+    // foreach ($imported_event_ids as $event_id) {
+    //   $event_api_urls[] = $event_id;
+    // }
+
+    foreach ($nodes as $n) {
+      $event_api_urls[] = \Drupal::service('az_event_trellis.trellis_helper')->getEventUrl($n->field_az_trellis_id);
+    }
+
+    if (!empty($migrations['az_trellis_events']['source']) && empty($migrations['az_trellis_events']['source']['urls'])) {
+      $migrations['az_trellis_events']['source']['urls'] = $event_api_urls;
+    }
+  }
+
+}
