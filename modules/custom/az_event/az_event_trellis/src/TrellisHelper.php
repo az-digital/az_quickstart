@@ -11,11 +11,15 @@ final class TrellisHelper {
 
   /**
    * API base path.
+   *
+   * @var string
    */
   public static $apiBasePath = '/ws/rest/eventsapi/v1/';
 
   /**
    * Trellis Event view URL prefix.
+   *
+   * @var string
    */
   public static $eventViewBasePath = '/lightning/r/conference360__Event__c/';
 
@@ -37,7 +41,7 @@ final class TrellisHelper {
    * Returns API URL for given Trellis Event ID.
    *
    * @param string $trellis_id
-   *   Trellis Event ID
+   *   Trellis Event ID.
    *
    * @return mixed
    *   String event URL or boolean FALSE if not found.
@@ -50,4 +54,5 @@ final class TrellisHelper {
 
     return FALSE;
   }
+
 }
