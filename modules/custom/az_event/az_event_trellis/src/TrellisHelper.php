@@ -21,7 +21,7 @@ final class TrellisHelper {
    *
    * @var string
    */
-  public static $eventViewBasePath = '/lightning/r/conference360__Event__c/';
+  public static $eventViewBasePath = 'https://ua-trellis.lightning.force.com/lightning/r/conference360__Event__c/';
 
   /**
    * The config factory.
