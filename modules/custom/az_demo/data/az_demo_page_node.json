@@ -167,7 +167,7 @@
       "exclude_title" : true,
       "az_page_category" : "",
       "az_main_content" : "86|87|88",
-      "az_marketing_page_style" : "1",
+      "az_marketing_page_style" : "az_marketing_page_standard",
       "az_media_image" : "arizona_campus_fireworks.jpg",
       "az_summary" : "This is an example Marketing Campaign Page."
     }
