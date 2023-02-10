@@ -48,7 +48,7 @@ third_party_settings:
         speed: fast
     group_card_body:
       children:
-        - group_title_link
+        - group_title_heading
         - field_az_titles
         - group_margin_top
       label: 'Card Body'
@@ -90,7 +90,7 @@ third_party_settings:
       label: 'Margin Top'
       parent_name: group_card_body
       region: content
-      weight: 14
+      weight: 3
       format_type: html_element
       format_settings:
         classes: mt-3
@@ -186,7 +186,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 13
+    weight: 2
     region: content
   smart_title:
     settings: {  }
