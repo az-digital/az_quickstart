@@ -1,8 +1,8 @@
 langcode: en
 status: true
 dependencies: {  }
-label: 'Modal Image'
 id: az_modal_image
+label: 'Modal Image'
 description: 'Image style used within the Person modal view display.'
 aspect_ratio: '5:4'
 soft_limit_width: 568
