@@ -9,7 +9,7 @@ use Drupal\migrate\MigrateMessage;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class CourseImportForm to compute course links.
+ * Class TrellisEventImportForm.
  */
 class TrellisEventImportForm extends FormBase {
 
