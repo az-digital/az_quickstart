@@ -287,7 +287,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       $value = $this->addDefaultConfigHash($value);
       if (!$this->validateDependencies($name, $data, $enabled_extensions, $all_config)) {
         // Couldn't validate dependency.
-        \Drupal::logger('az_core')->notice("Could not validate dependences of override @name.", [
+        \Drupal::logger('az_core')->notice("Could not validate dependencies of override @name.", [
           '@name' => $name,
         ]);
         unset($data[$name]);
