@@ -43,16 +43,12 @@ final class TrellisHelper {
    * @param string $trellis_id
    *   Trellis Event ID.
    *
-   * @return mixed
-   *   String event URL or boolean FALSE if not found.
+   * @return string
+   *   Event API URL.
    */
-  protected function getEventUrl($trellis_id) {
-    if (isset($trellis_id)) {
-      $hostname = $this->configFactory->get('az_event_trellis.settings')->get('api_hostname');
-      return 'https://' . $hostname . $this->apiBasePath . $trellis_id;
-    }
-
-    return FALSE;
+  public function getEventUrl($trellis_id) {
+    $hostname = $this->configFactory->get('az_event_trellis.settings')->get('api_hostname');
+    return 'https://' . $hostname . $this->apiBasePath . $trellis_id;
   }
 
 }
