@@ -12,11 +12,11 @@ server:
 gateway:
   enabled: false
   recheck_time: 720
-  method: 'client_side'
   paths:
     id: request_path
-    pages: '<front>'
     negate: false
+    pages: '<front>'
+  method: client_side
 forced_login:
   enabled: false
   paths:
