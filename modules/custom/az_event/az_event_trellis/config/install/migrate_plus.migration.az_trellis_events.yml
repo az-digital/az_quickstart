@@ -2,7 +2,7 @@ id: az_trellis_events
 label: Trellis Events
 migration_tags:
   - Events
-
+migration_group: az_trellis_events
 source:
   plugin: url
   data_fetcher_plugin: http
