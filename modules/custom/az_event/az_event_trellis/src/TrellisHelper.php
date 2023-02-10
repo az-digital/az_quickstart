@@ -48,7 +48,7 @@ final class TrellisHelper {
    */
   public function getEventUrl($trellis_id) {
     $hostname = $this->configFactory->get('az_event_trellis.settings')->get('api_hostname');
-    return 'https://' . $hostname . $this->apiBasePath . $trellis_id;
+    return 'https://' . $hostname . self::$apiBasePath . $trellis_id;
   }
 
 }
