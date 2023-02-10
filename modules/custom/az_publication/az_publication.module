@@ -74,7 +74,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $entity->hasField('field_az_publication_type') &&
       !empty($entity->field_az_publication_type->value)) {
     if ($display->getComponent('az_publication_bibliography')) {
-      // Publicaiton fields to CSL schema mappings.
+      // Publication fields to CSL schema mappings.
       $pmap = [
         'field_az_publication_container' => 'container-title',
         'field_az_publication_issue' => 'issue',
