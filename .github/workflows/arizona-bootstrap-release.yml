@@ -6,6 +6,7 @@ on:
 jobs:
   release:
     name: Create PR
+    if: ${{ github.event.client_payload.branch == '2.x' }}
     runs-on: ubuntu-latest
 
     steps:

@@ -114,6 +114,8 @@ content:
     settings:
       image_style: az_natural
       image_link: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     type: image
     weight: 2

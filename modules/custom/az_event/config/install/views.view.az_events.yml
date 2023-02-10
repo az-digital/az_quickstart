@@ -9,6 +9,7 @@ dependencies:
   module:
     - az_event
     - node
+    - smart_date
     - taxonomy
     - user
     - views_bootstrap
