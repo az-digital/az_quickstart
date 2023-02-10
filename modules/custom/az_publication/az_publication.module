@@ -246,7 +246,7 @@ function az_publication_form_auto_entitylabel_settings_form_alter(&$form, FormSt
  * into CSL format. This is an object with a date-parts property and the primary
  * processing needing to be done is making sure the date-parts nested array has
  * the number of components dictated by the date type, e.g. we do not want to
- * send a date with three componens if there should be only a year component.
+ * send a date with three components if there should be only a year component.
  * Drupal dates fields are always Y-m-d, so we may need fewer components than
  * the full date.
  *
