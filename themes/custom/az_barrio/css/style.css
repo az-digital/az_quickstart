@@ -149,6 +149,10 @@ span.field-label {
   padding: 0 1em 0 0;
 }
 
+.trailing-colon::after {
+  content: ':';
+}
+
 /**
  * "More" links.
  */
@@ -709,4 +713,3 @@ fieldset.collapsed {
      overflow-y: initial;
   }
 }
-
