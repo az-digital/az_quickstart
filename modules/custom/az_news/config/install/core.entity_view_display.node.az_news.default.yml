@@ -267,6 +267,7 @@ content:
     weight: 5
     region: content
 hidden:
+  az_news_read_more: true
   field_az_expiration_date: true
   field_az_link: true
   field_az_news_tags: true

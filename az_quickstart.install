@@ -246,3 +246,17 @@ function az_quickstart_update_920602() {
     $config->set('az_bootstrap_cdn_version', 'latest-2.x')->save(TRUE);
   }
 }
+
+/**
+ * Uninstall deprecated Drupal core modules.
+ */
+function az_quickstart_update_920603() {
+  $deprecated_modules = [
+    'aggregator',
+    'color',
+    'hal',
+    'quickedit',
+    'rdf',
+  ];
+  \Drupal::service('module_installer')->uninstall($deprecated_modules);
+}
