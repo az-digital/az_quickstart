@@ -93,6 +93,7 @@ permissions:
   - 'use editorial transition az_publish'
   - 'use editorial transition az_unpublish'
   - 'use editorial transition create_new_draft'
+  - 'use marketing campaign page styles'
   - 'view any unpublished content'
   - 'view latest version'
   - 'view post access counter'
