@@ -18,6 +18,7 @@ permissions:
   - 'administer easy breadcrumb'
   - 'administer menu'
   - 'administer meta tags'
+  - 'administer migrations'
   - 'administer nodes'
   - 'administer quickstart configuration'
   - 'administer redirects'
