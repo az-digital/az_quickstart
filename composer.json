@@ -135,7 +135,7 @@
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2022-05-20/2945387-19-support-bundleless-entities.patch"
             },
             "drupal/better_exposed_filters": {
-                "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-11-15/3210947-13.patch"
+                "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2023-02-13/3210947-14.patch"
             },
             "drupal/bootstrap_barrio": {
                 "Fix barrio webform required field issue (3133643)": "https://gist.githubusercontent.com/tadean/09ef9559553c788c5637077462b392dd/raw/1190b7d78843af29e2eae31c4601a51e65e5b352/barrio_webform_required_field_issue.patch",
