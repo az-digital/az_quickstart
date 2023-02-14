@@ -49,7 +49,7 @@ third_party_settings:
         speed: fast
     group_col_image:
       children:
-        - field_az_media_image
+        - group_linked_image
       label: 'Col - Image'
       parent_name: group_row
       region: content
@@ -141,6 +141,21 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_linked_image:
+      children:
+        - field_az_media_image
+      label: 'Linked image'
+      parent_name: group_col_image
+      region: content
+      weight: 23
+      format_type: link
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
+        target_attribute: default
   smart_title:
     enabled: true
     settings:
@@ -166,7 +181,7 @@ content:
       view_mode: az_medium
       link: false
     third_party_settings: {  }
-    weight: 1
+    weight: 24
     region: content
   field_az_phones:
     type: telephone_link
