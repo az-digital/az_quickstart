@@ -1,0 +1,5 @@
+az_flexible_page.az_flexible_page_settings_tab:
+  route_name: az_flexible_page.settings
+  title: 'AZ Page'
+  base_route: az_core.az_settings
+  weight: 1

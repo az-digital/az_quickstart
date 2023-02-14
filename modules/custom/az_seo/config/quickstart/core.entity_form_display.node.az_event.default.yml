@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
     - field_group
@@ -135,6 +136,7 @@ content:
     region: content
     settings:
       sidebar: true
+      use_details: true
     third_party_settings: {  }
   field_az_photos:
     type: media_library_widget
@@ -211,4 +213,5 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_az_trellis_id: true

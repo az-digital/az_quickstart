@@ -210,6 +210,17 @@
       "weight": "2"
     },
     {
+      "link_id": "29",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Marketing Campaign Page",
+      "urlpath": "/pages/marketing-campaign-page",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "12"
+    },
+    {
       "link_id": "14",
       "parent_link_id": "6",
       "menu": "main",

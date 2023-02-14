@@ -164,6 +164,19 @@
             "position" : "",
             "bg_color" : "bg-transparent-white",
             "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":86,
+            "az_title" : "",
+            "az_text_area" : "<h1 class=\"mt-0\">Welcome to this Marketing Campaign Page!<\/h1>\r\n\r\n<p>This is an example of a Marketing Campaign Page.<\/p>\r\n\r\n<p class=\"mt-4 mb-0\"><a class=\"btn btn-blue\" href=\"https:\/\/quickstart.arizona.edu\/pages\">Visit Quickstart site<\/a><\/p>\r\n",
+            "filename" : "arizona_campus_fireworks.jpg",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "spacing" : "y-7",
+            "content_style" : "box",
+            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
         }
     ]
 }

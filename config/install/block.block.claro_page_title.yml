@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - block_class
   theme:
     - claro
 id: claro_page_title

@@ -56,6 +56,11 @@ audio:not([controls]) {
   display: none;
 }
 
+/* Temporary citation style. Will be removed. */
+.node--view-mode-full .csl-entry {
+  margin-bottom: 1.2em;
+}
+
 /**
  * Wireframes.
  */
@@ -147,6 +152,10 @@ audio:not([controls]) {
 span.field-label {
   padding: 0 16px 0 0;
   padding: 0 1em 0 0;
+}
+
+.trailing-colon::after {
+  content: ':';
 }
 
 /**
@@ -399,7 +408,7 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-.search-block-form .input-group-append button {
+.az-search-block form.search-block-form .input-group .input-group-append button {
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -407,8 +416,8 @@ padding: 0.625rem .75rem;
   padding: 0 8px;
 }
 
-form.search-block-form .input-group .input-group-append button:hover,
-form.search-block-form .input-group .input-group-append button:focus {
+.az-search-block form.search-block-form .input-group .input-group-append button:hover,
+.az-search-block form.search-block-form .input-group .input-group-append button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
@@ -709,4 +718,3 @@ fieldset.collapsed {
      overflow-y: initial;
   }
 }
-
