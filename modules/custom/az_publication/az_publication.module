@@ -16,6 +16,7 @@ use Drupal\Core\Url;
 use Drupal\Core\Link;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\node\NodeInterface;
+use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -105,9 +106,30 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob->type = $entity->field_az_publication_type->value;
       // Load default citation settings.
       $default_config = \Drupal::config('az_publication.settings');
-      $default_style = $default_config->get('default_citation_style');
+      $style_context = $default_config->get('default_citation_style');
+
+      // Attempt to find citation argument context.
+      if (function_exists('views_get_current_view')) {
+        $view = views_get_current_view();
+        // Phpstan doesn't know this can be NULL.
+        // @phpstan-ignore-next-line
+        if (!empty($view)) {
+          if (!empty($view->argument)) {
+            foreach ($view->argument as $arg) {
+              // Only use the argument as style if it's a style argument.
+              if ($arg instanceof AZCitationStyleArgument) {
+                $citation_style_argument = $arg->getValue();
+                // If the argument exists, set our style to it.
+                if (!empty($citation_style_argument)) {
+                  $style_context = $citation_style_argument;
+                }
+              }
+            }
+          }
+        }
+      }
       // Search for style configuration.
-      $style = "az_publication.az_citation_style." . $default_style;
+      $style = "az_publication.az_citation_style." . $style_context;
       // Load style if available.
       $config = \Drupal::config($style);
       $style_info = $config->get('style');
