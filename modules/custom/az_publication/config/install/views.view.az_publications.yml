@@ -242,7 +242,20 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'No publications were found with the specified criteria.'
+            format: az_standard
+          tokenize: false
       sorts:
         field_az_publication_date_value:
           id: field_az_publication_date_value
