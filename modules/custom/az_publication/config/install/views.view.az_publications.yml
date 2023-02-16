@@ -9,7 +9,6 @@ dependencies:
     - core.entity_view_mode.node.az_ieee
     - core.entity_view_mode.node.az_mla
     - core.entity_view_mode.node.teaser
-    - field.storage.az_author.field_az_author_lname
     - field.storage.node.field_az_publication_date
     - node.type.az_publication
   module:
@@ -18,9 +17,10 @@ dependencies:
     - datetime
     - datetime_range
     - node
+    - options
     - user
-id: az_publications_date
-label: 'AZ Publications (Date)'
+id: az_publications
+label: 'AZ Publications'
 module: views
 description: ''
 tag: ''
@@ -91,69 +91,6 @@ display:
           settings:
             link_to_entity: true
           group_column: entity_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_az_author_lname:
-          id: field_az_author_lname
-          table: az_author__field_az_author_lname
-          field: field_az_author_lname
-          relationship: field_az_authors
-          group_type: count
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -272,10 +209,30 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
             filter:
+              name:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
               field_az_publication_date_value:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_az_publication_type_value:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
       access:
@@ -301,19 +258,6 @@ display:
             field_identifier: ''
           exposed: false
           granularity: day
-        field_az_author_lname_value:
-          id: field_az_author_lname_value
-          table: az_author__field_az_author_lname
-          field: field_az_author_lname_value
-          relationship: field_az_authors
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
         title:
           id: title
           table: node_field_data
@@ -357,37 +301,40 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        delta:
-          id: delta
-          table: node__field_az_authors
-          field: delta
-          relationship: none
+        name:
+          id: name
+          table: az_author_field_data
+          field: name
+          relationship: field_az_authors
           group_type: group
           admin_label: ''
-          plugin_id: numeric
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: '0'
-          group: 2
-          exposed: false
+          entity_type: az_author
+          entity_field: name
+          plugin_id: string
+          operator: allwords
+          value: ''
+          group: 1
+          exposed: true
           expose:
-            operator_id: ''
-            label: ''
+            operator_id: name_op
+            label: Author
             description: ''
             use_operator: false
-            operator: ''
+            operator: name_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: ''
+            identifier: name
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -401,37 +348,40 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        delta_1:
-          id: delta_1
-          table: node__field_az_authors
-          field: delta
+        title:
+          id: title
+          table: node_field_data
+          field: title
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: numeric
-          operator: empty
-          value:
-            min: ''
-            max: ''
-            value: ''
-          group: 2
-          exposed: false
+          entity_type: node
+          entity_field: title
+          plugin_id: string
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
           expose:
-            operator_id: ''
-            label: ''
+            operator_id: title_op
+            label: 'Title Keywords'
             description: ''
             use_operator: false
-            operator: ''
+            operator: title_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: ''
+            identifier: title
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -463,7 +413,7 @@ display:
           exposed: true
           expose:
             operator_id: field_az_publication_date_value_op
-            label: 'Publication Year'
+            label: Year
             description: ''
             use_operator: false
             operator: field_az_publication_date_value_op
@@ -497,11 +447,56 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           granularity: year
+        field_az_publication_type_value:
+          id: field_az_publication_type_value
+          table: node__field_az_publication_type
+          field: field_az_publication_type_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: list_field
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_publication_type_value_op
+            label: 'Publication Type'
+            description: ''
+            use_operator: false
+            operator: field_az_publication_type_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_publication_type_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
       filter_groups:
         operator: AND
         groups:
           1: AND
-          2: OR
       style:
         type: default
         options:
@@ -537,7 +532,7 @@ display:
           plugin_id: standard
           required: false
       use_ajax: true
-      group_by: false
+      group_by: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -551,7 +546,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
   az_ama:
     id: az_ama
@@ -592,7 +586,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
   az_apa:
     id: az_apa
@@ -633,7 +626,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
   az_bluebook:
     id: az_bluebook
@@ -674,7 +666,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
   az_chicago:
     id: az_chicago
@@ -715,7 +706,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
   az_ieee:
     id: az_ieee
@@ -756,7 +746,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
   az_mla:
     id: az_mla
@@ -797,7 +786,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
   block_1:
     id: block_1
@@ -837,5 +825,4 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
