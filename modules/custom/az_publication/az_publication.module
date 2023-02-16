@@ -103,13 +103,20 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
       $blob->type = $entity->field_az_publication_type->value;
-      // Search for style based on view mode.
-      $style = "az_publication.az_citation_style." . $view_mode;
+      // Load default citation settings.
+      $default_config = \Drupal::config('az_publication.settings');
+      $default_style = $default_config->get('default_citation_style');
+      // Search for style configuration.
+      $style = "az_publication.az_citation_style." . $default_style;
       // Load style if available.
       $config = \Drupal::config($style);
       $style_info = $config->get('style');
 
       if (!empty($style_info)) {
+        // Add cache tag based on citation mode.
+        $cache_tag = "citation:" . $style;
+        $renderer = \Drupal::service('renderer');
+        $renderer->addCacheableDependency($build, $cache_tag);
         // Map authorship information.
         foreach ($pmap as $source => $destination) {
           if (!empty($entity->{$source}->value)) {
