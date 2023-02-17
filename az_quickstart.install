@@ -260,3 +260,10 @@ function az_quickstart_update_920603() {
   ];
   \Drupal::service('module_installer')->uninstall($deprecated_modules);
 }
+
+/**
+ * Ensure block_class module is installed.
+ */
+function az_quickstart_update_920604() {
+  \Drupal::service('module_installer')->install(['block_class']);
+}
