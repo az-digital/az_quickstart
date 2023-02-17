@@ -718,3 +718,10 @@ fieldset.collapsed {
      overflow-y: initial;
   }
 }
+
+/* Add ability to hide contextual links:
+ * See https://github.com/az-digital/az_quickstart/pull/2228
+ */
+ .hide-contextual-links .contextual button {
+  display: none;
+}

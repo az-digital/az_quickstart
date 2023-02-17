@@ -76,7 +76,7 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: az-person-image-link
+        classes: hide-contextual-links
         show_empty_fields: false
         id: ''
         target: custom_uri
