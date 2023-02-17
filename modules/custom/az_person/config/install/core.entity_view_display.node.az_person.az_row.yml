@@ -49,7 +49,7 @@ third_party_settings:
         speed: fast
     group_col_image:
       children:
-        - group_linked_image
+        - group_link
       label: 'Col - Image'
       parent_name: group_row
       region: content
