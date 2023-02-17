@@ -144,7 +144,7 @@ third_party_settings:
     group_link:
       children:
         - field_az_media_image
-      label: 'Linked image'
+      label: 'Image link'
       parent_name: group_col_image
       region: content
       weight: 23
