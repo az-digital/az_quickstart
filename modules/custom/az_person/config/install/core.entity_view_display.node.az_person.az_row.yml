@@ -110,7 +110,7 @@ third_party_settings:
     group_title_link:
       children:
         - smart_title
-      label: 'Title link'
+      label: 'Title Link'
       parent_name: group_title_heading
       region: content
       weight: 21
