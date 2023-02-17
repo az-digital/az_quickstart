@@ -141,7 +141,7 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_linked_image:
+    group_link:
       children:
         - field_az_media_image
       label: 'Linked image'
