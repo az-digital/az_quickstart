@@ -150,7 +150,7 @@ third_party_settings:
       weight: 23
       format_type: link
       format_settings:
-        classes: az-person-row-img
+        classes: 'az-person-row-img az-person-image-link'
         show_empty_fields: false
         id: ''
         target: custom_uri
