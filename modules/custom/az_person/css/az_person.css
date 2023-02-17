@@ -27,7 +27,7 @@
 	display: none;
 }
 
-.az-person-grid .node--type-az-person.node--view-mode-az-row .az-person-row-img .contextual button {
+.az-person-row .node--type-az-person.node--view-mode-az-row .az-person-row-img .contextual button {
 	/* 	Hide media contextual link because it conflicts with the link that wraps the img,
 		which makes the contextual link unusable. */
 	display: none;
