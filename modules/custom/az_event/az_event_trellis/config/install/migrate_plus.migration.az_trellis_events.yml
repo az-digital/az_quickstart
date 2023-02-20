@@ -129,13 +129,13 @@ process:
     -
       plugin: format_date
       source: start_date_time
-      from_format: 'Y-m-d\TH:i:s.vP'
+      from_format: 'Y-m-d\TH:i:s.vp'
       to_format: 'U'
   field_az_event_date/end_value:
     -
       plugin: format_date
       source: end_date_time
-      from_format: 'Y-m-d\TH:i:s.vP'
+      from_format: 'Y-m-d\TH:i:s.vp'
       to_format: 'U'
 
 destination:
