@@ -50,6 +50,29 @@ function az_publication_theme_suggestions_block_alter(array &$suggestions, array
   if (!empty($variables['elements']['content']['#view_id'])) {
     $suggestions[] = 'block__views_block__' . $variables['elements']['content']['#view_id'];
   }
+  // Check if this is a content block.
+  if (!empty($variables['elements']['content']['#block_content'])) {
+    $block = $variables['elements']['content']['#block_content'];
+    // Check if this is a Flexible Block.
+    if ($block->bundle() === 'az_flexible_block') {
+      try {
+        // Attempt to find a view reference field to add a suggestion.
+        foreach ($block->field_az_main_content->referencedEntities() as $paragraph) {
+          if ($paragraph->hasField('field_az_view_reference')) {
+            if ($reference = $paragraph->get('field_az_view_reference')) {
+              if (!empty($reference->target_id) && !empty($reference->display_id)) {
+                // Add a content block suggestion based on view references.
+                $suggestions[] = 'block__block_content__views_reference__' . $reference->target_id . '__' . $reference->display_id;
+              }
+            }
+          }
+        }
+      }
+      catch (\InvalidArgumentException $e) {
+        // We ran into a field that didn't exist. Don't alter theme suggestions.
+      }
+    }
+  }
 }
 
 /**
@@ -57,8 +80,12 @@ function az_publication_theme_suggestions_block_alter(array &$suggestions, array
  */
 function az_publication_theme() {
   return [
-    'block__views_block__az_publications_person' => [
-      'template' => 'block--views-block--az-publications-person',
+    'block__views_block__az_publications_az_author_person' => [
+      'template' => 'block--views-block--az-publications-az-author-person',
+      'base hook' => 'block',
+    ],
+    'block__block_content__views_reference__az_publications__az_author_person' => [
+      'template' => 'block--block-content--views-reference--az-publications--az-author-person',
       'base hook' => 'block',
     ],
     'views_exposed_form__az_publications' => [
