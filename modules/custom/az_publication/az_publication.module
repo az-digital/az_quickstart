@@ -60,6 +60,10 @@ function az_publication_theme() {
       'template' => 'block--views-block--az-publications-person',
       'base hook' => 'block',
     ],
+    'views_exposed_form__az_publications' => [
+      'template' => 'views-exposed-form--az-publications',
+      'base hook' => 'views_exposed_form',
+    ],
   ];
 }
 
@@ -223,6 +227,28 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           '#type' => 'markup',
           '#markup' => ($biblio),
         ];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function az_publication_preprocess_views_view(&$variables) {
+  if (!empty($variables['id'])) {
+    // Only run for publication search.
+    if ($variables['id'] === 'az_publications') {
+      // Allow the publication year field to shrink if present.
+      if (!empty($variables['exposed']['field_az_publication_date_value'])) {
+        $variables['exposed']['field_az_publication_date_value']['#wrapper_attributes']['class'][] = 'flex-shrink-1';
+      }
+      if (!empty($variables['exposed']['field_az_publication_type_value'])) {
+        // Add class so publication type select is styled like text inputs.
+        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-text';
+        // Make sure type filter is styled as a form control.
+        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-select';
+        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-control';
       }
     }
   }
