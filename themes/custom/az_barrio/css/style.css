@@ -722,6 +722,6 @@ fieldset.collapsed {
 /* Add ability to hide contextual links:
  * See https://github.com/az-digital/az_quickstart/pull/2228
  */
- .hide-contextual-links .contextual button {
+.hide-contextual-links .contextual button {
   display: none;
 }
