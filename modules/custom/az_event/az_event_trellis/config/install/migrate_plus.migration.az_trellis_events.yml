@@ -124,19 +124,18 @@ process:
       strict: true
       default_value: 0
 
+  # field_az_event_date/timezone: timezone
   field_az_event_date/value:
     -
-      plugin: az_trellis_format_date
+      plugin: format_date
       source: start_date_time
-      source_timezone: timezone
-      from_format: 'Y-m-d\TH:i:s.vp'
+      from_format: 'Y-m-d\TH:i:s.vP'
       to_format: 'U'
   field_az_event_date/end_value:
     -
-      plugin: az_trellis_format_date
+      plugin: format_date
       source: end_date_time
-      source_timezone: timezone
-      from_format: 'Y-m-d\TH:i:s.vp'
+      from_format: 'Y-m-d\TH:i:s.vP'
       to_format: 'U'
 
 destination:
