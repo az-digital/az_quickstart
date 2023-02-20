@@ -15,9 +15,4 @@ content_type_modes:
   az_news: {  }
   az_person: {  }
   az_publication:
-    - az_ama
-    - az_apa
-    - az_bluebook
-    - az_chicago
-    - az_ieee
-    - az_mla
+    - az_publication_reference
