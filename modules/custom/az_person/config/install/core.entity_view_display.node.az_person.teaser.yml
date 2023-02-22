@@ -47,3 +47,4 @@ hidden:
   field_az_phones: true
   field_az_pronouns: true
   field_az_titles: true
+  smart_title: true

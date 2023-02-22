@@ -119,7 +119,6 @@ third_party_settings:
         speed: fast
     group_read_more:
       children:
-        - links
         - group_read_more_text
       label: 'Read more'
       parent_name: group_text_column
@@ -266,11 +265,6 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
@@ -280,7 +274,6 @@ hidden:
   field_az_attachments: true
   field_az_body: true
   field_az_byline: true
-  field_az_caption: true
   field_az_contacts: true
   field_az_expiration_date: true
   field_az_link: true
@@ -289,3 +282,4 @@ hidden:
   field_az_short_title: true
   field_az_subheading: true
   field_az_summary: true
+  links: true
