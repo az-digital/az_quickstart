@@ -92,6 +92,21 @@ process:
       migration:
         - az_demo_image_file
 
+  pseudo_exploded_categories:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: az_page_category
+    -
+      plugin: explode
+      delimiter: '|'
+
+  field_az_page_category:
+    -
+      plugin: migration_lookup
+      migration: az_demo_page_categories
+      source: '@pseudo_exploded_categories'
+
 destination:
   plugin: entity:node
   bundle: az_flexible_page
@@ -104,6 +119,7 @@ migration_dependencies:
     - az_demo_text_media_paragraph
     - az_demo_splitscreen_paragraph
     - az_demo_card_paragraph
+    - az_demo_page_categories
 
 dependencies:
   enforced:
