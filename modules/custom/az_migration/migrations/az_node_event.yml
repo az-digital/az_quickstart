@@ -67,7 +67,7 @@ process:
       title:
         plugin: default_value
         source: title
-        default_value: null
+        default_value: 'View Event'
       attributes: attributes
 
   field_az_link:
