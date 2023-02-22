@@ -204,7 +204,10 @@ process:
         plugin: str_replace
         search: '[node:url]'
         replace: ''
-      title: title
+      title:
+        plugin: default_value
+        source: title
+        default_value: null
       attributes: attributes
 
   field_az_link:
