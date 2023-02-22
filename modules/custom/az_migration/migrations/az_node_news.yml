@@ -202,17 +202,17 @@ process:
       delta: delta
       uri:
         -
-          plugin: skip_on_empty
+          plugin: default_value
           source: url
-          method: process
+          default_value: null
         -
           plugin: str_replace
           search: '[node:url]'
           replace: ''
       title:
-        plugin: skip_on_empty
+        plugin: default_value
         source: title
-        method: process
+        default_value: null
       attributes: attributes
 
   field_az_link:
