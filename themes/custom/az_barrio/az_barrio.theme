@@ -642,7 +642,7 @@ function az_barrio_preprocess_block(&$variables) {
   }
 
 /**
- * Closes #2251 Remove block_class config foraz_barrio_search block and add
+ * Closes #2251 Remove block_class config for az_barrio_search block and add
  * az-search-block class via preprocess hook.
  *
  * @link https://github.com/az-digital/az_quickstart/issues/2251
