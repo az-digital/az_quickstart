@@ -640,4 +640,8 @@ function az_barrio_preprocess_block(&$variables) {
       }
     }
   }
+  if ($variables['base_plugin_id'] === 'search_form_block') {
+    $variables['attributes']['class'][] = 'az-search-block';
+  }
+
 }
