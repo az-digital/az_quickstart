@@ -408,7 +408,7 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-div:not(#block-az-barrio-offcanvas-searchform).az-search-block form.search-block-form .input-group .input-group-append button {
+.az-search-block form.search-block-form .input-group .input-group-append button {
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -416,8 +416,8 @@ div:not(#block-az-barrio-offcanvas-searchform).az-search-block form.search-block
   padding: 0 8px;
 }
 
-div:not(#block-az-barrio-offcanvas-searchform).az-search-block form.search-block-form .input-group .input-group-append button:hover,
-div:not(#block-az-barrio-offcanvas-searchform).az-search-block form.search-block-form .input-group .input-group-append button:focus {
+.az-search-block form.search-block-form .input-group .input-group-append button:hover,
+.az-search-block form.search-block-form .input-group .input-group-append button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
