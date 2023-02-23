@@ -640,4 +640,15 @@ function az_barrio_preprocess_block(&$variables) {
       }
     }
   }
+
+/**
+ * Closes #2251 Remove block_class config for az_barrio_search block and add
+ * az-search-block class via preprocess hook.
+ *
+ * @link https://github.com/az-digital/az_quickstart/issues/2251
+ */
+  if ($variables['base_plugin_id'] === 'search_form_block' && $variables['elements']['#id'] === 'az_barrio_search') {
+    $variables['attributes']['class'][] = 'az-search-block';
+  }
+
 }
