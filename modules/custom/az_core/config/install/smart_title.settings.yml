@@ -3,7 +3,7 @@ smart_title:
   - 'node:az_course'
   - 'node:az_event'
   - 'node:az_news'
-  - 'node:az_page'
+  - 'node:az_flexible_page'
   - 'node:az_person'
   - 'taxonomy_term:az_person_categories'
   - 'taxonomy_term:az_person_categories_secondary'
