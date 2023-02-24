@@ -16,6 +16,8 @@ This module provides the following Drush command:
 `drush az-core-config-add-permissions`
 This command will add missing installation profile permissions to the active site.
 
+You can optionally add the -y flag to accept adding all missing distribution permissions.
+
 ## Class details
 - Namespace: Drupal\az_core\Commands
 - Class name: AZCoreConfigCommands
