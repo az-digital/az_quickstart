@@ -5,11 +5,3 @@ az_author.admin.structure.settings:
   description: 'Create and manage fields, forms, and display settings for your authors.'
   route_name: az_author.settings
   parent: system.admin_structure
-
-# Quickstart Citation Style menu items definition
-entity.az_citation_style.collection:
-  title: 'Quickstart Citation Styles'
-  route_name: entity.az_citation_style.collection
-  description: 'Manage CSL citation styles used by Quickstart.'
-  parent: system.admin_structure
-  weight: 99

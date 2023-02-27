@@ -41,7 +41,10 @@ class AZQuickstartCitationStyleForm extends EntityForm {
       '#title' => $this->t('Citation Style Language'),
       '#rows' => 15,
       '#default_value' => $az_citation_style->getStyle(),
-      '#description' => $this->t("A stylesheet in Citation Style Language (CSL). For reference, consult https://citationstyles.org/"),
+      '#description' => $this->t('A stylesheet in Citation Style Language (CSL). For reference, consult the <a href="@csl">Citation Style Language project</a> and <a href="@csl-repo">GitHub repository</a>.', [
+        '@csl' => 'https://citationstyles.org/',
+        '@csl-repo' => 'https://github.com/citation-style-language/styles',
+      ]),
       '#required' => TRUE,
     ];
 

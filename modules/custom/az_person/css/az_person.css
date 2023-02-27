@@ -4,7 +4,7 @@
 }
 
 .node--type-az-person.node--view-mode-full figure {
-	/* 	Temporary fix until forking Barrio is complete 
+	/* 	Temporary fix until forking Barrio is complete
 		(https://github.com/az-digital/az_quickstart/issues/690). This CSS rule
 		should be removed or relocated once forking Barrio is complete. */
 	margin-bottom: 0 !important;
@@ -18,19 +18,6 @@
 }
 .az-person-row:last-child {
 	border-bottom: none;
-}
-
-.az-person-grid .node--type-az-person.node--view-mode-az-card .card .contextual button {
-	/* 	Temporary fix to hide media contextual link, on the card view mode only, since 
-		it overlaps with node contextual link. This can be removed once Drupal issue
-		is committed to module. */
-	display: none;
-}
-
-.az-person-grid .node--type-az-person.node--view-mode-az-row .az-person-row-img .contextual button {
-	/* 	Hide media contextual link because it conflicts with the link that wraps the img,
-		which makes the contextual link unusable. */
-	display: none;
 }
 
 .az-person-modal-image .img-fluid {

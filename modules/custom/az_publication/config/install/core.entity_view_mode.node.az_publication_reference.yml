@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - node
-id: node.az_mla
-label: MLA
+id: node.az_publication_reference
+label: 'Publication Reference'
 targetEntityType: node
 cache: true
