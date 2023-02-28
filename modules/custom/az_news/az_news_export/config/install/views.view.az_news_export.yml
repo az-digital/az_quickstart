@@ -12,10 +12,10 @@ dependencies:
     - field.storage.node.field_az_media_image
     - field.storage.node.field_az_news_tags
     - field.storage.node.field_az_published
-    - field.storage.node.field_az_short_title
     - field.storage.node.field_az_subheading
     - node.type.az_news
   module:
+    - az_news_export
     - datetime
     - entity_reference_revisions
     - file
@@ -489,69 +489,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        field_az_short_title:
-          id: field_az_short_title
-          table: node__field_az_short_title
-          field: field_az_short_title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
         field_az_news_tags:
           id: field_az_news_tags
           table: node__field_az_news_tags
@@ -843,36 +780,21 @@ display:
         options: {  }
       empty: {  }
       sorts:
-        field_az_published_value:
-          id: field_az_published_value
-          table: node__field_az_published
-          field: field_az_published_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: datetime
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: field_az_published_value
-          exposed: false
-          granularity: second
-        created:
-          id: created
+        nid:
+          id: nid
           table: node_field_data
-          field: created
+          field: nid
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: node
-          entity_field: created
-          plugin_id: date
-          order: DESC
+          entity_field: nid
+          plugin_id: standard
+          order: ASC
           expose:
             label: ''
-            field_identifier: created
+            field_identifier: ''
           exposed: false
-          granularity: second
       arguments:
         term_node_tid_depth:
           id: term_node_tid_depth
@@ -983,7 +905,6 @@ display:
         - 'config:field.storage.node.field_az_media_image'
         - 'config:field.storage.node.field_az_news_tags'
         - 'config:field.storage.node.field_az_published'
-        - 'config:field.storage.node.field_az_short_title'
         - 'config:field.storage.node.field_az_subheading'
   rest_export_1:
     id: rest_export_1
@@ -992,54 +913,68 @@ display:
     position: 2
     display_options:
       pager:
-        type: none
+        type: mini
         options:
           offset: 0
+          items_per_page: 25
+          total_pages: null
+          id: 0
+          tags:
+            next: ››
+            previous: ‹‹
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
       style:
         type: serializer
         options:
           formats:
             json: json
       row:
-        type: data_field
+        type: az_news_data_field
         options:
           field_options:
             title:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_body:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_subheading:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_byline:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_published:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_expiration_date:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_link:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_short_title:
               alias: ''
-              raw_output: false
+              raw_output: 0
             field_az_news_tags:
               alias: ''
-              raw_output: true
+              raw_output: '1'
             field_az_attachments:
               alias: ''
-              raw_output: true
+              raw_output: '1'
             field_az_contacts:
               alias: ''
-              raw_output: true
+              raw_output: '1'
             field_az_media_image:
               alias: ''
-              raw_output: true
+              raw_output: '1'
       display_extenders: {  }
       path: az-quickstart/export/news
     cache_metadata:
@@ -1049,6 +984,7 @@ display:
         - 'languages:language_interface'
         - request_format
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags:
@@ -1061,5 +997,4 @@ display:
         - 'config:field.storage.node.field_az_media_image'
         - 'config:field.storage.node.field_az_news_tags'
         - 'config:field.storage.node.field_az_published'
-        - 'config:field.storage.node.field_az_short_title'
         - 'config:field.storage.node.field_az_subheading'
