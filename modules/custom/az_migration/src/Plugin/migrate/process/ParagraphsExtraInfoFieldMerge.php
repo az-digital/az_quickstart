@@ -60,7 +60,7 @@ class ParagraphsExtraInfoFieldMerge extends ProcessPluginBase {
     $field_uaqs_short_title = $row->getSourceProperty('field_uaqs_short_title');
     $field_uaqs_body = $row->getSourceProperty('field_uaqs_body');
     $field_uaqs_link = $row->getSourceProperty('field_uaqs_link');
-    $url =  $field_uaqs_link[0]['url'] ?? '';
+    $url = $field_uaqs_link[0]['url'] ?? '';
     $classes = $field_uaqs_link[0]['attributes']['class'] ?? '';
     $title = $field_uaqs_link[0]['title'] ?? $url;
     $short_title = $field_uaqs_short_title[0]['value'] ?? '';
