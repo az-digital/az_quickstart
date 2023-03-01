@@ -27,6 +27,13 @@ class AZNewsDataFieldRow extends DataFieldRow {
   protected $entityTypeManager;
 
   /**
+   * Drupal\Core\Utility\Token definition.
+   *
+   * @var \Drupal\Core\Utility\Token
+   */
+  protected $token;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -38,6 +45,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
     );
 
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->token = $container->get('token');
     return $instance;
   }
 
@@ -113,11 +121,23 @@ class AZNewsDataFieldRow extends DataFieldRow {
         }
         return $items;
       },
+      // Allow for token replacement in short title.
+      'field_az_short_title' => function ($value, $entity) {
+        $item = "";
+        if (!empty($value)) {
+          $token_data = ['node' => $entity];
+          $token_options = ['clear' => TRUE];
+          // Perform token replacement.
+          $item = $this->token->replace($value, $token_data, $token_options);
+        }
+        return $item;
+      },
     ];
     foreach ($this->view->field as $id => $field) {
-      // If the raw output option has been set, just get the raw value.
+      // If the raw output option has been set, get the raw value.
       if (!empty($this->rawOutputOptions[$id])) {
         $value = $field->getValue($row);
+        // Check for special serialization rules for this particular field.
         if (!empty($rules[$id]) && !empty($row->_entity)) {
           $value = $rules[$id]($value, $row->_entity);
         }
