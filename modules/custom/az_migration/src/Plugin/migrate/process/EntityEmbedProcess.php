@@ -72,6 +72,7 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
    * @var array
    */
   const MIGRATION_MAPPING = [
+    'uaqs_flexible_block' => 'az_block_content_flexible_block',
     'uaqs_flexible_page' => 'az_node_flexible_page',
     'uaqs_page' => 'az_node_uaqs_basic_page_to_az_page',
     'uaqs_carousel_item' => 'az_node_carousel',
@@ -110,6 +111,15 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
       'uaqs_med_media_list' => 'az_medium_media_list',
       'uaqs_card' => 'az_card',
       'uaqs_marquee' => 'az_marquee',
+    ],
+    'bean' => [
+      'default' => 'full',
+      'full' => 'full',
+      'teaser' => 'teaser',
+      'rss' => 'rss',
+      'search_index' => 'search_index',
+      'search_result' => 'search_result',
+      'token' => 'token',
     ],
   ];
 
@@ -217,6 +227,12 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
         $changed->setAttribute('data-embed-button', "az_embed_content");
         $changed->setAttribute('data-entity-embed-display', "view_mode:node.{$view}");
         break;
+
+      case 'block_content':
+        $changed->setAttribute('data-embed-button', "az_embed_content_block");
+        $changed->setAttribute('data-entity-embed-display', "view_mode:block_content.{$view}");
+        break;
+
     }
     return $changed;
   }
@@ -292,6 +308,26 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
             if (!empty($migrations[$node_type])) {
               $migration = $migrations[$node_type];
               $post = $this->updateEmbedTag($id, 'node', 'drupal-entity', $view, $dom, $element, $migration, 'node');
+            }
+
+          }
+
+          break;
+
+        // Embedded bean. Special consideration, as we need to know which
+        // migration the bean is part of, if any. Migration of an Embedded
+        // bean only is defined if it's a type that can be migrated.
+        case 'bean':
+          // Lookup of bean type.
+          $bean_type = Database::getConnection('default', 'migrate')
+            ->query('SELECT type FROM {bean} WHERE bid = :bid', [':bid' => $id])
+            ->fetchField();
+          if (!empty($bean_type)) {
+            // Map our D7 bean type to a migration. If we can't, we have no
+            // guarantee our bean is a migrated one.
+            if (!empty($migrations[$bean_type])) {
+              $migration = $migrations[$bean_type];
+              $post = $this->updateEmbedTag($id, 'block_content', 'drupal-entity', $view, $dom, $element, $migration, 'block_content');
             }
 
           }

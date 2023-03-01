@@ -4,6 +4,7 @@ dependencies:
   config:
     - views.view.az_events
   module:
+    - block_class
     - system
     - views
   theme:

@@ -1,12 +1,12 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_custom_menu_block
   module:
     - block_content
     - block_field
+  enforced:
+    module:
+      - az_custom_menu_block
 id: block_content.field_az_block
 field_name: field_az_block
 entity_type: block_content

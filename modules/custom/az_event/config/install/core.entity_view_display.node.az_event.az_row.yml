@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
     - date_ap_style
@@ -268,3 +269,4 @@ hidden:
   field_az_location: true
   field_az_photos: true
   field_az_subheading: true
+  field_az_trellis_id: true

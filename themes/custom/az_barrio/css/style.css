@@ -56,6 +56,11 @@ audio:not([controls]) {
   display: none;
 }
 
+/* Temporary citation style. Will be removed. */
+.node--view-mode-full .csl-entry {
+  margin-bottom: 1.2em;
+}
+
 /**
  * Wireframes.
  */
@@ -147,6 +152,10 @@ audio:not([controls]) {
 span.field-label {
   padding: 0 16px 0 0;
   padding: 0 1em 0 0;
+}
+
+.trailing-colon::after {
+  content: ':';
 }
 
 /**
@@ -710,3 +719,9 @@ fieldset.collapsed {
   }
 }
 
+/* Add ability to hide contextual links:
+ * See https://github.com/az-digital/az_quickstart/pull/2228
+ */
+.hide-contextual-links .contextual button {
+  display: none;
+}

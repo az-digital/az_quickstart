@@ -31,7 +31,7 @@ steps:
     script:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress n
-      - sudo n 12.22.6
+      - sudo n 18.12.1
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
       - yarn install
       - yarn run eslint --color .
@@ -90,6 +90,15 @@ steps:
       - curl -sS -o /dev/null http://localhost/pages/annual-events
       # Check for PHP watchdog entries
       - if [ -z "$($SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+  - name: Generate upgrade status report
+    plugin: Script
+    script:
+      # Enable upgrade_status module
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install upgrade_status
+      # Run report
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush upgrade_status:analyze az_quickstart
+      # Make upgrade_status folder in tmp directory accessible by www-data
+      - chown -R www-data:www-data /tmp/upgrade_status
   - name: Run PHPUnit Tests
     plugin: Script
     script:
