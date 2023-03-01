@@ -100,6 +100,8 @@ class AZNewsDataFieldRow extends DataFieldRow {
         }
         return $item;
       },
+      // Serialize the taxonomy terms as an array of labels.
+      // Replaced later with Trellis enterprise attributes?
       'field_az_news_tags' => function ($value, $entity) {
         $items = [];
         $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple($value);
