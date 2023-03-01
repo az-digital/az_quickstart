@@ -27,13 +27,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
   protected $entityTypeManager;
 
   /**
-   * Drupal\Core\Utility\Token definition.
-   *
-   * @var \Drupal\Core\Utility\Token
-   */
-  protected $token;
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -45,7 +38,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
     );
 
     $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->token = $container->get('token');
     return $instance;
   }
 
