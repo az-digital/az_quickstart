@@ -157,12 +157,12 @@ Luckily this is fairly simple and only requires a structure shown below:
 Example [migration group file](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/config/install/migrate_plus.migration_group.az_migration.yml)
 
 Compare source site pathauto settings to ensure new content and migrated content are consistent.
-  
+
 
 # Quickstart migrations usage notes
-  
+
 Usage notes for the built-in Quickstart migrations provided by this module.
-  
+
 ### Contents
   - [User migration](#user-migration)
   - [File migration](#file-migration)
@@ -173,7 +173,7 @@ Usage notes for the built-in Quickstart migrations provided by this module.
   - [Carousel item migration](#carousel-item-migration)
   - [Paragraph migrations](#paragraph-migrations)
 
-  
+
 ## User migration
 
 Source site pre-migration tasks :
@@ -396,10 +396,10 @@ drush mim az_node_carousel
 To rollback the  carousel item using the below command :
 ```
 drush mr az_node_carousel
-```  
+```
 
 ## Paragraph migrations
-  
+
 ### Contact paragraph migration
 
 Migrate contact paragraphs using the below command :
@@ -537,9 +537,9 @@ To rollback menu links, use the following command:
 drush mr az_exclude_node_title
 ```
 
- 
+
 # Migrate plugins
-  
+
 Migrate plugins provided by Quickstart modules.
 
 ## Reusable plugins
@@ -551,6 +551,8 @@ These plugins are designed to be reusable in custom migrations.
 - [EntityEmbedProcess (az_entity_embed_process)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/EntityEmbedProcess.php)
 - [MigratedPathLookup (az_migrated_path_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/MigratedPathLookup.php)
 - [TextFormatRecognizer (text_format_recognizer)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/TextFormatRecognizer.php)
+- [ManualMigrationLookup (az_manual_migration_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ManualMigrationLookup.php)
+- [ArrayIntersect (array_intersect)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ArrayIntersect.php)
 - [ParagraphsMappingFlexiblePage (paragraphs_mapping_flexible_page)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
 - [ParagraphsBehavior
   (paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/2.2.x/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehavior.php)
