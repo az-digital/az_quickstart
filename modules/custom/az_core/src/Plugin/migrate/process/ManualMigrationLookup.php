@@ -95,7 +95,7 @@ class ManualMigrationLookup extends ProcessPluginBase {
           break;
 
         case 'taxonomy_term':
-            // Lookup of content type.
+            // Lookup of taxonomy term.
             $value = Database::getConnection('default', 'migrate')
               ->query('SELECT name FROM {taxonomy_term_data} WHERE tid = :tid', [':tid' => $id])
               ->fetchField();
