@@ -64,7 +64,7 @@ use Drupal\migrate\Row;
  *          bundle_key: vid
  *          ignore_case: true
  * @endcode
-*/
+ */
 class ManualMigrationLookup extends ProcessPluginBase {
 
   /**
@@ -78,40 +78,39 @@ class ManualMigrationLookup extends ProcessPluginBase {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
 
-
   /**
    * {@inheritdoc}
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-      $source_entity_type = $this->configuration['source_entity_type'];
+    $source_entity_type = $this->configuration['source_entity_type'];
 
-      $id = $value;
-      switch ($source_entity_type) {
-        case 'node':
-          // Lookup of content type.
-          $value = Database::getConnection('default', 'migrate')
-            ->query('SELECT title FROM {node} WHERE nid = :nid', [':nid' => $id])
-            ->fetchField();
-          break;
+    $id = $value;
+    switch ($source_entity_type) {
+      case 'node':
+        // Lookup of content type.
+        $value = Database::getConnection('default', 'migrate')
+          ->query('SELECT title FROM {node} WHERE nid = :nid', [':nid' => $id])
+          ->fetchField();
+        break;
 
-        case 'taxonomy_term':
-            // Lookup of taxonomy term.
-            $value = Database::getConnection('default', 'migrate')
-              ->query('SELECT name FROM {taxonomy_term_data} WHERE tid = :tid', [':tid' => $id])
-              ->fetchField();
+      case 'taxonomy_term':
+        // Lookup of taxonomy term.
+        $value = Database::getConnection('default', 'migrate')
+          ->query('SELECT name FROM {taxonomy_term_data} WHERE tid = :tid', [':tid' => $id])
+          ->fetchField();
 
-            break;
+        break;
 
-        // Unimplemented type.
-        default:
-          break;
-      }
+      // Unimplemented type.
+      default:
+        break;
+    }
 
-      if (empty($value)) {
-        $message = sprintf('Processing of destination property %s was skipped: No value found for source entity type %s with id %s.', $destination_property, $source_entity_type, $id);
-        throw new MigrateSkipProcessException($message);
-      }
+    if (empty($value)) {
+      $message = sprintf('Processing of destination property %s was skipped: No value found for source entity type %s with id %s.', $destination_property, $source_entity_type, $id);
+      throw new MigrateSkipProcessException($message);
+    }
 
     return $value;
   }
