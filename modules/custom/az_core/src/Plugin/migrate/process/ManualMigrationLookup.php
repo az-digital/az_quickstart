@@ -21,7 +21,7 @@ use Drupal\migrate\Row;
  * This is useful for content that was manually migrated (i.e. copy and pasted)
  * and not tied to a migration.
  *
- * @return string source entity identifier Example: node title.
+ * @return string source entity label (Example: node title).
  *
  * Node example:
  *
