@@ -18,8 +18,8 @@ use Drupal\migrate\Row;
  *
  * This plugin looks up content from the source database and returns the field
  * data for the found entity. This requires an entity id from the source site.
- * This is useful for content that was manually migrated (Copy and Pasted) and not
- * tied to a migration.
+ * This is useful for content that was manually migrated (i.e. copy and pasted)
+ * and not tied to a migration.
  *
  * @return string source entity identifier Example: node title.
  *
