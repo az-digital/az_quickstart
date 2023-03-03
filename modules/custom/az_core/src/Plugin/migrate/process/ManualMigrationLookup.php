@@ -9,7 +9,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Process Plugin to handle content that was manually migrated.
+ * Process plugin to handle content that was manually migrated.
  *
  * @MigrateProcessPlugin(
  *   id = "az_manual_migration_lookup"
