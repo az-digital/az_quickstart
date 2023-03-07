@@ -108,32 +108,33 @@ function az_paragraphs_update_920601(&$sandbox) {
   $paragraphs_per_batch = 25;
   // Get the paragraph ids to be updated.
   $paragraph_ids = \Drupal::entityQuery('paragraph')
-  ->accessCheck(FALSE)
-  // Update 25 paragraphs per batch.
-  ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
-  ->execute();
+    ->accessCheck(FALSE)
+    // Update 25 paragraphs per batch.
+    ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
+    ->execute();
 
   $paragraph_storage = \Drupal::entityTypeManager()->getStorage('paragraph');
   $broken_paragraphs = $paragraph_storage->loadMultiple($paragraph_ids);
 
   foreach ($broken_paragraphs as $paragraph) {
     $behavior_settings = $paragraph->getAllBehaviorSettings();
-    if( isset($behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'])
-      && is_array($behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'])) {
-        $behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'] = 'mb-0';
+    if (isset($behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'])
+      && is_array($behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'])
+    ) {
+      $behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'] = 'mb-0';
     }
-    if( isset($behavior_settings['az_cards_paragraph_behavior'])
+    if (isset($behavior_settings['az_cards_paragraph_behavior'])
       && is_null($behavior_settings['az_cards_paragraph_behavior']['card_width'])
       && is_null($behavior_settings['az_cards_paragraph_behavior']['card_style'])
       && is_null($behavior_settings['az_cards_paragraph_behavior']['card_clickable'])
       && is_null($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'])
       && is_null($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_xs'])
-      ) {
-        $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-md-12 col-lg-12';
-        $behavior_settings['az_cards_paragraph_behavior']['card_style'] = 'card';
-        $behavior_settings['az_cards_paragraph_behavior']['card_clickable'] = 0;
-        $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-sm-12';
-        $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_xs'] = 'col-12';
+    ) {
+      $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-md-12 col-lg-12';
+      $behavior_settings['az_cards_paragraph_behavior']['card_style'] = 'card';
+      $behavior_settings['az_cards_paragraph_behavior']['card_clickable'] = 0;
+      $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-sm-12';
+      $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_xs'] = 'col-12';
     }
     $paragraph->setAllBehaviorSettings($behavior_settings);
     $paragraph->save();
