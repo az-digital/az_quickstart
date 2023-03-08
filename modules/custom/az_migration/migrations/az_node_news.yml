@@ -280,16 +280,10 @@ process:
   sticky: sticky
 
   path/pathauto:
-    -
-      plugin: skip_on_empty
-      source: alias
-      method: process
-    -
-      plugin: default_value
+    - plugin: default_value
       default_value: 0
 
   path/alias:
-    -
-      plugin: skip_on_empty
+    - plugin: skip_on_empty
       source: alias
       method: process
