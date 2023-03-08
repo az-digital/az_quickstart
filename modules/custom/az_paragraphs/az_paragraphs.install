@@ -131,7 +131,7 @@ function az_paragraphs_update_920601(&$sandbox) {
       && is_null($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_xs'])
     ) {
       $needs_update = TRUE;
-      $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-md-12 col-lg-12';
+      $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-md-4 col-lg-4';
       $behavior_settings['az_cards_paragraph_behavior']['card_style'] = 'card';
       $behavior_settings['az_cards_paragraph_behavior']['card_clickable'] = 0;
       $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-sm-12';
