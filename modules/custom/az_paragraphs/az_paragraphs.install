@@ -138,9 +138,9 @@ function az_paragraphs_update_920601(&$sandbox) {
       $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_xs'] = 'col-12';
     }
     if ($needs_update) {
-	    $paragraph->setAllBehaviorSettings($behavior_settings);
-	    $paragraph->save();
-	    $sandbox['updated_count']++;
+      $paragraph->setAllBehaviorSettings($behavior_settings);
+      $paragraph->save();
+      $sandbox['updated_count']++;
     }
     $sandbox['current']++;
   }
