@@ -55,6 +55,7 @@ process:
       value: value
       format: format
 
+
   preprocess_field_uaqs_link:
     plugin: sub_process
     source: field_uaqs_link
@@ -64,23 +65,27 @@ process:
         plugin: str_replace
         search: '[node:url]'
         replace: ''
+        source: url
       title:
         plugin: default_value
         source: title
-        default_value: 'View Event'
+        default_value: 'Read more'
       attributes: attributes
 
   field_az_link:
-    plugin: field_link
-    source: '@preprocess_field_uaqs_link'
-    uri_scheme: "https://"
-
-  'field_az_link/0/uri':
-    -
-      plugin: str_replace
-      source: field_az_link/0/uri
-      search: 'route:<nolink>'
-      replace: ''
+    - plugin: field_link
+      source: '@preprocess_field_uaqs_link'
+      uri_scheme: "https://"
+    - plugin: sub_process
+      process:
+        delta: delta
+        uri:
+          - plugin: str_replace
+            source: uri
+            search: 'route:<nolink>'
+            replace: ''
+        title: title
+        attributes: attributes
 
   field_az_location:
     -
