@@ -96,7 +96,7 @@ process:
       title:
         plugin: default_value
         source: title
-        default_value: 'Read more'
+        default_value: 'View profile'
       attributes: attributes
 
   field_az_link:
