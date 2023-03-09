@@ -494,6 +494,10 @@ drush mr az_paragraph_column_image
 
 ## Menu links migration
 
+Source site pre-migration tasks :
+
+* Prepare your menus for migration by removing any unused menu items, and deleting links that do not work.
+
 Quickstart 1 menu links can be migrated using the following command:
 ```
 drush mim az_menu_links
