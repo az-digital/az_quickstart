@@ -54,6 +54,9 @@ source:
     -
       name: az_summary
       selector: az_summary
+    -
+      name: az_event_category
+      selector: az_event_categories
 process:
   type:
     plugin: default_value
@@ -183,6 +186,21 @@ process:
         delta: delta
         target_id: '0'
 
+  pseudo_exploded_categories:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: az_event_category
+    -
+      plugin: explode
+      delimiter: '|'
+
+  field_az_event_category:
+    -
+      plugin: migration_lookup
+      migration: az_demo_event_categories
+      source: '@pseudo_exploded_categories'
+
 destination:
   plugin: entity:node
   bundle: az_event
@@ -191,6 +209,7 @@ migration_dependencies:
   required:
     - az_demo_image_file
     - az_demo_event_rrule
+    - az_demo_event_categories
 
 dependencies:
   enforced:

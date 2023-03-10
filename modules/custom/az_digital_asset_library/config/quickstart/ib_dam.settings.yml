@@ -1,6 +1,6 @@
+debug: false
+staging: false
 dependencies:
   enforced:
     module:
       - az_digital_asset_library
-debug: false
-staging: false
