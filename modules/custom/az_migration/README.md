@@ -494,7 +494,7 @@ drush mr az_paragraph_column_image
 
 ## Menu links migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Prepare your menus for migration by removing any unused menu items, and deleting links that do not work.
 * Duplicate unpublished menu links will collide with live menu links, so it would be best to delete unpublished menu links.
