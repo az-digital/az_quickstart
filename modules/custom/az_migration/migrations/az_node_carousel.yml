@@ -96,10 +96,17 @@ process:
   promote: promote
   sticky: sticky
   path/pathauto:
-    plugin: default_value
-    source: alias
-    default_value: 1
-    strict: true
+    - plugin: str_replace
+      source: alias
+      regex: true
+      search: /.$/
+      replace: 0
+    - plugin: default_value
+      source: alias
+      default_value: 1
+      strict: true
+    - plugin: callback
+      callable: intval
   path/alias:
     plugin: skip_on_empty
     source: alias
