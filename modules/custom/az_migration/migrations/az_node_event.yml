@@ -186,21 +186,10 @@ process:
   promote: promote
   sticky: sticky
   path/pathauto:
-    -
-      plugin: str_replace
-      regex: true
-      source: alias
-      search: /.*$/
-      replace: 0
-    -
-      plugin: default_value
-      default_value: 1
-    -
-      plugin: static_map
-      map:
-        '00': 0
-        '0': 0
-        '1': 1
+    plugin: default_value
+    source: alias
+    default_value: 1
+    strict: true
   path/alias:
     plugin: skip_on_empty
     source: alias
