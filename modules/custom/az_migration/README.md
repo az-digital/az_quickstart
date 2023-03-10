@@ -176,7 +176,7 @@ Usage notes for the built-in Quickstart migrations provided by this module.
   
 ## User migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Block any users you don’t want to migrate.
 * Check for any custom or overridden fields on users.
@@ -204,7 +204,7 @@ drush mr az_user
 
 ## File migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any files you don’t want migrated.
 
@@ -221,7 +221,7 @@ drush mr az_files
 
 ## Media migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any files you don’t want migrated.
 * Check for any custom or overridden fields on file_entities.
@@ -255,7 +255,7 @@ must create a custom migration.**
 
 ### Person category migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any terms you don’t want migrated.
 * Check for any custom or overridden fields on uaqs_person_category taxonomy.
@@ -457,7 +457,7 @@ Notes:
 
 This migration only imports the first link for cards from the multi-value link field in Quickstart v1. If there are multiple links on a card, you can edit the migrated card after the migration and add the links to the text area as HTML instead of using the link field.
 
-Source site pre-migration tasks:
+### Suggested pre-migration tasks (for source site)
 
 * Check for any custom or overridden fields on uaqs_content_chunks_card_deck paragraph type.
 * Delete any card decks you don’t want migrated.
