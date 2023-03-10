@@ -104,6 +104,7 @@ process:
       replace: 0
     -
       plugin: default_value
+      strict: true
       default_value: 1
     -
       plugin: static_map
