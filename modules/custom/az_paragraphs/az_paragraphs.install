@@ -145,5 +145,5 @@ function az_paragraphs_update_920601(&$sandbox) {
     $sandbox['current']++;
   }
   $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
-  return t('Default paragraph behavior settings fixed on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
+  return t('Paragraph behavior settings fixed on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
 }
