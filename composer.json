@@ -78,7 +78,7 @@
         "drupal/jquery_ui": "1.6.0",
         "drupal/jquery_ui_datepicker": "1.4.0",
         "drupal/link_class": "2.0.0",
-        "drupal/linkit": "6.0.0-beta3",
+        "drupal/linkit": "6.0.0-beta4",
         "drupal/masquerade": "2.0.0-rc1",
         "drupal/media_library_edit": "3.0.2",
         "drupal/media_library_form_element": "2.0.6",
@@ -175,8 +175,7 @@
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
             },
             "drupal/linkit": {
-                "Multiple Linkit elements breaks (2925828)": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch",
-                "Deprecated function Return type of SimpleSuggestion::jsonSerialize() (3262401)": "https://www.drupal.org/files/issues/2022-04-26/linkit-jsonserialize-3262401-11.patch"
+                "Multiple Linkit elements breaks (2925828)": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
