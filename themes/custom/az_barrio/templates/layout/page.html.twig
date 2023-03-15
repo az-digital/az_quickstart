@@ -18,6 +18,8 @@
  *   administration pages.
  * - az_barrio_navbar_offcanvas: A flag indicating if the offcanvas nav is
  *   enabled.
+ * - az_barrio_header_offcanvas: A flag indicating if the offcanvas header is
+ *   enabled.
  *
  * Site identity:
  * - front_page: The URL of the front page. Use this instead of base_path when
@@ -118,7 +120,11 @@
               <div class="{{ header_one_col_classes }}">
                 {{ page.branding }}
               </div>
+              {% if az_barrio_header_offcanvas %}
+              <div class="d-none d-lg-block {{ header_two_col_classes }}">
+              {% else %}
               <div class="{{ header_two_col_classes }}">
+              {% endif %}
                 <div class="row">
                   {{ page.header }}
                 </div>
@@ -156,6 +162,14 @@
                     {{ page.navigation }}
                   {% endif %}
               {% if az_barrio_navbar_offcanvas %}
+                {% if az_barrio_header_offcanvas %}
+                <div class="d-lg-none" id="headerOffcanvas">
+                  {{ page.header }}
+                  {% if page.header_2 %}
+                  {{ page.header_2 }}
+                  {% endif %}
+                </div>
+                {% endif %}
                 </nav>
               </div>
               {% endif %}
