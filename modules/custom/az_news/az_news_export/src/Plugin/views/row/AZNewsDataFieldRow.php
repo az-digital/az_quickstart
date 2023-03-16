@@ -109,7 +109,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
         return $item;
       },
       // Serialize the taxonomy terms as an array of labels.
-      // Replaced later with Trellis enterprise attributes?
       'field_az_news_tags' => function ($value, $entity) {
         $items = [];
         $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple($value);
@@ -118,6 +117,20 @@ class AZNewsDataFieldRow extends DataFieldRow {
             continue;
           }
           $items[] = $term->label();
+        }
+        return $items;
+      },
+      // Serialize the taxonomy terms as an array of enterprise keys.
+      'field_az_enterprise_attributes' => function ($value, $entity) {
+        $items = [];
+        $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple($value);
+        foreach ($terms as $term) {
+          if (!$term->access('view')) {
+            continue;
+          }
+          if (!empty($term->field_az_attribute_key->value)) {
+            $items[] = $term->field_az_attribute_key->value;
+          }
         }
         return $items;
       },

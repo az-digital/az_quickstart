@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_contacts
+    - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
@@ -268,6 +269,7 @@ content:
     region: content
 hidden:
   az_news_read_more: true
+  field_az_enterprise_attributes: true
   field_az_expiration_date: true
   field_az_link: true
   field_az_news_tags: true
