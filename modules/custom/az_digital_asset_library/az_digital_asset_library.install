@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * Uninstall unneeded module "entity_browser".
+ */
+function az_digital_asset_library_update_930603() {
+  $unused_modules = [
+    'entity_browser',
+  ];
+  try {
+    \Drupal::service('module_installer')->uninstall($unused_modules);
+  }
+  catch (Exception $exception) {
+    \Drupal::logger('az_digital_asset_library')->error($exception->getMessage());
+  }
+}
