@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_media_thumbnail_image
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -31,13 +32,14 @@ third_party_settings:
     group_summary:
       children:
         - field_az_short_title
+        - field_az_media_thumbnail_image
         - field_az_summary
         - field_az_expiration_date
         - field_az_link
       label: 'Summary fields'
       region: content
       parent_name: ''
-      weight: 10
+      weight: 9
       format_type: details_sidebar
       format_settings:
         classes: 'group-summary field-group-tab'
@@ -52,7 +54,7 @@ third_party_settings:
       label: 'Extra Fields'
       region: content
       parent_name: ''
-      weight: 11
+      weight: 10
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -68,7 +70,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 13
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -81,7 +83,7 @@ content:
     third_party_settings: {  }
   field_az_body:
     type: text_textarea
-    weight: 6
+    weight: 5
     region: content
     settings:
       rows: 5
@@ -97,7 +99,7 @@ content:
     third_party_settings: {  }
   field_az_contacts:
     type: entity_reference_paragraphs
-    weight: 9
+    weight: 8
     region: content
     settings:
       title: Contact
@@ -109,7 +111,7 @@ content:
     third_party_settings: {  }
   field_az_expiration_date:
     type: datetime_datelist
-    weight: 14
+    weight: 15
     region: content
     settings:
       increment: 30
@@ -118,7 +120,7 @@ content:
     third_party_settings: {  }
   field_az_link:
     type: link_default
-    weight: 15
+    weight: 16
     region: content
     settings:
       placeholder_url: ''
@@ -126,7 +128,7 @@ content:
     third_party_settings: {  }
   field_az_main_content:
     type: paragraphs
-    weight: 7
+    weight: 6
     region: content
     settings:
       title: Paragraph
@@ -152,9 +154,18 @@ content:
     third_party_settings:
       media_library_edit:
         show_edit: '1'
+  field_az_media_thumbnail_image:
+    type: media_library_widget
+    weight: 13
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
   field_az_news_tags:
     type: options_select
-    weight: 8
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -182,7 +193,7 @@ content:
     third_party_settings: {  }
   field_az_summary:
     type: text_textarea
-    weight: 13
+    weight: 14
     region: content
     settings:
       rows: 5
@@ -190,27 +201,27 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 16
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 14
+    weight: 13
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 18
+    weight: 17
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 15
+    weight: 14
     region: content
     settings:
       display_label: true
@@ -225,7 +236,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 12
+    weight: 11
     region: content
     settings:
       match_operator: CONTAINS
@@ -234,7 +245,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 17
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }

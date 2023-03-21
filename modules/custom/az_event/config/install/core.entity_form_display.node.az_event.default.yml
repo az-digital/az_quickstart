@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.az_event.field_az_event_date
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -30,6 +31,7 @@ third_party_settings:
     group_summary:
       children:
         - field_az_link
+        - field_az_media_thumbnail_image
         - field_az_summary
       label: 'Summary fields'
       region: content
@@ -114,7 +116,7 @@ content:
           YEARLY: YEARLY
   field_az_link:
     type: link_default
-    weight: 27
+    weight: 31
     region: content
     settings:
       placeholder_url: ''
@@ -128,6 +130,15 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
+  field_az_media_thumbnail_image:
+    type: media_library_widget
+    weight: 33
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
   field_az_photos:
     type: media_library_widget
     weight: 10
@@ -147,7 +158,7 @@ content:
     third_party_settings: {  }
   field_az_summary:
     type: text_textarea
-    weight: 28
+    weight: 34
     region: content
     settings:
       rows: 5

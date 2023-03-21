@@ -12,6 +12,7 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
@@ -208,6 +209,35 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
         if (!$keep_filter) {
           $form['term_node_tid_depth']['#access'] = FALSE;
         }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Sets Thumbnail Image field to match first item of Event Photos field in two
+ * cases where we can assume a user hasn't set the thumbnail to a specific
+ * image.
+ */
+function az_event_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_event' && $entity instanceof NodeInterface) {
+    if (isset($entity->field_az_photos->entity)) {
+      if (
+        // First case: set the Thumbnail Image field if it is empty.
+        !isset($entity->field_az_media_thumbnail_image->entity)
+        || (
+          // Second case: set the Thumbnail Image field if the two image
+          // fields were the same originally, but are now different after
+          // a user changed only the first item of the Event Photos field.
+          $entity->original instanceof NodeInterface
+          && $entity->original->field_az_photos->target_id === $entity->original->field_az_media_thumbnail_image->target_id
+          && $entity->field_az_photos->target_id !== $entity->original->field_az_photos->target_id
+        )
+      ) {
+        $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_photos->target_id;
+        \Drupal::messenger()->addStatus(t('%title: Set thumbnail image to match main image. (media ID %thumb)', ['%title' => $entity->field_title, '%thumb' => $entity->field_az_media_thumbnail_image->target_id]));
       }
     }
   }

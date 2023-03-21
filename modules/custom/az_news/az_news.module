@@ -11,6 +11,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Component\Utility\Html;
 use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
@@ -65,4 +66,33 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
     $bubbleable_metadata->applyTo($build);
   }
 
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Sets Thumbnail Image field to match Photo field if we
+ * can assume a user hasn't set the thumbnail to a specific
+ * image.
+ */
+function az_news_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_news' && $entity instanceof NodeInterface) {
+    if (isset($entity->field_az_media_image->entity)) {
+      if (
+        // First case: set the Thumbnail Image field if it is empty.
+        !isset($entity->field_az_media_thumbnail_image->entity)
+        || (
+          // Second case: set the Thumbnail Image field if the two image fields
+          // were the same originally, but are now different after a user
+          // changed only the Photo field.
+          $entity->original instanceof NodeInterface
+          && $entity->original->field_az_media_image->target_id === $entity->original->field_az_media_thumbnail_image->target_id
+          && $entity->field_az_media_image->target_id !== $entity->original->field_az_media_image->target_id
+        )
+      ) {
+        $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_media_image->target_id;
+        \Drupal::messenger()->addStatus(t('Set thumbnail image to match main image. %thumb', ['%thumb' => $entity->field_az_media_thumbnail_image->target_id]));
+      }
+    }
+  }
 }

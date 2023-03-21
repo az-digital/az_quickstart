@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_card_with_image
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
     - field.field.node.az_event.field_az_contacts
@@ -44,6 +44,7 @@ third_party_settings:
         speed: fast
     group_link:
       children:
+        - field_az_media_thumbnail_image
         - group_date
         - group_heading
         - group_summary
@@ -65,7 +66,7 @@ third_party_settings:
       label: Date
       parent_name: group_link
       region: content
-      weight: 5
+      weight: 7
       format_type: html_element
       format_settings:
         classes: 'text-muted font-weight-bold small'
@@ -83,7 +84,7 @@ third_party_settings:
       label: Heading
       parent_name: group_link
       region: content
-      weight: 6
+      weight: 8
       format_type: html_element
       format_settings:
         classes: 'card-title text-red h5 mt-0 mb-2'
@@ -101,7 +102,7 @@ third_party_settings:
       label: Summary
       parent_name: group_link
       region: content
-      weight: 7
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'card-text font-weight-normal small mb-0'
@@ -120,10 +121,10 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes:
         - node__title
-id: node.az_event.az_card
+id: node.az_event.az_card_with_image
 targetEntityType: node
 bundle: az_event
-mode: az_card
+mode: az_card_with_image
 content:
   field_az_event_date:
     type: daterange_ap_style
@@ -142,6 +143,15 @@ content:
       display_day: null
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_az_media_thumbnail_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_card_image
+      link: false
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_az_summary:
     type: text_default
@@ -164,7 +174,6 @@ hidden:
   field_az_event_category: true
   field_az_link: true
   field_az_location: true
-  field_az_media_thumbnail_image: true
   field_az_photos: true
   field_az_subheading: true
   field_az_trellis_id: true
