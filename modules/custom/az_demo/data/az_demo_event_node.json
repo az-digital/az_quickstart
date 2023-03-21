@@ -17,7 +17,8 @@
     ],
     "az_photos" : "badwater_panorama.jpg",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Field Trip|Geology"
   },
   {
     "id":2,
@@ -41,7 +42,8 @@
     "uaqs_link_info_title" : "Information on Pi Day",
     "az_photos" : "",
     "az_attachments" : "pi.pdf|approximately.pdf",
-    "az_attachments_description" : "The symbol π.|The start of the decimal expansion of π."
+    "az_attachments_description" : "The symbol π.|The start of the decimal expansion of π.",
+    "az_event_categories" : "Special Event|Mathematics"
   },
   {
     "id":3,
@@ -61,7 +63,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Literature"
   },
   {
     "id":4,
@@ -83,7 +86,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : ""
   },
   {
     "id":5,
@@ -105,7 +109,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Aerospace Engineering"
   },
   {"id":6,
     "title" : "Weekend Canyon Running Training",
@@ -125,7 +130,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Training|Athletics"
   },
   {"id":7,
     "title" : "Popular Geosciences Talk: The Earth is Solid",
@@ -144,7 +150,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Geology"
   },
   {"id":8,
     "title" : "Skeptical Astronomy Literature Survey",
@@ -155,7 +162,7 @@
     "az_event_date_duration" : "custom",
     "az_event_date_rrule" : 5,
     "uaqs_summary" : "Second Summer Session intensive Skeptical Astronomy literature survey.",
-    "az_body" : "This intensive summer course explores literary references relevant to  Skeptical Astronomy, from the Epic of Gilgamesh to contemporary blog posts.",
+    "az_body" : "This intensive summer course explores literary references relevant to Skeptical Astronomy, from the Epic of Gilgamesh to contemporary blog posts.",
     "az_location": [
       {
         "url": "",
@@ -164,7 +171,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Astronomy"
   },
   {"id":9,
     "title" : "Northern European Comedy Film Festival I: Leningrad Cowboys Go America",
@@ -183,7 +191,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Film Screening|Film|Northern European Comedy Film Festival"
   },
   {"id":10,
     "title" : "Northern European Comedy Film Festival II: The Adventures of Picasso",
@@ -202,7 +211,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Film Screening|Film|Northern European Comedy Film Festival"
   },
   {"id":11,
     "title" : "Northern European Comedy Film Festival III: The 100 Year-Old Man Who Climbed Out the Window and Disappeared",
@@ -221,7 +231,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Film Screening|Film|Northern European Comedy Film Festival"
   },
   {"id":12,
     "title" : "Alternative Geodesy I (introduction)",
@@ -241,7 +252,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Geology"
   },
   {"id":13,
     "title" : "Cycling Faster than Light",
@@ -260,7 +272,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Special Event|Athletics|Physics"
   },
   {"id":14,
     "title" : "Alternative Geodesy II (advanced topics)",
@@ -280,7 +293,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Geology"
   },
   {"id":15,
     "title" : "The Basque minority in Nueva España",
@@ -299,7 +313,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|History"
   },
   {"id":16,
     "title" : "Clever Bastards of the Fifteenth Century: Ikkyū and Du Fay",
@@ -318,7 +333,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|History"
   },
   {"id":17,
     "title" : "Planetary Engineering I (introduction)",
@@ -338,7 +354,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Planetary Engineering"
   },
   {"id":18,
     "title" : "GMOs: the New Ecoterrorist Hazard",
@@ -348,7 +365,7 @@
     "az_event_date_to" : "today + 10 days 13:00",
     "az_event_date_duration" : "60",
     "uaqs_summary" : "Ecoterrorists have started to embrace genetic engineering.",
-    "az_body" : "Security briefings seminar series\n\nSpeaker:\nAllan Pinkerton\n\nAbstract:“Traditionally, ecological activists have shunned genetic engineering, boycotting GMO-derived products and sabotaging experimental crops. Recently, however, some ecologists have promoted the idea that the only hope for some species to survive projected rapid environmental change is genetic manipulation, either by selective breeding for strains pre-adapted to future conditions or direct genetic engineering. The first indication that breakaway factions in the activist community have embraced this new direction has come from an explosion disrupting logging operations in the Pacific Northwest. Investigation revealed that no bomb had been planted, but that the normal mechanisms of resin formation within the trees themselves had been genetically modified to emplace lenses of high explosive within their bark (giving them the kind of reactive armor used in tanks and other military vehicles). There is a real risk that other species may be weaponized to defend themselves against human interference, and biotechnology research groups at universities are being asked to help identify the dangerous subversives they may be harboring.”",
+    "az_body" : "Security briefings seminar series\n\nSpeaker:\nAllan Pinkerton\n\nAbstract:\n“Traditionally, ecological activists have shunned genetic engineering, boycotting GMO-derived products and sabotaging experimental crops. Recently, however, some ecologists have promoted the idea that the only hope for some species to survive projected rapid environmental change is genetic manipulation, either by selective breeding for strains pre-adapted to future conditions or direct genetic engineering. The first indication that breakaway factions in the activist community have embraced this new direction has come from an explosion disrupting logging operations in the Pacific Northwest. Investigation revealed that no bomb had been planted, but that the normal mechanisms of resin formation within the trees themselves had been genetically modified to emplace lenses of high explosive within their bark (giving them the kind of reactive armor used in tanks and other military vehicles). There is a real risk that other species may be weaponized to defend themselves against human interference, and biotechnology research groups at universities are being asked to help identify the dangerous subversives they may be harboring.”",
     "az_location": [
       {
         "url": "",
@@ -357,7 +374,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Security|Environmental Science"
   },
   {"id":19,
     "title" : "Baroque Vocal Music in New World Indigenous Langages",
@@ -376,7 +394,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Concert|Music"
   },
   {"id":20,
     "title" : "Planetary Engineering II (advanced topics)",
@@ -396,7 +415,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Planetary Engineering"
   },
   {"id":21,
     "title" : "The Historical Context of Raphael Pumpelly's Arizona Mining Adventure",
@@ -415,7 +435,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|History|Geology"
   },
   {"id":22,
     "title" : "The Legacy of Marin Mersenne",
@@ -434,7 +455,8 @@
     ],
     "az_photos" : "",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Music|Mathematics"
   }
 ]
 }

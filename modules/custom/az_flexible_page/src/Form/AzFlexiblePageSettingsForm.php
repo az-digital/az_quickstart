@@ -2,11 +2,8 @@
 
 namespace Drupal\az_flexible_page\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Routing\RouteBuilderInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Form for custom AZ Flexible Page module settings.
