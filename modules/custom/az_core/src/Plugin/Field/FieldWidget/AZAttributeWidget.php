@@ -46,6 +46,62 @@ class AZAttributeWidget extends OptionsSelectWidget {
   /**
    * {@inheritdoc}
    */
+  public static function defaultSettings() {
+    return [
+      'allowed_attributes' => [],
+    ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $options = [];
+
+    // Get field settings to find target taxonomies.
+    $field_definition = $this->fieldDefinition;
+    $field_settings = $field_definition->getSettings();
+    $vocabularies = $field_settings['handler_settings']['target_bundles'] ?? [];
+
+    // Build form elements based on vocabularies.
+    foreach ($vocabularies as $vocabulary => $value) {
+      $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary, 0, 1, TRUE);
+      foreach ($terms as $term) {
+        if ($term->hasField('field_az_attribute_key') && !empty($term->field_az_attribute_key->value)) {
+          $options[$term->field_az_attribute_key->value] = $term->getName();
+        }
+      }
+    }
+
+    // Present form for choosing allowed attributes.
+    $element['allowed_attributes'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Allowed Attributes'),
+      '#default_value' => $this->getSetting('allowed_attributes'),
+      '#options' => $options,
+      '#description' => $this->t('Select which enterprise attributes are allowed for this content type.'),
+      '#multiple' => TRUE,
+    ];
+
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = [];
+    // Show selected attributes.
+    $options = array_filter($this->getSetting('allowed_attributes'));
+    $options = implode(', ', $options);
+    $summary[] = $this->t('Allowed Attributes: @attributes', ['@attributes' => $options]);
+
+    return $summary;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
     // Initial form.
@@ -86,6 +142,24 @@ class AZAttributeWidget extends OptionsSelectWidget {
           if (isset($selected_keys[$term->tid])) {
             $element[$parent]['#default_value'][] = $term->tid;
           }
+        }
+      }
+    }
+
+    $allowed = $this->getSetting('allowed_attributes');
+
+    // Retroactively remove attribute elements not allowed for this field.
+    foreach ($vocabularies as $vocabulary => $value) {
+      $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary, 0, 1, TRUE);
+      foreach ($terms as $term) {
+        if ($term->hasField('field_az_attribute_key') && !empty($term->field_az_attribute_key->value)) {
+          if (empty($allowed[$term->field_az_attribute_key->value])) {
+            unset($element[$term->id()]);
+          }
+        }
+        else {
+          // Remove attributes that are missing an attribute key.
+          unset($element[$term->id()]);
         }
       }
     }

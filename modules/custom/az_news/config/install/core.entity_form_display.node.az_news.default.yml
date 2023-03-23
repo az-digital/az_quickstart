@@ -113,7 +113,15 @@ content:
     type: attributes_select
     weight: 8
     region: content
-    settings: {  }
+    settings:
+      allowed_attributes:
+        'Arizona County': 'Arizona County'
+        Audiences: Audiences
+        Topic: Topic
+        'Tribal Nation': 'Tribal Nation'
+        'Uarizona Unit': 'Uarizona Unit'
+        Category: 0
+        'Event Format': 0
     third_party_settings: {  }
   field_az_expiration_date:
     type: datetime_datelist
