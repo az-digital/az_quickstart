@@ -67,6 +67,7 @@ class AZAttributeWidget extends OptionsSelectWidget {
     // Build form elements based on vocabularies.
     foreach ($vocabularies as $vocabulary => $value) {
       $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary, 0, 1, TRUE);
+      /** @var \Drupal\taxonomy\Entity\Term $term */
       foreach ($terms as $term) {
         if ($term->hasField('field_az_attribute_key') && !empty($term->field_az_attribute_key->value)) {
           $options[$term->field_az_attribute_key->value] = $term->getName();
@@ -152,6 +153,7 @@ class AZAttributeWidget extends OptionsSelectWidget {
     // Retroactively remove attribute elements not allowed for this field.
     foreach ($vocabularies as $vocabulary => $value) {
       $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary, 0, 1, TRUE);
+      /** @var \Drupal\taxonomy\Entity\Term $term */
       foreach ($terms as $term) {
         if ($term->hasField('field_az_attribute_key') && !empty($term->field_az_attribute_key->value)) {
           if (empty($allowed[$term->field_az_attribute_key->value])) {
