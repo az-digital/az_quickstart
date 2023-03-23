@@ -128,8 +128,10 @@ class AZNewsDataFieldRow extends DataFieldRow {
           if (!$term->access('view')) {
             continue;
           }
-          if (!empty($term->field_az_attribute_key->value)) {
-            $items[] = $term->field_az_attribute_key->value;
+          if (!empty($term->parent->entity)) {
+            if (!empty($term->field_az_attribute_key->value) && !empty($term->parent->entity->field_az_attribute_key->value)) {
+              $items[$term->parent->entity->field_az_attribute_key->value][] = $term->field_az_attribute_key->value;
+            }
           }
         }
         return $items;
