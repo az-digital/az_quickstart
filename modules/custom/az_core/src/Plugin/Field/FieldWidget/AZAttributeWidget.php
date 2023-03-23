@@ -6,6 +6,7 @@ use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Render\Element;
 
 /**
  * Plugin implementation of the 'attributes_select' widget.
@@ -162,6 +163,11 @@ class AZAttributeWidget extends OptionsSelectWidget {
           unset($element[$term->id()]);
         }
       }
+    }
+
+    // Hide the widget if we have no valid attributes.
+    if (empty(Element::children($element))) {
+      $element['#access'] = FALSE;
     }
 
     return $element;
