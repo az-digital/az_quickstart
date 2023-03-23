@@ -1,1 +1,1 @@
-endpoint: 'https://trellis-asset.s3.us-west-2.amazonaws.com/dmo/enterprise-attributes-v2.json'
+endpoint: 'https://nonprod-trellis-gateway.dev.trellis.arizona.edu/ws/rest/events/v1/enterprise-attributes'
