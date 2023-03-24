@@ -86,7 +86,7 @@ third_party_settings:
         speed: fast
     group_media:
       children:
-        - field_az_canonical_thumbnail
+        - field_az_media_thumbnail_image
       label: Media
       parent_name: group_row
       region: content
@@ -242,6 +242,15 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_az_media_thumbnail_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_card_image
+      link: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_az_published:
     type: timestamp_ap_style
     label: hidden
@@ -280,7 +289,6 @@ hidden:
   field_az_link: true
   field_az_main_content: true
   field_az_media_image: true
-  field_az_media_thumbnail_image: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true

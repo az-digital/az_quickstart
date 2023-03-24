@@ -15,11 +15,11 @@ effects:
     data:
       crop_type: az_square_aspect_ratio
       automatic_crop_provider: null
-  b473cf90-2c43-46b5-8a27-6970f31bb246:
-    uuid: b473cf90-2c43-46b5-8a27-6970f31bb246
-    id: image_scale
-    weight: -8
+  60965634-5fb1-411c-bb71-4420256a24c7:
+    uuid: 60965634-5fb1-411c-bb71-4420256a24c7
+    id: image_scale_and_crop
+    weight: 3
     data:
       width: 220
       height: 220
-      upscale: true
+      anchor: center-center
