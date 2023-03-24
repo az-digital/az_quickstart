@@ -350,7 +350,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['footer_logo']['settings']['footer_logo_upload'] = [
     '#type' => 'file',
     '#title' => t('Upload footer logo image'),
-    '#maxlength' => 40,
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
     '#upload_validators' => [
       'file_validate_extensions' => [
@@ -439,7 +438,7 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 }
 
 /**
- * Helper function to determin if is a file.
+ * Helper function to determine if is a file.
  *
  * See: https://api.drupal.org/api/drupal/core%21modules%21system%21src%21Form%21ThemeSettingsForm.php/function/ThemeSettingsForm%3A%3AvalidatePath/8.2.x.
  */
