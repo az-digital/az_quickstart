@@ -10,9 +10,9 @@ field_name: field_az_media_thumbnail_image
 entity_type: node
 bundle: az_news
 label: 'Thumbnail Image'
-description: '<b>Note:</b> This field will automatically match the Photo field unless you set it to a different image.'
+description: '<b>Note:</b> Whenever this article is saved, this field will be set to match the Photo field unless a different thumbnail image has been selected. When using the same image, a specific cropping for the thumbnail can be set by clicking the Edit Image pencil icon, expanding the <i>Crop image</i> dropdown, and applying a different <i>Card Image</i> cropping.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

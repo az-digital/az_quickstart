@@ -10,7 +10,7 @@ field_name: field_az_media_thumbnail_image
 entity_type: node
 bundle: az_event
 label: 'Thumbnail Image'
-description: ''
+description: '<b>Note:</b> Whenever this event is saved, this field will be set to match the first Event Photos image unless a different thumbnail image has been selected. When using the same image, a specific cropping for the thumbnail can be set by clicking the Edit Image pencil icon, expanding the <i>Crop image</i> dropdown, and applying a different <i>Card Image</i> or <i>Square Aspect Ratio</i> cropping.'
 required: false
 translatable: true
 default_value: {  }
@@ -22,7 +22,6 @@ settings:
       az_image: az_image
     sort:
       field: _none
-      direction: ASC
     auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

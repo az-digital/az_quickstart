@@ -92,7 +92,7 @@ function az_news_node_presave(EntityInterface $entity) {
       ) {
         $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_media_image->target_id;
         // @todo Remove message below before merging.
-        \Drupal::messenger()->addStatus(t('%title: set thumbnail image to match main image. (media ID %thumb)',
+        \Drupal::messenger()->addStatus(t('%title - Set thumbnail image to match main image (media ID %thumb). This message will be removed before this PR is merged.',
           [
             '%title' => $entity->getTitle(),
             '%thumb' => $entity->field_az_media_thumbnail_image->target_id,
