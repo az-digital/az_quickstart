@@ -217,9 +217,9 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * Sets Thumbnail Image field to match first item of Event Photos field in two
- * cases where we can assume a user hasn't set the thumbnail to a specific
- * image.
+ * Sets the Thumbnail Image field to match the first item of the Event Photos
+ * field in two cases where we can assume a user hasn't set the thumbnail to a
+ * specific image.
  */
 function az_event_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_event' && $entity instanceof NodeInterface) {

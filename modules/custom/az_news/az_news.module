@@ -71,9 +71,8 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * Sets Thumbnail Image field to match Photo field if we
- * can assume a user hasn't set the thumbnail to a specific
- * image.
+ * Sets the Thumbnail Image field to match the Photo field in two cases where
+ * we can assume a user hasn't set the thumbnail to a specific image.
  */
 function az_news_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_news' && $entity instanceof NodeInterface) {
