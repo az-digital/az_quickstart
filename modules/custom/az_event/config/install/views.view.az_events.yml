@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_card
-    - core.entity_view_mode.node.az_card_with_image
+    - core.entity_view_mode.node.az_card_alternate
     - core.entity_view_mode.node.az_row
     - node.type.az_event
     - taxonomy.vocabulary.az_event_categories
@@ -530,7 +530,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_card_with_image
+          view_mode: az_card_alternate
       defaults:
         title: false
         pager: false

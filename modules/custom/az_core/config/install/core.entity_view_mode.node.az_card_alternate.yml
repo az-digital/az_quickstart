@@ -3,7 +3,7 @@ status: true
 dependencies:
   module:
     - node
-id: node.az_card_with_image
-label: 'Card with Image'
+id: node.az_card_alternate
+label: 'Card Alternate'
 targetEntityType: node
 cache: true

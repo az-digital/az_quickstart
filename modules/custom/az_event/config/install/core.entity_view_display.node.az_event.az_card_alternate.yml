@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_card_with_image
+    - core.entity_view_mode.node.az_card_alternate
     - field.field.node.az_event.field_az_attachments
     - field.field.node.az_event.field_az_body
     - field.field.node.az_event.field_az_contacts
@@ -121,10 +121,10 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes:
         - node__title
-id: node.az_event.az_card_with_image
+id: node.az_event.az_card_alternate
 targetEntityType: node
 bundle: az_event
-mode: az_card_with_image
+mode: az_card_alternate
 content:
   field_az_event_date:
     type: daterange_ap_style
