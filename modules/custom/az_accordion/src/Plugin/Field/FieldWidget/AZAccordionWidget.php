@@ -100,10 +100,9 @@ class AZAccordionWidget extends WidgetBase {
 
       // Accordion item.
       $element['preview_container']['accordion_preview'] = [
-        '#theme' => 'az_accordion',
+        '#theme' => '#plain_text',
         '#title' => $item->title ?? '',
-        '#body' => check_markup(
-          $item->title),
+        '#body' => $item->title ?? '',
         '#attributes' => ['class' => ['card']],
       ];
 
