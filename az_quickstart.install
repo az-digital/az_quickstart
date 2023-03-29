@@ -267,3 +267,10 @@ function az_quickstart_update_920603() {
 function az_quickstart_update_920604() {
   \Drupal::service('module_installer')->install(['block_class']);
 }
+
+/**
+ * Ensure media_entity_file_replace module is installed.
+ */
+function az_quickstart_update_920605() {
+  \Drupal::service('module_installer')->install(['media_entity_file_replace']);
+}
