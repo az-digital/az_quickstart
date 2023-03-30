@@ -4,6 +4,8 @@ namespace Drupal\az_publication\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Seboettg\CiteProc\StyleSheet;
+use Seboettg\CiteProc\Exception\CiteProcException;
 
 /**
  * Class AZQuickstartCitationStyleForm provides a form for editing CSL styles.
@@ -37,18 +39,69 @@ class AZQuickstartCitationStyleForm extends EntityForm {
     ];
 
     $form['style'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Citation Style Language'),
-      '#rows' => 15,
+      '#type' => 'textfield',
+      '#title' => $this->t('Citation Style Language Style'),
+      '#size' => 60,
+      '#maxlength' => 128,
       '#default_value' => $az_citation_style->getStyle(),
-      '#description' => $this->t('A stylesheet in Citation Style Language (CSL). For reference, consult the <a href="@csl">Citation Style Language project</a> and <a href="@csl-repo">GitHub repository</a>.', [
+      '#description' => $this->t('The name of a known CSL stylesheet in the Citation Style Language standard, e.g. apa. For reference, consult the <a href="@csl">Citation Style Language project</a> and <a href="@csl-repo">GitHub repository</a>.', [
         '@csl' => 'https://citationstyles.org/',
         '@csl-repo' => 'https://github.com/citation-style-language/styles',
       ]),
-      '#required' => TRUE,
+      '#required' => FALSE,
+    ];
+
+    $open = !empty($az_citation_style->getCustom());
+
+    $form['custom_container'] = [
+      '#type' => 'details',
+      '#open' => $open,
+      '#title' => $this
+        ->t('Custom Citation Style Language'),
+    ];
+
+    $form['custom_container']['custom'] = [
+      '#type' => 'textarea',
+      '#title' => $this->t('Citation Style Language'),
+      '#rows' => 15,
+      '#default_value' => $az_citation_style->getCustom(),
+      '#description' => $this->t('A custom stylesheet in Citation Style Language (CSL). This field is only necessary if you have a custom citation style. For reference, consult the <a href="@csl">Citation Style Language project</a> and <a href="@csl-repo">GitHub repository</a>.', [
+        '@csl' => 'https://citationstyles.org/',
+        '@csl-repo' => 'https://github.com/citation-style-language/styles',
+      ]),
+      '#required' => FALSE,
     ];
 
     return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+    $values = $form_state->getValues();
+    if (empty($values['style']) && empty($values['custom'])) {
+      $form_state->setErrorByName('style', $this->t('You must enter either a CSL stylesheet name or custom CSL.'));
+    }
+    if (!empty($values['style']) && !empty($values['custom'])) {
+      $form_state->setErrorByName('style', $this->t('You must enter either a CSL stylesheet name or custom CSL, not both.'));
+    }
+    if (!empty($values['style'])) {
+      try {
+        $style = StyleSheet::loadStyleSheet($values['style']);
+      }
+      catch (CiteProcException $e) {
+        $form_state->setErrorByName('style', $this->t('The stylesheet name is not valid.'));
+      }
+    }
+    if (!empty($values['custom'])) {
+      libxml_use_internal_errors(TRUE);
+      $doc = simplexml_load_string($values['custom']);
+      if ($doc === FALSE) {
+        $form_state->setErrorByName('custom', $this->t('A custom CSL stylesheet must be valid XML.'));
+      }
+      libxml_clear_errors();
+    }
   }
 
   /**

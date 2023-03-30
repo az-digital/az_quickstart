@@ -32,7 +32,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   config_export = {
  *     "id",
  *     "label",
- *     "style"
+ *     "style",
+ *     "custom"
  *   },
  *   config_prefix = "az_citation_style",
  *   admin_permission = "administer site configuration",
@@ -87,6 +88,23 @@ class AZQuickstartCitationStyle extends ConfigEntityBase implements AZQuickstart
   public function setStyle($style) {
     $this
       ->set('style', $style);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCustom() {
+    return $this
+      ->get('custom');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setCustom($custom) {
+    $this
+      ->set('custom', $custom);
     return $this;
   }
 
