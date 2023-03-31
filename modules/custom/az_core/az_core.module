@@ -170,7 +170,7 @@ function az_core_modules_uninstalled($modules) {
  * Implements hook_block_access().
  */
 function az_core_block_access(Block $block, $operation, AccountInterface $account) {
-  if ($operation === 'view' && $block->plugin() === 'menu_block') {
+  if ($operation === 'view' && $block->plugin === 'menu_block') {
     $block_content = \Drupal::entityTypeManager()
       ->getViewBuilder('block')
       ->view($block);
