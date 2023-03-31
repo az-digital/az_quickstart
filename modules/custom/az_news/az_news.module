@@ -61,7 +61,6 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
             'node' => $entity,
           ], [], $bubbleable_metadata)),
       ];
-      $bubbleable_metadata->applyTo($build);
     }
   }
 
