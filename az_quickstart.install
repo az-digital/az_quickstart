@@ -271,6 +271,6 @@ function az_quickstart_update_920604() {
 /**
  * Ensure media_entity_file_replace module is installed.
  */
-function az_quickstart_update_920605() {
+function az_quickstart_update_920701() {
   \Drupal::service('module_installer')->install(['media_entity_file_replace']);
 }
