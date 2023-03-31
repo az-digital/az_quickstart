@@ -167,20 +167,6 @@ function az_core_modules_uninstalled($modules) {
 }
 
 /**
- * Implements hook_block_access().
- */
-function az_core_block_access(Block $block, $operation, AccountInterface $account) {
-  if ($operation === 'view' && $block->id() === 'az_barrio_sidebar_menu') {
-    $block_content = \Drupal::entityTypeManager()
-      ->getViewBuilder('block')
-      ->view($block);
-    $markup = \Drupal::service('renderer')->renderRoot($block_content);
-    return AccessResult::forbiddenIf($markup === '')->addCacheableDependency($block);
-  }
-  return AccessResult::neutral();
-}
-
-/**
  * Implements hook_token_info().
  */
 function az_core_token_info() {
