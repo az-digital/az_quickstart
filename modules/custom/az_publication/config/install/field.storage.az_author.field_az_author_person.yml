@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_publication
+    - node
+id: az_author.field_az_author_person
+field_name: field_az_author_person
+entity_type: az_author
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

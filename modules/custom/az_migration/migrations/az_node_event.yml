@@ -60,32 +60,31 @@ process:
     source: field_uaqs_link
     process:
       delta: delta
-      uri:
-      -
-        plugin: skip_on_empty
-        source: url
-        method: process
-      -
+      url:
         plugin: str_replace
         search: '[node:url]'
         replace: ''
-      title: 
-        plugin: skip_on_empty
+        source: url
+      title:
+        plugin: default_value
         source: title
-        method: process
+        default_value: 'View Event'
       attributes: attributes
 
   field_az_link:
-    plugin: field_link
-    source: '@preprocess_field_uaqs_link'
-    uri_scheme: "https://"
-
-  'field_az_link/0/uri':
-    -
-      plugin: str_replace
-      source: field_az_link/0/uri
-      search: 'route:<nolink>'
-      replace: ''
+    - plugin: field_link
+      source: '@preprocess_field_uaqs_link'
+      uri_scheme: "https://"
+    - plugin: sub_process
+      process:
+        delta: delta
+        uri:
+          - plugin: str_replace
+            source: uri
+            search: 'route:<nolink>'
+            replace: ''
+        title: title
+        attributes: attributes
 
   field_az_location:
     -
@@ -98,7 +97,9 @@ process:
     source: field_uaqs_body
     process:
       delta: delta
-      value: value
+      value:
+        plugin: az_entity_embed_process
+        source: value
       format:
         plugin: default_value
         default_value: az_standard
@@ -188,18 +189,22 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
-
   path/pathauto:
-    -
-      plugin: skip_on_empty
+    - plugin: str_replace
       source: alias
-      method: process
-    -
-      plugin: default_value
-      default_value: 0
-
-  path/alias: alias
-
+      regex: true
+      search: /.$/
+      replace: 0
+    - plugin: default_value
+      source: alias
+      default_value: 1
+      strict: true
+    - plugin: callback
+      callable: intval
+  path/alias:
+    plugin: skip_on_empty
+    source: alias
+    method: process
   field_az_event_category:
     -
       plugin: migration_lookup

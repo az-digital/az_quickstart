@@ -16,11 +16,14 @@ destination:
 
 process:
   field_az_text_area/value:
-    plugin: paragraphs_callout_field_merge
-    title: title_field
-    text: field_uaqs_summary
-    background: field_uaqs_callout_background
-    border: field_uaqs_callout_border_color
+    -
+      plugin: paragraphs_callout_field_merge
+      title: title_field
+      text: field_uaqs_summary
+      background: field_uaqs_callout_background
+      border: field_uaqs_callout_border_color
+    -
+      plugin: az_entity_embed_process
   field_az_text_area/format:
     plugin: default_value
     default_value: az_standard

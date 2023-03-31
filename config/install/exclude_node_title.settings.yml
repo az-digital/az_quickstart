@@ -7,9 +7,12 @@ content_types:
   az_flexible_page: user
   az_news: none
   az_person: none
+  az_publication: all
 content_type_modes:
   az_event: {  }
   az_flexible_page:
     - full
   az_news: {  }
   az_person: {  }
+  az_publication:
+    - az_publication_reference

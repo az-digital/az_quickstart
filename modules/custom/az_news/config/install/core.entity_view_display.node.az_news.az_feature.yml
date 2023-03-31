@@ -155,7 +155,6 @@ third_party_settings:
         speed: fast
     group_read_article:
       children:
-        - links
         - group_read_more_text
       label: 'Read article'
       parent_name: group_text_column
@@ -256,11 +255,6 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
@@ -277,3 +271,4 @@ hidden:
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
+  links: true
