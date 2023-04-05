@@ -80,6 +80,7 @@
         "drupal/link_class": "2.0.0",
         "drupal/linkit": "6.0.0-beta4",
         "drupal/masquerade": "2.0.0-rc1",
+        "drupal/media_entity_file_replace": "1.1",
         "drupal/media_library_edit": "3.0.2",
         "drupal/media_library_form_element": "2.0.6",
         "drupal/media_library_theme_reset": "1.5.0",
