@@ -38,6 +38,7 @@ class AZQuickstartCitationStyleForm extends EntityForm {
       '#disabled' => !$az_citation_style->isNew(),
     ];
 
+    // Element for referencing a CSL style by name.
     $form['style'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Citation Style Language Style'),
@@ -60,6 +61,7 @@ class AZQuickstartCitationStyleForm extends EntityForm {
         ->t('Custom Citation Style Language'),
     ];
 
+    // Element for entering custom CSL.
     $form['custom_container']['custom'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Citation Style Language'),
@@ -80,12 +82,15 @@ class AZQuickstartCitationStyleForm extends EntityForm {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
+    // Neither style element is strictly required, but one must be present.
     if (empty($values['style']) && empty($values['custom'])) {
       $form_state->setErrorByName('style', $this->t('You must enter either a CSL stylesheet name or custom CSL.'));
     }
+    // Style elements are mutually exclusive.
     if (!empty($values['style']) && !empty($values['custom'])) {
       $form_state->setErrorByName('style', $this->t('You must enter either a CSL stylesheet name or custom CSL, not both.'));
     }
+    // Check if we can successfully load the style the user entered.
     if (!empty($values['style'])) {
       try {
         $style = StyleSheet::loadStyleSheet($values['style']);
@@ -94,6 +99,7 @@ class AZQuickstartCitationStyleForm extends EntityForm {
         $form_state->setErrorByName('style', $this->t('The stylesheet name is not valid.'));
       }
     }
+    // If the user entered custom CSL, verify that it seems to be XML.
     if (!empty($values['custom'])) {
       libxml_use_internal_errors(TRUE);
       $doc = simplexml_load_string($values['custom']);
