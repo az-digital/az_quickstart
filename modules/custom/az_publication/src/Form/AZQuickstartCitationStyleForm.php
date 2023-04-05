@@ -44,7 +44,7 @@ class AZQuickstartCitationStyleForm extends EntityForm {
       '#size' => 60,
       '#maxlength' => 128,
       '#default_value' => $az_citation_style->getStyle(),
-      '#description' => $this->t('The name of a known CSL stylesheet in the Citation Style Language standard, e.g. apa. For reference, consult the <a href="@csl">Citation Style Language project</a> and <a href="@csl-repo">GitHub repository</a>.', [
+      '#description' => $this->t('The name of a CSL stylesheet in the <a href="@csl-repo">Citation Style Language GitHub repository</a>. Do not include the .csl file extension. E.g. for <strong>modern-language-association.csl</strong>, enter <strong>modern-language-association</strong>', [
         '@csl' => 'https://citationstyles.org/',
         '@csl-repo' => 'https://github.com/citation-style-language/styles',
       ]),
