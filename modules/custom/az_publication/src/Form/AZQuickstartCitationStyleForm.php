@@ -6,6 +6,7 @@ use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class AZQuickstartCitationStyleForm provides a form for editing CSL styles.
@@ -38,43 +39,76 @@ class AZQuickstartCitationStyleForm extends EntityForm {
       '#disabled' => !$az_citation_style->isNew(),
     ];
 
-    // Element for referencing a CSL style by name.
-    $form['style'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Citation Style Language Style'),
-      '#size' => 60,
-      '#maxlength' => 128,
-      '#default_value' => $az_citation_style->getStyle(),
-      '#description' => $this->t('The name of a CSL stylesheet in the <a href="@csl-repo">Citation Style Language GitHub repository</a>. Do not include the .csl file extension. E.g. for <strong>modern-language-association.csl</strong>, enter <strong>modern-language-association</strong>', [
-        '@csl' => 'https://citationstyles.org/',
-        '@csl-repo' => 'https://github.com/citation-style-language/styles',
-      ]),
-      '#required' => FALSE,
+    $custom = $form_state->getValue('custom') ?? $az_citation_style->getCustom();
+
+    // Present a text area or text field depending on the custom checkbox.
+    if (!$custom) {
+      // Element for referencing a CSL style by name.
+      $form['style'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('Citation Style Language Style'),
+        '#size' => 60,
+        '#maxlength' => 128,
+        '#default_value' => $az_citation_style->getStyle(),
+        '#description' => $this->t('The name of a CSL stylesheet in the <a href="@csl-repo">Citation Style Language GitHub repository</a>. Do not include the .csl file extension. E.g. for <strong>modern-language-association.csl</strong>, enter <strong>modern-language-association</strong>', [
+          '@csl' => 'https://citationstyles.org/',
+          '@csl-repo' => 'https://github.com/citation-style-language/styles',
+        ]),
+      ];
+    }
+    else {
+      // Element for entering custom CSL.
+      $form['style'] = [
+        '#type' => 'textarea',
+        '#title' => $this->t('Citation Style Language'),
+        '#rows' => 15,
+        '#default_value' => $az_citation_style->getStyle(),
+        '#description' => $this->t('A custom stylesheet in Citation Style Language (CSL). For reference, consult the <a href="@csl">Citation Style Language project</a> and <a href="@csl-repo">GitHub repository</a>.', [
+          '@csl' => 'https://citationstyles.org/',
+          '@csl-repo' => 'https://github.com/citation-style-language/styles',
+        ]),
+      ];
+    }
+
+    $form['style'] += [
+      '#required' => TRUE,
+      '#prefix' => '<div id="style-wrapper">',
+      '#suffix' => '</div>',
     ];
 
-    $open = !empty($az_citation_style->getCustom());
-
-    $form['custom_container'] = [
-      '#type' => 'details',
-      '#open' => $open,
+    // Checkbox triggers AJAX change of style element type.
+    $form['custom'] = [
+      '#type' => 'checkbox',
       '#title' => $this
-        ->t('Custom Citation Style Language'),
-    ];
-
-    // Element for entering custom CSL.
-    $form['custom_container']['custom'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Citation Style Language'),
-      '#rows' => 15,
+        ->t('This style uses custom Citation Style Language'),
       '#default_value' => $az_citation_style->getCustom(),
-      '#description' => $this->t('A custom stylesheet in Citation Style Language (CSL). This field is only necessary if you have a custom citation style. For reference, consult the <a href="@csl">Citation Style Language project</a> and <a href="@csl-repo">GitHub repository</a>.', [
-        '@csl' => 'https://citationstyles.org/',
-        '@csl-repo' => 'https://github.com/citation-style-language/styles',
-      ]),
-      '#required' => FALSE,
+      '#ajax' => [
+        'callback' => '::customCheckboxCallback',
+        'disable-refocus' => TRUE,
+        'event' => 'change',
+        'wrapper' => 'style-wrapper',
+      ],
     ];
 
     return $form;
+  }
+
+  /**
+   * Ajax callback event.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   Form state upon ajax submit.
+   * @param \Symfony\Component\HttpFoundation\Request $request
+   *   The request object for the current request.
+   *
+   * @return mixed
+   *   Must return AjaxResponse object or render array.
+   */
+  public function customCheckboxCallback(array &$form, FormStateInterface $form_state, Request $request) {
+
+    return $form['style'];
   }
 
   /**
@@ -82,31 +116,23 @@ class AZQuickstartCitationStyleForm extends EntityForm {
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
-    // Neither style element is strictly required, but one must be present.
-    if (empty($values['style']) && empty($values['custom'])) {
-      $form_state->setErrorByName('style', $this->t('You must enter either a CSL stylesheet name or custom CSL.'));
+    // If the user entered custom CSL, verify that it seems to be XML.
+    if (!empty($values['custom'])) {
+      libxml_use_internal_errors(TRUE);
+      $doc = simplexml_load_string($values['style']);
+      if ($doc === FALSE) {
+        $form_state->setErrorByName('style', $this->t('A custom CSL stylesheet must be valid XML.'));
+      }
+      libxml_clear_errors();
     }
-    // Style elements are mutually exclusive.
-    if (!empty($values['style']) && !empty($values['custom'])) {
-      $form_state->setErrorByName('style', $this->t('You must enter either a CSL stylesheet name or custom CSL, not both.'));
-    }
-    // Check if we can successfully load the style the user entered.
-    if (!empty($values['style'])) {
+    // Otherwise, check if we can successfully load the style the user entered.
+    else {
       try {
         $style = StyleSheet::loadStyleSheet($values['style']);
       }
       catch (CiteProcException $e) {
         $form_state->setErrorByName('style', $this->t('The stylesheet name is not valid.'));
       }
-    }
-    // If the user entered custom CSL, verify that it seems to be XML.
-    if (!empty($values['custom'])) {
-      libxml_use_internal_errors(TRUE);
-      $doc = simplexml_load_string($values['custom']);
-      if ($doc === FALSE) {
-        $form_state->setErrorByName('custom', $this->t('A custom CSL stylesheet must be valid XML.'));
-      }
-      libxml_clear_errors();
     }
   }
 

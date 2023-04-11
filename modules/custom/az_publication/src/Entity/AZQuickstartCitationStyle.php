@@ -3,6 +3,8 @@
 namespace Drupal\az_publication\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Seboettg\CiteProc\StyleSheet;
+use Seboettg\CiteProc\Exception\CiteProcException;
 
 /**
  * Defines the Quickstart Citation Style entity.
@@ -89,6 +91,26 @@ class AZQuickstartCitationStyle extends ConfigEntityBase implements AZQuickstart
     $this
       ->set('style', $style);
     return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getStyleSheet() {
+    $sheet = $this->getStyle();
+    $custom = $this->getCustom();
+
+    // If not a custom stylesheet, load via CSL package.
+    if (empty($custom)) {
+      try {
+        $sheet = StyleSheet::loadStyleSheet($sheet);
+      }
+      catch (CiteProcException $e) {
+        $sheet = '';
+      }
+    }
+
+    return $sheet;
   }
 
   /**

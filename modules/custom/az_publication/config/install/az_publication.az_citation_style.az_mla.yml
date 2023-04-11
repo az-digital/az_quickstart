@@ -4,4 +4,4 @@ dependencies: {  }
 id: az_mla
 label: 'Modern Language Association Style (MLA)'
 style: modern-language-association
-custom: ''
+custom: 0
