@@ -67,15 +67,15 @@ class NameDeconstructor extends ProcessPluginBase {
     $parser = new Parser();
     $name = $parser->parse($value);
     $value = [
-        'nickname' => $name->getNickname(),
-        'salutation' => $name->getSalutation(),
-        'firstname' => $name->getFirstname(),
-        'initials' => $name->getInitials(),
-        'lastname' => $name->getLastname(),
-        'suffix' => $name->getSuffix(),
-        'middlename' => $name->getMiddlename(),
-        'full' => $name->getFullName(),
-        'given' => $name->getGivenName(),
+      'nickname' => $name->getNickname(),
+      'salutation' => $name->getSalutation(),
+      'firstname' => $name->getFirstname(),
+      'initials' => $name->getInitials(),
+      'lastname' => $name->getLastname(),
+      'suffix' => $name->getSuffix(),
+      'middlename' => $name->getMiddlename(),
+      'full' => $name->getFullName(),
+      'given' => $name->getGivenName(),
     ];
     return $value;
   }
