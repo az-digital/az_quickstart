@@ -1,0 +1,20 @@
+{
+  "authors": [
+    {
+      "id":1,
+      "name" : "José An'ersen"
+    },
+    {
+      "id":2,
+      "name" : "Donald Giovanni"
+    },
+    {
+      "id":3,
+      "name" : "Grimme Ælling"
+    },
+    {
+      "id":4,
+      "name" : "Antonio de Espinosa"
+    }
+  ]
+}

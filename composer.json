@@ -114,7 +114,8 @@
         "npm-asset/blazy": "1.8.2",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0",
-        "seboettg/citeproc-php": "2.5.1"
+        "seboettg/citeproc-php": "2.5.1",
+        "theiconic/name-parser": "1.2.11"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
