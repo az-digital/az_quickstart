@@ -32,7 +32,6 @@ process:
   psuedo_deconstruct_name:
     - plugin: az_name_deconstruct
       source: name
-  field_az_author_non_drop_particle: '@psuedo_deconstruct_name/non_drop_particle'
   field_az_author_lname: '@psuedo_deconstruct_name/lastname'
   field_az_author_fname: '@psuedo_deconstruct_name/firstname'
   field_az_author_suffix: '@psuedo_deconstruct_name/suffix'
