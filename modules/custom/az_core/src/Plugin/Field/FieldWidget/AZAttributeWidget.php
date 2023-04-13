@@ -150,19 +150,34 @@ class AZAttributeWidget extends OptionsSelectWidget {
 
     $allowed = $this->getSetting('allowed_attributes');
 
-    // Retroactively remove attribute elements not allowed for this field.
+    // Retroactively edit or remove atribute elements with special cases.
     foreach ($vocabularies as $vocabulary => $value) {
       $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary, 0, 1, TRUE);
       /** @var \Drupal\taxonomy\Entity\Term $term */
       foreach ($terms as $term) {
+        $tid = $term->id();
+        // Check if this attribute type has special form element considerations.
+        if ($term->hasField('field_az_attribute_type') && !empty($term->field_az_attribute_type->value)) {
+          switch ($term->field_az_attribute_type->value) {
+            case 'single-select picklist':
+              $element[$tid]['#multiple'] = FALSE;
+              $element[$tid]['#empty_value'] = '';
+              break;
+
+            case 'multi-select picklist':
+            default:
+              break;
+          }
+        }
+        // Check if the attribute is allowed for this field.
         if ($term->hasField('field_az_attribute_key') && !empty($term->field_az_attribute_key->value)) {
           if (empty($allowed[$term->field_az_attribute_key->value])) {
-            unset($element[$term->id()]);
+            unset($element[$tid]);
           }
         }
         else {
           // Remove attributes that are missing an attribute key.
-          unset($element[$term->id()]);
+          unset($element[$tid]);
         }
       }
     }
@@ -183,6 +198,10 @@ class AZAttributeWidget extends OptionsSelectWidget {
     // Collapse down to a single array.
     $modified = [];
     foreach ($values as $group) {
+      if (!is_array($group)) {
+        // Single select elements are not yet arrays.
+        $group = !empty($group) ? [$group => $group] : [];
+      }
       foreach ($group as $key => $attribute) {
         $modified[$key] = $key;
       }

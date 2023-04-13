@@ -15,18 +15,22 @@ source:
 
   fields:
     -
-      name: name
-      selector: name
+      name: value
+      selector: value
     -
       name: key
       selector: key
+    -
+      name: type
+      selector: type
     -
       name: parent
       selector: parent
 
 process:
-  name: name
+  name: value
   field_az_attribute_key: key
+  field_az_attribute_type: type
   vid:
     plugin: default_value
     default_value: az_enterprise_attributes

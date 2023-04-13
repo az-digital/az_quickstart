@@ -24,8 +24,8 @@ class AZEnterpriseAttributesJson extends Json {
       // Add child terms to data.
       if (!empty($item['values'])) {
         foreach ($item['values'] as $child) {
-          if (!empty($item['name'])) {
-            $child['parent'] = $item['name'];
+          if (!empty($item['key'])) {
+            $child['parent'] = $item['key'];
           }
           $source_data[] = $child;
         }
@@ -35,13 +35,11 @@ class AZEnterpriseAttributesJson extends Json {
     foreach ($source_data as $index => $item) {
       // Add an empty parent if there isn't one.
       $source_data[$index]['parent'] = $item['parent'] ?? '';
-      // If there is no name, the value is the name.
-      if (empty($item['name']) && !empty($item['value'])) {
-        $source_data[$index]['name'] = $item['value'];
-      }
-      // If there is no key, the name is the key.
-      if (empty($item['key']) && !empty($item['name'])) {
-        $source_data[$index]['key'] = $item['name'];
+      // Add an empty type if there isn't one.
+      $source_data[$index]['type'] = $item['type'] ?? '';
+      // If there is no key, the value is the key.
+      if (empty($item['key']) && !empty($item['value'])) {
+        $source_data[$index]['key'] = $item['value'];
       }
     }
     return $source_data;

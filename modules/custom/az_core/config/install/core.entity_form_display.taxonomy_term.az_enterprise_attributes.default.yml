@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.taxonomy_term.az_enterprise_attributes.field_az_attribute_key
+    - field.field.taxonomy_term.az_enterprise_attributes.field_az_attribute_type
     - taxonomy.vocabulary.az_enterprise_attributes
   module:
     - path
@@ -14,7 +15,7 @@ mode: default
 content:
   description:
     type: text_textarea
-    weight: 2
+    weight: 3
     region: content
     settings:
       rows: 5
@@ -23,6 +24,14 @@ content:
   field_az_attribute_key:
     type: string_textfield
     weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_attribute_type:
+    type: string_textfield
+    weight: 2
     region: content
     settings:
       size: 60
@@ -38,13 +47,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 3
+    weight: 4
     region: content
     settings: {  }
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 4
+    weight: 5
     region: content
     settings:
       display_label: true
