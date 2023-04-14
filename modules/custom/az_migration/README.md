@@ -176,7 +176,7 @@ Usage notes for the built-in Quickstart migrations provided by this module.
 
 ## User migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Block any users you don’t want to migrate.
 * Check for any custom or overridden fields on users.
@@ -204,7 +204,7 @@ drush mr az_user
 
 ## File migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any files you don’t want migrated.
 
@@ -221,12 +221,13 @@ drush mr az_files
 
 ## Media migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any files you don’t want migrated.
 * Check for any custom or overridden fields on file_entities.
 * Check for any custom file entity types.
 * Take note of any file types other than `image`, `audio`, `document`, `video`
+* Check pathauto patterns.
 
 Migrate the related files using the below command :
 ```
@@ -255,11 +256,12 @@ must create a custom migration.**
 
 ### Person category migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any terms you don’t want migrated.
 * Check for any custom or overridden fields on uaqs_person_category taxonomy.
 * Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
+* Check pathauto patterns.
 
 Dependencies :
 
@@ -316,6 +318,7 @@ Source site pre-migration tasks :
 
 * Delete any categories you don’t want migrated.
 * Check for any custom or overridden fields on event_categories taxonomy.
+* Check pathauto patterns.
 
 Migrate event categories using the below command :
 ```
@@ -357,7 +360,7 @@ Source site pre-migration tasks :
 
 * Delete any news tags you don’t want migrated.
 * Check for any custom or overridden fields on uaqs_news_tags taxonomy.
-
+* Check pathauto patterns.
 
 Migrate news tags using the below command :
 ```
@@ -375,6 +378,7 @@ Source site pre-migration tasks :
 
 * Delete any news content you don’t want migrated.
 * Check for any custom or overridden fields on uaqs_news content type.
+* Check pathauto patterns.
 
 Migrate news content using the below command :
 ```
@@ -457,7 +461,7 @@ Notes:
 
 This migration only imports the first link for cards from the multi-value link field in Quickstart v1. If there are multiple links on a card, you can edit the migrated card after the migration and add the links to the text area as HTML instead of using the link field.
 
-Source site pre-migration tasks:
+### Suggested pre-migration tasks (for source site)
 
 * Check for any custom or overridden fields on uaqs_content_chunks_card_deck paragraph type.
 * Delete any card decks you don’t want migrated.
@@ -493,6 +497,11 @@ drush mr az_paragraph_column_image
 ```
 
 ## Menu links migration
+
+### Suggested pre-migration tasks (for source site)
+
+* Prepare your menus for migration by removing any unused menu items, and deleting links that do not work.
+* Duplicate unpublished menu links will collide with live menu links, so it would be best to delete unpublished menu links.
 
 Quickstart 1 menu links can be migrated using the following command:
 ```

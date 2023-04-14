@@ -9,7 +9,7 @@ use Drupal\migrate\MigrateMessage;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class TrellisEventImportForm.
+ * Form for importing events from the Trellis events API.
  */
 class TrellisEventImportForm extends FormBase {
 
