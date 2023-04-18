@@ -117,7 +117,7 @@ class AZQuickstartCitationStyle extends ConfigEntityBase implements AZQuickstart
    * {@inheritdoc}
    */
   public function getCustom() {
-    return $this
+    return (bool) $this
       ->get('custom');
   }
 
@@ -126,7 +126,7 @@ class AZQuickstartCitationStyle extends ConfigEntityBase implements AZQuickstart
    */
   public function setCustom($custom) {
     $this
-      ->set('custom', $custom);
+      ->set('custom', (bool) $custom);
     return $this;
   }
 

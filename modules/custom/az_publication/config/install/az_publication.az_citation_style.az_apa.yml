@@ -4,4 +4,4 @@ dependencies: {  }
 id: az_apa
 label: 'American Psychological Association Style (APA)'
 style: apa
-custom: 0
+custom: false

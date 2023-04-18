@@ -12,7 +12,7 @@ az_publication.az_citation_style.*:
       type: string
       label: 'Style'
     custom:
-      type: integer
+      type: boolean
       label: 'Custom'
     uuid:
       type: string

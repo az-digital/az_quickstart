@@ -4,4 +4,4 @@ dependencies: {  }
 id: az_chicago
 label: 'Chicago Manual of Style (CMOS)'
 style: chicago-fullnote-bibliography
-custom: 0
+custom: false
