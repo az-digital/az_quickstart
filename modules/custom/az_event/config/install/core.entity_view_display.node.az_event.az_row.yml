@@ -177,7 +177,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'h5 text-red mt-0'
+        classes: 'h5 text-chili mt-0'
         id: ''
         element: div
         show_label: false
