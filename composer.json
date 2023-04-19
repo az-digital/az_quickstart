@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.1",
         "academicpuma/locales": "1.0.0",
         "az-digital/arizona-bootstrap": "2.0.23",
         "bower-asset/bootstrap-datepicker": "1.9.0",
@@ -49,6 +49,7 @@
         "drupal/bootstrap_utilities": "2.0.0",
         "drupal/cas": "2.1.0",
         "drupal/chosen": "3.0.5",
+        "drupal/ckeditor": "1.0.1",
         "drupal/ckeditor_bs_grid": "2.0.8",
         "drupal/coffee": "1.3.0",
         "drupal/config_distro": "1.0-alpha4",
@@ -107,7 +108,7 @@
         "drupal/token": "1.11.0",
         "drupal/views_bootstrap": "5.4.0",
         "drupal/viewsreference": "2.0.0-beta4",
-        "drupal/webform": "6.1.4",
+        "drupal/webform": "6.2.0-beta5",
         "drupal/workbench_access": "2.0.1",
         "drupal/xmlsitemap": "1.4.0",
         "npm-asset/blazy": "1.8.2",
@@ -132,6 +133,9 @@
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2022-05-20/2945387-19-support-bundleless-entities.patch"
             },
+            "drupal/background_image_formatter": {
+                "Automated Drupal 10 compatibility fixes (3296604)": "https://www.drupal.org/files/issues/2022-07-18/background_image_formatter.1.x-dev.rector.patch"
+            },
             "drupal/better_exposed_filters": {
                 "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-02-16/3210947-12.patch"
             },
@@ -144,6 +148,10 @@
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
                 "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2022-08-04/3190842-only-get-session-id-when-necessary.patch"
             },
+            "drupal/ckeditor": {
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-02-28/3109289-ckeditor-contrib-67.patch",
+                "Changing an existing embedded media's alignment or alt data attributes does not get saved with CKEditor (3330723)": "https://www.drupal.org/files/issues/2023-01-03/3330723-3.patch"
+            },
             "drupal/config_sync": {
                 "Config_sync_test core constraint": "https://gist.githubusercontent.com/tadean/602c6412fbbdcc16a2d8a0fb58642f9e/raw/2ef503a4c0ae7d459f7c789d6ad3720d92945880/config_sync_test_core_requirement_issue.patch"
             },
@@ -153,13 +161,11 @@
                 "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://www.drupal.org/files/issues/2022-05-05/2259567-160-9-3-x.patch",
                 "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2020-06-05/1461322-25.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Allow text field to enforce a specific text format (784672)": "https://www.drupal.org/files/issues/2023-01-05/784672-302.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2022-12-07/drupal_core-mediaembed_default_view_mode-3109289-65.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch",
                 "Unrelated error message when running tests with database errors (3163925)": "https://www.drupal.org/files/issues/2022-05-12/3163925-19-9-2-x.patch",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
-                "Changing an existing embedded media does not get saved with CKEditor (3102249)": "https://www.drupal.org/files/issues/2022-09-19/3102249-48.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
                 "Usability/accessibility of input fields (row weights) in a table view (3159896)": "https://www.drupal.org/files/issues/2022-02-16/3159896-9-4.x-fix-custom-command.patch"
             },
@@ -173,6 +179,12 @@
             },
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
+            },
+            "drupal/entity_embed": {
+                "Drupal 10 compatibility (3287235)": "https://git.drupalcode.org/project/entity_embed/-/commit/f41e8a4662dfa9dfc1e7c7bd20a7173f9a231352.diff"
+            },
+            "drupal/link_class": {
+                "Automated Drupal 10 compatibility fixes (3297535)": "https://www.drupal.org/files/issues/2023-03-14/link_class-drupal-10-compatibility.patch"
             },
             "drupal/linkit": {
                 "Multiple Linkit elements breaks (2925828)": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch"
@@ -188,6 +200,9 @@
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
+            },
+            "drupal/smart_title": {
+                "Automated Drupal 10 compatibility fixes (3298104)": "https://www.drupal.org/files/issues/2023-03-16/3298104-8.patch"
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
