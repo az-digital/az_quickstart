@@ -114,6 +114,7 @@
         "npm-asset/blazy": "1.8.2",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0",
+        "renanbr/bibtex-parser": "2.1.2",
         "seboettg/citeproc-php": "2.5.1"
     },
     "require-dev": {
