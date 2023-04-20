@@ -1,11 +1,12 @@
 name: az_quickstart
-recipe: drupal9
+recipe: drupal10
 config:
   php: '8.1'
   via: apache:2.4
   webroot: web
   database: mariadb:10.4
   xdebug: false
+  composer_version: "2.5.4"
 services:
   # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
   # TODO: remove database service overrides once lando is updated.
