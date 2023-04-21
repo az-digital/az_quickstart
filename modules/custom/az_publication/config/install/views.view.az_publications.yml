@@ -204,6 +204,7 @@ display:
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
+              reset_button_always_show: false
             filter:
               name:
                 plugin_id: default
