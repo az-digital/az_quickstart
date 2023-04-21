@@ -1,0 +1,131 @@
+name: issue-2327
+recipe: drupal9
+config:
+  php: '8.1'
+  via: apache:2.4
+  webroot: web
+  database: mariadb:10.4
+  xdebug: false
+services:
+  # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
+  # TODO: remove database service overrides once lando is updated.
+  database:
+    type: compose
+    services:
+      image: mariadb:10.4
+      command: docker-entrypoint.sh mariadbd
+      restart: always
+      ports:
+        - '3306'
+      environment:
+        MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
+        MARIADB_DATABASE: drupal9
+        MYSQL_DATABASE: drupal9
+        MARIADB_USER: drupal9
+        MARIADB_PASSWORD: drupal9
+  appserver:
+    config:
+      php: .vscode/php.ini
+    overrides:
+      environment:
+        SIMPLETEST_DB: 'mysql://drupal9:drupal9@database/drupal9'
+        SIMPLETEST_BASE_URL: 'http://appserver'
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://chromedriver:9515"]'
+        XDEBUG_MODE: debug
+      volumes:
+        # Don't share our host working directory as /app. We want /app empty for composer.
+        - /app
+        # Instead share our host working directory as a standalone package.
+        - .:/usr/local/quickstart-install-profile
+    build:
+      # Create a new quickstart project and use the installation profile as a non-packagist repository.
+      # Use the matching scaffolding branch if available.
+      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
+      - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
+      # Use the matching require-dev metapackage branch if available.
+      - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi; composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+      - composer install
+      - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
+  node:
+    type: node:16
+    build:
+      - yarn install
+  chromedriver:
+    type: compose
+    services:
+      image: drupalci/webdriver-chromedriver:production
+      command: chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips=
+tooling:
+  # Provide a command to install Drupal.
+  # Current versions of the Bitnami MySQL container sometimes signal
+  # healthy before MySQL is fully started. This can result in MySQL errors
+  # in a race condition if Drupal is installed during the run phase.
+  install:
+    service: appserver
+    cmd:
+      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal9:drupal9@database:3306/drupal9 -y --verbose
+      - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
+      - /app/vendor/bin/drush --root=/app/web cache:rebuild
+  # Enable theme debugging.
+  theme-debug:
+    service: appserver
+    user: root
+    cmd:
+      - echo "Enabling theme debugging..."
+      - /app/vendor/bin/drupal --root=/app/web site:mode dev
+  # Provide Drush tooling to automatically know the Drupal root.
+  drush:
+    service: appserver
+    cmd: /app/vendor/bin/drush --root=/app/web
+  # Provide Drupal console tooling to automatically know the Drupal root.
+  drupal:
+    service: appserver
+    cmd: /app/vendor/bin/drupal --root=/app/web
+  # Provide phpcs tooling to check coding standards.
+  phpcs:
+    service: appserver
+    cmd: /app/vendor/bin/phpcs --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
+  # Provide PHPCBF tooling to fix coding standards.
+  phpcbf:
+    service: appserver
+    cmd: /app/vendor/bin/phpcbf --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart
+  # Provide phpunit tooling to run unit tests.
+  phpunit:
+    service: appserver
+    cmd: /app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
+  phpunit-fastest:
+    service: appserver
+    cmd: find web/profiles/custom/az_quickstart/ -name "*Test.php" | /app/vendor/bin/fastest -vvv "/app/vendor/bin/phpunit {} --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart;"
+  # Provide phpstan tooling to check for code quality and deprecated code.
+  phpstan:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
+  # Provide phpstan tooling to check for deprecated contrib module/theme code.
+  phpstan-contrib:
+    service: appserver
+    cmd: /app/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan-contrib.neon web/modules web/themes
+  yarn:
+    service: node
+    cmd: yarn
+  eslint:
+    service: node
+    cmd: yarn run eslint --color
+  # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
+  composer:
+    service: appserver
+    cmd:
+      # Run command against the install profile's composer.json - eg. profile dependencies.
+      - /usr/local/bin/composer --working-dir=/usr/local/quickstart-install-profile --no-scripts --no-update
+      # Now issue a composer update/install for the scaffolding folder to pull in new dependencies.
+      # "true" command consumes passed Lando arguments that were only intended to be passed to the previous call.
+      - /usr/local/bin/composer --working-dir=/app --no-scripts update && /usr/local/bin/composer --working-dir=/app install && true
+  xdebug-on:
+    service: appserver
+    description: Enable xdebug for Apache.
+    cmd: docker-php-ext-enable xdebug && /etc/init.d/apache2 reload && echo "Enabling xdebug"
+    user: root
+  xdebug-off:
+    service: appserver
+    description: Disable xdebug for Apache.
+    cmd: rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini && /etc/init.d/apache2 reload && echo "Disabling xdebug"
+    user: root
