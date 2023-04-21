@@ -1,0 +1,54 @@
+id: az_demo_page_categories
+label: AZ Quickstart Demo Page Categories
+migration_tags:
+  - Quickstart Demo Content
+  - Taxonomy
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_page_categories.json
+  item_selector: page_categories
+  ids:
+    name:
+      type: string
+
+  fields:
+    -
+      name: name
+      selector: name
+    -
+      name: description
+      selector: description
+    -
+      name: parent
+      selector: parent_name
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_page_categories
+
+process:
+  name: name
+  description: description
+  description/format:
+    plugin: default_value
+    default_value: az_standard
+
+  vid:
+    plugin: default_value
+    default_value: az_page_categories
+  parent:
+    -
+      plugin: migration_lookup
+      migration: az_demo_page_categories
+      source: parent
+    -
+      plugin: default_value
+      default_value: 0
+
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page

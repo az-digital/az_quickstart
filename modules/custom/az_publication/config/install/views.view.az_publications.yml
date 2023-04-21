@@ -2,25 +2,21 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_ama
-    - core.entity_view_mode.node.az_apa
-    - core.entity_view_mode.node.az_bluebook
-    - core.entity_view_mode.node.az_chicago
-    - core.entity_view_mode.node.az_ieee
-    - core.entity_view_mode.node.az_mla
-    - core.entity_view_mode.node.teaser
-    - field.storage.az_author.field_az_author_lname
+    - core.entity_view_mode.node.az_publication_reference
     - field.storage.node.field_az_publication_date
     - node.type.az_publication
+    - taxonomy.vocabulary.az_publication_categories
   module:
     - az_publication
     - better_exposed_filters
     - datetime
     - datetime_range
     - node
+    - options
+    - taxonomy
     - user
-id: az_publications_date
-label: 'AZ Publications (Date)'
+id: az_publications
+label: 'AZ Publications'
 module: views
 description: ''
 tag: ''
@@ -91,69 +87,6 @@ display:
           settings:
             link_to_entity: true
           group_column: entity_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_az_author_lname:
-          id: field_az_author_lname
-          table: az_author__field_az_author_lname
-          field: field_az_author_lname
-          relationship: field_az_authors
-          group_type: count
-          admin_label: ''
-          plugin_id: field
-          label: ''
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: false
-          group_column: value
           group_columns: {  }
           group_rows: true
           delta_limit: 0
@@ -272,10 +205,30 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
             filter:
+              name:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
               field_az_publication_date_value:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_az_publication_type_value:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
       access:
@@ -285,7 +238,20 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'No publications were found with the specified criteria.'
+            format: az_standard
+          tokenize: false
       sorts:
         field_az_publication_date_value:
           id: field_az_publication_date_value
@@ -301,19 +267,6 @@ display:
             field_identifier: ''
           exposed: false
           granularity: day
-        field_az_author_lname_value:
-          id: field_az_author_lname_value
-          table: az_author__field_az_author_lname
-          field: field_az_author_lname_value
-          relationship: field_az_authors
-          group_type: group
-          admin_label: ''
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
         title:
           id: title
           table: node_field_data
@@ -329,7 +282,86 @@ display:
             label: ''
             field_identifier: ''
           exposed: false
-      arguments: {  }
+      arguments:
+        az_citation_style_argument:
+          id: az_citation_style_argument
+          table: views
+          field: az_citation_style_argument
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_citation_style_argument
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:az_citation_style'
+            fail: 'not found'
+          validate_options:
+            bundles: {  }
+            access: false
+            operation: view
+            multiple: 0
+        term_node_tid_depth:
+          id: term_node_tid_depth
+          table: node_field_data
+          field: term_node_tid_depth
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: taxonomy_index_tid_depth
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: ignore
+          validate_options:
+            bundles:
+              az_publication_categories: az_publication_categories
+            access: false
+            operation: view
+            multiple: 1
+          break_phrase: true
+          depth: 1
+          use_taxonomy_term_path: false
       filters:
         status:
           id: status
@@ -357,37 +389,40 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        delta:
-          id: delta
-          table: node__field_az_authors
-          field: delta
-          relationship: none
+        name:
+          id: name
+          table: az_author_field_data
+          field: name
+          relationship: field_az_authors
           group_type: group
           admin_label: ''
-          plugin_id: numeric
-          operator: '='
-          value:
-            min: ''
-            max: ''
-            value: '0'
-          group: 2
-          exposed: false
+          entity_type: az_author
+          entity_field: name
+          plugin_id: string
+          operator: allwords
+          value: ''
+          group: 1
+          exposed: true
           expose:
-            operator_id: ''
-            label: ''
+            operator_id: name_op
+            label: Author
             description: ''
             use_operator: false
-            operator: ''
+            operator: name_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: ''
+            identifier: name
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -401,37 +436,40 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        delta_1:
-          id: delta_1
-          table: node__field_az_authors
-          field: delta
+        title:
+          id: title
+          table: node_field_data
+          field: title
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: numeric
-          operator: empty
-          value:
-            min: ''
-            max: ''
-            value: ''
-          group: 2
-          exposed: false
+          entity_type: node
+          entity_field: title
+          plugin_id: string
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
           expose:
-            operator_id: ''
-            label: ''
+            operator_id: title_op
+            label: 'Title Keywords'
             description: ''
             use_operator: false
-            operator: ''
+            operator: title_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: ''
+            identifier: title
             required: false
             remember: false
             multiple: false
             remember_roles:
               authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
             placeholder: ''
           is_grouped: false
           group_info:
@@ -463,7 +501,7 @@ display:
           exposed: true
           expose:
             operator_id: field_az_publication_date_value_op
-            label: 'Publication Year'
+            label: Year
             description: ''
             use_operator: false
             operator: field_az_publication_date_value_op
@@ -497,11 +535,56 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           granularity: year
+        field_az_publication_type_value:
+          id: field_az_publication_type_value
+          table: node__field_az_publication_type
+          field: field_az_publication_type_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: list_field
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_publication_type_value_op
+            label: 'Publication Type'
+            description: ''
+            use_operator: false
+            operator: field_az_publication_type_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_publication_type_value
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
       filter_groups:
         operator: AND
         groups:
           1: AND
-          2: OR
       style:
         type: default
         options:
@@ -517,7 +600,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_ama
+          view_mode: az_publication_reference
       query:
         type: views_query
         options:
@@ -537,7 +620,7 @@ display:
           plugin_id: standard
           required: false
       use_ajax: true
-      group_by: false
+      group_by: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -551,37 +634,189 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
-  az_ama:
-    id: az_ama
-    display_title: AMA
+  az_author_person:
+    id: az_author_person
+    display_title: Person
     display_plugin: block
     position: 2
     display_options:
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: field_az_publication_date
-              rendered: true
-              rendered_strip: true
-          row_class: ''
-          default_row_class: true
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
+      empty: {  }
+      arguments:
+        az_citation_style_argument:
+          id: az_citation_style_argument
+          table: views
+          field: az_citation_style_argument
           relationship: none
-          view_mode: az_ama
+          group_type: group
+          admin_label: ''
+          plugin_id: az_citation_style_argument
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:az_citation_style'
+            fail: 'not found'
+          validate_options:
+            bundles: {  }
+            access: false
+            operation: view
+            multiple: 0
+        term_node_tid_depth:
+          id: term_node_tid_depth
+          table: node_field_data
+          field: term_node_tid_depth
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: taxonomy_index_tid_depth
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: ignore
+          validate_options:
+            bundles:
+              az_publication_categories: az_publication_categories
+            access: false
+            operation: view
+            multiple: 1
+          break_phrase: true
+          depth: 1
+          use_taxonomy_term_path: false
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: field_az_author_person
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: node_nid
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
+          break_phrase: false
+          not: false
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            az_publication: az_publication
+          group: 1
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
       defaults:
-        style: false
-        style_options: false
-        row: false
+        empty: false
+        relationships: false
+        arguments: false
+        filters: false
+        filter_groups: false
+      relationships:
+        field_az_authors:
+          id: field_az_authors
+          table: node__field_az_authors
+          field: field_az_authors
+          relationship: none
+          group_type: group
+          admin_label: 'field_az_authors: Author'
+          plugin_id: standard
+          required: false
+        field_az_author_person:
+          id: field_az_author_person
+          table: az_author__field_az_author_person
+          field: field_az_author_person
+          relationship: field_az_authors
+          group_type: group
+          admin_label: 'field_az_author_person: Content'
+          plugin_id: standard
+          required: true
       display_description: ''
-      style_options: null
       display_extenders: {  }
+      block_hide_empty: true
     cache_metadata:
       max-age: -1
       contexts:
@@ -592,216 +827,10 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'
-  az_apa:
-    id: az_apa
-    display_title: APA
-    display_plugin: block
-    position: 3
-    display_options:
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: field_az_publication_date
-              rendered: true
-              rendered_strip: true
-          row_class: ''
-          default_row_class: true
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_apa
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
-      style_options: null
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
-        - 'config:field.storage.node.field_az_publication_date'
-  az_bluebook:
-    id: az_bluebook
-    display_title: Bluebook
-    display_plugin: block
-    position: 4
-    display_options:
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: field_az_publication_date
-              rendered: true
-              rendered_strip: true
-          row_class: ''
-          default_row_class: true
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_bluebook
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
-      style_options: null
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
-        - 'config:field.storage.node.field_az_publication_date'
-  az_chicago:
-    id: az_chicago
-    display_title: Chicago
-    display_plugin: block
-    position: 5
-    display_options:
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: field_az_publication_date
-              rendered: true
-              rendered_strip: true
-          row_class: ''
-          default_row_class: true
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_chicago
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
-      style_options: null
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
-        - 'config:field.storage.node.field_az_publication_date'
-  az_ieee:
-    id: az_ieee
-    display_title: IEEE
-    display_plugin: block
-    position: 6
-    display_options:
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: field_az_publication_date
-              rendered: true
-              rendered_strip: true
-          row_class: ''
-          default_row_class: true
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_ieee
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
-      style_options: null
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
-        - 'config:field.storage.node.field_az_publication_date'
-  az_mla:
-    id: az_mla
-    display_title: MLA
-    display_plugin: block
-    position: 7
-    display_options:
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: field_az_publication_date
-              rendered: true
-              rendered_strip: true
-          row_class: ''
-          default_row_class: true
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_mla
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
-      style_options: null
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - url.query_args
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
-        - 'config:field.storage.node.field_az_publication_date'
-  block_1:
-    id: block_1
-    display_title: Block
+  az_search:
+    id: az_search
+    display_title: Search
     display_plugin: block
     position: 1
     display_options:
@@ -820,11 +849,12 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: teaser
+          view_mode: az_publication_reference
       defaults:
         style: false
         style_options: false
         row: false
+      display_description: ''
       style_options: null
       display_extenders: {  }
     cache_metadata:
@@ -837,5 +867,4 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
-        - 'config:field.storage.az_author.field_az_author_lname'
         - 'config:field.storage.node.field_az_publication_date'

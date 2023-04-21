@@ -2,11 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_bluebook
+    - core.entity_view_mode.node.az_publication_reference
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
+    - field.field.node.az_publication.field_az_publication_category
     - field.field.node.az_publication.field_az_publication_container
     - field.field.node.az_publication.field_az_publication_date
     - field.field.node.az_publication.field_az_publication_date_type
@@ -25,11 +26,32 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_volume
     - node.type.az_publication
   module:
+    - field_group
     - user
-id: node.az_publication.az_bluebook
+third_party_settings:
+  field_group:
+    group_az_publication_reference:
+      children: {  }
+      label: Reference
+      parent_name: ''
+      region: hidden
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: div
+        label_element_classes: 'h3 mb-0'
+        attributes: ''
+        effect: none
+        speed: fast
+id: node.az_publication.az_publication_reference
 targetEntityType: node
 bundle: az_publication
-mode: az_bluebook
+mode: az_publication_reference
 content:
   az_publication_bibliography:
     settings: {  }
@@ -41,6 +63,7 @@ hidden:
   field_az_authors: true
   field_az_publication_abstract: true
   field_az_publication_approximate: true
+  field_az_publication_category: true
   field_az_publication_container: true
   field_az_publication_date: true
   field_az_publication_date_type: true

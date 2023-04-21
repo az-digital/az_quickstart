@@ -1,8 +1,8 @@
-name: Quickstart Publication (Experimental)
+name: Quickstart Publication
 description: 'Provides Publication content type'
 core_version_requirement: ^9 || ^10
 type: module
-package: The University of Arizona
+package: 'The University of Arizona - Experimental'
 dependencies:
   - 'auto_entitylabel:auto_entitylabel'
   - 'az_core:az_core'
@@ -20,6 +20,7 @@ dependencies:
   - 'drupal:options'
   - 'drupal:path'
   - 'drupal:system'
+  - 'drupal:taxonomy'
   - 'drupal:text'
   - 'drupal:user'
   - 'drupal:views'

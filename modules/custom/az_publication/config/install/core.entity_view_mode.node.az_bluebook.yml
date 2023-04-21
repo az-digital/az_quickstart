@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - node
-id: node.az_bluebook
-label: Bluebook
-targetEntityType: node
-cache: true
