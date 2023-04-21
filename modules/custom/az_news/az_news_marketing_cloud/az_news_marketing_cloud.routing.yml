@@ -1,0 +1,7 @@
+az_news_marketing_cloud.template:
+  path: '/export/marketing-cloud'
+  defaults:
+    _controller: '\Drupal\az_news_marketing_cloud\Controller\PageOutputController::template'
+    _title: 'AZ News for Marketing Cloud'
+  requirements: 
+    _permission: 'access content'
