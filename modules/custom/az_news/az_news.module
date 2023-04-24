@@ -71,32 +71,13 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * Sets the Thumbnail Image field to match the Photo field in two cases where
- * we can assume a user hasn't set the thumbnail to a specific image.
+ * Sets the Thumbnail Image field to match the Photo field if the
+ * Use Featured Image as Thumbnail checkbox is checked.
  */
 function az_news_node_presave(EntityInterface $entity) {
-  if ($entity->bundle() === 'az_news' && $entity instanceof NodeInterface) {
-    if (isset($entity->field_az_media_image->entity)) {
-      if (
-        // First case: set the Thumbnail Image field if it is empty.
-        !isset($entity->field_az_media_thumbnail_image->entity)
-        || (
-          // Second case: set the Thumbnail Image field if the two image fields
-          // were the same originally, but are now different after a user
-          // changed only the Photo field.
-          $entity->original instanceof NodeInterface
-          && $entity->original->field_az_media_image->target_id === $entity->original->field_az_media_thumbnail_image->target_id
-          && $entity->field_az_media_image->target_id !== $entity->original->field_az_media_image->target_id
-        )
-      ) {
-        $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_media_image->target_id;
-        // @todo Remove message below before merging.
-        \Drupal::messenger()->addStatus(t('%title - Set thumbnail image to match main image (media ID %thumb). This message will be removed before this PR is merged.',
-          [
-            '%title' => $entity->getTitle(),
-            '%thumb' => $entity->field_az_media_thumbnail_image->target_id,
-          ]));
-      }
-    }
+  if ($entity->bundle() === 'az_news'
+    && $entity instanceof NodeInterface
+    && !empty($entity->field_az_featured_image_as_thumb->value)) {
+    $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_media_image->target_id;
   }
 }

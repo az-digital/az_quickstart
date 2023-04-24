@@ -31,6 +31,9 @@ source:
       name: az_thumbnail
       selector: az_thumbnail
     -
+      name: az_featured_image_as_thumb
+      selector: az_featured_image_as_thumb
+    -
       name: az_caption
       selector: az_caption
     -
@@ -140,6 +143,8 @@ process:
     plugin: migration_lookup
     source: az_thumbnail
     migration: az_demo_image_file
+
+  field_az_featured_image_as_thumb: az_featured_image_as_thumb
 
 destination:
   plugin: entity:node

@@ -7,6 +7,7 @@ dependencies:
     - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_media_thumbnail_image
@@ -33,6 +34,7 @@ third_party_settings:
     group_summary:
       children:
         - field_az_link
+        - field_az_featured_image_as_thumb
         - field_az_media_thumbnail_image
         - field_az_summary
       label: 'Summary fields'
@@ -116,6 +118,13 @@ content:
           WEEKLY: WEEKLY
           MONTHLY: MONTHLY
           YEARLY: YEARLY
+  field_az_featured_image_as_thumb:
+    type: boolean_checkbox
+    weight: 32
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_az_link:
     type: link_default
     weight: 31
