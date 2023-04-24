@@ -3,27 +3,20 @@
 /**
  * Implements hook_theme().
  */
-function html__export__marketing_cloud_theme($existing, $type, $theme, $path) {
+function az_news_marketing_cloud_html__export__marketing_cloud_theme($existing, $type, $theme, $path) {
 
   return [
     'html__export__marketing_cloud' => [
       'render element' => 'children',
-      // If no template name is defined here,
-      // it defaults to the name of the theme hook,
-      // ie. module-name-theme-hook.html.twig
-      'template' => 'az-news-marketing-cloud',
-      // Optionally define path to Twig template files.
-      // Defaults to the module's ./templates/ directory.
+      'template' => 'html--export--marketing-cloud',
       'path' => $path . '/templates',
-      // Optionally define variables that will be passed to the Twig
-      // template and set default values for them.
       'variables' => [
         'variable1' => 'Yet another default text.',
         'variable2' => 0,
         'variable3' => [0, 0, 0],
-      'variables' => [
-        'test_var' => NULL
-      ],
+        'variables' => [
+          'test_var' => NULL,
+        ],
       ],
     ],
   ];
