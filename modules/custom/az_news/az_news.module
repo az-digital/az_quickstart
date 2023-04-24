@@ -52,9 +52,9 @@ function az_news_entity_extra_field_info() {
 function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_link')) {
-    $bubbleable_metadata = new BubbleableMetadata();
     // Read more pseudo field.
     if ($display->getComponent('az_news_read_more')) {
+      $bubbleable_metadata = new BubbleableMetadata();
       $build['az_news_read_more'][] = [
         '#type' => 'markup',
         '#markup' => Html::escape(\Drupal::service('token')
@@ -63,7 +63,6 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
           ], [], $bubbleable_metadata)),
       ];
     }
-    $bubbleable_metadata->applyTo($build);
   }
 
 }
