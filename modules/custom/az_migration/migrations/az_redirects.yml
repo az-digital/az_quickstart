@@ -29,6 +29,12 @@ process:
       - az_news_tags
       - az_person_categories_secondary
       - az_person_categories
+    node_migration:
+      - az_node_carousel
+      - az_node_event
+      - az_node_flexible_page
+      - az_node_news
+      - az_node_person
     source: source
   redirect_source/path: "@source_path_processed"
   redirect_source/query:
