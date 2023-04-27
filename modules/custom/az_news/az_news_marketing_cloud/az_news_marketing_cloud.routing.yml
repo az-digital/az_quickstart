@@ -1,7 +1,9 @@
 az_news_marketing_cloud.template:
-  path: '/export/marketing-cloud/text-layout?node=40'
+  path: '/export/marketing-cloud/text-layout/{node}'
   defaults:
-    _controller: '\Drupal\az_news_marketing_cloud\Controller\PageOutputController::template'
+    _controller: '\Drupal\az_news_marketing_cloud\Controller\PageOutputController::render'
     _title: 'AZ News for Marketing Cloud'
   requirements: 
-    _access: 'TRUE'
+    _entity_access: 'node.view'
+    node: \d+
+    
