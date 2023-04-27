@@ -70,6 +70,7 @@
         "drupal/externalauth": "2.0.3",
         "drupal/field_group": "3.4.0",
         "drupal/field_group_link": "3.1.0",
+        "drupal/flag": "^4.0@beta",
         "drupal/google_tag": "1.6.0",
         "drupal/honeypot": "2.1.2",
         "drupal/image_widget_crop": "2.4.0",
@@ -255,6 +256,12 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "composer/installers": true,
+            "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "drupal/console-extend-plugin": true
+        }
     }
 }

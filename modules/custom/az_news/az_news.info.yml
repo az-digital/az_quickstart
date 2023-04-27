@@ -16,6 +16,7 @@ dependencies:
   - drupal:datetime
   - drupal:field
   - drupal:file
+  - drupal:flag
   - drupal:link
   - drupal:media_library
   - drupal:node

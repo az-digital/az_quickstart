@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: az_featured
+label: 'Featured Story'
+bundles:
+  - az_news
+entity_type: node
+global: true
+flag_short: 'Flag this item'
+flag_long: 'will this be featured on the front page'
+flag_message: ''
+unflag_short: 'Unflag this item'
+unflag_long: ''
+unflag_message: ''
+unflag_denied_text: ''
+weight: 0
+flag_type: 'entity:node'
+link_type: ajax_link
+flagTypeConfig:
+  show_in_links:
+    az_card: az_card
+    az_feature: az_feature
+    az_marquee: az_marquee
+    az_media_list: az_media_list
+    az_medium_media_list: az_medium_media_list
+    az_minimal_media_list: az_minimal_media_list
+    az_row: az_row
+    full: full
+    rss: rss
+    search_index: search_index
+    search_result: search_result
+    teaser: teaser
+    token: token
+  show_as_field: true
+  show_on_form: false
+  show_contextual_link: false
+  extra_permissions:
+    owner: '0'
+linkTypeConfig: {  }
