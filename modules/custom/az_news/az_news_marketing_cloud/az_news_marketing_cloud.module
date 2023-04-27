@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Contains az_news_marketing_cloud.module.
+ */
+
+ /**
  * Implements hook_theme().
  */
 function az_news_marketing_cloud_theme($existing, $type, $theme, $path) {
