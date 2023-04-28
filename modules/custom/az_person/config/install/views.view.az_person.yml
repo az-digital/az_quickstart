@@ -425,8 +425,8 @@ display:
           default_row_class: false
           uses_fields: false
           col_xs: col-12
-          col_sm: col-sm-6
-          col_md: col-md-2
+          col_sm: col-sm-12
+          col_md: col-md-6
           col_lg: col-lg-4
           col_xl: col-xl-4
       row:
