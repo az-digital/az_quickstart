@@ -34,6 +34,7 @@
         "bower-asset/bootstrap-datepicker": "1.9.0",
         "bower-asset/chosen": "1.8.7",
         "citation-style-language/locales": "0.0.5",
+        "citation-style-language/styles": "0.0.199",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
@@ -114,7 +115,7 @@
         "npm-asset/blazy": "1.8.2",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0",
-        "seboettg/citeproc-php": "2.5.1"
+        "seboettg/citeproc-php": "2.6.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
