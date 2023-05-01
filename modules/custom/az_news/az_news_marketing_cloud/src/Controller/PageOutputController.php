@@ -9,7 +9,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\NodeInterface;
 
 // class PageOutputController extends EntityViewController {
-// 
+//
   /**
    * Returns a render-able array for a test page.
    */
@@ -18,7 +18,7 @@ use Drupal\node\NodeInterface;
     // \Drupal::routeMatch()->getParameter('node');
     // return array (
     //   '#theme' => 'html__export__marketing_cloud',
-    // ); 
+    // );
     // $html = \Drupal::service('renderer')->renderRoot($node);
     // $response = new Response();
     // $response->setContent($html);
@@ -31,10 +31,11 @@ use Drupal\node\NodeInterface;
 class PageOutputController extends ControllerBase {
 
   public function render(NodeInterface $node) {
+    dpm($node);
     $fields = [
       'title' => $node->getTitle(),
-      'body' => $node->get('body')->value,
-      'field_image' => $node->get('field_image')->entity->getUrl(),
+      // 'body' => $node->get('body')->value,
+      // 'field_image' => $node->get('field_image')->entity->getUrl(),
     ];
     return [
       '#theme' => 'html__export__marketing_cloud',

@@ -1,0 +1,5 @@
+az_news_marketing_cloud.admin_3rd_party: # The second plugin ID
+  route_name: az_news_marketing_cloud.template
+  title: 'Email Template'
+  base_route: entity.node.canonical
+  weight: 100
