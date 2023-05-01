@@ -27,4 +27,30 @@ interface AZQuickstartCitationStyleInterface extends ConfigEntityInterface {
    */
   public function setStyle($style);
 
+  /**
+   * Returns the loaded CSL stylesheet.
+   *
+   * @return string
+   *   The CSL stylesheet of this citation style.
+   */
+  public function getStyleSheet();
+
+  /**
+   * Returns whether this is a custom CSL implementation.
+   *
+   * @return bool
+   *   The custom CSL flag of this CSL style.
+   */
+  public function getCustom();
+
+  /**
+   * Sets indicator of whether this is a custom CSL implementation.
+   *
+   * @param string $custom
+   *   The desired custom CSL stylesheet.
+   *
+   * @return $this
+   */
+  public function setCustom($custom);
+
 }
