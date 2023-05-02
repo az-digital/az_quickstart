@@ -30,9 +30,10 @@
     ],
     "require": {
         "php": ">=7.4",
-        "academicpuma/locales": "1.0.0",
         "az-digital/arizona-bootstrap": "2.0.23",
         "bower-asset/bootstrap-datepicker": "1.9.0",
+        "citation-style-language/locales": "0.0.5",
+        "citation-style-language/styles": "0.0.199",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
@@ -55,7 +56,7 @@
         "drupal/config_snapshot": "1.0-rc2",
         "drupal/config_sync": "2.0-beta7",
         "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.5.5",
+        "drupal/core-recommended": "9.5.8",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.11",
         "drupal/date_ap_style": "1.5.0",
@@ -77,7 +78,7 @@
         "drupal/jquery_ui": "1.6.0",
         "drupal/jquery_ui_datepicker": "1.4.0",
         "drupal/link_class": "2.0.0",
-        "drupal/linkit": "6.0.0-beta4",
+        "drupal/linkit": "6.0.0-rc1",
         "drupal/masquerade": "2.0.0-rc1",
         "drupal/media_entity_file_replace": "1.1",
         "drupal/media_library_edit": "3.0.2",
@@ -114,7 +115,7 @@
         "npm-asset/blazy": "1.8.2",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0",
-        "seboettg/citeproc-php": "2.5.1"
+        "seboettg/citeproc-php": "2.6.0"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -124,9 +125,6 @@
             "dev-main": "2.7.x-dev"
         },
         "patches": {
-            "seboettg/citeproc-php": {
-                "allow citeproc academicpuma scoping": "https://gist.githubusercontent.com/tadean/aa6b130f49882ba955321847f4fa6fc8/raw/a4e9ba97a9d7f9812a218b55018dfa4b02082379/citeproc_academicpuma_az_publication.patch"
-            },
             "drupal/antibot": {
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
             },
@@ -174,9 +172,6 @@
             },
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
-            },
-            "drupal/linkit": {
-                "Multiple Linkit elements breaks (2925828)": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
