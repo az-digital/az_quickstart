@@ -266,6 +266,9 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
     '#default_value' => theme_get_setting('header_two_col_classes'),
   ];
+  // Add new AZ Barrio sidebar position option and help text.
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#description'] = t('Below the Bootstrap md breakpoint, the "Both sides" position places the Sidebar First region <strong>above</strong> the page content while the "Both sides below on mobile" position places both sidebar regions <strong>below</strong> the page content.');
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
