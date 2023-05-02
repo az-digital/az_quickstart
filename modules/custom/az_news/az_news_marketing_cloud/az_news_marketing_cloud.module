@@ -18,12 +18,12 @@ function az_news_marketing_cloud_theme($existing, $type, $theme, $path) {
   ];
 }
 
-/**
- * Implements hook_preprocess_node()
- */
-function az_news_marketing_cloud_preprocess_node(&$variables) {
-  $variables['node'] = \Drupal::request()->query->get('node');
-}
+// /**
+//  * Implements hook_preprocess_node()
+//  */
+// function az_news_marketing_cloud_preprocess_node(&$variables) {
+//   $variables['node'] = \Drupal::request()->query->get('node');
+// }
 
 /**
  * Implements hook_theme_registry_alter().
@@ -53,5 +53,14 @@ function az_news_marketing_cloud_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
       $theme_registry[$key]['type'] = 'module';
     }
+  }
+}
+
+/**
+ * Implements hook_entity_view_mode_alter().
+ */
+function az_news_marketing_cloud_entity_view_mode_alter(&$view_mode, $context) {
+  if ($context['entity_type'] === 'node' && $context['view_mode'] === 'full' && $context['entity']->getType() === 'page') {
+    $view_mode = 'node.az_marketing_cloud_text_layout';
   }
 }
