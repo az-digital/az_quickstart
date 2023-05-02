@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains az_multilingual.module.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK() for block templates.
+ * 
+ * Override template to include Bootstrap .btn classes on rendered links
+ */
+function az_multilingual_preprocess_links__language_block(&$variables) {
+  \Drupal::logger('az_multilingual')->info('Preprocess has triggered');
+
+  $links = $variables['links'];
+  if (!empty($links)) {
+    // $variables['links'] = [];
+    foreach ($links as $key => $link) {
+      $link['attributes']['class'] = 'btn btn-outline-dark';
+    }
+  }
+}
