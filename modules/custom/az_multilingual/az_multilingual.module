@@ -6,7 +6,7 @@
  */
 
 /**
- * Implements hook_preprocess_HOOK() for block templates.
+ * Implements hook_preprocess_HOOK() for links--language-block templates.
  *
  * Override template to include Bootstrap .btn classes on rendered links.
  */
