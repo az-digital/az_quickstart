@@ -37,9 +37,9 @@
 {{ attach_library('bootstrap_barrio/links') }}
 
 {% if links %}
-  <nav{{ attributes.addClass(['nav', 'links-inline', 'bg-gray-100', 'p-3', 'justify-content-end']) }}>
+  <nav{{ attributes.addClass(['nav', 'links-inline', 'bg-gray-100', 'p-3', 'justify-content-center', 'justify-content-lg-end']) }}>
     {%- for key, item in links -%}
-      <span{{ item.attributes.addClass(key|clean_class, 'nav-link') }}>
+      <span{{ item.attributes.addClass(key|clean_class, 'nav-link bg-transparent p-1') }}>
         {%- if item.link -%}
           {{ item.link }}
         {%- elseif item.text_attributes -%}

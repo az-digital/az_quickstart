@@ -11,13 +11,19 @@
  * Override template to include Bootstrap .btn classes on rendered links
  */
 function az_multilingual_preprocess_links__language_block(&$variables) {
-  \Drupal::logger('az_multilingual')->info('Preprocess has triggered');
 
   $links = $variables['links'];
+  $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
+
+  
   if (!empty($links)) {
-    // $variables['links'] = [];
     foreach ($links as $key => $link) {
-      $link['attributes']['class'] = 'btn btn-outline-dark';
+      
+      // Include .active class for Bootstrap styling (Drupal uses .is-active)
+      if (!empty($lang) && !empty($links[$lang])) {
+        $variables['links'][$lang]['link']['#options']['attributes']['class'][] = 'active';
+      }
+      $variables['links'][$key]['link']['#options']['attributes']['class'][] = 'btn btn-outline-dark';
     }
   }
 }
