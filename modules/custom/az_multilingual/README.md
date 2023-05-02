@@ -1,5 +1,5 @@
-# Quickstart International
-The Quickstart International module enables site editors to provide language translations for their site content. This module only provides the functionality necessary to serve content in multiple languages, and does not provide content translations themselves. It is up to the site owner(s) to provide translations for their site's content. 
+# Quickstart Multilingual
+The Quickstart Multilingual module enables site editors to provide language translations for their site content. This module only provides the functionality necessary to serve content in multiple languages, and does not provide content translations themselves. It is up to the site owner(s) to provide translations for their site's content. 
 
 ## Permissions
 
