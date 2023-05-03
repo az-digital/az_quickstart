@@ -59,7 +59,6 @@ install:
   - drupal:toolbar
   - drupal:field_ui
   - drupal:file
-  - drupal:flag
   - drupal:views
   - drupal:views_ui
   - drupal:tour
