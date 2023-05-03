@@ -10,7 +10,7 @@ field_name: field_az_media_thumbnail_image
 entity_type: node
 bundle: az_news
 label: 'Thumbnail Image'
-description: '<b>Note:</b> To set a different cropping for the thumbnail, click the Edit Image pencil icon, expand the <i>Crop image</i> dropdown, and apply a new <i>Card Image</i> cropping.'
+description: '<b>Note:</b> Using a totally different image for the thumbnail is not recommended. To simply set a different cropping, click the Edit Image pencil icon, expand the <i>Crop image</i> dropdown, and apply a new <i>Card Image</i> cropping.'
 required: false
 translatable: true
 default_value: {  }
