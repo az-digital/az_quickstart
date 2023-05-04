@@ -24,11 +24,6 @@ dependencies:
 third_party_settings:
   smart_title:
     enabled: true
-    settings:
-      smart_title__link: false
-      smart_title__tag: h1
-      smart_title__classes:
-        - text-midnight
 id: node.az_news.az_marketing_cloud_text_layout
 targetEntityType: node
 bundle: az_news
@@ -39,6 +34,14 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
+  field_az_short_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
   field_az_summary:
     type: text_default
     label: hidden
@@ -46,10 +49,10 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  smart_title:
+  links:
     settings: {  }
     third_party_settings: {  }
-    weight: 0
+    weight: 3
     region: content
 hidden:
   field_az_attachments: true
@@ -63,6 +66,5 @@ hidden:
   field_az_metatag: true
   field_az_news_tags: true
   field_az_published: true
-  field_az_short_title: true
   field_az_subheading: true
-  links: true
+  smart_title: true

@@ -6,7 +6,7 @@ namespace Drupal\az_news_marketing_cloud\Controller;
 // use Drupal\Core\Entity\Controller\EntityViewController;
 // use Symfony\Component\HttpFoundation\Response;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\node\NodeInterface;
+// use Drupal\node\NodeInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -61,18 +61,18 @@ class PageOutputController extends ControllerBase {
     );
   }
 
-  public function render(NodeInterface $node) {
-    $view_builder = $this->entityTypeManager->getViewBuilder('node');
-    $display = 'node.az_marketing_cloud_text_layout'; // The name of the view mode you want to use.
-    $build = $view_builder->view($node, $display);
+  // public function render(NodeInterface $node) {
+  //   $view_builder = $this->entityTypeManager->getViewBuilder('node');
+  //   $display = 'az_marketing_cloud_text_layout'; // The name of the view mode you want to use.
+  //   $build = $view_builder->view($node, $display);
 
-    // Create a render array for the custom template.
-    $output = [
-      '#theme' => 'html__export__marketing_cloud',
-      '#content' => $build,
-    ];
+  //   // Create a render array for the custom template.
+  //   $output = [
+  //     '#theme' => 'html__node__export__marketing_cloud',
+  //     '#content' => $build,
+  //   ];
 
-    return $output;
-  }
+  //   return $output;
+  // }
 
 }

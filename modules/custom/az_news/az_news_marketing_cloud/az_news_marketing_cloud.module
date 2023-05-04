@@ -8,15 +8,15 @@
  /**
  * Implements hook_theme().
  */
-function az_news_marketing_cloud_theme($existing, $type, $theme, $path) {
+// function az_news_marketing_cloud_theme($existing, $type, $theme, $path) {
 
-  return [
-    'html__export__marketing_cloud' => [
-      'template' => 'html--export--marketing-cloud',
-      ],
+//   return [
+//     'html__node__export__marketing_cloud' => [
+//       'template' => 'html--node--export--marketing-cloud',
+//       ],
 
-  ];
-}
+//   ];
+// }
 
 // /**
 //  * Implements hook_preprocess_node()
@@ -59,8 +59,8 @@ function az_news_marketing_cloud_theme_registry_alter(&$theme_registry) {
 /**
  * Implements hook_entity_view_mode_alter().
  */
-function az_news_marketing_cloud_entity_view_mode_alter(&$view_mode, $context) {
-  if ($context['entity_type'] === 'node' && $context['view_mode'] === 'full' && $context['entity']->getType() === 'page') {
-    $view_mode = 'node.az_marketing_cloud_text_layout';
-  }
-}
+// function az_news_marketing_cloud_entity_view_mode_alter(&$view_mode, $context) {
+//   // if ($context['entity_type'] === 'node' && $context['view_mode'] === 'full' && $context['entity']->getType() === 'page') {
+//   //   $view_mode = 'az_marketing_cloud_text_layout';
+//   // }
+// }
