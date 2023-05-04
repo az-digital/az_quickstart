@@ -3,3 +3,9 @@ az_publication_bibtex.az_publication_bibtex_secondary_tab:
   title: 'BibTex Import'
   parent_id: az_publication.az_publication_settings_tab
   weight: 3
+
+az_publication_bibtex.az_publication_doi_secondary_tab:
+  route_name: az_publication_bibtex.az_publication_doi_import_form
+  title: 'DOI Import'
+  parent_id: az_publication.az_publication_settings_tab
+  weight: 4

@@ -28,6 +28,12 @@ source:
       name: publisher
       selector: publisher
     -
+      name: institution
+      selector: institution
+    -
+      name: school
+      selector: school
+    -
       name: location
       selector: location
     -
@@ -46,14 +52,29 @@ source:
       name: journaltitle
       selector: journaltitle
     -
+      name: journal
+      selector: journal
+    -
       name: annotation
       selector: annotation
     -
       name: abstract
       selector: abstract
     -
+      name: url
+      selector: url
+    -
+      name: doi
+      selector: doi
+    -
       name: version
       selector: version
+    -
+      name: datetype
+      selector: _date_type
+    -
+      name: date
+      selector: _date
 
 process:
   type:
@@ -85,20 +106,36 @@ process:
       unpublished: manuscript
     default_value: article-journal
   title: title
+  field_az_publication_date_type: datetype
+  field_az_publication_date:
+    plugin: format_date
+    from_format: 'Y-m-d'
+    to_format: 'Y-m-d'
+    from_timezone: 'UTC'
+    source: date
   field_az_publication_container:
     plugin: null_coalesce
     source:
       - booktitle
       - journaltitle
+      - journal
   field_az_publication_abstract:
     plugin: null_coalesce
     source:
       - abstract
       - annotation
   field_az_publication_location: location
-  field_az_publication_publisher: publisher
+  field_az_publication_publisher:
+    plugin: null_coalesce
+    source:
+      - publisher
+      - institution
+      - school
   field_az_publication_page: pages
+  'field_az_publication_link/uri': url
+  field_az_publication_doi: doi
   field_az_publication_volume: volume
+  field_az_publication_issue: number
   field_az_publication_version: version
   field_az_authors:
     plugin: sub_process

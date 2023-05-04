@@ -8,6 +8,7 @@ use RenanBr\BibTexParser\Listener;
 use RenanBr\BibTexParser\Parser;
 use RenanBr\BibTexParser\Exception\ExceptionInterface;
 use RenanBr\BibTexParser\Processor\NamesProcessor;
+use Drupal\az_publication_bibtex\Processor\AZDateProcessor;
 
 /**
  * Obtain BibTeX data for migration..
@@ -33,6 +34,7 @@ class AZBibtex extends DataParserPluginBase {
     try {
       $listener = new Listener();
       $listener->addProcessor(new NamesProcessor());
+      $listener->addProcessor(new AZDateProcessor());
       $parser = new Parser();
       $parser->addListener($listener);
       $parser->parseString($bibtex);
