@@ -3,14 +3,17 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_marketing_cloud_text_layout
+    - field.storage.node.field_az_short_title
+    - field.storage.node.field_az_summary
     - node.type.az_news
   module:
     - node
+    - text
     - user
 id: az_marketing_cloud
 label: 'AZ Marketing Cloud'
 module: views
-description: ''
+description: 'Use this view to manage Marketing Cloud content'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -89,26 +92,10 @@ display:
         options:
           perm: 'access content'
       cache:
-        type: tag
+        type: none
         options: {  }
       empty: {  }
-      sorts:
-        created:
-          id: created
-          table: node_field_data
-          field: created
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: created
-          plugin_id: date
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
-          granularity: second
+      sorts: {  }
       arguments:
         nid:
           id: nid
@@ -116,7 +103,7 @@ display:
           field: nid
           relationship: none
           group_type: group
-          admin_label: 'Magic happens here'
+          admin_label: ''
           entity_type: node
           entity_field: nid
           plugin_id: node_nid
@@ -168,6 +155,10 @@ display:
             operator_list: {  }
       style:
         type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
       row:
         type: 'entity:node'
         options:
@@ -182,6 +173,7 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
+      show_admin_links: false
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -194,8 +186,8 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  page_1:
-    id: page_1
+  text_layout:
+    id: text_layout
     display_title: 'Text Layout'
     display_plugin: page
     position: 1
