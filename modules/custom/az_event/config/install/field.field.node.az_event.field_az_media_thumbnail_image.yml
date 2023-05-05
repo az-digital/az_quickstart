@@ -10,7 +10,7 @@ field_name: field_az_media_thumbnail_image
 entity_type: node
 bundle: az_event
 label: 'Thumbnail Image'
-description: '<strong>Note:</strong> Using an image for the thumbnail that does not appear on the full page display of the content is not recommended. To simply set a different cropping, click the Edit Image pencil icon, expand the <em>Crop image</em> dropdown, and apply a new <em>Card Image</em> cropping.<br>This field overrides the Event Photos field for listing displays and metatags.'
+description: '<strong>Note:</strong> Using an image for the thumbnail that does not appear on the full page display of the content is not recommended. To simply set a different cropping, click the Edit Image pencil icon, expand the <em>Crop image</em> dropdown, and apply a new <em>Card Image</em> cropping.<br>This field overrides the featured image for listing displays and metatags.'
 required: false
 translatable: true
 default_value: {  }
