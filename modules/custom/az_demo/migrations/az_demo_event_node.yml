@@ -178,7 +178,7 @@ process:
     -
       plugin: sub_process
       process:
-        target_id: key
+        target_id: value
         delta: delta
 
   field_az_media_thumbnail_image/target_id:
