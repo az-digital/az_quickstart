@@ -3,6 +3,8 @@ status: true
 dependencies:
   module:
     - taxonomy
+_core:
+  default_config_hash: '-46bTt-Yde4tB9yC0Doed8lvqQ4xQ0mgaG5HhWsGGKw'
 id: taxonomy_term.az_badge
 label: Badge
 targetEntityType: taxonomy_term

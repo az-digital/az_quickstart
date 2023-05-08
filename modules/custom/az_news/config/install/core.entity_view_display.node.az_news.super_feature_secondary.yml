@@ -1,0 +1,137 @@
+uuid: 77a03012-2976-4997-9144-14d5d9ac0d4b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.super_feature_secondary
+    - field.field.node.az_news.field_az_attachments
+    - field.field.node.az_news.field_az_body
+    - field.field.node.az_news.field_az_byline
+    - field.field.node.az_news.field_az_contacts
+    - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_link
+    - field.field.node.az_news.field_az_main_content
+    - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_news_tags
+    - field.field.node.az_news.field_az_published
+    - field.field.node.az_news.field_az_short_title
+    - field.field.node.az_news.field_az_subheading
+    - field.field.node.az_news.field_az_summary
+    - node.type.az_news
+  module:
+    - datetime
+    - field_group
+    - smart_title
+    - user
+third_party_settings:
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: ''
+      smart_title__classes:
+        - node__title
+  field_group:
+    group_content:
+      children:
+        - group_h4
+        - group_date
+        - field_az_news_tags
+      label: Content
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_h4:
+      children:
+        - smart_title
+      label: strong
+      parent_name: group_content
+      region: content
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: text-midnight
+        show_empty_fields: false
+        id: ''
+        element: b
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_date:
+      children:
+        - field_az_published
+      label: Date
+      parent_name: group_content
+      region: content
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: text-muted
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+_core:
+  default_config_hash: maoW7Zarv9lzZH0kAKM9oySFBQ_QKT6XzeR-sfmd77I
+id: node.az_news.super_feature_secondary
+targetEntityType: node
+bundle: az_news
+mode: super_feature_secondary
+content:
+  field_az_news_tags:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_badge
+      link: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
+  field_az_published:
+    type: datetime_custom
+    label: hidden
+    settings:
+      timezone_override: ''
+      date_format: 'M d, Y'
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  smart_title:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
+hidden:
+  az_news_read_more: true
+  field_az_attachments: true
+  field_az_body: true
+  field_az_byline: true
+  field_az_contacts: true
+  field_az_expiration_date: true
+  field_az_link: true
+  field_az_main_content: true
+  field_az_media_image: true
+  field_az_short_title: true
+  field_az_subheading: true
+  field_az_summary: true
+  links: true

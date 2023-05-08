@@ -1,0 +1,16 @@
+.marquee {
+  position: relative;
+}
+
+.marquee .marquee-text {
+    background: rgba(255, 255, 255, 0.92);
+    margin: -12% 1em 1em 1em;
+    overflow: hidden;
+    padding: 0em 1em 1em 1em;
+}
+
+.marquee .marquee-text {
+  position: absolute;
+  bottom: 0;
+}
+
