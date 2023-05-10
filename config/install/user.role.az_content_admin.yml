@@ -16,6 +16,8 @@ permissions:
   - 'administer blocks'
   - 'administer book outlines'
   - 'administer easy breadcrumb'
+  - 'administer flaggings'
+  - 'administer flags'
   - 'administer menu'
   - 'administer meta tags'
   - 'administer nodes'
