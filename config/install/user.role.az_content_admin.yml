@@ -79,8 +79,6 @@ permissions:
   - 'delete webform submissions own node'
   - 'edit any webform'
   - 'edit any webform submission'
-  - 'translate any entity'
-  - 'translate editable entities'
   - 'edit own az_audio media'
   - 'edit terms in az_event_categories'
   - 'edit terms in az_news_tags'
