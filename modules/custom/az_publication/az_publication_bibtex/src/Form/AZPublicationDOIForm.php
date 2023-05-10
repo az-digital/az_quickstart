@@ -88,7 +88,7 @@ class AZPublicationDOIForm extends FormBase {
         $migration->setStatus(MigrationInterface::STATUS_IDLE);
       }
       $options = [
-        'limit' => 1,
+        'limit' => 0,
         'update' => 1,
         'force' => 0,
         'configuration' => [

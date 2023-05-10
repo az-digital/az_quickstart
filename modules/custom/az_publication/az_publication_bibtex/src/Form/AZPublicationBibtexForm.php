@@ -95,7 +95,7 @@ class AZPublicationBibtexForm extends FormBase {
           $migration->setStatus(MigrationInterface::STATUS_IDLE);
         }
         $options = [
-          'limit' => 10,
+          'limit' => 0,
           'update' => 1,
           'force' => 0,
           'configuration' => [
