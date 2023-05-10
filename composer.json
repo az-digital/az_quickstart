@@ -39,7 +39,7 @@
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
         "drupal/antibot": "2.0.2",
-        "drupal/asset_injector": "2.16.0",
+        "drupal/asset_injector": "2.17.0",
         "drupal/auto_entitylabel": "3.0.0",
         "drupal/background_image_formatter": "1.7",
         "drupal/better_exposed_filters": "5.0",
