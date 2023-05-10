@@ -16,12 +16,12 @@ function az_multilingual_preprocess_links__language_block(&$variables) {
   $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
 
   if (!empty($links)) {
-    foreach ($links as $key => $link) {
 
-      // Include .active class for Bootstrap styling (Drupal uses .is-active)
-      if (!empty($lang) && !empty($links[$lang])) {
-        $variables['links'][$lang]['link']['#options']['attributes']['class'][] = 'active';
-      }
+    // Include .active class for Bootstrap styling (Drupal uses .is-active)
+    if (!empty($lang) && !empty($links[$lang])) {
+      $variables['links'][$lang]['link']['#options']['attributes']['class'][] = 'active';
+    }
+    foreach ($links as $key => $link) {
       $variables['links'][$key]['link']['#options']['attributes']['class'][] = 'btn btn-outline-dark';
     }
   }
