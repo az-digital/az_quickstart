@@ -309,7 +309,7 @@ display:
     id: block_3_col_grid
     display_title: 'Grid - 3 Col'
     display_plugin: block
-    position: 1
+    position: 2
     display_options:
       fields:
         field_az_person_category:
@@ -595,7 +595,7 @@ display:
     id: grid_modal
     display_title: 'Grid - Modal'
     display_plugin: block
-    position: 2
+    position: 3
     display_options:
       fields:
         nid:
@@ -1479,7 +1479,7 @@ display:
     id: row
     display_title: 'Row Page'
     display_plugin: page
-    position: 3
+    position: 4
     display_options:
       sorts:
         weight:
