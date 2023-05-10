@@ -29,4 +29,4 @@ The Quickstart Multilingual module enables site editors to provide language tran
 
 ### Important Notes
 
-- LinkIt does not currently support multilingual functionality. Recommend using LinkIt to link to the English version (regular link), then manually modify the URL in the link so it's prepended with the language code. Example: `/example-page` --> `/es/example-page`.
+- [LinkIt does not currently support multilingual functionality](https://www.drupal.org/project/linkit/issues/2886455). Recommend using LinkIt to link to the English version (regular link), then manually modify the URL in the link so it's prepended with the language code. Example: `/example-page` --> `/es/example-page`.
