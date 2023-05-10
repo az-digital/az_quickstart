@@ -1,0 +1,12 @@
+uuid: dd79934c-e50d-406c-96ab-6a589033641c
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+_core:
+  default_config_hash: LGJaqh-WhBiEHJEH-o-VQwd9o97DpiQbpJOmdQinYLo
+id: node.super_feature
+label: 'Super Feature'
+targetEntityType: node
+cache: true
