@@ -3,3 +3,9 @@ az_news_super_feature:
   css:
     theme:
       css/az_news_superfeature.css: {}
+
+az_news_trending:
+  version: 1.x
+  css:
+    theme:
+      css/az_news_trending.css: {}
