@@ -5,7 +5,7 @@ The Quickstart Multilingual module enables site editors to provide language tran
 
 - To enable this feature on your site, someone with an `administrator` role must enable this module on your site.
 - To install/manage languages on your site, you must have the `content administrator` role.
-- To make content translations on your site, you must have the `content administrator` role (as you will need access to menus).
+- To make content translations on your site, you must have the `content editor` role.
 
 ## Instructions
 
