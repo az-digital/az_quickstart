@@ -1,0 +1,6 @@
+services:
+  pubmigration_subscriber:
+    class: Drupal\az_publication_bibtex\EventSubscriber\AZPublicationBibtexEventSubscriber
+    arguments: ['@messenger', '@entity_type.manager']
+    tags:
+      - { name: 'event_subscriber' }
