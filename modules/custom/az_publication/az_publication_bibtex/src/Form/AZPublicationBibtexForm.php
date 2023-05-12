@@ -85,7 +85,6 @@ class AZPublicationBibtexForm extends FormBase {
       if (!empty($file)) {
         $uri = $file->getFileUri();
         $path = $this->fileSystem->realpath($uri);
-        \Drupal::messenger()->addMessage($path);
         $migration_id = 'az_publication_bibtex_import';
         /** @var \Drupal\migrate\Plugin\Migration $migration */
         $migration = $this->pluginManagerMigration->createInstance($migration_id);
