@@ -119,11 +119,14 @@ process:
       - booktitle
       - journaltitle
       - journal
-  field_az_publication_abstract:
+  field_az_publication_abstract/value:
     plugin: null_coalesce
     source:
       - abstract
       - annotation
+  field_az_publication_abstract/format:
+    plugin: default_value
+    default_value: az_standard
   field_az_publication_location: location
   field_az_publication_publisher:
     plugin: null_coalesce
