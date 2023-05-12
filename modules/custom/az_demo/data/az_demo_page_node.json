@@ -170,6 +170,16 @@
       "az_marketing_page_style" : "az_marketing_page_standard",
       "az_media_image" : "arizona_campus_fireworks.jpg",
       "az_summary" : "This is an example Marketing Campaign Page."
+    },
+    {
+      "id":18,
+      "title" : "Code Examples",
+      "path" : "/pages/code-examples",
+      "exclude_title" : true,
+      "az_page_category" : "Marketing Campaign",
+      "az_main_content" : "89",
+      "az_media_image" : "",
+      "az_summary" : "This is a code example."
     }
   ]
 }
