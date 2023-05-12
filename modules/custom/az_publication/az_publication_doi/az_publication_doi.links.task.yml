@@ -1,0 +1,5 @@
+az_publication_doi.az_publication_doi_secondary_tab:
+  route_name: az_publication_doi.az_publication_doi_import_form
+  title: 'DOI Import'
+  parent_id: az_publication.az_publication_settings_tab
+  weight: 4

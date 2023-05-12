@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_publication_bibtex\Form;
+namespace Drupal\az_publication_doi\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;

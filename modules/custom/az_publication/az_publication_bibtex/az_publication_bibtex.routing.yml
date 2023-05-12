@@ -5,11 +5,3 @@ az_publication_bibtex.az_publication_bibtex_import_form:
     _title: 'Quickstart Publication BibTeX Import'
   requirements:
     _permission: 'administer quickstart configuration'
-
-az_publication_bibtex.az_publication_doi_import_form:
-  path: '/admin/config/az-quickstart/settings/az-publication/doi'
-  defaults:
-    _form: '\Drupal\az_publication_bibtex\Form\AZPublicationDOIForm'
-    _title: 'Quickstart Publication DOI Import'
-  requirements:
-    _permission: 'administer quickstart configuration'
