@@ -13,7 +13,7 @@ bundle: az_person
 label: 'Phone Number(s)'
 description: '<strong>Suggested format:</strong> 000-000-0000 +ext'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
