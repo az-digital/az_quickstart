@@ -30,3 +30,5 @@ The Quickstart Multilingual module enables site editors to provide language tran
 ### Important Notes
 
 - [LinkIt does not currently support multilingual functionality](https://www.drupal.org/project/linkit/issues/2886455). Recommend manually copying the path to the page you need to link to, if it's in another language than the site's default.
+- If you have enabled any extra QS modules that contain content/paragraph types (such as HTML Field and Carousel Item), you will need to manually enable translations for those entity types after installing this module.
+- This module is compatible with Content Moderation workflows, but you will need to manually enable translations on moderation states after installing this module.
