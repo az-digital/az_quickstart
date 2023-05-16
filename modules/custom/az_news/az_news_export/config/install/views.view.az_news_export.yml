@@ -27,7 +27,6 @@ dependencies:
     - rest
     - serialization
     - taxonomy
-    - text
     - user
 id: az_news_export
 label: 'AZ News Export'
@@ -360,7 +359,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: text_default
+          type: az_enterprise_text_export
           settings: {  }
           group_column: value
           group_columns: {  }
@@ -422,7 +421,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: text_default
+          type: az_enterprise_text_export
           settings: {  }
           group_column: value
           group_columns: {  }
@@ -547,7 +546,7 @@ display:
           empty_zero: false
           hide_alter_empty: true
           click_sort_column: value
-          type: text_default
+          type: az_enterprise_text_export
           settings: {  }
           group_column: value
           group_columns: {  }
