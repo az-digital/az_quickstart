@@ -14,4 +14,4 @@ id: node.az_news
 target_entity_type_id: node
 target_bundle: az_news
 default_langcode: site_default
-language_alterable: true
+language_alterable: false
