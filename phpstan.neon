@@ -7,7 +7,7 @@ parameters:
 		- */tests/fixtures/*.php
 		- */settings*.php
 		- */node_modules/*
-		- */modules/custom/az_core/src/Plugin/LinkExtractor/*
+		- */LinkExtractor/*
 
 	ignoreErrors:
 		- '#\Drupal calls should be avoided in classes, use dependency injection instead#'
