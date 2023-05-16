@@ -42,7 +42,7 @@ class AzLinkExtractor extends LinkExtractorBase {
     $urls = [];
 
     // Finds all hyperlinks in the content.
-    if ($this->linkcheckerSetting->get('extract.from_a') == TRUE) {
+    if ($this->linkcheckerSetting->get('extract.from_a') === TRUE) {
       $links = $html_dom->getElementsByTagName('a');
       foreach ($links as $link) {
         $urls[] = $link->getAttribute('href');
@@ -55,7 +55,7 @@ class AzLinkExtractor extends LinkExtractorBase {
     }
 
     // Finds all audio links in the content.
-    if ($this->linkcheckerSetting->get('extract.from_audio') == TRUE) {
+    if ($this->linkcheckerSetting->get('extract.from_audio') === TRUE) {
       $audios = $html_dom->getElementsByTagName('audio');
       foreach ($audios as $audio) {
         $urls[] = $audio->getAttribute('src');
@@ -74,7 +74,7 @@ class AzLinkExtractor extends LinkExtractorBase {
     }
 
     // Finds embed tags with links in the content.
-    if ($this->linkcheckerSetting->get('extract.from_embed') == TRUE) {
+    if ($this->linkcheckerSetting->get('extract.from_embed') === TRUE) {
       $embeds = $html_dom->getElementsByTagName('embed');
       foreach ($embeds as $embed) {
         $urls[] = $embed->getAttribute('src');
@@ -84,7 +84,7 @@ class AzLinkExtractor extends LinkExtractorBase {
     }
 
     // Finds iframe tags with links in the content.
-    if ($this->linkcheckerSetting->get('extract.from_iframe') == TRUE) {
+    if ($this->linkcheckerSetting->get('extract.from_iframe') === TRUE) {
       $iframes = $html_dom->getElementsByTagName('iframe');
       foreach ($iframes as $iframe) {
         $urls[] = $iframe->getAttribute('src');
@@ -92,7 +92,7 @@ class AzLinkExtractor extends LinkExtractorBase {
     }
 
     // Finds img tags with links in the content.
-    if ($this->linkcheckerSetting->get('extract.from_img') == TRUE) {
+    if ($this->linkcheckerSetting->get('extract.from_img') === TRUE) {
       $imgs = $html_dom->getElementsByTagName('img');
       foreach ($imgs as $img) {
         $urls[] = $img->getAttribute('src');
@@ -101,7 +101,7 @@ class AzLinkExtractor extends LinkExtractorBase {
     }
 
     // Finds object/param tags with links in the content.
-    if ($this->linkcheckerSetting->get('extract.from_object') == TRUE) {
+    if ($this->linkcheckerSetting->get('extract.from_object') === TRUE) {
       $objects = $html_dom->getElementsByTagName('object');
       foreach ($objects as $object) {
         $urls[] = $object->getAttribute('data');
@@ -126,7 +126,7 @@ class AzLinkExtractor extends LinkExtractorBase {
     }
 
     // Finds video tags with links in the content.
-    if ($this->linkcheckerSetting->get('extract.from_video') == TRUE) {
+    if ($this->linkcheckerSetting->get('extract.from_video') === TRUE) {
       $videos = $html_dom->getElementsByTagName('video');
       foreach ($videos as $video) {
         $urls[] = $video->getAttribute('poster');
