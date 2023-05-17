@@ -1,0 +1,8 @@
+{
+  "name": "az-digital/ua_in_the_news",
+  "description": "View for UANews showing stories from outside media channels.",
+  "type": "drupal-custom-module",
+  "require": {
+      "drupal/core": "^9"
+  }
+}

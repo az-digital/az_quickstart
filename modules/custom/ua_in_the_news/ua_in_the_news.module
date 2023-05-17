@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * @file
+ * Contains ua_in_the_news.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\views\ViewExecutable; 
+
+/**
+ * Implements hook_help().
+ */
+function ua_in_the_news_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the ua_in_the_news module.
+    case 'help.page.ua_in_the_news':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Provides a view of University of Arizona news from outside news publications') . '</p>';
+      return $output;
+
+    default:
+  }
+}

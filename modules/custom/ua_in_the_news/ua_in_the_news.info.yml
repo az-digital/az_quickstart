@@ -1,0 +1,5 @@
+name: 'University of Arizona in the News'
+type: module
+description: 'View for UANews showing stories from outside media channels'
+core_version_requirement: ^9
+package: The University of Arizona - Custom
