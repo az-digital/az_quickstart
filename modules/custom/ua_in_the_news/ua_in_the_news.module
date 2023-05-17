@@ -6,7 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\views\ViewExecutable; 
+use Drupal\views\ViewExecutable;
 
 /**
  * Implements hook_help().
