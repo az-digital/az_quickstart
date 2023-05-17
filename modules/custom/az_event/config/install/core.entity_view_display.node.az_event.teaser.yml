@@ -8,8 +8,10 @@ dependencies:
     - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -39,8 +41,10 @@ hidden:
   field_az_contacts: true
   field_az_event_category: true
   field_az_event_date: true
+  field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_location: true
+  field_az_media_thumbnail_image: true
   field_az_photos: true
   field_az_subheading: true
   field_az_summary: true

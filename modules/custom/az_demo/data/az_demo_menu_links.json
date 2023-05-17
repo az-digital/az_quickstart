@@ -318,6 +318,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "0"
+    },
+    {
+      "link_id": "30",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Code Example",
+      "urlpath": "/pages/code-examples",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "13"
     }
   ]
 }
