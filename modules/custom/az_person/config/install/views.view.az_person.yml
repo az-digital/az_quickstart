@@ -309,7 +309,7 @@ display:
     id: block_1
     display_title: 'Grid - 3 col'
     display_plugin: block
-    position: 1
+    position: 4
     display_options:
       fields:
         field_az_person_category:
