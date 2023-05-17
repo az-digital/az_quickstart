@@ -305,11 +305,11 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_person_category'
-  block_3_col_grid:
-    id: block_3_col_grid
-    display_title: 'Grid - 3 Col'
+  block_grid_3_col:
+    id: block_grid_3_col
+    display_title: 'Grid - 3 col'
     display_plugin: block
-    position: 2
+    position: 1
     display_options:
       fields:
         field_az_person_category:
@@ -444,9 +444,8 @@ display:
         arguments: true
       relationships: {  }
       display_description: ''
-      style_options: null
       display_extenders: {  }
-      block_description: 'Grid 3 Column'
+      block_description: 'Person Grid 3 col'
     cache_metadata:
       max-age: -1
       contexts:
