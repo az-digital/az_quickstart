@@ -18,6 +18,7 @@ permissions:
   - 'administer easy breadcrumb'
   - 'administer flaggings'
   - 'administer flags'
+  - 'administer languages'
   - 'administer menu'
   - 'administer meta tags'
   - 'administer nodes'
