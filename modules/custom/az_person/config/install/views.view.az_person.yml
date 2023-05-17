@@ -305,8 +305,8 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_person_category'
-  block_grid_3_col:
-    id: block_grid_3_col
+  block_1:
+    id: block_1
     display_title: 'Grid - 3 col'
     display_plugin: block
     position: 1
@@ -445,7 +445,7 @@ display:
       relationships: {  }
       display_description: ''
       display_extenders: {  }
-      block_description: 'Person Grid 3 col'
+      block_description: 'Grid - 3 col'
     cache_metadata:
       max-age: -1
       contexts:
@@ -614,7 +614,7 @@ display:
     id: grid_modal
     display_title: 'Grid - Modal'
     display_plugin: block
-    position: 3
+    position: 2
     display_options:
       fields:
         nid:
@@ -1498,7 +1498,7 @@ display:
     id: row
     display_title: 'Row Page'
     display_plugin: page
-    position: 4
+    position: 3
     display_options:
       sorts:
         weight:
