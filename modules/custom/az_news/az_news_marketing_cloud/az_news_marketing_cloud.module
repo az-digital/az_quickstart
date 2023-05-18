@@ -47,18 +47,12 @@ function az_news_marketing_cloud_theme_registry_alter(&$theme_registry) {
 //     $variables['attributes']['alt'] = $attributes['alt'];
 //     $variables['attributes']['class'][] = 'some-class';
 //     dpm($variables);
-
 // }
-
-
-
-//   function az_news_marketing_cloud_preprocess_image(&$variables) {
+// function az_news_marketing_cloud_preprocess_image(&$variables) {
 //     //Delete all classes
-//     $variables['attributes']['class'] = [];  
-//    }
-
-//    function az_news_marketing_cloud_image_style(&$variables) {
+//     $variables['attributes']['class'] = [];
+//    }.
+// function az_news_marketing_cloud_image_style(&$variables) {
 //     // Add a new class
-//      $variables['attributes']['class'][] = 'class-that-is-added-to-empty-array-set-in-hook_image';   
+//      $variables['attributes']['class'][] = 'class-that-is-added-to-empty-array-set-in-hook_image';
 //     }
-
