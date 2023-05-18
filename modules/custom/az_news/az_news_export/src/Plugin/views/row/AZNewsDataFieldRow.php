@@ -4,6 +4,7 @@ namespace Drupal\az_news_export\Plugin\views\row;
 
 use Drupal\rest\Plugin\views\row\DataFieldRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\image\Entity\ImageStyle;
 
 /**
  * Plugin which displays fields as raw data.
@@ -54,6 +55,33 @@ class AZNewsDataFieldRow extends DataFieldRow {
    */
   public function render($row) {
     $output = [];
+    // Provider a helper for image serialization.
+    $image_serializer = function ($value, $entity) {
+      $item = [];
+      if (!empty($value)) {
+        $media = $this->entityTypeManager->getStorage('media')->load($value);
+        if (!empty($media) && $media->access('view') && $media->hasField('field_media_az_image')) {
+          if (!empty($media->field_media_az_image->entity)) {
+            /** @var \Drupal\file\FileInterface $image */
+            $image = $media->field_media_az_image->entity;
+            $item['original'] = $image->createFileUrl(FALSE);
+            $uri = $image->getFileUri();
+            $styles = [
+              'thumbnail' => 'az_enterprise_thumbnail',
+              'thumbnail_small' => 'az_enterprise_thumbnail_small',
+            ];
+            foreach ($styles as $key => $style_id) {
+              $image_style = ImageStyle::load($style_id);
+              if (!empty($image_style)) {
+                $item[$key] = $image_style->buildUrl($uri);
+              }
+            }
+
+          }
+        }
+      }
+      return $item;
+    };
     // Special serialization rules. Resolve references at serialization time.
     // View relationships creates duplicate rows and wrong array structure.
     $rules = [
@@ -94,20 +122,8 @@ class AZNewsDataFieldRow extends DataFieldRow {
         return $items;
       },
       // Serialize media image as file URL.
-      'field_az_media_image' => function ($value, $entity) {
-        $item = "";
-        if (!empty($value)) {
-          $media = $this->entityTypeManager->getStorage('media')->load($value);
-          if (!empty($media) && $media->access('view') && $media->hasField('field_media_az_image')) {
-            if (!empty($media->field_media_az_image->entity)) {
-              /** @var \Drupal\file\FileInterface $image */
-              $image = $media->field_media_az_image->entity;
-              $item = $image->createFileUrl(FALSE);
-            }
-          }
-        }
-        return $item;
-      },
+      'field_az_media_image' => $image_serializer,
+      'field_az_media_thumbnail_image' => $image_serializer,
       // Serialize the taxonomy terms as an array of labels.
       'field_az_news_tags' => function ($value, $entity) {
         $items = [];
