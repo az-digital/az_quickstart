@@ -56,3 +56,15 @@ function az_news_marketing_cloud_theme_registry_alter(&$theme_registry) {
 // // Add a new class
 //     $variables['attributes']['class'][] = 'class-that-is-added-to-empty-array-set-in-hook_image';
 //     }
+
+function az_news_marketing_cloud_preprocess__node__az_news__az_marketing_cloud_50_50_layout(&$variables) {
+  $node = $variables['node'];
+  if ($node->getType() === 'az_news') {
+    $media = $node->field_az_media_image->entity ?? NULL;
+    $file = $media->field_media_az_image->entity ?? NULL;
+    if (!empty($file)) {
+      $uri = $file->getFileUri();
+      $variables['file_field_url'] = file_create_url($uri);
+    }
+  }
+}
