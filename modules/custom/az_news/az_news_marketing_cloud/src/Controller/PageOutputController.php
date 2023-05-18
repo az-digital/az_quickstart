@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * $response = new Response();
  * $response->setContent($html);
  * return $response;
- * }
+ * }.
  *
  * }.
  * Class PageOutputController extends ControllerBase
@@ -49,16 +49,10 @@ class PageOutputController extends ControllerBase {
 
   protected $entityTypeManager;
 
-  /**
-   *
-   */
   public function __construct(EntityTypeManagerInterface $entityTypeManager) {
     $this->entityTypeManager = $entityTypeManager;
   }
 
-  /**
-   *
-   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager')
@@ -70,10 +64,10 @@ class PageOutputController extends ControllerBase {
   //   $display = 'az_marketing_cloud_text_layout'; // The name of the view mode you want to use.
   //   $build = $view_builder->view($node, $display);.
   // // Create a render array for the custom template.
-  //   $output = [
-  //     '#theme' => 'html__node__export__marketing_cloud',
-  //     '#content' => $build,
-  //   ];
+  // $output = [
+  //   '#theme' => 'html__node__export__marketing_cloud',
+  //   '#content' => $build,
+  // ];
   // return $output;
   // }.
 }
