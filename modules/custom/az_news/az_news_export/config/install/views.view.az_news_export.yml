@@ -18,6 +18,7 @@ dependencies:
     - field.storage.node.field_az_summary
     - node.type.az_news
   module:
+    - az_core
     - az_news_export
     - datetime
     - entity_reference_revisions

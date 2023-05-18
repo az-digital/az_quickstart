@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_news_export\Plugin\Field\FieldFormatter;
+namespace Drupal\az_core\Plugin\Field\FieldFormatter;
 
 use Drupal\text\Plugin\Field\FieldFormatter\TextDefaultFormatter;
 use Drupal\Component\Utility\Html;
