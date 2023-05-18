@@ -25,8 +25,14 @@ source:
       name: path_alias
       selector: path
     -
-      name: filename
+      name: az_photos
       selector: az_photos
+    -
+      name: az_thumbnail
+      selector: az_thumbnail
+    -
+      name: az_featured_image_as_thumb
+      selector: az_featured_image_as_thumb
     -
       name: az_body
       selector: az_body
@@ -153,38 +159,34 @@ process:
 
   # 'path/alias': path_alias
 
-  pseudo_exploded_photos:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: filename
-    -
-      plugin: explode
-      source: filename
-      delimiter: '|'
-
-  pseudo_photos:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: '@pseudo_exploded_photos'
-    -
-      plugin: migration_lookup
-      migration:
-        - az_demo_image_file
-      source: '@pseudo_exploded_photos'
-
   field_az_photos:
     -
       plugin: skip_on_empty
       method: process
-      source: '@pseudo_exploded_photos'
+      source: az_photos
+    -
+      plugin: explode
+      delimiter: '|'
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_image_file
+    -
+      plugin: single_value
+    -
+      plugin: az_prepare_array_for_sub_process
     -
       plugin: sub_process
-      source: '@pseudo_photos'
       process:
+        target_id: value
         delta: delta
-        target_id: '0'
+
+  field_az_media_thumbnail_image/target_id:
+    plugin: migration_lookup
+    source: az_thumbnail
+    migration: az_demo_image_file
+
+  field_az_featured_image_as_thumb: az_featured_image_as_thumb
 
   pseudo_exploded_categories:
     -

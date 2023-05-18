@@ -12,7 +12,7 @@ bundle: az_author
 label: 'Dropping Particle'
 description: 'Particles that are dropped when only the surname is shown, e.g. van, Ludwig van Beethoven.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

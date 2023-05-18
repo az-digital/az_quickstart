@@ -119,6 +119,8 @@ permissions:
   - 'revert az_publication revisions'
   - 'revert book revisions'
   - 'revert webform revisions'
+  - 'translate any entity'
+  - 'translate editable entities'
   - 'update any az_flexible_block block content'
   - 'update any az_quick_links block content'
   - 'update content translations'
