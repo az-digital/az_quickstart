@@ -13,7 +13,7 @@ bundle: az_event
 label: Where
 description: "Specify a URL if there is an online map for the location.<br />\r\nIf there is no map, simply fill in the location name or address in the title field.<br />\r\n<strong>Campus Map: </strong> http://map.arizona.edu<br />\r\n<strong>Google Maps: </strong> http://maps.google.com"
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

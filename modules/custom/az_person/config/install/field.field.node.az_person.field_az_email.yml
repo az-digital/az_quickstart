@@ -11,7 +11,7 @@ bundle: az_person
 label: Email
 description: 'If possible, <a href="https://uaatwork.arizona.edu/uannounce/send-arizonaedu-email-effective-march-10">please use addresses ending with <i>@arizona.edu</i> rather than <i>@email.arizona.edu</i></a>.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
