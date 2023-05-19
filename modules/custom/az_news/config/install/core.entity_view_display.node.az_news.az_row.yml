@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.ua_news_list_view
+    - core.entity_view_mode.node.az_row
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
@@ -276,12 +276,10 @@ third_party_settings:
         - text-decoration-none
         - text-muted
         - my-2
-_core:
-  default_config_hash: xbrXHf4INiKFniDUlOj0J3IIICVKAdsXWMmwk8yZdAc
-id: node.az_news.ua_news_list_view
+id: node.az_news.az_row
 targetEntityType: node
 bundle: az_news
-mode: ua_news_list_view
+mode: az_row
 content:
   field_az_media_image:
     type: media_thumbnail
