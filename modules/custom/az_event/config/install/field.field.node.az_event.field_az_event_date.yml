@@ -18,7 +18,7 @@ bundle: az_event
 label: When
 description: 'Use duration to specify an end time. Setting duration to custom allows more options.'
 required: true
-translatable: false
+translatable: true
 default_value:
   -
     default_date_type: ''

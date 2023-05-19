@@ -13,7 +13,7 @@ bundle: az_publication
 label: 'Publication Date'
 description: 'Date when the resource was published.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

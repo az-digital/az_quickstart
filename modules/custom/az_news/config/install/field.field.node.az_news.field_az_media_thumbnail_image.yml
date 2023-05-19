@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_media_thumbnail_image
+    - media.type.az_image
+    - node.type.az_news
+id: node.az_news.field_az_media_thumbnail_image
+field_name: field_az_media_thumbnail_image
+entity_type: node
+bundle: az_news
+label: 'Thumbnail Image'
+description: '<strong>Note:</strong> Using an image for the thumbnail that does not appear on the full page display of the content is not recommended. To simply set a different cropping, click the Edit Image pencil icon, expand the <em>Crop image</em> dropdown, and apply a new <em>Card Image</em> cropping.<br>This field overrides the featured image for listing displays and metatags.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_image: az_image
+    sort:
+      field: _none
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
