@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.ua_news_list_view
+label: 'UA News List View'
+targetEntityType: node
+cache: true
