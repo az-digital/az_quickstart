@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - node
-id: node.az_category_view
-label: 'AZ Category View'
-targetEntityType: node
-cache: true
