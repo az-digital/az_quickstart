@@ -190,6 +190,16 @@
       "az_main_content" : "100|101|102",
       "az_media_image" : "",
       "az_summary" : "A flexible page with news views."
+    },
+    {
+      "id":20,
+      "title" : "Person Grid - 3 Col",
+      "path" : "/pages/person-grid-3-col",
+      "exclude_title" : true,
+      "az_page_category" : "Views",
+      "az_main_content" : "59",
+      "az_media_image" : "",
+      "az_summary" : "Person Grid 3-column."
     }
   ]
 }
