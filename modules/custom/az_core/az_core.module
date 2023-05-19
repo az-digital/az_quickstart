@@ -340,6 +340,8 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
 
   // Check the status of the enterprise attribute lock.
   $disabled = $az_core_config->get('enterprise_attributes.locked');
+
+  // Display warning notification.
   \Drupal::messenger()->addMessage(t('Enterprise attributes should not normally be altered.'), MessengerInterface::TYPE_WARNING);
 
   if ($disabled) {
