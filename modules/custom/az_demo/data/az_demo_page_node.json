@@ -180,6 +180,16 @@
       "az_main_content" : "89",
       "az_media_image" : "",
       "az_summary" : "This is a code example."
+    },
+    {
+      "id":19,
+      "title" : "News Views",
+      "path" : "/pages/news-view-paragraphs",
+      "exclude_title" : true,
+      "az_page_category" : "Views",
+      "az_main_content" : "100|101|102",
+      "az_media_image" : "",
+      "az_summary" : "A flexible page with news views."
     }
   ]
 }

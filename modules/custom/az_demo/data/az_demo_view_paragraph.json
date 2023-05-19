@@ -1,0 +1,25 @@
+{
+  "paragraphs": [
+    {
+      "id":100,
+      "target_id" : "az_news",
+      "display_id" : "az_grid",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id":101,
+      "target_id" : "az_news",
+      "display_id" : "az_grid_filter",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id":102,
+      "target_id" : "az_news",
+      "display_id" : "az_feature",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    }
+  ]
+}
