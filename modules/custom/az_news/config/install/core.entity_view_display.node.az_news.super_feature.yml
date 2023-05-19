@@ -16,7 +16,6 @@ dependencies:
     - field.field.node.az_news.field_az_short_title
     - field.field.node.az_news.field_az_subheading
     - field.field.node.az_news.field_az_summary
-    - field.field.node.az_news.field_az_titles
     - image.style.az_full_width_bg_small
     - node.type.az_news
   module:
@@ -180,5 +179,4 @@ hidden:
   field_az_short_title: true
   field_az_subheading: true
   field_az_summary: true
-  field_az_titles: true
   links: true

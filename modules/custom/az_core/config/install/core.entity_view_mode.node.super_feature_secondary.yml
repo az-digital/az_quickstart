@@ -3,8 +3,6 @@ status: true
 dependencies:
   module:
     - node
-_core:
-  default_config_hash: Wo8gJiSNrU6qfdiDRHWDZ1vicE2TyP8qwdqVc9ggc-4
 id: node.super_feature_secondary
 label: 'Super Feature Secondary'
 targetEntityType: node
