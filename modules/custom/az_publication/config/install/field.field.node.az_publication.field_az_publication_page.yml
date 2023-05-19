@@ -11,7 +11,7 @@ bundle: az_publication
 label: Page(s)
 description: 'Number or range, e.g. 1, 2, 15-20.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

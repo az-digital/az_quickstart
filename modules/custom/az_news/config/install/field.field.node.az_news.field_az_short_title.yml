@@ -11,7 +11,7 @@ bundle: az_news
 label: 'Short Title'
 description: '<strong>Suggested character limit:</strong> 30. This field supports tokens.'
 required: false
-translatable: false
+translatable: true
 default_value:
   -
     value: '[node:title]'
