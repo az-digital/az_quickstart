@@ -458,8 +458,8 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_person_category'
-  grid_block_3cols:
-    id: grid_block_3cols
+  grid_block_3col:
+    id: grid_block_3col
     display_title: 'Grid - 3 col'
     display_plugin: block
     position: 4
