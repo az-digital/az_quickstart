@@ -69,6 +69,10 @@
  */
 #}
 
+
+{% set az_canonical_url = '[node:az-canonical-url]'  %} /* this WORKS inside*/
+
+
 {{ dump() }}
 
 <table cellpadding="0" cellspacing="0" width="100%" role="presentation" 
@@ -104,15 +108,15 @@
 
                         <!-- QS: TITLE (80 character max) -->
                         <h3 class="qs-heading" style="color:#403635; font-size:18px; font-style:normal; font-weight:bold; line-height:115%; margin-top:0;">
-                          {{ elements.smart_title }}
+                          {{ content.smart_title }}
                         </h3>
                         <!-- QS: SUMMARY (recomended 220 character max) -->
                         <p class="qs-summary" style="line-height: 150%;">
-                          {{ elements.field_az_summary }}</p>
+                          {{ content.field_az_summary }}</p>
                         <!-- QS: CALL TO ACTION LINK (recomended 30 character max) -->
                         <p>
-                          <a class="qs-link" href="{{ elements.links }}"
-                              style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">{{ elements.az_news_read_more }}</a>
+                          <a class="qs-link" href="{{ az_canonical_url }}"
+                              style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">{{ content.az_news_read_more }}</a>
                         </p>
 
                       </td>
