@@ -262,10 +262,10 @@ function az_core_canonical_summary_link_title(array $data) {
 function az_core_canonical_url(array $data) {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'];
-  $options = ['absolute' => TRUE];
   /** @var \Drupal\Core\Url $url */
-  $url = $node->toUrl($options);
-  $uri = $url->toUriString();
+  $url = $node->toUrl();
+  $url->setAbsolute(TRUE);
+  $uri = $url->toString();
 
   if (!empty($node->field_az_link[0]->uri)) {
     $uri = $node->field_az_link[0]->uri;

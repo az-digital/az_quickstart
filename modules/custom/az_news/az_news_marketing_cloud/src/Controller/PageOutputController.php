@@ -49,10 +49,16 @@ class PageOutputController extends ControllerBase {
 
   protected $entityTypeManager;
 
+  /**
+   *
+   */
   public function __construct(EntityTypeManagerInterface $entityTypeManager) {
     $this->entityTypeManager = $entityTypeManager;
   }
 
+  /**
+   *
+   */
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('entity_type.manager')
