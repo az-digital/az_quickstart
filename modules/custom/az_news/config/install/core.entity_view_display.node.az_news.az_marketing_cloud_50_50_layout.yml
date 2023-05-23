@@ -29,7 +29,7 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: false
-      smart_title__tag: h1
+      smart_title__tag: ''
       smart_title__classes:
         - text-midnight
 id: node.az_news.az_marketing_cloud_50_50_layout
