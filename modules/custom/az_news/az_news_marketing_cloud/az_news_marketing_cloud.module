@@ -61,7 +61,8 @@ function az_news_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$var
   $node = $variables['node'];
   if ($node->getType() === 'az_news') {
     $token_service = \Drupal::token();
-    $variables['az_canonical_url'] = $token_service->replace('[az_canonical_url]', ['node' => $node,], [], $bubbleable_metadata);
+    $variables['az_canonical_url'] = $token_service->replace('[node:az-canonical-url]', ['node' => $node,], [], $bubbleable_metadata);
+    $variables['az_canonical_summary_link_title'] = $token_service->replace('[node:az-canonical-summary-link-title]', ['node' => $node,], [], $bubbleable_metadata);
     $media = $node->field_az_media_image->entity ?? NULL;
     $file = $media->field_media_az_image->entity ?? NULL;
     if (!empty($file)) {
