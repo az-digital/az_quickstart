@@ -77,8 +77,8 @@ use Drupal\migrate\Row;
  *      entity_type: user
  *      value_key: name
  *      bundle: user
- *      bundle_key: name
- *      ignore_case: true
+ *    - plugin: default_value
+ *      default_value: 0
  * @endcode
  */
 class ManualMigrationLookup extends ProcessPluginBase {
