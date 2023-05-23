@@ -64,7 +64,7 @@ use Drupal\migrate\Row;
  *          bundle_key: vid
  *          ignore_case: true
  * @endcode
-  *
+ *
  * User example:
  *
  * @code
@@ -80,7 +80,7 @@ use Drupal\migrate\Row;
  *      bundle_key: name
  *      ignore_case: true
  * @endcode
-
+ *
  */
 class ManualMigrationLookup extends ProcessPluginBase {
 
