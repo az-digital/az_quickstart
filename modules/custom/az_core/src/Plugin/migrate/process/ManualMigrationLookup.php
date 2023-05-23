@@ -80,7 +80,6 @@ use Drupal\migrate\Row;
  *      bundle_key: name
  *      ignore_case: true
  * @endcode
- *
  */
 class ManualMigrationLookup extends ProcessPluginBase {
 
