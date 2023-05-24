@@ -216,7 +216,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         }
         // Handle file link if available.
         if (!empty($entity->field_az_publication_media->entity->field_media_az_document->entity)) {
-          $blob->itemlink = $entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE);
+          // @todo Remove urldecode() if we figure out a better way to prevent
+          // encoded URLs from getting double-encoded by CiteProc.
+          $blob->itemlink = urldecode($entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE));
         }
 
         $additionalLinks = [];
