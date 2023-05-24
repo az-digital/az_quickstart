@@ -426,7 +426,7 @@ display:
           uses_fields: false
           col_xs: col-12
           col_sm: col-sm-12
-          col_md: col-md-6
+          col_md: col-md-4
           col_lg: col-lg-3
           col_xl: col-xl-3
       row:
@@ -458,8 +458,8 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_person_category'
-  grid_block_3col:
-    id: grid_block_3col
+  grid_block_3cols:
+    id: grid_block_3cols
     display_title: 'Grid - 3 col'
     display_plugin: block
     position: 4
