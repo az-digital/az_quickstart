@@ -49,7 +49,7 @@
         "drupal/bootstrap_utilities": "2.0.0",
         "drupal/cas": "2.1.0",
         "drupal/chosen": "4.0.0",
-        "drupal/ckeditor_bs_grid": "2.0.8",
+        "drupal/ckeditor_bs_grid": "2.0.9",
         "drupal/coffee": "1.3.0",
         "drupal/config_distro": "1.0-alpha4",
         "drupal/config_provider": "2.0-rc4",
