@@ -3,18 +3,18 @@
 First off, thanks for taking the time to contribute to AZ Quickstart!
 
 AZ Quickstart is created by [Arizona Digital](https://digital.arizona.edu/), a
-team of web-focused volunteers that meet weekly to create projects like [Arizona Bootstrap](https://digital.arizona.edu/ua-bootstrap) and
+team of web-focused volunteers that meet weekly to create projects like [Arizona Bootstrap](https://digital.arizona.edu/arizona-bootstrap) and
 [Arizona Quickstart](https://quickstart.arizona.edu/).
 
 ## Things you'll need to get started
 
   * A [GitHub account](https://github.com/join).
   * [Slack](https://uarizona.slack.com) is our main source of communications.
-    * Use the `#ua-quickstart-d8` channel for questions/comments related to this
+    * Use the `#azdigital-quickstart` channel for questions/comments related to this
       project.
     * Use the `#friday-meetings` channel to ask questions or get updates related
-      to Arizona Digital meetings, both physical and via Zoom.
-    * Use the `#uadigital-general` channel to ask general questions related to
+      to Arizona Digital meetings.
+    * Use the `#azdigital-general` channel to ask general questions related to
       Arizona Digital.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
   * Local containerized (Docker) dev environment tool either lando or ddev
