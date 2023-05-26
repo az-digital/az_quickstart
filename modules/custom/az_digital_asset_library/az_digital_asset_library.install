@@ -4,6 +4,23 @@
  * Uninstall unneeded module "entity_browser".
  */
 function az_digital_asset_library_update_930603() {
+
+  // Remove intelligencebank entity_browser configuration.
+  $dependents = \Drupal::service('config.manager')->findConfigEntityDependents('module', array('entity_browser'));
+
+  $entity_browser_config = \Drupal::configFactory()->getEditable('entity_browser.entity_browser.az_digital_asset_library');
+  $configuration_to_delete = [
+    'entity_browser.browser.az_digital_asset_library',
+  ];
+
+  $dependents = \Drupal::service('config.manager')->findConfigEntityDependents('module', array('entity_browser'));
+
+  foreach ($configuration_to_delete as $configuration) {
+    $entity_browser_config->clear($configuration)->save();
+  }
+
+
+
   $unused_modules = [
     'entity_browser',
   ];
