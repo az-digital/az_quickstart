@@ -1549,7 +1549,7 @@ display:
           field_options:
             title:
               alias: ''
-              raw_output: 0
+              raw_output: '1'
             nid:
               alias: ''
               raw_output: 0

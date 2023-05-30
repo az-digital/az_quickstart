@@ -159,7 +159,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
           $token_data = ['node' => $entity];
           $token_options = ['clear' => TRUE];
           // Perform token replacement.
-          $item = $this->token->replace($value, $token_data, $token_options);
+          $item = $this->token->replacePlain($value, $token_data, $token_options);
         }
         return $item;
       },
