@@ -1,0 +1,11 @@
+az_news_super_feature:
+  version: 1.x
+  css:
+    theme:
+      css/az_news_superfeature.css: {}
+
+az_news_super_feature_secondary:
+  version: 1.x
+  css:
+    theme:
+      css/az_news_superfeature_secondary.css: {}

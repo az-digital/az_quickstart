@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.super_feature_secondary
+label: 'Super Feature Secondary'
+targetEntityType: node
+cache: true
