@@ -3,7 +3,7 @@
 namespace Drupal\az_core\Plugin\LinkExtractor;
 
 use Drupal\Component\Utility\Html;
-use Drupal\linkchecker\Plugin\LinkExtractorBase;
+use Drupal\linkchecker\Plugin\LinkExtractor\HtmlLinkExtractor;
 
 /**
  * Extracts link from field.
