@@ -17,7 +17,7 @@ use Drupal\linkchecker\Plugin\LinkExtractor\HtmlLinkExtractor;
  *   }
  * )
  */
-class AzLinkExtractor extends LinkExtractorBase {
+class AzLinkExtractor extends HtmlLinkExtractor {
 
   /**
    * {@inheritdoc}
