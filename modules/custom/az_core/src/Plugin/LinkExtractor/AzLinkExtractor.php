@@ -158,8 +158,9 @@ class AzLinkExtractor extends HtmlLinkExtractor {
    */
   protected function extractUrlFromField(array $value) {
 
+    $value['value'] = $value['body'];
+    $body = parent::extractUrlFromField($value);
     $link_uri = $this->extractUrlFromLinkUriField($value);
-    $body = $this->extractUrlFromBodyField($value);
 
     return array_merge($link_uri, $body);
   }
