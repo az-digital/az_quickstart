@@ -90,7 +90,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
-        uses: peter-evans/repository-dispatch@1708dda5703a768a0fb0ef6a7a03a0c3805ebc59
+        uses: peter-evans/repository-dispatch@26b39ed245ab8f31526069329e112ab2fb224588
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}
