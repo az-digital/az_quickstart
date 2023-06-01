@@ -18,7 +18,6 @@ use Drupal\linkchecker\Plugin\LinkExtractor\HtmlLinkExtractor;
  */
 class AzLinkExtractor extends HtmlLinkExtractor {
 
-
   /**
    * Extracts a URLs from field.
 
