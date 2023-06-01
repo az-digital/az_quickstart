@@ -30,7 +30,7 @@ class AzLinkExtractor extends HtmlLinkExtractor {
   protected function extractUrlFromLinkUriField(array $value) {
     // Return the uri index from the $value array.
     return empty($value['link_uri']) ? [] : [$value['link_uri']];
-   }
+  }
 
   /**
    * {@inheritdoc}
