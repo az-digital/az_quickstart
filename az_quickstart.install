@@ -267,3 +267,17 @@ function az_quickstart_update_920603() {
 function az_quickstart_update_920604() {
   \Drupal::service('module_installer')->install(['block_class']);
 }
+
+/**
+ * Ensure media_entity_file_replace module is installed.
+ */
+function az_quickstart_update_920701() {
+  \Drupal::service('module_installer')->install(['media_entity_file_replace']);
+}
+
+/**
+ * Enable az_paragraphs_splitscreen module by default.
+ */
+function az_quickstart_update_920702() {
+  \Drupal::service('module_installer')->install(['az_paragraphs_splitscreen']);
+}
