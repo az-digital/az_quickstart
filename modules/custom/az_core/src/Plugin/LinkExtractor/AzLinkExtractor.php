@@ -20,7 +20,6 @@ class AzLinkExtractor extends HtmlLinkExtractor {
 
   /**
    * Extracts a URLs from field.
-
    * @param array $value
    *   The field value.
    *
