@@ -6,9 +6,11 @@
  */
 
 /**
- * Uninstall unneeded module "entity_browser".
+ * Uninstall unneeded module "entity_browser" if possible.
  */
-function az_digital_asset_library_update_930604() {
+function az_digital_asset_library_update_930612() {
+// Get logger factory.
+$logger = \Drupal::service('logger.factory');
 
 
   $entity_browser_config = \Drupal::configFactory()->getEditable('entity_browser.browser.az_digital_asset_library');
@@ -23,7 +25,11 @@ function az_digital_asset_library_update_930604() {
   }
   else {
     foreach ($dependents as $dependent) {
-      \Drupal::logger('az_digital_asset_library')->warning('Could not uninstall unneeded module "entity_browser" because it is still in use by @dependent.', ['@dependent' => $dependent]);
+
+      $logger->get('az_digital_asset_library')->notice('Did not uninstall unneeded module "entity_browser" because it is still in use by %dependent.', [
+        '@dependent' => $dependent->getConfigDependencyName(),
+      ]);
+
     }
   }
 }
