@@ -31,7 +31,7 @@
     "require": {
         "php": ">=7.4",
         "az-digital/arizona-bootstrap": "2.0.23",
-        "bower-asset/bootstrap-datepicker": "1.9.0",
+        "bower-asset/bootstrap-datepicker": "1.10.0",
         "citation-style-language/locales": "0.0.5",
         "citation-style-language/styles": "0.0.249",
         "composer/installers": "^1.9",
