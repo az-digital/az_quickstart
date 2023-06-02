@@ -1,33 +1,27 @@
 <?php
 
 /**
- * Uninstall unneeded module "entity_browser".
+ * Uninstall unneeded module "entity_browser" if not used.
+ *
+ * @see https://github.org/az-digital/az_quickstart/issues
+ * @see https://www.drupal.org/project/az_digital_asset_library/issues/3134015
  */
 function az_digital_asset_library_update_930603() {
 
-  // Remove intelligencebank entity_browser configuration.
-  $dependents = \Drupal::service('config.manager')->findConfigEntityDependents('module', array('entity_browser'));
 
-  $entity_browser_config = \Drupal::configFactory()->getEditable('entity_browser.entity_browser.az_digital_asset_library');
+  $entity_browser_config = \Drupal::configFactory()->getEditable('entity_browser.browser.az_digital_asset_library');
   $configuration_to_delete = [
     'entity_browser.browser.az_digital_asset_library',
   ];
-
-  $dependents = \Drupal::service('config.manager')->findConfigEntityDependents('module', array('entity_browser'));
-
   foreach ($configuration_to_delete as $configuration) {
     $entity_browser_config->clear($configuration)->save();
   }
 
-
-
-  $unused_modules = [
-    'entity_browser',
-  ];
-  try {
+  $dependents = \Drupal::service('config.manager')->findConfigEntityDependencies('module', array('entity_browser'));
+  if (empty($dependents)) {
+    $unused_modules = [
+      'entity_browser',
+    ];
     \Drupal::service('module_installer')->uninstall($unused_modules);
-  }
-  catch (Exception $exception) {
-    \Drupal::logger('az_digital_asset_library')->error($exception->getMessage());
   }
 }
