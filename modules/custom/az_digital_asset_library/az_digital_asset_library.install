@@ -1,35 +1,52 @@
 <?php
-
 /**
  * @file
  * Install, update and uninstall functions for az_digital_asset_library module.
  */
 
+
 /**
  * Uninstall unneeded module "entity_browser" if possible.
  */
-function az_digital_asset_library_update_930612() {
-// Get logger factory.
-$logger = \Drupal::service('logger.factory');
+function az_digital_asset_library_update_930627() {
+  $uninstall_entity_browser = TRUE;
+  // Get logger factory.
+  $logger = \Drupal::service('logger.factory');
 
-
-  $entity_browser_config = \Drupal::configFactory()->getEditable('entity_browser.browser.az_digital_asset_library');
-  $entity_browser_config->delete();
-
+  // Delete old configuration.
+  $configuration_to_delete = [
+    'entity_browser.browser.az_digital_asset_library',
+  ];
+  foreach ($configuration_to_delete as $config_name) {
+    $config = \Drupal::configFactory()->getEditable($config_name);
+    $config->delete();
+    $logger->get('az_digital_asset_library')->notice('Deleted @config_name from active configuration.', [
+      '@config_name' => $config_name,
+    ]);
+  }
+  // Skip config dependencies that aren't a good indicator of whether the module is still in use.
+  $config_to_skip = [
+    'user.role.az_content_editor' => 'skip',
+    'system.action.user_remove_role_action.az_content_editor' => 'skip',
+    'system.action.user_add_role_action.az_content_editor' => 'skip',
+  ];
   $dependents = \Drupal::service('config.manager')->findConfigEntityDependencies('module', array('entity_browser'));
   if (empty($dependents)) {
-    $unused_modules = [
-      'entity_browser',
-    ];
-    \Drupal::service('module_installer')->uninstall($unused_modules);
+    $uninstall_entity_browser = TRUE;
   }
   else {
     foreach ($dependents as $dependent) {
-
-      $logger->get('az_digital_asset_library')->notice('Did not uninstall unneeded module "entity_browser" because it is still in use by %dependent.', [
-        '@dependent' => $dependent->getConfigDependencyName(),
-      ]);
-
+      if (!isset($config_to_skip[$dependent->getConfigDependencyName()])) {
+        $logger->get('az_digital_asset_library')->notice('Did not uninstall "entity_browser" because it is still in use by @dependent.', [
+          '@dependent' => $dependent->getConfigDependencyName(),
+        ]);
+        $uninstall_entity_browser = FALSE;
+      }
     }
+  }
+
+  if ($uninstall_entity_browser) {
+    \Drupal::service('module_installer')->uninstall(['entity_browser']);
+    $logger->get('az_digital_asset_library')->notice('Uninstalled "entity_browser" module.');
   }
 }
