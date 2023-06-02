@@ -8,22 +8,22 @@
 /**
  * Uninstall unneeded module "entity_browser".
  */
-function az_digital_asset_library_update_930603() {
+function az_digital_asset_library_update_930604() {
 
 
   $entity_browser_config = \Drupal::configFactory()->getEditable('entity_browser.browser.az_digital_asset_library');
-  $configuration_to_delete = [
-    'entity_browser.browser.az_digital_asset_library',
-  ];
-  foreach ($configuration_to_delete as $configuration) {
-    $entity_browser_config->clear($configuration)->save();
-  }
+  $entity_browser_config->delete();
 
   $dependents = \Drupal::service('config.manager')->findConfigEntityDependencies('module', array('entity_browser'));
   if (empty($dependents)) {
-  $unused_modules = [
-    'entity_browser',
-  ];
+    $unused_modules = [
+      'entity_browser',
+    ];
     \Drupal::service('module_installer')->uninstall($unused_modules);
+  }
+  else {
+    foreach ($dependents as $dependent) {
+      \Drupal::logger('az_digital_asset_library')->warning('Could not uninstall unneeded module "entity_browser" because it is still in use by @dependent.', ['@dependent' => $dependent]);
+    }
   }
 }
