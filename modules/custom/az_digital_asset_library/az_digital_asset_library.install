@@ -1,10 +1,12 @@
 <?php
 
 /**
- * Uninstall unneeded module "entity_browser" if not used.
- *
- * @see https://github.org/az-digital/az_quickstart/issues
- * @see https://www.drupal.org/project/az_digital_asset_library/issues/3134015
+ * @file
+ * Install, update and uninstall functions for az_digital_asset_library module.
+ */
+
+/**
+ * Uninstall unneeded module "entity_browser".
  */
 function az_digital_asset_library_update_930603() {
 
@@ -19,9 +21,9 @@ function az_digital_asset_library_update_930603() {
 
   $dependents = \Drupal::service('config.manager')->findConfigEntityDependencies('module', array('entity_browser'));
   if (empty($dependents)) {
-    $unused_modules = [
-      'entity_browser',
-    ];
+  $unused_modules = [
+    'entity_browser',
+  ];
     \Drupal::service('module_installer')->uninstall($unused_modules);
   }
 }
