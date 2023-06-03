@@ -53,7 +53,5 @@ function az_digital_asset_library_preprocess_entity_add_list(&$variables) {
   if (isset($variables['bundles']['ib_dam_embed'])) {
     unset($variables['bundles']['ib_dam_embed']);
   }
-  $dependents = \Drupal::service('config.manager')->findConfigEntityDependents('module', array('entity_browser'));
-dpm($dependents);
 
 }
