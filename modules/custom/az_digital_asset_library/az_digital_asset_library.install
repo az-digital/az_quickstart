@@ -1,12 +1,12 @@
 <?php
+
 /**
  * @file
  * Install, update and uninstall functions for az_digital_asset_library module.
  */
 
-
 /**
- * Uninstall unneeded module "entity_browser" if possible.
+ * Uninstall "entity_browser" if possible.
  */
 function az_digital_asset_library_update_930628() {
   $uninstall_entity_browser = TRUE;
@@ -24,13 +24,14 @@ function az_digital_asset_library_update_930628() {
       '@config_name' => $config_name,
     ]);
   }
-  // Skip config dependencies that aren't a good indicator of whether the module is still in use.
+  // Skip config dependencies that aren't a good indicator of whether
+  // the module is still in use.
   $config_to_skip = [
     'user.role.az_content_editor' => 'skip',
     'system.action.user_remove_role_action.az_content_editor' => 'skip',
     'system.action.user_add_role_action.az_content_editor' => 'skip',
   ];
-  $dependents = \Drupal::service('config.manager')->findConfigEntityDependencies('module', array('entity_browser'));
+  $dependents = \Drupal::service('config.manager')->findConfigEntityDependencies('module', ['entity_browser']);
   if (empty($dependents)) {
     $uninstall_entity_browser = TRUE;
   }
