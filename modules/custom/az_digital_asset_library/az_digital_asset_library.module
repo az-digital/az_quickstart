@@ -35,20 +35,3 @@ function az_digital_asset_library_form_media_library_add_form_upload_alter(&$for
   $data_dialog_options['title'] = 'Arizona Digital Asset Library Browser';
   $form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'] = Json::encode($data_dialog_options);
 }
-
-/**
- * Implements hook_module_implements_alter().
- *
- * Move az_digital_asset_library to the end of the list of modules that
- * implement hook_form_alter.
- *
- * This could possibly be done in az_digital_asset_library.install, but it's
- * not clear how to get the module weight of az_digital_asset_library.
- */
-function az_digital_asset_library_module_implements_alter(&$implementations, $hook) {
-  if ($hook === 'form_alter') {
-    $group = $implementations['az_digital_asset_library'];
-    unset($implementations['az_digital_asset_library']);
-    $implementations['az_digital_asset_library'] = $group;
-  }
-}
