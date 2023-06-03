@@ -13,6 +13,15 @@ use Drupal\Component\Utility\Html;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 
+
+/**
+* Implements hook_preprocess_node().
+*/
+
+function az_news_preprocess_node__az_news(&$variables) {
+  $variables['#attached']['library'][] = 'az_news/az_news_stories';
+}
+
 /**
  * Implements hook_theme().
  */

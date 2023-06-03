@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.news_card
+label: 'News Card'
+targetEntityType: node
+cache: true
