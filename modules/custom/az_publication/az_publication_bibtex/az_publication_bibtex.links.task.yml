@@ -1,5 +1,0 @@
-az_publication_bibtex.az_publication_bibtex_secondary_tab:
-  route_name: az_publication_bibtex.az_publication_bibtex_import_form
-  title: 'BibTex Import'
-  parent_id: az_publication.az_publication_settings_tab
-  weight: 3

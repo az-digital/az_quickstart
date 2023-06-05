@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_publication_bibtex\EventSubscriber;
+namespace Drupal\az_publication_import\EventSubscriber;
 
 use Drupal\migrate\Event\MigrateEvents;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -9,9 +9,9 @@ use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Drupal\Core\Messenger\Messenger;
 
 /**
- * Reponse to BibTeX migration import events.
+ * Reponse to publication migration import events.
  */
-class AZPublicationBibtexEventSubscriber implements EventSubscriberInterface {
+class AZPublicationImportEventSubscriber implements EventSubscriberInterface {
 
   /**
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -29,7 +29,7 @@ class AZPublicationBibtexEventSubscriber implements EventSubscriberInterface {
   protected $nodeStorage;
 
   /**
-   * Constructs an AZPublicationBibtexEventSubscriber.
+   * Constructs an AZPublicationImportEventSubscriber.
    *
    * @param \Drupal\Core\Messenger\Messenger $messenger
    *   Database connection object.
