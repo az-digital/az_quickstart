@@ -8,6 +8,7 @@ dependencies:
     - core.entity_view_mode.node.az_media_list
     - core.entity_view_mode.node.az_medium_media_list
     - core.entity_view_mode.node.az_minimal_media_list
+    - core.entity_view_mode.node.grid_attachment
     - core.entity_view_mode.node.news_card
     - node.type.az_news
     - taxonomy.vocabulary.az_news_tags
@@ -19,7 +20,7 @@ dependencies:
     - user
     - views_bootstrap
 _core:
-  default_config_hash: rXFPqquQVsODiSXRJsUZ0dmftAK_xA2HslnqevVxowQ
+  default_config_hash: UoLkkBx6xkdUYt5ie25Yh4ZjV5Jzn8sb509B2_I4YhU
 id: az_news
 label: 'AZ News'
 module: views
@@ -277,7 +278,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_medium_media_list
+          view_mode: grid_attachment
       defaults:
         title: false
         css_class: false
@@ -286,14 +287,28 @@ display:
         style_options: false
         row: false
         pager_options: false
+        header: false
       css_class: ''
       display_description: ''
       pager_options: null
       style_options: null
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: false
+          content:
+            value: '<h2 class="sans text-midnight mt-sm-0">IN THE NEWS</h2>'
+            format: az_standard
+          tokenize: false
       display_extenders: {  }
       displays:
-        marquee: marquee
-        block_1: block_1
+        grid_with_attachment: grid_with_attachment
       attachment_position: after
       inherit_arguments: true
     cache_metadata:
@@ -890,8 +905,8 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  block_1:
-    id: block_1
+  grid_with_attachment:
+    id: grid_with_attachment
     display_title: 'Grid View with Attachment'
     display_plugin: block
     position: 3
@@ -923,7 +938,7 @@ display:
         style: false
         row: false
         footer: false
-      css_class: 'row flex-nowrap'
+      css_class: row
       display_description: ''
       footer: {  }
       display_extenders: {  }

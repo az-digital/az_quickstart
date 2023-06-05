@@ -29,10 +29,10 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: true
-      smart_title__tag: h4
+      smart_title__tag: h6
       smart_title__classes:
-        - text-midnight
-        - text-decoration-none
+        - header-text
+        - mt-0
   field_group:
     group_card_clickable:
       children:
@@ -84,7 +84,7 @@ third_party_settings:
         classes: 'card-title text-midnight m-0'
         show_empty_fields: false
         id: ''
-        element: h4
+        element: h6
         show_label: false
         label_element: h3
         label_element_classes: ''
@@ -222,7 +222,7 @@ third_party_settings:
         effect: none
         speed: fast
 _core:
-  default_config_hash: xbrXHf4INiKFniDUlOj0J3IIICVKAdsXWMmwk8yZdAc
+  default_config_hash: Lt_O9B3rUTv9BdoFTAp8os8pkccm_Ftl8QrUxLbrQ4U
 id: node.az_news.news_card
 targetEntityType: node
 bundle: az_news
