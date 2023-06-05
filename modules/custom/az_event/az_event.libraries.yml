@@ -5,6 +5,7 @@ az_calendar_filter:
       css/az_calendar_filter.css: {}
   js:
     js/az_calendar_filter.js: {}
+    js/az_pager.js: {}
   dependencies:
     - core/jquery
     - core/jquery.once

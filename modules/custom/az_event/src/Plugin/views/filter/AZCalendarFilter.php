@@ -77,11 +77,6 @@ class AZCalendarFilter extends Date {
 
     $view->setDisplay($this->view->current_display);
 
-    // Turn off the pager for the cell query.
-    $pager = $view->display_handler->getOption('pager');
-    $pager['type'] = 'none';
-    $view->display_handler->setOption('pager', $pager);
-
     // Copy over exposed input.
     $input = $this->view->getExposedInput();
     $view->setExposedInput($input);

@@ -227,3 +227,23 @@ function az_event_node_presave(EntityInterface $entity) {
     $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_photos->target_id;
   }
 }
+
+/**
+ * Implements hook_views_data().
+ *
+ * Sets the Thumbnail Image field to match the first item of the Event Photos
+ * field if the Use Featured Image as Thumbnail checkbox is checked.
+ */
+function az_event_views_data() {
+  $data = [];
+
+  $data['views']['datepager'] = [
+    'title' => t('Date Pager'),
+    'help' => t('Pager that is based on date. Next and Prev take you to the appropriate event date'),
+    'pager' => [
+      'class' => 'Drupal\az_event\Plugin\views\pager',
+    ],
+  ];
+
+  return $data;
+}
