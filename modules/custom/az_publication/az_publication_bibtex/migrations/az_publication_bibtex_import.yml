@@ -6,8 +6,7 @@ source:
   plugin: url
   data_fetcher_plugin: file
   data_parser_plugin: az_bibtex
-  urls:
-    - profiles/custom/az_quickstart/modules/custom/az_publication/az_publication_bibtex/data/test.bib
+  urls: []
   ids:
     citation_key:
       type: string
