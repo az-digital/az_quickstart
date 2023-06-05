@@ -11,7 +11,7 @@ bundle: az_publication
 label: Issue
 description: 'Issue number of the resource, e.g. 5.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

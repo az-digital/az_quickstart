@@ -11,7 +11,7 @@ bundle: az_publication
 label: Volume
 description: 'Volume number of the resource, e.g. 1, 7, VII.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }
