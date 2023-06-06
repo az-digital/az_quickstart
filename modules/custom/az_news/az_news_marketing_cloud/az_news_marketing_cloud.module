@@ -75,7 +75,7 @@ function az_news_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$var
 
 function az_news_marketing_cloud_preprocess_views_view(&$variables) {
   $view = $variables['view'];
-  if ($view->id() === 'content') {
+  if ($view->id() === 'az_marketing_cloud.admin') {
     $variables['#attached']['library'][] = 'az_news_marketing_cloud/admin';
    }
 }
