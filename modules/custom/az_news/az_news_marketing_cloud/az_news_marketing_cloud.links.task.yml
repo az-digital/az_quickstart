@@ -1,0 +1,6 @@
+az_news_marketing_cloud.import:
+  title: 'Marketing Cloud importer'
+  route_name: view.az_marketing_cloud.admin
+  parent_id: system.admin_content
+  description: 'Import news from the Marketing Cloud API.'
+  weight: 101
