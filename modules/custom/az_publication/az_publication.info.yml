@@ -30,3 +30,4 @@ dependencies:
   - 'optional_end_date:optional_end_date'
   - 'paragraphs:paragraphs'
   - 'pathauto:pathauto'
+  - 'smart_title:smart_title'
