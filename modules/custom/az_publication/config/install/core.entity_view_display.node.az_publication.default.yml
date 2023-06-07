@@ -44,9 +44,9 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         element: div
-        show_label: false
+        show_label: true
         label_element: div
-        label_element_classes: 'h3 mb-0'
+        label_element_classes: 'h3 mb-0 mt-0'
         attributes: ''
         effect: none
         speed: fast
