@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.23",
         "npm-asset/bootstrap-datepicker": "1.10.0",
         "citation-style-language/locales": "0.0.5",
-        "citation-style-language/styles": "0.0.249",
+        "citation-style-language/styles": "0.0.250",
         "composer/installers": "^1.9",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
