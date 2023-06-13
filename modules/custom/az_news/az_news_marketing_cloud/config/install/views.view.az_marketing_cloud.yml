@@ -6,16 +6,12 @@ dependencies:
     - core.entity_view_mode.node.az_marketing_cloud_50_50_layout
     - core.entity_view_mode.node.az_marketing_cloud_text_layout
     - node.type.az_news
-    - user.role.administrator
-    - user.role.az_content_admin
-    - user.role.az_content_editor
   module:
     - node
-    - user
 id: az_marketing_cloud
 label: 'AZ Marketing Cloud'
 module: views
-description: 'Use this view to manage Marketing Cloud content'
+description: 'Use this view to manage content for export into Marketing Cloud'
 tag: ''
 base_table: node_field_data
 base_field: nid
@@ -263,6 +259,72 @@ display:
     position: 4
     display_options:
       fields:
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: field
+          label: ''
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: number_integer
+          settings:
+            thousand_separator: ''
+            prefix_suffix: true
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         title:
           id: title
           table: node_field_data
@@ -472,8 +534,8 @@ display:
           label: 'Link to Content'
           exclude: false
           alter:
-            alter_text: false
-            text: ''
+            alter_text: true
+            text: '<a class="js-click-copy" href="/export/marketing-cloud/text-layout/{{ nid }}">Click to copy text layout</a>'
             make_link: false
             path: ''
             absolute: false
@@ -481,9 +543,9 @@ display:
             replace_spaces: false
             path_case: none
             trim_whitespace: false
-            alt: ''
+            alt: 'Click to copy'
             rel: ''
-            link_class: ''
+            link_class: js-click-copy
             prefix: ''
             suffix: ''
             target: ''
@@ -499,7 +561,7 @@ display:
             preserve_tags: ''
             html: false
           element_type: ''
-          element_class: js-click-copy
+          element_class: ''
           element_label_type: ''
           element_label_class: ''
           element_label_colon: true
@@ -510,7 +572,7 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Click to cooy'
+          text: 'Click to copy'
           output_url_as_text: false
           absolute: true
       access:
