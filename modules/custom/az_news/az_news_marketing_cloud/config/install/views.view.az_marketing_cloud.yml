@@ -8,6 +8,7 @@ dependencies:
     - node.type.az_news
   module:
     - node
+    - user
 id: az_marketing_cloud
 label: 'AZ Marketing Cloud'
 module: views
@@ -576,12 +577,9 @@ display:
           output_url_as_text: false
           absolute: true
       access:
-        type: role
+        type: perm
         options:
-          role:
-            az_content_editor: az_content_editor
-            az_content_admin: az_content_admin
-            administrator: administrator
+          perm: 'access content overview'
       arguments: {  }
       filters:
         status:
@@ -704,7 +702,7 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
         - 'user.node_grants:view'
-        - user.roles
+        - user.permissions
       tags: {  }
   text_layout:
     id: text_layout

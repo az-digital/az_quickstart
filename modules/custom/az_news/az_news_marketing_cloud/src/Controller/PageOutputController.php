@@ -47,11 +47,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class PageOutputController extends ControllerBase {
 
-  protected $entityTypeManager;
-
   /**
    *
    */
+  protected $entityTypeManager;
+
   public function __construct(EntityTypeManagerInterface $entityTypeManager) {
     $this->entityTypeManager = $entityTypeManager;
   }
