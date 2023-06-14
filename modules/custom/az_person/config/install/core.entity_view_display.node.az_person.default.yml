@@ -168,7 +168,7 @@ third_party_settings:
         - field_az_phones
         - field_az_email
         - field_az_pronouns
-        - field_az_links
+        - field_az_attachments
         - group_text_break
       label: 'Card Body'
       parent_name: group_card
@@ -207,7 +207,7 @@ third_party_settings:
         speed: fast
     group_text_break:
       children:
-        - field_az_attachments
+        - field_az_links
       label: 'Text Break'
       parent_name: group_card_body
       region: content
@@ -242,7 +242,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 13
+    weight: 11
     region: content
   field_az_body:
     type: text_default
