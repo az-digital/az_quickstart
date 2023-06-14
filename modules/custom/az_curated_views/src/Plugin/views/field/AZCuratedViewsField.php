@@ -60,7 +60,7 @@ class AZCuratedViewsField extends BulkForm {
       $form[$this->options['id']][$row_index]['weight'] = [
         '#type' => 'select',
         '#options' => [
-          '1' => $this->t('Stickied'),
+          '1' => $this->t('Sticky at Top'),
           '0' => $this->t('Hidden'),
         ],
         '#empty_option' => $this->t('Shown'),
