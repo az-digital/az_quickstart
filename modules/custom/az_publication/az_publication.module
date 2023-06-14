@@ -303,11 +303,11 @@ function az_publication_preprocess_views_view(&$variables) {
     // Only run for publication search.
     if ($variables['id'] === 'az_publications') {
       // Reduce the width of the text input form elements from the default.
-      $allow_shrink = [
+      $resize_element = [
         'name',
         'title',
       ];
-      foreach ($allow_shrink as $element) {
+      foreach ($resize_element as $element) {
         if (!empty($variables['exposed'][$element])) {
           $variables['exposed'][$element]['#size'] = 20;
         }
