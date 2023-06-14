@@ -1,6 +1,0 @@
-az_publication_import.az_publication_import_action:
-  route_name: az_publication_import.az_publication_import_page
-  title: 'Import Publication'
-  weight: 10
-  appears_on:
-    - system.admin_content
