@@ -25,6 +25,7 @@ permissions:
   - 'administer quickstart configuration'
   - 'administer redirects'
   - 'administer taxonomy'
+  - 'administer url aliases'
   - 'administer xmlsitemap'
   - 'batch update workbench access'
   - 'bypass workbench access'
