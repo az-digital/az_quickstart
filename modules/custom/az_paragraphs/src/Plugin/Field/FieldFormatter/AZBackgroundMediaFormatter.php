@@ -7,6 +7,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 //phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
 use Drupal\file\FileInterface;
+use Drupal\file\Entity\File;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Markup;
@@ -572,8 +573,10 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   protected function image(array $settings, MediaInterface $media): array {
     $az_background_media = [];
     $css_settings = $settings['css_settings'];
-    $file_uri = $this->getMediaThumbFile($media)->getFileUri();
-
+    // $file_uri = $this->getMediaThumbFile($media)->getFileUri();
+    $fid = $media->getSource()->getSourceFieldValue($media);
+    $file = File::load($fid);
+    $file_uri = $file->getFileUri();
     if ($settings['style'] !== 'bottom') {
       $responsive_image_style_element = [
         '#theme' => 'az_responsive_background_image',
