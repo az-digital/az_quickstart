@@ -31,7 +31,7 @@ function az_digital_asset_library_preprocess_entity_add_list(&$variables) {
  */
 function az_digital_asset_library_form_media_library_add_form_upload_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['ib_dam_container']['asset_browser']['#title'] = t('Add Arizona Digital Asset Library Media');
-  if (isset($form['ib_dam_container']['asset_browser']['#attributes']) {
+  if (isset($form['ib_dam_container']['asset_browser']['#attributes'])) {
     $data_dialog_options = Json::decode($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options']);
     $data_dialog_options['title'] = 'Arizona Digital Asset Library Browser';
     $form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'] = Json::encode($data_dialog_options);
