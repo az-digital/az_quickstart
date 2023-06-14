@@ -1608,7 +1608,7 @@ display:
               alias: ''
               raw_output: '1'
       display_extenders: {  }
-      path: az_quickstart/1.0/export/az_news
+      path: az_quickstart/export/az_news/v1/az_news.json
     cache_metadata:
       max-age: -1
       contexts:
