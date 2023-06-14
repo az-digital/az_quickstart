@@ -21,7 +21,7 @@ function az_curated_views_views_data_alter(&$data) {
       $data[$base_table]['az_curated_views'] = [
         'title' => $data[$base_table]['table']['group'],
         'group' => t('Quickstart Curated Views'),
-        'help' => t('Provide view curating options based on context.'),
+        'help' => t('Provide view curation options based on context.'),
         'entity field' => $entity_keys['id'],
         'field' => [
           'id' => 'az_curated_views_field',
