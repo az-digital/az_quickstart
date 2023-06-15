@@ -20,4 +20,3 @@ copyLinks.forEach(element => (
     false
   )
 ));
-
