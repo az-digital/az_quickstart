@@ -17,6 +17,8 @@ use Drupal\Core\Link;
 use Symfony\Component\HttpFoundation\Request;
 use Drupal\node\NodeInterface;
 use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
+use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\views\Plugin\Block\ViewsBlock;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -296,15 +298,87 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
 }
 
 /**
+ * Implements hook_draggableviews_join_withargs_alter().
+ */
+function az_publication_draggableviews_join_withargs_alter(&$view_args, &$context) {
+  if (!empty($context['view_query']->view) && ($context['view_query']->view->id() === 'az_publications')) {
+    // Set draggableview context args to the current node for publications.
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof NodeInterface) {
+      $view_args = [$node->id()];
+    }
+    elseif (count($view_args) === 3) {
+      // View preview lacks Node context. Provide it.
+      $view_args = [end($view_args)];
+    }
+  }
+}
+
+/**
+ * Implements hook_contextual_links_alter().
+ */
+function az_publication_contextual_links_alter(array &$links, $group, array $route_parameters) {
+  $curation_key = 'az_publication.view.curate_publications';
+  $link_key = 'draggableviews.view.order_view';
+  // Provide route to curation page.
+  if ($group === $curation_key) {
+    $links[$curation_key]['route_name'] = 'view.az_publications_curate.curation_page';
+    return;
+  }
+  // Unset traditional draggable views link for publications.
+  if ($group !== $link_key || empty($links[$link_key]['metadata'])) {
+    return;
+  }
+  $metadata = $links[$link_key]['metadata'];
+  /** @var \Drupal\views\ViewEntityInterface $view */
+  $view = \Drupal::entityTypeManager()->getStorage('view')->load($metadata['name']);
+  if ($view->id() === 'az_publications') {
+    unset($links[$link_key]);
+  }
+}
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function az_publication_block_view_alter(array &$build, BlockPluginInterface $block) {
+
+  // Check if we are dealing with the person publication block.
+  if ($block instanceof ViewsBlock) {
+    $view = $block->getViewExecutable();
+    $view_id = $view->id();
+    $view_display = $view->current_display ?? '';
+    if (($view_id === 'az_publications') && ($view_display === 'az_author_person')) {
+      // If there is a node context, create curation contextual link.
+      $node = \Drupal::routeMatch()->getParameter('node');
+      if ($node instanceof NodeInterface) {
+        $build['#contextual_links']['az_publication.view.curate_publications'] = [
+          'route_parameters' => ['node' => $node->id()],
+        ];
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_preprocess_views_view().
  */
 function az_publication_preprocess_views_view(&$variables) {
   if (!empty($variables['id'])) {
     // Only run for publication search.
     if ($variables['id'] === 'az_publications') {
-      // Allow the publication year field to shrink if present.
+      // Reduce the width of the text input form elements from the default.
+      $resize_element = [
+        'name',
+        'title',
+      ];
+      foreach ($resize_element as $element) {
+        if (!empty($variables['exposed'][$element])) {
+          $variables['exposed'][$element]['#size'] = 20;
+        }
+      }
+      // Year field doesn't need a standard width text field.
       if (!empty($variables['exposed']['field_az_publication_date_value'])) {
-        $variables['exposed']['field_az_publication_date_value']['#wrapper_attributes']['class'][] = 'flex-shrink-1';
+        $variables['exposed']['field_az_publication_date_value']['#size'] = 6;
       }
       if (!empty($variables['exposed']['field_az_publication_type_value'])) {
         // Add class so publication type select is styled like text inputs.

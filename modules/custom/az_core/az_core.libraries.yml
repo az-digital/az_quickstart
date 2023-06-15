@@ -4,3 +4,7 @@ claro-node-form-overrides:
       css/claro-node-form-overrides.css: {}
   dependencies:
     - claro/node-form
+az-enterprise-attributes:
+  css:
+    component:
+      css/az-enterprise-attributes.css: {}
