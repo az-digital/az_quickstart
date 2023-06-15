@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_contacts
+    - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_featured_image_as_thumb
     - field.field.node.az_news.field_az_link
@@ -20,6 +21,7 @@ dependencies:
     - field.field.node.az_news.field_az_summary
     - node.type.az_news
   module:
+    - az_core
     - datetime
     - field_group
     - file
@@ -112,6 +114,20 @@ content:
       add_mode: dropdown
       form_display_mode: default
       default_paragraph_type: _none
+    third_party_settings: {  }
+  field_az_enterprise_attributes:
+    type: attributes_select
+    weight: 8
+    region: content
+    settings:
+      allowed_attributes:
+        Arizona_County__c: Arizona_County__c
+        Audiences__c: Audiences__c
+        Topic__c: Topic__c
+        Tribal_Nation__c: Tribal_Nation__c
+        Display_Name_Formula__c: Display_Name_Formula__c
+        Category1__c: 0
+        Event_Format__c: 0
     third_party_settings: {  }
   field_az_expiration_date:
     type: datetime_datelist
