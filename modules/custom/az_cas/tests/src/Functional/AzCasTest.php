@@ -27,7 +27,7 @@ class AzCasTest extends QuickstartFunctionalTestBase {
   /**
    * @var string
    */
-  protected $defaultTheme = 'seven';
+  protected $defaultTheme = 'claro';
 
   /**
    * The created user.
