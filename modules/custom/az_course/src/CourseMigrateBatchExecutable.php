@@ -57,6 +57,7 @@ class CourseMigrateBatchExecutable extends MigrateBatchExecutable {
   /**
    * {@inheritdoc}
    */
+  /** @phpstan-ignore-next-line */
   public static function batchProcessImport($migration_id, array $options, &$context): void {
     if (empty($context['sandbox'])) {
       $context['finished'] = 0;
