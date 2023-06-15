@@ -41,6 +41,8 @@ settings:
             - JustifyLeft
             - JustifyCenter
             - JustifyRight
+            - Indent
+            - Outdent
         -
           name: Structure
           items:
