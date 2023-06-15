@@ -9,7 +9,6 @@ dependencies:
     - core.entity_view_mode.media.az_square
   module:
     - bootstrap_utilities
-    - editor
     - entity_embed
     - linkit
     - media
