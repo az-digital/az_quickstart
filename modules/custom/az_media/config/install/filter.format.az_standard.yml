@@ -94,39 +94,3 @@ filters:
     weight: -45
     settings:
       title: true
-  bootstrap_utilities_image_filter:
-    id: bootstrap_utilities_image_filter
-    provider: bootstrap_utilities
-    status: false
-    weight: -38
-    settings: {  }
-  bootstrap_utilities_figure_filter:
-    id: bootstrap_utilities_figure_filter
-    provider: bootstrap_utilities
-    status: false
-    weight: -39
-    settings: {  }
-  editor_file_reference:
-    id: editor_file_reference
-    provider: editor
-    status: false
-    weight: -37
-    settings: {  }
-  filter_html_escape:
-    id: filter_html_escape
-    provider: filter
-    status: false
-    weight: -40
-    settings: {  }
-  filter_html_image_secure:
-    id: filter_html_image_secure
-    provider: filter
-    status: false
-    weight: -35
-    settings: {  }
-  filter_caption:
-    id: filter_caption
-    provider: filter
-    status: false
-    weight: -36
-    settings: {  }
