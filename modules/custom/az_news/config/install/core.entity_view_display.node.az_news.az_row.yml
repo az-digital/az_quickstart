@@ -14,7 +14,6 @@ dependencies:
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_media_thumbnail_image
-    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -54,7 +53,7 @@ third_party_settings:
       children:
         - group_media
       label: Link
-      parent_name: ''
+      parent_name: group_row_wrap
       region: content
       weight: 0
       format_type: link
@@ -89,6 +88,7 @@ third_party_settings:
       children:
         - group_text_muted
         - smart_title
+        - field_az_subheading
         - field_az_summary
       label: 'Media body'
       parent_name: group_media
@@ -125,6 +125,25 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_row_wrap:
+      children:
+        - group_story_link
+      label: 'row wrap'
+      parent_name: ''
+      region: content
+      weight: 20
+      format_type: html_element
+      format_settings:
+        classes: 'position-relative d-block list-group-item-action'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
     settings:
@@ -132,7 +151,10 @@ third_party_settings:
       smart_title__tag: h3
       smart_title__classes:
         - text-midnight
-        - mt-0
+        - my-0
+        - font-weight-bold
+_core:
+  default_config_hash: Phsrij3O1JJ05W5fTc_L_X0QMuHuDI_OK2cJN5o8IA4
 id: node.az_news.az_row
 targetEntityType: node
 bundle: az_news
@@ -155,16 +177,23 @@ content:
     settings:
       always_display_year: '1'
       use_today: '1'
+      display_day: '1'
       use_all_day: '1'
       timezone: ''
       cap_today: 0
-      display_day: 0
       display_time: 0
       time_before_date: 0
       display_noon_and_midnight: 0
       capitalize_noon_and_midnight: 0
     third_party_settings: {  }
     weight: 0
+    region: content
+  field_az_subheading:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_az_summary:
     type: text_default
@@ -176,7 +205,7 @@ content:
   smart_title:
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 6
     region: content
 hidden:
   az_news_read_more: true
@@ -193,5 +222,4 @@ hidden:
   field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
-  field_az_subheading: true
   links: true
