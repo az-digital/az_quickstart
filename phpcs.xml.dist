@@ -84,7 +84,7 @@
   <rule ref="Security.Misc.BadCorsHeader"/>
   <rule ref="Security.Misc.IncludeMismatch"/>
   <rule ref="Security.Misc.TypeJuggle"/>
-  
+
   <!-- PHPCompatibility -->
   <rule ref="PHPCompatibility"/>
   <config name="testVersion" value="8.1-"/>
