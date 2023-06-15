@@ -189,7 +189,7 @@ display:
     id: 30_70_layout
     display_title: '30/70 Layout'
     display_plugin: page
-    position: 3
+    position: 2
     display_options:
       style:
         type: default
@@ -223,7 +223,7 @@ display:
     id: 50_50_layout
     display_title: '50/50 Layout'
     display_plugin: page
-    position: 2
+    position: 1
     display_options:
       style:
         type: default
@@ -523,8 +523,8 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        view_node:
-          id: view_node
+        view_node_1:
+          id: view_node_1
           table: node
           field: view_node
           relationship: none
@@ -532,11 +532,11 @@ display:
           admin_label: ''
           entity_type: node
           plugin_id: entity_link
-          label: 'Link to Content'
+          label: 'Email Snippet'
           exclude: false
           alter:
             alter_text: true
-            text: '<a class="js-click-copy" href="/export/marketing-cloud/text-layout/{{ nid }}">Click to copy text layout</a>'
+            text: "<a href=\"/export/marketing-cloud/50-50-layout/{{ nid }}\">50/50 Layout</a> | \r\n<a href=\"/export/marketing-cloud/30-70-layout/{{ nid }}\">30/70 Layout</a> | \r\n<a href=\"/export/marketing-cloud/text-layout/{{ nid }}\">Text Layout</a>"
             make_link: false
             path: ''
             absolute: false
@@ -544,9 +544,9 @@ display:
             replace_spaces: false
             path_case: none
             trim_whitespace: false
-            alt: 'Click to copy'
+            alt: ''
             rel: ''
-            link_class: js-click-copy
+            link_class: ''
             prefix: ''
             suffix: ''
             target: ''
@@ -568,12 +568,12 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          text: 'Click to copy'
+          text: ''
           output_url_as_text: false
           absolute: true
       access:
@@ -708,7 +708,7 @@ display:
     id: text_layout
     display_title: 'Text Layout'
     display_plugin: page
-    position: 1
+    position: 3
     display_options:
       display_description: ''
       display_extenders: {  }
