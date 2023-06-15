@@ -2,15 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.ua_news_list_view
+    - core.entity_view_mode.node.az_row
   module:
     - node
     - taxonomy
     - user
-_core:
-  default_config_hash: YKgw0f77GEmCu6_6Om9Mbig0mON9JdfVuMxTtd0WQaI
-id: ua_category_list_pages
-label: 'UA Category List Pages'
+id: az_taxonomy
+label: 'Taxonomy List Pages'
 module: taxonomy
 description: 'Content belonging to a certain taxonomy term.'
 tag: default
@@ -222,7 +220,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: ua_news_list_view
+          view_mode: az_row
       query:
         type: views_query
         options:
