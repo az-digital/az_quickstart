@@ -46,25 +46,25 @@ steps:
   - name: Post-Installation Steps
     plugin: Script
     script:
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n --root=/var/www/html pm:install az_demo
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:create azcontenteditor --password="azcontenteditor"
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_content_editor azcontenteditor
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:create azcontentadmin --password="azcontentadmin"
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_content_editor azcontentadmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_content_admin azcontentadmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:create azuseradmin --password="azuseradmin"
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_content_editor azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_content_admin azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_user_admin azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:create azhtmladmin --password="azhtmladmin"
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_content_editor azhtmladmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_content_admin azhtmladmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html user:role:add az_html_admin azhtmladmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html config:set -y az_cas.settings disable_login_form 0
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html config:set -y system.logging error_level "verbose"
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html cache:rebuild
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_demo
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontentadmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azcontentadmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azuseradmin --password="azuseradmin"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azuseradmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azhtmladmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azhtmladmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_html_admin azhtmladmin
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y az_cas.settings disable_login_form 0
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush config:set -y system.logging error_level "verbose"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush cache:rebuild
       - chown www-data:www-data -R /var/www/html/sites/default/files
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n --root=/var/www/html pm:install environment_indicator
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install environment_indicator
       - chmod 777 /var/www/html/sites/default/settings.php
       - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';\n\$config['environment_indicator.indicator']['fg_color'] = '#ffffff';" >> /var/www/html/sites/default/settings.php
       - chmod 444 /var/www/html/sites/default/settings.php
@@ -93,9 +93,9 @@ steps:
     plugin: Script
     script:
       # Enable upgrade_status module
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n --root=/var/www/html pm:install upgrade_status
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install upgrade_status
       # Run report
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush --root=/var/www/html upgrade_status:analyze az_quickstart
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush upgrade_status:analyze az_quickstart
       # Make upgrade_status folder in tmp directory accessible by www-data
       - chown -R www-data:www-data /tmp/upgrade_status
   - name: Run PHPUnit Tests
