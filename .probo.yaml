@@ -5,6 +5,10 @@ assets:
   - migration.sh
   - terminus.sh
 steps:
+  - name: Setup Drush
+    plugin: Script
+    script:
+      - export DRUSH_LAUNCHER_FALLBACK=$SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush
   - name: Build Arizona Quickstart
     plugin: Script
     script:
@@ -35,17 +39,13 @@ steps:
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
       - yarn install
       - yarn run eslint --color .
-  - name: Setup Drupal
+  - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 10
     subDirectory: az-quickstart-scaffolding/web
-    runInstall: false
-    # profileName: az_quickstart
-    # installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose --yes -n"
-  - name: Install Arizona Quickstart
-    plugin: Script
-    script:
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush site:install az_quickstart --site-name="Quickstart Review" --account-name=azadmin --account-pass=azadmin --verbose --yes -n
+    runInstall: true
+    profileName: az_quickstart
+    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose --yes -n"
   - name: Post-Installation Steps
     plugin: Script
     script:
