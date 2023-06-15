@@ -5,10 +5,6 @@ assets:
   - migration.sh
   - terminus.sh
 steps:
-  - name: Setup Drush
-    plugin: Script
-    script:
-      - export DRUSH_LAUNCHER_FALLBACK=$SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush
   - name: Build Arizona Quickstart
     plugin: Script
     script:
@@ -46,6 +42,7 @@ steps:
     runInstall: true
     profileName: az_quickstart
     installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose --yes -n"
+    cliDefines: {DRUSH_LAUNCHER_FALLBACK: '$SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush'}
   - name: Post-Installation Steps
     plugin: Script
     script:
