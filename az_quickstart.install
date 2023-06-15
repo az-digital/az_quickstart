@@ -283,7 +283,7 @@ function az_quickstart_update_920702() {
 }
 
 /**
- * Enable az_paragraphs_splitscreen module by default.
+ * Enable ckeditor_indentblock module by default.
  */
 function az_quickstart_update_1020703() {
   \Drupal::service('module_installer')->install(['ckeditor_indentblock']);
