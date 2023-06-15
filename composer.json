@@ -135,7 +135,7 @@
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2022-05-20/2945387-19-support-bundleless-entities.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Affix library still broken (3366908)": "https://www.drupal.org/files/issues/2023-06-14/3366908-2.patch"
+                "Affix library still broken (3366908)": "https://www.drupal.org/files/issues/2023-06-14/3366908-3_5-x.patch"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
