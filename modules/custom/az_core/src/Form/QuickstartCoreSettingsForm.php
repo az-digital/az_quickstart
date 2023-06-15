@@ -198,6 +198,20 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       ],
     ];
 
+    $form['enterprise_attributes'] = [
+      '#type' => 'details',
+      '#title' => t('Enterprise attributes'),
+      '#open' => FALSE,
+      '#access' => $this->currentUser()->hasPermission('administer site configuration'),
+    ];
+
+    $form['enterprise_attributes']['enterprise_attributes_locked'] = [
+      '#title' => t('Enterprise attributes edits prohibited'),
+      '#type' => 'checkbox',
+      '#description' => t("With this setting enabled, edits to the enterprise attributes taxonomy will be prohibited (recommended)."),
+      '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -288,6 +302,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $this->config('az_core.settings')
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
+      ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();
