@@ -7,8 +7,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
-*
-*/
+ *
+ */
 class PageOutputController extends ControllerBase {
 
   /**
@@ -16,6 +16,9 @@ class PageOutputController extends ControllerBase {
    */
   protected $entityTypeManager;
 
+  /**
+   *
+   */
   public function __construct(EntityTypeManagerInterface $entityTypeManager) {
     $this->entityTypeManager = $entityTypeManager;
   }
