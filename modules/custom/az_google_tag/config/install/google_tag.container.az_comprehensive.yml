@@ -8,7 +8,7 @@ id: az_comprehensive
 label: 'AZ Comprehensive'
 weight: 0
 tag_container_ids:
-  - GTM-ML2BZB
+  - G-7PV3540XS3
 advanced_settings:
   gtm:
     data_layer: dataLayer
@@ -50,7 +50,7 @@ conditions:
       404
   user_role:
     id: user_role
-    negate: true
+    negate: false
     context_mapping:
       user: '@user.current_user_context:current_user'
     roles:
