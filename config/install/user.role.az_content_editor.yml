@@ -119,6 +119,7 @@ permissions:
   - 'revert az_publication revisions'
   - 'revert book revisions'
   - 'revert webform revisions'
+  - 'switch shortcut sets'
   - 'translate any entity'
   - 'translate editable entities'
   - 'update any az_flexible_block block content'
