@@ -56,12 +56,12 @@ conditions:
     roles:
       anonymous: anonymous
 events:
-  custom: {  }
-  generate_lead:
-    value: ''
-    currency: ''
-  search: {  }
   sign_up:
     method: CMS
   login:
     method: CMS
+  generate_lead:
+    value: ''
+    currency: ''
+  search: {  }
+  custom: {  }
