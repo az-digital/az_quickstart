@@ -6,6 +6,9 @@ use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
+/**
+*
+*/
 class PageOutputController extends ControllerBase {
 
   /**
@@ -25,4 +28,5 @@ class PageOutputController extends ControllerBase {
       $container->get('entity_type.manager')
     );
   }
+
 }
