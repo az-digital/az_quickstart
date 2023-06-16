@@ -118,6 +118,7 @@
         "npm-asset/bootstrap-datepicker": "1.10.0",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0",
+        "renanbr/bibtex-parser": "2.1.2",
         "seboettg/citeproc-php": "2.6.0"
     },
     "require-dev": {
@@ -182,6 +183,9 @@
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
+            },
+            "renanbr/bibtex-parser": {
+                "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
             }
         },
         "drupal-scaffold": {

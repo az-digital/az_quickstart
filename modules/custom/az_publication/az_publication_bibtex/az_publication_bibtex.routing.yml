@@ -1,0 +1,7 @@
+az_publication_bibtex.az_publication_bibtex_import_form:
+  path: '/admin/content/az-publication/import/bibtex'
+  defaults:
+    _form: '\Drupal\az_publication_bibtex\Form\AZPublicationBibtexForm'
+    _title: 'BibTeX Import'
+  requirements:
+    _permission: 'administer quickstart configuration'
