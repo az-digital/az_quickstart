@@ -23,7 +23,6 @@ install:
   - az_block_types_quick_links
   - az_metrics
   - az_news
-  - az_news_marketing_cloud
   - az_person
   - az_event
   - az_security

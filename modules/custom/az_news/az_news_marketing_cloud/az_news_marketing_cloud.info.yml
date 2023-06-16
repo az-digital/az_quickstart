@@ -2,6 +2,6 @@ name: Quickstart News for Marketing Cloud
 description: 'Provides News HTML and related configuration for use within Marketing Cloud.'
 core_version_requirement: ^9 || ^10
 type: module
-package: The University of Arizona
+package: 'The University of Arizona - Experimental'
 dependencies:
   - az_news
