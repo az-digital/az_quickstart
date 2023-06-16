@@ -1,0 +1,6 @@
+az_publication_import.az_publication_import_task:
+  title: 'Import Publication'
+  route_name: az_publication_import.az_publication_import_page
+  parent_id: system.admin_content
+  description: 'Import publications from an external source.'
+  weight: 102
