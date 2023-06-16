@@ -8,6 +8,7 @@ distribution:
 
 install:
   - az_cas
+  - az_digital_asset_library
   - az_paragraphs
   - az_paragraphs_accordion
   - az_paragraphs_cards
