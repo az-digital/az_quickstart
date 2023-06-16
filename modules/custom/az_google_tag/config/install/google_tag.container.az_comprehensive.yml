@@ -8,7 +8,7 @@ id: az_comprehensive
 label: 'AZ Comprehensive'
 weight: 0
 tag_container_ids:
-  - G-7PV3540XS3
+  - GTM-ML2BZB
 advanced_settings:
   gtm:
     data_layer: dataLayer
