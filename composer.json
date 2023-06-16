@@ -41,7 +41,7 @@
         "drupal/asset_injector": "2.17.0",
         "drupal/auto_entitylabel": "3.0.0",
         "drupal/background_image_formatter": "1.7",
-        "drupal/better_exposed_filters": "5.0",
+        "drupal/better_exposed_filters": "6.0.3",
         "drupal/blazy": "2.16.0",
         "drupal/block_class": "2.0.11",
         "drupal/block_content_permissions": "1.11.0",
@@ -78,7 +78,7 @@
         "drupal/inline_entity_form": "1.0.0-rc15",
         "drupal/intelligencebank": "4.0.0",
         "drupal/jquery_ui": "1.6.0",
-        "drupal/jquery_ui_datepicker": "1.4.0",
+        "drupal/jquery_ui_datepicker": "2.0.0",
         "drupal/link_class": "2.1.0",
         "drupal/linkit": "6.0.0-rc1",
         "drupal/masquerade": "2.0.0-rc1",
@@ -133,9 +133,6 @@
             },
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2022-05-20/2945387-19-support-bundleless-entities.patch"
-            },
-            "drupal/better_exposed_filters": {
-                "Remove jquery_ui_slider (3210947)": "https://www.drupal.org/files/issues/2022-02-16/3210947-12.patch"
             },
             "drupal/bootstrap_barrio": {
                 "Fix barrio webform required field issue (3133643)": "https://gist.githubusercontent.com/tadean/09ef9559553c788c5637077462b392dd/raw/1190b7d78843af29e2eae31c4601a51e65e5b352/barrio_webform_required_field_issue.patch",
