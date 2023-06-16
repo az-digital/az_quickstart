@@ -146,6 +146,12 @@
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-02-28/3109289-ckeditor-contrib-67.patch",
                 "Changing an existing embedded media's alignment or alt data attributes does not get saved with CKEditor (3330723)": "https://www.drupal.org/files/issues/2023-01-03/3330723-3.patch"
             },
+            "drupal/config_distro": {
+                "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
+            },
+            "drupal/config_provider": {
+                "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
+            },
             "drupal/core": {
                 "Rendered content view with relationship issue (2457999)": "https://www.drupal.org/files/issues/2023-01-04/2457999-9.5.x-309.patch",
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
@@ -158,9 +164,6 @@
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch"
-            },
-            "drupal/config_provider": {
-                "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
             },
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
