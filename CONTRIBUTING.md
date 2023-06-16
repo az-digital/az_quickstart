@@ -265,9 +265,9 @@ ddev eslint myfile.js
 
 Developing within Drupal can be a real challenge without debugging enabled.
 
-[Devel](https://www.drupal.org/project/devel) and [Drupal Console](https://drupalconsole.com/) are both included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
+[Devel](https://www.drupal.org/project/devel) is included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
 
-You can easily enable them by using the following commands.
+You can easily enable it by using the following commands.
 
 ### Lando
 Quickstart provides Lando tooling for enabling theme debugging.
