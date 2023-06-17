@@ -1,42 +1,67 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - system
+    - user
 id: az_comprehensive
 label: 'AZ Comprehensive'
 weight: 0
-container_id: GTM-ML2BZB
-data_layer: dataLayer
-include_classes: false
-whitelist_classes: |-
-  google
-  nonGooglePixels
-  nonGoogleScripts
-  nonGoogleIframes
-blacklist_classes: |-
-  customScripts
-  customPixels
-include_environment: false
-environment_id: ''
-environment_token: ''
-path_toggle: 'exclude listed'
-path_list: |-
-  /admin*
-  batch*
-  block/add/*
-  /block/*/edit
-  file/add
-  file/*/edit
-  /node/add*
-  /node/*/edit
-  /node/*/delete
-  /user/*/edit*
-  /user/*/cancel*
-  taxonomy/term/*/edit
-role_toggle: 'include listed'
-role_list:
-  anonymous: anonymous
-status_toggle: 'exclude listed'
-status_list: |-
-  403
-  404
-conditions: {  }
+tag_container_ids:
+  - GTM-ML2BZB
+advanced_settings:
+  gtm:
+    data_layer: dataLayer
+    include_classes: false
+    allowlist_classes: |-
+      google
+      nonGooglePixels
+      nonGoogleScripts
+      nonGoogleIframes
+    blocklist_classes: |-
+      customScripts
+      customPixels
+    include_environment: false
+    environment_id: ''
+    environment_token: ''
+dimensions_metrics: {  }
+conditions:
+  request_path:
+    id: request_path
+    negate: true
+    pages: |-
+      /admin*
+      batch*
+      block/add/*
+      /block/*/edit
+      file/add
+      file/*/edit
+      /node/add*
+      /node/*/edit
+      /node/*/delete
+      /user/*/edit*
+      /user/*/cancel*
+      taxonomy/term/*/edit
+  response_code:
+    id: response_code
+    negate: true
+    response_codes: |-
+      403
+      404
+  user_role:
+    id: user_role
+    negate: false
+    context_mapping:
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous
+events:
+  sign_up:
+    method: CMS
+  login:
+    method: CMS
+  generate_lead:
+    value: ''
+    currency: ''
+  search: {  }
+  custom: {  }
