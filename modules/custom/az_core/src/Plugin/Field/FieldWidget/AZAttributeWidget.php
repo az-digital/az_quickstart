@@ -106,6 +106,10 @@ class AZAttributeWidget extends OptionsSelectWidget {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
+    $this->required = $element['#required'] ?? FALSE;
+    $this->multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
+    $this->has_value = isset($items[0]->{$this->column});
+
     // Initial form.
     $element += [
       '#type' => 'details',
