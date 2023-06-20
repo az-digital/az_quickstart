@@ -134,6 +134,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob->id = $entity->id();
       $blob->type = $entity->field_az_publication_type->value;
       // Load default citation settings.
+      $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
+      $repository = \Drupal::service('entity.repository');
       $default_config = \Drupal::config('az_publication.settings');
       $style_context = $default_config->get('default_citation_style');
 
@@ -183,25 +185,27 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           foreach ($entity->field_az_authors as $item) {
             if (!empty($item->entity)) {
               $author = new stdClass();
+              $author_entity = $repository->getTranslationFromContext($item->entity);
               // Only literal name.
-              if (!empty($item->entity->field_az_author_literal->value) && empty($item->entity->field_az_author_parse->value)) {
-                $author->family = trim($item->entity->field_az_author_literal->value);
+              if (!empty($author_entity->field_az_author_literal->value) && empty($author_entity->field_az_author_parse->value)) {
+                $author->family = trim($author_entity->field_az_author_literal->value);
               }
               else {
                 // Map regular string fields.
                 foreach ($amap as $asource => $adestination) {
-                  if (!empty($item->entity->{$asource}->value)) {
-                    $author->{$adestination} = trim($item->entity->{$asource}->value);
+                  if (!empty($author_entity->{$asource}->value)) {
+                    $author->{$adestination} = trim($author_entity->{$asource}->value);
                   }
                 }
               }
               // Special field due to being an URL.
-              if (!empty($item->entity->field_az_author_link->uri)) {
-                $author->itemlink = $item->entity->field_az_author_link->uri;
+              if (!empty($author_entity->field_az_author_link->uri)) {
+                $author->itemlink = $author_entity->field_az_author_link->uri;
               }
               // Special field handling for person reference.
-              if (!empty($item->entity->field_az_author_person->entity)) {
-                $author->itemlink = $item->entity->field_az_author_person->entity->toUrl()->toString();
+              if (!empty($author_entity->field_az_author_person->entity)) {
+                $person = $repository->getTranslationFromContext($author_entity->field_az_author_person->entity);
+                $author->itemlink = $person->toUrl()->toString();
               }
               $blob->author[] = $author;
             }
@@ -222,10 +226,15 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $blob->itemlink = $entity->field_az_publication_link->uri;
         }
         // Handle file link if available.
-        if (!empty($entity->field_az_publication_media->entity->field_media_az_document->entity)) {
+        if (!empty($entity->field_az_publication_media->entity)) {
           // @todo Remove urldecode() if we figure out a better way to prevent
           // encoded URLs from getting double-encoded by CiteProc.
-          $blob->itemlink = urldecode($entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE));
+          $media_entity = $repository->getTranslationFromContext($entity->field_az_publication_media->entity);
+          if (!empty($media_entity->field_media_az_document->entity)) {
+            /** @var Drupal\file\FileInterface $file_entity */
+            $file_entity = $repository->getTranslationFromContext($media_entity->field_media_az_document->entity);
+            $blob->itemlink = urldecode($file_entity->createFileUrl(TRUE));
+          }
         }
 
         $additionalLinks = [];
@@ -286,7 +295,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           },
         ];
         // Set up CSL rendering.
-        $citeProc = new CiteProc($style_info, "en-US", $additionalMarkup);
+        $citeProc = new CiteProc($style_info, $locale, $additionalMarkup);
         $biblio = $citeProc->render([$blob], "bibliography");
         $build['az_publication_bibliography'][] = [
           '#type' => 'markup',

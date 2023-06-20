@@ -31,7 +31,7 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'seven';
+  protected $defaultTheme = 'claro';
 
   /**
    * The admin user.

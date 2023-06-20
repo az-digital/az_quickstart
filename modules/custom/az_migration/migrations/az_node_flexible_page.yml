@@ -72,7 +72,7 @@ process:
       source: alias
       regex: true
       search: /.$/
-      replace: 0
+      replace: '0'
     - plugin: default_value
       source: alias
       default_value: 1
