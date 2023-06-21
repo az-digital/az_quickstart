@@ -170,6 +170,9 @@
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
             },
+            "drupal/draggableviews": {
+                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2022-08-24/3252365-remove-select-all-class.patch"
+            },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
             },
