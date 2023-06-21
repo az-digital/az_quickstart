@@ -170,6 +170,9 @@
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
             },
+            "drupal/draggableviews": {
+                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2022-08-24/3252365-remove-select-all-class.patch"
+            },
             "drupal/linkit": {
                 "Multiple Linkit elements breaks (2925828)": "https://www.drupal.org/files/issues/2022-07-22/2925828-10-reroll-6.x.patch",
                 "Deprecated function Return type of SimpleSuggestion::jsonSerialize() (3262401)": "https://www.drupal.org/files/issues/2022-04-26/linkit-jsonserialize-3262401-11.patch"
