@@ -122,6 +122,18 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     }
   }
 
+  // Have sidebar breakpoints match mobile nav breakpoint
+  $sidebar_first_width = 'col-md-' . theme_get_setting('bootstrap_barrio_sidebar_first_width');
+  $sidebar_second_width = 'col-md-' . theme_get_setting('bootstrap_barrio_sidebar_second_width');
+  $az_sidebar_first_width = 'col-lg-' . theme_get_setting('bootstrap_barrio_sidebar_first_width');
+  $az_sidebar_second_width = 'col-lg-' . theme_get_setting('bootstrap_barrio_sidebar_second_width');
+
+  $variables['sidebar_first_attributes']->removeClass($sidebar_first_width);
+  $variables['sidebar_first_attributes']->addClass($az_sidebar_first_width);
+  $variables['sidebar_second_attributes']->removeClass($sidebar_second_width);
+  $variables['sidebar_second_attributes']->addClass($az_sidebar_second_width);
+
+
   // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
     // $variables['title'] = FALSE;
