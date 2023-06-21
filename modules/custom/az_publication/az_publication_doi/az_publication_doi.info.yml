@@ -1,0 +1,13 @@
+name: 'Quickstart Publication DOI Import'
+type: module
+description: 'Allows DOI import of publications'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+dependencies:
+  - 'az_core:az_core'
+  - 'az_publication:az_publication'
+  - 'az_publication_bibtex:az_publication_bibtex'
+  - 'az_publication_import:az_publication_import'
+  - migrate
+  - migrate_plus
+  - migrate_tools

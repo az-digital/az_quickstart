@@ -4,7 +4,7 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function ($, Drupal, drupalSettings) {
+(function ($, Drupal, drupalSettings, once) {
   Drupal.behaviors.azCalendarFilter = {
     attach: function attach(context, settings) {
       var filterInformation = drupalSettings.azCalendarFilter;
@@ -23,7 +23,7 @@
         }
       });
       $('.az-calendar-filter-calendar').datepicker('refresh');
-      $('.az-calendar-filter-wrapper', context).once('azCalendarFilter').each(function () {
+      $(once('azCalendarFilter', '.az-calendar-filter-wrapper', context)).each(function () {
         var $wrapper = $(this);
         var rangeKey = $wrapper.data('az-calendar-filter');
         var rangeStart = null;
@@ -147,4 +147,4 @@
       });
     }
   };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal, drupalSettings, once);

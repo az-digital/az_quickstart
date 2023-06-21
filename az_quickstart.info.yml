@@ -8,6 +8,7 @@ distribution:
 
 install:
   - az_cas
+  - az_digital_asset_library
   - az_paragraphs
   - az_paragraphs_accordion
   - az_paragraphs_cards
@@ -32,7 +33,7 @@ install:
   - drupal:history
   - drupal:block
   - drupal:breakpoint
-  - drupal:ckeditor
+  - ckeditor:ckeditor
   - drupal:config
   - drupal:content_moderation
   - drupal:contextual

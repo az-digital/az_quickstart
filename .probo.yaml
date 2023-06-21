@@ -37,11 +37,12 @@ steps:
       - yarn run eslint --color .
   - name: Install Arizona Quickstart
     plugin: Drupal
-    drupalVersion: 9
+    drupalVersion: 10
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
     installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose --yes -n"
+    cliDefines: {DRUSH_LAUNCHER_FALLBACK: '$SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush'}
   - name: Post-Installation Steps
     plugin: Script
     script:

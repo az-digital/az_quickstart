@@ -24,6 +24,10 @@ use Drupal\Core\StreamWrapper\StreamWrapperManager;
  * Example on how to alter theme settings form
  */
 function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  // Disable bootstrap_barrio_source and bootstrap_barrio_library settings.
+  $form['bootstrap_barrio_source']['#access'] = FALSE;
+  $form['bootstrap_barrio_library']['#access'] = FALSE;
+
   $form['footer_logo']['#open'] = FALSE;
 
   // AZ Barrio settings.
