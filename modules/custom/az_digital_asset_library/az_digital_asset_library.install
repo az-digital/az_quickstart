@@ -8,7 +8,7 @@
 /**
  * Uninstall "entity_browser" if possible.
  */
-function az_digital_asset_library_update_930628() {
+function az_digital_asset_library_update_1020701() {
   $uninstall_entity_browser = TRUE;
   // Get logger factory.
   $logger = \Drupal::service('logger.factory');
