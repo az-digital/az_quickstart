@@ -114,7 +114,6 @@ function az_news_update_920301() {
   return t('Better Exposed Filters module installed.');
 }
 
-
 /**
  * Add two new fields to az_news content type to allow overriding news thumbnails.
  *
