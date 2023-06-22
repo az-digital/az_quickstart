@@ -123,7 +123,7 @@ function az_news_update_920301() {
  *
  * @See https://github.com/az-digital/az_quickstart/issues/2504
  */
-function az_news_update_1020703() {
+function az_news_update_1020701() {
 
   $az_core_module_path = \Drupal::service('extension.list.module')->getPath('az_core');
   $az_core_config_storage = new FileStorage($az_core_module_path  . '/config/install');
