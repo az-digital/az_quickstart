@@ -52,8 +52,8 @@ function az_news_update_9202(&$sandbox) {
     return;
   }
 
-  $news_nodes = $node_storage->loadMultiple($nids);
-  foreach ($news_nodes as $node) {
+  $captioned_nodes = $node_storage->loadMultiple($nids);
+  foreach ($captioned_nodes as $node) {
     $caption_value = $node->$field_name->value;
     $media_id = $node->field_az_media_image->target_id;
     if (!empty($media_id)) {
