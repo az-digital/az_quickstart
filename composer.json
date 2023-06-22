@@ -145,7 +145,8 @@
             },
             "drupal/ckeditor": {
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-02-28/3109289-ckeditor-contrib-67.patch",
-                "Changing an existing embedded media's alignment or alt data attributes does not get saved with CKEditor (3330723)": "https://www.drupal.org/files/issues/2023-01-03/3330723-3.patch"
+                "Changing an existing embedded media's alignment or alt data attributes does not get saved with CKEditor (3330723)": "https://www.drupal.org/files/issues/2023-01-03/3330723-3.patch",
+                "Cursor is missing on chrome. (3340103)": "https://www.drupal.org/files/issues/2023-02-08/3340103-3.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
@@ -170,6 +171,9 @@
             "drupal/date_ap_style": {
                 "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
             },
+            "drupal/draggableviews": {
+                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2022-08-24/3252365-remove-select-all-class.patch"
+            },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
             },
@@ -183,7 +187,8 @@
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
             },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
+                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
+                "Ajax pager - Input value viewsreference contains a non-scalar value (3326841)": "https://www.drupal.org/files/issues/2023-01-05/3326841.patch"
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
