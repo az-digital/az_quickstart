@@ -15,9 +15,9 @@ function az_google_tag_toolbar_alter(&$items) {
     $site_url = \Drupal::request()->getHost();
     $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = [
       'title' => t('Analytics Dashboard'),
-      'url' => Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f', [
+      'url' => Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', [
         'query' => [
-          'params' => '{"df62":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '/"}',
+          'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '/"}',
         ],
         'absolute' => TRUE,
       ]),
