@@ -114,67 +114,59 @@ function az_news_update_920301() {
   return t('Better Exposed Filters module installed.');
 }
 
+
 /**
- * Set new thumbnail image fields for existing news nodes.
+ * Add two new fields to az_news content type to allow overriding news thumbnails.
+ *
+ * Create field_az_featured_image_as_thumb on az_news content type.
+ * Create field_az_media_thumbnail_image on az_news content type.
+ *
+ * @See https://github.com/az-digital/az_quickstart/issues/2504
  */
-function az_news_update_1020701(&$sandbox) {
-  if (!isset($sandbox['total'])) {
-    $sandbox['current'] = 0;
-    $sandbox['migrated'] = 0;
-    $sandbox['skipped'] = 0;
-    $sandbox['total'] = \Drupal::entityQuery('node')
-      ->accessCheck(FALSE)
-      ->condition('type', 'az_news')
-      ->count()
-      ->execute();
+function az_news_update_1020703() {
 
-    if (empty($sandbox['total'])) {
-      \Drupal::messenger()
-        ->addMessage('No news nodes found to process.');
-      $sandbox['#finished'] = 1;
-      return;
+  $az_core_module_path = \Drupal::service('extension.list.module')->getPath('az_core');
+  $az_core_config_storage = new FileStorage($az_core_module_path  . '/config/install');
+
+  $az_news_module_path = \Drupal::service('extension.list.module')->getPath('az_news');
+  $az_news_config_storage = new FileStorage($az_news_module_path  . '/config/install');
+
+  $field_config_to_add = [
+    'az_core' => [
+      'field.storage.node.field_az_featured_image_as_thumb',
+      'field.storage.node.field_az_media_thumbnail_image',
+    ],
+    'az_news' => [
+      'field.field.node.az_news.field_az_featured_image_as_thumb',
+      'field.field.node.az_news.field_az_media_thumbnail_image',
+    ]
+  ];
+
+  foreach ($field_config_to_add['az_core'] as $field_config_id) {
+    $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
+    $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+    $config_record = $az_core_config_storage->read($field_config_id);
+
+    /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+    $entity = $storage->createFromStorageRecord($config_record);
+    if ($storage->load($entity->id())) {
+      continue;
     }
+    $entity->save();
+
   }
+  foreach ($field_config_to_add['az_news'] as $field_config_id) {
+    $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
+    $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+    $config_record = $az_news_config_storage->read($field_config_id);
 
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-  $nodes_per_batch = 10;
-  $nids = $node_storage->getQuery()
-    ->accessCheck(FALSE)
-    ->condition('type', 'az_news')
-    ->range($sandbox['current'], $nodes_per_batch)
-    ->execute();
-
-  if (empty($nids)) {
-    $sandbox['#finished'] = 1;
-    return;
-  }
-
-  $news_nodes = $node_storage->loadMultiple($nids);
-  foreach ($news_nodes as $node) {
-    $media_id = $node->field_az_media_image->target_id;
-    // If the news node has an image, copy the ID to the thumbnail field.
-    if (!empty($media_id)) {
-      // Test if the presave hook takes care of this. Otherwise restore it.
-      /*
-       * $node->field_az_media_thumbnail_image->target_id = $media_id;
-       */
-      $sandbox['migrated']++;
+    /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+    $entity = $storage->createFromStorageRecord($config_record);
+    if ($storage->load($entity->id())) {
+      continue;
     }
-    $node->field_az_featured_image_as_thumb = 1;
-    $node->save();
-    $sandbox['current']++;
-  }
-  \Drupal::messenger()
-    ->addMessage($sandbox['current'] . ' news nodes processed to enable Use Featured Image as Thumb checkbox.');
-  \Drupal::messenger()
-    ->addMessage($sandbox['migrated'] . ' az_media_image values migrated.');
-  \Drupal::messenger()
-    ->addMessage($sandbox['skipped'] . ' news nodes skipped.');
+    $entity->save();
 
-  if ($sandbox['current'] >= $sandbox['total']) {
-    $sandbox['#finished'] = 1;
-  }
-  else {
-    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
   }
 }
+
