@@ -145,7 +145,8 @@
             },
             "drupal/ckeditor": {
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-02-28/3109289-ckeditor-contrib-67.patch",
-                "Changing an existing embedded media's alignment or alt data attributes does not get saved with CKEditor (3330723)": "https://www.drupal.org/files/issues/2023-01-03/3330723-3.patch"
+                "Changing an existing embedded media's alignment or alt data attributes does not get saved with CKEditor (3330723)": "https://www.drupal.org/files/issues/2023-01-03/3330723-3.patch",
+                "Cursor is missing on chrome. (3340103)": "https://www.drupal.org/files/issues/2023-02-08/3340103-3.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
