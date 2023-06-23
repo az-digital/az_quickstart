@@ -40,7 +40,7 @@ function az_news_post_update_after_1020701(&$sandbox) {
     $sandbox['current']++;
   }
   \Drupal::messenger()
-    ->addMessage($sandbox['current'] . ' news nodes processed to enable Use Featured Image as Thumb checkbox.');
+    ->addMessage($sandbox['current'] . ' news nodes processed to set field_az_featured_image_as_thumb to true.');
 
   if ($sandbox['current'] >= $sandbox['total']) {
     $sandbox['#finished'] = 1;
