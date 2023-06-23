@@ -22,8 +22,8 @@
       navigator.clipboard.writeText(baseUrl + href);
       event.srcElement.classList.add(
         'js-click-copy--copied',
-        'action-link--icon-checkmark'
-        );
+        'action-link--icon-checkmark',
+      );
     } else {
       return false;
     }
