@@ -139,7 +139,7 @@ function az_news_update_1020701() {
     'az_news' => [
       'field.field.node.az_news.field_az_featured_image_as_thumb',
       'field.field.node.az_news.field_az_media_thumbnail_image',
-    ]
+    ],
   ];
 
   foreach ($field_config_to_add['az_core'] as $field_config_id) {
