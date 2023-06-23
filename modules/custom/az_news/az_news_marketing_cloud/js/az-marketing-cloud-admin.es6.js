@@ -20,7 +20,10 @@
       event.preventDefault();
       const href = event.srcElement.getAttribute('href');
       navigator.clipboard.writeText(baseUrl + href);
-      event.srcElement.classList.add('js-click-copy--copied', 'action-link--icon-checkmark');
+      event.srcElement.classList.add(
+        'js-click-copy--copied',
+        'action-link--icon-checkmark'
+        );
     } else {
       return false;
     }
