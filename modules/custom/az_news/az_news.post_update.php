@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * @file
+ * Post update functions for az_news module.
+ */
+
+/**
  * Set new thumbnail image fields for existing news nodes.
  */
 function az_news_post_update_after_1020701(&$sandbox) {
