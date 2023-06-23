@@ -116,7 +116,7 @@ function az_news_update_920301() {
 }
 
 /**
- * Add two new fields to az_news content type to allow overriding news thumbnails.
+ * Add two new fields to az_news content type to allow overriding news thumbs.
  *
  * Create field_az_featured_image_as_thumb on az_news content type.
  * Create field_az_media_thumbnail_image on az_news content type.
@@ -142,7 +142,7 @@ function az_news_update_1020701() {
       $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
 
       $module_path = \Drupal::service('extension.list.module')->getPath($module);
-      $config_storage = new FileStorage($module_path  . '/config/install');
+      $config_storage = new FileStorage($module_path . '/config/install');
       $config_record = $config_storage->read($field_config_id);
 
       /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
@@ -155,4 +155,3 @@ function az_news_update_1020701() {
   }
 
 }
-
