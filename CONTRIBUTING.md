@@ -14,8 +14,8 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
       project.
     * Use the `#friday-meetings` channel to ask questions or get updates related
       to Arizona Digital meetings.
-    * Use the `#azdigital-general` channel to ask general questions related to
-      Arizona Digital.
+    * Use the `#azdigital-support` channel to ask general questions related to
+      Arizona Digital and get support for Arizona Digital products.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
   * Local containerized (Docker) dev environment tool either lando or ddev
     * [Lando](https://docs.lando.dev/basics/installation.html)
