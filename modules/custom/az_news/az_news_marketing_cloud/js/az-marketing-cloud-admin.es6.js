@@ -27,7 +27,6 @@
     }
   }
 
-
   let copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin .views-field.views-field-view-node-1 a');
   const base_url = window.location.origin;
 
