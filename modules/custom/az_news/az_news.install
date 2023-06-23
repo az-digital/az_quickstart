@@ -5,6 +5,7 @@
  * Install, update and uninstall functions for az_news module.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\field\Entity\FieldConfig;
 
 /**
@@ -112,4 +113,41 @@ function az_news_update_9203() {
 function az_news_update_920301() {
   \Drupal::service('module_installer')->install(['better_exposed_filters']);
   return t('Better Exposed Filters module installed.');
+}
+
+/**
+ * Add two new fields to az_news content type to allow overriding news thumbs.
+ *
+ * Create field_az_featured_image_as_thumb on az_news content type.
+ * Create field_az_media_thumbnail_image on az_news content type.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/2504
+ */
+function az_news_update_1020701() {
+
+  $field_config_to_add = [
+    'az_core' => [
+      'field.storage.node.field_az_featured_image_as_thumb',
+      'field.storage.node.field_az_media_thumbnail_image',
+    ],
+    'az_news' => [
+      'field.field.node.az_news.field_az_featured_image_as_thumb',
+      'field.field.node.az_news.field_az_media_thumbnail_image',
+    ],
+  ];
+
+  foreach ($field_config_to_add as $module => $configs) {
+    $module_path = \Drupal::service('extension.list.module')->getPath($module);
+    $config_storage = new FileStorage($module_path . '/config/install');
+    foreach ($configs as $field_config_id) {
+      $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
+      $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+      $config_record = $config_storage->read($field_config_id);
+
+      /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+      $entity = $storage->createFromStorageRecord($config_record);
+      $entity->save();
+    }
+  }
+
 }
