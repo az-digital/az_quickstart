@@ -6,18 +6,18 @@
 **/
 (function (Drupal, window, document) {
   function handleClick(event) {
-    if (event.type === "click") {
+    var baseUrl = window.location.origin;
+    if (event.type === 'click') {
       event.preventDefault();
-      var href = event.srcElement.getAttribute("href");
-      navigator.clipboard.writeText(base_url + href);
-      event.srcElement.classList.add("js-click-copy--copied", "action-link--icon-checkmark");
+      var href = event.srcElement.getAttribute('href');
+      navigator.clipboard.writeText(baseUrl + href);
+      event.srcElement.classList.add('js-click-copy--copied', 'action-link--icon-checkmark');
     } else {
       return false;
     }
   }
   var copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin .views-field.views-field-view-node-1 a');
-  var base_url = window.location.origin;
   copyLinks.forEach(function (element) {
-    return element.addEventListener("click", handleClick, false);
+    return element.addEventListener('click', handleClick, false);
   });
 })(Drupal, this, this.document);

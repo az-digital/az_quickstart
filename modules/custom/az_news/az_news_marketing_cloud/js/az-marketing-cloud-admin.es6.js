@@ -4,7 +4,6 @@
  */
 
 ((Drupal, window, document) => {
-
   /**
    * Handles click events on the click to copy links.
    *
@@ -16,27 +15,22 @@
    * copied.
    */
   function handleClick(event) {
-    if (event.type === "click") {
+    const baseUrl = window.location.origin;
+    if (event.type === 'click') {
       event.preventDefault();
-      let href = event.srcElement.getAttribute("href");
-      navigator.clipboard.writeText(base_url+href);
-      event.srcElement.classList.add("js-click-copy--copied");
-
+      const href = event.srcElement.getAttribute('href');
+      navigator.clipboard.writeText(baseUrl + href);
+      event.srcElement.classList.add('js-click-copy--copied', 'action-link--icon-checkmark');
     } else {
       return false;
     }
   }
 
+  const copyLinks = document.querySelectorAll(
+    '.view-id-az_marketing_cloud.view-display-id-admin .views-field.views-field-view-node-1 a',
+  );
 
-  let copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin .views-field.views-field-view-node-1 a');
-  const base_url = window.location.origin;
-
-  copyLinks.forEach(element => (
-    element.addEventListener(
-      "click",
-      handleClick,
-      false
-    )
-  ));
-
+  copyLinks.forEach((element) =>
+    element.addEventListener('click', handleClick, false),
+  );
 })(Drupal, this, this.document);
