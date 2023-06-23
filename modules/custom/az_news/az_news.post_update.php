@@ -6,7 +6,6 @@
 function az_news_post_update_after_1020701(&$sandbox) {
   if (!isset($sandbox['total'])) {
     $sandbox['current'] = 0;
-    $sandbox['migrated'] = 0;
     $sandbox['skipped'] = 0;
     $sandbox['total'] = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
