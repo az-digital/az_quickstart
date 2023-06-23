@@ -138,19 +138,19 @@ function az_news_update_1020701() {
 
   foreach ($field_config_to_add as $module => $configs) {
     foreach ($configs as $field_config_id) {
-	    $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
-	    $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
-	
-	    $module_path = \Drupal::service('extension.list.module')->getPath($module);
-	    $config_storage = new FileStorage($module_path  . '/config/install');
-	    $config_record = $config_storage->read($field_config_id);
-	
-	    /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
-	    $entity = $storage->createFromStorageRecord($config_record);
-	    if ($storage->load($entity->id())) {
-	      continue;
-	    }
-	    $entity->save();
+      $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
+      $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+
+      $module_path = \Drupal::service('extension.list.module')->getPath($module);
+      $config_storage = new FileStorage($module_path  . '/config/install');
+      $config_record = $config_storage->read($field_config_id);
+
+      /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+      $entity = $storage->createFromStorageRecord($config_record);
+      if ($storage->load($entity->id())) {
+        continue;
+      }
+      $entity->save();
     }
   }
 
