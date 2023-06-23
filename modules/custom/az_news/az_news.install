@@ -138,7 +138,7 @@ function az_news_update_1020701() {
 
   foreach ($field_config_to_add as $module => $configs) {
     $module_path = \Drupal::service('extension.list.module')->getPath($module);
-    $config_storage = new FileStorage($module_path  . '/config/install');
+    $config_storage = new FileStorage($module_path . '/config/install');
     foreach ($configs as $field_config_id) {
       $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
       $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
