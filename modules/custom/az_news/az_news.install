@@ -165,7 +165,7 @@ function az_news_update_1020701() {
       continue;
     }
     $entity->save();
-
   }
+
 }
 
