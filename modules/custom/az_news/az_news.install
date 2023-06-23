@@ -125,12 +125,6 @@ function az_news_update_920301() {
  */
 function az_news_update_1020701() {
 
-  $az_core_module_path = \Drupal::service('extension.list.module')->getPath('az_core');
-  $az_core_config_storage = new FileStorage($az_core_module_path  . '/config/install');
-
-  $az_news_module_path = \Drupal::service('extension.list.module')->getPath('az_news');
-  $az_news_config_storage = new FileStorage($az_news_module_path  . '/config/install');
-
   $field_config_to_add = [
     'az_core' => [
       'field.storage.node.field_az_featured_image_as_thumb',
@@ -142,30 +136,22 @@ function az_news_update_1020701() {
     ],
   ];
 
-  foreach ($field_config_to_add['az_core'] as $field_config_id) {
-    $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
-    $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
-    $config_record = $az_core_config_storage->read($field_config_id);
-
-    /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
-    $entity = $storage->createFromStorageRecord($config_record);
-    if ($storage->load($entity->id())) {
-      continue;
+  foreach ($field_config_to_add as $module => $configs) {
+    foreach ($configs as $field_config_id) {
+	    $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
+	    $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+	
+	    $module_path = \Drupal::service('extension.list.module')->getPath($module);
+	    $config_storage = new FileStorage($module_path  . '/config/install');
+	    $config_record = $config_storage->read($field_config_id);
+	
+	    /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+	    $entity = $storage->createFromStorageRecord($config_record);
+	    if ($storage->load($entity->id())) {
+	      continue;
+	    }
+	    $entity->save();
     }
-    $entity->save();
-  }
-
-  foreach ($field_config_to_add['az_news'] as $field_config_id) {
-    $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
-    $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
-    $config_record = $az_news_config_storage->read($field_config_id);
-
-    /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
-    $entity = $storage->createFromStorageRecord($config_record);
-    if ($storage->load($entity->id())) {
-      continue;
-    }
-    $entity->save();
   }
 
 }
