@@ -6,7 +6,7 @@
  */
 
 /**
- * Set new thumbnail image fields for existing news nodes.
+ * Set the new Use Featured Image as Thumbnail field on all news nodes.
  */
 function az_news_post_update_after_1020701(&$sandbox) {
   if (!isset($sandbox['total'])) {
