@@ -152,8 +152,8 @@ function az_news_update_1020701() {
       continue;
     }
     $entity->save();
-
   }
+
   foreach ($field_config_to_add['az_news'] as $field_config_id) {
     $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
     $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
