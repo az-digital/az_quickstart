@@ -6,8 +6,8 @@
  */
 
 use Drupal\Core\Config\FileStorage;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\field\Entity\FieldConfig;
 
 /**
  * Install az_paragraphs_photo_gallery.
