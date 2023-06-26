@@ -147,6 +147,7 @@ function az_news_update_1020701() {
 
       /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
       try {
+        /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
         $entity = $storage->createFromStorageRecord($config_record);
         $entity->save();
       }
