@@ -259,7 +259,7 @@ function az_core_canonical_summary_link_title(array $data) {
  *   Node data from hook_tokens().
  *
  * @return string
- *   The node's canononical URL (absolute).
+ *   The node's canonical URL (absolute).
  */
 function az_core_canonical_url(array $data) {
   /** @var \Drupal\node\NodeInterface $node */
