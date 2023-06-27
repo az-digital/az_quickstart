@@ -11,7 +11,7 @@
 /**
  * Implements hook_update_last_removed().
  */
-function az_core_update_last_removed() {
+function az_paragraphs_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 920301;
 }
