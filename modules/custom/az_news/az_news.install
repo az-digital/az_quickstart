@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Entity\EntityStorageException;
 
 /**
  * Implements hook_update_last_removed().
@@ -44,9 +45,14 @@ function az_news_update_1020701() {
       $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
       $config_record = $config_storage->read($field_config_id);
 
-      /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
-      $entity = $storage->createFromStorageRecord($config_record);
-      $entity->save();
+      try {
+        /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+        $entity = $storage->createFromStorageRecord($config_record);
+        $entity->save();
+      }
+      catch (EntityStorageException $e) {
+        \Drupal::logger('az_news')->notice($e->getMessage());
+      }
     }
   }
 
