@@ -144,7 +144,6 @@ third_party_settings:
       smart_title__tag: 'span'
       smart_title__classes: 
         - 'text-blue'
-        - 'text-decoration-none'
 id: node.az_person.az_card
 targetEntityType: node
 bundle: az_person
