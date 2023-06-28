@@ -112,7 +112,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'h5 mt-0 text-blue'
+        classes: 'h5 mt-0'
         show_empty_fields: false
         id: ''
         element: h3
@@ -142,7 +142,9 @@ third_party_settings:
     settings:
       smart_title__link: false
       smart_title__tag: ''
-      smart_title__classes: {  }
+      smart_title__classes: 
+        - 'text-blue'
+        - 'text-decoration-none'
 id: node.az_person.az_card
 targetEntityType: node
 bundle: az_person
