@@ -15,7 +15,7 @@ use Drupal\Core\Config\StorageException;
 use Drupal\Component\Serialization\Yaml;
 
 /**
- * Add missing permissions from the AZ Quickstart profile to the active site.
+ * Contains Quickstart configuration-related commands.
  */
 class AZCoreConfigCommands extends DrushCommands {
 
@@ -142,10 +142,11 @@ class AZCoreConfigCommands extends DrushCommands {
    * @param string $modules
    *   Optional comma-delimited module machine names.
    *
-   * @command az-core-config-export
+   * @command az-core-distribution-config
    */
   public function exportDistributionConfiguration($modules = '') {
     $extensions = $this->extensionLister->getList();
+    $installed = $this->extensionLister->getAllInstalledInfo();
     $arguments = [];
     if (!empty($modules)) {
       $arguments = explode(',', $modules);
@@ -159,7 +160,14 @@ class AZCoreConfigCommands extends DrushCommands {
       if (!empty($arguments) && !in_array($key, $arguments)) {
         continue;
       }
-      $this->output()->writeln(dt('@extension configuration:', [
+      // Only run for enabled extensions.
+      if (!isset($installed[$key])) {
+        $this->output()->writeln(dt('@extension not installed.', [
+          '@extension' => $key,
+        ]));
+        continue;
+      }
+      $this->output()->writeln(dt('@extension...', [
         '@extension' => $key,
       ]));
       $providers = $this->configCollector->getConfigProviders();
