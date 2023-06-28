@@ -131,7 +131,7 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: ''
+        classes: 'text-decoration-none'
         show_empty_fields: false
         id: ''
         target: custom_uri
@@ -142,8 +142,7 @@ third_party_settings:
     settings:
       smart_title__link: false
       smart_title__tag: 'span'
-      smart_title__classes: 
-        - 'text-blue'
+      smart_title__classes: 'text-blue'
 id: node.az_person.az_card
 targetEntityType: node
 bundle: az_person
