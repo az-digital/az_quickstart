@@ -219,7 +219,7 @@ third_party_settings:
         id: ''
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: h5
         attributes: ''
         effect: none
@@ -229,7 +229,7 @@ third_party_settings:
         - field_az_links
       label: Links
       parent_name: group_card_body
-      region: hidden
+      region: content
       weight: 12
       format_type: html_element
       format_settings:
@@ -238,7 +238,7 @@ third_party_settings:
         id: ''
         element: div
         show_label: true
-        label_element: h3
+        label_element: h2
         label_element_classes: h5
         attributes: ''
         effect: none
@@ -276,7 +276,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 11
+    weight: 10
     region: content
   field_az_email:
     type: email_mailto
@@ -329,7 +329,7 @@ content:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 12
+    weight: 11
     region: content
   field_az_person_category_sec:
     type: entity_reference_entity_view
@@ -338,7 +338,7 @@ content:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 13
+    weight: 12
     region: content
   field_az_phones:
     type: telephone_link
