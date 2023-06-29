@@ -274,7 +274,7 @@ On a local development site:
 2. Change the `debug` setting to `true` in the `twig.config` section of `parameters`
 3. Clear cache
 
-If using lando or ddev for local devleopment, you may need to use a code editor that allows you to connect to a running Docker container to make this change (e.g. VS Code).
+If using lando or ddev for local devleopment, you may need to use a code editor such as VS Code that allows you to connect to a running Docker container to make this change (see VS Code specific insructions in the "Local Development" section of this document).
 
 ## Configuration Management and Database Updates
 
