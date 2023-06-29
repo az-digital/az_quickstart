@@ -3,10 +3,8 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_alphabetical_listing
-    - field.storage.node.field_az_alphabetical_index
   module:
     - node
-    - options
     - user
 id: az_alphabetical_listing
 label: 'AZ Alphabetical Listing'
