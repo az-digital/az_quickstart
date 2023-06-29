@@ -270,7 +270,7 @@ Developing within Drupal can be a real challenge without debugging enabled.
 ### Turn on Twig debugging
 
 On a local development site:
-1. Copy sites/default/default.services.yml to sites/default/services.yml (if services.yml doesn't already exist)
+1. Copy `sites/default/default.services.yml` to `sites/default/services.yml` (if `services.yml` doesn't already exist)
 2. Change the `debug` setting to `true` in the `twig.config` section of `parameters`
 3. Clear cache
 
