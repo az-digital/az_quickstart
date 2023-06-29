@@ -71,8 +71,7 @@ tooling:
     service: appserver
     user: root
     cmd:
-      - echo "Enabling theme debugging..."
-      - /app/vendor/bin/drupal --root=/app/web site:mode dev
+      - echo "theme-debug relied on Drupal console (now deprecated) and is no longer availabe.  Please consult the README for instructions on how to manually turn on Twig debug and other debugging settings."
   # Provide Drush tooling to automatically know the Drupal root.
   drush:
     service: appserver
