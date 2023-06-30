@@ -58,5 +58,6 @@ hidden:
   created: true
   name: true
   path: true
+  replace_file: true
   status: true
   uid: true
