@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  module:
-    - block_class
   theme:
     - claro
 id: claro_primary_local_tasks
