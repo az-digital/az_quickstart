@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies: {  }
 label: 'Marketing Cloud - 30/70 Layout'
-id: marketing_cloud_30_70_layout
+id: az_marketing_cloud_30_70_layout
 description: 'Image crop for use in Marketing Cloud 30/70 Layout.'
 aspect_ratio: ''
 soft_limit_width: 200

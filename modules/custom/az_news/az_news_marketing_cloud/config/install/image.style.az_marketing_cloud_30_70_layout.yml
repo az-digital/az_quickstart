@@ -2,10 +2,10 @@ langcode: en
 status: true
 dependencies:
   config:
-    - crop.type.marketing_cloud_30_70_layout
+    - crop.type.az_marketing_cloud_30_70_layout
   module:
     - crop
-name: marketing_cloud_30_70_layout
+name: az_marketing_cloud_30_70_layout
 label: 'Marketing Cloud - 30/70 Layout (200x200)'
 effects:
   be4cccd8-b170-473b-99be-da72fdba050c:
@@ -21,5 +21,5 @@ effects:
     id: crop_crop
     weight: -10
     data:
-      crop_type: marketing_cloud_30_70_layout
+      crop_type: az_marketing_cloud_30_70_layout
       automatic_crop_provider: null
