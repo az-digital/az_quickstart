@@ -68,13 +68,7 @@
  * @ingroup themeable
  */
 #}
-{% set image = {
-  '#theme':      'image_style',
-  '#style_name': 'az_marketing_cloud_50_50_layout',
-  '#uri':        file_field_uri,
-  '#alt':        '',
-  '#attributes': { class: ['qs-img'] },
-} %}
+
 <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
   style="text-align: left; min-width: 100%; border-top: 1px solid #D4D4D4;"
   class="stylingblock-content-wrapper">
@@ -92,7 +86,7 @@
                       <td align="center">
 
                         <!-- QS: IMAGE -->
-                        {{ image }}
+                        <img class="qs-img" src="{{ images.az_marketing_cloud_50_50_layout }}" alt="" width="200" style="display: block; height: auto; width: 100%;">
 
                       </td>
                     </tr>

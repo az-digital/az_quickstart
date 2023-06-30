@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\image\Entity\ImageStyle;
 
 /**
  * Implements hook_theme_registry_alter().
@@ -52,7 +53,16 @@ function az_news_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$var
     $file = $media->field_media_az_image->entity ?? NULL;
     if (!empty($file)) {
       $uri = $file->getFileUri();
-      $variables['file_field_uri'] = $uri;
+      $styles = [
+        'az_marketing_cloud_30_70_layout',
+        'az_marketing_cloud_50_50_layout',
+      ];
+      foreach ($styles as $style) {
+        $image_style = ImageStyle::load($style);
+        if (!empty($image_style)) {
+          $variables['images'][$style] = $image_style->buildUrl($uri);
+        }
+      }
     }
   }
 }
