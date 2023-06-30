@@ -12,10 +12,10 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
   * [Slack](https://uarizona.slack.com) is our main source of communications.
     * Use the `#azdigital-quickstart` channel for questions/comments related to this
       project.
-    * Use the `#friday-meetings` channel to ask questions or get updates related
-      to Arizona Digital meetings.
-    * Use the `#azdigital-general` channel to ask general questions related to
-      Arizona Digital.
+    * Use the `#azdigital-meetings` channel to ask questions or get updates related
+      to Arizona Digital meetings and workshops.
+    * Use the `#azdigital-support` channel to ask general questions related to
+      Arizona Digital and get support for Arizona Digital products.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
   * Local containerized (Docker) dev environment tool either lando or ddev
     * [Lando](https://docs.lando.dev/basics/installation.html)
@@ -265,9 +265,9 @@ ddev eslint myfile.js
 
 Developing within Drupal can be a real challenge without debugging enabled.
 
-[Devel](https://www.drupal.org/project/devel) and [Drupal Console](https://drupalconsole.com/) are both included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
+[Devel](https://www.drupal.org/project/devel) is included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
 
-You can easily enable them by using the following commands.
+You can easily enable it by using the following commands.
 
 ### Lando
 Quickstart provides Lando tooling for enabling theme debugging.
