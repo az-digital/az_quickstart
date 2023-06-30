@@ -261,31 +261,20 @@ lando eslint myfile.js
 ddev eslint myfile.js
 ```
 
-## Theme debugging and the development site mode.
+## Theme debugging
 
 Developing within Drupal can be a real challenge without debugging enabled.
 
-[Devel](https://www.drupal.org/project/devel) is included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
+[Devel](https://www.drupal.org/project/devel) is included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.  See "Visual Studio Code Integration" 
 
-You can easily enable it by using the following commands.
+### Turn on Twig debugging
 
-### Lando
-Quickstart provides Lando tooling for enabling theme debugging.
+On a local development site:
+1. Copy `sites/default/default.services.yml` to `sites/default/services.yml` (if `services.yml` doesn't already exist)
+2. Change the `debug` setting to `true` in the `twig.config` section of `parameters`
+3. Clear cache
 
-Simply use the following command once your site is installed:
-
-```
-lando theme-debug
-```
-
-### DDev
-Quickstart provides DDev tooling for enabling theme debugging.
-
-Simply use the following command once your site is installed:
-
-```
-ddev theme-debug
-```
+If using lando or ddev for local devleopment, you may need to use a code editor such as VS Code that allows you to connect to a running Docker container to make this change (see VS Code specific insructions in the "Local Development" section of this document).
 
 ## Configuration Management and Database Updates
 
