@@ -77,6 +77,11 @@ process:
       plugin: skip_on_empty
       method: process
       source: summary
+
+  # Events are considered "published" unless any of these conditions are met:
+  # - 'External_Visibility' is "Don't Broadcast to any Platform (invite only)"
+  # - 'Status_Formula' is "Canceled"
+  # = 'Publish' is "false"
   external_visibility:
     -
       plugin: callback
