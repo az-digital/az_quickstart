@@ -1,3 +1,8 @@
+az_news_marketing_cloud:
+  css:
+    theme:
+      css/az-marketing-cloud.css: {}
+
 admin:
   version: 1.x
   js:
