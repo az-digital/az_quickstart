@@ -9,6 +9,7 @@ name: marketing_cloud_30_70_layout
 label: 'Marketing Cloud - 30/70 Layout (200x200)'
 effects:
   be4cccd8-b170-473b-99be-da72fdba050c:
+    uuid: be4cccd8-b170-473b-99be-da72fdba050c
     id: image_scale_and_crop
     weight: -9
     data:
@@ -16,6 +17,7 @@ effects:
       height: 200
       anchor: center-center
   467fdecb-cdd3-41ea-84b0-9743fcd81057:
+    uuid: 467fdecb-cdd3-41ea-84b0-9743fcd81057
     id: crop_crop
     weight: -10
     data:
