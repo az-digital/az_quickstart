@@ -34,7 +34,7 @@
         "az-digital/background_image_formatter": "dev-az-digital",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.5",
-        "citation-style-language/styles": "0.0.249",
+        "citation-style-language/styles": "0.0.272",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
