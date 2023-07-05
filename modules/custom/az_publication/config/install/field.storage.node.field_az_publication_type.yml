@@ -23,6 +23,9 @@ settings:
       value: article-newspaper
       label: 'Newspaper Article'
     -
+      value: article-book
+      label: 'Article in Book'
+    -
       value: bill
       label: Bill
     -
