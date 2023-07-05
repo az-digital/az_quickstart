@@ -6,7 +6,7 @@
  */
 
 /**
- * Install the new az_publication supporting module az_curated_views.
+ * Install the new az_curated_views module (now required by az_publication).
  */
 function az_publication_update_1020701() {
   \Drupal::service('module_installer')->install(['az_curated_views']);
