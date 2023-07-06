@@ -9,16 +9,37 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\image\Entity\ImageStyle;
 
 /**
+ * Implements hook_theme().
+ */
+function az_marketing_cloud_theme($existing, $type, $theme, $path) {
+  return [
+    'node__view__az_marketing_cloud__30_70_layout' => [
+      'template' => 'node--view--az-marketing-cloud--30-70-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__50_50_layout' => [
+      'template' => 'node--view--az-marketing-cloud--50-50-layout',
+      'base hook' => 'node',
+    ],
+    'page__export__marketing_cloud' => [
+      'template' => 'page--export--marketing-cloud',
+      'base hook' => 'page',
+    ],
+    'html__export__marketing_cloud' => [
+      'template' => 'html--export--marketing-cloud',
+      'base hook' => 'html',
+    ],
+    'block__az_barrio_page_title' => [
+      'template' => 'block--az-barrio-page-title',
+      'base hook' => 'block',
+    ],
+  ];
+}
+
+/**
  * Implements hook_theme_registry_alter().
  */
 function az_marketing_cloud_theme_registry_alter(&$theme_registry) {
-  if ($theme_registry['field_multiple_value_form']) {
-    if (isset($theme_registry['field_multiple_value_form']['preprocess functions'])) {
-      $key = array_search('paragraphs_preprocess_field_multiple_value_form', $theme_registry['field_multiple_value_form']['preprocess functions'], TRUE);
-      unset($theme_registry['field_multiple_value_form']['preprocess functions'][$key]);
-      $theme_registry['field_multiple_value_form']['preprocess functions'][] = 'paragraphs_preprocess_field_multiple_value_form';
-    }
-  }
 
   $module_path = \Drupal::service('extension.list.module')->getPath('az_marketing_cloud');
   // Find all .html.twig files in this module's folder recursively.
@@ -27,10 +48,6 @@ function az_marketing_cloud_theme_registry_alter(&$theme_registry) {
   foreach ($template_file_objects as $key => $template_file_object) {
     // If the template has not already been overridden by a theme.
     if (!isset($theme_registry[$key]['theme path']) || strpos($theme_registry[$key]['theme path'], 'themes/') === FALSE) {
-      // Copy default paragraph registry entry for paragraph entries.
-      if (strpos($key, 'paragraph__') === 0) {
-        $theme_registry[$key] = $theme_registry['paragraph'];
-      }
       // Alter the theme path and template elements.
       $theme_registry[$key]['theme path'] = $module_path;
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
