@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_publication module.
+ */
+
+/**
+ * Install the new az_curated_views module (now required by az_publication).
+ */
+function az_publication_update_1020701() {
+  \Drupal::service('module_installer')->install(['az_curated_views']);
+}
