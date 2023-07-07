@@ -35,7 +35,7 @@ filters:
     id: filter_autop
     provider: filter
     status: true
-    weight: -41
+    weight: -42
     settings: {  }
   filter_url:
     id: filter_url
@@ -48,7 +48,7 @@ filters:
     id: media_embed
     provider: media
     status: true
-    weight: -42
+    weight: -43
     settings:
       default_view_mode: default
       allowed_view_modes:
@@ -62,7 +62,7 @@ filters:
     id: entity_embed
     provider: entity_embed
     status: true
-    weight: -43
+    weight: -41
     settings: {  }
   bootstrap_utilities_blockquote_filter:
     id: bootstrap_utilities_blockquote_filter
