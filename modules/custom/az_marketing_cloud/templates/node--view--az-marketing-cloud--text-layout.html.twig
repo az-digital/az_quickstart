@@ -79,14 +79,14 @@
         <!-- QS: TITLE (recomended 80 character max) -->
         <h3 class="qs-heading"
           style="color:#403635; font-family:inherit; font-size:18px; font-weight:bold; line-height:115%;">
-          {{ elements.title }}</h3>
+          {{ content.smart_title }}</h3>
 
         <!-- QS: SUMMARY (recomended 220 character max) -->
-        <p class="qs-summary">{{ elements.field_az_summary }}<br>
+        <p class="qs-summary">{{ content.field_az_summary }}<br>
           <br>
           <!-- QS: CALL TO ACTION LINK (recomended 30 character max) -->
-          <a class="qs-link" href="{{ elements.links }}"
-              style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">{{ elements.az_news_read_more }}</a>
+          <a class="qs-link" href="{{ az_canonical_url }}"
+              style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">{{ az_canonical_summary_link_title }}</a>
         </p>
 
       </td>
