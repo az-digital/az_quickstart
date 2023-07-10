@@ -21,13 +21,13 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'node--view--az-marketing-cloud--50-50-layout',
       'base hook' => 'node',
     ],
+    'node__view__az_marketing_cloud__text_layout' => [
+      'template' => 'node--view--az-marketing-cloud--text-layout',
+      'base hook' => 'node',
+    ],
     'page__export__marketing_cloud' => [
       'template' => 'page--export--marketing-cloud',
       'base hook' => 'page',
-    ],
-    'html__export__marketing_cloud' => [
-      'template' => 'html--export--marketing-cloud',
-      'base hook' => 'html',
     ],
     'block__az_barrio_page_title' => [
       'template' => 'block--az-barrio-page-title',
