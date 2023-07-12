@@ -239,7 +239,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       // Diff active config and snapshot of module to check for customization.
       $diff = $differ->diff($active, $snap);
       // Overrides only allowed if no changes in diff.
-      if ($this->diffIsEmpty($diff) && !empty($active)) {
+      if (!$this->diffIsEmpty($diff) && !empty($active)) {
         return FALSE;
       }
     }
