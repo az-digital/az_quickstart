@@ -250,9 +250,10 @@ class QuickstartConfigProvider extends ConfigProviderBase {
    * Checks if a diff is empty.
    *
    * @param \Drupal\Component\Diff\Diff $diff
-   *  A diff object.
+   *   A diff object.
    *
    * @return bool
+   *   True if two sequences were identical.
    */
   protected function diffIsEmpty(Diff $diff) {
     foreach ($diff->getEdits() as $edit) {
