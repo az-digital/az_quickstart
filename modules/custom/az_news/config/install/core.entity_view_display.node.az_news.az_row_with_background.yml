@@ -37,7 +37,7 @@ third_party_settings:
       weight: 28
       format_type: html_element
       format_settings:
-        classes: row
+        classes: 'row no-gutters'
         show_empty_fields: false
         id: ''
         element: div
@@ -75,7 +75,7 @@ third_party_settings:
       weight: 25
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-lg-4'
+        classes: 'col-12 col-lg-4 pr-3'
         show_empty_fields: false
         id: ''
         element: div
@@ -96,7 +96,7 @@ third_party_settings:
       weight: 26
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-lg-8'
+        classes: col
         show_empty_fields: false
         id: ''
         element: div
