@@ -48,7 +48,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card bg-gray-100 card-borderless card-clickable mb-4'
+        classes: 'card bg-gray-100 card-borderless card-clickable mb-4 mt-n2'
         show_empty_fields: false
         id: ''
         element: div
@@ -187,7 +187,7 @@ third_party_settings:
         - m-0
         - hover-text-underline
 _core:
-  default_config_hash: gymZffnlcN5vj5yHjUPwBUwqyYbadyLr4ZxgEZtGTOU
+  default_config_hash: W4PY_hbRk9OQ0ZhVL1tpNh5GtWuXVzSD3gMj1V-NybY
 id: node.az_event.az_row_with_background
 targetEntityType: node
 bundle: az_event
