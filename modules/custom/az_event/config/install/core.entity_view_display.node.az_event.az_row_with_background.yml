@@ -19,7 +19,7 @@ dependencies:
     - node.type.az_event
   module:
     - field_group
-    - link
+    - smart_date
     - smart_title
     - user
 third_party_settings:
@@ -48,7 +48,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card bg-gray-100 card-borderless card-clickable mb-4 mt-n2 hover'
+        classes: 'card bg-gray-100 card-borderless mb-4 mt-n2 card-clickable hover'
         show_empty_fields: false
         id: ''
         element: div
@@ -101,7 +101,7 @@ third_party_settings:
     group_column_text:
       children:
         - smart_title
-        - group_where
+        - group_when
       label: 'Column - Text'
       parent_name: group_row
       region: content
@@ -160,12 +160,31 @@ third_party_settings:
       children:
         - field_az_location
       label: Where
+      parent_name: ''
+      region: hidden
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'nolink mt-3'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_when:
+      children:
+        - field_az_event_date
+      label: When
       parent_name: group_column_text
       region: content
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'nolink mt-3'
+        classes: 'text-muted font-weight-normal'
         show_empty_fields: false
         id: ''
         element: div
@@ -187,7 +206,7 @@ third_party_settings:
         - m-0
         - hover-text-underline
 _core:
-  default_config_hash: W4PY_hbRk9OQ0ZhVL1tpNh5GtWuXVzSD3gMj1V-NybY
+  default_config_hash: xPzHYXzf5k5F1l43RSsR4EY-4yWClAobxGdWU06f3t0
 id: node.az_event.az_row_with_background
 targetEntityType: node
 bundle: az_event
@@ -203,15 +222,26 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-  field_az_location:
-    type: link
+  field_az_event_date:
+    type: smartdate_default
     label: hidden
     settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: '0'
-      target: '0'
+      timezone_override: ''
+      format_type: medium
+      format: time_only
+      force_chronological: false
+      add_classes: false
+      time_wrapper: true
+      localize: false
+      parts:
+        start: start
+        end: end
+        duration: '0'
+      duration:
+        separator: ' | '
+        unit: ''
+        decimals: 2
+        suffix: h
     third_party_settings: {  }
     weight: 3
     region: content
@@ -225,9 +255,9 @@ hidden:
   field_az_body: true
   field_az_contacts: true
   field_az_event_category: true
-  field_az_event_date: true
   field_az_featured_image_as_thumb: true
   field_az_link: true
+  field_az_location: true
   field_az_media_thumbnail_image: true
   field_az_metatag: true
   field_az_photos: true
