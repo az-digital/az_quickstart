@@ -29,6 +29,10 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'page--export--marketing-cloud',
       'base hook' => 'page',
     ],
+    'html__export__marketing_cloud' => [
+      'template' => 'html--export--marketing-cloud',
+      'base hook' => 'html',
+    ],
     'block__az_barrio_page_title' => [
       'template' => 'block--az-barrio-page-title',
       'base hook' => 'block',
