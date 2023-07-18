@@ -33,6 +33,7 @@ install:
   - drupal:block
   - drupal:breakpoint
   - ckeditor:ckeditor
+  - drupal:ckeditor5
   - drupal:config
   - drupal:content_moderation
   - drupal:contextual
