@@ -11,3 +11,5 @@ description: ''
 behavior_plugins:
   az_default_paragraph_behavior:
     enabled: true
+  az_multivalue_grid_views:
+    enabled: true
