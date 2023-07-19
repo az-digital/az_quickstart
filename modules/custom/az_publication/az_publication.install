@@ -2,16 +2,23 @@
 
 /**
  * @file
- * Contains install and update functions for az_publication.
+ * Install, update and uninstall functions for az_publication module.
  */
 
 use Drupal\Core\Database\Database;
 use Drupal\Core\Utility\UpdateException;
 
 /**
- * Update az_author entity name field length while not affecting data.
+ * Install the new az_curated_views module (now required by az_publication).
  */
 function az_publication_update_1020701() {
+  \Drupal::service('module_installer')->install(['az_curated_views']);
+}
+
+/**
+ * Update az_author entity name field length while not affecting data.
+ */
+function az_publication_update_1020702() {
   // The usual approach of updateFieldStorageDefinition() does not work here.
   // We do not want to touch existing data. UpdateFieldStorageDefinition()
   // will throw an exception operating on data that already exists.
