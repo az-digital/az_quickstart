@@ -5,6 +5,7 @@
  * Contains az_marketing_cloud.module.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\image\Entity\ImageStyle;
 
@@ -48,7 +49,10 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
   if ($node->getType() === 'az_news') {
     $token_service = \Drupal::token();
     $bubbleable_metadata = new BubbleableMetadata();
-    $variables['az_canonical_url'] = $token_service->replace('[node:az-canonical-url]', ['node' => $node], [], $bubbleable_metadata);
+    // Find the root URL.
+    $base = \Drupal::request()->getSchemeAndHttpHost();
+    $canonical_url = $token_service->replace('[node:az-canonical-url]', ['node' => $node], [], $bubbleable_metadata);
+    $variables['az_canonical_url'] = Html::transformRootRelativeUrlsToAbsolute($canonical_url, $base);
     $variables['az_canonical_summary_link_title'] = $token_service->replace('[node:az-canonical-summary-link-title]', ['node' => $node], [], $bubbleable_metadata);
     $media = $node->field_az_media_image->entity ?? NULL;
     $file = $media->field_media_az_image->entity ?? NULL;
