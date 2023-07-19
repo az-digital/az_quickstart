@@ -82,14 +82,6 @@ class AZMulitvalueGridViews extends ParagraphsBehaviorBase {
   }
 
   /**
-   * {@inheritdoc}
-   */
-  public function getConfiguration() {
-    return $this->configuration;
-  }
-
-
-  /**
    * Get this plugins Behavior settings.
    *
    * @return array
@@ -178,6 +170,6 @@ class AZMulitvalueGridViews extends ParagraphsBehaviorBase {
     }
     $az_multivalue_grid_views_settings = $variables['az_multivalue_grid_views'];
     $variables['content']['field_az_view_reference'][0]['az_multivalue_grid_views'] = $az_multivalue_grid_views_settings;
-
   }
+
 }
