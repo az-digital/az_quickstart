@@ -68,7 +68,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: row
+        classes: 'card-body p-4 row'
         show_empty_fields: false
         id: ''
         element: div
@@ -80,15 +80,14 @@ third_party_settings:
         speed: fast
     group_column_date:
       children:
-        - group_month
-        - group_day
+        - group_background_date
       label: 'Column - Date'
       parent_name: group_row
       region: content
       weight: 8
       format_type: html_element
       format_settings:
-        classes: 'card-body col-3 text-muted pr-0'
+        classes: col-3
         show_empty_fields: false
         id: ''
         element: div
@@ -108,7 +107,7 @@ third_party_settings:
       weight: 10
       format_type: html_element
       format_settings:
-        classes: 'card-body col-9'
+        classes: col-9
         show_empty_fields: false
         id: ''
         element: div
@@ -122,12 +121,12 @@ third_party_settings:
       children:
         - az_event_month
       label: Month
-      parent_name: group_column_date
+      parent_name: group_background_date
       region: content
-      weight: 1
+      weight: 3
       format_type: html_element
       format_settings:
-        classes: 'h5 text-center mt-0 mb-0 text-uppercase'
+        classes: 'h5 text-center mt-0 mb-0 text-uppercase hover-text-underline'
         show_empty_fields: false
         id: ''
         element: div
@@ -141,12 +140,12 @@ third_party_settings:
       children:
         - az_event_day
       label: Day
-      parent_name: group_column_date
+      parent_name: group_background_date
       region: content
-      weight: 2
+      weight: 4
       format_type: html_element
       format_settings:
-        classes: 'h4 text-center mt-0 mb-0'
+        classes: 'h4 text-center mt-0 mb-0 hover-text-underline'
         show_empty_fields: false
         id: ''
         element: div
@@ -162,7 +161,7 @@ third_party_settings:
       label: Where
       parent_name: ''
       region: hidden
-      weight: 1
+      weight: 15
       format_type: html_element
       format_settings:
         classes: 'nolink mt-3'
@@ -194,6 +193,26 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_background_date:
+      children:
+        - group_month
+        - group_day
+      label: 'Background - Date'
+      parent_name: group_column_date
+      region: content
+      weight: 14
+      format_type: html_element
+      format_settings:
+        classes: 'bg-azurite h-100 py-3'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
     settings:
@@ -206,7 +225,7 @@ third_party_settings:
         - m-0
         - hover-text-underline
 _core:
-  default_config_hash: xPzHYXzf5k5F1l43RSsR4EY-4yWClAobxGdWU06f3t0
+  default_config_hash: WSx9j7rKkzksFusdsQxbDdkPQVkUTmTPK6-OcCqQC7I
 id: node.az_event.az_row_with_background
 targetEntityType: node
 bundle: az_event
