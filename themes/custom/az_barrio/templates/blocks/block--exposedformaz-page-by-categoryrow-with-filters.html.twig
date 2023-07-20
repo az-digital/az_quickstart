@@ -47,9 +47,14 @@ div.checkbox > div.bef-checkboxes > ul {
             font-weight: 600;
         }
     }
+    > li:nth-child(n+4) {
+        background-color: red;
+    }
 }
+
 
 </style>
   {% block content %}
     {{ content }}
+    <a href="#" class="btn btn-sm btn-hollow-primary btn-block">Reset filters</a>
   {% endblock %}
