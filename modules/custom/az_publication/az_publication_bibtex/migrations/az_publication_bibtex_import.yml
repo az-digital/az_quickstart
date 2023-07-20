@@ -80,7 +80,7 @@ process:
     plugin: default_value
     default_value: az_publication
   field_az_publication_type:
-    plugin: static_map
+  - plugin: static_map
     source: _type
     map:
       article: article-journal
@@ -104,6 +104,36 @@ process:
       thesis: thesis
       unpublished: manuscript
     default_value: article-journal
+
+  field_az_publication_mapped_type:
+  - plugin: static_map
+    source: _type
+    map:
+      article: article-journal
+      book: book
+      booklet: pamphlet
+      collection: collection
+      conference: paper-conference
+      inbook: book
+      incollection: entry
+      inproceedings: paper-conference
+      manual: pamphlet
+      mastersthesis: thesis
+      misc: post
+      online: webpage
+      patent: patent
+      periodical: periodical
+      phdthesis: thesis
+      proceedings: paper-conference
+      report: report
+      techreport: report
+      thesis: thesis
+      unpublished: manuscript
+    default_value: article-journal
+  - plugin: migration_lookup
+    migration: az_publication_type_mapping
+    no_stub: true
+
   title: title
   field_az_publication_date_type: datetype
   field_az_publication_date:

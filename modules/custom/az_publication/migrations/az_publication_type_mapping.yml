@@ -1,0 +1,55 @@
+id: az_publication_type_mapping
+label: AZ Publication types and their mappings to supported types.
+migration_tags:
+  - Publication
+  - Taxonomy
+
+dependencies:
+  enforced:
+    module:
+      - az_publication
+
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_publication/data/az_publication_type_mapping.json
+  item_selector: az_publication_type_mapping
+  ids:
+    az_publication_type:
+      type: string
+
+  fields:
+    -
+      name: name
+      selector: name
+    -
+      name: description
+      selector: description
+    -
+      name: parent
+      selector: parent_name
+    -
+      name: az_publication_type
+      selector: az_publication_type
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_publication_type_mapping
+
+process:
+  name: name
+  description: description
+  vid:
+    plugin: default_value
+    default_value: az_publication_type_mapping
+  parent:
+    -
+      plugin: migration_lookup
+      migration: az_publication_type_mapping
+      source: parent
+    -
+      plugin: default_value
+      default_value: 0
+  field_az_publication_type: az_publication_type

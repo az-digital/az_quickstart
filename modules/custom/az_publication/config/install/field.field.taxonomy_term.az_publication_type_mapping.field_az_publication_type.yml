@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.taxonomy_term.field_az_publication_type
+    - taxonomy.vocabulary.az_publication_type_mapping
+  module:
+    - options
+id: taxonomy_term.az_publication_type_mapping.field_az_publication_type
+field_name: field_az_publication_type
+entity_type: taxonomy_term
+bundle: az_publication_type_mapping
+label: 'Publication Type'
+description: 'Supported publication types.'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
