@@ -105,7 +105,7 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
   if($route_name === 'view.az_marketing_cloud.30_70_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
-  if($route_name === 'view.az_marketing_cloud.text_layout') {
+  if ($route_name === 'view.az_marketing_cloud.text_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
 }
