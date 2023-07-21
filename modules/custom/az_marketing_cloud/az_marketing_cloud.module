@@ -33,8 +33,8 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'html--export--marketing-cloud',
       'base hook' => 'html',
     ],
-    'block__az_barrio_page_title' => [
-      'template' => 'block--az-barrio-page-title',
+    'block__az_barrio_page_title__az_marketing_cloud' => [
+      'template' => 'block--az-barrio-page-title--az-marketing-cloud',
       'base hook' => 'block',
     ],
   ];
@@ -64,6 +64,21 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
           $variables['images'][$style] = $image_style->buildUrl($uri);
         }
       }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_marketing_cloud_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // If a view route context is found, add block suggestions for view context.
+  $view_id = \Drupal::routeMatch()->getParameter('view_id');
+  if (!empty($view_id)) {
+    $previous = $suggestions;
+    $view_id = strtr($view_id, '-', '_');
+    foreach ($previous as $p) {
+      $suggestions[] = $p . '__' . $view_id;
     }
   }
 }
