@@ -130,7 +130,7 @@ function az_marketing_cloud_theme_suggestions_block_alter(array &$suggestions, a
       $suggestions[] = 'block__az_marketing_cloud';
     }
   }
-  if($route_name === 'view.az_marketing_cloud.text_layout') {
+  if ($route_name === 'view.az_marketing_cloud.text_layout') {
     if($variables['elements']['#id'] === 'az_barrio_content') {
       $suggestions[] = 'block__az_marketing_cloud';
     }
