@@ -31,6 +31,7 @@ settings:
     az_courses: az_courses
     az_events: az_events
     az_news: az_news
+    az_news_events_side_by_side: az_news_events_side_by_side
     az_page_by_category: az_page_by_category
     az_person: az_person
     az_publications: az_publications
