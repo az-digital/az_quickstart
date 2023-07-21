@@ -121,7 +121,7 @@ function az_marketing_cloud_theme_suggestions_block_alter(array &$suggestions, a
     }
   }
   if($route_name === 'view.az_marketing_cloud.50_50_layout') {
-    if($variables['elements']['#id'] === 'az_barrio_content') {
+    if ($variables['elements']['#id'] === 'az_barrio_content') {
       $suggestions[] = 'block__az_marketing_cloud';
     }
   }
