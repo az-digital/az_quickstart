@@ -189,8 +189,6 @@ third_party_settings:
         - h4
         - m-0
         - hover-text-underline
-_core:
-  default_config_hash: BLEcJy64TS9BEiPdJe8Gw-WRSjDM26_ZGNSMzYkaxYQ
 id: node.az_news.az_row_with_background
 targetEntityType: node
 bundle: az_news
