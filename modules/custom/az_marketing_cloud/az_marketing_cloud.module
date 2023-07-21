@@ -99,12 +99,27 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
   if($route_name === 'view.az_marketing_cloud.50_50_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
-
+  if($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
 }
 
 function az_marketing_cloud_theme_suggestions_block_alter(array &$suggestions, array $variables) {
   $route_name = \Drupal::routeMatch()->getRouteName();
   if($route_name === 'view.az_marketing_cloud.50_50_layout') {
+    if($variables['elements']['#id'] === 'az_barrio_content') {
+      $suggestions[] = 'block__az_marketing_cloud';
+    }
+  }
+  if($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    if($variables['elements']['#id'] === 'az_barrio_content') {
+      $suggestions[] = 'block__az_marketing_cloud';
+    }
+  }
+  if($route_name === 'view.az_marketing_cloud.text_layout') {
     if($variables['elements']['#id'] === 'az_barrio_content') {
       $suggestions[] = 'block__az_marketing_cloud';
     }
@@ -115,6 +130,12 @@ function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestio
   $route_name = \Drupal::routeMatch()->getRouteName();
   if($route_name === 'view.az_marketing_cloud.50_50_layout') {
       $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
   }
 }
 
