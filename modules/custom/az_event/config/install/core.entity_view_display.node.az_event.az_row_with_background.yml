@@ -203,7 +203,7 @@ third_party_settings:
       weight: 14
       format_type: html_element
       format_settings:
-        classes: 'bg-azurite h-100 py-3'
+        classes: 'bg-azurite py-3'
         show_empty_fields: false
         id: ''
         element: div
