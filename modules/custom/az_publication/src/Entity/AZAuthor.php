@@ -246,7 +246,7 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
       ->setDescription(t('The name of the Author entity.'))
       ->setRevisionable(TRUE)
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 255,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')

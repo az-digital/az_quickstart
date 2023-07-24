@@ -1,0 +1,7 @@
+az_publication_import.az_publication_import_page:
+  path: '/admin/content/az-publication/import'
+  defaults:
+    _controller: '\Drupal\az_publication_import\Controller\AZPublicationImportController::menuPage'
+    _title: 'Quickstart Publication Import'
+  requirements:
+    _permission: 'administer quickstart configuration'

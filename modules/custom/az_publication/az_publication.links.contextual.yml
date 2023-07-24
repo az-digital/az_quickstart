@@ -1,0 +1,5 @@
+az_publication.view.curate_publications:
+  title: 'Curate Publications'
+  route_name: <none>
+  group: az_publication.view.curate_publications
+  weight: 200

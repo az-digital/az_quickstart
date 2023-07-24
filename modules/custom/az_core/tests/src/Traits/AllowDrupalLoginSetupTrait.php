@@ -8,11 +8,9 @@ namespace Drupal\Tests\az_core\Traits;
 trait AllowDrupalLoginSetupTrait {
 
   /**
-   * {@inheritdoc}
+   * Change AZ CAS module settings to enable normal Drupal logins.
    */
-  protected function setUp(): void {
-    parent::setUp();
-
+  public function enableDrupalLogin(): void {
     // Turn off az_cas disable_login_form setting.
     $config = $this
       ->config('az_cas.settings');
