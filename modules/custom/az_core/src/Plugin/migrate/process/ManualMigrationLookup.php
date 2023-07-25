@@ -64,6 +64,22 @@ use Drupal\migrate\Row;
  *          bundle_key: vid
  *          ignore_case: true
  * @endcode
+ *
+ * User example:
+ *
+ * @code
+ *  process:
+ *   uid:
+ *    - plugin: az_manual_migration_lookup
+ *      source_entity_type: user
+ *      source: node_uid
+ *    - plugin: entity_lookup
+ *      entity_type: user
+ *      value_key: name
+ *      bundle: user
+ *    - plugin: default_value
+ *      default_value: 0
+ * @endcode
  */
 class ManualMigrationLookup extends ProcessPluginBase {
 
@@ -100,6 +116,13 @@ class ManualMigrationLookup extends ProcessPluginBase {
           ->query('SELECT name FROM {taxonomy_term_data} WHERE tid = :tid', [':tid' => $id])
           ->fetchField();
 
+        break;
+
+      case 'user':
+        // Lookup of user.
+        $value = Database::getConnection('default', 'migrate')
+          ->query('SELECT name FROM {users} WHERE uid = :uid', [':uid' => $id])
+          ->fetchField();
         break;
 
       // Unimplemented type.
