@@ -129,7 +129,7 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
 
 function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
   $route_name = \Drupal::routeMatch()->getRouteName();
-  if($route_name === 'view.az_marketing_cloud.50_50_layout') {
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
       $suggestions[] = 'views_view__az_marketing_cloud';
   }
   if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
