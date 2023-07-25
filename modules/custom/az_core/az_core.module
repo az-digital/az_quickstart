@@ -259,14 +259,14 @@ function az_core_canonical_summary_link_title(array $data) {
  *   Node data from hook_tokens().
  *
  * @return string
- *   The node's canonical URL (absolute).
+ *   The node's canononical URI.
  */
 function az_core_canonical_url(array $data) {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'];
   /** @var \Drupal\Core\Url $url */
   $url = $node->toUrl();
-  $uri = $url->toString();
+  $uri = $url->toUriString();
 
   if (!empty($node->field_az_link[0]->uri)) {
     $uri = $node->field_az_link[0]->uri;
