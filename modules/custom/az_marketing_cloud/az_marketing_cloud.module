@@ -71,7 +71,7 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
     $token_service = \Drupal::token();
     $bubbleable_metadata = new BubbleableMetadata();
     $az_canonical_url = $token_service->replace('[node:az-canonical-url]', ['node' => $node], [], $bubbleable_metadata);
-    $az_canonical_url_object = Url::fromUserInput($az_canonical_url, [
+    $az_canonical_url_object = Url::fromUri($az_canonical_url, [
       'language' => \Drupal::languageManager()->getCurrentLanguage(),
     ]);
     $az_canonical_absolute_url = $az_canonical_url_object->setAbsolute()->toString();
