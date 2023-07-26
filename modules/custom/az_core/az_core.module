@@ -266,7 +266,7 @@ function az_core_canonical_url(array $data) {
   $node = $data['node'];
   /** @var \Drupal\Core\Url $url */
   $url = $node->toUrl();
-  $uri = $url->toUriString();
+  $uri = $url->toString();
 
   if (!empty($node->field_az_link[0]->uri)) {
     $uri = $node->field_az_link[0]->uri;
