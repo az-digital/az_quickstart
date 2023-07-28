@@ -80,6 +80,10 @@ class AZNewsDataFieldRow extends DataFieldRow {
           }
         }
       }
+      // Avoid returning an empty array.
+      if (empty($item)) {
+        $item = NULL;
+      }
       return $item;
     };
     // Special serialization rules. Resolve references at serialization time.
@@ -149,6 +153,10 @@ class AZNewsDataFieldRow extends DataFieldRow {
               $items[$term->parent->entity->field_az_attribute_key->value][] = $term->field_az_attribute_key->value;
             }
           }
+        }
+        // Avoid returning an empty array.
+        if (empty($items)) {
+          $items = NULL;
         }
         return $items;
       },
