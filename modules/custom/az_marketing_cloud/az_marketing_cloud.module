@@ -127,7 +127,7 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
 }
 
 /**
- *
+ * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
   $route_name = \Drupal::routeMatch()->getRouteName();
