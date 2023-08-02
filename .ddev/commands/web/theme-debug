@@ -1,7 +1,19 @@
 #!/bin/sh
 
 ## Description: Enable theme debugging.
-## Usage: theme-debug
-## Example: "ddev theme-debug"
+## Usage: theme-debug [args]
+## Example: "ddev theme-debug MODE"
 
-echo "theme-debug relied on Drupal console (now deprecated) and is no longer available.  Please consult CONTRIBUTING.md for instructions on how to manually turn on Twig debug and other debugging settings."
+if [ $# -eq 0 ]; then
+    echo "Usage: ddev theme-debug MODE"
+    exit 0
+fi
+
+
+if [[ $* = 'off' ]]; then
+  MODE="off"
+else
+  MODE="on"
+fi
+
+drush twig:debug ${MODE}
