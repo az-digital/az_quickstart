@@ -71,7 +71,9 @@ tooling:
     service: appserver
     user: root
     cmd:
-      - echo "theme-debug relied on Drupal console (now deprecated) and is no longer available.  Please consult CONTRIBUTING.md for instructions on how to manually turn on Twig debug and other debugging settings."
+      - /app/vendor/bin/drush --root=/app/web twig:debug on
+      - echo "Twig template caching disable, and twig debugging enabled, to turn this off, use lando drush twig:debug off"
+      - echo "Please consult CONTRIBUTING.md for instructions on how to manually turn on Twig debug and other debugging settings."
   # Provide Drush tooling to automatically know the Drupal root.
   drush:
     service: appserver
