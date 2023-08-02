@@ -80,8 +80,11 @@ function az_event_trellis_migration_plugins_alter(array &$migrations) {
 
 }
 
+/**
+ * Implements hook_link_alter().
+ */
 function az_event_trellis_link_alter(&$variables) {
   if ($variables['url']->isExternal()) {
-    $variables['options']['attributes'] = ['target' => '_blank'];
+    $variables['options']['attributes'] = ['target' => '_blank', 'class' => 'text-decoration-none'];
   }
 }
