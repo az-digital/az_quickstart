@@ -63,21 +63,24 @@ tooling:
   install:
     service: appserver
     cmd:
-      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal10:drupal10@database:3306/drupal10 -y --verbose
-      - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
-      - /app/vendor/bin/drush --root=/app/web cache:rebuild
+      - /app/vendor/bin/drush site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin --db-url=mysql://drupal10:drupal10@database:3306/drupal10 -y --verbose
+      - /app/vendor/bin/drush config:set -y az_cas.settings disable_login_form 0
+      - /app/vendor/bin/drush cache:rebuild
   # Enable theme debugging.
   theme-debug:
     service: appserver
     user: root
     cmd:
-      - /app/vendor/bin/drush --root=/app/web twig:debug on
-      - echo "Twig template caching disable, and twig debugging enabled, to turn this off, use lando drush twig:debug off"
-      - echo "Please consult CONTRIBUTING.md for instructions on how to manually turn on Twig debug and other debugging settings."
-  # Provide Drush tooling to automatically know the Drupal root.
+      - /app/vendor/bin/drush twig:debug
+    options:
+      mode:
+        passthrough: true
+        describe: Toggle twig debugging and twig template caching on and off.
+        default: on
+  # Provide Drush tooling.
   drush:
     service: appserver
-    cmd: /app/vendor/bin/drush --root=/app/web
+    cmd: /app/vendor/bin/drush
   # Provide phpcs tooling to check coding standards.
   phpcs:
     service: appserver
