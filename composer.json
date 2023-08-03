@@ -149,10 +149,14 @@
                 "Cursor is missing on chrome. (3340103)": "https://www.drupal.org/files/issues/2023-02-08/3340103-3.patch"
             },
             "drupal/config_distro": {
-                "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
+                "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch",
+                "Drush 12 compatibility (3369336)": "https://git.drupalcode.org/project/config_distro/-/merge_requests/6.diff"
             },
             "drupal/config_provider": {
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
+            },
+            "drupal/config_sync": {
+                "Drush 12 compatibility (3369335)": "https://git.drupalcode.org/project/config_sync/-/merge_requests/10.diff"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
