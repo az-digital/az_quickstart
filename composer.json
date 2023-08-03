@@ -105,7 +105,7 @@
         "drupal/seckit": "2.0.1",
         "drupal/slick": "2.9.0",
         "drupal/slick_views": "2.7.0",
-        "drupal/smart_date": "4.0.2",
+        "drupal/smart_date": "4.0.3",
         "drupal/smtp": "1.2.0",
         "drupal/token": "1.11.0",
         "drupal/views_bootstrap": "5.4.0",
@@ -190,9 +190,6 @@
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
-            },
-            "drupal/smart_date": {
-                "Cannot remove recurring instance (3359407)": "https://git.drupalcode.org/project/smart_date/-/commit/218418ae52408036a572d2a557807c49c7d4088b.diff"
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
