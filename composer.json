@@ -53,7 +53,7 @@
         "drupal/ckeditor": "1.0.2",
         "drupal/ckeditor_bs_grid": "2.0.9",
         "drupal/coffee": "1.3.0",
-        "drupal/config_distro": "2.0.0-alpha1",
+        "drupal/config_distro": "2.0.x-dev",
         "drupal/config_provider": "3.0.0-alpha1",
         "drupal/config_snapshot": "2.0.0-alpha1",
         "drupal/config_sync": "3.0.0-alpha2",
@@ -105,7 +105,7 @@
         "drupal/seckit": "2.0.1",
         "drupal/slick": "2.9.0",
         "drupal/slick_views": "2.7.0",
-        "drupal/smart_date": "4.0.2",
+        "drupal/smart_date": "4.0.3",
         "drupal/smtp": "1.2.0",
         "drupal/token": "1.11.0",
         "drupal/views_bootstrap": "5.4.0",
@@ -149,10 +149,14 @@
                 "Cursor is missing on chrome. (3340103)": "https://www.drupal.org/files/issues/2023-02-08/3340103-3.patch"
             },
             "drupal/config_distro": {
-                "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
+                "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch",
+                "Drush 12 compatibility (3369336)": "https://git.drupalcode.org/project/config_distro/-/merge_requests/6.diff"
             },
             "drupal/config_provider": {
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
+            },
+            "drupal/config_sync": {
+                "Drush 12 compatibility (3369335)": "https://git.drupalcode.org/project/config_sync/-/merge_requests/10.diff"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
@@ -186,9 +190,6 @@
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
-            },
-            "drupal/smart_date": {
-                "Cannot remove recurring instance (3359407)": "https://git.drupalcode.org/project/smart_date/-/commit/218418ae52408036a572d2a557807c49c7d4088b.diff"
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
