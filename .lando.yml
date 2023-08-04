@@ -80,7 +80,7 @@ tooling:
   # Provide Drush tooling.
   drush:
     service: appserver
-    cmd: /app/vendor/bin/drush
+    cmd: /app/vendor/bin/drush --root=/app/web
   # Provide phpcs tooling to check coding standards.
   phpcs:
     service: appserver
