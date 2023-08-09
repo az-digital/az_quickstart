@@ -1,9 +1,9 @@
 # AZ Core Config Commands
 
-A Drupal module that provides custom Drush commands for managing the configuration of the AZ Quickstart profile. The module adds missing permissions from the AZ Quickstart profile to the active site.
+AZ Core provides Drush commands to help with managing configuration on AZ Quickstart websites.
 
 ## Requirements
-- Drupal 8 or 9
+- Drupal 9 or 10
 - Drush
 
 ## Installation
