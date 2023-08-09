@@ -193,9 +193,6 @@
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
                 "Ajax pager - Input value viewsreference contains a non-scalar value (3326841)": "https://www.drupal.org/files/issues/2023-01-05/3326841.patch"
             },
-            "drupal/xmlsitemap": {
-                "Call to undefined method ModuleHandler::getImplementations() in xmlsitemap_check_status() (3355204)": "https://git.drupalcode.org/project/xmlsitemap/-/commit/f7122db.patch"
-            },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
             }
