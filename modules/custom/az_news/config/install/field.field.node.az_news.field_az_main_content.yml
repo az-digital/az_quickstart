@@ -22,36 +22,21 @@ default_value_callback: ''
 settings:
   handler: 'default:paragraph'
   handler_settings:
+    negate: 0
     target_bundles:
       az_cards: az_cards
-      az_text: az_text
       az_photo_gallery: az_photo_gallery
-    negate: 0
+      az_text: az_text
     target_bundles_drag_drop:
-      az_accordion:
-        weight: 10
-        enabled: false
       az_cards:
+        enabled: true
         weight: 4
-        enabled: true
-      az_contact:
-        weight: 12
-        enabled: false
-      az_photo_gallery:
-        weight: 6
-        enabled: true
-      az_splitscreen:
-        weight: 14
-        enabled: false
       az_text:
-        weight: 5
         enabled: true
-      az_text_background:
-        weight: 16
-        enabled: false
-      az_text_media:
-        weight: 17
-        enabled: false
+        weight: 5
+      az_photo_gallery:
+        enabled: true
+        weight: 6
       az_view_reference:
         weight: 7
         enabled: false
