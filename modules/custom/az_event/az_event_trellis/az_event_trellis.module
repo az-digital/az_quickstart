@@ -74,7 +74,7 @@ function az_event_trellis_migration_plugins_alter(array &$migrations) {
     }
 
     if (!empty($migrations['az_trellis_events']['source']) && empty($migrations['az_trellis_events']['source']['urls'])) {
-      $migrations['az_trellis_events']['source']['urls'] = $event_api_urls;
+      // $migrations['az_trellis_events']['source']['urls'] = $event_api_urls;
     }
   }
 

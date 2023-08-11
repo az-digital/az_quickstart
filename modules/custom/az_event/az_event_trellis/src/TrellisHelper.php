@@ -14,7 +14,7 @@ final class TrellisHelper {
    *
    * @var string
    */
-  public static $apiBasePath = '/ws/rest/eventsapi/v1/';
+  public static $apiBasePath = '/ws/rest/getevents/v2/eventinfo/';
 
   /**
    * Trellis Event view URL prefix.
@@ -49,6 +49,17 @@ final class TrellisHelper {
   public function getEventUrl($trellis_id) {
     $hostname = $this->configFactory->get('az_event_trellis.settings')->get('api_hostname');
     return 'https://' . $hostname . self::$apiBasePath . $trellis_id;
+  }
+
+  /**
+   * Returns API URL.
+   *
+   * @return string
+   *   Event API URL.
+   */
+  public function getEventEndpoint() {
+    $hostname = $this->configFactory->get('az_event_trellis.settings')->get('api_hostname');
+    return 'https://' . $hostname . self::$apiBasePath;
   }
 
 }

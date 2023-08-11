@@ -2,3 +2,8 @@ services:
   az_event_trellis.trellis_helper:
     class: Drupal\az_event_trellis\TrellisHelper
     arguments: ['@config.factory']
+  az_event_trellis.trellis_event_data:
+    class: Drupal\az_event_trellis\EventSubscriber\AZEventTrellisDataSubscriber
+    arguments: ['@http_client', '@messenger', '@entity_type.manager']
+    tags:
+      - { name: 'event_subscriber' }

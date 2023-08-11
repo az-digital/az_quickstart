@@ -11,7 +11,7 @@ migration_group: az_trellis_events
 label: 'Trellis Events'
 source:
   plugin: url
-  data_fetcher_plugin: http
+  data_fetcher_plugin: az_trellis_http
   data_parser_plugin: json
   urls: {  }
   item_selector: /0/data
@@ -44,11 +44,11 @@ source:
     -
       name: start_date_time
       label: 'Start Date and Time'
-      selector: Event_Start_DateTime
+      selector: Start_DateTime
     -
       name: end_date_time
       label: 'End Date and Time'
-      selector: Event_End_DateTime
+      selector: End_DateTime
     -
       name: external_visibility
       label: 'External Visibility'
