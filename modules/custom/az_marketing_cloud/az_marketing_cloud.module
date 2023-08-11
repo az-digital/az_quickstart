@@ -54,11 +54,14 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'views-view--az-marketing-cloud',
       'base hook' => 'views_view',
     ],
+    'views_view__az_marketing_cloud__admin' => [
+      'template' => 'views-view',
+      'base hook' => 'views_view',
+    ],
     'views_view_unformatted__az_marketing_cloud' => [
       'template' => 'views-view-unformatted--az-marketing-cloud',
       'base hook' => 'views_view_unformatted',
     ],
-
   ];
 }
 
