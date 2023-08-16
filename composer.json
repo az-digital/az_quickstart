@@ -195,7 +195,7 @@
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch"
-            }
+            },
             "drupal/xmlsitemap": {
                 "Call to undefined method ModuleHandler::getImplementations() in xmlsitemap_check_status() (3355204)": "https://git.drupalcode.org/project/xmlsitemap/-/commit/f7122db.patch"
             },
