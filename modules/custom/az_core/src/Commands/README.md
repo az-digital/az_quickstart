@@ -7,9 +7,7 @@ AZ Core provides Drush commands to help with managing configuration on AZ Quicks
 - Drush
 
 ## Installation
-- Install the module as you would normally install any Drupal module.
-- Enable the module using the Drupal administration interface or Drush.
-- After installation, you can access the custom Drush commands provided by this module.
+This module is automatically included in the az_quickstart install profile and enabled by default. This custom Drush command will work on any installed Quickstart 2 website.
 
 ## Usage
 This module provides the following Drush command:
