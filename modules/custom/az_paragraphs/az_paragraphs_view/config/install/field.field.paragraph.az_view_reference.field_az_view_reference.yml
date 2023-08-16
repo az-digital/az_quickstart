@@ -13,7 +13,7 @@ bundle: az_view_reference
 label: View
 description: ''
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -33,11 +33,7 @@ settings:
     az_news: az_news
     az_page_by_category: az_page_by_category
     az_person: az_person
-    az_publications_author: az_publications_author
-    az_publications_date: az_publications_date
-    az_publications_title: az_publications_title
-    az_publications_type: az_publications_type
-    az_publications_person: 0
+    az_publications: az_publications
     az_reorder: 0
     block_content: 0
     content: 0

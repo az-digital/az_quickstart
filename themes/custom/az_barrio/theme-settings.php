@@ -24,6 +24,10 @@ use Drupal\Core\StreamWrapper\StreamWrapperManager;
  * Example on how to alter theme settings form
  */
 function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  // Disable bootstrap_barrio_source and bootstrap_barrio_library settings.
+  $form['bootstrap_barrio_source']['#access'] = FALSE;
+  $form['bootstrap_barrio_library']['#access'] = FALSE;
+
   $form['footer_logo']['#open'] = FALSE;
 
   // AZ Barrio settings.
@@ -266,6 +270,9 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
     '#default_value' => theme_get_setting('header_two_col_classes'),
   ];
+  // Add new AZ Barrio sidebar position option and help text.
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#description'] = t('Below the Bootstrap md breakpoint, the "Both sides" position places the Sidebar First region <strong>above</strong> the page content while the "Both sides below on mobile" position places both sidebar regions <strong>below</strong> the page content.');
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
@@ -350,7 +357,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['footer_logo']['settings']['footer_logo_upload'] = [
     '#type' => 'file',
     '#title' => t('Upload footer logo image'),
-    '#maxlength' => 40,
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
     '#upload_validators' => [
       'file_validate_extensions' => [
@@ -439,7 +445,7 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 }
 
 /**
- * Helper function to determin if is a file.
+ * Helper function to determine if is a file.
  *
  * See: https://api.drupal.org/api/drupal/core%21modules%21system%21src%21Form%21ThemeSettingsForm.php/function/ThemeSettingsForm%3A%3AvalidatePath/8.2.x.
  */

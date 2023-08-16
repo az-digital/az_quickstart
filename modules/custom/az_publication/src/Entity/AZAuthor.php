@@ -19,6 +19,13 @@ use Drupal\user\UserInterface;
  * @ContentEntityType(
  *   id = "az_author",
  *   label = @Translation("Author"),
+ *   label_collection = @Translation("Authors"),
+ *   label_singular = @Translation("author"),
+ *   label_plural = @Translation("authors"),
+ *   label_count = @PluralTranslation(
+ *     singular = "@count author",
+ *     plural = "@count authors"
+ *   ),
  *   handlers = {
  *     "storage" = "Drupal\az_publication\AZAuthorStorage",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
@@ -239,7 +246,7 @@ class AZAuthor extends EditorialContentEntityBase implements AZAuthorInterface {
       ->setDescription(t('The name of the Author entity.'))
       ->setRevisionable(TRUE)
       ->setSettings([
-        'max_length' => 50,
+        'max_length' => 255,
         'text_processing' => 0,
       ])
       ->setDefaultValue('')

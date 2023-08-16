@@ -11,4 +11,12 @@ use Drupal\Tests\az_core\Traits\AllowDrupalLoginSetupTrait;
 abstract class QuickstartFunctionalTestBase extends BrowserTestBase {
   use AllowDrupalLoginSetupTrait;
 
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp(): void {
+    parent::setUp();
+    $this->enableDrupalLogin();
+  }
+
 }

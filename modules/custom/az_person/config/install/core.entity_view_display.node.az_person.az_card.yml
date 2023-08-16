@@ -70,13 +70,13 @@ third_party_settings:
     group_link:
       children:
         - field_az_media_image
-      label: Link
+      label: Image Link
       parent_name: group_card
       region: content
       weight: 1
       format_type: link
       format_settings:
-        classes: az-person-image-link
+        classes: hide-contextual-links
         show_empty_fields: false
         id: ''
         target: custom_uri

@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_category
+    - node.type.az_publication
+    - taxonomy.vocabulary.az_publication_categories
+id: node.az_publication.field_az_publication_category
+field_name: field_az_publication_category
+entity_type: node
+bundle: az_publication
+label: Category
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      az_publication_categories: az_publication_categories
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

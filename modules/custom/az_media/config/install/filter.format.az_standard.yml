@@ -20,35 +20,35 @@ filters:
     id: filter_htmlcorrector
     provider: filter
     status: true
-    weight: 10
+    weight: -44
     settings: {  }
   filter_html:
     id: filter_html
     provider: filter
     status: true
-    weight: -10
+    weight: -50
     settings:
-      allowed_html: '<em> <strong> <s> <abbr> <address> <cite> <blockquote class=""> <br> <div class="" name="" id="" class=* data-*> <ul type class=""> <ol start type class=""> <li class=""> <dl> <dt> <dd> <h1 class="" name="" id=""> <h2 class="" name="" id=""> <h3 class="" name="" id=""> <h4 class="" name="" id=""> <h5 class="" name="" id=""> <h6 class="" name="" id=""> <sup> <sub> <table class=""> <caption> <tbody class=""> <thead class=""> <tfoot class=""> <th class="" scope="" colspan="" rowspan=""> <td class="" colspan="" rowspan=""> <tr class="" colspan="" rowspan=""> <hr class=""> <a href class="" target="" name="" id="" data-entity-substitution data-entity-type data-entity-uuid title> <span class="" name="" id=""> <img src alt data-entity-type data-entity-uuid> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align="" data-caption data-embed-button alt title> <drupal-media data-view-mode="" data-align="" data-entity-type data-entity-uuid alt title> <p class=""> <footer class="">'
+      allowed_html: '<em> <strong> <s> <abbr> <address> <cite> <blockquote class=""> <br> <div class="" name="" id="" class=* data-*> <ul type class=""> <ol start type class=""> <li class=""> <dl> <dt> <dd> <h1 class="" name="" id=""> <h2 class="" name="" id=""> <h3 class="" name="" id=""> <h4 class="" name="" id=""> <h5 class="" name="" id=""> <h6 class="" name="" id=""> <sup> <sub> <table class=""> <caption> <tbody class=""> <thead class=""> <tfoot class=""> <th class="" scope="" colspan="" rowspan=""> <td class="" colspan="" rowspan=""> <tr class="" colspan="" rowspan=""> <hr class=""> <a href class="" target="" name="" id="" data-entity-substitution data-entity-type data-entity-uuid title> <span class="" name="" id=""> <img src alt data-entity-type data-entity-uuid> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align="" data-caption data-embed-button alt title> <drupal-media data-view-mode="" data-align="" data-entity-type data-entity-uuid alt title> <p class=""> <footer class=""> <code> <pre>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_autop:
     id: filter_autop
     provider: filter
     status: true
-    weight: 0
+    weight: -42
     settings: {  }
   filter_url:
     id: filter_url
     provider: filter
     status: true
-    weight: 0
+    weight: -46
     settings:
       filter_url_length: 72
   media_embed:
     id: media_embed
     provider: media
     status: true
-    weight: 100
+    weight: -43
     settings:
       default_view_mode: default
       allowed_view_modes:
@@ -62,19 +62,19 @@ filters:
     id: entity_embed
     provider: entity_embed
     status: true
-    weight: 100
+    weight: -41
     settings: {  }
   bootstrap_utilities_blockquote_filter:
     id: bootstrap_utilities_blockquote_filter
     provider: bootstrap_utilities
     status: true
-    weight: 0
+    weight: -49
     settings: {  }
   bootstrap_utilities_table_filter:
     id: bootstrap_utilities_table_filter
     provider: bootstrap_utilities
     status: true
-    weight: 0
+    weight: -48
     settings:
       table_remove_width_height: '1'
       table_row_striping: '0'
@@ -85,12 +85,12 @@ filters:
     id: filter_align
     provider: filter
     status: true
-    weight: 0
+    weight: -47
     settings: {  }
   linkit:
     id: linkit
     provider: linkit
     status: true
-    weight: 0
+    weight: -45
     settings:
       title: true

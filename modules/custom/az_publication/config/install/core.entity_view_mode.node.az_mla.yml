@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  module:
-    - node
-id: node.az_mla
-label: MLA
-targetEntityType: node
-cache: true

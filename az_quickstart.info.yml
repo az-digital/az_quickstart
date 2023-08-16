@@ -12,6 +12,7 @@ install:
   - az_paragraphs_accordion
   - az_paragraphs_cards
   - az_paragraphs_photo_gallery
+  - az_paragraphs_splitscreen
   - az_paragraphs_text
   - az_paragraphs_text_background
   - az_paragraphs_text_media
@@ -31,7 +32,7 @@ install:
   - drupal:history
   - drupal:block
   - drupal:breakpoint
-  - drupal:ckeditor
+  - ckeditor:ckeditor
   - drupal:config
   - drupal:content_moderation
   - drupal:contextual
@@ -73,6 +74,7 @@ install:
   - search_exclude:search_exclude
   - draggableviews:draggableviews
   - role_delegation:role_delegation
+  - media_entity_file_replace:media_entity_file_replace
 
 themes:
   - az_barrio

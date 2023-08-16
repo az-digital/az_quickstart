@@ -30,3 +30,20 @@ entity.az_author.collection:
   route_name: entity.az_author.collection
   base_route: system.admin_content
   weight: 50
+
+az_publication.az_publication_settings_tab:
+  route_name: az_publication.settings
+  title: 'AZ Publication'
+  base_route: az_core.az_settings
+  weight: 2
+
+az_publication.az_publication_settings_secondary_tab:
+  route_name: az_publication.settings
+  title: 'Publication Settings'
+  parent_id: az_publication.az_publication_settings_tab
+
+az_publication.az_citation_styles_secondary_tab:
+  route_name: entity.az_citation_style.collection
+  title: 'Citation Styles'
+  parent_id: az_publication.az_publication_settings_tab
+  weight: 2

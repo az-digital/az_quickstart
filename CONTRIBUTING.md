@@ -3,19 +3,19 @@
 First off, thanks for taking the time to contribute to AZ Quickstart!
 
 AZ Quickstart is created by [Arizona Digital](https://digital.arizona.edu/), a
-team of web-focused volunteers that meet weekly to create projects like [Arizona Bootstrap](https://digital.arizona.edu/ua-bootstrap) and
+team of web-focused volunteers that meet weekly to create projects like [Arizona Bootstrap](https://digital.arizona.edu/arizona-bootstrap) and
 [Arizona Quickstart](https://quickstart.arizona.edu/).
 
 ## Things you'll need to get started
 
   * A [GitHub account](https://github.com/join).
   * [Slack](https://uarizona.slack.com) is our main source of communications.
-    * Use the `#ua-quickstart-d8` channel for questions/comments related to this
+    * Use the `#azdigital-quickstart` channel for questions/comments related to this
       project.
-    * Use the `#friday-meetings` channel to ask questions or get updates related
-      to Arizona Digital meetings, both physical and via Zoom.
-    * Use the `#uadigital-general` channel to ask general questions related to
-      Arizona Digital.
+    * Use the `#azdigital-meetings` channel to ask questions or get updates related
+      to Arizona Digital meetings and workshops.
+    * Use the `#azdigital-support` channel to ask general questions related to
+      Arizona Digital and get support for Arizona Digital products.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
   * Local containerized (Docker) dev environment tool either lando or ddev
     * [Lando](https://docs.lando.dev/basics/installation.html)
@@ -261,31 +261,20 @@ lando eslint myfile.js
 ddev eslint myfile.js
 ```
 
-## Theme debugging and the development site mode.
+## Theme debugging
 
 Developing within Drupal can be a real challenge without debugging enabled.
 
-[Devel](https://www.drupal.org/project/devel) and [Drupal Console](https://drupalconsole.com/) are both included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
+[Devel](https://www.drupal.org/project/devel) is included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.  See "Visual Studio Code Integration" 
 
-You can easily enable them by using the following commands.
+### Turn on Twig debugging
 
-### Lando
-Quickstart provides Lando tooling for enabling theme debugging.
+On a local development site:
+1. Copy `sites/default/default.services.yml` to `sites/default/services.yml` (if `services.yml` doesn't already exist)
+2. Change the `debug` setting to `true` in the `twig.config` section of `parameters`
+3. Clear cache
 
-Simply use the following command once your site is installed:
-
-```
-lando theme-debug
-```
-
-### DDev
-Quickstart provides DDev tooling for enabling theme debugging.
-
-Simply use the following command once your site is installed:
-
-```
-ddev theme-debug
-```
+If using lando or ddev for local devleopment, you may need to use a code editor such as VS Code that allows you to connect to a running Docker container to make this change (see VS Code specific insructions in the "Local Development" section of this document).
 
 ## Configuration Management and Database Updates
 
