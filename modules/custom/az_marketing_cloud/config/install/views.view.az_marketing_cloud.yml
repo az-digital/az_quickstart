@@ -6,10 +6,12 @@ dependencies:
     - core.entity_view_mode.node.az_marketing_cloud_50_50_layout
     - core.entity_view_mode.node.az_marketing_cloud_text_layout
     - field.storage.node.field_az_published
+    - node.type.az_event
     - node.type.az_news
   module:
     - datetime
     - node
+    - smart_date
     - user
 id: az_marketing_cloud
 label: 'AZ Marketing Cloud'
@@ -467,7 +469,7 @@ display:
           admin_label: ''
           plugin_id: field
           label: 'Date of publication'
-          exclude: false
+          exclude: true
           alter:
             alter_text: false
             text: ''
@@ -522,6 +524,107 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          label: 'When - Start'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          date_format: custom
+          custom_date_format: 'M j, o'
+          timezone: ''
+        nothing:
+          id: nothing
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: 'Item Date'
+          exclude: false
+          alter:
+            alter_text: true
+            text: "{{ field_az_published }}\r\n{{ field_az_event_date_value }}"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
         status:
           id: status
           table: node_field_data
@@ -656,6 +759,73 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: field
+          label: Created
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: timestamp
+          settings:
+            date_format: custom
+            custom_date_format: m/d/o
+            timezone: ''
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
         view_node_1:
           id: view_node_1
           table: node
@@ -737,8 +907,8 @@ display:
       sorts: {  }
       arguments: {  }
       filters:
-        type:
-          id: type
+        type_1:
+          id: type_1
           table: node_field_data
           field: type
           relationship: none
@@ -749,6 +919,7 @@ display:
           plugin_id: bundle
           operator: in
           value:
+            az_event: az_event
             az_news: az_news
           group: 1
           exposed: false
@@ -826,6 +997,119 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            az_event: az_event
+            az_news: az_news
+          group: 1
+          exposed: true
+          expose:
+            operator_id: type_op
+            label: 'Content type'
+            description: ''
+            use_operator: false
+            operator: type_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: type
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: true
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          operator: '='
+          value:
+            min: ''
+            max: ''
+            value: ''
+            type: date
+            granularity: second
+          group: 1
+          exposed: true
+          expose:
+            operator_id: created_op
+            label: 'Authored on'
+            description: null
+            use_operator: false
+            operator: created_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: created
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: null
+            max_placeholder: null
+            placeholder: null
+          is_grouped: true
+          group_info:
+            label: 'Date created'
+            description: ''
+            identifier: created
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items:
+              3:
+                title: 'Last 30 days'
+                operator: '>='
+                value:
+                  min: ''
+                  max: ''
+                  value: '-30 days'
+                  type: offset
+              4:
+                title: 'Last 3 months'
+                operator: '>='
+                value:
+                  min: ''
+                  max: ''
+                  value: '-3 months'
+                  type: offset
       filter_groups:
         operator: AND
         groups:
@@ -839,12 +1123,15 @@ display:
           columns:
             nid: nid
             title: title
-            changed: changed
             type: type
-            status: status
-            view_node_1: view_node_1
             field_az_published: field_az_published
-          default: field_az_published
+            field_az_event_date_value: field_az_event_date_value
+            nothing: nothing
+            status: status
+            changed: changed
+            created: created
+            view_node_1: view_node_1
+          default: changed
           info:
             nid:
               sortable: false
@@ -860,16 +1147,28 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            changed:
+            type:
+              sortable: true
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            field_az_published:
               sortable: true
               default_sort_order: desc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            type:
+            field_az_event_date_value:
               sortable: true
               default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            nothing:
               align: ''
               separator: ''
               empty_column: false
@@ -881,16 +1180,23 @@ display:
               separator: ''
               empty_column: false
               responsive: ''
-            view_node_1:
-              sortable: false
+            changed:
+              sortable: true
+              default_sort_order: desc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+            created:
+              sortable: true
               default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
               responsive: ''
-            field_az_published:
-              sortable: true
-              default_sort_order: desc
+            view_node_1:
+              sortable: false
+              default_sort_order: asc
               align: ''
               separator: ''
               empty_column: false
