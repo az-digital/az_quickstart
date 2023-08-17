@@ -1,0 +1,157 @@
+<?php
+
+/**
+ * @file
+ * Contains az_marketing_cloud.module.
+ */
+
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Url;
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Implements hook_theme().
+ */
+function az_marketing_cloud_theme($existing, $type, $theme, $path) {
+  return [
+    'node__view__az_marketing_cloud__30_70_layout' => [
+      'template' => 'node--view--az-marketing-cloud--30-70-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__50_50_layout' => [
+      'template' => 'node--view--az-marketing-cloud--50-50-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__text_layout' => [
+      'template' => 'node--view--az-marketing-cloud--text-layout',
+      'base hook' => 'node',
+    ],
+    'region__az_marketing_cloud' => [
+      'template' => 'region--az-marketing-cloud',
+      'base hook' => 'region',
+    ],
+    'block__az_marketing_cloud' => [
+      'template' => 'block--az-marketing-cloud',
+      'base hook' => 'block',
+    ],
+    'container__view__az_marketing_cloud' => [
+      'template' => 'container--view--az-marketing-cloud',
+      'base hook' => 'container',
+    ],
+    'page__export__marketing_cloud' => [
+      'template' => 'page--export--marketing-cloud',
+      'base hook' => 'page',
+    ],
+    'html__export__marketing_cloud' => [
+      'template' => 'html--export--marketing-cloud',
+      'base hook' => 'html',
+    ],
+    'block__az_barrio_page_title__az_marketing_cloud' => [
+      'template' => 'block--az-barrio-page-title--az-marketing-cloud',
+      'base hook' => 'block',
+    ],
+    'views_view__az_marketing_cloud' => [
+      'template' => 'views-view--az-marketing-cloud',
+      'base hook' => 'views_view',
+    ],
+    'views_view__az_marketing_cloud__admin' => [
+      'template' => 'views-view',
+      'base hook' => 'views_view',
+    ],
+    'views_view_unformatted__az_marketing_cloud' => [
+      'template' => 'views-view-unformatted--az-marketing-cloud',
+      'base hook' => 'views_view_unformatted',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variables) {
+  $node = $variables['node'];
+  if ($node->getType() === 'az_news') {
+    $token_service = \Drupal::token();
+    $bubbleable_metadata = new BubbleableMetadata();
+    $az_canonical_url = $token_service->replace('[node:az-canonical-url]', ['node' => $node], [], $bubbleable_metadata);
+    $az_canonical_url_object = Url::fromUri($az_canonical_url, [
+      'language' => \Drupal::languageManager()->getCurrentLanguage(),
+    ]);
+    $az_canonical_absolute_url = $az_canonical_url_object->setAbsolute()->toString();
+    $variables['az_canonical_url'] = $az_canonical_absolute_url;
+    $variables['az_canonical_summary_link_title'] = $token_service->replace('[node:az-canonical-summary-link-title]', ['node' => $node], [], $bubbleable_metadata);
+    $media = $node->field_az_media_image->entity ?? NULL;
+    $file = $media->field_media_az_image->entity ?? NULL;
+    if (!empty($file)) {
+      $uri = $file->getFileUri();
+      $styles = [
+        'az_marketing_cloud_30_70_layout',
+        'az_marketing_cloud_50_50_layout',
+      ];
+      foreach ($styles as $style) {
+        $image_style = ImageStyle::load($style);
+        if (!empty($image_style)) {
+          $variables['images'][$style] = $image_style->buildUrl($uri);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_marketing_cloud_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // If a view route context is found, add block suggestions for view context.
+  $view_id = \Drupal::routeMatch()->getParameter('view_id');
+  if (!empty($view_id)) {
+    $previous = $suggestions;
+    $view_id = strtr($view_id, '-', '_');
+    foreach ($previous as $p) {
+      $suggestions[] = $p . '__' . $view_id;
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, array $variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+}
+
+/**
+ * Implements template_preprocess_views_view().
+ */
+function az_marketing_cloud_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
+
+  if ($view->id() === 'az_marketing_cloud') {
+    $variables['#attached']['library'][] = 'az_marketing_cloud/admin';
+  }
+}
