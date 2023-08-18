@@ -74,7 +74,8 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
  */
 function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variables) {
   $node = $variables['node'];
-  if ($node->getType() === 'az_news') {
+  $content_type = $node->getType();
+  if (in_array($content_type, ['az_news', 'az_event'])) {
     $token_service = \Drupal::token();
     $bubbleable_metadata = new BubbleableMetadata();
     $az_canonical_url = $token_service->replace('[node:az-canonical-url]', ['node' => $node], [], $bubbleable_metadata);
