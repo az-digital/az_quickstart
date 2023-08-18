@@ -89,8 +89,8 @@
                         
                         <!-- QS: EVENT MONTH AND DAY -->
                         <p style="line-height: 100%; text-align: center;">
-                          <span style="font-family:calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; color:#1e5288; font-size:14px; line-height: 0px;">MAR</span><br>
-                          <span style="font-family:calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; color:#1e5288; font-size:24px; line-height: 30px;">22</span>
+                          <span style="font-family:calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; color:#1e5288; font-size:14px; line-height: 0px;">{{ content.az_event_month }}</span><br>
+                          <span style="font-family:calibri,-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif; color:#1e5288; font-size:24px; line-height: 30px;">{{ content.az_event_day }}</span>
                         </p>
                         
                       </td>
@@ -103,15 +103,13 @@
 
                 <!-- QS: TITLE & LINK (recomended 80 character max) -->
                 <p style="line-height: 130%; margin-top:0;" class="qs-heading">
-                  <a class="qs-link" href="https://arizona.edu" style="color:#8B0015; font-weight: 700; text-decoration:underline;">Event Title or Label with Link Event
+                  <a class="qs-link" href="{{ az_canonical_url }}" style="color:#8B0015; font-weight: 700; text-decoration:underline;">
                       {{ content.smart_title }}</a>
                 </p>
 
                 <!-- QS: SUMMARY (recomended 180 character max) -->
                 <p style="line-height: 150%;" class="qs-summary">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent quis nisl in
-                  turpis sodales luctus sodales luctus. Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Praes.</p>
+                  {{ content.field_az_summary }}</p>
 
               </td>
             </tr>
