@@ -15,6 +15,12 @@
     );
   }
 
+  function setOverflowHidden() {
+    document.documentElement.style.setProperty(
+      '--full-width-overflow-x', 'hidden',
+    );
+  }
+
   /**
    * Calculates and sets margin required to push sidebars beneath the last
    * full-width paragraph in the Content region of the page.
@@ -90,6 +96,7 @@
     attach: () => {
       calculateScrollbarWidth();
       calculateFullWidthNegativeMargins();
+      setOverflowHidden();
       pushSidebarsDown();
     },
   };
