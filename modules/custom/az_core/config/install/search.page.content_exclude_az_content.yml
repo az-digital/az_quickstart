@@ -9,6 +9,10 @@ path: node
 weight: 0
 plugin: search_exclude_node_search
 configuration:
-  rankings: {  }
+  rankings: 
+    relevance: '2'
+    sticky: '3'
+    promote: '4'
+    recent: '1'
   excluded_bundles:
     az_carousel_item: az_carousel_item
