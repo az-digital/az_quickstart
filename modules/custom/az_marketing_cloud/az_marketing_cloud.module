@@ -26,6 +26,10 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'node--view--az-marketing-cloud--text-layout',
       'base hook' => 'node',
     ],
+    'node__view__az_marketing_cloud__event_layout' => [
+      'template' => 'node--view--az-marketing-cloud--event-layout',
+      'base hook' => 'node',
+    ],
     'region__az_marketing_cloud' => [
       'template' => 'region--az-marketing-cloud',
       'base hook' => 'region',
@@ -127,6 +131,9 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
   if ($route_name === 'view.az_marketing_cloud.text_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
+  if ($route_name === 'view.az_marketing_cloud.event_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
 }
 
 /**
@@ -141,6 +148,9 @@ function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestio
     $suggestions[] = 'views_view__az_marketing_cloud';
   }
   if ($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.event_layout') {
     $suggestions[] = 'views_view__az_marketing_cloud';
   }
 }

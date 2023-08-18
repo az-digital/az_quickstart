@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_marketing_cloud_30_70_layout
     - core.entity_view_mode.node.az_marketing_cloud_50_50_layout
+    - core.entity_view_mode.node.az_marketing_cloud_event_layout
     - core.entity_view_mode.node.az_marketing_cloud_text_layout
     - field.storage.node.field_az_published
     - node.type.az_event
@@ -261,7 +262,7 @@ display:
     id: admin
     display_title: Admin
     display_plugin: page
-    position: 4
+    position: 5
     display_options:
       fields:
         nid:
@@ -839,7 +840,7 @@ display:
           exclude: false
           alter:
             alter_text: true
-            text: "<a href=\"/export/marketing-cloud/50-50-layout/{{ nid }}\">50/50 Layout</a> | \r\n<a href=\"/export/marketing-cloud/30-70-layout/{{ nid }}\">30/70 Layout</a> | \r\n<a href=\"/export/marketing-cloud/text-layout/{{ nid }}\">Text Layout</a>"
+            text: "<a href=\"/export/marketing-cloud/50-50-layout/{{ nid }}\">50/50 Layout</a> | \r\n<a href=\"/export/marketing-cloud/30-70-layout/{{ nid }}\">30/70 Layout</a> | \r\n<a href=\"/export/marketing-cloud/text-layout/{{ nid }}\">Text Layout</a> | \r\n<a href=\"/export/marketing-cloud/event-layout/{{ nid }}\">Event Layout</a>"
             make_link: false
             path: ''
             absolute: false
@@ -1269,6 +1270,40 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_published'
+  event_layout:
+    id: event_layout
+    display_title: 'Event Layout'
+    display_plugin: page
+    position: 4
+    display_options:
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_marketing_cloud_event_layout
+      defaults:
+        style: false
+        style_options: false
+        row: false
+      display_description: ''
+      style_options: null
+      display_extenders: {  }
+      path: export/marketing-cloud/event-layout/%node
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   text_layout:
     id: text_layout
     display_title: 'Text Layout'
