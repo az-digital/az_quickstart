@@ -1,6 +1,6 @@
 :root {
   --sidebar-top-margin: 0;
-  --full-width-overflow-x: initial;
+  --full-width-overflow-x: hidden;
 }
 html {
   overflow-x: var(--full-width-overflow-x);

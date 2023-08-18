@@ -8,9 +8,6 @@
   function calculateScrollbarWidth() {
     document.documentElement.style.setProperty('--scrollbar-width', "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
   }
-  function setOverflowHidden() {
-    document.documentElement.style.setProperty('--full-width-overflow-x', 'hidden');
-  }
   function pushSidebarsDown() {
     var contentRegion = document.querySelector('main.main-content');
     if (contentRegion !== null) {
@@ -47,7 +44,6 @@
     attach: function attach() {
       calculateScrollbarWidth();
       calculateFullWidthNegativeMargins();
-      setOverflowHidden();
       pushSidebarsDown();
     }
   };
