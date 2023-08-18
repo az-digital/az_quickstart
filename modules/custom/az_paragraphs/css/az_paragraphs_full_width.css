@@ -1,15 +1,8 @@
-:root {
-  --sidebar-top-margin: 0;
-  --full-width-overflow-x: hidden;
-}
-html {
-  overflow-x: var(--full-width-overflow-x);
-}
-body {
-  overflow-x: var(--full-width-overflow-x);
-}
 .nav-link, .nav-pills .nav-link, .nav-tabs .nav-link {
   background-color: white;
+}
+:root {
+  --sidebar-top-margin: 0;
 }
 @media (min-width: 768px) {
     #sidebar_second,
