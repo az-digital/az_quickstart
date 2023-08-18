@@ -193,6 +193,9 @@
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
                 "Ajax pager - Input value viewsreference contains a non-scalar value (3326841)": "https://www.drupal.org/files/issues/2023-01-05/3326841.patch"
             },
+            "drupal/workbench_access": {
+                "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch"
+            },
             "drupal/xmlsitemap": {
                 "Call to undefined method ModuleHandler::getImplementations() in xmlsitemap_check_status() (3355204)": "https://git.drupalcode.org/project/xmlsitemap/-/commit/f7122db.patch"
             },
