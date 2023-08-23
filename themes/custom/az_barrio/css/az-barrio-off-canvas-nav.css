@@ -7,9 +7,8 @@ header#header_arizona {
   border: 0;
 }
 
+/* Remove when https://github.com/az-digital/arizona-bootstrap/pull/901 is
+included in a release */
 .btn-redbar .icon-text {
-  display: block;
   margin: -5px 0;
-  font-size: 10px;
-  line-height: 10px;
 }
