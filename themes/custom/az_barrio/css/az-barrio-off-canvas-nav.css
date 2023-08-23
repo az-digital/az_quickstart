@@ -7,7 +7,9 @@ header#header_arizona {
   border: 0;
 }
 
-/* Fixes https://github.com/az-digital/az_quickstart/issues/2549 */
-header#header_arizona .redbar-buttons {
-  overflow: hidden;
+.btn-redbar .icon-text {
+  display: block;
+  margin: -5px 0;
+  font-size: 10px;
+  line-height: 10px;
 }
