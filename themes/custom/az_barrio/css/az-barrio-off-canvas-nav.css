@@ -7,8 +7,10 @@ header#header_arizona {
   border: 0;
 }
 
-/* Remove when https://github.com/az-digital/arizona-bootstrap/pull/901 is
-included in a release */
+/*
+ * Remove when https://github.com/az-digital/arizona-bootstrap/pull/901 is
+ * included in a release
+ */
 .btn-redbar .icon-text {
   margin: -5px 0;
 }
