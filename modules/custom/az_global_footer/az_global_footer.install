@@ -51,7 +51,7 @@ function az_global_footer_update_last_removed() {
  * Campus Safety link(s) in the global footer will be updated with
  * new safety.arizona.edu domain.
  */
-function az_global_footer_update_920701() {
+function az_global_footer_update_1020701() {
   $updated_count = 0;
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
