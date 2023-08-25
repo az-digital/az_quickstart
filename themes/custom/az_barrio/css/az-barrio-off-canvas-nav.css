@@ -6,3 +6,11 @@ header#header_arizona {
 .navbar-offcanvas.no-navigation-region {
   border: 0;
 }
+
+/*
+ * Remove when https://github.com/az-digital/arizona-bootstrap/pull/901 is
+ * included in a release
+ */
+.btn-redbar .icon-text {
+  margin: -5px 0;
+}
