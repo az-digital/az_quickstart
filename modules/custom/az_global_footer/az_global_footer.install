@@ -48,7 +48,7 @@ function az_global_footer_update_last_removed() {
 /**
  * Update Campus Safety link(s)
  *
- * Campus Saftey link(s) in the global footer will be updated with
+ * Campus Safety link(s) in the global footer will be updated with
  * new safety.arizona.edu domain.
  */
 function az_global_footer_update_920701() {
