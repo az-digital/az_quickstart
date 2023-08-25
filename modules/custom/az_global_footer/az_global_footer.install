@@ -56,7 +56,7 @@ function az_global_footer_update_1020701() {
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
     ->condition('menu_name', 'az-footer-main')
-    ->condition('title', 'Campus Saftey')
+    ->condition('title', 'Campus Safety')
     ->condition('link__uri', 'https://www.arizona.edu/campus-safety')
     ->execute();
 
