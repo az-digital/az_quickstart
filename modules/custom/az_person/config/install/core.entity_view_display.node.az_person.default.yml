@@ -17,11 +17,13 @@ dependencies:
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
+    - image.style.az_medium
     - node.type.az_person
   module:
     - field_group
     - file
     - link
+    - media
     - smart_title
     - telephone
     - text
@@ -83,7 +85,6 @@ third_party_settings:
     group_col_12_name_titles:
       children:
         - group_mobile_node_title
-        - smart_title
         - group_titles
       label: 'Col 12 - Name & Titles'
       parent_name: group_row
@@ -248,6 +249,11 @@ targetEntityType: node
 bundle: az_person
 mode: default
 content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
   field_az_address:
     type: text_default
     label: hidden
@@ -314,11 +320,13 @@ content:
     weight: 4
     region: content
   field_az_media_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: az_medium
-      link: false
+      image_link: ''
+      image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 6
     region: content
@@ -371,4 +379,5 @@ content:
     region: content
 hidden:
   field_az_link: true
+  field_az_metatag: true
   links: true

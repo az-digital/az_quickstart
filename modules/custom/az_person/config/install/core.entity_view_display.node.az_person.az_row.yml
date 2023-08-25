@@ -18,9 +18,11 @@ dependencies:
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
+    - image.style.az_medium
     - node.type.az_person
   module:
     - field_group
+    - media
     - smart_title
     - telephone
     - user
@@ -108,8 +110,7 @@ third_party_settings:
         effect: none
         speed: fast
     group_title_link:
-      children:
-        - smart_title
+      children: {  }
       label: 'Title Link'
       parent_name: group_title_heading
       region: content
@@ -167,6 +168,11 @@ targetEntityType: node
 bundle: az_person
 mode: az_row
 content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
   field_az_email:
     type: email_mailto
     label: hidden
@@ -175,11 +181,13 @@ content:
     weight: 6
     region: content
   field_az_media_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: az_medium
-      link: false
+      image_link: ''
+      image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 24
     region: content
@@ -221,6 +229,7 @@ hidden:
   field_az_link: true
   field_az_links: true
   field_az_lname: true
+  field_az_metatag: true
   field_az_person_category: true
   field_az_person_category_sec: true
   links: true
