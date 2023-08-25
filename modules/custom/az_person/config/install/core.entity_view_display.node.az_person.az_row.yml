@@ -110,7 +110,8 @@ third_party_settings:
         effect: none
         speed: fast
     group_title_link:
-      children: {  }
+      children:
+        - smart_title
       label: 'Title Link'
       parent_name: group_title_heading
       region: content
@@ -168,11 +169,6 @@ targetEntityType: node
 bundle: az_person
 mode: az_row
 content:
-  content_moderation_control:
-    settings: {  }
-    third_party_settings: {  }
-    weight: -20
-    region: content
   field_az_email:
     type: email_mailto
     label: hidden
@@ -229,7 +225,6 @@ hidden:
   field_az_link: true
   field_az_links: true
   field_az_lname: true
-  field_az_metatag: true
   field_az_person_category: true
   field_az_person_category_sec: true
   links: true
