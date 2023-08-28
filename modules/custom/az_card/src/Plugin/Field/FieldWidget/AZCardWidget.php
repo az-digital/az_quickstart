@@ -167,11 +167,11 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
+        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '');
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : '#',
+          '#url' => $link_url ? $link_url : NULL,
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
