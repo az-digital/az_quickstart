@@ -126,7 +126,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : '#',
+          '#url' => $link_url ? $link_url : NULL,
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
         if (!empty($item->options['link_style'])) {
