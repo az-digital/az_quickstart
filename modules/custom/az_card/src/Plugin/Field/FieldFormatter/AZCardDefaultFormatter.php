@@ -9,7 +9,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Plugin implementation of the 'az_card_default' formatter.
@@ -46,13 +45,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   protected $pathValidator;
 
   /**
-   * The HTTP request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected $requestStack;
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -66,7 +58,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
     $instance->cardImageHelper = $container->get('az_card.image');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->pathValidator = $container->get('path.validator');
-    $instance->requestStack = $container->get('request_stack');
     return $instance;
   }
 
@@ -136,7 +127,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ?: Url::fromUri($this->requestStack->getCurrentRequest()->getRequestUri() . '/#'),
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
         if (!empty($item->options['link_style'])) {
