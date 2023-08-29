@@ -6,6 +6,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -135,7 +136,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ?: $this->requestStack->getCurrentRequest()->getRequestUri() . '/#',
+          '#url' => $link_url ?: Url::fromUri($this->requestStack->getCurrentRequest()->getRequestUri() . '/#'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
         if (!empty($item->options['link_style'])) {
