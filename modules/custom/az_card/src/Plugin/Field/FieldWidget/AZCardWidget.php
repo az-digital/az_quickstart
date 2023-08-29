@@ -9,7 +9,6 @@ use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
@@ -50,13 +49,6 @@ class AZCardWidget extends WidgetBase {
   protected $entityTypeManager;
 
   /**
-   * The HTTP request stack.
-   *
-   * @var \Symfony\Component\HttpFoundation\RequestStack
-   */
-  protected $requestStack;
-
-  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -70,7 +62,6 @@ class AZCardWidget extends WidgetBase {
     $instance->cardImageHelper = $container->get('az_card.image');
     $instance->pathValidator = $container->get('path.validator');
     $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->requestStack = $container->get('request_stack');
     return $instance;
   }
 
@@ -181,7 +172,7 @@ class AZCardWidget extends WidgetBase {
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ?: Url::fromUri($this->requestStack->getCurrentRequest()->getRequestUri() . '/#'),
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
