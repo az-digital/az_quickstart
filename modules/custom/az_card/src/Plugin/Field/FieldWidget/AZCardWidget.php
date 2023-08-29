@@ -2,13 +2,14 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\NestedArray;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'az_card' field widget.
@@ -48,6 +49,13 @@ class AZCardWidget extends WidgetBase {
   protected $entityTypeManager;
 
   /**
+   * The HTTP request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
@@ -61,6 +69,7 @@ class AZCardWidget extends WidgetBase {
     $instance->cardImageHelper = $container->get('az_card.image');
     $instance->pathValidator = $container->get('path.validator');
     $instance->entityTypeManager = $container->get('entity_type.manager');
+    $instance->requestStack = $container->get('request_stack');
     return $instance;
   }
 
@@ -171,7 +180,7 @@ class AZCardWidget extends WidgetBase {
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : NULL,
+          '#url' => $link_url ?: $this->requestStack->getCurrentRequest()->getRequestUri() . '/#',
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
