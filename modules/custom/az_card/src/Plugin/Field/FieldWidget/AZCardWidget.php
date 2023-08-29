@@ -7,6 +7,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -180,7 +181,7 @@ class AZCardWidget extends WidgetBase {
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ?: $this->requestStack->getCurrentRequest()->getRequestUri() . '/#',
+          '#url' => $link_url ?: Url::fromUri($this->requestStack->getCurrentRequest()->getRequestUri() . '/#'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
