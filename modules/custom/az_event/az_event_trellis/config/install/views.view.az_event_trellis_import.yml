@@ -413,27 +413,27 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           property_path: keyword
-        property_1:
-          id: property_1
+        Attributes:
+          id: Attributes
           table: az_event_trellis_data
-          field: property
+          field: Attributes
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: views_remote_data_property
+          plugin_id: az_event_trellis_views_attribute_filter
           operator: '='
           value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: property_1_op
+            operator_id: Attributes_op
             label: Audience
             description: ''
             use_operator: false
-            operator: property_1_op
+            operator: Attributes_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: property_1
+            identifier: audience
             required: false
             remember: false
             multiple: false
@@ -458,27 +458,28 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           property_path: audience
-        property_2:
-          id: property_2
+          az_attribute_key: Audiences__c
+        Attributes_1:
+          id: Attributes_1
           table: az_event_trellis_data
-          field: property
+          field: Attributes
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: views_remote_data_property
+          plugin_id: az_event_trellis_views_attribute_filter
           operator: '='
           value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: property_2_op
+            operator_id: Attributes_1_op
             label: Topic
             description: ''
             use_operator: false
-            operator: property_2_op
+            operator: Attributes_1_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: property_2
+            identifier: topic
             required: false
             remember: false
             multiple: false
@@ -503,27 +504,28 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           property_path: topic
-        property_3:
-          id: property_3
+          az_attribute_key: Topic__c
+        Attributes_2:
+          id: Attributes_2
           table: az_event_trellis_data
-          field: property
+          field: Attributes
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: views_remote_data_property
+          plugin_id: az_event_trellis_views_attribute_filter
           operator: '='
           value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: property_3_op
+            operator_id: Attributes_2_op
             label: Category
             description: ''
             use_operator: false
-            operator: property_3_op
+            operator: Attributes_2_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: property_3
+            identifier: category
             required: false
             remember: false
             multiple: false
@@ -547,28 +549,29 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          property_path: Category
-        property_4:
-          id: property_4
+          property_path: category
+          az_attribute_key: Category1__c
+        Attributes_3:
+          id: Attributes_3
           table: az_event_trellis_data
-          field: property
+          field: Attributes
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: views_remote_data_property
+          plugin_id: az_event_trellis_views_attribute_filter
           operator: '='
           value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: property_4_op
+            operator_id: Attributes_3_op
             label: Format
             description: ''
             use_operator: false
-            operator: property_4_op
+            operator: Attributes_3_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: property_4
+            identifier: format
             required: false
             remember: false
             multiple: false
@@ -593,6 +596,7 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           property_path: format
+          az_attribute_key: Event_Format__c
       style:
         type: table
       row:

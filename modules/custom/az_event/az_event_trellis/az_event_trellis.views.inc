@@ -44,5 +44,12 @@ function az_event_trellis_views_data(): array {
       'id' => 'date',
     ],
   ];
+  $data['az_event_trellis_data']['Attributes'] = [
+    'title' => t('Enterprise Attribute'),
+    'help' => t('Trellis event search API enterprise attributes'),
+    'filter' => [
+      'id' => 'az_event_trellis_views_attribute_filter',
+    ],
+  ];
   return $data;
 }
