@@ -1,0 +1,12 @@
+name: 'Quickstart Paragraphs - Views Row'
+type: module
+description: 'Provides a views row paragraph type.'
+core_version_requirement: ^9 || ^10
+dependencies:
+  - az_paragraphs
+  - az_paragraphs:az_paragraphs_view
+  - drupal:field
+  - drupal:views
+  - paragraphs:paragraphs
+  - viewsreference:viewsreference
+package: 'The University of Arizona'

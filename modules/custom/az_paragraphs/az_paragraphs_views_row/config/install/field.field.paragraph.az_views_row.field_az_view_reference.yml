@@ -3,17 +3,17 @@ status: true
 dependencies:
   config:
     - field.storage.paragraph.field_az_view_reference
-    - paragraphs.paragraphs_type.az_view_reference
+    - paragraphs.paragraphs_type.az_views_row
   module:
     - viewsreference
-id: paragraph.az_view_reference.field_az_view_reference
+id: paragraph.az_views_row.field_az_view_reference
 field_name: field_az_view_reference
 entity_type: paragraph
-bundle: az_view_reference
-label: View
+bundle: az_views_row
+label: 'First View'
 description: ''
-required: true
-translatable: true
+required: false
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:
@@ -28,13 +28,12 @@ settings:
     attachment: 0
     feed: 0
   preselect_views:
-    az_courses: az_courses
     az_events: az_events
     az_news: az_news
     az_page_by_category: az_page_by_category
     az_person: az_person
-    az_publications: az_publications
     az_reorder: 0
+    az_taxonomy: 0
     block_content: 0
     content: 0
     content_recent: 0
@@ -50,9 +49,9 @@ settings:
     who_s_new: 0
     who_s_online: 0
   enabled_settings:
+    pager: pager
     limit: limit
-    argument: argument
     title: title
     offset: offset
-    pager: pager
+    argument: argument
 field_type: viewsreference

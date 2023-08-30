@@ -436,17 +436,12 @@ display:
           offset: 0
           items_per_page: 3
       style:
-        type: views_bootstrap_grid
+        type: default
         options:
           grouping: {  }
           row_class: ''
           default_row_class: false
           uses_fields: true
-          col_xs: col-12
-          col_sm: none
-          col_md: none
-          col_lg: none
-          col_xl: none
       row:
         type: 'entity:node'
         options:
@@ -460,7 +455,7 @@ display:
         row: false
         pager_options: false
         footer: false
-      display_description: 'Use in a region that spans at least 12 columns.'
+      display_description: 'Best used in a region that spans the width of page content without sidebars.'
       pager_options: null
       style_options: null
       footer: {  }

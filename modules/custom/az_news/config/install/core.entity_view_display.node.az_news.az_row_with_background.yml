@@ -115,7 +115,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card bg-gray-100 card-borderless card-clickable mb-4 hover'
+        classes: 'bg-gray-100 card card-borderless card-clickable hover mb-4'
         show_empty_fields: false
         id: ''
         element: div
@@ -134,7 +134,7 @@ third_party_settings:
       weight: 27
       format_type: html_element
       format_settings:
-        classes: 'card-body pb-2 pl-4 pr-4 pt-4'
+        classes: 'card-body pt-4 pb-2 px-4'
         show_empty_fields: false
         id: ''
         element: div

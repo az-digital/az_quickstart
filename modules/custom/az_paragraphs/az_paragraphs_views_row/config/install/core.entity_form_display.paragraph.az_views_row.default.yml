@@ -1,0 +1,66 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_views_row.field_az_view_reference
+    - field.field.paragraph.az_views_row.field_az_first_view_button
+    - field.field.paragraph.az_views_row.field_az_title
+    - field.field.paragraph.az_views_row.field_az_second_view
+    - field.field.paragraph.az_views_row.field_az_second_view_title
+    - field.field.paragraph.az_views_row.field_az_second_view_button
+    - paragraphs.paragraphs_type.az_views_row
+  module:
+    - link
+    - viewsreference
+id: paragraph.az_views_row.default
+targetEntityType: paragraph
+bundle: az_views_row
+mode: default
+content:
+  field_az_view_reference:
+    type: viewsreference_select
+    weight: 1
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_first_view_button:
+    type: link_default
+    weight: 2
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_second_view:
+    type: viewsreference_select
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_second_view_title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_second_view_button:
+    type: link_default
+    weight: 5
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true
