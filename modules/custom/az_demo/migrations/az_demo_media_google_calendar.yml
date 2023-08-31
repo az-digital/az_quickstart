@@ -1,0 +1,40 @@
+id: az_demo_media_google_calendar
+label: AZ Quickstart Demo Media Google Calendar
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+  - Media
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_media_google_calendar.json
+  item_selector: calendars
+  ids:
+    id:
+      type: string
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: name
+      selector: name
+    -
+      name: uuid
+      selector: uuid
+    -
+      name: url
+      selector: url
+
+destination:
+  plugin: 'entity:media'
+
+process:
+  bundle:
+    plugin: default_value
+    default_value: az_google_calendar
+  name: name
+  field_media_az_media_remote: url
+  uuid: uuid

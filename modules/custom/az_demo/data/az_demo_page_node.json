@@ -180,6 +180,16 @@
       "az_main_content" : "89",
       "az_media_image" : "",
       "az_summary" : "This is a code example."
+    },
+    {
+      "id":19,
+      "title" : "Media Embed",
+      "path" : "/pages/media-embeds",
+      "exclude_title" : true,
+      "az_page_category" : "Media embeds",
+      "az_main_content" : "90",
+      "az_media_image" : "",
+      "az_summary" : "Remote media embeds."
     }
   ]
 }
