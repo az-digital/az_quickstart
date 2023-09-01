@@ -1,4 +1,4 @@
-langcode: en
+lalangcode: en
 status: true
 dependencies:
   config:
@@ -36,7 +36,7 @@ third_party_settings:
         required_fields: false
     group_first_view_hr:
       children: {  }
-      label: 'The first view is displayed FIRST on mobile screens and on the LEFT on desktop screens.'
+      label: 'The first view is displayed FIRST on mobile screens and on the LEFT on desktop screens. The title and button are optional.'
       region: content
       parent_name: group_first_view_section
       weight: 2
@@ -55,7 +55,7 @@ third_party_settings:
         required_fields: false
     group_second_view_hr:
       children: {  }
-      label: 'The second view is displayed SECOND on mobile screens and on the RIGHT on desktop screens.'
+      label: 'The second view is displayed SECOND on mobile screens and on the RIGHT on desktop screens. The title and button are optional.'
       region: content
       parent_name: group_second_view_section
       weight: 4
