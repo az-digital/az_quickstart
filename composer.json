@@ -31,7 +31,6 @@
     "require": {
         "php": ">=8.1",
         "az-digital/arizona-bootstrap": "2.0.24",
-        "az-digital/background_image_formatter": "dev-az-digital",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.5",
         "citation-style-language/styles": "0.0.249",
@@ -41,6 +40,7 @@
         "drupal/antibot": "2.0.2",
         "drupal/asset_injector": "2.17.0",
         "drupal/auto_entitylabel": "3.0.0",
+        "drupal/background_image_formatter": "2.0.3",
         "drupal/better_exposed_filters": "6.0.3",
         "drupal/blazy": "2.16.0",
         "drupal/block_class": "2.0.11",
@@ -53,10 +53,10 @@
         "drupal/ckeditor": "*",
         "drupal/ckeditor_bs_grid": "2.0.9",
         "drupal/coffee": "1.3.0",
-        "drupal/config_distro": "2.0.0-alpha1",
+        "drupal/config_distro": "2.0.0-alpha2",
         "drupal/config_provider": "3.0.0-alpha1",
         "drupal/config_snapshot": "2.0.0-alpha1",
-        "drupal/config_sync": "3.0.0-alpha2",
+        "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
         "drupal/core-recommended": "10.0.10",
         "drupal/crop": "2.3.0",
@@ -93,7 +93,7 @@
         "drupal/metatag": "1.22.0",
         "drupal/migrate_plus": "6.0.1",
         "drupal/migrate_queue_importer": "2.1.0",
-        "drupal/migrate_tools": "6.0.1",
+        "drupal/migrate_tools": "6.0.2",
         "drupal/optional_end_date": "1.3.0",
         "drupal/paragraphs": "1.15.0",
         "drupal/paragraphs_admin": "1.4.0",
@@ -179,6 +179,8 @@
             },
             "drupal/entity_embed": {
                 "Drupal 10 & CKEditor 5 readiness (3272732)": "https://git.drupalcode.org/project/entity_embed/-/merge_requests/12.diff"
+            "drupal/google_tag": {
+                "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
             },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
@@ -198,6 +200,9 @@
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
                 "Ajax pager - Input value viewsreference contains a non-scalar value (3326841)": "https://www.drupal.org/files/issues/2023-01-05/3326841.patch"
+            },
+            "drupal/workbench_access": {
+                "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch"
             },
             "drupal/xmlsitemap": {
                 "Call to undefined method ModuleHandler::getImplementations() in xmlsitemap_check_status() (3355204)": "https://git.drupalcode.org/project/xmlsitemap/-/commit/f7122db.patch"
