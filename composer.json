@@ -179,6 +179,7 @@
             },
             "drupal/entity_embed": {
                 "Drupal 10 & CKEditor 5 readiness (3272732)": "https://git.drupalcode.org/project/entity_embed/-/merge_requests/12.diff"
+            },
             "drupal/google_tag": {
                 "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
             },
