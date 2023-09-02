@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.storage.media.field_media_az_media_remote
     - media.type.az_google_calendar
-id: media.google_calendar.field_media_az_media_remote
+id: media.az_google_calendar.field_media_az_media_remote
 field_name: field_media_az_media_remote
 entity_type: media
 bundle: az_google_calendar
