@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.paragraph.field_az_second_view
-    - paragraphs.paragraphs_type.az_views_row
+    - field.storage.paragraph.field_az_view_reference
+    - paragraphs.paragraphs_type.az_views_side_by_side
   module:
     - viewsreference
-id: paragraph.az_views_row.field_az_second_view
-field_name: field_az_second_view
+id: paragraph.az_views_side_by_side.field_az_view_reference
+field_name: field_az_view_reference
 entity_type: paragraph
-bundle: az_views_row
-label: 'Second View'
+bundle: az_views_side_by_side
+label: 'First View'
 description: ''
 required: false
 translatable: false
@@ -28,10 +28,11 @@ settings:
     attachment: 0
     feed: 0
   preselect_views:
-    az_events: az_events
-    az_news: az_news
-    az_page_by_category: az_page_by_category
-    az_person: az_person
+    az_side_by_side_views: az_side_by_side_views
+    az_events: 0
+    az_news: 0
+    az_page_by_category: 0
+    az_person: 0
     az_reorder: 0
     az_taxonomy: 0
     block_content: 0

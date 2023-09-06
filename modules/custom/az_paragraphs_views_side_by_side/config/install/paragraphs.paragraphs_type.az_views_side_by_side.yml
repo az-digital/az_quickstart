@@ -3,8 +3,8 @@ status: true
 dependencies:
   module:
     - az_paragraphs
-id: az_views_row
-label: 'Views Row'
+id: az_views_side_by_side
+label: 'Views Side-by-Side'
 icon_uuid: null
 icon_default: null
 description: ''

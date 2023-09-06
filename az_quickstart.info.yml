@@ -17,7 +17,6 @@ install:
   - az_paragraphs_text_background
   - az_paragraphs_text_media
   - az_paragraphs_view
-  - az_paragraphs_views_row
   - az_core
   - az_flexible_page
   - az_flexible_block

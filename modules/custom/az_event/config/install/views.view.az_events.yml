@@ -5,7 +5,6 @@ dependencies:
     - core.entity_view_mode.node.az_card
     - core.entity_view_mode.node.az_card_alternate
     - core.entity_view_mode.node.az_row
-    - core.entity_view_mode.node.az_row_with_background
     - node.type.az_event
     - taxonomy.vocabulary.az_event_categories
   module:
@@ -361,157 +360,6 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  az_grid_images:
-    id: az_grid_images
-    display_title: 'Grid View with Images'
-    display_plugin: block
-    position: 2
-    display_options:
-      title: Events
-      pager:
-        type: some
-        options:
-          offset: 0
-          items_per_page: 3
-      style:
-        type: views_bootstrap_grid
-        options:
-          row_class: ''
-          default_row_class: false
-          uses_fields: true
-          col_xs: col-12
-          col_sm: col-sm-12
-          col_md: col-md-4
-          col_lg: col-lg-4
-          col_xl: col-xl-4
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_card_alternate
-      defaults:
-        title: false
-        pager: false
-        style: false
-        style_options: false
-        row: false
-        pager_options: false
-        footer: false
-      display_description: 'Use in a region that spans at least 12 columns.'
-      pager_options: null
-      style_options: null
-      footer:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: true
-          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events on the calendar\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events on the calendar</a>\r\n</div>"
-          tokenize: false
-      display_extenders: {  }
-      allow:
-        items_per_page: false
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_interface'
-        - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  az_row_with_background:
-    id: az_row_with_background
-    display_title: 'Row View with Background'
-    display_plugin: block
-    position: 2
-    display_options:
-      title: ''
-      pager:
-        type: some
-        options:
-          offset: 0
-          items_per_page: 3
-      arguments:
-        tid:
-          id: tid
-          table: taxonomy_index
-          field: tid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          default_action: ignore
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
-          default_argument_skip_url: false
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: 'entity:taxonomy_term'
-            fail: 'not found'
-          validate_options:
-            bundles: {  }
-            access: false
-            operation: view
-            multiple: 1
-          break_phrase: true
-          add_table: false
-          require_value: false
-          reduce_duplicates: false
-      style:
-        type: default
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: false
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_row_with_background
-      defaults:
-        title: false
-        pager: false
-        style: false
-        style_options: false
-        row: false
-        pager_options: false
-        footer: false
-      display_description: 'Best used in a region that spans the width of page content without sidebars.'
-      pager_options: null
-      style_options: null
-      footer: {  }
-      display_extenders: {  }
-      allow:
-        items_per_page: false
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_interface'
-        - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
   az_sidebar:
     id: az_sidebar
     display_title: 'Grid Sidebar'
@@ -645,6 +493,68 @@ display:
           tokenize: false
       display_extenders: {  }
       block_description: 'Sidebar Events Block'
+      allow:
+        items_per_page: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_grid_images:
+    id: az_grid_images
+    display_title: 'Grid View with Images'
+    display_plugin: block
+    position: 2
+    display_options:
+      title: Events
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 3
+      style:
+        type: views_bootstrap_grid
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: true
+          col_xs: col-12
+          col_sm: col-sm-12
+          col_md: col-md-4
+          col_lg: col-lg-4
+          col_xl: col-xl-4
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_card_alternate
+      defaults:
+        title: false
+        pager: false
+        style: false
+        style_options: false
+        row: false
+        pager_options: false
+        footer: false
+      display_description: 'Use in a region that spans at least 12 columns.'
+      pager_options: null
+      style_options: null
+      footer:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events on the calendar\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all events on the calendar</a>\r\n</div>"
+          tokenize: false
+      display_extenders: {  }
       allow:
         items_per_page: false
     cache_metadata:

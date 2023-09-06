@@ -1,6 +1,7 @@
-name: 'Quickstart Paragraphs - Views Row'
+name: 'Quickstart Paragraphs - Views Side-by-side'
 type: module
-description: 'Provides a views row paragraph type.'
+package: 'The University of Arizona - Experimental'
+description: 'Provides a paragraph type to show two views side-by-side on desktop screens.'
 core_version_requirement: ^9 || ^10
 dependencies:
   - az_paragraphs
@@ -9,4 +10,3 @@ dependencies:
   - drupal:views
   - paragraphs:paragraphs
   - viewsreference:viewsreference
-package: 'The University of Arizona'

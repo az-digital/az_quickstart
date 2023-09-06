@@ -2,13 +2,13 @@ lalangcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.az_views_row.field_az_first_view_button
-    - field.field.paragraph.az_views_row.field_az_second_view
-    - field.field.paragraph.az_views_row.field_az_second_view_button
-    - field.field.paragraph.az_views_row.field_az_second_view_title
-    - field.field.paragraph.az_views_row.field_az_title
-    - field.field.paragraph.az_views_row.field_az_view_reference
-    - paragraphs.paragraphs_type.az_views_row
+    - field.field.paragraph.az_views_side_by_side.field_az_first_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_title
+    - field.field.paragraph.az_views_side_by_side.field_az_title
+    - field.field.paragraph.az_views_side_by_side.field_az_view_reference
+    - paragraphs.paragraphs_type.az_views_side_by_side
   module:
     - field_group
     - link
@@ -141,9 +141,9 @@ third_party_settings:
         required_fields: true
 _core:
   default_config_hash: B3eRyJs2lI9mYI1A_9ZfXRDQk6mBD9o0kyiv49GUNoU
-id: paragraph.az_views_row.default
+id: paragraph.az_views_side_by_side.default
 targetEntityType: paragraph
-bundle: az_views_row
+bundle: az_views_side_by_side
 mode: default
 content:
   field_az_first_view_button:

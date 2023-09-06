@@ -1,0 +1,22 @@
+<?php
+
+/**
+ * @file
+ * Contains az_paragraphs_views_side_by_side.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_paragraphs_views_side_by_side_theme() {
+  return [
+    'field__field_az_first_view_button' => [
+      'template' => 'field--field-az-first-view-button',
+      'base hook' => 'field',
+    ],
+    'field__field_az_second_view_button' => [
+      'template' => 'field--field-az-second-view-button',
+      'base hook' => 'field',
+    ],
+  ];
+}

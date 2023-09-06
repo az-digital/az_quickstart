@@ -2,13 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.az_views_row.field_az_view_reference
-    - field.field.paragraph.az_views_row.field_az_first_view_button
-    - field.field.paragraph.az_views_row.field_az_title
-    - field.field.paragraph.az_views_row.field_az_second_view
-    - field.field.paragraph.az_views_row.field_az_second_view_title
-    - field.field.paragraph.az_views_row.field_az_second_view_button
-    - paragraphs.paragraphs_type.az_views_row
+    - field.field.paragraph.az_views_side_by_side.field_az_view_reference
+    - field.field.paragraph.az_views_side_by_side.field_az_first_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_title
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_title
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_button
+    - paragraphs.paragraphs_type.az_views_side_by_side
   module:
     - field_group
     - link
@@ -172,9 +172,9 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-id: paragraph.az_views_row.default
+id: paragraph.az_views_side_by_side.default
 targetEntityType: paragraph
-bundle: az_views_row
+bundle: az_views_side_by_side
 mode: default
 content:
   field_az_view_reference:
