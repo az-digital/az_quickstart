@@ -44,3 +44,36 @@ function az_global_footer_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 920501;
 }
+
+/**
+ * Update Campus Safety link(s)
+ *
+ * Campus Safety link(s) in the global footer will be updated with
+ * new safety.arizona.edu domain.
+ */
+function az_global_footer_update_1020701() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-main')
+    ->condition('title', 'Campus Safety')
+    ->condition('link__uri', 'https://www.arizona.edu/campus-safety')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /**
+     * @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content
+     */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      // phpcs:disable
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://safety.arizona.edu';
+      // phpcs:enable
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count Campus Safety menu link(s) in the global footer.', ['%count' => $updated_count]);
+}
