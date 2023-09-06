@@ -4,7 +4,7 @@
  * @file
  * common.inc
  *
- * Contains common functionality for the entire theme.
+ * Contains common functionality for az_core.
  */
 
 define('AZ_BOOTSTRAP_STABLE_VERSION', '2.0.24');

@@ -19,3 +19,39 @@ az_core.settings:
         locked:
           type: boolean
           label: 'Enterprise attribute edits prohibited'
+    arizona_bootstrap:
+      type: mapping
+      label: 'Arizona Bootstrap'
+      mapping:
+        source:
+          type: string
+          label: 'Arizona Bootstrap source'
+        cdn_version:
+          type: string
+          label: 'Arizona Bootstrap CDN version'
+        minified:
+          type: boolean
+          label: 'Use minified Arizona Bootstrap'
+    arizona_fonts:
+      type: mapping
+      label: 'Arizona Font'
+      mapping:
+        source:
+          type: string
+          label: 'Arizona Font source'
+        cdn_version:
+          type: string
+          label: 'Arizona Font CDN version'
+    arizona_icons:
+      type: mapping
+      label: 'Arizona Icons'
+      mapping:
+        source:
+          type: string
+          label: 'Arizona Icons source'
+        cdn_version:
+          type: string
+          label: 'Arizona Icons CDN version'
+        minified:
+          type: boolean
+          label: 'Arizona Icons minified'

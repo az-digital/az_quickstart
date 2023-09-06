@@ -4,7 +4,7 @@ global-styling:
     theme:
       css/style.css: {}
   dependencies:
-    - az_barrio/arizona-bootstrap
+    - az_core/arizona-bootstrap
 az-media-display:
   css:
     component:
@@ -16,21 +16,14 @@ az-barrio-off-canvas-nav:
   js:
     js/az-barrio-off-canvas-nav.js: {}
 az-proxima-nova:
-  css:
-    theme:
-      https://use.typekit.net/emv3zbo.css: {}
-az-icons:
-  css:
-    theme:
-      https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}
-arizona-bootstrap:
-  css:
-    theme:
-      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
-  js:
-    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
   dependencies:
-    - core/jquery
+    - az_core/az-proxima-nova
+az-icons:
+  dependencies:
+    - az_core/az-icons
+arizona-bootstrap:
+  dependencies:
+    - az_core/arizona-bootstrap
 button-no-conflict:
   js:
     js/button-no-conflict.js: {}

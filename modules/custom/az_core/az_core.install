@@ -12,3 +12,20 @@ function az_core_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 920501;
 }
+
+/**
+ * Implements hook_update().
+ */
+function az_core_update_1020801() {
+  // Covert az_barrio theme settings to az_core config.
+  $config = \Drupal::configFactory()->getEditable('az_core.settings');
+  $theme_config = \Drupal::configFactory()->getEditable('az_barrio.settings');
+  $config->set('arizona_bootstrap.source', $theme_config->get('az_bootstrap_source'));
+  $config->set('arizona-bootstrap.cdn_version', $theme_config->get('az_bootstrap_cdn_version'));
+  $config->set('arizona_bootstrap.minified', $theme_config->get('az_bootstrap_minified'));
+  $config->set('arizona_font.use_managed_font', $theme_config->get('az_barrio_font'));
+  $config->set('arizona_icons.use_az_icons', $theme_config->get('az_barrio_az_icons'));
+  $config->set('arizona_icons.az_icons_source', $theme_config->get('az_barrio_az_icons_source'));
+  $config->set('arizona_icons.use_material_design_sharp_icons', $theme_config->get('az_barrio_material_design_sharp_icons'));
+  $config->save();
+}

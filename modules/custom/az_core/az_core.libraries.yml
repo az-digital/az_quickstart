@@ -8,3 +8,19 @@ az-enterprise-attributes:
   css:
     component:
       css/az-enterprise-attributes.css: {}
+arizona-bootstrap:
+  css:
+    theme:
+      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
+  js:
+    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
+  dependencies:
+    - core/jquery
+az-proxima-nova:
+  css:
+    theme:
+      https://use.typekit.net/emv3zbo.css: {}
+az-icons:
+  css:
+    theme:
+      https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}

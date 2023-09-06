@@ -12,8 +12,6 @@ require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\Exception\FileException;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
 
 /**
@@ -92,155 +90,9 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
 
   // Fonts and Icons.
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
-  $form['fonts']['fonts']['az_barrio_font'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
-    '#default_value' => theme_get_setting('az_barrio_font'),
-    '#description' => t(
-        'If selected, a Typekit CDN <code>&lt;link&gt;</code> will be added to every page importing the @proxima_nova_docs_link CSS.', [
-          '@proxima_nova_docs_link' => Link::fromTextAndUrl(
-            'Arizona Digital, centrally-managed Proxima Nova font', Url::fromUri(
-                'https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/font/',
-                [
-                  'attributes' => [
-                    'target' => '_blank',
-                  ],
-                ]
-            )
-          )->toString(),
-        ]
-    ),
-  ];
-  $form['fonts']['bootstrap_icons'] = [
-    '#type' => 'details',
-    '#title' => t('Bootstrap icons'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  ];
   unset($form['fonts']['icons']['bootstrap_barrio_icons']);
   unset($form['fonts']['bootstrap_icons']);
-  $form['fonts']['icons'] = [
-    '#type' => 'details',
-    '#title' => t('Icons'),
-    '#collapsible' => TRUE,
-    '#collapsed' => FALSE,
-  ];
-  $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use Material Design Sharp Icons'),
-    '#description' => t(
-        'If selected, a Google Fonts CDN <code>&lt;link&gt;</code> will be added to every page importing the @material_design_sharp_icons_docs_link CSS.', [
-          '@material_design_sharp_icons_docs_link' => Link::fromTextAndUrl(
-            'Material Design Sharp icons', Url::fromUri(
-                'https://material.io/resources/icons/?style=sharp', [
-                  'attributes' => [
-                    'target' => '_blank',
-                  ],
-                ]
-            )
-          )->toString(),
-        ]
-    ),
-    '#default_value' => theme_get_setting('az_barrio_material_design_sharp_icons'),
-  ];
-  $form['fonts']['icons']['az_barrio_icons']['az_barrio_az_icons'] = [
-    '#type' => 'checkbox',
-    '#title' => t('Use AZ Icons'),
-    '#description' => t(
-        'If selected, a Arizona Digital CDN <code>&lt;link&gt;</code> will be added to every page importing the @az_icons_link CSS.', [
-          '@az_icons_link' => Link::fromTextAndUrl(
-            'Arizona icons', Url::fromUri(
-                'https://github.com/az-digital/az-icons', [
-                  'attributes' => [
-                    'target' => '_blank',
-                  ],
-                ]
-            )
-          )->toString(),
-        ]
-    ),
-    '#default_value' => theme_get_setting('az_barrio_az_icons'),
-  ];
-  $form['fonts']['icons']['az_barrio_icons']['az_icons'] = [
-    '#type' => 'fieldset',
-    '#title' => t('AZ Icons Settings'),
-    '#states' => [
-      'visible' => [
-        ':input[name="az_barrio_az_icons"]' => ['checked' => TRUE],
-      ],
-    ],
-    '#default_value' => theme_get_setting('az_barrio_az_icons'),
-  ];
 
-  $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_barrio_az_icons_source'] = [
-    '#type' => 'radios',
-    '#title' => t('Arizona Icons Source'),
-    '#options' => [
-      'cdn' => t(
-        'Use external copy of @azicons hosted on the CDN.', [
-          '@azicons' => Link::fromTextAndUrl(
-            'AZ Icons', Url::fromUri(
-                'https://github.com/az-digital/az-icons', [
-                  'attributes' => [
-                    'target' => '_blank',
-                  ],
-                ]
-            )
-          )->toString(),
-        ],
-
-      ),
-      'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
-    ],
-    '#default_value' => theme_get_setting('az_barrio_az_icons_source'),
-  ];
-
-  // AZ Bootstrap settings.
-  $form['azbs_settings'] = [
-    '#type' => 'details',
-    '#title' => t('Arizona Bootstrap'),
-    '#group' => 'bootstrap',
-    '#weight' => -9,
-  ];
-  $form['azbs_settings']['settings']['az_bootstrap_source'] = [
-    '#type' => 'radios',
-    '#title' => t('AZ Bootstrap Source'),
-    '#options' => [
-      'local' => t('Use local copy of AZ Bootstrap packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'cdn' => t('Use external copy of AZ Bootstrap hosted on the AZ Bootstrap CDN.'),
-    ],
-    '#default_value' => theme_get_setting('az_bootstrap_source'),
-    '#prefix' => t(
-        'AZ Barrio requires the <a href="@azbootstrap">AZ Bootstrap</a> front-end framework. AZ Bootstrap can either be loaded from the local copy packaged with AZ Barrio or from the AZ Bootstrap CDN.', [
-          '@azbootstrap' => 'http://digital.arizona.edu/arizona-bootstrap',
-        ]
-    ),
-    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> The AZ Bootstrap CDN is the preferred method for providing huge performance gains in load time.') . '</div>',
-  ];
-  $form['azbs_settings']['settings']['az_bootstrap_cdn'] = [
-    '#type' => 'fieldset',
-    '#title' => t('AZ Bootstrap CDN Settings'),
-    '#states' => [
-      'visible' => [
-        ':input[name="az_bootstrap_source"]' => ['value' => 'cdn'],
-      ],
-    ],
-  ];
-  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version'] = [
-    '#type' => 'radios',
-    '#title' => t('AZ Bootstrap CDN version'),
-    '#options' => [
-      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'latest-2.x' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      '2.x' => t('Latest dev version. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
-    ],
-    '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),
-  ];
-  $form['azbs_settings']['settings']['az_bootstrap_minified'] = [
-    '#type'          => 'checkbox',
-    '#title'         => t('Use minified version of AZ Bootstrap.'),
-    '#default_value' => theme_get_setting('az_bootstrap_minified'),
-  ];
   $form['azbs_settings']['settings']['az_bootstrap_style'] = [
     '#type' => 'fieldset',
     '#title' => t('AZ Bootstrap Style Settings'),

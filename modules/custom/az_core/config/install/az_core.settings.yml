@@ -3,3 +3,7 @@ monitoring_page:
   path: ''
 enterprise_attributes:
   locked: true
+arizona_bootstrap:
+  source: cdn
+  cdn_version: stable
+  minified: true
