@@ -24,6 +24,8 @@ az-icons:
 arizona-bootstrap:
   dependencies:
     - az_core/arizona-bootstrap
+  deprecated: The "%library_id%" asset library is deprecated in Quickstart 2.8 and will be removed in Quickstart 2.9. Use az_core/arizona-bootstrap instead
+
 button-no-conflict:
   js:
     js/button-no-conflict.js: {}
@@ -32,3 +34,5 @@ button-no-conflict:
 material-design-icons-sharp:
   dependencies:
     - az_core/material-design-icons-sharp
+  deprecated: The "%library_id%" asset library is deprecated in Quickstart 2.8 and will be removed in Quickstart 2.9. Use az_core/material-design-icons-sharp instead
+

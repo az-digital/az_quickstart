@@ -519,8 +519,6 @@ function az_core_library_info_alter(&$libraries, $extension) {
         ];
       }
     }
-    dpm($libraries);
-
   }
   if ($extension === 'ckeditor5' && isset($libraries['internal.drupal.ckeditor5'])) {
     $libraries['internal.drupal.ckeditor5']['dependencies'][] = 'az_core/arizona-bootstrap';
