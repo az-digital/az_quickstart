@@ -4,6 +4,12 @@ monitoring_page:
 enterprise_attributes:
   locked: true
 arizona_bootstrap:
-  source: cdn
+  source: local
   cdn_version: stable
   minified: true
+arizona_icons:
+  use_az_icons: true
+  az_icons_source: cdn
+  use_material_design_sharp_icons: true
+arizona_font:
+  use_managed_font: true

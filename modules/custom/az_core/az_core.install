@@ -21,7 +21,7 @@ function az_core_update_1020801() {
   $config = \Drupal::configFactory()->getEditable('az_core.settings');
   $theme_config = \Drupal::configFactory()->getEditable('az_barrio.settings');
   $config->set('arizona_bootstrap.source', $theme_config->get('az_bootstrap_source'));
-  $config->set('arizona-bootstrap.cdn_version', $theme_config->get('az_bootstrap_cdn_version'));
+  $config->set('arizona_bootstrap.cdn_version', $theme_config->get('az_bootstrap_cdn_version'));
   $config->set('arizona_bootstrap.minified', $theme_config->get('az_bootstrap_minified'));
   $config->set('arizona_font.use_managed_font', $theme_config->get('az_barrio_font'));
   $config->set('arizona_icons.use_az_icons', $theme_config->get('az_barrio_az_icons'));

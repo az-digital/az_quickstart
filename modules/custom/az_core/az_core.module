@@ -484,7 +484,6 @@ function az_core_library_info_alter(&$libraries, $extension) {
     }
 
     $material_design_sharp_icons = $az_core_config->get('arizona_icons.use_material_design_sharp_icons');
-    ;
     if ($material_design_sharp_icons === TRUE) {
       // Add Material Design Sharp Icon CSS based on theme settings.
       // Ensure icon CSS is loaded before Arizona Bootstrap.
@@ -520,6 +519,11 @@ function az_core_library_info_alter(&$libraries, $extension) {
         ];
       }
     }
+    dpm($libraries);
+
+  }
+  if ($extension === 'ckeditor5' && isset($libraries['internal.drupal.ckeditor5'])) {
+    $libraries['internal.drupal.ckeditor5']['dependencies'][] = 'az_core/arizona-bootstrap';
   }
 }
 
@@ -535,8 +539,8 @@ function az_core_az_bootstrap_assets_path($type) {
   $az_bootstrap_path = '';
 
   // AZ Bootstrap source.
-  if ($az_core_config->get('arizona-bootstrap.source') === 'cdn') {
-    $az_bootstrap_cdn_version = $az_core_config->get('arizona-bootstrap.version');
+  if ($az_core_config->get('arizona_bootstrap.source') === 'cdn') {
+    $az_bootstrap_cdn_version = $az_core_config->get('arizona_bootstrap.cdn_version');
     if ($az_bootstrap_cdn_version === 'stable') {
       $az_bootstrap_cdn_version = AzLibraryVersionChecker::getSemanticInstalledVersion('az-digital/arizona-bootstrap');
     }
@@ -554,7 +558,7 @@ function az_core_az_bootstrap_assets_path($type) {
   }
 
   // AZ Bootstrap minified.
-  if ($az_core_config->get('arizona-bootstrap.minified')) {
+  if ($az_core_config->get('arizona_bootstrap.minified')) {
     $az_bootstrap_path .= '.min';
   }
 
@@ -566,9 +570,10 @@ function az_core_az_bootstrap_assets_path($type) {
  */
 function az_core_az_icons_assets_path($type) {
   $az_icons_path = '';
+  $az_core_config = \Drupal::config('az_core.settings');
 
   // AZ Icons source.
-  if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
+  if ($az_core_config->get('arizona_icons.az_icons_source') === 'cdn') {
     $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
   }
   else {

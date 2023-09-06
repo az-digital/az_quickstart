@@ -30,6 +30,5 @@ button-no-conflict:
   dependencies:
     - core/jquery
 material-design-icons-sharp:
-  css:
-    theme:
-      https://fonts.googleapis.com/css?family=Material+Icons+Sharp: {}
+  dependencies:
+    - az_core/material-design-icons-sharp

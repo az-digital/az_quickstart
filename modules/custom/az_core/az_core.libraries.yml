@@ -24,3 +24,7 @@ az-icons:
   css:
     theme:
       https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}
+material-design-icons-sharp:
+  css:
+    theme:
+      https://fonts.googleapis.com/css?family=Material+Icons+Sharp: {}
