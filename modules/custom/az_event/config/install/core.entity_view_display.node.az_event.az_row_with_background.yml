@@ -68,7 +68,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: 'card-body p-4 row'
+        classes: 'card-body pt-4 pb-2 px-4 row'
         show_empty_fields: false
         id: ''
         element: div
@@ -101,6 +101,7 @@ third_party_settings:
       children:
         - smart_title
         - group_when
+        - group_view_event
       label: 'Column - Text'
       parent_name: group_row
       region: content
@@ -155,25 +156,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_where:
-      children:
-        - field_az_location
-      label: Where
-      parent_name: ''
-      region: hidden
-      weight: 15
-      format_type: html_element
-      format_settings:
-        classes: 'nolink mt-3'
-        show_empty_fields: false
-        id: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_when:
       children:
         - field_az_event_date
@@ -209,6 +191,24 @@ third_party_settings:
         element: div
         show_label: false
         label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_view_event:
+      children: {  }
+      label: 'View event'
+      parent_name: group_column_text
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: 'card-clickable-link mt-2 pb-3'
+        show_empty_fields: true
+        id: ''
+        element: div
+        show_label: true
+        label_element: span
         label_element_classes: ''
         attributes: ''
         effect: none

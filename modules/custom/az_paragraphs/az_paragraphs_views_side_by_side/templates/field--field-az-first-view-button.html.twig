@@ -49,7 +49,7 @@
 {% if label_hidden %}
   {% for item in items %}
     <div{{ attributes.addClass(classes, 'field__item') }}>
-	  <a class="btn btn-outline-blue" href="{{ item.content['#url'] }}">{{ item.content['#title'] }}</a>
+	  <a class="btn btn-outline-blue mb-4 mb-md-0" href="{{ item.content['#url'] }}">{{ item.content['#title'] }}</a>
 	</div>
   {% endfor %}
 {% else %}
@@ -57,7 +57,7 @@
     <div{{ title_attributes.addClass(title_classes) }}>{{ label }}</div>
     {% for item in items %}
       <div{{ item.attributes.addClass('field__item') }}>
-	    <a class="btn btn-outline-blue" href="{{ item.content['#url'] }}">{{ item.content['#title'] }}</a>
+	    <a class="btn btn-outline-blue mb-4 mb-md-0" href="{{ item.content['#url'] }}">{{ item.content['#title'] }}</a>
 	  </div>
     {% endfor %}
   </div>
