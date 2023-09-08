@@ -112,7 +112,7 @@
         "drupal/viewsreference": "2.0.0-beta6",
         "drupal/webform": "6.2.0-beta6",
         "drupal/workbench_access": "2.0.1",
-        "drupal/xmlsitemap": "1.4.0",
+        "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.0",
@@ -199,7 +199,7 @@
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch"
             },
             "drupal/xmlsitemap": {
-                "Call to undefined method ModuleHandler::getImplementations() in xmlsitemap_check_status() (3355204)": "https://git.drupalcode.org/project/xmlsitemap/-/commit/f7122db.patch"
+                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch"
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
