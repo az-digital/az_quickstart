@@ -22,9 +22,9 @@ settings:
     target_bundles: null
     auto_create: 0
   plugin_types:
-    default: default
     block: block
     page: page
+    default: 0
     attachment: 0
     feed: 0
   preselect_views:
