@@ -114,7 +114,9 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $arizona_bootstrap_installed_version = AzLibraryVersionChecker::getSemanticInstalledVersion('az-digital/arizona-bootstrap');
+    //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
+    require_once \Drupal::service('extension.list.module')->getPath('az_core') . '/includes/common.inc';
+
     $az_core_config = $this->config('az_core.settings');
     $site_config = $this->config('system.site');
 
@@ -227,7 +229,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#type' => 'radios',
       '#title' => t('AZ Bootstrap Source'),
       '#options' => [
-        'local' => t('Use installed copy of AZ Bootstrap packaged with AZ Quickstart (%installedversion).', ['%installedversion' => $arizona_bootstrap_installed_version]),
+        'local' => t('Use local copy of AZ Bootstrap packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
         'cdn' => t('Use external copy of AZ Bootstrap hosted on the AZ Bootstrap CDN.'),
       ],
       '#default_value' => $az_core_config->get('arizona_bootstrap.source'),
@@ -250,7 +252,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#type' => 'radios',
       '#title' => t('AZ Bootstrap CDN version'),
       '#options' => [
-        'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %installedversion (Recommended).', ['%installedversion' => $arizona_bootstrap_installed_version]),
+        'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
         'latest-2.x' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
         '2.x' => t('Latest dev version. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
       ],
@@ -361,7 +363,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
         ],
 
         ),
-        'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
+      'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
       ],
       '#default_value' => $az_core_config->get('arizona_icons.az_icons_source'),
 
