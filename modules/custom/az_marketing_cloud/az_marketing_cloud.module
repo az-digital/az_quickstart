@@ -26,6 +26,10 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'node--view--az-marketing-cloud--text-layout',
       'base hook' => 'node',
     ],
+    'node__view__az_marketing_cloud__hero_layout' => [
+      'template' => 'node--view--az-marketing-cloud--hero-layout',
+      'base hook' => 'node',
+    ],
     'node__view__az_marketing_cloud__event_layout' => [
       'template' => 'node--view--az-marketing-cloud--event-layout',
       'base hook' => 'node',
@@ -92,6 +96,7 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
       $styles = [
         'az_marketing_cloud_30_70_layout',
         'az_marketing_cloud_50_50_layout',
+        'az_marketing_cloud_hero_layout',
       ];
       foreach ($styles as $style) {
         $image_style = ImageStyle::load($style);
@@ -130,6 +135,9 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
     $suggestions[] = 'region__az_marketing_cloud';
   }
   if ($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.hero_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
   if ($route_name === 'view.az_marketing_cloud.event_layout') {
