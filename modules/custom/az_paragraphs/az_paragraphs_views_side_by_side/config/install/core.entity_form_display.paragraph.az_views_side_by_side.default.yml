@@ -1,4 +1,4 @@
-lalangcode: en
+langcode: en
 status: true
 dependencies:
   config:
@@ -139,8 +139,6 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
-_core:
-  default_config_hash: B3eRyJs2lI9mYI1A_9ZfXRDQk6mBD9o0kyiv49GUNoU
 id: paragraph.az_views_side_by_side.default
 targetEntityType: paragraph
 bundle: az_views_side_by_side

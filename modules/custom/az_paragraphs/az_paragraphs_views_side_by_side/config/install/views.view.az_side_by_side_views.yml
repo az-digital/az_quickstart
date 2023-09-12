@@ -60,7 +60,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no upcoming events listed.</em>'
+            value: '<em>No upcoming events are available at this time.</em>'
             format: az_standard
           tokenize: false
       sorts:
@@ -375,7 +375,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no news articles with the specified criteria.</em>'
+            value: '<em>No news articles found.</em>'
             format: az_standard
           tokenize: false
       sorts:
