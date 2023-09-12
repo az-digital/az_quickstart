@@ -825,7 +825,7 @@ display:
           entity_type: node
           plugin_id: entity_link
           label: 'Email Snippet'
-          exclude: false
+          exclude: true
           alter:
             alter_text: true
             text: "<a href=\"/export/marketing-cloud/hero-layout/{{ nid }}\">Hero Layout</a> | \r\n<a href=\"/export/marketing-cloud/50-50-layout/{{ nid }}\">50/50 Layout</a> | \r\n<a href=\"/export/marketing-cloud/30-70-layout/{{ nid }}\">30/70 Layout</a> | \r\n<a href=\"/export/marketing-cloud/text-layout/{{ nid }}\">Text Layout</a> | \r\n<a href=\"/export/marketing-cloud/event-layout/{{ nid }}\">Event Layout</a>"
@@ -868,6 +868,167 @@ display:
           text: ''
           output_url_as_text: false
           absolute: true
+        nothing_1:
+          id: nothing_1
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: 'Hero Layout'
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<a href="/export/marketing-cloud/hero-layout/{{ nid }}">Hero Layout</a>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+        nothing_2:
+          id: nothing_2
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: '50/50 Layout'
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<a href="/export/marketing-cloud/50-50-layout/{{ nid }}">50/50 Layout</a>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+        dropbutton:
+          id: dropbutton
+          table: views
+          field: dropbutton
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: dropbutton
+          label: Dropbutton
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: div
+          element_class: dropbutton--small
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: false
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          destination: false
+          fields:
+            nothing_1: nothing_1
+            nothing_2: nothing_2
+            nid: '0'
+            title: '0'
+            type: '0'
+            field_az_published: '0'
+            field_az_event_date_value: '0'
+            nothing: '0'
+            status: '0'
+            changed: '0'
+            created: '0'
+            view_node_1: '0'
       pager:
         type: full
         options:
