@@ -208,7 +208,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Arizona Bootstrap'),
     '#group' => 'bootstrap',
     '#weight' => -9,
-    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart\'s settings for choosing how your site includes Arizona Bootstrap have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of Quickstart Core configuration.') . '</div>',
+    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart"'"s settings for choosing how your site includes Arizona Bootstrap have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of Quickstart Core configuration.') . '</div>',
   ];
   $form['azbs_settings']['settings']['az_bootstrap_source'] = [
     '#type' => 'radios',
