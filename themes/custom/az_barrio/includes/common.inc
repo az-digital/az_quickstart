@@ -5,7 +5,7 @@
  * common.inc
  *
  * Contains common functionality for the entire theme.
- * @deprecated Use modules/custom/az_core/includes/common.inc instead.
+ * @deprecated in 2.8.0 and is removed from 2.9.0. Use modules/custom/az_core/includes/common.inc instead.
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
