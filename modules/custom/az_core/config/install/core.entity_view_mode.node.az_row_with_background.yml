@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_row_with_background
+label: 'Row with Background'
+targetEntityType: node
+cache: true
