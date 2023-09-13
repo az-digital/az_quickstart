@@ -363,7 +363,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
         ],
 
         ),
-      'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
+        'local' => t('Use local copy of AZ Icons packaged with AZ Barrio (%stableversion).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
       ],
       '#default_value' => $az_core_config->get('arizona_icons.az_icons_source'),
 
