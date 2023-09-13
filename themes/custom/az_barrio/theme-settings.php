@@ -92,18 +92,15 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
 
   // Fonts and Icons.
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
-  $form['fonts']['fonts']['#description'] = '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart"'"s settings for choosing how your site includes fonts have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link, [
-          '@quickstart-core-link' => Link::fromTextAndUrl(
-            'Quickstart Core configuration', Url::fromRoute(
-                'az_core.az_settings', [
-                  'attributes' => [
-                    'target' => '_blank',
-                  ],
-                ]
-            )
-          )->toString(),
-        ],
-.') . '</div>';
+  $form['fonts']['fonts']['#description'] = '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart settings for choosing how your site includes fonts have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link', [
+    '@quickstart-core-link' => Link::fromTextAndUrl(
+          'Quickstart Core configuration',
+          Url::fromRoute('az_core.az_settings'),
+          [
+            'attributes' => ['target' => '_blank'],
+          ]
+    )->toString(),
+  ]) . '.</div>';
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
@@ -138,7 +135,15 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Icons'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
-    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart\'s settings for choosing how your site includes icons have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of Quickstart Core configuration.') . '</div>',
+    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart\'s settings for choosing how your site includes icons have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link', [
+      '@quickstart-core-link' => Link::fromTextAndUrl(
+          'Quickstart Core configuration',
+          Url::fromRoute('az_core.az_settings'),
+          [
+            'attributes' => ['target' => '_blank'],
+          ]
+      )->toString(),
+    ]) . '.</div>',
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
     '#type' => 'checkbox',
@@ -219,7 +224,15 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Arizona Bootstrap'),
     '#group' => 'bootstrap',
     '#weight' => -9,
-    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart"'"s settings for choosing how your site includes Arizona Bootstrap have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of Quickstart Core configuration.') . '</div>',
+    '#description' => '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart\'s settings for choosing how your site includes Arizona Bootstrap have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link', [
+      '@quickstart-core-link' => Link::fromTextAndUrl(
+          'Quickstart Core configuration',
+          Url::fromRoute('az_core.az_settings'),
+          [
+            'attributes' => ['target' => '_blank'],
+          ]
+      )->toString(),
+    ]) . '.</div>',
   ];
   $form['azbs_settings']['settings']['az_bootstrap_source'] = [
     '#type' => 'radios',
