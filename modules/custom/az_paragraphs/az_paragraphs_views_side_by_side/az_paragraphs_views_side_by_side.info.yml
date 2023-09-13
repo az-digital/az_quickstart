@@ -4,8 +4,4 @@ package: 'The University of Arizona - Experimental'
 description: 'Provides a paragraph type to show two views side-by-side on desktop screens.'
 core_version_requirement: ^9 || ^10
 dependencies:
-  - az_paragraphs:az_paragraphs
-  - drupal:field
-  - drupal:views
-  - paragraphs:paragraphs
-  - viewsreference:viewsreference
+  - az_paragraphs:az_paragraphs_view
