@@ -92,7 +92,18 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
 
   // Fonts and Icons.
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
-  $form['fonts']['fonts']['#description'] = '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart"'"s settings for choosing how your site includes fonts have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of Quickstart Core configuration.') . '</div>';
+  $form['fonts']['fonts']['#description'] = '<div class="alert alert-info messages info">' . t('<strong>NOTE:</strong> With the advent of CKEditor5, Quickstart"'"s settings for choosing how your site includes fonts have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link, [
+          '@quickstart-core-link' => Link::fromTextAndUrl(
+            'Quickstart Core configuration', Url::fromRoute(
+                'az_core.az_settings', [
+                  'attributes' => [
+                    'target' => '_blank',
+                  ],
+                ]
+            )
+          )->toString(),
+        ],
+.') . '</div>';
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
