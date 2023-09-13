@@ -92,15 +92,19 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
 
   // Fonts and Icons.
   unset($form['fonts']['fonts']['bootstrap_barrio_google_fonts']);
+  $fonts_description_link_options = [
+    'attributes' => ['target' => '_blank'],
+  ];
   $form['fonts']['fonts']['#description'] = t('<div class="alert alert-info messages info"><strong>NOTE:</strong> With the advent of CKEditor5, Quickstart settings for choosing how your site includes fonts have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link.</div>', [
     '@quickstart-core-link' => Link::fromTextAndUrl(
-          'Quickstart Core configuration',
-          Url::fromRoute('az_core.az_settings'),
-          [
-            'attributes' => ['target' => '_blank'],
-          ]
+      'Quickstart Core configuration', Url::fromRoute(
+        'az_core.az_settings',
+        [],
+        $fonts_description_link_options
+        )
     )->toString(),
-  ]);
+  ]
+  );
   $form['fonts']['fonts']['az_barrio_font'] = [
     '#type' => 'checkbox',
     '#title' => t('Use the centrally-managed Typekit webfont, Proxima Nova'),
@@ -130,6 +134,10 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
   unset($form['fonts']['icons']['bootstrap_barrio_icons']);
   unset($form['fonts']['bootstrap_icons']);
+  $icons_description_link_options = [
+    'attributes' => ['target' => '_blank'],
+  ];
+
   $form['fonts']['icons'] = [
     '#type' => 'details',
     '#title' => t('Icons'),
@@ -137,13 +145,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsed' => FALSE,
     '#description' => t('<div class="alert alert-info messages info"><strong>NOTE:</strong> With the advent of CKEditor5, Quickstart\'s settings for choosing how your site includes icons have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link.</div>', [
       '@quickstart-core-link' => Link::fromTextAndUrl(
-          'Quickstart Core configuration',
-          Url::fromRoute('az_core.az_settings'),
-          [
-            'attributes' => ['target' => '_blank'],
-          ]
+        'Quickstart Core configuration', Url::fromRoute(
+          'az_core.az_settings',
+          [],
+          $icons_description_link_options
+          )
       )->toString(),
-    ]),
+    ]
+    ),
   ];
   $form['fonts']['icons']['az_barrio_icons']['az_barrio_material_design_sharp_icons'] = [
     '#type' => 'checkbox',
@@ -219,6 +228,10 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   ];
 
   // AZ Bootstrap settings.
+  $azbs_settings_description_link_options = [
+    'attributes' => ['target' => '_blank'],
+  ];
+
   $form['azbs_settings'] = [
     '#type' => 'details',
     '#title' => t('Arizona Bootstrap'),
@@ -226,13 +239,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#weight' => -9,
     '#description' => t('<div class="alert alert-info messages info"><strong>NOTE:</strong> With the advent of CKEditor5, Quickstart\'s settings for choosing how your site includes Arizona Bootstrap have moved. These theme settings have been deprecated in Quickstart 2.8.0 and will be removed in Quickstart 2.9.0 in favor of @quickstart-core-link.</div>', [
       '@quickstart-core-link' => Link::fromTextAndUrl(
-          'Quickstart Core configuration',
-          Url::fromRoute('az_core.az_settings'),
-          [
-            'attributes' => ['target' => '_blank'],
-          ]
+        'Quickstart Core configuration', Url::fromRoute(
+          'az_core.az_settings',
+          [],
+          $azbs_settings_description_link_options
+          )
       )->toString(),
-    ]),
+    ]
+    ),
   ];
   $form['azbs_settings']['settings']['az_bootstrap_source'] = [
     '#type' => 'radios',
