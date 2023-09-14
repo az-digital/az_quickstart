@@ -230,6 +230,24 @@ settings:
         -
           label: 'Blockquote Footer'
           element: '<footer class="blockquote-footer">'
+        -
+          label: 'Bordered table'
+          element: '<table class="table table-bordered">'
+        -
+          label: 'Hover table'
+          element: '<table class="table table-hover">'
+        -
+          label: 'Small table'
+          element: '<table class="table table-sm">'
+        -
+          label: 'Striped table'
+          element: '<table class="table table-striped">'
+        -
+          label: 'Dark table'
+          element: '<table class="table table-dark">'
+        -
+          label: 'Dark table heading'
+          element: '<thead class="thead-dark">'
     ckeditor_bs_grid_grid:
       use_cdn: false
       cdn_url: ''
