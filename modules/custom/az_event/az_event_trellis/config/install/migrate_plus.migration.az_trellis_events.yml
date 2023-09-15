@@ -10,11 +10,8 @@ migration_tags:
 migration_group: az_trellis_events
 label: 'Trellis Events'
 source:
-  plugin: url
-  data_fetcher_plugin: az_trellis_http
-  data_parser_plugin: json
-  urls: {  }
-  item_selector: /0/data
+  plugin: az_trellis_events_api
+  trellis_ids: {  }
   track_changes: true
   fields:
     -

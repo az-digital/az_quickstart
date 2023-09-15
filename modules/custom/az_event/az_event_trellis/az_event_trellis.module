@@ -59,7 +59,7 @@ function az_event_trellis_form_node_az_event_edit_form_alter(&$form, FormStateIn
  */
 function az_event_trellis_migration_plugins_alter(array &$migrations) {
 
-  if (!empty($migrations['az_trellis_events'])) {
+  if (!empty($migrations['migration_config_deriver:az_trellis_events'])) {
     $query = \Drupal::entityQuery('node')
       ->accessCheck(FALSE)
       ->condition('type', 'az_event')
@@ -68,13 +68,14 @@ function az_event_trellis_migration_plugins_alter(array &$migrations) {
     $node_storage = \Drupal::entityTypeManager()->getStorage('node');
     $nodes = $node_storage->loadMultiple($nids);
 
-    $event_api_urls = [];
+    $event_api_ids = [];
     foreach ($nodes as $n) {
-      $event_api_urls[] = \Drupal::service('az_event_trellis.trellis_helper')->getEventUrl($n->get('field_az_trellis_id')->getString());
+      $event_api_ids[] = $n->get('field_az_trellis_id')->getString();
     }
 
-    if (!empty($migrations['az_trellis_events']['source']) && empty($migrations['az_trellis_events']['source']['urls'])) {
-      // $migrations['az_trellis_events']['source']['urls'] = $event_api_urls;
+    if (empty($migrations['migration_config_deriver:az_trellis_events']['source']['trellis_ids'])) {
+      // @todo figure out issue with merged config with form request.
+      // $migrations['migration_config_deriver:az_trellis_events']['source']['trellis_ids'] = $event_api_ids;
     }
   }
 

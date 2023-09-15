@@ -97,7 +97,6 @@ class AZEventTrellisViewsField extends BulkForm {
       $ids = array_filter($ids);
       foreach ($ids as $value) {
         if (!empty($value)) {
-          \Drupal::logger('requested')->notice($value);
           \Drupal::service('messenger')->addMessage(t('Log: user requested importing <strong>@id</strong>.', [
             '@id' => $value,
           ]));
@@ -112,7 +111,6 @@ class AZEventTrellisViewsField extends BulkForm {
         'force' => 0,
         'configuration' => [
           'source' => [
-            'urls' => $event_url,
             'trellis_ids' => $ids,
           ],
         ],
