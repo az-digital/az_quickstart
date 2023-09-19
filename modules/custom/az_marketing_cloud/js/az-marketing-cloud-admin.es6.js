@@ -24,10 +24,24 @@
         'js-click-copy--copied',
         'action-link--icon-checkmark',
       );
+      removeClass(event.srcElement)
     } else {
       return false;
     }
   }
+
+  function removeClass(element) {
+    setTimeout(() => {
+      element.classList.remove(
+        'js-click-copy--copied',
+        'action-link--icon-checkmark',
+    );
+    },3000)
+  }
+    
+  // event.setTimeout(function () {
+  //       $("[js-click-copy--copied!='']").tooltip('destroy');
+  //     }, 3000);
 
   function addClass() {
     let elem = document.getElementsByClassName("dropbutton");
