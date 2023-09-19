@@ -38,14 +38,10 @@
     );
     },3000)
   }
-    
-  // event.setTimeout(function () {
-  //       $("[js-click-copy--copied!='']").tooltip('destroy');
-  //     }, 3000);
 
   function addClass() {
     let elem = document.getElementsByClassName("dropbutton");
-    elem.classList.add("dropbutton--small");
+    elem.classList.add("dropbutton--extrasmall");
   }
   
   const copyLinks = document.querySelectorAll(
