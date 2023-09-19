@@ -6,7 +6,7 @@
 **/
 function addClass() {
   let elem = document.getElementsByClassName("dropbutton");
-  elem.classList.add("dropbutton--small");
+  elem.classList.add("dropbutton--extrasmall");
 }
 
 (function (Drupal, window, document) {
@@ -21,7 +21,7 @@ function addClass() {
       return false;
     }
   }
-  var copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin td.dropbutton--small a');
+  var copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin li.dropbutton-action a');
   copyLinks.forEach(function (element) {
     return element.addEventListener('click', handleClick, false);
   });
