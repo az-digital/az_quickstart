@@ -24,16 +24,18 @@
         'js-click-copy--copied',
         'action-link--icon-checkmark',
       );
-      setTimeout(function () {
-        $("[js-click-copy--copied!='']").tooltip('destroy');
-      }, 3000);
     } else {
       return false;
     }
   }
 
+  function addClass() {
+    let elem = document.getElementsByClassName("dropbutton");
+    elem.classList.add("dropbutton--small");
+  }
+  
   const copyLinks = document.querySelectorAll(
-    '.view-id-az_marketing_cloud.view-display-id-admin td.dropbutton--small a',
+    '.view-id-az_marketing_cloud.view-display-id-admin li.dropbutton-action a',
   );
 
   copyLinks.forEach((element) =>
