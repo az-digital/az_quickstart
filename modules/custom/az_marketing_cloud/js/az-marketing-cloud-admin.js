@@ -5,7 +5,7 @@
 * @preserve
 **/
 function addClass() {
-  let elem = document.getElementById("ul");
+  let elem = document.getElementsByClassName("dropbutton");
   elem.classList.add("dropbutton--small");
 }
 
