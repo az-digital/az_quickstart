@@ -24,6 +24,9 @@
         'js-click-copy--copied',
         'action-link--icon-checkmark',
       );
+      setTimeout(function () {
+        $("[js-click-copy--copied!='']").tooltip('destroy');
+      }, 3000);
     } else {
       return false;
     }

@@ -4,6 +4,11 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
+function addClass() {
+  let elem = document.getElementById("ul");
+  elem.classList.add("dropbutton--small");
+}
+
 (function (Drupal, window, document) {
   function handleClick(event) {
     var baseUrl = window.location.origin;

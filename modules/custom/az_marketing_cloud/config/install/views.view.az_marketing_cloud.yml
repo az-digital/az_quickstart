@@ -1004,7 +1004,7 @@ display:
             preserve_tags: ''
             html: false
           element_type: div
-          element_class: dropbutton--small
+          element_class: ''
           element_label_type: ''
           element_label_class: ''
           element_label_colon: true
