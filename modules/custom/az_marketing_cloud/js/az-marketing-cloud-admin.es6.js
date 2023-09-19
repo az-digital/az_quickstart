@@ -30,7 +30,7 @@
   }
 
   const copyLinks = document.querySelectorAll(
-    '.view-id-az_marketing_cloud.view-display-id-admin .views-field.views-field-created a',
+    '.view-id-az_marketing_cloud.view-display-id-admin td.dropbutton--small a',
   );
 
   copyLinks.forEach((element) =>

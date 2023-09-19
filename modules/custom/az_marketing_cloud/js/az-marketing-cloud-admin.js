@@ -16,7 +16,7 @@
       return false;
     }
   }
-  var copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin .views-field.views-field-created a');
+  var copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin td.dropbutton--small a');
   copyLinks.forEach(function (element) {
     return element.addEventListener('click', handleClick, false);
   });
