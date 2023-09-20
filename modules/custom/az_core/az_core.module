@@ -313,6 +313,15 @@ function az_core_form_block_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
+ * Implements hook_form_BASE_FORM_ID_alter() for \Drupal\node\NodeForm.
+ *
+ * Adds style overrides for claro/node-form.
+ */
+function az_core_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+}
+
+/**
  * Perform alterations before attribute forms are rendered.
  *
  * @param array $form
