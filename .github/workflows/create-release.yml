@@ -12,7 +12,7 @@ on:
         type: boolean
       release_notes:
         description: Add release notes.
-         required: false
+        required: false
 jobs:
   build:
     name: Upload Release Asset
