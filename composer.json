@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.25",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.6",
-        "citation-style-language/styles": "0.0.249",
+        "citation-style-language/styles": "0.0.287",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
@@ -51,7 +51,7 @@
         "drupal/cas": "2.1.0",
         "drupal/chosen": "4.0.0",
         "drupal/ckeditor": "1.0.2",
-        "drupal/ckeditor_bs_grid": "2.0.9",
+        "drupal/ckeditor_bs_grid": "2.0.10",
         "drupal/coffee": "1.3.0",
         "drupal/config_distro": "2.0.0-alpha2",
         "drupal/config_provider": "3.0.0-alpha1",
@@ -76,7 +76,7 @@
         "drupal/google_tag": "2.0.2",
         "drupal/honeypot": "2.1.2",
         "drupal/image_widget_crop": "2.4.0",
-        "drupal/inline_entity_form": "2.0.0-rc4",
+        "drupal/inline_entity_form": "2.0.0-rc7",
         "drupal/intelligencebank": "4.0.0",
         "drupal/jquery_ui": "1.6.0",
         "drupal/jquery_ui_datepicker": "2.0.0",
@@ -107,12 +107,12 @@
         "drupal/slick_views": "2.7.0",
         "drupal/smart_date": "4.0.3",
         "drupal/smtp": "1.2.0",
-        "drupal/token": "1.11.0",
+        "drupal/token": "1.12.0",
         "drupal/views_bootstrap": "5.4.0",
-        "drupal/viewsreference": "2.0.0-beta4",
+        "drupal/viewsreference": "2.0.0-beta6",
         "drupal/webform": "6.2.0-beta6",
         "drupal/workbench_access": "2.0.1",
-        "drupal/xmlsitemap": "1.4.0",
+        "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.0",
@@ -194,14 +194,13 @@
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
             },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
-                "Ajax pager - Input value viewsreference contains a non-scalar value (3326841)": "https://www.drupal.org/files/issues/2023-01-05/3326841.patch"
+                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch"
             },
             "drupal/xmlsitemap": {
-                "Call to undefined method ModuleHandler::getImplementations() in xmlsitemap_check_status() (3355204)": "https://git.drupalcode.org/project/xmlsitemap/-/commit/f7122db.patch"
+                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch"
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
