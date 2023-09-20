@@ -5,10 +5,13 @@ on:
       version:
         description: The version to tag and release
         required: true
-       pre_release:
+      pre_release:
         description: Is this a pre-release?
         required: false
         default: 'false'
+      release_notes:
+         description: Add release notes.
+         required: false
 jobs:
   build:
     name: Upload Release Asset
@@ -55,6 +58,7 @@ jobs:
           target_commitish: ${{ env.RELEASE_SHA }}
           draft: false
           prerelease: ${{ github.event.inputs.pre_release }}
+          body: ${{ github.event.inputs.release_notes }}
           files: |
             ./az_quickstart.zip
             ./az_quickstart.tar.gz
