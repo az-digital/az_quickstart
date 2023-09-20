@@ -1,0 +1,15 @@
+az_event_trellis_date:
+  version: 1.x
+  js:
+    js/az_event_trellis_date.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+    - az_event_trellis/easepick--bundle
+easepick--bundle:
+  css:
+    theme:
+      /libraries/easepick--bundle/dist/index.css: {}
+  js:
+    /libraries/easepick--bundle/dist/index.umd.js: {}

@@ -500,7 +500,7 @@ display:
       exposed_form:
         type: basic
         options:
-          submit_button: Filter
+          submit_button: Search
           reset_button: false
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
@@ -837,6 +837,114 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           property_path: keyword
+        Date:
+          id: Date
+          table: az_event_trellis_data
+          field: Date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_event_trellis_views_date_filter
+          operator: '='
+          value:
+            value: ''
+            begin: ''
+            end: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: Date_op
+            label: 'Updated Date'
+            description: ''
+            use_operator: false
+            operator: Date_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: modified
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          api_param: modified
+          api_options:
+            'Last 7 Days': 'Last 7 Days'
+            'Last 30 Days': 'Last 30 Days'
+            Custom: Custom
+          api_param_custom_begin: modified_begin
+          api_param_custom_end: modified_end
+        Date_1:
+          id: Date_1
+          table: az_event_trellis_data
+          field: Date
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_event_trellis_views_date_filter
+          operator: '='
+          value:
+            value: ''
+            begin: ''
+            end: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: Date_1_op
+            label: 'Start Date'
+            description: ''
+            use_operator: false
+            operator: Date_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: start
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          api_param: start
+          api_options:
+            'Next 7 Days': 'Next 7 Days'
+            'Next 30 Days': 'Next 30 Days'
+            Custom: Custom
+          api_param_custom_begin: start_begin
+          api_param_custom_end: start_end
       filter_groups:
         operator: AND
         groups:
@@ -849,6 +957,7 @@ display:
         type: views_query
         options: {  }
       relationships: {  }
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders: {  }

@@ -51,5 +51,12 @@ function az_event_trellis_views_data(): array {
       'id' => 'az_event_trellis_views_attribute_filter',
     ],
   ];
+  $data['az_event_trellis_data']['Date'] = [
+    'title' => t('Trellis Date'),
+    'help' => t('Trellis event search API dates'),
+    'filter' => [
+      'id' => 'az_event_trellis_views_date_filter',
+    ],
+  ];
   return $data;
 }
