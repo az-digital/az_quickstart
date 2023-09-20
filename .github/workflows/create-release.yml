@@ -11,7 +11,7 @@ on:
         default: false
         type: boolean
       release_notes:
-         description: Add release notes.
+        description: Add release notes.
          required: false
 jobs:
   build:
