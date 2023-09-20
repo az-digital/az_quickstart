@@ -8,7 +8,8 @@ on:
       pre_release:
         description: Is this a pre-release?
         required: false
-        default: 'false'
+        default: false
+        type: boolean
       release_notes:
          description: Add release notes.
          required: false
