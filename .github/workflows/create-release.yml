@@ -28,25 +28,6 @@ jobs:
           git commit -m "Preparing to tag ${{ github.event.inputs.version }}."
           git push
           echo "RELEASE_SHA=$(git rev-parse HEAD)" >> ${GITHUB_ENV}
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.event.inputs.version }}
-          release_name: ${{ github.event.inputs.version }}
-          commitish: ${{ env.RELEASE_SHA }}
-          draft: false
-          prerelease: false
-      - name: Remove version from info file
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          sed -i "/version: /d" az_quickstart.info.yml
-          git add az_quickstart.info.yml
-          git commit -m "Back to dev."
-          git push
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           git clone https://github.com/az-digital/az-quickstart-scaffolding.git az_quickstart
@@ -61,26 +42,29 @@ jobs:
       - name: Tar Assets
         run: |
           tar --exclude '*.git*' -c -z -f az_quickstart.tar.gz az_quickstart
-      - name: Upload Zip Assets
-        id: upload-zip-asset
-        uses: actions/upload-release-asset@v1
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./az_quickstart.zip
-          asset_name: az_quickstart.zip
-          asset_content_type: application/zip
-      - name: Upload Tar Asset
-        id: upload-tar-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./az_quickstart.tar.gz
-          asset_name: az_quickstart.tar.gz
-          asset_content_type: application/x-gzip
+          tag_name: ${{ github.event.inputs.version }}
+          name: ${{ github.event.inputs.version }}
+          target_commitish: ${{ env.RELEASE_SHA }}
+          draft: false
+          prerelease: false
+          files: |
+            ./az_quickstart.zip
+            ./az_quickstart.tar.gz
+      - name: Remove version from info file
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          sed -i "/version: /d" az_quickstart.info.yml
+          git add az_quickstart.info.yml
+          git commit -m "Back to dev."
+          git push
+
   dispatch:
     needs: build
     strategy:
