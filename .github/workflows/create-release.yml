@@ -54,7 +54,7 @@ jobs:
           name: ${{ github.event.inputs.version }}
           target_commitish: ${{ env.RELEASE_SHA }}
           draft: false
-          prerelease: ${{ inputs.pre_release }}
+          prerelease: ${{ github.event.inputs.pre_release }}
           files: |
             ./az_quickstart.zip
             ./az_quickstart.tar.gz
