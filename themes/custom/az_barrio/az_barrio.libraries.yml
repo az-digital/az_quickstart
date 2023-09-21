@@ -3,6 +3,7 @@ global-styling:
   css:
     theme:
       css/style.css: {}
+      css/az-bef-sidebar.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap
 az-media-display:

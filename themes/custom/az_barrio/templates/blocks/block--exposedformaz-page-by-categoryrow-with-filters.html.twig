@@ -1,60 +1,8 @@
-<style>
-form#views-exposed-form-az-page-by-category-row-with-filters {
-    border: solid rgba(0,0,0,.075) 1px;
-    padding: 1.5rem;
-    box-shadow: 0 .1rem .25rem rgba(0,0,0,.075);
-    margin-bottom: 1rem;
-    > .form-row > fieldset {
-        margin-bottom: 0;
-        > label {
-            font-weight: 600;
-            color: #49595e;
-            font-size: 1.25rem;
-            line-height: 1.5rem;
-        }
-    }
-}
-div.checkbox > div.bef-checkboxes > ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    > li > div.checkbox > label {
-        color: #1E5288;
-        font-size: 1rem;
-        font-weight: 600;
-    }
-    > li > ul {
-        list-style: none;
-        padding-left: 3px;
-        margin: 0;
-    }
-    > li:has(ul) {
-        > div {
-            padding: 0;
-            margin: 15px 0 8px 0;
-            > input {
-                display: none;
-            }
-            > label {
-            font-weight: 600 !important;
-            color: #49595e !important;
-            font-size: 1.25rem !important;
-            line-height: 1.5rem !important;
-            }
-        }
-        > ul > li > div.checkbox > label {
-            color: #1E5288 !important;
-            font-weight: 600;
-        }
-    }
-    > li:has(ul):nth-child(n+4) {
-        background-color: red;
-    }
-}
+{% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="az_barrio://css/az-bef-sidebar.css" /> 
+{% endblock %}
 
-
-</style>
-  {% block content %}
-    {{ content }}
-    <a href="" class="btn btn-sm btn-hollow-primary btn-block">Reset filters</a>
-  {% endblock %}
+{% block content %}
+  <a href="#" class="btn btn-sm btn-primary btn-block mb-3">Clear filters</a>
+  {{ content }}
+{% endblock %}
