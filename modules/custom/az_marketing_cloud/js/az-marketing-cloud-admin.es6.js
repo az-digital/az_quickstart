@@ -25,7 +25,8 @@
         'action-link--icon-checkmark',
       );
       removeClass(event.srcElement)
-    } else {
+    }
+    else {
       return false;
     }
   }
@@ -39,10 +40,9 @@
     },3000)
   }
 
-  function addClass() {
-    let elem = document.getElementsByClassName("dropbutton");
-    elem.classList.add("dropbutton--extrasmall");
-  }
+  window.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll(".dropbutton").forEach((element) => element.classList.add("dropbutton--extrasmall"))
+  });
   
   const copyLinks = document.querySelectorAll(
     '.view-id-az_marketing_cloud.view-display-id-admin li.dropbutton-action a',

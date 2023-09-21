@@ -4,11 +4,6 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-function addClass() {
-  let elem = document.getElementsByClassName("dropbutton");
-  elem.classList.add("dropbutton--extrasmall");
-}
-
 (function (Drupal, window, document) {
   function handleClick(event) {
     var baseUrl = window.location.origin;
@@ -17,10 +12,21 @@ function addClass() {
       var href = event.srcElement.getAttribute('href');
       navigator.clipboard.writeText(baseUrl + href);
       event.srcElement.classList.add('js-click-copy--copied', 'action-link--icon-checkmark');
+      removeClass(event.srcElement);
     } else {
       return false;
     }
   }
+  function removeClass(element) {
+    setTimeout(function () {
+      element.classList.remove('js-click-copy--copied', 'action-link--icon-checkmark');
+    }, 3000);
+  }
+  window.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll(".dropbutton").forEach(function (element) {
+      return element.classList.add("dropbutton--extrasmall");
+    });
+  });
   var copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin li.dropbutton-action a');
   copyLinks.forEach(function (element) {
     return element.addEventListener('click', handleClick, false);

@@ -250,7 +250,7 @@ display:
     id: admin
     display_title: Admin
     display_plugin: page
-    position: 5
+    position: 6
     display_options:
       fields:
         nid:
@@ -573,7 +573,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: custom
-          label: 'Item Date'
+          label: 'Item date'
           exclude: false
           alter:
             alter_text: true
@@ -735,8 +735,8 @@ display:
           click_sort_column: value
           type: timestamp
           settings:
-            date_format: short
-            custom_date_format: ''
+            date_format: custom
+            custom_date_format: m/d/o
             timezone: ''
           group_column: value
           group_columns: {  }
@@ -966,6 +966,153 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
+        nothing_3:
+          id: nothing_3
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: '30/70 Layout'
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<a href="/export/marketing-cloud/30-70-layout/{{ nid }}">30/70 Layout</a>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+        nothing_4:
+          id: nothing_4
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: 'Text Layout'
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<a href="/export/marketing-cloud/text-layout/{{ nid }}">Text Layout</a>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
+        nothing_5:
+          id: nothing_5
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: 'Event Layout'
+          exclude: true
+          alter:
+            alter_text: true
+            text: '<a href="/export/marketing-cloud/event-layout/{{ nid }}">Event Layout</a>'
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
         dropbutton:
           id: dropbutton
           table: views
@@ -974,11 +1121,11 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: dropbutton
-          label: Dropbutton
+          label: 'Email snippet'
           exclude: false
           alter:
             alter_text: false
-            text: ''
+            text: "{% if node.bundle == 'az_news'  %}\r\nThis is a test\r\n{% end if %}"
             make_link: false
             path: ''
             absolute: false
@@ -1012,13 +1159,16 @@ display:
           element_wrapper_class: ''
           element_default_classes: false
           empty: ''
-          hide_empty: false
+          hide_empty: true
           empty_zero: false
           hide_alter_empty: true
           destination: false
           fields:
             nothing_1: nothing_1
             nothing_2: nothing_2
+            nothing_3: nothing_3
+            nothing_4: nothing_4
+            nothing_5: nothing_5
             nid: '0'
             title: '0'
             type: '0'
@@ -1029,6 +1179,122 @@ display:
             changed: '0'
             created: '0'
             view_node_1: '0'
+        dropbutton_1:
+          id: dropbutton_1
+          table: views
+          field: dropbutton
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: dropbutton
+          label: 'Event email snippet'
+          exclude: true
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          destination: false
+          fields:
+            nothing_5: nothing_5
+            nid: '0'
+            title: '0'
+            type: '0'
+            field_az_published: '0'
+            field_az_event_date_value: '0'
+            nothing: '0'
+            status: '0'
+            changed: '0'
+            created: '0'
+            view_node_1: '0'
+            nothing_1: '0'
+            nothing_2: '0'
+            nothing_3: '0'
+            nothing_4: '0'
+            dropbutton: '0'
+        nothing_6:
+          id: nothing_6
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: 'Custom text'
+          exclude: true
+          alter:
+            alter_text: true
+            text: "{{ dropbutton }}\r\n{{ dropbutton_1 }}\r\n\r\n{% if node.bundle == 'az_news'  %}\r\n    <p>Our website is in maintenance mode. Please, come back later.</p>\r\n{% endif %}"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
       pager:
         type: full
         options:
@@ -1423,7 +1689,7 @@ display:
     id: event_layout
     display_title: 'Event Layout'
     display_plugin: page
-    position: 4
+    position: 5
     display_options:
       arguments:
         nid:
