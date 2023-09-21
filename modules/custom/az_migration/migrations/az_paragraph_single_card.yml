@@ -105,9 +105,9 @@ process:
         card_style: '@card_style_processed'
         card_clickable: '@card_clickable_processed'
         az_display_settings:
-            bottom_spacing: '@bottom_spacing_processed'
-            card_width_sm: '@card_width_sm_processed'
-            card_width_xs: '@card_width_xs_processed'
+          bottom_spacing: '@bottom_spacing_processed'
+          card_width_sm: '@card_width_sm_processed'
+          card_width_xs: '@card_width_xs_processed'
 
 
 dependencies:
