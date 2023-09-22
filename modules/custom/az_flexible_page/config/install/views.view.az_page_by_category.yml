@@ -377,7 +377,7 @@ display:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
+                  collapsible: false
                   is_secondary: false
                 select_all_none: false
                 select_all_none_nested: false
