@@ -192,9 +192,6 @@
             "drupal/smart_date": {
                 "Cannot remove recurring instance (3359407)": "https://git.drupalcode.org/project/smart_date/-/commit/218418ae52408036a572d2a557807c49c7d4088b.diff"
             },
-            "drupal/viewsexposedfilterblock": {
-              "Label (Title) not set for Views block (2720101)": "https://www.drupal.org/files/issues/2018-09-12/2720101-72.patch"
-            },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
                 "Ajax pager - Input value viewsreference contains a non-scalar value (3326841)": "https://www.drupal.org/files/issues/2023-01-05/3326841.patch"
