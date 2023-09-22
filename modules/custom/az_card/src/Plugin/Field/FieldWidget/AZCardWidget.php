@@ -2,13 +2,14 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Utility\Html;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\Validator\ConstraintViolationInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Component\Utility\Html;
-use Drupal\Component\Utility\NestedArray;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'az_card' field widget.
@@ -167,11 +168,11 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
+        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : '#',
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }

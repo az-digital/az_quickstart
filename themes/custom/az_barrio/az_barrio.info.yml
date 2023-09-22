@@ -10,6 +10,8 @@ block_default_region: 'content'
 libraries:
   - az_barrio/global-styling
 
+logo: images/logo.png
+
 regions:
   alert: Alert
   header_ua_utilities: 'UA header utilities'

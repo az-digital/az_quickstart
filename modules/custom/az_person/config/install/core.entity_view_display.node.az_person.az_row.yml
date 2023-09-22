@@ -18,9 +18,11 @@ dependencies:
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
+    - image.style.az_medium
     - node.type.az_person
   module:
     - field_group
+    - media
     - smart_title
     - telephone
     - user
@@ -175,11 +177,13 @@ content:
     weight: 6
     region: content
   field_az_media_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: az_medium
-      link: false
+      image_link: ''
+      image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 24
     region: content

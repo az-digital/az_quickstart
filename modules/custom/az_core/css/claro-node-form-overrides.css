@@ -7,15 +7,7 @@
 @media screen and (min-width: 61rem) {
   .layout-region--node-main,
   .layout-region--node-footer {
-    width: 65% !important;
-  }
-
-  .layout-region--node-main .layout-region__content,
-  .layout-region--node-footer .layout-region__content {
-    max-width: 100% !important;
-  }
-
-  .layout-region--node-secondary {
-    width: 35% !important;
+    margin-inline: 0;
+    width: initial;
   }
 }
