@@ -3,7 +3,6 @@ global-styling:
   css:
     theme:
       css/style.css: {}
-      css/az-bef-sidebar.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap
 az-media-display:
@@ -24,6 +23,10 @@ az-icons:
   css:
     theme:
       https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}
+az-bef-sidebar:
+  css:
+    theme:
+      css/az-bef-sidebar.css: {}
 arizona-bootstrap:
   css:
     theme:
