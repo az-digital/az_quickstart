@@ -4,12 +4,14 @@ az_event_trellis_date:
     js/az_event_trellis_date.js: {}
   dependencies:
     - core/drupal
+    - core/drupalSettings
     - core/jquery
     - core/once
-    - az_event_trellis/easepick--bundle
-easepick--bundle:
+    - az_event_trellis/easepick_bundle
+easepick_bundle:
+  js:
+    /libraries/easepick--bundle/dist/index.umd.js: {}
+easepick_shadow:
   css:
     theme:
       /libraries/easepick--bundle/dist/index.css: {}
-  js:
-    /libraries/easepick--bundle/dist/index.umd.js: {}
