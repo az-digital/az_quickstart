@@ -75,6 +75,7 @@ install:
   - draggableviews:draggableviews
   - role_delegation:role_delegation
   - media_entity_file_replace:media_entity_file_replace
+  - extlink:extlink
 
 themes:
   - az_barrio
