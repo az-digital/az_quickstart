@@ -80,6 +80,17 @@ class AZEventTrellisViewsField extends BulkForm {
   }
 
   /**
+   * {@inheritdoc}
+   */
+  public function viewsFormValidate(&$form, FormStateInterface $form_state) {
+    $ids = $form_state->getValue($this->options['id']);
+    if (empty($ids) || empty(array_filter($ids))) {
+      $form_state->setErrorByName('', $this->emptySelectedMessage());
+    }
+    // Unlike parent class, do not throw form error when action is empty.
+  }
+
+  /**
    * Submit handler for the Trellis import form.
    *
    * @param mixed $form
