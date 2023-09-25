@@ -77,7 +77,7 @@ class AZEventTrellisViewsAttributeFilter extends FilterPluginBase {
         ->accessCheck(TRUE)
         ->sort('name')
         ->addTag('taxonomy_term_access')
-        ->condition('parent', $parents);
+        ->condition('parent', $parents, 'IN');
       $children = $query->execute();
     }
     $terms = Term::loadMultiple($children);
