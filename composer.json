@@ -141,7 +141,7 @@
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
-                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2022-08-04/3190842-only-get-session-id-when-necessary.patch"
+                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2023-09-15/3190842-10.patch"
             },
             "drupal/ckeditor": {
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-02-28/3109289-ckeditor-contrib-67.patch",
