@@ -41,6 +41,7 @@
  * - page.header: Items for the header region next to logo.
  * - page.header_2: Items for the secondary header region next to logo.
  * - page.navigation: Items for the navigation menu region.
+ * - page.navigation_2: Items for the navigation_2 menu region.
  * - page.navigation_offcanvas: Items for off-canvas content.
  * - page.help: Items for the help region.
  * - page.content_featured: Items for the featured content region.
@@ -160,6 +161,11 @@
               </div>
               {% endif %}
             </div>
+            {% if page.navigation_2 %}
+              <div class="row">
+                {{ page.navigation_2 }}
+              </div>
+            {% endif %}
             {% if page.help %}
               <div class="row">
                 {{ page.help }}

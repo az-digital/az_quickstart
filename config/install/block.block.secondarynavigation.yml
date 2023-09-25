@@ -1,0 +1,26 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - fixed_block_content.fixed_block_content.secondary_navigation
+  module:
+    - block_class
+    - fixed_block_content
+  theme:
+    - az_barrio
+third_party_settings:
+  block_class:
+    classes: 'bg-gray-100 navbar-light navbar-expand mt-n1'
+id: secondarynavigation
+theme: az_barrio
+region: navigation_2
+weight: 0
+provider: null
+plugin: 'fixed_block_content:secondary_navigation'
+settings:
+  id: 'fixed_block_content:secondary_navigation'
+  label: 'Secondary navigation'
+  label_display: '0'
+  provider: fixed_block_content
+  view_mode: ''
+visibility: {  }
