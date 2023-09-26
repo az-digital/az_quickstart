@@ -30,7 +30,7 @@
         'js-click-copy--copied',
         'action-link--icon-checkmark',
       );
-      removeClass(event.srcElement)
+      removeClass(event.target)
     }
     else {
       return false;
