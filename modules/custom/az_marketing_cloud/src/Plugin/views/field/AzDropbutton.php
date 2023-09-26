@@ -40,7 +40,7 @@ class AzDropbutton extends Links {
     $form['dropbutton_type'] = [
       '#type' => 'select',
       '#title' => $this->t('Dropbutton type'),
-      '#description' => $this->t('Description of your custom option.'),
+      '#description' => $this->t('Dropbutton type.'),
       '#default_value' => $this->options['dropbutton_type'],
       '#options' => [
         'small' => 'Small',
