@@ -92,6 +92,11 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
       '#required' => FALSE,
       '#default_value' => $this->value['value'],
     ];
+    // Add label if this is the exposed form.
+    $exposed_info = $this->exposedInfo();
+    if (!empty($exposed_info['label'])) {
+      $form['value']['value']['#title'] = $exposed_info['label'];
+    }
     // Fetch library information for shadow DOM inclusion.
     $css = [];
     try {
@@ -142,6 +147,24 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
       $state = [$source => ['value' => 'Custom']];
       $form['value']['begin']['#states']['visible'][] = $state;
       $form['value']['end']['#states']['visible'][] = $state;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function buildValueWrapper(&$form, $wrapper_identifier) {
+    // Modify parent class behavior to be a container rather than a fieldset.
+    if (!isset($form[$wrapper_identifier])) {
+      $form[$wrapper_identifier] = [
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => [
+            'views-exposed-form__item',
+            'az-event-trellis-datewrapper',
+          ],
+        ],
+      ];
     }
   }
 

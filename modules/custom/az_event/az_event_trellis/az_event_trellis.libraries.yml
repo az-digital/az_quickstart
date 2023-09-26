@@ -2,6 +2,9 @@ az_event_trellis_date:
   version: 1.x
   js:
     js/az_event_trellis_date.js: {}
+  css:
+    theme:
+      css/az_event_trellis_datewrapper.css: {}
   dependencies:
     - core/drupal
     - core/drupalSettings
