@@ -9,7 +9,6 @@
     var copyLinks = document.querySelectorAll('.js-click2copy a');
     function _handleClick(event) {
       var baseUrl = window.location.origin;
-      console.log(event);
       if (event.type === 'click') {
         event.preventDefault();
         var href = event.target.getAttribute('href');
