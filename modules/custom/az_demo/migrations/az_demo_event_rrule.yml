@@ -57,13 +57,13 @@ process:
   freq: freq
 
   limit:
-  # Example Input: "COUNT=10" or "UNTIL=2020-12-31" or empty
+    # Example Input: "COUNT=10" or "UNTIL=2020-12-31" or empty
     - plugin: default_value
       source: limit
       default_value: ""
 
   parameters:
-  # Example Input: "BYDAY=TU;INTERVAL=1"
+    # Example Input: "BYDAY=TU;INTERVAL=1"
     - plugin: skip_on_empty
       method: process
       source: parameters
@@ -82,7 +82,7 @@ process:
       callable: strtotime
 
   unlimited:
-  # Example Input: Boolean 0 or 1 (0=limited, 1=unlimited)
+    # Example Input: Boolean 0 or 1 (0=limited, 1=unlimited)
     - plugin: default_value
       default_value: 0
 
