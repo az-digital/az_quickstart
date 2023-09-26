@@ -98,7 +98,7 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
       $attached = AttachedAssets::createFromRenderArray([
         '#attached' => [
           'library' => [
-            'az_event_trellis/easepick_shadow',
+            'az_event_trellis/easepick_styles',
           ],
         ],
       ]);
