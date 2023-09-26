@@ -49,7 +49,7 @@ class AzDropbutton extends Links {
     ];
     $form['click_action'] = [
       '#type' => 'select',
-      '#title' => $this->t('Click Action'),
+      '#title' => $this->t('Click action'),
       '#description' => $this->t('Determine how links should behave.'),
       '#default_value' => $this->options['click_action'],
       '#options' => [
