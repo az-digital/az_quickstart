@@ -163,4 +163,3 @@ function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestio
     $suggestions[] = 'views_view__az_marketing_cloud';
   }
 }
-

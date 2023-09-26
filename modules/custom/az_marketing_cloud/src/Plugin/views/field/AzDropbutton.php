@@ -15,51 +15,49 @@ use Drupal\Core\Form\FormStateInterface;
  */
 class AzDropbutton extends Links {
 
-/**
- * {@inheritdoc}
- */
-public function defineOptions() {
-  $options = parent::defineOptions();
-  $options['dropbutton_type'] = [
-    'small' => 'small',
-    'extrasmall' => 'extrasmall',
-  ];
-  $options['click_action'] = [
-    'none' => '',
-    'js-click2copy' => 'js-click2copy',
-  ];
-  return $options;
-}
+  /**
+   * {@inheritdoc}
+   */
+  public function defineOptions() {
+    $options = parent::defineOptions();
+    $options['dropbutton_type'] = [
+      'small' => 'small',
+      'extrasmall' => 'extrasmall',
+    ];
+    $options['click_action'] = [
+      'none' => '',
+      'js-click2copy' => 'js-click2copy',
+    ];
+    return $options;
+  }
 
-/**
- * {@inheritdoc}
- */
-public function buildOptionsForm(&$form, FormStateInterface $form_state) {
-  parent::buildOptionsForm($form, $form_state);
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::buildOptionsForm($form, $form_state);
 
-  $form['dropbutton_type'] = [
-    '#type' => 'select',
-    '#title' => $this->t('Dropbutton Type'),
-    '#description' => $this->t('Description of your custom option.'),
-    '#default_value' => $this->options['dropbutton_type'],
-    '#options' => [
-      'small' => 'Small',
-      'extrasmall' => 'Extra Small',
-    ],
-  ];
-  $form['click_action'] = [
-    '#type' => 'select',
-    '#title' => $this->t('Click Action'),
-    '#description' => $this->t('Determine how links should behave.'),
-    '#default_value' => $this->options['click_action'],
-    '#options' => [
-      'none' => 'None',
-      'js-click2copy' => 'Click to Copy to Clipboard via JS',
-    ],
-  ];
-}
-
-
+    $form['dropbutton_type'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Dropbutton Type'),
+      '#description' => $this->t('Description of your custom option.'),
+      '#default_value' => $this->options['dropbutton_type'],
+      '#options' => [
+        'small' => 'Small',
+        'extrasmall' => 'Extra Small',
+      ],
+    ];
+    $form['click_action'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Click Action'),
+      '#description' => $this->t('Determine how links should behave.'),
+      '#default_value' => $this->options['click_action'],
+      '#options' => [
+        'none' => 'None',
+        'js-click2copy' => 'Click to Copy to Clipboard via JS',
+      ],
+    ];
+  }
 
   /**
    * {@inheritdoc}
@@ -67,7 +65,7 @@ public function buildOptionsForm(&$form, FormStateInterface $form_state) {
   public function render(ResultRow $values) {
     $links = $this->getLinks() ?? [];
     $click_action = $this->options['click_action'] ?? '';
-    $dropbutton_type =  $this->options['dropbutton_type'] ?? '';
+    $dropbutton_type = $this->options['dropbutton_type'] ?? '';
     $dropbutton = [
       '#type' => 'dropbutton',
       '#links' => [],
