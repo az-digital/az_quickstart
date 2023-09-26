@@ -3,7 +3,12 @@
  * Provides click to copy functionality.
  */
 
-((Drupal, window, document) => {
+((window, document) => {
+
+  function init() {
+    const copyLinks = document.querySelectorAll('.js-click2copy a');
+
+
   /**
    * Handles click events on the click to copy links.
    *
@@ -14,13 +19,14 @@
    * the user's clipboard and adds a class to the link to indicate that it has been
    * copied.
    */
-  function handleClick(event) {
+  function _handleClick(event) {
     const baseUrl = window.location.origin;
+    console.log(event);
     if (event.type === 'click') {
       event.preventDefault();
-      const href = event.srcElement.getAttribute('href');
+      const href = event.target.getAttribute('href');
       navigator.clipboard.writeText(baseUrl + href);
-      event.srcElement.classList.add(
+      event.target.classList.add(
         'js-click-copy--copied',
         'action-link--icon-checkmark',
       );
@@ -40,15 +46,16 @@
     },3000)
   }
 
-  window.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll(".dropbutton").forEach((element) => element.classList.add("dropbutton--extrasmall"))
-  });
-  
-  const copyLinks = document.querySelectorAll(
-    '.view-id-az_marketing_cloud.view-display-id-admin li.dropbutton-action a',
-  );
 
-  copyLinks.forEach((element) =>
-    element.addEventListener('click', handleClick, false),
-  );
-})(Drupal, this, this.document);
+  copyLinks.forEach((element) => {
+    element.addEventListener('click', _handleClick, false);
+  });
+}
+
+if (document.readyState === "complete") {
+  init();
+} else {
+  document.addEventListener("DOMContentLoaded", init);
+}
+
+})(this, this.document);

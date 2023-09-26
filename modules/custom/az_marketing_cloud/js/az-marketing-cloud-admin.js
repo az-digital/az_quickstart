@@ -4,31 +4,34 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal, window, document) {
-  function handleClick(event) {
-    var baseUrl = window.location.origin;
-    if (event.type === 'click') {
-      event.preventDefault();
-      var href = event.srcElement.getAttribute('href');
-      navigator.clipboard.writeText(baseUrl + href);
-      event.srcElement.classList.add('js-click-copy--copied', 'action-link--icon-checkmark');
-      removeClass(event.srcElement);
-    } else {
-      return false;
+(function (window, document) {
+  function init() {
+    var copyLinks = document.querySelectorAll('.js-click2copy a');
+    function _handleClick(event) {
+      var baseUrl = window.location.origin;
+      console.log(event);
+      if (event.type === 'click') {
+        event.preventDefault();
+        var href = event.target.getAttribute('href');
+        navigator.clipboard.writeText(baseUrl + href);
+        event.target.classList.add('js-click-copy--copied', 'action-link--icon-checkmark');
+        removeClass(event.srcElement);
+      } else {
+        return false;
+      }
     }
-  }
-  function removeClass(element) {
-    setTimeout(function () {
-      element.classList.remove('js-click-copy--copied', 'action-link--icon-checkmark');
-    }, 3000);
-  }
-  window.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll(".dropbutton").forEach(function (element) {
-      return element.classList.add("dropbutton--extrasmall");
+    function removeClass(element) {
+      setTimeout(function () {
+        element.classList.remove('js-click-copy--copied', 'action-link--icon-checkmark');
+      }, 3000);
+    }
+    copyLinks.forEach(function (element) {
+      element.addEventListener('click', _handleClick, false);
     });
-  });
-  var copyLinks = document.querySelectorAll('.view-id-az_marketing_cloud.view-display-id-admin li.dropbutton-action a');
-  copyLinks.forEach(function (element) {
-    return element.addEventListener('click', handleClick, false);
-  });
-})(Drupal, this, this.document);
+  }
+  if (document.readyState === "complete") {
+    init();
+  } else {
+    document.addEventListener("DOMContentLoaded", init);
+  }
+})(this, this.document);
