@@ -44,7 +44,7 @@ class AzDropbutton extends Links {
       '#default_value' => $this->options['dropbutton_type'],
       '#options' => [
         'small' => 'Small',
-        'extrasmall' => 'Extra Small',
+        'extrasmall' => 'Extra small',
       ],
     ];
     $form['click_action'] = [
