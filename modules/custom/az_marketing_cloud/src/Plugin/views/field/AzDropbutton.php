@@ -54,7 +54,7 @@ class AzDropbutton extends Links {
       '#default_value' => $this->options['click_action'],
       '#options' => [
         'none' => 'None',
-        'js-click2copy' => 'Click to Copy to Clipboard via JS',
+        'js-click2copy' => 'Click to copy to clipboard via JS',
       ],
     ];
   }
