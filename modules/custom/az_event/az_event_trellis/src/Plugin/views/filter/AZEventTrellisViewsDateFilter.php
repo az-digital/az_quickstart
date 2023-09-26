@@ -118,7 +118,7 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
       // Failed to fetch assets.
     }
     $form['#attached']['drupalSettings']['trellisDatePicker']['css'] = $css;
-    // Prepare uniqud id for data attribute.
+    // Prepare unique id for data attribute.
     $end_id = Html::getUniqueId('az-trellis-daterange-end');
     $form['value']['begin'] = [
       '#type' => 'textfield',
