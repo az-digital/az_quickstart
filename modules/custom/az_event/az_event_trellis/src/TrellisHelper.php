@@ -3,6 +3,7 @@
 namespace Drupal\az_event_trellis;
 
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use GuzzleHttp\ClientInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -55,6 +56,13 @@ final class TrellisHelper {
   protected $httpClient;
 
   /**
+   * The node storage.
+   *
+   * @var \Drupal\node\NodeStorageInterface
+   */
+  protected $nodeStorage;
+
+  /**
    * Constructs a new TrellisHelper object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -63,11 +71,14 @@ final class TrellisHelper {
    *   The HTTP client service.
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   The cache backend.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
+   *   The entity type manager service.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ClientInterface $httpClient, CacheBackendInterface $cache) {
+  public function __construct(ConfigFactoryInterface $config_factory, ClientInterface $httpClient, CacheBackendInterface $cache, EntityTypeManagerInterface $entityTypeManager) {
     $this->configFactory = $config_factory;
     $this->httpClient = $httpClient;
     $this->cache = $cache;
+    $this->nodeStorage = $entityTypeManager->getStorage('node');
   }
 
   /**
@@ -154,6 +165,29 @@ final class TrellisHelper {
       }
     }
     return $events;
+  }
+
+  /**
+   * Fetch the list of trellis event ids currently imported.
+   *
+   * @return array
+   *   Returns an array of event ids.
+   */
+  public function getImportedEventIds() {
+    // Check for events that have trellis ids.
+    $query = \Drupal::entityQuery('node')
+      ->accessCheck(FALSE)
+      ->condition('type', 'az_event')
+      ->exists('field_az_trellis_id');
+    $nids = $query->execute();
+    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
+    $nodes = $this->nodeStorage->loadMultiple($nids);
+
+    $event_api_ids = [];
+    foreach ($nodes as $n) {
+      $event_api_ids[] = $n->get('field_az_trellis_id')->getString();
+    }
+    return $event_api_ids;
   }
 
   /**

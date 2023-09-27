@@ -4,7 +4,6 @@ declare(strict_types = 1);
 
 namespace Drupal\az_event_trellis\Plugin\migrate\source;
 
-use Drupal\az_event_trellis\TrellisHelper;
 use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 use Drupal\migrate\Plugin\MigrationInterface;
 
@@ -16,6 +15,13 @@ use Drupal\migrate\Plugin\MigrationInterface;
  * )
  */
 class AZTrellisEventSource extends SourcePluginBase {
+
+  /**
+   * The node storage.
+   *
+   * @var \Drupal\node\NodeStorageInterface
+   */
+  protected $nodeStorage;
 
   /**
    * @var \Drupal\az_event_trellis\TrellisHelper
@@ -59,6 +65,10 @@ class AZTrellisEventSource extends SourcePluginBase {
     // @todo use injection for this.
     $this->trellisHelper = \Drupal::service('az_event_trellis.trellis_helper');
     $this->trellisIds = $configuration['trellis_ids'] ?? [];
+    // If no arguments are supplied, fetch the list currently on the site.
+    if (empty($this->trellisIds)) {
+      $this->trellisIds = $this->trellisHelper->getImportedEventIds();
+    }
   }
 
   /**
