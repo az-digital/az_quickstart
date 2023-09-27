@@ -9,7 +9,7 @@ extlink_subdomains: false
 extlink_alert: false
 extlink_alert_text: 'This link will take you to an external web site. We are not responsible for their content.'
 extlink_exclude: ''
-extlink_include: '/sites/default/files/*'
+extlink_include: '/sites/.+/files/.+\.pdf'
 extlink_class: '0'
 extlink_label: '(link is external)'
 extlink_img_class: false
