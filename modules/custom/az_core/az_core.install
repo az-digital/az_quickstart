@@ -14,7 +14,7 @@ function az_core_update_last_removed() {
 }
 
 /**
- * Implements hook_update().
+ * Migrate config for AZ Bootstrap, AZ Icons, and Font from AZ Barrio theme settings to AZ Core module config.
  */
 function az_core_update_1020801() {
   // Covert az_barrio theme settings to az_core config.
