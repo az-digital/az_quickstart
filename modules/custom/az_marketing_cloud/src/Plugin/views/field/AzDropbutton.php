@@ -21,7 +21,7 @@ class AzDropbutton extends Links {
   public function defineOptions() {
     $options = parent::defineOptions();
     $options['dropbutton_type'] = [
-      'small' => 'small',
+      'default' => 'small',
       'extrasmall' => 'extrasmall',
     ];
     $options['click_action'] = [
