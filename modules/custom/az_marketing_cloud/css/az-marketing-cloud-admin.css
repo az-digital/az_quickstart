@@ -1,11 +1,4 @@
 .js-click-copy--copied:before {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  margin-right: 5px;
-}
-
-.js-click-copy--copied:after {
   content: "Link copied!";
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
