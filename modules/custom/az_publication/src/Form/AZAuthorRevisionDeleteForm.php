@@ -88,6 +88,10 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $az_author_revision = NULL) {
+    // @todo Re-enable after upgrading to Drupal 10.2.x / phpstan-drupal 1.2.x.
+    // @see https://www.drupal.org/project/drupal/issues/3383215
+    // @see https://github.com/mglaman/phpstan-drupal/pull/596
+    // @phpstan-ignore-next-line
     $this->revision = $this->authorStorage->loadRevision($az_author_revision);
     $form = parent::buildForm($form, $form_state);
 
@@ -98,6 +102,10 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    // @todo Re-enable after upgrading to Drupal 10.2.x / phpstan-drupal 1.2.x.
+    // @see https://www.drupal.org/project/drupal/issues/3383215
+    // @see https://github.com/mglaman/phpstan-drupal/pull/596
+    // @phpstan-ignore-next-line
     $this->authorStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Author: deleted %title revision %revision.', [
