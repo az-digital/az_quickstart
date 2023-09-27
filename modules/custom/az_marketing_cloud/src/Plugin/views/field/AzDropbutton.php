@@ -25,7 +25,7 @@ class AzDropbutton extends Links {
       'extrasmall' => 'extrasmall',
     ];
     $options['click_action'] = [
-      'none' => '',
+      'default' => '',
       'js-click2copy' => 'js-click2copy',
     ];
     return $options;
