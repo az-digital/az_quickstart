@@ -1256,7 +1256,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: az_dropbutton
-          label: 'Email snippet'
+          label: 'Copy email snippet'
           exclude: false
           alter:
             alter_text: false
