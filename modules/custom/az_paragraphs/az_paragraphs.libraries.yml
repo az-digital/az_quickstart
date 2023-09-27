@@ -29,7 +29,7 @@ az_paragraphs.az_text_media:
     theme:
       css/az_paragraphs_az_text_media.css: {}
   dependencies:
-    - az_core/arizona-bootstrap
+    - az_barrio/arizona-bootstrap
     - az_barrio/button-no-conflict
 az_paragraphs.az_photo_gallery:
   version: VERSION
