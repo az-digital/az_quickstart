@@ -2,6 +2,7 @@
 
 namespace Drupal\az_event_trellis;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use GuzzleHttp\ClientInterface;
@@ -93,7 +94,7 @@ final class TrellisHelper {
   public function searchEvents(array $query) {
     $ids = [];
     // Compute cache key of query.
-    $key = 'az_trellis_event.search:' . md5(serialize($query));
+    $key = 'az_trellis_event.search:' . Crypt::hashBase64(serialize($query));
     $cached = $this->cache->get($key);
     // If we have this search cached, return it.
     if ($cached !== FALSE) {
