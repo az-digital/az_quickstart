@@ -8,6 +8,7 @@ use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\ViewExecutable;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
 use Drupal\migrate\MigrateMessage;
 
@@ -116,6 +117,9 @@ class AZEventTrellisViewsField extends BulkForm {
       // Pass URL to migrate executable.
       $event_url = $this->trellisHelper->getEventEndpoint();
       $migration = $this->pluginManagerMigration->createInstance('az_trellis_events');
+      if ($migration->getStatus() !== MigrationInterface::STATUS_IDLE) {
+        $migration->setStatus(MigrationInterface::STATUS_IDLE);
+      }
       $options = [
         'limit' => 0,
         'update' => 1,
