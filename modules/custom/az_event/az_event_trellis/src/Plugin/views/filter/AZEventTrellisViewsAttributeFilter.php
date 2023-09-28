@@ -144,7 +144,9 @@ class AZEventTrellisViewsAttributeFilter extends FilterPluginBase {
    * {@inheritdoc}
    */
   public function query($group_by = FALSE): void {
-    assert($this->query instanceof RemoteDataQuery);
+    if (!($this->query instanceof RemoteDataQuery)) {
+      return;
+    }
     $this->query->addWhere(
       $this->options['group'],
       $this->options['property_path'],

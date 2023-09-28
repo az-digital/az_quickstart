@@ -245,7 +245,9 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
    * {@inheritdoc}
    */
   public function query($group_by = FALSE): void {
-    assert($this->query instanceof RemoteDataQuery);
+    if (!($this->query instanceof RemoteDataQuery)) {
+      return;
+    }
     $value = $this->value['value'] ?? '';
     $this->query->addWhere(
       $this->options['group'],
