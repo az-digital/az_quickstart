@@ -8,7 +8,6 @@ az_event_trellis_date:
   dependencies:
     - core/drupal
     - core/drupalSettings
-    - core/jquery
     - core/once
     - az_event_trellis/easepick_bundle
 easepick_bundle:
