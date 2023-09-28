@@ -3,14 +3,14 @@
   flex-wrap: wrap;
 }
 
-/* /*
+/**
  * Override the width of the table set by Bootstrap content styles.
  * See: https://github.com/ckeditor/ckeditor5/issues/3253.
  */
  .ck.ck-content .table {
   width: auto;
 }
-/*
+/**
  * Configure the z-index of the editor UI, so when inside a Bootstrap
  * modal, it will be rendered over the modal.
  */
