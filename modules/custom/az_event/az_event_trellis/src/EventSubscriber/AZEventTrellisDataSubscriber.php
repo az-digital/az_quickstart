@@ -10,11 +10,17 @@ use Drupal\migrate\Event\MigrateEvents;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\Session\AccountProxy;
 
 /**
  * Provides API integration for Trellis Views.
  */
 final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
+
+  /**
+   * @var \Drupal\Core\Session\AccountProxy
+   */
+  protected $currentUser;
 
   /**
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -55,12 +61,15 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
    *   Database connection object.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
+   * @param \Drupal\Core\Session\AccountProxy $currentUser
+   *   The currently logged in user.
    */
-  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager) {
+  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser) {
     $this->trellisHelper = $trellisHelper;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->nodeStorage = $this->entityTypeManager->getStorage('node');
+    $this->currentUser = $currentUser;
   }
 
   /**
@@ -75,12 +84,16 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
     $id = reset($ids);
     if ($migration === 'az_trellis_events') {
       $event = $this->nodeStorage->load($id);
-      $url = $event->toUrl()->toString();
       if (!empty($event)) {
-        $this->messenger->addMessage(t('Imported <a href="@eventlink">@eventtitle</a>.', [
-          '@eventlink' => $url,
-          '@eventtitle' => $event->getTitle(),
-        ]));
+        $url = $event->toUrl()->toString();
+        // Only show message if current user has permission.
+        if ($this->currentUser->hasPermission('create az_event content')) {
+          // Show status message that event was imported.
+          $this->messenger->addMessage(t('Imported <a href="@eventlink">@eventtitle</a>.', [
+            '@eventlink' => $url,
+            '@eventtitle' => $event->getTitle(),
+          ]));
+        }
       }
     }
   }
