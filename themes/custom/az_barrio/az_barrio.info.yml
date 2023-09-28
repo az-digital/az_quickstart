@@ -49,6 +49,7 @@ ckeditor_stylesheets:
   - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest/css/arizona-bootstrap.min.css
 
 ckeditor5-stylesheets:
+  - css/ckeditor-arizona-bootstrap.css
   - css/ckeditor5.css
 
 libraries-extend:
