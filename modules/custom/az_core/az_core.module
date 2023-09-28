@@ -428,8 +428,8 @@ function az_core_form_taxonomy_vocabulary_confirm_reset_alphabetical_alter(&$for
 function az_core_library_info_alter(&$libraries, $extension) {
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
     // Add AZ Bootstrap CSS & JS based on theme settings.
-    $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
-    $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
+    $az_bootstrap_css_path = az_core_az_bootstrap_assets_path('css');
+    $az_bootstrap_js_path = az_core_az_bootstrap_assets_path('js');
     if (!$az_bootstrap_css_path || !$az_bootstrap_js_path) {
       return;
     }
@@ -496,7 +496,7 @@ function az_core_library_info_alter(&$libraries, $extension) {
     if ($az_icons === TRUE) {
       if ($extension === 'az_barrio' && isset($libraries['az-icons'])) {
         // Add Arizona Icons CSS based on theme settings.
-        $az_icons_path = az_barrio_az_icons_assets_path('css');
+        $az_icons_path = az_core_az_icons_assets_path('css');
         // Ensure icons are loaded before Arizona Bootstrap.
         $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-icons';
         $az_barrio_az_icons_css_info = [
@@ -522,4 +522,58 @@ function az_core_library_info_alter(&$libraries, $extension) {
       }
     }
   }
+}
+
+/**
+ * Helper function for constructing AZ Bootstrap asset paths.
+ */
+function az_core_az_bootstrap_assets_path($type) {
+  if (empty($type)) {
+    return FALSE;
+  }
+
+  $az_bootstrap_path = '';
+
+  // AZ Bootstrap source.
+  if (theme_get_setting('az_bootstrap_source', 'az_barrio') === 'cdn') {
+    $az_bootstrap_cdn_version = theme_get_setting('az_bootstrap_cdn_version', 'az_barrio');
+    if ($az_bootstrap_cdn_version === 'stable') {
+      $az_bootstrap_cdn_version = AZ_BOOTSTRAP_STABLE_VERSION;
+    }
+    $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
+  }
+  else {
+    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
+  }
+
+  $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
+
+  // Use AZ Bootstrap Javascript bundle (contains Popper.js).
+  if ($type === 'js') {
+    $az_bootstrap_path .= '.bundle';
+  }
+
+  // AZ Bootstrap minified.
+  if (theme_get_setting('az_bootstrap_minified', 'az_barrio')) {
+    $az_bootstrap_path .= '.min';
+  }
+
+  return $az_bootstrap_path . '.' . $type;
+}
+
+/**
+ * Helper function for constructing UA Brand Icons asset paths.
+ */
+function az_core_az_icons_assets_path($type) {
+  $az_icons_path = '';
+
+  // AZ Icons source.
+  if (theme_get_setting('az_barrio_az_icons_source', 'az_barrio') === 'cdn') {
+    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
+  }
+  else {
+    $az_icons_path = 'libraries/az-icons/az-icons-styles.css';
+  }
+
+  return $az_icons_path;
 }
