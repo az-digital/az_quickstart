@@ -17,6 +17,9 @@ use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Drupal\Core\Messenger\MessengerInterface;
 
+//phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
+include_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
+
 /**
  * Implements hook_help().
  */
