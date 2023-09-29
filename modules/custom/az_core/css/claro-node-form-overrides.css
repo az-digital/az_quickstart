@@ -5,8 +5,8 @@
 */
 
 @media screen and (min-width: 61rem) {
-  .layout-region--node-main,
-  .layout-region--node-footer {
+  .layout-region.layout-region--node-main,
+  .layout-region.layout-region--node-footer {
     margin-inline: 0;
     width: initial;
   }
