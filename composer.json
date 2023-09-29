@@ -174,7 +174,7 @@
                 "CKEditor 5 compatibility (3309747)": "https://www.drupal.org/files/issues/2023-07-26/3309747-45.patch"
             },
             "drupal/entity_embed": {
-                "Drupal 10 & CKEditor 5 readiness (3272732)": "https://www.drupal.org/files/issues/2023-09-29/3309747-52.patch"
+                "Drupal 10 & CKEditor 5 readiness (3272732)": "https://www.drupal.org/files/issues/2023-09-29/3272732-134.patch"
             },
             "drupal/google_tag": {
                 "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
