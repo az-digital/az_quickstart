@@ -78,6 +78,10 @@ class AZEventTrellisViewsField extends BulkForm {
         ];
       }
     }
+    // Change default BulkForm label.
+    if (!empty($form['actions']['submit'])) {
+      $form['actions']['submit']['#value'] = $this->t('Import');
+    }
   }
 
   /**
