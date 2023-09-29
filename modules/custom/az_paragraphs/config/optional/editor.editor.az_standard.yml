@@ -27,6 +27,7 @@ settings:
       - '|'
       - alignment
       - '|'
+      - bootstrapGrid
       - insertTable
       - horizontalLine
       - blockQuote
@@ -43,7 +44,6 @@ settings:
       - '|'
       - code
       - codeBlock
-      - bootstrapGrid
   plugins:
     ckeditor5_alignment:
       enabled_alignments:
