@@ -38,7 +38,7 @@
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
         "drupal/antibot": "2.0.2",
-        "drupal/asset_injector": "2.17.0",
+        "drupal/asset_injector": "2.19.0",
         "drupal/auto_entitylabel": "3.0.0",
         "drupal/background_image_formatter": "2.0.3",
         "drupal/better_exposed_filters": "6.0.3",
@@ -48,7 +48,7 @@
         "drupal/block_field": "1.0.0-rc4",
         "drupal/bootstrap_barrio": "5.1.10",
         "drupal/bootstrap_utilities": "2.0.0",
-        "drupal/cas": "2.1.0",
+        "drupal/cas": "2.2.0",
         "drupal/chosen": "4.0.0",
         "drupal/ckeditor": "1.0.2",
         "drupal/ckeditor_bs_grid": "2.0.10",
@@ -61,7 +61,7 @@
         "drupal/core-recommended": "10.1.4",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.14.0",
-        "drupal/date_ap_style": "1.5.0",
+        "drupal/date_ap_style": "1.7.0",
         "drupal/draggableviews": "2.1.3",
         "drupal/easy_breadcrumb": "2.0.5",
         "drupal/embed": "1.6.0",
@@ -74,9 +74,9 @@
         "drupal/field_group_link": "3.1.0",
         "drupal/flag": "4.0-beta4",
         "drupal/google_tag": "2.0.2",
-        "drupal/honeypot": "2.1.2",
+        "drupal/honeypot": "2.1.3",
         "drupal/image_widget_crop": "2.4.0",
-        "drupal/inline_entity_form": "2.0.0-rc7",
+        "drupal/inline_entity_form": "2.0.0-rc9",
         "drupal/intelligencebank": "4.0.0",
         "drupal/jquery_ui": "1.6.0",
         "drupal/jquery_ui_datepicker": "2.0.0",
@@ -95,11 +95,11 @@
         "drupal/migrate_queue_importer": "2.1.0",
         "drupal/migrate_tools": "6.0.2",
         "drupal/optional_end_date": "1.3.0",
-        "drupal/paragraphs": "1.15.0",
+        "drupal/paragraphs": "1.16.0",
         "drupal/paragraphs_admin": "1.4.0",
         "drupal/pathauto": "1.11.0",
         "drupal/quick_node_clone": "1.16.0",
-        "drupal/redirect": "1.8.0",
+        "drupal/redirect": "1.9.0",
         "drupal/role_delegation": "1.2.0",
         "drupal/search_exclude": "3.0.0-beta1",
         "drupal/seckit": "2.0.1",
@@ -120,7 +120,7 @@
         "npm-asset/easepick--bundle": "1.2.1",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0",
-        "renanbr/bibtex-parser": "2.1.2",
+        "renanbr/bibtex-parser": "2.2.0",
         "seboettg/citeproc-php": "2.6.0"
     },
     "require-dev": {
@@ -143,7 +143,7 @@
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
-                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2022-08-04/3190842-only-get-session-id-when-necessary.patch"
+                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2023-09-15/3190842-10.patch"
             },
             "drupal/ckeditor": {
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-02-28/3109289-ckeditor-contrib-67.patch",
@@ -166,19 +166,14 @@
                 "Unrelated error message when running tests with database errors (3163925)": "https://www.drupal.org/files/issues/2022-05-12/3163925-19-9-2-x.patch",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
-                "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch"
-            },
-            "drupal/date_ap_style": {
-                "All Day Setting hides time display (3272760)": "https://www.drupal.org/files/issues/2022-03-31/3272760-7.patch"
+                "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
+                "Loadjs css file load issue (Quickstart Issue 2772)": "https://gist.githubusercontent.com/tadean/163159a15080a6a7714ed13459393f80/raw/a1cebecc335a0a058141356b69857094b32af1e3/loadjs_2772.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
             },
             "drupal/google_tag": {
                 "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
-            },
-            "drupal/honeypot": {
-                "Missing primary key in table honeypot_user (2943526)": "https://www.drupal.org/files/issues/2023-07-10/honeypot-add_primary_key-2943526-64.patch"
             },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
