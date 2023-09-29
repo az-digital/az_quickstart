@@ -89,4 +89,5 @@ process:
 destination:
   plugin: 'entity:node'
   default_bundle: az_event
+  validate: false
 migration_dependencies: null
