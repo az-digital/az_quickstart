@@ -1,10 +1,22 @@
 .js-click-copy--copied:before {
-  content: "Link copied!";
-  position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
+    content: 'Link copied!';
+    color: white;
+    display: block;
+    position: absolute;
+    top: -130%;
+    left: 10%;
+    background-color: black;
+    padding: 5px;
+    border-radius: 5px;
+    white-space: nowrap;
+}
+.js-click-copy--copied:after {
+    content: "";
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
 }
