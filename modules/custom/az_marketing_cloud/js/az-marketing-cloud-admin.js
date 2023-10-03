@@ -9,7 +9,7 @@
     var copyLinks = document.querySelectorAll('.js-click2copy a');
     function removeClass(element) {
       setTimeout(function () {
-        element.classList.remove('js-click-copy--copied', 'action-link--icon-checkmark');
+        element.classList.remove('js-click-copy--copied');
       }, 3000);
     }
     function _handleClick(event) {
@@ -18,7 +18,7 @@
         event.preventDefault();
         var href = event.target.getAttribute('href');
         navigator.clipboard.writeText(baseUrl + href);
-        event.target.classList.add('js-click-copy--copied', 'action-link--icon-checkmark');
+        event.target.classList.add('js-click-copy--copied');
         removeClass(event.target);
       } else {
         return false;

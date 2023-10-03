@@ -11,7 +11,6 @@
       setTimeout(() => {
         element.classList.remove(
           'js-click-copy--copied',
-          'action-link--icon-checkmark',
         );
       }, 3000);
     }
@@ -34,7 +33,6 @@
         navigator.clipboard.writeText(baseUrl + href);
         event.target.classList.add(
           'js-click-copy--copied',
-          'action-link--icon-checkmark',
         );
         removeClass(event.target);
       } else {
