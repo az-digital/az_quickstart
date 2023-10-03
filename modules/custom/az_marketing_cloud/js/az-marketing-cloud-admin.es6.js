@@ -9,9 +9,7 @@
 
     function removeClass(element) {
       setTimeout(() => {
-        element.classList.remove(
-          'js-click-copy--copied'
-        );
+        element.classList.remove('js-click-copy--copied');
       }, 3000);
     }
 
@@ -31,9 +29,7 @@
         event.preventDefault();
         const href = event.target.getAttribute('href');
         navigator.clipboard.writeText(baseUrl + href);
-        event.target.classList.add(
-          'js-click-copy--copied'
-        );
+        event.target.classList.add('js-click-copy--copied');
         removeClass(event.target);
       } else {
         return false;
