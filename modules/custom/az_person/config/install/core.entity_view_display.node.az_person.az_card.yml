@@ -70,7 +70,7 @@ third_party_settings:
     group_link:
       children:
         - field_az_media_image
-      label: Image Link
+      label: 'Image Link'
       parent_name: group_card
       region: content
       weight: 1
