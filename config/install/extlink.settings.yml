@@ -18,9 +18,7 @@ extlink_css_explicit: ''
 extlink_mailto_class: '0'
 extlink_mailto_label: '(link sends email)'
 extlink_use_font_awesome: false
-extlink_font_awesome_classes:
-  links: 'fa fa-external-link'
-  mailto: 'fa fa-envelope-o'
+extlink_font_awesome_classes: {  }
 extlink_icon_placement: append
 whitelisted_domains:
   - 'https://events.trellis.arizona.edu/*'
