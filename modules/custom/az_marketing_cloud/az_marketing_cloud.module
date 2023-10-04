@@ -34,6 +34,10 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'node--view--az-marketing-cloud--event-layout',
       'base hook' => 'node',
     ],
+    'node__view__az_marketing_cloud__unpublished' => [
+      'template' => 'node--view--az-marketing-cloud--unpublished',
+      'base hook' => 'node',
+    ],
     'region__az_marketing_cloud' => [
       'template' => 'region--az-marketing-cloud',
       'base hook' => 'region',
@@ -161,6 +165,12 @@ function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestio
   }
   if ($route_name === 'view.az_marketing_cloud.event_layout') {
     $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+}
+function az_marketing_cloud_theme_suggestions_node_alter(array &$suggestions, array $variables)
+{
+  if (!$node->isPublished()) {
+    $suggestions[] = 'node__view__az_marketing_cloud__unpublished';
   }
 }
 
