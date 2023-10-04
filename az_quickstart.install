@@ -120,8 +120,15 @@ function az_quickstart_update_920702() {
 }
 
 /**
- * Enable extlink module by default.
+ * Ensure ckeditor5 module is installed.
  */
 function az_quickstart_update_1020801() {
+  \Drupal::service('module_installer')->install(['ckeditor5']);
+}
+
+/**
+ * Enable extlink module by default.
+ */
+function az_quickstart_update_1020802() {
   \Drupal::service('module_installer')->install(['extlink']);
 }
