@@ -82,9 +82,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
             if (!empty($media->field_media_az_image->alt)) {
               $item['alt'] = $media->field_media_az_image->alt;
             }
-            if (!empty($media->field_media_az_image->title)) {
-              $item['title'] = $media->field_media_az_image->title;
-            }
           }
         }
       }
