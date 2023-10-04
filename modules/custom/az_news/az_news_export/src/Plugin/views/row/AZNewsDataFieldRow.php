@@ -66,6 +66,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
             /** @var \Drupal\file\FileInterface $image */
             $image = $media->field_media_az_image->entity;
             $item['fid'] = $image->id();
+            $item['uuid'] = $image->uuid();
             $item['original'] = $image->createFileUrl(FALSE);
             $uri = $image->getFileUri();
             $styles = [
