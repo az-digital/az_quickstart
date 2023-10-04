@@ -10,10 +10,10 @@
  */
 function az_enterprise_attributes_import_migration_plugins_alter(array &$migrations) {
 
-  if (!empty($migrations['az_enterprise_attributes_import'])) {
+  if (!empty($migrations['migration_config_deriver:az_enterprise_attributes_import'])) {
     $endpoint = \Drupal::config('az_enterprise_attributes_import.settings')->get('endpoint');
     if (!empty($endpoint)) {
-      $migrations['az_enterprise_attributes_import']['source']['urls'] = [$endpoint];
+      $migrations['migration_config_deriver:az_enterprise_attributes_import']['source']['urls'] = [$endpoint];
     }
   }
 }
