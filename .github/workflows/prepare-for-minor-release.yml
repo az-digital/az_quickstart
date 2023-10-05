@@ -25,9 +25,9 @@ jobs:
       - name: Create version contstraint string for next release branch alias string.
         id: alias-next-version-constraint
         run: |
-          local delimiter=.
-          local version_parts=($(echo ${{ inputs.release_branch_name }} | tr $delimiter '\n'))
-          version_parts[2]=$((version_parts[2]+1))
+          delimiter=.
+          version_parts=($(echo ${{ inputs.release_branch_name }} | tr $delimiter '\n'))
+          version_parts[1]=$((version_parts[1]+1))
           NEXT_RELEASE_VERSION_CONSTRAINT=$(local IFS=$delimiter ; echo "${version_parts[*]}" | sed 's/\(.*\)\.x/~\1/')
           echo "NEXT_RELEASE_VERSION_CONSTRAINT=${NEXT_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
           echo "Next release version constraint: $NEXT_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
@@ -122,7 +122,7 @@ jobs:
          tools: composer:v2
 
     - name: Update dev branch alias via Composer
-      run: | 
+      run: |
         composer config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
 
     - name: Add changed files to release branch commit
@@ -172,7 +172,7 @@ jobs:
       - name: Update dev branch alias via Composer
         run: |
           composer config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
- 
+
       - name: Show git status
         run: |
           git status
