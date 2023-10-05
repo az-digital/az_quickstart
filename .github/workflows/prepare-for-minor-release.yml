@@ -18,15 +18,26 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     outputs:
-      next_release_branch_alias_constraint: ${{ steps.alias-version-constraint.outputs.NEXT_RELEASE_VERSION_CONSTRAINT }}
+      next_release_branch_alias_constraint: ${{ steps.alias-next-version-constraint.outputs.NEXT_RELEASE_VERSION_CONSTRAINT }}
+      this_release_branch_alias_constraint: ${{ steps.alias-version-constraint.outputs.THIS_RELEASE_VERSION_CONSTRAINT }}
       main_branch_alias: ${{ steps.alias-main-branch.outputs.MAIN_BRANCH_ALIAS }}
     steps:
       - name: Create version contstraint string for next release branch alias string.
-        id: alias-version-constraint
+        id: alias-next-version-constraint
         run: |
-          NEXT_RELEASE_VERSION_CONSTRAINT=$(echo ${{ inputs.release_branch_name }} | sed 's/\(.*\)\.x/~\1/')
+          delimiter=.
+          version_parts=($(echo ${{ inputs.release_branch_name }} | tr $delimiter '\n'))
+          version_parts[2]=$((version_parts[1]+1))
+          NEXT_RELEASE_VERSION_CONSTRAINT=$(local IFS=$delimiter ; echo "${version_parts[*]}" | sed 's/\(.*\)\.x/~\1/')
           echo "NEXT_RELEASE_VERSION_CONSTRAINT=${NEXT_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
           echo "Next release version constraint: $NEXT_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
+
+      - name: Create version contstraint string for this release branch alias string.
+        id: alias-version-constraint
+        run: |
+          THIS_RELEASE_VERSION_CONSTRAINT=$(echo ${{ inputs.release_branch_name }} | sed 's/\(.*\)\.x/~\1/')
+          echo "THIS_RELEASE_VERSION_CONSTRAINT=${THIS_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
+          echo "This release version constraint: $THIS_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
       - name: Create the composer main branch alias string.
         id: alias-main-branch
         run: |
@@ -39,7 +50,7 @@ jobs:
     strategy:
       matrix:
         repo:
-          - trackleft/az-quickstart-scaffolding
+          - az-digital/az-quickstart-scaffolding
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
@@ -48,7 +59,7 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}
           event-type: az_quickstart_prep_for_minor_release
-          client-payload: '{"release_branch_name": "${{ inputs.release_branch_name }}" , "next_release_branch_alias_constraint": "${{needs.branch_name_prep.outputs.next_release_branch_alias_constraint}}", "main_branch_alias": "${{needs.branch_name_prep.outputs.main_branch_alias}}"}'
+          client-payload: '{"release_branch_name": "${{ inputs.release_branch_name }}" , "this_release_branch_alias_constraint": "${{needs.branch_name_prep.outputs.this_release_branch_alias_constraint}}", "main_branch_alias": "${{needs.branch_name_prep.outputs.main_branch_alias}}", "next_release_branch_alias_constraint": "${{needs.branch_name_prep.outputs.next_release_branch_alias_constraint}}"}'
 
   prepare_for_new_minor_release:
     name: Prepare for a new minor release
@@ -56,14 +67,24 @@ jobs:
     needs: branch_name_prep
     steps:
     - name: Checkout az_quickstart
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        repository: trackleft/az_quickstart
+        repository: az-digital/az_quickstart
         ref: main
 
     - name: Create and check out release branch
       run: |
         git checkout -b ${{ inputs.release_branch_name }}
+
+    - name: Set up git
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+
+    - name: Push new release branch to GitHub
+      run: |
+        git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
+        # git push origin -u ${{ inputs.release_branch_name }}
 
     - name: Check out new branch so we can make a pull request
       run: |
@@ -94,9 +115,15 @@ jobs:
         NEW_VERSION=${{ inputs.release_branch_name }}
         sed -i "s/SCAFFOLD_BRANCH=main/SCAFFOLD_BRANCH=$NEW_VERSION/g" .probo.yaml
 
-    - uses: php-actions/composer@v6
+    - name: Setup PHP with composer v2
+      uses: shivammathur/setup-php@v2
       with:
-        command: config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
+         php-version: '8.1'
+         tools: composer:v2
+
+    - name: Update dev branch alias via Composer
+      run: |
+        composer config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
 
     - name: Add changed files to release branch commit
       run: |
@@ -108,24 +135,14 @@ jobs:
         git add .probo.yaml
         git add composer.json
 
-    - name: Set up git
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-
-    - name: Push new release branch to GitHub
-      run: |
-        git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
-        git push origin -u ${{ inputs.release_branch_name }}
-
-    - name: Push required changes to new branch so we can make a pull request
-      uses: peter-evans/create-pull-request@v5
-      with:
-        title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-        commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-        branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
-        base: ${{ inputs.release_branch_name }}
-        delete-branch: true
+    # - name: Push required changes to new branch so we can make a pull request
+    #   uses: peter-evans/create-pull-request@v5
+    #   with:
+    #     title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
+    #     commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
+    #     branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
+    #     base: ${{ inputs.release_branch_name }}
+    #     delete-branch: true
 
   update_previous_release_branches:
     needs: prepare_for_new_minor_release
@@ -136,9 +153,10 @@ jobs:
         previous_version: [2.7.x, 2.6.x, 2.5.x, 2.4.x, 2.3.x, 2.2.x, 2.1.x, 2.0.x]
     steps:
       - name: Update previous release branch `${{ matrix.previous_version }}`
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: ${{ matrix.previous_version }}
+
       - name: Set up Git
         run: |
           git config user.name "GitHub Action"
@@ -151,9 +169,10 @@ jobs:
       - name: Show git diff
         run: git diff ${{ matrix.previous_version }}
 
-      - uses: php-actions/composer@v6
-        with:
-          command: config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
+      - name: Update dev branch alias via Composer
+        run: |
+          composer config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
+
       - name: Show git status
         run: |
           git status
@@ -161,11 +180,11 @@ jobs:
       - name: Show git diff
         run: git diff
 
-      - name: Push required changes to new branch so we can make a pull request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
-          base: ${{ matrix.previous_version }}
-          delete-branch: true
+      # - name: Push required changes to new branch so we can make a pull request
+      #   uses: peter-evans/create-pull-request@v5
+      #   with:
+      #     title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
+      #     commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
+      #     branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
+      #     base: ${{ matrix.previous_version }}
+      #     delete-branch: true
