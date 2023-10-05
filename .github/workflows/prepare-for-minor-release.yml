@@ -117,7 +117,6 @@ jobs:
         git add .probo.yaml
         git add composer.json
 
-
     - name: Push required changes to new branch so we can make a pull request
       uses: peter-evans/create-pull-request@v5
       with:
