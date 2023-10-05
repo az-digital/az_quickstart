@@ -169,11 +169,11 @@ jobs:
       - name: Show git diff
         run: git diff
 
-      - name: Push required changes to new branch so we can make a pull request
-        uses: peter-evans/create-pull-request@v5
-        with:
-          title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
-          base: ${{ matrix.previous_version }}
-          delete-branch: true
+      # - name: Push required changes to new branch so we can make a pull request
+      #   uses: peter-evans/create-pull-request@v5
+      #   with:
+      #     title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
+      #     commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
+      #     branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
+      #     base: ${{ matrix.previous_version }}
+      #     delete-branch: true
