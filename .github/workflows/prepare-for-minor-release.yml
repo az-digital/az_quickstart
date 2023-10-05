@@ -21,6 +21,16 @@ jobs:
       this_release_branch_alias_constraint: ${{ steps.alias-version-constraint.outputs.THIS_RELEASE_VERSION_CONSTRAINT }}
       main_branch_alias: ${{ steps.alias-main-branch.outputs.MAIN_BRANCH_ALIAS }}
     steps:
+      - name: Create version contstraint string for next release branch alias string.
+        id: alias-next-version-constraint
+        run: |
+          local delimiter=.
+          local version_parts=($(echo ${{ inputs.release_branch_name }} | tr $delimiter '\n'))
+version_parts[2]=$((version_parts[2]+1))
+          NEXT_RELEASE_VERSION_CONSTRAINT=$(local IFS=$delimiter ; echo "${version_parts[*]}" | sed 's/\(.*\)\.x/~\1/')
+          echo "NEXT_RELEASE_VERSION_CONSTRAINT=${NEXT_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
+          echo "Next release version constraint: $NEXT_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
+
       - name: Create version contstraint string for this release branch alias string.
         id: alias-version-constraint
         run: |
