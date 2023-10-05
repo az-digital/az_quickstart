@@ -63,7 +63,8 @@ function az_quickstart_install() {
  * Implements hook_requireents().
  */
 function az_quickstart_requirements($phase) {
-  if ($phase == 'runtime') {
+  $requirements = [];
+  if ($phase === 'runtime') {
     // Reset the extension lists.
     /** @var \Drupal\Core\Extension\ModuleExtensionList $module_extension_list */
     $module_extension_list = \Drupal::service('extension.list.module');
@@ -98,6 +99,8 @@ function az_quickstart_requirements($phase) {
       ];
     }
   }
+
+  return $requirements;
 }
 
 /**
