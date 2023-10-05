@@ -27,7 +27,7 @@ jobs:
         run: |
           local delimiter=.
           local version_parts=($(echo ${{ inputs.release_branch_name }} | tr $delimiter '\n'))
-version_parts[2]=$((version_parts[2]+1))
+          version_parts[2]=$((version_parts[2]+1))
           NEXT_RELEASE_VERSION_CONSTRAINT=$(local IFS=$delimiter ; echo "${version_parts[*]}" | sed 's/\(.*\)\.x/~\1/')
           echo "NEXT_RELEASE_VERSION_CONSTRAINT=${NEXT_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
           echo "Next release version constraint: $NEXT_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
