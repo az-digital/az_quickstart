@@ -117,15 +117,6 @@ jobs:
         git add .probo.yaml
         git add composer.json
 
-    - name: Set up git
-      run: |
-        git config user.name github-actions
-        git config user.email github-actions@github.com
-
-    - name: Push new release branch to GitHub
-      run: |
-        git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
-        git push origin -u ${{ inputs.release_branch_name }}
 
     - name: Push required changes to new branch so we can make a pull request
       uses: peter-evans/create-pull-request@v5
