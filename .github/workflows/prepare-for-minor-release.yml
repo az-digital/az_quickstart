@@ -111,8 +111,7 @@ jobs:
          tools: composer:v2
 
     - name: Update dev branch alias via Composer
-      with:
-        command: config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
+      composer config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
 
     - name: Add changed files to release branch commit
       run: |
