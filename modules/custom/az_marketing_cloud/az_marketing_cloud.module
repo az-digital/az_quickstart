@@ -34,10 +34,6 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'node--view--az-marketing-cloud--event-layout',
       'base hook' => 'node',
     ],
-    'node__view__az_marketing_cloud__hero_layout__unpublished' => [
-      'template' => 'node--view--az-marketing-cloud--hero-layout--unpublished',
-      'base hook' => 'node',
-    ],
     'region__az_marketing_cloud' => [
       'template' => 'region--az-marketing-cloud',
       'base hook' => 'region',

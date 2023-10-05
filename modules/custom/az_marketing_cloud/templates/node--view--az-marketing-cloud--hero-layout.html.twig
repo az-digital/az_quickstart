@@ -69,59 +69,119 @@
 */
 #}
 
-<table class="qs-layout-hero" cellspacing="0" cellpadding="0" style="width: 100%;">
-  <tbody>
-    <tr>
-      <td valign="top" class="responsive-td" style="width: 100%;">
-        <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
-          style="text-align: left; min-width: 100%; " class="stylingblock-content-wrapper">
-          <tbody>
-            <tr>
-              <td class="stylingblock-content-wrapper" align="center">
-                <img class="qs-img" alt="" src="{{ images.az_marketing_cloud_hero_layout }}" width="600" height="300"
-                  style="display: block; height: 300px; width: 600px; padding: 0px; text-align: center;">
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
-          style="text-align: left; background-color: transparent; min-width: 100%;"
-          class="stylingblock-content-wrapper">
-          <tbody>
-            <tr>
-              <td style="padding: 15px 20px 0px; " class="stylingblock-content-wrapper" align="left">
-                <h1 class="qs-heading"
-                  style="font-size:24px;color:#1E5288;line-height:115%;font-weight:bold;font-style:normal;">
-                  {{ content.smart_title }}</h1>
-                <p class="qs-summary" style="line-height: 150%;">
-                  {{ content.field_az_summary }}
-                </p>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
-          style="text-align: left; background-color: transparent; min-width: 100%;">
-          <tbody>
-            <tr>
-              <td style="padding: 15px 20px 20px 15px; " class="stylingblock-content-wrapper" align="left">
-                <table border="0" cellspacing="0" cellpadding="0" role="presentation">
-                  <tbody>
-                    <tr>
-                      <td class="innertd buttonblock" align="center" bgcolor="#FFFFFF"
-                        style=" border-radius: 0px; background-color: #FFFFFF;">
-                        <a class="qs-button"
-                          style="text-decoration: none; display: block; font-size: 16px; color: #8B0015; background-color: #FFFFFF; border: 2px solid #8B0015; padding: 8px; text-transform: uppercase;"
-                          target="_blank" href="{{ az_canonical_url }}">{{ az_canonical_summary_link_title }}</a>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </td>
-    </tr>
-  </tbody>
-</table>
+{% if node.isPublished() %}
+  <table class="qs-layout-hero" cellspacing="0" cellpadding="0" style="width: 100%;">
+    <tbody>
+      <tr>
+        <td valign="top" class="responsive-td" style="width: 100%;">
+          <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+            style="text-align: left; min-width: 100%; " class="stylingblock-content-wrapper">
+            <tbody>
+              <tr>
+                <td class="stylingblock-content-wrapper" align="center">
+                  <img class="qs-img" alt="" src="{{ images.az_marketing_cloud_hero_layout }}" width="600" height="300"
+                    style="display: block; height: 300px; width: 600px; padding: 0px; text-align: center;">
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+            style="text-align: left; background-color: transparent; min-width: 100%;"
+            class="stylingblock-content-wrapper">
+            <tbody>
+              <tr>
+                <td style="padding: 15px 20px 0px; " class="stylingblock-content-wrapper" align="left">
+                  <h1 class="qs-heading"
+                    style="font-size:24px;color:#1E5288;line-height:115%;font-weight:bold;font-style:normal;">
+                    {{ content.smart_title }}</h1>
+                  <p class="qs-summary" style="line-height: 150%;">
+                    {{ content.field_az_summary }}
+                  </p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+            style="text-align: left; background-color: transparent; min-width: 100%;">
+            <tbody>
+              <tr>
+                <td style="padding: 15px 20px 20px 15px; " class="stylingblock-content-wrapper" align="left">
+                  <table border="0" cellspacing="0" cellpadding="0" role="presentation">
+                    <tbody>
+                      <tr>
+                        <td class="innertd buttonblock" align="center" bgcolor="#FFFFFF"
+                          style=" border-radius: 0px; background-color: #FFFFFF;">
+                          <a class="qs-button"
+                            style="text-decoration: none; display: block; font-size: 16px; color: #8B0015; background-color: #FFFFFF; border: 2px solid #8B0015; padding: 8px; text-transform: uppercase;"
+                            target="_blank" href="{{ az_canonical_url }}">{{ az_canonical_summary_link_title }}</a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  {% else %}
+    <table class="qs-layout-hero" cellspacing="0" cellpadding="0" style="width: 100%;">
+      <tbody>
+        <tr>
+          <td valign="top" class="responsive-td" style="width: 100%;">
+            <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+              style="text-align: left; min-width: 100%; " class="stylingblock-content-wrapper">
+              <tbody>
+                <tr>
+                  <td class="stylingblock-content-wrapper" align="center">
+                    <img class="qs-img" alt="" src="/images/hero-layout.png" width="600" height="300"
+                      style="display: block; height: 300px; width: 600px; padding: 0px; text-align: center;">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+              style="text-align: left; background-color: transparent; min-width: 100%;"
+              class="stylingblock-content-wrapper">
+              <tbody>
+                <tr>
+                  <td style="padding: 15px 20px 0px; " class="stylingblock-content-wrapper" align="left">
+                    <h1 class="qs-heading"
+                      style="font-size:24px;color:#1E5288;line-height:115%;font-weight:bold;font-style:normal;">
+                      Unpublished content</h1>
+                    <p class="qs-summary" style="line-height: 150%;">
+                      This URL will be updated with real content once the item is published on the website.
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+              style="text-align: left; background-color: transparent; min-width: 100%;">
+              <tbody>
+                <tr>
+                  <td style="padding: 15px 20px 20px 15px; " class="stylingblock-content-wrapper" align="left">
+                    <table border="0" cellspacing="0" cellpadding="0" role="presentation">
+                      <tbody>
+                        <tr>
+                          <td class="innertd buttonblock" align="center" bgcolor="#FFFFFF"
+                            style=" border-radius: 0px; background-color: #FFFFFF;">
+                            <a class="qs-button"
+                              style="text-decoration: none; display: block; font-size: 16px; color: #8B0015; background-color: #FFFFFF; border: 2px solid #8B0015; padding: 8px; text-transform: uppercase;"
+                              target="_blank" href="">Button</a>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+{% endif %}
