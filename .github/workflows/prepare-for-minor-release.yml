@@ -73,7 +73,7 @@ jobs:
     - name: Push new release branch to GitHub
       run: |
         git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
-        git push origin -u ${{ inputs.release_branch_name }}
+        # git push origin -u ${{ inputs.release_branch_name }}
 
     - name: Check out new branch so we can make a pull request
       run: |
