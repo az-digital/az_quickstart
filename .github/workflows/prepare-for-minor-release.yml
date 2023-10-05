@@ -68,6 +68,15 @@ jobs:
     - name: Check out new branch so we can make a pull request
       run: |
         git checkout -b ${{ inputs.release_branch_name }}-prepare-for-minor-release
+    - name: Set up git
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+
+    - name: Push new release branch to GitHub
+      run: |
+        git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
+        git push origin -u ${{ inputs.release_branch_name }}
 
     - name: Update DDev config in release branch
       run: |
