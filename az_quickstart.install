@@ -118,3 +118,10 @@ function az_quickstart_update_920701() {
 function az_quickstart_update_920702() {
   \Drupal::service('module_installer')->install(['az_paragraphs_splitscreen']);
 }
+
+/**
+ * Ensure ckeditor5 module is installed.
+ */
+function az_quickstart_update_1020801() {
+  \Drupal::service('module_installer')->install(['ckeditor5']);
+}

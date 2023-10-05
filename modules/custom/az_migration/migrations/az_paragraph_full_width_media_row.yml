@@ -29,11 +29,11 @@ process:
     process:
       delta: delta
       target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_media
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_media
 
   bg_attach_processed:
     - plugin: get
@@ -109,7 +109,7 @@ process:
         style: '@content_style_processed'
         text_media_spacing: '@text_media_spacing_processed'
         az_display_settings:
-            bottom_spacing: '@bottom_spacing_processed'
+          bottom_spacing: '@bottom_spacing_processed'
 
 dependencies:
   enforced:
