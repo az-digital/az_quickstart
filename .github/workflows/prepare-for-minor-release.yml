@@ -39,7 +39,7 @@ jobs:
     strategy:
       matrix:
         repo:
-          - trackleft/az-quickstart-scaffolding
+          - az-digital/az-quickstart-scaffolding
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
