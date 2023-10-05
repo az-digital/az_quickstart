@@ -80,14 +80,14 @@ function az_quickstart_requirements($phase) {
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
     foreach ($enabled_modules as $module => $data) {
       if (in_array($module, $azqs_deprecated_modules)) {
-        $enabled_deprecated_modules[] = $module_extension_list->getExtensionInfo($module)['name'];
+        $enabled_deprecated_modules[$module] = $module_extension_list->getExtensionInfo($module)['name'];
       }
     }
 
     // Warn if any deprecated modules are installed.
     if (!empty($enabled_deprecated_modules)) {
-      foreach ($enabled_deprecated_modules as $deprecated_module) {
-        $deprecated_modules_link_list[] = (string) Link::fromTextAndUrl($deprecated_module, Url::fromUri('https://www.drupal.org/project/' . $deprecated_module))->toString();
+      foreach ($enabled_deprecated_modules as $deprecated_module => $name) {
+        $deprecated_modules_link_list[] = (string) Link::fromTextAndUrl($name, Url::fromUri('https://www.drupal.org/project/' . $deprecated_module))->toString();
       }
       $requirements['azqs_deprecated_modules'] = [
         'title' => t('Quickstart deprecated modules enabled'),
