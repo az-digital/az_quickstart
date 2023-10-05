@@ -79,7 +79,7 @@ function az_quickstart_requirements($phase) {
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
     foreach ($enabled_modules as $module => $data) {
-      if (in_array($azqs_deprecated_modules, $module)) {
+      if (in_array($module, $azqs_deprecated_modules)) {
         $enabled_deprecated_modules[] = $module_extension_list->getExtensionInfo($module)['name'];
       }
     }
