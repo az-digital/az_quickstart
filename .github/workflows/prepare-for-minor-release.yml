@@ -104,7 +104,13 @@ jobs:
         NEW_VERSION=${{ inputs.release_branch_name }}
         sed -i "s/SCAFFOLD_BRANCH=main/SCAFFOLD_BRANCH=$NEW_VERSION/g" .probo.yaml
 
-    - uses: php-actions/composer@v6
+    - name: Setup PHP with composer v2
+      uses: shivammathur/setup-php@v2
+      with:
+         php-version: '8.1'
+         tools: composer:v2
+
+    - name: Update dev branch alias via Composer
       with:
         command: config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
 
