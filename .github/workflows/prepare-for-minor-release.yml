@@ -21,7 +21,7 @@ jobs:
       this_release_branch_alias_constraint: ${{ steps.alias-version-constraint.outputs.THIS_RELEASE_VERSION_CONSTRAINT }}
       main_branch_alias: ${{ steps.alias-main-branch.outputs.MAIN_BRANCH_ALIAS }}
     steps:
-      - name: Create version contstraint string for next release branch alias string.
+      - name: Create version contstraint string for this release branch alias string.
         id: alias-version-constraint
         run: |
           THIS_RELEASE_VERSION_CONSTRAINT=$(echo ${{ inputs.release_branch_name }} | sed 's/\(.*\)\.x/~\1/')
