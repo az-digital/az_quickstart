@@ -18,6 +18,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     outputs:
+     next_release_branch_alias_constraint: ${{ steps.alias-next-version-constraint.outputs.NEXT_RELEASE_VERSION_CONSTRAINT }}
       this_release_branch_alias_constraint: ${{ steps.alias-version-constraint.outputs.THIS_RELEASE_VERSION_CONSTRAINT }}
       main_branch_alias: ${{ steps.alias-main-branch.outputs.MAIN_BRANCH_ALIAS }}
     steps:
