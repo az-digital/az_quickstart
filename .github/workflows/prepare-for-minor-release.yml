@@ -59,7 +59,7 @@ version_parts[2]=$((version_parts[2]+1))
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}
           event-type: az_quickstart_prep_for_minor_release
-          client-payload: '{"release_branch_name": "${{ inputs.release_branch_name }}" , "next_release_branch_alias_constraint": "${{needs.branch_name_prep.outputs.next_release_branch_alias_constraint}}", "main_branch_alias": "${{needs.branch_name_prep.outputs.main_branch_alias}}"}'
+          client-payload: '{"release_branch_name": "${{ inputs.release_branch_name }}" , "this_release_branch_alias_constraint": "${{needs.branch_name_prep.outputs.this_release_branch_alias_constraint}}", "main_branch_alias": "${{needs.branch_name_prep.outputs.main_branch_alias}}", "next_release_branch_alias_constraint": "${{inputs.next_release_branch_version_constraint}}"}'
 
   prepare_for_new_minor_release:
     name: Prepare for a new minor release
