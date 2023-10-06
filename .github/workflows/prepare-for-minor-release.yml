@@ -18,13 +18,13 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     outputs:
-      next_minor_release: ${{ steps.alias-next-version-constraint.outputs.NEXT_MINOR_RELEASE }}
-      next_release_branch_alias_constraint: ${{ steps.alias-next-version-constraint.outputs.NEXT_RELEASE_VERSION_CONSTRAINT }}
-      this_release_branch_alias_constraint: ${{ steps.alias-version-constraint.outputs.THIS_RELEASE_VERSION_CONSTRAINT }}
-      main_branch_alias: ${{ steps.alias-main-branch.outputs.MAIN_BRANCH_ALIAS }}
+      next_minor_release: ${{ steps.define-version-variables.outputs.NEXT_MINOR_RELEASE }}
+      next_release_branch_alias_constraint: ${{ steps.define-version-variables.outputs.NEXT_RELEASE_VERSION_CONSTRAINT }}
+      this_release_branch_alias_constraint: ${{ steps.define-version-variables.outputs.THIS_RELEASE_VERSION_CONSTRAINT }}
+      main_branch_alias: ${{ steps.define-version-variables.outputs.MAIN_BRANCH_ALIAS }}
     steps:
-      - name: Create version constraint string for next release branch alias string.
-        id: alias-next-version-constraint
+      - name: Define version variables
+        id: define-version-variables
         run: |
           delimiter=.
           version_parts=($(echo ${{ inputs.release_branch_name }} | tr $delimiter '\n'))
@@ -35,16 +35,9 @@ jobs:
           echo "NEXT_RELEASE_VERSION_CONSTRAINT=${NEXT_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
           echo "Next minor release: $NEXT_MINOR_RELEASE" >> $GITHUB_STEP_SUMMARY
           echo "Next release version constraint: $NEXT_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
-
-      - name: Create version constraint string for this release branch alias string.
-        id: alias-version-constraint
-        run: |
           THIS_RELEASE_VERSION_CONSTRAINT=$(echo ${{ inputs.release_branch_name }} | sed 's/\(.*\)\.x/~\1/')
           echo "THIS_RELEASE_VERSION_CONSTRAINT=${THIS_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
           echo "This release version constraint: $THIS_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
-      - name: Create the composer main branch alias string.
-        id: alias-main-branch
-        run: |
           MAIN_BRANCH_ALIAS="${{ inputs.release_branch_name }}-dev"
           echo "MAIN_BRANCH_ALIAS=${MAIN_BRANCH_ALIAS}" >> $GITHUB_OUTPUT
           echo "Main branch alias: $MAIN_BRANCH_ALIAS" >> $GITHUB_STEP_SUMMARY
