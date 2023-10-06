@@ -124,7 +124,6 @@ jobs:
 
     - name: Add changed files to release branch commit
       run: |
-        git diff
         git add .ddev/commands/web/install
         git add .github/workflows/security.yml
         git add .github/workflows/create-release.yml
@@ -165,19 +164,9 @@ jobs:
         run: |
           git checkout -b ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
 
-      - name: Show git diff
-        run: git diff ${{ matrix.previous_version }}
-
       - name: Update dev branch alias via Composer
         run: |
           composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
-
-      - name: Show git status
-        run: |
-          git status
-
-      - name: Show git diff
-        run: git diff
 
       - name: Create pull request for previous release branch updates
         uses: peter-evans/create-pull-request@v5
