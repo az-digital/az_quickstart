@@ -81,7 +81,7 @@ jobs:
     - name: Push new release branch to GitHub
       run: |
         git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
-        # git push origin -u ${{ inputs.release_branch_name }}
+        git push origin -u ${{ inputs.release_branch_name }}
 
     - name: Check out new branch so we can make a pull request
       run: |
@@ -132,16 +132,16 @@ jobs:
         git add .probo.yaml
         git add composer.json
 
-    # - name: Push required changes to new branch so we can make a pull request
-    #   uses: peter-evans/create-pull-request@v5
-    #   with:
-    #     title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-    #     commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-    #     branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
-    #     base: ${{ inputs.release_branch_name }}
-    #     delete-branch: true
-    #     labels: |
-    #       ${{ inputs.release_branch_name }} only
+    - name: Create pull request for release branch updates
+      uses: peter-evans/create-pull-request@v5
+      with:
+        title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
+        commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
+        branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
+        base: ${{ inputs.release_branch_name }}
+        delete-branch: true
+        labels: |
+          ${{ inputs.release_branch_name }} only
 
   update_previous_release_branches:
     needs: [prepare_for_new_minor_release, branch_name_prep]
@@ -179,13 +179,13 @@ jobs:
       - name: Show git diff
         run: git diff
 
-      # - name: Push required changes to new branch so we can make a pull request
-      #   uses: peter-evans/create-pull-request@v5
-      #   with:
-      #     title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-      #     commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-      #     branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
-      #     base: ${{ matrix.previous_version }}
-      #     delete-branch: true
-      #     labels: |
-      #       ${{ matrix.previous_version }} only
+      - name: Create pull request for previous release branch updates
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
+          commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
+          branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
+          base: ${{ matrix.previous_version }}
+          delete-branch: true
+          labels: |
+            ${{ matrix.previous_version }} only
