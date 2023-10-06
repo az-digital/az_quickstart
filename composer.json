@@ -40,7 +40,7 @@
         "drupal/antibot": "2.0.2",
         "drupal/asset_injector": "2.19.0",
         "drupal/auto_entitylabel": "3.0.0",
-        "drupal/background_image_formatter": "2.0.3",
+        "drupal/background_image_formatter": "*",
         "drupal/better_exposed_filters": "6.0.3",
         "drupal/blazy": "2.18.0",
         "drupal/block_class": "2.0.11",
