@@ -18,18 +18,22 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     outputs:
+      next_minor_release: ${{ steps.alias-next-version-constraint.outputs.NEXT_MINOR_RELEASE }}
       next_release_branch_alias_constraint: ${{ steps.alias-next-version-constraint.outputs.NEXT_RELEASE_VERSION_CONSTRAINT }}
       this_release_branch_alias_constraint: ${{ steps.alias-version-constraint.outputs.THIS_RELEASE_VERSION_CONSTRAINT }}
       main_branch_alias: ${{ steps.alias-main-branch.outputs.MAIN_BRANCH_ALIAS }}
     steps:
-      - name: Create version contstraint string for next release branch alias string.
+      - name: Create version constraint string for next release branch alias string.
         id: alias-next-version-constraint
         run: |
           delimiter=.
           version_parts=($(echo ${{ inputs.release_branch_name }} | tr $delimiter '\n'))
           version_parts[1]=$((version_parts[1]+1))
-          NEXT_RELEASE_VERSION_CONSTRAINT=$(local IFS=$delimiter ; echo "${version_parts[*]}" | sed 's/\(.*\)\.x/~\1/')
+          NEXT_MINOR_RELEASE=$(IFS=$delimiter ; echo "${version_parts[*]}" | sed 's/\(.*\)\.x/\1/')
+          NEXT_RELEASE_VERSION_CONSTRAINT="~${NEXT_MINOR_RELEASE}"
+          echo "NEXT_MINOR_RELEASE=${NEXT_MINOR_RELEASE}" >> $GITHUB_OUTPUT
           echo "NEXT_RELEASE_VERSION_CONSTRAINT=${NEXT_RELEASE_VERSION_CONSTRAINT}" >> $GITHUB_OUTPUT
+          echo "Next minor release: $NEXT_MINOR_RELEASE" >> $GITHUB_STEP_SUMMARY
           echo "Next release version constraint: $NEXT_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
 
       - name: Create version contstraint string for this release branch alias string.
@@ -171,7 +175,7 @@ jobs:
 
       - name: Update dev branch alias via Composer
         run: |
-          composer config extra.branch-alias.dev-main ${{ inputs.release_branch_name }}-dev
+          composer config extra.branch-alias.dev-main ${{ steps.alias-next-version-constraint.outputs.NEXT_MINOR_RELEASE }}-dev
 
       - name: Show git status
         run: |
