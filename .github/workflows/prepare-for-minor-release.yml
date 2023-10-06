@@ -36,7 +36,7 @@ jobs:
           echo "Next minor release: $NEXT_MINOR_RELEASE" >> $GITHUB_STEP_SUMMARY
           echo "Next release version constraint: $NEXT_RELEASE_VERSION_CONSTRAINT" >> $GITHUB_STEP_SUMMARY
 
-      - name: Create version contstraint string for this release branch alias string.
+      - name: Create version constraint string for this release branch alias string.
         id: alias-version-constraint
         run: |
           THIS_RELEASE_VERSION_CONSTRAINT=$(echo ${{ inputs.release_branch_name }} | sed 's/\(.*\)\.x/~\1/')
