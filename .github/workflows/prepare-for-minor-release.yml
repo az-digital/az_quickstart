@@ -15,7 +15,7 @@ jobs:
           echo "release_branch_name: ${{ inputs.release_branch_name }}"
 
   branch_name_prep:
-    timeout-minutes: 60
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     outputs:
       next_minor_release: ${{ steps.define-version-variables.outputs.NEXT_MINOR_RELEASE }}
