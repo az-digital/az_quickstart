@@ -132,7 +132,7 @@ jobs:
         git add .probo.yaml
         git add composer.json
 
-    - name: Create pull request for release branch updates
+    - name: Create pull request for new release branch updates
       uses: peter-evans/create-pull-request@v5
       with:
         title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
