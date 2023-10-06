@@ -168,7 +168,7 @@ jobs:
 
       - name: Update dev branch alias via Composer
         run: |
-          composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}-dev
+          composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
 
       - name: Show git status
         run: |
