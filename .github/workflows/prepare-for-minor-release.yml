@@ -132,14 +132,16 @@ jobs:
         git add .probo.yaml
         git add composer.json
 
-    # - name: Push required changes to new branch so we can make a pull request
-    #   uses: peter-evans/create-pull-request@v5
-    #   with:
-    #     title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-    #     commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-    #     branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
-    #     base: ${{ inputs.release_branch_name }}
-    #     delete-branch: true
+    - name: Push required changes to new branch so we can make a pull request
+      uses: peter-evans/create-pull-request@v5
+      with:
+        title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
+        commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
+        branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
+        base: ${{ inputs.release_branch_name }}
+        delete-branch: true
+        labels: |
+          ${{ inputs.release_branch_name }} only
 
   update_previous_release_branches:
     needs: [prepare_for_new_minor_release, branch_name_prep]
