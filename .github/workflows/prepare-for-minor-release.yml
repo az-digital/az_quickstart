@@ -142,7 +142,7 @@ jobs:
     #     delete-branch: true
 
   update_previous_release_branches:
-    needs: prepare_for_new_minor_release
+    needs: [prepare_for_new_minor_release, branch_name_prep]
     runs-on: ubuntu-latest
     name: Update `${{ matrix.previous_version }}` release branch.
     strategy:
