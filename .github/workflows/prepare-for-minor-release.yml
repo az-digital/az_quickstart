@@ -118,6 +118,10 @@ jobs:
          php-version: '8.1'
          tools: composer:v2
 
+    - name: Update dev branch alias via Composer
+      run: |
+        composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
+
     - name: Add changed files to release branch commit
       run: |
         git diff
