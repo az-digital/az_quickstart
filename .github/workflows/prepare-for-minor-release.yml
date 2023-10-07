@@ -103,7 +103,7 @@ jobs:
     - name: Update Lando config in release branch
       run: |
         NEW_VERSION=${{ inputs.release_branch_name }}
-        sed -i '' 's/SCAFFOLD_BRANCH="main"/SCAFFOLD_BRANCH="$NEW_VERSION"/g' .lando.yml
+        sed -i '' 's/SCAFFOLD_BRANCH="main"/SCAFFOLD_BRANCH=$NEW_VERSION/g' .lando.yml
 
     - name: Update Probo config in release branch
       run: |
