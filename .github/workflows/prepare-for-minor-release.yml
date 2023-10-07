@@ -83,10 +83,6 @@ jobs:
         git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
         git push origin -u ${{ inputs.release_branch_name }}
 
-    - name: Check out new branch so we can make a pull request
-      run: |
-        git checkout -b ${{ inputs.release_branch_name }}-prepare-for-minor-release
-
     - name: Update DDev config in release branch
       run: |
         NEW_VERSION=${{ inputs.release_branch_name }}
@@ -122,15 +118,6 @@ jobs:
       run: |
         composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
 
-    - name: Add changed files to release branch commit
-      run: |
-        git add .ddev/commands/web/install
-        git add .github/workflows/security.yml
-        git add .github/workflows/create-release.yml
-        git add .lando.yml
-        git add .probo.yaml
-        git add composer.json
-
     - name: Create pull request for new release branch updates
       uses: peter-evans/create-pull-request@v5
       with:
@@ -141,7 +128,14 @@ jobs:
         delete-branch: true
         labels: |
           ${{ inputs.release_branch_name }} only
-
+        add-paths: |
+          .ddev/commands/web/install
+          .github/workflows/security.yml
+          .github/workflows/create-release.yml
+          .lando.yml
+          .probo.yaml
+          composer.json
+          
   update_previous_release_branches:
     needs: [prepare_for_new_minor_release, branch_name_prep]
     runs-on: ubuntu-latest
@@ -160,10 +154,6 @@ jobs:
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
 
-      - name: Check out new branch so we can make a pull request
-        run: |
-          git checkout -b ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
-
       - name: Update dev branch alias via Composer
         run: |
           composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
@@ -178,3 +168,5 @@ jobs:
           delete-branch: true
           labels: |
             ${{ matrix.previous_version }} only
+          add-paths: |
+            composer.json
