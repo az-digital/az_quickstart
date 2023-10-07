@@ -6,6 +6,7 @@ on:
       release_branch_name:
         description: The name of the new release branch (e.g. 2.8.x) to create.
         required: true
+        
 jobs:
   print_inputs:
     runs-on: ubuntu-latest
@@ -68,6 +69,7 @@ jobs:
       with:
         repository: az-digital/az_quickstart
         ref: main
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Create and check out release branch
       run: |
@@ -82,10 +84,6 @@ jobs:
       run: |
         git commit --allow-empty -m "Prepare for new minor release ${{ inputs.release_branch_name }}"
         git push origin -u ${{ inputs.release_branch_name }}
-
-    - name: Check out new branch so we can make a pull request
-      run: |
-        git checkout -b ${{ inputs.release_branch_name }}-prepare-for-minor-release
 
     - name: Update DDev config in release branch
       run: |
@@ -105,7 +103,7 @@ jobs:
     - name: Update Lando config in release branch
       run: |
         NEW_VERSION=${{ inputs.release_branch_name }}
-        sed -i "s/SCAFFOLD_BRANCH=main/SCAFFOLD_BRANCH=$NEW_VERSION/g" .lando.yml
+        sed -i '' 's/SCAFFOLD_BRANCH="main"/SCAFFOLD_BRANCH=$NEW_VERSION/g' .lando.yml
 
     - name: Update Probo config in release branch
       run: |
@@ -122,15 +120,6 @@ jobs:
       run: |
         composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
 
-    - name: Add changed files to release branch commit
-      run: |
-        git add .ddev/commands/web/install
-        git add .github/workflows/security.yml
-        git add .github/workflows/create-release.yml
-        git add .lando.yml
-        git add .probo.yaml
-        git add composer.json
-
     - name: Create pull request for new release branch updates
       uses: peter-evans/create-pull-request@v5
       with:
@@ -139,9 +128,17 @@ jobs:
         branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
         base: ${{ inputs.release_branch_name }}
         delete-branch: true
+        token: ${{ secrets.REPO_DISPATCH_TOKEN }}
         labels: |
           ${{ inputs.release_branch_name }} only
-
+        add-paths: |
+          .ddev/commands/web/install
+          .github/workflows/security.yml
+          .github/workflows/create-release.yml
+          .lando.yml
+          .probo.yaml
+          composer.json
+          
   update_previous_release_branches:
     needs: [prepare_for_new_minor_release, branch_name_prep]
     runs-on: ubuntu-latest
@@ -154,15 +151,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ matrix.previous_version }}
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
 
       - name: Set up Git
         run: |
           git config user.name "GitHub Action"
           git config user.email "action@github.com"
-
-      - name: Check out new branch so we can make a pull request
-        run: |
-          git checkout -b ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
 
       - name: Update dev branch alias via Composer
         run: |
@@ -176,5 +170,8 @@ jobs:
           branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
           base: ${{ matrix.previous_version }}
           delete-branch: true
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           labels: |
             ${{ matrix.previous_version }} only
+          add-paths: |
+            composer.json
