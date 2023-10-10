@@ -76,4 +76,4 @@ process:
         full_width: full_width
         ordering: ordering
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing
