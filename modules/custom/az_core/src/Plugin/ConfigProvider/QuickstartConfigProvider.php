@@ -2,11 +2,12 @@
 
 namespace Drupal\az_core\Plugin\ConfigProvider;
 
+use Drupal\Component\Diff\Diff;
 use Drupal\config_provider\Plugin\ConfigProviderBase;
-use Drupal\Core\Config\InstallStorage;
-use Drupal\Core\Config\StorageInterface;
 use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
+use Drupal\Core\Config\InstallStorage;
+use Drupal\Core\Config\StorageInterface;
 
 /**
  * Class for providing configuration from a quickstart default directory.
@@ -238,7 +239,25 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       // Diff active config and snapshot of module to check for customization.
       $diff = $differ->diff($active, $snap);
       // Overrides only allowed if no changes in diff.
-      if (!$diff->isEmpty() && !empty($active)) {
+      if (!$this->diffIsEmpty($diff) && !empty($active)) {
+        return FALSE;
+      }
+    }
+    return TRUE;
+  }
+
+  /**
+   * Checks if a diff is empty.
+   *
+   * @param \Drupal\Component\Diff\Diff $diff
+   *   A diff object.
+   *
+   * @return bool
+   *   True if two sequences were identical.
+   */
+  protected function diffIsEmpty(Diff $diff) {
+    foreach ($diff->getEdits() as $edit) {
+      if ($edit->type != 'copy') {
         return FALSE;
       }
     }
