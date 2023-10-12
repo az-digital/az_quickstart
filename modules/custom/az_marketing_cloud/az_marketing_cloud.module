@@ -163,14 +163,3 @@ function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestio
     $suggestions[] = 'views_view__az_marketing_cloud';
   }
 }
-
-/**
- * Implements template_preprocess_views_view().
- */
-function az_marketing_cloud_preprocess_views_view(&$variables) {
-  $view = $variables['view'];
-
-  if ($view->id() === 'az_marketing_cloud') {
-    $variables['#attached']['library'][] = 'az_marketing_cloud/admin';
-  }
-}
