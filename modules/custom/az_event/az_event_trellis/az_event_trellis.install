@@ -6,7 +6,7 @@
  */
 
 /**
- * Ensure views_data_export module is installed.
+ * Ensure views_remote_data module is installed.
  */
 function az_event_trellis_update_1020801() {
   \Drupal::service('module_installer')->install(['views_remote_data']);
