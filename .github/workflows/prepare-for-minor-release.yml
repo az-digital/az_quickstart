@@ -166,7 +166,7 @@ jobs:
         with:
           title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
           commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
+          branch: update-${{ matrix.previous_version }}-for-${{ inputs.release_branch_name }}
           base: ${{ matrix.previous_version }}
           delete-branch: true
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
