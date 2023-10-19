@@ -18,14 +18,16 @@ function az_quickstart_post_update_force_import_core_block_view(&$sandbox) {
   $config_to_import = 'views.view.block_content';
   $module_path = \Drupal::service('extension.list.module')->getPath('block_content');
   $config_storage = new FileStorage($module_path . '/config/optional');
-  $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($config_to_import);
-  $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
-  $id = $storage->getIDFromConfigName($config_to_import, $storage->getEntityType()->getConfigPrefix());
+  $entity_type_id = \Drupal::service('config.manager')->getEntityTypeIdByName($config_to_import);
+  /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+  $storage = \Drupal::entityTypeManager()->getStorage($entity_type_id);
+  /** @var \Drupal\Core\Config\Entity\ConfigEntityTypeInterface $entity_type */
+  $entity_type = $storage->getEntityType();
+  $id = $storage->getIDFromConfigName($config_to_import, $entity_type->getConfigPrefix());
   $active = $storage->load($id);
   $config_record = $config_storage->read($config_to_import);
 
   try {
-    /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
     $entity = $storage->updateFromStorageRecord($active, $config_record);
     $entity->save();
   }
