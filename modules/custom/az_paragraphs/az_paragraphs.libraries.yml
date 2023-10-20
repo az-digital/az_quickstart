@@ -54,7 +54,6 @@ az_paragraphs.preview:
       css/az_paragraphs_preview.css: {}
       css/az_paragraphs_widget.css: {}
   dependencies:
-    - az_barrio/global-styling
     - az_barrio/material-design-icons-sharp
     - az_barrio/arizona-bootstrap
     - az_barrio/button-no-conflict

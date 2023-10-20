@@ -20,3 +20,7 @@
 .layout-region--node-main .claro-details__summary {
   color: unset;
 }
+
+tr.odd {
+  background-color: #eee;
+}
