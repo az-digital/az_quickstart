@@ -5,6 +5,7 @@
  * Post update functions for AZ Quickstart.
  */
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\EntityStorageException;
 
@@ -26,6 +27,11 @@ function az_quickstart_post_update_force_import_core_block_view(&$sandbox) {
   $id = $storage->getIDFromConfigName($config_to_import, $entity_type->getConfigPrefix());
   $active = $storage->load($id);
   $config_record = $config_storage->read($config_to_import);
+
+  // Add a config hash if necessary.
+  if (empty($config_record['_core']['default_config_hash'])) {
+    $config_record['_core']['default_config_hash'] = Crypt::hashBase64(serialize($config_record));
+  }
 
   try {
     $entity = $storage->updateFromStorageRecord($active, $config_record);
