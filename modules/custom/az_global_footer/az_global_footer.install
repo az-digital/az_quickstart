@@ -128,7 +128,7 @@ function az_global_footer_update_1020703() {
     if ($menu_link_content !== NULL) {
       // phpcs:disable
       /* @phpstan-ignore-next-line */
-      $menu_link_content->link->title = 'Directory';
+      $menu_link_content->title = 'Directory';
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://directory.arizona.edu';
       // phpcs:enable
