@@ -139,7 +139,7 @@ display:
           validate_options:
             bundles:
               az_news: az_news
-            access: true
+            access: false
             operation: view
             multiple: 0
           break_phrase: false
@@ -1749,7 +1749,7 @@ display:
           validate_options:
             bundles:
               az_event: az_event
-            access: true
+            access: false
             operation: view
             multiple: 0
           break_phrase: false
