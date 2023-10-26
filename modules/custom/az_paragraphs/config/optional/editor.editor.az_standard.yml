@@ -114,7 +114,7 @@ settings:
         - '<dl>'
         - '<dt>'
         - '<dd>'
-        - '<div name id>'
+        - '<div class name id>'
         - '<span class name id>'
         - '<img src alt data-entity-type data-entity-uuid>'
         - '<footer class>'
