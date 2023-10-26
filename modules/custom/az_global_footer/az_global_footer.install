@@ -111,7 +111,7 @@ function az_global_footer_update_1020702() {
 /**
  * Update Directory footer links.
  *
- * Directory links in the global footer will be updated with new primary domain.
+ * Change global footer A-Z Index link to Campus Directory front page.
  */
 function az_global_footer_update_1020703() {
   $updated_count = 0;
@@ -137,5 +137,5 @@ function az_global_footer_update_1020703() {
     }
   }
 
-  return t('Updated %count Directory menu link(s) in the global footer.', ['%count' => $updated_count]);
+  return t('Updated %count menu link(s) from A-Z Index to Directory in the global footer.', ['%count' => $updated_count]);
 }
