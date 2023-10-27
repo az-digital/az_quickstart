@@ -70,53 +70,39 @@
 #}
 
 {% if node.isPublished() %}
-  <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
-    style="min-width: 100%;"
-    class="stylingblock-content-wrapper qs-layout-100">
-    <tbody>
-      <tr>
-        <td style="padding: 10px 15px; " class="stylingblock-content-wrapper camarker-inner">
-          <h3 class="qs-heading"
-            style="color:#403635; font-family:inherit; font-size:18px; font-weight:bold; line-height:115%;">
-            {{ content.smart_title }}
-          </h3>
-          <div class="qs-summary">
-            {{ content.field_az_summary }}
-          </div>
-          <p>
-            <a class="qs-link" href="{{ az_canonical_url }}"
-              style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">
-              {{ az_canonical_summary_link_title }}
-            </a>
-          </p>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  {% else %}
-    <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
-      style="min-width: 100%;"
-      class="stylingblock-content-wrapper qs-layout-100">
-      <tbody>
-        <tr>
-          <td style="padding: 10px 15px; " class="stylingblock-content-wrapper camarker-inner">
-            <h3 class="qs-heading"
-              style="color:#403635; font-family:inherit; font-size:18px; font-weight:bold; line-height:115%;">
-              Unpublished content
-            </h3>
-            <div class="qs-summary">
-              This URL will be updated with real content once the item is published on the website.
-            </div>
-            <p>
-              <a class="qs-link" href=""
-                style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">
-                Link
-              </a>
-            </p>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
+  {% set heading = content.smart_title %}
+  {% set summary = content.field_az_summary %}
+  {% set link_url = az_canonical_url %}
+  {% set link_text = az_canonical_summary_link_title %}
+{% else %}
+  {% set image_src = '/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/hero-layout-unpublished.png'
+  %}
+  {% set heading = 'Unpublished content' %}
+  {% set summary = 'This URL will be updated with real content once the item is published on the website.' %}
+  {% set link_url = '' %}
+  {% set link_text = 'Link' %}
 {% endif %}
+
+<table cellpadding="0" cellspacing="0" width="100%" role="presentation"
+  style="min-width: 100%;"
+  class="stylingblock-content-wrapper qs-layout-100">
+  <tbody>
+    <tr>
+      <td style="padding: 10px 15px; " class="stylingblock-content-wrapper camarker-inner">
+        <h3 class="qs-heading"
+          style="color:#403635; font-family:inherit; font-size:18px; font-weight:bold; line-height:115%;">
+          {{ heading }}
+        </h3>
+        <div class="qs-summary">
+          {{ summary }}
+        </div>
+        <p>
+          <a class="qs-link" href="{{ link_url }}"
+            style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">
+            {{ link_text }}
+          </a>
+        </p>
+      </td>
+    </tr>
+  </tbody>
+</table>
