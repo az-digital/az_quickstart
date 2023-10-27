@@ -183,7 +183,7 @@
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
             },
             "drupal/linkit": {
-                "Issue #3364963 'This link has no URL' when inserting text before or after a link": "https://www.drupal.org/files/issues/2023-10-26/3364963-this-link-has-no-url.patch"
+                "Issue #3364963 'This link has no URL' when inserting text before or after a link": "https://www.drupal.org/files/issues/2023-10-27/3364963-this-link-has-no-url-10.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
