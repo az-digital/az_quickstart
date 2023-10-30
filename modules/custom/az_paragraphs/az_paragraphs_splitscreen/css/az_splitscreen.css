@@ -17,7 +17,7 @@
 .az-splitscreen-text {
   width: 100%;
 }
-.az-splitscreen:not(.full-width-background) {
+main:only-child .az-splitscreen:not(.full-width-background) {
   margin-right: calc(var(--scrollbar-width) / 2);
 }
 
