@@ -630,7 +630,7 @@ function az_barrio_preprocess_block(&$variables) {
           // Add classes to interior <li> elements and <a> elements.
           if (!empty($variables['elements']['content']['#items'])) {
             foreach ($variables['elements']['content']['#items'] as $key => $item) {
-              $item['attributes']->addClass('d-flex', 'px-0', 'mb-2');
+              $item['attributes']->addClass('d-flex', 'px-0', 'mb-1', 'mb-md-2');
 
               // Merge existing url options with transparent.
               $options = $item['url']->getOptions();
