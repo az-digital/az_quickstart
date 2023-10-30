@@ -35,6 +35,9 @@ steps:
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
       - yarn install
       - yarn run eslint --color .
+  - name: Setup drush
+    plugin: Shell
+    command: 'ln -s $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush /usr/local/bin/drush'
   - name: Install Arizona Quickstart
     plugin: Drupal
     drupalVersion: 10
