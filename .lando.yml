@@ -67,12 +67,18 @@ tooling:
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
   # Enable theme debugging.
-  theme-debug:
+  theme-debug-on:
     service: appserver
     user: root
     cmd:
-      - echo "theme-debug relied on Drupal console (now deprecated) and is no longer available.  Please consult CONTRIBUTING.md for instructions on how to manually turn on Twig debug and other debugging settings."
-  # Provide Drush tooling to automatically know the Drupal root.
+      - /app/vendor/bin/drush twig:debug on
+  # Disable theme debugging.
+  theme-debug-off:
+    service: appserver
+    user: root
+    cmd:
+      - /app/vendor/bin/drush twig:debug off
+  # Provide Drush tooling.
   drush:
     service: appserver
     cmd: /app/vendor/bin/drush --root=/app/web
