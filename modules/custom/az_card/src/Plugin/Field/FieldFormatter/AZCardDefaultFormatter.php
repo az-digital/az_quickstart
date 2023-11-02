@@ -123,7 +123,13 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Link.
       $link_render_array = [];
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        if (str_starts_with($item->link_uri, '/sites/default/files/')) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',

@@ -168,7 +168,13 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        if (str_starts_with($item->link_uri, '/sites/default/files/')) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
@@ -516,6 +522,10 @@ class AZCardWidget extends WidgetBase {
       // Check to make sure the path can be found.
       if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.
+        return;
+      }
+      if (str_starts_with($element['#value'], '/sites/default/files/')) {
+        // Link to public file, ignore validation.
         return;
       }
       $form_state
