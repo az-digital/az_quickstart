@@ -46,3 +46,12 @@
 .ck.ck-content .table>figcaption {
   caption-side: bottom;
 }
+
+/**
+ * Ensure white text is visible in editor.
+ */
+.ck.ck-content .text-white,
+.ck.ck-content .btn-outline-white {
+  background-color: #6c757d;
+  padding: 0.2rem;
+}

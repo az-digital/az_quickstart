@@ -12,7 +12,7 @@ field_name: field_az_body
 entity_type: node
 bundle: az_news
 label: 'Article Body'
-description: ''
+description: 'White text will be highlighted in gray (only while editing) to keep the text visible.'
 required: false
 translatable: true
 default_value: {  }
