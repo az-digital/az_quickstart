@@ -525,8 +525,9 @@ class AZCardWidget extends WidgetBase {
         // Url is valid, no conversion required.
         return;
       }
-      if (str_starts_with($element['#value'], '/' . PublicStream::basePath())) {
-        // Link to public file, ignore validation.
+      if (str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
+        file_exists(urldecode(substr($element['#value'], 1)))) {
+        // Link to public file, confirmed to exist.
         return;
       }
       $form_state
