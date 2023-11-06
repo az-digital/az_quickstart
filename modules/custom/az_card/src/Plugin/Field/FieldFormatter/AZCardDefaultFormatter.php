@@ -9,6 +9,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
 
 /**
  * Plugin implementation of the 'az_card_default' formatter.
@@ -123,7 +124,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Link.
       $link_render_array = [];
       if ($item->link_title || $item->link_uri) {
-        if (str_starts_with($item->link_uri, '/sites/default/files/')) {
+        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }

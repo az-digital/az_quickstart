@@ -10,6 +10,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
 
 /**
  * Defines the 'az_card' field widget.
@@ -168,7 +169,7 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        if (str_starts_with($item->link_uri, '/sites/default/files/')) {
+        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
@@ -524,7 +525,7 @@ class AZCardWidget extends WidgetBase {
         // Url is valid, no conversion required.
         return;
       }
-      if (str_starts_with($element['#value'], '/sites/default/files/')) {
+      if (str_starts_with($element['#value'], '/' . PublicStream::basePath())) {
         // Link to public file, ignore validation.
         return;
       }
