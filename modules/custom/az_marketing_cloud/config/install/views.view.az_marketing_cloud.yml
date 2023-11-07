@@ -897,59 +897,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        view_node_1:
-          id: view_node_1
-          table: node
-          field: view_node
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: entity_link
-          label: 'Email Snippet'
-          exclude: true
-          alter:
-            alter_text: true
-            text: "<a href=\"/export/marketing-cloud/hero-layout/{{ nid }}\">Hero Layout</a> | \r\n<a href=\"/export/marketing-cloud/50-50-layout/{{ nid }}\">50/50 Layout</a> | \r\n<a href=\"/export/marketing-cloud/30-70-layout/{{ nid }}\">30/70 Layout</a> | \r\n<a href=\"/export/marketing-cloud/text-layout/{{ nid }}\">Text Layout</a> | \r\n<a href=\"/export/marketing-cloud/event-layout/{{ nid }}\">Event Layout</a>"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: ''
-          output_url_as_text: false
-          absolute: true
         nothing_1:
           id: nothing_1
           table: views
@@ -1146,58 +1093,6 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
-        field_az_event_date_value_1:
-          id: field_az_event_date_value_1
-          table: node__field_az_event_date
-          field: field_az_event_date_value
-          relationship: none
-          group_type: group
-          admin_label: 'URL Date'
-          plugin_id: date
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          date_format: html_datetime
-          custom_date_format: ''
-          timezone: ''
         nothing_5:
           id: nothing_5
           table: views
@@ -1210,123 +1105,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<a href="/export/marketing-cloud/event-layout/{{ nid }}/{{ field_az_event_date_value_1 }}">Event Layout</a>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
-        dropbutton_1:
-          id: dropbutton_1
-          table: views
-          field: dropbutton
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: dropbutton
-          label: 'Event email snippet'
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          destination: false
-          fields:
-            nothing_5: nothing_5
-            nid: '0'
-            title: '0'
-            type: '0'
-            field_az_published: '0'
-            field_az_event_date_value: '0'
-            nothing: '0'
-            status: '0'
-            changed: '0'
-            created: '0'
-            view_node_1: '0'
-            nothing_1: '0'
-            nothing_2: '0'
-            nothing_3: '0'
-            nothing_4: '0'
-            dropbutton: '0'
-        nothing_6:
-          id: nothing_6
-          table: views
-          field: nothing
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: custom
-          label: 'Custom text'
-          exclude: true
-          alter:
-            alter_text: true
-            text: "{{ dropbutton }}\r\n{{ dropbutton_1 }}\r\n\r\n{% if node.bundle == 'az_news'  %}\r\n    <p>Our website is in maintenance mode. Please, come back later.</p>\r\n{% endif %}"
+            text: '<a href="/export/marketing-cloud/event-layout/{{ nid }}">Event Layout</a>'
             make_link: false
             path: ''
             absolute: false
@@ -1840,1148 +1619,13 @@ display:
         - 'config:field.storage.node.field_az_published'
         - entity_field_info
         - views_data
-  admin_group:
-    id: admin_group
-    display_title: 'Admin Group'
-    display_plugin: page
-    position: 6
-    display_options:
-      enabled: false
-      fields:
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: field
-          label: ''
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: false
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: number_integer
-          settings:
-            thousand_separator: ''
-            prefix_suffix: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        draggableviews:
-          id: draggableviews
-          table: entity_subqueue_field_data
-          field: draggableviews
-          relationship: entityqueue_relationship
-          group_type: group
-          admin_label: ''
-          entity_type: entity_subqueue
-          entity_field: name
-          plugin_id: draggable_views_field
-          label: 'Entity subqueue'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          action_title: Action
-          include_exclude: exclude
-          selected_actions: {  }
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: field
-          label: Title
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: false
-            ellipsis: false
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: false
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: string
-          settings:
-            link_to_entity: true
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: type
-          plugin_id: field
-          label: 'Content type'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: target_id
-          type: entity_reference_label
-          settings:
-            link: false
-          group_column: target_id
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_az_published:
-          id: field_az_published
-          table: node__field_az_published
-          field: field_az_published
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: field
-          label: 'Date of publication'
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: datetime_custom
-          settings:
-            timezone_override: ''
-            date_format: 'M j, o'
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        field_az_event_date_value:
-          id: field_az_event_date_value
-          table: node__field_az_event_date
-          field: field_az_event_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: date
-          label: 'When - Start'
-          exclude: true
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          date_format: custom
-          custom_date_format: 'M j, o'
-          timezone: ''
-        nothing:
-          id: nothing
-          table: views
-          field: nothing
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: custom
-          label: 'Item date'
-          exclude: false
-          alter:
-            alter_text: true
-            text: "{{ field_az_published }}\r\n{{ field_az_event_date_value }}"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: status
-          plugin_id: field
-          label: Published
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: boolean
-          settings:
-            format: yes-no
-            format_custom_false: ''
-            format_custom_true: ''
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        changed:
-          id: changed
-          table: node_field_data
-          field: changed
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: changed
-          plugin_id: field
-          label: Updated
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: timestamp
-          settings:
-            date_format: custom
-            custom_date_format: m/d/o
-            timezone: ''
-            tooltip:
-              date_format: ''
-              custom_date_format: ''
-            time_diff:
-              enabled: false
-              future_format: '@interval hence'
-              past_format: '@interval ago'
-              granularity: 2
-              refresh: 60
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-        created:
-          id: created
-          table: node_field_data
-          field: created
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: created
-          plugin_id: field
-          label: Created
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          click_sort_column: value
-          type: timestamp
-          settings:
-            date_format: custom
-            custom_date_format: m/d/o
-            timezone: ''
-            tooltip:
-              date_format: ''
-              custom_date_format: ''
-            time_diff:
-              enabled: false
-              future_format: '@interval hence'
-              past_format: '@interval ago'
-              granularity: 2
-              refresh: 60
-          group_column: value
-          group_columns: {  }
-          group_rows: true
-          delta_limit: 0
-          delta_offset: 0
-          delta_reversed: false
-          delta_first_last: false
-          multi_type: separator
-          separator: ', '
-          field_api_classes: false
-      pager:
-        type: none
-        options:
-          offset: 0
-      access:
-        type: perm
-        options:
-          perm: 'access content overview'
-      sorts:
-        queue:
-          id: queue
-          table: entity_subqueue_field_data
-          field: queue
-          relationship: entityqueue_relationship
-          group_type: group
-          admin_label: ''
-          entity_type: entity_subqueue
-          entity_field: queue
-          plugin_id: standard
-          order: ASC
-          expose:
-            label: 'Entity queue'
-            field_identifier: queue
-          exposed: false
-      arguments:
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: node_nid
-          default_action: empty
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
-          default_argument_skip_url: false
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: 'entity:node'
-            fail: 'not found'
-          validate_options:
-            bundles:
-              az_event: az_event
-              az_news: az_news
-            access: true
-            operation: update
-            multiple: 1
-          break_phrase: true
-          not: false
-      filters:
-        type_1:
-          id: type_1
-          table: node_field_data
-          field: type
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          operator: in
-          value:
-            az_event: az_event
-            az_news: az_news
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        queue:
-          id: queue
-          table: entity_subqueue_field_data
-          field: queue
-          relationship: entityqueue_relationship
-          group_type: group
-          admin_label: ''
-          entity_type: entity_subqueue
-          entity_field: queue
-          plugin_id: bundle
-          operator: in
-          value:
-            az_marketing_cloud_reorder: az_marketing_cloud_reorder
-          group: 1
-          exposed: true
-          expose:
-            operator_id: queue_op
-            label: 'Entity queue'
-            description: ''
-            use_operator: false
-            operator: queue_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: queue
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        entityqueue_relationship:
-          id: entityqueue_relationship
-          table: node_field_data
-          field: entityqueue_relationship
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: entity_queue_in_queue
-          operator: '='
-          value: '1'
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      style:
-        type: table
-        options:
-          grouping: {  }
-          row_class: ''
-          default_row_class: false
-          columns:
-            nid: nid
-            draggableviews: draggableviews
-            title: title
-            type: type
-            field_az_published: field_az_published
-            field_az_event_date_value: field_az_event_date_value
-            nothing: nothing
-            status: status
-            changed: changed
-            created: created
-          default: '-1'
-          info:
-            nid:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            draggableviews:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            type:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_az_published:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            field_az_event_date_value:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            nothing:
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            status:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            changed:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-            created:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          override: true
-          sticky: false
-          summary: ''
-          empty_table: false
-          caption: ''
-          description: ''
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_marketing_cloud_text_layout
-      defaults:
-        access: false
-        pager: false
-        style: false
-        style_options: false
-        row: false
-        relationships: false
-        fields: false
-        sorts: false
-        arguments: false
-        filters: false
-        filter_groups: false
-        pager_options: false
-        header: false
-      relationships:
-        entityqueue_relationship:
-          id: entityqueue_relationship
-          table: node_field_data
-          field: entityqueue_relationship
-          relationship: none
-          group_type: group
-          admin_label: 'Content queue'
-          entity_type: node
-          plugin_id: entity_queue
-          required: true
-          limit_queue: az_marketing_cloud_reorder
-        items_target_id:
-          id: items_target_id
-          table: entity_subqueue__items
-          field: items_target_id
-          relationship: entityqueue_relationship
-          group_type: group
-          admin_label: 'Entity subqueue'
-          entity_type: entity_subqueue
-          entity_field: items
-          plugin_id: standard
-          required: false
-      display_description: ''
-      pager_options: null
-      style_options: null
-      header:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text
-          empty: true
-          content:
-            value: "<p>Manage the content you would like to share with your Trellis Marketing Cloud email templates.</p>\r\n\r\n<details data-drupal-selector=\"edit-field-az-metatag-0\" class=\"accordion__item js-form-wrapper form-wrapper claro-details claro-details--accordion-item\" id=\"edit-field-az-metatag-0\" data-once=\"details\">\r\n\r\n<summary role=\"button\" aria-controls=\"edit-field-az-metatag-0\" aria-expanded=\"true\" aria-pressed=\"true\" class=\"claro-details__summary claro-details__summary--accordion-item\">How does this feature work?</summary>\r\n\r\n<div class=\"claro-details__wrapper details-wrapper claro-details__wrapper--accordion-item\">\r\n        <div class=\"claro-details__content claro-details__content--accordion-item\">\r\n    \r\n<p><em><strong>NOTE:</strong> This feature is intended to be used with Trellis Marketing Cloud.</em></p>\r\n\r\n<p>Use the <strong>Email Snippet</strong> link below to get the URL for the layout you would like to use in your email template. \LOnce copied, you can paste that URL into the External Content module on Marketing Cloud.</p>\r\n\r\n<p><strong>Layout options:</strong></p>\r\n<table>\r\n<tr>\r\n<td width=\"15%\"><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/hero-layout.png\"></td>\r\n<td width=\"85%\"><p><strong>Hero Layout</strong><br>Your image and text take up the full width of horizontal space.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/50-50-layout.png\"></td>\r\n<td><p><strong>50/50 Layout</strong><br>\r\nYour image and text take up the same amount of horizontal space.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/30-70-layout.png\"></td>\r\n<td><p><strong>30/70 Layout</strong><br>\r\nYour image is square and takes up 30% of horizontal space.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/text-layout.png\"></td>\r\n<td><p><strong>Text Layout</strong><br>\r\nNo image is used. Your heading, summary and text link are used.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/event-layout.png\"></td>\r\n<td><p><strong>Event Layout</strong><br>\r\nNo image is used. Your date, heading and summary are used.</p></td>\r\n</tr>\r\n</table>\r\n</details>"
-            format: full_html
-          tokenize: false
-      display_extenders: {  }
-      path: admin/content/marketing-cloud/group/%node
-      menu:
-        type: none
-        title: 'Marketing cloud'
-        description: ''
-        weight: 0
-        expanded: false
-        menu_name: admin
-        parent: system.admin_content
-        context: '1'
-      tab_options:
-        type: none
-        title: ''
-        description: ''
-        weight: 0
-    cache_metadata:
-      max-age: 0
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:entityqueue.entity_queue.az_marketing_cloud_reorder'
-        - 'config:field.storage.node.field_az_published'
-        - entity_field_info
-        - views_data
-  event_layout:
-    id: event_layout
-    display_title: 'Event Layout'
-    display_plugin: page
-    position: 5
-    display_options:
-      arguments:
-        nid:
-          id: nid
-          table: node_field_data
-          field: nid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: nid
-          plugin_id: node_nid
-          default_action: 'not found'
-          exception:
-            value: all
-            title_enable: false
-            title: All
-          title_enable: false
-          title: ''
-          default_argument_type: fixed
-          default_argument_options:
-            argument: ''
-          default_argument_skip_url: false
-          summary_options:
-            base_path: ''
-            count: true
-            override: false
-            items_per_page: 25
-          summary:
-            sort_order: asc
-            number_of_records: 0
-            format: default_summary
-          specify_validation: true
-          validate:
-            type: 'entity:node'
-            fail: 'not found'
-          validate_options:
-            bundles:
-              az_event: az_event
-            access: true
-            operation: view
-            multiple: 0
-          break_phrase: false
-          not: false
-      style:
-        type: default
-        options:
-          row_class: ''
-          default_row_class: false
-          uses_fields: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_marketing_cloud_event_layout
-      defaults:
-        style: false
-        style_options: false
-        row: false
-        arguments: false
-      display_description: ''
-      style_options: null
-      display_extenders: {  }
-      path: export/marketing-cloud/event-layout/%node/%field_az_event_date_value_1
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  hero_layout:
-    id: hero_layout
-    display_title: 'Hero Layout'
-    display_plugin: page
-    position: 1
-    display_options:
-      style:
-        type: default
-        options:
-          row_class: ''
-          default_row_class: false
-          uses_fields: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_marketing_cloud_hero_layout
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
-      style_options: null
-      display_extenders: {  }
-      path: export/marketing-cloud/hero-layout/%node
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_content'
-        - 'languages:language_interface'
-        - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags: {  }
-  page_1:
-    id: page_1
+  admin_group_draggable:
+    id: admin_group_draggable
     display_title: 'Draggable view'
     display_plugin: page
     position: 8
     display_options:
+      title: 'Create a group'
       fields:
         title:
           id: title
@@ -3084,58 +1728,6 @@ display:
           action_title: Action
           include_exclude: exclude
           selected_actions: {  }
-        field_az_event_date_value:
-          id: field_az_event_date_value
-          table: node__field_az_event_date
-          field: field_az_event_date_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: date
-          label: 'When - Start'
-          exclude: false
-          alter:
-            alter_text: false
-            text: ''
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          date_format: html_datetime
-          custom_date_format: ''
-          timezone: ''
       sorts:
         weight:
           id: weight
@@ -3152,7 +1744,159 @@ display:
           exposed: false
           draggable_views_reference: this
           draggable_views_null_order: after
-          draggable_views_pass_arguments: false
+          draggable_views_pass_arguments: true
+      arguments:
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: nid
+          plugin_id: node_nid
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:node'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              az_event: az_event
+              az_news: az_news
+            access: true
+            operation: update
+            multiple: 1
+          break_phrase: true
+          not: false
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:date_format'
+            fail: 'not found'
+          validate_options:
+            bundles: {  }
+            access: false
+            operation: view
+            multiple: 1
+          format: 'YYYY-MM-DDThh:mm:ssTZD'
+      style:
+        type: table
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: false
+          columns:
+            title: title
+          default: '-1'
+          info:
+            title:
+              sortable: false
+              default_sort_order: asc
+              align: ''
+              separator: ''
+              empty_column: false
+              responsive: ''
+          override: true
+          sticky: false
+          summary: ''
+          empty_table: false
+          caption: ''
+          description: ''
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_marketing_cloud_text_layout
+      defaults:
+        title: false
+        style: false
+        style_options: false
+        row: false
+        fields: false
+        sorts: false
+        arguments: false
+        header: false
+      display_description: ''
+      style_options: null
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: "<p>Manage the content you would like to share with your Trellis Marketing Cloud email templates.</p>\r\n\r\n<details data-drupal-selector=\"edit-field-az-metatag-0\" class=\"accordion__item js-form-wrapper form-wrapper claro-details claro-details--accordion-item\" id=\"edit-field-az-metatag-0\" data-once=\"details\">\r\n\r\n<summary role=\"button\" aria-controls=\"edit-field-az-metatag-0\" aria-expanded=\"true\" aria-pressed=\"true\" class=\"claro-details__summary claro-details__summary--accordion-item\">How does this feature work?</summary>\r\n\r\n<div class=\"claro-details__wrapper details-wrapper claro-details__wrapper--accordion-item\">\r\n        <div class=\"claro-details__content claro-details__content--accordion-item\">\r\n    \r\n<p><em><strong>NOTE:</strong> This feature is intended to be used with Trellis Marketing Cloud.</em></p>\r\n\r\n<p>Use the <strong>Email Snippet</strong> link below to get the URL for the layout you would like to use in your email template. \LOnce copied, you can paste that URL into the External Content module on Marketing Cloud.</p>\r\n\r\n<p><strong>Layout options:</strong></p>\r\n<table>\r\n<tr>\r\n<td width=\"15%\"><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/hero-layout.png\"></td>\r\n<td width=\"85%\"><p><strong>Hero Layout</strong><br>Your image and text take up the full width of horizontal space.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/50-50-layout.png\"></td>\r\n<td><p><strong>50/50 Layout</strong><br>\r\nYour image and text take up the same amount of horizontal space.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/30-70-layout.png\"></td>\r\n<td><p><strong>30/70 Layout</strong><br>\r\nYour image is square and takes up 30% of horizontal space.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/text-layout.png\"></td>\r\n<td><p><strong>Text Layout</strong><br>\r\nNo image is used. Your heading, summary and text link are used.</p></td>\r\n</tr>\r\n<tr>\r\n<td><img src=\"/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/event-layout.png\"></td>\r\n<td><p><strong>Event Layout</strong><br>\r\nNo image is used. Your date, heading and summary are used.</p></td>\r\n</tr>\r\n</table>\r\n</details>"
+            format: full_html
+          tokenize: false
+      display_extenders: {  }
+      path: admin/content/marketing-cloud/group-draggable/%node
+    cache_metadata:
+      max-age: 0
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  event_layout:
+    id: event_layout
+    display_title: 'Event Layout'
+    display_plugin: page
+    position: 5
+    display_options:
       arguments:
         nid:
           id: nid
@@ -3191,53 +1935,67 @@ display:
           validate_options:
             bundles:
               az_event: az_event
-              az_news: az_news
             access: true
-            operation: update
-            multiple: 1
-          break_phrase: true
+            operation: view
+            multiple: 0
+          break_phrase: false
           not: false
       style:
-        type: table
+        type: default
         options:
-          grouping: {  }
           row_class: ''
           default_row_class: false
-          columns:
-            title: title
-          default: '-1'
-          info:
-            title:
-              sortable: false
-              default_sort_order: asc
-              align: ''
-              separator: ''
-              empty_column: false
-              responsive: ''
-          override: true
-          sticky: false
-          summary: ''
-          empty_table: false
-          caption: ''
-          description: ''
+          uses_fields: false
       row:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_marketing_cloud_text_layout
+          view_mode: az_marketing_cloud_event_layout
       defaults:
         style: false
         style_options: false
         row: false
-        fields: false
-        sorts: false
         arguments: false
       display_description: ''
       style_options: null
       display_extenders: {  }
-      path: admin/content/marketing-cloud/group-draggable/%
+      path: export/marketing-cloud/event-layout/%node
     cache_metadata:
-      max-age: 0
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  hero_layout:
+    id: hero_layout
+    display_title: 'Hero Layout'
+    display_plugin: page
+    position: 1
+    display_options:
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_marketing_cloud_hero_layout
+      defaults:
+        style: false
+        style_options: false
+        row: false
+      display_description: ''
+      style_options: null
+      display_extenders: {  }
+      path: export/marketing-cloud/hero-layout/%node
+    cache_metadata:
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
