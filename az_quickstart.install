@@ -67,7 +67,7 @@ function az_quickstart_install() {
 }
 
 /**
- * Implements hook_requireents().
+ * Implements hook_requirements().
  */
 function az_quickstart_requirements($phase) {
   $requirements = [];
