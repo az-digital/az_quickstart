@@ -30,9 +30,15 @@ html.sticky-footer #main-wrapper {
   flex: 1 0 auto;
   width: 100%;
 }
+
 /* Footer Social Media Icons */
 .az-icon-spacing::before {
   margin-right:  .4rem;
+}
+
+/* Footer Nav */
+#footer_sub .nav-utility {
+  line-height: 1.25;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
