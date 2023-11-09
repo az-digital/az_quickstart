@@ -76,7 +76,7 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
 function az_news_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_news'
     && $entity instanceof NodeInterface
-    && !empty($entity->field_az_featured_image_as_thumb->value)) {
-    $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_media_image->target_id;
+    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue())) {
+    $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_media_image')->target_id;
   }
 }
