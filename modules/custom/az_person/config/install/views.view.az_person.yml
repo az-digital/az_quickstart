@@ -1,3 +1,4 @@
+uuid: a6c2f5ab-be3c-4f2c-ba81-9bc309d8f3b6
 langcode: en
 status: true
 dependencies:
@@ -6,14 +7,18 @@ dependencies:
     - core.entity_view_mode.node.az_row
     - field.storage.node.field_az_body
     - field.storage.node.field_az_email
+    - field.storage.node.field_az_fname
+    - field.storage.node.field_az_lname
     - field.storage.node.field_az_media_image
     - field.storage.node.field_az_person_category
+    - field.storage.node.field_az_person_category_sec
     - field.storage.node.field_az_phones
     - field.storage.node.field_az_titles
     - node.type.az_person
     - taxonomy.vocabulary.az_person_categories
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
+    - better_exposed_filters
     - draggableviews
     - node
     - taxonomy
@@ -21,6 +26,8 @@ dependencies:
     - text
     - user
     - views_bootstrap
+_core:
+  default_config_hash: ybWi-QrJlOjgzYqtr9BAvSyXKTwhrcuf9wCFJoYuow4
 id: az_person
 label: 'AZ Person'
 module: views
@@ -108,7 +115,7 @@ display:
           total_pages: null
           id: 0
       exposed_form:
-        type: basic
+        type: bef
         options:
           submit_button: Apply
           reset_button: false
@@ -117,6 +124,26 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              combine:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
       access:
         type: perm
         options:
@@ -375,6 +402,195 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+        field_az_person_category_sec:
+          id: field_az_person_category_sec
+          table: node__field_az_person_category_sec
+          field: field_az_person_category_sec
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: target_id
+          type: entity_reference_label
+          settings:
+            link: true
+          group_column: target_id
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_az_fname:
+          id: field_az_fname
+          table: node__field_az_fname
+          field: field_az_fname
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+        field_az_lname:
+          id: field_az_lname
+          table: node__field_az_lname
+          field: field_az_lname
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: field
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          click_sort_column: value
+          type: string
+          settings:
+            link_to_entity: false
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
       sorts:
         weight:
           id: weight
@@ -418,12 +634,91 @@ display:
             label: ''
             field_identifier: field_az_fname_value
           exposed: false
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            az_person: az_person
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        combine:
+          id: combine
+          table: views
+          field: combine
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: combine
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: combine_op
+            label: Search
+            description: ''
+            use_operator: false
+            operator: combine_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: combine
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          fields:
+            field_az_person_category: field_az_person_category
+            field_az_fname: field_az_fname
+            field_az_lname: field_az_lname
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
       style:
         type: views_bootstrap_grid
         options:
           row_class: ''
           default_row_class: false
-          uses_fields: false
+          uses_fields: true
           col_xs: col-12
           col_sm: col-sm-6
           col_md: col-md-4
@@ -442,6 +737,8 @@ display:
         fields: false
         sorts: false
         arguments: true
+        filters: false
+        filter_groups: false
       relationships: {  }
       display_description: ''
       style_options: null
@@ -457,7 +754,10 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags:
+        - 'config:field.storage.node.field_az_fname'
+        - 'config:field.storage.node.field_az_lname'
         - 'config:field.storage.node.field_az_person_category'
+        - 'config:field.storage.node.field_az_person_category_sec'
   grid_block_3cols:
     id: grid_block_3cols
     display_title: 'Grid - 3 col'
