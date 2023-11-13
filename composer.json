@@ -67,7 +67,7 @@
         "drupal/embed": "1.7.0",
         "drupal/entity_browser": "*",
         "drupal/entity_embed": "1.4.0",
-        "drupal/environment_indicator": "4.0.10",
+        "drupal/environment_indicator": "4.0.17",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.3",
         "drupal/extlink": "1.7",
