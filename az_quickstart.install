@@ -51,7 +51,7 @@ function az_quickstart_install() {
     ];
   }
   else {
-    // Modules to install only outside of Pantheon.
+    // Modules to install if not on Pantheon.
     $extra_modules = [
       'big_pipe',
     ];
