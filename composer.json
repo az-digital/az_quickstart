@@ -66,7 +66,7 @@
         "drupal/easy_breadcrumb": "2.0.5",
         "drupal/embed": "1.7.0",
         "drupal/entity_browser": "*",
-        "drupal/entity_embed": "1.4.0",
+        "drupal/entity_embed": "1.5.0",
         "drupal/environment_indicator": "4.0.10",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.3",
@@ -173,9 +173,6 @@
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
-            },
-            "drupal/entity_embed": {
-                "Drupal 10 & CKEditor 5 readiness (3272732)": "https://git.drupalcode.org/project/entity_embed/-/commit/ac6f2fe13b18f5f55c43badd6f46195776e2351c.diff"
             },
             "drupal/google_tag": {
                 "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
