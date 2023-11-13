@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
+    - field.field.node.az_news.field_az_byline_affiliation
     - field.field.node.az_news.field_az_contacts
     - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
@@ -43,7 +44,7 @@ third_party_settings:
       label: 'Summary fields'
       region: content
       parent_name: ''
-      weight: 9
+      weight: 11
       format_type: details_sidebar
       format_settings:
         classes: 'group-summary field-group-tab'
@@ -58,7 +59,7 @@ third_party_settings:
       label: 'Extra Fields'
       region: content
       parent_name: ''
-      weight: 10
+      weight: 12
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -67,6 +68,67 @@ third_party_settings:
         description: ''
         required_fields: true
         weight: 0
+    group_byline_row:
+      children:
+        - group_az_byline_left
+        - group_az_byline_right
+      label: 'Byline row'
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: row
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+    group_az_byline_left:
+      children:
+        - field_az_byline
+      label: 'Byline left'
+      region: content
+      parent_name: group_byline_row
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+    group_az_byline_right:
+      children:
+        - field_az_byline_affiliation
+      label: 'Byline right'
+      region: content
+      parent_name: group_byline_row
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: col
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
 id: node.az_news.default
 targetEntityType: node
 bundle: az_news
@@ -74,7 +136,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 12
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -87,7 +149,7 @@ content:
     third_party_settings: {  }
   field_az_body:
     type: text_textarea
-    weight: 5
+    weight: 6
     region: content
     settings:
       rows: 5
@@ -95,7 +157,15 @@ content:
     third_party_settings: {  }
   field_az_byline:
     type: string_textfield
-    weight: 2
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_byline_affiliation:
+    type: string_textfield
+    weight: 10
     region: content
     settings:
       size: 60
@@ -103,7 +173,7 @@ content:
     third_party_settings: {  }
   field_az_contacts:
     type: entity_reference_paragraphs
-    weight: 8
+    weight: 9
     region: content
     settings:
       title: Contact
@@ -115,7 +185,7 @@ content:
     third_party_settings: {  }
   field_az_enterprise_attributes:
     type: attributes_select
-    weight: 8
+    weight: 10
     region: content
     settings:
       allowed_attributes:
@@ -129,7 +199,7 @@ content:
     third_party_settings: {  }
   field_az_expiration_date:
     type: datetime_datelist
-    weight: 16
+    weight: 17
     region: content
     settings:
       increment: 30
@@ -145,7 +215,7 @@ content:
     third_party_settings: {  }
   field_az_link:
     type: link_default
-    weight: 17
+    weight: 18
     region: content
     settings:
       placeholder_url: ''
@@ -153,7 +223,7 @@ content:
     third_party_settings: {  }
   field_az_main_content:
     type: paragraphs
-    weight: 6
+    weight: 7
     region: content
     settings:
       title: Paragraph
@@ -172,7 +242,7 @@ content:
     third_party_settings: {  }
   field_az_media_image:
     type: media_library_widget
-    weight: 4
+    weight: 5
     region: content
     settings:
       media_types: {  }
@@ -181,7 +251,7 @@ content:
         show_edit: '1'
   field_az_media_thumbnail_image:
     type: media_library_widget
-    weight: 14
+    weight: 15
     region: content
     settings:
       media_types: {  }
@@ -190,7 +260,7 @@ content:
         show_edit: '1'
   field_az_news_tags:
     type: options_select
-    weight: 7
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -210,7 +280,7 @@ content:
     third_party_settings: {  }
   field_az_subheading:
     type: text_textfield
-    weight: 3
+    weight: 4
     region: content
     settings:
       size: 60
@@ -218,7 +288,7 @@ content:
     third_party_settings: {  }
   field_az_summary:
     type: text_textarea
-    weight: 15
+    weight: 16
     region: content
     settings:
       rows: 5
@@ -226,27 +296,27 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 15
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 13
+    weight: 15
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 17
+    weight: 19
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 14
+    weight: 16
     region: content
     settings:
       display_label: true
@@ -261,7 +331,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 11
+    weight: 13
     region: content
     settings:
       match_operator: CONTAINS
@@ -270,7 +340,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 16
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }

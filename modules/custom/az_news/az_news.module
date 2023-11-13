@@ -22,6 +22,10 @@ function az_news_theme($existing, $type, $theme, $path) {
       'template' => 'field--node--az-news',
       'base hook' => 'field',
     ],
+    'field_group_html_element__node__group_az_byline' => [
+      'template' => 'field-group-html-element--node--az-news--group-az-byline',
+      'base hook' => 'field_group_html_element',
+    ],
   ];
 }
 
