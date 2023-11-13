@@ -45,34 +45,60 @@
     'paragraph--type--' ~ paragraph.bundle|clean_class,
     view_mode ? 'paragraph--view-mode--' ~ view_mode|clean_class,
     not paragraph.isPublished() ? 'paragraph--unpublished',
-    'az-link-group-style-' ~ group_style|clean_class,
+    'az-link-group-style-' ~ link_group.group_style|clean_class,
+    link_group.group_style|clean_class,
+  ]
+%}
+
+{% set link_attributes = create_attribute() %}
+{% set button_attributes = create_attribute() %}
+{% set dropdown_attributes = create_attribute() %}
+
+{% 
+  set button_classes = [
+    'btn',
+    link_group.button_color ? link_group.button_color,
+    link_group.button_size ? link_group.button_size,
   ]
 %}
 
 {% 
-  set button_classes = button_color and button_size ? [
+  set dropdown_classes = [
     'btn',
-    button_color,
-    button_size,
-  ] : ''
+    'dropdown-toggle',
+    link_group.button_color ? link_group.button_color,
+    link_group.button_size ? link_group.button_size,
+  ]
 %}
+
+{% if link_group.group_style ==  'buttons' %}
+  {% set link_classes = button_classes %}
+{% elseif link_group.group_style == 'dropdown' %}
+  {% set link_classes = 'dropdown-item' %}
+{% elseif link_group.group_style == 'list_group' %}
+  {% set link_classes = [
+    'list-group-item',
+    'list-group-item-action'
+  ] %}
+{% endif %}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
-      {% for item in content.field_az_link_item %}
-        {# Button #}
-        {% if group_style == 'buttons' %}
-          <a href="{{ item.link_uri }}" {{ attributes.addClass(button_classes) }}">
-        {# Dropdown #}
-        {% elseif group_style == 'dropdown' %}
-          <a href="{{ item.link_uri }}" {{ attributes.addClass("btn", button_color) }}">
+      {% if link_group.group_style == 'dropdown' %}
+        <button {{ dropdown_attributes.addClass(dropdown_classes) }} type="button" id="dropdown-{{ paragraph.id() }}" data-toggle="dropdown" aria-expanded="false">{{ link_group.dropdown_title }}</button>
+        <div class="dropdown-menu" aria-labelledby="dropdown-{{ paragraph.id() }}">
+      {% endif %}
+      {% for key, item in paragraph.field_az_link_item %}
+        {% if key|first != '#' %}
+          <a href="{{ item.url }}" {{ link_attributes.addClass(link_classes) }}>{{ item.title }}</a>
         {% endif %}
-
       {% endfor %}
+      {% if link_group.group_style != 'buttons' %}
+      {# Close surrounding divs if dropdown or list-group #}
+        </div>
+      {% endif %}
 
-        {# List Group #}
-        <p>Test this</p>
     {% endblock %}
   </div>
 {% endblock paragraph %}

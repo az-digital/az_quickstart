@@ -47,7 +47,7 @@ function az_paragraphs_link_group_field_group_pre_render_alter(array &$element, 
   if ($group->group_name === 'group_link_group') {
     $paragraph = $rendering_object['#paragraph'];
     if ($paragraph instanceof ParagraphInterface) {
-      $linkgroup_style_mapping = [
+      $linkgroup_class_mapping = [
         'buttons' => 'd-flex flex-wrap',
         'dropdown' => 'dropdown',
         'list_group' => 'list-group'
@@ -55,8 +55,9 @@ function az_paragraphs_link_group_field_group_pre_render_alter(array &$element, 
       $paragraph_settings = $paragraph->getAllBehaviorSettings();
       if (!empty($paragraph_settings['az_link_group'])) {
         $linkgroup_settings = $paragraph_settings['az_link_group'];
-        $linkgroup_classes = $linkgroup_style_mapping[$linkgroup_settings];
-        $element['#attributes']['class'][] = $linkgroup_classes;
+        $linkgroup_style_settings = $linkgroup_settings['group_style'];
+        $linkgroup_style_classes = $linkgroup_class_mapping[$linkgroup_style_settings];
+        $element['#attributes']['class'][] = $linkgroup_style_classes;
       }
     }
   }

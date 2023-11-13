@@ -11,3 +11,5 @@ description: 'Provides structured content for a group of links, which come with 
 behavior_plugins:
   az_default_paragraph_behavior:
     enabled: true
+  az_link_group:
+    enabled: true

@@ -25,8 +25,6 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
-    \Drupal::logger('az_paragraphs_link_group')->info('AZLinkGroupParagraphBehavior loaded');
-
     // Link Group style
     $form['group_style'] = [
       '#title' => $this->t('Style'),
@@ -40,48 +38,72 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
-    /* if ($config['group_style'] == 'dropdown') {
+    // Dropdown title
+    $form['dropdown_title'] = [
+      '#title' => $this->t('Dropdown Title'),
+      '#type' => 'textfield',
+      '#description' => $this->t('The title of your dropdown menu.'),
+      '#size' => 60,
+      '#maxlength' => 120,
+      '#default_value' => $config['dropdown_title'] ?? '',
+      '#states' => [
+        'visible' => [
+          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
+            ['value' => 'dropdown'],
+          ],
+        ],
+      ],
+    ];
 
-      // Dropdown title
-      $form['dropdown_title'] = [
-        '#title' => $this->t('Dropdown Title'),
-        '#type' => 'text',
-        '#description' => $this->t('The title of your dropdown menu.'),
-      ];
-    }
-
-    elseif ($config['group_style'] == 'buttons') {
       // Button color
-      $form['button_color'] = [
-        '#title' => $this->t('Button Color'),
-        '#type' => 'select',
-        '#options' => [
-          'btn-red' => $this->t('Red'),
-          'btn-blue' => $this->t('Blue'),
-          'btn-white' => $this->t('White'),
-          'btn-outline-red' => $this->t('Red Outline'),
-          'btn-outline-blue' => $this->t('Blue Outline'),
-          'btn-outline-white' => $this->t('White Outline'),
+    $form['button_color'] = [
+      '#title' => $this->t('Button Color'),
+      '#type' => 'select',
+      '#options' => [
+        'btn-red' => $this->t('Red'),
+        'btn-blue' => $this->t('Blue'),
+        'btn-white' => $this->t('White'),
+        'btn-outline-red' => $this->t('Red Outline'),
+        'btn-outline-blue' => $this->t('Blue Outline'),
+        'btn-outline-white' => $this->t('White Outline'),
+      ],
+      '#default_value' => $config['button_color'] ?? 'btn-red',
+      '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
+      [
+        '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
+        '@ua_brand_colors_link' => Link::fromTextAndUrl('brand.arizona.edu/applying-the-brand/colors', Url::fromUri('https://brand.arizona.edu/applying-the-brand/colors', ['attributes' => ['target' => '_blank']]))->toString(),
+      ]),
+      '#states' => [
+        'visible' => [
+          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
+            ['value' => 'buttons'],
+            'or',
+            ['value' => 'dropdown']
+          ],
         ],
-        '#default_value' => $config['button_color'] ?? 'btn-red',
-        '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
-        [
-          '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
-          '@ua_brand_colors_link' => Link::fromTextAndUrl('brand.arizona.edu/applying-the-brand/colors', Url::fromUri('https://brand.arizona.edu/applying-the-brand/colors', ['attributes' => ['target' => '_blank']]))->toString(),
-        ]),
-      ];
+      ],
+    ];
 
-      // Button size
-      $form['button_size'] = [
-        '#title' => $this->t('Button Size'),
-        '#type' => 'select',
-        '#options' => [
-          'btn-lg' => $this->t('Large'),
-          'btn-sm' => $this->t('Small'),
+    // Button size
+    $form['button_size'] = [
+      '#title' => $this->t('Button Size'),
+      '#type' => 'select',
+      '#options' => [
+        'default' => $this->t('Default'),
+        'btn-lg' => $this->t('Large'),
+        'btn-sm' => $this->t('Small'),
+      ],
+      '#default_value' => $config['button_size'] ?? '',
+      '#states' => [
+        'visible' => [
+          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
+            ['value' => 'buttons'],
+            'or',
+            ['value' => 'dropdown']
+          ],
         ],
-      ];
-
-    }*/
+      ],
+    ];
 
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
@@ -104,6 +126,13 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
     $variables['link_group'] = $config;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
+    // Throw error if required fields not filled in
   }
 
 }
