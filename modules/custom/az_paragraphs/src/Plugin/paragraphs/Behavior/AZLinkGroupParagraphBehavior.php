@@ -23,9 +23,9 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
    * {@inheritdoc}
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
-    \Drupal::logger('az_paragraphs_link_group')->info('AZLinkGroupParagraphBehavior loaded');
-
     $config = $this->getSettings($paragraph);
+
+    \Drupal::logger('az_paragraphs_link_group')->info('AZLinkGroupParagraphBehavior loaded');
 
     // Link Group style
     $form['group_style'] = [
@@ -40,8 +40,8 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
-    if ($config['group_style'] == 'dropdown') {
-      
+    /* if ($config['group_style'] == 'dropdown') {
+
       // Dropdown title
       $form['dropdown_title'] = [
         '#title' => $this->t('Dropdown Title'),
@@ -81,7 +81,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
         ],
       ];
 
-    }
+    }*/
 
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
