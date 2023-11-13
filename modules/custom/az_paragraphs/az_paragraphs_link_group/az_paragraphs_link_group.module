@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file
+ * Contains az_paragraphs_link_group.module.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\paragraphs\ParagraphInterface;
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function az_paragraphs_link_group_theme_registry_alter(&$theme_registry) {
+  $module_path = \Drupal::service('extension.list.module')->getPath('az_paragraphs_link_group');
+  // Find all .html.twig files in this module's folder recursively.
+  $template_file_objects = drupal_find_theme_templates($theme_registry, '.html.twig', $module_path);
+  // Iterate through all found template file objects.
+  foreach ($template_file_objects as $key => $template_file_object) {
+    // If the template has not already been overridden by a theme.
+    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+      // Copy default paragraph registry entry for paragraph entries.
+      if (strpos($key, 'paragraph__') === 0) {
+        $theme_registry[$key] = $theme_registry['paragraph'];
+      }
+      // Alter the theme path and template elements.
+      $theme_registry[$key]['theme path'] = $module_path;
+      $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
+      $theme_registry[$key]['type'] = 'module';
+    }
+  }
+}
+
+/**
+ * Alter the pre_rendered build of the field group element.
+ *
+ * @param array $element
+ *   Group being rendered.
+ * @param object $group
+ *   The Field group info.
+ * @param object $rendering_object
+ *   The entity / form being rendered.
+ */
+function az_paragraphs_link_group_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
+
+  if ($group->group_name === 'group_link_group') {
+    $paragraph = $rendering_object['#paragraph'];
+    if ($paragraph instanceof ParagraphInterface) {
+      $linkgroup_style_mapping = [
+        'buttons' => 'd-flex flex-wrap',
+        'dropdown' => 'dropdown',
+        'list_group' => 'list-group'
+      ];
+      $paragraph_settings = $paragraph->getAllBehaviorSettings();
+      if (!empty($paragraph_settings['az_link_group'])) {
+        $linkgroup_settings = $paragraph_settings['az_link_group'];
+        $linkgroup_classes = $linkgroup_style_mapping[$linkgroup_settings];
+        $element['#attributes']['class'][] = $linkgroup_classes;
+      }
+    }
+  }
+}
