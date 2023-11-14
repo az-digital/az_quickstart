@@ -60,7 +60,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
-      // Button color
+    // Button color
     $form['button_color'] = [
       '#title' => $this->t('Button Color'),
       '#type' => 'select',
