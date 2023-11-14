@@ -57,6 +57,7 @@
 {% 
   set button_classes = [
     'btn',
+    'my-1',
     link_group.button_color ? link_group.button_color,
     link_group.button_size ? link_group.button_size,
   ]
@@ -71,23 +72,27 @@
   ]
 %}
 
+{% 
+  set listgroup_classes = [
+    'list-group-item',
+    'list-group-item-action'
+  ]
+%}
+
 {% if link_group.group_style ==  'buttons' %}
   {% set link_classes = button_classes %}
 {% elseif link_group.group_style == 'dropdown' %}
   {% set link_classes = 'dropdown-item' %}
 {% elseif link_group.group_style == 'list_group' %}
-  {% set link_classes = [
-    'list-group-item',
-    'list-group-item-action'
-  ] %}
+  {% set link_classes = listgroup_classes %}
 {% endif %}
 
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
       {% if link_group.group_style == 'dropdown' %}
-        <button {{ dropdown_attributes.addClass(dropdown_classes) }} type="button" id="dropdown-{{ paragraph.id() }}" data-toggle="dropdown" aria-expanded="false">{{ link_group.dropdown_title }}</button>
-        <div class="dropdown-menu" aria-labelledby="dropdown-{{ paragraph.id() }}">
+        <button {{ dropdown_attributes.addClass(dropdown_classes) }} type="button" id="az-link-group-dropdown-{{ paragraph.id() }}" data-toggle="dropdown" aria-expanded="false">{{ link_group.dropdown_title }}</button>
+        <div class="dropdown-menu" aria-labelledby="az-link-group-dropdown-{{ paragraph.id() }}">
       {% endif %}
       {% for key, item in paragraph.field_az_link_item %}
         {% if key|first != '#' %}

@@ -53,6 +53,14 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
           ],
         ],
       ],
+      
+    ];
+    $form[":input[name='field_az_main_content[0][behavior_plugins][az_link_group][dropdown_title]']"]['target_id']['#states'] = [
+      'required' => [
+        ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
+          ['value' => 'dropdown'],
+        ],
+      ],
     ];
 
       // Button color
@@ -62,12 +70,11 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#options' => [
         'btn-red' => $this->t('Red'),
         'btn-blue' => $this->t('Blue'),
-        'btn-white' => $this->t('White'),
         'btn-outline-red' => $this->t('Red Outline'),
         'btn-outline-blue' => $this->t('Blue Outline'),
         'btn-outline-white' => $this->t('White Outline'),
       ],
-      '#default_value' => $config['button_color'] ?? 'btn-red',
+      '#default_value' => $config['button_color'] ?? 'btn-blue',
       '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
       [
         '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
@@ -93,7 +100,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
         'btn-lg' => $this->t('Large'),
         'btn-sm' => $this->t('Small'),
       ],
-      '#default_value' => $config['button_size'] ?? '',
+      '#default_value' => $config['button_size'] ?? 'default',
       '#states' => [
         'visible' => [
           ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
@@ -133,6 +140,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   public function validateBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     // Throw error if required fields not filled in
+
   }
 
 }
