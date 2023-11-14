@@ -77,7 +77,7 @@ class AZMailCommands extends DrushCommands {
     $signature_and_version = pack("C*", $version) . $signature;
     //phpcs:ignore Security.BadFunctions.CryptoFunctions.WarnCryptoFunc
     $smtp_password = base64_encode($signature_and_version);
-    return mb_convert_encoding($smtp_password, 'UTF-8', mb_list_encodings());
+    return mb_convert_encoding($smtp_password, 'ISO-8859-1', 'UTF-8');
   }
 
 }
