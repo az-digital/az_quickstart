@@ -52,13 +52,10 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
             ['value' => 'dropdown'],
           ],
         ],
-      ],
-      
-    ];
-    $form[":input[name='field_az_main_content[0][behavior_plugins][az_link_group][dropdown_title]']"]['target_id']['#states'] = [
-      'required' => [
-        ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
-          ['value' => 'dropdown'],
+        'required' => [
+          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
+            ['value' => 'dropdown'],
+          ],
         ],
       ],
     ];
@@ -75,11 +72,6 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
         'btn-outline-white' => $this->t('White Outline'),
       ],
       '#default_value' => $config['button_color'] ?? 'btn-blue',
-      '#description' => $this->t('<br><big><b>Important:</b></big> Site editors are responsible for accessibility and brand guideline considerations.<ul><li>To ensure proper color contrast, use the text color accessibility test at the bottom of the @arizona_bootstrap_color_docs_link.</li><li>For guidance on using the University of Arizona color palette, visit @ua_brand_colors_link.</li></ul>',
-      [
-        '@arizona_bootstrap_color_docs_link' => Link::fromTextAndUrl('Arizona Bootstrap color documentation', Url::fromUri('https://digital.arizona.edu/arizona-bootstrap/docs/2.0/getting-started/color-contrast/', ['attributes' => ['target' => '_blank']]))->toString(),
-        '@ua_brand_colors_link' => Link::fromTextAndUrl('brand.arizona.edu/applying-the-brand/colors', Url::fromUri('https://brand.arizona.edu/applying-the-brand/colors', ['attributes' => ['target' => '_blank']]))->toString(),
-      ]),
       '#states' => [
         'visible' => [
           ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
@@ -134,13 +126,4 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     $variables['link_group'] = $config;
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
-    // Throw error if required fields not filled in
-
-  }
-
 }
