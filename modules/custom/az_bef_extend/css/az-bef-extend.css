@@ -1,0 +1,84 @@
+@charset "UTF-8";
+.bef-exposed-form.top-reset .form-row {
+  display: flex;
+  flex-direction: column;
+}
+.bef-exposed-form.top-reset .form-row .form-actions {
+  order: -1;
+  width: 100%;
+}
+.bef-exposed-form.top-reset .form-row .form-actions .button {
+  width: 100%;
+}
+.bef-exposed-form.bef-vertical-style summary {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1E5288;
+  list-style: none;
+}
+.bef-exposed-form.bef-vertical-style .form-item {
+  border-bottom: 1px solid #ccc;
+  padding: 12px 0;
+}
+.bef-exposed-form.bef-vertical-style .form-item summary {
+  position: relative;
+}
+.bef-exposed-form.bef-vertical-style .form-item summary:after {
+  position: absolute;
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-top: 2px solid #1E5288;
+  border-right: 2px solid #1E5288;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  transform: rotate(135deg);
+}
+.bef-exposed-form.bef-vertical-style .form-item summary[aria-pressed=true]:after {
+  transform: rotate(-45deg);
+}
+.bef-exposed-form.bef-vertical-style ul {
+  list-style: none;
+  padding-left: 0;
+}
+.bef-exposed-form.bef-vertical-style .has-nested-ul > div {
+  padding-left: 0;
+  pointer-events: none;
+}
+.bef-exposed-form.bef-vertical-style .has-nested-ul > div label {
+  font-weight: 600;
+}
+.bef-exposed-form.bef-vertical-style .has-nested-ul > div input {
+  display: none;
+}
+.bef-exposed-form.bef-vertical-style .has-nested-ul > div:before {
+  content: "–";
+  display: inline-block;
+  padding-right: 12px;
+}
+.bef-exposed-form.bef-vertical-style .has-nested-ul ul {
+  padding-left: 21px;
+}
+.bef-exposed-form.bef-vertical-style .form-actions {
+  padding-bottom: 24px;
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 0;
+}
+.bef-exposed-form.bef-vertical-style .form-type-select {
+  width: 100%;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #ccc;
+}
+.bef-exposed-form.bef-vertical-style .form-type-select .form-select {
+  display: block;
+  width: 100%;
+  padding: 6px;
+}
+.bef-exposed-form.bef-vertical-style .form-radios ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+/*# sourceMappingURL=az-bef-extend.css.map */

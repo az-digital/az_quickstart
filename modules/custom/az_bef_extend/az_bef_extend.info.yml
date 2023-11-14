@@ -1,0 +1,7 @@
+name: 'AZ BEF extension'
+type: module
+description: 'Adds extra options to BEF'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona'
+dependencies:
+  - better_exposed_filters

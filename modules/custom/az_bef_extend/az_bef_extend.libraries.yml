@@ -1,0 +1,11 @@
+az_bef_extend:
+  version: 1.x
+  css:
+    theme:
+      css/az-bef-extend.css: {}
+  js:
+    js/az-bef-extend.js: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once

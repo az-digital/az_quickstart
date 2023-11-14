@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * @file
+ * Contains az_bef_extend.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_alter() for BEF settings form.
+ */
+function az_bef_extend_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['#attached']['library'][] = 'az_bef_extend/az_bef_extend';
+  if ($form_id == 'views_exposed_form') {
+    $move_reset_to_top_setting = Drupal::config('az_bef_extend.settings')->get('move_reset_to_top');
+    $vertical_styles = Drupal::config('az_bef_extend.settings')->get('vertical_style');
+    if($move_reset_to_top_setting){
+      $form['#attributes']['class'][] = 'top-reset';
+    }
+    if($vertical_styles){
+      $form['#attributes']['class'][] = 'bef-vertical-style';
+    }
+  }
+
+  if ($form_id == 'views_ui_edit_display_form') {
+    // Assuming 'options' is directly under the form root.
+    if (isset($form['options']) && is_array($form['options'])) {
+      // Add your custom settings inside the 'edit-options' div.
+      $form['options']['az_bef_extend_vertical'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Use vertical filter styling'),
+        '#default_value' => Drupal::config('az_bef_extend.settings')->get('vertical_style'),
+        '#description' => t('When checked, this will apply vertical styling to the filters.'),
+        '#weight' => -50,
+      ];
+
+      $form['options']['az_bef_extend_move_reset'] = [
+        '#type' => 'checkbox',
+        '#title' => t('Move reset button to top'),
+        '#default_value' => Drupal::config('az_bef_extend.settings')->get('move_reset_to_top'),
+        '#description' => t('When checked, and if the reset button is enabled, move it to the top of the filters.'),
+        '#weight' => -49,
+      ];
+    }
+
+    // If the form uses a submit button, add your custom submit handler.
+    if (isset($form['actions']['submit'])) {
+      $form['actions']['submit']['#submit'][] = 'az_bef_extend_bef_settings_submit';
+    }
+  }
+}
+
+/**
+ * Custom submit handler for the BEF settings.
+ */
+function az_bef_extend_bef_settings_submit($form, FormStateInterface $form_state) {
+  // Save the new settings to your module's configuration.
+  \Drupal::service('config.factory')->getEditable('az_bef_extend.settings')
+    ->set('vertical_style', $form_state->getValue('az_bef_extend_vertical'))
+    ->set('move_reset_to_top', $form_state->getValue('az_bef_extend_move_reset'))
+    ->save();
+}
+
