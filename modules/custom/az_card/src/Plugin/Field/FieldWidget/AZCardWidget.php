@@ -527,8 +527,8 @@ class AZCardWidget extends WidgetBase {
       }
       if (str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
         // phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
-        file_exists(urldecode(substr($element['#value'], 1)))) {
-        // Link to public file, confirmed to exist.
+        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))) {
+        // Link to a public file which is confirmed to exist.
         return;
       }
       $form_state
