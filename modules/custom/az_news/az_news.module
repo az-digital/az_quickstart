@@ -60,9 +60,7 @@ function az_news_entity_extra_field_info() {
 function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   if ($entity instanceof FieldableEntityInterface) {
-    /**
-     * Read more pseudo field.
-     */
+    // Read more pseudo field.
     if ($entity->hasField('field_az_link')) {
       if ($display->getComponent('az_news_read_more')) {
         $bubbleable_metadata = new BubbleableMetadata();
@@ -76,9 +74,7 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
         ];
       }
     }
-    /**
-     * Byline combiner pseudo field.
-     */
+    // Byline combiner pseudo field.
     if ($entity->hasField('field_az_byline') && $entity->hasField('field_az_byline_affiliation')) {
       if ($display->getComponent('az_news_byline_combined')) {
         $byline = '';

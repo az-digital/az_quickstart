@@ -89,6 +89,8 @@ third_party_settings:
         effect: none
         speed: fast
         required_fields: true
+        description: ''
+        open: false
     group_az_byline_left:
       children:
         - field_az_byline
@@ -98,7 +100,7 @@ third_party_settings:
       weight: 8
       format_type: html_element
       format_settings:
-        classes: col
+        classes: 'col col-lg-6'
         show_empty_fields: false
         id: ''
         element: div
@@ -118,7 +120,7 @@ third_party_settings:
       weight: 9
       format_type: html_element
       format_settings:
-        classes: col
+        classes: 'col col-lg-6'
         show_empty_fields: false
         id: ''
         element: div
