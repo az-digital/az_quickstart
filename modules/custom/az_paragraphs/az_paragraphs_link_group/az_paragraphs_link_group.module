@@ -5,8 +5,6 @@
  * Contains az_paragraphs_link_group.module.
  */
 
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -50,7 +48,7 @@ function az_paragraphs_link_group_field_group_pre_render_alter(array &$element, 
       $linkgroup_class_mapping = [
         'buttons' => 'd-flex flex-wrap',
         'dropdown' => 'dropdown',
-        'list_group' => 'list-group'
+        'list_group' => 'list-group',
       ];
       $paragraph_settings = $paragraph->getAllBehaviorSettings();
       if (!empty($paragraph_settings['az_link_group'])) {

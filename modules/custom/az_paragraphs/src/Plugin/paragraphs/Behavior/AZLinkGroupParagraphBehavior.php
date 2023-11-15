@@ -3,8 +3,6 @@
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -77,7 +75,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
           ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
             ['value' => 'buttons'],
             'or',
-            ['value' => 'dropdown']
+            ['value' => 'dropdown'],
           ],
         ],
       ],
@@ -98,7 +96,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
           ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
             ['value' => 'buttons'],
             'or',
-            ['value' => 'dropdown']
+            ['value' => 'dropdown'],
           ],
         ],
       ],
@@ -125,5 +123,5 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     $variables['link_group'] = $config;
   }
-  
+
 }
