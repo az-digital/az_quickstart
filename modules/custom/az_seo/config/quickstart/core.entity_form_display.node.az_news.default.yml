@@ -52,7 +52,7 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         open: true
-        description: 'Summary fields determine how this news appears in feeds, listings and other displays throughout the site. Utilize these options to tailor the presentation and effectiveness of your content in various contexts.'
+        description: 'Summary fields determine how this news article appears in feeds, listings and other displays throughout the site. Utilize these options to tailor the presentation and effectiveness of your content in various contexts.'
         required_fields: true
         weight: -10
     group_az_extra_fields:
