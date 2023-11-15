@@ -42,25 +42,32 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 
-  // Install Pantheon module dependencies when running on Pantheon.
+  // Install additional modules if site is running on Pantheon (or not).
   if (defined('PANTHEON_ENVIRONMENT')) {
-    $pantheon_modules = [
+    // Modules to install only on Pantheon.
+    $extra_modules = [
       'pantheon_advanced_page_cache',
       'environment_indicator',
     ];
-    foreach ($pantheon_modules as $module) {
-      try {
-        \Drupal::service('module_installer')->install([$module]);
-      }
-      catch (MissingDependencyException $e) {
-        \Drupal::logger('az_quickstart')->warning('@module module not available to install.', ['@module' => $module]);
-      }
+  }
+  else {
+    // Modules to install if not on Pantheon.
+    $extra_modules = [
+      'big_pipe',
+    ];
+  }
+  foreach ($extra_modules as $module) {
+    try {
+      \Drupal::service('module_installer')->install([$module]);
+    }
+    catch (MissingDependencyException $e) {
+      \Drupal::logger('az_quickstart')->warning('@module module not available to install.', ['@module' => $module]);
     }
   }
 }
 
 /**
- * Implements hook_requireents().
+ * Implements hook_requirements().
  */
 function az_quickstart_requirements($phase) {
   $requirements = [];

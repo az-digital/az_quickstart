@@ -58,7 +58,7 @@
         "drupal/config_snapshot": "2.0.0-alpha1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.1.5",
+        "drupal/core-recommended": "10.1.6",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.14.0",
         "drupal/date_ap_style": "1.7.0",
@@ -66,7 +66,7 @@
         "drupal/easy_breadcrumb": "2.0.5",
         "drupal/embed": "1.7.0",
         "drupal/entity_browser": "*",
-        "drupal/entity_embed": "1.4.0",
+        "drupal/entity_embed": "1.5.0",
         "drupal/environment_indicator": "4.0.10",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.3",
@@ -97,7 +97,7 @@
         "drupal/migrate_tools": "6.0.2",
         "drupal/optional_end_date": "1.3.0",
         "drupal/paragraphs": "1.16.0",
-        "drupal/paragraphs_admin": "1.4.0",
+        "drupal/paragraphs_admin": "1.5.0",
         "drupal/pathauto": "1.12.0",
         "drupal/quick_node_clone": "1.16.0",
         "drupal/redirect": "1.9.0",
@@ -111,8 +111,8 @@
         "drupal/token": "1.13.0",
         "drupal/views_bootstrap": "5.4.0",
         "drupal/views_remote_data": "1.0.2",
-        "drupal/viewsreference": "2.0.0-beta6",
-        "drupal/webform": "6.2.0-rc3",
+        "drupal/viewsreference": "2.0.0-beta7",
+        "drupal/webform": "6.2.0",
         "drupal/workbench_access": "2.0.1",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
@@ -173,9 +173,6 @@
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
-            },
-            "drupal/entity_embed": {
-                "Drupal 10 & CKEditor 5 readiness (3272732)": "https://git.drupalcode.org/project/entity_embed/-/commit/ac6f2fe13b18f5f55c43badd6f46195776e2351c.diff"
             },
             "drupal/google_tag": {
                 "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
