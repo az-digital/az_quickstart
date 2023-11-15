@@ -94,8 +94,9 @@ display:
           sort_asc_label: Asc
           sort_desc_label: Desc
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access content'
       cache:
         type: none
         options: {  }
@@ -176,6 +177,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }
   30_70_layout:
     id: 30_70_layout
@@ -209,6 +211,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }
   50_50_layout:
     id: 50_50_layout
@@ -242,6 +245,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }
   admin:
     id: admin
@@ -1781,6 +1785,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }
   hero_layout:
     id: hero_layout
@@ -1814,6 +1819,7 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }
   text_layout:
     id: text_layout
@@ -1831,4 +1837,5 @@ display:
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
+        - user.permissions
       tags: {  }

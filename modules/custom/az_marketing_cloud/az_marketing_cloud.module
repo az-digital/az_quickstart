@@ -80,6 +80,39 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
   $node = $variables['node'];
   $content_type = $node->getType();
   if (in_array($content_type, ['az_news', 'az_event'])) {
+    // If the node is unpublished, replace the content and set it to published
+    // (in $variables only) to display it to anonymous users.
+    if (!$node->isPublished()) {
+      $variables['content']['smart_title'] = 'Unpublished content';
+      $variables['content']['field_az_summary'] = 'This URL will be updated with real content once the item is published on the website.';
+      $variables['az_canonical_url'] = '';
+      $variables['az_canonical_summary_link_title'] = 'Link';
+
+      if ($content_type === 'az_news' && $variables['view_mode'] !== 'az_marketing_cloud_text_layout') {
+        $images_dir = '/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/';
+        switch ($variables['view_mode']) {
+          case 'az_marketing_cloud_30_70_layout':
+            $variables['images']['az_marketing_cloud_30_70_layout'] = $images_dir . '30-70-layout-unpublished.png';
+            break;
+
+          case 'az_marketing_cloud_50_50_layout':
+            $variables['images']['az_marketing_cloud_50_50_layout'] = $images_dir . '50-50-layout-unpublished.png';
+            break;
+
+          case 'az_marketing_cloud_hero_layout':
+            $variables['images']['az_marketing_cloud_hero_layout'] = $images_dir . 'hero-layout-unpublished.png';
+            break;
+        }
+      }
+      if ($content_type === 'az_event') {
+        $variables['content']['az_event_month'] = 'Jan';
+        $variables['content']['az_event_day'] = '00';
+      }
+
+      $node->setPublished();
+      return;
+    }
+
     $token_service = \Drupal::token();
     $bubbleable_metadata = new BubbleableMetadata();
     $az_canonical_url = $token_service->replace('[node:az-canonical-url]', ['node' => $node], [], $bubbleable_metadata);
