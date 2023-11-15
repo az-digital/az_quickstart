@@ -45,7 +45,7 @@ third_party_settings:
         show_empty_fields: false
         id: ''
         open: true
-        description: 'For use in feeds and content listings.'
+        description: 'Summary fields determine how this event appears in feeds, listings and other displays throughout the site. Utilize these options to tailor the presentation and effectiveness of your content in various contexts.'
         required_fields: true
         weight: -10
 id: node.az_event.default
