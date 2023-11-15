@@ -25,7 +25,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
 
-    // Link Group style
+    // Link Group style.
     $form['group_style'] = [
       '#title' => $this->t('Style'),
       '#type' => 'select',
@@ -38,7 +38,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
-    // Dropdown title
+    // Dropdown title.
     $form['dropdown_title'] = [
       '#title' => $this->t('Dropdown Title'),
       '#type' => 'textfield',
@@ -60,7 +60,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
-    // Button color
+    // Button color.
     $form['button_color'] = [
       '#title' => $this->t('Button Color'),
       '#type' => 'select',
@@ -83,7 +83,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       ],
     ];
 
-    // Button size
+    // Button size.
     $form['button_size'] = [
       '#title' => $this->t('Button Size'),
       '#type' => 'select',
@@ -103,7 +103,6 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
         ],
       ],
     ];
-
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
@@ -126,4 +125,5 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
     $config = $this->getSettings($paragraph);
     $variables['link_group'] = $config;
   }
+  
 }
