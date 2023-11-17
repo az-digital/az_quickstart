@@ -7,6 +7,7 @@ use Drupal\Component\Utility\NestedArray;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -168,7 +169,13 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
@@ -516,6 +523,12 @@ class AZCardWidget extends WidgetBase {
       // Check to make sure the path can be found.
       if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.
+        return;
+      }
+      if (str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
+        // phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
+        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))) {
+        // Link to a public file which is confirmed to exist.
         return;
       }
       $form_state
