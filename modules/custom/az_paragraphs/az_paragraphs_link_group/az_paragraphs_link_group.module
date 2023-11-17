@@ -5,6 +5,8 @@
  * Contains az_paragraphs_link_group.module.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -26,37 +28,6 @@ function az_paragraphs_link_group_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key]['theme path'] = $module_path;
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
       $theme_registry[$key]['type'] = 'module';
-    }
-  }
-}
-
-/**
- * Alter the pre_rendered build of the field group element.
- *
- * @param array $element
- *   Group being rendered.
- * @param object $group
- *   The Field group info.
- * @param object $rendering_object
- *   The entity / form being rendered.
- */
-function az_paragraphs_link_group_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
-
-  if ($group->group_name === 'group_link_group') {
-    $paragraph = $rendering_object['#paragraph'];
-    if ($paragraph instanceof ParagraphInterface) {
-      $linkgroup_class_mapping = [
-        'buttons' => 'd-flex flex-wrap',
-        'dropdown' => 'dropdown',
-        'list_group' => 'list-group',
-      ];
-      $paragraph_settings = $paragraph->getAllBehaviorSettings();
-      if (!empty($paragraph_settings['az_link_group'])) {
-        $linkgroup_settings = $paragraph_settings['az_link_group'];
-        $linkgroup_style_settings = $linkgroup_settings['group_style'];
-        $linkgroup_style_classes = $linkgroup_class_mapping[$linkgroup_style_settings];
-        $element['#attributes']['class'][] = $linkgroup_style_classes;
-      }
     }
   }
 }
