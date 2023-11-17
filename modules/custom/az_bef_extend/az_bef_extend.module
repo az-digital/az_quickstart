@@ -24,7 +24,6 @@ function az_bef_extend_form_alter(&$form, FormStateInterface $form_state, $form_
   }
 
   if ($form_id == 'views_ui_edit_display_form') {
-    // Assuming 'options' is directly under the form root.
     if (isset($form['options']) && is_array($form['options'])) {
       // Add your custom settings inside the 'edit-options' div.
       $form['options']['az_bef_extend_vertical'] = [
@@ -44,7 +43,6 @@ function az_bef_extend_form_alter(&$form, FormStateInterface $form_state, $form_
       ];
     }
 
-    // If the form uses a submit button, add your custom submit handler.
     if (isset($form['actions']['submit'])) {
       $form['actions']['submit']['#submit'][] = 'az_bef_extend_bef_settings_submit';
     }
