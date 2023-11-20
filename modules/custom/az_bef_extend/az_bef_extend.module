@@ -11,6 +11,7 @@ use Drupal\Core\Form\FormStateInterface;
  * Implements hook_form_alter() for BEF settings form.
  */
 function az_bef_extend_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $is_bef = false;
   $form['#attached']['library'][] = 'az_bef_extend/az_bef_extend';
   if ($form_id == 'views_exposed_form') {
     $move_reset_to_top_setting = Drupal::config('az_bef_extend.settings')->get('move_reset_to_top');
@@ -25,22 +26,29 @@ function az_bef_extend_form_alter(&$form, FormStateInterface $form_state, $form_
 
   if ($form_id == 'views_ui_edit_display_form') {
     if (isset($form['options']) && is_array($form['options'])) {
-      // Add your custom settings inside the 'edit-options' div.
-      $form['options']['az_bef_extend_vertical'] = [
-        '#type' => 'checkbox',
-        '#title' => t('Use vertical filter styling'),
-        '#default_value' => Drupal::config('az_bef_extend.settings')->get('vertical_style'),
-        '#description' => t('When checked, this will apply vertical styling to the filters.'),
-        '#weight' => -50,
-      ];
+      foreach ($form['options']['exposed_form_options'] as $key => $value) {
+          if (strpos($key, 'bef') !== false) {
+            $is_bef = true;
+            break;
+          }
+      }
+      if($is_bef){
+        $form['options']['az_bef_extend_vertical'] = [
+          '#type' => 'checkbox',
+          '#title' => t('Use vertical filter styling'),
+          '#default_value' => Drupal::config('az_bef_extend.settings')->get('vertical_style'),
+          '#description' => t('When checked, this will apply vertical styling to the filters.'),
+          '#weight' => -50,
+        ];
 
-      $form['options']['az_bef_extend_move_reset'] = [
-        '#type' => 'checkbox',
-        '#title' => t('Move reset button to top'),
-        '#default_value' => Drupal::config('az_bef_extend.settings')->get('move_reset_to_top'),
-        '#description' => t('When checked, and if the reset button is enabled, move it to the top of the filters.'),
-        '#weight' => -49,
-      ];
+        $form['options']['az_bef_extend_move_reset'] = [
+          '#type' => 'checkbox',
+          '#title' => t('Move reset button to top'),
+          '#default_value' => Drupal::config('az_bef_extend.settings')->get('move_reset_to_top'),
+          '#description' => t('When checked, and if the reset button is enabled, move it to the top of the filters.'),
+          '#weight' => -49,
+        ];
+      }
     }
 
     if (isset($form['actions']['submit'])) {
