@@ -78,11 +78,12 @@ class AZParagraphsItem extends ParagraphsItem {
   /**
    * Processes field collections within a paragraph.
    *
-   * Field collections are groups of fields that can be reused across different entities.
-   * This function iterates over each field collection defined in the source property
-   * and processes them individually.
+   * Field collections are groups of fields that can be reused across different
+   * entities.
+   * This function iterates over each field collection defined in the source
+   * property and processes them individually.
    *
-   * @param Row $row
+   * @param \Drupal\migrate\Row $row
    *   The current row being processed.
    * @param string|int $item_id
    *   The item ID of the paragraph.
@@ -90,14 +91,14 @@ class AZParagraphsItem extends ParagraphsItem {
    *   The revision ID of the paragraph.
    */
   private function processFieldCollections(Row $row, $item_id, $revision_id) {
-      // Check if there are field collections defined for the paragraph.
-      if (!empty($row->getSourceProperty('field_collection_names'))) {
-          // Extract field collection names and process each collection.
-          $field_collection_field_names = explode(',', $row->getSourceProperty('field_collection_names'));
-          foreach ($field_collection_field_names as $field) {
-              $this->processEachFieldCollection($row, $field, $item_id, $revision_id);
-          }
+    // Check if there are field collections defined for the paragraph.
+    if (!empty($row->getSourceProperty('field_collection_names'))) {
+      // Extract field collection names and process each collection.
+      $field_collection_field_names = explode(',', $row->getSourceProperty('field_collection_names'));
+      foreach ($field_collection_field_names as $field) {
+        $this->processEachFieldCollection($row, $field, $item_id, $revision_id);
       }
+    }
   }
 
   /**
@@ -105,7 +106,7 @@ class AZParagraphsItem extends ParagraphsItem {
    *
    * Retrieves and sets the values for a specific field collection.
    *
-   * @param Row $row
+   * @param \Drupal\migrate\Row $row
    *   The current row being processed.
    * @param string $field
    *   The field collection name.
@@ -115,14 +116,13 @@ class AZParagraphsItem extends ParagraphsItem {
    *   The revision ID of the paragraph.
    */
   private function processEachFieldCollection(Row $row, $field, $item_id, $revision_id) {
-      // Retrieve field collection data for the specific field.
-      $field_collection_data = $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id);
-      // Process and sort field collection values.
-      $field_collection_field_values = $this->getFieldCollectionValues($field_collection_data, $field);
-      ksort($field_collection_field_values);
-
-      // Set the processed values back into the row.
-      $row->setSourceProperty($field . '_values', $field_collection_field_values);
+    // Retrieve field collection data for the specific field.
+    $field_collection_data = $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id);
+    // Process and sort field collection values.
+    $field_collection_field_values = $this->getFieldCollectionValues($field_collection_data, $field);
+    ksort($field_collection_field_values);
+    // Set the processed values back into the row.
+    $row->setSourceProperty($field . '_values', $field_collection_field_values);
   }
 
   /**
@@ -136,18 +136,18 @@ class AZParagraphsItem extends ParagraphsItem {
    *   The organized field collection values.
    */
   private function getFieldCollectionValues($field_collection_data, $field) {
-      $field_collection_field_values = [];
-      foreach ($field_collection_data as $delta => $field_collection_data_item) {
-          $field_collection_value = $this->getFieldValues(
-              'field_collection_item',
-              $field,
-              $field_collection_data_item['item_id'],
-              $field_collection_data_item['revision_id']
-          );
-          $field_collection_field_values[$delta] = $field_collection_value;
-      }
+    $field_collection_field_values = [];
+    foreach ($field_collection_data as $delta => $field_collection_data_item) {
+      $field_collection_value = $this->getFieldValues(
+        'field_collection_item',
+        $field,
+        $field_collection_data_item['item_id'],
+        $field_collection_data_item['revision_id']
+      );
+      $field_collection_field_values[$delta] = $field_collection_value;
+    }
 
-      return $field_collection_field_values;
+    return $field_collection_field_values;
   }
 
   /**
@@ -155,7 +155,7 @@ class AZParagraphsItem extends ParagraphsItem {
    *
    * Iterates over all fields of a paragraph and sets their values in the row.
    *
-   * @param Row $row
+   * @param \Drupal\migrate\Row $row
    *   The current row being processed.
    * @param string|int $item_id
    *   The item ID of the paragraph.
@@ -163,9 +163,9 @@ class AZParagraphsItem extends ParagraphsItem {
    *   The revision ID of the paragraph.
    */
   private function processParagraphFields(Row $row, $item_id, $revision_id) {
-      foreach (array_keys($this->getFields('paragraphs_item', $row->getSourceProperty('bundle'))) as $field) {
-          $row->setSourceProperty($field, $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id));
-      }
+    foreach (array_keys($this->getFields('paragraphs_item', $row->getSourceProperty('bundle'))) as $field) {
+      $row->setSourceProperty($field, $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id));
+    }
   }
 
   /**
@@ -181,9 +181,9 @@ class AZParagraphsItem extends ParagraphsItem {
    *   is modified by reference.
    */
   private function excludeArchivedParagraphs($query) {
-      // Add a condition to the query to exclude rows where 'archived' is marked as 1 (true).
-      // In this context, a value of 0 in 'p.archived' means the paragraph is not archived.
-      $query->condition('p.archived', 0);
+    // Add a condition to the query to exclude rows where 'archived' is marked as 1 (true).
+    // In this context, a value of 0 in 'p.archived' means the paragraph is not archived.
+    $query->condition('p.archived', 0);
   }
 
 }
