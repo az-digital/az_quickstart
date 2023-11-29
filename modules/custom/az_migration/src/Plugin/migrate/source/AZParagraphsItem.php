@@ -132,6 +132,7 @@ class AZParagraphsItem extends ParagraphsItem {
    *   The raw field collection data.
    * @param string $field
    *   The field collection name.
+   *
    * @return array
    *   The organized field collection values.
    */
@@ -171,18 +172,23 @@ class AZParagraphsItem extends ParagraphsItem {
   /**
    * Modifies the query to exclude archived paragraphs.
    *
-   * This method alters the existing query by adding a condition that filters out
-   * paragraphs marked as archived. In Drupal, 'archived' often means the paragraph
-   * is either deleted or not in active use, depending on the specific implementation.
-   * By adding this condition, only active, non-archived paragraphs are fetched by the query.
+   * This method alters the existing query by adding a condition that filters
+   * out paragraphs marked as archived. In Drupal, 'archived' often means the
+   * paragraph is either deleted or not in active use, depending on the
+   * specific implementation.
+   *
+   * By adding this condition, only active, non-archived paragraphs are fetched
+   * by the query.
    *
    * @param \Drupal\Core\Database\Query\SelectInterface $query
-   *   The query object that is being built for fetching paragraph items. This object
-   *   is modified by reference.
+   *   The query object that is being built for fetching paragraph items.
+   *   This object is modified by reference.
    */
   private function excludeArchivedParagraphs($query) {
-    // Add a condition to the query to exclude rows where 'archived' is marked as 1 (true).
-    // In this context, a value of 0 in 'p.archived' means the paragraph is not archived.
+    // Add a condition to the query to exclude rows where 'archived'
+    // is marked as 1 (true).
+    // In this context, a value of 0 in 'p.archived' means the paragraph
+    // is not archived.
     $query->condition('p.archived', 0);
   }
 
