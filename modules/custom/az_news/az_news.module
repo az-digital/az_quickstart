@@ -80,7 +80,7 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
         $byline = '';
 
         if (!$entity->get('field_az_byline')->isEmpty()) {
-          $byline = 'By ' . $entity->get('field_az_byline')->value;
+          $byline = t('By') . ' ' . $entity->get('field_az_byline')->value;
         }
 
         if (!$entity->get('field_az_byline_affiliation')->isEmpty()) {
