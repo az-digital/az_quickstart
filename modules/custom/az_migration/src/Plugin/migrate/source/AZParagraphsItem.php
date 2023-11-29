@@ -33,14 +33,17 @@ class AZParagraphsItem extends ParagraphsItem {
   public function query() {
     $query = parent::query();
 
-    // @phpstan-ignore-next-line
-    $this->allowArchivedParagraphs = \Drupal::config('az_migration.settings')->get('allow_archived_paragraphs');
-
     $query->addField('p', 'bottom_spacing', 'bottom_spacing');
     $query->addField('p', 'view_mode', 'view_mode');
 
+    // @phpstan-ignore-next-line
+    $this->allowArchivedParagraphs = \Drupal::config('az_migration.settings')->get('allow_archived_paragraphs');
     if (!$this->allowArchivedParagraphs) {
-      $this->excludeArchivedParagraphs($query);
+      // Add a condition to the query to exclude rows where 'archived'
+      // is marked as 1 (true).
+      // In this context, a value of 0 in 'p.archived' means the paragraph
+      // is not archived.
+      $query->condition('p.archived', 0);
     }
 
     return $query;
@@ -100,29 +103,6 @@ class AZParagraphsItem extends ParagraphsItem {
     }
     return $row;
 
-  }
-
-  /**
-   * Modifies the query to exclude archived paragraphs.
-   *
-   * This method alters the existing query by adding a condition that filters
-   * out paragraphs marked as archived. In Drupal, 'archived' often means the
-   * paragraph is either deleted or not in active use, depending on the
-   * specific implementation.
-   *
-   * By adding this condition, only active, non-archived paragraphs are fetched
-   * by the query.
-   *
-   * @param \Drupal\Core\Database\Query\SelectInterface $query
-   *   The query object that is being built for fetching paragraph items.
-   *   This object is modified by reference.
-   */
-  private function excludeArchivedParagraphs($query) {
-    // Add a condition to the query to exclude rows where 'archived'
-    // is marked as 1 (true).
-    // In this context, a value of 0 in 'p.archived' means the paragraph
-    // is not archived.
-    $query->condition('p.archived', 0);
   }
 
 }
