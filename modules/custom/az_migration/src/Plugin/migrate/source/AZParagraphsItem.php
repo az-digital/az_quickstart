@@ -142,7 +142,7 @@ class AZParagraphsItem extends ParagraphsItem {
       $field_collection_value = $this->getFieldValues(
         'field_collection_item',
         $field,
-        $field_collection_data_item['item_id'],
+        $field_collection_data_item['value'],
         $field_collection_data_item['revision_id']
       );
       $field_collection_field_values[$delta] = $field_collection_value;
