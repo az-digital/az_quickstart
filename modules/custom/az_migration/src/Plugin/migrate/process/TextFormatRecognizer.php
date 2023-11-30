@@ -102,8 +102,8 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
       // likely to exist in the source regardless of intent.
       $markup = trim(_filter_autop(check_markup($value, $format)));
       if (!empty($markup)) {
-        // Attempt to parse the resultant html and convert back to canonical html
-        // if successful.
+        // Attempt to parse the resultant html and convert back to canonical
+        // html if successful.
         $markupDoc = new \DOMDocument();
         if (@$markupDoc->loadHTML($markup)) {
           $markup = $markupDoc->saveXML();
@@ -119,4 +119,5 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
 
     return $this->configuration['failed'];
   }
+
 }
