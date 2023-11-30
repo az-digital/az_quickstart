@@ -57,8 +57,12 @@
     {% block content %}
       {# Layout for content width AND full width styles #}
       <div class="container">
-        <div class="content">
-          {{ content }}
+        <div class="row">
+          <div class="col">
+            <div class="content">
+              {{ content }}
+            </div>
+          </div>
         </div>
       </div>
     {% endblock %}
