@@ -990,6 +990,45 @@ display:
             Custom: Custom
           api_param_custom_begin: modified_begin
           api_param_custom_end: modified_end
+        property_4:
+          id: property_4
+          table: az_event_trellis_data
+          field: property
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: views_remote_data_property
+          operator: '='
+          value: 'true'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          property_path: publish
       filter_groups:
         operator: AND
         groups:

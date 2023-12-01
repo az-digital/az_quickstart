@@ -120,7 +120,8 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
           }
         }
       }
-      if (empty($parameters)) {
+      // Don't perform search if empty or publish is the only field.
+      if (empty($parameters) || (count($parameters) <= 1)) {
         return;
       }
       $ids = $this->trellisHelper->searchEvents($parameters);
