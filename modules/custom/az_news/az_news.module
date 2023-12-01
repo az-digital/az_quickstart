@@ -70,7 +70,7 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * Sets the Thumbnail Image field to match the Photo field if the
+ * Sets the Thumbnail Image field to match the "Featured Image" field if the
  * Use Featured Image as Thumbnail checkbox is checked.
  */
 function az_news_node_presave(EntityInterface $entity) {
