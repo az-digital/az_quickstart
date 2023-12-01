@@ -101,4 +101,4 @@ process:
         card_title_style: card_title_style
         card_clickable: card_clickable
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing

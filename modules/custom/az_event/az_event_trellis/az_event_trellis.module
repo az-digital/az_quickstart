@@ -53,29 +53,3 @@ function az_event_trellis_form_node_az_event_edit_form_alter(&$form, FormStateIn
     }
   }
 }
-
-/**
- * Implements hook_migration_plugins_alter().
- */
-function az_event_trellis_migration_plugins_alter(array &$migrations) {
-
-  if (!empty($migrations['az_trellis_events'])) {
-    $query = \Drupal::entityQuery('node')
-      ->accessCheck(FALSE)
-      ->condition('type', 'az_event')
-      ->exists('field_az_trellis_id');
-    $nids = $query->execute();
-    $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-    $nodes = $node_storage->loadMultiple($nids);
-
-    $event_api_urls = [];
-    foreach ($nodes as $n) {
-      $event_api_urls[] = \Drupal::service('az_event_trellis.trellis_helper')->getEventUrl($n->get('field_az_trellis_id')->getString());
-    }
-
-    if (!empty($migrations['az_trellis_events']['source']) && empty($migrations['az_trellis_events']['source']['urls'])) {
-      $migrations['az_trellis_events']['source']['urls'] = $event_api_urls;
-    }
-  }
-
-}

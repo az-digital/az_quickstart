@@ -28,7 +28,13 @@
       {% endif %}
     </div>
   {% endif %}
-  {% if title_style == 'default' or (title_style == 'title-on-image' and (body or link)) %}
+  {% if title_style == 'title-on-image' and body['#text'] == '' and link['#title'] == '' %}
+    <div class="d-flex flex-column">
+      {% if link|render %}
+        <div class="mt-auto">{{ link }}</div>
+      {% endif %}
+    </div>
+  {% else %}
     <div class="card-body d-flex flex-column">
       {% if title and title_style == 'default' %}
         <h3 class="h5 bold mt-0 card-title">{{ title }}</h3>
