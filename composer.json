@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.25",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.11",
-        "citation-style-language/styles": "0.0.303",
+        "citation-style-language/styles": "0.0.325",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
@@ -132,9 +132,6 @@
             "dev-main": "2.9.x-dev"
         },
         "patches": {
-            "citation-style-language/styles": {
-                "Add Bibliography to Bluebook Law Review (issue 6603": "https://patch-diff.githubusercontent.com/raw/citation-style-language/styles/pull/6634.diff"
-            },
             "drupal/antibot": {
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
             },
