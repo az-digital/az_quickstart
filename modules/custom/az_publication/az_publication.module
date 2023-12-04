@@ -214,7 +214,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         // Handle publication date if available.
         if (!empty($entity->field_az_publication_date->value)) {
           $blob->issued = _az_publication_publication_date_object($entity);
-          if ($blob->issued->{'status'} === 'forthcoming') {
+          if (isset($blob->issued->{'status'}) && $blob->issued->{'status'} === 'forthcoming') {
             $blob->status = t('forthcoming');
           }
         }
