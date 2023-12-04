@@ -187,7 +187,8 @@
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
             "drupal/migrate_plus": {
-                "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch"
+                "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
+                "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
