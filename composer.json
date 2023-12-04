@@ -133,7 +133,6 @@
         },
         "patches": {
             "citation-style-language/styles": {
-                "Add Forthcoming support to BlueBook Law Review (issue 6576)": "https://patch-diff.githubusercontent.com/raw/citation-style-language/styles/pull/6641.diff",
                 "Add Bibliography to Bluebook Law Review (issue 6603": "https://patch-diff.githubusercontent.com/raw/citation-style-language/styles/pull/6634.diff"
             },
             "drupal/antibot": {
