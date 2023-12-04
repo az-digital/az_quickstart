@@ -42,7 +42,7 @@
         "drupal/auto_entitylabel": "3.0.0",
         "drupal/background_image_formatter": "*",
         "drupal/better_exposed_filters": "6.0.3",
-        "drupal/blazy": "2.19.0",
+        "drupal/blazy": "2.21.0",
         "drupal/block_class": "2.0.11",
         "drupal/block_content_permissions": "1.11.0",
         "drupal/block_field": "1.0.0-rc4",
@@ -58,15 +58,15 @@
         "drupal/config_snapshot": "2.0.0-alpha1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.1.5",
+        "drupal/core-recommended": "10.1.6",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.14.0",
         "drupal/date_ap_style": "1.7.0",
         "drupal/draggableviews": "2.1.3",
         "drupal/easy_breadcrumb": "2.0.5",
-        "drupal/embed": "1.6.0",
+        "drupal/embed": "1.7.0",
         "drupal/entity_browser": "*",
-        "drupal/entity_embed": "1.4.0",
+        "drupal/entity_embed": "1.5.0",
         "drupal/environment_indicator": "4.0.10",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.3",
@@ -82,7 +82,7 @@
         "drupal/jquery_ui": "1.6.0",
         "drupal/jquery_ui_datepicker": "2.0.0",
         "drupal/link_class": "2.1.0",
-        "drupal/linkit": "6.1.1",
+        "drupal/linkit": "6.1.2",
         "drupal/masquerade": "2.0.0-rc4",
         "drupal/media_entity_file_replace": "1.1",
         "drupal/media_library_edit": "3.0.2",
@@ -97,8 +97,8 @@
         "drupal/migrate_tools": "6.0.2",
         "drupal/optional_end_date": "1.3.0",
         "drupal/paragraphs": "1.16.0",
-        "drupal/paragraphs_admin": "1.4.0",
-        "drupal/pathauto": "1.11.0",
+        "drupal/paragraphs_admin": "1.5.0",
+        "drupal/pathauto": "1.12.0",
         "drupal/quick_node_clone": "1.16.0",
         "drupal/redirect": "1.9.0",
         "drupal/role_delegation": "1.2.0",
@@ -108,11 +108,11 @@
         "drupal/slick_views": "2.8.0",
         "drupal/smart_date": "4.0.3",
         "drupal/smtp": "1.2.0",
-        "drupal/token": "1.12.0",
+        "drupal/token": "1.13.0",
         "drupal/views_bootstrap": "5.4.0",
         "drupal/views_remote_data": "1.0.2",
-        "drupal/viewsreference": "2.0.0-beta6",
-        "drupal/webform": "6.2.0-beta7",
+        "drupal/viewsreference": "2.0.0-beta7",
+        "drupal/webform": "6.2.0",
         "drupal/workbench_access": "2.0.1",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
@@ -129,7 +129,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.8.x-dev"
+            "dev-main": "2.9.x-dev"
         },
         "patches": {
             "citation-style-language/styles": {
@@ -143,7 +143,8 @@
             },
             "drupal/bootstrap_barrio": {
                 "Affix library still broken (3366908)": "https://www.drupal.org/files/issues/2023-06-14/3366908-3_5-x.patch",
-                "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch"
+                "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",
+                "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
@@ -176,12 +177,6 @@
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
             },
-            "drupal/embed": {
-                "CKEditor 5 compatibility (3309747)": "https://www.drupal.org/files/issues/2023-07-26/3309747-45.patch"
-            },
-            "drupal/entity_embed": {
-                "Drupal 10 & CKEditor 5 readiness (3272732)": "https://www.drupal.org/files/issues/2023-09-29/3272732-134.patch"
-            },
             "drupal/google_tag": {
                 "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
             },
@@ -189,7 +184,7 @@
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
             },
             "drupal/linkit": {
-                "Upcast linkit profile in linkit.autocomplete route (3212820)": "https://www.drupal.org/files/issues/2023-10-05/3212820-backwards-compatibility_19.patch"
+                "Issue #3364963 'This link has no URL' when inserting text before or after a link": "https://www.drupal.org/files/issues/2023-10-27/3364963-this-link-has-no-url-10.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"

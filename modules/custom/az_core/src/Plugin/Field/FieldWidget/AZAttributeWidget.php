@@ -136,7 +136,7 @@ class AZAttributeWidget extends OptionsSelectWidget {
         if ($term->depth === 0) {
           $element[$term->tid] = [
             '#type' => 'select',
-            '#title' => $this->t($term->name),
+            '#title' => $this->t('@name', ['@name' => $term->name]),
             '#options' => [],
             '#default_value' => [],
             '#multiple' => TRUE,
