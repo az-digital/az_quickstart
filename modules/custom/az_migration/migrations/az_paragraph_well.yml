@@ -43,9 +43,9 @@ process:
         card_style: 'card card-borderless'
         card_clickable: 0
         az_display_settings:
-            bottom_spacing: bottom_spacing
-            card_width_sm: 'col-sm-12'
-            card_width_xs: 'col-12'
+          bottom_spacing: bottom_spacing
+          card_width_sm: 'col-sm-12'
+          card_width_xs: 'col-12'
 
 dependencies:
   enforced:

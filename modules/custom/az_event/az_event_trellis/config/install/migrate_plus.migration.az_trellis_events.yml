@@ -10,11 +10,8 @@ migration_tags:
 migration_group: az_trellis_events
 label: 'Trellis Events'
 source:
-  plugin: url
-  data_fetcher_plugin: http
-  data_parser_plugin: json
-  urls: {  }
-  item_selector: /0/data
+  plugin: az_trellis_events_api
+  trellis_ids: {  }
   track_changes: true
   fields:
     -
@@ -44,23 +41,15 @@ source:
     -
       name: start_date_time
       label: 'Start Date and Time'
-      selector: Event_Start_DateTime
+      selector: Start_DateTime
     -
       name: end_date_time
       label: 'End Date and Time'
-      selector: Event_End_DateTime
-    -
-      name: external_visibility
-      label: 'External Visibility'
-      selector: External_Visibility
+      selector: End_DateTime
     -
       name: publish
       label: Publish
-      selector: Publish
-    -
-      name: status_formula
-      label: 'Status Formula'
-      selector: Status_Formula
+      selector: Publish_Formula
   ids:
     id:
       type: string
@@ -77,53 +66,10 @@ process:
       plugin: skip_on_empty
       method: process
       source: summary
-
-  # Events are considered "published" unless any of these conditions are met:
-  # - 'External_Visibility' is "Don't Broadcast to any Platform (invite only)"
-  # - 'Status_Formula' is "Canceled"
-  # = 'Publish' is "false"
-  external_visibility:
-    -
-      plugin: callback
-      callable: strtolower
-      source: external_visibility
-    -
-      plugin: static_map
-      map:
-        "don't broadcast to any platform (invite only)": false
-      default_value: true
-  status_formula:
-    -
-      plugin: callback
-      callable: strtolower
-      source: status_formula
-    -
-      plugin: static_map
-      map:
-        canceled: false
-      default_value: true
-  publish:
-    plugin: static_map
-    source: publish
-    map:
-      'true': true
-    default_value: false
-  combined_status:
-    -
-      plugin: skip_on_empty
-      source: '@external_visibility'
-      method: process
-    -
-      plugin: skip_on_empty
-      source: '@status_formula'
-      method: process
-    -
-      plugin: get
-      source: '@publish'
   status:
     -
       plugin: get
-      source: '@combined_status'
+      source: publish
     -
       plugin: default_value
       strict: true
@@ -143,4 +89,5 @@ process:
 destination:
   plugin: 'entity:node'
   default_bundle: az_event
+  validate: false
 migration_dependencies: null

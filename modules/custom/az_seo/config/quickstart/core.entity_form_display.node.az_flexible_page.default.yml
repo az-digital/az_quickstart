@@ -30,11 +30,12 @@ third_party_settings:
       format_type: details_sidebar
       format_settings:
         classes: ''
+        show_empty_fields: false
         id: ''
-        open: false
-        description: 'These fields appear in display modes other that the full page view mode.'
+        open: true
+        description: 'Summary fields determine how this page appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
+        weight: -10
     group_categorization:
       children:
         - field_az_page_category
@@ -62,7 +63,7 @@ third_party_settings:
         classes: ''
         id: ''
         open: false
-        description: 'Display this page with a Marketing Campaign Page style.'
+        description: 'Display this page with a Marketing Campaign Page style, hiding the navigation menu and other page regions. See <a href="https://quickstart.arizona.edu/pages">Adding Pages</a> for details about each style.'
         required_fields: true
         weight: 0
 id: node.az_flexible_page.default
@@ -116,6 +117,7 @@ content:
     region: content
     settings:
       sidebar: true
+      use_details: true
     third_party_settings: {  }
   field_az_page_category:
     type: options_select
