@@ -190,11 +190,12 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
     $changed = $dom->createElement($tag);
     $changed->setAttribute('data-entity-type', $type);
     $ids = $this->migrateLookup->lookup($migration, [$id]);
-    if (empty($ids)) {
-      $ids = $this->migrateStub->createStub($migration, [$id]);
+    if (!$ids) {
+      $ids = "deleted_file";
     }
-    // We eventually found our id, by lookup or stubbing it.
-    if (!empty($ids)) {
+    // If the file was deleted on the source site, we replace the embed tag with
+    // a placeholder, otherwise we use the found ID.
+    if ($ids && is_array($ids)) {
       $id = reset($ids);
       if (!empty($id)) {
         $eid = reset($id);
@@ -203,6 +204,9 @@ class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface 
           $changed->setAttribute('data-entity-uuid', $entity->uuid());
         }
       }
+    }
+    else {
+      $changed = $dom->createElement("h1", "deleted_entity_placeholder");
     }
 
     // Data alignment.
