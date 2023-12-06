@@ -20,6 +20,13 @@
       "display_id" : "az_feature",
       "data": "",
       "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 103,
+      "target_id" : "az_person",
+      "display_id" : "grid_block_3cols",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
     }
   ]
 }
