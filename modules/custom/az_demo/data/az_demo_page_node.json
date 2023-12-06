@@ -200,6 +200,16 @@
       "az_main_content" : "103",
       "az_media_image" : "",
       "az_summary" : "Person Grid 3-column."
+    },
+    {
+      "id":21,
+      "title" : "News Finder",
+      "path" : "/finder/news",
+      "exclude_title" : true,
+      "az_page_category" : "Views",
+      "az_main_content" : "104",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
     }
   ]
 }

@@ -31,6 +31,14 @@
       "display_id" : "grid_block_3cols",
       "data" : "",
       "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 104,
+      "title" : "News finder",
+      "target_id" : "az_finder",
+      "display_id" : "news",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
     }
   ]
 }
