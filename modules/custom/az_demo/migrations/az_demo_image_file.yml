@@ -19,6 +19,9 @@ source:
 
   fields:
     -
+      name: uuid
+      selector: uuid
+    -
       name: filename
       selector: filename
     -
@@ -31,6 +34,10 @@ source:
 destination:
   plugin: 'entity:media'
 process:
+  uuid:
+    plugin: skip_on_empty
+    method: process
+    source: uuid
   bundle:
     plugin: default_value
     default_value: az_image
