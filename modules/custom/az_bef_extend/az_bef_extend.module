@@ -13,22 +13,22 @@ function az_bef_extend_form_alter(&$form, FormStateInterface $form_state, $form_
   $config = NULL;
 
   // Check if the form is a Views exposed form
-  if ($form_id == 'views_exposed_form') {
+  if ($form_id === 'views_exposed_form') {
     /** @var ViewExecutable $view */
     $view = $form_state->get('view') ?: $form['#view'];
     if ($view) {
-      if($view->id() != 'watchdog'){
+      if($view->id() !== 'watchdog'){
         $view_id = $view->id();
         $display_id = $view->getDisplay()->display['id'];
-  
+
         $form_state->set('view_id', $view_id);
         $form_state->set('display_id', $display_id);
-  
+
         // Load the specific configuration for this view and display
         $config = \Drupal::config('az_bef_extend.settings.' . $view_id . '.' . $display_id);
         $vert = $form_state->getValue('az_bef_extend_vertical');
         $reset = $form_state->getValue('az_bef_extend_move_reset');
-  
+
         // Apply settings to the form
         if ($config->get('move_reset_to_top')) {
           $form['#attributes']['class'][] = 'top-reset';
@@ -44,10 +44,10 @@ function az_bef_extend_form_alter(&$form, FormStateInterface $form_state, $form_
     $view = $form_state->get('view') ?: $form['#view'];
     if($view){
       $view_id = $view->id();
-  
+
       // The display ID is usually part of the form state or URL
       $display_id = $form_state->get('display_id') ?: 'default';
-  
+
       // Load the specific configuration for this view and display
       $config = \Drupal::config('az_bef_extend.settings.' . $view_id . '.' . $display_id);
       $vert = $config->get('vertical_style');

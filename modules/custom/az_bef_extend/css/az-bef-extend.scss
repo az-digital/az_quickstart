@@ -55,17 +55,9 @@
     .has-nested-ul{
       >  div{
         padding-left: 0;
-        pointer-events: none;
+        margin-left: 20px;
         label{
           font-weight: 600;
-        }
-        input{
-          display: none;
-        }
-        &:before{
-          content: '–';
-          display: inline-block;
-          padding-right: 12px;
         }
       }
       ul{
