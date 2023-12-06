@@ -24,8 +24,8 @@ source:
       name: id
       selector: id
     -
-      name: field_az_title
-      selector: field_az_title
+      name: title
+      selector: title
     -
       name: target_id
       selector: target_id
