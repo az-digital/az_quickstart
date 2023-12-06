@@ -2,12 +2,12 @@
 
 namespace Drupal\az_core\Commands;
 
-use Drush\Commands\DrushCommands;
-use Drupal\user\Entity\Role;
-use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
-use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
+use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\user\Entity\Role;
+use Drush\Commands\DrushCommands;
 
 /**
  * Add missing permissions from the AZ Quickstart profile to the active site.
