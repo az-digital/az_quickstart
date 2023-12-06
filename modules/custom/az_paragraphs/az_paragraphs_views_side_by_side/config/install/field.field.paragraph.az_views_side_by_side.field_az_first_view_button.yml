@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_first_view_button
+    - paragraphs.paragraphs_type.az_views_side_by_side
+  module:
+    - link
+id: paragraph.az_views_side_by_side.field_az_first_view_button
+field_name: field_az_first_view_button
+entity_type: paragraph
+bundle: az_views_side_by_side
+label: 'First View Button'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

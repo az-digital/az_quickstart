@@ -30,9 +30,15 @@ html.sticky-footer #main-wrapper {
   flex: 1 0 auto;
   width: 100%;
 }
+
 /* Footer Social Media Icons */
 .az-icon-spacing::before {
   margin-right:  .4rem;
+}
+
+/* Footer Nav */
+#footer_sub .nav-utility {
+  line-height: 1.25;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
@@ -695,11 +701,13 @@ fieldset.collapsed {
 /* end Bootstrap Barrio image field styles */
 
 @media (min-width: 768px) {
-  #content .form-item .form-select,
-  #content .form-item .form-email,
-  #content .form-item .form-file,
-  #content .form-item .form-number,
-  #content .form-item .form-text {
+  #content .form-select,
+  #content .form-email,
+  #content .form-file,
+  #content .form-number,
+  #content .form-tel,
+  #content input[type="text"].form-control,
+  #content .webform-signature-pad .button {
     width: initial;
     max-width: 100%;
   }

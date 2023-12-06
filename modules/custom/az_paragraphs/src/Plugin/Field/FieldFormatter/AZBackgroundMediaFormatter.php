@@ -5,12 +5,12 @@ namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
-//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
-use Drupal\file\FileInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
+use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -525,7 +525,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
         $az_background_media[] = $background_video;
-        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
           $image_renderable = [
             '#theme' => 'responsive_image_formatter',
             '#responsive_image_style_id' => 'az_full_width_background',
@@ -591,7 +591,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
-      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
         $image_renderable = [
           '#theme' => 'responsive_image_formatter',
           '#responsive_image_style_id' => 'az_full_width_background',

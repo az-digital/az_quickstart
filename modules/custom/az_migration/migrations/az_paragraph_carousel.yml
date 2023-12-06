@@ -61,7 +61,7 @@ process:
       az_photo_gallery_paragraph_behavior:
         gallery_display: '@gallery_display_processed'
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:
