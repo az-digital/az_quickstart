@@ -24,6 +24,9 @@ source:
       name: id
       selector: id
     -
+      name: field_az_title
+      selector: field_az_title
+    -
       name: target_id
       selector: target_id
     -
@@ -41,7 +44,7 @@ destination:
   default_bundle: az_view_reference
 
 process:
-  field_az_view_reference/target_id: target_id
+  field_az_title/0/value: field_az_title
   field_az_view_reference/display_id: display_id
   field_az_view_reference/data: data
   behavior_settings:

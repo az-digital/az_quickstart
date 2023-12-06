@@ -1,6 +1,7 @@
 {
   "paragraphs": [
     {
+      "field_az_title" : "Grid View",
       "id":100,
       "target_id" : "az_news",
       "display_id" : "az_grid",
@@ -9,6 +10,7 @@
     },
     {
       "id":101,
+      "field_az_title" : "Grid View with Filter",
       "target_id" : "az_news",
       "display_id" : "az_grid_filter",
       "data": "",
@@ -16,6 +18,7 @@
     },
     {
       "id":102,
+      "field_az_title" : "Feature View",
       "target_id" : "az_news",
       "display_id" : "az_feature",
       "data": "",
@@ -23,6 +26,7 @@
     },
     {
       "id" : 103,
+      "field_az_title" : "Grid - 3 col"
       "target_id" : "az_person",
       "display_id" : "grid_block_3cols",
       "data" : "",
