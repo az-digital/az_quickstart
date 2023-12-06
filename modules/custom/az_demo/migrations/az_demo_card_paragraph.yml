@@ -52,7 +52,6 @@ destination:
 
 process:
   field_az_title: card_title
-
   field_az_cards:
     source: az_cards
     plugin: sub_process
