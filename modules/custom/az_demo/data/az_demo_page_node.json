@@ -193,11 +193,11 @@
     },
     {
       "id":20,
-      "title" : "Person Grid - 3 Col",
-      "path" : "/pages/person-grid-3-col",
+      "title" : "Person Views",
+      "path" : "/pages/person-view-paragraphs",
       "exclude_title" : true,
       "az_page_category" : "Views",
-      "az_main_content" : "59",
+      "az_main_content" : "103",
       "az_media_image" : "",
       "az_summary" : "Person Grid 3-column."
     }
