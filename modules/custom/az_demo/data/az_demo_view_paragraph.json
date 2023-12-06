@@ -26,7 +26,7 @@
     },
     {
       "id" : 103,
-      "field_az_title" : "Grid - 3 col"
+      "field_az_title" : "Grid - 3 col",
       "target_id" : "az_person",
       "display_id" : "grid_block_3cols",
       "data" : "",
