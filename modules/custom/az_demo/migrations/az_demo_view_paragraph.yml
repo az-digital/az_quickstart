@@ -45,9 +45,9 @@ destination:
 
 process:
   field_az_title/value: 
-  - plugin: skip_on_empty
-    method: process
-    source: title
+    - plugin: skip_on_empty
+      method: process
+      source: title
   field_az_view_reference/display_id: display_id
   field_az_view_reference/data: data
   behavior_settings:
