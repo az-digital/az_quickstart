@@ -44,7 +44,7 @@ destination:
   default_bundle: az_view_reference
 
 process:
-  field_az_title/value: field_az_title
+  field_az_title/value: title
   field_az_view_reference/display_id: display_id
   field_az_view_reference/data: data
   behavior_settings:
