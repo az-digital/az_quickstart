@@ -329,6 +329,28 @@
       "expanded": false,
       "enabled": true,
       "weight": "13"
+    },
+    {
+      "link_id": "31",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "News Views",
+      "urlpath": "/pages/news-view-paragraphs",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "14"
+    },
+    {
+      "link_id": "32",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Person Views",
+      "urlpath": "/pages/person-view-paragraphs",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "15"
     }
   ]
 }
