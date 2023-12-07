@@ -16,14 +16,12 @@ use Drupal\Core\Form\FormStateInterface;
  *   help = @Translation("Better exposed filters with additional Quickstart styles.")
  * )
  */
-class QuickstartExposedFilters extends BetterExposedFilters
-{
+class QuickstartExposedFilters extends BetterExposedFilters {
 
   /**
    * {@inheritdoc}
    */
-  public function exposedFormAlter(&$form, FormStateInterface $form_state)
-  {
+  public function exposedFormAlter(&$form, FormStateInterface $form_state) {
     parent::exposedFormAlter($form, $form_state);
 
     // Attach Quickstart styles.
@@ -31,4 +29,5 @@ class QuickstartExposedFilters extends BetterExposedFilters
     // Vertical style intended for sidebar use.
     $form['#attributes']['class'][] = 'az-bef-vertical';
   }
+
 }
