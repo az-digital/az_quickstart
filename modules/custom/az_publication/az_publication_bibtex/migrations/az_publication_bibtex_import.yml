@@ -11,136 +11,112 @@ source:
     citation_key:
       type: string
   fields:
-    -
-      name: _type
+    - name: _type
       selector: _type
-    -
-      name: citation_key
+    - name: citation_key
       selector: citation-key
-    -
-      name: title
+    - name: title
       selector: title
-    -
-      name: author
+    - name: author
       selector: author
-    -
-      name: publisher
+    - name: publisher
       selector: publisher
-    -
-      name: institution
+    - name: institution
       selector: institution
-    -
-      name: school
+    - name: school
       selector: school
-    -
-      name: location
+    - name: location
       selector: location
-    -
-      name: volume
+    - name: volume
       selector: volume
-    -
-      name: pages
+    - name: pages
       selector: pages
-    -
-      name: number
+    - name: number
       selector: number
-    -
-      name: booktitle
+    - name: booktitle
       selector: booktitle
-    -
-      name: journaltitle
+    - name: journaltitle
       selector: journaltitle
-    -
-      name: journal
+    - name: journal
       selector: journal
-    -
-      name: annotation
+    - name: annotation
       selector: annotation
-    -
-      name: abstract
+    - name: abstract
       selector: abstract
-    -
-      name: url
+    - name: url
       selector: url
-    -
-      name: doi
+    - name: doi
       selector: doi
-    -
-      name: version
+    - name: version
       selector: version
-    -
-      name: datetype
+    - name: datetype
       selector: _date_type
-    -
-      name: date
+    - name: date
       selector: _date
-
 process:
   type:
     plugin: default_value
     default_value: az_publication
   field_az_publication_type:
-  - plugin: static_map
-    source: _type
-    map:
-      article: article-journal
-      book: book
-      booklet: pamphlet
-      collection: collection
-      conference: paper-conference
-      inbook: book
-      incollection: entry
-      inproceedings: paper-conference
-      manual: pamphlet
-      mastersthesis: thesis
-      misc: post
-      online: webpage
-      patent: patent
-      periodical: periodical
-      phdthesis: thesis
-      proceedings: paper-conference
-      report: report
-      techreport: report
-      thesis: thesis
-      unpublished: manuscript
-    default_value: article-journal
-
+    - plugin: static_map
+      source: _type
+      map:
+        article: article-journal
+        book: book
+        booklet: pamphlet
+        collection: collection
+        conference: paper-conference
+        inbook: book
+        incollection: entry
+        inproceedings: paper-conference
+        manual: pamphlet
+        mastersthesis: thesis
+        misc: post
+        online: webpage
+        patent: patent
+        periodical: periodical
+        phdthesis: thesis
+        proceedings: paper-conference
+        report: report
+        techreport: report
+        thesis: thesis
+        unpublished: manuscript
+      default_value: article-journal
   field_az_publication_mapped_type:
-  - plugin: static_map
-    source: _type
-    map:
-      article: article-journal
-      book: book
-      booklet: pamphlet
-      collection: collection
-      conference: paper-conference
-      inbook: book
-      incollection: entry
-      inproceedings: paper-conference
-      manual: pamphlet
-      mastersthesis: thesis
-      misc: post
-      online: webpage
-      patent: patent
-      periodical: periodical
-      phdthesis: thesis
-      proceedings: paper-conference
-      report: report
-      techreport: report
-      thesis: thesis
-      unpublished: manuscript
-    default_value: article-journal
-  - plugin: migration_lookup
-    migration: az_publication_type_mapping
-    no_stub: true
-
+    - plugin: static_map
+      source: _type
+      map:
+        article: article-journal
+        book: book
+        booklet: pamphlet
+        collection: collection
+        conference: paper-conference
+        inbook: book
+        incollection: entry
+        inproceedings: paper-conference
+        manual: pamphlet
+        mastersthesis: thesis
+        misc: post
+        online: webpage
+        patent: patent
+        periodical: periodical
+        phdthesis: thesis
+        proceedings: paper-conference
+        report: report
+        techreport: report
+        thesis: thesis
+        unpublished: manuscript
+      default_value: article-journal
+    - plugin: migration_lookup
+      migration: az_publication_type_mapping
+      no_stub: true
   title: title
   field_az_publication_date_type: datetype
   field_az_publication_date:
     plugin: format_date
-    from_format: 'Y-m-d'
-    to_format: 'Y-m-d'
-    from_timezone: 'UTC'
+    from_format: Y-m-d
+    to_format: Y-m-d
+    from_timezone: UTC
     source: date
   field_az_publication_container:
     plugin: null_coalesce
@@ -164,7 +140,7 @@ process:
       - institution
       - school
   field_az_publication_page: pages
-  'field_az_publication_link/uri': url
+  field_az_publication_link/uri: url
   field_az_publication_doi: doi
   field_az_publication_volume: volume
   field_az_publication_issue: number
@@ -174,16 +150,14 @@ process:
     source: author
     process:
       fullname:
-        -
-          plugin: callback
+        - plugin: callback
           callable: array_filter
           source:
             - first
             - von
             - last
             - jr
-        -
-          plugin: concat
+        - plugin: concat
           delimiter: ' '
       target_id:
         plugin: entity_generate
@@ -198,11 +172,9 @@ process:
           field_az_author_nondrop_particle: von
           field_az_author_lname: last
           field_az_author_suffix: jr
-
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   bundle: az_publication
-
 dependencies:
   enforced:
     module:
