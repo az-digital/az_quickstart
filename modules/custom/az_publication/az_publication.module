@@ -102,7 +102,6 @@ function az_publication_theme() {
  */
 function az_publication_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
-
   // Only if fields suggest a publication.
   if ($entity instanceof NodeInterface &&
       $entity instanceof FieldableEntityInterface &&
