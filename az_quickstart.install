@@ -82,6 +82,7 @@ function az_quickstart_requirements($phase) {
       'background_image_formatter',
       'ckeditor',
       'entity_browser',
+      'media_library_theme_reset',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
