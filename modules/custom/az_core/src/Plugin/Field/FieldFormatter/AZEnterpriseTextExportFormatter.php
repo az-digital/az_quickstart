@@ -2,10 +2,10 @@
 
 namespace Drupal\az_core\Plugin\Field\FieldFormatter;
 
-use Drupal\text\Plugin\Field\FieldFormatter\TextDefaultFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Security\TrustedCallbackInterface;
+use Drupal\text\Plugin\Field\FieldFormatter\TextDefaultFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
