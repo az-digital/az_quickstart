@@ -4,11 +4,11 @@ namespace Drupal\az_publication_bibtex\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\file\Entity\File;
+use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
-use Drupal\migrate\MigrateMessage;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * BibTeX import form.

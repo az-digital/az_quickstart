@@ -2,12 +2,12 @@
 
 namespace Drupal\az_publication\Controller;
 
+use Drupal\az_publication\Entity\AZAuthorInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\az_publication\Entity\AZAuthorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
