@@ -3,8 +3,8 @@
 namespace Drupal\az_publication\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
 /**
  * Defines the Quickstart Citation Style entity.
