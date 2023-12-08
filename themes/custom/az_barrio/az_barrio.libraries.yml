@@ -4,6 +4,7 @@ global-styling:
     theme:
       css/style.css: {}
   dependencies:
+    - az_barrio/az-ajax
     - az_barrio/arizona-bootstrap
 az-media-display:
   css:
@@ -15,6 +16,9 @@ az-barrio-off-canvas-nav:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
+az-ajax:
+  js:
+    js/az-ajax.js: {}
 az-proxima-nova:
   css:
     theme:
