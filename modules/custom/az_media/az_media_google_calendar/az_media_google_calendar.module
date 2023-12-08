@@ -5,7 +5,6 @@
  * Hook implementations and global functions for az_media_google_calendar.
  */
 
-
 /**
  * Implements hook_theme().
  */

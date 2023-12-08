@@ -28,6 +28,7 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
   public static function getUrlRegexPattern() {
     return '/^https:\/\/calendar\.google\.com\/calendar\/embed\?src=/';
   }
+
   /**
    * {@inheritdoc}
    */
@@ -63,7 +64,6 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
         continue;
       }
 
-
       $elements[$delta] = [
         '#theme' => 'az_media_google_calendar',
         '#url' => $item->value,
@@ -79,9 +79,9 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
    */
   public static function defaultSettings() {
     return [
-        'width' => 960,
-        'height' => 600,
-      ] + parent::defaultSettings();
+      'width' => 960,
+      'height' => 600,
+    ] + parent::defaultSettings();
   }
 
   /**
@@ -89,25 +89,25 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
-        'width' => [
-          '#type' => 'number',
-          '#title' => $this->t('Width'),
-          '#default_value' => $this->getSetting('width'),
-          '#size' => 5,
-          '#maxlength' => 5,
-          '#field_suffix' => $this->t('pixels'),
-          '#min' => 50,
-        ],
-        'height' => [
-          '#type' => 'number',
-          '#title' => $this->t('Height'),
-          '#default_value' => $this->getSetting('height'),
-          '#size' => 5,
-          '#maxlength' => 5,
-          '#field_suffix' => $this->t('pixels'),
-          '#min' => 50,
-        ],
-      ];
+      'width' => [
+        '#type' => 'number',
+        '#title' => $this->t('Width'),
+        '#default_value' => $this->getSetting('width'),
+        '#size' => 5,
+        '#maxlength' => 5,
+        '#field_suffix' => $this->t('pixels'),
+        '#min' => 50,
+      ],
+      'height' => [
+        '#type' => 'number',
+        '#title' => $this->t('Height'),
+        '#default_value' => $this->getSetting('height'),
+        '#size' => 5,
+        '#maxlength' => 5,
+        '#field_suffix' => $this->t('pixels'),
+        '#min' => 50,
+      ],
+    ];
   }
 
   /**

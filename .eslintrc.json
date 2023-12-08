@@ -10,9 +10,6 @@
     "es6": true,
     "node": true
   },
-  "parserOptions": {
-    "ecmaVersion": 2020
-  },
   "globals": {
     "Drupal": true,
     "drupalSettings": true,
@@ -23,6 +20,7 @@
     "Backbone": true,
     "Modernizr": true,
     "loadjs": true,
+    "Popper": true,
     "Shepherd": true,
     "Sortable": true,
     "once": true,
@@ -49,7 +47,6 @@
       "requireReturn": false
     }],
     "no-unused-vars": ["warn"],
-    "operator-linebreak": ["error", "after", { "overrides": { "?": "ignore", ":": "ignore" } }],
-    "yml/indent": ["error", 2]
+    "operator-linebreak": ["error", "after", { "overrides": { "?": "ignore", ":": "ignore" } }]
   }
 }
