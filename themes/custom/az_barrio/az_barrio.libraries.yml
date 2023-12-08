@@ -4,7 +4,6 @@ global-styling:
     theme:
       css/style.css: {}
   dependencies:
-    - az_barrio/az-ajax
     - az_barrio/arizona-bootstrap
 az-media-display:
   css:
