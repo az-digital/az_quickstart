@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+label: 'Marketing Cloud - Hero Layout'
+id: az_marketing_cloud_hero_layout
+description: 'Image crop for use in Marketing Cloud Hero Layout.'
+aspect_ratio: '2:1'
+soft_limit_width: 600
+soft_limit_height: 300
+hard_limit_width: null
+hard_limit_height: null

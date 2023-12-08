@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_event_trellis.
+ */
+
+/**
+ * Ensure views_remote_data module is installed.
+ */
+function az_event_trellis_update_1020801() {
+  \Drupal::service('module_installer')->install(['views_remote_data']);
+}

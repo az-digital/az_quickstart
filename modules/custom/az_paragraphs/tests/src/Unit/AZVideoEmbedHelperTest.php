@@ -23,6 +23,7 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    parent::setup();
     $this->videoEmbedHelper = new AZVideoEmbedHelper();
   }
 

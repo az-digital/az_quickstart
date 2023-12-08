@@ -3,9 +3,9 @@
 namespace Drupal\az_news_export\Plugin\views\row;
 
 use Drupal\az_news_export\AZNewsDataEmpty;
+use Drupal\image\Entity\ImageStyle;
 use Drupal\rest\Plugin\views\row\DataFieldRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\image\Entity\ImageStyle;
 
 /**
  * Plugin which displays fields as raw data.
@@ -65,6 +65,8 @@ class AZNewsDataFieldRow extends DataFieldRow {
           if (!empty($media->field_media_az_image->entity)) {
             /** @var \Drupal\file\FileInterface $image */
             $image = $media->field_media_az_image->entity;
+            $item['fid'] = $image->id();
+            $item['uuid'] = $image->uuid();
             $item['original'] = $image->createFileUrl(FALSE);
             $uri = $image->getFileUri();
             $styles = [
@@ -77,7 +79,9 @@ class AZNewsDataFieldRow extends DataFieldRow {
                 $item[$key] = $image_style->buildUrl($uri);
               }
             }
-
+            if (!empty($media->field_media_az_image->alt)) {
+              $item['alt'] = $media->field_media_az_image->alt;
+            }
           }
         }
       }

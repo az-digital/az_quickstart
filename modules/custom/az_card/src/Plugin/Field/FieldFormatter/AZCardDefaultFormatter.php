@@ -6,8 +6,10 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_card_default' formatter.
@@ -122,11 +124,17 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Link.
       $link_render_array = [];
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '');
+        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : '#',
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
         if (!empty($item->options['link_style'])) {

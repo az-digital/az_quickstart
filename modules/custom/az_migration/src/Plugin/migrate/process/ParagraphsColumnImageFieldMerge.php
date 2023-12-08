@@ -2,10 +2,10 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\media\Entity\Media;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\media\Entity\Media;
 
 /**
  * Process Plugin to field merge for Column Image paragraphs.
