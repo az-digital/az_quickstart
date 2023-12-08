@@ -10,7 +10,7 @@ dependencies:
     - node.type.az_news
     - taxonomy.vocabulary.az_news_tags
   module:
-    - better_exposed_filters
+    - az_core
     - node
     - taxonomy
     - text
@@ -398,10 +398,10 @@ display:
           offset: 0
           items_per_page: null
       exposed_form:
-        type: bef
+        type: az_bef
         options:
           submit_button: Apply
-          reset_button: false
+          reset_button: 0
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -411,33 +411,33 @@ display:
           text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
+              autosubmit: 1
+              autosubmit_exclude_textfield: 0
+              autosubmit_textfield_delay: '500'
+              autosubmit_hide: 1
+              input_required: 0
+              allow_secondary: 0
               secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: false
+              secondary_open: 0
+              reset_button_always_show: 0
             filter:
               combine:
                 plugin_id: default
                 advanced:
-                  placeholder_text: Search
-                  collapsible: false
-                  is_secondary: false
+                  placeholder_text: ''
+                  collapsible: 0
+                  is_secondary: 0
               field_az_news_tags_target_id:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-                select_all_none: true
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
                 select_all_none_nested: false
-                display_inline: false
+                display_inline: 0
       access:
         type: perm
         options:
@@ -491,7 +491,7 @@ display:
           field: combine
           relationship: none
           group_type: group
-          admin_label: ''
+          admin_label: Search
           plugin_id: combine
           operator: contains
           value: ''
@@ -499,7 +499,7 @@ display:
           exposed: true
           expose:
             operator_id: combine_op
-            label: Search
+            label: ''
             description: ''
             use_operator: false
             operator: combine_op
@@ -517,7 +517,7 @@ display:
               az_user_admin: '0'
               az_html_admin: '0'
               administrator: '0'
-            placeholder: ''
+            placeholder: Search
           is_grouped: false
           group_info:
             label: ''
@@ -532,6 +532,8 @@ display:
             group_items: {  }
           fields:
             title: title
+            field_az_media_image: field_az_media_image
+            field_az_media_thumbnail_image: field_az_media_thumbnail_image
             field_az_body: field_az_body
         field_az_news_tags_target_id:
           id: field_az_news_tags_target_id
@@ -547,7 +549,7 @@ display:
           exposed: true
           expose:
             operator_id: field_az_news_tags_target_id_op
-            label: az_news_tags
+            label: Tags
             description: ''
             use_operator: false
             operator: field_az_news_tags_target_id_op
