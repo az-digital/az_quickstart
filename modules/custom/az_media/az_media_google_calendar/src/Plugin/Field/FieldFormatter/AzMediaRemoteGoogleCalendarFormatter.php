@@ -63,10 +63,11 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
       if ($item->isEmpty()) {
         continue;
       }
+      $fieldValue = $item->getValue();
 
       $elements[$delta] = [
         '#theme' => 'az_media_google_calendar',
-        '#url' => $item->value,
+        '#url' => $fieldValue['value'],
         '#width' => $this->getSetting('width') ?? 960,
         '#height' => $this->getSetting('height') ?? 600,
       ];
