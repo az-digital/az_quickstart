@@ -2,10 +2,10 @@
 
 namespace Drupal\az_curated_views\Plugin\views\field;
 
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\field\BulkForm;
-use Drupal\Core\Database\Database;
-use Drupal\Core\Cache\Cache;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -74,6 +74,17 @@ class AZCuratedViewsField extends BulkForm {
         '#value' => $this->getEntity($row)->id(),
       ];
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function viewsFormValidate(&$form, FormStateInterface $form_state) {
+    $ids = $form_state->getValue($this->options['id']);
+    if (empty($ids) || empty(array_filter($ids))) {
+      $form_state->setErrorByName('', $this->emptySelectedMessage());
+    }
+    // Unlike parent class, do not throw form error when action is empty.
   }
 
   /**

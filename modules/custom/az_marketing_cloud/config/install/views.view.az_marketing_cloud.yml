@@ -140,7 +140,7 @@ display:
           validate_options:
             bundles:
               az_news: az_news
-            access: true
+            access: false
             operation: view
             multiple: 0
           break_phrase: false
@@ -300,7 +300,7 @@ display:
           element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -366,7 +366,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: false
+          element_default_classes: true
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -610,7 +610,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -748,6 +748,7 @@ display:
               past_format: '@interval ago'
               granularity: 2
               refresh: 60
+              description: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -801,7 +802,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -824,6 +825,7 @@ display:
               past_format: '@interval ago'
               granularity: 2
               refresh: 60
+              description: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -834,59 +836,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-        view_node_1:
-          id: view_node_1
-          table: node
-          field: view_node
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          plugin_id: entity_link
-          label: 'Email Snippet'
-          exclude: true
-          alter:
-            alter_text: true
-            text: "<a href=\"/export/marketing-cloud/hero-layout/{{ nid }}\">Hero Layout</a> | \r\n<a href=\"/export/marketing-cloud/50-50-layout/{{ nid }}\">50/50 Layout</a> | \r\n<a href=\"/export/marketing-cloud/30-70-layout/{{ nid }}\">30/70 Layout</a> | \r\n<a href=\"/export/marketing-cloud/text-layout/{{ nid }}\">Text Layout</a> | \r\n<a href=\"/export/marketing-cloud/event-layout/{{ nid }}\">Event Layout</a>"
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: true
-          text: ''
-          output_url_as_text: false
-          absolute: true
         nothing_1:
           id: nothing_1
           table: views
@@ -899,7 +848,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<a href="/export/marketing-cloud/hero-layout/{{ nid }}">Hero Layout</a>'
+            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/hero-layout/{{ nid }}\">Hero Layout</a>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -931,7 +880,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -948,7 +897,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<a href="/export/marketing-cloud/50-50-layout/{{ nid }}">50/50 Layout</a>'
+            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/50-50-layout/{{ nid }}\">50/50 Layout</a>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -980,7 +929,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -997,7 +946,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<a href="/export/marketing-cloud/30-70-layout/{{ nid }}">30/70 Layout</a>'
+            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/30-70-layout/{{ nid }}\">30/70 Layout</a>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1029,7 +978,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -1046,7 +995,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<a href="/export/marketing-cloud/text-layout/{{ nid }}">Text Layout</a>'
+            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/text-layout/{{ nid }}\">Text Layout</a>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1078,69 +1027,20 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
-        nothing_5:
-          id: nothing_5
-          table: views
-          field: nothing
+        delta:
+          id: delta
+          table: node__field_az_event_date
+          field: delta
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: custom
-          label: 'Event Layout'
-          exclude: true
-          alter:
-            alter_text: true
-            text: '<a href="/export/marketing-cloud/event-layout/{{ nid }}">Event Layout</a>'
-            make_link: false
-            path: ''
-            absolute: false
-            external: false
-            replace_spaces: false
-            path_case: none
-            trim_whitespace: false
-            alt: ''
-            rel: ''
-            link_class: ''
-            prefix: ''
-            suffix: ''
-            target: ''
-            nl2br: false
-            max_length: 0
-            word_boundary: true
-            ellipsis: true
-            more_link: false
-            more_link_text: ''
-            more_link_path: ''
-            strip_tags: false
-            trim: false
-            preserve_tags: ''
-            html: false
-          element_type: ''
-          element_class: ''
-          element_label_type: ''
-          element_label_class: ''
-          element_label_colon: true
-          element_wrapper_type: ''
-          element_wrapper_class: ''
-          element_default_classes: true
-          empty: ''
-          hide_empty: false
-          empty_zero: false
-          hide_alter_empty: false
-        dropbutton_1:
-          id: dropbutton_1
-          table: views
-          field: dropbutton
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: dropbutton
-          label: 'Event email snippet'
+          plugin_id: numeric
+          label: ''
           exclude: true
           alter:
             alter_text: false
@@ -1173,7 +1073,7 @@ display:
           element_class: ''
           element_label_type: ''
           element_label_class: ''
-          element_label_colon: true
+          element_label_colon: false
           element_wrapper_type: ''
           element_wrapper_class: ''
           element_default_classes: true
@@ -1181,37 +1081,27 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          destination: false
-          fields:
-            nothing_5: nothing_5
-            nid: '0'
-            title: '0'
-            type: '0'
-            field_az_published: '0'
-            field_az_event_date_value: '0'
-            nothing: '0'
-            status: '0'
-            changed: '0'
-            created: '0'
-            view_node_1: '0'
-            nothing_1: '0'
-            nothing_2: '0'
-            nothing_3: '0'
-            nothing_4: '0'
-            dropbutton: '0'
-        nothing_6:
-          id: nothing_6
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ','
+          format_plural: false
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
+        nothing_5:
+          id: nothing_5
           table: views
           field: nothing
           relationship: none
           group_type: group
           admin_label: ''
           plugin_id: custom
-          label: 'Custom text'
+          label: 'Event Layout'
           exclude: true
           alter:
             alter_text: true
-            text: "{{ dropbutton }}\r\n{{ dropbutton_1 }}\r\n\r\n{% if node.bundle == 'az_news'  %}\r\n    <p>Our website is in maintenance mode. Please, come back later.</p>\r\n{% endif %}"
+            text: "{% if type == 'Event' %}\r\n<a href=\"/export/marketing-cloud/event-layout/{{ nid }}/instance/{{ delta }}\">Event Layout</a>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
@@ -1243,7 +1133,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -1292,7 +1182,7 @@ display:
           element_label_colon: true
           element_wrapper_type: ''
           element_wrapper_class: ''
-          element_default_classes: true
+          element_default_classes: false
           empty: ''
           hide_empty: false
           empty_zero: false
@@ -1313,9 +1203,6 @@ display:
             status: 0
             changed: 0
             created: 0
-            view_node_1: 0
-            dropbutton_1: 0
-            nothing_6: 0
           dropbutton_type: extrasmall
           click_action: js-click2copy
           validate_links: 0
@@ -1715,6 +1602,64 @@ display:
     display_plugin: page
     position: 5
     display_options:
+      fields:
+        delta:
+          id: delta
+          table: node__field_az_event_date
+          field: delta
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: numeric
+          label: ''
+          exclude: false
+          alter:
+            alter_text: false
+            text: ''
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: false
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: true
+          set_precision: false
+          precision: 0
+          decimal: .
+          separator: ''
+          format_plural: false
+          format_plural_string: !!binary MQNAY291bnQ=
+          prefix: ''
+          suffix: ''
       arguments:
         nid:
           id: nid
@@ -1753,9 +1698,44 @@ display:
           validate_options:
             bundles:
               az_event: az_event
-            access: true
+            access: false
             operation: view
             multiple: 0
+          break_phrase: false
+          not: false
+        delta:
+          id: delta
+          table: node__field_az_event_date
+          field: delta
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: numeric
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          default_argument_skip_url: false
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: false
+          validate:
+            type: none
+            fail: 'not found'
+          validate_options: {  }
           break_phrase: false
           not: false
       style:
@@ -1763,7 +1743,7 @@ display:
         options:
           row_class: ''
           default_row_class: false
-          uses_fields: false
+          uses_fields: true
       row:
         type: 'entity:node'
         options:
@@ -1773,15 +1753,15 @@ display:
         style: false
         style_options: false
         row: false
+        fields: false
         arguments: false
       display_description: ''
       style_options: null
       display_extenders: {  }
-      path: export/marketing-cloud/event-layout/%node
+      path: export/marketing-cloud/event-layout/%node/instance/%delta
     cache_metadata:
       max-age: -1
       contexts:
-        - 'languages:language_content'
         - 'languages:language_interface'
         - url
         - 'user.node_grants:view'
