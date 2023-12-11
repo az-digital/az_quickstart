@@ -2,8 +2,8 @@
 
 namespace Drupal\az_mail\Commands;
 
-use Drush\Commands\DrushCommands;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drush\Commands\DrushCommands;
 
 /**
  * Drush commandfile for az_mail.

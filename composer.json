@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.25",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.11",
-        "citation-style-language/styles": "0.0.303",
+        "citation-style-language/styles": "0.0.325",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
@@ -84,7 +84,7 @@
         "drupal/link_class": "2.1.0",
         "drupal/linkit": "6.1.2",
         "drupal/masquerade": "2.0.0-rc4",
-        "drupal/media_entity_file_replace": "1.1",
+        "drupal/media_entity_file_replace": "1.2.0",
         "drupal/media_library_edit": "3.0.2",
         "drupal/media_library_form_element": "2.0.6",
         "drupal/media_library_theme_reset": "1.5.0",
@@ -122,7 +122,7 @@
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
         "npm-asset/slick-carousel": "1.8.0",
         "renanbr/bibtex-parser": "2.2.0",
-        "seboettg/citeproc-php": "2.6.0"
+        "seboettg/citeproc-php": "2.6.2"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
@@ -187,7 +187,8 @@
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
             "drupal/migrate_plus": {
-                "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch"
+                "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
+                "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
