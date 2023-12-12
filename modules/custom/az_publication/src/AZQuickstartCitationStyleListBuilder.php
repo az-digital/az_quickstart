@@ -14,7 +14,7 @@ class AZQuickstartCitationStyleListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildHeader() {
-    $header['label'] = $this->t('Quickstart Citation Style');
+    $header['label'] = $this->t('Style name');
     $header['id'] = $this->t('Machine name');
     return $header + parent::buildHeader();
   }

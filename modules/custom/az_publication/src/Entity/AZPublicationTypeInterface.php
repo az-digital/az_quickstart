@@ -14,10 +14,10 @@ interface AZPublicationTypeInterface extends ConfigEntityInterface {
   /**
    * Gets the Publication Type mapping.
    *
-   * @return string
+   * @return string or null
    *   The type this is mapped to.
    */
-  public function getType():string;
+  public function getType(): ?string;
 
   /**
    * Sets the Publication Type mapping.
@@ -27,6 +27,7 @@ interface AZPublicationTypeInterface extends ConfigEntityInterface {
    *
    * @param string $type
    *   The mapping string to set.
+   *
    * @return $this
    *   The class instance for method chaining.
    */

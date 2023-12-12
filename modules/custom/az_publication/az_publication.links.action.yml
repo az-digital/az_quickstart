@@ -10,6 +10,6 @@ entity.az_publication_type.add_form:
     - entity.az_publication_type.collection
 entity.az_citation_style.add_form:
   route_name: entity.az_citation_style.add_form
-  title: 'Add Quickstart Citation Style'
+  title: 'Add Citation Style'
   appears_on:
     - entity.az_citation_style.collection

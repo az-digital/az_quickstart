@@ -32,4 +32,5 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
 
     return $row + parent::buildRow($entity);
   }
+
 }

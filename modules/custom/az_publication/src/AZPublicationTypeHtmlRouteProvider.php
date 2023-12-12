@@ -11,8 +11,7 @@ use Drupal\Core\Entity\Routing\AdminHtmlRouteProvider;
  * @see Drupal\Core\Entity\Routing\AdminHtmlRouteProvider
  * @see Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider
  */
-class AZPublicationTypeHtmlRouteProvider extends AdminHtmlRouteProvider
-{
+class AZPublicationTypeHtmlRouteProvider extends AdminHtmlRouteProvider {
 
   /**
    * {@inheritdoc}
@@ -22,4 +21,5 @@ class AZPublicationTypeHtmlRouteProvider extends AdminHtmlRouteProvider
 
     return $collection;
   }
+
 }

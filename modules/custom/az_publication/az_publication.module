@@ -131,14 +131,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
-      $blob->type = $entity->get('type');
-      // $az_publication_mapped_type_id = $entity->field_az_publication_mapped_type->target_id;
-      // $az_publication_mapped_type_term = \Drupal::entityTypeManager()->getStorage('az_citation_style')->load($az_publication_mapped_type_id);
-      // $az_publication_type = '';
-      // if (isset($az_publication_mapped_type_term->field_az_publication_type->value)) {
-      //   $az_publication_type = $az_publication_mapped_type_term->field_az_publication_type->value;
-      // }
-      // $blob->type = $az_publication_type;
+      $az_publication_mapped_type_id = $entity->field_az_publication_mapped_type->target_id;
+      $az_publication_mapped_type = \Drupal::entityTypeManager()->getStorage('az_publication_type')->load($az_publication_mapped_type_id);
+      $blob->type = $az_publication_mapped_type->getType();
       // Load default citation settings.
       $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
       $repository = \Drupal::service('entity.repository');
@@ -242,7 +237,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $blob->itemlink = urldecode($file_entity->createFileUrl(TRUE));
           }
         }
-
         $additionalLinks = [];
         if (!empty($entity->field_az_publication_extra_links)) {
           foreach ($entity->field_az_publication_extra_links as $item) {
@@ -292,12 +286,22 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           "author" => $renderlink,
           "csl-entry" => function ($cslItem, $renderedText) {
             // Remove citation number tag.
-            // In general it's never a good idea to parse html with regex.
-            // This works ONLY because the output is a known pattern.
             if (!empty($cslItem->additionalLinks)) {
               $renderedText .= ' ' . $cslItem->additionalLinks;
             }
-            return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);
+            $dom = new DOMDocument();
+            // Suppress loadHTML warnings.
+            libxml_use_internal_errors(TRUE);
+            $dom->loadHTML($renderedText);
+            libxml_clear_errors();
+            $divs = $dom->getElementsByTagName('div');
+            foreach ($divs as $div) {
+              if ($div->getAttribute('class') === 'csl-left-margin') {
+                $div->parentNode->removeChild($div);
+              }
+            }
+            $renderedText = $dom->saveHTML();
+            return $renderedText;
           },
         ];
         // Set up CSL rendering.
@@ -308,6 +312,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           '#markup' => ($biblio),
         ];
       }
+
     }
   }
 }

@@ -35,8 +35,7 @@ class AZPublicationTypeForm extends EntityForm {
   /**
    * {@inheritdoc}
    */
-  public function form(array $form, FormStateInterface $form_state)
-  {
+  public function form(array $form, FormStateInterface $form_state) {
     $form = parent::form($form, $form_state);
 
     /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $az_publication_type */
@@ -59,15 +58,15 @@ class AZPublicationTypeForm extends EntityForm {
       ],
       '#disabled' => !$az_publication_type->isNew(),
     ];
-dpm($az_publication_type->getType());
+
     $form['type'] = [
       '#required' => TRUE,
       '#type' => 'radios',
       '#title' => $this->t('Publication Type Mapping'),
       '#options' => $az_publication_type->getTypeOptions(),
       '#default_value' => $az_publication_type->getType(),
-      '#description' => $this->t('derp @csl-repo', [
-        '@csl-repo' => 'https://citationstyles.org/',
+      '#description' => $this->t('The supported types @csl-docs', [
+        '@csl-docs' => 'https://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types',
       ]),
     ];
 
@@ -77,8 +76,6 @@ dpm($az_publication_type->getType());
       '#suffix' => '</div>',
     ];
 
-
-
     return $form;
   }
 
@@ -87,7 +84,7 @@ dpm($az_publication_type->getType());
    */
   public function save(array $form, FormStateInterface $form_state) {
     $az_publication_type = $this->entity;
-    // Retrieve and set the 'mapping' data
+    // Retrieve and set the 'mapping' data.
     $type = $form_state->getValue('type');
     $az_publication_type->setType($type);
     $status = $az_publication_type->save();
