@@ -4,4 +4,4 @@ az_publication.settings:
   mapping:
     default_citation_style:
       type: string
-      label: 'Default Citation Style'
+      label: 'Default Citation Style to be used throughout the site.'

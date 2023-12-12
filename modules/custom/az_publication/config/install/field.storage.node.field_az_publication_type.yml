@@ -17,9 +17,6 @@ settings:
       value: article
       label: Article
     -
-      value: article-book
-      label: 'Article in Book'
-    -
       value: article-journal
       label: 'Journal Article'
     -
