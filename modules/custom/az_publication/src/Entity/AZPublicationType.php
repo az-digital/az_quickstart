@@ -81,7 +81,8 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
   /**
    * Gets the Publication Type mapping.
    *
-   * @return string
+   * @return string|null
+   *   The type this is mapped to.
    */
   public function getType(): ?string {
     return $this->get('type');
@@ -91,10 +92,11 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
    * Sets the Publication Type mapping.
    *
    * @param string $type
+   *   The type this is mapped to.
    *
    * @return $this
    */
-  public function setType(string $type) {
+  public function setType(string $type): self {
     $this->set('type', (string) $type);
     return $this;
   }
