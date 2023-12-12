@@ -4,8 +4,8 @@ namespace Drupal\az_publication\Form;
 
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
-use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

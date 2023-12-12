@@ -62,6 +62,7 @@ permissions:
   - 'delete any az_remote_video media'
   - 'delete any az_video media'
   - 'delete any book content'
+  - 'delete any file'
   - 'delete any webform'
   - 'delete any webform content'
   - 'delete any webform submission'

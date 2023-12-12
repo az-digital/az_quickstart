@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\az_publication\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
 /**
  * Defines the Quickstart Citation Style entity.
@@ -45,9 +47,9 @@ use Seboettg\CiteProc\Exception\CiteProcException;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/{az_citation_style}",
+ *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/styles/{az_citation_style}",
  *     "add-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/add",
- *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/{az_citation_style}/edit",
+ *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/styles/{az_citation_style}/edit",
  *     "delete-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/{az_citation_style}/delete",
  *     "collection" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style"
  *   }

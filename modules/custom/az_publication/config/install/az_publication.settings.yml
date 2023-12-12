@@ -1,1 +1,5 @@
 default_citation_style: az_mla
+dependencies:
+  enforced:
+    module:
+      - az_publication
