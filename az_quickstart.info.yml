@@ -8,7 +8,6 @@ distribution:
 
 install:
   - az_cas
-  - az_digital_asset_library
   - az_paragraphs
   - az_paragraphs_accordion
   - az_paragraphs_cards
@@ -33,7 +32,7 @@ install:
   - drupal:history
   - drupal:block
   - drupal:breakpoint
-  - ckeditor:ckeditor
+  - drupal:ckeditor5
   - drupal:config
   - drupal:content_moderation
   - drupal:contextual
@@ -52,7 +51,6 @@ install:
   - easy_breadcrumb:easy_breadcrumb
   - drupal:page_cache
   - drupal:dynamic_page_cache
-  - drupal:big_pipe
   - drupal:taxonomy
   - drupal:dblog
   - drupal:search
@@ -76,6 +74,7 @@ install:
   - draggableviews:draggableviews
   - role_delegation:role_delegation
   - media_entity_file_replace:media_entity_file_replace
+  - extlink:extlink
 
 themes:
   - az_barrio

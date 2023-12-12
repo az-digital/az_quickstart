@@ -4,6 +4,7 @@
           "id": 80,
           "card_width": "col-lg-6",
           "card_style": "card",
+          "card_title": "Borderless Cards",
           "card_title_style": "default",
           "card_clickable": false,
           "az_cards": [
@@ -34,6 +35,7 @@
         "id": 81,
         "card_width": "col-lg-4",
         "card_style": "card card-borderless",
+        "card_title": "Clickable Borderless Cards",
         "card_title_style": "default",
         "card_clickable": true,
         "az_cards": [
@@ -74,6 +76,7 @@
       "id": 82,
       "card_width": "col-lg-4",
       "card_style": "card",
+      "card_title": "Clickable Title-on-Image Cards",
       "card_title_style": "title-on-image",
       "card_clickable": true,
       "az_cards": [
@@ -114,6 +117,7 @@
         "id": 83,
         "card_width": "col-lg-6",
         "card_style": "card card-borderless",
+        "card_title": "Borderless Title-on-Image Cards",
         "card_title_style": "title-on-image",
         "card_clickable": false,
         "az_cards": [
