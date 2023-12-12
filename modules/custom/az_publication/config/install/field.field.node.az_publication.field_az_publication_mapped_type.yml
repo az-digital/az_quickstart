@@ -4,7 +4,9 @@ dependencies:
   config:
     - field.storage.node.field_az_publication_mapped_type
     - node.type.az_publication
-    - taxonomy.vocabulary.az_publication_categories
+  enforced:
+    module:
+      - az_publication
 id: node.az_publication.field_az_publication_mapped_type
 field_name: field_az_publication_mapped_type
 entity_type: node
@@ -16,13 +18,6 @@ translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
-  handler: 'default:taxonomy_term'
-  handler_settings:
-    target_bundles:
-      az_publication_type_mapping: az_publication_type_mapping
-    sort:
-      field: name
-      direction: asc
-    auto_create: false
-    auto_create_bundle: ''
+  handler: 'default:az_publication_type'
+  handler_settings: {  }
 field_type: entity_reference

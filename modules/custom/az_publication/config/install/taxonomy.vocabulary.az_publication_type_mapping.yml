@@ -1,7 +1,0 @@
-langcode: en
-status: true
-dependencies: {  }
-name: 'Publication type mapping'
-vid: az_publication_type_mapping
-description: 'Taxonomy for mapping publication types.'
-weight: 0

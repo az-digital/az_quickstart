@@ -104,9 +104,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
 
   // Only if fields suggest a publication.
   if ($entity instanceof NodeInterface &&
-      $entity instanceof FieldableEntityInterface &&
-      $entity->hasField('field_az_publication_mapped_type') &&
-      !empty($entity->field_az_publication_mapped_type->target_id)) {
+      $entity instanceof FieldableEntityInterface) {
 
     if ($display->getComponent('az_publication_bibliography')) {
       // Publication fields to CSL schema mappings.
@@ -133,13 +131,14 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
-      $az_publication_mapped_type_id = $entity->field_az_publication_mapped_type->target_id;
-      $az_publication_mapped_type_term = \Drupal::entityTypeManager()->getStorage('az_citation_style')->load($az_publication_mapped_type_id);
-      $az_publication_type = '';
-      if (isset($az_publication_mapped_type_term->field_az_publication_type->value)) {
-        $az_publication_type = $az_publication_mapped_type_term->field_az_publication_type->value;
-      }
-      $blob->type = $az_publication_type;
+      $blob->type = $entity->get('type');
+      // $az_publication_mapped_type_id = $entity->field_az_publication_mapped_type->target_id;
+      // $az_publication_mapped_type_term = \Drupal::entityTypeManager()->getStorage('az_citation_style')->load($az_publication_mapped_type_id);
+      // $az_publication_type = '';
+      // if (isset($az_publication_mapped_type_term->field_az_publication_type->value)) {
+      //   $az_publication_type = $az_publication_mapped_type_term->field_az_publication_type->value;
+      // }
+      // $blob->type = $az_publication_type;
       // Load default citation settings.
       $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
       $repository = \Drupal::service('entity.repository');
