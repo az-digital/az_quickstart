@@ -15,22 +15,63 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildHeader() {
-    $header['label'] = $this->t('Label');
-    $header['id'] = $this->t('Machine name');
-    $header['type'] = $this->t('Mapped Type');
-    return $header + parent::buildHeader();
+  public function buildRow(EntityInterface $entity) {
+    $row['id'] = $entity->id();
+    $row['label'] = $entity->label();
+    $row['type'] = $entity->getType();
+
+    return $row + parent::buildRow($entity);
   }
 
   /**
    * {@inheritdoc}
    */
-  public function buildRow(EntityInterface $entity) {
-    $row['label'] = $entity->label();
-    $row['id'] = $entity->id();
-    $row['type'] = $entity->getType();
+  public function load() {
 
-    return $row + parent::buildRow($entity);
+    // Get the entity type manager service.
+    $entity_type_manager = \Drupal::service('entity_type.manager');
+
+    // Get the entity storage for your 'az_publication_type' entity type.
+    $entity_storage = $entity_type_manager->getStorage('az_publication_type');
+
+    // Create a query.
+    $entity_query = $entity_storage->getQuery();
+
+    $header = $this->buildHeader();
+
+    $entity_query->pager(50);
+    $entity_query->tableSort($header);
+
+    $tids = $entity_query->execute();
+
+    return $this->storage->loadMultiple($tids);
+  }
+  /**
+   * {@inheritdoc}
+   */
+  public function buildHeader() {
+
+    $header = array(
+      'id' => array(
+        'data' => $this->t('Machine name'),
+        'field' => 'id',
+        'specifier' => 'id',
+        'class' => array(RESPONSIVE_PRIORITY_LOW),
+      ),
+      'label' => array(
+        'data' => $this->t('Label'),
+        'field' => 'label',
+        'specifier' => 'label',
+      ),
+      'type' => array(
+        'data' => $this->t('Mapped Type'),
+        'field' => 'type',
+        'specifier' => 'type',
+      ),
+
+    );
+
+    return $header + parent::buildHeader();
   }
 
 }
