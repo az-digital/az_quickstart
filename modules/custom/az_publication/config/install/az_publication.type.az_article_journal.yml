@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_article_journal
 type: 'article-journal'
-label: 'Journal
+label: 'Journal Article'

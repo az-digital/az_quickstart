@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_article_newspaper
 type: 'article-newspaper'
-label: 'Newspaper
+label: 'Newspaper Article'

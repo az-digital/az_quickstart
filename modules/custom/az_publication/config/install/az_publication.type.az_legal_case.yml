@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_legal_case
 type: 'legal_case'
-label: 'Legal
+label: 'Legal Case'

@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_paper_conference
 type: 'paper-conference'
-label: 'Conference
+label: 'Conference Paper'

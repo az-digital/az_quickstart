@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_personal_communication
 type: 'personal_communication'
-label: 'Personal
+label: 'Personal Communication'
