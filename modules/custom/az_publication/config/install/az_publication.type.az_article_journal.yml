@@ -5,5 +5,5 @@ dependencies:
     module:
       - az_publication
 id: az_article_journal
-type: article-journal
-label: Journal Article
+type: 'article-journal'
+label: 'Journal

@@ -4,6 +4,6 @@ dependencies:
   enforced:
     module:
       - az_publication
-id: az_article
-type: 'article'
-label: 'Article'
+id: az_event
+type: 'event'
+label: 'Event'
