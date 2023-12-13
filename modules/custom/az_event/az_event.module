@@ -223,7 +223,7 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
 function az_event_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_event'
     && $entity instanceof NodeInterface
-    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue())) {
+    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue()[0]['value'])) {
     $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_photos')->target_id;
   }
 }
