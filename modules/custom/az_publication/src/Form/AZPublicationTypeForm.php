@@ -46,7 +46,7 @@ class AZPublicationTypeForm extends EntityForm {
       '#title' => $this->t('Label'),
       '#maxlength' => 255,
       '#default_value' => $az_publication_type->label(),
-      '#description' => $this->t("Label for the Publication Type."),
+      '#description' => $this->t("Enter a descriptive label for the Publication Type. This label will be used as the identifier in lists and references throughout the system. Choose a name that clearly and concisely reflects the nature of the publication type. Keep it short yet descriptive."),
       '#required' => TRUE,
     ];
 
@@ -58,6 +58,7 @@ class AZPublicationTypeForm extends EntityForm {
       ],
       '#disabled' => !$az_publication_type->isNew(),
     ];
+
 
     $form['type'] = [
       '#required' => TRUE,
@@ -74,6 +75,13 @@ class AZPublicationTypeForm extends EntityForm {
       '#required' => TRUE,
       '#prefix' => '<div id="mapping-wrapper">',
       '#suffix' => '</div>',
+    ];
+
+    $form['status'] = [
+      '#title' => $this->t('Published'),
+      '#type' => 'checkbox',
+      '#default_value' => $az_publication_type->status(),
+      '#disabled' => !$az_publication_type->status(),
     ];
 
     return $form;

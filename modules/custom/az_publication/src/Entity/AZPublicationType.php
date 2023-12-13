@@ -41,13 +41,16 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
- *     "uuid" = "uuid"
+ *     "uuid" = "uuid",
+ *     "status" = "status",
  *   },
  *   links = {
  *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}",
  *     "add-form" = "/admin/config/az-quickstart/settings/az-publication/type/add",
  *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/edit",
  *     "delete-form" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/delete",
+ *     "enable" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/enable",
+ *     "disable" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/disable",
  *     "collection" = "/admin/config/az-quickstart/settings/az-publication/types"
  *   },
  *   constraints = {

@@ -28,4 +28,17 @@ class AZQuickstartCitationStyleListBuilder extends ConfigEntityListBuilder {
     return $row + parent::buildRow($entity);
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function render()
+  {
+    $build = parent::render();
+    $build['table']['#empty'] = $this->t('No publication types available. <a href=":url">Add publication type</a>.', [
+      ':url' => Url::fromRoute('entity.az_publication.type.add_form')->toString(),
+    ]);
+    return $build;
+  }
+
+
 }
