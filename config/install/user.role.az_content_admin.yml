@@ -85,6 +85,7 @@ permissions:
   - 'delete webform submissions own node'
   - 'edit any webform'
   - 'edit any webform submission'
+  - 'edit own az_audio media'
   - 'edit terms in az_event_categories'
   - 'edit terms in az_news_tags'
   - 'edit terms in az_page_categories'
