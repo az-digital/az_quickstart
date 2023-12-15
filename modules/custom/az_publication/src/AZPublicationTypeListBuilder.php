@@ -112,7 +112,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'operations' => $row['operations'],
       ],
       '#attributes' => [
-        'class' => [$entity->status() ? 'views-ui-list-enabled' : 'views-ui-list-disabled'],
+        'class' => [$entity->status() ? 'az-publication-ui-list-enabled' : 'az-publication-ui-list-disabled'],
       ],
     ];
   }
