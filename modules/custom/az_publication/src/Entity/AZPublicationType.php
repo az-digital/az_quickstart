@@ -52,9 +52,6 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "enable" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/enable",
  *     "disable" = "/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/disable",
  *     "collection" = "/admin/config/az-quickstart/settings/az-publication/types"
- *   },
- *   constraints = {
- *     "ValidPublicationMapping" = {}
  *   }
  * )
  */

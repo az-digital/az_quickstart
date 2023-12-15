@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Controller for AJAX operations on AZPublicationType entities.
  */
-class AzPublicationTypeController extends ControllerBase {
+class AZPublicationTypeController extends ControllerBase {
 
   /**
    * Performs an operation on an AZPublicationType and returns a response.

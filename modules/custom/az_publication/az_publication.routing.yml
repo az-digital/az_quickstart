@@ -5,23 +5,3 @@ az_publication.settings:
     _title: 'AZ Publication Settings'
   requirements:
     _permission: 'administer quickstart configuration'
-
-entity.az_publication_type.enable:
-  path: '/admin/structure/views/view/{view}/enable'
-  defaults:
-    _controller: '\Drupal\az_publication\Controller\AzPublicationTypeController::ajaxOperation'
-    op: enable
-  requirements:
-    _entity_access: az_publication_type.enable
-    _csrf_token: 'TRUE'
-
-entity.az_publication_type.disable:
-  path: '/admin/structure/views/view/{view}/disable'
-  defaults:
-    _controller: '\Drupal\az_publication\Controller\AzPublicationTypeController::ajaxOperation'
-    op: disable
-  requirements:
-    _entity_access: az_publication_type.disable
-    _csrf_token: 'TRUE'
-
-

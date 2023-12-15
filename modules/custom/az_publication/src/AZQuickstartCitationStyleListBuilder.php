@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\az_publication;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
-
+use \Drupal\Core\Url;
 /**
  * Provides a listing of Quickstart Citation Style entities.
  */
@@ -31,14 +33,12 @@ class AZQuickstartCitationStyleListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function render()
-  {
+  public function render() {
     $build = parent::render();
     $build['table']['#empty'] = $this->t('No publication types available. <a href=":url">Add publication type</a>.', [
       ':url' => Url::fromRoute('entity.az_publication.type.add_form')->toString(),
     ]);
     return $build;
   }
-
 
 }

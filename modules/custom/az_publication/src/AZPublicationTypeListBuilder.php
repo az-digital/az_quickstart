@@ -15,35 +15,18 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildRow(EntityInterface $entity) {
+  // public function buildRow(EntityInterface $entity) {
 
-    $row['id'] = $entity->id();
-    $row['label'] = $entity->label();
-    $row['type'] = $entity->getType();
-    $row['status'] = $entity->status();
-    $row['attributes']['class'][] = [$entity->status() ? 'views-ui-list-enabled' : 'views-ui-list-disabled'];
+  //   $row['id'] = $entity->id();
+  //   $row['label'] = $entity->label();
+  //   $row['type'] = $entity->getType();
+  //   $row['status'] = $entity->status();
+  //   $row['attributes'] =  '';
+  //   dpm($row);
+  //   // $row['attributes']['class'][] = [$entity->status() ? 'views-ui-list-enabled' : 'views-ui-list-disabled'];
 
-    return $row + parent::buildRow($entity);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function load() {
-    $entities = [
-      'enabled' => [],
-      'disabled' => [],
-    ];
-    foreach (parent::load() as $entity) {
-      if ($entity->status()) {
-        $entities['enabled'][] = $entity;
-      } else {
-        $entities['disabled'][] = $entity;
-      }
-    }
-    return $entities;
-
-  }
+  //   return $row + parent::buildRow($entity);
+  // }
 
   /**
    * {@inheritdoc}
@@ -52,50 +35,13 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     $query = $this
       ->getStorage()
       ->getQuery()
-      ->sort('label', 'DESC');
+      ->sort('id', 'DESC');
 
     // Only add the pager if a limit is specified.
     if ($this->limit) {
       $query->pager($this->limit);
     }
     return $query->execute();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function buildHeader() {
-
-    $header = array(
-      'id' => array(
-        'data' => $this->t('Machine name'),
-        'field' => 'id',
-        'specifier' => 'id',
-        'attributes' => [
-          'class' => array(RESPONSIVE_PRIORITY_LOW),
-        ]
-      ),
-      'label' => array(
-        'data' => $this->t('Label'),
-        'field' => 'label',
-        'specifier' => 'label',
-        'attributes' => [],
-      ),
-      'type' => array(
-        'data' => $this->t('Mapped Type'),
-        'field' => 'type',
-        'specifier' => 'type',
-        'attributes' => [],
-      ),
-      'status' => array(
-        'data' => $this->t('Status'),
-        'field' => 'status',
-        'specifier' => 'status',
-        'attributes' => [],
-      ),
-    );
-
-    return $header + parent::buildHeader();
   }
 
   /**
@@ -126,6 +72,102 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   /**
    * {@inheritdoc}
    */
+  public function load() {
+    $entities = [
+      'enabled' => [],
+      'disabled' => [],
+    ];
+    foreach (parent::load() as $entity) {
+      if ($entity->status()) {
+        $entities['enabled'][] = $entity;
+      } else {
+        $entities['disabled'][] = $entity;
+      }
+    }
+    return $entities;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildRow(EntityInterface $entity) {
+    $row = parent::buildRow($entity);
+    return [
+      'data' => [
+        'id' => [
+          'data' => [
+            '#plain_text' => $entity->id(),
+          ],
+        ],
+        'label' => [
+          'data' => [
+            '#plain_text' => $entity->label(),
+          ],
+        ],
+        'type' => [
+          'data' => [
+            '#plain_text' => $entity->getType(),
+          ],
+        ],
+        'operations' => $row['operations'],
+      ],
+      '#attributes' => [
+        'class' => [$entity->status() ? 'views-ui-list-enabled' : 'views-ui-list-disabled'],
+      ],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function buildHeader() {
+    return [
+      'id' => [
+        'data' => $this->t('Machine name'),
+        'field' => 'id',
+        'specifier' => 'id',
+        'attributes' => [
+          'class' => [
+            RESPONSIVE_PRIORITY_LOW,
+            'az-publication-type-machine-name'
+          ],
+        ],
+      ],
+      'label' => [
+        'data' => $this->t('Label'),
+        'field' => 'label',
+        'specifier' => 'label',
+        'attributes' => [
+          'class' => [
+            RESPONSIVE_PRIORITY_LOW,
+            'az-publication-type-label'
+          ],
+        ],
+      ],
+      'type' => [
+        'data' => $this->t('Mapped Type'),
+        'field' => 'type',
+        'specifier' => 'type',
+        'attributes' => [
+          'class' => [
+            RESPONSIVE_PRIORITY_LOW,
+            'az-publication-type'
+          ],
+        ],
+      ],
+      'operations' => [
+        'data' => $this->t('Operations'),
+        '#attributes' => [
+          'class' => ['views-ui-operations'],
+        ],
+      ],
+    ];
+  }
+
+
+  /**
+   * {@inheritdoc}
+   */
   public function render() {
     $entities = $this->load();
     $list['#type'] = 'container';
@@ -141,18 +183,18 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     $list['disabled']['heading']['#markup'] = '<h2>' . $this->t('Disabled', [], ['context' => 'Plural']) . '</h2>';
     foreach (['enabled', 'disabled'] as $status) {
       $list[$status]['#type'] = 'container';
-      $list[$status]['#attributes'] = ['class' => ['views-list-section', $status]];
+      $list[$status]['#attributes'] = ['class' => ['az-publication-type-list-section', $status]];
       $list[$status]['table'] = [
         '#theme' => 'az_publication_type_listing_table',
         '#headers' => $this->buildHeader(),
-        '#attributes' => ['class' => ['views-listing-table', $status]],
+        '#attributes' => ['class' => ['az-publication-type-listing-table', $status]],
       ];
       foreach ($entities[$status] as $entity) {
         $list[$status]['table']['#rows'][$entity->id()] = $this->buildRow($entity);
       }
     }
-    $list['enabled']['table']['#empty'] = $this->t('There are no enabled views.');
-    $list['disabled']['table']['#empty'] = $this->t('There are no disabled views.');
+    $list['enabled']['table']['#empty'] = $this->t('There are no enabled publication types.');
+    $list['disabled']['table']['#empty'] = $this->t('There are no disabled publication types.');
 
     return $list;
   }

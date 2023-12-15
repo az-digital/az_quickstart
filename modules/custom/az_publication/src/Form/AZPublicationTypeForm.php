@@ -59,7 +59,6 @@ class AZPublicationTypeForm extends EntityForm {
       '#disabled' => !$az_publication_type->isNew(),
     ];
 
-
     $form['type'] = [
       '#required' => TRUE,
       '#type' => 'radios',
@@ -78,7 +77,7 @@ class AZPublicationTypeForm extends EntityForm {
     ];
 
     $form['status'] = [
-      '#title' => $this->t('Published'),
+      '#title' => $this->t('Enabled'),
       '#type' => 'checkbox',
       '#default_value' => $az_publication_type->status(),
       '#disabled' => !$az_publication_type->status(),
