@@ -91,7 +91,7 @@ class AZPublicationTypeForm extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $az_publication_type = $this->entity;
-    // Retrieve and set the 'mapping' data.
+    // Retrieve and set the 'type' data.
     $type = $form_state->getValue('type');
     $az_publication_type->setType($type);
     $status = $az_publication_type->save();
