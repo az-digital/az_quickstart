@@ -221,6 +221,13 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $date->{'date-parts'}[] = explode('-', $entity->field_az_accessed_date->value);
           $blob->accessed = $date;
         }
+        // By default, provide a link to the node page if nothing else applies.
+        try {
+          $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
+          $blob->itemlink = $url->toString();
+        }
+        catch (Exception $e) {
+        }
         // Handle link field if available.
         if (!empty($entity->field_az_publication_link->uri)) {
           $blob->itemlink = $entity->field_az_publication_link->uri;
