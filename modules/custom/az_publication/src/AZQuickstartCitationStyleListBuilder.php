@@ -35,8 +35,8 @@ class AZQuickstartCitationStyleListBuilder extends ConfigEntityListBuilder {
    */
   public function render() {
     $build = parent::render();
-    $build['table']['#empty'] = $this->t('No publication types available. <a href=":url">Add publication type</a>.', [
-      ':url' => Url::fromRoute('entity.az_publication.type.add_form')->toString(),
+    $build['table']['#empty'] = $this->t('No citation styles available. <a href=":url">Add citation style</a>.', [
+      ':url' => Url::fromRoute('entity.az_citation_style.add_form')->toString(),
     ]);
     return $build;
   }

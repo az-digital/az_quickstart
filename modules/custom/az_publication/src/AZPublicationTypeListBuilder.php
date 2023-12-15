@@ -6,6 +6,7 @@ namespace Drupal\az_publication;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
+use \Drupal\Core\Url;
 
 /**
  * Provides a listing of Publication Type entities.
@@ -195,6 +196,9 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     }
     $list['enabled']['table']['#empty'] = $this->t('There are no enabled publication types.');
     $list['disabled']['table']['#empty'] = $this->t('There are no disabled publication types.');
+    $list['table']['#empty'] = $this->t('No publication types available. <a href=":url">Add publication type</a>.', [
+      ':url' => Url::fromRoute('entity.az_publication_type.add_form')->toString(),
+    ]);
 
     return $list;
   }
