@@ -15,8 +15,8 @@ declare(strict_types=1);
  * Implements hook_views_data().
  */
 function az_publication_views_data() {
-  /** @var \Drupal\Core\Config\TypedConfigManagerInterface $typed_config */
   $data = [];
+  /** @var \Drupal\Core\Config\TypedConfigManagerInterface $typed_config */
   $typed_config = Drupal::service('config.typed');
   $all_definitions = $typed_config->getDefinitions();
   $all_definitions_keys = array_keys($all_definitions);
