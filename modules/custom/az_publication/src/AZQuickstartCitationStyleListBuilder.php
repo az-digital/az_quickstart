@@ -6,7 +6,8 @@ namespace Drupal\az_publication;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
-use \Drupal\Core\Url;
+use Drupal\Core\Url;
+
 /**
  * Provides a listing of Quickstart Citation Style entities.
  */

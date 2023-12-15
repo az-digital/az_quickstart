@@ -20,7 +20,7 @@ class AZPublicationTypeHtmlRouteProvider extends AdminHtmlRouteProvider {
   public function getRoutes(EntityTypeInterface $entity_type) {
     $collection = parent::getRoutes($entity_type);
 
-    // Define the 'enable' route
+    // Define the 'enable' route.
     $route = new Route('/admin/config/az-quickstart/settings/az-publication/{az_publication_type}/enable');
     $route->setDefault('_controller', '\Drupal\az_publication\Controller\AZPublicationTypeController::ajaxOperation');
     $route->setDefault('op', 'enable');
@@ -28,7 +28,7 @@ class AZPublicationTypeHtmlRouteProvider extends AdminHtmlRouteProvider {
     $route->setRequirement('_csrf_token', 'TRUE');
     $collection->add('entity.az_publication_type.enable', $route);
 
-    // Define the 'disable' route
+    // Define the 'disable' route.
     $route = new Route('/admin/config/az-quickstart/settings/az-publication/{az_publication_type}/disable');
     $route->setDefault('_controller', '\Drupal\az_publication\Controller\AZPublicationTypeController::ajaxOperation');
     $route->setDefault('op', 'disable');

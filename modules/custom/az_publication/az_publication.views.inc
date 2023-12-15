@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @file
+ */
+
 declare(strict_types=1);
 
 /**
@@ -65,8 +69,7 @@ function az_publication_views_data() {
           'id' => 'config_entity_operations',
         ],
       ];
-          // dpm($data);
-
+      // dpm($data);
       // We do not kno how many stars a given config prefix requires, for
       // example the schema for block is under block.block.*.*.
       $keys = preg_grep('/^' . str_replace('.', '\.', $prefix) . '\.\*/', $config_keys);
@@ -183,7 +186,7 @@ function _views_views_config_process_schema(array &$views_config_data, array &$a
 function _views_views_config_data_add(array &$views_config_data, array $definition, $prefix) {
   // Some places label makes no sense than prefix.
   $title = $definition['label'];
-  if (strtolower($title) == 'text') {
+  if (strtolower($title) === 'text') {
     $title = ucfirst($prefix);
   }
   $views_config_data[$prefix] = [

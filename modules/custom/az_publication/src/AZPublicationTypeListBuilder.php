@@ -6,28 +6,12 @@ namespace Drupal\az_publication;
 
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
-use \Drupal\Core\Url;
+use Drupal\Core\Url;
 
 /**
  * Provides a listing of Publication Type entities.
  */
 class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
-
-  /**
-   * {@inheritdoc}
-   */
-  // public function buildRow(EntityInterface $entity) {
-
-  //   $row['id'] = $entity->id();
-  //   $row['label'] = $entity->label();
-  //   $row['type'] = $entity->getType();
-  //   $row['status'] = $entity->status();
-  //   $row['attributes'] =  '';
-  //   dpm($row);
-  //   // $row['attributes']['class'][] = [$entity->status() ? 'views-ui-list-enabled' : 'views-ui-list-disabled'];
-
-  //   return $row + parent::buildRow($entity);
-  // }
 
   /**
    * {@inheritdoc}
@@ -81,7 +65,8 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     foreach (parent::load() as $entity) {
       if ($entity->status()) {
         $entities['enabled'][] = $entity;
-      } else {
+      }
+      else {
         $entities['disabled'][] = $entity;
       }
     }
@@ -130,7 +115,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'attributes' => [
           'class' => [
             RESPONSIVE_PRIORITY_LOW,
-            'az-publication-type-machine-name'
+            'az-publication-type-machine-name',
           ],
         ],
       ],
@@ -141,7 +126,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'attributes' => [
           'class' => [
             RESPONSIVE_PRIORITY_LOW,
-            'az-publication-type-label'
+            'az-publication-type-label',
           ],
         ],
       ],
@@ -152,7 +137,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'attributes' => [
           'class' => [
             RESPONSIVE_PRIORITY_LOW,
-            'az-publication-type'
+            'az-publication-type',
           ],
         ],
       ],
@@ -164,7 +149,6 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
       ],
     ];
   }
-
 
   /**
    * {@inheritdoc}
@@ -184,11 +168,21 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     $list['disabled']['heading']['#markup'] = '<h2>' . $this->t('Disabled', [], ['context' => 'Plural']) . '</h2>';
     foreach (['enabled', 'disabled'] as $status) {
       $list[$status]['#type'] = 'container';
-      $list[$status]['#attributes'] = ['class' => ['az-publication-type-list-section', $status]];
+      $list[$status]['#attributes'] = [
+        'class' => [
+          'az-publication-type-list-section',
+          $status,
+        ],
+      ];
       $list[$status]['table'] = [
         '#theme' => 'az_publication_type_listing_table',
         '#headers' => $this->buildHeader(),
-        '#attributes' => ['class' => ['az-publication-type-listing-table', $status]],
+        '#attributes' => [
+          'class' => [
+            'az-publication-type-listing-table',
+            $status,
+          ],
+        ],
       ];
       foreach ($entities[$status] as $entity) {
         $list[$status]['table']['#rows'][$entity->id()] = $this->buildRow($entity);

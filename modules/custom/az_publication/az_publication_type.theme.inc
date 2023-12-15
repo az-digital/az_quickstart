@@ -31,7 +31,8 @@ function template_preprocess_az_publication_type_listing_table(&$variables) {
   // Convert the attributes to valid attribute objects for rows.
   if (!empty($variables['rows'])) {
     foreach ($variables['rows'] as $key => $row) {
-      // Check if '#attributes' exists and is an array before trying to access it.
+      // Check if '#attributes' exists and is an array before trying to
+      // access it.
       if (is_array($row) && isset($row['#attributes']) && is_array($row['#attributes'])) {
         $variables['rows'][$key]['attributes'] = new Attribute($row['#attributes']);
       }
