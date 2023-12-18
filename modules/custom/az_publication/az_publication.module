@@ -21,6 +21,36 @@ use Seboettg\CiteProc\CiteProc;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_publication_form_view_add_form_alter(&$form, FormStateInterface $form_state) {
+  $options = [];
+  foreach ($form['displays']['show']['wizard_key']['#options'] as $key => $option) {
+    $group = 'Content';
+    if (strpos($key, 'standard:') === 0 || strpos($key, 'az_publication') === 0) {
+      $group = 'Configuration';
+    }
+    $options[$group][$key] = $option;
+  }
+
+  // Order by label, instead of key.
+  if (is_array($options['Content'])) {
+    uasort($options['Content'], function ($a, $b) {
+      return $a->render() <=> $b->render();
+    });
+  }
+  // Order by label, instead of key.
+  if (is_array($options['Content'])) {
+    uasort($options['Configuration'], function ($a, $b) {
+      return $a->render() <=> $b->render();
+    });
+  }
+
+  $form['displays']['show']['wizard_key']['#options'] = $options;
+}
+
+
+/**
  * Implements hook_entity_extra_field_info().
  */
 function az_publication_entity_extra_field_info() {

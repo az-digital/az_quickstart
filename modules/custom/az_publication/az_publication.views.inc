@@ -55,7 +55,7 @@ function az_publication_views_data() {
       $data[$table_name]['table']['base'] = [
         'title' => $entity_info->getLabel(),
         'field' => $id,
-        'query_id' => 'views_config_entity_query',
+        'query_id' => 'az_publication_entity_query',
       ];
 
       $data[$table_name][$id]['field'] = [
@@ -79,7 +79,7 @@ function az_publication_views_data() {
         $definition = $all_definitions[$key];
 
         if (is_array($definition)) {
-          _views_views_config_process_schema($data[$table_name], $all_definitions, $all_definitions_keys, $definition);
+          _views_az_publication_process_schema($data[$table_name], $all_definitions, $all_definitions_keys, $definition);
         }
       }
     }
@@ -91,7 +91,7 @@ function az_publication_views_data() {
 /**
  * Process all config definitions.
  *
- * @param array $views_config_data
+ * @param array $az_publication_data
  *   Views config data structure.
  * @param array $all_definitions
  *   All config definitions.
@@ -104,7 +104,7 @@ function az_publication_views_data() {
  * @param array $history
  *   Current recursive path, as definition labels.
  */
-function _views_views_config_process_schema(array &$views_config_data, array &$all_definitions, array &$all_definitions_keys, array $definition, $prefix = '', array $history = []) {
+function _views_az_publication_process_schema(array &$az_publication_data, array &$all_definitions, array &$all_definitions_keys, array $definition, $prefix = '', array $history = []) {
   // Prevent endless loops.
   $hashed_def = md5(serialize($definition));
   if (in_array($hashed_def, $history)) {
@@ -127,14 +127,14 @@ function _views_views_config_process_schema(array &$views_config_data, array &$a
       $new_definition = $all_definitions[$type];
       if (isset($new_definition['type'])) {
         if (is_array($new_definition)) {
-          _views_views_config_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
+          _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
         }
       }
       // If the new definition type has no type then the current one is a
       // primitive type (for e.g. string). If there is a label and this is
       // neither a mapping nor a sequence then add it to Views data.
       elseif (!isset($definition['mapping']) && !isset($definition['sequence']) && isset($definition['label'])) {
-        _views_views_config_data_add($views_config_data, $definition, $prefix);
+        _views_az_publication_data_add($az_publication_data, $definition, $prefix);
         // As there is no mapping or sequence, this prefix is done.
         return;
       }
@@ -151,7 +151,7 @@ function _views_views_config_process_schema(array &$views_config_data, array &$a
         $new_definition = $all_definitions[$key];
 
         if (is_array($new_definition)) {
-          _views_views_config_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
+          _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
         }
       }
     }
@@ -160,14 +160,14 @@ function _views_views_config_process_schema(array &$views_config_data, array &$a
   if (isset($definition['mapping'])) {
     foreach ($definition['mapping'] as $k => $new_definition) {
       if (is_array($new_definition)) {
-        _views_views_config_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter$k", $history);
+        _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter$k", $history);
       }
     }
   }
   elseif (isset($definition['sequence'])) {
     foreach ($definition['sequence'] as $new_definition) {
       if (is_array($new_definition)) {
-        _views_views_config_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter*", $history);
+        _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter*", $history);
       }
     }
   }
@@ -176,20 +176,20 @@ function _views_views_config_process_schema(array &$views_config_data, array &$a
 /**
  * Adjust config data based on type.
  *
- * @param array $views_config_data
- *   Views config data structure.
+ * @param array $az_publication_data
+ *   Config data structure.
  * @param array $definition
  *   The current definition.
  * @param string $prefix
  *   A prefix.
  */
-function _views_views_config_data_add(array &$views_config_data, array $definition, $prefix) {
+function _views_az_publication_data_add(array &$az_publication_data, array $definition, $prefix) {
   // Some places label makes no sense than prefix.
   $title = $definition['label'];
   if (strtolower($title) === 'text') {
     $title = ucfirst($prefix);
   }
-  $views_config_data[$prefix] = [
+  $az_publication_data[$prefix] = [
     'title' => $title,
     'help' => $prefix,
     'sort' => [
