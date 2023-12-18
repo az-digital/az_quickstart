@@ -16,6 +16,9 @@ parameters:
 		- '#Plugin manager has cache backend specified but does not declare cache tags.#'
 		- '#Unsafe usage of new static\(\)#'
 
+	universalObjectCratesClasses:
+		- XMLReader
+
 	drupal:
 		entityMapping:
 			az_author:
@@ -27,5 +30,5 @@ parameters:
 			paragraphs_type:
 				class: Drupal\paragraphs\Entity\ParagraphsType
 
-	phpVersion: 80100
+	phpVersion: 80200
 	level: 2
