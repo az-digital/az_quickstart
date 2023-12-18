@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_publication
   config:
     - field.field.az_author.az_author.field_az_author_drop_particle
     - field.field.az_author.az_author.field_az_author_fname
