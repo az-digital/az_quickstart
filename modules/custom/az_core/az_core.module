@@ -115,7 +115,7 @@ function az_core_toolbar() {
     $items['az_quickstart']['tray']['az_links']['#links'] = $admin_items + $items['az_quickstart']['tray']['az_links']['#links'];
 
     if (!empty($version)) {
-      $items['az_quickstart']['tray']['az_links']['#links']['releases']['url'] = Url::fromUri("https://github.com/az-digital/az_quickstart/releases/${version}");
+      $items['az_quickstart']['tray']['az_links']['#links']['releases']['url'] = Url::fromUri("https://github.com/az-digital/az_quickstart/releases/{$version}");
     }
 
   }
