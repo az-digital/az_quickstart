@@ -3,4 +3,6 @@ services:
     autoconfigure: true
   pubmigration_subscriber:
     class: Drupal\az_publication_import\EventSubscriber\AZPublicationImportEventSubscriber
-    arguments: ['@messenger', '@entity_type.manager']
+    arguments:
+      - '@messenger'
+      - '@entity_type.manager'

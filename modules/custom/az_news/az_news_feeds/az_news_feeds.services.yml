@@ -4,4 +4,5 @@ services:
   # Listens to migration events.
   az_news_feeds.migrate_events_subscriber:
     class: 'Drupal\az_news_feeds\EventSubscriber\AzNewsFeedsMigrateSubscriber'
-    arguments: ['@config.factory']
+    arguments:
+      - '@config.factory'

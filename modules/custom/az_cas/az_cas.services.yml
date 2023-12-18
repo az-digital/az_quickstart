@@ -3,4 +3,5 @@ services:
     autoconfigure: true
   az_cas.az_cas_route_subscriber:
     class: Drupal\az_cas\Routing\AzCasRouteSubscriber
-    arguments: ['@config.factory']
+    arguments:
+      - '@config.factory'
