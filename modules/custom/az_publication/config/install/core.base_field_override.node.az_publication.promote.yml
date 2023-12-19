@@ -1,9 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_publication
   config:
     - node.type.az_publication
 id: node.az_publication.promote

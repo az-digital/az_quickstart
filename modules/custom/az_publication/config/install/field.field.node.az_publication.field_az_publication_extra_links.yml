@@ -1,9 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_publication
   config:
     - field.storage.node.field_az_publication_extra_links
     - node.type.az_publication
