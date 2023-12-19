@@ -91,7 +91,7 @@ function az_publication_update_1020702() {
 function az_publication_update_az_publication_nodes($node_id, &$context) {
   $node = Node::load($node_id);
 
-  if ($node && $node->getType() == 'az_publication') {
+  if ($node && $node->getType() === 'az_publication') {
     // Get the entity field manager service.
     $entity_field_manager = \Drupal::service('entity_field.manager');
 
