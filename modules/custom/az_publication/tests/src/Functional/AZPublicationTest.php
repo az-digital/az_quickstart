@@ -24,6 +24,13 @@ class AZPublicationTest extends BrowserTestBase {
   protected $defaultTheme = 'stark';
 
   /**
+   * {@inheritdoc}
+   */
+  protected $modules = [
+    'az_publication',
+  ];
+
+  /**
    * Disable strict schema cheking.
    *
    * @var bool
