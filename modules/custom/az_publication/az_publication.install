@@ -102,7 +102,7 @@ function az_publication_update_az_publication_nodes($node_id, &$context) {
       $old_value = $node->get('field_az_publication_type')->value;
 
       // Map the old value to an entity ID.
-      $new_entity_id = mymodule_map_old_value_to_entity_id($old_value);
+      $new_entity_id = az_publication_map_old_value_to_entity_id($old_value);
 
       if ($new_entity_id) {
         // Update the new field with the entity reference.
@@ -135,11 +135,11 @@ function az_publication_update_1020703(&$sandbox) {
   $batch = [
     'title' => t('Updating data...'),
     'operations' => [],
-    'finished' => 'mymodule_batch_finished',
+    'finished' => 'az_publication_batch_finished',
   ];
 
   foreach ($entity_ids as $entity_id) {
-    $batch['operations'][] = ['mymodule_batch_operation', [$entity_id]];
+    $batch['operations'][] = ['az_publication_batch_operation', [$entity_id]];
   }
 
   batch_set($batch);
@@ -154,7 +154,7 @@ function az_publication_update_1020703(&$sandbox) {
 /**
  * Batch finished callback.
  */
-function mymodule_batch_finished($success, $results, $operations) {
+function az_publication_batch_finished($success, $results, $operations) {
   if ($success) {
     \Drupal::messenger()->addMessage(t('All data has been processed.'));
   }
