@@ -26,7 +26,7 @@ class AZPublicationTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $modules = [
+  protected static $modules = [
     'az_publication',
   ];
 
