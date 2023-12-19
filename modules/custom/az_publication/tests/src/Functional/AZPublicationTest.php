@@ -28,6 +28,9 @@ class AZPublicationTest extends BrowserTestBase {
    */
   protected static $modules = [
     'az_publication',
+    'az_publication_bibtex',
+    'az_publication_doi',
+    'az_publication_import',
   ];
 
   /**
@@ -44,19 +47,25 @@ class AZPublicationTest extends BrowserTestBase {
    */
   public function testIsUninstallableAndReinstallable() {
 
-    // Uninstalls the az_publication module, so hook_modules_uninstalled()
+    // Uninstalls the az_publication modules, so hook_modules_uninstalled()
     // is executed.
     $this->container
       ->get('module_installer')
       ->uninstall([
         'az_publication',
+        'az_publication_bibtex',
+        'az_publication_doi',
+        'az_publication_import',
       ]);
 
-    // Reinstalls the az_publication module.
+    // Reinstalls the az_publication modules.
     $this->container
       ->get('module_installer')
       ->install([
         'az_publication',
+        'az_publication_bibtex',
+        'az_publication_doi',
+        'az_publication_import',
       ]);
 
   }
