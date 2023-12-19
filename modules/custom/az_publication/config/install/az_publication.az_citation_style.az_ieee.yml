@@ -1,9 +1,6 @@
 langcode: en
 status: true
-dependencies:
-  enforced:
-    module:
-      - az_publication
+dependencies: {  }
 id: az_ieee
 label: 'Institute of Electrical and Electronics Engineers Style (IEEE)'
 style: ieee

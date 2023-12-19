@@ -1,9 +1,6 @@
 langcode: en
 status: true
 dependencies:
-  enforced:
-    module:
-      - az_publication
   config:
     - core.entity_view_mode.node.az_card
     - field.field.node.az_publication.field_az_accessed_date

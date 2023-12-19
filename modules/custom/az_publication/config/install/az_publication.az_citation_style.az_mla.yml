@@ -1,9 +1,6 @@
 langcode: en
 status: true
-dependencies:
-  enforced:
-    module:
-      - az_publication
+dependencies: {  }
 id: az_mla
 label: 'Modern Language Association Style (MLA)'
 style: modern-language-association

@@ -1,9 +1,6 @@
 langcode: en
 status: true
-dependencies:
-  enforced:
-    module:
-      - az_publication
+dependencies: {  }
 id: az_chicago
 label: 'Chicago Manual of Style (CMOS)'
 style: chicago-fullnote-bibliography
