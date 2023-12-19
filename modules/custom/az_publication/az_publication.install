@@ -5,6 +5,7 @@
  * Install, update and uninstall functions for az_publication module.
  */
 
+use Drupal\node\Entity\Node;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Utility\UpdateException;
 
@@ -88,7 +89,7 @@ function az_publication_update_1020702() {
  * Batch operation for updating az_publication nodes.
  */
 function az_publication_update_az_publication_nodes($node_id, &$context) {
-  $node = \Drupal\node\Entity\Node::load($node_id);
+  $node = Node::load($node_id);
 
   if ($node && $node->getType() == 'az_publication') {
     // Get the entity field manager service.

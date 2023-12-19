@@ -109,4 +109,3 @@ class StringEntity extends StringFilter {
   }
 
 }
-

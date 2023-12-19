@@ -19,10 +19,25 @@ use Drupal\views\ViewExecutable;
  */
 class ConfigEntityQuery extends Sql {
 
+  /**
+   * Commands variable.
+   *
+   * @var array
+   */
   protected $commands = [];
 
+  /**
+   * EntityConditionGroups variable.
+   *
+   * @var [type]
+   */
   protected $entityConditionGroups;
 
+  /**
+   * Undocumented variable.
+   *
+   * @var sorting
+   */
   protected $sorting = [];
 
   /**
@@ -103,7 +118,7 @@ class ConfigEntityQuery extends Sql {
    *   The view which is executed.
    */
   public function execute(ViewExecutable $view) {
-    $this->group_operator = isset($this->group_operator) ? $this->group_operator : 'AND';
+    $this->group_operator = $this->group_operator ?? 'AND';
     $base_table = $this->view->storage->get('base_table');
     $data = \Drupal::service('views.views_data')->get($base_table);
     $entity_type = $data['table']['entity type'];
@@ -118,9 +133,9 @@ class ConfigEntityQuery extends Sql {
     $ids = $query->execute();
     $results = \Drupal::entityTypeManager()->getStorage($entity_type)->loadMultiple($ids);
     $index = 0;
-    /* @var \Drupal\Core\Config\Entity\ConfigEntityBase $result */
+    /** @var \Drupal\Core\Config\Entity\ConfigEntityBase $result */
     foreach ($results as $result) {
-      // @todo: toArray() doesn't return all properties.
+      // @todo toArray() doesn't return all properties.
       $entity = $result->toArray();
       $entity['type'] = $entity_type;
       $entity['entity'] = $result;
@@ -139,7 +154,23 @@ class ConfigEntityQuery extends Sql {
     foreach ($this->commands as $group => $grouped_commands) {
       $conditionGroup = $this->getConditionGroup($group);
       foreach ($grouped_commands as $command) {
-        call_user_func_array([$conditionGroup, $command['method']], $command['args']);
+        // call_user_func_array([$conditionGroup, $command['method']],
+        // $command['args']);.
+        switch ($command['method']) {
+          case 'condition':
+            $conditionGroup->condition(...$command['args']);
+            break;
+
+          case 'exists':
+            $conditionGroup->exists(...$command['args']);
+            break;
+
+          case 'notExists':
+            $conditionGroup->notExists(...$command['args']);
+            break;
+
+          // Add other cases as needed.
+        }
       }
     }
   }
@@ -150,7 +181,7 @@ class ConfigEntityQuery extends Sql {
   protected function getConditionGroup($group) {
     if (!isset($this->entityConditionGroups[$group])) {
       $query = $this->entityConditionGroups[0];
-      $condition = isset($this->where[$group]) && $this->where[$group]['type'] == 'OR' ? $query->orConditionGroup() : $query->andConditionGroup();
+      $condition = isset($this->where[$group]) && $this->where[$group]['type'] === 'OR' ? $query->orConditionGroup() : $query->andConditionGroup();
       $query->condition($condition);
       $this->entityConditionGroups[$group] = $condition;
     }

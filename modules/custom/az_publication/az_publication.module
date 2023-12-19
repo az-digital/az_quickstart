@@ -49,7 +49,6 @@ function az_publication_form_view_add_form_alter(&$form, FormStateInterface $for
   $form['displays']['show']['wizard_key']['#options'] = $options;
 }
 
-
 /**
  * Implements hook_entity_extra_field_info().
  */
