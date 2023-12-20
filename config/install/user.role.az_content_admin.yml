@@ -99,6 +99,7 @@ permissions:
   - 'renew token'
   - 'update content translations'
   - 'update any az_custom_menu_block block content'
+  - 'update any media'
   - 'use advanced search'
   - 'use editorial transition az_publish'
   - 'use editorial transition az_unpublish'
