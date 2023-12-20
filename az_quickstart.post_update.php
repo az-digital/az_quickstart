@@ -45,7 +45,7 @@ function az_quickstart_post_update_force_import_core_block_view(&$sandbox) {
 }
 
 /**
- * Remove block_content_permissions module permissions from Quickstart roles.
+ * Remove unneeded block_content permissions (core + contrib) from AZQS roles.
  */
 function az_quickstart_post_update_remove_block_content_permissions_from_roles(&$sandbox) {
   $azqs_roles = [
@@ -53,15 +53,12 @@ function az_quickstart_post_update_remove_block_content_permissions_from_roles(&
     'az_content_editor',
   ];
   $permissions_to_remove = [
-    'create az_custom_menu_block block content',
-    'create az_flexible_block block content',
-    'create az_quick_links block content'
-    'delete any az_custom_menu_block block content',
-    'delete any az_flexible_block block content',
-    'delete any az_quick_links block content',
+    'administer block content types',
+    'administer block types',
     'update any az_custom_menu_block block content',
     'update any az_flexible_block block content',
     'update any az_quick_links block content',
+    'view restricted block content',
   ];
   
   \Drupal::classResolver(ConfigEntityUpdater::class)->update($sandbox, 'user_role', function (Role $role) {
