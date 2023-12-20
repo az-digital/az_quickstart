@@ -6,8 +6,10 @@
  */
 
 use Drupal\Component\Utility\Crypt;
+use Drupal\Core\Config\Entity\ConfigEntityUpdater;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\EntityStorageException;
+use Drupal\user\Entity\Role;
 
 /**
  * Force import of core block_content view.
@@ -40,4 +42,38 @@ function az_quickstart_post_update_force_import_core_block_view(&$sandbox) {
   catch (EntityStorageException $e) {
     \Drupal::logger('az_quickstart')->notice($e->getMessage());
   }
+}
+
+/**
+ * Remove block_content_permissions module permissions from Quickstart roles.
+ */
+function az_quickstart_post_update_remove_block_content_permissions_from_roles(&$sandbox) {
+  $azqs_roles = [
+    'az_content_admin',
+    'az_content_editor',
+  ];
+  $permissions_to_remove = [
+    'create az_custom_menu_block block content',
+    'create az_flexible_block block content',
+    'create az_quick_links block content'
+    'delete any az_custom_menu_block block content',
+    'delete any az_flexible_block block content',
+    'delete any az_quick_links block content',
+    'update any az_custom_menu_block block content',
+    'update any az_flexible_block block content',
+    'update any az_quick_links block content',
+  ];
+  
+  \Drupal::classResolver(ConfigEntityUpdater::class)->update($sandbox, 'user_role', function (Role $role) {
+    $update = FALSE;
+    if (in_array($role->id, $azqs_roles)) {
+      foreach ($permissions_to_remove as $permission) {
+        if ($role->hasPermission($permission)) {
+          $role->revokePermission($permission);
+          $update = TRUE;
+        }
+      }
+    }
+    return $update;
+  });
 }
