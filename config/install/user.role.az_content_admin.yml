@@ -14,6 +14,7 @@ permissions:
   - 'administer author entities'
   - 'administer block classes'
   - 'administer blocks'
+  - 'administer block content'
   - 'administer book outlines'
   - 'administer easy breadcrumb'
   - 'administer flaggings'
