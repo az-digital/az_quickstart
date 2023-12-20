@@ -32,6 +32,7 @@ permissions:
   - 'batch update workbench access'
   - 'bypass workbench access'
   - 'bypass node access'
+  - 'create az_custom_menu_block block content'
   - 'create content translations'
   - 'create new books'
   - 'create terms in az_academic_programs'
