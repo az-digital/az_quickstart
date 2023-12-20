@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.25",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.11",
-        "citation-style-language/styles": "0.0.325",
+        "citation-style-language/styles": "0.0.330",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
