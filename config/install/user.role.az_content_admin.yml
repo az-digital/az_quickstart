@@ -95,7 +95,6 @@ permissions:
   - 'edit webform submissions own node'
   - 'renew token'
   - 'update content translations'
-  - 'update any az_custom_menu_block block content'
   - 'use advanced search'
   - 'use editorial transition az_publish'
   - 'use editorial transition az_unpublish'

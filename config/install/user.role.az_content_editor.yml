@@ -126,8 +126,6 @@ permissions:
   - 'switch shortcut sets'
   - 'translate any entity'
   - 'translate editable entities'
-  - 'update any az_flexible_block block content'
-  - 'update any az_quick_links block content'
   - 'update content translations'
   - 'update media'
   - 'use editorial transition az_publish'
