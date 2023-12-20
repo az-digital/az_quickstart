@@ -359,8 +359,8 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Upload footer logo image'),
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
     '#upload_validators' => [
-      'file_validate_extensions' => [
-        'png gif jpg jpeg apng svg',
+      'FileExtension' => [
+        'extensions' => 'png gif jpg jpeg apng svg',
       ],
     ],
   ];

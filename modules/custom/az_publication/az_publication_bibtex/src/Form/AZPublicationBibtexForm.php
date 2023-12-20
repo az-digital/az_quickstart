@@ -54,7 +54,7 @@ class AZPublicationBibtexForm extends FormBase {
       '#title' => $this->t('Upload a BibTeX document'),
       '#upload_location' => 'temporary://bibtex/',
       '#upload_validators' => [
-        'file_validate_extensions' => ['bib'],
+        'FileExtension' => ['extensions' => 'bib'],
       ],
       '#required' => TRUE,
     ];
