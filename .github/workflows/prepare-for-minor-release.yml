@@ -124,7 +124,7 @@ jobs:
       with:
         title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
         commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-        branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
+        branch: prepare-${{ inputs.release_branch_name }}-for-minor-release
         base: ${{ inputs.release_branch_name }}
         delete-branch: true
         token: ${{ secrets.REPO_DISPATCH_TOKEN }}
