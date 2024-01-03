@@ -223,8 +223,11 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         }
         // By default, provide a link to the node page if nothing else applies.
         try {
-          $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
-          $blob->itemlink = $url->toString();
+          // Canonical full node should not link to itself.
+          if ($view_mode !== 'full') {
+            $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
+            $blob->itemlink = $url->toString();
+          }
         }
         catch (Exception $e) {
         }
