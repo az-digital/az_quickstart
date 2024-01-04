@@ -57,7 +57,7 @@
       {% endif %}
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
-        <li class="page-item {{ current == key ? 'active' : '' }}">
+        <li class="page-item page-number-item{{ current == key ? ' active' : '' }}">
           {% if current == key %}
             <span class="page-link">
               {{- key -}}
