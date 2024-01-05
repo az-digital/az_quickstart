@@ -80,6 +80,7 @@ function az_quickstart_requirements($phase) {
     // Gather all deprecated modules that are enabled.
     $azqs_deprecated_modules = [
       'background_image_formatter',
+      'block_content_permissions',
       'ckeditor',
       'entity_browser',
       'media_library_theme_reset',
