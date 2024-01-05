@@ -6,6 +6,9 @@ dependencies:
   module:
     - system
     - views
+  enforced:
+    module:
+      az_demo
   theme:
     - az_barrio
 id: az_barrio_exposedformaz_findernews
