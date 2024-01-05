@@ -1,0 +1,236 @@
+<?php
+
+/**
+ * @file
+ * Contains az_exposed_filters.install.
+ */
+
+/**
+ * Provide upgrade path from 8.x-3.x to 8.x-4.x.
+ */
+function az_exposed_filters_update_8001() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('views.view.') as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+
+    // Go through each display on each view.
+    $displays = $config->get('display');
+    foreach ($displays as $display_name => $display) {
+      if (!empty($display['display_options']['exposed_form'])) {
+        $exposed_form = $display['display_options']['exposed_form'];
+        // Find AZ Exposed Filters exposed forms.
+        if (isset($exposed_form['type']) && $exposed_form['type'] === 'az_exposed_filters') {
+          $az_exposed_filters_settings = [];
+          foreach ($exposed_form['options']['az_exposed_filters'] as $type => $option) {
+            // General settings.
+            if ($type === 'general') {
+              $az_exposed_filters_settings['general'] = [
+                'autosubmit' => $option['autosubmit'] ?? FALSE,
+                'autosubmit_exclude_textfield' => $option['autosubmit_exclude_textfield'] ?? FALSE,
+                'autosubmit_hide' => $option['autosubmit_hide'] ?? FALSE,
+                'input_required' => $exposed_form['options']['input_required'] ?? FALSE,
+              ];
+
+              if (isset($exposed_form['options']['text_input_required'])) {
+                $az_exposed_filters_settings['general'] += [
+                  'text_input_required' => $exposed_form['options']['text_input_required'],
+                  'text_input_required_format' => 'basic_html',
+                ];
+              }
+
+              $az_exposed_filters_settings['general'] += [
+                'allow_secondary' => $option['allow_secondary'] ?? FALSE,
+                'secondary_label' => $option['secondary_label'] ?? 'Advanced options',
+              ];
+            }
+            // Sort settings.
+            elseif ($type === 'sort') {
+              $az_exposed_filters_settings['sort'] = [
+                'plugin_id' => $option['az_exposed_filters_format'] ?? 'default',
+                'advanced' => [
+                  'combine' => $option['advanced']['combine'] ?? FALSE,
+                  'combine_rewrite' => $option['advanced']['combine_rewrite'] ?? '',
+                  'reset' => $option['advanced']['reset'] ?? FALSE,
+                  'reset_label' => $option['advanced']['reset_label'] ?? '',
+                  'collapsible' => $option['advanced']['collapsible'] ?? FALSE,
+                  'collapsible_label' => $option['advanced']['collapsible_label'] ?? '',
+                  'is_secondary' => $option['advanced']['is_secondary'] ?? FALSE,
+                ],
+              ];
+            }
+            // Pager settings.
+            elseif ($type === 'pager') {
+              $az_exposed_filters_settings['pager'] = [
+                'plugin_id' => $option['az_exposed_filters_format'] ?? 'default',
+                'advanced' => [
+                  'is_secondary' => $option['is_secondary'] ?? FALSE,
+                ],
+              ];
+            }
+            // Filter settings.
+            else {
+              // This would indicate a newer version of the config already.
+              if ($type === 'filter') {
+                continue;
+              }
+
+              $field_name = $type;
+              $az_exposed_filters_settings['filter'][$field_name] = [
+                'plugin_id' => $option['az_exposed_filters_format'] ?? 'default',
+              ];
+
+              // Checkboxes/Radio buttons.
+              if ($option['az_exposed_filters_format'] === 'az_exposed_filters') {
+                $az_exposed_filters_settings['filter'][$field_name]['select_all_none'] = $option['more_options']['select_all_none'] ?? FALSE;
+                $az_exposed_filters_settings['filter'][$field_name]['select_all_none_nested'] = $option['more_options']['select_all_none_nested'] ?? FALSE;
+              }
+
+              // Links.
+              if ($option['az_exposed_filters_format'] === 'az_exposed_filters_links') {
+                $az_exposed_filters_settings['filter'][$field_name]['select_all_none'] = $option['more_options']['select_all_none'] ?? FALSE;
+              }
+
+              // Sliders.
+              if ($option['az_exposed_filters_format'] === 'az_exposed_filters_slider') {
+                // Update plugin name to 'az_exposed_filters_sliders'.
+                $az_exposed_filters_settings['filter'][$field_name] = [
+                  'plugin_id' => 'az_exposed_filters_sliders',
+                ];
+
+                // Animate option is now split into two separate options.
+                $animate = $option['slider_options']['az_exposed_filters_slider_animate'];
+                $animate_ms = 0;
+                if (empty($animate)) {
+                  $animate = 'none';
+                }
+                elseif (is_int($animate)) {
+                  $animate = 'custom';
+                  $animate_ms = $animate;
+                }
+
+                $az_exposed_filters_settings['filter'][$field_name] = array_merge($az_exposed_filters_settings['filter'][$field_name], [
+                  'min' => $option['slider_options']['az_exposed_filters_slider_min'] ?? 0,
+                  'max' => $option['slider_options']['az_exposed_filters_slider_max'] ?? 99999,
+                  'step' => $option['slider_options']['az_exposed_filters_slider_step'] ?? 1,
+                  'animate' => $animate,
+                  'animate_ms' => $animate_ms,
+                  'orientation' => $option['slider_options']['az_exposed_filters_slider_orientation'] ?? 'horizontal',
+                ]);
+              }
+
+              // Shared advanced settings.
+              $az_exposed_filters_settings['filter'][$field_name]['advanced'] = [
+                'collapsible' => $option['more_options']['az_exposed_filters_collapsible'] ?? FALSE,
+                'is_secondary' => $option['more_options']['is_secondary'] ?? FALSE,
+                'placeholder_text' => $option['more_options']['placeholder_text'] ?? '',
+                'rewrite' => [
+                  'filter_rewrite_values' => $option['more_options']['rewrite']['filter_rewrite_values'] ?? '',
+                ],
+                // New option.
+                'sort_options' => FALSE,
+              ];
+            }
+          }
+
+          // Update AZ Exposed Filters settings.
+          $config->set("display.$display_name.display_options.exposed_form.options.az_exposed_filters", $az_exposed_filters_settings);
+        }
+      }
+    }
+
+    $config->save(TRUE);
+  }
+}
+
+/**
+ * Renames az_exposed_filters_slider plugin to az_exposed_filters_sliders to be compatible with 8.x-4.x.
+ */
+function az_exposed_filters_update_8002() {
+  $config_factory = \Drupal::configFactory();
+  foreach ($config_factory->listAll('views.view.') as $config_name) {
+    $config = $config_factory->getEditable($config_name);
+
+    // Go through each display on each view.
+    $displays = $config->get('display');
+    $needs_update = FALSE;
+    foreach ($displays as $display_name => $display) {
+      if (!empty($display['display_options']['exposed_form'])) {
+        $exposed_form = $display['display_options']['exposed_form'];
+        // Find AZ Exposed Filters exposed forms.
+        if (isset($exposed_form['type']) && $exposed_form['type'] === 'az_exposed_filters') {
+          $az_exposed_filters_settings = $exposed_form['options']['az_exposed_filters'];
+          foreach ($exposed_form['options']['az_exposed_filters'] as $type => $option) {
+            if ($type === 'filter') {
+              $field_name = $type;
+              // Sliders.
+              if (($option['az_exposed_filters_format'] ?? '') === 'az_exposed_filters_slider') {
+                $needs_update = TRUE;
+                // Update plugin name to 'az_exposed_filters_sliders'.
+                $az_exposed_filters_settings['filter'][$field_name] = [
+                  'plugin_id' => 'az_exposed_filters_sliders',
+                ];
+
+                // Animate option is now split into two separate options.
+                $animate = $option['slider_options']['az_exposed_filters_slider_animate'];
+                $animate_ms = 0;
+                if (empty($animate)) {
+                  $animate = 'none';
+                }
+                elseif (is_int($animate)) {
+                  $animate = 'custom';
+                  $animate_ms = $animate;
+                }
+
+                $az_exposed_filters_settings['filter'][$field_name] = array_merge($az_exposed_filters_settings['filter'][$field_name], [
+                  'min' => $option['slider_options']['az_exposed_filters_slider_min'] ?? 0,
+                  'max' => $option['slider_options']['az_exposed_filters_slider_max'] ?? 99999,
+                  'step' => $option['slider_options']['az_exposed_filters_slider_step'] ?? 1,
+                  'animate' => $animate,
+                  'animate_ms' => $animate_ms,
+                  'orientation' => $option['slider_options']['az_exposed_filters_slider_orientation'] ?? 'horizontal',
+                ]);
+              }
+            }
+          }
+
+          // Update AZ Exposed Filters settings.
+          if ($needs_update) {
+            $config->set("display.$display_name.display_options.exposed_form.options.az_exposed_filters", $az_exposed_filters_settings);
+          }
+        }
+      }
+    }
+    if ($needs_update) {
+      $config->save(TRUE);
+    }
+  }
+}
+
+/**
+ * Provide upgrade path from 8.x-4.x to 8.x-5.x.
+ */
+function az_exposed_filters_update_8003() {
+  $modules = [];
+  $moduleHandler = \Drupal::service('module_handler');
+  // Push jquery_ui module for installation if it isn't enabled already.
+  if (!($moduleHandler->moduleExists('jquery_ui'))) {
+    array_push($modules, 'jquery_ui');
+  }
+  // Push jquery_ui_slider module for installation if it isn't enabled already.
+  if (!($moduleHandler->moduleExists('jquery_ui_slider'))) {
+    array_push($modules, 'jquery_ui_slider');
+  }
+  // Push jquery_ui_touch_punch module for installation if it isn't enabled already.
+  if (!($moduleHandler->moduleExists('jquery_ui_touch_punch'))) {
+    array_push($modules, 'jquery_ui_touch_punch');
+  }
+  // Push jquery_ui_datepicker module for installation if it isn't enabled already.
+  if (!($moduleHandler->moduleExists('jquery_ui_datepicker'))) {
+    array_push($modules, 'jquery_ui_datepicker');
+  }
+
+  // Install the modules.
+  if (!empty($modules)) {
+    \Drupal::service('module_installer')->install($modules);
+  }
+}

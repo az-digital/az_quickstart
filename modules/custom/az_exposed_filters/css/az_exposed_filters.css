@@ -1,0 +1,17 @@
+/**
+ * @file
+ * az_exposed_filters.css
+ */
+
+/*
+ * Basic styling for features added by AZ Exposed Filters
+ */
+.az-exposed-filters-exposed-form .form--inline .form-item {
+  float: none;
+}
+.az-exposed-filters-exposed-form .form--inline > .form-item {
+  float: left; /* LRT */
+}
+.az-exposed-filters-exposed-form .form--inline .az-exposed-filters--secondary {
+  clear: left;
+}

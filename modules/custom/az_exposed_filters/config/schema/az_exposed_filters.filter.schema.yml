@@ -1,0 +1,93 @@
+#
+# Schema for the Better Exposed Filters filter widgets.
+#
+az_exposed_filters_filter_widget:
+  type: mapping
+  mapping:
+    plugin_id:
+      type: string
+      label: 'Plugin id'
+    advanced:
+      type: mapping
+      mapping:
+        sort_options:
+          type: boolean
+          label: 'Sort filter options alphabetically'
+        placeholder_text:
+          type: string
+          label: 'Placeholder text for the filter'
+        rewrite:
+          type: mapping
+          label: 'Rewrite filter options'
+          mapping:
+            filter_rewrite_values:
+              type: text
+              label: 'Rewrite filter option'
+        collapsible:
+          type: boolean
+          label: 'Make sort options collapsible'
+        is_secondary:
+          type: boolean
+          label: 'This filter is a secondary option'
+
+# AZ exposed filter widgets
+az_exposed_filters.filter.*:
+  label: 'Exposed filter AZ settings'
+  type: az_exposed_filters_filter_widget
+
+az_exposed_filters.filter.default:
+  label: 'Default'
+  type: az_exposed_filters_filter_widget
+
+az_exposed_filters.filter.az_exposed_filters:
+  label: 'Checkboxes/Radio Buttons'
+  type: az_exposed_filters_filter_widget
+  mapping:
+    select_all_none:
+      type: boolean
+      label: 'Add select all/none links'
+    select_all_none_nested:
+      type: boolean
+      label: 'Add select all/none links to hierarchical lists'
+    display_inline:
+      type: boolean
+      label: 'Display checkbox/radio options inline'
+
+az_exposed_filters.filter.az_exposed_filters_links:
+  label: 'Links'
+  type: az_exposed_filters_filter_widget
+  mapping:
+    select_all_none:
+      type: boolean
+      label: 'Add select all/none links'
+
+az_exposed_filters.filter.az_exposed_filters_hidden:
+  label: 'Hidden'
+  type: az_exposed_filters_filter_widget
+
+az_exposed_filters.filter.az_exposed_filters_sliders:
+  label: 'jQuery UI Slider'
+  type: az_exposed_filters_filter_widget
+  mapping:
+    min:
+      type: string
+      label: 'Range minimum'
+    max:
+      type: string
+      label: 'Range maximum'
+    step:
+      type: string
+      label: 'Step'
+    animate:
+      type: string
+      label: 'Animation speed'
+    animate_ms:
+      type: string
+      label: 'Animation speed in milliseconds'
+    orientation:
+      type: string
+      label: 'Orientation'
+
+az_exposed_filters.filter.az_exposed_filters_datepickers:
+  label: 'jQuery UI Date Picker'
+  type: az_exposed_filters_filter_widget

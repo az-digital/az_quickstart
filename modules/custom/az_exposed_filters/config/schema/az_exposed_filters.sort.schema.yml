@@ -1,0 +1,50 @@
+#
+# Schema for the Better Exposed Filters sort widgets.
+#
+az_exposed_filters_sort_widget:
+  type: mapping
+  mapping:
+    plugin_id:
+      type: string
+      label: 'Plugin id'
+    advanced:
+      type: mapping
+      mapping:
+        combine:
+          type: boolean
+          label: 'Combine sort order with sort by'
+        combine_rewrite:
+          type: text
+          label: 'Rewrite combined sort options'
+        reset:
+          type: boolean
+          label: 'Include reset sort option'
+        reset_label:
+          type: label
+          label: 'Reset sort label'
+        collapsible:
+          type: boolean
+          label: 'Make sort options collapsible'
+        collapsible_label:
+          type: label
+          label: 'Collapsible details element title'
+        is_secondary:
+          type: boolean
+          label: 'Sort is a secondary option'
+
+# AZ Exposed Filter exposed sort widgets
+az_exposed_filters.sort.*:
+  type: az_exposed_filters_sort_widget
+  label: 'Exposed sort AZ Exposed Filter settings'
+
+az_exposed_filters.sort.default:
+  type: az_exposed_filters_sort_widget
+  label: 'Default'
+
+az_exposed_filters.sort.az_exposed_filters:
+  type: az_exposed_filters_sort_widget
+  label: 'Checkboxes/Radio Buttons'
+
+az_exposed_filters.sort.az_exposed_filters_links:
+  type: az_exposed_filters_sort_widget
+  label: 'Links'

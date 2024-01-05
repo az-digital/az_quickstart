@@ -1,0 +1,15 @@
+services:
+  # Helpers
+  az_exposed_filters.az_exposed_filters_helper:
+    class: Drupal\az_exposed_filters\AzExposedFiltersHelper
+
+  # Plugins
+  plugin.manager.az_exposed_filters_filter_widget:
+    class: Drupal\az_exposed_filters\Plugin\AzExposedFiltersWidgetManager
+    arguments: [filter, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.az_exposed_filters_pager_widget:
+    class: Drupal\az_exposed_filters\Plugin\AzExposedFiltersWidgetManager
+    arguments: [pager, '@container.namespaces', '@cache.discovery', '@module_handler']
+  plugin.manager.az_exposed_filters_sort_widget:
+    class: Drupal\az_exposed_filters\Plugin\AzExposedFiltersWidgetManager
+    arguments: [sort, '@container.namespaces', '@cache.discovery', '@module_handler']

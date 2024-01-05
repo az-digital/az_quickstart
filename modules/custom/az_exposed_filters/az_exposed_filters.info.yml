@@ -1,0 +1,16 @@
+name: AZ Exposed Filters
+description: Provides advanced options (e.g. links, checkboxes, or other widgets) to exposed Views elements.
+core_version_requirement: ^9 || ^10
+type: module
+package: Views
+dependencies:
+  - drupal:views
+  - jquery_ui:jquery_ui
+  - jquery_ui_slider:jquery_ui_slider
+  - jquery_ui_touch_punch:jquery_ui_touch_punch
+  - jquery_ui_datepicker:jquery_ui_datepicker
+
+# Information added by Drupal.org packaging script on 2022-12-20
+version: '6.0.3'
+project: 'az_exposed_filters'
+datestamp: 1671541879

@@ -1,0 +1,23 @@
+{%
+  set classes = [
+    'az-exposed-filters-links',
+    is_nested ? 'az-exposed-filters-nested'
+  ]
+%}
+{% set is_nested = true %}
+{% for name, value in hiddens %}
+<input type="hidden" name="{{ name }}" value="{{ value }}" />
+{% endfor %}
+<div{{ attributes.addClass(classes) }}>
+  {% set current_nesting_level = 0 %}
+  {% for child in children %}
+    {% set item = attribute(element, child) %}
+    {% if child in selected %}
+      {% set new_nesting_level = attribute(depth, child) %}
+      {% set item = item|merge({'#attributes': {'class': 'az-exposed-filters-link-active'}}) %}
+    {% endif %}
+    {% set new_nesting_level = attribute(depth, child) %}
+    {% include '@az_exposed_filters/az-exposed-filters-nested-elements.html.twig' %}
+    {% set current_nesting_level = new_nesting_level %}
+  {% endfor %}
+</div>

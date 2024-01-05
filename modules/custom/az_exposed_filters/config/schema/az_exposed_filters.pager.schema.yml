@@ -1,0 +1,32 @@
+#
+# Schema for the Better Exposed Filters pager widgets.
+#
+az_exposed_filters_pager_widget:
+  type: mapping
+  mapping:
+    plugin_id:
+      type: string
+      label: 'Plugin id'
+    advanced:
+      type: mapping
+      mapping:
+        is_secondary:
+          type: boolean
+          label: 'Pager is a secondary option'
+
+# AZ Exposed Filter exposed pager widgets
+az_exposed_filters.pager.*:
+  type: az_exposed_filters_pager_widget
+  label: 'Exposed pager AZ Exposed Filter settings'
+
+az_exposed_filters.pager.default:
+  type: az_exposed_filters_pager_widget
+  label: 'Default'
+
+az_exposed_filters.pager.az_exposed_filters:
+  type: az_exposed_filters_pager_widget
+  label: 'Checkboxes/Radio Buttons'
+
+az_exposed_filters.pager.az_exposed_filters_links:
+  type: az_exposed_filters_pager_widget
+  label: 'Links'
