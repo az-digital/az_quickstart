@@ -57,7 +57,16 @@
       {% endif %}
       {# Now generate the actual pager piece. #}
       {% for key, item in items.pages %}
-        <li class="page-item page-number-item{{ current == key ? ' active' : '' }}">
+        {% 
+          if (not items.previous and key - current <= 2) or
+          (items.previous and items.next and (key - current)|abs <= 1) or
+          (not items.next and current - key <= 2)
+        %}
+          {% set show_mobile_class = ' show-item-mobile' %}
+        {% else %}
+          {% set show_mobile_class = '' %}
+        {% endif %}
+        <li class="page-item page-number{{ current == key ? ' active' : '' }}{{ show_mobile_class }}">
           {% if current == key %}
             <span class="page-link">
               {{- key -}}

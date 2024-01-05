@@ -214,7 +214,7 @@ span.field-label {
 
 /* Limit page number items to 3 on mobile. */
 @media screen and (max-width: 576px) {
-  .page-item:nth-child(n+4 of .page-number-item) {
+  .page-number:not(.show-item-mobile) {
     display: none;
   }
 }
