@@ -9,8 +9,8 @@ use Drupal\Core\Extension\MissingDependencyException;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
-use Drupal\user\Entity\User;
 use Drupal\shortcut\Entity\Shortcut;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_install().
@@ -80,8 +80,10 @@ function az_quickstart_requirements($phase) {
     // Gather all deprecated modules that are enabled.
     $azqs_deprecated_modules = [
       'background_image_formatter',
+      'block_content_permissions',
       'ckeditor',
       'entity_browser',
+      'media_library_theme_reset',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
