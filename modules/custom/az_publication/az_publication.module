@@ -225,8 +225,13 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         try {
           // Canonical full node should not link to itself.
           if ($view_mode !== 'full') {
+            $has_cover = !empty($entity->field_az_publication_image->target_id);
+            $has_abstract = !empty($entity->field_az_publication_abstract->value);
             $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
-            $blob->itemlink = $url->toString();
+            // Linking to full node if there is an abstract or cover page.
+            if ($has_cover || $has_abstract) {
+              $blob->itemlink = $url->toString();
+            }
           }
         }
         catch (Exception $e) {
