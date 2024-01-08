@@ -4,6 +4,7 @@ dependencies:
   config:
     - views.view.az_page_by_category
   module:
+    - block_class
     - system
     - views
   theme:
@@ -17,9 +18,9 @@ plugin: 'views_exposed_filter_block:az_page_by_category-row_with_filters'
 settings:
   id: 'views_exposed_filter_block:az_page_by_category-row_with_filters'
   label: ''
-  label_display: '0'
+  label_display: visible
   provider: views
-  views_label: ''
+  views_label: Filter
 visibility:
   request_path:
     id: request_path
