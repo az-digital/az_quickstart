@@ -146,7 +146,7 @@ function az_global_footer_update_1020703() {
  * Twitter icon(s) in the global footer will be updated with
  * new X icon(s).
  */
-function az_global_footer_update_1020704() {
+function az_global_footer_update_1020801() {
   $updated_count = 0;
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
