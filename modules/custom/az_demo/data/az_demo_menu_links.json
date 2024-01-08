@@ -351,17 +351,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "15"
-    },
+    }
     {
       "link_id": "33",
-      "parent_link_id": "0",
+      "parent_link_id": "6",
       "menu": "main",
-      "title": "News Finder",
-      "urlpath": "/finder/news",
+      "title": "Page List with Finder",
+      "urlpath": "/pages/page-list-finder",
       "external": false,
       "expanded": false,
       "enabled": true,
-      "weight": "0"
+      "weight": "16"
     }
   ]
 }

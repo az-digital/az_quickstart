@@ -34,11 +34,11 @@
     },
     {
       "id" : 104,
-      "title" : "News finder",
-      "target_id" : "az_finder",
-      "display_id" : "news",
+      "title" : "",
+      "target_id" : "az_pages",
+      "display_id" : "row_with_filters",
       "data" : "",
-      "bottom_spacing" : "mb-0"
+      "bottom_spacing" : "mb-4"
     }
   ]
 }
