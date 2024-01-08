@@ -8,7 +8,7 @@ dependencies:
     - node.type.az_flexible_page
     - taxonomy.vocabulary.az_page_categories
   module:
-    - better_exposed_filters
+    - az_core
     - node
     - taxonomy
     - user
@@ -341,10 +341,10 @@ display:
     display_options:
       fields: {  }
       exposed_form:
-        type: bef
+        type: az_bef
         options:
           submit_button: Apply
-          reset_button: false
+          reset_button: 1
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -354,33 +354,33 @@ display:
           text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
+              autosubmit: 1
+              autosubmit_exclude_textfield: 0
+              autosubmit_textfield_delay: '500'
+              autosubmit_hide: 1
+              input_required: 0
+              allow_secondary: 0
               secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: false
+              secondary_open: 0
+              reset_button_always_show: 0
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               field_az_page_category_target_id:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
+                select_all_none_nested: 0
+                display_inline: 0
       filters:
         status:
           id: status
@@ -543,7 +543,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }

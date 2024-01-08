@@ -200,12 +200,12 @@
       "az_main_content" : "103",
       "az_media_image" : "",
       "az_summary" : "Person Grid 3-column."
-    },
+},
     {
       "id":21,
-      "title" : "News Finder",
-      "path" : "/finder/news",
-      "exclude_title" : true,
+      "title" : "Page List with Finder",
+      "path" : "/pages/page-list-finder",
+      "exclude_title" : false,
       "az_page_category" : "Views",
       "az_main_content" : "104",
       "az_media_image" : "",
