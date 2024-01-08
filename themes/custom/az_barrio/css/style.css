@@ -212,7 +212,7 @@ span.field-label {
   font-weight: bold;
 }
 
-/* On mobile, limit pager number items to 3 and hide previous/next buttons. */
+/* On mobile, limit pager number items and hide previous/next buttons. */
 @media screen and (max-width: 576px) {
   .hide-pager-item-mobile {
     display: none;
