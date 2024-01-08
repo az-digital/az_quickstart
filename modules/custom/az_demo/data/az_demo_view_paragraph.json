@@ -35,7 +35,7 @@
     {
       "id" : 104,
       "title" : "",
-      "target_id" : "az_pages",
+      "target_id" : "az_page_by_category",
       "display_id" : "row_with_filters",
       "data" : "",
       "bottom_spacing" : "mb-4"
