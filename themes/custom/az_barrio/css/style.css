@@ -214,7 +214,14 @@ span.field-label {
 
 /* On mobile, limit pager number items to 3 and hide previous/next buttons. */
 @media screen and (max-width: 576px) {
-  .hide-item-mobile {
+  .hide-pager-item-mobile {
+    display: none;
+  }
+}
+
+/* On desktop, hide the ellipsis button when it is only needed on mobile. */
+@media screen and (min-width: 576px) {
+  .hide-pager-ellipsis-desktop {
     display: none;
   }
 }
