@@ -105,7 +105,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
   // Only if fields suggest a publication.
   if ($entity instanceof NodeInterface &&
       $entity instanceof FieldableEntityInterface) {
-
     if ($display->getComponent('az_publication_bibliography')) {
       // Publication fields to CSL schema mappings.
       $pmap = [
