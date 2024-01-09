@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_article_magazine
 type: article-magazine
-label: Magazine
+label: Magazine Article
