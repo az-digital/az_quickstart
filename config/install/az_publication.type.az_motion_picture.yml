@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_motion_picture
 type: motion_picture
-label: Motion
+label: 'Motion Picture'
