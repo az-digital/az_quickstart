@@ -29,9 +29,9 @@
  * @see template_preprocess_pager()
  */
 #}
-{# Specify how many page number links to display on either side of the current page on mobile devices. #}
-{% set mobile_page_numbers_to_show_each_side_of_current = 1 %}
-{% set mobile_total_page_numbers_to_show = 2 * mobile_page_numbers_to_show_each_side_of_current + 1 %}
+{# Specify how many page number links to display on each side of the current page on mobile devices. #}
+{% set mobile_page_numbers_each_side_of_current = 1 %}
+{% set mobile_total_page_numbers_to_show = 2 * mobile_page_numbers_each_side_of_current + 1 %}
 {% if items %}
   <nav role="navigation" aria-label="{{ heading_id }}">
     <h3 id="{{ heading_id }}" class="sr-only">{{ 'Pagination'|t }}</h3>
@@ -69,7 +69,7 @@
       {% for key, item in items.pages %}
         {% 
           if (not items.previous and key - current >= mobile_total_page_numbers_to_show) or
-          (items.previous and items.next and (key - current)|abs > mobile_page_numbers_to_show_each_side_of_current) or
+          (items.previous and items.next and (key - current)|abs > mobile_page_numbers_each_side_of_current) or
           (not items.next and current - key >= mobile_total_page_numbers_to_show)
         %}
           {% set hide_mobile_class = ' hide-pager-item-mobile' %}
@@ -92,7 +92,7 @@
       {% if ellipses.next %}
         {% set hide_ellipsis_class = '' %}
       {% else %}
-        {% if items.pages|keys|last - current > mobile_page_numbers_to_show_each_side_of_current %}
+        {% if items.pages|keys|last - current > mobile_page_numbers_each_side_of_current %}
           {% set hide_ellipsis_class = ' hide-pager-ellipsis-desktop' %}
         {% else %}
           {% set hide_ellipsis_class = ' d-none' %}
