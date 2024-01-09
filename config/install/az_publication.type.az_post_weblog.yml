@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_post_weblog
 type: post-weblog
-label: Weblog
+label: 'Weblog Post'
