@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\config_views\Plugin\views\filter;
+namespace Drupal\az_publication\Plugin\views\filter;
 
 use Drupal\views\Plugin\views\filter\StringFilter;
 

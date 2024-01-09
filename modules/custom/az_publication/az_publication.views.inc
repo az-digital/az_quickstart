@@ -2,22 +2,21 @@
 
 /**
  * @file
+ * Provide views data tied to the az_publication module.
  */
 
 declare(strict_types=1);
 
 /**
- * @file
- * Provide views data tied to the az_publication module.
- */
-
-/**
  * Implements hook_views_data().
+ *
+ * Generates dynamic views data based on configuration entities.
  */
 function az_publication_views_data() {
-  $data = [];
   /** @var \Drupal\Core\Config\TypedConfigManagerInterface $typed_config */
+  $data = [];
   $typed_config = Drupal::service('config.typed');
+
   $all_definitions = $typed_config->getDefinitions();
   $all_definitions_keys = array_keys($all_definitions);
   // Small optimization: the config entities due to their prefixed nature always
@@ -44,6 +43,7 @@ function az_publication_views_data() {
         ],
       ];
     }
+
     if ($prefix = $entity_info->getConfigPrefix()) {
       $table_name = 'config_' . str_replace('.', '_', $prefix);
       $id = $entity_info->getKey('id');
@@ -69,7 +69,7 @@ function az_publication_views_data() {
           'id' => 'config_entity_operations',
         ],
       ];
-      // dpm($data);
+
       // We do not kno how many stars a given config prefix requires, for
       // example the schema for block is under block.block.*.*.
       $keys = preg_grep('/^' . str_replace('.', '\.', $prefix) . '\.\*/', $config_keys);
@@ -85,13 +85,12 @@ function az_publication_views_data() {
     }
   }
   return $data;
-
 }
 
 /**
  * Process all config definitions.
  *
- * @param array $az_publication_data
+ * @param array $views_config_data
  *   Views config data structure.
  * @param array $all_definitions
  *   All config definitions.
@@ -104,7 +103,7 @@ function az_publication_views_data() {
  * @param array $history
  *   Current recursive path, as definition labels.
  */
-function _views_az_publication_process_schema(array &$az_publication_data, array &$all_definitions, array &$all_definitions_keys, array $definition, $prefix = '', array $history = []) {
+function _views_az_publication_process_schema(array &$views_config_data, array &$all_definitions, array &$all_definitions_keys, array $definition, $prefix = '', array $history = []) {
   // Prevent endless loops.
   $hashed_def = md5(serialize($definition));
   if (in_array($hashed_def, $history)) {
@@ -127,14 +126,14 @@ function _views_az_publication_process_schema(array &$az_publication_data, array
       $new_definition = $all_definitions[$type];
       if (isset($new_definition['type'])) {
         if (is_array($new_definition)) {
-          _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
+          _views_az_publication_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
         }
       }
       // If the new definition type has no type then the current one is a
       // primitive type (for e.g. string). If there is a label and this is
       // neither a mapping nor a sequence then add it to Views data.
       elseif (!isset($definition['mapping']) && !isset($definition['sequence']) && isset($definition['label'])) {
-        _views_az_publication_data_add($az_publication_data, $definition, $prefix);
+        _views_az_publication_data_add($views_config_data, $definition, $prefix);
         // As there is no mapping or sequence, this prefix is done.
         return;
       }
@@ -151,7 +150,7 @@ function _views_az_publication_process_schema(array &$az_publication_data, array
         $new_definition = $all_definitions[$key];
 
         if (is_array($new_definition)) {
-          _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
+          _views_az_publication_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, $prefix, $history);
         }
       }
     }
@@ -160,36 +159,56 @@ function _views_az_publication_process_schema(array &$az_publication_data, array
   if (isset($definition['mapping'])) {
     foreach ($definition['mapping'] as $k => $new_definition) {
       if (is_array($new_definition)) {
-        _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter$k", $history);
+        _views_az_publication_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter$k", $history);
       }
     }
   }
   elseif (isset($definition['sequence'])) {
     foreach ($definition['sequence'] as $new_definition) {
       if (is_array($new_definition)) {
-        _views_az_publication_process_schema($az_publication_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter*", $history);
+        _views_az_publication_process_schema($views_config_data, $all_definitions, $all_definitions_keys, $new_definition, "$prefix$delimiter*", $history);
       }
     }
   }
 }
 
 /**
+ * Adds a field to the Views data based on the schema definition.
+ *
+ * @param array $table_data
+ *   Views table data structure.
+ * @param array $definition
+ *   The schema definition for the field.
+ * @param string $prefix
+ *   The field prefix.
+ */
+function _views_az_publication_add_field(array &$table_data, array $definition, $prefix) {
+  // Define field based on type
+  $table_data[$prefix] = [
+    'title' => $definition['label'],
+    'help' => t('Field: @prefix', ['@prefix' => $prefix]),
+    'field' => [
+      'id' => 'standard', // Default, adjust as needed
+    ],
+  ];
+}
+
+/**
  * Adjust config data based on type.
  *
- * @param array $az_publication_data
- *   Config data structure.
+ * @param array $views_config_data
+ *   Views config data structure.
  * @param array $definition
  *   The current definition.
  * @param string $prefix
  *   A prefix.
  */
-function _views_az_publication_data_add(array &$az_publication_data, array $definition, $prefix) {
-  // Some places label makes no sense than prefix.
+function _views_az_publication_data_add(array &$views_config_data, array $definition, $prefix) {
   $title = $definition['label'];
-  if (strtolower($title) === 'text') {
+  if (strtolower($title) == 'text') {
     $title = ucfirst($prefix);
   }
-  $az_publication_data[$prefix] = [
+  $views_config_data[$prefix] = [
     'title' => $title,
     'help' => $prefix,
     'sort' => [
@@ -217,3 +236,5 @@ function _views_az_publication_data_add(array &$az_publication_data, array $defi
       break;
   }
 }
+
+

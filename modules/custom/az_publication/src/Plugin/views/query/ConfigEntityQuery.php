@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\config_views\Plugin\views\query;
+namespace Drupal\az_publication\Plugin\views\query;
 
 use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\views\Plugin\views\join\JoinPluginBase;
@@ -39,6 +39,13 @@ class ConfigEntityQuery extends Sql {
    * @var sorting
    */
   protected $sorting = [];
+
+  /**
+   * Undocumented variable.
+   *
+   * @var [type]
+   */
+  protected $groupOperator = NULL;
 
   /**
    * {@inheritdoc}
@@ -118,11 +125,11 @@ class ConfigEntityQuery extends Sql {
    *   The view which is executed.
    */
   public function execute(ViewExecutable $view) {
-    $this->group_operator = $this->group_operator ?? 'AND';
+    $this->groupOperator = $this->groupOperator ?? 'AND';
     $base_table = $this->view->storage->get('base_table');
     $data = \Drupal::service('views.views_data')->get($base_table);
     $entity_type = $data['table']['entity type'];
-    $query = \Drupal::entityQuery($entity_type, $this->group_operator);
+    $query = \Drupal::entityQuery($entity_type, $this->groupOperator);
     $this->entityConditionGroups = [
       $query,
     ];
