@@ -219,11 +219,20 @@ span.field-label {
   }
 }
 
-/* On desktop, hide the ellipsis button when it is only needed on mobile. */
+/* On desktop, hide the ellipsis item when it is only needed on mobile. */
 @media screen and (min-width: 576px) {
   .hide-pager-ellipsis-desktop {
     display: none;
   }
+}
+
+/* Match ellipsis item styling to Bootstrap .page-link styles. */
+.pager__item--ellipsis {
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
 }
 
 /**
