@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_entry_dictionary
 type: entry-dictionary
-label: Dictionary
+label: 'Dictionary Entry'
