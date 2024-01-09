@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_review_book
 type: review-book
-label: Book Review
+label: 'Book Review'
