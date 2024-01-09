@@ -6,4 +6,4 @@ dependencies:
       - az_publication
 id: az_musical_score
 type: musical_score
-label: Musical Score
+label: 'Musical Score'
