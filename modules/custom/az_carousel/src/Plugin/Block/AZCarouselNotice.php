@@ -2,7 +2,9 @@
 
 namespace Drupal\az_carousel\Plugin\Block;
 
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Block\BlockBase;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 
 /**
@@ -14,12 +16,11 @@ use Drupal\Core\Url;
  *
  * Also an addition to allow a quick link to edit carousel items, since
  * contextual links are not generated in the view. Issue currently unavailable.
- *
- * @Block(
- *  id = "az_carousel_notice",
- *  admin_label = @Translation("Quickstart Carousel Notification Block"),
- * )
  */
+#[Block(
+  id: 'az_carousel_notice',
+  admin_label: new TranslatableMarkup('Quickstart Carousel Notification Block'),
+)]
 class AZCarouselNotice extends BlockBase {
 
   /**
