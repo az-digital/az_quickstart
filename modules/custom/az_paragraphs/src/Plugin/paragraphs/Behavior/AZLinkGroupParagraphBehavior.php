@@ -3,6 +3,7 @@
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Html;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
@@ -22,6 +23,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
    */
   public function buildBehaviorForm(ParagraphInterface $paragraph, array &$form, FormStateInterface $form_state) {
     $config = $this->getSettings($paragraph);
+    $linkgroup_style_unique_id = Html::getUniqueId('');
 
     // Link Group style.
     $form['group_style'] = [
@@ -33,6 +35,9 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
         'buttons' => $this->t('Buttons'),
         'dropdown' => $this->t('Dropdown'),
         'list_group' => $this->t('List Group'),
+      ],
+      '#attributes' => [
+        'id' => $linkgroup_style_unique_id,
       ],
     ];
 
@@ -46,14 +51,10 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['dropdown_title'] ?? '',
       '#states' => [
         'visible' => [
-          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
-            ['value' => 'dropdown'],
-          ],
+          ':input[id="' . $linkgroup_style_unique_id . '"]' => ['value' => 'dropdown'],
         ],
         'required' => [
-          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
-            ['value' => 'dropdown'],
-          ],
+          ':input[id="' . $linkgroup_style_unique_id . '"]' => ['value' => 'dropdown'],
         ],
       ],
     ];
@@ -72,7 +73,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['button_color'] ?? 'btn-blue',
       '#states' => [
         'visible' => [
-          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
+          ':input[id="' . $linkgroup_style_unique_id . '"]' => [
             ['value' => 'buttons'],
             'or',
             ['value' => 'dropdown'],
@@ -93,7 +94,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['button_size'] ?? 'default',
       '#states' => [
         'visible' => [
-          ':input[name="field_az_main_content[0][behavior_plugins][az_link_group][group_style]"]' => [
+          ':input[id="' . $linkgroup_style_unique_id . '"]' => [
             ['value' => 'buttons'],
             'or',
             ['value' => 'dropdown'],
