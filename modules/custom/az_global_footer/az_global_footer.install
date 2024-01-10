@@ -150,9 +150,9 @@ function az_global_footer_update_1020801() {
   $updated_count = 0;
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
-    ->condition('menu_name', 'az-footer-resources')
-    ->condition('title', 'X')
-    ->condition('link__uri', 'https://x.com/uarizona')
+    ->condition('menu_name', 'az-footer-social-media')
+    ->condition('title', 'Twitter')
+    ->condition('link__uri', 'https://twitter.com/uarizona')
     ->execute();
 
   foreach ($menu_link_content_ids as $id) {
@@ -161,7 +161,11 @@ function az_global_footer_update_1020801() {
     if ($menu_link_content !== NULL) {
       // phpcs:disable
       /* @phpstan-ignore-next-line */
+      $menu_link_content->title = 'X, formerly Twitter';
+      /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://x.com/uarizona';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->options->attributes->class = 'az-icon-twitter az-icon-x-twitter az-icon-spacing';
       // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
