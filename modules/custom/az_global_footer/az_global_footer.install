@@ -160,27 +160,27 @@ function az_global_footer_update_1020801() {
     $menu_link_content = MenuLinkContent::load($id);
 
     if ($menu_link_content !== NULL) {
-            // phpcs:disable
-            /* @phpstan-ignore-next-line */
-            $menu_link_content->title = 'X, formerly Twitter';
-            /* @phpstan-ignore-next-line */
-            $menu_link_content->link->uri = 'https://x.com/uarizona';
+      // phpcs:disable
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->title = 'X, formerly Twitter';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://x.com/uarizona';
 
-            // Retrieve existing options
-            /* @phpstan-ignore-next-line */
-            $options = $menu_link_content->link->first()->options;
+      // Retrieve existing options
+      /* @phpstan-ignore-next-line */
+      $options = $menu_link_content->link->first()->options;
 
-            // Set new classes
-            $options['attributes']['class'] = [
-            'az-icon-x-twitter',
-            'az-icon-spacing'
-        ];
+      // Set new classes
+      $options['attributes']['class'] = [
+        'az-icon-x-twitter',
+        'az-icon-spacing'
+      ];
 
-            // Update the options
-            /* @phpstan-ignore-next-line */
-            $menu_link_content->link->first()->options = $options;
+      // Update the options
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->first()->options = $options;
 
-            // phpcs:enable
+      // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
     }
