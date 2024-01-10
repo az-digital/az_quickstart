@@ -165,7 +165,11 @@ function az_global_footer_update_1020801() {
       /* @phpstan-ignore-next-line */
       $menu_link_content->link->uri = 'https://x.com/uarizona';
       /* @phpstan-ignore-next-line */
-      $menu_link_content->link->options['attributes']['class'] = 'az-icon-twitter az-icon-x-twitter az-icon-spacing';
+      $menu_link_content->link->options['attributes']['class'] = [
+        'az-icon-twitter',
+        'az-icon-x-twitter',
+        'az-icon-spacing'
+        ];
       // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
