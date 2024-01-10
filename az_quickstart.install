@@ -187,3 +187,10 @@ function az_quickstart_update_1020801() {
 function az_quickstart_update_1020802() {
   \Drupal::service('module_installer')->install(['extlink']);
 }
+
+/**
+ * Uninstall unsupported media_library_theme_reset module.
+ */
+function az_quickstart_update_1020803() {
+  \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
+}
