@@ -257,7 +257,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
    */
   protected function diffIsEmpty(Diff $diff) {
     foreach ($diff->getEdits() as $edit) {
-      if ($edit->type != 'copy') {
+      if ($edit->type !== 'copy') {
         return FALSE;
       }
     }
