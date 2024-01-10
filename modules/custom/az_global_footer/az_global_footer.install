@@ -165,9 +165,9 @@ function az_global_footer_update_1020801() {
             $menu_link_content->title = 'X, formerly Twitter';
             /* @phpstan-ignore-next-line */
             $menu_link_content->link->uri = 'https://x.com/uarizona';
-            /* @phpstan-ignore-next-line */
 
             // Retrieve existing options
+            /* @phpstan-ignore-next-line */
             $options = $menu_link_content->link->first()->options;
 
             // Set new classes
@@ -177,6 +177,7 @@ function az_global_footer_update_1020801() {
             ];
 
             // Update the options
+            /* @phpstan-ignore-next-line */
             $menu_link_content->link->first()->options = $options;
 
             // phpcs:enable
