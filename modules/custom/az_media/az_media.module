@@ -5,18 +5,19 @@
  * Contains az_media.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\editor\Entity\Editor;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 /**
- * Implements hook_ckeditor_css_alter().
+ * Implements hook_library_info_alter().
  */
-function az_media_ckeditor_css_alter(array &$css, Editor $editor) {
-  $css[] = \Drupal::service('extension.list.module')->getPath('az_media') . '/css/az-media-edit.css';
+function az_media_library_info_alter(array &$libraries, $extension) {
+  if ($extension === 'ckeditor5' && isset($libraries['internal.drupal.ckeditor5.media'])) {
+    $libraries['internal.drupal.ckeditor5.media']['dependencies'][] = 'az_media/az_media_edit';
+  }
 }
 
 /**

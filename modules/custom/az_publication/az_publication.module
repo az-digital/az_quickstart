@@ -5,20 +5,20 @@
  * Contains az_publication.module.
  */
 
-use Drupal\Core\Datetime\Element\Datetime;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\node\Entity\NodeType;
-use Seboettg\CiteProc\CiteProc;
-use Drupal\Core\Url;
-use Drupal\Core\Link;
-use Symfony\Component\HttpFoundation\Request;
-use Drupal\node\NodeInterface;
 use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Datetime\Element\Datetime;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
 use Drupal\views\Plugin\Block\ViewsBlock;
+use Seboettg\CiteProc\CiteProc;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -253,7 +253,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
               }
               $link = Link::fromTextAndUrl($title, $url);
               $buildLink = $link->toRenderable();
-              $buildLink['#attributes']['class'] = ['text-decoration-none'];
               $additionalLinks[] = \Drupal::service('renderer')->render($buildLink);
             }
           }
@@ -274,7 +273,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             }
             $link = Link::fromTextAndUrl($renderedText, $url);
             $buildLink = $link->toRenderable();
-            $buildLink['#attributes']['class'] = ['text-decoration-none'];
             $renderedText = \Drupal::service('renderer')->render($buildLink);
             // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
             $renderedText = str_replace('"', '', $renderedText);

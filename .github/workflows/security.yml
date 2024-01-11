@@ -3,6 +3,8 @@ on:
   push:
     schedule:
       - cron:  '0 13 * * *'
+    tags-ignore:
+      - '*'
 jobs:
   dependency-audit:
     name: Dependency Check
@@ -13,7 +15,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
       - name: Set variables
         run: |
           export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
@@ -55,7 +57,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
       - name: Set variables
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Install dependencies

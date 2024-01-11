@@ -9,7 +9,7 @@ field_name: field_az_featured_image_as_thumb
 entity_type: node
 bundle: az_news
 label: 'Use Featured Image as Thumbnail'
-description: 'Sets the thumbnail image to be the same as the featured Photo'
+description: 'Sets the <em>summary</em> thumbnail image to be the same as the featured image. This is the default behavior.'
 required: false
 translatable: false
 default_value:

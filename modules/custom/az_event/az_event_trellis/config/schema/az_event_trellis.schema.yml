@@ -1,0 +1,13 @@
+views.filter_value.az_event_trellis_views_date_filter:
+  type: views_filter
+  label: 'Trellis filter'
+  mapping:
+    value:
+      type: string
+      label: 'Value'
+    begin:
+      type: string
+      label: 'Custom Date Range Begin'
+    end:
+      type: string
+      label: 'Custom Date Range End'
