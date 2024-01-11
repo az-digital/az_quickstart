@@ -8,3 +8,4 @@ dependencies:
   - migrate:migrate
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
+configure: az-enterprise-attributes-import.settings
