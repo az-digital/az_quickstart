@@ -59,7 +59,7 @@
         {% set hide_ellipsis_class = '' %}
       {% else %}
         {% if current >= mobile_total_page_numbers_to_show %}
-          {% set hide_ellipsis_class = ' hide-pager-ellipsis-desktop' %}
+          {% set hide_ellipsis_class = ' d-sm-none' %}
         {% else %}
           {% set hide_ellipsis_class = ' d-none' %}
         {% endif %}
@@ -93,7 +93,7 @@
         {% set hide_ellipsis_class = '' %}
       {% else %}
         {% if items.pages|keys|last - current > mobile_page_numbers_each_side_of_current %}
-          {% set hide_ellipsis_class = ' hide-pager-ellipsis-desktop' %}
+          {% set hide_ellipsis_class = ' d-sm-none' %}
         {% else %}
           {% set hide_ellipsis_class = ' d-none' %}
         {% endif %}
