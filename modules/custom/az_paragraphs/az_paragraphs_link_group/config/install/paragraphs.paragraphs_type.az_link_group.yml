@@ -9,7 +9,5 @@ icon_uuid: null
 icon_default: null
 description: 'Provides structured content for a group of links, which come with a handful of style options.'
 behavior_plugins:
-  az_default_paragraph_behavior:
-    enabled: true
   az_link_group:
     enabled: true
