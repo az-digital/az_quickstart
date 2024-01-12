@@ -192,7 +192,7 @@
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch"
             },
             "drupal/quick_node_clone": {
-                "Use a custom node access operation to allow implementations of hook_node_access() to define custom access rules (3342710)": "https://www.drupal.org/files/issues/2023-02-17/3342710-2.patch"
+                "Use a custom node access operation to allow implementations of hook_node_access() to define custom access rules (3342710)": "https://www.drupal.org/files/issues/2024-01-12/3342710-5.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
