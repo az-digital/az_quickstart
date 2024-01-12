@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.25",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.11",
-        "citation-style-language/styles": "0.0.325",
+        "citation-style-language/styles": "0.0.343",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
@@ -42,7 +42,7 @@
         "drupal/auto_entitylabel": "3.0.0",
         "drupal/background_image_formatter": "*",
         "drupal/better_exposed_filters": "6.0.3",
-        "drupal/blazy": "2.21.0",
+        "drupal/blazy": "2.22.0",
         "drupal/block_class": "2.0.11",
         "drupal/block_content_permissions": "1.11.0",
         "drupal/block_field": "1.0.0-rc4",
@@ -58,10 +58,10 @@
         "drupal/config_snapshot": "2.0.0-alpha1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.1.7",
+        "drupal/core-recommended": "10.2.1",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.14.0",
-        "drupal/date_ap_style": "1.7.0",
+        "drupal/date_ap_style": "2.0.0",
         "drupal/draggableviews": "2.1.3",
         "drupal/easy_breadcrumb": "2.0.5",
         "drupal/embed": "1.7.0",
@@ -77,7 +77,7 @@
         "drupal/google_tag": "2.0.2",
         "drupal/honeypot": "2.1.3",
         "drupal/image_widget_crop": "2.4.0",
-        "drupal/inline_entity_form": "3.0.0-rc15",
+        "drupal/inline_entity_form": "3.0.0-rc19",
         "drupal/intelligencebank": "4.0.0",
         "drupal/jquery_ui": "1.6.0",
         "drupal/jquery_ui_datepicker": "2.0.0",
@@ -112,7 +112,7 @@
         "drupal/views_bootstrap": "5.4.0",
         "drupal/views_remote_data": "1.0.2",
         "drupal/viewsreference": "2.0.0-beta7",
-        "drupal/webform": "6.2.0",
+        "drupal/webform": "6.2.2",
         "drupal/workbench_access": "2.0.1",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
@@ -129,7 +129,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.9.x-dev"
+            "dev-main": "2.10.x-dev"
         },
         "patches": {
             "drupal/antibot": {
@@ -160,7 +160,7 @@
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "https://www.drupal.org/files/issues/2022-05-05/2259567-160-9-3-x.patch",
+                "Support SVG files for theme logo setting (2259567)": "https://www.drupal.org/files/issues/2023-12-01/2259567-179.patch",
                 "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2023-07-11/1461322-10-1-x-41.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2020-11-03/2552541-43.patch",
@@ -169,7 +169,8 @@
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
-                "Loadjs css file load issue (Quickstart Issue 2772)": "https://gist.githubusercontent.com/tadean/163159a15080a6a7714ed13459393f80/raw/a1cebecc335a0a058141356b69857094b32af1e3/loadjs_2772.patch"
+                "Loadjs css file load issue (Quickstart Issue 2772)": "https://gist.githubusercontent.com/tadean/163159a15080a6a7714ed13459393f80/raw/a1cebecc335a0a058141356b69857094b32af1e3/loadjs_2772.patch",
+                "Media Type links in Media Library modal missing vertical tabs styling in Claro (3404866)": "https://www.drupal.org/files/issues/2024-01-04/missing_variables_in_claro-3404866-41.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
