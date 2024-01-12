@@ -39,12 +39,12 @@ settings:
       - az_embed_content
       - az_embed_content_block
       - '|'
-      - sourceEditing
-      - showBlocks
-      - removeFormat
-      - '|'
       - code
       - codeBlock
+      - '|'
+      - showBlocks
+      - sourceEditing
+      - removeFormat
   plugins:
     ckeditor5_alignment:
       enabled_alignments:
