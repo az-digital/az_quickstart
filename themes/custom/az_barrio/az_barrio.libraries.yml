@@ -5,6 +5,9 @@ global-styling:
       css/style.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap
+az-ajax:
+  js:
+    js/az-ajax.js: {}
 az-media-display:
   css:
     component:

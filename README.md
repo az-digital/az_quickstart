@@ -59,7 +59,7 @@ emphasized or checked are:
   * Re-check that the required PHP extensions are added: on a recent system the usual packaging mechanism should suffice to add them (such as apt on Debian or Ubuntu versions of Linux).
   * Check that the Apache configuration enables `mod_rewrite`, and the module letting it work with PHP.
   * Check the user and group of the running web server: in many Debian-derived Linux systems these will be `www-data`, but not on all (this information is needed for setting file and directory permissions later).
-  * Install and configure the software as a normal (non-root) user with the ability to `sudo` when elevated privileges areneeded; add this user to the same group that the web server uses (so you would see something like `www-data:x:33:normaluser` in the /etc/group file).
+  * Install and configure the software as a normal (non-root) user with the ability to `sudo` when elevated privileges are needed; add this user to the same group that the web server uses (so you would see something like `www-data:x:33:normaluser` in the /etc/group file).
   * A recent version of Composer is a necessity, not an option — remove any previously installed but stale versions, and follow the [https://getcomposer.org/download/](https://getcomposer.org/download/) instructions to install it, or if upgrading is possible, try the command `sudo -H composer self-update --2` 
 
 ### Web Server Configuration
