@@ -169,7 +169,8 @@
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
-                "Loadjs css file load issue (Quickstart Issue 2772)": "https://gist.githubusercontent.com/tadean/163159a15080a6a7714ed13459393f80/raw/a1cebecc335a0a058141356b69857094b32af1e3/loadjs_2772.patch"
+                "Loadjs css file load issue (Quickstart Issue 2772)": "https://gist.githubusercontent.com/tadean/163159a15080a6a7714ed13459393f80/raw/a1cebecc335a0a058141356b69857094b32af1e3/loadjs_2772.patch",
+                "Continuation Add Views EntityReference filter to be available for all entity reference fields": "https://www.drupal.org/files/issues/2023-09-12/3347343-92--MR-4053-1bc7bda7.diff"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
@@ -209,7 +210,7 @@
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch"
             },
             "drupal/xmlsitemap": {
-                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch"
+                "Module incorrectly assumes string,triggering PHP 8 fatal error (3355204)": "https://www.drupal.org/files/issues/2023-04-19/3355204_metatag_2.patch"
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"

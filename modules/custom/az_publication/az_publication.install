@@ -5,7 +5,6 @@
  * Install, update and uninstall functions for az_publication module.
  */
 
-use Drupal\node\Entity\Node;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Utility\UpdateException;
 
@@ -83,82 +82,4 @@ function az_publication_update_1020702() {
     $db->schema()->changeField($table_name, $field_name, $field_name, $table_schema['fields'][$field_name]);
   }
 
-}
-
-/**
- * Batch operation for updating az_publication nodes.
- */
-function az_publication_update_az_publication_nodes($node_id, &$context) {
-  $node = Node::load($node_id);
-
-  if ($node && $node->getType() === 'az_publication') {
-    // Get the entity field manager service.
-    $entity_field_manager = \Drupal::service('entity_field.manager');
-
-    // Check if the fields exist and are correctly configured.
-    $fields = $entity_field_manager->getFieldDefinitions('node', 'az_publication');
-    if (isset($fields['field_az_publication_type']) && isset($fields['field_az_publication_mapped_type'])) {
-      // Get the old value.
-      $old_value = $node->get('field_az_publication_type')->value;
-
-      // Map the old value to an entity ID.
-      $new_entity_id = az_publication_map_old_value_to_entity_id($old_value);
-
-      if ($new_entity_id) {
-        // Update the new field with the entity reference.
-        $node->set('field_az_publication_mapped_type', ['target_id' => $new_entity_id]);
-        $node->save();
-
-        $context['message'] = t('Updated node @node_id', ['@node_id' => $node_id]);
-      }
-    }
-  }
-}
-
-/**
- * Implements hook_update_N().
- */
-function az_publication_update_1020703(&$sandbox) {
-  if (!isset($sandbox['progress'])) {
-    // Initialize batch.
-    $sandbox['progress'] = 0;
-    $sandbox['max'] = \Drupal::database()->query("SELECT COUNT(*) FROM {node}")->fetchField();
-  }
-
-  // Define batch size.
-  $limit = 50;
-
-  // Fetch a batch of entity IDs.
-  $entity_ids = \Drupal::database()->queryRange("SELECT entity_id FROM {node}", $sandbox['progress'], $limit)->fetchCol();
-
-  // Define the batch.
-  $batch = [
-    'title' => t('Updating data...'),
-    'operations' => [],
-    'finished' => 'az_publication_batch_finished',
-  ];
-
-  foreach ($entity_ids as $entity_id) {
-    $batch['operations'][] = ['az_publication_batch_operation', [$entity_id]];
-  }
-
-  batch_set($batch);
-
-  // Update progress.
-  $sandbox['progress'] += count($entity_ids);
-  if ($sandbox['progress'] >= $sandbox['max']) {
-    $sandbox['#finished'] = 1;
-  }
-}
-
-/**
- * Batch finished callback.
- */
-function az_publication_batch_finished($success, $results, $operations) {
-  if ($success) {
-    \Drupal::messenger()->addMessage(t('All data has been processed.'));
-  }
-  else {
-    \Drupal::messenger()->addMessage(t('Finished with an error.'));
-  }
 }
