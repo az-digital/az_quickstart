@@ -23,10 +23,10 @@ settings:
       - '|'
       - heading
       - '|'
-      - sourceEditing
-      - '|'
       - code
       - codeBlock
+      - '|'
+      - sourceEditing
   plugins:
     ckeditor5_codeBlock:
       languages:
