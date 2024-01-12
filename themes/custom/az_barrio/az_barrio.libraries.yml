@@ -18,9 +18,6 @@ az-barrio-off-canvas-nav:
       css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
-az-ajax:
-  js:
-    js/az-ajax.js: {}
 az-proxima-nova:
   css:
     theme:
