@@ -57,31 +57,6 @@ process:
   type:
     plugin: default_value
     default_value: az_publication
-  field_az_publication_type:
-    - plugin: static_map
-      source: _type
-      map:
-        article: article-journal
-        book: book
-        booklet: pamphlet
-        collection: collection
-        conference: paper-conference
-        inbook: book
-        incollection: entry
-        inproceedings: paper-conference
-        manual: pamphlet
-        mastersthesis: thesis
-        misc: post
-        online: webpage
-        patent: patent
-        periodical: periodical
-        phdthesis: thesis
-        proceedings: paper-conference
-        report: report
-        techreport: report
-        thesis: thesis
-        unpublished: manuscript
-      default_value: article-journal
   'field_az_publication_mapped_type/0/target_id':
     - plugin: static_map
       source: _type
