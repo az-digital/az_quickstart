@@ -99,8 +99,8 @@
           <a href="{{ item.url }}" {{ link_attributes.addClass(link_classes) }}>{{ item.title }}</a>
         {% endif %}
       {% endfor %}
-      {% if link_group.group_style != 'buttons' %}
-        {# Close surrounding divs if dropdown or list-group #}
+      {% if link_group.group_style == 'dropdown' %}
+        {# Close surrounding div if dropdown #}
         </div>
       {% endif %}
     {% endblock %}
