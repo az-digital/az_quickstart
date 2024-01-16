@@ -57,31 +57,31 @@ process:
   type:
     plugin: default_value
     default_value: az_publication
-  'field_az_publication_mapped_type/0/target_id':
-    - plugin: static_map
-      source: _type
-      map:
-        article: az_article_journal
-        book: az_book
-        booklet: az_pamphlet
-        collection: az_collection
-        conference: az_paper_conference
-        inbook: az_book
-        incollection: az_entry
-        inproceedings: az_paper_conference
-        manual: az_pamphlet
-        mastersthesis: az_thesis
-        misc: az_post
-        online: az_webpage
-        patent: az_patent
-        periodical: az_periodical
-        phdthesis: az_thesis
-        proceedings: az_paper_conference
-        report: az_report
-        techreport: az_report
-        thesis: az_thesis
-        unpublished: az_manuscript
-      default_value: az_article_journal
+  field_az_publication_mapped_type/0/target_id:
+  - plugin: static_map
+    source: _type
+    map:
+      article: az_article_journal
+      book: az_book
+      booklet: az_pamphlet
+      collection: az_collection
+      conference: az_paper_conference
+      inbook: az_book
+      incollection: az_entry
+      inproceedings: az_paper_conference
+      manual: az_pamphlet
+      mastersthesis: az_thesis
+      misc: az_post
+      online: az_webpage
+      patent: az_patent
+      periodical: az_periodical
+      phdthesis: az_thesis
+      proceedings: az_paper_conference
+      report: az_report
+      techreport: az_report
+      thesis: az_thesis
+      unpublished: az_manuscript
+    default_value: az_article_journal
   title: title
   field_az_publication_date_type: datetype
   field_az_publication_date:
@@ -91,11 +91,11 @@ process:
     from_timezone: UTC
     source: date
   field_az_publication_container:
-    - plugin: null_coalesce
-      source:
-        - booktitle
-        - journaltitle
-        - journal
+    plugin: null_coalesce
+    source:
+      - booktitle
+      - journaltitle
+      - journal
   field_az_publication_abstract/value:
     plugin: null_coalesce
     source:
@@ -145,7 +145,7 @@ process:
           field_az_author_lname: last
           field_az_author_suffix: jr
 destination:
-  plugin: 'entity:node'
+  plugin: entity:node
   bundle: az_publication
 dependencies:
   enforced:
