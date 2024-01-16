@@ -7,9 +7,9 @@
 
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Render\Markup;
 use Drupal\Core\Utility\UpdateException;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Render\Markup;
 
 /**
  * Install the new az_curated_views module (now required by az_publication).
@@ -229,7 +229,8 @@ function az_publication_batch_finished($success, $results, $operations) {
       '#theme' => 'item_list',
       '#items' => $items,
     ]);
-  } else {
+  }
+  else {
     // An error occurred.
     // $operations contains the operations that remained unprocessed.
     $error_operation = reset($operations);
