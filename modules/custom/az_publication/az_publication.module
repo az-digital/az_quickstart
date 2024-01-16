@@ -24,34 +24,35 @@ use Symfony\Component\HttpFoundation\Request;
  * Implements hook_form_FORM_ID_alter().
  */
 function az_publication_form_view_add_form_alter(&$form, FormStateInterface $form_state) {
-    $options = [];
-    foreach ($form['displays']['show']['wizard_key']['#options'] as $key => $option) {
-        $group = (strpos($key, 'standard:') === 0 || strpos($key, 'az_publication') === 0) ? 'Configuration' : 'Content';
-        $options[$group][$key] = $option;
-    }
+  $options = [];
+  foreach ($form['displays']['show']['wizard_key']['#options'] as $key => $option) {
+    $group = (strpos($key, 'standard:') === 0 || strpos($key, 'az_publication') === 0) ? 'Configuration' : 'Content';
+    $options[$group][$key] = $option;
+  }
 
-    // Refactored sorting logic
-    az_publication_sort_options_by_render($options, 'Content');
-    az_publication_sort_options_by_render($options, 'Configuration');
+  // Refactored sorting logic.
+  az_publication_sort_options_by_render($options, 'Content');
+  az_publication_sort_options_by_render($options, 'Configuration');
 
-    $form['displays']['show']['wizard_key']['#options'] = $options;
+  $form['displays']['show']['wizard_key']['#options'] = $options;
 }
 
 /**
  * Sorts options by render method.
  */
 function az_publication_sort_options_by_render(array &$options, $key) {
-    if (isset($options[$key]) && is_array($options[$key])) {
-        uasort($options[$key], ' az_publication_compare_render');
-    }
+  if (isset($options[$key]) && is_array($options[$key])) {
+    uasort($options[$key], ' az_publication_compare_render');
+  }
 }
 
 /**
  * Comparison function for uasort.
  */
 function az_publication_compare_render($a, $b) {
-    return $a->render() <=> $b->render();
+  return $a->render() <=> $b->render();
 }
+
 /**
  * Implements hook_entity_extra_field_info().
  */
