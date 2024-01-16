@@ -142,10 +142,7 @@ function az_publication_theme() {
  * Implements hook_ENTITY_TYPE_view().
  */
 function az_publication_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-
-  // Only if fields suggest a publication.
   if ($entity instanceof NodeInterface) {
-    // Additional checks for specific fields and display components.
     if ($display->getComponent('az_publication_bibliography') && $entity->hasField('field_az_publication_mapped_type')) {
 
       // Publication fields to CSL schema mappings.
@@ -169,18 +166,25 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         'field_az_author_suffix' => 'suffix',
         'field_az_author_literal' => 'literal',
       ];
+      $default_config = \Drupal::config('az_publication.settings');
+      $style_context = $default_config->get('default_citation_style');
+
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
-      $az_publication_mapped_type_id = $entity->field_az_publication_mapped_type->target_id;
-      $az_publication_mapped_type = \Drupal::entityTypeManager()->getStorage('az_publication_type')->load($az_publication_mapped_type_id);
-      // Check if the entity has a 'getType' method.
-      if (method_exists($az_publication_mapped_type, 'getType')) {
-        $blob->type = $az_publication_mapped_type->getType();
-      } else {
-        $blob->type = 'article';
-      }
+      $az_publication_mapped_type_field = $entity->get('field_az_publication_mapped_type');
+      if (!$az_publication_mapped_type_field->isEmpty()) {
+        $az_publication_mapped_type_id = $az_publication_mapped_type_field->target_id;
+        $az_publication_mapped_type = \Drupal::entityTypeManager()->getStorage('az_publication_type')->load($az_publication_mapped_type_id);
 
+        // Check if the entity has a 'getType' method.
+        if (method_exists($az_publication_mapped_type, 'getType')) {
+          $blob->type = $az_publication_mapped_type->getType();
+        }
+        else {
+          $blob->type = $style_context;
+        }
+      }
       // Load default citation settings.
       $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
       $repository = \Drupal::service('entity.repository');
