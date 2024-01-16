@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication\Controller;
 
-use Drupal\Core\Controller\ControllerBase;
+use Drupal\az_publication\Entity\AZPublicationType;
 use Drupal\Core\Ajax\AjaxResponse;
 use Drupal\Core\Ajax\ReplaceCommand;
-use Drupal\az_publication\Entity\AZPublicationType;
+use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

@@ -11,12 +11,11 @@ field_name: field_az_publication_type
 entity_type: node
 bundle: az_publication
 label: 'Publication Type'
-description: ''
+description: 'This field was replaced by the field_az_publication_mapped_type field and can be safely deleted if az_publications update 1020902 finished without errors.'
 required: false
 translatable: true
 default_value:
-  -
-    value: article-journal
+  - value: article-journal
 default_value_callback: ''
 settings: {  }
 field_type: list_string

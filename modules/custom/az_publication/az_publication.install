@@ -5,10 +5,10 @@
  * Install, update and uninstall functions for az_publication module.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Utility\UpdateException;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Config\FileStorage;
 
 /**
  * Install the new az_curated_views module (now required by az_publication).
@@ -86,7 +86,6 @@ function az_publication_update_1020702() {
 
 }
 
-
 /**
  * Adds field_az_publication_mapped_type field.
  */
@@ -128,55 +127,56 @@ function az_publication_update_1020902(&$sandbox) {
 
   // Define the mapping from old field values to new config entity IDs.
   $mapping = [
-      'article' => 'az_article',
-      'article-journal' => 'az_article_journal',
-      'article-magazine' => 'az_article_magazine',
-      'article-newspaper' => 'az_article_newspaper',
-      'bill' => 'az_bill',
-      'book' => 'az_book',
-      'broadcast' => 'az_broadcast',
-      'chapter' => 'az_chapter',
-      'classic' => 'az_classic',
-      'collection' => 'az_collection',
-      'dataset' => 'az_dataset',
-      'document' => 'az_document',
-      'entry' => 'az_entry',
-      'entry-dictionary' => 'az_entry_dictionary',
-      'entry-encyclopedia' => 'az_entry_encyclopedia',
-      'event' => 'az_event',
-      'figure' => 'az_figure',
-      'graphic' => 'az_graphic',
-      'hearing' => 'az_hearing',
-      'interview' => 'az_interview',
-      'legal_case' => 'az_legal_case',
-      'legislation' => 'az_legislation',
-      'manuscript' => 'az_manuscript',
-      'map' => 'az_map',
-      'motion_picture' => 'az_motion_picture',
-      'musical_score' => 'az_musical_score',
-      'pamphlet' => 'az_pamphlet',
-      'paper-conference' => 'az_paper_conference',
-      'patent' => 'az_patent',
-      'performance' => 'az_performance',
-      'periodical' => 'az_periodical',
-      'personal_communication' => 'az_personal_communication',
-      'post' => 'az_post',
-      'post-weblog' => 'az_post_weblog',
-      'regulation' => 'az_regulation',
-      'report' => 'az_report',
-      'review' => 'az_review',
-      'review-book' => 'az_review_book',
-      'software' => 'az_software',
-      'song' => 'az_song',
-      'speech' => 'az_speech',
-      'standard' => 'az_standard',
-      'thesis' => 'az_thesis',
-      'treaty' => 'az_treaty',
-      'webpage' => 'az_webpage',
+    'article' => 'az_article',
+    'article-journal' => 'az_article_journal',
+    'article-magazine' => 'az_article_magazine',
+    'article-newspaper' => 'az_article_newspaper',
+    'bill' => 'az_bill',
+    'book' => 'az_book',
+    'broadcast' => 'az_broadcast',
+    'chapter' => 'az_chapter',
+    'classic' => 'az_classic',
+    'collection' => 'az_collection',
+    'dataset' => 'az_dataset',
+    'document' => 'az_document',
+    'entry' => 'az_entry',
+    'entry-dictionary' => 'az_entry_dictionary',
+    'entry-encyclopedia' => 'az_entry_encyclopedia',
+    'event' => 'az_event',
+    'figure' => 'az_figure',
+    'graphic' => 'az_graphic',
+    'hearing' => 'az_hearing',
+    'interview' => 'az_interview',
+    'legal_case' => 'az_legal_case',
+    'legislation' => 'az_legislation',
+    'manuscript' => 'az_manuscript',
+    'map' => 'az_map',
+    'motion_picture' => 'az_motion_picture',
+    'musical_score' => 'az_musical_score',
+    'pamphlet' => 'az_pamphlet',
+    'paper-conference' => 'az_paper_conference',
+    'patent' => 'az_patent',
+    'performance' => 'az_performance',
+    'periodical' => 'az_periodical',
+    'personal_communication' => 'az_personal_communication',
+    'post' => 'az_post',
+    'post-weblog' => 'az_post_weblog',
+    'regulation' => 'az_regulation',
+    'report' => 'az_report',
+    'review' => 'az_review',
+    'review-book' => 'az_review_book',
+    'software' => 'az_software',
+    'song' => 'az_song',
+    'speech' => 'az_speech',
+    'standard' => 'az_standard',
+    'thesis' => 'az_thesis',
+    'treaty' => 'az_treaty',
+    'webpage' => 'az_webpage',
   ];
 
   // Process nodes in batches.
-  $limit = 50; // Number of nodes to process per batch.
+  // Number of nodes to process per batch.
+  $limit = 50;
   $nids_slice = array_slice($sandbox['nids'], $sandbox['progress'], $limit);
   $nodes = Node::loadMultiple($nids_slice);
 
@@ -206,7 +206,7 @@ function az_publication_batch_info() {
   return [
     'title' => t('Updating AZ Publication Nodes...'),
     'operations' => [
-      ['az_publication_update_1020902', []]
+      ['az_publication_update_1020902', []],
     ],
     'finished' => 'az_publication_batch_finished',
   ];
@@ -217,14 +217,14 @@ function az_publication_batch_info() {
  */
 function az_publication_batch_finished($success, $results, $operations) {
   if ($success) {
-    $message = t('@count items successfully processed:', array('@count' => count($results)));
-    $message .= theme('item_list', array('items' => $results));
+    $message = t('@count items successfully processed:', ['@count' => count($results)]);
+    $message .= theme('item_list', ['items' => $results]);
   }
   else {
     // An error occurred.
     // $operations contains the operations that remained unprocessed.
     $error_operation = reset($operations);
-    $message = t('An error occurred while processing %error_operation with arguments: @arguments', array('%error_operation' => $error_operation[0], '@arguments' => print_r($error_operation[1], TRUE)));
+    $message = t('An error occurred while processing %error_operation with arguments: @arguments', ['%error_operation' => $error_operation[0], '@arguments' => print_r($error_operation[1], TRUE)]);
   }
   drupal_set_message($message);
 }
