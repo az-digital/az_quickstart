@@ -260,6 +260,21 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $date->{'date-parts'}[] = explode('-', $entity->field_az_accessed_date->value);
           $blob->accessed = $date;
         }
+        // By default, provide a link to the node page if nothing else applies.
+        try {
+          // Canonical full node should not link to itself.
+          if ($view_mode !== 'full') {
+            $has_cover = !empty($entity->field_az_publication_image->target_id);
+            $has_abstract = !empty($entity->field_az_publication_abstract->value);
+            $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
+            // Linking to full node if there is an abstract or cover page.
+            if ($has_cover || $has_abstract) {
+              $blob->itemlink = $url->toString();
+            }
+          }
+        }
+        catch (Exception $e) {
+        }
         // Handle link field if available.
         if (!empty($entity->field_az_publication_link->uri)) {
           $blob->itemlink = $entity->field_az_publication_link->uri;
@@ -291,7 +306,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
               }
               $link = Link::fromTextAndUrl($title, $url);
               $buildLink = $link->toRenderable();
-              $buildLink['#attributes']['class'] = ['text-decoration-none'];
               $additionalLinks[] = \Drupal::service('renderer')->render($buildLink);
             }
           }
@@ -312,7 +326,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             }
             $link = Link::fromTextAndUrl($renderedText, $url);
             $buildLink = $link->toRenderable();
-            $buildLink['#attributes']['class'] = ['text-decoration-none'];
             $renderedText = \Drupal::service('renderer')->render($buildLink);
             // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
             $renderedText = str_replace('"', '', $renderedText);
