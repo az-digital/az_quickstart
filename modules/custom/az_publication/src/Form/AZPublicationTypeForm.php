@@ -91,7 +91,7 @@ class AZPublicationTypeForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    /** @var AZPublicationType $az_publication_type */
+    /** @var \Drupal\az_publication\Entity\AZPublicationType $az_publication_type */
     $az_publication_type = $this->entity;
     // Ensure the entity is of the correct type.
     if (!$az_publication_type instanceof AZPublicationType) {
