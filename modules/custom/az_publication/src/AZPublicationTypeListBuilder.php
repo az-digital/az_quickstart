@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication;
 
+use Drupal\az_publication\Entity\AZPublicationType;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
@@ -62,12 +63,15 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
       'enabled' => [],
       'disabled' => [],
     ];
+
     foreach (parent::load() as $entity) {
-      if ($entity->status()) {
-        $entities['enabled'][] = $entity;
-      }
-      else {
-        $entities['disabled'][] = $entity;
+      if ($entity instanceof AZPublicationType) {
+        if ($entity->status()) {
+          $entities['enabled'][] = $entity;
+        }
+        else {
+          $entities['disabled'][] = $entity;
+        }
       }
     }
     return $entities;
@@ -77,6 +81,9 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
+    if (!$entity instanceof AZPublicationType) {
+      return [];
+    }
     $row = parent::buildRow($entity);
     return [
       'data' => [
