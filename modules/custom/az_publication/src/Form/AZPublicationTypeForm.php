@@ -91,6 +91,11 @@ class AZPublicationTypeForm extends EntityForm {
    */
   public function save(array $form, FormStateInterface $form_state) {
     $az_publication_type = $this->entity;
+    // Ensure the entity is of the correct type.
+    if (!$az_publication_type instanceof AZPublicationType) {
+      // Handle the case where $az_publication_type is not the expected type.
+      throw new \UnexpectedValueException("Unexpected entity type.");
+    }
     // Retrieve and set the 'type' data.
     $type = $form_state->getValue('type');
     $az_publication_type->setType($type);
