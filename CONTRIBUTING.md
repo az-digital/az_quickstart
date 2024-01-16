@@ -1,4 +1,4 @@
-# How to contribute
+# How to contribute to this
 
 First off, thanks for taking the time to contribute to AZ Quickstart!
 
