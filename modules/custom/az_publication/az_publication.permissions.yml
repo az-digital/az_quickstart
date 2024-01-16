@@ -43,11 +43,11 @@ delete publication type entities:
 edit publication type entities:
   title: 'Edit Publication Type entities'
 
-view published publication type entities:
-  title: 'View published Publication Type entities'
+view enabled publication type entities:
+  title: 'View enabled Publication Type entities'
 
-view unpublished publication type entities:
-  title: 'View unpublished Publication Type entities'
+view disabled publication type entities:
+  title: 'View disabled Publication Type entities'
 
 view all publication type revisions:
   title: 'View all Publication Type revisions'
