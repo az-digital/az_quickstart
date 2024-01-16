@@ -51,7 +51,7 @@
         "drupal/cas": "2.2.0",
         "drupal/chosen": "4.0.0",
         "drupal/ckeditor": "*",
-        "drupal/ckeditor_bs_grid": "2.0.10",
+        "drupal/ckeditor_bs_grid": "2.0.11",
         "drupal/coffee": "1.3.0",
         "drupal/config_distro": "2.0.0-alpha2",
         "drupal/config_provider": "3.0.0-alpha1",
