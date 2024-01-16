@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication\Form;
 
+use Drupal\az_publication\Entity\AZPublicationType;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -90,6 +91,7 @@ class AZPublicationTypeForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
+    /** @var AZPublicationType $az_publication_type */
     $az_publication_type = $this->entity;
     // Ensure the entity is of the correct type.
     if (!$az_publication_type instanceof AZPublicationType) {
