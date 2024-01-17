@@ -182,8 +182,6 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $form['group_configuration_hidden']['#value'] = $new_endpoint_url;
     // Update the markup field's display.
     $form['group_configuration']['link'] = $link_render_array;
-
-    // $form['group_configuration']['#markup'] = '<div id="endpoint-wrapper">' . $this->t("Fetching news from: ") .  $new_endpoint_url . '</div>';
     return [
       $form['group_configuration_hidden'],
       $form['group_configuration'],
