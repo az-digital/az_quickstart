@@ -56,3 +56,5 @@ ckeditor5-stylesheets:
 libraries-extend:
   system/base:
     - az_barrio/az-media-display
+  core/drupal.ajax:
+    - az_barrio/az-ajax
