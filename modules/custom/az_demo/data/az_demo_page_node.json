@@ -190,6 +190,16 @@
       "az_main_content" : "18|3|2|20",
       "az_media_image" : "",
       "az_summary" : "This is a page with text and text with background elements."
+    },
+    {
+      "id":20,
+      "title" : "Combo Page Without Sidebar",
+      "path" : "/pages/combo-page-no-sidebar",
+      "exclude_title" : true,
+      "az_page_category" : "Text",
+      "az_main_content" : "18|3|2|20",
+      "az_media_image" : "",
+      "az_summary" : "This is a page with text and text with background elements."
     }
   ]
 }

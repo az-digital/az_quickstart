@@ -340,6 +340,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "14"
+    },
+    {
+      "link_id": "32",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Combo Page Without Sidebar",
+      "urlpath": "/pages/combo-page-no-sidebar",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "15"
     }
   ]
 }
