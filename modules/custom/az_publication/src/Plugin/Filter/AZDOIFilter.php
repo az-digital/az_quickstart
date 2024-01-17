@@ -56,7 +56,7 @@ class AZDOIFilter extends FilterBase {
 
             // If there is a match, inject a link into this chunk.
             // Match DOI identifiers.
-            $pattern = "/(10\.\d{4,9}\/[-._;()\/:A-Z0-9]*[-_;()\/:A-Z0-9]+)/i";
+            $pattern = "/(doi:\s*)?(10\.\d{4,9}\/[-._;()\/:A-Z0-9]*[-_;()\/:A-Z0-9]+)/i";
             $chunks[$i] = preg_replace_callback($pattern, [static::class, 'filterDoi'], $chunks[$i]);
           }
 
@@ -109,9 +109,10 @@ class AZDOIFilter extends FilterBase {
    */
   public static function filterDoi($match) {
     // The $i:th parenthesis in the regexp contains the URL.
-    $i = 1;
+    $i = 2;
+    $full = 0;
     $match[$i] = Html::decodeEntities($match[$i]);
-    $caption = Html::escape($match[$i]);
+    $caption = Html::escape($match[$full]);
     $match[$i] = Html::escape($match[$i]);
     return '<a href="https://doi.org/' . $match[$i] . '">' . $caption . '</a>';
   }
