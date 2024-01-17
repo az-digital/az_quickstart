@@ -57,10 +57,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
-    return [
-      'migrate_plus.migration_group.az_news_feeds',
-      'az_news_feeds.settings',
-    ];
+    return [];
   }
 
   /**
@@ -96,9 +93,6 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $az_news_feeds_config = $this->config('az_news_feeds.settings');
-    $selected_categories = $az_news_feeds_config->get('uarizona_news_terms');
-    $selected_categories = array_keys($selected_categories);
     $term_options = $this->getRemoteTermOptions();
     $form['links'] = [
       '#type' => 'item',
@@ -122,47 +116,79 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#type' => 'value',
       '#value' => $term_options,
     ];
+
+    $form['group_configuration_hidden'] = [
+      '#type' => 'hidden',
+      '#config_target' => 'migrate_plus.migration_group.az_news_feeds:shared_configuration.source.urls',
+    ];
+
+    $group_config = $this->config('migrate_plus.migration_group.az_news_feeds');
+    $default_url = $group_config->get('shared_configuration.source.urls');
+    $url = Url::fromUri($default_url);
+
+    $link_render_array = [
+      '#type' => 'link',
+      '#title' => $this->t($url->toString()),
+      '#url' => $url,
+    ];
+
+    $form['group_configuration'] = [
+      '#type' => 'container',
+      '#attributes' => ['id' => ['endpoint-wrapper']],
+      'text' => [
+        '#markup' => $this->t('Fetching news from: '),
+      ],
+      'link' => $link_render_array,
+    ];
     $form['uarizona_news_terms'] = [
       '#title' => t('News Categories'),
       '#type' => 'select',
       '#multiple' => TRUE,
-      '#required' => TRUE,
+      '#required' => FALSE,
       '#description' => 'Select which terms you want to import.',
       '#options' => $form['term_options']['#value'],
-      '#default_value' => $selected_categories,
+      '#config_target' => 'az_news_feeds.settings:uarizona_news_terms',
+      '#ajax' => [
+        'callback' => '::updateEndpointCallback',
+        'wrapper' => 'endpoint-wrapper',
+      ],
     ];
 
     return parent::buildForm($form, $form_state);
   }
 
   /**
-   * {@inheritdoc}
+   *
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    $az_news_feeds_config = $this->configFactory->getEditable('az_news_feeds.settings');
-    $keys = $form_state->getValue('uarizona_news_terms');
-    $selected_terms = [];
-    foreach ($keys as $key) {
-      $selected_terms[$key] = $form['uarizona_news_terms']['#options'][$key];
-    }
-    $az_news_feeds_config
-      ->set('uarizona_news_terms', $selected_terms)
-      ->save();
-
-    // Update the news.arizona.edu feed url in the migration group config.
-    $group_config = $this->configFactory->getEditable('migrate_plus.migration_group.az_news_feeds');
+  public function updateEndpointCallback(array &$form, FormStateInterface $form_state) {
+    $az_news_feeds_config = $this->config('az_news_feeds.settings');
+    // Generate the new endpoint URL based on the selected terms.
+    $selected_terms = $form_state->getValue('uarizona_news_terms');
     $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
     $content_path = $az_news_feeds_config->get('uarizona_news_content_path');
-    $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
+    if (!$selected_terms) {
+      $selected_terms = ['all' => 'all'];
+    }
     $views_contextual_argument = implode('+', array_keys($selected_terms));
-    $urls = $base_uri . $content_path . $views_contextual_argument;
-    $group_config
-      ->set('shared_configuration.source.urls', $urls)
-      ->save();
+    $new_endpoint_url = $base_uri . $content_path . $views_contextual_argument;
+    $url = Url::fromUri($new_endpoint_url);
+    $link_render_array = [
+      '#type' => 'link',
+      '#title' => $this->t($url->toString()),
+      '#url' => $url,
+    ];
 
-    drupal_flush_all_caches();
+    // Update the hidden field's value.
+    $form['group_configuration_hidden']['#value'] = $new_endpoint_url;
+    // Update the markup field's display.
+    $form['group_configuration']['link'] = $link_render_array;
 
-    parent::submitForm($form, $form_state);
+    // $form['group_configuration']['#markup'] = '<div id="endpoint-wrapper">' . $this->t("Fetching news from: ") .  $new_endpoint_url . '</div>';
+    return [
+      $form['group_configuration_hidden'],
+      $form['group_configuration'],
+    ];
+
   }
 
 }
