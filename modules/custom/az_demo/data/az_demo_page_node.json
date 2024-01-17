@@ -180,6 +180,16 @@
       "az_main_content" : "89",
       "az_media_image" : "",
       "az_summary" : "This is a code example."
+    },
+    {
+      "id":19,
+      "title" : "Combo Page",
+      "path" : "/pages/combo-page",
+      "exclude_title" : true,
+      "az_page_category" : "Text",
+      "az_main_content" : "3|18|2|20|9",
+      "az_media_image" : "",
+      "az_summary" : "This is a page with text and text with background elements."
     }
   ]
 }

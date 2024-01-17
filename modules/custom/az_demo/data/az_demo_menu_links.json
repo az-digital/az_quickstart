@@ -329,6 +329,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "13"
+    },
+    {
+      "link_id": "31",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Combo Page",
+      "urlpath": "/pages/combo-page",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "14"
     }
   ]
 }
