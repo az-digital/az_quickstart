@@ -10,11 +10,11 @@
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\Exception\FileException;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -359,8 +359,8 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Upload footer logo image'),
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
     '#upload_validators' => [
-      'file_validate_extensions' => [
-        'png gif jpg jpeg apng svg',
+      'FileExtension' => [
+        'extensions' => 'png gif jpg jpeg apng svg',
       ],
     ],
   ];

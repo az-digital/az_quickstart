@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - name: Install Terminus and authenticate Terminus
         uses: pantheon-systems/terminus-github-actions@release/v1
@@ -35,7 +35,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - name: Set up SSH
         run: |
@@ -43,7 +43,7 @@ jobs:
           echo -e "Host *.drush.in\n    StrictHostKeyChecking no" > ${HOME}/.ssh/config
           echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
           chmod 600 ${HOME}/.ssh/*
-          
+
       - name: Install Terminus and authenticate Terminus
         uses: pantheon-systems/terminus-github-actions@release/v1
         with:
@@ -71,7 +71,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - name: Set up SSH
         run: |

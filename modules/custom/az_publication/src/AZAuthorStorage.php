@@ -2,10 +2,10 @@
 
 namespace Drupal\az_publication;
 
-use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
-use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\Language\LanguageInterface;
 use Drupal\az_publication\Entity\AZAuthorInterface;
+use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
+use Drupal\Core\Language\LanguageInterface;
+use Drupal\Core\Session\AccountInterface;
 
 /**
  * Defines the storage handler class for Author entities.

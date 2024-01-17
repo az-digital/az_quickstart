@@ -3,9 +3,9 @@
 namespace Drupal\az_news_export\Plugin\views\row;
 
 use Drupal\az_news_export\AZNewsDataEmpty;
+use Drupal\image\Entity\ImageStyle;
 use Drupal\rest\Plugin\views\row\DataFieldRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\image\Entity\ImageStyle;
 
 /**
  * Plugin which displays fields as raw data.

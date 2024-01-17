@@ -56,7 +56,7 @@
       "path" : "/pages/card-decks",
       "exclude_title" : false,
       "az_page_category"  : "Cards",
-      "az_main_content"  : "80|28|81|29|82|30|83",
+      "az_main_content"  : "80|81|82|83",
       "az_media_image"    : "",
       "az_summary" : ""
     },
@@ -193,6 +193,43 @@
     },
     {
       "id":20,
+      "title" : "Combo Page Without Sidebar",
+      "path" : "/pages/combo-page-no-sidebar",
+      "exclude_title" : true,
+      "az_page_category" : "Text",
+      "az_main_content" : "18|3|2|20",
+      "az_media_image" : "",
+      "az_summary" : "This is a page with text and text with background elements."
+      "title" : "News Views",
+      "path" : "/pages/news-view-paragraphs",
+      "exclude_title" : true,
+      "az_page_category" : "Views",
+      "az_main_content" : "100|101|102",
+      "az_media_image" : "",
+      "az_summary" : "A flexible page with news views."
+    },
+    {
+      "id":20,
+      "title" : "Person Views",
+      "path" : "/pages/person-view-paragraphs",
+      "exclude_title" : true,
+      "az_page_category" : "Views",
+      "az_main_content" : "103",
+      "az_media_image" : "",
+      "az_summary" : "Person Grid 3-column."
+    },
+    {
+      "id":21,
+      "title" : "Combo Page",
+      "path" : "/pages/combo-page",
+      "exclude_title" : true,
+      "az_page_category" : "Text",
+      "az_main_content" : "18|3|2|20",
+      "az_media_image" : "",
+      "az_summary" : "This is a page with text and text with background elements."
+    },
+    {
+      "id":22,
       "title" : "Combo Page Without Sidebar",
       "path" : "/pages/combo-page-no-sidebar",
       "exclude_title" : true,
