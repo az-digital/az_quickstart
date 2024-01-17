@@ -2,11 +2,11 @@
 
 namespace Drupal\az_publication_import\EventSubscriber;
 
-use Drupal\migrate\Event\MigrateEvents;
-use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Drupal\Core\Messenger\Messenger;
+use Drupal\migrate\Event\MigrateEvents;
+use Drupal\migrate\Event\MigratePostRowSaveEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * Reponse to publication migration import events.

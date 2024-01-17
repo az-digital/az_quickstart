@@ -2,14 +2,14 @@
 
 namespace Drupal\az_publication_bibtex\Plugin\migrate_plus\data_parser;
 
-use Drupal\migrate\MigrateException;
-use Drupal\migrate_plus\DataParserPluginBase;
-use RenanBr\BibTexParser\Listener;
-use RenanBr\BibTexParser\Parser;
-use RenanBr\BibTexParser\Exception\ExceptionInterface;
-use RenanBr\BibTexParser\Processor\NamesProcessor;
 use Drupal\az_publication_bibtex\Processor\AZDateProcessor;
 use Drupal\az_publication_bibtex\Processor\AZLatexProcessor;
+use Drupal\migrate\MigrateException;
+use Drupal\migrate_plus\DataParserPluginBase;
+use RenanBr\BibTexParser\Exception\ExceptionInterface;
+use RenanBr\BibTexParser\Listener;
+use RenanBr\BibTexParser\Parser;
+use RenanBr\BibTexParser\Processor\NamesProcessor;
 
 /**
  * Obtain BibTeX data for migration..

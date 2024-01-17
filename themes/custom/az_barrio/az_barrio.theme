@@ -444,6 +444,7 @@ function az_barrio_primary_logo() {
         '#alt' => $primary_alt_text,
         '#attributes' => [
           'class' => ['img-fluid'],
+          'fetchpriority' => 'high',
         ]
       ];
       $renderer = \Drupal::service('renderer');
@@ -579,7 +580,7 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  *
  * Footer menu links styles, using default theme templates.
  * @link https://github.com/az-digital/az_quickstart/issues/1012
- * @link https://github.com/az-digital/az_quickstart/issues/1613 
+ * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
   if ($variables['base_plugin_id'] === 'system_branding_block') {
