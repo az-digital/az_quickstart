@@ -167,7 +167,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $base_uri = $az_news_feeds_config->get('uarizona_news_base_uri');
     $content_path = $az_news_feeds_config->get('uarizona_news_content_path');
     if (!$selected_terms) {
-      $selected_terms = ['all' => 'all'];
+      $selected_terms = ['all' => 'All'];
     }
     $views_contextual_argument = implode('+', array_keys($selected_terms));
     $new_endpoint_url = $base_uri . $content_path . $views_contextual_argument;

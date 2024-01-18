@@ -55,8 +55,9 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
       '#type' => 'url',
       '#title' => $this->t('Enterprise Attributes Endpoint'),
       '#description' => $this->t('Enter a fully qualified URL for the endpoint of your enterprise attributes service.'),
-      '#default_value' => $config->get('endpoint'),
+      '#config_target' => 'az_enterprise_attributes_import.settings:endpoint',
       '#required' => TRUE,
+
     ];
     return parent::buildForm($form, $form_state);
   }
@@ -66,10 +67,6 @@ class AZEnterpriseAttributesImportForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
-
-    $this->config('az_enterprise_attributes_import.settings')
-      ->set('endpoint', $form_state->getValue('endpoint'))
-      ->save();
 
     // Fetch the attribute migration.
     $migration = $this->pluginManagerMigration->createInstance('az_enterprise_attributes_import');
