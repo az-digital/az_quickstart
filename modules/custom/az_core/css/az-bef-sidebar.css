@@ -6,8 +6,7 @@
   margin-bottom: 1rem;
 }
 
-.az-bef-vertical>.content>form>.form-row>fieldset {
-  margin-bottom: 0;
+.az-bef-vertical>form>.form-row>fieldset {
   width: 100%;
 }
 
@@ -68,6 +67,7 @@ div.checkbox>div.bef-checkboxes>ul>li:has(ul)>div>label {
   font-size: 1.25rem !important;
   line-height: 1.5rem !important;
   padding-top: 1rem !important;
+  padding-bottom: 0.5rem !important;
   border-top: 1px solid #e9ecef !important;
   width: 100% !important;
 }
