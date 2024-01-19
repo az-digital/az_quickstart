@@ -111,13 +111,19 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#open' => TRUE,
     ];
 
+    $taxonomy_url = Url::fromUri('internal:/admin/structure/taxonomy/manage/az_news_tags/overview');
+    $taxonomy_link = Link::fromTextAndUrl('News Tags vocabulary', $taxonomy_url)->toString();
+
+    $markup = '<p>To import the most recent stories regardless of tag, select "All".</p>' .
+        '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
+        '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
+        '<p>This importer associates stories with existing taxonomy terms based on tags from the feed. If a story in the feed includes tags, the importer will check if these tags correspond to any existing terms in the ' . $taxonomy_link . ' on the site. It will then associate the story with those existing terms. For instance, if a story\'s tags include \'Lunar and Planetary Laboratory\' and this term exists in the ' . $taxonomy_link . ' on the site, the importer will add this term to the story. Tags that do not match any existing taxonomy terms on the site will be ignored and not added to the story.</p>';
+
     $form['help_container']['help'] = [
-      '#type' => 'item',
-      '#markup' => '<p>To import the most recent stories regardless of tag, select "All".</p>' .
-      '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
-      '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
-      '<p>This importer associates stories with existing taxonomy terms based on tags from the feed. If a story in the feed includes tags, the importer will check if these tags correspond to any existing terms in the \'az_news_tags\' taxonomy on the site. It will then associate the story with those existing terms. For instance, if a story\'s tags include \'Lunar and Planetary Laboratory\' and this term exists in the \'az_news_tags\' taxonomy on the site, the importer will add this term to the story. Tags that do not match any existing taxonomy terms on the site will be ignored and not added to the story.</p>',
+        '#type' => 'item',
+        '#markup' => $markup,
     ];
+
     $form['term_options'] = [
       '#type' => 'value',
       '#value' => $term_options,
@@ -134,7 +140,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
 
     $link_render_array = [
       '#type' => 'link',
-      '#title' => $this->t('Link to the news feed: @url', ['@url' => $url->toString()]),
+      '#title' => $this->t('@url', ['@url' => $url->toString()]),
       '#url' => $url,
     ];
 
@@ -188,7 +194,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $url = Url::fromUri($new_endpoint_url);
     $link_render_array = [
       '#type' => 'link',
-      '#title' => $this->t('Link to the news feed: @url', ['@url' => $url->toString()]),
+      '#title' => $this->t('@url', ['@url' => $url->toString()]),
       '#url' => $url,
     ];
 
