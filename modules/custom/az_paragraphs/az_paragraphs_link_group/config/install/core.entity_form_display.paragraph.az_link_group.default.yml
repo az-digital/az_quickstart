@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.az_link_group.field_az_link_item
+    - field.field.paragraph.az_link_group.field_az_title
     - paragraphs.paragraphs_type.az_link_group
   module:
     - link
@@ -13,11 +14,19 @@ mode: default
 content:
   field_az_link_item:
     type: link_default
-    weight: 0
+    weight: 1
     region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
+    third_party_settings: {  }
+  field_az_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
     third_party_settings: {  }
 hidden:
   created: true

@@ -90,6 +90,9 @@
 {% block paragraph %}
   <div{{ attributes.addClass(classes) }}>
     {% block content %}
+      {% if paragraph.field_az_title.value is not empty %}
+        <h2>{{ paragraph.field_az_title.value }}</h2>
+      {% endif %}
       {% if link_group.group_style == 'dropdown' %}
         <button {{ dropdown_attributes.addClass(dropdown_classes) }} type="button" id="az-link-group-dropdown-{{ paragraph.id() }}" data-toggle="dropdown" aria-expanded="false">{{ link_group.dropdown_title }}</button>
         <div class="dropdown-menu" aria-labelledby="az-link-group-dropdown-{{ paragraph.id() }}">

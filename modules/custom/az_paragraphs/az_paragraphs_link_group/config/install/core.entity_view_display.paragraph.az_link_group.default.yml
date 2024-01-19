@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.az_link_group.field_az_link_item
+    - field.field.paragraph.az_link_group.field_az_title
     - paragraphs.paragraphs_type.az_link_group
   module:
     - field_group
@@ -15,7 +16,7 @@ third_party_settings:
       label: 'Link Group'
       parent_name: ''
       region: content
-      weight: 0
+      weight: 2
       format_type: html_element
       format_settings:
         classes: ''
@@ -42,6 +43,14 @@ content:
       url_plain: false
       rel: ''
       target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_az_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
     weight: 1
     region: content
