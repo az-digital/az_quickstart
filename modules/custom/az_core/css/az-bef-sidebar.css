@@ -10,7 +10,7 @@
   width: 100%;
 }
 
-.az-bef-vertical>.content>form>.form-row>fieldset>label {
+.az-bef-vertical>form>.form-row>fieldset.form-type-textfield>label {
   font-weight: 600;
   color: #1e5288;
   font-size: 1.25rem;
