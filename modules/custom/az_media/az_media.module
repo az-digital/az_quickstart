@@ -162,3 +162,16 @@ function az_media_entity_presave(EntityInterface $entity) {
     $entity->thumbnail->target_id = $entity->field_media_az_image->target_id;
   }
 }
+
+/**
+ * Implements hook_config_schema_info_alter().
+ *
+ * Temporarily remove the CKEditor SourceEditingRedundantTags constraint to
+ * allow the Standard text format (defined in this module) to be saved from the
+ * UI. See https://www.drupal.org/project/drupal/issues/3410100.
+ */
+function az_media_config_schema_info_alter(&$definitions) {
+  if (isset($definitions['ckeditor5.plugin.ckeditor5_sourceEditing']['mapping']['allowed_tags']['sequence']['constraints']['SourceEditingRedundantTags'])) {
+    unset($definitions['ckeditor5.plugin.ckeditor5_sourceEditing']['mapping']['allowed_tags']['sequence']['constraints']['SourceEditingRedundantTags']);
+  }
+}
