@@ -116,7 +116,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#markup' => '<p>To import the most recent stories regardless of tag, select "All".</p>' .
       '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
       '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
-      '<p>This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.</p>',
+      '<p>This importer associates stories with existing taxonomy terms based on tags from the feed. If a story in the feed includes tags, the importer will check if these tags correspond to any existing terms in the \'az_news_tags\' taxonomy on the site. It will then associate the story with those existing terms. For instance, if a story\'s tags include \'Lunar and Planetary Laboratory\' and this term exists in the \'az_news_tags\' taxonomy on the site, the importer will add this term to the story. Tags that do not match any existing taxonomy terms on the site will be ignored and not added to the story.</p>',
     ];
     $form['term_options'] = [
       '#type' => 'value',
@@ -134,7 +134,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
 
     $link_render_array = [
       '#type' => 'link',
-      '#title' => $this->t($url->toString()),
+      '#title' => $this->t('Link to the news feed: @url', ['@url' => $url->toString()]),
       '#url' => $url,
     ];
 
