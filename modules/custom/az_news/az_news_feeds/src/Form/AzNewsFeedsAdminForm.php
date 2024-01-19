@@ -164,7 +164,15 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   }
 
   /**
+   * Updates the endpoint URL based on selected terms and updates form elements.
    *
+   * @param array &$form
+   *   The form array.
+   * @param FormStateInterface $form_state
+   *   The form state interface.
+   *
+   * @return array
+   *   An array of updated form elements.
    */
   public function updateEndpointCallback(array &$form, FormStateInterface $form_state) {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
@@ -180,7 +188,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $url = Url::fromUri($new_endpoint_url);
     $link_render_array = [
       '#type' => 'link',
-      '#title' => $this->t($url->toString()),
+      '#title' => $this->t('Link to the news feed: @url', ['@url' => $url->toString()]),
       '#url' => $url,
     ];
 
