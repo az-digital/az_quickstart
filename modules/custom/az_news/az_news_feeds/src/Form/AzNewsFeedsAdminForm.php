@@ -105,7 +105,13 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
         )->toString(),
       ]),
     ];
-    $form['help'] = [
+    $form['help_container'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Help'),
+      '#open' => TRUE,
+    ];
+
+    $form['help_container']['help'] = [
       '#type' => 'item',
       '#markup' => '<p>To import the most recent stories regardless of tag, select "All".</p>' .
       '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
@@ -136,16 +142,16 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#type' => 'container',
       '#attributes' => ['id' => ['endpoint-wrapper']],
       'text' => [
-        '#markup' => $this->t('Fetching news from: '),
+        '#markup' => $this->t('Fetch news from: '),
       ],
       'link' => $link_render_array,
     ];
     $form['uarizona_news_terms'] = [
-      '#title' => t('News Categories'),
+      '#title' => $this->t('News Categories'),
       '#type' => 'select',
       '#multiple' => TRUE,
       '#required' => FALSE,
-      '#description' => 'Select which terms you want to import.',
+      '#description' => $this->t('Select which terms you want to import.'),
       '#options' => $form['term_options']['#value'],
       '#config_target' => 'az_news_feeds.settings:uarizona_news_terms',
       '#ajax' => [
