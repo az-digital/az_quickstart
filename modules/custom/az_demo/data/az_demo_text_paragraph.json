@@ -84,6 +84,11 @@
             "id": 89,
             "az_text_area": "<code>code tag</code> <br> <pre>pre tags</pre>",
             "bottom_spacing": "mb-0"
+        },
+        {
+            "id": 104,
+            "az_text_area": "<div class=\"bg-sky text-chili\">\r\n    <p>\r\n        <strong>Test Div classes<\/strong>\r\n    <\/p>\r\n<\/div>\r\n<p>\r\n    <a class=\"text-h3 bg-cool-gray\" href=\"https:\/\/quickstart.arizona.edu\">https:\/\/quickstart.arizona.edu<\/a>\r\n<\/p>\r\n<ul class=\"bg-warm-gray\">\r\n    <li>\r\n        Test List Class\r\n    <\/li>\r\n    <li class=\"text-size-h2\">\r\n        Test List Item Class&nbsp;\r\n    <\/li>\r\n<\/ul>\r\n<p>\r\n    &nbsp;\r\n<\/p>\r\n<hr>\r\n<p>\r\n    &nbsp;\r\n<\/p>\r\n<blockquote class=\"bg-blue\">\r\n    <p>\r\n        test blockquote\r\n    <\/p>\r\n<\/blockquote>\r\n<table class=\"bg-cool-gray\">\r\n    <tbody class=\"text-azurite\">\r\n        <tr class=\"bg-warm-gray\">\r\n            <td class=\"p-3\">\r\n                Test table\r\n            <\/td>\r\n            <td>\r\n                &nbsp;\r\n            <\/td>\r\n        <\/tr>\r\n        <tr>\r\n            <td>\r\n                &nbsp;\r\n            <\/td>\r\n            <td>\r\n                &nbsp;\r\n            <\/td>\r\n        <\/tr>\r\n    <\/tbody>\r\n<\/table>\r\n<p>\r\n    &nbsp;\r\n<\/p>\r\n<p>\r\n    &nbsp;\r\n<\/p>\r\n<p>\r\n    &nbsp;\r\n<\/p>",
+            "bottom_spacing": "mb-0"
         }
     ]
 }
