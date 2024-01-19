@@ -7,7 +7,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
- * Provides a behavior for text with background.
+ * Provides a behavior for link group paragraphs.
  *
  * @ParagraphsBehavior(
  *   id = "az_link_group",
