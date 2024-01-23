@@ -419,31 +419,3 @@ function az_core_form_taxonomy_vocabulary_confirm_reset_alphabetical_alter(&$for
     _az_core_check_attribute_form($form, $form_state, $form_id);
   }
 }
-
-/**
- * Implements hook_config_schema_info_alter().
- *
- * Temporarily remove the CKEditor SourceEditingRedundantTags constraint to
- * prevent errors when saving the Standard and Basic HTML text formats from the
- * UI. See https://www.drupal.org/project/drupal/issues/3410100.
- */
-function az_core_config_schema_info_alter(&$definitions) {
-  if (isset($definitions['ckeditor5.plugin.ckeditor5_sourceEditing']['mapping']['allowed_tags']['sequence']['constraints']['SourceEditingRedundantTags'])) {
-    unset($definitions['ckeditor5.plugin.ckeditor5_sourceEditing']['mapping']['allowed_tags']['sequence']['constraints']['SourceEditingRedundantTags']);
-  }
-}
-
-/**
- * Implements hook_form_FORM_ID_alter().
- *
- * Temporarily add a warning message to the edit forms for the Quickstart text
- * formats which have CKEditor source editing enabled. See
- * https://www.drupal.org/project/drupal/issues/3410100.
- */
-function az_core_form_filter_format_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  /** @var \Drupal\filter\FilterFormatEditForm $form_object */
-  $form_object = $form_state->getFormObject();
-  if ($form_object->getEntity()->id() === 'az_standard' || $form_object->getEntity()->id() === 'basic_html') {
-    \Drupal::messenger()->addMessage(t('Some validation for the CKEditor source editing "Manually editable HTML tags" field has been temporarily disabled due to <a href="https://www.drupal.org/project/drupal/issues/3410100" target="_blank">Drupal core issue #3410100</a>. Changing these tags is not recommended.'), MessengerInterface::TYPE_WARNING);
-  }
-}
