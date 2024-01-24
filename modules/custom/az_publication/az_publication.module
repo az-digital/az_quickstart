@@ -14,6 +14,7 @@ use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\filter\Entity\FilterFormat;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 use Drupal\views\Plugin\Block\ViewsBlock;
@@ -310,7 +311,13 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         // Set up CSL rendering.
         $citeProc = new CiteProc($style_info, $locale, $additionalMarkup);
         $biblio = $citeProc->render([$blob], "bibliography");
-        $build['az_publication_bibliography'][] = [
+        // Check if our filter format exists prior to use.
+        $az_citation_format = FilterFormat::load('az_citation');
+        if ($az_citation_format !== NULL) {
+          // Provide reference-specific filters.
+          $biblio = check_markup($biblio, 'az_citation');
+        }
+        $build['az_publication_bibliography'] = [
           '#type' => 'markup',
           '#markup' => ($biblio),
         ];
