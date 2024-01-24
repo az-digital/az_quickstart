@@ -32,7 +32,7 @@ class AZAuthorRevisionDeleteForm extends ConfirmFormBase {
   /**
    * The Author storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\az_publication\AZAuthorStorageInterface
    */
   protected $authorStorage;
 

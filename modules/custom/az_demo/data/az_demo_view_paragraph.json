@@ -1,0 +1,36 @@
+{
+  "paragraphs": [
+    {
+      "title" : "Grid View",
+      "id":100,
+      "target_id" : "az_news",
+      "display_id" : "az_grid",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id":101,
+      "title" : "Grid View with Filter",
+      "target_id" : "az_news",
+      "display_id" : "az_grid_filter",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id":102,
+      "title" : "Feature View",
+      "target_id" : "az_news",
+      "display_id" : "az_feature",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 103,
+      "title" : "Grid - 3 col",
+      "target_id" : "az_person",
+      "display_id" : "grid_block_3cols",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    }
+  ]
+}

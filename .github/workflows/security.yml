@@ -3,17 +3,19 @@ on:
   push:
     schedule:
       - cron:  '0 13 * * *'
+    tags-ignore:
+      - '*'
 jobs:
   dependency-audit:
     name: Dependency Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
       - name: Set variables
         run: |
           export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
@@ -29,7 +31,7 @@ jobs:
             echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az-quickstart-scaffolding
@@ -51,11 +53,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.2'
       - name: Set variables
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
       - name: Install dependencies

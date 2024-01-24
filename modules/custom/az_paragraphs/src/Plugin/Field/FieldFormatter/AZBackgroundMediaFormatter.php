@@ -5,12 +5,12 @@ namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
-//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
-use Drupal\file\FileInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
+//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
+use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -314,6 +314,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $element = [];
     $full_width = '';
     $marquee_style = $settings['style'];
+    /** @var \Drupal\media\MediaInterface[] $media_items */
     $media_items = $this->getEntitiesToView($items, $langcode);
     $paragraph = $items->getEntity();
 
@@ -339,7 +340,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     // Replace underscores with hyphens in selector.
     $settings['css_settings'] = str_replace(['_'], '-', $settings['css_settings']);
 
-    /** @var \Drupal\media\MediaInterface[] $media_items */
+    /** @var \Drupal\media\MediaInterface $media */
     foreach ($media_items as $delta => $media) {
       $element['#media_type'] = $media->bundle();
 
@@ -393,7 +394,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    *   The URI object for the media item's thumbnail image.
    */
   protected function getMediaThumbFile(MediaInterface $media): ?FileInterface {
-    $fid = $media->thumbnail->target_id;
+    $fid = $media->get('thumbnail')->target_id;
     $file = $this->entityTypeManager->getStorage('file')->load($fid);
 
     return $file;
@@ -456,6 +457,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * Prepare markup for remote video.
    *
    * YouTube is currently the only supported provider.
+   *
+   * @param array $settings
+   *   The merged paragraph behavior settings,
+   *   field formatter settings, and default settings.
+   * @param \Drupal\media\MediaInterface $media
+   *   The media item.
    *
    * @return array
    *   The remote video render array for az_background_media element.
@@ -525,11 +532,11 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
         $az_background_media[] = $background_video;
-        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
           $image_renderable = [
             '#theme' => 'responsive_image_formatter',
             '#responsive_image_style_id' => 'az_full_width_background',
-            '#item' => $media->thumbnail,
+            '#item' => $media->get('thumbnail'),
             '#item_attributes' => [
               'class' => ['img-fluid', ' w-100', 'invisible'],
             ],
@@ -541,7 +548,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         $image_renderable = [
           '#theme' => 'responsive_image_formatter',
           '#responsive_image_style_id' => 'az_full_width_background',
-          '#item' => $media->thumbnail,
+          '#item' => $media->get('thumbnail'),
           '#item_attributes' => [
             'class' => ['img-fluid'],
           ],
@@ -566,13 +573,21 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   /**
    * Prepare markup for image.
    *
+   * @param array $settings
+   *   The merged paragraph behavior settings,
+   *   field formatter settings, and default settings.
+   * @param \Drupal\media\MediaInterface $media
+   *   The media item.
+   *
    * @return array
    *   The image render array for az_background_media element.
    */
   protected function image(array $settings, MediaInterface $media): array {
     $az_background_media = [];
     $css_settings = $settings['css_settings'];
-    $file_uri = $this->getMediaThumbFile($media)->getFileUri();
+    $fid = $media->getSource()->getSourceFieldValue($media);
+    $file = $this->entityTypeManager->getStorage('file')->load($fid);
+    $file_uri = $file->getFileUri();
 
     if ($settings['style'] !== 'bottom') {
       $responsive_image_style_element = [
@@ -589,11 +604,11 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
-      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && $settings['full_width'] === 'full-width-background') {
+      if ($settings['text_media_spacing'] === 'az-aspect-ratio' && isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
         $image_renderable = [
           '#theme' => 'responsive_image_formatter',
           '#responsive_image_style_id' => 'az_full_width_background',
-          '#item' => $media->field_media_az_image,
+          '#item' => $media->get('field_media_az_image'),
           '#item_attributes' => [
             'class' => ['img-fluid', ' w-100', 'invisible'],
           ],
@@ -607,7 +622,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       $image_renderable = [
         '#theme' => 'responsive_image_formatter',
         '#responsive_image_style_id' => 'az_full_width_background',
-        '#item' => $media->field_media_az_image,
+        '#item' => $media->get('field_media_az_image'),
         '#item_attributes' => [
           'class' => ['img-fluid'],
         ],

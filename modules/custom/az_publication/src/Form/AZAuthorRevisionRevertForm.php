@@ -2,10 +2,10 @@
 
 namespace Drupal\az_publication\Form;
 
+use Drupal\az_publication\Entity\AZAuthorInterface;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\az_publication\Entity\AZAuthorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -25,7 +25,7 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
   /**
    * The Author storage.
    *
-   * @var \Drupal\Core\Entity\EntityStorageInterface
+   * @var \Drupal\az_publication\AZAuthorStorageInterface
    */
   protected $authorStorage;
 
@@ -110,9 +110,12 @@ class AZAuthorRevisionRevertForm extends ConfirmFormBase {
     $original_revision_timestamp = $this->revision->getRevisionCreationTime();
 
     $this->revision = $this->prepareRevertedRevision($this->revision, $form_state);
-    $this->revision->revision_log = $this->t('Copy of the revision from %date.', [
-      '%date' => $this->dateFormatter->format($original_revision_timestamp),
-    ]);
+    $this->revision->set(
+      'revision_log',
+      $this->t('Copy of the revision from %date.', [
+        '%date' => $this->dateFormatter->format($original_revision_timestamp),
+      ])
+    );
     $this->revision->save();
 
     $this->logger('content')->notice('Author: reverted %title revision %revision.', [

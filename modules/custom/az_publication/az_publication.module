@@ -5,20 +5,21 @@
  * Contains az_publication.module.
  */
 
-use Drupal\Core\Datetime\Element\Datetime;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\node\Entity\NodeType;
-use Seboettg\CiteProc\CiteProc;
-use Drupal\Core\Url;
-use Drupal\Core\Link;
-use Symfony\Component\HttpFoundation\Request;
-use Drupal\node\NodeInterface;
 use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Datetime\Element\Datetime;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\filter\Entity\FilterFormat;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
 use Drupal\views\Plugin\Block\ViewsBlock;
+use Seboettg\CiteProc\CiteProc;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -134,6 +135,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob->id = $entity->id();
       $blob->type = $entity->field_az_publication_type->value;
       // Load default citation settings.
+      $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
+      $repository = \Drupal::service('entity.repository');
       $default_config = \Drupal::config('az_publication.settings');
       $style_context = $default_config->get('default_citation_style');
 
@@ -183,25 +186,27 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           foreach ($entity->field_az_authors as $item) {
             if (!empty($item->entity)) {
               $author = new stdClass();
+              $author_entity = $repository->getTranslationFromContext($item->entity);
               // Only literal name.
-              if (!empty($item->entity->field_az_author_literal->value) && empty($item->entity->field_az_author_parse->value)) {
-                $author->family = trim($item->entity->field_az_author_literal->value);
+              if (!empty($author_entity->field_az_author_literal->value) && empty($author_entity->field_az_author_parse->value)) {
+                $author->family = trim($author_entity->field_az_author_literal->value);
               }
               else {
                 // Map regular string fields.
                 foreach ($amap as $asource => $adestination) {
-                  if (!empty($item->entity->{$asource}->value)) {
-                    $author->{$adestination} = trim($item->entity->{$asource}->value);
+                  if (!empty($author_entity->{$asource}->value)) {
+                    $author->{$adestination} = trim($author_entity->{$asource}->value);
                   }
                 }
               }
               // Special field due to being an URL.
-              if (!empty($item->entity->field_az_author_link->uri)) {
-                $author->itemlink = $item->entity->field_az_author_link->uri;
+              if (!empty($author_entity->field_az_author_link->uri)) {
+                $author->itemlink = $author_entity->field_az_author_link->uri;
               }
               // Special field handling for person reference.
-              if (!empty($item->entity->field_az_author_person->entity)) {
-                $author->itemlink = $item->entity->field_az_author_person->entity->toUrl()->toString();
+              if (!empty($author_entity->field_az_author_person->entity)) {
+                $person = $repository->getTranslationFromContext($author_entity->field_az_author_person->entity);
+                $author->itemlink = $person->toUrl()->toString();
               }
               $blob->author[] = $author;
             }
@@ -210,6 +215,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         // Handle publication date if available.
         if (!empty($entity->field_az_publication_date->value)) {
           $blob->issued = _az_publication_publication_date_object($entity);
+          if (isset($blob->issued->{'status'}) && $blob->issued->{'status'} === 'forthcoming') {
+            $blob->status = t('forthcoming');
+          }
         }
         // Handle accessed date if available.
         if (!empty($entity->field_az_accessed_date->value)) {
@@ -217,15 +225,35 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $date->{'date-parts'}[] = explode('-', $entity->field_az_accessed_date->value);
           $blob->accessed = $date;
         }
+        // By default, provide a link to the node page if nothing else applies.
+        try {
+          // Canonical full node should not link to itself.
+          if ($view_mode !== 'full') {
+            $has_cover = !empty($entity->field_az_publication_image->target_id);
+            $has_abstract = !empty($entity->field_az_publication_abstract->value);
+            $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
+            // Linking to full node if there is an abstract or cover page.
+            if ($has_cover || $has_abstract) {
+              $blob->itemlink = $url->toString();
+            }
+          }
+        }
+        catch (Exception $e) {
+        }
         // Handle link field if available.
         if (!empty($entity->field_az_publication_link->uri)) {
           $blob->itemlink = $entity->field_az_publication_link->uri;
         }
         // Handle file link if available.
-        if (!empty($entity->field_az_publication_media->entity->field_media_az_document->entity)) {
+        if (!empty($entity->field_az_publication_media->entity)) {
           // @todo Remove urldecode() if we figure out a better way to prevent
           // encoded URLs from getting double-encoded by CiteProc.
-          $blob->itemlink = urldecode($entity->field_az_publication_media->entity->field_media_az_document->entity->createFileUrl(TRUE));
+          $media_entity = $repository->getTranslationFromContext($entity->field_az_publication_media->entity);
+          if (!empty($media_entity->field_media_az_document->entity)) {
+            /** @var Drupal\file\FileInterface $file_entity */
+            $file_entity = $repository->getTranslationFromContext($media_entity->field_media_az_document->entity);
+            $blob->itemlink = urldecode($file_entity->createFileUrl(TRUE));
+          }
         }
 
         $additionalLinks = [];
@@ -244,7 +272,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
               }
               $link = Link::fromTextAndUrl($title, $url);
               $buildLink = $link->toRenderable();
-              $buildLink['#attributes']['class'] = ['text-decoration-none'];
               $additionalLinks[] = \Drupal::service('renderer')->render($buildLink);
             }
           }
@@ -265,7 +292,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             }
             $link = Link::fromTextAndUrl($renderedText, $url);
             $buildLink = $link->toRenderable();
-            $buildLink['#attributes']['class'] = ['text-decoration-none'];
             $renderedText = \Drupal::service('renderer')->render($buildLink);
             // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
             $renderedText = str_replace('"', '', $renderedText);
@@ -286,9 +312,15 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           },
         ];
         // Set up CSL rendering.
-        $citeProc = new CiteProc($style_info, "en-US", $additionalMarkup);
+        $citeProc = new CiteProc($style_info, $locale, $additionalMarkup);
         $biblio = $citeProc->render([$blob], "bibliography");
-        $build['az_publication_bibliography'][] = [
+        // Check if our filter format exists prior to use.
+        $az_citation_format = FilterFormat::load('az_citation');
+        if ($az_citation_format !== NULL) {
+          // Provide reference-specific filters.
+          $biblio = check_markup($biblio, 'az_citation');
+        }
+        $build['az_publication_bibliography'] = [
           '#type' => 'markup',
           '#markup' => ($biblio),
         ];
@@ -455,6 +487,14 @@ function _az_publication_publication_date_object(EntityInterface $entity) {
   // Handle approximate dates, e.g. (ca. 2000)
   if (!empty($entity->field_az_publication_approximate->value)) {
     $date->{'circa'} = 1;
+  }
+  // Handle forthcoming/future dates.
+  if (!empty($entity->field_az_publication_date->value)) {
+    $issue_date = strtotime($entity->field_az_publication_date->value);
+    $now = \Drupal::time()->getCurrentTime();
+    if ($issue_date > $now) {
+      $date->{'status'} = 'forthcoming';
+    }
   }
   return $date;
 }

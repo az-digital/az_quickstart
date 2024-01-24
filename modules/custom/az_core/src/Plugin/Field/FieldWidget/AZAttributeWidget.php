@@ -2,11 +2,11 @@
 
 namespace Drupal\az_core\Plugin\Field\FieldWidget;
 
-use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\Plugin\Field\FieldWidget\OptionsSelectWidget;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Render\Element;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'attributes_select' widget.
@@ -106,6 +106,10 @@ class AZAttributeWidget extends OptionsSelectWidget {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
+    $this->required = $element['#required'] ?? FALSE;
+    $this->multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
+    $this->has_value = isset($items[0]->{$this->column});
+
     // Initial form.
     $element += [
       '#type' => 'details',
@@ -132,7 +136,7 @@ class AZAttributeWidget extends OptionsSelectWidget {
         if ($term->depth === 0) {
           $element[$term->tid] = [
             '#type' => 'select',
-            '#title' => $this->t($term->name),
+            '#title' => $this->t('@name', ['@name' => $term->name]),
             '#options' => [],
             '#default_value' => [],
             '#multiple' => TRUE,

@@ -1,4 +1,4 @@
-image: proboci/ubuntu:20.04-php8.1
+image: proboci/ubuntu:22.04-php8.2
 assets:
   - test-credentials.sh
   - migration.settings.php
@@ -30,14 +30,18 @@ steps:
     plugin: Script
     script:
       - sudo npm cache clean -f --silent --no-progress
+      - sudo npm install -g --no-progress yarn
       - sudo npm install -g --no-progress n
       - sudo n 18.12.1
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
       - yarn install
       - yarn run eslint --color .
+  - name: Setup drush
+    plugin: Shell
+    command: 'ln -s $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush /usr/local/bin/drush'
   - name: Install Arizona Quickstart
     plugin: Drupal
-    drupalVersion: 9
+    drupalVersion: 10
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
@@ -128,14 +132,14 @@ steps:
       - echo "\$sites['$BUILD_ID--site-migration.probo.build'] = 'migration';" >> sites.php
       - cp ${ASSET_DIR}/migration.settings.php migration/settings.php
       - cd migration
-      - drush site:install az_quickstart --site-name='Quickstart Migration' --account-name=azadmin --account-pass=azadmin --verbose --yes -n
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush site:install az_quickstart --site-name='Quickstart Migration' --account-name=azadmin --account-pass=azadmin --verbose --yes -n
       - chown www-data:www-data -R /var/www/html/sites/migration/files
       - terminus env:wake ${MIGRATION_SOURCE_SITE_NAME}.dev
-      - drush -y install az_migration
-      - drush -y install az_paragraphs_html
-      - drush -y cset az_migration.settings migrate_d7_protocol "https"
-      - drush -y cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io/"
-      - drush -y cset az_migration.settings migrate_d7_public_path "sites/default/files"
-      - drush -y cset az_cas.settings disable_login_form 0
-      - drush mim --group=az_migration
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y install az_migration
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y install az_paragraphs_html
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y cset az_migration.settings migrate_d7_protocol "https"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y cset az_migration.settings migrate_d7_filebasepath "dev-${MIGRATION_SOURCE_SITE_NAME}.pantheonsite.io/"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y cset az_migration.settings migrate_d7_public_path "sites/default/files"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y cset az_cas.settings disable_login_form 0
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush mim --group=az_migration
       - echo "https://${BUILD_ID}--site-migration.probo.build/"

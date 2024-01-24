@@ -56,10 +56,10 @@ third_party_settings:
         classes: 'group-summary field-group-tab'
         show_empty_fields: false
         id: ''
-        open: false
-        description: ''
+        open: true
+        description: 'Summary fields determine how this person appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
+        weight: -10
 id: node.az_person.default
 targetEntityType: node
 bundle: az_person

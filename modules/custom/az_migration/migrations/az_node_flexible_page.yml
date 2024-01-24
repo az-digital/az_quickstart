@@ -46,11 +46,11 @@ process:
     process:
       delta: delta
       target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_media
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_media
 
   uid:
     -
@@ -72,7 +72,7 @@ process:
       source: alias
       regex: true
       search: /.$/
-      replace: 0
+      replace: '0'
     - plugin: default_value
       source: alias
       default_value: 1
@@ -127,10 +127,10 @@ process:
               - az_paragraph_card_deck
 
   field_az_main_content:
-      plugin: paragraphs_mapping_flexible_page
-      source:
-        - '@tmp_flexible_subpage'
-        - '@temp_pid'
+    plugin: paragraphs_mapping_flexible_page
+    source:
+      - '@tmp_flexible_subpage'
+      - '@temp_pid'
 
 dependencies:
   enforced:
