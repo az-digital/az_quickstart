@@ -144,6 +144,7 @@ settings:
         - '<a class target name id title>'
         - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode>'
         - '<drupal-media title>'
+        - '<p class>'
     ckeditor5_style:
       styles:
         -
