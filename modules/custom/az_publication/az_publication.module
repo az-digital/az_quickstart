@@ -215,6 +215,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         // Handle publication date if available.
         if (!empty($entity->field_az_publication_date->value)) {
           $blob->issued = _az_publication_publication_date_object($entity);
+          if (isset($blob->issued->{'status'}) && $blob->issued->{'status'} === 'forthcoming') {
+            $blob->status = t('forthcoming');
+          }
         }
         // Handle accessed date if available.
         if (!empty($entity->field_az_accessed_date->value)) {
@@ -484,6 +487,14 @@ function _az_publication_publication_date_object(EntityInterface $entity) {
   // Handle approximate dates, e.g. (ca. 2000)
   if (!empty($entity->field_az_publication_approximate->value)) {
     $date->{'circa'} = 1;
+  }
+  // Handle forthcoming/future dates.
+  if (!empty($entity->field_az_publication_date->value)) {
+    $issue_date = strtotime($entity->field_az_publication_date->value);
+    $now = \Drupal::time()->getCurrentTime();
+    if ($issue_date > $now) {
+      $date->{'status'} = 'forthcoming';
+    }
   }
   return $date;
 }
