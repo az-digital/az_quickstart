@@ -9,64 +9,42 @@ format: az_standard
 editor: ckeditor5
 settings:
   toolbar:
-    rows:
-      -
-        -
-          name: Undo/Redo
-          items:
-            - Undo
-            - Redo
-        -
-          name: Formatting
-          items:
-            - Bold
-            - Strike
-            - Italic
-            - Superscript
-            - Subscript
-            - SpecialChar
-        -
-          name: Links
-          items:
-            - DrupalLink
-            - DrupalUnlink
-        -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        -
-          name: Alignment
-          items:
-            - JustifyLeft
-            - JustifyCenter
-            - JustifyRight
-            - Indent
-            - Outdent
-        -
-          name: Structure
-          items:
-            - bs_grid
-            - Table
-            - HorizontalRule
-            - Blockquote
-        -
-          name: 'Text styles'
-          items:
-            - Format
-            - Styles
-        -
-          name: Embed
-          items:
-            - DrupalMediaLibrary
-            - az_embed_content
-            - az_embed_content_block
-        -
-          name: Tools
-          items:
-            - Source
-            - Maximize
-            - RemoveFormat
+    items:
+      - undo
+      - redo
+      - '|'
+      - bold
+      - strikethrough
+      - italic
+      - superscript
+      - subscript
+      - specialCharacters
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - '|'
+      - alignment
+      - '|'
+      - bootstrapGrid
+      - insertTable
+      - horizontalLine
+      - blockQuote
+      - '|'
+      - heading
+      - style
+      - '|'
+      - drupalMedia
+      - az_embed_content
+      - az_embed_content_block
+      - '|'
+      - code
+      - codeBlock
+      - '|'
+      - showBlocks
+      - sourceEditing
+      - removeFormat
   plugins:
     ckeditor5_alignment:
       enabled_alignments:
@@ -334,14 +312,16 @@ settings:
         - '11'
         - '12'
       available_breakpoints:
-        xs: xs
-        sm: sm
-        md: md
-        lg: lg
-        xl: 0
-        xxl: 0
-    indentblock:
-      enable: true
+        - xs
+        - sm
+        - md
+        - lg
+        - xl
+    linkit_extension:
+      linkit_enabled: true
+      linkit_profile: az_linkit
+    media_media:
+      allow_view_mode_override: true
 image_upload:
   status: false
   scheme: public
