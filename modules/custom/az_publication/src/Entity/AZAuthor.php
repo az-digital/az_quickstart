@@ -71,7 +71,7 @@ use Drupal\user\UserInterface;
  *     "add-form" = "/admin/structure/az_author/add",
  *     "edit-form" = "/admin/structure/az_author/{az_author}/edit",
  *     "delete-form" = "/admin/structure/az_author/{az_author}/delete",
- *     "version-history" = "/admin/structure/az_author/{az_author}/revisions",
+ *     "version_history" = "/admin/structure/az_author/{az_author}/revisions",
  *     "revision" = "/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/view",
  *     "revision_revert" = "/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/revert",
  *     "revision_delete" = "/admin/structure/az_author/{az_author}/revisions/{az_author_revision}/delete",
