@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_pmcid
+    - node.type.az_publication
+id: node.az_publication.field_az_publication_pmcid
+field_name: field_az_publication_pmcid
+entity_type: node
+bundle: az_publication
+label: 'PubMed Central Identifier (PMCID)'
+description: 'An optional PMCID assigned by the PubMed Central database'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
