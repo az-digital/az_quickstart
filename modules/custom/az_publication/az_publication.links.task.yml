@@ -14,8 +14,8 @@ entity.az_author.edit_form:
   base_route: entity.az_author.canonical
   title: 'Edit'
 
-entity.az_author.version_history:
-  route_name: entity.az_author.version_history
+entity.az_author.version-history:
+  route_name: entity.az_author.version-history
   base_route: entity.az_author.canonical
   title: 'Revisions'
 
