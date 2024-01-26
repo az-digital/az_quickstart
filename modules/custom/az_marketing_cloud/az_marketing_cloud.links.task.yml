@@ -1,0 +1,6 @@
+az_marketing_cloud.import:
+  title: 'Content for email'
+  route_name: view.az_marketing_cloud.admin
+  parent_id: system.admin_content
+  description: 'Export news and events for Marketing Cloud newsletters.'
+  weight: 101

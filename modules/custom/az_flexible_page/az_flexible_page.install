@@ -6,9 +6,9 @@
  */
 
 /**
- * Enable smart_title and views_bootstrap modules.
+ * Implements hook_update_last_removed().
  */
-function az_flexible_page_update_9201() {
-  $module_list = ['smart_title', 'views_bootstrap'];
-  \Drupal::service('module_installer')->install($module_list);
+function az_flexible_page_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 9201;
 }

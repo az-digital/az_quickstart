@@ -38,18 +38,26 @@ function az_global_footer_uninstall() {
 }
 
 /**
- * Replace Global Engagement link(s)
- *
- * Global Engagement link(s) in the global footer will be replaced with
- * International Engagement link(s).
+ * Implements hook_update_last_removed().
  */
-function az_global_footer_update_920501() {
+function az_global_footer_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920501;
+}
+
+/**
+ * Update Campus Safety link(s)
+ *
+ * Campus Safety link(s) in the global footer will be updated with
+ * new safety.arizona.edu domain.
+ */
+function az_global_footer_update_1020701() {
   $updated_count = 0;
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
-    ->condition('menu_name', 'az-footer-topics')
-    ->condition('title', 'Global Engagement')
-    ->condition('link__uri', 'https://global.arizona.edu')
+    ->condition('menu_name', 'az-footer-main')
+    ->condition('title', 'Campus Safety')
+    ->condition('link__uri', 'https://www.arizona.edu/campus-safety')
     ->execute();
 
   foreach ($menu_link_content_ids as $id) {
@@ -58,15 +66,125 @@ function az_global_footer_update_920501() {
      */
     $menu_link_content = MenuLinkContent::load($id);
     if ($menu_link_content !== NULL) {
-      $menu_link_content->title = 'International Engagement';
       // phpcs:disable
       /* @phpstan-ignore-next-line */
-      $menu_link_content->link->uri = 'https://international.arizona.edu';
+      $menu_link_content->link->uri = 'https://safety.arizona.edu';
       // phpcs:enable
       $menu_link_content->save();
       $updated_count++;
     }
   }
 
-  return t('Replaced %count Global Engagement menu link(s) in the global footer with International Engagement menu link(s).', ['%count' => $updated_count]);
+  return t('Updated %count Campus Safety menu link(s) in the global footer.', ['%count' => $updated_count]);
+}
+
+/**
+ * Update Phonebook footer links.
+ *
+ * Phonebook links in the global footer will be updated with new primary domain.
+ */
+function az_global_footer_update_1020702() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-resources')
+    ->condition('title', 'Phonebook')
+    ->condition('link__uri', 'https://directory.arizona.edu/phonebook')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      // phpcs:disable
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://phonebook.arizona.edu';
+      // phpcs:enable
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count Phonebook menu link(s) in the global footer.', ['%count' => $updated_count]);
+}
+
+/**
+ * Update Directory footer links.
+ *
+ * Change global footer A-Z Index link to Campus Directory front page.
+ */
+function az_global_footer_update_1020703() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-resources')
+    ->condition('title', 'A-Z Index')
+    ->condition('link__uri', 'https://directory.arizona.edu/index')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      // phpcs:disable
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->title = 'Directory';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://directory.arizona.edu';
+      // phpcs:enable
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count menu link(s) from A-Z Index to Directory in the global footer.', ['%count' => $updated_count]);
+}
+
+/**
+ * Update Twitter link(s) to new X link(s)
+ *
+ * Twitter icon(s) in the global footer will be updated with
+ * new X icon(s).
+ */
+function az_global_footer_update_1020801() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-social-media')
+    ->condition('title', 'Twitter')
+    ->condition('link__uri', 'https://twitter.com/uarizona')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+
+    if ($menu_link_content !== NULL) {
+      // phpcs:disable
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->title = 'X, formerly Twitter';
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://x.com/uarizona';
+
+      // Retrieve existing options
+      /* @phpstan-ignore-next-line */
+      $options = $menu_link_content->link->first()->options;
+
+      // Set new classes
+      $options['attributes']['class'] = [
+        'az-icon-x-twitter',
+        'az-icon-spacing'
+      ];
+
+      // Update the options
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->first()->options = $options;
+
+      // phpcs:enable
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count X-Twitter link(s) & icon(s) in the global footer.', ['%count' => $updated_count]);
 }
