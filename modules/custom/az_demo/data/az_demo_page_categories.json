@@ -43,6 +43,10 @@
     { "name" : "Text",
       "description" : "A page with text paragraphs.",
       "parent_name" : ""
+    },
+    { "name" : "Views",
+      "description":"A page containing views.",
+      "parent_name" : ""
     }
   ]
 }

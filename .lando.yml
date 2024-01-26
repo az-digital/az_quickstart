@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal10
 config:
-  php: '8.1'
+  php: '8.2'
   via: apache:2.4
   webroot: web
   database: mariadb:10.4
@@ -47,7 +47,7 @@ services:
       - composer install
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
-    type: node:16
+    type: node:18
     build:
       - yarn install
   chromedriver:
@@ -71,8 +71,7 @@ tooling:
     service: appserver
     user: root
     cmd:
-      - echo "Enabling theme debugging..."
-      - /app/vendor/bin/drupal --root=/app/web site:mode dev
+      - echo "theme-debug relied on Drupal console (now deprecated) and is no longer available.  Please consult CONTRIBUTING.md for instructions on how to manually turn on Twig debug and other debugging settings."
   # Provide Drush tooling to automatically know the Drupal root.
   drush:
     service: appserver

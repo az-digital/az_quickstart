@@ -17,11 +17,13 @@ dependencies:
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
+    - image.style.az_medium
     - node.type.az_person
   module:
     - field_group
     - file
     - link
+    - media
     - smart_title
     - telephone
     - text
@@ -152,7 +154,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'card mb-4 mb-md-5'
+        classes: 'card mb-4 mb-md-0'
         show_empty_fields: false
         id: ''
         element: div
@@ -314,11 +316,13 @@ content:
     weight: 4
     region: content
   field_az_media_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: az_medium
-      link: false
+      image_link: ''
+      image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 6
     region: content
