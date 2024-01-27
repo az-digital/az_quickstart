@@ -120,8 +120,8 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
         '<p>This importer associates stories with existing taxonomy terms based on tags from the feed. If a story in the feed includes tags, the importer will check if these tags correspond to any existing terms in the ' . $taxonomy_link . ' on the site. It will then associate the story with those existing terms. For instance, if a story\'s tags include \'Lunar and Planetary Laboratory\' and this term exists in the ' . $taxonomy_link . ' on the site, the importer will add this term to the story. Tags that do not match any existing taxonomy terms on the site will be ignored and not added to the story.</p>';
 
     $form['help_container']['help'] = [
-        '#type' => 'item',
-        '#markup' => $markup,
+      '#type' => 'item',
+      '#markup' => $markup,
     ];
 
     $form['term_options'] = [
@@ -174,7 +174,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    *
    * @param array &$form
    *   The form array.
-   * @param FormStateInterface $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state interface.
    *
    * @return array
