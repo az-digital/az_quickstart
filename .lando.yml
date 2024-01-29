@@ -1,4 +1,4 @@
-name: az_quickstart
+name: az_quickstart-122-add-block-content
 recipe: drupal10
 config:
   php: '8.2'

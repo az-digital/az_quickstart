@@ -1,0 +1,49 @@
+id: az_demo_flex_block_content_cta
+label: AZ Quickstart Demo Flexible Block CTA
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_flex_block_content_cta.json
+  item_selector: paragraphs
+  ids:
+    id:
+      type: integer
+
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: az_text_area
+      selector: az_text_area
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
+
+destination:
+  plugin: 'entity:block_content'
+  default_bundle: az_flexible_block
+
+process:
+  'field_az_text_area/value': az_text_area
+  'field_az_text_area/format':
+    -
+      plugin: default_value
+      default_value: az_standard
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page

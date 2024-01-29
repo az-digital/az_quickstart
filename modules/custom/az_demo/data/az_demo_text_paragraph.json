@@ -84,6 +84,12 @@
             "id": 89,
             "az_text_area": "<code>code tag</code> <br> <pre>pre tags</pre>",
             "bottom_spacing": "mb-0"
-        }
+        },
+        {
+            "id": 90,
+            "az_text_area": "<p align=\"right\"><a class=\"btn btn-blue\" href=\"https://github.com/az-digital/az_quickstart\">Flexible block CTA</a></p>",
+            "bottom_spacing": "mb-0"
+        }        
+        
     ]
 }
