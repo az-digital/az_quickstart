@@ -219,10 +219,10 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        field_az_event_date_value:
-          id: field_az_event_date_value
+        field_az_event_date_end_value:
+          id: field_az_event_date_end_value
           table: node__field_az_event_date
-          field: field_az_event_date_value
+          field: field_az_event_date_end_value
           relationship: none
           group_type: group
           admin_label: ''
@@ -231,8 +231,9 @@ display:
           value:
             min: ''
             max: ''
-            value: today
-            type: offset
+            value: now
+            type: date
+            granularity: second
           group: 1
           exposed: false
           expose:
