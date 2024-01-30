@@ -192,7 +192,7 @@ class AZCoreConfigCommands extends DrushCommands {
           unset($active['uuid']);
           // Diff the state of configuration to check for changes.
           $diff = $this->configDiffer->diff($original, $active);
-          if (!$diff->isEmpty()) {
+          if (!empty($diff)) {
 
             if ($this->io()->confirm(dt('    Update [@key/@dir] @item?', [
               '@key' => $key,
