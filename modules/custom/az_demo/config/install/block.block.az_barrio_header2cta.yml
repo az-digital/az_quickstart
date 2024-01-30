@@ -1,0 +1,31 @@
+uuid: 272a5df0-d8b9-4df1-b43a-4c483f909ae7
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:az_flexible_block:fa0928ef-a9cc-4e88-9c7a-e7f9c2d5d558'
+  module:
+    - block_class
+    - block_content
+    - system
+  theme:
+    - az_barrio
+id: az_barrio_header2cta
+theme: az_barrio
+region: header_2
+weight: 0
+provider: null
+plugin: 'block_content:fa0928ef-a9cc-4e88-9c7a-e7f9c2d5d558'
+settings:
+  id: 'block_content:fa0928ef-a9cc-4e88-9c7a-e7f9c2d5d558'
+  label: 'Header2 CTA'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /pages/text
