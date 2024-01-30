@@ -3,9 +3,10 @@
 namespace Drupal\az_core\Commands;
 
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
+use Drupal\Component\Diff\Diff;
+use Drupal\Component\Serialization\Yaml;
 use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\config_update\ConfigDiffer;
-use Drupal\Component\Serialization\Yaml;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\StorageException;
@@ -192,7 +193,7 @@ class AZCoreConfigCommands extends DrushCommands {
           unset($active['uuid']);
           // Diff the state of configuration to check for changes.
           $diff = $this->configDiffer->diff($original, $active);
-          if (!empty($diff)) {
+          if (!$this->diffIsEmpty($diff)) {
 
             if ($this->io()->confirm(dt('    Update [@key/@dir] @item?', [
               '@key' => $key,
@@ -219,6 +220,24 @@ class AZCoreConfigCommands extends DrushCommands {
       }
     }
 
+  }
+
+  /**
+   * Checks if a diff is empty.
+   *
+   * @param \Drupal\Component\Diff\Diff $diff
+   *   A diff object.
+   *
+   * @return bool
+   *   True if two sequences were identical.
+   */
+  protected function diffIsEmpty(Diff $diff) {
+    foreach ($diff->getEdits() as $edit) {
+      if ($edit->type !== 'copy') {
+        return FALSE;
+      }
+    }
+    return TRUE;
   }
 
   /**
