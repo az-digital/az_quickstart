@@ -6,7 +6,7 @@
  * of these @include files will be combined into a single file.
  */
 
-/* For structuring header utilities*/
+/* For structuring header utilities */
 header#header_arizona {
   min-height: 10px;
 }
@@ -210,6 +210,22 @@ span.field-label {
 /* The current page's list item. */
 .pager-current {
   font-weight: bold;
+}
+
+/* On mobile, limit pager number items and hide previous/next buttons. */
+@media screen and (max-width: 576px) {
+  .hide-pager-item-mobile {
+    display: none;
+  }
+}
+
+/* Match ellipsis item styling to Bootstrap .page-link styles. */
+.pager__item--ellipsis {
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
 }
 
 /**
