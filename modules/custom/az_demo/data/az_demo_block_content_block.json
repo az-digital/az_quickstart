@@ -75,32 +75,6 @@
           }
         }
       ]
-    },
-    {
-      "id":4,
-      "info" : "Header CTA Buttons",
-      "uuid" : "272a5df0-d8b9-4df1-b43a-4c483f909ae7",
-      "menu_parent_link_id": "26",
-      "field_az_block": [
-        {
-          "plugin_id": "menu_block:main",
-          "settings": {
-            "id" : "menu_block:main",
-            "label" : "Main navigation",
-            "label_display" : "visible",
-            "provider" : "menu_block",
-            "follow" : "0",
-            "follow_parent" : "child",
-            "level" : "1",
-            "depth" : "0",
-            "expand_all_items" : "1",
-            "parent" : "see menu_parent_link_id above",
-            "suggestion" : "sidebar",
-            "label_type" : "block",
-            "label_link" : "0"
-          }
-        }
-      ]
-    }    
+    }
   ]
 }
