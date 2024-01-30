@@ -232,7 +232,7 @@ display:
             min: ''
             max: ''
             value: now
-            type: date
+            type: offset
             granularity: second
           group: 1
           exposed: false
