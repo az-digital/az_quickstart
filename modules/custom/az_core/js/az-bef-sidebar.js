@@ -38,6 +38,7 @@ function clearSearchBox(event) {
 function clearAllFilters(event) {
     clearSearchBox(event);
     uncheckAllCheckboxes(event);
+    checkboxContainer.querySelector('.js-form-submit').click();
     event.preventDefault();
 }
   countButton.addEventListener('click', clearAllFilters);

@@ -29,17 +29,16 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     // Vertical style intended for sidebar use.
     $form['#attributes']['class'][] = 'az-bef-vertical';
 
-
     // Create the submit button.
     $clear_all_filters = $this->t('Clear all filters');
-	  $count = [
+    $count = [
       '#type' => 'html_tag',
       '#tag' => 'span',
       '#attributes' => [
         'class' => [
           'js-bef-filter-count',
         ],
-      ]
+      ],
     ];
 
     $form['clear_all_filters'] = [
