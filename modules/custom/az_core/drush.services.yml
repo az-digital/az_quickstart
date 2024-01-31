@@ -7,5 +7,6 @@ services:
       - '@config_update.config_diff'
       - '@extension.list.module'
       - '@serialization.yaml'
+      - '@user.permissions'
     tags:
       - { name: drush.command }

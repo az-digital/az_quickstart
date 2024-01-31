@@ -13,6 +13,7 @@ use Drupal\Core\Config\StorageException;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\user\Entity\Role;
+use Drupal\user\PermissionHandler;
 use Drush\Commands\DrushCommands;
 
 /**
@@ -49,6 +50,13 @@ class AZCoreConfigCommands extends DrushCommands {
   protected $extensionLister;
 
   /**
+   * Drupal\user\PermissionHandler definition.
+   *
+   * @var \Drupal\user\PermissionHandler
+   */
+  protected $permissionHandler;
+
+  /**
    * Drupal\Component\Serialization\Yaml definition.
    *
    * @var \Drupal\Component\Serialization\Yaml
@@ -71,13 +79,16 @@ class AZCoreConfigCommands extends DrushCommands {
    *   The extension.list.module service.
    * @param \Drupal\Component\Serialization\Yaml $yamlSerialization
    *   The serialization.yaml service.
+   * @param \Drupal\user\PermissionHandler $permissionHandler
+   *   The user permissions service.
    */
-  public function __construct(ConfigFactory $configFactory, ConfigCollector $configCollector, ConfigDiffer $configDiffer, ModuleExtensionList $extensionLister, Yaml $yamlSerialization) {
+  public function __construct(ConfigFactory $configFactory, ConfigCollector $configCollector, ConfigDiffer $configDiffer, ModuleExtensionList $extensionLister, Yaml $yamlSerialization, PermissionHandler $permissionHandler) {
     $this->configFactory = $configFactory;
     $this->configCollector = $configCollector;
     $this->configDiffer = $configDiffer;
     $this->extensionLister = $extensionLister;
     $this->yamlSerialization = $yamlSerialization;
+    $this->permissionHandler = $permissionHandler;
   }
 
   /**
@@ -191,6 +202,10 @@ class AZCoreConfigCommands extends DrushCommands {
           unset($original['uuid']);
           unset($active['_core']);
           unset($active['uuid']);
+          if ((strpos($item, 'user.role.') === 0)) {
+            // Make role alterations if a role config.
+            $active = $this->prepareRoleConfig($active, $original);
+          }
           // Diff the state of configuration to check for changes.
           $diff = $this->configDiffer->diff($original, $active);
           if (!$this->diffIsEmpty($diff)) {
@@ -220,6 +235,40 @@ class AZCoreConfigCommands extends DrushCommands {
       }
     }
 
+  }
+
+  /**
+   * Prepare role permissions for export.
+   *
+   * @param array $active
+   *   The active site role config.
+   * @param array $original
+   *   A original role config in a module.
+   *
+   * @return array
+   *   The prepared active permissions.
+   */
+  protected function prepareRoleConfig($active, $original) {
+    // Dependencies are calculated by our config provider on import.
+    $active['dependencies'] = [];
+    $active_perms = $active['permissions'] ?? [];
+    $original_perms = $original['permissions'] ?? [];
+    // Compute which permissions are seemingly being removed.
+    $removed_perms = array_diff($original_perms, $active_perms);
+    $retain_perms = [];
+    // Persist invalid permissions from the remove list.
+    // We don't want to remove permissions from inactive modules.
+    $permission_list = $this->permissionHandler->getPermissions();
+    foreach ($removed_perms as $permission) {
+      if (!isset($permission_list[$permission])) {
+        $retain_perms[] = $permission;
+      }
+    }
+    // Add the inactive permissions back into the config.
+    $final_perms = array_merge($active_perms, $retain_perms);
+    sort($final_perms);
+    $active['permissions'] = $final_perms;
+    return $active;
   }
 
   /**
