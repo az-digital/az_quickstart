@@ -28,49 +28,35 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $form['#attached']['library'][] = 'az_core/az-bef-sidebar';
     // Vertical style intended for sidebar use.
     $form['#attributes']['class'][] = 'az-bef-vertical';
-    // Form checkboxes.
-    $form['colour_select'] = [
-      '#type' => 'radios',
-      '#title' => $this->t('Pick a colour'),
-      '#options' => [
-        'blue' => $this->t('Blue'),
-        'white' => $this->t('White'),
-        'black' => $this->t('Black'),
-        'other' => $this->t('Other'),
-      ],
-      // We cannot give id attribute to radio buttons as it will break their functionality, making them inaccessible.
-      /* '#attributes' => [
-        // Define a static id so we can easier select it.
-        'id' => 'field_colour_select',
-      ],*/
-    ];
 
-    // This textfield will only be shown when the option 'Other'
-    // is selected from the radios above.
-    $form['custom_colour'] = [
-      '#type' => 'textfield',
-      '#size' => '60',
-      '#placeholder' => 'Enter favourite colour',
-      '#attributes' => [
-        'id' => 'custom-colour',
-      ],
-      '#states' => [
-        // Show this textfield only if the radio 'other' is selected above.
-        'visible' => [
-          // Don't mistake :input for the type of field or for a css selector --
-          // it's a jQuery selector. 
-          // You can always use :input or any other jQuery selector here, no matter 
-          // whether your source is a select, radio or checkbox element.
-          // in case of radio buttons we can select them by thier name instead of id.
-          ':input[name="colour_select"]' => ['value' => 'other'],
-        ],
-      ],
-    ];
 
     // Create the submit button.
-    $form['submit'] = [
-      '#type' => 'inline_template',
-      '#template' => '<button type="button" class="btn btn-success" disabled="disabled">Product unavailable</button>',
+    $clear_all_filters = $this->t('Clear all filters');
+	  $count = [
+      '#type' => 'html_tag',
+      '#tag' => 'span',
+      '#attributes' => [
+        'class' => [
+          'js-bef-filter-count',
+        ],
+      ]
+    ];
+
+    $form['clear_all_filters'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'button',
+      '#value' => $clear_all_filters,
+      'count' => $count,
+      '#attributes' => [
+        'class' => [
+          'btn',
+          'btn-primary',
+          'btn-block',
+          'js-bef-clear-all',
+          'd-none',
+        ],
+      ],
+      '#weight' => -10,
     ];
   }
 
