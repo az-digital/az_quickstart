@@ -87,7 +87,7 @@
         },
         {
             "id": 90,
-            "az_main_content": "<p align=\"right\"><a class=\"btn btn-blue\" href=\"https://github.com/az-digital/az_quickstart\">Flexible block CTA</a></p>",
+            "az_text_area": "<p align=\"right\"><a class=\"btn btn-blue\" href=\"https://github.com/az-digital/az_quickstart\">Flexible block CTA</a></p>",
             "bottom_spacing": "mb-0"
         }                
     ]

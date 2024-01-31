@@ -4,18 +4,7 @@
       "id":4,
       "info" : "Header2 CTA",
       "uuid" : "272a5df0-d8b9-4df1-b43a-4c483f909ae7",
-      "field_az_block": [
-        {
-          "plugin_id": "block_content:fa0928ef-a9cc-4e88-9c7a-e7f9c2d5d558",
-          "settings": {
-          "id" : "az_barrio_header2cta",
-          "label" : "Header2 CTA",
-          "label_display" : "hidden",
-          "label_type" : "block",
-          "label_link" : "0"
-          }
-        }
-      ]
+      "az_main_content"  : "90"
     }
   ]
 }

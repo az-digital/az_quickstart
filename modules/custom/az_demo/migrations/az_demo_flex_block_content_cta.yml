@@ -17,8 +17,6 @@ source:
   data_parser_plugin: json
   urls:
     - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_flex_block_content_cta.json
-  constants:
-    MENU_ITEM_PREFIX: 'main:menu_link_content'
   item_selector: blocks
   ids:
     id:
@@ -30,14 +28,12 @@ source:
       selector: info
     - name: uuid
       selector: uuid
-    - name: menu_parent_link_id
-      selector: menu_parent_link_id
-    - name: field_az_block
-      selector: field_az_block
+    - name: field_az_main_content
+      selector: az_main_content
 process:
   type:
     plugin: default_value
-    default_value: az_custom_menu_block
+    default_value: az_flexible_block
   info: info
   uuid: uuid
 
@@ -56,11 +52,6 @@ process:
       plugin: migration_lookup
       migration:
         - az_demo_text_paragraph
-        - az_demo_text_background_paragraph
-        - az_demo_text_media_paragraph
-        - az_demo_splitscreen_paragraph
-        - az_demo_card_paragraph
-        - az_demo_view_paragraph
       source: '@pseudo_exploded_paragraphs'
 
   field_az_main_content:
@@ -70,37 +61,6 @@ process:
       target_id: '0'
       target_revision_id: '1'
 
-  pseudo_menu_parent_link_id:
-    - plugin: skip_on_empty
-      method: process
-      source: menu_parent_link_id
-    - plugin: migration_lookup
-      source: menu_parent_link_id
-      migration:
-        - az_demo_menu_links
-    - plugin: entity_value
-      entity_type: menu_link_content
-      field_name: uuid
-  pseudo_parent_uuid:
-    - plugin: skip_on_empty
-      method: process
-      source: '@pseudo_menu_parent_link_id/0/value'
-
-  field_az_block:
-    plugin: sub_process
-    source: field_az_block
-    process:
-      plugin_id: plugin_id
-      settings: settings
-  field_az_block/0/settings/parent:
-    - plugin: skip_on_empty
-      source: '@pseudo_parent_uuid'
-      method: process
-    - plugin: concat
-      source:
-        - constants/MENU_ITEM_PREFIX
-        - '@pseudo_parent_uuid'
-      delimiter: ":"
 destination:
   plugin: entity:block_content
-  bundle: az_custom_menu_block
+  bundle: az_flexible_block
