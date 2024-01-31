@@ -52,19 +52,13 @@ set classes = [
     </h2>
     {{ title_suffix }}
     {% endif %}
-
-      {# Menu. #}
-      {% block content %}
-      {{ content }}
-      {% endblock %}
       
-    {# Menu. 
-      <h2{{ title_attributes.setAttribute('id', heading_id).addClass('h4').addClass('mt-md-5') }}>{{ configuration.label }}
-        </h2>
+    {# Menu #}
+    <h2{{ title_attributes.setAttribute('id', heading_id).addClass('h4').addClass('mt-md-5') }}>{{ configuration.label }}</h2>
     {% block content %}
       <a href="#" class="btn btn-sm btn-primary btn-block mb-3">Clear filters</a>
       {{ content }}
     {% endblock %}
-    #}
+    
 </nav>
 
