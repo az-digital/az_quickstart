@@ -56,6 +56,7 @@ function az_demo_blocks_to_hide_by_path(): array {
     'az_barrio_sidebar_menu' => [
       '/pages/split-screen-no-sidebar',
       '/pages/text-background-no-sidebar',
+      '/pages/combo-page-no-sidebar',
       '/pages/page-list-finder',
     ],
   ];
