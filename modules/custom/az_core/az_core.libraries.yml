@@ -19,3 +19,5 @@ az-bef-sidebar:
   css:
     theme:
       css/az-bef-sidebar.css: {}
+  js:
+    js/az-bef-sidebar.js: {}
