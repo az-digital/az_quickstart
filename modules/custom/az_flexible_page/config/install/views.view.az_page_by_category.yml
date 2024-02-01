@@ -339,12 +339,17 @@ display:
     display_plugin: block
     position: 3
     display_options:
+      title: Filter
       fields: {  }
+      pager:
+        type: none
+        options:
+          offset: 0
       exposed_form:
         type: az_bef
         options:
           submit_button: Apply
-          reset_button: 1
+          reset_button: 0
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -463,7 +468,7 @@ display:
           group_type: group
           admin_label: ''
           plugin_id: taxonomy_index_tid
-          operator: or
+          operator: and
           value: {  }
           group: 1
           exposed: true
@@ -522,8 +527,10 @@ display:
           relationship: none
           view_mode: az_row
       defaults:
+        title: false
         css_class: false
         use_ajax: false
+        pager: false
         exposed_form: false
         style: false
         style_options: false
@@ -531,9 +538,11 @@ display:
         fields: false
         filters: false
         filter_groups: false
+        pager_options: false
       css_class: ''
       use_ajax: true
       display_description: ''
+      pager_options: null
       style_options: null
       exposed_block: true
       display_extenders: {  }
@@ -542,7 +551,6 @@ display:
       contexts:
         - 'languages:language_interface'
         - url
-        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }

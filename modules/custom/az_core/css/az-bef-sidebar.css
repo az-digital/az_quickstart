@@ -6,12 +6,12 @@
   margin-bottom: 1rem;
 }
 
-.az-bef-vertical>form>.form-row>fieldset {
+form>.form-row>fieldset {
   width: 100%;
   margin-bottom: 0;
 }
 
-.az-bef-vertical>form>.form-row>fieldset.form-type-textfield>label {
+form>.form-row>fieldset.form-type-textfield>label {
   font-weight: 600;
   color: #1e5288;
   font-size: 1.25rem;
@@ -88,4 +88,17 @@ div.checkbox>div.bef-checkboxes>ul>li: has(ul)>div>ul>li:has(ul)>div>label {
   font-weight: 600 !important;
   width: 100% !important;
   margin-top: 0.5rem;
+}
+
+button.js-bef-clear-all {
+  margin-bottom: 1rem;
+}
+
+.js-bef-filter-count {
+  margin-left: 5px;
+}
+
+.az-bef-vertical h2 {
+  margin-top: 3rem !important;
+  font-size: 1.5rem;
 }

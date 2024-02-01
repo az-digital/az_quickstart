@@ -48,10 +48,12 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#attributes' => [
         'class' => [
           'btn',
+          'btn-sm',
           'btn-primary',
           'btn-block',
           'js-bef-clear-all',
           'd-none',
+          'mx-1',
         ],
       ],
       '#weight' => -10,
