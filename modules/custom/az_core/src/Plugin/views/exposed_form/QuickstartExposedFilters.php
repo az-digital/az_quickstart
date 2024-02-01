@@ -30,7 +30,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $form['#attributes']['class'][] = 'az-bef-vertical';
 
     // Create the submit button.
-    $clear_all_filters = $this->t('Clear all filters');
     $count = [
       '#type' => 'html_tag',
       '#tag' => 'span',
@@ -44,7 +43,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $form['clear_all_filters'] = [
       '#type' => 'html_tag',
       '#tag' => 'button',
-      '#value' => $clear_all_filters,
+      '#value' => $this->t('Clear all filters'),
       'count' => $count,
       '#attributes' => [
         'class' => [
