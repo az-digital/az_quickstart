@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - block_class
   theme:
     - az_barrio
 id: az_barrio_local_actions
@@ -12,6 +14,6 @@ plugin: local_actions_block
 settings:
   id: local_actions_block
   label: 'Primary admin actions'
-  provider: core
   label_display: '0'
+  provider: core
 visibility: {  }

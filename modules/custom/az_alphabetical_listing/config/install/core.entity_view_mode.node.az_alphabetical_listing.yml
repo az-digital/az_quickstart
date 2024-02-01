@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_alphabetical_listing
+label: 'Alphabetical Listing'
+targetEntityType: node
+cache: true

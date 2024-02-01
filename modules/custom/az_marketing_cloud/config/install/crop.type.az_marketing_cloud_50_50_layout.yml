@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+label: 'Marketing Cloud - 50/50 Layout'
+id: az_marketing_cloud_50_50_layout
+description: 'Image crop for use in Marketing Cloud 50/50 Layout.'
+aspect_ratio: '3:2'
+soft_limit_width: 270
+soft_limit_height: 180
+hard_limit_width: null
+hard_limit_height: null

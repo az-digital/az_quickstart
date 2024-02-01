@@ -1,17 +1,23 @@
 global-styling:
   version: 1.x
   css:
-    component:
+    theme:
       css/style.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap
+az-ajax:
+  js:
+    js/az-ajax.js: {}
 az-media-display:
   css:
     component:
       css/az-media-display.css: {}
 az-barrio-off-canvas-nav:
+  css:
+    theme:
+      css/az-barrio-off-canvas-nav.css: {}
   js:
     js/az-barrio-off-canvas-nav.js: {}
-  dependencies:
-    - az_barrio/arizona-bootstrap
 az-proxima-nova:
   css:
     theme:
@@ -26,6 +32,11 @@ arizona-bootstrap:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
   js:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
+  dependencies:
+    - core/jquery
+button-no-conflict:
+  js:
+    js/button-no-conflict.js: {}
   dependencies:
     - core/jquery
 material-design-icons-sharp:

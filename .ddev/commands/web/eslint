@@ -4,4 +4,4 @@
 ## Usage: eslint [args]
 ## Example: "eslint" or "eslint myfile.js" or "eslint ."
 
-cd /usr/local/quickstart-install-profile && eslint $@
+cd /usr/local/quickstart-install-profile && yarn run eslint $@

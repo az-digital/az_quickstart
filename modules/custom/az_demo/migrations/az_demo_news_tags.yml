@@ -1,0 +1,42 @@
+id: az_demo_news_tags
+label: AZ Quickstart Demo News Tags
+migration_tags:
+  - Quickstart Demo Content
+  - Taxonomy
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_news_tags.json
+  item_selector: news_tags
+  ids:
+    name:
+      type: string
+
+  fields:
+    -
+      name: name
+      selector: name
+    -
+      name: description
+      selector: description
+    -
+      name: parent
+      selector: parent_name
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_news_tags
+
+process:
+  name: name
+  description: description
+  vid:
+    plugin: default_value
+    default_value: az_news_tags
+
+dependencies:
+  enforced:
+    module:
+      - az_news

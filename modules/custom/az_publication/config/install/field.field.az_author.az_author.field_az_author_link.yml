@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.az_author.field_az_author_link
+  module:
+    - az_publication
+    - link
+id: az_author.az_author.field_az_author_link
+field_name: field_az_author_link
+entity_type: az_author
+bundle: az_author
+label: Link
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 0
+  link_type: 17
+field_type: link

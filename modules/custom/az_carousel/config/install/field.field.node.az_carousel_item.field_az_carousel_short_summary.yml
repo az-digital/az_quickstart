@@ -11,7 +11,7 @@ bundle: az_carousel_item
 label: 'Short Summary'
 description: "Optional short summary/details for your carousel slide.<br />\r\n<strong>Maximum of 255 characters.</strong>"
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

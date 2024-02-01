@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_ieee
+label: 'Institute of Electrical and Electronics Engineers Style (IEEE)'
+style: ieee
+custom: false

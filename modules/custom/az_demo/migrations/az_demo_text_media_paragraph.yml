@@ -42,6 +42,12 @@ source:
     -
       name: position
       selector: position
+    -
+      name: spacing
+      selector: spacing
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
 
 
 destination:
@@ -62,20 +68,31 @@ process:
       plugin: migration_lookup
       source: filename
       migration:
+        - az_demo_remote_video
         - az_demo_image_file
+      source_ids:
+        - az_demo_remote_video:
+            - filename
+        - az_demo_image_file:
+            - filename
 
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    bg_text_color: bg_color
-    bg_attach: bg_attachment
-    position: position
-    full_width: full_width
-    content_style: content_style
-
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_text_media_paragraph_behavior:
+        bg_color: bg_color
+        bg_attachment: bg_attachment
+        position: position
+        full_width: full_width
+        style: content_style
+        text_media_spacing: spacing
+        az_display_settings:
+          bottom_spacing: bottom_spacing
 
 migration_dependencies:
   required:
     - az_demo_image_file
+    - az_demo_remote_video
 
 dependencies:
   enforced:

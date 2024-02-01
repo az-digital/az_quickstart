@@ -2,8 +2,9 @@
 
 namespace Drupal\az_migration\Plugin\migrate\source;
 
-use Drupal\migrate\Row;
+//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
 use Drupal\file\Plugin\migrate\source\d7\File;
+use Drupal\migrate\Row;
 
 /**
  * Drupal 7 file source from database.
@@ -72,6 +73,7 @@ class AZFileHandle extends File {
     $path = str_replace(['public:/', 'private:/', 'temporary:/'],
     [$this->publicPath, $this->privatePath, $this->temporaryPath],
     $row->getSourceProperty('uri'));
+    // Set the filepath for the source files.
     $row->setSourceProperty('filepath', $path);
 
     return parent::prepareRow($row);

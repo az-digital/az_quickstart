@@ -1,4 +1,6 @@
 services:
   az_card.image:
     class: Drupal\az_card\AZCardImageHelper
-    arguments: ['@entity_type.manager', '@renderer']
+    arguments:
+      - '@entity_type.manager'
+      - '@renderer'

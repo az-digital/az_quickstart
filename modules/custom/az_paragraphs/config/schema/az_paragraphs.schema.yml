@@ -1,0 +1,38 @@
+field.formatter.settings.az_background_media:
+  type: mapping
+  label: 'Background Media'
+  mapping:
+    image_style:
+      type: string
+      label: 'Responsive image style'
+    css_settings:
+      type: mapping
+      label: 'Default CSS Settings'
+      mapping:
+        z_index:
+          type: string
+          label: 'Z Index'
+        color:
+          type: string
+          label: 'Color'
+        x:
+          type: string
+          label: 'Horizontal Alignment'
+        y:
+          type: string
+          label: 'Vertical Alignment'
+        attachment:
+          type: string
+          label: 'Background Attachment'
+        repeat:
+          type: string
+          label: 'Background Repeat'
+        size:
+          type: string
+          label: 'Background Size'
+        important:
+          type: boolean
+          label: 'Add "!important" to the background property.'
+        selector:
+          type: string
+          label: 'The CSS selector to add background media to.'

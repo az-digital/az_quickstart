@@ -4,6 +4,7 @@ dependencies:
   config:
     - views.view.az_events
   module:
+    - block_class
     - system
     - views
   theme:
@@ -17,8 +18,8 @@ plugin: 'views_block:az_events-az_sidebar'
 settings:
   id: 'views_block:az_events-az_sidebar'
   label: ''
-  provider: views
   label_display: visible
+  provider: views
   views_label: ''
   items_per_page: none
   context_mapping: {  }

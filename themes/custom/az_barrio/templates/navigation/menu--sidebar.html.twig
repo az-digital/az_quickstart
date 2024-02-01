@@ -19,19 +19,25 @@
  */
 #}
 {% import _self as menus %}
-
 {#
   We call a macro which calls itself to render the full tree.
   @see http://twig.sensiolabs.org/doc/tags/macro.html
 #}
 {{ menus.menu_links(items, attributes, 0) }}
 {% macro menu_links(items, attributes, menu_level) %}
-  {% import _self as menus %}
+  {%
+    set nav_pills_ul_classes = [
+      'nav',
+      'flex-column',
+      'nav-pills',
+      'bg-white',
+    ]
+  %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul{{ attributes.addClass('nav').addClass('flex-column').addClass('nav-pills').addClass('list-group') }}>
+      <ul{{ attributes.addClass(nav_pills_ul_classes)}}>
     {% else %}
-      <ul class="menu">
+      <ul{{ attributes.addClass(nav_pills_ul_classes).addClass('menu') }}>
     {% endif %}
     {% for item in items %}
       {%

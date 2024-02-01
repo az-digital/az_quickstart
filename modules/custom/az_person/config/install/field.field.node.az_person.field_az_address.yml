@@ -14,11 +14,10 @@ bundle: az_person
 label: Address(es)
 description: 'Office location(s)'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   allowed_formats:
     - plain_text
 field_type: text_long
-

@@ -4,3 +4,15 @@
  * @file
  * Contains az_paragraphs_text_media.module.
  */
+
+/**
+ * Implements hook_theme().
+ */
+function az_paragraphs_text_media_theme($existing, $type, $theme, $path) {
+  return [
+    'field__paragraph__az_text_media' => [
+      'template' => 'field--paragraph--az-text-media',
+      'base hook' => 'field',
+    ],
+  ];
+}

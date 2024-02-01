@@ -6,6 +6,7 @@ dependencies:
     - paragraphs.paragraphs_type.az_photo_gallery
   module:
     - media_library
+    - media_library_edit
 id: paragraph.az_photo_gallery.default
 targetEntityType: paragraph
 bundle: az_photo_gallery
@@ -16,7 +17,9 @@ content:
     weight: 0
     settings:
       media_types: {  }
-    third_party_settings: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
     region: content
 hidden:
   created: true

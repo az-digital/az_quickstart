@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_quick_links
+    - field.storage.block_content.field_az_links
+  module:
+    - link
+id: block_content.az_quick_links.field_az_links
+field_name: field_az_links
+entity_type: block_content
+bundle: az_quick_links
+label: Links
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 2
+field_type: link

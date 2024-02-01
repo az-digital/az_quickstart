@@ -72,6 +72,7 @@
       "title": ""
     },
     {
+      "uuid": "5cec161c-71bc-4d23-824f-a692400ee17a",
       "filename" : "arizona_campus_fireworks.jpg",
       "alt" : "Fireworks over campus",
       "title": ""
@@ -87,9 +88,76 @@
       "title": ""
     },
     {
+      "filename" : "runners_brains.jpeg",
+      "alt" : "Woman running",
+      "title": ""
+    },
+    {
+      "filename" : "runners_brains_2.jpg",
+      "alt" : "Man running",
+      "title": ""
+    },
+    {
+      "filename" : "mans_best_friend.jpeg",
+      "alt" : "Cute dog",
+      "title": ""
+    },
+    {
+      "filename" : "connection-647206_1920.jpeg",
+      "alt" : "Fractal superimposed on human silhouettes",
+      "title": "",
+      "caption": "People with amyotrophic lateral sclerosis lose the ability to move because the neurons that connect their muscles with their brain break down and die."
+    },
+    {
       "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
       "alt" : "The Hay Wain by Hieronymus Bosch",
       "title": ""
+    },
+    {
+      "filename" : "arizona_running.png",
+      "alt" : "Arizona running logo",
+      "title": ""
+    },
+    {
+      "filename" : "canyon_running.jpg",
+      "alt" : "Woman running in a canyon",
+      "title": ""
+    },
+    {
+      "filename" : "earth_solid.jpg",
+      "alt" : "A volcanic crater",
+      "title": ""
+    },
+    {
+      "filename" : "earth_solid_2.jpg",
+      "alt" : "A mountain range with a river of lava",
+      "title": ""
+    },
+    {
+      "filename" : "pumpelly_arizona.jpg",
+      "alt" : "Map of Arizona from 1878",
+      "title": ""
+    },
+    {
+      "filename" : "europe_film.png",
+      "alt" : "Northern European film festival logo",
+      "title": ""
+    },
+    {
+      "filename" : "holsclaw_hall.jpg",
+      "alt" : "Holsclaw Hall",
+      "title": ""
+    },
+    {
+      "filename" : "gmo.jpg",
+      "alt" : "Concept of research on genetic modification of food",
+      "title": ""
+    },
+    {
+      "filename" : "sea-anemone.jpg",
+      "alt" : "A close-up image of a vibrant sea anemone under water. The anemone's long, slender tentacles are colored in varying shades of blue and tipped with yellow, creating a striking contrast. Partially hidden among the tentacles, a clownfish with its characteristic orange and white stripes can be seen, adding a sense of life and movement to the scene. The background is a blur of marine colors, indicating a complex reef environment.",
+      "title" : "Clownfish Peekaboo in a Sea Anemone",
+      "uuid": "6c01643a-9935-4317-874f-5fd0a29fad26"
     }
   ]
 }

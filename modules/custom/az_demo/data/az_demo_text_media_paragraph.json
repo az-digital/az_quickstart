@@ -7,9 +7,11 @@
             "filename" : "lynx.jpg",
             "full_width" : "full-width-background",
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "box",
             "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
-            "bg_color" : [{"value":"light"}]
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
         },
         {
             "id":42,
@@ -18,9 +20,11 @@
             "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
             "full_width" : "full-width-background",
             "bg_attachment" : "bg-fixed",
+            "spacing" : "y-5",
             "content_style" : "column",
             "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
-            "bg_color" : [{"value":"light"}]
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
         },
         {
             "id":43,
@@ -29,9 +33,11 @@
             "filename" : "study.jpeg",
             "full_width" : false,
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "column",
             "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
-            "bg_color" : [{"value":"dark"}]
+            "bg_color" : "bg-transparent-black",
+            "bottom_spacing" : "mb-0"
         },
         {
             "id":44,
@@ -40,9 +46,11 @@
             "filename" : "mecklerphoto_mens-wearhouse.jpeg",
             "full_width" : "full-width-background",
             "bg_attachment" : "",
+            "spacing" : "y-5",
             "content_style" : "box",
             "position" : "col-md-8 col-lg-6",
-            "bg_color" : [{"value":"light"}]
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
         },
         {
             "id":45,
@@ -51,9 +59,11 @@
             "filename" : "june_bugs.jpeg",
             "full_width" : false,
             "bg_attachment" : "bg-fixed",
+            "spacing" : "y-5",
             "content_style" : "box",
             "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
-            "bg_color" : [{"value":"dark"}]
+            "bg_color" : "bg-transparent-black",
+            "bottom_spacing" : "mb-0"
         },
         {
             "id":46,
@@ -64,7 +74,8 @@
             "bg_attachment" : "",
             "content_style" : "bottom",
             "position" : "",
-            "bg_color" : [{"value":"dark"}]
+            "bg_color" : "bg-transparent-black",
+            "bottom_spacing" : "mb-0"
         },
         {
             "id":47,
@@ -75,7 +86,97 @@
             "bg_attachment" : "",
             "content_style" : "bottom",
             "position" : "",
-            "bg_color" : [{"value":"light"}]
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":48,
+            "az_title" : "Column with Video",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=fePMsmtd7EU",
+            "full_width" : false,
+            "bg_attachment" : "",
+            "spacing" : "y-5",
+            "content_style" : "column",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":49,
+            "az_title" : "Column with Full-Width Video",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=9VntGNAE4L8",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "spacing" : "y-5",
+            "content_style" : "column",
+            "position" : "",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":50,
+            "az_title" : "Box With Video",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=KkogmuRNt1M",
+            "full_width" : false,
+            "bg_attachment" : "",
+            "spacing" : "y-5",
+            "content_style" : "box",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":51,
+            "az_title" : "Box With Full-Width Video",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=x_C7XpqJdso",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "spacing" : "y-5",
+            "content_style" : "box",
+            "position" : "col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":52,
+            "az_title" : "Bottom style with video",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=o5AcFV8f230",
+            "full_width" : false,
+            "bg_attachment" : "",
+            "content_style" : "bottom",
+            "position" : "",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":53,
+            "az_title" : "Bottom style with full-width video",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=GHnSIobpE-0",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "content_style" : "bottom",
+            "position" : "",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":86,
+            "az_title" : "",
+            "az_text_area" : "<h1 class=\"mt-0\">Welcome to this Marketing Campaign Page!<\/h1>\r\n\r\n<p>This is an example of a Marketing Campaign Page.<\/p>\r\n\r\n<p class=\"mt-4 mb-0\"><a class=\"btn btn-blue\" href=\"https:\/\/quickstart.arizona.edu\/pages\">Visit Quickstart site<\/a><\/p>\r\n",
+            "filename" : "arizona_campus_fireworks.jpg",
+            "full_width" : "full-width-background",
+            "bg_attachment" : "",
+            "spacing" : "y-7",
+            "content_style" : "box",
+            "position" : "col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6",
+            "bg_color" : "bg-transparent-white",
+            "bottom_spacing" : "mb-0"
         }
     ]
 }

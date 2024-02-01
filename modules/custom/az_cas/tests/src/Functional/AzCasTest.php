@@ -3,14 +3,14 @@
 namespace Drupal\Tests\az_cas\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Tests for the AZ CAS module.
  *
  * @group az_cas
  */
-class AzCasTest extends BrowserTestBase {
+class AzCasTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -27,19 +27,19 @@ class AzCasTest extends BrowserTestBase {
   /**
    * @var string
    */
-  protected $defaultTheme = 'seven';
+  protected $defaultTheme = 'claro';
 
   /**
    * The created user.
    *
-   * @var User
+   * @var \Drupal\user\Entity\User
    */
   protected $adminUser;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a test user.
@@ -94,9 +94,19 @@ class AzCasTest extends BrowserTestBase {
       $config->get('server.cert')
     );
     $this->assertSession()->fieldValueEquals(
-      'gateway[check_frequency]',
+      'gateway[enabled]',
       // This is the az_cas overridden value.
-      $config->get('gateway.check_frequency')
+      $config->get('gateway.enabled')
+    );
+    $this->assertSession()->fieldValueEquals(
+      'gateway[recheck_time]',
+      // This is the az_cas overridden value.
+      $config->get('gateway.recheck_time')
+    );
+    $this->assertSession()->fieldValueEquals(
+      'gateway[method]',
+      // This is the az_cas overridden value.
+      $config->get('gateway.method')
     );
     $this->assertSession()->fieldValueEquals(
       'gateway[paths][negate]',

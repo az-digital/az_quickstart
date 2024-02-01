@@ -3,19 +3,19 @@
 First off, thanks for taking the time to contribute to AZ Quickstart!
 
 AZ Quickstart is created by [Arizona Digital](https://digital.arizona.edu/), a
-team of web-focused volunteers that meet weekly to create projects like [Arizona Bootstrap](https://digital.arizona.edu/ua-bootstrap) and
+team of web-focused volunteers that meet weekly to create projects like [Arizona Bootstrap](https://digital.arizona.edu/arizona-bootstrap) and
 [Arizona Quickstart](https://quickstart.arizona.edu/).
 
 ## Things you'll need to get started
 
   * A [GitHub account](https://github.com/join).
   * [Slack](https://uarizona.slack.com) is our main source of communications.
-    * Use the `#ua-quickstart-d8` channel for questions/comments related to this
+    * Use the `#azdigital-quickstart` channel for questions/comments related to this
       project.
-    * Use the `#friday-meetings` channel to ask questions or get updates related
-      to Arizona Digital meetings, both physical and via Zoom.
-    * Use the `#uadigital-general` channel to ask general questions related to
-      Arizona Digital.
+    * Use the `#azdigital-meetings` channel to ask questions or get updates related
+      to Arizona Digital meetings and workshops.
+    * Use the `#azdigital-support` channel to ask general questions related to
+      Arizona Digital and get support for Arizona Digital products.
   * A basic understanding of [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git).
   * Local containerized (Docker) dev environment tool either lando or ddev
     * [Lando](https://docs.lando.dev/basics/installation.html)
@@ -160,6 +160,14 @@ When you install either of the recommended environments with the configuration
 provided by this project, you will have our testing environment built in, but it
 can still be a bit complicated.
 
+## Testing with phpstan prior to making a pull request
+PHPStan focuses on finding errors in your code without actually running it. It
+catches whole classes of bugs even before you write tests for the code. It moves
+PHP closer to compiled languages in the sense that the correctness of each line
+of the code can be checked before you run the actual line.
+
+`lando phpstan`
+`ddev phpstan`
 ### Local testing on Lando
 With lando running and quickstart installed and the branch with the changes you
 want to run tests on checked out.
@@ -253,20 +261,38 @@ lando eslint myfile.js
 ddev eslint myfile.js
 ```
 
-## Theme debugging and the development site mode.
+## Theme debugging
 
 Developing within Drupal can be a real challenge without debugging enabled.
 
-[Devel](https://www.drupal.org/project/devel) and [Drupal Console](https://drupalconsole.com/) are both included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.
+[Devel](https://www.drupal.org/project/devel) is included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.  See "Visual Studio Code Integration" 
 
-You can easily enable them by using the following commands.
+### Turn on Twig debugging
 
-### Lando
-```
-lando drush en -y devel && lando drupal site:mode dev
-```
+On a local development site:
+1. Copy `sites/default/default.services.yml` to `sites/default/services.yml` (if `services.yml` doesn't already exist)
+2. Change the `debug` setting to `true` in the `twig.config` section of `parameters`
+3. Clear cache
 
-### DDev
-```
-ddev drush en -y devel && ddev drupal site:mode dev
-```
+If using lando or ddev for local devleopment, you may need to use a code editor such as VS Code that allows you to connect to a running Docker container to make this change (see VS Code specific insructions in the "Local Development" section of this document).
+
+## Configuration Management and Database Updates
+
+A question that frequently arises for Quickstart contributors is whether a change that they are making requires a database update or if configuration file changes are sufficient.
+
+### Context
+
+`az-digital/az_quickstart` is a Drupal distribution that is hosted on many different platforms by a variety of teams employing different strategies and cadences when it comes to updating their Quickstart websites. This necessitates relatively strict guidelines that should be followed by the Arizona Digital team when making changes to Quickstart itself.
+
+### Configuration changes that require database updates
+
+Configuration changes will require database updates if:
+-  Your code adds a new setting that never existed before.
+-  You are changing a default setting and it would be best for it to be the new default on sites immediately, regardless of downstream decisions.
+-  Your code replaces an existing setting and has a new key name.
+
+### Configuration changes that do not require database updates
+
+Configuration changes will not require database updates if:
+- Your code adds another option to an existing setting and doesn't need to be selected by default.
+- Your code changes an existing setting, but doesn't have breaking implications if configuration updates aren't applied right away downstream.

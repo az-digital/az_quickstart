@@ -1,0 +1,17 @@
+<?php
+
+/**
+ * @file
+ * Az_media.install.
+ *
+ * Install, update and uninstall functions for
+ * az_media module.
+ */
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function az_media_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 9201;
+}

@@ -274,6 +274,12 @@ az_barrio.settings:
     bootstrap_barrio_region_class_footer_sub:
       type: text
       label: 'Classes for footer sub region'
+    bootstrap_barrio_region_clean_footer_sub_menus:
+      type: boolean
+      label: 'Enable clean wrapper for footer sub menus region'
+    bootstrap_barrio_region_class_footer_sub_menus:
+      type: text
+      label: 'Classes for footer sub menus region'
     bootstrap_barrio_region_clean_az_page_bottom:
       type: boolean
       label: 'Enable clean wrapper for page bottom region'
@@ -289,6 +295,9 @@ az_barrio.settings:
     az_bs_overlay_menu_scroll:
       type: boolean
       label: 'Enable overlay menu scroll'
+    land_acknowledgment:
+      type: boolean
+      label: 'Enable land acknowledgment'
     info_security_privacy:
       type: boolean
       label: 'Enable privacy link'
@@ -349,3 +358,9 @@ az_barrio.settings:
     footer_logo_path:
       type: path
       label: 'Footer logo path'
+    header_one_col_classes:
+      type: string
+      label: 'Header column one classes'
+    header_two_col_classes:
+      type: string
+      label: 'Header column two classes'

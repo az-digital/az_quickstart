@@ -1,0 +1,11 @@
+az_alphabetical_listing:
+  version: 1.x
+  css:
+    theme:
+      css/alphabetical_listing.css: {}
+  js:
+    js/alphabetical_listing.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - az_barrio/arizona-bootstrap

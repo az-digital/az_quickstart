@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az-footer-social-media
+label: 'Footer - Social Media'
+description: 'Contains links to social media accounts.'
+locked: false

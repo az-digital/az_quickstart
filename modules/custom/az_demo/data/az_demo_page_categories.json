@@ -1,0 +1,52 @@
+{
+    "page_categories": [
+    { "name" : "Accordions",
+      "description" : "A page with accordions.",
+      "parent_name" : ""
+    },
+    { "name" : "Cards",
+      "description" : "A page with cards.",
+      "parent_name" : ""
+    },
+    { "name" : "Carousel",
+      "description" : "A page with a carousel.",
+      "parent_name" : ""
+    },
+    { "name" : "Events",
+      "description" : "A page with events.",
+      "parent_name" : ""
+    },
+    { "name" : "Home Page",
+      "description" : "The home page for the site.",
+      "parent_name" : ""
+    },
+    { "name" : "Marketing Campaign",
+      "description" : "A page intended to be used for a marketing campaign.",
+      "parent_name" : ""
+    },
+    { "name" : "Menu Blocks",
+      "description" : "A page with embedded menu blocks.",
+      "parent_name" : ""
+    },
+    { "name" : "No Sidebar",
+      "description" : "A page which is included in the main navigation menu but has the sidebar hidden.",
+      "parent_name" : ""
+    },
+    { "name" : "Photo Galleries",
+      "description" : "A page with photo galleries.",
+      "parent_name" : ""
+    },
+    { "name" : "Split Screen",
+      "description" : "A page with split screen paragraphs.",
+      "parent_name" : ""
+    },
+    { "name" : "Text",
+      "description" : "A page with text paragraphs.",
+      "parent_name" : ""
+    },
+    { "name" : "Views",
+      "description":"A page containing views.",
+      "parent_name" : ""
+    }
+  ]
+}

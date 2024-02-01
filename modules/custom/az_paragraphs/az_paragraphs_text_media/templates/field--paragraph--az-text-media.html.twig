@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * AZ Paragraphs - Text on Media override fields.
+ *
+ * This template is here in order to remove all markup around
+ * the fields attached to a az_text_media paragraph.
+ *
+ * @see template_preprocess_field()
+ */
+#}
+
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}

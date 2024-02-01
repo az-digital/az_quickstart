@@ -1,0 +1,66 @@
+{#
+/**
+ * @file
+ * Default theme implementation for a responsive background image.
+ *
+ * Available variables:
+ * - uri: The URI of the image.
+ * - responsive_image_style_id: The ID of the responsive image style.
+ * - fallback_image: For mobile first, this is typically the smallest image.
+ * - selector: The css selector to use
+ * - color: The background color
+ * - x: The x offset
+ * - y: The y offset
+ * - attachment: The attachment property (scroll or fixed)
+ * - repeat: The repeat settings
+ * - background_size: The background size property if necessary
+ * - media_query: Set the media query (all, print or screen)
+ * - important: Add the `!important` property to all
+ *   background properties.
+ * - z_index: The z-index property if necessary
+ * - media_queries: An associative array of media query and image path.
+ *   - media: A CSS media query.
+ *   - src: A path or url to an image file.
+ *
+ * @see template_preprocess_az_responsive_background_image()
+ */
+#}
+
+<style type="text/css">
+  {{ selector }} {
+    background-image: url({{ fallback_image|raw }}){{ important }};
+    {% if repeat %}
+    background-repeat: {{ repeat }}{{ important }};
+    {% endif %}
+    {% if color %}
+    background-color: {{ color }}{{ important }};
+    {% endif %}
+    {% if size %}
+    background-size: {{ size }}{{ important }};
+    -webkit-background-size: {{ size }}{{ important }};
+    -moz-background-size: {{ size }}{{ important }};
+    -o-background-size: {{ size }}{{ important }};
+    {% endif %}
+    {% if attachment %}
+    background-attachment: {{ attachment }}{{ important }};
+    {% endif %}
+    {% if x %}
+    background-position-x: {{ x }}{{ important }};
+    {% endif %}
+    {% if y %}
+    background-position-y: {{ y }}{{ important }};
+    {% endif %}
+    {% if z_index %}
+    z-index: {{ z_index }}{{ important }};
+    {% endif %}
+  }
+  {% if media_queries %}
+    {% for media_query in media_queries %}
+      @media {{ media_query.media }} {
+        {{ selector }} {
+          background-image: url({{ media_query.src|raw }}){{ important }};
+        }
+      }
+    {% endfor %}
+  {% endif %}
+</style>

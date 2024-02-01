@@ -19,15 +19,25 @@ source:
 
   fields:
     -
+      name: uuid
+      selector: uuid
+    -
       name: filename
       selector: filename
     -
       name: alt
       selector: alt
+    -
+      name: caption
+      selector: caption
 
 destination:
   plugin: 'entity:media'
 process:
+  uuid:
+    plugin: skip_on_empty
+    method: process
+    source: uuid
   bundle:
     plugin: default_value
     default_value: az_image
@@ -66,6 +76,12 @@ process:
     value_key: uri
 
   'field_media_az_image/alt': alt
+
+  field_az_caption/value: caption
+  field_az_caption/format:
+    -
+      plugin: default_value
+      default_value: plain_text
 
 # Dependencies.
 dependencies:

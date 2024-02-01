@@ -19,6 +19,12 @@ use Drupal\Core\TypedData\MapDataDefinition;
  *   default_widget = "az_card",
  *   default_formatter = "az_card_default"
  * )
+ *
+ * @property string $title
+ * @property string $body
+ * @property string $body_format
+ * @property string $link_title
+ * @property string $link_uri
  */
 class AZCardItem extends FieldItemBase {
 

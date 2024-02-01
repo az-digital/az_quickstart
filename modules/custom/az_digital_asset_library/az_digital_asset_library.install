@@ -1,0 +1,27 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_digital_asset_library module.
+ */
+
+/**
+ * Delete unused configuration for entity_browser.
+ */
+function az_digital_asset_library_update_1020701() {
+  $uninstall_entity_browser = TRUE;
+  // Get logger factory.
+  $logger = \Drupal::service('logger.factory');
+
+  // Delete old configuration.
+  $configuration_to_delete = [
+    'entity_browser.browser.az_digital_asset_library',
+  ];
+  foreach ($configuration_to_delete as $config_name) {
+    $config = \Drupal::configFactory()->getEditable($config_name);
+    $config->delete();
+    $logger->get('az_digital_asset_library')->notice('Deleted @config_name from active configuration.', [
+      '@config_name' => $config_name,
+    ]);
+  }
+}

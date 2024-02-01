@@ -1,0 +1,35 @@
+id: az_demo_remote_video
+label: AZ Quickstart Demo Remote Video
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_remote_video.json
+  item_selector: videos
+  ids:
+    filename:
+      type: string
+
+  fields:
+    -
+      name: filename
+      selector: filename
+
+destination:
+  plugin: 'entity:media'
+process:
+  bundle:
+    plugin: default_value
+    default_value: az_remote_video
+
+  'field_media_az_oembed_video/value': filename
+
+# Dependencies.
+dependencies:
+  enforced:
+    module:
+      - az_media

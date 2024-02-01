@@ -8,13 +8,13 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-require_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
+require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\Exception\FileException;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -24,6 +24,10 @@ use Drupal\Core\StreamWrapper\StreamWrapperManager;
  * Example on how to alter theme settings form
  */
 function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  // Disable bootstrap_barrio_source and bootstrap_barrio_library settings.
+  $form['bootstrap_barrio_source']['#access'] = FALSE;
+  $form['bootstrap_barrio_library']['#access'] = FALSE;
+
   $form['footer_logo']['#open'] = FALSE;
 
   // AZ Barrio settings.
@@ -44,6 +48,14 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Institutional header wordmark logo'),
     '#description' => t('With few exceptions, this should always be enabled.'),
     '#default_value' => theme_get_setting('wordmark'),
+  ];
+
+  // Land Acknowledgment.
+  $form['az_settings']['settings']['land_acknowledgment'] = [
+    '#type' => 'checkbox',
+    '#title' => t('Land Acknowledgment'),
+    '#description' => t('With few execeptions, this should always be enabled.'),
+    '#default_value' => theme_get_setting('land_acknowledgment'),
   ];
 
   // Information security and privacy link.
@@ -105,7 +117,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   ];
-  unset($form['fonts']['bootstrap_icons']['bootstrap_barrio_bootstrap_icons']);
   unset($form['fonts']['icons']['bootstrap_barrio_icons']);
   unset($form['fonts']['bootstrap_icons']);
   $form['fonts']['icons'] = [
@@ -220,8 +231,8 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('AZ Bootstrap CDN version'),
     '#options' => [
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'latest' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      'main' => t('Latest dev version. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      'latest-2.x' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
+      '2.x' => t('Latest dev version. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),
   ];
@@ -239,6 +250,29 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('Use the AZ Bootstrap sticky footer template.'),
     '#default_value' => theme_get_setting('sticky_footer'),
   ];
+  // Responsive Header Grid.
+  $form['layout']['header_grid'] = [
+    '#type' => 'details',
+    '#collapsible' => TRUE,
+    '#collapsed' => TRUE,
+    '#title' => t('Responsive Header Grid'),
+    '#description' => t('The header typically contains two columns on small screen sizes and larger with the "Site branding" region on the left and with "Header 1" and "Header 2" on the right.'),
+  ];
+  $form['layout']['header_grid']['header_one_col_classes'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column one classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the Site branding region. Should contain a string with classes separated by a space.'),
+    '#default_value' => theme_get_setting('header_one_col_classes'),
+  ];
+  $form['layout']['header_grid']['header_two_col_classes'] = [
+    '#type' => 'textfield',
+    '#title' => t('Column two classes'),
+    '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
+    '#default_value' => theme_get_setting('header_two_col_classes'),
+  ];
+  // Add new AZ Barrio sidebar position option and help text.
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#description'] = t('Below the Bootstrap md breakpoint, the "Both sides" position places the Sidebar First region <strong>above</strong> the page content while the "Both sides below on mobile" position places both sidebar regions <strong>below</strong> the page content.');
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
@@ -323,20 +357,17 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['footer_logo']['settings']['footer_logo_upload'] = [
     '#type' => 'file',
     '#title' => t('Upload footer logo image'),
-    '#maxlength' => 40,
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
     '#upload_validators' => [
-      'file_validate_extensions' => [
-        'png gif jpg jpeg apng svg',
+      'FileExtension' => [
+        'extensions' => 'png gif jpg jpeg apng svg',
       ],
     ],
   ];
-
   $form['footer_logo']['settings']['footer_logo_link_destination'] = [
-    '#required' => TRUE,
-    '#type' => 'textfield',
-    '#title' => t('Footer logo link destination'),
-    '#description' => t('Where should the footer logo link to. Example: &#x3C;front&#x3E;'),
+    '#type' => 'url',
+    '#title' => t('Footer logo external link destination'),
+    '#description' => t('If blank, the footer logo links to the homepage; otherwise, enter an external site URL. Example: https://www.arizona.edu/'),
     '#default_value' => theme_get_setting('footer_logo_link_destination'),
   ];
   $form['footer_logo']['settings']['footer_logo_alt_text'] = [
@@ -414,7 +445,7 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 }
 
 /**
- * Helper function to determin if is a file.
+ * Helper function to determine if is a file.
  *
  * See: https://api.drupal.org/api/drupal/core%21modules%21system%21src%21Form%21ThemeSettingsForm.php/function/ThemeSettingsForm%3A%3AvalidatePath/8.2.x.
  */
