@@ -1,52 +1,114 @@
 {
-    "page_categories": [
-    { "name" : "Accordions",
-      "description" : "A page with accordions.",
-      "parent_name" : ""
+  "page_categories": [
+    {
+      "name": "Accordions",
+      "description": "A page with accordions.",
+      "parent_name": ""
     },
-    { "name" : "Cards",
-      "description" : "A page with cards.",
-      "parent_name" : ""
+    {
+      "name": "Collapsible Sections",
+      "description": "A page with collapsible sections.",
+      "parent_name": "Accordions"
     },
-    { "name" : "Carousel",
-      "description" : "A page with a carousel.",
-      "parent_name" : ""
+    {
+      "name": "Expandable Panels",
+      "description": "A page with expandable panels.",
+      "parent_name": "Accordions"
     },
-    { "name" : "Events",
-      "description" : "A page with events.",
-      "parent_name" : ""
+    {
+      "name": "Cards",
+      "description": "A page with cards.",
+      "parent_name": ""
     },
-    { "name" : "Home Page",
-      "description" : "The home page for the site.",
-      "parent_name" : ""
+    {
+      "name": "Info Cards",
+      "description": "A page with informational cards.",
+      "parent_name": "Cards"
     },
-    { "name" : "Marketing Campaign",
-      "description" : "A page intended to be used for a marketing campaign.",
-      "parent_name" : ""
+    {
+      "name": "Content Boxes",
+      "description": "A page with content boxes.",
+      "parent_name": "Cards"
     },
-    { "name" : "Menu Blocks",
-      "description" : "A page with embedded menu blocks.",
-      "parent_name" : ""
+    {
+      "name": "Carousel",
+      "description": "A page with a carousel.",
+      "parent_name": ""
     },
-    { "name" : "No Sidebar",
-      "description" : "A page which is included in the main navigation menu but has the sidebar hidden.",
-      "parent_name" : ""
+    {
+      "name": "Image Slider",
+      "description": "A page with an image slider.",
+      "parent_name": "Carousel"
     },
-    { "name" : "Photo Galleries",
-      "description" : "A page with photo galleries.",
-      "parent_name" : ""
+    {
+      "name": "Rotating Banner",
+      "description": "A page with a rotating banner.",
+      "parent_name": "Carousel"
     },
-    { "name" : "Split Screen",
-      "description" : "A page with split screen paragraphs.",
-      "parent_name" : ""
+    {
+      "name": "Events",
+      "description": "A page with events.",
+      "parent_name": ""
     },
-    { "name" : "Text",
-      "description" : "A page with text paragraphs.",
-      "parent_name" : ""
+    {
+      "name": "Event Listings",
+      "description": "A page listing various events.",
+      "parent_name": "Events"
     },
-    { "name" : "Views",
+    {
+      "name": "Upcoming Events",
+      "description": "A page showcasing upcoming events.",
+      "parent_name": "Events"
+    },
+    {
+      "name": "Home Page",
+      "description": "The home page for the site.",
+      "parent_name": ""
+    },
+    {
+      "name": "Marketing Campaign",
+      "description": "A page intended to be used for a marketing campaign.",
+      "parent_name": ""
+    },
+    {
+      "name": "Menu Blocks",
+      "description": "A page with embedded menu blocks.",
+      "parent_name": ""
+    },
+    {
+      "name": "No Sidebar",
+      "description": "A page which is included in the main navigation menu but has the sidebar hidden.",
+      "parent_name": ""
+    },
+    {
+      "name": "Photo Galleries",
+      "description": "A page with photo galleries.",
+      "parent_name": ""
+    },
+    {
+      "name": "Image Galleries",
+      "description": "A page with image galleries.",
+      "parent_name": "Photo Galleries"
+    },
+    {
+      "name": "Media Galleries",
+      "description": "A page with media galleries.",
+      "parent_name": "Photo Galleries"
+    },
+    {
+      "name": "Split Screen",
+      "description": "A page with split screen paragraphs.",
+      "parent_name": ""
+    },
+    {
+      "name": "Text",
+      "description": "A page with text paragraphs.",
+      "parent_name": ""
+    },
+    {
+      "name": "Views",
       "description":"A page containing views.",
-      "parent_name" : ""
+      "parent_name": ""
     }
   ]
 }
