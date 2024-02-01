@@ -158,10 +158,18 @@ class AZCoreConfigCommands extends DrushCommands {
    */
   public function exportDistributionConfiguration($modules = '') {
     $extensions = $this->extensionLister->getList();
-    $installed = $this->extensionLister->getAllInstalledInfo();
+    $installed = array_intersect_key($extensions, $this->extensionLister->getAllInstalledInfo());
+
+    $overrides = [];
     $arguments = [];
     if (!empty($modules)) {
       $arguments = explode(',', $modules);
+    }
+    $providers = $this->configCollector->getConfigProviders();
+    foreach ($providers as $provider) {
+      if ($provider instanceof QuickstartConfigProvider) {
+        $overrides = $provider->getOnlyOverrideConfig($installed);
+      }
     }
     foreach ($extensions as $key => $extension) {
       // Only run for distribution extensions.
@@ -182,7 +190,6 @@ class AZCoreConfigCommands extends DrushCommands {
       $this->output()->writeln(dt('@extension...', [
         '@extension' => $key,
       ]));
-      $providers = $this->configCollector->getConfigProviders();
       foreach ($providers as $provider) {
         $dir = $provider->getDirectory();
         // Only examine providers with a defined storage directory.
@@ -202,6 +209,14 @@ class AZCoreConfigCommands extends DrushCommands {
           unset($original['uuid']);
           unset($active['_core']);
           unset($active['uuid']);
+          // Skip if the configuration is overridden.
+          if (isset($overrides[$item]) && ($dir !== QuickstartConfigProvider::ID)) {
+            $this->output()->writeln(dt('    -- skipping overridden config -- @item', [
+              '@item' => $item,
+              '@dir' => $dir,
+            ]));
+            continue;
+          }
           if ((strpos($item, 'user.role.') === 0)) {
             // Make role alterations if a role config.
             $active = $this->prepareRoleConfig($active, $original);
