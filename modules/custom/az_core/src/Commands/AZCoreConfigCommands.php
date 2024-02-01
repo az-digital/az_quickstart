@@ -9,6 +9,7 @@ use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\config_update\ConfigDiffer;
 use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageException;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Extension\ModuleExtensionList;
@@ -159,6 +160,8 @@ class AZCoreConfigCommands extends DrushCommands {
   public function exportDistributionConfiguration($modules = '') {
     $extensions = $this->extensionLister->getList();
     $installed = array_intersect_key($extensions, $this->extensionLister->getAllInstalledInfo());
+    $seen = [];
+    $dependencies = [];
 
     $overrides = [];
     $arguments = [];
@@ -201,6 +204,8 @@ class AZCoreConfigCommands extends DrushCommands {
         $storage = new FileStorage($path);
         $all = $storage->listAll();
         foreach ($all as $item) {
+          // Maintain list of every config item we've seen in modules.
+          $seen[] = $item;
           // Get the state of module configuration versus active configuration.
           $original = $storage->read($item);
           $active = $this->configFactory->get($item)->get();
@@ -232,6 +237,7 @@ class AZCoreConfigCommands extends DrushCommands {
             ]))) {
               try {
                 $storage->write($item, $active);
+                $original = $active;
               }
               catch (StorageException $e) {
                 $this->output()->writeln(dt('    Failed to write @item', [
@@ -246,10 +252,36 @@ class AZCoreConfigCommands extends DrushCommands {
               '@dir' => $dir,
             ]));
           }
+          $item_deps = $original['dependencies']['config'] ?? [];
+          // Build list of potential module dependencies.
+          foreach ($item_deps as $dep) {
+            $dependencies[$dep] = $dependencies[$dep] ?? $extension;
+          }
         }
       }
     }
-
+    // Compute list of needed config that doesn't seem to have a home.
+    $needed = array_diff_key($dependencies, array_flip($seen));
+    foreach ($needed as $item => $extension) {
+      $active = $this->configFactory->get($item)->get();
+      $path = $extension->getPath() . DIRECTORY_SEPARATOR . InstallStorage::CONFIG_INSTALL_DIRECTORY;
+      $storage = new FileStorage($path);
+      unset($active['_core']);
+      unset($active['uuid']);
+      if ($this->io()->confirm(dt('Add NEW configuration @item?', [
+        '@item' => $item,
+      ]))) {
+        try {
+          $storage->write($item, $active);
+          $original = $active;
+        }
+        catch (StorageException $e) {
+          $this->output()->writeln(dt('Failed to write NEW configuration @item', [
+            '@item' => $item,
+          ]));
+        }
+      }
+    }
   }
 
   /**
