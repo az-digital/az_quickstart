@@ -28,11 +28,12 @@ third_party_settings:
       format_type: details_sidebar
       format_settings:
         classes: ''
+        show_empty_fields: false
         id: ''
-        open: false
-        description: 'These fields appear in display modes other that the full page view mode.'
+        open: true
+        description: 'Summary fields determine how this page appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
+        weight: -10
     group_categorization:
       children:
         - field_az_page_category

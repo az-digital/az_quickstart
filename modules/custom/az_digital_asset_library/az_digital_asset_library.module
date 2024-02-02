@@ -5,8 +5,8 @@
  * Contains az_digital_asset_library.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Component\Serialization\Json;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -31,7 +31,7 @@ function az_digital_asset_library_preprocess_entity_add_list(&$variables) {
  * not clear how to get the module weight of az_digital_asset_library.
  */
 function az_digital_asset_library_module_implements_alter(&$implementations, $hook) {
-  if ($hook == 'form_alter' && isset($implementations['az_digital_asset_library'])) {
+  if ($hook === 'form_alter' && isset($implementations['az_digital_asset_library'])) {
     $form_alters = $implementations['az_digital_asset_library'];
     unset($implementations['az_digital_asset_library']);
     $implementations['az_digital_asset_library'] = $form_alters;

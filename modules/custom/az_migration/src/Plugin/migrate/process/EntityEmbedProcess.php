@@ -2,12 +2,12 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\Core\Database\Database;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
-use Drupal\Core\Database\Database;
 use Drupal\migrate_plus\Plugin\migrate\process\Dom;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Process Plugin to handle embedded entities in HTML text.

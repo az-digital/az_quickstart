@@ -2,9 +2,9 @@
 
 namespace Drupal\az_marketing_cloud\Plugin\views\field;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\views\Plugin\views\field\Links;
 use Drupal\views\ResultRow;
-use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Renders links as a drop button.
@@ -76,10 +76,9 @@ class AzDropbutton extends Links {
     if (!empty($links)) {
       $dropbutton['#links'] = $links;
     }
-    if ($this->options['click_action'] == 'js-click2copy') {
+    if ($this->options['click_action'] === 'js-click2copy') {
       $dropbutton['#attributes']['class'][] = $click_action;
       $dropbutton['#attached']['library'][] = 'az_marketing_cloud/admin';
-
     }
 
     return $dropbutton;

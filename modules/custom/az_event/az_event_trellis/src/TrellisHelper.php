@@ -4,9 +4,9 @@ namespace Drupal\az_event_trellis;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Cache\CacheBackendInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use GuzzleHttp\ClientInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**

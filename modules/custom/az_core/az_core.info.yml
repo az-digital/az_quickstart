@@ -16,3 +16,4 @@ dependencies:
   - drupal:text
   - linkit:linkit
   - search_exclude:search_exclude
+configure: az_core.az_settings

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_branch_name:
-        description: The name of the new release branch (e.g. 2.8.x) to create.
+        description: The name of the new release branch (e.g. 2.9.x) to create.
         required: true
         
 jobs:
@@ -102,8 +102,7 @@ jobs:
 
     - name: Update Lando config in release branch
       run: |
-        NEW_VERSION=${{ inputs.release_branch_name }}
-        sed -i '' 's/SCAFFOLD_BRANCH="main"/SCAFFOLD_BRANCH=$NEW_VERSION/g' .lando.yml
+        sed -i 's|SCAFFOLD_BRANCH="main"|SCAFFOLD_BRANCH="${{ inputs.release_branch_name }}"|g' .lando.yml
 
     - name: Update Probo config in release branch
       run: |
@@ -125,7 +124,7 @@ jobs:
       with:
         title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
         commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-        branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
+        branch: prepare-${{ inputs.release_branch_name }}-for-minor-release
         base: ${{ inputs.release_branch_name }}
         delete-branch: true
         token: ${{ secrets.REPO_DISPATCH_TOKEN }}
@@ -145,7 +144,7 @@ jobs:
     name: Update `${{ matrix.previous_version }}` release branch.
     strategy:
       matrix:
-        previous_version: [2.7.x, 2.6.x, 2.5.x, 2.4.x, 2.3.x, 2.2.x, 2.1.x, 2.0.x]
+        previous_version: [2.9.x, 2.8.x, 2.7.x, 2.6.x, 2.5.x, 2.4.x, 2.3.x, 2.2.x, 2.1.x, 2.0.x]
     steps:
       - name: Update previous release branch `${{ matrix.previous_version }}`
         uses: actions/checkout@v4
@@ -167,7 +166,7 @@ jobs:
         with:
           title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
           commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
+          branch: update-${{ matrix.previous_version }}-for-${{ inputs.release_branch_name }}
           base: ${{ matrix.previous_version }}
           delete-branch: true
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}

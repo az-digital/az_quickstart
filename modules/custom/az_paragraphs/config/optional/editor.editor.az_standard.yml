@@ -39,11 +39,12 @@ settings:
       - az_embed_content
       - az_embed_content_block
       - '|'
-      - sourceEditing
-      - removeFormat
-      - '|'
       - code
       - codeBlock
+      - '|'
+      - showBlocks
+      - sourceEditing
+      - removeFormat
   plugins:
     ckeditor5_alignment:
       enabled_alignments:
@@ -51,6 +52,50 @@ settings:
         - justify
         - left
         - right
+    ckeditor5_codeBlock:
+      languages:
+        -
+          label: 'Plain text'
+          language: plaintext
+        -
+          label: C
+          language: c
+        -
+          label: 'C#'
+          language: cs
+        -
+          label: C++
+          language: cpp
+        -
+          label: CSS
+          language: css
+        -
+          label: Diff
+          language: diff
+        -
+          label: HTML
+          language: html
+        -
+          label: Java
+          language: java
+        -
+          label: JavaScript
+          language: javascript
+        -
+          label: PHP
+          language: php
+        -
+          label: Python
+          language: python
+        -
+          label: Ruby
+          language: ruby
+        -
+          label: TypeScript
+          language: typescript
+        -
+          label: XML
+          language: xml
     ckeditor5_heading:
       enabled_headings:
         - heading1
@@ -60,8 +105,10 @@ settings:
         - heading5
         - heading6
     ckeditor5_list:
-      reversed: false
-      startIndex: true
+      properties:
+        reversed: false
+        startIndex: true
+      multiBlock: true
     ckeditor5_sourceEditing:
       allowed_tags:
         - '<abbr>'
@@ -70,7 +117,7 @@ settings:
         - '<dl>'
         - '<dt>'
         - '<dd>'
-        - '<div name id>'
+        - '<div class name id data-*>'
         - '<span class name id>'
         - '<img src alt data-entity-type data-entity-uuid>'
         - '<footer class>'
@@ -93,7 +140,7 @@ settings:
         - '<tr class colspan rowspan>'
         - '<hr class>'
         - '<a class target name id title>'
-        - '<drupal-entity data-entity-type data-embed-button>'
+        - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode>'
         - '<drupal-media title>'
         - '<p class>'
     ckeditor5_style:

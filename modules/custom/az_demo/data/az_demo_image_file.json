@@ -72,6 +72,7 @@
       "title": ""
     },
     {
+      "uuid": "5cec161c-71bc-4d23-824f-a692400ee17a",
       "filename" : "arizona_campus_fireworks.jpg",
       "alt" : "Fireworks over campus",
       "title": ""
@@ -151,6 +152,18 @@
       "filename" : "gmo.jpg",
       "alt" : "Concept of research on genetic modification of food",
       "title": ""
+    },
+    {
+      "filename" : "sea-anemone.jpg",
+      "alt" : "A close-up image of a vibrant sea anemone under water. The anemone's long, slender tentacles are colored in varying shades of blue and tipped with yellow, creating a striking contrast. Partially hidden among the tentacles, a clownfish with its characteristic orange and white stripes can be seen, adding a sense of life and movement to the scene. The background is a blur of marine colors, indicating a complex reef environment.",
+      "title" : "Clownfish Peekaboo in a Sea Anemone",
+      "uuid": "6c01643a-9935-4317-874f-5fd0a29fad26"
+    },
+    {
+      "filename" : "navajo_wool_weaving.jpg",
+      "alt" : "Navajo wool weaving",
+      "title": "",
+      "caption": "Axis Radius, 2016, Wool, aniline dyes, vegetal dyes, Lent by James Wezelman and Denise Grusin"
     }
   ]
 }
