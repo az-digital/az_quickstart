@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\az_core\Commands;
+namespace Drupal\az_core\Drush\Commands;
 
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
