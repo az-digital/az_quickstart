@@ -60,7 +60,9 @@ lando drush az-entity-list:list
 
 ### Output
 
-The default output will looks like this.
+The default output will count each entity type by bundle, and output in a table by default.
+
+To output in other formats, use `drush az-entity-list:list --help`
 
 ```
  ------------------------ -------------------------------- ------------------- ------- 
