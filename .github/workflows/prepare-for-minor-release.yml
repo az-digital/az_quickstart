@@ -120,7 +120,7 @@ jobs:
         composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
 
     - name: Create pull request for new release branch updates
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v6
       with:
         title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
         commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
@@ -162,7 +162,7 @@ jobs:
           composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
 
       - name: Create pull request for previous release branch updates
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
           commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
