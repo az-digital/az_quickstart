@@ -10,7 +10,7 @@ AZ Core provides Drush commands to help with managing an AZ Quickstart website.
 
 This module is automatically included in the az_quickstart install profile and enabled by default. These custom Drush commands will work on any installed Quickstart 2 website.
 
-## AZ Core Config Commands
+## AZ Core Config Command: Add Permissions
 
 AZ Core provides Drush commands to help with managing configuration on AZ Quickstart websites.
 
