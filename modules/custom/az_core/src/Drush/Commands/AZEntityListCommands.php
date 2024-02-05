@@ -82,7 +82,14 @@ final class AZEntityListCommands extends DrushCommands {
       }
 
       foreach ($bundles as $bundle) {
-        $bundle_field = $entity_type_definition->getKey('bundle');
+        try {
+          $bundle_field = $entity_type_definition->getKey('bundle');
+        }
+        catch (\Exception $e) {
+          // The bundle key does not exist.
+          continue;
+        }
+
         $query = $this->entityTypeManager->getStorage($entity_type)->getQuery();
         $query->accessCheck(FALSE);
         $query->condition($bundle_field, $bundle);
