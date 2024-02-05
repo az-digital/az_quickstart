@@ -3,7 +3,7 @@ AZ Core provides Drush commands to help with managing an AZ Quickstart website.
 
 ### Requirements
 
-- Drupal 9 or 10
+- Drupal 10
 - Drush 12
 
 ### Installation
