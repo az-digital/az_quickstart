@@ -48,60 +48,80 @@ final class AZEntityListCommands extends DrushCommands {
    *   A table with a row for each asset type and count.
    */
   #[CLI\Command(name: 'az-entity-list:list', aliases: ['ael'])]
-  #[CLI\FieldLabels(['entity_type' => 'Entity type', 'bundle' => 'Bundle', 'count' => 'Count'])]
-  #[CLI\DefaultFields(['entity_type', 'bundle', 'count'])]
-  public function list(array $options = ['format' => 'table']): RowsOfFields {
+  #[CLI\DefaultFields(fields: [
+    'entity_type',
+    'bundle',
+    'module',
+    'count'
+  ])]
+  #[CLI\FieldLabels(labels: [
+    'entity_type' => 'Entity type',
+    'bundle' => 'Bundle',
+    'module' => 'Provider',
+    'count' => 'Count'
+  ])]
+  #[CLI\Usage(name: 'drush az-entity-list:list', description: "List entities enabled on an Arizona Quickstart site.")]
+
+    public function list(array $options = ['format' => 'table']): RowsOfFields {
     $all_results = [];
     $entity_types = array_keys($this->entityTypeManager->getDefinitions());
-    $bundle_types = [];
 
     foreach ($entity_types as $entity_type) {
-      try {
-        $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
-      }
-      catch (\Exception $e) {
-        // The entity type does not exist.
-        continue;
-      }
-
-      // Check if the entity type has bundles.
-      if ($bundle = $entity_type_definition->getBundleEntityType()) {
-        // Load all bundles for this entity type.
-        $bundles = $this->entityTypeManager->getStorage($bundle)->loadMultiple();
-        $bundle_types[$entity_type] = array_keys($bundles);
-      }
-    }
-
-    foreach ($bundle_types as $entity_type => $bundles) {
-      try {
-        $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
-      }
-      catch (\Exception $e) {
-        // The entity type does not exist.
-        continue;
-      }
-
-      foreach ($bundles as $bundle) {
-        try {
-          $bundle_field = $entity_type_definition->getKey('bundle');
-        }
-        catch (\Exception $e) {
-          // The bundle key does not exist.
+      // If the entity has bundle types add them to the list. Otherwise, just
+      // use the entity type as the bundle.
+      $bundle_types = $this->getBundleTypes($entity_type) ?? [$entity_type];
+      $entity_provider = $this->entityTypeManager->getDefinition($entity_type)->getProvider();
+      foreach ($bundle_types as $bundle) {
+        $count = $this->getEntityCount($entity_type, $bundle);
+        if ($count === 0) {
           continue;
         }
-
-        $query = $this->entityTypeManager->getStorage($entity_type)->getQuery();
-        $query->accessCheck(FALSE);
-        $query->condition($bundle_field, $bundle);
-        $results = $query->count()->execute();
-        array_push($all_results, [
+        $all_results[] = [
           'entity_type' => $entity_type,
           'bundle' => $bundle,
-          'count' => $results,
-        ]);
+          'module' => $entity_provider,
+          'count' => $count,
+        ];
       }
     }
+
     return new RowsOfFields($all_results);
-  }
+    }
+
+    /**
+     * List entity bundles enabled on an Arizona Quickstart site.
+     */
+    private function getBundleTypes(string $entity_type): ?array {
+      try {
+        $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
+        if ($bundle = $entity_type_definition->getBundleEntityType()) {
+          $bundles = $this->entityTypeManager->getStorage($bundle)->loadMultiple();
+          return array_keys($bundles);
+        }
+      }
+      catch (\Exception $e) {
+      }
+      return NULL;
+
+    }
+
+    /**
+     * Get the count of entities for a given entity type and bundle.
+     */
+    private function getEntityCount(string $entity_type, string $bundle): int {
+      try {
+        $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
+        $bundle_field = $entity_type_definition->getKey('bundle');
+        $query = $this->entityTypeManager->getStorage($entity_type)->getQuery();
+        $query->accessCheck(FALSE);
+        if ($bundle_field) {
+          $query->condition($bundle_field, $bundle);
+        }
+        return $query->count()->execute();
+      }
+      catch (\Exception $e) {
+        return 0;
+      }
+    }
 
 }
