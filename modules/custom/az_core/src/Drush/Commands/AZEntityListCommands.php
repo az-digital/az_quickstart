@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * A Drush commandfile.
  */
-final class AzEntityListCommands extends DrushCommands {
+final class AZEntityListCommands extends DrushCommands {
 
   /**
    * The entity type manager.
@@ -64,7 +64,6 @@ final class AzEntityListCommands extends DrushCommands {
         continue;
       }
 
-
       // Check if the entity type has bundles.
       if ($bundle = $entity_type_definition->getBundleEntityType()) {
         // Load all bundles for this entity type.
@@ -79,7 +78,6 @@ final class AzEntityListCommands extends DrushCommands {
       }
       catch (\Exception $e) {
         // The entity type does not exist.
-
         continue;
       }
 
