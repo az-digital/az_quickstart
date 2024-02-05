@@ -37,7 +37,7 @@ A custom Drush command to add missing installation profile permissions.
 
 Provides a drush command for listing entities.
 
-### Running the drush command
+### Usage
 
 List entities on an Arizona Quickstart site.
 
