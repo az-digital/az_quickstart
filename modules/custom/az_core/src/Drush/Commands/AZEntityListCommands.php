@@ -51,14 +51,14 @@ final class AZEntityListCommands extends DrushCommands {
   #[CLI\DefaultFields(fields: [
     'entity_type',
     'bundle',
-    'module',
     'count',
+    'module',
   ])]
   #[CLI\FieldLabels(labels: [
     'entity_type' => 'Entity type',
     'bundle' => 'Bundle',
-    'module' => 'Provider',
     'count' => 'Count',
+    'module' => 'Entity Type Provider',
   ])]
   #[CLI\Usage(name: 'drush az-entity-list:list', description: "List entities enabled on an Arizona Quickstart site.")]
 
@@ -69,7 +69,7 @@ final class AZEntityListCommands extends DrushCommands {
     foreach ($entity_types as $entity_type) {
       // If the entity has bundle types add them to the list. Otherwise, just
       // use the entity type as the bundle.
-      $bundle_types = $this->getBundleTypes($entity_type) ?? [$entity_type];
+      $bundle_types = $this->getBundleTypes($entity_type);
       $entity_provider = $this->entityTypeManager->getDefinition($entity_type)->getProvider();
       foreach ($bundle_types as $bundle) {
         $count = $this->getEntityCount($entity_type, $bundle);
@@ -79,8 +79,8 @@ final class AZEntityListCommands extends DrushCommands {
         $all_results[] = [
           'entity_type' => $entity_type,
           'bundle' => $bundle,
-          'module' => $entity_provider,
           'count' => $count,
+          'module' => $entity_provider,
         ];
       }
     }
@@ -91,7 +91,7 @@ final class AZEntityListCommands extends DrushCommands {
     /**
      * List entity bundles enabled on an Arizona Quickstart site.
      */
-    private function getBundleTypes(string $entity_type): ?array {
+    private function getBundleTypes(string $entity_type): array {
       try {
         $entity_type_definition = $this->entityTypeManager->getDefinition($entity_type);
         if ($bundle = $entity_type_definition->getBundleEntityType()) {
@@ -101,7 +101,7 @@ final class AZEntityListCommands extends DrushCommands {
       }
       catch (\Exception $e) {
       }
-      return NULL;
+      return [$entity_type];
 
     }
 
