@@ -125,7 +125,14 @@
         "seboettg/citeproc-php": "2.6.2"
     },
     "require-dev": {
-        "az-digital/az-quickstart-dev": "~1"
+        "az-digital/az-quickstart-dev": "~1",
+         "drush/drush": ">=12"
+    },
+    "suggest": {
+        "drush/drush": ">=12"
+    },
+    "conflict": {
+        "drush/drush": "<12.0"
     },
     "extra": {
         "branch-alias": {
