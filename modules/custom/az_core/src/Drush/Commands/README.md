@@ -22,18 +22,6 @@ This command will add missing installation profile permissions to the active sit
 
 You can optionally add the -y flag to accept adding all missing distribution permissions.
 
-### Class details
-- Namespace: Drupal\az_core\Commands
-- Class name: AZCoreConfigCommands
-- Dependencies: ConfigCollector, ModuleExtensionList
-
-### Method details
-#### __construct(ConfigCollector $configCollector, ModuleExtensionList $extensionLister)
-Constructs a new AZCoreConfigCommands object.
-
-### addMissingPermissions()
-A custom Drush command to add missing installation profile permissions.
-
 ## AZ Entity List
 
 Provides a Drush command for listing entities.
