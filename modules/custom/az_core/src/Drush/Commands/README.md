@@ -55,10 +55,6 @@ drush topic docs:output-formats-filters Output formatters and filters: control t
 
 Aliases: `ael`
 
-```
-lando drush az-entity-list:list
-```
-
 ### Output
 
 The default output will count each entity type by bundle, and output in a table by default.
