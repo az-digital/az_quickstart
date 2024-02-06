@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.taxonomy_term.az_badge_link
+    - core.entity_view_mode.taxonomy_term.az_badge_alt
     - taxonomy.vocabulary.az_publication_categories
   module:
     - field_group
@@ -30,10 +30,10 @@ third_party_settings:
         target: entity
         custom_uri: ''
         target_attribute: default
-id: taxonomy_term.az_publication_categories.az_badge_link
+id: taxonomy_term.az_publication_categories.az_badge_alt
 targetEntityType: taxonomy_term
 bundle: az_publication_categories
-mode: az_badge_link
+mode: az_badge_alt
 content:
   smart_title:
     settings: {  }
