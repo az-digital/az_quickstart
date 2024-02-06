@@ -32,7 +32,7 @@ third_party_settings:
   smart_title:
     enabled: false
   field_group:
-    group_mobile_node_title:
+    group_node_title:
       children:
         - field_az_fname
         - field_az_lname
@@ -75,7 +75,7 @@ third_party_settings:
         speed: fast
     group_col_12_name_titles:
       children:
-        - group_mobile_node_title
+        - group_node_title
         - group_titles
       label: 'Col 12 - Name & Titles'
       parent_name: group_row
