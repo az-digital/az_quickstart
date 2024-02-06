@@ -5,7 +5,6 @@ dependencies:
     - core.entity_view_mode.taxonomy_term.az_badge
     - taxonomy.vocabulary.az_page_categories
   module:
-    - field_group
     - smart_title
 third_party_settings:
   smart_title:
