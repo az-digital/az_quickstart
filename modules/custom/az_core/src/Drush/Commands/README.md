@@ -36,11 +36,13 @@ A custom Drush command to add missing installation profile permissions.
 
 ## AZ Entity List
 
-Provides a drush command for listing entities.
+Provides a Drush command for listing entities.
 
 ### Usage
 
-List entities on an Arizona Quickstart site.
+This module provides the following Drush command:
+`drush az-entity-list:list`
+This command will list entities on an Arizona Quickstart site.
 
 ```
 Options:
