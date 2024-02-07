@@ -70,7 +70,7 @@ final class AZEntityListCommands extends DrushCommands {
       // If the entity has bundle types add them to the list. Otherwise, just
       // use the entity type as the bundle.
       $bundle_types = $this->getBundleTypes($entity_type);
-      $entity_provider = $this->entityTypeManager->getDefinition($entity_type)->getProvider();
+      $entity_type_provider = $this->entityTypeManager->getDefinition($entity_type)->getProvider();
       foreach ($bundle_types as $bundle) {
         $count = $this->getEntityCount($entity_type, $bundle);
         if ($count === 0) {
