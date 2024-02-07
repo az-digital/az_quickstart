@@ -106,7 +106,7 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
       }
       // Else render as radio buttons.
       else {
-        $form[$field_id]['#theme'] = 'az_bef_radios';
+        $form[$field_id]['#theme'] = 'bef_radios';
         $form[$field_id]['#type'] = 'radios';
       }
     }
