@@ -128,10 +128,10 @@
         "az-digital/az-quickstart-dev": "~1"
     },
     "suggest": {
-        "drush/drush": ">=12"
+        "drush/drush": ">=12.4.3"
     },
     "conflict": {
-        "drush/drush": "<12.0"
+        "drush/drush": "<12.4.3"
     },
     "extra": {
         "branch-alias": {
