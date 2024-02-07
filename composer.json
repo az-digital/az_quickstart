@@ -128,7 +128,6 @@
         "az-digital/az-quickstart-dev": "~1"
     },
     "suggest": {
-        "drush/drush": ">=12.4.3"
     },
     "conflict": {
         "drush/drush": "<12.4.3"
