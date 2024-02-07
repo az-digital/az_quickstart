@@ -35,7 +35,7 @@ This command will list entities on an Arizona Quickstart site.
 ```
 Options:
  --format[=FORMAT] Format the result data. Available formats: csv,json,list,null,php,print-r,sections,string,table,tsv,var_dump,var_export,xml,yaml [default: table]
- --fields=FIELDS   Available fields: Entity type (entity_type), Bundle (type), Count (count) [default: entity_type,type,count]
+ --fields=FIELDS   Available fields: Entity type (entity_type), Bundle (bundle), Entity Type Provider (entity_type_provider), Count (count), [default: entity_type,bundle,entity_type_provider,count]
  --field=FIELD     Select just one field, and force format to *string*.
  --filter[=FILTER] Filter output based on provided expression
 ```
