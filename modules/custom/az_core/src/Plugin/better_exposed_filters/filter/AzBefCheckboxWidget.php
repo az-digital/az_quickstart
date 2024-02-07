@@ -3,8 +3,8 @@
 namespace Drupal\az_core\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Default widget implementation.
@@ -15,7 +15,6 @@ use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWid
  * )
  */
 class AzBefCheckboxWidget extends FilterWidgetBase {
-
 
   /**
    * {@inheritdoc}
@@ -112,6 +111,5 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
       }
     }
   }
-
 
 }

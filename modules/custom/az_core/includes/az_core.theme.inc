@@ -5,9 +5,9 @@
  * Theme hooks, preprocessor, and suggestions.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
-use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_theme().
@@ -35,7 +35,6 @@ function az_core_theme($existing, $type, $theme, $path) {
  */
 function template_preprocess_az_bef_checkboxes(array &$variables) {
   $element = &$variables['element'];
-
 
   // Create new wrapper attributes since the element attributes will be used
   // on the fieldset (@see template_preprocess_fieldset).
@@ -79,20 +78,10 @@ function template_preprocess_az_bef_hidden(array &$variables) {
     ];
   }
 
-  // @todo
-  // Check for optgroups.  Put subelements in the $element_set array and add a
-  // group heading. Otherwise, just add the element to the set.
-  // $element_set = array();
-  // if (is_array($elem)) {
-  // $element_set = $elem;
-  // }
-  // else {
-  // $element_set[$option] = $elem;
-  // }
 }
 
 /******************************************************************************
- * Utility functions for BEF themed elements.
+ * Utility functions for AZ BEF themed elements.
  */
 
 /**
@@ -105,28 +94,6 @@ function template_preprocess_az_bef_hidden(array &$variables) {
  *   An associative array containing:
  *   - element: An associative array containing the exposed form element.
  */
-// function _az_bef_preprocess_nested_elements(array &$variables) {
-//   // Provide a hierarchical info on the element children for the template to
-//   // render as a nested <ul>. Views prepends '-' characters for each level of
-//   // depth in the vocabulary. Store that information, but remove the hyphens as
-//   // we don't want to display them.
-//   $variables['is_nested'] = TRUE;
-//   $variables['depth'] = [];
-//   foreach ($variables['children'] as $child) {
-//     if ($child === 'All') {
-//       // For non-required filters, put the any/all option at the root.
-//       $variables['depth'][$child] = 0;
-//       // And don't change the text as it defaults to "- Any -" and we do not
-//       // want to remove the leading hyphens.
-//       continue;
-//     }
-
-//     $original = $variables['element'][$child]['#title'];
-//     $variables['element'][$child]['#title'] = ltrim($original, '-');
-//     $variables['depth'][$child] = strlen($original) - strlen($variables['element'][$child]['#title']);
-//   }
-// }
-
 function _az_bef_preprocess_nested_elements(array &$variables) {
   // Provide a hierarchical info on the element children for the template to
   // render as a nested <ul>. Views prepends '-' characters for each level of
@@ -141,7 +108,6 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
   // Example logic to structure elements (simplified for illustration).
   foreach ($variables['children'] as $child) {
     // Determine if the child has sub-elements (actual children).
-
     // Calculate depth based on hyphens in the title as a proxy for hierarchy.
     $original = $variables['element'][$child]['#title'];
     $cleanedTitle = ltrim($original, '-');
@@ -162,16 +128,16 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
     $term_parent_id = reset(array_keys($term_parents));
     $child_terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadChildren($term_id);
 
-    if($term_parent_id !== FALSE) {
-      $collapseId = HTML::getUniqueId('collapse-az-bef-' . $term_parent_id );
+    if ($term_parent_id !== FALSE) {
+      $collapseId = HTML::getUniqueId('collapse-az-bef-' . $term_parent_id);
     }
     else {
       $collapseId = 'collapse-az-bef-' . $variables['element'][$child]['#return_value'];
     }
     if ($child === 'All') {
-        // Special handling for "All" option.
-        $variables['depth'][$child] = 0;
-        continue;
+      // Special handling for "All" option.
+      $variables['depth'][$child] = 0;
+      continue;
     }
     if ($depth === 0 && !empty($child_terms)) {
       $list_title = [
