@@ -1,6 +1,21 @@
 .az-bef-vertical ul {
   list-style: none;
 }
+.az-bef-vertical .collapser::after {
+    top: 2px;
+    right: 20px;
+    display: inline-block;
+    font-family: "Material Icons Sharp";
+    font-size: 2em;
+    -webkit-font-variant-ligatures: no-common-ligatures;
+    font-variant-ligatures: no-common-ligatures;
+}
+.az-bef-vertical .collapser[aria-expanded=true]::after {
+    content: "expand_less";
+}
+.az-bef-vertical .collapser[aria-expanded=false]::after {
+    content: "expand_more";
+}
 
 .az-bef-vertical {
   margin-bottom: 1rem;

@@ -24,6 +24,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   public function exposedFormAlter(&$form, FormStateInterface $form_state) {
     parent::exposedFormAlter($form, $form_state);
 
+    // Mark form as QuickstartExposedFilters form for easier alterations.
+    $form['#context']['az_bef'] = TRUE;
+
     // Attach Quickstart styles.
     $form['#attached']['library'][] = 'az_core/az-bef-sidebar';
     // Vertical style intended for sidebar use.
@@ -56,6 +59,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       ],
       '#weight' => -10,
     ];
+
   }
 
 }
