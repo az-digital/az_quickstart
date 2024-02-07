@@ -142,59 +142,62 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
   foreach ($variables['children'] as $child) {
     // Determine if the child has sub-elements (actual children).
 
-        // Calculate depth based on hyphens in the title as a proxy for hierarchy.
-        $original = $variables['element'][$child]['#title'];
-        $cleanedTitle = ltrim($original, '-');
+    // Calculate depth based on hyphens in the title as a proxy for hierarchy.
+    $original = $variables['element'][$child]['#title'];
+    $cleanedTitle = ltrim($original, '-');
 
-        $depth = strlen($original) - strlen($cleanedTitle);
+    $depth = strlen($original) - strlen($cleanedTitle);
 
-        // Update the title and depth information.
-        $variables['element'][$child]['#title'] = $cleanedTitle;
-        $collapseId = NULL;
-        $variables['depth'][$child] = $depth;
-        $term_parents = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadParents($variables['element'][$child]['#return_value']);
-        $term_parent_id = reset(array_keys($term_parents));
-        // $term_parent_id = $term_parents[$term_parent_id]->id();
-        if($term_parent_id !== FALSE) {
-          $collapseId = HTML::getUniqueId('collapse-az-bef-' . $term_parent_id );
-        }
-        else {
-          $collapseId = 'collapse-az-bef-' . $variables['element'][$child]['#return_value'];
-        }
+    // Update the title and depth information.
+    $variables['element'][$child]['#title'] = $cleanedTitle;
+    $collapseId = NULL;
+    $variables['depth'][$child] = $depth;
+    $term_id = $variables['element'][$child]['#return_value'];
 
-        if ($child === 'All') {
-            // Special handling for "All" option.
-            $variables['depth'][$child] = 0;
-            continue;
-        }
-        if ($depth === 0) {
-            // This condition now checks both for actual children and specific depth.
-            // Modify the element to become a list title, for example.
-            $list_title = [
-                '#type' => 'html_tag',
-                '#tag' => 'a', // Assuming you want to keep it as an anchor tag.
-                '#value' => $cleanedTitle, // Use the cleaned title without hyphens.
-                '#attributes' => [
-                    'class' => [
-                      'text-azurite',
-                      'font-weight-bolder',
-                      'text-size-h5',
-                      'collapser',
-                    ],
-                    'data-toggle' => 'collapse',
-                    'href' => '#' . $collapseId,
-                    'role' => 'button',
-                    'aria-expanded' => 'false',
-                    'aria-controls' => $collapseId,
-                    'data-parent-id' => $collapseId,
-                ],
-            ];
+    // Return value is a holdover from the form API. It is the value of the
+    // element that is returned when the form is submitted. It is used to
+    // determine if the element is selected.
+    // Its value is the term ID.
+    $term_parents = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadParents($term_id);
+    $term_parent_id = reset(array_keys($term_parents));
+    $child_terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadChildren($term_id);
 
-            // Apply the modified list title to the element.
-            $variables['element'][$child] = $list_title;
-        }
+    if($term_parent_id !== FALSE) {
+      $collapseId = HTML::getUniqueId('collapse-az-bef-' . $term_parent_id );
     }
+    else {
+      $collapseId = 'collapse-az-bef-' . $variables['element'][$child]['#return_value'];
+    }
+    if ($child === 'All') {
+        // Special handling for "All" option.
+        $variables['depth'][$child] = 0;
+        continue;
+    }
+    if ($depth === 0 && !empty($child_terms)) {
+      $list_title = [
+        '#type' => 'html_tag',
+        '#tag' => 'a',
+        '#value' => $cleanedTitle,
+        '#attributes' => [
+          'class' => [
+            'text-azurite',
+            'font-weight-bolder',
+            'text-size-h5',
+            'collapser',
+          ],
+          'data-toggle' => 'collapse',
+          'href' => '#' . $collapseId,
+          'role' => 'button',
+          'aria-expanded' => 'false',
+          'aria-controls' => $collapseId,
+          'data-parent-id' => $collapseId,
+        ],
+      ];
+      // Apply the modified list title to the element.
+      $variables['element'][$child] = $list_title;
+    }
+  }
 
-    // Assign structured elements for Twig rendering.
-    $variables['nested_elements'] = $structured_elements;
+  // Assign structured elements for Twig rendering.
+  $variables['nested_elements'] = $structured_elements;
 }
