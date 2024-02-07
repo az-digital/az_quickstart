@@ -52,13 +52,13 @@ final class AZEntityListCommands extends DrushCommands {
     'entity_type',
     'bundle',
     'count',
-    'module',
+    'entity_type_provider',
   ])]
   #[CLI\FieldLabels(labels: [
     'entity_type' => 'Entity type',
     'bundle' => 'Bundle',
     'count' => 'Count',
-    'module' => 'Entity Type Provider',
+    'entity_type_provider' => 'Entity Type Provider',
   ])]
   #[CLI\Usage(name: 'drush az-entity-list:list', description: "List entities enabled on an Arizona Quickstart site.")]
 
@@ -80,7 +80,7 @@ final class AZEntityListCommands extends DrushCommands {
           'entity_type' => $entity_type,
           'bundle' => $bundle,
           'count' => $count,
-          'module' => $entity_provider,
+          'entity_type_provider' => $entity_type_provider,
         ];
       }
     }
