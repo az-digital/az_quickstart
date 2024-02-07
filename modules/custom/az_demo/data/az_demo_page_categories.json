@@ -26,6 +26,26 @@
       "parent_name": "Cards"
     },
     {
+      "name": "Technical Info Cards",
+      "description": "A page with technical information cards.",
+      "parent_name": "Info Cards"
+    },
+    {
+      "name": "Product Info Cards",
+      "description": "A page with product information cards.",
+      "parent_name": "Info Cards"
+    },
+    {
+      "name": "Software Technical Info Cards",
+      "description": "A page with software technical information cards.",
+      "parent_name": "Technical Info Cards"
+    },
+    {
+      "name": "Hardware Technical Info Cards",
+      "description": "A page with hardware technical information cards.",
+      "parent_name": "Technical Info Cards"
+    },
+    {
       "name": "Content Boxes",
       "description": "A page with content boxes.",
       "parent_name": "Cards"
@@ -107,8 +127,38 @@
     },
     {
       "name": "Views",
-      "description":"A page containing views.",
+      "description": "A page containing views.",
       "parent_name": ""
+    },
+    {
+      "name": "FAQ Sections",
+      "description": "A page with frequently asked questions sections.",
+      "parent_name": "Collapsible Sections"
+    },
+    {
+      "name": "User Guides",
+      "description": "A page dedicated to user guides.",
+      "parent_name": "Technical Info Cards"
+    },
+    {
+      "name": "Installation Guides",
+      "description": "A page with installation guides for products.",
+      "parent_name": "User Guides"
+    },
+    {
+      "name": "Troubleshooting Guides",
+      "description": "A page with troubleshooting guides for products.",
+      "parent_name": "User Guides"
+    },
+    {
+      "name": "Feature Highlights",
+      "description": "A page showcasing product feature highlights.",
+      "parent_name": "Product Info Cards"
+    },
+    {
+      "name": "Comparison Charts",
+      "description": "A page with comparison charts for products.",
+      "parent_name": "Product Info Cards"
     }
   ]
 }
