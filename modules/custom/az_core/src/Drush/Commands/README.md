@@ -39,9 +39,6 @@ Options:
  --field=FIELD     Select just one field, and force format to *string*.
 ```
 
-Topics:
-drush topic docs:output-formats-filters Output formatters and filters: control the command output
-
 Aliases: `ael`
 
 ### Output
