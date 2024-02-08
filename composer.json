@@ -63,7 +63,7 @@
         "drupal/ctools": "3.14.0",
         "drupal/date_ap_style": "2.0.0",
         "drupal/draggableviews": "2.1.3",
-        "drupal/easy_breadcrumb": "2.0.5",
+        "drupal/easy_breadcrumb": "2.0.6",
         "drupal/embed": "1.7.0",
         "drupal/entity_browser": "*",
         "drupal/entity_embed": "1.5.0",
@@ -85,7 +85,7 @@
         "drupal/linkit": "6.1.2",
         "drupal/masquerade": "2.0.0-rc4",
         "drupal/media_entity_file_replace": "1.2.0",
-        "drupal/media_library_edit": "3.0.2",
+        "drupal/media_library_edit": "3.0.3",
         "drupal/media_library_form_element": "2.0.6",
         "drupal/media_library_theme_reset": "1.5.0",
         "drupal/media_migration": "1.0.0-alpha16",
@@ -94,7 +94,7 @@
         "drupal/metatag": "2.0.0",
         "drupal/migrate_plus": "6.0.2",
         "drupal/migrate_queue_importer": "2.1.0",
-        "drupal/migrate_tools": "6.0.2",
+        "drupal/migrate_tools": "6.0.3",
         "drupal/optional_end_date": "1.3.0",
         "drupal/paragraphs": "1.17.0",
         "drupal/paragraphs_admin": "1.5.0",
@@ -176,9 +176,6 @@
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
-            },
-            "drupal/easy_breadcrumb": {
-                "explode(): Passing null to parameter #2 ($string) of type string is deprecated (3284123)": "https://git.drupalcode.org/project/easy_breadcrumb/-/commit/e1655f4260ca82262d49deefbd717801664c5c78.diff"
             },
             "drupal/google_tag": {
                 "GoogleTagUpgradeManager not mapping negate values correctly (3382757)": "https://www.drupal.org/files/issues/2023-08-22/3382757-5.patch"
