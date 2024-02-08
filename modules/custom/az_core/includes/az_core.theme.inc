@@ -34,47 +34,14 @@ function az_core_theme($existing, $type, $theme, $path) {
  */
 function template_preprocess_az_bef_checkboxes(array &$variables) {
   $element = &$variables['element'];
-
-  // Create new wrapper attributes since the element attributes will be used
-  // on the fieldset (@see template_preprocess_fieldset).
   $variables['wrapper_attributes'] = new Attribute();
-
   $variables['children'] = Element::children($element);
   $variables['show_select_all_none'] = $element['#bef_select_all_none'] ?? FALSE;
   $variables['show_select_all_none_nested'] = $element['#bef_select_all_none_nested'] ?? FALSE;
   $variables['display_inline'] = $element['#bef_display_inline'] ?? FALSE;
-
-  // Set element name.
   $variables['attributes']['name'] = $element['#name'];
-
-  // Handle nested checkboxes.
   if (!empty($variables['element']['#bef_nested'])) {
     _az_bef_preprocess_nested_elements($variables);
-  }
-}
-
-/**
- * Prepares variables for bef-hidden template.
- *
- * Default template: bef-hidden.html.twig.
- *
- * @param array $variables
- *   An associative array containing:
- *   - element: An associative array containing the exposed form element.
- */
-function template_preprocess_az_bef_hidden(array &$variables) {
-  $element = $variables['element'];
-
-  // This theme function is only used for multi-select elements.
-  $variables['is_multiple'] = TRUE;
-  $variables['selected'] = empty($element['#value']) ? $element['#default_value'] : $element['#value'];
-  $variables['hidden_elements'] = [];
-  foreach ($element['#options'] as $value => $label) {
-    $variables['hidden_elements'][$value] = [
-      '#type' => 'hidden',
-      '#value' => $value,
-      '#name' => $element['#name'] . '[]',
-    ];
   }
 
 }
