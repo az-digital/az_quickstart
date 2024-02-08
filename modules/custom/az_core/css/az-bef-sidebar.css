@@ -2,28 +2,38 @@
   list-style: none;
 }
 .az-bef-vertical .collapser::after {
-    top: 2px;
-    right: 20px;
-    display: inline-block;
     font-family: "Material Icons Sharp";
-    font-size: 2em;
     -webkit-font-variant-ligatures: no-common-ligatures;
     font-variant-ligatures: no-common-ligatures;
 }
+.az-bef-vertical .collapser {
+    top: 2px;
+    right: 20px;
+    font-size: 1rem;
+    display: inline-block;
+}
+
+.az-bef-vertical .collapser.level-0 {
+    top: 2px;
+    right: 20px;
+    font-size: 1.25rem;
+    display: inline-block;
+}
 .az-bef-vertical .collapser[aria-expanded=true]::after {
-    content: "expand_less";
+  content: "remove";
 }
 .az-bef-vertical .collapser[aria-expanded=false]::after {
+  content: "add";
+}
+.az-bef-vertical .collapser.level-0[aria-expanded=true]::after {
+    content: "expand_less";
+}
+.az-bef-vertical .collapser.level-0[aria-expanded=false]::after {
     content: "expand_more";
 }
 
 .az-bef-vertical {
   margin-bottom: 1rem;
-}
-
-form>.form-row>fieldset {
-  width: 100%;
-  margin-bottom: 0;
 }
 
 form>.form-row>fieldset.form-type-textfield>label {
@@ -65,16 +75,6 @@ div.checkbox>div.bef-checkboxes>ul>li>ul>li>ul>li>ul>li>ul>li>ul>li>ul {
 div.checkbox>div.bef-checkboxes>ul>li:has(ul)>div {
   margin: 15px 0 0 0;
   padding: 0;
-}
-
-div.checkbox>div.bef-checkboxes>ul>li>ul>li:has(ul)>div {
-  margin: 8px 0 3px 0;
-  padding: 0;
-}
-
-div.checkbox>div.bef-checkboxes>ul>li:has(ul)>div>input,
-div.checkbox>div.bef-checkboxes>ul>li>ul>li:has(ul)>div>input {
-  display: none;
 }
 
 div.checkbox>div.bef-checkboxes>ul>li:has(ul)>div>label {

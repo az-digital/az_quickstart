@@ -128,40 +128,49 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
     $term_parent_id = reset(array_keys($term_parents));
     $child_terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadChildren($term_id);
 
-    if ($term_parent_id !== FALSE) {
-      $collapseId = HTML::getUniqueId('collapse-az-bef-' . $term_parent_id);
-    }
-    else {
-      $collapseId = 'collapse-az-bef-' . $variables['element'][$child]['#return_value'];
-    }
     if ($child === 'All') {
       // Special handling for "All" option.
       $variables['depth'][$child] = 0;
       continue;
     }
-    if ($depth === 0 && !empty($child_terms)) {
-      $list_title = [
-        '#type' => 'html_tag',
-        '#tag' => 'a',
-        '#value' => $cleanedTitle,
-        '#attributes' => [
-          'class' => [
-            'text-azurite',
-            'font-weight-bolder',
-            'text-size-h5',
-            'collapser',
-          ],
-          'data-toggle' => 'collapse',
-          'href' => '#' . $collapseId,
-          'role' => 'button',
-          'aria-expanded' => 'false',
-          'aria-controls' => $collapseId,
-          'data-parent-id' => $collapseId,
-        ],
-      ];
+    $list_title = [
+      '#type' => 'html_tag',
+      '#tag' => 'a',
+      '#attributes' => [
+        'class' => [],
+      ],
+    ];
+    if (!empty($child_terms)) {
+      $collapseId = 'collapse-az-bef-' . $term_id;
+      $list_title['#value'] = $cleanedTitle;
+      $list_title['#attributes']['data-toggle'] = 'collapse';
+      $list_title['#attributes']['href'] = '#' . $collapseId;
+      $list_title['#attributes']['role'] = 'button';
+      $list_title['#attributes']['aria-expanded'] = 'true';
+      $list_title['#attributes']['aria-controls'] = $collapseId;
+      $list_title['#attributes']['data-collapse-id'] = $collapseId;
+      $list_title['#attributes']['class'][] = 'collapser';
+      $list_title['#attributes']['class'][] = 'level-' . $depth;
+      $list_title['#attributes']['class'][] = 'text-decoration-none';
+      if ($depth === 0) {
+        $list_title['#attributes']['class'][] = 'text-azurite';
+        $list_title['#attributes']['class'][] = 'font-weight-bolder';
+        $list_title['#attributes']['class'][] = 'text-size-h5';
+      }
+      else {
+        $list_title['#attributes']['class'][] = 'text-azurite';
+        $list_title['#attributes']['class'][] = 'collapser';
+      }
       // Apply the modified list title to the element.
       $variables['element'][$child] = $list_title;
+      if ($depth > 0 && !empty($child_terms)) {
+        $list_title['#value'] = $cleanedTitle;
+        // Apply the modified list title to the element.
+        $variables['element'][$child] = $list_title;
+      }
+
     }
+
   }
 
   // Assign structured elements for Twig rendering.
