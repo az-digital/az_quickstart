@@ -162,12 +162,6 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       }
       // Apply the modified list title to the element.
       $variables['element'][$child] = $list_title;
-      if ($depth > 0 && !empty($child_terms)) {
-        $list_title['#value'] = $cleanedTitle;
-        // Apply the modified list title to the element.
-        $variables['element'][$child] = $list_title;
-      }
-
     }
 
   }
