@@ -68,32 +68,18 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
   $variables['is_nested'] = TRUE;
   $variables['depth'] = [];
 
-  // Initialize an empty array for structured elements.
-  $structured_elements = [];
-
   // Example logic to structure elements (simplified for illustration).
   foreach ($variables['children'] as $child) {
     // Determine if the child has sub-elements (actual children).
     // Calculate depth based on hyphens in the title as a proxy for hierarchy.
     $original = $variables['element'][$child]['#title'];
     $cleanedTitle = ltrim($original, '-');
-
     $depth = strlen($original) - strlen($cleanedTitle);
-
-    // Update the title and depth information.
     $variables['element'][$child]['#title'] = $cleanedTitle;
     $collapseId = NULL;
     $variables['depth'][$child] = $depth;
     $term_id = $variables['element'][$child]['#return_value'];
-
-    // Return value is a holdover from the form API. It is the value of the
-    // element that is returned when the form is submitted. It is used to
-    // determine if the element is selected.
-    // Its value is the term ID.
-    $term_parents = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadParents($term_id);
-    $term_parent_id = reset(array_keys($term_parents));
     $child_terms = \Drupal::entityTypeManager()->getStorage('taxonomy_term')->loadChildren($term_id);
-
     if ($child === 'All') {
       // Special handling for "All" option.
       $variables['depth'][$child] = 0;
@@ -133,6 +119,4 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
 
   }
 
-  // Assign structured elements for Twig rendering.
-  $variables['nested_elements'] = $structured_elements;
 }
