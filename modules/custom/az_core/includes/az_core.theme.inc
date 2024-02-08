@@ -5,7 +5,6 @@
  * Theme hooks, preprocessor, and suggestions.
  */
 
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Template\Attribute;
 
