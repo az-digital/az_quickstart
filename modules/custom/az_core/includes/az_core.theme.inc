@@ -106,8 +106,9 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       $list_title['#attributes']['class'][] = 'text-decoration-none';
       if ($depth === 0) {
         $list_title['#attributes']['class'][] = 'text-azurite';
-        $list_title['#attributes']['class'][] = 'font-weight-bolder';
         $list_title['#attributes']['class'][] = 'text-size-h5';
+        $list_title['#attributes']['class'][] = 'mt-3';
+        $list_title['#attributes']['class'][] = 'pt-3';
       }
       else {
         $list_title['#attributes']['class'][] = 'text-azurite';

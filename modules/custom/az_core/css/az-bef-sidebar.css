@@ -1,42 +1,17 @@
-.az-bef-vertical ul {
-  list-style: none;
-}
-.az-bef-vertical .collapser::after {
-    font-family: "Material Icons Sharp";
-    -webkit-font-variant-ligatures: no-common-ligatures;
-    font-variant-ligatures: no-common-ligatures;
-}
-.az-bef-vertical .collapser {
-    top: 2px;
-    right: 20px;
-    font-size: 1rem;
-    display: inline-block;
-}
-
-.az-bef-vertical .collapser.level-0 {
-    top: 2px;
-    right: 20px;
-    font-size: 1.25rem;
-    display: inline-block;
-}
-.az-bef-vertical .collapser[aria-expanded=true]::after {
-  content: "remove";
-}
-.az-bef-vertical .collapser[aria-expanded=false]::after {
-  content: "add";
-}
-.az-bef-vertical .collapser.level-0[aria-expanded=true]::after {
-    content: "expand_less";
-}
-.az-bef-vertical .collapser.level-0[aria-expanded=false]::after {
-    content: "expand_more";
-}
-
+/* This margin is currently overridden by AZ Barrio. */
 .az-bef-vertical {
   margin-bottom: 1rem;
 }
 
-form>.form-row>fieldset.form-type-textfield>label {
+.az-bef-vertical > h2 {
+  margin-top: 3rem !important;
+  font-size: 1.5rem;
+}
+
+.az-bef-vertical .form-type-textfield {
+  margin-bottom: 0;
+}
+.az-bef-vertical .form-type-textfield > label {
   font-weight: 600;
   color: #1e5288;
   font-size: 1.25rem;
@@ -46,63 +21,71 @@ form>.form-row>fieldset.form-type-textfield>label {
   width: 100%;
 }
 
-div.checkbox>div.bef-checkboxes>ul {
-  padding: 0;
-  margin: 0;
+.az-bef-vertical fieldset {
+  min-width: 100%;
 }
 
-div.checkbox>div.bef-checkboxes>ul>li>div.checkbox>label {
-  color: #1E5288;
-  font-size: 1rem;
+.az-bef-vertical .collapser:not(.level-0) {
+  color: unset !important;
+}
+.az-bef-vertical .collapser::after {
+  font-family: "Material Icons Sharp";
+  -webkit-font-variant-ligatures: no-common-ligatures;
+  font-variant-ligatures: no-common-ligatures;
+  float: left;
+  margin-right: 2px;
+  margin-left: -1px;
+}
+.az-bef-vertical .collapser[aria-expanded=true]::after {
+  content: "remove";
+}
+.az-bef-vertical .collapser[aria-expanded=false]::after {
+  content: "add";
+}
+
+.az-bef-vertical .collapser.level-0 {
+  display: block;
+  border-top: 1px solid #e9ecef;
   font-weight: 600;
 }
+.az-bef-vertical .collapser.level-0::after {
+  float: right;
+  vertical-align: bottom;
+}
+.az-bef-vertical .collapser.level-0[aria-expanded=true]::after {
+  content: "expand_less";
+}
+.az-bef-vertical .collapser.level-0[aria-expanded=false]::after {
+  content: "expand_more";
+}
 
-div.checkbox>div.bef-checkboxes>ul>li>ul {
-  padding-left: 3px;
-  margin: 0.5rem 0 0 0;
+.az-bef-ul > li:has(.collapser) {
+  margin-bottom: 0.25rem;
 }
-div.checkbox>div.bef-checkboxes>ul>li>ul>li>ul {
-  padding-left: 10px;
+
+.az-bef-checkboxes > li > .checkbox {
+  display: block;
+  margin-top: .5rem;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  font-weight: 600;
+  color: #1e5288;
 }
-div.checkbox>div.bef-checkboxes>ul>li>ul>li>ul>li>ul,
-div.checkbox>div.bef-checkboxes>ul>li>ul>li>ul>li>ul>li>ul,
-div.checkbox>div.bef-checkboxes>ul>li>ul>li>ul>li>ul>li>ul>li>ul,
-div.checkbox>div.bef-checkboxes>ul>li>ul>li>ul>li>ul>li>ul>li>ul>li>ul {
+.az-bef-checkboxes > li > .checkbox > .form-checkbox {
+  margin-top: 0.2rem;
+}
+
+.az-bef-checkboxes ul > li > ul {
   padding-left: 20px;
 }
 
-
-div.checkbox>div.bef-checkboxes>ul>li:has(ul)>div {
-  margin: 15px 0 0 0;
-  padding: 0;
+.az-bef-checkboxes > li > ul > li > ul {
+  padding-left: 10px;
 }
 
-div.checkbox>div.bef-checkboxes>ul>li:has(ul)>div>label {
-  font-weight: 600 !important;
-  color: #1e5288 !important;
-  font-size: 1.25rem !important;
-  line-height: 1.5rem !important;
-  padding-top: 1rem !important;
-  border-top: 1px solid #e9ecef !important;
-  width: 100% !important;
-}
-
-div.checkbox>div.bef-checkboxes>ul>li:has(ul)>ul>li>div.checkbox>label {
-  font-weight: 600;
-}
-
-div.checkbox>div.bef-checkboxes>ul>li: has(ul)>div>ul>li:has(ul)>div {
-  padding: 0;
-}
-
-div.checkbox>div.bef-checkboxes>ul>li: has(ul)>div>ul>li:has(ul)>div>input {
-  display: none;
-}
-
-div.checkbox>div.bef-checkboxes>ul>li: has(ul)>div>ul>li:has(ul)>div>label {
-  font-weight: 600 !important;
-  width: 100% !important;
-  margin-top: 0.5rem;
+.az-bef-checkboxes > li > ul {
+  padding-left: 4px;
+  margin-top: .25rem;
 }
 
 button.js-bef-clear-all {
@@ -111,9 +94,4 @@ button.js-bef-clear-all {
 
 .js-bef-filter-count {
   margin-left: 5px;
-}
-
-.az-bef-vertical h2 {
-  margin-top: 3rem !important;
-  font-size: 1.5rem;
 }

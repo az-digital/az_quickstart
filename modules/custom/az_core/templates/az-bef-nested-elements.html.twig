@@ -16,12 +16,12 @@
 {% apply spaceless %}
   {% set delta = (current_nesting_level - new_nesting_level) | abs %}
   {% if loop.first %}
-    <ul>
+    <ul {{ attributes.setAttribute('class', 'az-bef-checkboxes list-unstyled m-0 p-0') }}>
   {% else %}
     {% if delta %}
       {% for i in 1..delta %}
         {% if new_nesting_level > current_nesting_level %}
-          <ul {{ attributes.setAttribute('id', collapse_id).setAttribute('class', 'collapse show') }}>
+          <ul {{ attributes.setAttribute('id', collapse_id).setAttribute('class', 'az-bef-ul list-unstyled collapse show') }}>
         {% else %}
           </ul>
         {% endif %}
