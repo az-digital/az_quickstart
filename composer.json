@@ -127,6 +127,9 @@
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
     },
+    "conflict": {
+        "drush/drush": "<12.4.3"
+    },
     "extra": {
         "branch-alias": {
             "dev-main": "2.10.x-dev"
