@@ -190,9 +190,8 @@ function az_publication_update_1020902(&$sandbox) {
       // Map and update the new entity reference field.
       if (isset($mapping[$old_value])) {
         $node->set('field_az_publication_mapped_type', ['target_id' => $mapping[$old_value]]);
-        // Make this change a new revision.
         $node->setNewRevision(TRUE);
-        $node->isDefaultRevision(FALSE);
+        $node->isDefaultRevision(TRUE);
         $node->setRevisionLogMessage('Mapped static publication type to new customize-able type reference field. See https://github.com/az-digital/az_quickstart/issues/2547.');
         $node->setRevisionCreationTime($time->getRequestTime());
         $node->setRevisionUserId(0);
