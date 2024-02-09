@@ -7,7 +7,6 @@
 
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Database\Database;
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Utility\UpdateException;
 use Drupal\node\Entity\Node;
 
@@ -199,7 +198,7 @@ function az_publication_update_1020902(&$sandbox) {
         $node->set('field_az_publication_mapped_type', ['target_id' => $mapping[$old_value]]);
         $node->setNewRevision(TRUE);
         $node->isDefaultRevision(TRUE);
-        // Construct a detailed message
+        // Construct a detailed message.
         $revision_log_message = sprintf(
           "Publication type updated from '%s' to '%s' as part of data migration to a customizable type reference field. For more information, see the issue at https://github.com/az-digital/az_quickstart/issues/2547.",
           $old_value,
