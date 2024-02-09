@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_card
     - core.entity_view_mode.node.az_media_list
+    - core.entity_view_mode.node.az_row
     - core.entity_view_mode.node.full
     - core.entity_view_mode.node.teaser
   module:
@@ -18,6 +19,7 @@ type_settings:
   display_plugins:
     - 'view_mode:node.az_card'
     - 'view_mode:node.az_media_list'
+    - 'view_mode:node.az_row'
     - 'view_mode:node.full'
     - 'view_mode:node.teaser'
   entity_browser: ''

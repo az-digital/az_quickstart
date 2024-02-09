@@ -501,6 +501,28 @@
     "az_attachments" : "",
     "az_attachments_description" : "",
     "az_event_categories" : "Lecture|Music|Mathematics"
+  },
+  {"id":23,
+    "title" : "Pulse: Weavings and Paintings by Marlowe Katoney",
+    "az_summary" : "",
+    "az_subheading" : "Pulse: Weavings and Paintings",
+    "az_event_date" : "today - 3 days 0:00",
+    "az_event_date_to" : "today + 27 days 23:59",
+    "az_event_date_duration" : "44639",
+    "uaqs_summary" : "First trained as a painter at the University of Arizona, Winslow-based artist Marlowe Katoney (Diné) was taught to weave by his maternal grandmother in 2010. Since then, Katoney has used a hybrid approach to his weaving practice, combining elements from painting, color theory, perspective, and composition with traditional Navajo iconography and designs.",
+    "az_body" : "First trained as a painter at the University of Arizona, Winslow-based artist Marlowe Katoney (Diné) was taught to weave by his maternal grandmother in 2010. Since then, Katoney has used a hybrid approach to his weaving practice, combining elements from painting, color theory, perspective, and composition with traditional Navajo iconography and designs.\n\nThe subjects of Katoney's work are varied, as he literally and figuratively weaves traditional imagery with contemporary pictorial practices. Many works directly relate to events in his life, while others are drawn from larger concepts related to popular culture, street art, nature, family, and Navajo culture.\n\nAs the artist explains, \"For me, being an artist is an ongoing pursuit of freedom. It's of the aesthetic of not being limited to the notion of having to abide by the popular [perceptions] of beauty or to create something readily identifiable as being 'Navajo' but instead it's to deconstruct old ideas to create new ones ... Addressing subject matter and composition in this way contextualizes traditional Navajo weaving into contemporary art.\"\n\nPulse features approximately thirty weavings and paintings created over the span of fifteen years that are drawn from both private and public collections. This exhibition is curated by Dr. Anya Montiel, Curator and Native American Art Historian, and Olivia Miller, UAMA Director and Curator.\n\nThis exhibition is made possible through support from the Terra Foundation for American Art.",
+    "az_location": [
+      {
+        "url": "https://map.arizona.edu/2",
+        "title": "Museum of Art"
+      }
+    ],
+    "az_photos" : "navajo_wool_weaving.jpg",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
+    "az_attachments" : "",
+    "az_attachments_description" : "",
+    "az_event_categories" : "Special Event"
   }
 ]
 }
