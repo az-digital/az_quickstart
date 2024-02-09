@@ -12,7 +12,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 interface AZPublicationTypeInterface extends ConfigEntityInterface {
 
   /**
-   * Gets the Publication Type mapping.
+   * Gets the publication type mapping.
    *
    * @return string|null
    *   The type this is mapped to.
@@ -20,7 +20,7 @@ interface AZPublicationTypeInterface extends ConfigEntityInterface {
   public function getType(): ?string;
 
   /**
-   * Sets the Publication Type mapping.
+   * Sets the publication type mapping.
    *
    * Validates and sets the mapping property. Each element in the mapping array
    * should be an associative array with a single key-value pair.
@@ -34,7 +34,7 @@ interface AZPublicationTypeInterface extends ConfigEntityInterface {
   public function setType(string $type): self;
 
   /**
-   * Gets the Publication Type mapping options.
+   * Gets the publication type mapping options.
    *
    * @return array
    *   An array of publication type mapping options.

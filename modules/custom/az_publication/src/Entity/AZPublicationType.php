@@ -7,17 +7,17 @@ namespace Drupal\az_publication\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
- * Defines the AZPublication Type entity.
+ * Defines the publication type entity.
  *
  * @ConfigEntityType(
  *   id = "az_publication_type",
- *   label = @Translation("Publication Type"),
- *   label_collection = @Translation("Publication Types"),
- *   label_singular = @Translation("Publication Type"),
- *   label_plural = @Translation("Publication Types"),
+ *   label = @Translation("Publication type"),
+ *   label_collection = @Translation("Publication types"),
+ *   label_singular = @Translation("publication type"),
+ *   label_plural = @Translation("publication types"),
  *   label_count = @PluralTranslation(
- *     singular = "@count Publication Type",
- *     plural = "@count Publication Types"
+ *     singular = "@count publication type",
+ *     plural = "@count publication types"
  *   ),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
@@ -58,28 +58,28 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
 class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInterface {
 
   /**
-   * The Publication Type ID.
+   * The publication type ID.
    *
    * @var string
    */
   protected $id;
 
   /**
-   * The Publication Type label.
+   * The publication type label.
    *
    * @var string
    */
   protected $label;
 
   /**
-   * The Publication Type mapping.
+   * The publication type mapping.
    *
    * @var string
    */
   protected $type;
 
   /**
-   * Gets the Publication Type mapping.
+   * Gets the publication type mapping.
    *
    * @return string|null
    *   The type this is mapped to.
@@ -89,7 +89,7 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
   }
 
   /**
-   * Sets the Publication Type mapping.
+   * Sets the publication type mapping.
    *
    * @param string $type
    *   The type this is mapped to.
@@ -102,7 +102,7 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
   }
 
   /**
-   * Gets the Publication Type mapping options.
+   * Gets the publication type mapping options.
    *
    * @return array
    *   An associative array of publication type mapping options.
