@@ -102,6 +102,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       $list_title['#attributes']['aria-controls'] = $collapseId;
       $list_title['#attributes']['data-collapse-id'] = $collapseId;
       $list_title['#attributes']['class'][] = 'collapser';
+      $list_title['#attributes']['class'][] = 'mb-2';
       $list_title['#attributes']['class'][] = 'level-' . $depth;
       $list_title['#attributes']['class'][] = 'text-decoration-none';
       if ($depth === 0) {
