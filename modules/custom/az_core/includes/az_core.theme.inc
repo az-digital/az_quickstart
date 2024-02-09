@@ -102,13 +102,13 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       $list_title['#attributes']['aria-controls'] = $collapseId;
       $list_title['#attributes']['data-collapse-id'] = $collapseId;
       $list_title['#attributes']['class'][] = 'collapser';
-      $list_title['#attributes']['class'][] = 'mb-2';
       $list_title['#attributes']['class'][] = 'level-' . $depth;
       $list_title['#attributes']['class'][] = 'text-decoration-none';
       if ($depth === 0) {
         $list_title['#attributes']['class'][] = 'text-azurite';
-        $list_title['#attributes']['class'][] = 'font-weight-bolder';
         $list_title['#attributes']['class'][] = 'text-size-h5';
+        $list_title['#attributes']['class'][] = 'mt-3';
+        $list_title['#attributes']['class'][] = 'pt-3';
       }
       else {
         $list_title['#attributes']['class'][] = 'text-azurite';

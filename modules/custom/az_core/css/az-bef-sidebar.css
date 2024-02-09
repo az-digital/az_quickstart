@@ -45,9 +45,8 @@
 
 .az-bef-vertical .collapser.level-0 {
   display: block;
-  padding-top: 0.75rem;
   border-top: 1px solid #e9ecef;
-  font-size: 1.25rem;
+  font-weight: 600;
 }
 .az-bef-vertical .collapser.level-0::after {
   float: right;
@@ -66,10 +65,11 @@
 
 .az-bef-checkboxes > li > .checkbox {
   display: block;
-  margin-top: 1rem;
-  font-size: 1.25rem;
+  margin-top: .5rem;
+  font-size: 1rem;
   line-height: 1.25rem;
   font-weight: 600;
+  color: #1e5288;
 }
 .az-bef-checkboxes > li > .checkbox > .form-checkbox {
   margin-top: 0.2rem;
@@ -85,6 +85,7 @@
 
 .az-bef-checkboxes > li > ul {
   padding-left: 4px;
+  margin-top: .25rem;
 }
 
 button.js-bef-clear-all {
