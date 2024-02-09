@@ -210,7 +210,8 @@
                 "Deprecation in Drupal 10.2: Smart Date List Item allowed values must be passed as array (3409287)": "https://www.drupal.org/files/issues/2023-12-18/3409287.patch"
             },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
+                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
+                "View without empty handling could break caching (3017716)": "https://www.drupal.org/files/issues/2024-02-09/3017716-22.patch"
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch"
