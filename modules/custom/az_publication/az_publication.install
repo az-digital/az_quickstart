@@ -91,21 +91,22 @@ function az_publication_update_1020702() {
  * Adds field_az_publication_mapped_type field.
  */
 function az_publication_update_1020901() {
-  // The path to your module's config/install directory.
-  $module_path = \Drupal::service('extension.list.module')->getPath('az_publication') . '/config/install';
-
+  $module_dir = \Drupal::service('extension.list.module')->getPath('az_publication');
+  $module_path = $module_dir . '/config/install';
   // Create a new FileStorage object.
   $source_storage = new FileStorage($module_path);
-
-  // Import the specific configurations.
-  $field_storage_config = $source_storage->read('field.storage.node.field_az_publication_mapped_type');
-  \Drupal::entityTypeManager()->getStorage('field_storage_config')->create($field_storage_config)->save();
-
-  $field_config = $source_storage->read('field.field.node.az_publication.field_az_publication_mapped_type');
-  \Drupal::entityTypeManager()->getStorage('field_config')->create($field_config)->save();
-
+  $config_factory = \Drupal::service('config.factory');
+  if ($config_factory->get('field.storage.node.field_az_publication_mapped_type')->isNew()) {
+    $field_storage_config = $source_storage->read('field.storage.node.field_az_publication_mapped_type');
+    \Drupal::entityTypeManager()->getStorage('field_storage_config')->create($field_storage_config)->save();
+  }
+  if ($config_factory->get('field.field.node.az_publication.field_az_publication_mapped_type')->isNew()) {
+    $field_config = $source_storage->read('field.field.node.az_publication.field_az_publication_mapped_type');
+    \Drupal::entityTypeManager()->getStorage('field_config')->create($field_config)->save();
+  }
   // Clear caches after importing the configurations.
   \Drupal::service('entity_field.manager')->clearCachedFieldDefinitions();
+
 }
 
 /**
@@ -180,6 +181,7 @@ function az_publication_update_1020902(&$sandbox) {
   $limit = 50;
   $nids_slice = array_slice($sandbox['nids'], $sandbox['progress'], $limit);
   $nodes = Node::loadMultiple($nids_slice);
+  $time = \Drupal::service('datetime.time');
 
   foreach ($nodes as $node) {
     if ($node->hasField('field_az_publication_type') && !$node->get('field_az_publication_type')->isEmpty()) {
@@ -188,6 +190,12 @@ function az_publication_update_1020902(&$sandbox) {
       // Map and update the new entity reference field.
       if (isset($mapping[$old_value])) {
         $node->set('field_az_publication_mapped_type', ['target_id' => $mapping[$old_value]]);
+        // Make this change a new revision.
+        $node->setNewRevision(TRUE);
+        $node->isDefaultRevision(FALSE);
+        $node->setRevisionLogMessage('Mapped static publication type to new customize-able type reference field. See https://github.com/az-digital/az_quickstart/issues/2547.');
+        $node->setRevisionCreationTime($time->getRequestTime());
+        $node->setRevisionUserId(0);
         $node->save();
       }
     }
