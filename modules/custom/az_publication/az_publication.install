@@ -192,13 +192,20 @@ function az_publication_update_1020902(&$sandbox) {
   foreach ($nodes as $node) {
     if ($node->hasField('field_az_publication_type') && !$node->get('field_az_publication_type')->isEmpty()) {
       $old_value = $node->get('field_az_publication_type')->value;
+      $new_value = $mapping[$old_value];
 
       // Map and update the new entity reference field.
       if (isset($mapping[$old_value])) {
         $node->set('field_az_publication_mapped_type', ['target_id' => $mapping[$old_value]]);
         $node->setNewRevision(TRUE);
         $node->isDefaultRevision(TRUE);
-        $node->setRevisionLogMessage('Mapped static publication type to new customize-able type reference field. See https://github.com/az-digital/az_quickstart/issues/2547.');
+        // Construct a detailed message
+        $revision_log_message = sprintf(
+          "Publication type updated from '%s' to '%s' as part of data migration to a customizable type reference field. For more information, see the issue at https://github.com/az-digital/az_quickstart/issues/2547.",
+          $old_value,
+          $new_value
+        );
+        $node->setRevisionLogMessage($revision_log_message);
         $node->setRevisionCreationTime($time->getRequestTime());
         $node->setRevisionUserId(1);
         $node->save();
