@@ -194,7 +194,7 @@ function az_publication_update_1020902(&$sandbox) {
         $node->isDefaultRevision(TRUE);
         $node->setRevisionLogMessage('Mapped static publication type to new customize-able type reference field. See https://github.com/az-digital/az_quickstart/issues/2547.');
         $node->setRevisionCreationTime($time->getRequestTime());
-        $node->setRevisionUserId(0);
+        $node->setRevisionUserId(1);
         $node->save();
       }
     }
