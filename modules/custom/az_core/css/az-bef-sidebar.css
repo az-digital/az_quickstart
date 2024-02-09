@@ -19,7 +19,9 @@
 .az-bef-vertical fieldset {
   min-width: 100%;
 }
-
+.az-bef-vertical .collapser {
+  font-weight: 600;
+}
 .az-bef-vertical .collapser:not(.level-0) {
   color: unset !important;
 }
@@ -39,9 +41,7 @@
 }
 
 .az-bef-vertical .collapser.level-0 {
-  display: block;
   border-top: 1px solid #e9ecef;
-  font-weight: 600;
 }
 .az-bef-vertical .collapser.level-0::after {
   float: right;
@@ -66,25 +66,25 @@
   font-weight: 600;
   color: #1e5288;
 }
+.az-bef-checkboxes .form-checkbox {
+  margin-top: 0.35rem;
+}
 .az-bef-checkboxes > li > .checkbox > .form-checkbox {
   margin-top: 0.2rem;
+}
+.az-bef-checkboxes > li > ul > li > .checkbox {
+  font-weight: 600;
 }
 
 .az-bef-checkboxes ul > li > ul {
   padding-left: 20px;
 }
-
 .az-bef-checkboxes > li > ul > li > ul {
   padding-left: 10px;
 }
-
 .az-bef-checkboxes > li > ul {
   padding-left: 4px;
   margin-top: .25rem;
-}
-
-button.js-bef-clear-all {
-  margin-bottom: 1rem;
 }
 
 .js-bef-filter-count {

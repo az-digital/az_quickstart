@@ -5,6 +5,7 @@
  * Contains az_core.module.
  */
 
+ // phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 require_once __DIR__ . '/includes/az_core.theme.inc';
 
 use Drupal\block\Entity\Block;

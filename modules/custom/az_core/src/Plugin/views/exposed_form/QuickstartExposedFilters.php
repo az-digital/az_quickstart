@@ -57,6 +57,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
           'js-bef-clear-all',
           'd-none',
           'mx-1',
+          'mb-3',
         ],
       ],
       '#weight' => -10,
