@@ -32,8 +32,8 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['group_style'] ?? 'buttons',
       '#description' => $this->t('Determines the style/behavior of your group of links.'),
       '#options' => [
-        'buttons' => $this->t('Buttons'),
-        'dropdown' => $this->t('Dropdown'),
+        'buttons' => $this->t('Inline Buttons'),
+        'dropdown' => $this->t('Dropdown Button'),
         'list_group' => $this->t('List Group'),
       ],
       '#attributes' => [
@@ -43,7 +43,7 @@ class AZLinkGroupParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     // Dropdown title.
     $form['dropdown_title'] = [
-      '#title' => $this->t('Dropdown Title'),
+      '#title' => $this->t('Dropdown Button Title'),
       '#type' => 'textfield',
       '#description' => $this->t('The title of your dropdown menu.'),
       '#size' => 60,
