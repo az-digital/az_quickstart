@@ -4,6 +4,7 @@
       "id":1,
       "title" : "Fruit Flies and Cellular Demise – Zeroing in on the Causes of ALS",
       "az_byline" : "",
+      "az_byline_affiliation" : "College of Science",
       "az_published" : "today -10 days",
       "az_media_image" : "connection-647206_1920.jpeg",
       "az_thumbnail" : "",
@@ -22,7 +23,8 @@
     {
       "id":2,
       "title" : "Runners' Brains May Have More Connectivity, UA Research Shows",
-      "az_byline" : "Alexis Blue, University Communications",
+      "az_byline" : "Wilma Wildcat",
+      "az_byline_affiliation" : "University Communications",
       "az_published" : "today -5 days",
       "az_media_image" : "runners_brains.jpeg",
       "az_thumbnail" : "runners_brains_2.jpg",
@@ -41,7 +43,8 @@
     {
       "id":3,
       "title" : "Jet Stream Changes Could Amplify Weather Extremes by 2060s (UANews)",
-      "az_byline" : "Daniel Stolte, University Communications",
+      "az_byline" : "Wilbur Wildcat",
+      "az_byline_affiliation" : "University Communications",
       "az_published" : "today -15 day",
       "az_media_image" : "",
       "az_thumbnail" : "",
@@ -60,7 +63,8 @@
     {
       "id":4,
       "title" : "Could Man's Best Friend Be Man's Best Medicine?",
-      "az_byline" : "American Geophysical Union/University Communications",
+      "az_byline" : "",
+      "az_byline_affiliation" : "American Geophysical Union/University Communications",
       "az_published" : "today -1 day",
       "az_media_image" : "mans_best_friend.jpeg",
       "az_thumbnail" : "mans_best_friend.jpeg",
@@ -79,7 +83,8 @@
     {
       "id":5,
       "title" : "Black Holes Come to the Big Screen",
-      "az_byline" : "Daniel Stolte, University Communications",
+      "az_byline" : "Wilbur Wildcat",
+      "az_byline_affiliation" : "",
       "az_published" : "today -10 day",
       "az_media_image" : "",
       "az_thumbnail" : "",
