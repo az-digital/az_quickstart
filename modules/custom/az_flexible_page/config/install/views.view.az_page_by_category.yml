@@ -386,6 +386,20 @@ display:
                 select_all_none: 0
                 select_all_none_nested: 0
                 display_inline: 0
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: 'No results found for the selected filters, try clearing filters and trying again.'
+            format: az_standard
+          tokenize: false
       filters:
         status:
           id: status
@@ -527,6 +541,7 @@ display:
           relationship: none
           view_mode: az_row
       defaults:
+        empty: false
         title: false
         css_class: false
         use_ajax: false
