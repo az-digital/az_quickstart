@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_core\Commands;
+namespace Drupal\az_core\Drush\Commands;
 
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
 use Drupal\config_provider\Plugin\ConfigCollector;
