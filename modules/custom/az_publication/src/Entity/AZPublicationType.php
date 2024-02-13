@@ -11,13 +11,13 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *
  * @ConfigEntityType(
  *   id = "az_publication_type",
- *   label = @Translation("Publication Type"),
- *   label_collection = @Translation("Publication Types"),
- *   label_singular = @Translation("Publication Type"),
- *   label_plural = @Translation("Publication Types"),
+ *   label = @Translation("Publication type"),
+ *   label_collection = @Translation("Publication types"),
+ *   label_singular = @Translation("publication type"),
+ *   label_plural = @Translation("publication types"),
  *   label_count = @PluralTranslation(
- *     singular = "@count Publication Type",
- *     plural = "@count Publication Types"
+ *     singular = "@count publication type",
+ *     plural = "@count publication types"
  *   ),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",

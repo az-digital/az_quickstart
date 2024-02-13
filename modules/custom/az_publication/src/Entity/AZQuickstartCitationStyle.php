@@ -13,13 +13,13 @@ use Seboettg\CiteProc\StyleSheet;
  *
  * @ConfigEntityType(
  *   id = "az_citation_style",
- *   label = @Translation("Quickstart Citation Style"),
- *   label_collection = @Translation("Quickstart Citation Styles"),
- *   label_singular = @Translation("Quickstart Citation Style"),
- *   label_plural = @Translation("Quickstart Citation Styles"),
+ *   label = @Translation("Citation Style"),
+ *   label_collection = @Translation("Citation Styles"),
+ *   label_singular = @Translation("Citation Style"),
+ *   label_plural = @Translation("Citation Styles"),
  *   label_count = @PluralTranslation(
- *     singular = "@count Quickstart Citation Style",
- *     plural = "@count Quickstart Citation Styles"
+ *     singular = "@count Citation Style",
+ *     plural = "@count Citation Styles"
  *   ),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
