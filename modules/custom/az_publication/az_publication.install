@@ -200,7 +200,7 @@ function az_publication_update_1020902(&$sandbox) {
         $node->isDefaultRevision(TRUE);
         // Construct a detailed message.
         $revision_log_message = sprintf(
-          "Publication type updated from '%s' to '%s' as part of data migration to a customizable type reference field. For more information, see the issue at https://github.com/az-digital/az_quickstart/issues/2547.",
+          "Publication type updated from '%s' to '%s' as part of data migration to a customizable type reference field. For more information about how to use this feature, see https://quickstart.arizona.edu/node/220",
           $old_value,
           $new_value
         );
