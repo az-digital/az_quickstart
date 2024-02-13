@@ -397,7 +397,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: 'No results found for the selected filters, try clearing filters and trying again.'
+            value: 'No results found for the selected filters. Please clear filters and try again.'
             format: az_standard
           tokenize: false
       filters:
