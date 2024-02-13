@@ -47,11 +47,11 @@ use Seboettg\CiteProc\StyleSheet;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/styles/{az_citation_style}",
- *     "add-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/add",
- *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/styles/{az_citation_style}/edit",
- *     "delete-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/{az_citation_style}/delete",
- *     "collection" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style"
+ *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}",
+ *     "add-form" = "/admin/config/az-quickstart/settings/az-publication/style/add",
+ *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}/edit",
+ *     "delete-form" = "/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}/delete",
+ *     "collection" = "/admin/config/az-quickstart/settings/az-publication/styles"
  *   }
  * )
  */

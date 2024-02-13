@@ -35,19 +35,17 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    */
   public function getDefaultOperations(EntityInterface $entity) {
     $operations = parent::getDefaultOperations($entity);
-    // Add AJAX functionality to enable/disable operations.
-    foreach (['enable', 'disable'] as $op) {
-      if (isset($operations[$op])) {
-        $operations[$op]['url'] = $entity->toUrl($op);
-        // Enable and disable operations should use AJAX.
-        $operations[$op]['attributes']['class'][] = 'use-ajax';
-      }
-    }
-
-    // ajax.js focuses automatically on the data-drupal-selector element. When
-    // enabling the type again, focusing on the disable link doesn't work, as it
-    // is hidden. We assign data-drupal-selector to every link, so it focuses
-    // on the edit link.
+    // $current_user = \Drupal::currentUser();
+    // if (!$current_user->hasPermission('delete az publication type entities') && isset($operations['delete'])) {
+    //   unset($operations['delete']);
+    // }
+    // if (!$current_user->hasPermission('disable az publication type entities') && isset($operations['disable'])) {
+    //   unset($operations['disable']);
+    // }
+    // if (!$current_user->hasPermission('enable az publication type entities') && isset($operations['enable'])) {
+    //   unset($operations['enable']);
+    // }
+    // Ensure ajax.js focuses on appropriate element by setting data-drupal-selector.
     foreach ($operations as &$operation) {
       $operation['attributes']['data-drupal-selector'] = 'az-publication-type-listing-' . $entity->id();
     }

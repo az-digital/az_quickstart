@@ -27,6 +27,7 @@ permissions:
   - 'add publication type entities'
   - 'add content to books'
   - 'administer nodes'
+  - 'administer publication type entities'
   - 'administer webform'
   - 'administer webform element access'
   - 'administer webform submission'

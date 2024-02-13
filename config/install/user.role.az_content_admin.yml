@@ -23,7 +23,6 @@ permissions:
   - 'administer menu'
   - 'administer meta tags'
   - 'administer nodes'
-  - 'administer publication type entities'
   - 'administer quickstart configuration'
   - 'administer redirects'
   - 'administer shortcuts'

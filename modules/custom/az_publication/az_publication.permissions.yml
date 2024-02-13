@@ -60,3 +60,8 @@ delete all publication type revisions:
   title: 'Delete all Publication Type revisions'
   description: 'Role requires permission to <em>view Publication Type revisions</em> and <em>delete rights</em> for publication type entities in question or <em>administer publication type entities</em>.'
 
+disable publication type entities:
+  title: 'Disable Publication Type entities'
+
+enable publication type entities:
+  title: 'Enable Publication Type entities'

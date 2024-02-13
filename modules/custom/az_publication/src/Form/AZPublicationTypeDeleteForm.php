@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication\Form;
 
+use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Entity\EntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 
 /**
@@ -48,6 +50,19 @@ class AZPublicationTypeDeleteForm extends EntityConfirmFormBase {
     );
 
     $form_state->setRedirectUrl($this->getCancelUrl());
+  }
+
+  /**
+   * Checks access for the delete form.
+   *
+   * @param AccountInterface $account
+   *   The user account.
+   *
+   * @return AccessResult
+   */
+  public function access(AccountInterface $account) {
+    // Check for the custom delete permission.
+    return $account->hasPermission('delete az publication type entities') ? AccessResult::allowed() : AccessResult::forbidden();
   }
 
 }

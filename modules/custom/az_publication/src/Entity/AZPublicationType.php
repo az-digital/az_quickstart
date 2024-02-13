@@ -37,7 +37,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "type"
  *   },
  *   config_prefix = "type",
- *   admin_permission = "administer site configuration",
+ *   admin_permission = "administer publication type entities",
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
