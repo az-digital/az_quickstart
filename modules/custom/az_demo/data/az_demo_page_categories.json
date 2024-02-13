@@ -1,6 +1,26 @@
 {
   "page_categories": [
     {
+      "name": "Home Page",
+      "description": "The home page for the site.",
+      "parent_name": ""
+    },
+    {
+      "name": "Marketing Campaign",
+      "description": "A page intended to be used for a marketing campaign.",
+      "parent_name": ""
+    },
+    {
+      "name": "Menu Blocks",
+      "description": "A page with embedded menu blocks.",
+      "parent_name": ""
+    },
+    {
+      "name": "No Sidebar",
+      "description": "A page which is included in the main navigation menu but has the sidebar hidden.",
+      "parent_name": ""
+    },
+    {
       "name": "Accordions",
       "description": "A page with accordions.",
       "parent_name": ""
@@ -79,26 +99,6 @@
       "name": "Upcoming Events",
       "description": "A page showcasing upcoming events.",
       "parent_name": "Events"
-    },
-    {
-      "name": "Home Page",
-      "description": "The home page for the site.",
-      "parent_name": ""
-    },
-    {
-      "name": "Marketing Campaign",
-      "description": "A page intended to be used for a marketing campaign.",
-      "parent_name": ""
-    },
-    {
-      "name": "Menu Blocks",
-      "description": "A page with embedded menu blocks.",
-      "parent_name": ""
-    },
-    {
-      "name": "No Sidebar",
-      "description": "A page which is included in the main navigation menu but has the sidebar hidden.",
-      "parent_name": ""
     },
     {
       "name": "Photo Galleries",
