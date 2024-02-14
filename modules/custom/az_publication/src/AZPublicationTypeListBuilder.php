@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication;
 
-use Drupal\az_publication\Entity\AZPublicationType;
 use Drupal\Core\Config\Entity\ConfigEntityListBuilder;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Url;
@@ -172,7 +171,8 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
       '#attributes' => [
         'class' => [
           'table-filter',
-          'js-show'],
+          'js-show',
+        ],
       ],
     ];
     $list['enabled']['heading']['#markup'] = '<h2>' . $this->t('Enabled', [], ['context' => 'Plural']) . '</h2>';
