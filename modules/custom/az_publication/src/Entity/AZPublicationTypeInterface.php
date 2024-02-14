@@ -12,7 +12,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 interface AZPublicationTypeInterface extends ConfigEntityInterface {
 
   /**
-   * Gets the Publication Type mapping options.
+   * Gets the publication type mapping options.
    *
    * @return array
    *   An array of publication type mapping options.

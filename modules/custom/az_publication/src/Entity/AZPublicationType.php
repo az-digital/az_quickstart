@@ -7,7 +7,7 @@ namespace Drupal\az_publication\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
- * Defines the AZ Publication Type entity.
+ * Defines the publication type entity.
  *
  * @ConfigEntityType(
  *   id = "az_publication_type",
@@ -59,28 +59,28 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
 class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInterface {
 
   /**
-   * The Publication Type ID.
+   * The publication type ID.
    *
    * @var string
    */
   protected $id;
 
   /**
-   * The Publication Type label.
+   * The publication type label.
    *
    * @var string
    */
   protected $label;
 
   /**
-   * The Publication Type mapping.
+   * The publication type mapping.
    *
    * @var string
    */
   protected $type;
 
   /**
-   * Gets the Publication Type mapping options.
+   * Gets the publication type mapping options.
    *
    * @return array
    *   An associative array of publication type mapping options.
