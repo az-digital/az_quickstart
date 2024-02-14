@@ -12,28 +12,6 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 interface AZPublicationTypeInterface extends ConfigEntityInterface {
 
   /**
-   * Gets the Publication Type mapping.
-   *
-   * @return string|null
-   *   The type this is mapped to.
-   */
-  public function getType(): ?string;
-
-  /**
-   * Sets the Publication Type mapping.
-   *
-   * Validates and sets the mapping property. Each element in the mapping array
-   * should be an associative array with a single key-value pair.
-   *
-   * @param string $type
-   *   The mapping string to set.
-   *
-   * @return $this
-   *   The class instance for method chaining.
-   */
-  public function setType(string $type): self;
-
-  /**
    * Gets the Publication Type mapping options.
    *
    * @return array

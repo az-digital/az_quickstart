@@ -80,29 +80,6 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
   protected $type;
 
   /**
-   * Gets the Publication Type mapping.
-   *
-   * @return string|null
-   *   The type this is mapped to.
-   */
-  public function getType(): ?string {
-    return $this->get('type');
-  }
-
-  /**
-   * Sets the Publication Type mapping.
-   *
-   * @param string $type
-   *   The type this is mapped to.
-   *
-   * @return $this
-   */
-  public function setType(string $type): self {
-    $this->set('type', (string) $type);
-    return $this;
-  }
-
-  /**
    * Gets the Publication Type mapping options.
    *
    * @return array

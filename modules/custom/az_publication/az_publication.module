@@ -127,7 +127,6 @@ function az_publication_theme() {
       'template' => 'views-exposed-form--az-publications',
       'base hook' => 'views_exposed_form',
     ],
-    // List types.
     'az_publication_type_listing_table' => [
       'variables' => [
         'headers' => NULL,

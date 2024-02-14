@@ -55,10 +55,11 @@ class AZPublicationTypeDeleteForm extends EntityConfirmFormBase {
   /**
    * Checks access for the delete form.
    *
-   * @param AccountInterface $account
+   * @param \Drupal\Core\Session\AccountInterface $account
    *   The user account.
    *
-   * @return AccessResult
+   * @return \Drupal\Core\Access\AccessResult
+   *   The access result.
    */
   public function access(AccountInterface $account) {
     // Check for the custom delete permission.

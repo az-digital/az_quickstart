@@ -35,17 +35,18 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    */
   public function getDefaultOperations(EntityInterface $entity) {
     $operations = parent::getDefaultOperations($entity);
-    // $current_user = \Drupal::currentUser();
-    // if (!$current_user->hasPermission('delete az publication type entities') && isset($operations['delete'])) {
-    //   unset($operations['delete']);
-    // }
-    // if (!$current_user->hasPermission('disable az publication type entities') && isset($operations['disable'])) {
-    //   unset($operations['disable']);
-    // }
-    // if (!$current_user->hasPermission('enable az publication type entities') && isset($operations['enable'])) {
-    //   unset($operations['enable']);
-    // }
-    // Ensure ajax.js focuses on appropriate element by setting data-drupal-selector.
+    $current_user = \Drupal::currentUser();
+    if (!$current_user->hasPermission('delete az publication type entities') && isset($operations['delete'])) {
+      unset($operations['delete']);
+    }
+    if (!$current_user->hasPermission('disable az publication type entities') && isset($operations['disable'])) {
+      unset($operations['disable']);
+    }
+    if (!$current_user->hasPermission('enable az publication type entities') && isset($operations['enable'])) {
+      unset($operations['enable']);
+    }
+    // Ensure ajax.js focuses on appropriate element by setting
+    // data-drupal-selector.
     foreach ($operations as &$operation) {
       $operation['attributes']['data-drupal-selector'] = 'az-publication-type-listing-' . $entity->id();
     }
@@ -61,15 +62,12 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
       'enabled' => [],
       'disabled' => [],
     ];
-
     foreach (parent::load() as $entity) {
-      if ($entity instanceof AZPublicationType) {
-        if ($entity->status()) {
-          $entities['enabled'][] = $entity;
-        }
-        else {
-          $entities['disabled'][] = $entity;
-        }
+      if ($entity->status()) {
+        $entities['enabled'][] = $entity;
+      }
+      else {
+        $entities['disabled'][] = $entity;
       }
     }
     return $entities;
@@ -79,9 +77,6 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    if (!$entity instanceof AZPublicationType) {
-      return [];
-    }
     $row = parent::buildRow($entity);
     return [
       'data' => [
@@ -97,7 +92,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         ],
         'type' => [
           'data' => [
-            '#plain_text' => $entity->getType(),
+            '#plain_text' => $entity->get('type'),
           ],
         ],
         'operations' => $row['operations'],
@@ -117,7 +112,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'data' => $this->t('Machine name'),
         'field' => 'id',
         'specifier' => 'id',
-        'attributes' => [
+        '#attributes' => [
           'class' => [
             RESPONSIVE_PRIORITY_LOW,
             'az-publication-type-machine-name',
@@ -128,7 +123,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'data' => $this->t('Label'),
         'field' => 'label',
         'specifier' => 'label',
-        'attributes' => [
+        '#attributes' => [
           'class' => [
             RESPONSIVE_PRIORITY_LOW,
             'az-publication-type-label',
@@ -139,7 +134,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'data' => $this->t('Mapped Type'),
         'field' => 'type',
         'specifier' => 'type',
-        'attributes' => [
+        '#attributes' => [
           'class' => [
             RESPONSIVE_PRIORITY_LOW,
             'az-publication-type',
@@ -175,7 +170,9 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     $list['filters'] = [
       '#type' => 'container',
       '#attributes' => [
-        'class' => ['table-filter', 'js-show'],
+        'class' => [
+          'table-filter',
+          'js-show'],
       ],
     ];
     $list['enabled']['heading']['#markup'] = '<h2>' . $this->t('Enabled', [], ['context' => 'Plural']) . '</h2>';
@@ -197,9 +194,16 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
             $status,
           ],
         ],
+        '#rows' => [],
       ];
-      foreach ($entities[$status] as $entity) {
-        $list[$status]['table']['#rows'][$entity->id()] = $this->buildRow($entity);
+
+      if (!empty($entities[$status]) && is_array($entities[$status])) {
+        foreach ($entities[$status] as $entity) {
+          $row = $this->buildRow($entity);
+          if (is_array($row)) {
+            $list[$status]['table']['#rows'][$entity->id()] = $row;
+          }
+        }
       }
     }
     $list['enabled']['table']['#empty'] = $this->t('There are no enabled publication types.');

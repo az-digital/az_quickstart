@@ -27,7 +27,6 @@ function template_preprocess_az_publication_type_listing_table(&$variables) {
       $variables['headers'][$key]['attributes'] = new Attribute($header['#attributes']);
     }
   }
-
   // Convert the attributes to valid attribute objects for rows.
   if (!empty($variables['rows'])) {
     foreach ($variables['rows'] as $key => $row) {
