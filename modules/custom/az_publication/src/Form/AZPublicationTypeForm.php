@@ -64,7 +64,7 @@ class AZPublicationTypeForm extends EntityForm {
       '#required' => TRUE,
       '#type' => 'radios',
       '#title' => $this->t('Publication Type Mapping'),
-      '#options' => $az_publication_type->getTypeOptions(),
+      '#options' => $az_publication_type->getMappableTypeOptions(),
       '#default_value' => $az_publication_type->getType(),
       '#description' => $this->t('Select the type of publication this entry corresponds to. Each type aligns with the standards defined in the Citation Style Language (CSL). Your selection here will determine how the publication is formatted and displayed. For a detailed explanation of each type, refer to the CSL documentation: <a href=":csl-docs" target="_blank">CSL Types Specification</a>.', [
         ':csl-docs' => 'https://docs.citationstyles.org/en/stable/specification.html#appendix-iii-types',

@@ -7,7 +7,7 @@ namespace Drupal\az_publication\Entity;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
- * Defines the AZPublication Type entity.
+ * Defines the AZ Publication Type entity.
  *
  * @ConfigEntityType(
  *   id = "az_publication_type",
@@ -34,7 +34,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   config_export = {
  *     "id",
  *     "label",
- *     "type"
+ *     "type",
+ *     "status"
  *   },
  *   config_prefix = "type",
  *   admin_permission = "administer publication type entities",
@@ -107,7 +108,7 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
    * @return array
    *   An associative array of publication type mapping options.
    */
-  public static function getTypeOptions():array {
+  public static function getMappableTypeOptions():array {
     return [
       'article' => 'Article',
       'article-journal' => 'Journal Article',

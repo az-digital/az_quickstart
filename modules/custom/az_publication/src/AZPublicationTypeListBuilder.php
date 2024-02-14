@@ -163,6 +163,15 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     $list['#type'] = 'container';
     $list['#attributes']['id'] = 'az-publication-type-entity-list';
     $list['#attached']['library'][] = 'core/drupal.ajax';
+    $list['description'] = [
+      '#type' => 'markup',
+      '#markup' => $this->t('Tailor publication types to meet specific requirements and disable unused types to streamline the interface. For full documentation on how to use this feature, visit the <a href=":link" target="_blank">Quickstart documentation</a>.', [
+        ':link' => 'https://quickstart.arizona.edu/node/220',
+      ]),
+      '#prefix' => '<div class="az-publication-type-description">',
+      '#suffix' => '</div>',
+    ];
+
     $list['filters'] = [
       '#type' => 'container',
       '#attributes' => [

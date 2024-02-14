@@ -39,6 +39,6 @@ interface AZPublicationTypeInterface extends ConfigEntityInterface {
    * @return array
    *   An array of publication type mapping options.
    */
-  public static function getTypeOptions(): array;
+  public static function getMappableTypeOptions(): array;
 
 }
