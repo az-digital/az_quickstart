@@ -47,6 +47,14 @@ source:
       selector: url
     - name: doi
       selector: doi
+    - name: issn
+      selector: issn
+    - name: isbn
+      selector: isbn
+    - name: pmid
+      selector: pmid
+    - name: pmcid
+      selector: pmcid
     - name: version
       selector: version
     - name: datetype
@@ -114,6 +122,10 @@ process:
   field_az_publication_page: pages
   field_az_publication_link/uri: url
   field_az_publication_doi: doi
+  field_az_publication_issn: issn
+  field_az_publication_isbn: isbn
+  field_az_publication_pmid: pmid
+  field_az_publication_pmcid: pmcid
   field_az_publication_volume: volume
   field_az_publication_issue: number
   field_az_publication_version: version
