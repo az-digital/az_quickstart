@@ -176,10 +176,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       if (!$az_publication_mapped_type_field->isEmpty()) {
         $az_publication_mapped_type_id = $az_publication_mapped_type_field->target_id;
         $az_publication_mapped_type = \Drupal::entityTypeManager()->getStorage('az_publication_type')->load($az_publication_mapped_type_id);
-
-        // Check if the entity has a 'getType' method.
-        if (method_exists($az_publication_mapped_type, 'getType')) {
-          $blob->type = $az_publication_mapped_type->getType();
+        if ($az_publication_mapped_type->get('type')) {
+          $blob->type = $az_publication_mapped_type->get('type');
         }
         else {
           $blob->type = $style_context;
