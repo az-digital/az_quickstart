@@ -62,7 +62,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
       'disabled' => [],
     ];
     foreach (parent::load() as $entity) {
-      if ($entity->status()) {
+      if ($entity->get('status')) {
         $entities['enabled'][] = $entity;
       }
       else {

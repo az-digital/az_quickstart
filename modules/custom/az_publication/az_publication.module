@@ -175,7 +175,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $az_publication_mapped_type_field = $entity->get('field_az_publication_mapped_type');
       if (!$az_publication_mapped_type_field->isEmpty()) {
         $az_publication_mapped_type_id = $az_publication_mapped_type_field->target_id;
-        $az_publication_mapped_type = \Drupal::entityTypeManager()->getStorage('az_publication_type')->load($az_publication_mapped_type_id);
+        $entity_type_manager = \Drupal::entityTypeManager();
+        $az_publication_type_storage = $entity_type_manager->getStorage('az_publication_type');
+        $az_publication_mapped_type = $az_publication_type_storage->load($az_publication_mapped_type_id);
         if ($az_publication_mapped_type->get('type')) {
           $blob->type = $az_publication_mapped_type->get('type');
         }

@@ -80,8 +80,8 @@ class AZPublicationTypeForm extends EntityForm {
     $form['status'] = [
       '#title' => $this->t('Enabled'),
       '#type' => 'checkbox',
-      '#default_value' => $az_publication_type->status(),
-      '#disabled' => !$az_publication_type->status(),
+      '#default_value' => $az_publication_type->get('status'),
+      '#disabled' => !$az_publication_type->get('status'),
     ];
 
     return $form;
@@ -100,7 +100,7 @@ class AZPublicationTypeForm extends EntityForm {
     }
     // Retrieve and set the 'type' data.
     $type = $form_state->getValue('type');
-    $az_publication_type->setType($type);
+    $az_publication_type->set('type', $type);
     $status = $az_publication_type->save();
 
     switch ($status) {
