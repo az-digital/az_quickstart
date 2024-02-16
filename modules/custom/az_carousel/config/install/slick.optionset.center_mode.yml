@@ -10,17 +10,17 @@ skin: ''
 breakpoints: 1
 optimized: false
 options:
-  options__active_tab: edit-options-settings
+  options__active_tab: edit-options-responsives
   settings:
     mobileFirst: true
     asNavFor: ''
     accessibility: true
     adaptiveHeight: false
     autoplay: false
-    autoplaySpeed: 3000
     pauseOnHover: true
     pauseOnDotsHover: false
     pauseOnFocus: true
+    autoplaySpeed: 3000
     arrows: false
     prevArrow: Previous
     nextArrow: Next
@@ -66,15 +66,15 @@ options:
   responsives:
     responsive:
       -
-        breakpoint: 1200
+        breakpoint: 1110
         unslick: false
         settings:
           adaptiveHeight: false
           autoplay: false
-          autoplaySpeed: 3000
           pauseOnHover: false
           pauseOnDotsHover: false
           pauseOnFocus: false
+          autoplaySpeed: 3000
           arrows: true
           centerMode: true
           centerPadding: 10%
@@ -98,7 +98,7 @@ options:
           cssEase: ease
           cssEaseBezier: ''
           cssEaseOverride: ''
-          variableWidth: false
+          variableWidth: true
           vertical: false
           verticalSwiping: false
           waitForAnimate: false
