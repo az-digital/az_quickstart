@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_mla
+label: 'Modern Language Association Style (MLA)'
+style: modern-language-association
+custom: false

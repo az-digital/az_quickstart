@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_row
     - field.field.node.az_flexible_page.field_az_main_content
+    - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
@@ -17,24 +18,25 @@ third_party_settings:
   smart_title:
     enabled: true
     settings:
+      smart_title__link: false
       smart_title__tag: h2
       smart_title__classes:
         - card-title
         - text-midnight
         - h4
         - mt-md-2
-      smart_title__link: false
   field_group:
     group_card_clickable:
       children:
         - group_link
+      label: 'Card Clickable'
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: 'card card-borderless card-clickable bg-gray-100 p-4'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -42,32 +44,32 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: 'Card Clickable'
     group_link:
       children:
         - group_row
+      label: Link
       parent_name: group_card_clickable
+      region: content
       weight: 2
       format_type: link
-      region: content
       format_settings:
-        id: ''
         classes: 'card-body p-0'
+        id: ''
         target: entity
         custom_uri: ''
         target_attribute: default
-      label: Link
     group_row:
       children:
         - group_media
         - group_column
+      label: Row
       parent_name: group_link
+      region: content
       weight: 5
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: row
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -75,15 +77,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: Row
     group_media:
       children:
         - field_az_media_image
+      label: Media
       parent_name: group_row
+      region: content
       weight: 5
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'col-12 col-md-4'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -91,21 +95,19 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'col-12 col-md-4'
-      label: Media
     group_column:
       children:
         - smart_title
         - group_summary
         - group_read_more
+      label: Column
       parent_name: group_row
+      region: content
       weight: 6
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: col
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -113,16 +115,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: Column
     group_heading:
       children: {  }
+      label: Heading
       parent_name: ''
+      region: hidden
       weight: 3
       format_type: html_element
-      region: hidden
       format_settings:
-        id: ''
         classes: 'card-title text-midnight h4 mt-md-2'
+        id: ''
         element: h2
         show_label: false
         label_element: h3
@@ -130,15 +132,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: Heading
     group_read_more:
       children:
         - links
+      label: 'Read more'
       parent_name: group_column
+      region: content
       weight: 5
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'card-clickable-link text-chili text-left'
+        id: ''
         element: div
         show_label: true
         label_element: div
@@ -146,19 +150,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'card-clickable-link text-chili text-left'
-      label: 'Read more'
     group_summary:
       children:
         - field_az_summary
+      label: Summary
       parent_name: group_column
+      region: content
       weight: 3
       format_type: html_element
-      region: content
       format_settings:
-        id: ''
         classes: 'card-text font-weight-normal'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -166,7 +168,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-      label: Summary
 id: node.az_flexible_page.az_row
 targetEntityType: node
 bundle: az_flexible_page
@@ -174,30 +175,31 @@ mode: az_row
 content:
   field_az_media_image:
     type: entity_reference_entity_view
-    weight: 2
-    region: content
     label: hidden
     settings:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
+    weight: 2
+    region: content
   field_az_summary:
     type: text_default
-    weight: 4
-    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 4
+    region: content
   links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 1
     region: content
+  smart_title:
     settings: {  }
     third_party_settings: {  }
-  smart_title:
     weight: 2
     region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden:
   field_az_main_content: true
+  field_az_marketing_page_style: true
   field_az_page_category: true

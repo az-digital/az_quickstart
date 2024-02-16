@@ -10,11 +10,12 @@ id: paragraph.az_text.field_az_text_area
 field_name: field_az_text_area
 entity_type: paragraph
 bundle: az_text
-label: 'Text'
-description: ''
+label: Text
+description: 'White text will be highlighted in gray (only while editing) to keep the text visible.'
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Contains az_paragraphs_splitscreen.module.
+ */
+
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\paragraphs\ParagraphInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_view_alter().
+ */
+function az_paragraphs_splitscreen_paragraph_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  // Check for specific paragraph type.
+  if ($entity->bundle() === 'az_splitscreen') {
+    $build['#attached']['library'][] = 'az_paragraphs_splitscreen/az_paragraphs_splitscreen';
+  }
+}
+
+/**
+ * Implements hook_theme_registry_alter().
+ */
+function az_paragraphs_splitscreen_theme_registry_alter(&$theme_registry) {
+  $module_path = \Drupal::service('extension.list.module')->getPath('az_paragraphs_splitscreen');
+  // Find all .html.twig files in this module's folder recursively.
+  $template_file_objects = drupal_find_theme_templates($theme_registry, '.html.twig', $module_path);
+  // Iterate through all found template file objects.
+  foreach ($template_file_objects as $key => $template_file_object) {
+    // If the template has not already been overridden by a theme.
+    if (!isset($theme_registry[$key]['theme path']) || !preg_match('#/themes/#', $theme_registry[$key]['theme path'])) {
+      // Copy default paragraph registry entry for paragraph entries.
+      if (strpos($key, 'paragraph__') === 0) {
+        $theme_registry[$key] = $theme_registry['paragraph'];
+      }
+      // Alter the theme path and template elements.
+      $theme_registry[$key]['theme path'] = $module_path;
+      $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
+      $theme_registry[$key]['type'] = 'module';
+    }
+  }
+}
+
+/**
+ * Alter the pre_rendered build of the field group element.
+ *
+ * @param array $element
+ *   Group being rendered.
+ * @param object $group
+ *   The Field group info.
+ * @param object $rendering_object
+ *   The entity / form being rendered.
+ */
+function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
+
+  if ($group->group_name === 'group_split_screen') {
+    $paragraph = $rendering_object['#paragraph'];
+    if ($paragraph instanceof ParagraphInterface) {
+      $order_class_mapping = [
+        'order_0' => 'order-0',
+        'order_1' => 'order-0 order-md-1',
+      ];
+      $paragraph_settings = $paragraph->getAllBehaviorSettings();
+      if (!empty($paragraph_settings['az_split_screen'])) {
+        $splitscreen_settings = $paragraph_settings['az_split_screen'];
+        $order_settings = $splitscreen_settings['ordering'];
+        $order_classes = $order_class_mapping[$order_settings];
+        $element['#attributes']['class'][] = $order_classes;
+      }
+    }
+  }
+}

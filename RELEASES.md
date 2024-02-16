@@ -15,6 +15,8 @@ Patch releases will be applied to the current development branch first and then 
   - Security improvements
   - Critical institutional link changes
   - Critical brand changes
+  - Add Experimental modules
+  - Update Experimental modules
 - Third-party code / dependencies
   - Drupal core
     - Security updates
@@ -30,6 +32,8 @@ Patch releases will be applied to the current development branch first and then 
 The following types of changes are allowed for minor releases in addition to those allowed for patch releases.
 - Functionality and frontend
   - New features
+  - Experimental modules changed to Stable
+  - Enable formally experimental modules by default or via database update.
   - Changes to behavior that existing sites might rely on
   - CSS, markup or template changes
     - Not critical brand changes (see patch release)
@@ -70,6 +74,12 @@ The goal of the stable release is to provide a version of Quickstart for The Uni
 ### End of Life
 Once two more releases of Quickstart are available (approximately one year from initial release), releases will no longer be supported. This means that they will not receive any further security updates or bug fixes.
 -->
+
+### Beta Releases (beta)
+Beta releases serve as a preview of the upcoming stable release and are meant for testing purposes. They provide developers and site maintainers an opportunity to test new features, APIs, and compatibility with existing configurations. Feedback from beta testing is crucial to address bugs, performance issues, or any other concerns before the stable release.
+
+### Release Candidates (rc)
+Release candidates are the final step before the stable release. These versions are considered feature complete, with all proposed features implemented and bugs addressed. The primary purpose of an RC is to ensure that there are no critical issues that were missed during beta testing. If no significant problems are identified in an RC, it can be promoted to a stable release. However, if issues are found, they are addressed, and a new RC is issued for testing.
 
 ## Update hook numbering convention
 

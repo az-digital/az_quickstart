@@ -2,11 +2,11 @@
 
 namespace Drupal\az_metrics\EventSubscriber;
 
-use Drupal\Core\Database\Connection;
 use Drupal\Component\Datetime\Time;
-use Symfony\Component\HttpKernel\KernelEvents;
-use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Drupal\Core\Database\Connection;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
  * Class for logging domains.
@@ -16,14 +16,14 @@ class AZMetricsSubscriber implements EventSubscriberInterface {
   /**
    * Drupal\Core\Database\Connection definition.
    *
-   * @var Drupal\Core\Database\Connection
+   * @var \Drupal\Core\Database\Connection
    */
   protected $connection;
 
   /**
    * Drupal\Component\Datetime\Time definition.
    *
-   * @var Drupal\Component\Datetime\Time
+   * @var \Drupal\Component\Datetime\Time
    */
   protected $time;
 

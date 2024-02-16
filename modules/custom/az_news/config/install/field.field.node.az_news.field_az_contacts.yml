@@ -14,7 +14,7 @@ bundle: az_news
 label: Contacts
 description: 'Persons who can be contacted about the news article.'
 required: false
-translatable: true
+translatable: false
 default_value: {  }
 default_value_callback: ''
 settings:

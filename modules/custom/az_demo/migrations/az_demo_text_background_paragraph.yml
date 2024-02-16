@@ -30,6 +30,12 @@ source:
     -
       name: bg_pattern
       selector: bg_pattern
+    -
+      name: bg_padding
+      selector: bg_padding
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
@@ -41,12 +47,16 @@ process:
     -
       plugin: default_value
       default_value: az_standard
-
   behavior_settings:
-    plugin: paragraphs_behavior_settings
-    bg_color: bg_color
-    bg_pattern: bg_pattern
-    text_background_full_width: full_width
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_text_background_paragraph_behavior:
+        text_background_color: bg_color
+        text_background_full_width: full_width
+        text_background_pattern: bg_pattern
+        text_background_padding: bg_padding
+        az_display_settings:
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

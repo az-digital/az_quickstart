@@ -3,6 +3,7 @@
 namespace Drupal\az_news_feeds\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
@@ -27,14 +28,17 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
-   * @param GuzzleHttp\ClientInterface $http_client
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface|null $typedConfigManager
+   *   The typed config manager.
+   * @param \GuzzleHttp\ClientInterface $http_client
    *   An http client.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
+    TypedConfigManagerInterface|null $typedConfigManager,
     ClientInterface $http_client
     ) {
-    parent::__construct($config_factory);
+    parent::__construct($config_factory, $typedConfigManager);
     $this->httpClient = $http_client;
   }
 
@@ -44,6 +48,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   public static function create(ContainerInterface $container): self {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('http_client')
     );
   }

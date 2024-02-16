@@ -1,8 +1,17 @@
 .nav-link, .nav-pills .nav-link, .nav-tabs .nav-link {
   background-color: white;
 }
+:root {
+  --sidebar-top-margin: 0;
+}
+@media (min-width: 768px) {
+    #sidebar_second,
+    #sidebar_first {
+      margin-top: var(--sidebar-top-margin);
+    }
+}
 .full-width-background {
-    max-width: calc(100vw - var(--scrollbar-width) / 2);
+    max-width: calc(100vw - var(--scrollbar-width));
 }
 /* See https://github.com/az-digital/az_quickstart/pull/1365 */
 .sidebar_first {
@@ -13,8 +22,8 @@
     max-width: calc(100vw - var(--scrollbar-width));
 }
 .region-content .full-width-background {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    margin-left: var(--full-width-left-distance);
+    margin-right: var(--full-width-right-distance);
     overflow: hidden;
 }
 .region-content .az-full-width-row {
@@ -112,9 +121,9 @@
 }
 @media (min-width: 768px) {
     .layout-sidebar-first .region-content .full-width-background .az-full-width-row {
-        -ms-flex: 0 0 75%;
-        flex: 0 0 75%;
-        max-width: 75%;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
         margin-left: auto;
         margin-right: 0;
     }
@@ -131,36 +140,30 @@
         -ms-flex-pack: initial;
         justify-content: initial;
     }
+    .layout-two-sidebars .region-content .full-width-background,
+    .layout-sidebar-second .region-content .full-width-background,
     .layout-sidebar-first .region-content .full-width-background {
-        margin-left: calc(33.333333333333333% - 50vw);
-        margin-right: calc(66.66666666666% - 50vw);
+        margin-left: var(--full-width-left-distance);
+        margin-right: var(--full-width-right-distance);
     }
     .layout-sidebar-second .region-content .full-width-background .az-full-width-row {
-        -ms-flex: 0 0 75%;
-        flex: 0 0 75%;
-        max-width: 75%;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
         -ms-flex-pack: start!important;
         justify-content: flex-start!important;
-    }
-    .layout-sidebar-second .region-content .full-width-background {
-        margin-right: calc(33.333333333333333% - 50vw);
-        margin-left: calc(66.66666666666% - 50vw);
     }
     .layout-two-sidebars .region-content .full-width-background .az-full-width-row {
         -ms-flex-pack: center!important;
         justify-content: center!important;
     }
     .layout-two-sidebars .region-content .full-width-background .az-full-width-row {
-        -ms-flex: 0 0 50%;
-        flex: 0 0 50%;
-        max-width: 50%;
+        -ms-flex: 0 0 100%;
+        flex: 0 0 100%;
+        max-width: 100%;
     }
     .region-content .paragraph--type--az-text-background.full-width-background .az-full-width-column-content {
         padding-left: 0;
         padding-right: 0;
-    }
-    .layout-two-sidebars .region-content .full-width-background .full-width-background {
-        margin-left: calc(50% - 50vw);
-        margin-right: calc(50% - 50vw);
     }
 }

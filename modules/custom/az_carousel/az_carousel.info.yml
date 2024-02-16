@@ -1,7 +1,7 @@
 name: 'Quickstart Carousel Item'
 type: module
 description: 'Allows users to create and order carousel items.'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 package: The University of Arizona
 dependencies:
   - az_core
@@ -18,5 +18,4 @@ dependencies:
   - pathauto:pathauto
   - search_exclude:search_exclude
   - slick:slick
-  - slick_ui:slick_ui
   - slick_views:slick_views

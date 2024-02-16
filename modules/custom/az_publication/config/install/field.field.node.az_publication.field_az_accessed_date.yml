@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_accessed_date
+    - node.type.az_publication
+  module:
+    - datetime
+id: node.az_publication.field_az_accessed_date
+field_name: field_az_accessed_date
+entity_type: node
+bundle: az_publication
+label: 'Accessed Date'
+description: 'Date when the resource was accessed for information.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: datetime

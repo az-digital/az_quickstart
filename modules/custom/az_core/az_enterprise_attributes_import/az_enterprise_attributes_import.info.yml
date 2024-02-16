@@ -1,0 +1,11 @@
+name: Quickstart Enterprise Attributes Import
+description: 'Import University of Arizona Attributes'
+core_version_requirement: ^9 || ^10
+type: module
+package: 'The University of Arizona - Experimental'
+dependencies:
+  - az_core:az_core
+  - migrate:migrate
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+configure: az_enterprise_attributes_import.settings

@@ -1,5 +1,6 @@
 langcode: en
 status: true
+dependencies: {  }
 name: az_small
 label: 'Small (360px)'
 effects:

@@ -51,7 +51,9 @@ source:
     link_id:
       type: integer
 process:
-  bundle: menu_link_content
+  bundle:
+    plugin: default_value
+    default_value: menu_link_content
   title: title
   menu_name: menu
   # Handle external urls or url aliases.

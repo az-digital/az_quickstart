@@ -4,6 +4,7 @@ dependencies:
   config:
     - system.menu.main
   module:
+    - block_class
     - menu_block
   theme:
     - az_barrio
@@ -16,14 +17,16 @@ plugin: 'menu_block:main'
 settings:
   id: 'menu_block:main'
   label: 'Sidebar menu'
-  provider: menu_block
   label_display: visible
+  provider: menu_block
   follow: false
   follow_parent: active
   level: 2
   depth: 0
-  expand: false
+  expand_all_items: false
   parent: 'main:'
   suggestion: sidebar
   label_type: root
+  label_link: false
+  expand: false
 visibility: {  }

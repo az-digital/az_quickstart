@@ -1,0 +1,6 @@
+status: 1
+pattern: '[az_author:field_az_author_fname] [az_author:field_az_author_drop_particle] [az_author:field_az_author_nondrop_particle] [az_author:field_az_author_lname] [az_author:field_az_author_suffix] [az_author:field_az_author_literal]'
+escape: false
+preserve_titles: false
+save: false
+chunk: 50

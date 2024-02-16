@@ -43,11 +43,16 @@ content:
       crop_preview_image_style: crop_thumbnail
       crop_list:
         - az_card_image
+        - az_modal_image
         - az_full_width_bg_extra_small
         - az_full_width_bg_large
         - az_full_width_bg_medium
         - az_full_width_bg_small
         - az_large
+        - az_marketing_cloud_30_70_layout
+        - az_marketing_cloud_50_50_layout
+        - az_marketing_cloud_hero_layout
+        - az_square_aspect_ratio
       progress_indicator: throbber
       crop_types_required: {  }
       show_crop_area: false
@@ -56,5 +61,6 @@ hidden:
   created: true
   name: true
   path: true
+  replace_file: true
   status: true
   uid: true

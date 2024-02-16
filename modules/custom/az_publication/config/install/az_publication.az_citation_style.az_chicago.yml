@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_chicago
+label: 'Chicago Manual of Style (CMOS)'
+style: chicago-fullnote-bibliography
+custom: false

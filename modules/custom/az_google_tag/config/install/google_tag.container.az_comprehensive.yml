@@ -2,56 +2,66 @@ langcode: en
 status: true
 dependencies:
   module:
-    - ctools
-    - google_tag
+    - system
+    - user
 id: az_comprehensive
 label: 'AZ Comprehensive'
 weight: 0
-container_id: GTM-ML2BZB
-data_layer: dataLayer
-include_classes: false
-whitelist_classes: |-
-  google
-  nonGooglePixels
-  nonGoogleScripts
-  nonGoogleIframes
-blacklist_classes: |-
-  customScripts
-  customPixels
-include_environment: false
-environment_id: ''
-environment_token: ''
-path_toggle: 'exclude listed'
-path_list: |-
-  /admin*
-  batch*
-  block/add/*
-  /block/*/edit
-  file/add
-  file/*/edit
-  /node/add*
-  /node/*/edit
-  /node/*/delete
-  /user/*/edit*
-  /user/*/cancel*
-  taxonomy/term/*/edit
-role_toggle: 'include listed'
-role_list:
-  anonymous: anonymous
-status_toggle: 'exclude listed'
-status_list: |-
-  403
-  404
+tag_container_ids:
+  - GTM-ML2BZB
+advanced_settings:
+  gtm:
+    data_layer: dataLayer
+    include_classes: false
+    allowlist_classes: |-
+      google
+      nonGooglePixels
+      nonGoogleScripts
+      nonGoogleIframes
+    blocklist_classes: |-
+      customScripts
+      customPixels
+    include_environment: false
+    environment_id: ''
+    environment_token: ''
+dimensions_metrics: {  }
 conditions:
-  'entity_bundle:node':
-    id: 'entity_bundle:node'
-    bundles: {  }
+  request_path:
+    id: request_path
+    negate: true
+    pages: |-
+      /admin*
+      batch*
+      block/add/*
+      /block/*/edit
+      file/add
+      file/*/edit
+      /node/add*
+      /node/*/edit
+      /node/*/delete
+      /user/*/edit*
+      /user/*/cancel*
+      taxonomy/term/*/edit
+  response_code:
+    id: response_code
+    negate: true
+    response_codes: |-
+      403
+      404
+  user_role:
+    id: user_role
     negate: false
     context_mapping:
-      node: '@node.node_route_context:node'
-  'entity_bundle:taxonomy_term':
-    id: 'entity_bundle:taxonomy_term'
-    bundles: {  }
-    negate: false
-    context_mapping:
-      taxonomy_term: '@taxonomy_term.taxonomy_term_route_context:taxonomy_term'
+      user: '@user.current_user_context:current_user'
+    roles:
+      anonymous: anonymous
+events:
+  generate_lead:
+    value: ''
+    currency: ''
+  custom: {  }
+  sign_up:
+    method: CMS
+  search: {  }
+  login:
+    method: CMS

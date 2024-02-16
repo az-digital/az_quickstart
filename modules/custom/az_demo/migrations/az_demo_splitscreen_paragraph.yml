@@ -1,0 +1,79 @@
+id: az_demo_splitscreen_paragraph
+label: AZ Quickstart Demo SplitScreen Paragraphs
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+migration_dependencies:
+  required:
+    - az_demo_image_file
+    - az_demo_remote_video
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_splitscreen_paragraph.json
+  item_selector: paragraphs
+  ids:
+    id:
+      type: integer
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: az_text_area
+      selector: az_text_area
+    -
+      name: filename
+      selector: filename
+    -
+      name: full_width
+      selector: full_width
+    -
+      name: bg_color
+      selector: bg_color
+    -
+      name: ordering
+      selector: ordering
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_splitscreen
+
+process:
+  field_az_text_area/value: az_text_area
+  field_az_text_area/format:
+    -
+      plugin: default_value
+      default_value: az_standard
+
+  field_az_media/target_id:
+    -
+      plugin: migration_lookup
+      source: filename
+      migration:
+        - az_demo_remote_video
+        - az_demo_image_file
+      source_ids:
+        - az_demo_remote_video:
+            - filename
+        - az_demo_image_file:
+            - filename
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_split_screen:
+        bg_color: bg_color
+        full_width: full_width
+        ordering: ordering
+        az_display_settings:
+          bottom_spacing: bottom_spacing

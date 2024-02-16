@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - main
-
+concurrency: kitten-deploy
 jobs:
   watch-workflow:
     name: Watch workflow logs
@@ -11,18 +11,14 @@ jobs:
     timeout-minutes: 10
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.2'
 
-      - name: Install terminus
-        run: |
-          composer -n require pantheon-systems/terminus:^2
-          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
-
-      - name: Set up terminus
-        run: |
-          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+      - name: Install Terminus and authenticate Terminus
+        uses: pantheon-systems/terminus-github-actions@release/v1
+        with:
+          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Watch workflow logs
         run: |
@@ -37,9 +33,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.2'
 
       - name: Set up SSH
         run: |
@@ -48,14 +44,10 @@ jobs:
           echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
           chmod 600 ${HOME}/.ssh/*
 
-      - name: Install terminus
-        run: |
-          composer -n require pantheon-systems/terminus:^2
-          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
-
-      - name: Set up terminus
-        run: |
-          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+      - name: Install Terminus and authenticate Terminus
+        uses: pantheon-systems/terminus-github-actions@release/v1
+        with:
+          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Sync code to pantheon
         run: |
@@ -77,9 +69,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.2'
 
       - name: Set up SSH
         run: |
@@ -88,14 +80,10 @@ jobs:
           echo -e "${{ secrets.PANTHEON_SSH_KEY }}" > ${HOME}/.ssh/id_rsa
           chmod 600 ${HOME}/.ssh/*
 
-      - name: Install terminus
-        run: |
-          composer -n require pantheon-systems/terminus:^2
-          echo "$(pwd)/vendor/bin" >> ${GITHUB_PATH}
-
-      - name: Set up terminus
-        run: |
-          terminus -y -n auth:login --machine-token ${{ secrets.TERMINUS_TOKEN }}
+      - name: Install Terminus and authenticate Terminus
+        uses: pantheon-systems/terminus-github-actions@release/v1
+        with:
+          pantheon-machine-token: ${{ secrets.TERMINUS_TOKEN }}
 
       - name: Wake env
         run: |
@@ -117,7 +105,7 @@ jobs:
           --site-name="Kitten" \
           --yes \
           --verbose
-          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- pm:enable -n -y az_demo
+          terminus -y -n drush ${{ secrets.DEMO_SITE_NAME }}.dev -- pm:install -n -y az_demo
           terminus -y -n connection:set ${{ secrets.DEMO_SITE_NAME }}.dev git
 
       - name: Clear caches

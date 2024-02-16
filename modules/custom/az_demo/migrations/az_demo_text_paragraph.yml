@@ -21,6 +21,9 @@ source:
     -
       name: az_text_area
       selector: az_text_area
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
 
 destination:
   plugin: 'entity_reference_revisions:paragraph'
@@ -34,7 +37,11 @@ process:
       default_value: az_standard
 
   behavior_settings:
-    plugin: paragraphs_behavior_settings
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

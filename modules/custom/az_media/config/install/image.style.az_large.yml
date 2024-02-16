@@ -14,6 +14,7 @@ effects:
     weight: 1
     data:
       crop_type: az_large
+      automatic_crop_provider: null
   4872c243-7d96-4f0f-95b1-f2f8ecff0bea:
     uuid: 4872c243-7d96-4f0f-95b1-f2f8ecff0bea
     id: image_scale

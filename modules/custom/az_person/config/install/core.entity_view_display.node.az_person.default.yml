@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
@@ -16,65 +17,256 @@ dependencies:
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
+    - image.style.az_medium
     - node.type.az_person
   module:
+    - field_group
     - file
     - link
+    - media
+    - smart_title
     - telephone
     - text
     - user
+third_party_settings:
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: h1
+      smart_title__classes:
+        - node__title
+        - text-blue
+        - mt-md-0
+        - mb-0
+  field_group:
+    group_row:
+      children:
+        - group_col_12_name_titles
+        - group_col_12_image
+        - group_col_bio
+      label: Row
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'row d-md-block clearfix mb-5'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col_12_name_titles:
+      children:
+        - smart_title
+        - group_titles
+      label: 'Col 12 - Name & Titles'
+      parent_name: group_row
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: 'col-12 col-md-8 float-md-right'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col_12_image:
+      children:
+        - group_card
+      label: 'Col 12 - Image'
+      parent_name: group_row
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: 'col-12 col-md-4 float-md-left'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_col_bio:
+      children:
+        - field_az_body
+        - field_az_degrees
+        - field_az_person_category
+        - field_az_person_category_sec
+      label: 'Col - Bio'
+      parent_name: group_row
+      region: content
+      weight: 6
+      format_type: html_element
+      format_settings:
+        classes: 'col-12 col-md-8 float-md-right'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card:
+      children:
+        - field_az_media_image
+        - group_card_body
+      label: Card
+      parent_name: group_col_12_image
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: 'card mb-4 mb-md-0'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card_body:
+      children:
+        - field_az_address
+        - field_az_phones
+        - field_az_email
+        - field_az_pronouns
+        - group_text_break
+        - group_links
+      label: 'Card Body'
+      parent_name: group_card
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: card-body
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_titles:
+      children:
+        - field_az_titles
+      label: Titles
+      parent_name: group_col_12_name_titles
+      region: content
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: 'h4 d-block mt-0'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_text_break:
+      children:
+        - field_az_attachments
+      label: Documents
+      parent_name: group_card_body
+      region: content
+      weight: 11
+      format_type: html_element
+      format_settings:
+        classes: 'text-break mt-3'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: h5
+        attributes: ''
+        effect: none
+        speed: fast
+    group_links:
+      children:
+        - field_az_links
+      label: Links
+      parent_name: group_card_body
+      region: content
+      weight: 12
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: h5
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.az_person.default
 targetEntityType: node
 bundle: az_person
 mode: default
 content:
   field_az_address:
-    weight: 5
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 7
     region: content
   field_az_attachments:
-    weight: 18
+    type: file_default
     label: hidden
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    type: file_default
+    weight: 11
     region: content
   field_az_body:
-    weight: 16
+    type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 9
     region: content
   field_az_degrees:
-    weight: 17
+    type: string
     label: above
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 10
     region: content
   field_az_email:
-    weight: 7
+    type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: email_mailto
-    region: content
-  field_az_fname:
-    weight: 2
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
+    weight: 9
     region: content
   field_az_links:
-    weight: 8
+    type: link
     label: hidden
     settings:
       trim_length: 80
@@ -83,67 +275,68 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
-    region: content
-  field_az_lname:
-    weight: 3
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
+    weight: 11
     region: content
   field_az_media_image:
-    type: entity_reference_entity_view
-    weight: 21
-    label: above
+    type: media_thumbnail
+    label: hidden
     settings:
-      view_mode: default
-      link: false
+      image_link: ''
+      image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
+    weight: 6
     region: content
   field_az_person_category:
-    weight: 19
-    label: above
+    type: entity_reference_entity_view
+    label: hidden
     settings:
-      link: true
+      view_mode: az_badge
+      link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 11
     region: content
   field_az_person_category_sec:
-    weight: 20
-    label: above
+    type: entity_reference_entity_view
+    label: hidden
     settings:
-      link: true
+      view_mode: az_badge
+      link: false
     third_party_settings: {  }
-    type: entity_reference_label
+    weight: 12
     region: content
   field_az_phones:
-    weight: 6
+    type: telephone_link
     label: hidden
     settings:
       title: ''
     third_party_settings: {  }
-    type: telephone_link
+    weight: 8
     region: content
   field_az_pronouns:
-    weight: 22
-    label: above
+    type: string
+    label: inline
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 10
     region: content
   field_az_titles:
-    weight: 4
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 9
     region: content
-  links:
-    weight: 1
-    region: content
+  smart_title:
     settings: {  }
     third_party_settings: {  }
+    weight: 7
+    region: content
+hidden:
+  field_az_fname: true
+  field_az_link: true
+  field_az_lname: true
+  links: true

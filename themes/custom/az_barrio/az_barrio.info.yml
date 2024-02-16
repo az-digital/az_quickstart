@@ -1,12 +1,16 @@
 name: Arizona Barrio
 type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
+dependencies:
+  - az_core
 base theme: bootstrap_barrio
 block_default_region: 'content'
 
 libraries:
   - az_barrio/global-styling
+
+logo: images/logo.png
 
 regions:
   alert: Alert
@@ -18,23 +22,23 @@ regions:
   navigation_offcanvas: 'Off canvas content associated with the mobile off canvas navbar'
   help: 'Help'
   content_featured: 'Featured content'
+  highlighted: 'Highlighted'
+  breadcrumb: 'Breadcrumb'
+  content_top: 'Content top'
   sidebar_first: 'Sidebar first'
   sidebar_second: 'Sidebar second'
-  highlighted: 'Highlighted'
-  content_top: 'Content top'
-  breadcrumb: 'Breadcrumb'
   content: 'Content'
+  full_width_content_bottom: 'Full width content bottom'
   content_2_col_1: 'Content 2-column stacked(1)'
   content_2_col_2: 'Content 2-column stacked(2)'
   content_3_col_1: 'Content 3-column stacked(1)'
   content_3_col_2: 'Content 3-column stacked(2)'
   content_3_col_3: 'Content 3-column stacked(3)'
-  full_width_content_bottom: 'Full width content bottom'
+  content_bottom: 'Content bottom'
   content_4_col_1: 'Content 4-column stacked(1)'
   content_4_col_2: 'Content 4-column stacked(2)'
   content_4_col_3: 'Content 4-column stacked(3)'
   content_4_col_4: 'Content 4-column stacked(4)'
-  content_bottom: 'Content bottom'
   footer: 'Footer'
   footer_sub: 'Footer sub'
   footer_sub_menus: 'Footer sub menus'
@@ -42,8 +46,15 @@ regions:
 
 ckeditor_stylesheets:
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
-  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest/css/arizona-bootstrap.min.css
+  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-2.x/css/arizona-bootstrap.min.css
+
+ckeditor5-stylesheets:
+  - css/ckeditor5.css
+  - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
+  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-2.x/css/arizona-bootstrap.min.css
 
 libraries-extend:
   system/base:
     - az_barrio/az-media-display
+  core/drupal.ajax:
+    - az_barrio/az-ajax
