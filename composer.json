@@ -166,7 +166,6 @@
                 "Support SVG files for theme logo setting (2259567)": "https://www.drupal.org/files/issues/2023-12-01/2259567-179.patch",
                 "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2023-07-11/1461322-10-1-x-41.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
-                "Unrelated error message when running tests with database errors (3163925)": "https://www.drupal.org/files/issues/2022-05-12/3163925-19-9-2-x.patch",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
@@ -174,7 +173,8 @@
                 "Media Type links in Media Library modal missing vertical tabs styling in Claro (3404866)": "https://www.drupal.org/files/issues/2024-01-04/missing_variables_in_claro-3404866-41.patch",
                 "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2024-01-18/2350049-30.patch",
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch"
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch",
+                "Unrelated error message when running tests with database errors (3163925)": "https://www.drupal.org/files/issues/2022-05-12/3163925-19-9-2-x.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
