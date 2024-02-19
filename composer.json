@@ -204,6 +204,7 @@
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
+                "Configuration schema for Enable extra settings incorrect (3402036)": "https://www.drupal.org/files/issues/2023-11-17/configuration-schema-for-views-reference-field-settings-3402036-4.patch",
                 "View without empty handling could break caching (3017716)": "https://www.drupal.org/files/issues/2024-02-09/3017716-22.patch"
             },
             "drupal/workbench_access": {
