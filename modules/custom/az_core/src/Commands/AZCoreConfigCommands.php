@@ -16,6 +16,7 @@ use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\user\Entity\Role;
 use Drupal\user\PermissionHandler;
 use Drush\Commands\DrushCommands;
+use Symfony\Component\Yaml\Yaml as SymfonyYaml;
 
 /**
  * Contains Quickstart configuration-related commands.
@@ -160,6 +161,8 @@ class AZCoreConfigCommands extends DrushCommands {
   public function exportDistributionConfiguration($modules = '') {
     $extensions = $this->extensionLister->getList();
     $installed = array_intersect_key($extensions, $this->extensionLister->getAllInstalledInfo());
+    $rules = $this->loadExportRules();
+    $metatag_rules = $rules['strip_metatags'] ?? [];
     $seen = [];
     $dependencies = [];
 
@@ -226,10 +229,17 @@ class AZCoreConfigCommands extends DrushCommands {
             // Make role alterations if a role config.
             $active = $this->prepareRoleConfig($active, $original);
           }
+          if (in_array($item, $metatag_rules)) {
+            // Strip metatags workaround. Replace with more robust array logic.
+            $active = $this->stripMetatags($active);
+          }
+          if (isset($rules['merge'][$item])) {
+            // Add export rules for merge.
+            $active = array_merge($active, $rules['merge'][$item]);
+          }
           // Diff the state of configuration to check for changes.
           $diff = $this->configDiffer->diff($original, $active);
           if (!$this->diffIsEmpty($diff)) {
-
             if ($this->io()->confirm(dt('    Update [@key/@dir] @item?', [
               '@key' => $key,
               '@dir' => $dir,
@@ -282,6 +292,49 @@ class AZCoreConfigCommands extends DrushCommands {
         }
       }
     }
+  }
+
+  /**
+   * Load special case rules for distribution export.
+   *
+   * @return array
+   *   The export rules.
+   */
+  protected function loadExportRules() {
+    $rules = [
+      'strip_metatags' => [],
+      'ignore_config' => [],
+      'merge' => [],
+    ];
+    try {
+      $rules = SymfonyYaml::parseFile($this->extensionLister->getPath('az_core') . '/az_core.distribution_export.yml');
+    }
+    catch (\Exception $e) {
+    }
+
+    return $rules;
+  }
+
+  /**
+   * Remove metatag rules (placeholder).
+   *
+   * @param array $config
+   *   The config with metatags.
+   *
+   * @return array
+   *   The prepared configuration.
+   */
+  protected function stripMetatags($config) {
+    // @todo replace with more general-use yml diff logic.
+    if (!empty($config['dependencies']['config']) && is_array($config['dependencies']['config'])) {
+      // Filter out metatag dependency.
+      $matches = preg_filter('/field\.field\.node\.az_\w+\.field_az_metatag/', '$0', $config['dependencies']['config']);
+      $config['dependencies']['config'] = array_values(array_diff($config['dependencies']['config'], $matches));
+    }
+
+    // Filter out disabled field display settings.
+    unset($config['hidden']['field_az_metatag']);
+    return $config;
   }
 
   /**

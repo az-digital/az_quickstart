@@ -1,0 +1,37 @@
+# TODO: replace with more robust rules for diff exclusion.
+strip_metatags:
+  - core.entity_view_display.node.az_event.az_card
+  - core.entity_view_display.node.az_event.az_card_alternate
+  - core.entity_view_display.node.az_event.az_row
+  - core.entity_view_display.node.az_event.az_row_with_background
+  - core.entity_view_display.node.az_event.default
+  - core.entity_view_display.node.az_event.teaser
+  - core.entity_view_display.node.az_flexible_page.az_card
+  - core.entity_view_display.node.az_flexible_page.az_row
+  - core.entity_view_display.node.az_flexible_page.default
+  - core.entity_view_display.node.az_news.az_card
+  - core.entity_view_display.node.az_news.az_feature
+  - core.entity_view_display.node.az_news.az_marquee
+  - core.entity_view_display.node.az_news.az_media_list
+  - core.entity_view_display.node.az_news.az_medium_media_list
+  - core.entity_view_display.node.az_news.az_minimal_media_list
+  - core.entity_view_display.node.az_news.az_row
+  - core.entity_view_display.node.az_news.az_row_with_background
+  - core.entity_view_display.node.az_news.default
+  - core.entity_view_display.node.az_news.teaser
+  - core.entity_view_display.node.az_person.az_card
+  - core.entity_view_display.node.az_person.az_row
+  - core.entity_view_display.node.az_person.default
+  - core.entity_view_display.node.az_person.teaser
+# TODO: potentially replace with config_ignore API?
+ignore_config: []
+# Override dev site values.
+merge:
+  automated_cron.settings:
+    interval: 10800
+  system.site:
+    uuid: ''
+    name: ''
+    mail: ''
+  az_cas.settings:
+    disable_login_form: true  
