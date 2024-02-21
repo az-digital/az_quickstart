@@ -163,8 +163,6 @@ class AZCoreConfigCommands extends DrushCommands {
     $installed = array_intersect_key($extensions, $this->extensionLister->getAllInstalledInfo());
     $rules = $this->loadExportRules();
     $metatag_rules = $rules['strip_metatags'] ?? [];
-    $seen = [];
-    $dependencies = [];
 
     $overrides = [];
     $arguments = [];
@@ -207,8 +205,6 @@ class AZCoreConfigCommands extends DrushCommands {
         $storage = new FileStorage($path);
         $all = $storage->listAll();
         foreach ($all as $item) {
-          // Maintain list of every config item we've seen in modules.
-          $seen[] = $item;
           // Get the state of module configuration versus active configuration.
           $original = $storage->read($item);
           $active = $this->configFactory->get($item)->get();
@@ -262,36 +258,93 @@ class AZCoreConfigCommands extends DrushCommands {
               '@dir' => $dir,
             ]));
           }
-          $item_deps = $original['dependencies']['config'] ?? [];
+        }
+      }
+    }
+    $this->exportDependencies();
+  }
+
+  /**
+   * Export new dependencies found in the distribution.
+   */
+  protected function exportDependencies() {
+    $rules = $this->loadExportRules();
+    $ignores = $rules['ignore_config'] ?? [];
+    $extensions = $this->extensionLister->getList();
+    $providers = $this->configCollector->getConfigProviders();
+    $seen = [];
+    $dependencies = [];
+    $choices = [];
+
+    foreach ($extensions as $key => $extension) {
+      // Only run for distribution extensions.
+      if (substr($key, 0, 3) !== "az_") {
+        continue;
+      }
+      $choices[$key] = $key;
+      foreach ($providers as $provider) {
+        $dir = $provider->getDirectory();
+        // Only examine providers with a defined storage directory.
+        if (empty($dir)) {
+          continue;
+        }
+        // Find out which config items the module's storage has available.
+        $path = $extension->getPath() . DIRECTORY_SEPARATOR . $dir;
+        $storage = new FileStorage($path);
+        $all = $storage->listAll();
+        foreach ($all as $item) {
+          // Maintain list of every config item we've seen in modules.
+          $seen[$item] = $item;
+          $config = $storage->read($item);
+          $item_deps = $config['dependencies']['config'] ?? [];
           // Build list of potential module dependencies.
           foreach ($item_deps as $dep) {
-            $dependencies[$dep] = $dependencies[$dep] ?? $extension;
+            $dependencies[$dep] = $dep;
           }
         }
       }
     }
-    // Compute list of needed config that doesn't seem to have a home.
-    $needed = array_diff_key($dependencies, array_flip($seen));
-    foreach ($needed as $item => $extension) {
-      $active = $this->configFactory->get($item)->get();
-      $path = $extension->getPath() . DIRECTORY_SEPARATOR . InstallStorage::CONFIG_INSTALL_DIRECTORY;
-      $storage = new FileStorage($path);
-      unset($active['_core']);
-      unset($active['uuid']);
-      if ($this->io()->confirm(dt('Add NEW configuration @item?', [
-        '@item' => $item,
-      ]))) {
-        try {
-          $storage->write($item, $active);
-          $original = $active;
-        }
-        catch (StorageException $e) {
-          $this->output()->writeln(dt('Failed to write NEW configuration @item', [
-            '@item' => $item,
-          ]));
+    // Restripe array.
+    $dependencies = array_values($dependencies);
+    while (TRUE) {
+      $new_dependencies = [];
+      foreach ($dependencies as $dependency) {
+        if (!isset($seen[$dependency]) && (!in_array($dependency, $ignores))) {
+          if ($this->io()->confirm(dt('Add NEW configuration @item?', [
+            '@item' => $dependency,
+          ]))) {
+            $active = $this->configFactory->get($dependency)->get();
+            unset($active['_core']);
+            unset($active['uuid']);
+            $item_deps = $active['dependencies']['config'] ?? [];
+            foreach ($item_deps as $nested_dependency) {
+              if (!in_array($nested_dependency, $dependencies,)) {
+                $new_dependencies[$nested_dependency] = $nested_dependency;
+              }
+            }
+            $choice = $this->io()->choice(dt('Where should @item be exported?', [
+              '@item' => $dependency,
+            ]), $choices);
+            $path = $this->extensionLister->getPath($choice) . DIRECTORY_SEPARATOR . InstallStorage::CONFIG_INSTALL_DIRECTORY;
+            $storage = new FileStorage($path);
+            try {
+              $storage->write($dependency, $active);
+              $seen[$dependency] = $dependency;
+            }
+            catch (StorageException $e) {
+              $this->output()->writeln(dt('Failed to write NEW configuration @item', [
+                '@item' => $dependency,
+              ]));
+            }
+          }
         }
       }
+      if (empty($new_dependencies)) {
+        break;
+      }
+      $dependencies = array_values($new_dependencies);
     }
+
   }
 
   /**

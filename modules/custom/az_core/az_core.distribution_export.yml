@@ -24,7 +24,21 @@ strip_metatags:
   - core.entity_view_display.node.az_person.default
   - core.entity_view_display.node.az_person.teaser
 # TODO: potentially replace with config_ignore API?
-ignore_config: []
+ignore_config:
+  - core.entity_view_mode.node.teaser
+  - filter.format.plain_text
+  - core.entity_form_mode.media.media_library
+  - image.style.thumbnail
+  - core.entity_view_mode.media.media_library
+  - image.style.large
+  - image.style.medium
+  - image.style.media_library
+  - core.entity_view_mode.node.full
+  - core.entity_view_mode.block_content.full
+  - core.entity_view_mode.paragraph.preview
+  - system.menu.main
+  - core.entity_view_mode.user.compact
+  - field.storage.block_content.body
 # Override dev site values.
 merge:
   automated_cron.settings:
