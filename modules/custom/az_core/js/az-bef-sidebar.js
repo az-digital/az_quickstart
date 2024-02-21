@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const countButton = document.querySelector('.js-bef-clear-all');
   const checkboxContainer = document.querySelector('.az-bef-vertical');
   const checkboxCount = countButton.querySelector('.js-bef-filter-count');
-  const titleInput = checkboxContainer.querySelector('input[name="title"]');
+  const searchInput = checkboxContainer.querySelector('input[name="search"]');
 
   // Function to update the checkbox count
   function updateCheckboxCount() {
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 // Function to clear search box.
 function clearSearchBox(event) {
-  titleInput.value = '';
+  searchInput.value = '';
 }
 
 // Function to clear all filters

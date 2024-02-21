@@ -10,6 +10,8 @@ dependencies:
   module:
     - az_core
     - node
+    - search
+    - search_exclude
     - taxonomy
     - user
     - views_bootstrap
@@ -397,7 +399,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: 'No results found for the selected filters, try clearing filters and trying again.'
+            value: 'No results found for the selected filters. Please clear filters and try again.'
             format: az_standard
           tokenize: false
       filters:
@@ -427,29 +429,27 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        title:
-          id: title
-          table: node_field_data
-          field: title
+        keys:
+          id: keys
+          table: node_search_index
+          field: keys
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: string
-          operator: contains
+          plugin_id: search_keywords
+          operator: optional
           value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: title_op
+            operator_id: keys_op
             label: Search
             description: ''
             use_operator: false
-            operator: title_op
+            operator: keys_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: title
+            identifier: search
             required: false
             remember: false
             multiple: false
@@ -461,7 +461,6 @@ display:
               az_user_admin: '0'
               az_html_admin: '0'
               administrator: '0'
-            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
