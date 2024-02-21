@@ -398,7 +398,7 @@ function az_barrio_az_icons_assets_path($type) {
   }
   $az_icons_path .= '/az-icons-styles';
 
-  // AZ Bootstrap minified.
+  // AZ Icons minified.
   if (theme_get_setting('az_icons_minified')) {
     $az_icons_path .= '.min';
   }
