@@ -199,6 +199,6 @@ function az_quickstart_update_1020803() {
 /**
  * Enable ckeditor_indentblock module by default.
  */
-function az_quickstart_update_1020901() {
+function az_quickstart_update_1021001() {
   \Drupal::service('module_installer')->install(['ckeditor_indentblock']);
 }
