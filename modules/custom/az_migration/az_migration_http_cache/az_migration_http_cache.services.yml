@@ -1,0 +1,7 @@
+services:
+  cache.az_migration_http_cache:
+     class: Drupal\Core\Cache\CacheBackendInterface
+     tags:
+       - { name: cache.bin }
+     factory: cache_factory:get
+     arguments: [az_migration_http_cache]
