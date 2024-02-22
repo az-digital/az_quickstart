@@ -357,7 +357,7 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required: ''
           text_input_required_format: az_standard
           bef:
             general:
@@ -371,10 +371,12 @@ display:
               secondary_open: 0
               reset_button_always_show: 0
             filter:
-              title:
+              keys:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
                   collapsible: 0
                   is_secondary: 0
               field_az_page_category_target_id:
@@ -385,9 +387,15 @@ display:
                     filter_rewrite_values: ''
                   collapsible: 0
                   is_secondary: 0
-                select_all_none: 0
-                select_all_none_nested: 0
-                display_inline: 0
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
+                expand_all_levels: 0
+          az_bef:
+            az_finder:
+              min_search_length: '3'
+            finder:
+              min_search_length: '3'
       empty:
         area:
           id: area
