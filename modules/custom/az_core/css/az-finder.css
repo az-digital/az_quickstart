@@ -15,6 +15,9 @@
   border-top: 1px solid #e9ecef;
   width: 100%;
 }
+.js-svg-replace-level-0 svg, .js-svg-replace-level-1 svg {
+  pointer-events: none;
+}
 
 .az-bef-vertical fieldset {
   min-width: 100%;
@@ -25,20 +28,6 @@
 .az-bef-vertical .collapser:not(.level-0) {
   color: unset !important;
 }
-.az-bef-vertical .collapser::after {
-  font-family: "Material Icons Sharp";
-  -webkit-font-variant-ligatures: no-common-ligatures;
-  font-variant-ligatures: no-common-ligatures;
-  float: left;
-  margin-right: 2px;
-  margin-left: -1px;
-}
-.az-bef-vertical .collapser[aria-expanded=true]::after {
-  content: "remove";
-}
-.az-bef-vertical .collapser[aria-expanded=false]::after {
-  content: "add";
-}
 
 .az-bef-vertical .collapser.level-0 {
   border-top: 1px solid #e9ecef;
@@ -47,13 +36,6 @@
   float: right;
   vertical-align: bottom;
 }
-.az-bef-vertical .collapser.level-0[aria-expanded=true]::after {
-  content: "expand_less";
-}
-.az-bef-vertical .collapser.level-0[aria-expanded=false]::after {
-  content: "expand_more";
-}
-
 .az-bef-ul > li:has(.collapser) {
   margin-bottom: 0.25rem;
 }

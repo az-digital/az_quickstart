@@ -5,17 +5,50 @@
 
 (function (drupalSettings) {
   document.addEventListener('DOMContentLoaded', function () {
-    const clearAllButton = document.querySelector('.js-finder-clear-all');
     const filterContainer = document.querySelector('.az-bef-vertical');
+
+    const clearAllButton = filterContainer.querySelector(
+      '.js-finder-clear-all',
+    );
     const filterCountDisplay = clearAllButton.querySelector(
       '.js-finder-filter-count',
     );
     const searchInputField = filterContainer.querySelector(
       'input[name="search"]',
     );
-
+    const svgLevel0ReplaceButtons = filterContainer.querySelectorAll(
+      '.js-svg-replace-level-0',
+    );
+    const svgLevel1ReplaceButtons = filterContainer.querySelectorAll(
+      '.js-svg-replace-level-1',
+    );
     // Access Drupal setting for minimum search input length
     const minSearchLength = drupalSettings.azFinder.minSearchLength || 3;
+    // Access Drupal setting for icons
+    const icons = drupalSettings.azFinder.icons;
+
+    function toggleSVG(container, level) {
+      const isExpanded = container.getAttribute('aria-expanded') === 'true';
+      let newSVGMarkup;
+      if (level === 0) {
+        newSVGMarkup = isExpanded ? icons.level_0_expand : icons.level_0_collapse;
+      } else {
+        newSVGMarkup = isExpanded ? icons.level_1_expand : icons.level_1_collapse;
+      }
+      container.querySelector('svg').outerHTML = newSVGMarkup;
+    }
+
+    svgLevel0ReplaceButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        toggleSVG(this, 0);
+      });
+    });
+
+    svgLevel1ReplaceButtons.forEach((button) => {
+      button.addEventListener('click', function () {
+        toggleSVG(this, 1);
+      });
+    });
 
     // Update display of total active filters
     function updateActiveFilterDisplay() {
