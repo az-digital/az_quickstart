@@ -26,19 +26,19 @@ class QuickstartExposedFilters extends BetterExposedFilters {
 
     // Mark form as QuickstartExposedFilters form for easier alterations.
     $form['#context']['az_bef'] = TRUE;
-
     // Attach Quickstart styles.
-    $form['#attached']['library'][] = 'az_core/az-bef-sidebar';
+    $form['#attached']['library'][] = 'az_core/az-finder';
+    // Attach JavaScript settings for the minimum search input length.
+    $form['#attached']['drupalSettings']['azFinder']['minSearchLength'] = $this->options['az_bef']['finder']['min_search_length'] ?? 3;
     // Vertical style intended for sidebar use.
     $form['#attributes']['class'][] = 'az-bef-vertical';
-
-    // Create the submit button.
+    // Create the clear all filters button.
     $count = [
       '#type' => 'html_tag',
       '#tag' => 'span',
       '#attributes' => [
         'class' => [
-          'js-bef-filter-count',
+          'js-finder-filter-count',
         ],
       ],
     ];
@@ -54,7 +54,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
           'btn-sm',
           'btn-primary',
           'btn-block',
-          'js-bef-clear-all',
+          'js-finder-clear-all',
           'd-none',
           'mx-1',
           'mb-3',
@@ -65,4 +65,30 @@ class QuickstartExposedFilters extends BetterExposedFilters {
 
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+
+    // Add a field for setting the minimum search input length
+    $form['az_bef']['finder']['min_search_length'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Minimum Search Input Length'),
+      '#description' => $this->t('The minimum number of characters required in the search field to count as an active filter.'),
+      '#default_value' => $this->options['az_bef']['finder']['min_search_length'] ?? 3,
+      '#min' => 0,
+      '#step' => 1,
+    ];
+    parent::buildOptionsForm($form, $form_state);
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
+    parent::submitOptionsForm($form, $form_state);
+    // Save the minimum search input length setting
+    $this->options['az_bef']['finder']['min_search_length'] = $form_state->getValue(['az_bef', 'finder', 'min_search_length']);
+  }
 }

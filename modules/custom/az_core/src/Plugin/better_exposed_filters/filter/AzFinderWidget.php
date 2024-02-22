@@ -2,19 +2,19 @@
 
 namespace Drupal\az_core\Plugin\better_exposed_filters\filter;
 
-use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-
+use Drupal\Core\Template\Attribute;
+use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 /**
- * Default widget implementation.
+ * Finder widget implementation.
  *
  * @BetterExposedFiltersFilterWidget(
- *   id = "az_bef_checkboxes",
- *   label = @Translation("Finder Checkboxes/Radio Buttons"),
+ *   id = "az_finder",
+ *   label = @Translation("Finder"),
  * )
  */
-class AzBefCheckboxWidget extends FilterWidgetBase {
+class AzFinderWidget extends FilterWidgetBase {
 
   /**
    * {@inheritdoc}
@@ -24,6 +24,7 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
       'select_all_none' => FALSE,
       'select_all_none_nested' => FALSE,
       'display_inline' => FALSE,
+      'expand_all_levels' => FALSE,
     ];
   }
 
@@ -31,35 +32,15 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
-    $filter = $this->handler;
-
     $form = parent::buildConfigurationForm($form, $form_state);
-
-    $form['select_all_none'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Add select all/none links'),
-      '#default_value' => !empty($this->configuration['select_all_none']),
-      '#disabled' => !$filter->options['expose']['multiple'],
-      '#description' => $this->t('Add a "Select All/None" link when rendering the exposed filter using checkboxes. If this option is disabled, edit the filter and check the "Allow multiple selections".'
-      ),
+    $form['help'] = [
+      '#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.'),
     ];
-
-    $form['select_all_none_nested'] = [
+    $form['expand_all_levels'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Add nested all/none selection'),
-      '#default_value' => !empty($this->configuration['select_all_none_nested']),
-      '#disabled' => (!$filter->options['expose']['multiple']) || (isset($filter->options['hierarchy']) && !$filter->options['hierarchy']),
-      '#description' => $this->t('When a parent checkbox is checked, check all its children. If this option is disabled, edit the filter and check "Allow multiple selections" and edit the filter settings and check "Show hierarchy in dropdown".'
-      ),
-    ];
-
-    $form['display_inline'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Display inline'),
-      '#default_value' => !empty($this->configuration['display_inline']),
-      '#description' => $this->t('Display checkbox/radio options inline.'
-      ),
+      '#title' => $this->t('Expand all hierarchical levels by default'),
+      '#default_value' => $this->configuration['expand_all_levels'],
+      '#description' => $this->t('When enabled, all hierarchical levels will be expanded by default.'),
     ];
 
     return $form;
@@ -76,7 +57,6 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
     $field_id = $filter->options['is_grouped'] ? $filter->options['group_info']['identifier'] : $filter->options['expose']['identifier'];
 
     parent::exposedFormAlter($form, $form_state);
-
     if (!empty($form[$field_id])) {
       // Clean up filters that pass objects as options instead of strings.
       if (!empty($form[$field_id]['#options'])) {
@@ -86,7 +66,7 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
       // Support rendering hierarchical checkboxes/radio buttons (e.g. taxonomy
       // terms).
       if (!empty($filter->options['hierarchy'])) {
-        $form[$field_id]['#bef_nested'] = TRUE;
+        $form[$field_id]['#hierarchy'] = TRUE;
       }
 
       // Display inline.
@@ -94,7 +74,7 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
 
       // Render as checkboxes if filter allows multiple selections.
       if (!empty($form[$field_id]['#multiple'])) {
-        $form[$field_id]['#theme'] = 'az_bef_checkboxes';
+        $form[$field_id]['#theme'] = 'az_finder_widget';
         $form[$field_id]['#type'] = 'checkboxes';
 
         // Show all/none option.
@@ -106,7 +86,7 @@ class AzBefCheckboxWidget extends FilterWidgetBase {
       }
       // Else render as radio buttons.
       else {
-        $form[$field_id]['#theme'] = 'bef_radios';
+        $form[$field_id]['#theme'] = 'az_finder_widget';
         $form[$field_id]['#type'] = 'radios';
       }
     }

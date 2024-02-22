@@ -378,7 +378,7 @@ display:
                   collapsible: 0
                   is_secondary: 0
               field_az_page_category_target_id:
-                plugin_id: az_bef_hierarchical_select
+                plugin_id: az_finder
                 advanced:
                   sort_options: 0
                   rewrite:

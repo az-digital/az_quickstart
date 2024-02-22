@@ -15,9 +15,9 @@ az-enterprise-attributes:
   css:
     component:
       css/az-enterprise-attributes.css: {}
-az-bef-sidebar:
+az-finder:
   css:
     theme:
-      css/az-bef-sidebar.css: {}
+      css/az-finder.css: {}
   js:
-    js/az-bef-sidebar.js: {}
+    js/az-finder.js: {}

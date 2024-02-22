@@ -13,9 +13,9 @@ use Drupal\Core\Template\Attribute;
  */
 function az_core_theme($existing, $type, $theme, $path) {
   return [
-    'az_bef_checkboxes' => [
+    'az_finder_widget' => [
       'render element' => 'element',
-    ],
+     ],
   ];
 }
 
@@ -24,26 +24,25 @@ function az_core_theme($existing, $type, $theme, $path) {
  */
 
 /**
- * Prepares variables for bef-checkboxes template.
+ * Prepares variables for az-finder template.
  *
- * Default template: bef-checkboxes.html.twig.
+ * Default template: az-finder.html.twig.
  *
  * @param array $variables
  *   An associative array containing:
  *   - element: An associative array containing the exposed form element.
  */
-function template_preprocess_az_bef_checkboxes(array &$variables) {
+// function template_preprocess_az_finder(array &$variables) {
+
+// }
+function template_preprocess_az_finder_widget(array &$variables) {
   $element = &$variables['element'];
   $variables['wrapper_attributes'] = new Attribute();
   $variables['children'] = Element::children($element);
-  $variables['show_select_all_none'] = $element['#bef_select_all_none'] ?? FALSE;
-  $variables['show_select_all_none_nested'] = $element['#bef_select_all_none_nested'] ?? FALSE;
-  $variables['display_inline'] = $element['#bef_display_inline'] ?? FALSE;
   $variables['attributes']['name'] = $element['#name'];
-  if (!empty($variables['element']['#bef_nested'])) {
+  if (!empty($element['#hierarchy'])) {
     _az_bef_preprocess_nested_elements($variables);
   }
-
 }
 
 /******************************************************************************
@@ -93,7 +92,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       ],
     ];
     if (!empty($child_terms)) {
-      $collapseId = 'collapse-az-bef-' . $term_id;
+      $collapseId = 'collapse-az-finder-' . $term_id;
       $list_title['#value'] = $cleanedTitle;
       $list_title['#attributes']['data-toggle'] = 'collapse';
       $list_title['#attributes']['href'] = '#' . $collapseId;

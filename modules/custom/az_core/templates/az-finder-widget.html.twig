@@ -1,5 +1,6 @@
 {#
-  Themes Views' default multi-select element as a set of checkboxes.
+  Themes Views' default multi-select element as a hierarchical list of headings
+  and checkboxes.
 
   Available variables:
     - wrapper_attributes: attributes for the wrapper element.
@@ -13,7 +14,6 @@
 
 {% set classes = [
   'form-checkboxes',
-  'bef-checkboxes',
   is_nested ? 'bef-nested',
   show_select_all_none ? 'bef-select-all-none',
   show_select_all_none_nested ? 'bef-select-all-none-nested',
@@ -28,13 +28,10 @@
       {% set vars = {
         collapse_id: vars.collapse_id ?? item['#attributes']['data-collapse-id'],
       } %}
-
-      {% include '@az_core/az-bef-nested-elements.html.twig' with vars %}
+      {% include '@az_core/az-finder-nested-elements.html.twig' with vars %}
       {% set vars = {
         collapse_id: item['#attributes']['data-collapse-id'] ?? vars.collapse_id,
       } %}
-
-
       {% set current_nesting_level = new_nesting_level %}
     {% else %}
       {{ item }}

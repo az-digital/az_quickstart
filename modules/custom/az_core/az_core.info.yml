@@ -16,4 +16,5 @@ dependencies:
   - drupal:text
   - linkit:linkit
   - search_exclude:search_exclude
+  - better_exposed_filters:better_exposed_filters
 configure: az_core.az_settings
