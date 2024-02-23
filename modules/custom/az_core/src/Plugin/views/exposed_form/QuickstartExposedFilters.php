@@ -62,7 +62,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       ],
       '#weight' => -10,
     ];
-
   }
 
   /**
