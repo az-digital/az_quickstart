@@ -327,10 +327,16 @@ az_barrio.settings:
       label: 'Use Material Design Sharp Icons'
     az_barrio_az_icons:
       type: boolean
-      label: 'Use AZ Icons'
+      label: 'Use Arizona Icons'
     az_barrio_az_icons_source:
       type: string
-      label: 'AZ Icons source'
+      label: 'Arizona Icons source'
+    az_icons_minified:
+      type: boolean
+      label: 'Use minified version of Arizona Icons'
+    az_icons_cdn_version:
+      type: string
+      label: 'Arizona Icons CDN version'
     sticky_footer:
       type: boolean
       label: 'Enable AZ Bootstrap sticky footer template'
