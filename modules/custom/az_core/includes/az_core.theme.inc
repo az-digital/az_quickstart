@@ -175,7 +175,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
         ],
       ];
 
-      $collapse_id = 'collapse-az-finder-' . $term_id;
+      $collapse_id = 'collapse-az-finder-' . $entity_id;
       $list_title_link['#attributes']['data-toggle'] = 'collapse';
       $list_title_link['#attributes']['href'] = '#' . $collapse_id;
       $list_title_link['#attributes']['class'][] = 'd-block';
