@@ -387,10 +387,14 @@ display:
                     filter_rewrite_values: ''
                   collapsible: 0
                   is_secondary: 0
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
-                expand_all_levels: 0
+                level_0_expand_color: '#1e5288'
+                level_0_collapse_color: '#1e5288'
+                level_1_expand_color: '#1e8a61'
+                level_1_collapse_color: '#ff9c7a'
+                level_0_expand_title: 'Level 0 Expand'
+                level_0_collapse_title: 'Level 0 Collapse'
+                level_1_expand_title: 'Level 1 Expand'
+                level_1_collapse_title: 'Level 1 Collapse'
           az_bef:
             az_finder:
               min_search_length: '3'
@@ -501,7 +505,7 @@ display:
             operator: field_az_page_category_target_id_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_az_page_category_target_id
+            identifier: category
             required: false
             remember: false
             multiple: true

@@ -41,6 +41,7 @@ function template_preprocess_az_finder_widget(array &$variables) {
   $variables['wrapper_attributes'] = new Attribute();
   $variables['children'] = Element::children($element);
   $variables['attributes']['name'] = $element['#name'];
+  dpm($variables);
   if (!empty($element['#hierarchy'])) {
     _az_bef_preprocess_nested_elements($variables);
   }
@@ -97,6 +98,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
   $level_1_expand_icon_title = $element['#level_1_expand_title'] ?? $default_title_expand;
   $level_1_collapse_icon_title = $element['#level_1_collapse_title'] ?? $default_title_collapse;
 
+
   // Example logic to structure elements (simplified for illustration).
   foreach ($variables['children'] as $child) {
 
@@ -106,9 +108,15 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       continue;
     }
     $renderer = \Drupal::service('renderer');
-    $taxonomy_storage = \Drupal::entityTypeManager()->getStorage('taxonomy_term');
-    $term_id = $element[$child]['#return_value'];
-    $child_terms = $taxonomy_storage->loadChildren($term_id);
+    // $entity_type = $child_element['#entity_type'];
+    $entity_type = 'taxonomy_term';
+    $entity_id = $child;
+    $entity_storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+    $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
+    if (empty($children) && $entity_type != 'taxonomy_term') {
+      continue;
+    }
+
     $original_title = $element[$child]['#title'];
     $cleaned_title = ltrim($original_title, '-');
     $list_title = [
@@ -153,7 +161,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
     // // Decide which icon to use based on depth.
     $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
     $variables['depth'][$child] = $depth;
-    if (!empty($child_terms) && $depth === 1) {
+    if (!empty($children) && $depth === 1) {
       $icon_html = $renderer->render($collapse_icon);
       $list_title['#value'] =  Markup::create($icon_html . ' ' . $cleaned_title);
     } else {
@@ -161,7 +169,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       $variables['element'][$child]['#title'] = $list_title['#value'];
     }
 
-    if (!empty($child_terms) && $depth <= 1) {
+    if (!empty($children) && $depth <= 1) {
 
       $list_title_link = [
         '#type' => 'html_tag',

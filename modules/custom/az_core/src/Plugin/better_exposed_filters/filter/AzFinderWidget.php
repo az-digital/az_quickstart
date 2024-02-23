@@ -82,6 +82,7 @@ public function buildConfigurationForm(array $form, FormStateInterface $form_sta
     $field_id = $filter->options['is_grouped'] ? $filter->options['group_info']['identifier'] : $filter->options['expose']['identifier'];
 
     parent::exposedFormAlter($form, $form_state);
+
     if (!empty($form[$field_id])) {
       // Clean up filters that pass objects as options instead of strings.
       if (!empty($form[$field_id]['#options'])) {
@@ -93,7 +94,6 @@ public function buildConfigurationForm(array $form, FormStateInterface $form_sta
       if (!empty($filter->options['hierarchy'])) {
         $form[$field_id]['#hierarchy'] = TRUE;
       }
-
       // Set the SVG icon colors and titles.
       $form[$field_id]['#level_0_expand_color'] = $config['level_0_expand_color'];
       $form[$field_id]['#level_0_collapse_color'] = $config['level_0_collapse_color'];
@@ -103,7 +103,6 @@ public function buildConfigurationForm(array $form, FormStateInterface $form_sta
       $form[$field_id]['#level_0_collapse_title'] = $config['level_0_collapse_title'];
       $form[$field_id]['#level_1_expand_title'] = $config['level_1_expand_title'];
       $form[$field_id]['#level_1_collapse_title'] = $config['level_1_collapse_title'];
-
       // Render as checkboxes if filter allows multiple selections.
       if (!empty($form[$field_id]['#multiple'])) {
         $form[$field_id]['#theme'] = 'az_finder_widget';
