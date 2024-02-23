@@ -393,14 +393,14 @@
       "link_id": "36",
       "parent_link_id": "0",
       "menu": "az-footer-social-media",
-      "title": "Twitter",
-      "urlpath": "https://twitter.com/uarizona",
+      "title": "X, formerly Twitter",
+      "urlpath": "https://x.com/uarizona",
       "external": true,
       "expanded": false,
       "enabled": true,
       "weight": "2",
       "class": [
-        "az-icon-twitter",
+        "az-icon-x-twitter",
         "az-icon-spacing"
       ]
     },

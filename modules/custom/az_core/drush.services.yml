@@ -1,6 +1,8 @@
 services:
   az_core_config.commands:
-    class: \Drupal\az_core\Commands\AZCoreConfigCommands
-    arguments: ['@config_provider.collector', '@extension.list.module']
+    class: \Drupal\az_core\Drush\Commands\AZCoreConfigCommands
+    arguments:
+      - '@config_provider.collector'
+      - '@extension.list.module'
     tags:
       - { name: drush.command }

@@ -362,6 +362,28 @@
       "expanded": false,
       "enabled": true,
       "weight": "16"
+    },    
+    {
+      "link_id": "34",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Combo Page",
+      "urlpath": "/pages/combo-page",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "17"
+    },
+    {
+      "link_id": "35",
+      "parent_link_id": "6",
+      "menu": "main",
+      "title": "Combo Page Without Sidebar",
+      "urlpath": "/pages/combo-page-no-sidebar",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "18"
     }
   ]
 }
