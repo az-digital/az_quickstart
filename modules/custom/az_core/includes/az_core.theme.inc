@@ -156,7 +156,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
     // // Decide which icon to use based on depth.
     $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
     $variables['depth'][$child] = $depth;
-    if (!empty($children) && $depth === 1) {
+    if (!empty($children) && $depth >= 1) {
       $icon_html = $renderer->render($collapse_icon);
       $list_title['#value'] = Markup::create($icon_html . ' ' . $cleaned_title);
     }
@@ -165,7 +165,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
       $variables['element'][$child]['#title'] = $list_title['#value'];
     }
 
-    if (!empty($children) && $depth <= 1) {
+    if (!empty($children)) {
 
       $list_title_link = [
         '#type' => 'html_tag',
