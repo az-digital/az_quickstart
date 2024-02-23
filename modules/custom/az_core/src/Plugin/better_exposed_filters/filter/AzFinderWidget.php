@@ -2,10 +2,10 @@
 
 namespace Drupal\az_core\Plugin\better_exposed_filters\filter;
 
+use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Template\Attribute;
-use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
+
 /**
  * Finder widget implementation.
  *
@@ -32,43 +32,44 @@ class AzFinderWidget extends FilterWidgetBase {
     ];
   }
 
-/**
- * {@inheritdoc}
- */
-public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-  $form = parent::buildConfigurationForm($form, $form_state);
+  /**
+   * {@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildConfigurationForm($form, $form_state);
 
-  // Add custom settings for the Finder widget.
-  $form['help'] = [
-    '#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.'),
-  ];
-  // Define fields for SVG colors and titles
-  $svg_settings = [
-    'level_0_expand' => 'Level 0 Expand',
-    'level_0_collapse' => 'Level 0 Collapse',
-    'level_1_expand' => 'Level 1 Expand',
-    'level_1_collapse' => 'Level 1 Collapse',
-  ];
-
-  foreach ($svg_settings as $key => $label) {
-    $form[$key . '_color'] = [
-      '#type' => 'color',
-      '#list' => 'colors',
-      '#title' => $this->t('@label Icon Color', ['@label' => $label]),
-      '#default_value' => $this->configuration[$key . '_color'] ?? '#1E5288', // Default azurite color
-      '#description' => $this->t('Specify the fill color for the @label SVG icon.', ['@label' => $label]),
+    // Add custom settings for the Finder widget.
+    $form['help'] = [
+      '#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.'),
+    ];
+    // Define fields for SVG colors and titles.
+    $svg_settings = [
+      'level_0_expand' => 'Level 0 Expand',
+      'level_0_collapse' => 'Level 0 Collapse',
+      'level_1_expand' => 'Level 1 Expand',
+      'level_1_collapse' => 'Level 1 Collapse',
     ];
 
-    $form[$key . '_title'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('@label Icon Title', ['@label' => $label]),
-      '#default_value' => $this->configuration[$key . '_title'] ?? $this->t('@label', ['@label' => $label]),
-      '#description' => $this->t('Specify the title for the @label SVG icon.', ['@label' => $label]),
-    ];
+    foreach ($svg_settings as $key => $label) {
+      $form[$key . '_color'] = [
+        '#type' => 'color',
+        '#list' => 'colors',
+        '#title' => $this->t('@label Icon Color', ['@label' => $label]),
+      // Default azurite color.
+        '#default_value' => $this->configuration[$key . '_color'] ?? '#1E5288',
+        '#description' => $this->t('Specify the fill color for the @label SVG icon.', ['@label' => $label]),
+      ];
+
+      $form[$key . '_title'] = [
+        '#type' => 'textfield',
+        '#title' => $this->t('@label Icon Title', ['@label' => $label]),
+        '#default_value' => $this->configuration[$key . '_title'] ?? $this->t('@label', ['@label' => $label]),
+        '#description' => $this->t('Specify the title for the @label SVG icon.', ['@label' => $label]),
+      ];
+    }
+
+    return $form;
   }
-
-  return $form;
-}
 
   /**
    * {@inheritdoc}

@@ -6,8 +6,8 @@
  */
 
 use Drupal\Core\Render\Element;
-use Drupal\Core\Template\Attribute;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
 
 /**
  * Implements hook_theme().
@@ -16,7 +16,7 @@ function az_core_theme($existing, $type, $theme, $path) {
   return [
     'az_finder_widget' => [
       'render element' => 'element',
-     ],
+    ],
   ];
 }
 
@@ -33,15 +33,11 @@ function az_core_theme($existing, $type, $theme, $path) {
  *   An associative array containing:
  *   - element: An associative array containing the exposed form element.
  */
-// function template_preprocess_az_finder(array &$variables) {
-
-// }
 function template_preprocess_az_finder_widget(array &$variables) {
   $element = &$variables['element'];
   $variables['wrapper_attributes'] = new Attribute();
   $variables['children'] = Element::children($element);
   $variables['attributes']['name'] = $element['#name'];
-  dpm($variables);
   if (!empty($element['#hierarchy'])) {
     _az_bef_preprocess_nested_elements($variables);
   }
@@ -83,7 +79,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
   $variables['is_nested'] = TRUE;
   $variables['depth'] = [];
   $element = $variables['element'];
-  // Default azurite color
+  // Default azurite color.
   $default_color = '#1E5288';
   $default_title_expand = t('Expand this section');
   $default_title_collapse = t('Collapse this section');
@@ -97,7 +93,6 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
   $level_0_collapse_icon_title = $element['#level_0_collapse_title'] ?? $default_title_collapse;
   $level_1_expand_icon_title = $element['#level_1_expand_title'] ?? $default_title_expand;
   $level_1_collapse_icon_title = $element['#level_1_collapse_title'] ?? $default_title_collapse;
-
 
   // Example logic to structure elements (simplified for illustration).
   foreach ($variables['children'] as $child) {
@@ -113,7 +108,7 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
     $entity_id = $child;
     $entity_storage = \Drupal::entityTypeManager()->getStorage($entity_type);
     $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
-    if (empty($children) && $entity_type != 'taxonomy_term') {
+    if (empty($children) && $entity_type !== 'taxonomy_term') {
       continue;
     }
 
@@ -163,8 +158,9 @@ function _az_bef_preprocess_nested_elements(array &$variables) {
     $variables['depth'][$child] = $depth;
     if (!empty($children) && $depth === 1) {
       $icon_html = $renderer->render($collapse_icon);
-      $list_title['#value'] =  Markup::create($icon_html . ' ' . $cleaned_title);
-    } else {
+      $list_title['#value'] = Markup::create($icon_html . ' ' . $cleaned_title);
+    }
+    else {
       $list_title['#value'] = $cleaned_title;
       $variables['element'][$child]['#title'] = $list_title['#value'];
     }

@@ -70,7 +70,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
 
-    // Add a field for setting the minimum search input length
+    // Add a field for setting the minimum search input length.
     $form['az_bef']['finder']['min_search_length'] = [
       '#type' => 'number',
       '#title' => $this->t('Minimum Search Input Length'),
@@ -88,7 +88,12 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    */
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     parent::submitOptionsForm($form, $form_state);
-    // Save the minimum search input length setting
-    $this->options['az_bef']['finder']['min_search_length'] = $form_state->getValue(['az_bef', 'finder', 'min_search_length']);
+    // Save the minimum search input length setting.
+    $this->options['az_bef']['finder']['min_search_length'] = $form_state->getValue([
+      'az_bef',
+      'finder',
+      'min_search_length',
+    ]);
   }
+
 }
