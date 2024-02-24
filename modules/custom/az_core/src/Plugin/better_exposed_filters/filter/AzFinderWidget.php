@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Drupal\az_core\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
