@@ -164,12 +164,23 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       }
 
       $form[$field_id]['#theme'] = 'az_finder_widget';
-      $form['#attached']['drupalSettings']['azFinder']['icons'] = [
-        'level_0_expand' => $this->renderer->render($this->generateSvgRenderArray(0, 'expand')),
-        'level_0_collapse' => $this->renderer->render($this->generateSvgRenderArray(0, 'collapse')),
-        'level_1_expand' => $this->renderer->render($this->generateSvgRenderArray(1, 'expand')),
-        'level_1_collapse' => $this->renderer->render($this->generateSvgRenderArray(1, 'collapse')),
-      ];
+      // Initialize an array to hold the SVG icon settings.
+      $svgIcons = [];
+
+      // Define the levels and actions for which SVG icons need to be generated.
+      $levels = [0, 1];
+      $actions = ['expand', 'collapse'];
+
+      // Loop through each level and action to generate the SVG icons.
+      foreach ($levels as $level) {
+        foreach ($actions as $action) {
+          // Generate the SVG icon for the current level and action.
+          $svg_icons["level_{$level}_{$action}"] = $this->renderer->render($this->generateSvgRenderArray($level, $action));
+        }
+      }
+
+      // Attach the generated SVG icons to Drupal settings.
+      $form['#attached']['drupalSettings']['azFinder']['icons'] = $svg_icons;
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
   }
