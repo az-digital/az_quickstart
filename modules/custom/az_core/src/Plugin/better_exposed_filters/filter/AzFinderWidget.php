@@ -181,12 +181,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   An associative array containing the element being processed.
    */
   public function preprocessAzFinderWidget(array &$variables) {
-    $variables['#attached']['drupalSettings']['azFinder']['icons'] = [
-      'level_0_expand' => $this->renderer->render($this->generateSvgRenderArray(0, 'expand')),
-      'level_0_collapse' => $this->renderer->render($this->generateSvgRenderArray(0, 'collapse')),
-      'level_1_expand' => $this->renderer->render($this->generateSvgRenderArray(1, 'expand')),
-      'level_1_collapse' => $this->renderer->render($this->generateSvgRenderArray(1, 'collapse')),
-    ];
     //recreate the icons for the form element
     $level_0_collapse_icon = $this->generateSvgRenderArray(0, 'collapse');
     $level_1_collapse_icon = $this->generateSvgRenderArray(1, 'collapse');
