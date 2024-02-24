@@ -180,13 +180,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @param array &$variables
    *   An associative array containing the element being processed.
    */
-
-  /**
-   * Preprocesses variables for the az-finder template.
-   *
-   * @param array &$variables
-   *   An associative array containing the element being processed.
-   */
   public function preprocessAzFinderWidget(array &$variables) {
     $variables['#attached']['drupalSettings']['azFinder']['icons'] = [
       'level_0_expand' => $this->renderer->render($this->generateSvgRenderArray(0, 'expand')),
