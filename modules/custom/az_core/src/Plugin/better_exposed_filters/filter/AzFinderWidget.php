@@ -182,6 +182,9 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   An associative array containing the element being processed.
    */
   public function preprocessAzFinderWidget(array &$variables) {
+    $level_0_collapse_icon = $this->generateSvgRenderArray(0, 'collapse');
+    $level_1_collapse_icon = $this->generateSvgRenderArray(1, 'collapse');
+
     $element = $variables['element'];
     $variables += [
       'wrapper_attributes' => new Attribute(),
@@ -193,9 +196,9 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       $variables['is_nested'] = TRUE;
       $variables['#attached']['drupalSettings']['azFinder']['icons'] = [
         'level_0_expand' => $this->renderer->render($this->generateSvgRenderArray(0, 'expand')),
-        'level_0_collapse' => $this->renderer->render($this->generateSvgRenderArray(0, 'collapse')),
+        'level_0_collapse' => $this->renderer->render($level_0_collapse_icon),
         'level_1_expand' => $this->renderer->render($this->generateSvgRenderArray(1, 'expand')),
-        'level_1_collapse' => $this->renderer->render($this->generateSvgRenderArray(1, 'collapse')),
+        'level_1_collapse' => $this->renderer->render($level_1_collapse_icon),
       ];
     }
     $variables['is_nested'] = TRUE;
@@ -227,10 +230,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       // Determine if the child has sub-elements (actual children).
       // Calculate depth based on hyphens in the title as a proxy for hierarchy.
       $depth = strlen($original_title) - strlen($cleaned_title);
-      $level_0_expand_icon = $this->generateSvgRenderArray(0, 'expand');
-      $level_0_collapse_icon = $this->generateSvgRenderArray(0, 'collapse');
-      $level_1_expand_icon = $this->generateSvgRenderArray(1, 'expand');
-      $level_1_collapse_icon = $this->generateSvgRenderArray(1, 'collapse');
 
       $list_title['#value'] = $cleaned_title;
       // // Decide which icon to use based on depth.
@@ -283,12 +282,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
         }
 
         $list_title_link['value'] = $list_title;
-        $list_title_link['#attached']['drupalSettings']['azFinder']['icons'] = [
-          'level_0_expand' => $this->renderer->render($level_0_expand_icon),
-          'level_0_collapse' => $this->renderer->render($level_0_collapse_icon),
-          'level_1_expand' => $this->renderer->render($level_1_expand_icon),
-          'level_1_collapse' => $this->renderer->render($level_1_collapse_icon),
-        ];
 
         // Apply the modified list title to the element.
         $variables['element'][$child] = $list_title_link;
