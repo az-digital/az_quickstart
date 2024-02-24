@@ -194,7 +194,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   An associative array containing the element being processed.
    */
   public function preprocessAzFinderWidget(array &$variables) {
-    //recreate the icons for the form element
+    // Recreate the icons for the form element.
     $level_0_collapse_icon = $this->generateSvgRenderArray(0, 'collapse');
     $level_1_collapse_icon = $this->generateSvgRenderArray(1, 'collapse');
 
