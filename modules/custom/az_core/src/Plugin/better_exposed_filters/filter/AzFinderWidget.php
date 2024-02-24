@@ -4,14 +4,14 @@ namespace Drupal\az_core\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Template\Attribute;
-use Drupal\Core\Render\Element;
-
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Finder widget implementation.
@@ -31,9 +31,11 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   protected $renderer;
 
   /**
-   * Indicates whether the widget is nested.
+   * The entity type manager service.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $isNested = TRUE;
+  protected $entityTypeManager;
 
   /**
    * Constructs a new AzFinderWidget object.
@@ -46,18 +48,23 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   The plugin definition.
    * @param \Drupal\Core\Render\RendererInterface $renderer
    *   The renderer service.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
    */
   public function __construct(
     array $configuration,
     $plugin_id,
     $plugin_definition,
-    RendererInterface $renderer
+    RendererInterface $renderer,
+    EntityTypeManagerInterface $entity_type_manager
   ) {
     parent::__construct(
       $configuration,
       $plugin_id,
-      $plugin_definition);
+      $plugin_definition
+    );
     $this->renderer = $renderer;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -67,19 +74,21 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition) {
+    $plugin_definition
+  ) {
     return new static(
       $configuration,
       $plugin_id,
       $plugin_definition,
-      $container->get('renderer')
+      $container->get('renderer'),
+      $container->get('entity_type.manager')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration(): array {
+  public function defaultConfiguration() {
     return parent::defaultConfiguration() + [
       'level_0_icon_size' => '24',
       'level_1_icon_size' => '18',
@@ -97,15 +106,9 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
-
-    // Custom settings for the Finder widget.
-    $form['help'] = [
-      '#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.'),
-    ];
-
-    // Fields for SVG colors and titles.
+    $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
     $svg_settings = [
       'level_0_icon_size' => 'Level 0 Icon Size',
       'level_0_expand' => 'Level 0 Expand',
@@ -116,27 +119,25 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     ];
 
     foreach ($svg_settings as $key => $label) {
-      $form[$key . '_icon_size'] = [
-        '#type' => 'number',
-        '#title' => $this->t('@label Icon Size', ['@label' => $label]),
-        '#default_value' => $this->configuration[$key . '_icon_size'],
-        '#description' => $this->t('Specify the size for the @label SVG icon.', ['@label' => $label]),
+      $suffix = strpos($key, 'icon_size') !== FALSE ? '_icon_size' : '_color';
+      $form[$key . $suffix] = [
+        '#type' => strpos($key, 'icon_size') !== FALSE ? 'number' : 'color',
+        '#title' => $this->t('@label', ['@label' => $label]),
+        '#default_value' => $this->configuration[$key . $suffix],
+        '#description' => $this->t('Specify the size for the @label.', ['@label' => $label]),
         '#min' => 0,
         '#step' => 1,
       ];
-      $form[$key . '_color'] = [
-        '#type' => 'color',
-        '#title' => $this->t('@label Icon Color', ['@label' => $label]),
-        '#default_value' => $this->configuration[$key . '_color'],
-        '#description' => $this->t('Specify the fill color for the @label SVG icon.', ['@label' => $label]),
-      ];
 
-      $form[$key . '_title'] = [
-        '#type' => 'textfield',
-        '#title' => $this->t('@label Icon Title', ['@label' => $label]),
-        '#default_value' => $this->configuration[$key . '_title'],
-        '#description' => $this->t('Specify the title for the @label SVG icon.', ['@label' => $label]),
-      ];
+      // Titles for non-size fields.
+      if (strpos($key, 'icon_size') === FALSE) {
+        $form[$key . '_title'] = [
+          '#type' => 'textfield',
+          '#title' => $this->t('@label Icon Title', ['@label' => $label]),
+          '#default_value' => $this->configuration[$key . '_title'],
+          '#description' => $this->t('Specify the title for the @label SVG icon.', ['@label' => $label]),
+        ];
+      }
     }
 
     return $form;
@@ -151,36 +152,28 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     $field_id = $filter->options['is_grouped'] ? $filter->options['group_info']['identifier'] : $filter->options['expose']['identifier'];
 
     if (!empty($form[$field_id])) {
+      $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
+      $form[$field_id]['#hierarchy'] = !empty($filter->options['hierarchy']);
 
-      if (!empty($form[$field_id]['#options'])) {
-        $form[$field_id]['#options'] = BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']);
+      // Assigning SVG icon colors and titles directly.
+      foreach (['level_0', 'level_1'] as $level) {
+        foreach (['expand', 'collapse'] as $action) {
+          $form[$field_id]["#{$level}_{$action}_color"] = $config["{$level}_{$action}_color"];
+          $form[$field_id]["#{$level}_{$action}_title"] = $config["{$level}_{$action}_title"];
+        }
       }
 
-      if (!empty($filter->options['hierarchy'])) {
-        $form[$field_id]['#hierarchy'] = TRUE;
-      }
-
-      // SVG icon colors and titles.
-      $form[$field_id]['#level_0_expand_color'] = $config['level_0_expand_color'];
-      $form[$field_id]['#level_0_collapse_color'] = $config['level_0_collapse_color'];
-      $form[$field_id]['#level_1_expand_color'] = $config['level_1_expand_color'];
-      $form[$field_id]['#level_1_collapse_color'] = $config['level_1_collapse_color'];
-      $form[$field_id]['#level_0_expand_title'] = $config['level_0_expand_title'];
-      $form[$field_id]['#level_0_collapse_title'] = $config['level_0_collapse_title'];
-      $form[$field_id]['#level_1_expand_title'] = $config['level_1_expand_title'];
-      $form[$field_id]['#level_1_collapse_title'] = $config['level_1_collapse_title'];
-
-      if (!empty($form[$field_id]['#multiple'])) {
-        $form[$field_id]['#theme'] = 'az_finder_widget';
-        $form[$field_id]['#type'] = 'checkboxes';
-      }
-      else {
-        $form[$field_id]['#theme'] = 'az_finder_widget';
-        $form[$field_id]['#type'] = 'radios';
-      }
+      $form[$field_id]['#theme'] = 'az_finder_widget';
+      $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
   }
 
+  /**
+   * Preprocesses variables for the az-finder template.
+   *
+   * @param array &$variables
+   *   An associative array containing the element being processed.
+   */
 
   /**
    * Preprocesses variables for the az-finder template.
@@ -190,178 +183,143 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    */
   public function preprocessAzFinderWidget(array &$variables) {
     $element = $variables['element'];
-    $variables['wrapper_attributes'] = new Attribute();
-    $variables['children'] = Element::children($element);
-    $variables['attributes']['name'] = $element['#name'];
-    if (!empty($element['#hierarchy'])) {
-      $this->preprocessNestedElements($variables);
-    }
-  }
+    $variables += [
+      'wrapper_attributes' => new Attribute(),
+      'children' => Element::children($element),
+      'attributes' => ['name' => $element['#name']],
+    ];
 
-/**
- * Processes nested elements for hierarchical display.
- *
- * @param array &$element
- *   The form element to process.
- */
-public function preprocessNestedElements(array &$variables): void {
+    if (!empty($element['#hierarchy'])) {
+      $variables['is_nested'] = TRUE;
+      $variables['#attached']['drupalSettings']['azFinder']['icons'] = [
+        'level_0_expand' => $this->renderer->render($this->generateSvgRenderArray(0, 'expand')),
+        'level_0_collapse' => $this->renderer->render($this->generateSvgRenderArray(0, 'collapse')),
+        'level_1_expand' => $this->renderer->render($this->generateSvgRenderArray(1, 'expand')),
+        'level_1_collapse' => $this->renderer->render($this->generateSvgRenderArray(1, 'collapse')),
+      ];
+    }
     $variables['is_nested'] = TRUE;
     $variables['depth'] = [];
     $element = $variables['element'];
-  $default_color = '#1E5288';
-  $default_title_expand = t('Expand this section');
-  $default_title_collapse = t('Collapse this section');
 
-  $level_0_expand_icon_fill_color = $element['#level_0_expand_color'] ?? $default_color;
-  $level_0_collapse_icon_fill_color = $element['#level_0_collapse_color'] ?? $default_color;
-  $level_1_expand_icon_fill_color = $element['#level_1_expand_color'] ?? $default_color;
-  $level_1_collapse_icon_fill_color = $element['#level_1_collapse_color'] ?? $default_color;
+    // Example logic to structure elements (simplified for illustration).
+    foreach ($variables['children'] as $child) {
 
-  $level_0_expand_icon_title = $element['#level_0_expand_title'] ?? $default_title_expand;
-  $level_0_collapse_icon_title = $element['#level_0_collapse_title'] ?? $default_title_collapse;
-  $level_1_expand_icon_title = $element['#level_1_expand_title'] ?? $default_title_expand;
-  $level_1_collapse_icon_title = $element['#level_1_collapse_title'] ?? $default_title_collapse;
+      if ($child === 'All') {
+        // Special handling for "All" option.
+        $variables['depth'][$child] = 0;
+        continue;
+      }
+      // $entity_type = $child_element['#entity_type'];
+      $entity_type = 'taxonomy_term';
+      $entity_id = $child;
+      $entity_storage = $this->entityTypeManager->getStorage($entity_type);
+      $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
+      if (empty($children) && $entity_type !== 'taxonomy_term') {
+        continue;
+      }
 
-  // Example logic to structure elements (simplified for illustration).
-  foreach ($variables['children'] as $child) {
-
-    if ($child === 'All') {
-      // Special handling for "All" option.
-      $variables['depth'][$child] = 0;
-      continue;
-    }
-    $renderer = \Drupal::service('renderer');
-    // $entity_type = $child_element['#entity_type'];
-    $entity_type = 'taxonomy_term';
-    $entity_id = $child;
-    $entity_storage = \Drupal::entityTypeManager()->getStorage($entity_type);
-    $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
-    if (empty($children) && $entity_type !== 'taxonomy_term') {
-      continue;
-    }
-
-    $original_title = $element[$child]['#title'];
-    $cleaned_title = ltrim($original_title, '-');
-    $list_title = [
-      '#type' => 'html_tag',
-    ];
-    // Determine if the child has sub-elements (actual children).
-    // Calculate depth based on hyphens in the title as a proxy for hierarchy.
-    $depth = strlen($original_title) - strlen($cleaned_title);
-    $level_0_expand_icon = [
-      '#type' => 'inline_template',
-      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z"/></svg>',
-      '#context' => [
-        'title' => $level_0_expand_icon_title,
-        'fill_color' => $level_0_expand_icon_fill_color,
-      ],
-    ];
-    $level_0_collapse_icon = [
-      '#type' => 'inline_template',
-      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z"/></svg>',
-      '#context' => [
-        'title' => $level_0_collapse_icon_title,
-        'fill_color' => $level_0_collapse_icon_fill_color,
-      ],
-    ];
-    $level_1_expand_icon = [
-      '#type' => 'inline_template',
-      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>',
-      '#context' => [
-        'title' => $level_1_expand_icon_title,
-        'fill_color' => $level_1_expand_icon_fill_color,
-      ],
-    ];
-    $level_1_collapse_icon = [
-      '#type' => 'inline_template',
-      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="M19 13H5v-2h14v2z"/></svg>',
-      '#context' => [
-        'title' => $level_1_collapse_icon_title,
-        'fill_color' => $level_1_collapse_icon_fill_color,
-      ],
-    ];
-    $list_title['#value'] = $cleaned_title;
-    // // Decide which icon to use based on depth.
-    $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
-    $variables['depth'][$child] = $depth;
-    if (!empty($children) && $depth >= 1) {
-      $icon_html = $renderer->render($collapse_icon);
-      $list_title['#value'] = Markup::create($icon_html . ' ' . $cleaned_title);
-    }
-    else {
-      $list_title['#value'] = $cleaned_title;
-      $variables['element'][$child]['#title'] = $list_title['#value'];
-    }
-
-    if (!empty($children)) {
-
-      $list_title_link = [
+      $original_title = $element[$child]['#title'];
+      $cleaned_title = ltrim($original_title, '-');
+      $list_title = [
         '#type' => 'html_tag',
-        '#tag' => 'a',
-        '#attributes' => [
-          'class' => [],
-        ],
       ];
+      // Determine if the child has sub-elements (actual children).
+      // Calculate depth based on hyphens in the title as a proxy for hierarchy.
+      $depth = strlen($original_title) - strlen($cleaned_title);
+      $level_0_expand_icon = $this->generateSvgRenderArray(0, 'expand');
+      $level_0_collapse_icon = $this->generateSvgRenderArray(0, 'collapse');
+      $level_1_expand_icon = $this->generateSvgRenderArray(1, 'expand');
+      $level_1_collapse_icon = $this->generateSvgRenderArray(1, 'collapse');
 
-      $collapse_id = 'collapse-az-finder-' . $entity_id;
-      $list_title_link['#attributes']['data-toggle'] = 'collapse';
-      $list_title_link['#attributes']['href'] = '#' . $collapse_id;
-      $list_title_link['#attributes']['class'][] = 'd-block';
-      $list_title_link['#attributes']['role'] = 'button';
-      $list_title_link['#attributes']['aria-expanded'] = 'true';
-      $list_title_link['#attributes']['aria-controls'] = $collapse_id;
-      $list_title_link['#attributes']['data-collapse-id'] = $collapse_id;
-      $list_title_link['#attributes']['class'][] = 'collapser';
-      $list_title_link['#attributes']['class'][] = 'level-' . $depth;
-      $list_title_link['#attributes']['class'][] = 'text-decoration-none';
-      if ($depth === 0) {
-        $list_title['icon'] = $collapse_icon;
-        $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-0';
-        $list_title['#tag'] = 'h3';
-        $list_title['#attributes']['class'][] = 'text-azurite';
-        $list_title['#attributes']['class'][] = 'text-size-h5';
-        $list_title['#attributes']['class'][] = 'mt-3';
-        $list_title['#attributes']['class'][] = 'pt-3';
+      $list_title['#value'] = $cleaned_title;
+      // // Decide which icon to use based on depth.
+      $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
+      $variables['depth'][$child] = $depth;
+      if (!empty($children) && $depth >= 1) {
+        $collapse_icon_html = $this->renderer->render($collapse_icon);
+        $list_title['#value'] = Markup::create($collapse_icon_html . ' ' . $cleaned_title);
       }
       else {
-        $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
-        $list_title['#tag'] = 'h4';
-        $list_title['#attributes']['class'][] = 'text-azurite';
-        $list_title['#attributes']['class'][] = 'text-size-h6';
+        $list_title['#value'] = $cleaned_title;
+        $variables['element'][$child]['#title'] = $list_title['#value'];
       }
 
-      $list_title_link['value'] = $list_title;
-      $list_title_link['#attached']['drupalSettings']['azFinder']['icons'] = [
-        'level_0_expand' => $renderer->render($level_0_expand_icon),
-        'level_0_collapse' => $renderer->render($level_0_collapse_icon),
-        'level_1_expand' => $renderer->render($level_1_expand_icon),
-        'level_1_collapse' => $renderer->render($level_1_collapse_icon),
-      ];
+      if (!empty($children)) {
 
-      // Apply the modified list title to the element.
-      $variables['element'][$child] = $list_title_link;
+        $list_title_link = [
+          '#type' => 'html_tag',
+          '#tag' => 'a',
+          '#attributes' => [
+            'class' => [],
+          ],
+        ];
+
+        $collapse_id = 'collapse-az-finder-' . $entity_id;
+        $list_title_link['#attributes']['data-toggle'] = 'collapse';
+        $list_title_link['#attributes']['href'] = '#' . $collapse_id;
+        $list_title_link['#attributes']['class'][] = 'd-block';
+        $list_title_link['#attributes']['role'] = 'button';
+        $list_title_link['#attributes']['aria-expanded'] = 'true';
+        $list_title_link['#attributes']['aria-controls'] = $collapse_id;
+        $list_title_link['#attributes']['data-collapse-id'] = $collapse_id;
+        $list_title_link['#attributes']['class'][] = 'collapser';
+        $list_title_link['#attributes']['class'][] = 'level-' . $depth;
+        $list_title_link['#attributes']['class'][] = 'text-decoration-none';
+        if ($depth === 0) {
+          $list_title['icon'] = $collapse_icon;
+          $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-0';
+          $list_title['#tag'] = 'h3';
+          $list_title['#attributes']['class'][] = 'text-azurite';
+          $list_title['#attributes']['class'][] = 'text-size-h5';
+          $list_title['#attributes']['class'][] = 'mt-3';
+          $list_title['#attributes']['class'][] = 'pt-3';
+        }
+        else {
+          $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
+          $list_title['#tag'] = 'h4';
+          $list_title['#attributes']['class'][] = 'text-azurite';
+          $list_title['#attributes']['class'][] = 'text-size-h6';
+        }
+
+        $list_title_link['value'] = $list_title;
+        $list_title_link['#attached']['drupalSettings']['azFinder']['icons'] = [
+          'level_0_expand' => $this->renderer->render($level_0_expand_icon),
+          'level_0_collapse' => $this->renderer->render($level_0_collapse_icon),
+          'level_1_expand' => $this->renderer->render($level_1_expand_icon),
+          'level_1_collapse' => $this->renderer->render($level_1_collapse_icon),
+        ];
+
+        // Apply the modified list title to the element.
+        $variables['element'][$child] = $list_title_link;
+      }
     }
+
   }
-}
 
   /**
-   * Implementation of generateSvgMarkup.
+   * Generates SVG markup for icons based on depth and action.
    *
    * @param int $depth
-   *   The depth of the option.
+   *   The depth of the option, affecting icon size and path.
+   * @param string $action
+   *   The action ('expand' or 'collapse') determining the icon.
    *
-   * @return string
-   *   The SVG markup.
+   * @return array
+   *   A render array for the SVG icon.
    */
-  protected function generateSvgMarkup($depth): string {
+  protected function generateSvgRenderArray($depth, $action): array {
     $config = $this->getConfiguration();
+    $level = $depth === 0 ? 'level_0' : 'level_1';
+    $actionType = $action === 'expand' ? 'expand' : 'collapse';
 
-    // Define default values for the SVG attributes.
+    // Define default values and paths for SVG attributes based on action
+    // and depth.
     $attributes = [
-      'fill_color' => $config['level_' . $depth . '_expand_color'] ?? '#000000',
+      'fill_color' => $config["{$level}_{$actionType}_color"] ?? '#000000',
       'size' => $depth === 0 ? '24' : '18',
-      'title' => $config['level_' . $depth . '_expand_title'] ?? 'Expand this section',
-      'icon_path' => $depth === 0 ? "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z" : "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z",
+      'title' => $config["{$level}_{$actionType}_title"] ?? ucfirst($action) . ' this section',
+      'icon_path' => $this->getIconPath($depth, $action),
     ];
 
     // Sanitize dynamic values to prevent XSS vulnerabilities.
@@ -375,8 +333,28 @@ public function preprocessNestedElements(array &$variables): void {
       '#context' => $attributes,
     ];
 
-    // Return the render array for the SVG.
-    return $this->renderer->render($svg_render_template);
+    // Return the rendered SVG markup.
+    return $svg_render_template;
+  }
+
+  /**
+   * Determines the SVG path for the icon based on depth and action.
+   *
+   * @param int $depth
+   *   Depth of the item, affecting the icon shape.
+   * @param string $action
+   *   Action type ('expand' or 'collapse').
+   *
+   * @return string
+   *   SVG path for the specified icon.
+   */
+  private function getIconPath($depth, $action): string {
+    if ($depth === 0) {
+      return $action === 'expand' ? "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z" : "m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z";
+    }
+    else {
+      return $action === 'expand' ? "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" : "M19 13H5v-2h14v2z";
+    }
   }
 
   /**

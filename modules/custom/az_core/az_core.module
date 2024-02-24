@@ -444,7 +444,8 @@ function template_preprocess_az_finder_widget(&$variables) {
     // Call the preprocessAzFinderWidget method with the variables.
     try {
       $widget->preprocessAzFinderWidget($variables);
-    } catch (\Exception $e) {
+    }
+    catch (\Exception $e) {
       // Log any errors.
       \Drupal::logger('az_core')->error('Error in preprocessAzFinderWidget: @message', ['@message' => $e->getMessage()]);
     }
