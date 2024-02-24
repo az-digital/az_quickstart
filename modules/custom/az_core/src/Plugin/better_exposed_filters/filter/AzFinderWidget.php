@@ -316,7 +316,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     // and depth.
     $attributes = [
       'fill_color' => $config["{$level}_{$actionType}_color"] ?? '#000000',
-      'size' => $depth === 0 ? '24' : '18',
+      'size' => $depth === 0 ? '24' : '16',
       'title' => $config["{$level}_{$actionType}_title"] ?? ucfirst($action) . ' this section',
       'icon_path' => $this->getIconPath($depth, $action),
     ];
@@ -328,7 +328,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
 
     $svg_render_template = [
       '#type' => 'inline_template',
-      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 {{ size }} {{ size }}" title="{{ title }}"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
+      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
       '#context' => $attributes,
     ];
 
@@ -344,16 +344,22 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @param string $action
    *   Action type ('expand' or 'collapse').
    *
-   * @return string
-   *   SVG path for the specified icon.
+   * @return string|null
+   *   SVG path for the specified icon, or NULL if not found.
    */
-  private function getIconPath($depth, $action): string {
-    if ($depth === 0) {
-      return $action === 'expand' ? "M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z" : "m12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z";
-    }
-    else {
-      return $action === 'expand' ? "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" : "M19 13H5v-2h14v2z";
-    }
+  private function getIconPath($depth, $action): ?string {
+    $icon_paths = [
+      'expand' => [
+        '0' => 'M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z',
+        '1' => 'M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z',
+      ],
+      'collapse' => [
+        '0' => 'm12 8-6 6 1.41 1.41L12 10.83l4.59 4.58L18 14l-6-6z',
+        '1' => 'M19 13H5v-2h14v2z',
+      ],
+    ];
+
+    return $icon_paths[$action][$depth] ?? NULL;
   }
 
   /**

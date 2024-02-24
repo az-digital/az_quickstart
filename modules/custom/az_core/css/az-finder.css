@@ -18,7 +18,10 @@
 .js-svg-replace-level-0 svg, .js-svg-replace-level-1 svg {
   pointer-events: none;
 }
-
+.az-bef-vertical .js-svg-replace-level-1 svg {
+    position: relative;
+    top: -1px;
+}
 .az-bef-vertical fieldset {
   min-width: 100%;
 }
