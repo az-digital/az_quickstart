@@ -164,6 +164,12 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       }
 
       $form[$field_id]['#theme'] = 'az_finder_widget';
+      $form['#attached']['drupalSettings']['azFinder']['icons'] = [
+        'level_0_expand' => $this->renderer->render($this->generateSvgRenderArray(0, 'expand')),
+        'level_0_collapse' => $this->renderer->render($this->generateSvgRenderArray(0, 'collapse')),
+        'level_1_expand' => $this->renderer->render($this->generateSvgRenderArray(1, 'expand')),
+        'level_1_collapse' => $this->renderer->render($this->generateSvgRenderArray(1, 'collapse')),
+      ];
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
   }
