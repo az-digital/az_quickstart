@@ -12,6 +12,7 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -322,10 +323,15 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       'title' => $config["{$level}_{$actionType}_title"] ?? ucfirst($action) . ' this section',
       'icon_path' => $this->getIconPath($depth, $action),
     ];
-
     // Sanitize dynamic values to prevent XSS vulnerabilities.
     foreach ($attributes as &$attribute) {
-      $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8');
+      // Check if the attribute is an instance of TranslatableMarkup and convert
+      // it to a string.
+      if ($attribute instanceof TranslatableMarkup) {
+        $attribute = $attribute->render();
+      }
+      // Now safely apply htmlspecialchars to the string.
+      $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8') ?? '';
     }
 
     $svg_render_template = [
