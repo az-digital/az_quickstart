@@ -203,8 +203,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       $variables['is_nested'] = TRUE;
     }
 
-    dpm($variables['#attached']['drupalSettings']['azFinder']['icons']);
-
     $variables['is_nested'] = TRUE;
     $variables['depth'] = [];
     $element = $variables['element'];
