@@ -180,6 +180,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   private function getFieldId($filter): string {
     return $filter->options['is_grouped'] ? $filter->options['group_info']['identifier'] : $filter->options['expose']['identifier'];
   }
+
   /**
    * Sets the form options for the filter.
    *
@@ -194,7 +195,15 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     $form[$field_id]['#theme'] = 'az_finder_widget';
   }
 
-  private function assignSvgIconColorsAndTitles(array &$form, $field_id): void{
+  /**
+   * Assigns SVG icon colors and titles to the form.
+   *
+   * @param array $form
+   *  The form array.
+   * @param string $field_id
+   * The field ID.
+   */
+  private function assignSvgIconColorsAndTitles(array &$form, $field_id): void {
     $config = $this->getConfiguration();
     foreach (['level_0', 'level_1'] as $level) {
       foreach (['expand', 'collapse'] as $action) {
@@ -204,6 +213,13 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     }
   }
 
+  /**
+   * Generates and attaches SVG icons to the form.
+   * @param array $form
+   *  The form array.
+   * @param string $field_id
+   * The field ID.
+   */
   private function generateAndAttachSvgIcons(array &$form, $field_id): void {
     $svg_icons = [];
     $levels = [0, 1];
