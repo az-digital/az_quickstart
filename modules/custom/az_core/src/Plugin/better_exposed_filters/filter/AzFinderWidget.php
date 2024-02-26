@@ -199,9 +199,9 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * Assigns SVG icon colors and titles to the form.
    *
    * @param array $form
-   *  The form array.
+   *   The form array.
    * @param string $field_id
-   * The field ID.
+   *   The field ID.
    */
   private function assignSvgIconColorsAndTitles(array &$form, $field_id): void {
     $config = $this->getConfiguration();
@@ -215,10 +215,11 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
 
   /**
    * Generates and attaches SVG icons to the form.
+   *
    * @param array $form
-   *  The form array.
+   *   The form array.
    * @param string $field_id
-   * The field ID.
+   *   The field ID.
    */
   private function generateAndAttachSvgIcons(array &$form, $field_id): void {
     $svg_icons = [];
