@@ -323,14 +323,17 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
           $list_title['#tag'] = 'h3';
           $list_title['#attributes']['class'][] = 'text-azurite';
           $list_title['#attributes']['class'][] = 'text-size-h5';
-          $list_title['#attributes']['class'][] = 'mt-3';
-          $list_title['#attributes']['class'][] = 'pt-3';
+          $list_title['#attributes']['class'][] = 'm-0';
+          $list_title['#attributes']['class'][] = 'd-flex';
         }
         else {
+          $list_title['icon'] = $collapse_icon;
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
-          $list_title['#tag'] = 'h4';
-          $list_title['#attributes']['class'][] = 'text-azurite';
+          $list_title['#tag'] = 'h' . $depth + 3;
+          $list_title['#attributes']['class'][] = 'text-body';
           $list_title['#attributes']['class'][] = 'text-size-h6';
+          $list_title['#attributes']['class'][] = 'm-0';
+          $list_title['#attributes']['class'][] = 'd-flex';
         }
 
         $list_title_link['value'] = $list_title;

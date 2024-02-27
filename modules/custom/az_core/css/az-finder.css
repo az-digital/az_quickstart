@@ -1,4 +1,4 @@
-.az-bef-vertical > h2 {
+.az-bef-vertical>h2 {
   margin-top: 3rem !important;
   font-size: 1.5rem;
 }
@@ -6,7 +6,8 @@
 .az-bef-vertical .form-type-textfield {
   margin-bottom: 0;
 }
-.az-bef-vertical .form-type-textfield > label {
+
+.az-bef-vertical .form-type-textfield>label {
   font-weight: 600;
   color: #1e5288;
   font-size: 1.25rem;
@@ -15,35 +16,44 @@
   border-top: 1px solid #e9ecef;
   width: 100%;
 }
-.js-svg-replace-level-0 svg, .js-svg-replace-level-1 svg {
+
+.js-svg-replace-level-0 svg,
+.js-svg-replace-level-1 svg {
   pointer-events: none;
+  display: flex;
 }
-.az-bef-vertical .js-svg-replace-level-1 svg {
-    position: relative;
-    top: -1px;
+
+.js-svg-replace-level-0 svg {
+  margin-left: auto;
 }
+
 .az-bef-vertical fieldset {
   min-width: 100%;
 }
+
 .az-bef-vertical .collapser {
   font-weight: 600;
 }
+
 .az-bef-vertical .collapser:not(.level-0) {
   color: unset !important;
 }
 
-.az-bef-vertical .collapser.level-0 {
+.az-bef-vertical li:has(.collapser.level-0) {
   border-top: 1px solid #e9ecef;
+  padding: 1rem 0;
 }
+
 .az-bef-vertical .collapser.level-0::after {
   float: right;
   vertical-align: bottom;
 }
-.az-bef-ul > li:has(.collapser) {
+
+.az-bef-ul>li:has(.collapser) {
   margin-bottom: 0.25rem;
 }
 
-.az-bef-checkboxes > li > .checkbox {
+.az-bef-checkboxes>li>.checkbox {
   display: block;
   margin-top: .5rem;
   font-size: 1rem;
@@ -51,23 +61,28 @@
   font-weight: 600;
   color: #1e5288;
 }
+
 .az-bef-checkboxes .form-checkbox {
   margin-top: 0.35rem;
 }
-.az-bef-checkboxes > li > .checkbox > .form-checkbox {
+
+.az-bef-checkboxes>li>.checkbox>.form-checkbox {
   margin-top: 0.2rem;
 }
-.az-bef-checkboxes > li > ul > li > .checkbox {
+
+.az-bef-checkboxes>li>ul>li>.checkbox {
   font-weight: 600;
 }
 
-.az-bef-checkboxes ul > li > ul {
+.az-bef-checkboxes ul>li>ul {
   padding-left: 20px;
 }
-.az-bef-checkboxes > li > ul > li > ul {
+
+.az-bef-checkboxes>li>ul>li>ul {
   padding-left: 10px;
 }
-.az-bef-checkboxes > li > ul {
+
+.az-bef-checkboxes>li>ul {
   padding-left: 4px;
   margin-top: .25rem;
 }
