@@ -1,4 +1,6 @@
 services:
+  _defaults:
+    autoconfigure: true
   az_core.page_cache_request_policy.deny_monitoring_page:
     class: Drupal\az_core\PageCache\DenyMonitoringPage
     arguments:
