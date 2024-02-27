@@ -195,10 +195,3 @@ function az_quickstart_update_1020802() {
 function az_quickstart_update_1020803() {
   \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
 }
-
-/**
- * Enable ckeditor_indentblock module by default.
- */
-function az_quickstart_update_1021001() {
-  \Drupal::service('module_installer')->install(['ckeditor_indentblock']);
-}
