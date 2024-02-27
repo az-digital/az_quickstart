@@ -17,11 +17,6 @@
 .az-splitscreen-text {
   width: 100%;
 }
-/* If no sidebars are present, align full-width and non-full-width Split Screen paragraphs. */
-main:only-child .az-splitscreen:not(.full-width-background) {
-  margin-right: calc(var(--scrollbar-width) / 2);
-}
-
 /* Desktop styles */
 @media screen and (min-width: 768px) {
   .az-splitscreen-content {

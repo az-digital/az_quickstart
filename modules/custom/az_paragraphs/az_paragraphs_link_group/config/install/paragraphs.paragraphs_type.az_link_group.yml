@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_paragraphs
+id: az_link_group
+label: 'Link Group'
+icon_uuid: null
+icon_default: null
+description: 'Provides structured content for a group of links, which come with a handful of style options.'
+behavior_plugins:
+  az_link_group:
+    enabled: true
