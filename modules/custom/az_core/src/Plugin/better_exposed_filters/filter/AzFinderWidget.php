@@ -21,7 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @BetterExposedFiltersFilterWidget(
  *   id = "az_finder",
- *   label = @Translation("Finder"),
+ *   label = @Translation("Quickstart Finder"),
  * )
  */
 class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginInterface {

@@ -1,3 +1,7 @@
+.checkbox {
+  width: 100% !important;
+}
+
 .az-bef-vertical>h2 {
   margin-top: 3rem !important;
   font-size: 1.5rem;
