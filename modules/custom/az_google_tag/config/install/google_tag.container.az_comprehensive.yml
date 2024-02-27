@@ -1,12 +1,9 @@
-uuid: 101ed8ad-8d09-4fa6-a470-0672a6b5907d
 langcode: en
 status: true
 dependencies:
   module:
     - system
     - user
-_core:
-  default_config_hash: Z9ldxEXGzG9lldJFkFQPg59Iwlj76z3FR8GgMf0Xinc
 id: az_comprehensive
 label: 'AZ Comprehensive'
 weight: 0
