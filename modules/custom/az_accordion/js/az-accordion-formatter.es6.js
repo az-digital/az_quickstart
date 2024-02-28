@@ -33,7 +33,8 @@
           window.location.hash = hash;
           // Accessing history through window to avoid ESLint error.
           window.history.pushState(null, null, hash);
-        }}
+        }
+      }
 
     };
 
