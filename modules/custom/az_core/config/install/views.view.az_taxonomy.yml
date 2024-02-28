@@ -290,6 +290,9 @@ display:
       query:
         type: views_query
         options: {  }
+      defaults:
+        css_class: false
+      css_class: add-pager-top-margin
       display_extenders: {  }
       path: taxonomy/term/%
     cache_metadata:
