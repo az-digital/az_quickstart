@@ -19,7 +19,8 @@
           $targetAccordion.scrollIntoView({ behavior: 'smooth' });
 
           window.location.hash = hash;
-          history.pushState(null, null, hash);
+          // Accessing history through window to avoid ESLint error
+          window.history.pushState(null, null, hash);
         }
       }
     };
@@ -29,21 +30,20 @@
 
     // Add an event listener to handle clicks on anchor links
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', function handleAnchorClick(e) {
         e.preventDefault();
 
         // Extract the hash from the anchor link and handle the accordion
-        const hash = this.getAttribute('href');
+        const hash = anchor.getAttribute('href');
         handleAccordion(hash);
       });
     });
   }
 
-  // Event listener for DOMContentLoaded to initialize the script
+  // Initialize the script either on DOMContentLoaded or immediately if the event has already fired
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
   } else {
-    // The DOMContentLoaded event has already fired; run init immediately
     init();
   }
 })(this, this.document);

@@ -19,15 +19,15 @@
             behavior: 'smooth'
           });
           window.location.hash = hash;
-          history.pushState(null, null, hash);
+          window.history.pushState(null, null, hash);
         }
       }
     };
     handleAccordion(window.location.hash);
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-      anchor.addEventListener('click', function (e) {
+      anchor.addEventListener('click', function handleAnchorClick(e) {
         e.preventDefault();
-        var hash = this.getAttribute('href');
+        var hash = anchor.getAttribute('href');
         handleAccordion(hash);
       });
     });
