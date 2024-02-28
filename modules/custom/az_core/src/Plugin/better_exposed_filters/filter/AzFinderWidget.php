@@ -14,6 +14,7 @@ use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
+use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -48,6 +49,13 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   protected $entityTypeManager;
 
   /**
+   * Cache for SVG icon render arrays.
+   *
+   * @var array
+   */
+  protected $svgIconCache = [];
+
+  /**
    * Constructs a new AzFinderWidget object.
    *
    * @param array $configuration
@@ -76,6 +84,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     $this->configuration = $configuration;
     $this->renderer = $renderer;
     $this->entityTypeManager = $entity_type_manager;
+    $this->initializeIconCache();
+
   }
 
   /**
@@ -92,8 +102,15 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       $plugin_id,
       $plugin_definition,
       $container->get('renderer'),
-      $container->get('entity_type.manager')
+      $container->get('entity_type.manager'),
     );
+  }
+
+  /**
+   * Initializes the SVG icon cache.
+   */
+  protected function initializeIconCache() {
+    $this->svgIconCache = $this->generateSvgIcons();
   }
 
   /**
@@ -155,17 +172,23 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function exposedFormAlter(array &$form, FormStateInterface $form_state) {
+  public function exposedFormAlter(array &$form, FormStateInterface $form_state): array {
+    if (!$this->view instanceof ViewExecutable) {
+      return $form;
+    }
     $filter = $this->handler;
     $field_id = $this->getFieldId($filter);
-
     if (!empty($form[$field_id])) {
       $this->setFormOptions($form, $field_id);
-      $this->assignSvgIconColorsAndTitles($form, $field_id);
-      $this->generateAndAttachSvgIcons($form, $field_id);
-
+      $svg_icons = $this->svgIconCache;
+      foreach ($svg_icons as $key => $icon) {
+        $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->render($icon);
+      }
+      // $this->assignSvgIconColorsAndTitles($form, $field_id);
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
+
+    return $form;
   }
 
   /**
@@ -188,51 +211,37 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   The form array.
    * @param string $field_id
    *   The field ID.
+   *
+   * @return array
+   *   The form array with the options set.
    */
-  private function setFormOptions(array &$form, $field_id): void {
+  private function setFormOptions(array &$form, $field_id): array {
     $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
     $form[$field_id]['#hierarchy'] = !empty($this->handler->options['hierarchy']);
     $form[$field_id]['#theme'] = 'az_finder_widget';
+    $form[$field_id]['#type'] = 'checkboxes';
+
+    return $form;
   }
 
   /**
-   * Assigns SVG icon colors and titles to the form.
+   * Generates SVG icons.
    *
-   * @param array $form
-   *   The form array.
-   * @param string $field_id
-   *   The field ID.
+   * @return array
+   *   The the SVG render arrays for the icons.
    */
-  private function assignSvgIconColorsAndTitles(array &$form, $field_id): void {
-    $config = $this->getConfiguration();
-    foreach (['level_0', 'level_1'] as $level) {
-      foreach (['expand', 'collapse'] as $action) {
-        $form[$field_id]["#{$level}_{$action}_color"] = $config["{$level}_{$action}_color"];
-        $form[$field_id]["#{$level}_{$action}_title"] = $config["{$level}_{$action}_title"];
-      }
-    }
-  }
-
-  /**
-   * Generates and attaches SVG icons to the form.
-   *
-   * @param array $form
-   *   The form array.
-   * @param string $field_id
-   *   The field ID.
-   */
-  private function generateAndAttachSvgIcons(array &$form, $field_id): void {
+  private function generateSvgIcons(): array {
     $svg_icons = [];
     $levels = [0, 1];
     $actions = ['expand', 'collapse'];
-
     foreach ($levels as $level) {
       foreach ($actions as $action) {
         $icon_render_array = $this->generateSvgRenderArray($level, $action);
-        $svg_icons["level_{$level}_{$action}"] = $this->renderer->render($icon_render_array);
+        $svg_icons["level_{$level}_{$action}"] = $icon_render_array;
       }
     }
-    $form['#attached']['drupalSettings']['azFinder']['icons'] = $svg_icons;
+
+    return $svg_icons;
   }
 
   /**
@@ -242,7 +251,10 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   An associative array containing the element being processed.
    */
   public function preprocessAzFinderWidget(array &$variables) {
+
     $element = $variables['element'];
+    // dpm($this->svgIconCache);
+    // dpm($element);
     $variables += [
       'wrapper_attributes' => new Attribute(),
       'children' => Element::children($element),
@@ -274,6 +286,9 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       }
 
       $original_title = $element[$child]['#title'];
+      if (empty($original_title)) {
+        continue;
+      }
       $cleaned_title = ltrim($original_title, '-');
       $list_title = [
         '#type' => 'html_tag',
@@ -281,15 +296,21 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       // Determine if the child has sub-elements (actual children).
       // Calculate depth based on hyphens in the title as a proxy for hierarchy.
       $depth = strlen($original_title) - strlen($cleaned_title);
-
       $list_title['#value'] = $cleaned_title;
       // Decide which icon to use based on depth.
-      $level_0_collapse_icon = $this->generateSvgRenderArray(0, 'collapse');
-      $level_1_collapse_icon = $this->generateSvgRenderArray(1, 'collapse');
-      $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
+      $level_0_collapse_icon = $this->svgIconCache['level_0_collapse'];
+      $level_1_collapse_icon = $this->svgIconCache['level_1_collapse'];
+      if (!empty($level_0_collapse_icon) && !empty($level_1_collapse_icon)) {
+        $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
+
+      }
+      else {
+        $collapse_icon = $this->svgIconCache['level_0_collapse'];
+      }
       $variables['depth'][$child] = $depth;
       if (!empty($children) && $depth >= 1) {
         $collapse_icon_html = $this->renderer->render($collapse_icon);
+        // dpm($collapse_icon_html);
         $list_title['#value'] = Markup::create($collapse_icon_html . ' ' . $cleaned_title);
       }
       else {
@@ -343,7 +364,28 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   }
 
   /**
-   * Generates SVG markup for icons based on depth and action.
+   * Generates a render array for an SVG icon based on depth and action.
+   *
+   * @param int $depth
+   *   The depth of the option, affecting icon size and path.
+   * @param string $action
+   *   The action ('expand' or 'collapse') determining the icon.
+   *
+   * @return array
+   *   A cached render array for the SVG icon.
+   */
+  public function generateSvgRenderArray($depth, $action): array {
+    $cacheKey = "level_{$depth}_{$action}";
+    if (!isset($this->svgIconCache[$cacheKey])) {
+      // Generate the icon and cache it.
+      $this->svgIconCache[$cacheKey] = $this->createSvgIconRenderArray($depth, $action);
+    }
+    // dpm($this->svgIconCache[$cacheKey]);.
+    return $this->svgIconCache[$cacheKey];
+  }
+
+  /**
+   * Creates a render array for an SVG icon based on depth and action.
    *
    * @param int $depth
    *   The depth of the option, affecting icon size and path.
@@ -353,26 +395,23 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return array
    *   A render array for the SVG icon.
    */
-  public function generateSvgRenderArray($depth, $action): array {
+  protected function createSvgIconRenderArray($depth, $action) {
     $level = $depth === 0 ? 'level_0' : 'level_1';
     $actionType = $action === 'expand' ? 'expand' : 'collapse';
-    // Define default values and paths for SVG attributes based on action
-    // and depth.
+    $sizeKey = "{$level}_icon_size";
+    $size = $this->configuration[$sizeKey] ?? ($depth === 0 ? '24' : '16');
     $attributes = [
       'fill_color' => $this->configuration["{$level}_{$actionType}_color"] ?? '#000000',
-      'size' => $depth === 0 ? '24' : '16',
+      'size' => $size,
       'title' => $this->configuration["{$level}_{$actionType}_title"] ?? ucfirst($action) . ' this section',
       'icon_path' => $this->getIconPath($depth, $action),
     ];
-    // Sanitize dynamic values to prevent XSS vulnerabilities.
+
     foreach ($attributes as &$attribute) {
-      // Check if the attribute is an instance of TranslatableMarkup and convert
-      // it to a string.
       if ($attribute instanceof TranslatableMarkup) {
         $attribute = $attribute->render();
       }
-      // Now safely apply htmlspecialchars to the string.
-      $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8') ?? '';
+      $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8');
     }
 
     $svg_render_template = [
@@ -381,7 +420,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       '#context' => $attributes,
     ];
 
-    // Return the rendered SVG markup.
     return $svg_render_template;
   }
 
