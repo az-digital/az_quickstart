@@ -10,7 +10,12 @@
     const handleAccordion = (hash) => {
       if (hash) {
         const $targetAccordion = document.querySelector(hash);
-        if ($targetAccordion && hash !== '#' && hash.startsWith('#accordion-') && $targetAccordion.classList.contains('collapse')) {
+        if (
+          $targetAccordion &&
+          hash !== '#' &&
+          hash.startsWith('#accordion-') &&
+          $targetAccordion.classList.contains('collapse')
+        ) {
           const yOffset = -10;
           const y = $targetAccordion.getBoundingClientRect().top + window.pageYOffset + yOffset;
           if ('collapse' in $targetAccordion) {
