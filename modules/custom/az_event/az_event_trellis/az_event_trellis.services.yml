@@ -1,4 +1,6 @@
 services:
+  _defaults:
+    autoconfigure: true
   az_event_trellis.trellis_helper:
     class: Drupal\az_event_trellis\TrellisHelper
     arguments:
@@ -13,5 +15,3 @@ services:
       - '@messenger'
       - '@entity_type.manager'
       - '@current_user'
-    tags:
-      - { name: 'event_subscriber' }

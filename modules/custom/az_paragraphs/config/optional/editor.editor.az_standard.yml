@@ -27,6 +27,8 @@ settings:
       - numberedList
       - '|'
       - alignment
+      - indent
+      - outdent
       - '|'
       - bootstrapGrid
       - insertTable
@@ -318,6 +320,8 @@ settings:
         - md
         - lg
         - xl
+    ckeditor_indentblock_indent:
+      enable: true
     linkit_extension:
       linkit_enabled: true
       linkit_profile: az_linkit
