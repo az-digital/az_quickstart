@@ -17,8 +17,9 @@
         ) {
           const yOffset = -10;
           const y =
-          $targetAccordion.getBoundingClientRect().top +
-          window.pageYOffset + yOffset;
+            $targetAccordion.getBoundingClientRect().top +
+            window.scrollY +
+            yOffset;
           if ('collapse' in $targetAccordion) {
             $targetAccordion.collapse('show');
           } else {

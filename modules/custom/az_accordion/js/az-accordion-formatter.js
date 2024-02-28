@@ -11,7 +11,7 @@
         var $targetAccordion = document.querySelector(hash);
         if ($targetAccordion && hash !== '#' && hash.startsWith('#accordion-') && $targetAccordion.classList.contains('collapse')) {
           var yOffset = -10;
-          var y = $targetAccordion.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          var y = $targetAccordion.getBoundingClientRect().top + window.scrollY + yOffset;
           if ('collapse' in $targetAccordion) {
             $targetAccordion.collapse('show');
           } else {
