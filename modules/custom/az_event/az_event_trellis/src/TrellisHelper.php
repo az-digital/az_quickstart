@@ -110,6 +110,8 @@ final class TrellisHelper {
         $json = json_decode($json, TRUE);
         if ($json !== NULL) {
           $ids = $json['data']['Event_IDs'] ?? [];
+          // Ensure events are in Id order.
+          sort($ids);
           // @todo determine cache expiration.
           $expire = time() + 1800;
           // Cache search result.
@@ -135,6 +137,8 @@ final class TrellisHelper {
     $events = [];
     $fetch = [];
     $url = $this->getEventEndpoint();
+    // Remove any duplicate ids to mimic remote API.
+    $trellis_ids = array_unique($trellis_ids);
     // Grab events that are in cache.
     foreach ($trellis_ids as $trellis_id) {
       $cached = $this->getTrellisCache($trellis_id);
@@ -165,6 +169,10 @@ final class TrellisHelper {
       catch (GuzzleException $e) {
       }
     }
+    // Make sure events are in Id order regardless of cached/fetched.
+    usort($events, function ($a, $b) {
+      return strcmp($a['Id'], $b['Id']);
+    });
     return $events;
   }
 
