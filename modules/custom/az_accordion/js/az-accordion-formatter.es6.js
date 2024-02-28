@@ -3,7 +3,6 @@
  * Provides scroll to and expand functionality for accordion based on anchor links.
  */
 
-
 ((window, document) => {
   function init() {
     // Function to handle accordion based on hash
@@ -17,21 +16,24 @@
           $targetAccordion.classList.contains('collapse')
         ) {
           const yOffset = -10;
-          const y = $targetAccordion.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          const y =
+          $targetAccordion.getBoundingClientRect().top +
+          window.pageYOffset + yOffset;
           if ('collapse' in $targetAccordion) {
             $targetAccordion.collapse('show');
           } else {
             $targetAccordion.classList.add('show');
           }
-          // Smooth scroll to the accordion
+          // Smooth scroll to the accordion.
           $targetAccordion.scrollIntoView({
             top: y,
-            behavior: 'smooth'
+            behavior: 'smooth',
           });
           window.location.hash = hash;
-          // Accessing history through window to avoid ESLint error
+          // Accessing history through window to avoid ESLint error.
           window.history.pushState(null, null, hash);
         }}
+
     };
 
     // Check for hash on initial load.
