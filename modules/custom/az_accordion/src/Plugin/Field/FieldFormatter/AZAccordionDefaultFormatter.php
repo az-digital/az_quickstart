@@ -97,6 +97,45 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $title = $item->title ?? '';
 
       $accordion_classes = 'accordion';
+      $accordion_id = Html::getUniqueId('accordion-' . $item->getEntity()->id() . '-' . $delta . '-' . $title);
+      $anchor_href = '#' . $accordion_id;
+      $path = \Drupal::service('path.current')->getPath();
+      $path_with_anchor = $path . $anchor_href;
+      // Create render array with click to copy link button for each item.
+      $click_to_copy_link = [
+        '#type' => 'html_tag',
+        '#tag' => 'a',
+        '#value' => $this->t('Click to copy link to this accordion item.'),
+        '#attributes' => [
+          'class' => [
+            'btn',
+            'btn-primary',
+            'btn-sm',
+          ],
+          'href' => $path_with_anchor,
+        ],
+      ];
+      $click_to_copy = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#value' => '',
+        '#attributes' => [
+          'class' => [
+            'js-click2copy',
+            'position-relative',
+          ],
+        ],
+        'click_to_copy_link' => $click_to_copy_link,
+        '#attached' => [
+          'library' => [
+            'az_marketing_cloud/admin',
+            'az_accordion/formatter',
+          ],
+
+        ],
+
+      ];
+
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
@@ -128,9 +167,10 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           '#text' => $item->body ?? '',
           '#format' => $item->body_format,
           '#langcode' => $item->getLangcode(),
+          'click_to_copy' => $click_to_copy,
         ],
         '#attributes' => ['class' => $accordion_classes],
-        '#accordion_item_id' => Html::getUniqueId('az_accordion'),
+        '#accordion_item_id' => $accordion_id,
         '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
         '#aria_controls' => Html::getUniqueId('az_accordion_aria_controls'),
