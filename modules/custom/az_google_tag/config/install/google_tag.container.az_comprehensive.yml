@@ -22,7 +22,8 @@ advanced_settings:
         nonGoogleIframes
       blocklist_classes: |-
         customScripts
-      customPixels      include_environment: false
+        customPixels      
+      include_environment: false
       environment_id: ''
       environment_token: ''
 dimensions_metrics: {  }
