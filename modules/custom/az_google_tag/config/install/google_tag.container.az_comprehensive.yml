@@ -19,7 +19,7 @@ advanced_settings:
         google
         nonGooglePixels
         nonGoogleScripts
-        nonGoogleIframes''
+        nonGoogleIframes
       blocklist_classes: |-
         customScripts
         customPixels
