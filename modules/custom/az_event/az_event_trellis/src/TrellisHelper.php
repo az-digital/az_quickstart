@@ -173,7 +173,7 @@ final class TrellisHelper {
     // phpcs:disable Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
     usort($events, function ($a, $b) {
       return strcmp($a['Id'], $b['Id']);
-   });
+    });
    // phpcs:enable Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
     return $events;
   }
