@@ -14,7 +14,7 @@ use Drupal\Core\Form\FormStateInterface;
  *
  * @ViewsExposedForm(
  *   id = "az_bef",
- *   title = @Translation("Quickstart exposed filters style"),
+ *   title = @Translation("Quickstart Exposed Filters"),
  *   help = @Translation("Better exposed filters with additional Quickstart styles.")
  * )
  */
@@ -31,7 +31,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     // Attach Quickstart styles.
     $form['#attached']['library'][] = 'az_core/az-finder';
     // Attach JavaScript settings for the minimum search input length.
-    $form['#attached']['drupalSettings']['azFinder']['minSearchLength'] = $this->options['az_bef']['finder']['min_search_length'] ?? 3;
+    $form['#attached']['drupalSettings']['azFinder']['minSearchLength'] = $this->options['az_bef']['finder']['min_search_length'] ?? 1;
     // Vertical style intended for sidebar use.
     $form['#attributes']['class'][] = 'az-bef-vertical';
     // Create the clear all filters button.
