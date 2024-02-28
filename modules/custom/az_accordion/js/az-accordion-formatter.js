@@ -9,13 +9,16 @@
     var handleAccordion = function handleAccordion(hash) {
       if (hash) {
         var $targetAccordion = document.querySelector(hash);
-        if ($targetAccordion) {
+        if ($targetAccordion && hash !== '#' && hash.startsWith('#accordion-') && $targetAccordion.classList.contains('collapse')) {
+          var yOffset = -10;
+          var y = $targetAccordion.getBoundingClientRect().top + window.pageYOffset + yOffset;
           if ('collapse' in $targetAccordion) {
             $targetAccordion.collapse('show');
           } else {
             $targetAccordion.classList.add('show');
           }
           $targetAccordion.scrollIntoView({
+            top: y,
             behavior: 'smooth'
           });
           window.location.hash = hash;
