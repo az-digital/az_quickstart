@@ -15,9 +15,14 @@ advanced_settings:
     GTM-ML2BZB:
       data_layer: dataLayer
       include_classes: false
-      allowlist_classes: ''
-      blocklist_classes: ''
-      include_environment: false
+      allowlist_classes: |-
+        google
+        nonGooglePixels
+        nonGoogleScripts
+        nonGoogleIframes
+      blocklist_classes: |-
+        customScripts
+      customPixels      include_environment: false
       environment_id: ''
       environment_token: ''
 dimensions_metrics: {  }
