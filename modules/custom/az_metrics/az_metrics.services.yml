@@ -1,8 +1,8 @@
 services:
+  _defaults:
+    autoconfigure: true
   az_metrics.event_subscriber:
     class: Drupal\az_metrics\EventSubscriber\AZMetricsSubscriber
     arguments:
       - '@database'
       - '@datetime.time'
-    tags:
-      - { name: event_subscriber }
