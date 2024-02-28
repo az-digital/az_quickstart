@@ -35,7 +35,6 @@
           window.history.pushState(null, null, hash);
         }
       }
-
     };
 
     // Check for hash on initial load.
