@@ -75,7 +75,7 @@
         "drupal/field_group": "3.4.0",
         "drupal/field_group_link": "3.1.0",
         "drupal/flag": "4.0-beta4",
-        "drupal/google_tag": "2.0.3",
+        "drupal/google_tag": "2.0.4",
         "drupal/honeypot": "2.1.3",
         "drupal/image_widget_crop": "2.4.0",
         "drupal/inline_entity_form": "3.0.0-rc19",
@@ -182,7 +182,6 @@
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
             },
             "drupal/google_tag": {
-                "GoogleTagUpgradeManager may fail upgrade for some configurations (3388487)": "https://www.drupal.org/files/issues/2024-01-30/google_tag-db_update_unset_values-3388487-6.patch"
             },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
