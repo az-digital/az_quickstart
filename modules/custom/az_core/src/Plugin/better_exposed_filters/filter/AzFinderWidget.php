@@ -350,7 +350,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
         else {
           $list_title['icon'] = $collapse_icon;
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
-          $list_title['#tag'] = 'h' . $depth + 3;
+          $list_title['#tag'] = "h" . ($depth + 3);
           $list_title['#attributes']['class'][] = 'text-body';
           $list_title['#attributes']['class'][] = 'text-size-h6';
           $list_title['#attributes']['class'][] = 'm-0';
