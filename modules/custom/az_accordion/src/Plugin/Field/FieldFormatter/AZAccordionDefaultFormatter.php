@@ -5,11 +5,14 @@ declare(strict_types=1);
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Path\CurrentPathStack;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Drupal\paragraphs\ParagraphInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\path_alias\AliasManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -54,26 +57,52 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   protected $pathAliasManager;
 
   /**
+   * Constructs a new AZAccordionDefaultFormatter instance.
+   *
+   * @param array $configuration
+   *   A configuration array containing information about the plugin instance.
+   * @param string $plugin_id
+   *   The plugin_id for the plugin instance.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager service.
+   * @param \Drupal\Core\Render\RendererInterface $renderer
+   *   The renderer service.
+   * @param \Drupal\Core\Path\CurrentPathStack $current_path
+   *   The current path service.
+   * @param \Drupal\path_alias\AliasManagerInterface $path_alias_manager
+   *   The path alias manager service.
+   */
+  public function __construct(
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    EntityTypeManagerInterface $entity_type_manager,
+    RendererInterface $renderer,
+    CurrentPathStack $current_path,
+    AliasManagerInterface $path_alias_manager
+  ) {
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->entityTypeManager = $entity_type_manager;
+    $this->renderer = $renderer;
+    $this->currentPath = $current_path;
+    $this->pathAliasManager = $path_alias_manager;
+  }
+
+  /**
    * {@inheritdoc}
    */
-  public static function create(
-  ContainerInterface $container,
-  array $configuration,
-  $plugin_id,
-  $plugin_definition
-  ) {
-    $instance = parent::create(
-      $container,
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
       $configuration,
-       $plugin_id,
-       $plugin_definition,
-     );
-
-    $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->renderer = $container->get('renderer');
-    $instance->currentPath = $container->get('path.current');
-    $instance->pathAliasManager = $container->get('path_alias.manager');
-    return $instance;
+      $plugin_id,
+      $plugin_definition,
+      $container->get('entity_type.manager'),
+      $container->get('renderer'),
+      $container->get('path.current'),
+      $container->get('path_alias.manager')
+    );
   }
 
   /**
@@ -88,13 +117,12 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
-
-    // @todo accordion style selection (based on custom config entities).
     $element['foo'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Foo'),
       '#default_value' => $settings['foo'],
     ];
+
     return $element;
   }
 
@@ -104,6 +132,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function settingsSummary() {
     $settings = $this->getSettings();
     $summary[] = $this->t('Foo: @foo', ['@foo' => $settings['foo']]);
+
     return $summary;
   }
 
@@ -112,7 +141,6 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
-    /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
       $title = $item->title ?? '';
       $accordion_classes = 'accordion';
@@ -120,69 +148,28 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $accordion_id = Html::getUniqueId('accordion-' . $entity_id . '-' . $delta . '-' . $title);
       $anchor_href = '#' . $accordion_id;
       $path = $this->currentPath->getPath();
-      $path = $this->pathAliasManager->getAliasByPath($path);
-      $path_with_anchor = $path . $anchor_href;
-      // Create render array with click to copy link button for each item.
+      $path_with_anchor = $this->pathAliasManager->getAliasByPath($path) . $anchor_href;
       $click_to_copy_link = [
         '#type' => 'html_tag',
         '#tag' => 'a',
         '#value' => $this->t('Click to copy link to this accordion item.'),
         '#attributes' => [
-          'class' => [
-            'btn',
-            'btn-primary',
-            'btn-sm',
-          ],
+          'class' => ['btn', 'btn-primary', 'btn-sm'],
           'href' => $path_with_anchor,
         ],
       ];
       $click_to_copy = [
         '#type' => 'html_tag',
         '#tag' => 'div',
-        '#value' => '',
-        '#attributes' => [
-          'class' => [
-            'js-click2copy',
-            'position-relative',
-          ],
-        ],
         'click_to_copy_link' => $click_to_copy_link,
         '#attached' => [
-          'library' => [
-            'az_core/click-to-copy',
-            'az_accordion/formatter',
-          ],
-
+          'library' => ['az_core/click-to-copy', 'az_accordion/formatter'],
         ],
-
       ];
-
-      $column_classes = [];
-      $column_classes[] = 'col-md-4 col-lg-4';
-      $parent = $item->getEntity();
-
-      // Get settings from parent paragraph.
-      if ($parent instanceof ParagraphInterface) {
-        // Get the behavior settings for the parent.
-        $parent_config = $parent->getAllBehaviorSettings();
-
-        // See if the parent behavior defines some accordion-specific
-        // settings.
-        if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
-          // @todo implement az_accordion_paragraph_behavior handling.
-        }
-      }
-
-      // Handle class keys that contained multiple classes.
-      $column_classes = implode(' ', $column_classes);
-      $column_classes = explode(' ', $column_classes);
-      $column_classes[] = 'pb-4';
 
       $element[$delta] = [
         '#theme' => 'az_accordion',
         '#title' => $title,
-        // The ProcessedText element handles cache context & tag bubbling.
-        // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#body' => [
           '#type' => 'processed_text',
           '#text' => $item->body ?? '',
@@ -196,7 +183,6 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
         '#aria_controls' => Html::getUniqueId('az_accordion_aria_controls'),
       ];
-
     }
 
     return $element;
