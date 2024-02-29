@@ -128,7 +128,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         'click_to_copy_link' => $click_to_copy_link,
         '#attached' => [
           'library' => [
-            'az_marketing_cloud/admin',
+            'az_core/click-to-copy',
             'az_accordion/formatter',
           ],
 
