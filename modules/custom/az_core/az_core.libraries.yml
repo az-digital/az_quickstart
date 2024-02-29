@@ -18,6 +18,6 @@ az-enterprise-attributes:
 click-to-copy:
   css:
     component:
-      css/az-accordion-widget.css: {}
+      css/click-to-copy.css: {}
   js:
     js/click-to-copy.js: {}

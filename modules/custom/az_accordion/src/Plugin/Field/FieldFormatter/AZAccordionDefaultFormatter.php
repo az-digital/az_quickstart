@@ -75,15 +75,24 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
    *   The path alias manager service.
    */
   public function __construct(
-    array $configuration,
+  array $configuration,
+  $plugin_id,
+  $plugin_definition,
+  EntityTypeManagerInterface $entity_type_manager,
+  RendererInterface $renderer,
+  CurrentPathStack $current_path,
+  ?AliasManagerInterface $path_alias_manager = NULL
+  ) {
+    $field_definition = $configuration['field_definition'];
+    parent::__construct(
     $plugin_id,
     $plugin_definition,
-    EntityTypeManagerInterface $entity_type_manager,
-    RendererInterface $renderer,
-    CurrentPathStack $current_path,
-    AliasManagerInterface $path_alias_manager
-  ) {
-    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $field_definition,
+    $configuration['settings'],
+    $configuration['label'],
+    $configuration['view_mode'],
+    $configuration['third_party_settings']
+    );
     $this->entityTypeManager = $entity_type_manager;
     $this->renderer = $renderer;
     $this->currentPath = $current_path;
@@ -93,15 +102,20 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  public static function create(
+  ContainerInterface $container,
+  array $configuration,
+  $plugin_id,
+  $plugin_definition
+  ) {
     return new static(
-      $configuration,
-      $plugin_id,
-      $plugin_definition,
-      $container->get('entity_type.manager'),
-      $container->get('renderer'),
-      $container->get('path.current'),
-      $container->get('path_alias.manager')
+    $configuration,
+    $plugin_id,
+    $plugin_definition,
+    $container->get('entity_type.manager'),
+    $container->get('renderer'),
+    $container->get('path.current'),
+    $container->has('path_alias.manager') ? $container->get('path_alias.manager') : NULL
     );
   }
 
@@ -163,7 +177,16 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#tag' => 'div',
         'click_to_copy_link' => $click_to_copy_link,
         '#attached' => [
-          'library' => ['az_core/click-to-copy', 'az_accordion/formatter'],
+          'library' => [
+            'az_core/click-to-copy',
+            'az_accordion/formatter',
+          ],
+        ],
+        '#attributes' => [
+          'class' => [
+            'js-click2copy',
+            'position-relative',
+          ],
         ],
       ];
 
