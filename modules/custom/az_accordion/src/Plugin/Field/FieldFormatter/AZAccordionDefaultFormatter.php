@@ -114,16 +114,13 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $element = [];
     /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
-
-      // Format title.
       $title = $item->title ?? '';
-
       $accordion_classes = 'accordion';
-      $accordion_id = Html::getUniqueId('accordion-' . $item->getEntity()->id() . '-' . $title);
+      $entity_id = $item->getEntity()->id();
+      $accordion_id = Html::getUniqueId('accordion-' . $entity_id . '-' . $delta . '-' . $title);
       $anchor_href = '#' . $accordion_id;
       $path = $this->currentPath->getPath();
       $path = $this->pathAliasManager->getAliasByPath($path);
-
       $path_with_anchor = $path . $anchor_href;
       // Create render array with click to copy link button for each item.
       $click_to_copy_link = [
