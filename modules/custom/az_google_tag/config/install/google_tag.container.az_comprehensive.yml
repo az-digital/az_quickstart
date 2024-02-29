@@ -10,7 +10,7 @@ weight: 0
 tag_container_ids:
   - GTM-ML2BZB
 advanced_settings:
-  consent_mode: 1
+  consent_mode: 0
   gtm:
     GTM-ML2BZB:
       data_layer: dataLayer
