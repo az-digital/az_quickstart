@@ -8,6 +8,7 @@ dependencies:
   - az_card
   - az_core
   - az_media
+  - ckeditor_indentblock:ckeditor_indentblock
   - drupal:text
   - drupal:telephone
   - entity_embed:entity_embed
