@@ -9,7 +9,6 @@
     var handleAccordion = function handleAccordion(hash) {
       if (hash) {
         var $targetAccordion = document.querySelector(hash);
-        console.log('handleAccordion', hash);
         if ($targetAccordion && hash !== '#' && hash.startsWith('#accordion-') && $targetAccordion.classList.contains('collapse')) {
           var yOffset = -10;
           var y = $targetAccordion.getBoundingClientRect().top + window.scrollY + yOffset;

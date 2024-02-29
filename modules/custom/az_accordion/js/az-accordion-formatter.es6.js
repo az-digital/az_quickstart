@@ -9,8 +9,6 @@
     const handleAccordion = (hash) => {
       if (hash) {
         const $targetAccordion = document.querySelector(hash);
-                  console.log('handleAccordion', hash);
-
         if (
           $targetAccordion &&
           hash !== '#' &&
