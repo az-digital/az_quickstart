@@ -11,10 +11,6 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\Core\Render\RendererInterface;
-use Drupal\Core\Path\CurrentPathStack;
-use Drupal\path_alias\AliasManagerInterface;
 
 /**
  * Provides a default formatter for az_accordion fields.
@@ -57,9 +53,9 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
    */
   protected $pathAliasManager;
 
-   /**
-    * {@inheritdoc}
-    */
+  /**
+   * {@inheritdoc}
+   */
   public static function create(
   ContainerInterface $container,
   array $configuration,
@@ -78,7 +74,8 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
     $instance->currentPath = $container->get('path.current');
     $instance->pathAliasManager = $container->get('path_alias.manager');
     return $instance;
-    }
+  }
+
   /**
    * {@inheritdoc}
    */
