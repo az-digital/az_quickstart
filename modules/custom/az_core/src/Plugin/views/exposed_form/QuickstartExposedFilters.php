@@ -76,7 +76,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#type' => 'number',
       '#title' => $this->t('Minimum Search Input Length'),
       '#description' => $this->t('The minimum number of characters required in the search field to count as an active filter.'),
-      '#default_value' => $this->options['az_bef']['finder']['min_search_length'] ?? 3,
+      '#default_value' => $this->options['az_bef']['finder']['min_search_length'] ?? 1,
       '#min' => 0,
       '#step' => 1,
     ];
