@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
@@ -9,9 +11,13 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\Path\CurrentPathStack;
+use Drupal\path_alias\AliasManagerInterface;
 
 /**
- * Plugin implementation of the 'az_accordion_default' formatter.
+ * Provides a default formatter for az_accordion fields.
  *
  * @FieldFormatter(
  *   id = "az_accordion_default",
@@ -31,28 +37,48 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   protected $entityTypeManager;
 
   /**
-   * The renderer.
+   * The renderer service.
    *
    * @var \Drupal\Core\Render\RendererInterface
    */
   protected $renderer;
 
   /**
-   * {@inheritdoc}
+   * The current path service.
+   *
+   * @var \Drupal\Core\Path\CurrentPathStack
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+  protected $currentPath;
+
+  /**
+   * The path alias manager service.
+   *
+   * @var \Drupal\path_alias\AliasManagerInterface
+   */
+  protected $pathAliasManager;
+
+   /**
+    * {@inheritdoc}
+    */
+  public static function create(
+  ContainerInterface $container,
+  array $configuration,
+  $plugin_id,
+  $plugin_definition
+  ) {
     $instance = parent::create(
       $container,
       $configuration,
-      $plugin_id,
-      $plugin_definition,
-    );
+       $plugin_id,
+       $plugin_definition,
+     );
 
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->renderer = $container->get('renderer');
+    $instance->currentPath = $container->get('path.current');
+    $instance->pathAliasManager = $container->get('path_alias.manager');
     return $instance;
-  }
-
+    }
   /**
    * {@inheritdoc}
    */
@@ -89,7 +115,6 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
-
     /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
 
@@ -97,9 +122,11 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $title = $item->title ?? '';
 
       $accordion_classes = 'accordion';
-      $accordion_id = Html::getUniqueId('accordion-' . $item->getEntity()->id() . '-' . $delta . '-' . $title);
+      $accordion_id = Html::getUniqueId('accordion-' . $item->getEntity()->id() . '-' . $title);
       $anchor_href = '#' . $accordion_id;
-      $path = \Drupal::service('path.current')->getPath();
+      $path = $this->currentPath->getPath();
+      $path = $this->pathAliasManager->getAliasByPath($path);
+
       $path_with_anchor = $path . $anchor_href;
       // Create render array with click to copy link button for each item.
       $click_to_copy_link = [

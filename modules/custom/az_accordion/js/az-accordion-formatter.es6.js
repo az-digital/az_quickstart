@@ -9,6 +9,8 @@
     const handleAccordion = (hash) => {
       if (hash) {
         const $targetAccordion = document.querySelector(hash);
+                  console.log('handleAccordion', hash);
+
         if (
           $targetAccordion &&
           hash !== '#' &&
@@ -20,16 +22,17 @@
             $targetAccordion.getBoundingClientRect().top +
             window.scrollY +
             yOffset;
-          if ('collapse' in $targetAccordion) {
-            $targetAccordion.collapse('show');
-          } else {
-            $targetAccordion.classList.add('show');
-          }
           // Smooth scroll to the accordion.
           $targetAccordion.scrollIntoView({
             top: y,
             behavior: 'smooth',
           });
+
+          if ('collapse' in $targetAccordion) {
+            $targetAccordion.collapse('show');
+          } else {
+            $targetAccordion.classList.add('show');
+          }
           window.location.hash = hash;
           // Accessing history through window to avoid ESLint error.
           window.history.pushState(null, null, hash);
