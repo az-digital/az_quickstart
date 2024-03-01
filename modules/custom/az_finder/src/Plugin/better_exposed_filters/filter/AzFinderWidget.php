@@ -115,13 +115,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
-    return parent::defaultConfiguration() + [];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
@@ -160,7 +153,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return string
    *   The field ID.
    */
-  private function getFieldId($filter): string {
+  protected function getFieldId($filter): string {
     return $filter->options['is_grouped'] ? $filter->options['group_info']['identifier'] : $filter->options['expose']['identifier'];
   }
 
@@ -175,7 +168,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return array
    *   The form array with the options set.
    */
-  private function setFormOptions(array &$form, $field_id): array {
+  protected function setFormOptions(array &$form, $field_id): array {
     $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
     $form[$field_id]['#hierarchy'] = !empty($this->handler->options['hierarchy']);
     $form[$field_id]['#theme'] = 'az_finder_widget';
@@ -190,7 +183,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return array
    *   The the SVG render arrays for the icons.
    */
-  private function generateSvgIcons(): array {
+  protected function generateSvgIcons(): array {
     $svg_icons = [];
     $levels = [0, 1];
     $actions = ['expand', 'collapse'];
@@ -268,15 +261,14 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
         $collapse_icon = $this->svgIconCache['level_0_collapse'];
       }
       $variables['depth'][$child] = $depth;
-      if (!empty($children) && $depth >= 1) {
-        $collapse_icon_html = $this->renderer->render($collapse_icon);
-        // dpm($collapse_icon_html);
-        $list_title['#value'] = Markup::create($collapse_icon_html . ' ' . $cleaned_title);
-      }
-      else {
+      // if (!empty($children) && $depth >= 0) {
+      //   $collapse_icon_html = $this->renderer->render($collapse_icon);
+      //   $list_title['#value'] = Markup::create($collapse_icon_html . ' ' . $cleaned_title);
+      // }
+      // else {
         $list_title['#value'] = $cleaned_title;
         $variables['element'][$child]['#title'] = $list_title['#value'];
-      }
+      // }
 
       if (!empty($children)) {
 
@@ -298,8 +290,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
         $list_title_link['#attributes']['class'][] = 'collapser';
         $list_title_link['#attributes']['class'][] = 'level-' . $depth;
         $list_title_link['#attributes']['class'][] = 'text-decoration-none';
+        $list_title['icon'] = $collapse_icon;
         if ($depth === 0) {
-          $list_title['icon'] = $collapse_icon;
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-0';
           $list_title['#tag'] = 'h3';
           $list_title['#attributes']['class'][] = 'text-azurite';
@@ -308,7 +300,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
           $list_title['#attributes']['class'][] = 'd-flex';
         }
         else {
-          $list_title['icon'] = $collapse_icon;
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
           $list_title['#tag'] = "h" . ($depth + 3);
           $list_title['#attributes']['class'][] = 'text-body';
@@ -316,6 +307,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
           $list_title['#attributes']['class'][] = 'm-0';
           $list_title['#attributes']['class'][] = 'd-flex';
         }
+        $list_title['accessible_action_title'] = $accessible_action_title;
 
         $list_title_link['value'] = $list_title;
 
@@ -337,7 +329,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return array
    *   A cached render array for the SVG icon.
    */
-  public function generateSvgRenderArray($depth, $action): array {
+  protected function generateSvgRenderArray($depth, $action): array {
     $cacheKey = "level_{$depth}_{$action}";
     if (!isset($this->svgIconCache[$cacheKey])) {
       // Generate the icon and cache it.
@@ -381,7 +373,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
 
     $svg_render_template = [
       '#type' => 'inline_template',
-      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
+      '#template' => '<svg title="{{ title }}" xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
       '#context' => $attributes,
     ];
 
@@ -399,7 +391,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return string|null
    *   SVG path for the specified icon, or NULL if not found.
    */
-  private function getIconPath($depth, $action): ?string {
+  protected function getIconPath($depth, $action): ?string {
     $icon_paths = [
       'expand' => [
         '0' => 'M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6-1.41-1.41z',
@@ -434,6 +426,28 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     }
 
     return $depth;
+  }
+
+  /**
+   * Determines the accessible title for the action based on depth.
+   *
+   * @param int $depth
+   *   Depth of the item, affecting the text.
+   * @param string $action
+   *   Action type ('expand' or 'collapse').
+   *
+   * @return string|null
+   *   Accessible title for the specified action, or NULL if not found.
+   */
+  protected function getAccessibleActionTitle($action, $depth): ?string {
+    // Validate action and depth are within expected range/values
+    if (!in_array($action, ['expand', 'collapse']) || !in_array($depth, [0, 1])) {
+      return null;
+    }
+
+    // Directly construct and return the title
+    $level = $depth + 1; // Adjusting depth to match level naming convention
+    return ucfirst($action) . " level $level";
   }
 
 }
