@@ -1,0 +1,6 @@
+filter:
+  css:
+    theme:
+      css/az-finder-filter.css: {}
+  js:
+    js/az-finder-filter.js: {}

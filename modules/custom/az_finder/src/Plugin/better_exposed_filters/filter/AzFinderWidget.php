@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\az_core\Plugin\better_exposed_filters\filter;
+namespace Drupal\az_finder\Plugin\better_exposed_filters\filter;
 
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;

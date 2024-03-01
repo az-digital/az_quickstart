@@ -5,6 +5,10 @@
  * Contains az_paragraphs_link_group.module.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\paragraphs\ParagraphInterface;
+
 /**
  * Implements hook_theme_registry_alter().
  */

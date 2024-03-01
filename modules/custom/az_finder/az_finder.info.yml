@@ -1,0 +1,7 @@
+name: 'Quickstart Finder'
+type: module
+description: 'Search and filter content using the Finder module with your views.'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+dependencies:
+  - better_exposed_filters:better_exposed_filters
