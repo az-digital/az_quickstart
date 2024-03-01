@@ -300,8 +300,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
           $list_title['#attributes']['class'][] = 'm-0';
           $list_title['#attributes']['class'][] = 'd-flex';
         }
-        $list_title['accessible_action_title'] = $accessible_action_title;
-
         $list_title_link['value'] = $list_title;
 
         // Apply the modified list title to the element.
