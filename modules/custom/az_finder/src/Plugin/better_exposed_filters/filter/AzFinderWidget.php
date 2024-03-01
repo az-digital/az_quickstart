@@ -117,18 +117,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * {@inheritdoc}
    */
   public function defaultConfiguration() {
-    return parent::defaultConfiguration() + [
-      'level_0_collapse_color' => '#1E5288',
-      'level_0_collapse_title' => $this->t('Level 0 Collapse'),
-      'level_0_expand_color' => '#1E5288',
-      'level_0_expand_title' => $this->t('Level 0 Expand'),
-      'level_0_icon_size' => '24',
-      'level_1_collapse_color' => '#1E5288',
-      'level_1_collapse_title' => $this->t('Level 1 Collapse'),
-      'level_1_expand_color' => '#1E5288',
-      'level_1_expand_title' => $this->t('Level 1 Expand'),
-      'level_1_icon_size' => '16',
-    ];
+    return parent::defaultConfiguration() + [];
   }
 
   /**
@@ -137,34 +126,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
-    $svg_settings = [
-      'level_0_icon_size' => 'Level 0 Icon Size',
-      'level_0_expand' => 'Level 0 Expand',
-      'level_0_collapse' => 'Level 0 Collapse',
-      'level_1_icon_size' => 'Level 1 Icon Size',
-      'level_1_expand' => 'Level 1 Expand',
-      'level_1_collapse' => 'Level 1 Collapse',
-    ];
-    foreach ($svg_settings as $key => $label) {
-      $suffix = strpos($key, 'icon_size') !== FALSE ? '_icon_size' : '_color';
-      $form[$key . $suffix] = [
-        '#type' => strpos($key, 'icon_size') !== FALSE ? 'number' : 'color',
-        '#title' => $this->t('@label', ['@label' => $label]),
-        '#default_value' => $this->configuration[$key . $suffix],
-        '#description' => $this->t('Specify the size for the @label.', ['@label' => $label]),
-        '#min' => 0,
-        '#step' => 1,
-      ];
-      // Titles for non-size fields.
-      if (strpos($key, 'icon_size') === FALSE) {
-        $form[$key . '_title'] = [
-          '#type' => 'textfield',
-          '#title' => $this->t('@label Icon Title', ['@label' => $label]),
-          '#default_value' => $this->configuration[$key . '_title'],
-          '#description' => $this->t('Specify the title for the @label SVG icon.', ['@label' => $label]),
-        ];
-      }
-    }
 
     return $form;
   }
@@ -398,33 +359,33 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return array
    *   A render array for the SVG icon.
    */
-  protected function createSvgIconRenderArray($depth, $action) {
-    $level = $depth === 0 ? 'level_0' : 'level_1';
-    $actionType = $action === 'expand' ? 'expand' : 'collapse';
-    $sizeKey = "{$level}_icon_size";
-    $size = $this->configuration[$sizeKey] ?? ($depth === 0 ? '24' : '16');
-    $attributes = [
-      'fill_color' => $this->configuration["{$level}_{$actionType}_color"] ?? '#000000',
-      'size' => $size,
-      'title' => $this->configuration["{$level}_{$actionType}_title"] ?? ucfirst($action) . ' this section',
-      'icon_path' => $this->getIconPath($depth, $action),
-    ];
+protected function createSvgIconRenderArray($depth, $action) {
+  $size = $depth === 0 ? '24' : '16';
+  $fillColor = '#1E5288'; // Default color
+  $title = ucfirst($action) . ' this section'; // Default title
 
-    foreach ($attributes as &$attribute) {
-      if ($attribute instanceof TranslatableMarkup) {
-        $attribute = $attribute->render();
-      }
-      $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8');
-    }
+  // Set fixed paths or colors based on depth and action if needed
+  $iconPath = $this->getIconPath($depth, $action);
 
-    $svg_render_template = [
-      '#type' => 'inline_template',
-      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
-      '#context' => $attributes,
-    ];
+  $attributes = [
+    'fill_color' => $fillColor,
+    'size' => $size,
+    'title' => $title,
+    'icon_path' => $iconPath,
+  ];
 
-    return $svg_render_template;
+  foreach ($attributes as &$attribute) {
+    $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8');
   }
+
+  $svg_render_template = [
+    '#type' => 'inline_template',
+    '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
+    '#context' => $attributes,
+  ];
+
+  return $svg_render_template;
+}
 
   /**
    * Determines the SVG path for the icon based on depth and action.

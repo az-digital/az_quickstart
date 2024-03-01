@@ -565,7 +565,7 @@ display:
         filters: false
         filter_groups: false
         pager_options: false
-      css_class: ''
+      css_class: add-pager-top-margin
       use_ajax: true
       display_description: ''
       pager_options: null
