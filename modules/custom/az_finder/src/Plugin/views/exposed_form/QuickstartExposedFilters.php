@@ -29,7 +29,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     // Mark form as QuickstartExposedFilters form for easier alterations.
     $form['#context']['az_bef'] = TRUE;
     // Attach Quickstart styles.
-    $form['#attached']['library'][] = 'az_core/az-finder';
+    $form['#attached']['library'][] = 'az_finder/filter';
     // Attach JavaScript settings for the minimum search input length.
     $form['#attached']['drupalSettings']['azFinder']['minSearchLength'] = $this->options['az_bef']['finder']['min_search_length'] ?? 1;
     // Vertical style intended for sidebar use.
