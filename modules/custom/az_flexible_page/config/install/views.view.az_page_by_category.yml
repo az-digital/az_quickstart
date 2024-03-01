@@ -8,7 +8,7 @@ dependencies:
     - node.type.az_flexible_page
     - taxonomy.vocabulary.az_page_categories
   module:
-    - az_core
+    - az_finder
     - node
     - search
     - search_exclude
