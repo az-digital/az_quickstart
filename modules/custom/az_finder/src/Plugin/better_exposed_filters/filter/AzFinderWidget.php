@@ -10,7 +10,6 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Template\Attribute;
 use Drupal\views\ViewExecutable;
@@ -425,22 +424,23 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   /**
    * Determines the accessible title for the action based on depth.
    *
-   * @param int $depth
-   *   Depth of the item, affecting the text.
    * @param string $action
    *   Action type ('expand' or 'collapse').
+   * @param int $depth
+   *   Depth of the item, affecting the text.
    *
    * @return string|null
    *   Accessible title for the specified action, or NULL if not found.
    */
   protected function getAccessibleActionTitle($action, $depth): ?string {
-    // Validate action and depth are within expected range/values
+    // Validate action and depth are within expected range/values.
     if (!in_array($action, ['expand', 'collapse']) || !in_array($depth, [0, 1])) {
-      return null;
+      return NULL;
     }
 
-    // Directly construct and return the title
-    $level = $depth + 1; // Adjusting depth to match level naming convention
+    // Directly construct and return the title.
+    // Adjusting depth to match level naming convention.
+    $level = $depth + 1;
     return ucfirst($action) . " level $level";
   }
 
