@@ -261,14 +261,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
         $collapse_icon = $this->svgIconCache['level_0_collapse'];
       }
       $variables['depth'][$child] = $depth;
-      // if (!empty($children) && $depth >= 0) {
-      //   $collapse_icon_html = $this->renderer->render($collapse_icon);
-      //   $list_title['#value'] = Markup::create($collapse_icon_html . ' ' . $cleaned_title);
-      // }
-      // else {
-        $list_title['#value'] = $cleaned_title;
-        $variables['element'][$child]['#title'] = $list_title['#value'];
-      // }
+      $list_title['#value'] = $cleaned_title;
+      $variables['element'][$child]['#title'] = $list_title['#value'];
 
       if (!empty($children)) {
 
@@ -355,22 +349,22 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     // Default color.
     $fillColor = '#1E5288';
     // Default title.
-    $title = ucfirst($action) . ' this section';
-
-    // Set fixed paths or colors based on depth and action if needed.
+    if ($action === 'expand') {
+      $title = 'Expand this section';
+    }
+    else {
+      $title = 'Collapse this section';
+    }
     $iconPath = $this->getIconPath($depth, $action);
-
     $attributes = [
       'fill_color' => $fillColor,
       'size' => $size,
       'title' => $title,
       'icon_path' => $iconPath,
     ];
-
     foreach ($attributes as &$attribute) {
       $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8');
     }
-
     $svg_render_template = [
       '#type' => 'inline_template',
       '#template' => '<svg title="{{ title }}" xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
