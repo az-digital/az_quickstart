@@ -12,7 +12,6 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Render\RendererInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
 use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -359,33 +358,35 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    * @return array
    *   A render array for the SVG icon.
    */
-protected function createSvgIconRenderArray($depth, $action) {
-  $size = $depth === 0 ? '24' : '16';
-  $fillColor = '#1E5288'; // Default color
-  $title = ucfirst($action) . ' this section'; // Default title
+  protected function createSvgIconRenderArray($depth, $action) {
+    $size = $depth === 0 ? '24' : '16';
+    // Default color.
+    $fillColor = '#1E5288';
+    // Default title.
+    $title = ucfirst($action) . ' this section';
 
-  // Set fixed paths or colors based on depth and action if needed
-  $iconPath = $this->getIconPath($depth, $action);
+    // Set fixed paths or colors based on depth and action if needed.
+    $iconPath = $this->getIconPath($depth, $action);
 
-  $attributes = [
-    'fill_color' => $fillColor,
-    'size' => $size,
-    'title' => $title,
-    'icon_path' => $iconPath,
-  ];
+    $attributes = [
+      'fill_color' => $fillColor,
+      'size' => $size,
+      'title' => $title,
+      'icon_path' => $iconPath,
+    ];
 
-  foreach ($attributes as &$attribute) {
-    $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8');
+    foreach ($attributes as &$attribute) {
+      $attribute = htmlspecialchars($attribute, ENT_QUOTES, 'UTF-8');
+    }
+
+    $svg_render_template = [
+      '#type' => 'inline_template',
+      '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
+      '#context' => $attributes,
+    ];
+
+    return $svg_render_template;
   }
-
-  $svg_render_template = [
-    '#type' => 'inline_template',
-    '#template' => '<svg xmlns="http://www.w3.org/2000/svg" width="{{ size }}" height="{{ size }}" viewBox="0 0 24 24" title="{{ title }}"><path fill="{{ fill_color }}" d="{{ icon_path }}"/></svg>',
-    '#context' => $attributes,
-  ];
-
-  return $svg_render_template;
-}
 
   /**
    * Determines the SVG path for the icon based on depth and action.
