@@ -28,7 +28,7 @@
       {% set vars = {
         collapse_id: vars.collapse_id ?? item['#attributes']['data-collapse-id'],
       } %}
-      {% include '@az_core/az-finder-nested-elements.html.twig' with vars %}
+      {% include '@az_finder/az-finder-nested-elements.html.twig' with vars %}
       {% set vars = {
         collapse_id: item['#attributes']['data-collapse-id'] ?? vars.collapse_id,
       } %}
