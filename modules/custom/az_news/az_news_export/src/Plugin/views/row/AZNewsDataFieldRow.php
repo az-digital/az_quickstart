@@ -59,7 +59,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
     // Provider a helper for image serialization.
     $image_serializer = function ($value, $entity) {
       $item = [];
-      if (!empty($value)) {
+      if (!empty($value) && is_numeric($value)) {
         $media = $this->entityTypeManager->getStorage('media')->load($value);
         if (!empty($media) && $media->access('view') && $media->hasField('field_media_az_image')) {
           if (!empty($media->field_media_az_image->entity)) {
