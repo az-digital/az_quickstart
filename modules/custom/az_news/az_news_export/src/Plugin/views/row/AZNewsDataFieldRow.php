@@ -59,8 +59,11 @@ class AZNewsDataFieldRow extends DataFieldRow {
     // Provider a helper for image serialization.
     $image_serializer = function ($value, $entity) {
       $item = [];
-      if (!empty($value) && is_numeric($value)) {
-        $media = $this->entityTypeManager->getStorage('media')->load($value);
+      // Normalize input: if $value is an array with one element, take that element; otherwise, use $value directly.
+      $normalizedValue = is_array($value) && count($value) === 1 ? reset($value) : $value;
+
+      if (!empty($normalizedValue) && is_numeric($normalizedValue)) {
+        $media = $this->entityTypeManager->getStorage('media')->load($normalizedValue);
         if (!empty($media) && $media->access('view') && $media->hasField('field_media_az_image')) {
           if (!empty($media->field_media_az_image->entity)) {
             /** @var \Drupal\file\FileInterface $image */
