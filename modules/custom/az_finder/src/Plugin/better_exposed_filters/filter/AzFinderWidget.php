@@ -203,10 +203,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   An associative array containing the element being processed.
    */
   public function preprocessAzFinderWidget(array &$variables) {
-
     $element = $variables['element'];
-    // dpm($this->svgIconCache);
-    // dpm($element);
     $variables += [
       'wrapper_attributes' => new Attribute(),
       'children' => Element::children($element),
@@ -262,9 +259,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       $variables['depth'][$child] = $depth;
       $list_title['#value'] = $cleaned_title;
       $variables['element'][$child]['#title'] = $list_title['#value'];
-
       if (!empty($children)) {
-
         $list_title_link = [
           '#type' => 'html_tag',
           '#tag' => 'a',
@@ -326,7 +321,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       // Generate the icon and cache it.
       $this->svgIconCache[$cacheKey] = $this->createSvgIconRenderArray($depth, $action);
     }
-    // dpm($this->svgIconCache[$cacheKey]);.
+
     return $this->svgIconCache[$cacheKey];
   }
 
