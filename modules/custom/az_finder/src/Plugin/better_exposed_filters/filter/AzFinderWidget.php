@@ -294,6 +294,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
           $list_title['#attributes']['class'][] = 'text-size-h6';
           $list_title['#attributes']['class'][] = 'm-0';
           $list_title['#attributes']['class'][] = 'd-flex';
+          $list_title['#attributes']['class'][] = 'flex-row-reverse';
+          $list_title['#attributes']['class'][] = 'justify-content-end';
         }
         $list_title_link['value'] = $list_title;
 
@@ -339,7 +341,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   protected function createSvgIconRenderArray($depth, $action) {
     $size = $depth === 0 ? '24' : '16';
     // Default color.
-    $fillColor = '#1E5288';
+    $fillColor = '#1e5288';
     // Default title.
     if ($action === 'expand') {
       $title = 'Expand this section';

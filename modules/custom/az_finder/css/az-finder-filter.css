@@ -12,12 +12,11 @@
 }
 
 .az-bef-vertical .form-type-textfield>label {
-  font-weight: 600;
+  font-weight: 500;
   color: #1e5288;
   font-size: 1.25rem;
   line-height: 1.5rem;
   padding-top: 1rem;
-  border-top: 1px solid #e9ecef;
   width: 100%;
 }
 
@@ -36,7 +35,7 @@
 }
 
 .az-bef-vertical .collapser {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .az-bef-vertical .collapser:not(.level-0) {
@@ -44,13 +43,8 @@
 }
 
 .az-bef-vertical li:has(.collapser.level-0) {
-  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
   padding: 1rem 0;
-}
-
-.az-bef-vertical .collapser.level-0::after {
-  float: right;
-  vertical-align: bottom;
 }
 
 .az-bef-ul>li:has(.collapser) {
@@ -62,7 +56,7 @@
   margin-top: .5rem;
   font-size: 1rem;
   line-height: 1.25rem;
-  font-weight: 600;
+  font-weight: 500;
   color: #1e5288;
 }
 
@@ -75,7 +69,7 @@
 }
 
 .az-bef-checkboxes>li>ul>li>.checkbox {
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .az-bef-checkboxes ul>li>ul {
