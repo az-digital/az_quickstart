@@ -299,6 +299,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
           $list_title['#attributes']['class'][] = 'text-size-h6';
           $list_title['#attributes']['class'][] = 'm-0';
           $list_title['#attributes']['class'][] = 'd-flex';
+          $list_title['#attributes']['class'][] = 'flex-row-reverse';
+          $list_title['#attributes']['class'][] = 'justify-content-end';
         }
         $list_title_link['value'] = $list_title;
 
