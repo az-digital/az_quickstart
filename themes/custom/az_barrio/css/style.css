@@ -228,6 +228,11 @@ span.field-label {
   border: 1px solid #dee2e6;
 }
 
+/* Add this class to a view display to add a top margin to the pager. */
+.add-pager-top-margin > nav:has(.pagination) {
+  margin-top: 1rem;
+}
+
 /**
  * Marker.
  */

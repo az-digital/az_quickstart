@@ -431,7 +431,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $all_settings = [];
     // Paragraph instance settings override everything.
     $paragraph_settings = $this->getParagraphSettings($items);
-    $all_settings += $paragraph_settings['az_text_media_paragraph_behavior'];
+    $all_settings += $paragraph_settings['az_text_media_paragraph_behavior'] ?? [];
     // Field formatter settings.
     $all_settings += $this->getSettings();
     // Fill in all the rest of the required settings.
