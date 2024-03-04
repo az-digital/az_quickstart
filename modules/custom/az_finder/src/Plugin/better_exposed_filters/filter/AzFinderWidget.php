@@ -346,7 +346,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   protected function createSvgIconRenderArray($depth, $action) {
     $size = $depth === 0 ? '24' : '16';
     // Default color.
-    $fillColor = '#1E5288';
+    $fillColor = '#1e5288';
     // Default title.
     if ($action === 'expand') {
       $title = 'Expand this section';
