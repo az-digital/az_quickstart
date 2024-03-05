@@ -95,7 +95,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
     foreach ($this->view->field as $field_name => $field) {
       $field_definition = $field_definitions[$field_name];
       $value = !empty($this->rawOutputOptions[$field_name]) ? $field->getValue($row) : $field->advancedRender($row);
-      if (empty($value) || empty($field_definition)) {
+      if (empty($value)) {
         continue;
       }
       foreach ($serializable_entity_types as $target_type) {
@@ -201,7 +201,9 @@ class AZNewsDataFieldRow extends DataFieldRow {
         switch ($target_type) {
           case 'media':
             $media_type = $referencedEntity->bundle();
-            $fid = $referencedEntity->getSource()->getSourceFieldValue($referencedEntity);
+            $source_file_field = $referencedEntity->getSource();
+            $fid = $source_file_field->getSourceFieldValue($referencedEntity);
+            /* @var \Drupal\file\FileInterface $file */
             $file = $this->entityTypeManager->getStorage('file')->load($fid);
             $item['fid'] = $file->id();
             $item['uuid'] = $file->uuid();
