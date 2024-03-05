@@ -234,20 +234,23 @@ class AZNewsDataFieldRow extends DataFieldRow {
             }
           case 'paragraph':
             $paragraph_type = $referencedEntity->bundle();
-            if ($paragraph_type === 'az_contact') {
-              $contact_fields = [
-                'field_az_email',
-                'field_az_title',
-                'field_az_phone',
-              ];
-              foreach ($contact_fields as $contact_field) {
-                if ($referencedEntity->hasField($contact_field) && !empty($referencedEntity->{$contact_field}->value)) {
-                  $item[$contact_field] = $referencedEntity->{$contact_field}->value;
+            switch ($paragraph_type) {
+              case 'az_contact':
+                $contact_fields = [
+                  'field_az_email',
+                  'field_az_title',
+                  'field_az_phone',
+                ];
+                foreach ($contact_fields as $contact_field) {
+                  if ($referencedEntity->hasField($contact_field) && !empty($referencedEntity->{$contact_field}->value)) {
+                    $item[$contact_field] = $referencedEntity->{$contact_field}->value;
+                  }
                 }
-              }
+                break;
+              case 'default':
+                break;
             }
             break;
-
           case 'file':
             $item = $referencedEntity->createFileUrl(FALSE);
             break;
