@@ -20,8 +20,8 @@ services:
       - '@module_handler'
       - '@logger.channel.az_core'
   cache.az_migration_http_cache:
-     class: Drupal\Core\Cache\CacheBackendInterface
-     tags:
-       - { name: cache.bin }
-     factory: cache_factory:get
-     arguments: [az_migration_http_cache]
+    class: Drupal\Core\Cache\CacheBackendInterface
+    tags:
+      - { name: cache.bin }
+    factory: cache_factory:get
+    arguments: [az_migration_http_cache]
