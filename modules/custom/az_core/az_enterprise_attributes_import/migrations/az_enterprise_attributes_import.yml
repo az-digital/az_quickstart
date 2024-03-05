@@ -5,7 +5,7 @@ migration_tags:
   - Taxonomy
 source:
   plugin: url
-  data_fetcher_plugin: http
+  data_fetcher_plugin: az_core_http
   data_parser_plugin: az_enterprise_attributes_import_json
   urls: []
   item_selector: attributes

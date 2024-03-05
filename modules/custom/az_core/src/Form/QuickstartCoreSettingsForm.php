@@ -216,6 +216,20 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
     ];
 
+    $form['migrations'] = [
+      '#type' => 'details',
+      '#title' => t('Migrations'),
+      '#open' => FALSE,
+      '#access' => $this->currentUser()->hasPermission('administer site configuration'),
+    ];
+
+    $form['migrations']['migrations_http_cached'] = [
+      '#title' => t('Cache Quickstart Migration HTTP Requests'),
+      '#type' => 'checkbox',
+      '#description' => t("Quickstart migrations from remote HTTP endpoints will be cached (recommended)."),
+      '#default_value' => $az_core_config->get('migrations.http_cached'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -307,6 +321,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
       ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
+      ->set('migrations.http_cached', $form_state->getValue('migrations_http_cached'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();

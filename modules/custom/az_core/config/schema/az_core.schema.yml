@@ -19,3 +19,10 @@ az_core.settings:
         locked:
           type: boolean
           label: 'Enterprise attribute edits prohibited'
+    migrations:
+      type: mapping
+      label: 'Migrations'
+      mapping:
+        http_cached:
+          type: boolean
+          label: 'HTTP Fetches Cached'

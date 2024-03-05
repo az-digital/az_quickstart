@@ -12,3 +12,10 @@ function az_core_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 920501;
 }
+
+/**
+ * Install guzzle_cache.
+ */
+function az_core_update_1021001() {
+  \Drupal::service('module_installer')->install(['guzzle_cache']);
+}
