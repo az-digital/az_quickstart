@@ -14,6 +14,7 @@ dependencies:
     - media_library_edit
     - paragraphs
     - path
+    - shs_chosen
     - text
 third_party_settings:
   field_group:
@@ -110,10 +111,21 @@ content:
       media_library_edit:
         show_edit: '1'
   field_az_page_category:
-    type: options_select
+    type: options_shs_chosen
     weight: 13
     region: content
-    settings: {  }
+    settings:
+      display_node_count: false
+      create_new_items: false
+      create_new_levels: false
+      force_deepest: true
+      chosen_override: false
+      chosen_settings:
+        disable_search: false
+        search_contains: false
+        placeholder_text_multiple: 'Choose some options'
+        placeholder_text_single: 'Choose an option'
+        no_results_text: 'No results match'
     third_party_settings: {  }
   field_az_summary:
     type: text_textarea

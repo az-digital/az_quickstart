@@ -106,6 +106,7 @@
         "drupal/role_delegation": "1.2.0",
         "drupal/search_exclude": "3.0.0-beta1",
         "drupal/seckit": "2.0.1",
+        "drupal/shs": "2.0.0-rc4",
         "drupal/slick": "2.10.0",
         "drupal/slick_views": "2.8.0",
         "drupal/smart_date": "4.0.3",
