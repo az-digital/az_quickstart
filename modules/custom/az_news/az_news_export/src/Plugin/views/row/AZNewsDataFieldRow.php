@@ -58,10 +58,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
   ];
 
   /**
-   * Set the serializable entity types.
-   */
-
-  /**
    * {@inheritdoc}
    */
   public static function create(
