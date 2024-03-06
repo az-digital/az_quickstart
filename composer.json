@@ -178,7 +178,8 @@
                 "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2024-01-18/2350049-30.patch",
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch",
                 "big_pipe.js' checkMutation() does not check if node exists before using it (3416141)": "https://git.drupalcode.org/project/drupal/-/commit/885932a21356e31fcd53a2c67a351465991bf9da.diff",
-                "Exposed term filter is not updated when terms are added, deleted, or rearranged (caching issue?) (2900248)": "https://www.drupal.org/files/issues/2023-04-25/2900248-70.patch"
+                "Exposed term filter is not updated when terms are added, deleted, or rearranged (caching issue?) (2900248)": "https://www.drupal.org/files/issues/2023-04-25/2900248-70.patch",
+                "Views exposed form block options are not updated immediately when adding additional sorts, filters, etc (2887144)":"https://www.drupal.org/files/issues/2023-04-21/2887144-30.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
