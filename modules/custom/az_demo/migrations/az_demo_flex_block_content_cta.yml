@@ -1,0 +1,66 @@
+id: az_demo_flex_block_content_cta
+label: AZ Quickstart Demo Flexible Block CTA
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+migration_dependencies:
+  required:
+    - az_demo_text_paragraph
+    - az_demo_menu_links
+dependencies:
+  enforced:
+    module:
+      - az_demo
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_flex_block_content_cta.json
+  item_selector: blocks
+  ids:
+    id:
+      type: integer
+  fields:
+    - name: id
+      selector: id
+    - name: info
+      selector: info
+    - name: uuid
+      selector: uuid
+    - name: field_az_main_content
+      selector: az_main_content
+process:
+  type:
+    plugin: default_value
+    default_value: az_flexible_block
+  info: info
+  uuid: uuid
+
+  pseudo_exploded_paragraphs:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: field_az_main_content
+    -
+      plugin: explode
+      source: field_az_main_content
+      delimiter: '|'
+
+  pseudo_paragraphs:
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_text_paragraph
+      source: '@pseudo_exploded_paragraphs'
+
+  field_az_main_content:
+    plugin: sub_process
+    source: '@pseudo_paragraphs'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
+
+destination:
+  plugin: entity:block_content
+  bundle: az_flexible_block
