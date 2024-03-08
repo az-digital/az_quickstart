@@ -1,0 +1,31 @@
+name: Create PR for new Arizona Icons release
+run-name: Create PR to update Arizona Icons to ${{ github.event.client_payload.version }}.
+on:
+  repository_dispatch:
+    types: az_icons_release
+
+jobs:
+  release:
+    name: Create PR
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        # with:
+        #   ssh-key: ${{ secrets.SELF_DEPLOY_KEY }}
+
+      - name: Create new branch and PR
+        run: |
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git checkout -b 'az-icons-${{ github.event.client_payload.version }}'
+          jq --indent 4 '.require."az-digital/az-icons" |= "${{ github.event.client_payload.version }}"' composer.json > composer.json.new
+          mv composer.json.new composer.json
+          cat themes/custom/az_barrio/includes/common.inc | sed "s/^define('AZ_ICONS_STABLE_VERSION'.*/define('AZ_ICONS_STABLE_VERSION', '${{ github.event.client_payload.version }}');/g" > common.inc.new
+          mv common.inc.new themes/custom/az_barrio/includes/common.inc
+          git add composer.json themes/custom/az_barrio/includes/common.inc
+          git commit -m 'Update Arizona Icons to ${{ github.event.client_payload.version }}'
+          git push --set-upstream origin 'az-icons-${{ github.event.client_payload.version }}'
+          echo "${{ secrets.GITHUB_TOKEN }}" | gh auth login --with-token
+          gh pr create --title 'Update Arizona Icons to ${{ github.event.client_payload.version }}' --body ''

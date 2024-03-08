@@ -723,7 +723,7 @@ display:
         row: false
         filters: false
         filter_groups: false
-      css_class: ''
+      css_class: add-pager-top-margin
       use_ajax: true
       display_description: ''
       style_options: null
