@@ -672,6 +672,15 @@ fieldset.collapsed {
   max-width: 100%;
 }
 
+/* Webform field labels */
+form.webform-submission-form {
+  label:not(.form-check-label) {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+
 .align-left {
   float: none;
 }
