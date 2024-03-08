@@ -28,26 +28,14 @@ class TrellisEventSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $az_event_trellis_config = $this->config('az_event_trellis.settings');
 
     $form['api_hostname'] = [
       '#title' => t("API Hostname"),
       '#type' => 'textfield',
-      '#default_value' => $az_event_trellis_config->get('api_hostname'),
+      '#config_target' => 'az_event_trellis.settings:api_hostname',
     ];
 
     return parent::buildForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('az_event_trellis.settings')
-      ->set('api_hostname', $form_state->getValue('api_hostname'))
-      ->save();
-
-    parent::submitForm($form, $form_state);
   }
 
 }
