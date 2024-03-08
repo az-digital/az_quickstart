@@ -64,6 +64,7 @@ permissions:
   - 'delete any webform content'
   - 'delete any webform submission'
   - 'delete author entities'
+  - 'delete publication type entities'
   - 'delete content translations'
   - 'delete own az_carousel_item content'
   - 'delete terms in az_academic_programs'
