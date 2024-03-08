@@ -5,7 +5,6 @@ dependencies:
     - core.entity_view_mode.taxonomy_term.az_badge
     - taxonomy.vocabulary.az_event_categories
   module:
-    - field_group
     - smart_title
 third_party_settings:
   smart_title:
@@ -13,23 +12,9 @@ third_party_settings:
     settings:
       smart_title__link: false
       smart_title__tag: div
-      smart_title__classes: {  }
-  field_group:
-    group_link:
-      children:
-        - smart_title
-      label: Link
-      parent_name: ''
-      region: content
-      weight: 0
-      format_type: link
-      format_settings:
-        classes: 'badge badge-light badge-link'
-        show_empty_fields: false
-        id: ''
-        target: entity
-        custom_uri: ''
-        target_attribute: default
+      smart_title__classes:
+        - badge
+        - badge-light
 id: taxonomy_term.az_event_categories.az_badge
 targetEntityType: taxonomy_term
 bundle: az_event_categories
