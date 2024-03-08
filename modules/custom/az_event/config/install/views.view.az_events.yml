@@ -570,16 +570,32 @@ display:
       tags: {  }
   block_1:
     id: block_1
-    display_title: 'Grid Past with Images'
+    display_title: 'Past Grid View with Images'
     display_plugin: block
     position: 2
     display_options:
       title: Events
       pager:
-        type: some
+        type: full
         options:
           offset: 0
-          items_per_page: 3
+          items_per_page: 12
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
       filters:
         status:
           id: status
@@ -685,18 +701,7 @@ display:
       display_description: 'Use in a region that spans at least 12 columns.'
       pager_options: null
       style_options: null
-      footer:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text_custom
-          empty: true
-          content: "<div class=\"text-align-center\">\r\n<a title=\"View all events on the calendar\" class=\"btn btn-outline-blue\" href=\"/calendar\">View all past events</a>\r\n</div>"
-          tokenize: false
+      footer: {  }
       display_extenders: {  }
       allow:
         items_per_page: false
@@ -705,6 +710,7 @@ display:
       contexts:
         - 'languages:language_interface'
         - url
+        - url.query_args
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
