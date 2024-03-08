@@ -23,7 +23,7 @@
       '.js-svg-replace-level-1',
     );
     // Access Drupal setting for minimum search input length
-    const minSearchLength = drupalSettings.azFinder.minSearchLength || 3;
+    const minSearchLength = drupalSettings.azFinder.minSearchLength || 1;
     // Access Drupal setting for icons
     const icons = drupalSettings.azFinder.icons;
 
