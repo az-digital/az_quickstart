@@ -14,8 +14,8 @@ use Drupal\Core\Url;
  */
 function az_google_tag_requirements($phase) {
   $requirements = [];
-  $consent_mode_enabled = az_google_tag_consent_mode_enabled();
   if ($phase === 'runtime') {
+    $consent_mode_enabled = az_google_tag_consent_mode_enabled();
     $tag_containers_url = Url::fromRoute('entity.google_tag_container.collection');
     $requirements['az_google_tag'] = [
       'title' => t('Google Tag consent mode setting(s)'),
