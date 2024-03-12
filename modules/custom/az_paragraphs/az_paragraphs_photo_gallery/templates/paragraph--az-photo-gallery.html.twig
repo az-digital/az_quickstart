@@ -109,6 +109,10 @@
                     {% if item.entity.field_az_caption.value %}
                       <div class="carousel-caption{% if grid %} az-gallery-caption d-block{% else %} d-none d-md-block{% endif %}">
                         <p>{{ item.entity.field_az_caption.value }}</p>
+                        {# Render the credit, if one exists. #}
+                        {% if item.entity.field_az_credit.value %}
+                            <cite class="small">{{ item.entity.field_az_credit.value }}</cite>
+                        {% endif %}
                       </div>
                     {% endif %}
                   </div>
