@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: global
+label: Global
+tags:
+  canonical_url: '[current-page:url]'
+  generator: 'Arizona Quickstart (https://quickstart.arizona.edu)'
+  title: '[current-page:title] | [site:name]'
