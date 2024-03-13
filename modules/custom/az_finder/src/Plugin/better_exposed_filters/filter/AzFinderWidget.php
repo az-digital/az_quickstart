@@ -67,6 +67,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
    *   The renderer service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
+   * @param \Drupal\az_finder\AzFinderIcons $az_finder_icons
+   *   The AzFinderIcons service.
    */
   public function __construct(
     array $configuration,
