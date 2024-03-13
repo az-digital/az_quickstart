@@ -42,6 +42,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#attributes' => [
         'class' => [
           'js-finder-filter-count',
+          'ml-1',
         ],
       ],
     ];

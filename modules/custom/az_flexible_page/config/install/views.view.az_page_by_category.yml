@@ -10,8 +10,6 @@ dependencies:
   module:
     - az_finder
     - node
-    - search
-    - search_exclude
     - taxonomy
     - user
     - views_bootstrap
@@ -397,9 +395,9 @@ display:
                 level_1_collapse_title: 'Level 1 Collapse'
           az_bef:
             az_finder:
-              min_search_length: '3'
+              min_search_length: '1'
             finder:
-              min_search_length: '3'
+              min_search_length: '1'
       empty:
         area:
           id: area
@@ -441,24 +439,26 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        keys:
-          id: keys
-          table: node_search_index
-          field: keys
+        title:
+          id: title
+          table: node_field_data
+          field: title
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: search_keywords
-          operator: optional
+          entity_type: node
+          entity_field: title
+          plugin_id: string
+          operator: contains
           value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: keys_op
+            operator_id: title_op
             label: Search
             description: ''
             use_operator: false
-            operator: keys_op
+            operator: title_op
             operator_limit_selection: false
             operator_list: {  }
             identifier: search
@@ -473,6 +473,7 @@ display:
               az_user_admin: '0'
               az_html_admin: '0'
               administrator: '0'
+            placeholder: ''
           is_grouped: false
           group_info:
             label: ''
@@ -579,4 +580,6 @@ display:
         - url
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:taxonomy.vocabulary.az_page_categories'
+        - 'taxonomy_term_list:az_page_categories'

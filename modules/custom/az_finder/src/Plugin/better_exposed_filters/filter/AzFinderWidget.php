@@ -358,16 +358,17 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
           $list_title['#attributes']['class'][] = 'text-size-h5';
           $list_title['#attributes']['class'][] = 'm-0';
           $list_title['#attributes']['class'][] = 'd-flex';
+          $list_title['#attributes']['class'][] = 'align-items-center';
         }
         else {
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-1';
           $list_title['#tag'] = "h" . ($depth + 3);
           $list_title['#attributes']['class'][] = 'text-body';
           $list_title['#attributes']['class'][] = 'text-size-h6';
-          $list_title['#attributes']['class'][] = 'm-0';
           $list_title['#attributes']['class'][] = 'd-flex';
           $list_title['#attributes']['class'][] = 'flex-row-reverse';
           $list_title['#attributes']['class'][] = 'justify-content-end';
+          $list_title['#attributes']['class'][] = 'align-items-center';
         }
         $list_title_link['value'] = $list_title;
 
