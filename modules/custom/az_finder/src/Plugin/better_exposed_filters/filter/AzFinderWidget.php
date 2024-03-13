@@ -145,7 +145,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     $field_id = $this->getFieldId($filter);
     $identifier = $filter_id;
 
-
     $exposed_label = $filter->options['expose']['label'];
     $exposed_description = $filter->options['expose']['description'];
 
@@ -155,7 +154,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       $exposed_description = $filter->options['group_info']['description'];
     }
 
-        // Add possible field wrapper to validate for "between" operator.
+    // Add possible field wrapper to validate for "between" operator.
     $element_wrapper = $field_id . '_wrapper';
 
     $filter_elements = [
@@ -184,7 +183,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
             $element => $wrapper_array,
           ];
         }
-      } else {
+      }
+      else {
         // Determine if element has min or max child fields, if so then update type.
         if (array_intersect($fields, array_keys($form[$field_id]))) {
           $form[$element] = [
@@ -200,8 +200,6 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       // Finally, add some metadata to the form element.
       $this->addContext($form[$element]);
     }
-
-
 
     if (!empty($form[$field_id])) {
       $this->setFormOptions($form, $field_id);
