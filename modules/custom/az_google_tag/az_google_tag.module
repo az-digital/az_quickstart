@@ -37,15 +37,12 @@ function az_google_tag_toolbar_alter(&$items) {
  */
 function az_google_tag_consent_mode_enabled() {
   $google_tag_storage = \Drupal::entityTypeManager()->getStorage('google_tag_container');
-  $total_count = $google_tag_storage
-    ->getQuery()
-    ->accessCheck(FALSE)
-    ->count()
-    ->execute();
-  $consent_disabled_count = count(
-    // Find Google tags with a consent mode value of 0 or FALSE.
-    $google_tag_storage->loadByProperties(['advanced_settings.consent_mode' => [0, FALSE]])
+  $consent_enabled_count = count(
+  // Find enabled Google tags with a consent mode value of 1 or TRUE.
+    $google_tag_storage->loadByProperties([
+      'advanced_settings.consent_mode' => [1, TRUE],
+      'status' => [1, TRUE],
+    ])
   );
-
-  return $consent_disabled_count < $total_count;
+  return $consent_enabled_count > 0;
 }
