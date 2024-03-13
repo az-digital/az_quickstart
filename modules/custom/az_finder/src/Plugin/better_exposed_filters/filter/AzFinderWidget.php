@@ -105,6 +105,16 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   }
 
   /**
+   * Overrides defaultConfiguration to adjust default values.
+   */
+  public function defaultConfiguration() {
+    $configuration = parent::defaultConfiguration();
+    // Modify or remove default configuration for 'advanced' here.
+    unset($configuration['advanced']);
+    return $configuration;
+  }
+
+  /**
    * Initializes the SVG icon cache.
    */
   protected function initializeIconCache() {
@@ -117,6 +127,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
+    unset($form['advanced']);
 
     return $form;
   }
@@ -128,15 +139,76 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
     if (!$this->view instanceof ViewExecutable) {
       return $form;
     }
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
+    $filter_id = $filter->options['expose']['identifier'];
     $field_id = $this->getFieldId($filter);
+    $identifier = $filter_id;
+
+
+    $exposed_label = $filter->options['expose']['label'];
+    $exposed_description = $filter->options['expose']['description'];
+
+    if ($filter->isAGroup()) {
+      $identifier = $filter->options['group_info']['identifier'];
+      $exposed_label = $filter->options['group_info']['label'];
+      $exposed_description = $filter->options['group_info']['description'];
+    }
+
+        // Add possible field wrapper to validate for "between" operator.
+    $element_wrapper = $field_id . '_wrapper';
+
+    $filter_elements = [
+      $identifier,
+      $element_wrapper,
+      $filter->options['expose']['operator_id'],
+    ];
+
+    // Iterate over all exposed filter elements.
+    foreach ($filter_elements as $element) {
+      // Sanity check to make sure the element exists.
+      if (empty($form[$element])) {
+        continue;
+      }
+
+      // "Between" operator fields to validate for.
+      $fields = ['min', 'max'];
+
+      // Check if the the element is apart of a wrapper.
+      if ($element === $element_wrapper) {
+        $wrapper_array = $form[$element];
+        // Determine if wrapper element has min or max fields or if collapsible, if so then update type.
+        if (array_intersect($fields, array_keys($wrapper_array[$field_id]))) {
+          $form[$element] = [
+            '#type' => 'container',
+            $element => $wrapper_array,
+          ];
+        }
+      } else {
+        // Determine if element has min or max child fields, if so then update type.
+        if (array_intersect($fields, array_keys($form[$field_id]))) {
+          $form[$element] = [
+            '#type' => 'container',
+            $element => $wrapper_array,
+          ];
+        }
+      }
+
+      $form[$element]['#title'] = $exposed_label;
+      $form[$element]['#description'] = $exposed_description;
+
+      // Finally, add some metadata to the form element.
+      $this->addContext($form[$element]);
+    }
+
+
+
     if (!empty($form[$field_id])) {
       $this->setFormOptions($form, $field_id);
       $svg_icons = $this->svgIconCache;
       foreach ($svg_icons as $key => $icon) {
         $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->render($icon);
       }
-      // $this->assignSvgIconColorsAndTitles($form, $field_id);
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
 
