@@ -4,8 +4,8 @@ filter-ui:
       css/az-finder-filter.css: {}
   js:
     js/az-finder-filter-ui.js:
-    - type: module
-    - minified: false
+      - type: module
+      - minified: false
   dependencies:
     - core/drupal
     - core/drupalSettings

@@ -4,7 +4,7 @@
  */
 
 (function (drupalSettings) {
-  document.addEventListener('DOMContentLoaded', function () {
+  document.addEventListener('DOMContentLoaded', () => {
     const filterContainer = document.querySelector('.az-bef-vertical');
     if (!filterContainer) return;
 
@@ -23,12 +23,9 @@
     const svgLevel1ReplaceButtons = filterContainer.querySelectorAll(
       '.js-svg-replace-level-1',
     );
-    const accordionButtons = filterContainer.querySelectorAll(
-      '.collapser'
-    );
-
+    const accordionButtons = filterContainer.querySelectorAll('.collapser');
     // Access Drupal setting for minimum search input length
-    const minSearchLength = drupalSettings.azFinder.minSearchLength || 1;
+    const minSearchLength = drupalSettings.azFinder.minSearchLength || 3;
     // Access Drupal setting for icons
     const icons = drupalSettings.azFinder.icons;
 
@@ -37,27 +34,27 @@
       const isExpanded = container.getAttribute('aria-expanded') === 'true';
       let newSVGMarkup;
       if (level === 0) {
-        newSVGMarkup = isExpanded ? icons.level_0_expand : icons.level_0_collapse;
+        newSVGMarkup = isExpanded
+          ? icons.level_0_expand
+          : icons.level_0_collapse;
       } else {
-        newSVGMarkup = isExpanded ? icons.level_1_expand : icons.level_1_collapse;
+        newSVGMarkup = isExpanded
+          ? icons.level_1_expand
+          : icons.level_1_collapse;
       }
       container.querySelector('svg').outerHTML = newSVGMarkup;
     }
 
     svgLevel0ReplaceButtons.forEach((button) => {
-      button.addEventListener('click', function () {
-        toggleSVG(this, 0);
-      });
+      button.addEventListener('click', () => toggleSVG(button, 0));
     });
 
     svgLevel1ReplaceButtons.forEach((button) => {
-      button.addEventListener('click', function () {
-        toggleSVG(this, 1);
-      });
+      button.addEventListener('click', () => toggleSVG(button, 1));
     });
 
     // Update display of total active filters
-    function updateActiveFilterDisplay() {
+    const updateActiveFilterDisplay = () => {
       const activeCheckboxes = filterContainer.querySelectorAll(
         'input[type="checkbox"]:checked',
       );
@@ -131,7 +128,6 @@
         }
       });
     });
-
 
     // Initialize the display of active filters
     updateActiveFilterDisplay();
