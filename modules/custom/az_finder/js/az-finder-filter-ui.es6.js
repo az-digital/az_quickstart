@@ -24,11 +24,7 @@
       '.js-svg-replace-level-1',
     );
     const accordionButtons = filterContainer.querySelectorAll('.collapser');
-    // Access Drupal setting for minimum search input length
-    const minSearchLength = drupalSettings.azFinder.minSearchLength || 1;
-    // Access Drupal setting for icons
-    const icons = drupalSettings.azFinder.icons;
-
+    const { minSearchLength = 1, icons } = drupalSettings.azFinder;
     // Replace SVGs with expand/collapse icons
     function toggleSVG(container, level) {
       const isExpanded = container.getAttribute('aria-expanded') === 'true';
@@ -102,7 +98,7 @@
     }
 
     // Handle changes in checkboxes and search input
-    filterContainer.addEventListener('change', function (event) {
+    filterContainer.addEventListener('change', (event) => {
       if (
         event.target &&
         (event.target.type === 'checkbox' || event.target === searchInputField)
@@ -111,7 +107,7 @@
       }
     });
 
-    clearAllButton.addEventListener('click', function (event) {
+    clearAllButton.addEventListener('click', (event) => {
       resetAllFilters(event, searchInputField, filterContainer);
     });
     // Update filter count based on search input changes

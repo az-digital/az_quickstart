@@ -7,14 +7,17 @@
 (function (drupalSettings) {
   document.addEventListener('DOMContentLoaded', function () {
     var filterContainer = document.querySelector('.az-bef-vertical');
+    if (!filterContainer) return;
     var clearAllButton = filterContainer.querySelector('.js-finder-clear-all');
     var filterCountDisplay = clearAllButton.querySelector('.js-finder-filter-count');
     var searchInputField = filterContainer.querySelector('input[name="search"]');
     var svgLevel0ReplaceButtons = filterContainer.querySelectorAll('.js-svg-replace-level-0');
     var svgLevel1ReplaceButtons = filterContainer.querySelectorAll('.js-svg-replace-level-1');
     var accordionButtons = filterContainer.querySelectorAll('.collapser');
-    var minSearchLength = drupalSettings.azFinder.minSearchLength || 3;
-    var icons = drupalSettings.azFinder.icons;
+    var _drupalSettings$azFin = drupalSettings.azFinder,
+      _drupalSettings$azFin2 = _drupalSettings$azFin.minSearchLength,
+      minSearchLength = _drupalSettings$azFin2 === void 0 ? 1 : _drupalSettings$azFin2,
+      icons = _drupalSettings$azFin.icons;
     function toggleSVG(container, level) {
       var isExpanded = container.getAttribute('aria-expanded') === 'true';
       var newSVGMarkup;
@@ -27,15 +30,15 @@
     }
     svgLevel0ReplaceButtons.forEach(function (button) {
       button.addEventListener('click', function () {
-        toggleSVG(this, 0);
+        return toggleSVG(button, 0);
       });
     });
     svgLevel1ReplaceButtons.forEach(function (button) {
       button.addEventListener('click', function () {
-        toggleSVG(this, 1);
+        return toggleSVG(button, 1);
       });
     });
-    function updateActiveFilterDisplay() {
+    var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
       var activeCheckboxes = filterContainer.querySelectorAll('input[type="checkbox"]:checked');
       var activeFilterCount = activeCheckboxes.length;
       if (searchInputField.value.trim().length >= minSearchLength) {
@@ -47,7 +50,7 @@
       } else if (activeFilterCount === 0 && !clearAllButton.classList.contains('d-none')) {
         clearAllButton.classList.add('d-none');
       }
-    }
+    };
     function deselectAllCheckboxes(event, filterContainer) {
       event.preventDefault();
       var checkboxes = filterContainer.querySelectorAll('input[type="checkbox"]');
@@ -74,13 +77,14 @@
       resetAllFilters(event, searchInputField, filterContainer);
     });
     searchInputField.addEventListener('input', updateActiveFilterDisplay);
-    accordionButtons.forEach(function (button, index) {
-      button.addEventListener('keydown', function (event) {
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault();
-          button.click();
-        }
-      });
+    var handleAccordionButtonKeydown = function handleAccordionButtonKeydown(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        event.currentTarget.click();
+      }
+    };
+    accordionButtons.forEach(function (button) {
+      button.addEventListener('keydown', handleAccordionButtonKeydown);
     });
     updateActiveFilterDisplay();
   });
