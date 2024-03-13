@@ -4,6 +4,7 @@ namespace Drupal\az_publication_bibtex\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+//phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnWeirdFilesystem
 use Drupal\file\Entity\File;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -69,14 +70,6 @@ class AZPublicationBibtexForm extends FormBase {
   /**
    * {@inheritdoc}
    */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
-    parent::validateForm($form, $form_state);
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $values = $form_state->getValues();
     if (!empty($values['bibtex'])) {
@@ -84,6 +77,7 @@ class AZPublicationBibtexForm extends FormBase {
       $file = File::load($fid);
       if (!empty($file)) {
         $uri = $file->getFileUri();
+        // phpcs:ignore Security.BadFunctions.FilesystemFunctions.WarnFilesystem
         $path = $this->fileSystem->realpath($uri);
         $migration_id = 'az_publication_bibtex_import';
         /** @var \Drupal\migrate\Plugin\Migration $migration */
