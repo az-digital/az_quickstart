@@ -102,7 +102,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       $plugin_definition,
       $container->get('renderer'),
       $container->get('entity_type.manager'),
-      $container->get('az_finder.az_finder_icons')
+      $container->get('az_finder.icons')
     );
   }
 
