@@ -172,7 +172,7 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
 
       // "Between" operator fields to validate for.
       $fields = ['min', 'max'];
-
+      $wrapper_array = [];
       // Check if the the element is apart of a wrapper.
       if ($element === $element_wrapper) {
         $wrapper_array = $form[$element];
