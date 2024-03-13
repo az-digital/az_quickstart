@@ -389,7 +389,6 @@ class AZLatexProcessor {
 
       // Translate array.
       if (is_array($entry[$tag])) {
-        //phpcs:ignore Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
         array_walk_recursive($entry[$tag], function (&$text) {
           if (is_string($text)) {
             $text = $this->detex($text);
@@ -412,7 +411,6 @@ class AZLatexProcessor {
    *   The deTeX-ified string.
    */
   private function detex($text) {
-    //phpcs:ignore Security.BadFunctions.PregReplace.PregReplaceDyn
     return preg_replace($this->search, $this->replace, $text);
   }
 

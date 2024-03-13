@@ -139,7 +139,6 @@ class AZCuratedViewsField extends BulkForm {
       // We invalidate the entity list cache for other views.
       $views_entity_table_info = $view->query->getEntityTableInfo();
       // Find the entity type used by the view.
-      //phpcs:ignore Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
       $result = array_keys(array_filter($views_entity_table_info, function ($info) {
         return $info['relationship_id'] === 'none';
       }));
