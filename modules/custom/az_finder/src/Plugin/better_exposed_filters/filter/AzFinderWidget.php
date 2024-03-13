@@ -296,14 +296,15 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       $depth = strlen($original_title) - strlen($cleaned_title);
       $list_title['#value'] = $cleaned_title;
       // Decide which icon to use based on depth.
-      $level_0_collapse_icon = $this->svgIconCache['level_0_collapse'];
-      $level_1_collapse_icon = $this->svgIconCache['level_1_collapse'];
+      $icons = $this->azFinderIcons->generateSvgIcons();
+      $level_0_collapse_icon = $icons['level_0_collapse'];
+      $level_1_collapse_icon = $icons['level_1_collapse'];
       if (!empty($level_0_collapse_icon) && !empty($level_1_collapse_icon)) {
         $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
 
       }
       else {
-        $collapse_icon = $this->svgIconCache['level_0_collapse'];
+        $collapse_icon = $icons['level_0_collapse'];
       }
       $variables['depth'][$child] = $depth;
       $list_title['#value'] = $cleaned_title;

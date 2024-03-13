@@ -4,6 +4,9 @@ declare(strict_types = 1);
 
 namespace Drupal\az_finder;
 
+/**
+ * Provides SVG icons for the Az Finder module.
+ */
 final class AzFinderIcons {
 
   /**
@@ -56,7 +59,6 @@ final class AzFinderIcons {
 
     return $this->svgIconCache[$cacheKey];
   }
-
 
   /**
    * Creates a render array for an SVG icon based on depth and action.
