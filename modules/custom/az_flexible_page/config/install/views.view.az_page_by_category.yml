@@ -394,8 +394,6 @@ display:
                 level_1_expand_title: 'Level 1 Expand'
                 level_1_collapse_title: 'Level 1 Collapse'
           az_bef:
-            az_finder:
-              min_search_length: '1'
             finder:
               min_search_length: '1'
       empty:
