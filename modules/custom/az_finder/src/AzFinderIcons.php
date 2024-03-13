@@ -7,7 +7,7 @@ namespace Drupal\az_finder;
 /**
  * Provides SVG icons for the Quickstart Finder module.
  */
-final class AZFinderIcons {
+final class AzFinderIcons {
 
   /**
    * Cache for SVG icon render arrays.
