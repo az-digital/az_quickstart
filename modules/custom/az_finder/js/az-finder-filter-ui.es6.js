@@ -3,7 +3,7 @@
  * Custom JavaScript for the AZ Finder module.
  */
 
-(function (drupalSettings) {
+((drupalSettings) => {
   document.addEventListener('DOMContentLoaded', () => {
     const filterContainer = document.querySelector('.az-bef-vertical');
     if (!filterContainer) return;
@@ -76,7 +76,7 @@
       ) {
         clearAllButton.classList.add('d-none');
       }
-    }
+    };
 
     // Deselect all checkboxes
     function deselectAllCheckboxes(event, filterContainer) {
@@ -116,17 +116,17 @@
     });
     // Update filter count based on search input changes
     searchInputField.addEventListener('input', updateActiveFilterDisplay);
-    // Add event listeners for keyboard navigation.
-    // This allows the user to navigate the accordion headers with the arrow
-    // keys and toggle them with Enter or Space.
-    accordionButtons.forEach((button, index) => {
-      button.addEventListener('keydown', (event) => {
-        // Handle Enter or Space press
-        if (event.key === 'Enter' || event.key === ' ') {
-          event.preventDefault(); // Prevent the default action to stop scrolling when space is pressed
-          button.click(); // Trigger the Bootstrap collapse toggle
-        }
-      });
+    // Define a function for handling keydown events on accordion buttons
+    const handleAccordionButtonKeydown = (event) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault(); // Prevent the default action to stop scrolling when space is pressed
+        event.currentTarget.click(); // Trigger the Bootstrap collapse toggle
+      }
+    };
+
+    // Apply the event listener to each accordion button
+    accordionButtons.forEach((button) => {
+      button.addEventListener('keydown', handleAccordionButtonKeydown);
     });
 
     // Initialize the display of active filters

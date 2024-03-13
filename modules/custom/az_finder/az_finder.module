@@ -45,14 +45,9 @@ function az_finder_preprocess_views_view(&$variables) {
   // Early exit if conditions are not met to reduce nesting.
   if (empty($view->display_handler->options['exposed_form']['type']) ||
       $view->display_handler->options['exposed_form']['type'] !== 'az_bef' ||
-      empty($view->display_handler->options['exposed_form']['options']['bef']['az_finder'])) {
+      empty($view->display_handler->options['exposed_form']['options']['az_bef']['finder'])) {
     return;
   }
-
-  $az_bef_options = $view->display_handler->options['exposed_form']['options']['bef']['az_finder'];
-  $skip_link_id = $az_bef_options['skip_link_id'];
-  $skip_link_text = $az_bef_options['skip_link_text'];
-
   $skip_to_filter = [
     '#type' => 'html_tag',
     '#tag' => 'a',
