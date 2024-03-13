@@ -1,0 +1,3 @@
+services:
+  az_finder.az_finder_icons:
+    class: Drupal\az_finder\AZFinderIcons
