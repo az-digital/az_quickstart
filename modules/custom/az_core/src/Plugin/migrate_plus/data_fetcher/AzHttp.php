@@ -4,6 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\az_core\Plugin\migrate_plus\data_fetcher;
 
+use Drupal\az_core\Strategy\AZPoliteCacheStrategy;
 use Drupal\guzzle_cache\DrupalGuzzleCache;
 use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use GuzzleHttp\Client;
@@ -11,7 +12,6 @@ use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Kevinrob\GuzzleCache\CacheMiddleware;
-use Kevinrob\GuzzleCache\Strategy\GreedyCacheStrategy;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -39,6 +39,7 @@ use Psr\Http\Message\ResponseInterface;
 class AzHttp extends Http {
 
   const MAX_REQUESTS = 5;
+  const DEFAULT_CACHE_TTL = 600;
 
   /**
    * {@inheritdoc}
@@ -56,10 +57,8 @@ class AzHttp extends Http {
       // Push our custom cache bin to the stack.
       $stack->push(
         new CacheMiddleware(
-          // Greedy implies cache control headers in API responses are ignored.
-          // Ideally we should NOT do this. It is preferred to ensure that APIs
-          // have reasonable cache control headers.
-          new GreedyCacheStrategy($cache, 600)
+          // If no cache control headers exist, add a default TTL.
+          new AZPoliteCacheStrategy($cache, self::DEFAULT_CACHE_TTL)
         ),
         'cache'
       );
