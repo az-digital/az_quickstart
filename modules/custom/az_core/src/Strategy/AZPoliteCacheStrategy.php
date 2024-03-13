@@ -40,7 +40,7 @@ class AZPoliteCacheStrategy extends PrivateCacheStrategy {
    * @param \Psr\Http\Message\ResponseInterface $response
    *   The response to the request.
    *
-   * @return Kevinrob\GuzzleCache\CacheEntry|null
+   * @return \Kevinrob\GuzzleCache\CacheEntry|null
    *   Entry to save, null if can't cache it
    */
   protected function getCacheObject(RequestInterface $request, ResponseInterface $response) {
