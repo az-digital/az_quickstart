@@ -18,12 +18,15 @@ function az_google_tag_requirements($phase) {
     $consent_mode_enabled = az_google_tag_consent_mode_enabled();
     $tag_containers_url = Url::fromRoute('entity.google_tag_container.collection');
     if ($consent_mode_enabled) {
-      $requirements['az_google_tag']['value'] = t('Enabled');
-      $requirements['az_google_tag']['description'] = t(
-        'The "Enforce Privacy Consent Policy" setting is currently enabled for one or more <a href="@url">Google Tag containers</a>. This is not recommended for most UArizona websites at this time. Websites that enable consent mode without also having a consent management platform in place risk disabling Google Analytics metrics from being collected. Once a consent management platform is available for campus websites, the recommended setting(s) will likely change.',
-        ['@url' => $tag_containers_url->toString()]
-      );
-      $requirements['az_google_tag']['severity'] = REQUIREMENT_WARNING;
+      $requirements['az_google_tag'] = [
+        'title' => t('Google Tag consent mode setting(s)'),
+        'value' => t('Enabled'),
+        'description' => t(
+          'The "Enforce Privacy Consent Policy" setting is currently enabled for one or more <a href="@url">Google Tag containers</a>. This is not recommended for most UArizona websites at this time. Websites that enable consent mode without also having a consent management platform in place risk disabling Google Analytics metrics from being collected. Once a consent management platform is available for campus websites, the recommended setting(s) will likely change.',
+          ['@url' => $tag_containers_url->toString()]
+        ),
+        'severity' => REQUIREMENT_WARNING,
+      ];
     }
   }
   return $requirements;
