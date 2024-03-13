@@ -21,8 +21,8 @@ use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
  * Finder widget implementation.
  *
  * @BetterExposedFiltersFilterWidget(
- *   id = "az_finder",
- *   label = @Translation("Quickstart Finder"),
+ *   id = "az_finder_tid_widget",
+ *   label = @Translation("Quickstart Finder Term ID Widget"),
  * )
  */
 class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements ContainerFactoryPluginInterface {
