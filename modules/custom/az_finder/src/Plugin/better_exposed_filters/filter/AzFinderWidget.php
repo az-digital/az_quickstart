@@ -176,7 +176,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
       // Check if the the element is apart of a wrapper.
       if ($element === $element_wrapper) {
         $wrapper_array = $form[$element];
-        // Determine if wrapper element has min or max fields or if collapsible, if so then update type.
+        // Determine if wrapper element has min or max fields or if collapsible,
+        // if so then update type.
         if (array_intersect($fields, array_keys($wrapper_array[$field_id]))) {
           $form[$element] = [
             '#type' => 'container',
@@ -185,7 +186,8 @@ class AzFinderWidget extends FilterWidgetBase implements ContainerFactoryPluginI
         }
       }
       else {
-        // Determine if element has min or max child fields, if so then update type.
+        // Determine if element has min or max child fields, if so then update
+        // type.
         if (array_intersect($fields, array_keys($form[$field_id]))) {
           $form[$element] = [
             '#type' => 'container',
