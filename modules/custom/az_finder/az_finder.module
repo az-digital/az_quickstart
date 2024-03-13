@@ -21,13 +21,13 @@ function az_finder_theme($existing, $type, $theme, $path) {
  */
 function template_preprocess_az_finder_widget(&$variables) {
   // Check if the class exists.
-  if (class_exists('\Drupal\az_finder\Plugin\better_exposed_filters\filter\AzFinderWidget')) {
-    // Create an instance of the AzFinderWidget class.
+  if (class_exists('\Drupal\az_finder\Plugin\better_exposed_filters\filter\AzFinderTaxonomyIndexTidWidget')) {
+    // Create an instance of the AzFinderTaxonomyIndexTidWidget class.
     $widget = \Drupal::service('plugin.manager.better_exposed_filters_filter_widget')
       ->createInstance('az_finder', []);
-    // Call the preprocessAzFinderWidget method with the variables.
+    // Call the preprocessAzFinderTaxonomyIndexTidWidget method with the variables.
     try {
-      $widget->preprocessAzFinderWidget($variables);
+      $widget->preprocessAzFinderTaxonomyIndexTidWidget($variables);
     }
     catch (\Exception $e) {
       // Log any errors.
