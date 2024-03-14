@@ -105,9 +105,6 @@ tooling:
   eslint:
     service: node
     cmd: yarn run lint:js
-  eslint-fix:
-    service: node
-    cmd: yarn run lint:js:fix
   # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
   composer:
     service: appserver
