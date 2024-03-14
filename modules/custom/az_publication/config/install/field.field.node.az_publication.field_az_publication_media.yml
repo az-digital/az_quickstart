@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_media
+    - media.type.az_document
+    - node.type.az_publication
+id: node.az_publication.field_az_publication_media
+field_name: field_az_publication_media
+entity_type: node
+bundle: az_publication
+label: 'Publication File'
+description: 'Upload a copy of the publication to be available on this site, if desired.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_document: az_document
+    sort:
+      field: name
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

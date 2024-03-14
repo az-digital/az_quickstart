@@ -2,10 +2,10 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
-use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a behavior for text with media.
@@ -287,7 +287,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     }
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
-    // Set title element if a heading level other than h2 (the default) was selected.
+    // Set title element if a heading level other than h2 (the default) was
+    // selected.
     if ($config['title_level'] !== 'h2') {
       $variables['elements']['#fieldgroups']['group_az_title']->format_settings['element'] = $config['title_level'];
     }

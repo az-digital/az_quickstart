@@ -71,6 +71,15 @@
             "bg_padding" : "py-5",
             "bg_pattern" : "",
             "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":87,
+            "az_text_area" : "<div class=\"bs_grid\"><div class=\"row\" data-row-lg=\"equal_equal_equal\" data-row-md=\"none\" data-row-none=\"none\" data-row-sm=\"12_12_12\" data-row-xl=\"\" data-row-xxl=\"\"><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>100</strong></p></div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>That's a big number</strong></p></div></div><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>600+</strong></p></div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>Even more impressive</strong></p></div></div><div class=\"col-sm-12 col-lg\"><div class=\"text-center p-0 m-0\"><p class=\"display-3 sans my-0\"><strong>100M</strong></p></div><div class=\"text-sky text-center\"><p class=\"h5 my-0\"><strong>Now we're just showing off</strong></p></div></div></div></div>",
+            "full_width" : "full-width-background",
+            "bg_color" : "bg-blue",
+            "bg_padding" : "py-5",
+            "bg_pattern" : "",
+            "bottom_spacing" : "mb-5"
         }
     ]
 }

@@ -5,12 +5,13 @@
  * Contains az_news.module.
  */
 
-use Drupal\Core\Entity\EntityInterface;
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\Component\Utility\Html;
 use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
@@ -51,9 +52,9 @@ function az_news_entity_extra_field_info() {
 function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_link')) {
-    $bubbleable_metadata = new BubbleableMetadata();
     // Read more pseudo field.
     if ($display->getComponent('az_news_read_more')) {
+      $bubbleable_metadata = new BubbleableMetadata();
       $build['az_news_read_more'][] = [
         '#type' => 'markup',
         '#markup' => Html::escape(\Drupal::service('token')
@@ -62,7 +63,20 @@ function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDis
           ], [], $bubbleable_metadata)),
       ];
     }
-    $bubbleable_metadata->applyTo($build);
   }
 
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Sets the Thumbnail Image field to match the "Featured Image" field if the
+ * Use Featured Image as Thumbnail checkbox is checked.
+ */
+function az_news_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_news'
+    && $entity instanceof NodeInterface
+    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue()[0]['value'])) {
+    $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_media_image')->target_id;
+  }
 }

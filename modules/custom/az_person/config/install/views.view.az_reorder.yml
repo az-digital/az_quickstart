@@ -379,7 +379,20 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
-      header: {  }
+      header:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p><strong>Note:</strong> Changing the sort order will override default alphabetical ordering.</p>'
+            format: az_standard
+          tokenize: false
       footer: {  }
       display_extenders: {  }
     cache_metadata:

@@ -1,7 +1,7 @@
 name: 'Quickstart Core'
 type: module
 description: 'Settings and configuration common to other Quickstart componenets.'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 package: 'The University of Arizona'
 dependencies:
   - config_distro:config_distro
@@ -9,6 +9,11 @@ dependencies:
   - config_snapshot:config_snapshot
   - config_sync:config_sync
   - config_update:config_update
+  - drupal:field
+  - drupal:path
+  - drupal:taxonomy
   - drupal:telephone
+  - drupal:text
   - linkit:linkit
   - search_exclude:search_exclude
+configure: az_core.az_settings

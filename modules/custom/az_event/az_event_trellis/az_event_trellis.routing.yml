@@ -1,0 +1,7 @@
+az_event_trellis.settings:
+  path: '/admin/config/az-quickstart/settings/az-event-trellis'
+  defaults:
+    _form: '\Drupal\az_event_trellis\Form\TrellisEventSettingsForm'
+    _title: 'Trellis Event Importer Settings'
+  requirements:
+    _permission: 'administer quickstart configuration'

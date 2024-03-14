@@ -1,8 +1,9 @@
 name: 'Quickstart CAS'
 type: module
 description: 'Pre-configures contrib CAS module to work with University of Arizona WebAuth.'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 package: 'The University of Arizona'
 dependencies:
   - cas:cas
   - az_core
+configure: az_cas.settings

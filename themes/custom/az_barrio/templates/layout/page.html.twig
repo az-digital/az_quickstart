@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Bootstrap Barrio's theme implementation to display a single page.
+ * Arizona Barrio's theme implementation to display a single page.
  *
  * The doctype, html, head and body tags are not in this template. Instead they
  * can be found in the html.html.twig template normally located in the
@@ -37,31 +37,34 @@
  * Regions:
  * - page.alert: Items for the top header alert region.
  * - page.header_ua_utilities: Items for the top header utility bar region.
+ * - page.branding: Items for the site branding region.
  * - page.header: Items for the header region next to logo.
  * - page.header_2: Items for the secondary header region next to logo.
  * - page.navigation: Items for the navigation menu region.
+ * - page.navigation_offcanvas: Items for off-canvas content.
+ * - page.help: Items for the help region.
  * - page.content_featured: Items for the featured content region.
+ * - page.highlighted: Items for the highlighted region.
+ * - page.breadcrumb: Items for the breadcrumb region.
+ * - page.content_top: Items for the content top region.
  * - page.sidebar_first: Items for the first sidebar.
  * - page.sidebar_second: Items for the second sidebar.
- * - page.highlighted: Items for the highlighted region.
- * - page.content_top: Items for the content top region.
- * - page.breadcrumb: Items for the breadcrumb region.
  * - page.content: The main content of the current page.
+ * - page.full_width_content_bottom: Items for the full-width bottom region.
  * - page.content_2_col_1: Items for the first 2-column bottom region.
  * - page.content_2_col_2: Items for the second 2-column bottom region.
  * - page.content_3_col_1: Items for the first 3-column bottom region.
  * - page.content_3_col_2: Items for the second 3-column bottom region.
  * - page.content_3_col_3: Items for the third 3-column bottom region.
- * - page.full_width_content_bottom: Items for the full-width bottom region.
+ * - page.content_bottom: Items for the bottom region.
  * - page.content_4_col_1: Items for the first 4-column content bottom region.
  * - page.content_4_col_2: Items for the second 4-column content bottom region.
  * - page.content_4_col_3: Items for the third 4-column content bottom region.
  * - page.content_4_col_4: Items for the fourth 4-column content bottom region.
- * - page.content_bottom: Items for the bottom region.
  * - page.footer: Items for footer content.
  * - page.footer_sub: Items for the content below footer.
  * - page.footer_sub_menus: Items for menu content below footer.
- * - page.page_bottom: Items for the very bottom of the page.
+ * - page.az_page_bottom: Items for the very bottom of the page.
  *
  * Theme variables:
  * - navbar_offcanvas_attributes: Attributes for the navbar_top region.
@@ -88,7 +91,7 @@
             <div class="row">
               {% if wordmark %}
               <a class="arizona-logo" href="https://www.arizona.edu" title="The University of Arizona homepage">
-                <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"/>
+                <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" fetchpriority="high" />
               </a>
               {% endif %}
               {% if page.header_ua_utilities %}
@@ -97,7 +100,7 @@
             </div> <!-- /.row -->
           </div> <!-- /.container -->
           {% if az_barrio_navbar_offcanvas %}
-          <div class="redbar-buttons d-lg-none">
+          <div class="redbar-buttons d-lg-none d-flex">
             <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar" id="jsAzSearch">
               <span class="icon material-icons-sharp"> search </span>
               <span class="icon-text"> search </span>
@@ -165,14 +168,6 @@
           </div>
         </div>
     </header>
-    {% if page.featured_top %}
-        <div class="featured-top">
-          <aside class="featured-top__inner section {{ container }} clearfix" role="complementary">
-            {{ page.featured_top }}
-          </aside>
-        </div>
-    {% endif %}
-
 
     <div id="main-wrapper" class="layout-main-wrapper clearfix">
         <div id="main" role="main">
@@ -193,7 +188,7 @@
               {{ page.breadcrumb }}
             </div>
             {% endif %}
-            {% if page.breadcrumb %}
+            {% if page.content_top %}
             <div class="row">
               {{ page.content_top }}
             </div>
@@ -205,14 +200,16 @@
               <main{{ content_attributes }}>
                 {{ page.content }}
               </main>
-              {% if page.sidebar_first %}
+              {% set has_sidebar_first = page.sidebar_first|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
+              {% if has_sidebar_first is not empty %}
               <div{{ sidebar_first_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_first }}
                 </aside>
               </div>
               {% endif %}
-              {% if page.sidebar_second %}
+              {% set has_sidebar_second = page.sidebar_second|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
+              {% if has_sidebar_second is not empty %}
               <div{{ sidebar_second_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_second }}
@@ -258,17 +255,8 @@
           {% endif %}
         </div>
     </div>
-    {% if page.featured_bottom_first or page.featured_bottom_second or page.featured_bottom_third %}
-      <div class="featured-bottom">
-        <aside class="{{ container }} clearfix" role="complementary">
-          {{ page.featured_bottom_first }}
-          {{ page.featured_bottom_second }}
-          {{ page.featured_bottom_third }}
-        </aside>
-      </div>
-    {% endif %}
-    <footer class="site-footer">
 
+    <footer class="site-footer">
         {% if page.footer or page.footer_sub or footer_logo %}
         <div class="bg-warm-gray py-5" role="contentinfo">
           {% if page.footer or footer_logo %}

@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_image
+    - media.type.az_image
+    - node.type.az_publication
+id: node.az_publication.field_az_publication_image
+field_name: field_az_publication_image
+entity_type: node
+bundle: az_publication
+label: 'Publication Image'
+description: 'An optional image associated with the publication, e.g. thumbnail, cover image, etc.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_image: az_image
+    sort:
+      field: name
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

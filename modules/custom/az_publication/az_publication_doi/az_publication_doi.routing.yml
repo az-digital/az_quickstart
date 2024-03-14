@@ -1,0 +1,7 @@
+az_publication_doi.az_publication_doi_import_form:
+  path: '/admin/content/az-publication/import/doi'
+  defaults:
+    _form: '\Drupal\az_publication_doi\Form\AZPublicationDOIForm'
+    _title: 'DOI Import'
+  requirements:
+    _permission: 'administer quickstart configuration'

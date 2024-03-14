@@ -5,8 +5,8 @@
  * Contains az_flexible_page.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Implements hook_preprocess_node().
@@ -16,18 +16,88 @@ function az_flexible_page_preprocess_node__az_flexible_page(&$variables) {
 }
 
 /**
- * Implements hook_form_alter().
+ * Implements hook_preprocess_HOOK() for flexible page node page templates.
  */
-function az_flexible_page_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  /** @var Drupal\Core\Entity\FieldableEntityInterface $formObject */
-  $formObject = $form_state->getFormObject();
-  if ($formObject instanceof EntityFormInterface) {
-    $entity = $formObject->getEntity();
-    if (
-      $entity->getEntityTypeId() === 'node'
-      && in_array($entity->bundle(), ['az_flexible_page'])
-    ) {
+function az_flexible_page_preprocess_page__node__az_flexible_page(&$variables) {
+  // Exit if Marketing Campaign Page styles are not enabled globally.
+  if (!(\Drupal::config('az_flexible_page.settings')->get('marketing_page_styles.enabled'))) {
+    return;
+  }
+
+  $marketing_page_style = $variables['node']->field_az_marketing_page_style->value;
+
+  if (!isset($marketing_page_style) || $marketing_page_style === '') {
+    return;
+  }
+
+  // Regions disabled by all Marketing Campaign Page styles.
+  if ($variables['page']['header_ua_utilities']) {
+    unset($variables['page']['header_ua_utilities']);
+  }
+  if ($variables['page']['header']) {
+    unset($variables['page']['header']);
+  }
+  if ($variables['page']['header_2']) {
+    unset($variables['page']['header_2']);
+  }
+  if ($variables['page']['navigation']) {
+    unset($variables['page']['navigation']);
+  }
+  if ($variables['page']['navigation_offcanvas']) {
+    unset($variables['page']['navigation_offcanvas']);
+  }
+  if ($variables['page']['content_featured']) {
+    unset($variables['page']['content_featured']);
+  }
+  if ($variables['page']['highlighted']) {
+    unset($variables['page']['highlighted']);
+  }
+  if ($variables['page']['breadcrumb']) {
+    unset($variables['page']['breadcrumb']);
+  }
+  if ($variables['page']['content_top']) {
+    unset($variables['page']['content_top']);
+  }
+
+  // Set the navbar_offcanvas flag to FALSE since that region is disabled.
+  $variables['az_barrio_navbar_offcanvas'] = FALSE;
+
+  // Disable site branding region on "Standard - No Site Branding" style.
+  if ($marketing_page_style === 'az_marketing_page_standard_no_branding') {
+    if ($variables['page']['branding']) {
+      unset($variables['page']['branding']);
+    }
+  }
+
+  // Disable footer_sub regions on all styles except
+  // "Standard - Show Full Footer".
+  if ($marketing_page_style !== 'az_marketing_page_standard_footer') {
+    if ($variables['page']['footer_sub']) {
+      unset($variables['page']['footer_sub']);
+    }
+    if ($variables['page']['footer_sub_menus']) {
+      unset($variables['page']['footer_sub_menus']);
+    }
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for \Drupal\node\NodeForm.
+ */
+function az_flexible_page_form_node_form_alter(&$form, FormStateInterface $form_state) {
+  $form_object = $form_state->getFormObject();
+  if ($form_object instanceof EntityFormInterface) {
+    /** @var \Drupal\node\NodeInterface $node */
+    $node = $form_object->getEntity();
+    if (in_array($node->bundle(), ['az_flexible_page'])) {
       $form['#attached']['library'][] = 'az_flexible_page/az_flexible_page_form';
+
+      // Remove field for Marketing Campaign Page styles if they aren't globally
+      // enabled or if the user does not have permission to use them.
+      if (!(\Drupal::config('az_flexible_page.settings')->get('marketing_page_styles.enabled')) ||
+        !(\Drupal::currentUser()->hasPermission('use marketing campaign page styles'))) {
+        $form['field_az_marketing_page_style']['#access'] = FALSE;
+      }
     }
   }
 }

@@ -4,13 +4,11 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-
 (function ($, Drupal) {
   Drupal.behaviors.azAlphabeticalListing = {
     attach: function attach() {
       $('#az-js-alpha-navigation li').each(function (index, element) {
         var groupId = $(element).children().attr('data-href');
-
         if ($(groupId).length !== 0) {
           $(element).removeClass('disabled');
           $(element).children().attr('tabindex', '0').attr('aria-hidden', 'false').attr('href', groupId);
@@ -19,7 +17,6 @@
           $(element).children().attr('tabindex', '-1').attr('aria-hidden', 'true').removeAttr('href');
         }
       });
-
       function azAlphabeticalListingCheckNoResults() {
         var visibleResults = false;
         $('.az-alphabetical-listing-group-title').each(function (index, element) {
@@ -27,14 +24,12 @@
             visibleResults = true;
           }
         });
-
         if (!visibleResults) {
           $('#az-js-alphabetical-listing-no-results').show();
         } else {
           $('#az-js-alphabetical-listing-no-results').hide();
         }
       }
-
       function azAlphabeticalListingGroupLoop() {
         $('.az-alphabetical-listing-group-title').each(function (index, element) {
           var elementId = $(element).attr('id');
@@ -47,7 +42,6 @@
             }
           });
           var navTarget = $('#az-js-alpha-navigation').find(".page-link[data-href='#".concat(elementId, "']"));
-
           if (!visibleChildren) {
             $(element).hide();
             $(element).addClass('hide-result');
@@ -61,12 +55,10 @@
           }
         });
       }
-
       $('#az-js-alphabetical-listing-search').keyup(function (event) {
         var filter = $(event.currentTarget).val();
         $('.az-js-alphabetical-listing-search-result').each(function (index, element) {
           var searchResultText = $(element).find('.az-alphabetical-listing-item').text();
-
           if (searchResultText.search(new RegExp(filter, 'i')) < 0) {
             $(element).find('az-alphabetical-listing-item').attr('tabindex', '0');
             $(element).addClass('hide-result');
@@ -89,18 +81,15 @@
         var fixedNavHeight = $alphaNav.outerHeight();
         var headingHeight = $('.az-alphabetical-listing-group-title:first').outerHeight();
         var offsetHeight = fixedNavHeight + headingHeight;
-
         if ($(window).width() <= breakpoint) {
           fixedNavHeight = 0;
         }
-
         $root.animate({
           scrollTop: $(href).offset().top - offsetHeight
         }, 500, function () {
           window.location.hash = href;
         });
       });
-
       if ($('body.toolbar-tray-open').length) {
         $('#az-js-floating-alpha-nav-container').css('top', '79px');
       } else if ($('body.toolbar-horizontal').length) {

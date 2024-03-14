@@ -30,16 +30,19 @@ process:
     process:
       delta: delta
       target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_media
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_media
 
   field_az_text_area/value:
-    plugin: paragraphs_fw_media_row_field_merge
-    body: field_uaqs_summary
-    link: field_uaqs_link
+    -
+      plugin: paragraphs_fw_media_row_field_merge
+      body: field_uaqs_summary
+      link: field_uaqs_link
+    -
+      plugin: az_entity_embed_process
 
   field_az_text_area/format:
     plugin: default_value
@@ -114,7 +117,7 @@ process:
         style: '@content_style_processed'
         text_media_spacing: '@text_media_spacing_processed'
         az_display_settings:
-            bottom_spacing: '@bottom_spacing_processed'
+          bottom_spacing: '@bottom_spacing_processed'
 
 dependencies:
   enforced:

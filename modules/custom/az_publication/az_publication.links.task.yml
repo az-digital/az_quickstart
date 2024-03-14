@@ -1,0 +1,49 @@
+# Author routing definition
+az_author.settings_tab:
+  route_name: az_author.settings
+  title: 'Settings'
+  base_route: az_author.settings
+
+entity.az_author.canonical:
+  route_name: entity.az_author.canonical
+  base_route: entity.az_author.canonical
+  title: 'View'
+
+entity.az_author.edit_form:
+  route_name: entity.az_author.edit_form
+  base_route: entity.az_author.canonical
+  title: 'Edit'
+
+entity.az_author.version_history:
+  route_name: entity.az_author.version_history
+  base_route: entity.az_author.canonical
+  title: 'Revisions'
+
+entity.az_author.delete_form:
+  route_name:  entity.az_author.delete_form
+  base_route:  entity.az_author.canonical
+  title: Delete
+  weight: 10
+
+entity.az_author.collection:
+  title: 'Authors'
+  route_name: entity.az_author.collection
+  base_route: system.admin_content
+  weight: 50
+
+az_publication.az_publication_settings_tab:
+  route_name: az_publication.settings
+  title: 'AZ Publication'
+  base_route: az_core.az_settings
+  weight: 2
+
+az_publication.az_publication_settings_secondary_tab:
+  route_name: az_publication.settings
+  title: 'Publication Settings'
+  parent_id: az_publication.az_publication_settings_tab
+
+az_publication.az_citation_styles_secondary_tab:
+  route_name: entity.az_citation_style.collection
+  title: 'Citation Styles'
+  parent_id: az_publication.az_publication_settings_tab
+  weight: 2

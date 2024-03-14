@@ -1,0 +1,18 @@
+az_publication.az_citation_style.*:
+  type: config_entity
+  label: 'Quickstart Citation Style config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    style:
+      type: string
+      label: 'Style'
+    custom:
+      type: boolean
+      label: 'Custom'
+    uuid:
+      type: string

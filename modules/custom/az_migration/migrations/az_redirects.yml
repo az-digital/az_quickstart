@@ -21,11 +21,26 @@ process:
     -
       plugin: default_value
       default_value: 1
-  redirect_source/path: source
+  source_path_processed:
+    plugin: az_migrated_path_lookup
+    term_migration:
+      - az_event_categories
+      - az_flexible_page_categories
+      - az_news_tags
+      - az_person_categories_secondary
+      - az_person_categories
+    node_migration:
+      - az_node_carousel
+      - az_node_event
+      - az_node_flexible_page
+      - az_node_news
+      - az_node_person
+    source: source
+  redirect_source/path: "@source_path_processed"
   redirect_source/query:
     plugin: d7_redirect_source_query
     source: source_options
-  link_path_processed:
+  destination_path_processed:
     plugin: az_migrated_path_lookup
     term_migration:
       - az_event_categories
@@ -44,7 +59,7 @@ process:
     -
       plugin: d7_path_redirect
       source:
-        - "@link_path_processed"
+        - "@destination_path_processed"
         - redirect_options
   language:
     plugin: default_value
@@ -58,14 +73,14 @@ destination:
   plugin: entity:redirect
 migration_dependencies:
   required:
-      - az_event_categories
-      - az_flexible_page_categories
-      - az_news_tags
-      - az_person_categories_secondary
-      - az_person_categories
-      - az_node_carousel
-      - az_node_event
-      - az_node_flexible_page
-      - az_node_news
-      - az_node_person
-      - az_user
+    - az_event_categories
+    - az_flexible_page_categories
+    - az_news_tags
+    - az_person_categories_secondary
+    - az_person_categories
+    - az_node_carousel
+    - az_node_event
+    - az_node_flexible_page
+    - az_node_news
+    - az_node_person
+    - az_user

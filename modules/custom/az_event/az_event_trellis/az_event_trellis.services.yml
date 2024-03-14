@@ -1,0 +1,17 @@
+services:
+  _defaults:
+    autoconfigure: true
+  az_event_trellis.trellis_helper:
+    class: Drupal\az_event_trellis\TrellisHelper
+    arguments:
+      - '@config.factory'
+      - '@http_client'
+      - '@cache.default'
+      - '@entity_type.manager'
+  az_event_trellis.trellis_event_data:
+    class: Drupal\az_event_trellis\EventSubscriber\AZEventTrellisDataSubscriber
+    arguments:
+      - '@az_event_trellis.trellis_helper'
+      - '@messenger'
+      - '@entity_type.manager'
+      - '@current_user'

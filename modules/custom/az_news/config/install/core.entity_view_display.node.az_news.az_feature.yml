@@ -7,10 +7,13 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_contacts
+    - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_featured_image_as_thumb
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_media_thumbnail_image
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -155,7 +158,6 @@ third_party_settings:
         speed: fast
     group_read_article:
       children:
-        - links
         - group_read_more_text
       label: 'Read article'
       parent_name: group_text_column
@@ -256,11 +258,6 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: content
   smart_title:
     settings: {  }
     third_party_settings: {  }
@@ -271,9 +268,13 @@ hidden:
   field_az_body: true
   field_az_byline: true
   field_az_contacts: true
+  field_az_enterprise_attributes: true
   field_az_expiration_date: true
+  field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_main_content: true
+  field_az_media_thumbnail_image: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
+  links: true

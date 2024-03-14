@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.node.az_flexible_page.field_az_main_content
+    - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
     - field.field.node.az_flexible_page.field_az_metatag
     - field.field.node.az_flexible_page.field_az_page_category
@@ -29,11 +30,12 @@ third_party_settings:
       format_type: details_sidebar
       format_settings:
         classes: ''
+        show_empty_fields: false
         id: ''
-        open: false
-        description: 'These fields appear in display modes other that the full page view mode.'
+        open: true
+        description: 'Summary fields determine how this page appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
+        weight: -10
     group_categorization:
       children:
         - field_az_page_category
@@ -49,6 +51,21 @@ third_party_settings:
         description: 'Select the categories you would like this flexible page to appear in throughout the site. You can <a href="/admin/structure/taxonomy/manage/az_page_categories/overview">add categories</a> as needed.'
         required_fields: true
         weight: 0
+    group_marketing_campaign_page:
+      children:
+        - field_az_marketing_page_style
+      label: 'Marketing Campaign Page'
+      region: content
+      parent_name: ''
+      weight: 4
+      format_type: details_sidebar
+      format_settings:
+        classes: ''
+        id: ''
+        open: false
+        description: 'Display this page with a Marketing Campaign Page style, hiding the navigation menu and other page regions. See <a href="https://quickstart.arizona.edu/pages">Adding Pages</a> for details about each style.'
+        required_fields: true
+        weight: 0
 id: node.az_flexible_page.default
 targetEntityType: node
 bundle: az_flexible_page
@@ -56,7 +73,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 5
+    weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -79,9 +96,15 @@ content:
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
+  field_az_marketing_page_style:
+    type: options_select
+    weight: 14
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_az_media_image:
     type: media_library_widget
-    weight: 9
+    weight: 11
     region: content
     settings:
       media_types: {  }
@@ -90,20 +113,21 @@ content:
         show_edit: '1'
   field_az_metatag:
     type: metatag_firehose
-    weight: 11
+    weight: 15
     region: content
     settings:
       sidebar: true
+      use_details: true
     third_party_settings: {  }
   field_az_page_category:
     type: options_select
-    weight: 11
+    weight: 13
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_summary:
     type: text_textarea
-    weight: 10
+    weight: 12
     region: content
     settings:
       rows: 5
@@ -111,13 +135,13 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 8
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 6
+    weight: 7
     region: content
     settings:
       display_label: true
@@ -131,7 +155,7 @@ content:
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 7
+    weight: 8
     region: content
     settings:
       display_label: true
@@ -146,7 +170,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 4
+    weight: 5
     region: content
     settings:
       match_operator: CONTAINS
@@ -155,7 +179,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 9
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
