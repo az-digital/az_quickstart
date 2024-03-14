@@ -7,6 +7,7 @@
     "node": ">= 18"
   },
   "scripts": {
+    "lint:js": "eslint --ext .js --ext .yml --ext .json .",
     "build": "yarn build:js",
     "watch": "yarn watch:js",
     "build:js": "cross-env BABEL_ENV=quickstart node ./scripts/js/babel-es6-build.js",
