@@ -63,14 +63,30 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Card title level'),
       '#type' => 'select',
       '#options' => [
-        'h2' => $this->t('Section heading (H2)'),
-        'h3' => $this->t('Subsection heading (H3)'),
-        'h4' => $this->t('Subsection heading (H4)'),
-        'h5' => $this->t('Subsection heading (H5)'),
-        'h6' => $this->t('Subsection heading (H6)'),
+        'h2' => $this->t('H2 (section heading)'),
+        'h3' => $this->t('H3 (subsection heading)'),
+        'h4' => $this->t('H4 (subsection heading)'),
+        'h5' => $this->t('H5 (subsection heading)'),
+        'h6' => $this->t('H6 (subsection heading)'),
       ],
       '#default_value' => $config['card_title_level'] ?? 'h3',
       '#description' => $this->t('The heading level of the card title. <a href="https://quickstart.arizona.edu/best-practices/using-headings" target="_blank">Learn about best web practices</a>.'),
+    ];
+
+    $form['card_title_display'] = [
+      '#title' => $this->t('Card title display'),
+      '#type' => 'select',
+      '#options' => [
+        'display-1' => $this->t('Largest'),
+        'display-4' => $this->t('Larger'),
+        'h2' => $this->t('Large'),
+        'h3' => $this->t('Medium'),
+        'h4' => $this->t('Small'),
+        'h5' => $this->t('Default'),
+        'h6' => $this->t('Smallest'),
+      ],
+      '#default_value' => $config['card_title_display'] ?? 'h5',
+      '#description' => $this->t('Select the display size of the title.'),
     ];
 
     $form['card_clickable'] = [
