@@ -260,20 +260,51 @@ lando eslint myfile.js
 ddev eslint myfile.js
 ```
 
-## Theme debugging
+## Theme Debugging
 
-Developing within Drupal can be a real challenge without debugging enabled.
+Developing within Drupal can be enhanced with Twig debugging. For AZ Quickstart,
+we outline the most efficient methods to enable Twig debugging: via the Drupal
+UI and using Drush, with a special emphasis on the latter for its convenience.
 
-[Devel](https://www.drupal.org/project/devel) is included in the [development metapackage](https://github.com/az-digital/az-quickstart-dev) that is downloaded when installing a site locally via Lando, or DDev.  See "Visual Studio Code Integration" 
+### Enable Twig Debugging via the Drupal UI
 
-### Turn on Twig debugging
+To enable Twig debugging through the Drupal UI:
 
-On a local development site:
-1. Copy `sites/default/default.services.yml` to `sites/default/services.yml` (if `services.yml` doesn't already exist)
-2. Change the `debug` setting to `true` in the `twig.config` section of `parameters`
-3. Clear cache
+1. Go to `/admin/config/development/settings` on your Drupal site.
+2. Check the box for "Twig Debugging".
+3. Click on "Save configuration".
+4. Don't forget to clear your cache for the changes to take effect.
 
-If using lando or ddev for local devleopment, you may need to use a code editor such as VS Code that allows you to connect to a running Docker container to make this change (see VS Code specific insructions in the "Local Development" section of this document).
+### Enable Twig Debugging via Drush
+
+Drush provides a powerful and quick way to enable or disable Twig debugging.
+Below are the commands for enabling and subsequently disabling debugging:
+
+To enable Twig debugging:
+
+```bash
+drush state:set twig_debug 1 --input-format=integer && \
+drush state:set twig_cache_disable 1 --input-format=integer && \
+drush state:set disable_rendered_output_cache_bins 1 --input-format=integer && \
+drush cache:rebuild
+```
+
+To disable Twig debugging:
+
+```bash
+drush state:set twig_debug 0 --input-format=integer && \
+drush state:set twig_cache_disable 0 --input-format=integer && \
+drush state:set disable_rendered_output_cache_bins 0 --input-format=integer && \
+drush cache:rebuild
+```
+
+### Additional Developer Resources
+
+For more tools and tips on Drupal development, [visit the Drupal development
+tools page](https://www.drupal.org/docs/develop/development-tools). Here, you'll
+find a wealth of resources on debugging, performance optimization, and
+development best practices to enhance your Drupal projects.
+
 
 ## Configuration Management and Database Updates
 
