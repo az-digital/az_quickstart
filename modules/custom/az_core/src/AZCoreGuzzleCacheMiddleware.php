@@ -49,7 +49,7 @@ class AZCoreGuzzleCacheMiddleware {
 
     // Only use the cache if the settings allow for it.
     if (!empty($this->configFactory->get('az_core.settings')->get('migrations.http_cached'))) {
-      $middleware = $this->politeCacheStrategy;
+      $middleware = new CacheMiddleware($this->politeCacheStrategy);
     }
     else {
       $middleware = new CacheMiddleware(new NullCacheStrategy());
