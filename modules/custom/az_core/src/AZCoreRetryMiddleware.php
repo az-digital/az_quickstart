@@ -8,7 +8,7 @@ use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 /**
- * Provides a Drupal cache backend for the Guzzle caching middleware.
+ * Provides a Middleware that conducts retries for failed requests.
  */
 class AZCoreRetryMiddleware {
 
