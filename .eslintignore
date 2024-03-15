@@ -1,6 +1,3 @@
 node_modules/**/*
 *.js
-**/*.json
 !*.es6.js
-!scripts/js/**/*.js
-
