@@ -10,7 +10,8 @@
     },
     {
       "filename" : "placeduck04.jpg",
-      "alt" : "José An'ersen"
+      "alt" : "José An'ersen",
+      "credit": "Renowned Placeduck Photographer"
     },
     {
       "filename" : "placeduck11.jpg",
@@ -22,11 +23,13 @@
       },
     {
       "filename" : "placeduck07.jpg",
-      "alt" : "Thomas Urquhart"
+      "alt" : "Thomas Urquhart",
+      "credit": "Renowned Placeduck Photographer"
       },
     {
       "filename" : "placeduck06.jpg",
-      "alt" : "Janet Horne"
+      "alt" : "Janet Horne",
+      "credit": "Renowned Placeduck Photographer"
     },
     {
       "filename" : "placeduck08.jpg",
@@ -34,7 +37,10 @@
     },
     {
       "filename" : "placeduck02.jpg",
-      "alt" : "Barbara Strozzi"
+      "alt" : "Barbara Strozzi",
+      "caption": "Barbara Strozzi was an Italian Baroque composer and waterfowl call vocalizer.",
+      "title": "Barbara Strozzi",
+      "credit": "Renowned Placeduck Photographer"
     },
     {
       "filename" : "placeduck03.jpg",
