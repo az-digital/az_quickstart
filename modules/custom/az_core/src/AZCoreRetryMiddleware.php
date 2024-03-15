@@ -30,7 +30,7 @@ class AZCoreRetryMiddleware {
   }
 
   /**
-   * {@inheritdoc}
+   * Invokes to a callable that retries failed requests in a handler stack.
    */
   public function __invoke(): \Closure {
     return Middleware::retry([$this, 'decideRetry']);
