@@ -24,7 +24,7 @@ function template_preprocess_az_finder_widget(&$variables) {
   if (class_exists('\Drupal\az_finder\Plugin\better_exposed_filters\filter\AzFinderTaxonomyIndexTidWidget')) {
     // Create an instance of the AzFinderTaxonomyIndexTidWidget class.
     $widget = \Drupal::service('plugin.manager.better_exposed_filters_filter_widget')
-      ->createInstance('az_finder', []);
+      ->createInstance('az_finder_tid_widget', []);
     // Call the preprocessAzFinderTaxonomyIndexTidWidget method with the variables.
     try {
       $widget->preprocessAzFinderTaxonomyIndexTidWidget($variables);
