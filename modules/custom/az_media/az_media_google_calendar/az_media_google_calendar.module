@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations and global functions for az_media_google_calendar.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_media_google_calendar_theme($existing, $type, $theme, $path) {
+  return [
+    'az_media_google_calendar' => [
+      'variables' => [
+        'type' => NULL,
+        'url' => NULL,
+        'width' => NULL,
+        'height' => NULL,
+      ],
+      'template' => 'az-media-google-calendar',
+    ],
+  ];
+}
