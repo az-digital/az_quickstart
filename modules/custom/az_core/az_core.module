@@ -26,7 +26,7 @@ function az_core_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.az_core':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Settings and configuration common to other Quickstart components.') . '</p>';
+      $output .= '<p>' . t('Settings and configuration common to other Quickstart componenets..') . '</p>';
       return $output;
 
     default:
@@ -418,5 +418,4 @@ function az_core_form_taxonomy_vocabulary_confirm_reset_alphabetical_alter(&$for
   if ($form_object->getEntity()->id() === 'az_enterprise_attributes') {
     _az_core_check_attribute_form($form, $form_state, $form_id);
   }
-
 }
