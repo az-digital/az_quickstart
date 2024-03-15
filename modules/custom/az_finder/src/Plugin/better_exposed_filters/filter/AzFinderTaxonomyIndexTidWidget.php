@@ -250,7 +250,7 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * {@inheritdoc}
    */
   public static function isApplicable($filter = NULL, array $filter_options = []) {
-    // return tru in an instance of TaxonomyIndexTid.
+    // Only applies to TaxonomyIndexTid filters.
     return $filter instanceof TaxonomyIndexTid;
   }
 
