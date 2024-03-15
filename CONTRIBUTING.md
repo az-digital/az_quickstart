@@ -264,7 +264,7 @@ For a single file, the command changes slightly to include the filename, like
 
 ESLint provides an auto-fix feature that can automatically fix some of the
 linting errors. This is done by appending `--fix` to the eslint command: `lando
-eslint --fix`.
+eslint . --fix` or `ddev eslint . --fix`.
 
 ## Theme debugging
 
