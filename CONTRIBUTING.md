@@ -254,7 +254,7 @@ to adhere to the project's coding standards.
 ###  Running ESLint
 
 To lint all files in the project, contributors can use the command `lando
-eslint` or `ddev eslint`, depending on whether you're using Lando or DDev for
+eslint .` or `ddev eslint .`, depending on whether you're using Lando or DDev for
 your local development environment.
 
 For a single file, the command changes slightly to include the filename, like
