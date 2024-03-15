@@ -31,8 +31,11 @@ class AZCoreRetryMiddleware {
 
   /**
    * Invokes to a callable that retries failed requests in a handler stack.
+   *
+   * @return callable
+   *   A callable that provides a middleware with a retry decision function.
    */
-  public function __invoke(): \Closure {
+  public function __invoke(): callable {
     return Middleware::retry([$this, 'decideRetry']);
   }
 

@@ -55,7 +55,10 @@ class AZCoreGuzzleCache implements CacheStorageInterface {
   }
 
   /**
-   * {@inheritdoc}
+   * Provide Middleware for a polite TTL cache or no cache, based on config.
+   *
+   * @return \Kevinrob\GuzzleCache\CacheMiddleware
+   *   A Middleware to add to the stack.
    */
   public function __invoke(): CacheMiddleware {
 
