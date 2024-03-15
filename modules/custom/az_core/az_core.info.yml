@@ -14,7 +14,6 @@ dependencies:
   - drupal:taxonomy
   - drupal:telephone
   - drupal:text
-  - guzzle_cache:guzzle_cache
   - linkit:linkit
   - search_exclude:search_exclude
 configure: az_core.az_settings

@@ -26,3 +26,28 @@ services:
       - { name: cache.bin }
     factory: cache_factory:get
     arguments: [az_migration_http_cache]
+  az_core.az_migration_http_cache_middleware:
+    class: Drupal\az_core\AZCoreGuzzleCache
+    arguments: ['@config.factory','@cache.az_migration_http_cache', 600]
+    tags:
+      - { name: az_core_migration_http_client_middleware, priority: 0 }
+  az_core.az_migration_http_retry_middleware:
+    class: Drupal\az_core\AZCoreRetryMiddleware
+    arguments: [5]
+    tags:
+      - { name: az_core_migration_http_client_middleware, priority: 100 }
+  az_core.az_migration_http_handler_stack_configurator:
+    class: Drupal\Core\Http\HandlerStackConfigurator
+    arguments: ['@service_container']
+    tags:
+      - { name: service_id_collector, tag: az_core_migration_http_client_middleware }
+  az_core.az_migration_http_handler_stack:
+    class: GuzzleHttp\HandlerStack
+    factory: GuzzleHttp\HandlerStack::create
+    configurator: ['@az_core.az_migration_http_handler_stack_configurator', configure]
+  az_core.az_migration_http_client_factory:
+    class: Drupal\Core\Http\ClientFactory
+    arguments: ['@az_core.az_migration_http_handler_stack']
+  az_core.az_migration_http_client:
+    class: GuzzleHttp\Client
+    factory: ['@az_core.az_migration_http_client_factory', 'fromOptions']
