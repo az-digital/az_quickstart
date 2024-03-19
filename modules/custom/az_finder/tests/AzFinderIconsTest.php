@@ -14,6 +14,9 @@ use PHPUnit\Framework\TestCase;
  */
 class AzFinderIconsTest extends TestCase {
 
+  /**
+   *
+   */
   public function testGenerateSvgIcons() {
     $azFinderIcons = new AzFinderIcons();
     $svgIcons = $azFinderIcons->generateSvgIcons();
@@ -43,4 +46,5 @@ class AzFinderIconsTest extends TestCase {
     $this->assertArrayHasKey('#context', $svgIcons['level_0_collapse']);
 
   }
+
 }

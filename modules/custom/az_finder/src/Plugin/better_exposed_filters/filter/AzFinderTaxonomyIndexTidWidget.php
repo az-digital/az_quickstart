@@ -13,9 +13,9 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Template\Attribute;
+use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 
 /**
  * Finder widget implementation.
@@ -250,7 +250,7 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * {@inheritdoc}
    */
   public static function isApplicable($filter = NULL, array $filter_options = []) {
-    // return tru in an instance of TaxonomyIndexTid.
+    // Return tru in an instance of TaxonomyIndexTid.
     return $filter instanceof TaxonomyIndexTid;
   }
 
