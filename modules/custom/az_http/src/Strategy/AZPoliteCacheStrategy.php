@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_core\Strategy;
+namespace Drupal\az_http\Strategy;
 
 use Kevinrob\GuzzleCache\CacheEntry;
 use Kevinrob\GuzzleCache\KeyValueHttpHeader;

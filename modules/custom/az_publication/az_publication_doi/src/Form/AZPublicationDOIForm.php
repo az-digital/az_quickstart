@@ -94,7 +94,7 @@ class AZPublicationDOIForm extends FormBase {
         'configuration' => [
           'source' => [
             'urls' => $url,
-            'data_fetcher_plugin' => 'az_core_http',
+            'data_fetcher_plugin' => 'http',
             'headers' => [
               // Content Negotiation. https://citation.crosscite.org/docs.html
               'Accept' => 'application/x-bibtex; charset=utf-8',

@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 
-namespace Drupal\az_core\Plugin\migrate_plus\data_fetcher;
+namespace Drupal\az_http\Plugin\migrate_plus\data_fetcher;
 
 use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @code
  * source:
  *   plugin: url
- *   data_fetcher_plugin: az_core_http
+ *   data_fetcher_plugin: az_http
  *   headers:
  *     Accept: application/json
  *     User-Agent: Internet Explorer 6
@@ -24,7 +24,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @endcode
  *
  * @DataFetcher(
- *   id = "az_core_http",
+ *   id = "az_http",
  *   title = @Translation("Quickstart HTTP Fetcher with optional cache")
  * )
  */
@@ -40,7 +40,7 @@ class AzHttp extends Http {
       $plugin_definition,
     );
 
-    $instance->httpClient = $container->get('az_core.az_migration_http_client');
+    $instance->httpClient = $container->get('az_http.http_client');
     return $instance;
   }
 

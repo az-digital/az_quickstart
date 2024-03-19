@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_core;
+namespace Drupal\az_http;
 
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Middleware;
@@ -10,7 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 /**
  * Provides a Middleware that conducts retries for failed requests.
  */
-class AZCoreRetryMiddleware {
+class AZHttpRetryMiddleware {
 
   /**
    * Maximum number of requests to perform.
@@ -20,7 +20,7 @@ class AZCoreRetryMiddleware {
   protected $requests;
 
   /**
-   * Constructs a new AZCoreRetryMiddleware.
+   * Constructs a new AZHttpRetryMiddleware.
    *
    * @param int $max_requests
    *   Maximum number of requests to perform.

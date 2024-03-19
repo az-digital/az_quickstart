@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_core;
+namespace Drupal\az_http;
 
 use Drupal\Core\Cache\CacheBackendInterface;
 use Kevinrob\GuzzleCache\CacheEntry;
@@ -9,7 +9,7 @@ use Kevinrob\GuzzleCache\Storage\CacheStorageInterface;
 /**
  * Provides a Drupal cache backend for the Guzzle caching middleware.
  */
-class AZCoreGuzzleCacheStorage implements CacheStorageInterface {
+class AZHttpGuzzleCacheStorage implements CacheStorageInterface {
 
   /**
    * The Drupal cache backend.
@@ -19,7 +19,7 @@ class AZCoreGuzzleCacheStorage implements CacheStorageInterface {
   protected $cache;
 
   /**
-   * Constructs a new AZCoreGuzzleCacheStorage.
+   * Constructs a new AZHttpGuzzleCacheStorage.
    *
    * @param \Drupal\Core\Cache\CacheBackendInterface $cache
    *   The Drupal cache backend.
