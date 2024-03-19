@@ -5,7 +5,6 @@ dependencies:
     - az_news_feeds
   enforced:
     module:
-      - az_core
       - az_news_feeds
       - migrate_tools
 id: az_news_feeds
