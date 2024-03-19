@@ -5,14 +5,18 @@ services:
     class: Drupal\Core\Cache\CacheBackendInterface
     tags:
       - { name: cache.bin }
-    factory: ['@cache_factory', 'get']
+    factory:
+      - '@cache_factory'
+      - 'get'
     arguments:
       - az_http_cache
   cache.az_http_cache_memory:
     class: Drupal\Core\Cache\MemoryCache\MemoryCacheInterface
     tags:
       - { name: cache.bin.memory, default_backend: cache.backend.memory.memory }
-    factory: ['@cache_factory', 'get']
+    factory:
+      - '@cache_factory'
+      - 'get'
     arguments:
       - az_http_cache_memory
   cache.az_http_cache_chain:
@@ -32,7 +36,8 @@ services:
       - 600
   az_http.cache_middleware:
     class: Drupal\az_http\AZHttpGuzzleCacheMiddleware
-    arguments: ['@az_http.cache_strategy_polite']
+    arguments:
+      - '@az_http.cache_strategy_polite'
     tags:
       - { name: az_http_client_middleware, priority: 0 }
   az_http.retry_middleware:
@@ -50,11 +55,15 @@ services:
   az_http.http_handler_stack:
     class: GuzzleHttp\HandlerStack
     factory: GuzzleHttp\HandlerStack::create
-    configurator: ['@az_http.http_handler_stack_configurator', configure]
+    configurator:
+      - '@az_http.http_handler_stack_configurator'
+      - 'configure'
   az_http.http_client_factory:
     class: Drupal\Core\Http\ClientFactory
     arguments:
       - '@az_http.http_handler_stack'
   az_http.http_client:
     class: GuzzleHttp\Client
-    factory: ['@az_http.http_client_factory', 'fromOptions']
+    factory:
+      - '@az_http.http_client_factory'
+      - 'fromOptions'
