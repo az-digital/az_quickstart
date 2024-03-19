@@ -25,7 +25,6 @@ dependencies:
     - node
     - taxonomy
     - user
-    - az_enterprise_attributes_import
 id: az_finder
 label: 'AZ Finder'
 module: views
