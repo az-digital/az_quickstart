@@ -29,7 +29,6 @@ class AZDOIFilter extends FilterBase {
     $ignore_tags = 'a|script|style|code|pre';
 
     _filter_url_escape_comments('', TRUE);
-    // phpcs:ignore
     $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s', '_filter_url_escape_comments', $text);
 
     // Split at all tags; ensures that no tags or attributes are processed.
@@ -58,7 +57,6 @@ class AZDOIFilter extends FilterBase {
             // If there is a match, inject a link into this chunk.
             // Match DOI identifiers.
             $pattern = "/(doi:\s*)?(10\.\d{4,9}\/[-._;()\/:A-Z0-9]*[-_;()\/:A-Z0-9]+)/i";
-            // phpcs:ignore
             $chunks[$i] = preg_replace_callback($pattern, [static::class, 'filterDoi'], $chunks[$i]);
           }
 
@@ -90,7 +88,6 @@ class AZDOIFilter extends FilterBase {
 
     // Revert to the original comment contents.
     _filter_url_escape_comments('', FALSE);
-    // phpcs:ignore
     $text = $text ? preg_replace_callback('`<!--(.*?)-->`', '_filter_url_escape_comments', $text) : $text;
 
     // Make sure our regex chunking didn't eat the text due to a broken tag.
