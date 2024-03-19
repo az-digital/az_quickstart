@@ -16,7 +16,6 @@ dependencies:
   module:
     - az_core
     - az_event
-    - az_
     - az_news
     - az_person
     - az_flexible_page
