@@ -4,11 +4,11 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_card
     - core.entity_view_mode.node.az_row
+    - core.entity_view_mode.node.teaser
     - field.storage.node.field_az_page_category
     - node.type.az_flexible_page
     - taxonomy.vocabulary.az_page_categories
   module:
-    - az_finder
     - node
     - taxonomy
     - user
@@ -22,12 +22,72 @@ base_table: node_field_data
 base_field: nid
 display:
   default:
+    display_plugin: default
     id: default
     display_title: Master
-    display_plugin: default
     position: 0
     display_options:
-      title: ''
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
+      query:
+        type: views_query
+        options:
+          disable_sql_rewrite: false
+          distinct: false
+          replica: false
+          query_comment: ''
+          query_tags: {  }
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      pager:
+        type: full
+        options:
+          items_per_page: 50
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      style:
+        type: default
+        options:
+          grouping:
+            -
+              field: field_az_page_category
+              rendered: true
+              rendered_strip: true
+          row_class: ''
+          default_row_class: false
+          uses_fields: true
+      row:
+        type: 'entity:node'
+        options:
+          view_mode: teaser
       fields:
         field_az_page_category:
           id: field_az_page_category
@@ -36,7 +96,6 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: field
           label: ''
           exclude: false
           alter:
@@ -92,45 +151,33 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-      pager:
-        type: full
-        options:
-          offset: 0
-          items_per_page: 50
-          total_pages: null
-          id: 0
-          tags:
-            next: 'Next ›'
-            previous: '‹ Previous'
-            first: '« First'
-            last: 'Last »'
+          plugin_id: field
+      filters:
+        status:
+          value: '1'
+          table: node_field_data
+          field: status
+          plugin_id: boolean
+          entity_type: node
+          entity_field: status
+          id: status
           expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      access:
-        type: perm
-        options:
-          perm: 'access content'
-      cache:
-        type: tag
-        options: {  }
-      empty: {  }
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            az_flexible_page: az_flexible_page
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
       sorts:
         title:
           id: title
@@ -139,14 +186,19 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: standard
           order: ASC
+          exposed: false
           expose:
             label: ''
             field_identifier: title
-          exposed: false
+          entity_type: node
+          entity_field: title
+          plugin_id: standard
+      title: ''
+      header: {  }
+      footer: {  }
+      empty: {  }
+      relationships: {  }
       arguments:
         tid:
           id: tid
@@ -155,7 +207,6 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: taxonomy_index_tid
           default_action: ignore
           exception:
             value: all
@@ -169,8 +220,8 @@ display:
           summary_options:
             base_path: ''
             count: true
-            override: false
             items_per_page: 25
+            override: false
           summary:
             sort_order: asc
             number_of_records: 0
@@ -182,68 +233,16 @@ display:
           validate_options:
             bundles:
               az_page_categories: az_page_categories
-            access: false
             operation: view
             multiple: 1
+            access: false
           break_phrase: true
           add_table: false
           require_value: false
           reduce_duplicates: true
-      filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            az_flexible_page: az_flexible_page
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-      style:
-        type: default
-        options:
-          grouping:
-            -
-              field: field_az_page_category
-              rendered: true
-              rendered_strip: true
-          row_class: ''
-          default_row_class: false
-          uses_fields: true
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_row
-      query:
-        type: views_query
-        options:
-          query_comment: ''
-          disable_sql_rewrite: false
-          distinct: false
-          replica: false
-          query_tags: {  }
-      relationships: {  }
-      group_by: false
-      header: {  }
-      footer: {  }
+          plugin_id: taxonomy_index_tid
       display_extenders: {  }
+      group_by: false
     cache_metadata:
       max-age: -1
       contexts:
@@ -256,11 +255,13 @@ display:
       tags:
         - 'config:field.storage.node.field_az_page_category'
   grid:
+    display_plugin: page
     id: grid
     display_title: 'Grid Page'
-    display_plugin: page
     position: 2
     display_options:
+      display_extenders: {  }
+      display_description: ''
       style:
         type: views_bootstrap_grid
         options:
@@ -273,18 +274,16 @@ display:
           col_md: col-md-4
           col_lg: col-lg-4
           col_xl: col-xl-4
+      defaults:
+        style: false
+        row: false
+        style_options: false
       row:
         type: 'entity:node'
         options:
           relationship: none
           view_mode: az_card
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
       style_options: null
-      display_extenders: {  }
       path: page-grid
     cache_metadata:
       max-age: -1
@@ -298,30 +297,32 @@ display:
       tags:
         - 'config:field.storage.node.field_az_page_category'
   row:
+    display_plugin: page
     id: row
     display_title: 'Row Page'
-    display_plugin: page
     position: 1
     display_options:
+      display_extenders: {  }
+      path: page-list
+      display_description: ''
       style:
         type: default
         options:
           row_class: ''
           default_row_class: false
           uses_fields: false
+      defaults:
+        css_class: false
+        style: false
+        row: false
+        style_options: false
+      css_class: add-pager-top-margin
       row:
         type: 'entity:node'
         options:
           relationship: none
           view_mode: az_row
-      defaults:
-        style: false
-        style_options: false
-        row: false
-      display_description: ''
       style_options: null
-      display_extenders: {  }
-      path: page-list
     cache_metadata:
       max-age: -1
       contexts:
@@ -333,251 +334,3 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_page_category'
-  row_with_filters:
-    id: row_with_filters
-    display_title: 'Row Page with Filters'
-    display_plugin: block
-    position: 3
-    display_options:
-      title: Filter
-      fields: {  }
-      pager:
-        type: none
-        options:
-          offset: 0
-      exposed_form:
-        type: az_bef
-        options:
-          submit_button: Apply
-          reset_button: 0
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-          text_input_required: ''
-          text_input_required_format: az_standard
-          bef:
-            general:
-              autosubmit: 1
-              autosubmit_exclude_textfield: 0
-              autosubmit_textfield_delay: '500'
-              autosubmit_hide: 1
-              input_required: 0
-              allow_secondary: 0
-              secondary_label: 'Advanced options'
-              secondary_open: 0
-              reset_button_always_show: 0
-            filter:
-              keys:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: 0
-                  is_secondary: 0
-              field_az_page_category_target_id:
-                plugin_id: az_finder_tid_widget
-                advanced:
-                  sort_options: 0
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: 0
-                  is_secondary: 0
-                level_0_expand_color: '#1e5288'
-                level_0_collapse_color: '#1e5288'
-                level_1_expand_color: '#1e8a61'
-                level_1_collapse_color: '#ff9c7a'
-                level_0_expand_title: 'Level 0 Expand'
-                level_0_collapse_title: 'Level 0 Collapse'
-                level_1_expand_title: 'Level 1 Expand'
-                level_1_collapse_title: 'Level 1 Collapse'
-          az_bef:
-            finder:
-              min_search_length: '1'
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text
-          empty: true
-          content:
-            value: 'No results found for the selected filters. Please clear filters and try again.'
-            format: az_standard
-          tokenize: false
-      filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            az_flexible_page: az_flexible_page
-          group: 1
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: string
-          operator: contains
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_op
-            label: Search
-            description: ''
-            use_operator: false
-            operator: title_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: search
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        field_az_page_category_target_id:
-          id: field_az_page_category_target_id
-          table: node__field_az_page_category
-          field: field_az_page_category_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: and
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_az_page_category_target_id_op
-            label: ''
-            description: ''
-            use_operator: false
-            operator: field_az_page_category_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: category
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: az_page_categories
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      style:
-        type: default
-        options:
-          row_class: ''
-          default_row_class: false
-          uses_fields: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_row
-      defaults:
-        empty: false
-        title: false
-        css_class: false
-        use_ajax: false
-        pager: false
-        exposed_form: false
-        style: false
-        style_options: false
-        row: false
-        fields: false
-        filters: false
-        filter_groups: false
-        pager_options: false
-      css_class: add-pager-top-margin
-      use_ajax: true
-      display_description: ''
-      pager_options: null
-      style_options: null
-      exposed_block: true
-      display_extenders: {  }
-    cache_metadata:
-      max-age: -1
-      contexts:
-        - 'languages:language_interface'
-        - url
-        - 'user.node_grants:view'
-        - user.permissions
-      tags:
-        - 'config:taxonomy.vocabulary.az_page_categories'
-        - 'taxonomy_term_list:az_page_categories'

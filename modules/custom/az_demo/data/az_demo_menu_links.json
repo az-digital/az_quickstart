@@ -373,17 +373,6 @@
       "expanded": false,
       "enabled": true,
       "weight": "17"
-    },
-    {
-      "link_id": "35",
-      "parent_link_id": "6",
-      "menu": "main",
-      "title": "Page List with Finder",
-      "urlpath": "/pages/page-list-finder",
-      "external": false,
-      "expanded": false,
-      "enabled": true,
-      "weight": "18"
     }
   ]
 }
