@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_row
     - node.type.az_event
     - node.type.az_flexible_page
     - node.type.az_news
@@ -14,12 +14,18 @@ dependencies:
     - taxonomy.vocabulary.az_person_categories
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
+    - az_core
     - az_event
+    - az_
+    - az_news
+    - az_person
+    - az_flexible_page
     - better_exposed_filters
     - datetime
     - node
     - taxonomy
     - user
+    - az_enterprise_attributes_import
 id: az_finder
 label: 'AZ Finder'
 module: views
@@ -123,7 +129,7 @@ display:
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
-              reset_button_always_show: false
+              reset_button_always_show: true
             filter:
               title:
                 plugin_id: default
@@ -131,13 +137,18 @@ display:
                   placeholder_text: ''
                   collapsible: false
                   is_secondary: false
-              field_az_published_value:
-                plugin_id: bef_datepicker
+              type:
+                plugin_id: bef
                 advanced:
-                  placeholder_text: ''
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-              field_az_enterprise_attributes_target_id:
+                select_all_none: true
+                select_all_none_nested: true
+                display_inline: false
+              tid:
                 plugin_id: bef
                 advanced:
                   sort_options: false
@@ -328,7 +339,7 @@ display:
         type: 'entity:node'
         options:
           relationship: none
-          view_mode: az_card
+          view_mode: az_row
       query:
         type: views_query
         options:
@@ -358,20 +369,75 @@ display:
     display_plugin: block
     position: 3
     display_options:
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: true
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              type:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: true
+                  is_secondary: false
+                select_all_none: true
+                select_all_none_nested: true
+                display_inline: false
+              tid:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: true
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
       sorts:
-        field_az_lname_value:
-          id: field_az_lname_value
-          table: node__field_az_lname
-          field: field_az_lname_value
+        created:
+          id: created
+          table: node_field_data
+          field: created
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: standard
+          entity_type: node
+          entity_field: created
+          plugin_id: date
           order: ASC
           expose:
             label: ''
             field_identifier: ''
           exposed: false
+          granularity: second
       filters:
         status:
           id: status
@@ -400,8 +466,8 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: 'Search by Name'
-            description: ''
+            label: Search
+            description: 'Search by title'
             use_operator: false
             operator: title_op
             operator_limit_selection: false
@@ -431,108 +497,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_az_person_category_target_id:
-          id: field_az_person_category_target_id
-          table: node__field_az_person_category
-          field: field_az_person_category_target_id
-          relationship: none
-          group_type: group
-          admin_label: Category
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_az_person_category_target_id_op
-            label: Category
-            description: 'Choose a category'
-            use_operator: false
-            operator: field_az_person_category_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: category
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: az_person_categories
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
-        field_az_person_category_sec_target_id:
-          id: field_az_person_category_sec_target_id
-          table: node__field_az_person_category_sec
-          field: field_az_person_category_sec_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_az_person_category_sec_target_id_op
-            label: 'Secondary Category'
-            description: 'Choose a secondary category.'
-            use_operator: false
-            operator: field_az_person_category_sec_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: category_secondary
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: az_person_categories_secondary
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
         type:
           id: type
           table: node_field_data
@@ -558,7 +522,7 @@ display:
             identifier: type
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
@@ -580,11 +544,63 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: 'Enterprise attributes'
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: tid_op
+            label: 'Enterprise Attributes'
+            description: 'Choose an attribute'
+            use_operator: false
+            operator: tid_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: enterprise_attributes
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          vid: az_enterprise_attributes
+          type: select
+          hierarchy: true
+          limit: true
+          error_message: true
       filter_groups:
         operator: AND
         groups:
           1: AND
       defaults:
+        exposed_form: false
         sorts: false
         filters: false
         filter_groups: false
@@ -608,6 +624,58 @@ display:
     display_plugin: block
     position: 3
     display_options:
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: true
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_az_enterprise_attributes_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
+              field_az_event_category_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
       sorts:
         field_az_lname_value:
           id: field_az_lname_value
@@ -623,17 +691,6 @@ display:
             field_identifier: ''
           exposed: false
       filters:
-        status:
-          id: status
-          table: node_field_data
-          field: status
-          entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
         type:
           id: type
           table: node_field_data
@@ -676,6 +733,17 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
         title:
           id: title
           table: node_field_data
@@ -692,13 +760,13 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: 'Search by Name'
-            description: ''
+            label: Search
+            description: 'Search by Name of Event'
             use_operator: false
             operator: title_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: title
+            identifier: search
             required: false
             remember: false
             multiple: false
@@ -710,6 +778,108 @@ display:
               az_user_admin: '0'
               az_html_admin: '0'
               administrator: '0'
+            placeholder: 'Search by name'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_az_event_category_target_id:
+          id: field_az_event_category_target_id
+          table: node__field_az_event_category
+          field: field_az_event_category_target_id
+          relationship: none
+          group_type: group
+          admin_label: Category
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_event_category_target_id_op
+            label: Category
+            description: 'Choose a category'
+            use_operator: false
+            operator: field_az_event_category_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: category
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          vid: az_event_categories
+          type: select
+          hierarchy: true
+          limit: true
+          error_message: true
+        field_az_event_date_value_az_calendar:
+          id: field_az_event_date_value_az_calendar
+          table: node__field_az_event_date
+          field: field_az_event_date_value_az_calendar
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_calendar_filter
+          operator: overlaps
+          value:
+            min: today
+            max: 'today +3 years'
+            value: ''
+            type: date
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_event_date_value_az_calendar_op
+            label: Date
+            description: 'Select a date'
+            use_operator: false
+            operator: field_az_event_date_value_az_calendar_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_az_event_date_value_az_calendar
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            min_placeholder: ''
+            max_placeholder: ''
             placeholder: ''
           is_grouped: false
           group_info:
@@ -746,7 +916,7 @@ display:
             identifier: az_enterprise_attributes
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
@@ -774,107 +944,12 @@ display:
           hierarchy: true
           limit: true
           error_message: true
-        field_az_event_date_value_az_calendar:
-          id: field_az_event_date_value_az_calendar
-          table: node__field_az_event_date
-          field: field_az_event_date_value_az_calendar
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: az_calendar_filter
-          operator: overlaps
-          value:
-            min: today
-            max: 'today +7 hours'
-            value: ''
-            type: date
-          group: 1
-          exposed: false
-          expose:
-            operator_id: ''
-            label: ''
-            description: ''
-            use_operator: false
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: ''
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-            min_placeholder: ''
-            max_placeholder: ''
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        field_az_event_category_target_id:
-          id: field_az_event_category_target_id
-          table: node__field_az_event_category
-          field: field_az_event_category_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_az_event_category_target_id_op
-            label: Category
-            description: ''
-            use_operator: false
-            operator: field_az_event_category_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: category
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: az_event_categories
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
       filter_groups:
         operator: AND
         groups:
           1: AND
       defaults:
+        exposed_form: false
         sorts: false
         filters: false
         filter_groups: false
@@ -898,6 +973,70 @@ display:
     display_plugin: block
     position: 3
     display_options:
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: true
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_az_byline_value:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: true
+                  is_secondary: false
+              field_az_published_value:
+                plugin_id: bef_datepicker
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_az_news_tags_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: true
+                  is_secondary: false
+                select_all_none: true
+                select_all_none_nested: true
+                display_inline: false
+              field_az_enterprise_attributes_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: true
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
       sorts:
         field_az_lname_value:
           id: field_az_lname_value
@@ -982,13 +1121,58 @@ display:
           exposed: true
           expose:
             operator_id: title_op
-            label: 'Search by Name'
-            description: ''
+            label: Search
+            description: 'Search by headline'
             use_operator: false
             operator: title_op
             operator_limit_selection: false
             operator_list: {  }
             identifier: title
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        field_az_byline_value:
+          id: field_az_byline_value
+          table: node__field_az_byline
+          field: field_az_byline_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: string
+          operator: word
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_byline_value_op
+            label: Byline
+            description: ''
+            use_operator: false
+            operator: field_az_byline_value_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: byline
             required: false
             remember: false
             multiple: false
@@ -1065,57 +1249,6 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           granularity: day
-        field_az_enterprise_attributes_target_id:
-          id: field_az_enterprise_attributes_target_id
-          table: node__field_az_enterprise_attributes
-          field: field_az_enterprise_attributes_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_az_enterprise_attributes_target_id_op
-            label: 'Enterprise Attributes'
-            description: 'UArizona attributes'
-            use_operator: false
-            operator: field_az_enterprise_attributes_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: az_enterprise_attributes
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          vid: az_enterprise_attributes
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
         field_az_news_tags_target_id:
           id: field_az_news_tags_target_id
           table: node__field_az_news_tags
@@ -1130,7 +1263,7 @@ display:
           exposed: true
           expose:
             operator_id: field_az_news_tags_target_id_op
-            label: tags
+            label: Tags
             description: 'Choose a tag'
             use_operator: false
             operator: field_az_news_tags_target_id_op
@@ -1139,7 +1272,7 @@ display:
             identifier: tags
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
@@ -1167,11 +1300,63 @@ display:
           hierarchy: true
           limit: true
           error_message: true
+        field_az_enterprise_attributes_target_id:
+          id: field_az_enterprise_attributes_target_id
+          table: node__field_az_enterprise_attributes
+          field: field_az_enterprise_attributes_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_az_enterprise_attributes_target_id_op
+            label: 'Enterprise Attributes'
+            description: 'UArizona attributes'
+            use_operator: false
+            operator: field_az_enterprise_attributes_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: az_enterprise_attributes
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          vid: az_enterprise_attributes
+          type: select
+          hierarchy: true
+          limit: true
+          error_message: true
       filter_groups:
         operator: AND
         groups:
           1: AND
       defaults:
+        exposed_form: false
         sorts: false
         filters: false
         filter_groups: false
@@ -1195,6 +1380,47 @@ display:
     display_plugin: block
     position: 3
     display_options:
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: true
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_az_page_category_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: true
+                select_all_none_nested: true
+                display_inline: false
       sorts:
         field_az_lname_value:
           id: field_az_lname_value
@@ -1324,8 +1550,8 @@ display:
           exposed: true
           expose:
             operator_id: field_az_page_category_target_id_op
-            label: category
-            description: ''
+            label: Category
+            description: 'Select a category'
             use_operator: false
             operator: field_az_page_category_target_id_op
             operator_limit_selection: false
@@ -1342,7 +1568,7 @@ display:
               az_user_admin: '0'
               az_html_admin: '0'
               administrator: '0'
-            reduce: true
+            reduce: false
           is_grouped: false
           group_info:
             label: ''
@@ -1360,12 +1586,13 @@ display:
           type: select
           hierarchy: true
           limit: true
-          error_message: true
+          error_message: false
       filter_groups:
         operator: AND
         groups:
           1: AND
       defaults:
+        exposed_form: false
         sorts: false
         filters: false
         filter_groups: false
@@ -1389,6 +1616,58 @@ display:
     display_plugin: block
     position: 3
     display_options:
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: true
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              field_az_person_category_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: true
+                  is_secondary: false
+                select_all_none: true
+                select_all_none_nested: true
+                display_inline: false
+              field_az_person_category_sec_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: true
+                  is_secondary: true
+                select_all_none: true
+                select_all_none_nested: true
+                display_inline: false
       sorts:
         field_az_lname_value:
           id: field_az_lname_value
@@ -1611,6 +1890,7 @@ display:
         groups:
           1: AND
       defaults:
+        exposed_form: false
         sorts: false
         filters: false
         filter_groups: false

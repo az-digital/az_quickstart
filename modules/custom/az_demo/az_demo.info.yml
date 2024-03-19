@@ -6,6 +6,7 @@ package: 'The University of Arizona - Experimental'
 dependencies:
   - az_custom_menu_block
   - az_core
+  - az_enterprise_attributes_import
   - az_event
   - az_news
   - az_flexible_page
