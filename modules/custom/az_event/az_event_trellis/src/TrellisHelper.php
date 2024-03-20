@@ -202,6 +202,28 @@ final class TrellisHelper {
   }
 
   /**
+   * Fetch the periodic search list of ids to import.
+   *
+   * @return array
+   *   Returns an array of event ids.
+   */
+  public function getPeriodicEventIds() {
+    // Find enabled import configurations.
+    $imports = \Drupal::entityTypeManager()->getStorage('az_event_trellis_import')->loadByProperties([
+      'status' => [1, TRUE],
+    ]);
+
+    $event_api_ids = [];
+    foreach ($imports as $import) {
+      /** @var \Drupal\az_event_trellis\Entity\AZEventTrellisImport $import */
+      $event_api_ids += $import->getEventIds();
+    }
+    // Remove duplicates in case searches overlapped.
+    $event_api_ids = array_unique($event_api_ids);
+    return $event_api_ids;
+  }
+
+  /**
    * Returns the cache for an event if possible.
    *
    * @param string $trellis_id

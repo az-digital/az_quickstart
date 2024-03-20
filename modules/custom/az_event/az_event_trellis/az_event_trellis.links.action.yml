@@ -1,0 +1,5 @@
+entity.az_event_trellis_import.add_form:
+  route_name: 'entity.az_event_trellis_import.add_form'
+  title: 'Add recurring Trellis Event Import'
+  appears_on:
+    - entity.az_event_trellis_import.collection

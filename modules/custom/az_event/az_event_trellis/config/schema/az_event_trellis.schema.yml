@@ -11,3 +11,19 @@ views.filter_value.az_event_trellis_views_date_filter:
     end:
       type: string
       label: 'Custom Date Range End'
+az_event_trellis.az_event_trellis_import.*:
+  type: config_entity
+  label: Trellis Event Import
+  mapping:
+    id:
+      type: string
+      label: ID
+    label:
+      type: label
+      label: Label
+    uuid:
+      type: string
+    keyword:
+      type: string
+    owner:
+      type: string

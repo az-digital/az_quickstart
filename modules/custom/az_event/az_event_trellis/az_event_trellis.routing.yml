@@ -5,3 +5,35 @@ az_event_trellis.settings:
     _title: 'Trellis Event Importer Settings'
   requirements:
     _permission: 'administer quickstart configuration'
+
+entity.az_event_trellis_import.collection:
+  path: '/admin/structure/az-event-trellis-import'
+  defaults:
+    _entity_list: 'az_event_trellis_import'
+    _title: 'Trellis Event Import configuration'
+  requirements:
+    _permission: 'administer az_event_trellis_import'
+
+entity.az_event_trellis_import.add_form:
+  path: '/admin/structure/az_event_trellis_import/add'
+  defaults:
+    _entity_form: 'az_event_trellis_import.add'
+    _title: 'Add a trellis event import'
+  requirements:
+    _permission: 'administer az_event_trellis_import'
+
+entity.az_event_trellis_import.edit_form:
+  path: '/admin/structure/az-event-trellis-import/{az_event_trellis_import}'
+  defaults:
+    _entity_form: 'az_event_trellis_import.edit'
+    _title: 'Edit a trellis event import'
+  requirements:
+    _permission: 'administer az_event_trellis_import'
+
+entity.az_event_trellis_import.delete_form:
+  path: '/admin/structure/az-event-trellis-import/{az_event_trellis_import}/delete'
+  defaults:
+    _entity_form: 'az_event_trellis_import.delete'
+    _title: 'Delete a trellis event import'
+  requirements:
+    _permission: 'administer az_event_trellis_import'

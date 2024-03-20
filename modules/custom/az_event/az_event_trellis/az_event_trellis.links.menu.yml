@@ -1,0 +1,5 @@
+entity.az_event_trellis_import.overview:
+  title: Trellis Event Imports
+  parent: system.admin_structure
+  description: 'List of Trellis event import settings'
+  route_name: entity.az_event_trellis_import.collection
