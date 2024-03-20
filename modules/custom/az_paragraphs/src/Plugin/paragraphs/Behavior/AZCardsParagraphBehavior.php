@@ -74,19 +74,21 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
 
     $form['card_title_display'] = [
-      '#title' => $this->t('Card title display'),
+      '#title' => $this->t('Card title display size'),
       '#type' => 'select',
       '#options' => [
-        'display-1' => $this->t('Largest'),
-        'display-4' => $this->t('Larger'),
-        'h2' => $this->t('Large'),
-        'h3' => $this->t('Medium'),
-        'h4' => $this->t('Small'),
-        'h5' => $this->t('Default'),
-        'h6' => $this->t('Smallest'),
+        'h6' => $this->t('Smallest (H6 size)'),
+        'h5' => $this->t('Default (H5 size)'),
+        'h4' => $this->t('Small (H4 size)'),
+        'h3' => $this->t('Medium (H3 size)'),
+        'h2' => $this->t('Large (H2 size)'),
+        'display-4' => $this->t('Small Display Heading'),
+        'display-3' => $this->t('Medium Display Heading'),
+        'display-2' => $this->t('Large Display Heading'),
+        'display-1' => $this->t('Largest Display Heading'),
       ],
       '#default_value' => $config['card_title_display'] ?? 'h5',
-      '#description' => $this->t('Select the display size of the title.'),
+      '#description' => $this->t('Select the display size of the title. <a href="https://digital.arizona.edu/arizona-bootstrap/docs/2.0/content/typography/#display-headings" target="_blank">Learn about display heading sizes</a>.'),
     ];
 
     $form['card_clickable'] = [
