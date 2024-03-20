@@ -418,5 +418,4 @@ function az_core_form_taxonomy_vocabulary_confirm_reset_alphabetical_alter(&$for
   if ($form_object->getEntity()->id() === 'az_enterprise_attributes') {
     _az_core_check_attribute_form($form, $form_state, $form_id);
   }
-
 }
