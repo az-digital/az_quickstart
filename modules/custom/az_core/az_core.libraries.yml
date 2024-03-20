@@ -15,7 +15,3 @@ az-enterprise-attributes:
   css:
     component:
       css/az-enterprise-attributes.css: {}
-az-bef-sidebar:
-  css:
-    theme:
-      css/az-bef-sidebar.css: {}
