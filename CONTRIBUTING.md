@@ -271,9 +271,8 @@ UI and using Drush, with a special emphasis on the latter for its convenience.
 To enable Twig debugging through the Drupal UI:
 
 1. Go to `/admin/config/development/settings` on your Drupal site.
-2. Check the box for "Twig Debugging".
-3. Click on "Save configuration".
-4. Don't forget to clear your cache for the changes to take effect.
+2. Check the box for "Twig development mode".
+3. Click on "Save settings".
 
 ### Enable Twig Debugging via Drush
 
