@@ -246,19 +246,25 @@ ddev yarn watch
 
 ## ESLint in Local Development
 
-You may run eslint to lint javascript in local development with one of the
-following two commands.
+To maintain high-quality JavaScript code, contributors are encouraged to use
+ESLint in their local development environment. This tool helps in identifying
+and reporting on patterns found in ECMAScript/JavaScript code, making it easier
+to adhere to the project's coding standards.
 
-All files:
-```
-lando eslint .
-ddev eslint .
-```
-Single file:
-```
-lando eslint myfile.js
-ddev eslint myfile.js
-```
+###  Running ESLint
+
+To lint all files in the project, contributors can use the command `lando
+eslint .` or `ddev eslint .`, depending on whether you're using Lando or DDev for
+your local development environment.
+
+For a single file, the command changes slightly to include the filename, like
+`lando eslint myfile.js` or `ddev eslint myfile.js`.
+
+### Auto-fixing Code with ESLint
+
+ESLint provides an auto-fix feature that can automatically fix some of the
+linting errors. This is done by appending `--fix` to the eslint command: `lando
+eslint . --fix` or `ddev eslint . --fix`.
 
 ## Theme Debugging
 
@@ -304,6 +310,10 @@ tools page](https://www.drupal.org/docs/develop/development-tools). Here, you'll
 find a wealth of resources on debugging, performance optimization, and
 development best practices to enhance your Drupal projects.
 
+[Devel](https://www.drupal.org/project/devel) is included in the
+[development metapackage](https://github.com/az-digital/az-quickstart-dev) 
+that is downloaded when installing a site locally via Lando, or DDev.  See 
+"Visual Studio Code Integration"
 
 ## Configuration Management and Database Updates
 
