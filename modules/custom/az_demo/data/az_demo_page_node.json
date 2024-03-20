@@ -96,7 +96,7 @@
       "path" : "/pages/photo-galleries",
       "exclude_title" : false,
       "az_page_category"  : "Photo Galleries|Image Galleries",
-      "az_main_content"  : "7|10",
+      "az_main_content"  : "7|200|10|201",
       "az_media_image"    : "",
       "az_summary" : ""
     },
