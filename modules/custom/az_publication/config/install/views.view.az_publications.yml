@@ -16,6 +16,9 @@ dependencies:
     - options
     - taxonomy
     - user
+  enforced:
+    module:
+      - az_publication
 id: az_publications
 label: 'AZ Publications'
 module: views

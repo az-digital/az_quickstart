@@ -9,6 +9,14 @@ use Drupal\Core\Database\Database;
 use Drupal\Core\Utility\UpdateException;
 
 /**
+ * Implements hook_uninstall().
+ */
+function az_publication_uninstall() {
+  // Delete az_publication az_author auto entity label settings.
+  \Drupal::configFactory()->getEditable('auto_entitylabel.settings.az_author.az_author')->delete();
+}
+
+/**
  * Install the new az_curated_views module (now required by az_publication).
  */
 function az_publication_update_1020701() {
