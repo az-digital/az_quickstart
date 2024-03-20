@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.az_very_small
+label: 'Very Small (220px)'
+targetEntityType: media
+cache: true

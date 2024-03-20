@@ -64,8 +64,8 @@ display:
           id: 0
           total_pages: null
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Previous'
+            next: 'Next ›'
             first: '« First'
             last: 'Last »'
           expose:
@@ -597,9 +597,11 @@ display:
           default_row_class: false
           uses_fields: false
       defaults:
+        css_class: false
         style: false
         row: false
         style_options: false
+      css_class: add-pager-top-margin
       row:
         type: 'entity:node'
         options:
@@ -810,8 +812,8 @@ display:
           id: 0
           total_pages: null
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Previous'
+            next: 'Next ›'
             first: '« First'
             last: 'Last »'
           expose:

@@ -3,7 +3,8 @@
 namespace Drupal\az_publication_import\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\system\SystemManager;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
  * Returns responses for Quickstart Publication Import routes.
@@ -11,21 +12,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZPublicationImportController extends ControllerBase {
 
   /**
-   * System Manager Service.
-   *
-   * @var \Drupal\system\SystemManager
+   * Constructs a new \Drupal\az_publication_import\Controller object.
    */
-  protected $systemManager;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    $instance = new static();
-
-    $instance->systemManager = $container->get('system.manager');
-    return $instance;
-  }
+  public function __construct(
+    #[Autowire(service: 'system.manager')]
+    protected SystemManager $systemManager,
+  ) {}
 
   /**
    * Provides a single block from the administration menu as a page.

@@ -35,7 +35,6 @@ function az_mail_mail_alter(&$message) {
       if (count($ses_message_tags) > 0) {
         $message['headers']['X-SES-MESSAGE-TAGS'] = implode(
           ',',
-          //phpcs:ignore Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
           array_map(
             function ($tag) {
               return $tag['key'] . '=' . $tag['value'];
