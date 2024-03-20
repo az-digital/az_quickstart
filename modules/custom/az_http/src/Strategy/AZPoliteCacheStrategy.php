@@ -58,6 +58,7 @@ class AZPoliteCacheStrategy extends PrivateCacheStrategy {
       return;
     }
 
+    // @todo Determine our policy on other headers to avoid caching, such as Authorization.
     if ($cacheControl->has('no-store')) {
       // No store allowed.
       return;
