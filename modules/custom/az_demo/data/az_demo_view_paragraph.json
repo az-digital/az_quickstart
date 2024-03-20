@@ -35,8 +35,40 @@
     {
       "id" : 104,
       "title" : "",
-      "target_id" : "az_page_by_category",
-      "display_id" : "row_with_filters",
+      "target_id" : "az_finder",
+      "display_id" : "person",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 105,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "news",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 106,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "event",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 107,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "page",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 108,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "content",
       "data" : "",
       "bottom_spacing" : "mb-4"
     }

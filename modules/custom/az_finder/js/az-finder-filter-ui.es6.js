@@ -14,9 +14,7 @@
     const filterCountDisplay = clearAllButton.querySelector(
       '.js-finder-filter-count',
     );
-    const searchInputField = filterContainer.querySelector(
-      'input[name="search"]',
-    );
+    const searchInput = filterContainer.querySelector('input[name="search"]');
     const svgLevel0ReplaceButtons = filterContainer.querySelectorAll(
       '.js-svg-replace-level-0',
     );
@@ -25,20 +23,20 @@
     );
     const accordionButtons = filterContainer.querySelectorAll('.collapser');
     const { minSearchLength = 1, icons } = drupalSettings.azFinder;
-    // Replace SVGs with expand/collapse icons
-    function toggleSVG(container, level) {
-      const isExpanded = container.getAttribute('aria-expanded') === 'true';
-      let newSVGMarkup;
+
+    // Replace nested ternary with a function to avoid nesting
+    function getNewSVGMarkup(isExpanded, level) {
       if (level === 0) {
-        newSVGMarkup = isExpanded
-          ? icons.level_0_expand
-          : icons.level_0_collapse;
-      } else {
-        newSVGMarkup = isExpanded
-          ? icons.level_1_expand
-          : icons.level_1_collapse;
+        return isExpanded ? icons.level_0_expand : icons.level_0_collapse;
       }
-      container.querySelector('svg').outerHTML = newSVGMarkup;
+      return isExpanded ? icons.level_1_expand : icons.level_1_collapse;
+    }
+
+    // Replace SVGs with expand/collapse icons
+    function toggleSVG(button, level) {
+      const isExpanded = button.getAttribute('aria-expanded') === 'true';
+      const newSVGMarkup = getNewSVGMarkup(isExpanded, level);
+      button.querySelector('svg').outerHTML = newSVGMarkup;
     }
 
     svgLevel0ReplaceButtons.forEach((button) => {
@@ -50,82 +48,63 @@
     });
 
     // Update display of total active filters
-    const updateActiveFilterDisplay = () => {
+    function updateActiveFilterDisplay() {
       const activeCheckboxes = filterContainer.querySelectorAll(
         'input[type="checkbox"]:checked',
       );
       let activeFilterCount = activeCheckboxes.length;
 
-      if (searchInputField.value.trim().length >= minSearchLength) {
+      if (searchInput.value.trim().length >= minSearchLength) {
         activeFilterCount += 1;
       }
 
       filterCountDisplay.textContent = `(${activeFilterCount})`;
-      if (
-        activeFilterCount > 0 &&
-        clearAllButton.classList.contains('d-none')
-      ) {
-        clearAllButton.classList.remove('d-none');
-      } else if (
-        activeFilterCount === 0 &&
-        !clearAllButton.classList.contains('d-none')
-      ) {
-        clearAllButton.classList.add('d-none');
-      }
-    };
+      clearAllButton.classList.toggle('d-none', activeFilterCount === 0);
+    }
 
-    // Deselect all checkboxes
-    function deselectAllCheckboxes(event, filterContainer) {
-      event.preventDefault();
+    // Adjust arrow function to not return an assignment directly
+    function deselectAllCheckboxes() {
       const checkboxes = filterContainer.querySelectorAll(
         'input[type="checkbox"]',
       );
-      checkboxes.forEach((checkbox) => (checkbox.checked = false));
+      checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+      });
       updateActiveFilterDisplay();
     }
 
-    // Clear search input field
-    function clearSearchInput(event, searchInputField) {
-      searchInputField.value = '';
-    }
-
     // Reset all filters to their default state
-    function resetAllFilters(event, searchInputField, filterContainer) {
-      clearSearchInput(event, searchInputField);
-      deselectAllCheckboxes(event, filterContainer);
+    function resetAllFilters() {
+      searchInput.value = '';
+      deselectAllCheckboxes();
       filterContainer.querySelector('.js-form-submit').click();
-      event.preventDefault();
     }
 
-    // Handle changes in checkboxes and search input
+    clearAllButton.addEventListener('click', (event) => {
+      event.preventDefault();
+      resetAllFilters();
+    });
+
     filterContainer.addEventListener('change', (event) => {
-      if (
-        event.target &&
-        (event.target.type === 'checkbox' || event.target === searchInputField)
-      ) {
+      if (event.target.type === 'checkbox' || event.target === searchInput) {
         updateActiveFilterDisplay();
       }
     });
 
-    clearAllButton.addEventListener('click', (event) => {
-      resetAllFilters(event, searchInputField, filterContainer);
-    });
-    // Update filter count based on search input changes
-    searchInputField.addEventListener('input', updateActiveFilterDisplay);
-    // Define a function for handling keydown events on accordion buttons
-    const handleAccordionButtonKeydown = (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault(); // Prevent the default action to stop scrolling when space is pressed
-        event.currentTarget.click(); // Trigger the Bootstrap collapse toggle
-      }
-    };
+    searchInput.addEventListener('input', updateActiveFilterDisplay);
 
-    // Apply the event listener to each accordion button
+    // Define a function for handling keydown events on accordion buttons
+    function handleAccordionButtonKeydown(event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        event.currentTarget.click();
+      }
+    }
+
     accordionButtons.forEach((button) => {
       button.addEventListener('keydown', handleAccordionButtonKeydown);
     });
 
-    // Initialize the display of active filters
     updateActiveFilterDisplay();
   });
 })(drupalSettings);

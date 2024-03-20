@@ -96,7 +96,7 @@
       "path" : "/pages/photo-galleries",
       "exclude_title" : false,
       "az_page_category"  : "Photo Galleries|Image Galleries",
-      "az_main_content"  : "7|10",
+      "az_main_content"  : "7|200|10|201",
       "az_media_image"    : "",
       "az_summary" : ""
     },
@@ -223,11 +223,51 @@
     },
     {
       "id":23,
-      "title" : "Page List with Finder",
-      "path" : "/pages/page-list-finder",
+      "title" : "People Finder",
+      "path" : "/finders/people",
       "exclude_title" : false,
-      "az_page_category" : "Views|Rotating Banner",
+      "az_page_category" : "Views",
       "az_main_content" : "104",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":24,
+      "title" : "News Finder",
+      "path" : "/finders/news",
+      "exclude_title" : false,
+      "az_page_category" : "Views",
+      "az_main_content" : "105",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":25,
+      "title" : "Event Finder",
+      "path" : "/finders/events",
+      "exclude_title" : false,
+      "az_page_category" : "Views|Event Listings",
+      "az_main_content" : "106",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":26,
+      "title" : "Page Finder",
+      "path" : "/finders/pages",
+      "exclude_title" : false,
+      "az_page_category" : "Views",
+      "az_main_content" : "107",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":27,
+      "title" : "Content Finder",
+      "path" : "/finders/content",
+      "exclude_title" : false,
+      "az_page_category" : "Views",
+      "az_main_content" : "108",
       "az_media_image" : "",
       "az_summary" : "A page with views better exposed filters block."
     }

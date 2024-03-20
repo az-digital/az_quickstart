@@ -10,7 +10,7 @@
     if (!filterContainer) return;
     var clearAllButton = filterContainer.querySelector('.js-finder-clear-all');
     var filterCountDisplay = clearAllButton.querySelector('.js-finder-filter-count');
-    var searchInputField = filterContainer.querySelector('input[name="search"]');
+    var searchInput = filterContainer.querySelector('input[name="search"]');
     var svgLevel0ReplaceButtons = filterContainer.querySelectorAll('.js-svg-replace-level-0');
     var svgLevel1ReplaceButtons = filterContainer.querySelectorAll('.js-svg-replace-level-1');
     var accordionButtons = filterContainer.querySelectorAll('.collapser');
@@ -18,15 +18,16 @@
       _drupalSettings$azFin2 = _drupalSettings$azFin.minSearchLength,
       minSearchLength = _drupalSettings$azFin2 === void 0 ? 1 : _drupalSettings$azFin2,
       icons = _drupalSettings$azFin.icons;
-    function toggleSVG(container, level) {
-      var isExpanded = container.getAttribute('aria-expanded') === 'true';
-      var newSVGMarkup;
+    function getNewSVGMarkup(isExpanded, level) {
       if (level === 0) {
-        newSVGMarkup = isExpanded ? icons.level_0_expand : icons.level_0_collapse;
-      } else {
-        newSVGMarkup = isExpanded ? icons.level_1_expand : icons.level_1_collapse;
+        return isExpanded ? icons.level_0_expand : icons.level_0_collapse;
       }
-      container.querySelector('svg').outerHTML = newSVGMarkup;
+      return isExpanded ? icons.level_1_expand : icons.level_1_collapse;
+    }
+    function toggleSVG(button, level) {
+      var isExpanded = button.getAttribute('aria-expanded') === 'true';
+      var newSVGMarkup = getNewSVGMarkup(isExpanded, level);
+      button.querySelector('svg').outerHTML = newSVGMarkup;
     }
     svgLevel0ReplaceButtons.forEach(function (button) {
       button.addEventListener('click', function () {
@@ -38,51 +39,43 @@
         return toggleSVG(button, 1);
       });
     });
-    var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
+    function updateActiveFilterDisplay() {
       var activeCheckboxes = filterContainer.querySelectorAll('input[type="checkbox"]:checked');
       var activeFilterCount = activeCheckboxes.length;
-      if (searchInputField.value.trim().length >= minSearchLength) {
+      if (searchInput.value.trim().length >= minSearchLength) {
         activeFilterCount += 1;
       }
       filterCountDisplay.textContent = "(".concat(activeFilterCount, ")");
-      if (activeFilterCount > 0 && clearAllButton.classList.contains('d-none')) {
-        clearAllButton.classList.remove('d-none');
-      } else if (activeFilterCount === 0 && !clearAllButton.classList.contains('d-none')) {
-        clearAllButton.classList.add('d-none');
-      }
-    };
-    function deselectAllCheckboxes(event, filterContainer) {
-      event.preventDefault();
+      clearAllButton.classList.toggle('d-none', activeFilterCount === 0);
+    }
+    function deselectAllCheckboxes() {
       var checkboxes = filterContainer.querySelectorAll('input[type="checkbox"]');
       checkboxes.forEach(function (checkbox) {
-        return checkbox.checked = false;
+        checkbox.checked = false;
       });
       updateActiveFilterDisplay();
     }
-    function clearSearchInput(event, searchInputField) {
-      searchInputField.value = '';
-    }
-    function resetAllFilters(event, searchInputField, filterContainer) {
-      clearSearchInput(event, searchInputField);
-      deselectAllCheckboxes(event, filterContainer);
+    function resetAllFilters() {
+      searchInput.value = '';
+      deselectAllCheckboxes();
       filterContainer.querySelector('.js-form-submit').click();
-      event.preventDefault();
     }
+    clearAllButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      resetAllFilters();
+    });
     filterContainer.addEventListener('change', function (event) {
-      if (event.target && (event.target.type === 'checkbox' || event.target === searchInputField)) {
+      if (event.target.type === 'checkbox' || event.target === searchInput) {
         updateActiveFilterDisplay();
       }
     });
-    clearAllButton.addEventListener('click', function (event) {
-      resetAllFilters(event, searchInputField, filterContainer);
-    });
-    searchInputField.addEventListener('input', updateActiveFilterDisplay);
-    var handleAccordionButtonKeydown = function handleAccordionButtonKeydown(event) {
+    searchInput.addEventListener('input', updateActiveFilterDisplay);
+    function handleAccordionButtonKeydown(event) {
       if (event.key === 'Enter' || event.key === ' ') {
         event.preventDefault();
         event.currentTarget.click();
       }
-    };
+    }
     accordionButtons.forEach(function (button) {
       button.addEventListener('keydown', handleAccordionButtonKeydown);
     });
