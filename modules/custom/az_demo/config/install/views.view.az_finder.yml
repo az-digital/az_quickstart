@@ -7,7 +7,6 @@ dependencies:
     - node.type.az_flexible_page
     - node.type.az_news
     - node.type.az_person
-    - taxonomy.vocabulary.az_enterprise_attributes
     - taxonomy.vocabulary.az_event_categories
     - taxonomy.vocabulary.az_news_tags
     - taxonomy.vocabulary.az_page_categories
@@ -542,61 +541,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        tid:
-          id: tid
-          table: taxonomy_index
-          field: tid
-          relationship: none
-          group_type: group
-          admin_label: 'Enterprise attributes'
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: tid_op
-            label: 'Enterprise Attributes'
-            description: 'Choose an attribute'
-            use_operator: false
-            operator: tid_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: enterprise_attributes
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: az_enterprise_attributes
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
       defaults:
         exposed_form: false
         sorts: false
@@ -652,17 +596,6 @@ display:
                   placeholder_text: ''
                   collapsible: false
                   is_secondary: false
-              field_az_enterprise_attributes_target_id:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
               field_az_event_category_target_id:
                 plugin_id: bef
                 advanced:
@@ -891,61 +824,6 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_az_enterprise_attributes_target_id:
-          id: field_az_enterprise_attributes_target_id
-          table: node__field_az_enterprise_attributes
-          field: field_az_enterprise_attributes_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_az_enterprise_attributes_target_id_op
-            label: 'Enterprise Attributes'
-            description: 'UArizona attributes'
-            use_operator: false
-            operator: field_az_enterprise_attributes_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: az_enterprise_attributes
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          vid: az_enterprise_attributes
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
       defaults:
         exposed_form: false
         sorts: false
@@ -1023,17 +901,6 @@ display:
                   is_secondary: false
                 select_all_none: true
                 select_all_none_nested: true
-                display_inline: false
-              field_az_enterprise_attributes_target_id:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
                 display_inline: false
       sorts:
         field_az_lname_value:
@@ -1298,61 +1165,6 @@ display:
           hierarchy: true
           limit: true
           error_message: true
-        field_az_enterprise_attributes_target_id:
-          id: field_az_enterprise_attributes_target_id
-          table: node__field_az_enterprise_attributes
-          field: field_az_enterprise_attributes_target_id
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: field_az_enterprise_attributes_target_id_op
-            label: 'Enterprise Attributes'
-            description: 'UArizona attributes'
-            use_operator: false
-            operator: field_az_enterprise_attributes_target_id_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: az_enterprise_attributes
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: az_enterprise_attributes
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
       defaults:
         exposed_form: false
         sorts: false
