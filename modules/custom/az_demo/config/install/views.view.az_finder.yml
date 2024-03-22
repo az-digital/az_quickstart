@@ -889,7 +889,7 @@ display:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
+                  collapsible: true
                   is_secondary: false
               field_az_published_value:
                 plugin_id: bef_datepicker
