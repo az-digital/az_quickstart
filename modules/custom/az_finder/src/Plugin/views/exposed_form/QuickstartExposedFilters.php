@@ -13,9 +13,9 @@ use Drupal\Core\Form\FormStateInterface;
  * @ingroup views_exposed_form_plugins
  *
  * @ViewsExposedForm(
- *   id = "az_bef",
+ *   id = "az_better_exposed_filters",
  *   title = @Translation("Quickstart Exposed Filters"),
- *   help = @Translation("Better exposed filters with additional Quickstart styles.")
+ *   help = @Translation("Better exposed filters with additional Quickstart Settings.")
  * )
  */
 class QuickstartExposedFilters extends BetterExposedFilters {
@@ -25,81 +25,221 @@ class QuickstartExposedFilters extends BetterExposedFilters {
    */
   public function exposedFormAlter(&$form, FormStateInterface $form_state) {
     parent::exposedFormAlter($form, $form_state);
-
+    $options = $this->options;
+    if ($options['skip_link']) {
+      $skip_link_id = $options['skip_link_id'] ?? 'search-filters';
+      $form['#prefix'] = '<div id="' . $skip_link_id . '">';
+      $form['#suffix'] = '</div>';
+    }
+    if( $options['orientation'] === 'vertical' ) {
+      $form['#attributes']['class'][] = 'az-bef-vertical';
+    }
+    if( $options['orientation'] === 'horizontal' ) {
+      $form['#attributes']['class'][] = 'az-bef-horizontal';
+    }
     // Mark form as QuickstartExposedFilters form for easier alterations.
-    $form['#context']['az_bef'] = TRUE;
-    // Attach Quickstart styles.
-    $form['#attached']['library'][] = 'az_finder/filter-ui';
-    // Attach JavaScript settings for the minimum search input length.
-    $form['#attached']['drupalSettings']['azFinder']['minSearchLength'] = $this->options['az_bef']['finder']['min_search_length'] ?? 1;
-    // Vertical style intended for sidebar use.
-    $form['#attributes']['class'][] = 'az-bef-vertical';
-    // Create the clear all filters button.
-    $count = [
-      '#type' => 'html_tag',
-      '#tag' => 'span',
-      '#attributes' => [
-        'class' => [
-          'js-finder-filter-count',
-          'ml-1',
-        ],
-      ],
-    ];
+    $form['#context']['az_better_exposed_filters'] = TRUE;
+    $form['#attributes']['data-az-better-exposed-filters'] = TRUE;
+    $form['#attached']['drupalSettings']['azFinder']['minTextLength'] = $options['min_text_length'] ?? 1;
+    if ($options['reset_button'] === 1 && isset($form['actions']) && isset($form['actions']['reset'])) {
+      $form['#attached']['library'][] = 'az_finder/active-filter-reset';
+      // Clone the reset button.
+      $reset_button = $form['actions']['reset'];
+      if ($options['reset_button_position'] === 'top') {
+        $reset_button['#weight'] = -1000;
+      }
+      $existing_classes = $reset_button['#attributes']['class'] ?? [];
+      $reset_button['#attributes']['class'] = array_merge($existing_classes, [
+        'btn',
+        'btn-sm',
+        'btn-primary',
+        'btn-block',
+        'js-active-filters-reset',
+        'mx-1',
+        'mb-3',
+      ]);
+      // Add the reset button visibility setting to the drupalSettings array.
+      if ($this->options['bef']['general']['reset_button_always_show'] === 1) {
+        $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = TRUE;
+      }
+      else {
+        $reset_button['#attributes']['class'][] = 'd-hidden';
+        $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = FALSE;
+      }
+      // Add the reset button counter setting to the drupalSettings array.
+      if ($this->options['reset_button_counter'] === 1) {
+        $form['#attached']['library'][] = 'az_finder/active-filter-count';
+        $count = [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => [
+            'class' => [
+              'js-active-filter-count',
+              'ml-1',
+            ],
+          ],
+        ];
+        $reset_button['count'] = $count;
+        $reset_button['#type'] = 'html_tag';
+        $reset_button['#tag'] = 'button';
+        $reset_button['#attributes']['type'] = 'button';
+        $reset_button['#attached']['library'][] = 'az_finder/active-filter-reset';
+        unset($reset_button['#pre_render']);
+      }
+      // Add the cloned reset button at the beginning of the form.
+      $form['top_reset'] = $reset_button;
+      // Hide the original reset button.
+      $form['actions']['reset']['#access'] = FALSE;
+    }
+  }
 
-    $form['clear_all_filters'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'button',
-      '#value' => $this->t('Clear all filters'),
-      'count' => $count,
-      '#attributes' => [
-        'class' => [
-          'btn',
-          'btn-sm',
-          'btn-primary',
-          'btn-block',
-          'js-finder-clear-all',
-          'd-none',
-          'mx-1',
-          'mb-3',
-        ],
-        'type' => 'button',
-      ],
-      '#weight' => -10,
-    ];
-    $form['#prefix'] = '<div id="search-filter">';
-    $form['#suffix'] = '</div>';
+  /**
+   * {@inheritdoc}
+   */
+  protected function defineOptions() {
+    $options = parent::defineOptions();
+    $options['reset_button_position'] = ['default' => 'bottom'];
+    $options['min_text_length'] = ['default' => 1];
+    $options['reset_button_counter'] = ['default' => FALSE];
+    $options['orientation'] = ['default' => 'horizontal'];
+    $options['skip_link'] = ['default' => FALSE];
+    $options['skip_link_text'] = ['default' => $this->t('Skip to search and filter')];
+    $options['skip_link_id'] = ['default' => 'search-filter'];
 
+    return $options;
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildOptionsForm(&$form, FormStateInterface $form_state) {
-
-    // Add a field for setting the minimum search input length.
-    $form['az_bef']['finder']['min_search_length'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Minimum Search Input Length'),
-      '#description' => $this->t('The minimum number of characters required in the search field to count as an active filter.'),
-      '#default_value' => $this->options['az_bef']['finder']['min_search_length'] ?? 1,
-      '#min' => 0,
-      '#step' => 1,
-    ];
     parent::buildOptionsForm($form, $form_state);
+    $reset_button_option = $form['bef']['general']['reset_button'];
+    unset($form['bef']['general']['reset_button']);
+    $form['bef']['general']['reset_button'] = $reset_button_option;
+    $form['bef']['general']['reset_button_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Reset Button Settings'),
+      '#open' => TRUE,
+      '#states' => [
+        'visible' => [
+          ':input[name="exposed_form_options[reset_button]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    if (isset($form['bef']['general']['reset_button_always_show'])) {
+      $form['bef']['general']['reset_button_settings']['reset_button_always_show'] = $form['bef']['general']['reset_button_always_show'];
+      unset($form['bef']['general']['reset_button_always_show']);
+    }
+    if (isset($form['bef']['general']['reset_button_label'])) {
+      $form['bef']['general']['reset_button_settings']['reset_button_label'] = $form['bef']['general']['reset_button_label'];
+      unset($form['bef']['general']['reset_button_label']);
+    }
+    $form['bef']['general']['reset_button_settings']['reset_button_position'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Reset Button Position'),
+      '#options' => [
+        'top' => $this->t('Top'),
+        'bottom' => $this->t('Bottom'),
+      ],
+      '#default_value' => $this->options['reset_button_position'] ?? 'bottom',
+      '#description' => $this->t('Select where to place the reset button in the form.'),
+    ];
+    $form['bef']['general']['reset_button_settings']['reset_button_counter'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Show active filter counter'),
+      '#description' => $this->t('Show a counter of active filters next to the reset button.'),
+      '#default_value' => $this->options['reset_button_counter'] ?? FALSE,
+    ];
+    $form['bef']['general']['reset_button_settings']['min_text_length'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Minimum text input length for active filter counter'),
+      '#description' => $this->t('The minimum number of characters required in text fields to count as an active filter.'),
+      '#default_value' => $this->options['min_text_length'] ?? FALSE,
+      '#min' => 1,
+      '#step' => 1,
+      '#states' => [
+        'visible' => [
+          ':input[name="exposed_form_options[bef][general][reset_button_settings][reset_button_counter]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $form['bef']['general']['skip_link'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add skip link to the top of the view'),
+      '#description' => $this->t('Add a skip link to the top of the view to allow keyboard users to skip to the search and filter form.'),
+      '#default_value' => $this->options['skip_link'] ?? FALSE,
+    ];
 
+    $form['bef']['general']['skip_link_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Skip Link Settings'),
+      '#open' => TRUE,
+      '#states' => [
+        'visible' => [
+          ':input[name="exposed_form_options[bef][general][skip_link]"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+    $form['bef']['general']['skip_link_settings']['skip_link_text'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('Text'),
+      '#description' => $this->t('The text to display for the skip link.'),
+      '#default_value' => $this->options['skip_link_text'] ?? $this->t('Skip to search and filter'),
+    ];
+    $form['bef']['general']['skip_link_settings']['skip_link_id'] = [
+      '#type' => 'textfield',
+      '#title' => $this->t('ID/Anchor'),
+      '#default_value' => $this->options['skip_link_id'] ?? 'search-filter',
+      '#description' => $this->t('The ID or anchor to link to within the view.'),
+    ];
+    $form['bef']['general']['orientation'] = [
+      '#type' => 'radios',
+      '#title' => $this->t('Orientation'),
+      '#description' => $this->t('The orientation of the filters within the exposed form.'),
+      '#options' => [
+        'horizontal' => $this->t('Horizontal'),
+        'vertical' => $this->t('Vertical'),
+      ],
+      '#default_value' => $this->options['orientation'] ?? FALSE,
+    ];
   }
 
   /**
    * {@inheritdoc}
    */
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
+    // Extract the entire 'bef' section from the form state.
+    $bef_settings = $form_state->getValue(['exposed_form_options', 'bef']);
+
+    // Check and ensure the 'general' section exists within 'bef'.
+    if (isset($bef_settings['general'])) {
+      // Directly handle the 'reset_button_settings' within 'general'.
+      // This involves manually saving the new settings introduced or
+      // modified in buildOptionsForm.
+      $general_settings = $bef_settings['general'];
+
+      if (isset($general_settings['reset_button_settings'])) {
+        $reset_button_settings = $general_settings['reset_button_settings'];
+        $this->options['reset_button_position'] = $reset_button_settings['reset_button_position'] ?? 'bottom';
+        $this->options['min_text_length'] = $reset_button_settings['min_text_length'] ?? 1;
+        $this->options['reset_button_counter'] = $reset_button_settings['reset_button_counter'] ?? FALSE;
+        $this->options['orientation'] = $general_settings['orientation'] ?? 'vertical';
+        $this->options['skip_link'] = $general_settings['skip_link'] ?? FALSE;
+        $this->options['skip_link_text'] = $general_settings['skip_link_settings']['skip_link_text'] ?? $this->t('Skip to search and filter');
+        $this->options['skip_link_id'] = $general_settings['skip_link_settings']['skip_link_id'] ?? 'search-filter';
+        // Since we've manually handled 'reset_button_settings', remove it from 'general'
+        // to prevent any unintended processing by the parent method.
+        unset($general_settings['reset_button_settings']);
+
+        // Reassign 'general' back to 'bef' to reflect our changes.
+        $bef_settings['general'] = $general_settings;
+
+        // Update 'bef' in the form_state to reflect our changes.
+        $form_state->setValue(['exposed_form_options', 'bef'], $bef_settings);
+      }
+    }
     parent::submitOptionsForm($form, $form_state);
-    // Save the minimum search input length setting.
-    $this->options['az_bef']['finder']['min_search_length'] = $form_state->getValue([
-      'az_bef',
-      'finder',
-      'min_search_length',
-    ]);
   }
 
 }
