@@ -1604,8 +1604,8 @@ display:
                     filter_rewrite_values: ''
                   collapsible: true
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
+                select_all_none: true
+                select_all_none_nested: true
                 display_inline: false
               field_az_person_category_sec_target_id:
                 plugin_id: bef
