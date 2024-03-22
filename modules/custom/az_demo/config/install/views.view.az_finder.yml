@@ -1584,7 +1584,7 @@ display:
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: true
-              skip_link: 0
+              skip_link: 1
               skip_link_settings:
                 skip_link_text: 'Skip to search and filter'
                 skip_link_id: search-filter
@@ -1622,7 +1622,7 @@ display:
           min_text_length: 1
           reset_button_counter: true
           orientation: horizontal
-          skip_link: false
+          skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
       sorts:
