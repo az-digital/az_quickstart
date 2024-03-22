@@ -17,25 +17,25 @@ function az_finder_preprocess_views_view(&$variables) {
   }
   if (!empty($view->display_handler->options['exposed_form']['options'])) {
     $options = $view->display_handler->options['exposed_form']['options'];
-  }
-  if ($options['skip_link'] === TRUE) {
-    $skip_link_id = $options['skip_link_id'] ?? 'search-filters';
-    $skip_link_text = $options['skip_link_text'] ?? 'Skip to search and filter';
-    $skip_to_filter = [
-      '#type' => 'html_tag',
-      '#tag' => 'a',
-      '#value' => $skip_link_text,
-      '#attributes' => [
-        'href' => '#' . $skip_link_id,
-        'class' => [
-          'visually-hidden',
-          'focusable',
-          'skip-link',
+    if ($options['skip_link'] === TRUE) {
+      $skip_link_id = $options['skip_link_id'] ?? 'search-filters';
+      $skip_link_text = $options['skip_link_text'] ?? 'Skip to search and filter';
+      $skip_to_filter = [
+        '#type' => 'html_tag',
+        '#tag' => 'a',
+        '#value' => $skip_link_text,
+        '#attributes' => [
+          'href' => '#' . $skip_link_id,
+          'class' => [
+            'visually-hidden',
+            'focusable',
+            'skip-link',
+          ],
         ],
-      ],
-    ];
+      ];
 
-    $variables['header'][] = $skip_to_filter;
+      $variables['header'][] = $skip_to_filter;
+    }
   }
 
 }
