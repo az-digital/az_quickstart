@@ -211,13 +211,13 @@ final class TrellisHelper {
    */
   public function getPeriodicEventIds() {
     // Find enabled import configurations.
-    $imports = \Drupal::entityTypeManager()->getStorage('az_event_trellis_import')->loadByProperties([
+    $imports = \Drupal::entityTypeManager()->getStorage('az_recurring_import_rule')->loadByProperties([
       'status' => [1, TRUE],
     ]);
 
     $event_api_ids = [];
     foreach ($imports as $import) {
-      /** @var \Drupal\az_event_trellis\Entity\AZEventTrellisImport $import */
+      /** @var \Drupal\az_event_trellis\Entity\AZRecurringImportRule $import */
       $event_api_ids += $import->getEventIds();
     }
     // Remove duplicates in case searches overlapped.

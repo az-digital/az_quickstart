@@ -9,7 +9,7 @@ use Drupal\Core\Config\Entity\ConfigEntityInterface;
 /**
  * Provides an interface defining a trellis event import entity type.
  */
-interface AZEventTrellisImportInterface extends ConfigEntityInterface {
+interface AZRecurringImportRuleInterface extends ConfigEntityInterface {
 
   /**
    * Returns a list of event ids associated with this import.

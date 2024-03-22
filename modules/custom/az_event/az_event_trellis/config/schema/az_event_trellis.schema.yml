@@ -11,7 +11,7 @@ views.filter_value.az_event_trellis_views_date_filter:
     end:
       type: string
       label: 'Custom Date Range End'
-az_event_trellis.az_event_trellis_import.*:
+az_event_trellis.az_recurring_import_rule.*:
   type: config_entity
   label: Trellis Event Import
   mapping:

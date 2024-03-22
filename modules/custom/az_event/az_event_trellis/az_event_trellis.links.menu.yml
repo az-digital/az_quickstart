@@ -1,5 +1,5 @@
-entity.az_event_trellis_import.overview:
-  title: Trellis Event Imports
+entity.az_recurring_import_rule.overview:
+  title: Recurring Import Rules
   parent: system.admin_structure
-  description: 'List of Trellis event import settings'
-  route_name: entity.az_event_trellis_import.collection
+  description: 'List of Recurring Import Rule settings'
+  route_name: entity.az_recurring_import_rule.collection

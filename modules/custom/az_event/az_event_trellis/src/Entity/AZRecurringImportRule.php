@@ -4,37 +4,37 @@ declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Entity;
 
-use Drupal\az_event_trellis\AZEventTrellisImportInterface;
+use Drupal\az_event_trellis\AZRecurringImportRuleInterface;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
 
 /**
- * Defines the trellis event import entity type.
+ * Defines the recurring import rule entity type.
  *
  * @ConfigEntityType(
- *   id = "az_event_trellis_import",
- *   label = @Translation("Trellis Event Import"),
- *   label_collection = @Translation("Trellis Event Imports"),
- *   label_singular = @Translation("trellis event import"),
- *   label_plural = @Translation("trellis event imports"),
+ *   id = "az_recurring_import_rule",
+ *   label = @Translation("Recurring Import Rule"),
+ *   label_collection = @Translation("Recurring Import Rules"),
+ *   label_singular = @Translation("recurring import rule"),
+ *   label_plural = @Translation("recurring import rules"),
  *   label_count = @PluralTranslation(
- *     singular = "@count trellis event import",
- *     plural = "@count trellis event imports",
+ *     singular = "@count recurring import rule",
+ *     plural = "@count recurring import rules",
  *   ),
  *   handlers = {
- *     "list_builder" = "Drupal\az_event_trellis\AZEventTrellisImportListBuilder",
+ *     "list_builder" = "Drupal\az_event_trellis\AZRecurringImportRuleListBuilder",
  *     "form" = {
- *       "add" = "Drupal\az_event_trellis\Form\AZEventTrellisImportForm",
- *       "edit" = "Drupal\az_event_trellis\Form\AZEventTrellisImportForm",
+ *       "add" = "Drupal\az_event_trellis\Form\AZRecurringImportRuleForm",
+ *       "edit" = "Drupal\az_event_trellis\Form\AZRecurringImportRuleForm",
  *       "delete" = "Drupal\Core\Entity\EntityDeleteForm",
  *     },
  *   },
- *   config_prefix = "az_event_trellis_import",
- *   admin_permission = "administer az_event_trellis_import",
+ *   config_prefix = "az_recurring_import_rule",
+ *   admin_permission = "administer quickstart configuration",
  *   links = {
  *     "collection" = "/admin/structure/az-event-trellis-import",
  *     "add-form" = "/admin/structure/az-event-trellis-import/add",
- *     "edit-form" = "/admin/structure/az-event-trellis-import/{az_event_trellis_import}",
- *     "delete-form" = "/admin/structure/az-event-trellis-import/{az_event_trellis_import}/delete",
+ *     "edit-form" = "/admin/structure/az-event-trellis-import/{az_recurring_import_rule}",
+ *     "delete-form" = "/admin/structure/az-event-trellis-import/{az_recurring_import_rule}/delete",
  *   },
  *   entity_keys = {
  *     "id" = "id",
@@ -51,35 +51,35 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   },
  * )
  */
-final class AZEventTrellisImport extends ConfigEntityBase implements AZEventTrellisImportInterface {
+final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurringImportRuleInterface {
 
   /**
-   * The az_event_trellis_import ID.
+   * The az_recurring_import_rule ID.
    */
   protected string $id;
 
   /**
-   * The az_event_trellis_import label.
+   * The az_recurring_import_rule label.
    */
   protected string $label;
 
   /**
-   * The az_event_trellis_import keyword.
+   * The az_recurring_import_rule keyword.
    */
   protected string $keyword;
 
   /**
-   * The az_event_trellis_import owner.
+   * The az_recurring_import_rule owner.
    */
   protected string $owner;
 
   /**
-   * The az_event_trellis_import owner.
+   * The az_recurring_import_rule owner.
    */
   protected string $host;
 
   /**
-   * The az_event_trellis_import enterprise attributes.
+   * The az_recurring_import_rule enterprise attributes.
    */
   protected array $attributes;
 

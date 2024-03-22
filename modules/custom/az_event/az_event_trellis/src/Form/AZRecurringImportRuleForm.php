@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Form;
 
-use Drupal\az_event_trellis\Entity\AZEventTrellisImport;
+use Drupal\az_event_trellis\Entity\AZRecurringImportRule;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\taxonomy\Entity\Term;
@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 /**
  * Trellis Event Import form.
  */
-final class AZEventTrellisImportForm extends EntityForm {
+final class AZRecurringImportRuleForm extends EntityForm {
 
   /**
    * The entity repository.
@@ -45,7 +45,7 @@ final class AZEventTrellisImportForm extends EntityForm {
   public function form(array $form, FormStateInterface $form_state): array {
 
     $form = parent::form($form, $form_state);
-    /** @var \Drupal\az_event_trellis\Entity\AZEventTrellisImport $entity */
+    /** @var \Drupal\az_event_trellis\Entity\AZRecurringImportRule $entity */
     $entity = $this->entity;
     // Fetch the list of attributes mapped by the API.
     $mappings = $this->trellisHelper->getAttributeMappings();
@@ -62,7 +62,7 @@ final class AZEventTrellisImportForm extends EntityForm {
       '#type' => 'machine_name',
       '#default_value' => $this->entity->id(),
       '#machine_name' => [
-        'exists' => [AZEventTrellisImport::class, 'load'],
+        'exists' => [AZRecurringImportRule::class, 'load'],
       ],
       '#disabled' => !$entity->isNew(),
     ];

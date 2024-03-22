@@ -6,34 +6,34 @@ az_event_trellis.settings:
   requirements:
     _permission: 'administer quickstart configuration'
 
-entity.az_event_trellis_import.collection:
-  path: '/admin/structure/az-event-trellis-import'
+entity.az_recurring_import_rule.collection:
+  path: '/admin/structure/az-recurring-import-rule'
   defaults:
-    _entity_list: 'az_event_trellis_import'
-    _title: 'Trellis Event Import configuration'
+    _entity_list: 'az_recurring_import_rule'
+    _title: 'Recurring Import Rule configuration'
   requirements:
-    _permission: 'administer az_event_trellis_import'
+    _permission: 'administer az_recurring_import_rule'
 
-entity.az_event_trellis_import.add_form:
-  path: '/admin/structure/az_event_trellis_import/add'
+entity.az_recurring_import_rule.add_form:
+  path: '/admin/structure/az_recurring_import_rule/add'
   defaults:
-    _entity_form: 'az_event_trellis_import.add'
-    _title: 'Add a trellis event import'
+    _entity_form: 'az_recurring_import_rule.add'
+    _title: 'Add a recurring import rule'
   requirements:
-    _permission: 'administer az_event_trellis_import'
+    _permission: 'administer az_recurring_import_rule'
 
-entity.az_event_trellis_import.edit_form:
-  path: '/admin/structure/az-event-trellis-import/{az_event_trellis_import}'
+entity.az_recurring_import_rule.edit_form:
+  path: '/admin/structure/az-event-trellis-import/{az_recurring_import_rule}'
   defaults:
-    _entity_form: 'az_event_trellis_import.edit'
-    _title: 'Edit a trellis event import'
+    _entity_form: 'az_recurring_import_rule.edit'
+    _title: 'Edit a recurring import rule'
   requirements:
-    _permission: 'administer az_event_trellis_import'
+    _permission: 'administer az_recurring_import_rule'
 
-entity.az_event_trellis_import.delete_form:
-  path: '/admin/structure/az-event-trellis-import/{az_event_trellis_import}/delete'
+entity.az_recurring_import_rule.delete_form:
+  path: '/admin/structure/az-event-trellis-import/{az_recurring_import_rule}/delete'
   defaults:
-    _entity_form: 'az_event_trellis_import.delete'
-    _title: 'Delete a trellis event import'
+    _entity_form: 'az_recurring_import_rule.delete'
+    _title: 'Delete a recurring import rule'
   requirements:
-    _permission: 'administer az_event_trellis_import'
+    _permission: 'administer az_recurring_import_rule'
