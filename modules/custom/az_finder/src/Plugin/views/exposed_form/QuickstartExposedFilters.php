@@ -31,10 +31,10 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       $form['#prefix'] = '<div id="' . $skip_link_id . '">';
       $form['#suffix'] = '</div>';
     }
-    if( $options['orientation'] === 'vertical' ) {
+    if ($options['orientation'] === 'vertical') {
       $form['#attributes']['class'][] = 'az-bef-vertical';
     }
-    if( $options['orientation'] === 'horizontal' ) {
+    if ($options['orientation'] === 'horizontal') {
       $form['#attributes']['class'][] = 'az-bef-horizontal';
     }
     // Mark form as QuickstartExposedFilters form for easier alterations.
