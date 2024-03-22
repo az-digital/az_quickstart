@@ -1,5 +1,0 @@
-entity.az_recurring_import_rule.overview:
-  title: Recurring Import Rules
-  parent: system.admin_structure
-  description: 'List of Recurring Import Rule settings'
-  route_name: entity.az_recurring_import_rule.collection

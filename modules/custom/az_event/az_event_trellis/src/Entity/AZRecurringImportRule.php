@@ -31,10 +31,10 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   config_prefix = "az_recurring_import_rule",
  *   admin_permission = "administer quickstart configuration",
  *   links = {
- *     "collection" = "/admin/structure/az-event-trellis-import",
- *     "add-form" = "/admin/structure/az-event-trellis-import/add",
- *     "edit-form" = "/admin/structure/az-event-trellis-import/{az_recurring_import_rule}",
- *     "delete-form" = "/admin/structure/az-event-trellis-import/{az_recurring_import_rule}/delete",
+ *     "collection" = "/admin/config/az-quickstart/settings/az-recurring-import-rule",
+ *     "add-form" = "/admin/config/az-quickstart/settings/az-recurring-import-rule/add",
+ *     "edit-form" = "/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}",
+ *     "delete-form" = "/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}/delete",
  *   },
  *   entity_keys = {
  *     "id" = "id",
