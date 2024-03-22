@@ -41,7 +41,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $form['#context']['az_better_exposed_filters'] = TRUE;
     $form['#attributes']['data-az-better-exposed-filters'] = TRUE;
     $form['#attached']['drupalSettings']['azFinder']['minTextLength'] = $options['min_text_length'] ?? 1;
-    if ($options['reset_button'] === 1 && isset($form['actions']) && isset($form['actions']['reset'])) {
+    if ($options['reset_button'] === TRUE && isset($form['actions']) && isset($form['actions']['reset'])) {
       $form['#attached']['library'][] = 'az_finder/active-filter-reset';
       // Clone the reset button.
       $reset_button = $form['actions']['reset'];
@@ -59,7 +59,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         'mb-3',
       ]);
       // Add the reset button visibility setting to the drupalSettings array.
-      if ($this->options['bef']['general']['reset_button_always_show'] === 1) {
+      if ($this->options['bef']['general']['reset_button_always_show'] === TRUE) {
         $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = TRUE;
       }
       else {
@@ -67,7 +67,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = FALSE;
       }
       // Add the reset button counter setting to the drupalSettings array.
-      if ($this->options['reset_button_counter'] === 1) {
+      if ($this->options['reset_button_counter'] === TRUE) {
         $form['#attached']['library'][] = 'az_finder/active-filter-count';
         $count = [
           '#type' => 'html_tag',
