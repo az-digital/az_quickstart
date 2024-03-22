@@ -218,7 +218,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       // This involves manually saving the new settings introduced or
       // modified in buildOptionsForm.
       $general_settings = $bef_settings['general'];
-
       if (isset($general_settings['reset_button_settings'])) {
         $reset_button_settings = $general_settings['reset_button_settings'];
         $this->options['reset_button_position'] = $reset_button_settings['reset_button_position'] ?? 'bottom';
@@ -228,10 +227,11 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $this->options['skip_link'] = $general_settings['skip_link'] ?? FALSE;
         $this->options['skip_link_text'] = $general_settings['skip_link_settings']['skip_link_text'] ?? $this->t('Skip to search and filter');
         $this->options['skip_link_id'] = $general_settings['skip_link_settings']['skip_link_id'] ?? 'search-filter';
-        // Since we've manually handled 'reset_button_settings', remove it from 'general'
-        // to prevent any unintended processing by the parent method.
+        unset($general_settings['orientation']);
+        unset($general_settings['skip_link']);
+        unset($general_settings['skip_link_settings']);
         unset($general_settings['reset_button_settings']);
-
+        dpm($general_settings);
         // Reassign 'general' back to 'bef' to reflect our changes.
         $bef_settings['general'] = $general_settings;
 

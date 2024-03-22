@@ -1,3 +1,4 @@
+uuid: 69eeed7b-e582-4070-bb02-4bb0b0a978e0
 langcode: en
 status: true
 dependencies:
@@ -22,6 +23,8 @@ dependencies:
   enforced:
     module:
       - az_demo
+_core:
+  default_config_hash: 1SPUoJWdqvilRPTu1gAcB7PI6PJKixrCXJN0_KtikeU
 id: az_finder
 label: 'AZ Finder'
 module: views
@@ -406,22 +409,11 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
-              tid:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
-          reset_button_position: bottom
+          reset_button_position: top
           min_text_length: 1
-          reset_button_counter: false
-          orientation: horizontal
-          skip_link: false
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
       sorts:
@@ -613,11 +605,11 @@ display:
                 select_all_none: false
                 select_all_none_nested: false
                 display_inline: false
-          reset_button_position: bottom
+          reset_button_position: top
           min_text_length: 1
-          reset_button_counter: false
-          orientation: horizontal
-          skip_link: false
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
       sorts:
@@ -908,11 +900,11 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
-          reset_button_position: bottom
+          reset_button_position: top
           min_text_length: 1
-          reset_button_counter: false
-          orientation: horizontal
-          skip_link: false
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
       sorts:
@@ -1304,11 +1296,11 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
-          reset_button_position: bottom
+          reset_button_position: top
           min_text_length: 1
-          reset_button_counter: false
-          orientation: horizontal
-          skip_link: false
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
       sorts:
@@ -1607,7 +1599,7 @@ display:
           reset_button_position: top
           min_text_length: 1
           reset_button_counter: true
-          orientation: horizontal
+          orientation: vertical
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
