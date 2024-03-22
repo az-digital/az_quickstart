@@ -48,6 +48,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "host",
  *     "keyword",
  *     "attributes",
+ *     "approval",
  *   },
  * )
  */
@@ -84,6 +85,11 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
   protected array $attributes;
 
   /**
+   * The az_recurring_import_rule approval status.
+   */
+  protected string $approval;
+
+  /**
    * {@inheritdoc}
    */
   public function getEventIds() {
@@ -96,6 +102,7 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     $params['keyword'] = $this->get('keyword') ?? '';
     $params['owner'] = $this->get('owner') ?? '';
     $params['host'] = $this->get('host') ?? '';
+    $params['approval'] = $this->get('approval') ?? '';
     $params = array_filter($params);
     // Let's refuse to search if there are no constraints except published.
     if (count($params) === 1) {

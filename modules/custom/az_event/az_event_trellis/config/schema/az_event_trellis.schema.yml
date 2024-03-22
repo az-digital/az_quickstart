@@ -29,9 +29,11 @@ az_event_trellis.az_recurring_import_rule.*:
       type: string
     keyword:
       type: string
-attributes:
-  type: sequence
-  label: ‘Enterprise Attributes’
-  sequence:
-    type: string
-    label: ‘Attribute’
+    attributes:
+      type: sequence
+      label: ‘Enterprise Attributes’
+      sequence:
+        type: string
+        label: ‘Attribute’
+    approval:
+      type: string
