@@ -4,38 +4,52 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (drupalSettings) {
-  document.addEventListener('DOMContentLoaded', function () {
-    var filterContainers = document.querySelectorAll('[data-az-better-exposed-filters]');
-    filterContainers.forEach(function (container) {
-      var filterCountDisplay = container.querySelector('.js-active-filter-count');
-      var resetButton = container.querySelector('.js-active-filters-reset');
-      var textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
-      var minSearchLength = drupalSettings.azFinder.minSearchLength || 1;
-      var alwaysDisplayResetButton = drupalSettings.azFinder.alwaysDisplayResetButton || false;
-      var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
-        var activeFilterCount = container.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked').length;
-        textInputFields.forEach(function (inputField) {
-          if (inputField.value.trim().length >= minSearchLength) {
-            activeFilterCount += 1;
+(function (drupalSettings, Drupal) {
+  Drupal.behaviors.azFinderFilterCount = {
+    attach: function attach(context, settings) {
+      var filterContainers = context.querySelectorAll('[data-az-better-exposed-filters]');
+      filterContainers.forEach(function (container) {
+        var filterCountDisplay = container.querySelector('.js-active-filter-count');
+        var textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
+        var checkboxesAndRadios = container.querySelectorAll('input[type="checkbox"], input[type="radio"]');
+        var minSearchLength = settings.azFinder.minSearchLength || 1;
+        var alwaysDisplayResetButton = settings.azFinder.alwaysDisplayResetButton || false;
+        var calculateActiveFilterCount = function calculateActiveFilterCount() {
+          var count = container.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked').length;
+          textInputFields.forEach(function (inputField) {
+            if (inputField.value.trim().length >= minSearchLength) {
+              count += 1;
+            }
+          });
+          return count;
+        };
+        var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
+          var activeFilterCount = calculateActiveFilterCount();
+          filterCountDisplay.textContent = "(".concat(activeFilterCount, ")");
+          var resetButton = container.querySelector('.js-active-filters-reset');
+          if (resetButton) {
+            if (alwaysDisplayResetButton || activeFilterCount > 0) {
+              resetButton.classList.remove('d-none');
+            } else {
+              resetButton.classList.add('d-none');
+            }
           }
+        };
+        textInputFields.forEach(function (inputField) {
+          return inputField.addEventListener('input', updateActiveFilterDisplay, {
+            passive: true
+          });
         });
-        filterCountDisplay.textContent = "(".concat(activeFilterCount, ")");
-        if (alwaysDisplayResetButton || activeFilterCount > 0) {
-          resetButton.classList.remove('d-none');
-        } else {
-          resetButton.classList.add('d-none');
-        }
-      };
-      textInputFields.forEach(function (inputField) {
-        inputField.addEventListener('input', updateActiveFilterDisplay);
+        checkboxesAndRadios.forEach(function (input) {
+          return input.addEventListener('change', updateActiveFilterDisplay, {
+            passive: true
+          });
+        });
+        container.addEventListener('az-finder-filter-reset', updateActiveFilterDisplay, {
+          passive: true
+        });
+        updateActiveFilterDisplay();
       });
-      container.addEventListener('change', function (event) {
-        if (['checkbox', 'radio'].includes(event.target.type)) {
-          updateActiveFilterDisplay();
-        }
-      });
-      updateActiveFilterDisplay();
-    });
-  });
-})(drupalSettings);
+    }
+  };
+})(drupalSettings, Drupal);
