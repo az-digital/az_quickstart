@@ -23,7 +23,15 @@ az_event_trellis.az_event_trellis_import.*:
       label: Label
     uuid:
       type: string
-    keyword:
+    host:
       type: string
     owner:
       type: string
+    keyword:
+      type: string
+attributes:
+  type: sequence
+  label: ‘Enterprise Attributes’
+  sequence:
+    type: string
+    label: ‘Attribute’

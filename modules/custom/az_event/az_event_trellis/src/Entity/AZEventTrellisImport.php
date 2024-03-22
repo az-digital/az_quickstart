@@ -44,8 +44,10 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   config_export = {
  *     "id",
  *     "label",
- *     "keyword",
  *     "owner",
+ *     "host",
+ *     "keyword",
+ *     "attributes",
  *   },
  * )
  */
@@ -72,6 +74,16 @@ final class AZEventTrellisImport extends ConfigEntityBase implements AZEventTrel
   protected string $owner;
 
   /**
+   * The az_event_trellis_import owner.
+   */
+  protected string $host;
+
+  /**
+   * The az_event_trellis_import enterprise attributes.
+   */
+  protected array $attributes;
+
+  /**
    * {@inheritdoc}
    */
   public function getEventIds() {
@@ -79,13 +91,17 @@ final class AZEventTrellisImport extends ConfigEntityBase implements AZEventTrel
     $params = [
       'publish' => 'true',
     ];
+    $attributes = array_filter($this->attributes ?? []);
+    $params += $attributes;
     $params['keyword'] = $this->get('keyword') ?? '';
     $params['owner'] = $this->get('owner') ?? '';
+    $params['host'] = $this->get('host') ?? '';
     $params = array_filter($params);
     // Let's refuse to search if there are no constraints except published.
     if (count($params) === 1) {
       return [];
     }
+
     return \Drupal::service('az_event_trellis.trellis_helper')->searchEvents($params);
   }
 

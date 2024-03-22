@@ -2,10 +2,12 @@
 
 namespace Drupal\az_event_trellis;
 
+use Drupal\az_event_trellis\Plugin\views\filter\AZEventTrellisViewsAttributeFilter;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\views\Views;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -221,6 +223,25 @@ final class TrellisHelper {
     // Remove duplicates in case searches overlapped.
     $event_api_ids = array_unique($event_api_ids);
     return $event_api_ids;
+  }
+
+  /**
+   * Return mapped array of api names of attributes.
+   *
+   * @return array
+   *   The array of attribute ids mapped to API names.
+   */
+  public function getAttributeMappings() {
+    $mappings = [];
+    $view = Views::getView('az_event_trellis_import');
+    $display = $view->getDisplay() ?? NULL;
+    $filters = $display->getHandlers('filter');
+    foreach ($filters as $filter) {
+      if ($filter instanceof AZEventTrellisViewsAttributeFilter) {
+        $mappings += $filter->getApiMapping();
+      }
+    }
+    return $mappings;
   }
 
   /**
