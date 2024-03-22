@@ -168,7 +168,9 @@ final class AZRecurringImportRuleForm extends EntityForm {
         \SAVED_UPDATED => $this->t('Updated recurring import rule %label.', $message_args),
       }
     );
-    $events = $this->entity->getEventIds();
+    /** @var \Drupal\az_event_trellis\Entity\AZRecurringImportRule $entity */
+    $entity = $this->entity;
+    $events = $entity->getEventIds();
     $this->messenger()->addStatus(
     t('This rule currently matches <strong>@events</strong> item(s).', [
         '@events' => count($events),
