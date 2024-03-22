@@ -13,10 +13,7 @@ dependencies:
     - taxonomy.vocabulary.az_person_categories
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
-    - az_event
-    - az_flexible_page
-    - az_news
-    - az_person
+    - az_finder
     - better_exposed_filters
     - datetime
     - node
@@ -366,10 +363,10 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
-          reset_button: true
+          reset_button: 1
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -379,44 +376,45 @@ display:
           text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
+              autosubmit: 1
+              autosubmit_exclude_textfield: 0
+              autosubmit_textfield_delay: '500'
+              autosubmit_hide: 1
+              input_required: 0
+              allow_secondary: 0
               secondary_label: 'Advanced options'
-              secondary_open: false
+              secondary_open: 0
               reset_button_always_show: true
+              skip_link: 0
+              skip_link_settings:
+                skip_link_text: 'Skip to search and filter'
+                skip_link_id: search-filter
+              orientation: horizontal
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               type:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
-              tid:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
+                select_all_none_nested: 0
+                display_inline: 0
+          reset_button_position: bottom
+          min_text_length: '1'
+          reset_button_counter: 0
+          orientation: horizontal
+          skip_link: 0
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         created:
           id: created
@@ -566,10 +564,10 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
-          reset_button: true
+          reset_button: 1
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -579,33 +577,45 @@ display:
           text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
+              autosubmit: 1
+              autosubmit_exclude_textfield: 0
+              autosubmit_textfield_delay: '500'
+              autosubmit_hide: 1
+              input_required: 0
+              allow_secondary: 0
               secondary_label: 'Advanced options'
-              secondary_open: false
+              secondary_open: 0
               reset_button_always_show: true
+              skip_link: 0
+              skip_link_settings:
+                skip_link_text: 'Skip to search and filter'
+                skip_link_id: search-filter
+              orientation: horizontal
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               field_az_event_category_target_id:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
+                select_all_none_nested: 0
+                display_inline: 0
+          reset_button_position: bottom
+          min_text_length: '1'
+          reset_button_counter: 0
+          orientation: horizontal
+          skip_link: 0
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value
@@ -842,10 +852,10 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
-          reset_button: true
+          reset_button: 1
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -855,45 +865,57 @@ display:
           text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
+              autosubmit: 1
+              autosubmit_exclude_textfield: 0
+              autosubmit_textfield_delay: '500'
+              autosubmit_hide: 1
+              input_required: 0
+              allow_secondary: 0
               secondary_label: 'Advanced options'
-              secondary_open: false
+              secondary_open: 0
               reset_button_always_show: true
+              skip_link: 0
+              skip_link_settings:
+                skip_link_text: 'Skip to search and filter'
+                skip_link_id: search-filter
+              orientation: horizontal
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               field_az_byline_value:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: true
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               field_az_published_value:
                 plugin_id: bef_datepicker
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               field_az_news_tags_target_id:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
+                select_all_none_nested: 0
+                display_inline: 0
+          reset_button_position: bottom
+          min_text_length: '1'
+          reset_button_counter: 0
+          orientation: horizontal
+          skip_link: 0
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_published_value:
           id: field_az_published_value
@@ -1243,10 +1265,10 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
-          reset_button: true
+          reset_button: 1
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -1256,33 +1278,45 @@ display:
           text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
+              autosubmit: 1
+              autosubmit_exclude_textfield: 0
+              autosubmit_textfield_delay: '500'
+              autosubmit_hide: 1
+              input_required: 0
+              allow_secondary: 0
               secondary_label: 'Advanced options'
-              secondary_open: false
+              secondary_open: 0
               reset_button_always_show: true
+              skip_link: 0
+              skip_link_settings:
+                skip_link_text: 'Skip to search and filter'
+                skip_link_id: search-filter
+              orientation: horizontal
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               field_az_page_category_target_id:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
+                select_all_none_nested: 0
+                display_inline: 0
+          reset_button_position: bottom
+          min_text_length: '1'
+          reset_button_counter: 0
+          orientation: horizontal
+          skip_link: 0
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         changed:
           id: changed
@@ -1525,11 +1559,11 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
-          reset_button: true
-          reset_button_label: Reset
+          reset_button: 1
+          reset_button_label: 'Clear all filters'
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -1538,44 +1572,56 @@ display:
           text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
+              autosubmit: 1
+              autosubmit_exclude_textfield: 0
+              autosubmit_textfield_delay: '500'
+              autosubmit_hide: 1
+              input_required: 0
+              allow_secondary: 0
               secondary_label: 'Advanced options'
-              secondary_open: false
+              secondary_open: 0
               reset_button_always_show: true
+              skip_link: 0
+              skip_link_settings:
+                skip_link_text: 'Skip to search and filter'
+                skip_link_id: search-filter
+              orientation: horizontal
             filter:
               title:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
+                  collapsible: 0
+                  is_secondary: 0
               field_az_person_category_target_id:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
+                select_all_none_nested: 0
+                display_inline: 0
               field_az_person_category_sec_target_id:
                 plugin_id: bef
                 advanced:
-                  sort_options: false
+                  sort_options: 0
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: true
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                  collapsible: 0
+                  is_secondary: 0
+                select_all_none: 0
+                select_all_none_nested: 0
+                display_inline: 0
+          reset_button_position: top
+          min_text_length: '1'
+          reset_button_counter: 1
+          orientation: horizontal
+          skip_link: 0
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_lname_value:
           id: field_az_lname_value
