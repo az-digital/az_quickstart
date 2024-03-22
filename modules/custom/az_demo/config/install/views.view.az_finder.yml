@@ -1,4 +1,3 @@
-uuid: 69eeed7b-e582-4070-bb02-4bb0b0a978e0
 langcode: en
 status: true
 dependencies:
@@ -23,8 +22,6 @@ dependencies:
   enforced:
     module:
       - az_demo
-_core:
-  default_config_hash: 1SPUoJWdqvilRPTu1gAcB7PI6PJKixrCXJN0_KtikeU
 id: az_finder
 label: 'AZ Finder'
 module: views

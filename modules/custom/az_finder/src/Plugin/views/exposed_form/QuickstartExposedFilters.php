@@ -211,7 +211,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     // Extract the entire 'bef' section from the form state.
     $bef_settings = $form_state->getValue(['exposed_form_options', 'bef']);
-
     // Check and ensure the 'general' section exists within 'bef'.
     if (isset($bef_settings['general'])) {
       // Directly handle the 'reset_button_settings' within 'general'.
@@ -231,10 +230,8 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         unset($general_settings['skip_link']);
         unset($general_settings['skip_link_settings']);
         unset($general_settings['reset_button_settings']);
-        dpm($general_settings);
         // Reassign 'general' back to 'bef' to reflect our changes.
         $bef_settings['general'] = $general_settings;
-
         // Update 'bef' in the form_state to reflect our changes.
         $form_state->setValue(['exposed_form_options', 'bef'], $bef_settings);
       }
