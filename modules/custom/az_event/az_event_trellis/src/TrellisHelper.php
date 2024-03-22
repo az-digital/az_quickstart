@@ -204,12 +204,12 @@ final class TrellisHelper {
   }
 
   /**
-   * Fetch the periodic search list of ids to import.
+   * Fetch the recurring search list of ids to import.
    *
    * @return array
    *   Returns an array of event ids.
    */
-  public function getPeriodicEventIds() {
+  public function getRecurringEventIds() {
     // Find enabled import configurations.
     $imports = \Drupal::entityTypeManager()->getStorage('az_recurring_import_rule')->loadByProperties([
       'status' => [1, TRUE],
