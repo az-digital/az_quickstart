@@ -1602,7 +1602,7 @@ display:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: false
+                  collapsible: true
                   is_secondary: false
                 select_all_none: false
                 select_all_none_nested: false
