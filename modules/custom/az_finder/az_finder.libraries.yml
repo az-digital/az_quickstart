@@ -1,0 +1,11 @@
+filter-ui:
+  css:
+    component:
+      css/az-finder-filter.css: {}
+  js:
+    js/az-finder-filter-ui.js:
+      - type: module
+      - minified: false
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
