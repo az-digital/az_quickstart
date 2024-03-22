@@ -18,7 +18,7 @@
           textFields.forEach((textField) => {
             textField.value = '';
           });
-          container.querySelector('form').submit();
+          container.querySelector('.js-form-submit').click();
         });
       }
     });
