@@ -164,9 +164,15 @@ final class AZRecurringImportRuleForm extends EntityForm {
     $message_args = ['%label' => $this->entity->label()];
     $this->messenger()->addStatus(
       match($result) {
-        \SAVED_NEW => $this->t('Created new Trellis event import settings %label.', $message_args),
-        \SAVED_UPDATED => $this->t('Updated new Trellis event import settings %label.', $message_args),
+        \SAVED_NEW => $this->t('Created new recurring import rule %label.', $message_args),
+        \SAVED_UPDATED => $this->t('Updated recurring import rule %label.', $message_args),
       }
+    );
+    $events = $this->entity->getEventIds();
+    $this->messenger()->addStatus(
+    t('This rule currently matches <strong>@events</strong> item(s).', [
+        '@events' => count($events),
+      ])
     );
     $form_state->setRedirectUrl($this->entity->toUrl('collection'));
     return $result;
