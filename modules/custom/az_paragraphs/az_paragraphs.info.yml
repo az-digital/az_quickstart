@@ -5,6 +5,7 @@ core_version_requirement: ^9 || ^10
 package: 'The University of Arizona'
 dependencies:
   - paragraphs:paragraphs
+  - anchor_link:anchor_link
   - az_card
   - az_core
   - az_media
