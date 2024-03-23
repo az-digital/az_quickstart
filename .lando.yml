@@ -47,7 +47,7 @@ services:
       - composer install
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
-    type: node:18
+    type: node:20
     build:
       - yarn install
   chromedriver:
