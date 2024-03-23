@@ -78,7 +78,7 @@ class AzDropbutton extends Links {
     }
     if ($this->options['click_action'] === 'js-click2copy') {
       $dropbutton['#attributes']['class'][] = $click_action;
-      $dropbutton['#attached']['library'][] = 'az_marketing_cloud/admin';
+      $dropbutton['#attached']['library'][] = 'az_core/click-to-copy';
     }
 
     return $dropbutton;
