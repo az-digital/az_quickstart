@@ -1,7 +1,4 @@
 active-filter-count:
-  css:
-    component:
-      css/active-filter-count.css: {}
   js:
     js/active-filter-count.js:
       - type: module
