@@ -406,17 +406,6 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
-              tid:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
       sorts:
         created:
           id: created
