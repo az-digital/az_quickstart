@@ -419,7 +419,6 @@ display:
                 select_all_none_nested: false
                 display_inline: false
           reset_button_position: top
-          min_text_length: 1
           reset_button_counter: true
           orientation: vertical
           skip_link: true
@@ -615,7 +614,6 @@ display:
                 select_all_none_nested: false
                 display_inline: false
           reset_button_position: top
-          min_text_length: 1
           reset_button_counter: true
           orientation: vertical
           skip_link: true
@@ -910,7 +908,6 @@ display:
                 select_all_none_nested: true
                 display_inline: false
           reset_button_position: top
-          min_text_length: 1
           reset_button_counter: true
           orientation: vertical
           skip_link: true
@@ -1306,7 +1303,6 @@ display:
                 select_all_none_nested: true
                 display_inline: false
           reset_button_position: top
-          min_text_length: 1
           reset_button_counter: true
           orientation: vertical
           skip_link: true
@@ -1606,7 +1602,6 @@ display:
                 select_all_none_nested: true
                 display_inline: false
           reset_button_position: top
-          min_text_length: 1
           reset_button_counter: true
           orientation: vertical
           skip_link: true

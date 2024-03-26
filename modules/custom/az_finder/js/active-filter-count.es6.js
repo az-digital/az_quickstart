@@ -15,7 +15,6 @@
         const checkboxesAndRadios = container.querySelectorAll(
           'input[type="checkbox"], input[type="radio"]',
         );
-        const minSearchLength = settings.azFinder.minSearchLength || 1;
         const alwaysDisplayResetButton =
           settings.azFinder.alwaysDisplayResetButton || false;
 
@@ -24,7 +23,7 @@
             'input[type="checkbox"]:checked, input[type="radio"]:checked',
           ).length;
           textInputFields.forEach((inputField) => {
-            if (inputField.value.trim().length >= minSearchLength) {
+            if (inputField.value.trim().length >= 1) {
               count += 1;
             }
           });

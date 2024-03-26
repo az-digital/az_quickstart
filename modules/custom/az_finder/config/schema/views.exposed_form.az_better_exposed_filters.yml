@@ -5,9 +5,6 @@ views.exposed_form.az_better_exposed_filters:
     reset_button_position:
       type: string
       label: 'Reset Button Position'
-    min_text_length:
-      type: integer
-      label: 'Minimum Text Length for Active Filter Counter'
     reset_button_counter:
       type: boolean
       label: 'Show Active Filter Counter'
