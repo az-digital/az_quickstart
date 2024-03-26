@@ -1,3 +1,10 @@
+/**
+ * @file
+ * active-filter-count.es6.js
+ *
+ * This file contains the JavaScript needed to count active filters in
+ * exposed filter forms.
+ */
 ((drupalSettings, Drupal) => {
   Drupal.behaviors.azFinderFilterCount = {
     attach(context, settings) {
