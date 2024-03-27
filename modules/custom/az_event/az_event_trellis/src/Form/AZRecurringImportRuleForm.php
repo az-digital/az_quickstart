@@ -52,7 +52,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
 
     $form['label'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Label'),
+      '#title' => $this->t('Import Rule Name'),
       '#maxlength' => 255,
       '#default_value' => $entity->label(),
       '#required' => TRUE,
