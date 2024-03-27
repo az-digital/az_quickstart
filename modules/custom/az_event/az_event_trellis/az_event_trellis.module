@@ -114,7 +114,7 @@ function az_event_trellis_gather_filter_options(&$form, FormStateInterface $form
 /**
  * Implements hook_form_FORM_ID_alter().
  *
- * Hide the event view category search if there are no options.
+ * Add clickable link that opens import configuration modal.
  */
 function az_event_trellis_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
@@ -131,6 +131,7 @@ function az_event_trellis_form_views_exposed_form_alter(&$form, FormStateInterfa
       // Cache the search.
       \Drupal::service('cache.default')->set($key, $search, $expire);
       $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
+      // Add a link to open the modal.
       $form['actions']['recurring'] = [
         '#type' => 'link',
         '#title' => t('Create Recurring Import'),
