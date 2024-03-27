@@ -2,10 +2,12 @@
 
 namespace Drupal\az_event_trellis;
 
+use Drupal\az_event_trellis\Plugin\views\filter\AZEventTrellisViewsAttributeFilter;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\views\Views;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -199,6 +201,47 @@ final class TrellisHelper {
       $event_api_ids[] = $n->get('field_az_trellis_id')->getString();
     }
     return $event_api_ids;
+  }
+
+  /**
+   * Fetch the recurring search list of ids to import.
+   *
+   * @return array
+   *   Returns an array of event ids.
+   */
+  public function getRecurringEventIds() {
+    // Find enabled import configurations.
+    $imports = \Drupal::entityTypeManager()->getStorage('az_recurring_import_rule')->loadByProperties([
+      'status' => [1, TRUE],
+    ]);
+
+    $event_api_ids = [];
+    foreach ($imports as $import) {
+      /** @var \Drupal\az_event_trellis\Entity\AZRecurringImportRule $import */
+      $event_api_ids += $import->getEventIds();
+    }
+    // Remove duplicates in case searches overlapped.
+    $event_api_ids = array_unique($event_api_ids);
+    return $event_api_ids;
+  }
+
+  /**
+   * Return mapped array of api names of attributes.
+   *
+   * @return array
+   *   The array of attribute ids mapped to API names.
+   */
+  public function getAttributeMappings() {
+    $mappings = [];
+    $view = Views::getView('az_event_trellis_import');
+    $display = $view->getDisplay() ?? NULL;
+    $filters = $display->getHandlers('filter');
+    foreach ($filters as $filter) {
+      if ($filter instanceof AZEventTrellisViewsAttributeFilter) {
+        $mappings += $filter->getApiMapping();
+      }
+    }
+    return $mappings;
   }
 
   /**

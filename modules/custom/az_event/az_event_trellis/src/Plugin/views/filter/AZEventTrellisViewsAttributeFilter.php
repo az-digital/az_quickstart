@@ -132,6 +132,18 @@ class AZEventTrellisViewsAttributeFilter extends FilterPluginBase {
   }
 
   /**
+   * Return the attribute id and api parameter name.
+   *
+   * @return array
+   *   An array with the key as the attribute id and the value as the api path.
+   */
+  public function getApiMapping(): array {
+    $key = $this->options['az_attribute_key'] ?? '';
+    $path = $this->options['property_path'] ?? '';
+    return [$key => $path];
+  }
+
+  /**
    * {@inheritdoc}
    */
   public function adminSummary() {
