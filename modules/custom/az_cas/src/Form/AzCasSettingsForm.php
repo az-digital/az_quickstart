@@ -2,6 +2,7 @@
 
 namespace Drupal\az_cas\Form;
 
+use Drupal\Core\Cache\CacheFactoryInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
@@ -22,6 +23,13 @@ class AzCasSettingsForm extends ConfigFormBase {
   protected $routeBuilder;
 
   /**
+   * The cache factory.
+   *
+   * @var \Drupal\Core\Cache\CacheFactoryInterface
+   */
+  protected $cacheFactory;
+
+  /**
    * Constructs a AzCasSettingsForm object.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -30,11 +38,14 @@ class AzCasSettingsForm extends ConfigFormBase {
    *   The typed config manager.
    * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
    *   The route builder.
+   * @param \Drupal\Core\Cache\CacheFactoryInterface $cache_factory
+   *   The cache factory.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder) {
+  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder, CacheFactoryInterface $cache_factory) {
     parent::__construct($config_factory, $typedConfigManager);
 
     $this->routeBuilder = $route_builder;
+    $this->cacheFactory = $cache_factory;
   }
 
   /**
@@ -44,7 +55,8 @@ class AzCasSettingsForm extends ConfigFormBase {
     return new static(
       $container->get('config.factory'),
       $container->get('config.typed'),
-      $container->get('router.builder')
+      $container->get('router.builder'),
+      $container->get('cache_factory')
     );
   }
 
@@ -75,6 +87,13 @@ class AzCasSettingsForm extends ConfigFormBase {
       '#default_value' => $az_cas_config->get('disable_login_form'),
     ];
 
+    $form['disable_admin_add_user_button'] = [
+      '#title' => t("Disable 'Add user' button"),
+      '#type' => 'checkbox',
+      '#description' => t("Removes button for adding non-CAS users in admin interface."),
+      '#default_value' => $az_cas_config->get('disable_admin_add_user_button'),
+    ];
+
     $form['disable_password_recovery_link'] = [
       '#title' => t("Disable 'request new password' form"),
       '#type' => 'checkbox',
@@ -91,10 +110,13 @@ class AzCasSettingsForm extends ConfigFormBase {
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('az_cas.settings')
       ->set('disable_login_form', $form_state->getValue('disable_login_form'))
+      ->set('disable_admin_add_user_button', $form_state->getValue('disable_admin_add_user_button'))
       ->set('disable_password_recovery_link', $form_state->getValue('disable_password_recovery_link'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();
+    $this->cacheFactory->get('render')->deleteAll();
+    $this->cacheFactory->get('discovery')->deleteAll();
 
     parent::submitForm($form, $form_state);
   }

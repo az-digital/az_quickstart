@@ -1,4 +1,6 @@
 services:
+  _defaults:
+    autoconfigure: true
   az_core.page_cache_request_policy.deny_monitoring_page:
     class: Drupal\az_core\PageCache\DenyMonitoringPage
     arguments:
@@ -18,4 +20,3 @@ services:
       - '@config_sync.snapshotter'
       - '@config_update.config_list'
       - '@module_handler'
-      - '@logger.channel.az_core'
