@@ -22,6 +22,9 @@ dependencies:
     - node
     - taxonomy
     - user
+  enforced:
+    module:
+      - az_demo
 id: az_finder
 label: 'AZ Finder'
 module: views
