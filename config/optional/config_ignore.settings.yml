@@ -1,0 +1,8 @@
+mode: simple
+ignored_config_entities:
+  - 'block.block.*'
+  - exclude_node_title.settings
+  - 'system.menu.*'
+  - system.site
+  - 'taxonomy.vocabulary.*'
+  - 'webform.webform.*'
