@@ -1,11 +1,15 @@
-filter-ui:
-  css:
-    component:
-      css/az-finder-filter.css: {}
+active-filter-count:
   js:
-    js/az-finder-filter-ui.js:
+    js/active-filter-count.js:
       - type: module
       - minified: false
   dependencies:
     - core/drupal
     - core/drupalSettings
+active-filter-reset:
+  js:
+    js/active-filter-reset.js:
+      - type: module
+      - minified: false
+  dependencies:
+    - core/drupal
