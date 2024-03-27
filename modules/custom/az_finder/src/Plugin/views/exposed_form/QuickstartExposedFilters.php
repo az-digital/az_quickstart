@@ -40,7 +40,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     // Mark form as QuickstartExposedFilters form for easier alterations.
     $form['#context']['az_better_exposed_filters'] = TRUE;
     $form['#attributes']['data-az-better-exposed-filters'] = TRUE;
-    $form['#attached']['drupalSettings']['azFinder']['minTextLength'] = $options['min_text_length'] ?? 1;
     if ($options['reset_button'] === TRUE && isset($form['actions']) && isset($form['actions']['reset'])) {
       $form['#attached']['library'][] = 'az_finder/active-filter-reset';
       // Clone the reset button.
@@ -63,8 +62,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = TRUE;
       }
       else {
-        $reset_button['#attributes']['class'][] = 'd-hidden';
+        $reset_button['#attributes']['class'][] = 'd-none';
         $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = FALSE;
+        unset($reset_button['#access']);
       }
       // Add the reset button counter setting to the drupalSettings array.
       if ($this->options['reset_button_counter'] === TRUE) {
@@ -99,7 +99,6 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   protected function defineOptions() {
     $options = parent::defineOptions();
     $options['reset_button_position'] = ['default' => 'bottom'];
-    $options['min_text_length'] = ['default' => 1];
     $options['reset_button_counter'] = ['default' => FALSE];
     $options['orientation'] = ['default' => 'horizontal'];
     $options['skip_link'] = ['default' => FALSE];
@@ -142,33 +141,20 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         'top' => $this->t('Top'),
         'bottom' => $this->t('Bottom'),
       ],
-      '#default_value' => $this->options['reset_button_position'] ?? 'bottom',
+      '#default_value' => $this->options['reset_button_position'] ?? 'top',
       '#description' => $this->t('Select where to place the reset button in the form.'),
     ];
     $form['bef']['general']['reset_button_settings']['reset_button_counter'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show active filter counter'),
-      '#description' => $this->t('Show a counter of active filters next to the reset button.'),
+      '#description' => $this->t('Show a counter of active filters within the reset button next to the text.'),
       '#default_value' => $this->options['reset_button_counter'] ?? FALSE,
-    ];
-    $form['bef']['general']['reset_button_settings']['min_text_length'] = [
-      '#type' => 'number',
-      '#title' => $this->t('Minimum text input length for active filter counter'),
-      '#description' => $this->t('The minimum number of characters required in text fields to count as an active filter.'),
-      '#default_value' => $this->options['min_text_length'] ?? FALSE,
-      '#min' => 1,
-      '#step' => 1,
-      '#states' => [
-        'visible' => [
-          ':input[name="exposed_form_options[bef][general][reset_button_settings][reset_button_counter]"]' => ['checked' => TRUE],
-        ],
-      ],
     ];
     $form['bef']['general']['skip_link'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Add skip link to the top of the view'),
-      '#description' => $this->t('Add a skip link to the top of the view to allow keyboard users to skip to the search and filter form.'),
-      '#default_value' => $this->options['skip_link'] ?? FALSE,
+      '#title' => $this->t('Add skip link to the top of the view results'),
+      '#description' => $this->t('Add a skip link to the top of the view results to allow keyboard users to skip to the search and filter form.'),
+      '#default_value' => $this->options['skip_link'] ?? TRUE,
     ];
 
     $form['bef']['general']['skip_link_settings'] = [
@@ -201,7 +187,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         'horizontal' => $this->t('Horizontal'),
         'vertical' => $this->t('Vertical'),
       ],
-      '#default_value' => $this->options['orientation'] ?? FALSE,
+      '#default_value' => $this->options['orientation'] ?? TRUE,
     ];
   }
 
@@ -219,8 +205,8 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       $general_settings = $bef_settings['general'];
       if (isset($general_settings['reset_button_settings'])) {
         $reset_button_settings = $general_settings['reset_button_settings'];
+        $this->options['bef']['general']['reset_button_always_show'] = $reset_button_settings['reset_button_always_show'] ?? FALSE;
         $this->options['reset_button_position'] = $reset_button_settings['reset_button_position'] ?? 'bottom';
-        $this->options['min_text_length'] = $reset_button_settings['min_text_length'] ?? 1;
         $this->options['reset_button_counter'] = $reset_button_settings['reset_button_counter'] ?? FALSE;
         $this->options['orientation'] = $general_settings['orientation'] ?? 'vertical';
         $this->options['skip_link'] = $general_settings['skip_link'] ?? FALSE;
