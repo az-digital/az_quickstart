@@ -121,6 +121,10 @@ function az_event_trellis_form_views_exposed_form_alter(&$form, FormStateInterfa
   $view = $form_state->get('view');
   if (($view->id() === 'az_event_trellis_import') && ($view->current_display === 'page_1')) {
 
+    // Don't create configuration link if user does not have permission.
+    if (!\Drupal::currentUser()->hasPermission('administer quickstart configuration')) {
+      return;
+    }
     $search = az_event_trellis_gather_filter_options($form, $form_state);
     if (!empty($search)) {
       // We cannot use an ajax response here to open a dialog.
