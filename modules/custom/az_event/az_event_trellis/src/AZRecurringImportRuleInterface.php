@@ -19,4 +19,12 @@ interface AZRecurringImportRuleInterface extends ConfigEntityInterface {
    */
   public function getEventIds();
 
+  /**
+   * Returns a list of API queries parameters associated with this import.
+   *
+   * @return array
+   *   An array of query parameters, keyed by parameter name.
+   */
+  public function getQueryParameters();
+
 }

@@ -92,7 +92,7 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
   /**
    * {@inheritdoc}
    */
-  public function getEventIds() {
+  public function getQueryParameters() {
     // Build a list of query parameters.
     $params = [
       'publish' => 'true',
@@ -104,6 +104,16 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
     $params['host'] = $this->get('host') ?? '';
     $params['approval'] = $this->get('approval') ?? '';
     $params = array_filter($params);
+    return $params;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getEventIds() {
+    // Build a list of query parameters.
+    $params = $this->getQueryParameters();
+
     // Let's refuse to search if there are no constraints except published.
     if (count($params) === 1) {
       return [];
