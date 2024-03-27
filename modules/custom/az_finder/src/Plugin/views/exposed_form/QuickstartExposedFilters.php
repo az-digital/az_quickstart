@@ -204,6 +204,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       $general_settings = $bef_settings['general'];
       if (isset($general_settings['reset_button_settings'])) {
         $reset_button_settings = $general_settings['reset_button_settings'];
+        $this->options['bef']['general']['reset_button_always_show'] = $reset_button_settings['reset_button_always_show'] ?? FALSE;
         $this->options['reset_button_position'] = $reset_button_settings['reset_button_position'] ?? 'bottom';
         $this->options['reset_button_counter'] = $reset_button_settings['reset_button_counter'] ?? FALSE;
         $this->options['orientation'] = $general_settings['orientation'] ?? 'vertical';
