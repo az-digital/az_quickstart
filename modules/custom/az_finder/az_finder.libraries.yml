@@ -13,4 +13,3 @@ active-filter-reset:
       - minified: false
   dependencies:
     - core/drupal
-    - core/drupalSettings
