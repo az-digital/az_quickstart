@@ -37,3 +37,11 @@ entity.az_recurring_import_rule.delete_form:
     _title: 'Delete a recurring import rule'
   requirements:
     _permission: 'administer quickstart configuration'
+
+entity.az_recurring_import_rule.modal:
+  path: '/admin/az-event-trellis-modal'
+  defaults:
+    _title: 'Entity Az Recurring Import Rule Modal'
+    _controller: '\Drupal\az_event_trellis\Controller\AZRecurringImportModalController'
+  requirements:
+    _permission: 'administer quickstart configuration'
