@@ -14,6 +14,7 @@ dependencies:
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
     - az_event
+    - az_finder
     - az_flexible_page
     - az_news
     - az_person
@@ -369,7 +370,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -420,6 +421,12 @@ display:
                 select_all_none: false
                 select_all_none_nested: false
                 display_inline: false
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         created:
           id: created
@@ -569,7 +576,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -609,6 +616,12 @@ display:
                 select_all_none: false
                 select_all_none_nested: false
                 display_inline: false
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value
@@ -845,7 +858,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -897,6 +910,12 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_published_value:
           id: field_az_published_value
@@ -1246,7 +1265,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -1286,6 +1305,12 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         changed:
           id: changed
@@ -1528,11 +1553,11 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
-          reset_button_label: Reset
+          reset_button_label: 'Clear all filters'
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -1579,6 +1604,12 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_lname_value:
           id: field_az_lname_value
