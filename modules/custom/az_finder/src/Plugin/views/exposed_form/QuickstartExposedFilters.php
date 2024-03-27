@@ -140,20 +140,20 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         'top' => $this->t('Top'),
         'bottom' => $this->t('Bottom'),
       ],
-      '#default_value' => $this->options['reset_button_position'] ?? 'bottom',
+      '#default_value' => $this->options['reset_button_position'] ?? 'top',
       '#description' => $this->t('Select where to place the reset button in the form.'),
     ];
     $form['bef']['general']['reset_button_settings']['reset_button_counter'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Show active filter counter'),
-      '#description' => $this->t('Show a counter of active filters next to the reset button.'),
+      '#description' => $this->t('Show a counter of active filters within the reset button next to the text.'),
       '#default_value' => $this->options['reset_button_counter'] ?? FALSE,
     ];
     $form['bef']['general']['skip_link'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Add skip link to the top of the view'),
-      '#description' => $this->t('Add a skip link to the top of the view to allow keyboard users to skip to the search and filter form.'),
-      '#default_value' => $this->options['skip_link'] ?? FALSE,
+      '#title' => $this->t('Add skip link to the top of the view results'),
+      '#description' => $this->t('Add a skip link to the top of the view results to allow keyboard users to skip to the search and filter form.'),
+      '#default_value' => $this->options['skip_link'] ?? TRUE,
     ];
 
     $form['bef']['general']['skip_link_settings'] = [
@@ -186,7 +186,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         'horizontal' => $this->t('Horizontal'),
         'vertical' => $this->t('Vertical'),
       ],
-      '#default_value' => $this->options['orientation'] ?? FALSE,
+      '#default_value' => $this->options['orientation'] ?? TRUE,
     ];
   }
 
