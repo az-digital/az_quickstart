@@ -101,7 +101,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     // Get active configuration to look for roles.
     $existing_config = $this->getActiveStorages()->listAll();
-    // phpcs:ignore
     $existing_roles = array_filter($existing_config, function ($name) {
       return (strpos($name, 'user.role.') === 0);
     });

@@ -384,14 +384,25 @@ function az_barrio_az_bootstrap_assets_path($type) {
  */
 function az_barrio_az_icons_assets_path($type) {
   $az_icons_path = '';
+  $az_icons_cdn_version = theme_get_setting('az_icons_cdn_version');
+  if ($az_icons_cdn_version === 'stable') {
+    $az_icons_cdn_version = AZ_ICONS_STABLE_VERSION;
+  }
 
   // AZ Icons source.
   if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
-    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
+    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/'  . $az_icons_cdn_version;
   }
   else {
-    $az_icons_path = 'libraries/az-icons/az-icons-styles.css';
+    $az_icons_path = base_path() . 'libraries/az-icons';
   }
+  $az_icons_path .= '/az-icons-styles';
+
+  // AZ Icons minified.
+  if (theme_get_setting('az_icons_minified')) {
+    $az_icons_path .= '.min';
+  }
+  $az_icons_path .= '.css';
 
   return $az_icons_path;
 }
