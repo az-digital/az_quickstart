@@ -10,7 +10,7 @@ field_name: field_az_media_image
 entity_type: node
 bundle: az_carousel_item
 label: Image
-description: 'Minimum dimensions: 1400px (wide) x 500px (tall)'
+description: 'Minimum dimensions: 1110px (wide) x 500px (tall)'
 required: true
 translatable: true
 default_value: {  }
