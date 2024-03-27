@@ -143,9 +143,6 @@
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2022-05-20/2945387-19-support-bundleless-entities.patch"
             },
-            "drupal/better_exposed_filters": {
-                "Reset button does not use AJAX (2996297)": "https://www.drupal.org/files/issues/2022-09-14/better_exposed_filters-reset_button_ajax_5x-2996297-74.patch"
-            },
             "drupal/bootstrap_barrio": {
                 "Affix library still broken (3366908)": "https://www.drupal.org/files/issues/2023-06-14/3366908-3_5-x.patch",
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",

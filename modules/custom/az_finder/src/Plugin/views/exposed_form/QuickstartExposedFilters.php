@@ -62,8 +62,9 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = TRUE;
       }
       else {
-        $reset_button['#attributes']['class'][] = 'd-hidden';
+        $reset_button['#attributes']['class'][] = 'd-none';
         $form['#attached']['drupalSettings']['azFinder']['alwaysDisplayResetButton'] = FALSE;
+        unset($reset_button['#access']);
       }
       // Add the reset button counter setting to the drupalSettings array.
       if ($this->options['reset_button_counter'] === TRUE) {
