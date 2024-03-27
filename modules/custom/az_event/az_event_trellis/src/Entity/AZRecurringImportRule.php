@@ -82,7 +82,7 @@ final class AZRecurringImportRule extends ConfigEntityBase implements AZRecurrin
   /**
    * The az_recurring_import_rule enterprise attributes.
    */
-  protected array $attributes;
+  protected ?array $attributes;
 
   /**
    * The az_recurring_import_rule approval status.
