@@ -131,7 +131,7 @@ function az_event_trellis_form_views_exposed_form_alter(&$form, FormStateInterfa
       // Exposed forms do not support ajax callbacks. Cache search parameters.
       // Compute cache key of parameters.
       $key = 'az_recurring_import_modal:' . Crypt::hashBase64(serialize($search));
-      $expire = time() + 120;
+      $expire = time() + 1200;
       // Cache the search.
       \Drupal::service('cache.default')->set($key, $search, $expire);
       $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
