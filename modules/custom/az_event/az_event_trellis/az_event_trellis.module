@@ -78,6 +78,9 @@ function az_event_trellis_gather_filter_options(&$form, FormStateInterface $form
     $handlers = $view->filter;
     // Get exposed search information.
     $input = $view->getExposedInput();
+    if (empty($input)) {
+      return [];
+    }
     // Loops through handlers to find inputs we want.
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $handler */
     foreach ($handlers as $key => $handler) {
