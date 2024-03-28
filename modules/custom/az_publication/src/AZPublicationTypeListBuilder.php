@@ -29,6 +29,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     return $query->execute();
   }
 
+
   /**
    * {@inheritdoc}
    */
@@ -62,7 +63,8 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
       'disabled' => [],
     ];
     foreach (parent::load() as $entity) {
-      if ($entity->get('status')) {
+      /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
+      if ($entity->isEnabled()) {
         $entities['enabled'][] = $entity;
       }
       else {
@@ -72,10 +74,12 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     return $entities;
   }
 
+
   /**
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
+    /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
     $row = parent::buildRow($entity);
     return [
       'data' => [
@@ -91,13 +95,13 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         ],
         'type' => [
           'data' => [
-            '#plain_text' => $entity->get('type'),
+            '#plain_text' => $entity->bundle(),
           ],
         ],
         'operations' => $row['operations'],
       ],
       '#attributes' => [
-        'class' => [$entity->status() ? 'az-publication-ui-list-enabled' : 'az-publication-ui-list-disabled'],
+        'class' => [$entity->isEnabled() ? 'az-publication-ui-list-enabled' : 'az-publication-ui-list-disabled'],
       ],
     ];
   }

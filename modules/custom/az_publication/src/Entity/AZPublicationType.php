@@ -135,4 +135,14 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
     ];
   }
 
+  /**
+   * Gets the enabled/disabled status of the publication type.
+   *
+   * @return bool
+   *   TRUE if the publication type is enabled, FALSE otherwise.
+   */
+  public function isEnabled(): bool {
+    return (bool) $this->get('status');
+  }
+
 }
