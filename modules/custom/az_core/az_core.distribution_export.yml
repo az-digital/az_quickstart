@@ -39,6 +39,12 @@ ignore_config:
   - system.menu.main
   - core.entity_view_mode.user.compact
   - field.storage.block_content.body
+# Ignore some config in bulk.
+ignore_config_pattern:
+  # Don't try to export block placements.
+  - '/^block\.block\./'
+  # Don't try to export system actions.
+  - '/^system\.action\./'
 # Override dev site values.
 merge:
   automated_cron.settings:

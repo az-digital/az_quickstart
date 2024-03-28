@@ -8,9 +8,11 @@ use Drupal\Component\Serialization\Yaml;
 use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\config_update\ConfigDiffer;
 use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\Entity\ConfigDependencyManager;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageException;
+use Drupal\Core\Config\StorageInterface;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\user\Entity\Role;
@@ -43,6 +45,13 @@ class AZCoreConfigCommands extends DrushCommands {
    * @var \Drupal\Core\Config\ConfigFactory
    */
   protected $configFactory;
+
+  /**
+   * Drupal\Core\Config\StorageInterface definition.
+   *
+   * @var \Drupal\Core\Config\StorageInterface
+   */
+  protected $configStorage;
 
   /**
    * Drupal\Core\Extension\ModuleExtensionList definition.
@@ -83,14 +92,17 @@ class AZCoreConfigCommands extends DrushCommands {
    *   The serialization.yaml service.
    * @param \Drupal\user\PermissionHandler $permissionHandler
    *   The user permissions service.
+   * @param \Drupal\Core\Config\StorageInterface $configStorage
+   *   The active config storage.
    */
-  public function __construct(ConfigFactory $configFactory, ConfigCollector $configCollector, ConfigDiffer $configDiffer, ModuleExtensionList $extensionLister, Yaml $yamlSerialization, PermissionHandler $permissionHandler) {
+  public function __construct(ConfigFactory $configFactory, ConfigCollector $configCollector, ConfigDiffer $configDiffer, ModuleExtensionList $extensionLister, Yaml $yamlSerialization, PermissionHandler $permissionHandler, StorageInterface $configStorage) {
     $this->configFactory = $configFactory;
     $this->configCollector = $configCollector;
     $this->configDiffer = $configDiffer;
     $this->extensionLister = $extensionLister;
     $this->yamlSerialization = $yamlSerialization;
     $this->permissionHandler = $permissionHandler;
+    $this->configStorage = $configStorage;
   }
 
   /**
@@ -270,11 +282,13 @@ class AZCoreConfigCommands extends DrushCommands {
   protected function exportDependencies() {
     $rules = $this->loadExportRules();
     $ignores = $rules['ignore_config'] ?? [];
+    $ignore_patterns = $rules['ignore_config_pattern'] ?? [];
     $extensions = $this->extensionLister->getList();
     $providers = $this->configCollector->getConfigProviders();
-    $seen = [];
-    $dependencies = [];
+    $manager = new ConfigDependencyManager();
+    $distribution = [];
     $choices = [];
+    $current = [];
 
     foreach ($extensions as $key => $extension) {
       // Only run for distribution extensions.
@@ -291,60 +305,75 @@ class AZCoreConfigCommands extends DrushCommands {
         // Find out which config items the module's storage has available.
         $path = $extension->getPath() . DIRECTORY_SEPARATOR . $dir;
         $storage = new FileStorage($path);
-        $all = $storage->listAll();
-        foreach ($all as $item) {
-          // Maintain list of every config item we've seen in modules.
-          $seen[$item] = $item;
-          $config = $storage->read($item);
-          $item_deps = $config['dependencies']['config'] ?? [];
-          // Build list of potential module dependencies.
-          foreach ($item_deps as $dep) {
-            $dependencies[$dep] = $dep;
-          }
-        }
+        $distribution += $storage->readMultiple($storage->listAll());
       }
-    }
-    // Restripe array.
-    $dependencies = array_values($dependencies);
-    while (TRUE) {
-      $new_dependencies = [];
-      foreach ($dependencies as $dependency) {
-        if (!isset($seen[$dependency]) && (!in_array($dependency, $ignores))) {
-          if ($this->io()->confirm(dt('Add NEW configuration @item?', [
-            '@item' => $dependency,
-          ]))) {
-            $active = $this->configFactory->get($dependency)->get();
-            unset($active['_core']);
-            unset($active['uuid']);
-            $item_deps = $active['dependencies']['config'] ?? [];
-            foreach ($item_deps as $nested_dependency) {
-              if (!in_array($nested_dependency, $dependencies,)) {
-                $new_dependencies[$nested_dependency] = $nested_dependency;
-              }
-            }
-            $choice = $this->io()->choice(dt('Where should @item be exported?', [
-              '@item' => $dependency,
-            ]), $choices);
-            $path = $this->extensionLister->getPath($choice) . DIRECTORY_SEPARATOR . InstallStorage::CONFIG_INSTALL_DIRECTORY;
-            $storage = new FileStorage($path);
-            try {
-              $storage->write($dependency, $active);
-              $seen[$dependency] = $dependency;
-            }
-            catch (StorageException $e) {
-              $this->output()->writeln(dt('Failed to write NEW configuration @item', [
-                '@item' => $dependency,
-              ]));
-            }
-          }
-        }
-      }
-      if (empty($new_dependencies)) {
-        break;
-      }
-      $dependencies = array_values($new_dependencies);
     }
 
+    $this->output()->writeln(dt('Examining dependencies...'));
+    // Get all config from active site.
+    $current = $this->configStorage->readMultiple($this->configStorage->listAll());
+    // Create a list of config that is not in the distribution.
+    $only_active = array_diff_key($current, $distribution);
+    // Analyze dependencies of active site.
+    $manager->setData($current);
+    $manager->sortAll();
+    $related = [];
+    // Examine active site config.
+    foreach ($only_active as $item => $data) {
+      $dependents = $manager->getDependentEntities('config', $item);
+      foreach ($dependents as $dependent) {
+        $name = $dependent->getConfigDependencyName();
+        // Active config is of interest if any dependents are in the distro.
+        if (($name !== $item) && isset($distribution[$name])) {
+          $related[$item] = $data;
+        }
+      }
+    }
+    // Examine distribution config.
+    foreach ($distribution as $item => $data) {
+      $dependents = $manager->getDependentEntities('config', $item);
+      foreach ($dependents as $dependent) {
+        $name = $dependent->getConfigDependencyName();
+        // Active config is of interest if it depends ON the distro.
+        if (($name !== $item) && isset($only_active[$name])) {
+          $related[$name] = $only_active[$name];
+        }
+      }
+    }
+
+    // Remove ignored items.
+    $dependencies = array_diff_key($related, array_flip($ignores));
+
+    // Remove patterns of items.
+    foreach (array_keys($dependencies) as $item) {
+      foreach ($ignore_patterns as $pattern) {
+        if (preg_match($pattern, $item)) {
+          unset($dependencies[$item]);
+        }
+      }
+    }
+
+    foreach ($dependencies as $dependency => $data) {
+      if ($this->io()->confirm(dt('Export NEW dependent configuration @item?', [
+        '@item' => $dependency,
+      ]))) {
+        unset($data['_core']);
+        unset($data['uuid']);
+        $choice = $this->io()->choice(dt('Where should @item be exported?', [
+          '@item' => $dependency,
+        ]), $choices);
+        $path = $this->extensionLister->getPath($choice) . DIRECTORY_SEPARATOR . InstallStorage::CONFIG_INSTALL_DIRECTORY;
+        $storage = new FileStorage($path);
+        try {
+          $storage->write($dependency, $data);
+        }
+        catch (StorageException $e) {
+          $this->output()->writeln(dt('Failed to write NEW configuration @item', [
+            '@item' => $dependency,
+          ]));
+        }
+      }
+    }
   }
 
   /**
@@ -357,6 +386,7 @@ class AZCoreConfigCommands extends DrushCommands {
     $rules = [
       'strip_metatags' => [],
       'ignore_config' => [],
+      'ignore_pattern' => [],
       'merge' => [],
     ];
     try {

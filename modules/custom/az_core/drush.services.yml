@@ -8,5 +8,6 @@ services:
       - '@extension.list.module'
       - '@serialization.yaml'
       - '@user.permissions'
+      - '@config.storage'
     tags:
       - { name: drush.command }
