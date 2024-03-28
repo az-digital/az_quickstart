@@ -19,12 +19,4 @@ interface AZPublicationTypeInterface extends ConfigEntityInterface {
    */
   public static function getMappableTypeOptions(): array;
 
-  /**
-   * Gets the enabled/disabled status of the publication type.
-   *
-   * @return bool
-   *   TRUE if the publication type is enabled, FALSE otherwise.
-   */
-  public function isEnabled(): bool;
-
 }

@@ -64,7 +64,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     ];
     foreach (parent::load() as $entity) {
       /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
-      if ($entity->isEnabled()) {
+      if ($entity->get('status')) {
         $entities['enabled'][] = $entity;
       }
       else {
@@ -95,13 +95,13 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         ],
         'type' => [
           'data' => [
-            '#plain_text' => $entity->bundle(),
+            '#plain_text' => $entity->get('type'),
           ],
         ],
         'operations' => $row['operations'],
       ],
       '#attributes' => [
-        'class' => [$entity->isEnabled() ? 'az-publication-ui-list-enabled' : 'az-publication-ui-list-disabled'],
+        'class' => [$entity->get('status') ? 'az-publication-ui-list-enabled' : 'az-publication-ui-list-disabled'],
       ],
     ];
   }
