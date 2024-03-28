@@ -1,0 +1,11 @@
+az_http.settings:
+  type: config_object
+  label: 'Quickstart HTTP settings'
+  mapping:
+    migrations:
+      type: mapping
+      label: 'Migrations'
+      mapping:
+        http_cached:
+          type: boolean
+          label: 'Migration HTTP Fetches Cached'

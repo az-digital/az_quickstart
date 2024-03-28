@@ -1,0 +1,7 @@
+name: 'Quickstart HTTP'
+type: module
+description: 'Provides a cache-friendly HTTP service for dedicated API Requests'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+dependencies:
+  - az_core
