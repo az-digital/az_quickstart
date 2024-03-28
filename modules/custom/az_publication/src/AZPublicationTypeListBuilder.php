@@ -35,13 +35,13 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   public function getDefaultOperations(EntityInterface $entity) {
     $operations = parent::getDefaultOperations($entity);
     $current_user = \Drupal::currentUser();
-    if (!$current_user->hasPermission('delete az publication type entities') && isset($operations['delete'])) {
+    if (!$current_user->hasPermission('delete publication type entities') && isset($operations['delete'])) {
       unset($operations['delete']);
     }
-    if (!$current_user->hasPermission('disable az publication type entities') && isset($operations['disable'])) {
+    if (!$current_user->hasPermission('disable publication type entities') && isset($operations['disable'])) {
       unset($operations['disable']);
     }
-    if (!$current_user->hasPermission('enable az publication type entities') && isset($operations['enable'])) {
+    if (!$current_user->hasPermission('enable publication type entities') && isset($operations['enable'])) {
       unset($operations['enable']);
     }
     // Ensure ajax.js focuses on appropriate element by setting
