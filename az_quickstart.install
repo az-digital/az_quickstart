@@ -214,7 +214,7 @@ function az_quickstart_update_1020901(&$sandbox) {
   $ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
     ->condition('langcode', 'und')
-    ->range($sandbox['progress'], $sandbox['progress'] + $batch_size)
+    ->range($sandbox['progress'], $batch_size)
     ->execute();
   $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
   foreach ($menu_links as $menu_link) {
