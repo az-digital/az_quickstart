@@ -203,6 +203,7 @@ function az_quickstart_update_1020901(&$sandbox) {
   if (!isset($sandbox['progress'])) {
     $sandbox['progress'] = 0;
     $sandbox['max'] = \Drupal::entityQuery('menu_link_content')
+      ->accessCheck(FALSE)
       ->condition('langcode', 'und')
       ->count()
       ->execute();
@@ -211,6 +212,7 @@ function az_quickstart_update_1020901(&$sandbox) {
   $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
 
   $ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
     ->condition('langcode', 'und')
     ->range($sandbox['progress'], $sandbox['progress'] + $batch_size)
     ->execute();
