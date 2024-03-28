@@ -42,15 +42,10 @@ function az_publication_form_view_add_form_alter(&$form, FormStateInterface $for
  */
 function az_publication_sort_options_by_render(array &$options, $key) {
   if (isset($options[$key]) && is_array($options[$key])) {
-    uasort($options[$key], ' az_publication_compare_render');
+    uasort($options[$key], function ($a, $b) {
+      return $a->render() <=> $b->render();
+    });
   }
-}
-
-/**
- * Comparison function for uasort.
- */
-function az_publication_compare_render($a, $b) {
-  return $a->render() <=> $b->render();
 }
 
 /**
