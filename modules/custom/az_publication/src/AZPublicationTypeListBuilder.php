@@ -29,7 +29,6 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     return $query->execute();
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -73,7 +72,6 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     }
     return $entities;
   }
-
 
   /**
    * {@inheritdoc}
