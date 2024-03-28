@@ -195,3 +195,31 @@ function az_quickstart_update_1020802() {
 function az_quickstart_update_1020803() {
   \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
 }
+
+/**
+ * Update langcode for migrated menu links to be the site's default language.
+ */
+function az_quickstart_update_1020901(&$sandbox) {
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = \Drupal::entityQuery('menu_link_content')
+      ->condition('langcode', 'und')
+      ->count()
+      ->execute();
+  }
+  $batch_size = 25;
+  $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+
+  $ids = \Drupal::entityQuery('menu_link_content')
+    ->condition('langcode', 'und')
+    ->range($sandbox['progress'], $sandbox['progress'] + $batch_size)
+    ->execute();
+  $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
+  foreach ($menu_links as $menu_link) {
+    $menu_link->langcode = $default_langcode;
+    $menu_link->save();
+    $sandbox['progress']++;
+  }
+  $sandbox['#finished'] = $sandbox['max'] === 0 ? 1 : $sandbox['progress'] / $sandbox['max'];
+  return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
+}
