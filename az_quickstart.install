@@ -200,7 +200,7 @@ function az_quickstart_update_1020803() {
  * Update langcode for migrated menu links to be the site's default language.
  */
 function az_quickstart_update_1020901(&$sandbox) {
-  if (!isset($sandbox['progress'])) {
+  if (!isset($sandbox['max'])) {
     $sandbox['progress'] = 0;
     $sandbox['max'] = \Drupal::entityQuery('menu_link_content')
       ->accessCheck(FALSE)
