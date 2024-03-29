@@ -75,28 +75,35 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#description' => $this->t('Enabled import rules will regularly import matching content into the site automatically.'),
     ];
 
-    $form['owner'] = [
+    $form['query_parameters'] = [
+      '#type' => 'details',
+      '#title' => t('Recurring Search Parameters'),
+      '#description' => $this->t('When this import rule runs, the following search terms will be used.'),
+      '#open' => TRUE,
+    ];
+
+    $form['query_parameters']['owner'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Owner'),
       '#maxlength' => 255,
       '#default_value' => $entity->get('owner'),
     ];
 
-    $form['host'] = [
+    $form['query_parameters']['host'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Host'),
       '#maxlength' => 255,
       '#default_value' => $entity->get('host'),
     ];
 
-    $form['keyword'] = [
+    $form['query_parameters']['keyword'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Keyword'),
       '#maxlength' => 255,
       '#default_value' => $entity->get('keyword'),
     ];
 
-    $form['attributes']['#tree'] = TRUE;
+    $form['query_parameters']['attributes']['#tree'] = TRUE;
 
     // Get the different attributes available.
     $query = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
@@ -131,7 +138,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
       }
 
       // Build the select element for the attribute.
-      $form['attributes'][$key] = [
+      $form['query_parameters']['attributes'][$key] = [
         '#type' => 'select',
         '#options' => $options,
         '#empty_option' => $this->t('- Any -'),
@@ -142,7 +149,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
       ];
     }
 
-    $form['approval'] = [
+    $form['query_parameters']['approval'] = [
       '#type' => 'select',
       '#title' => $this->t('Approved for University Calendar'),
       '#options' => [
