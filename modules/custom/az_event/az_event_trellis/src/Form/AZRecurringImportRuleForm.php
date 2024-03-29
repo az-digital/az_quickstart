@@ -55,6 +55,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#title' => $this->t('Import Rule Name'),
       '#maxlength' => 255,
       '#default_value' => $entity->label(),
+      '#description' => $this->t('Describe this rule, e.g., Graduate Lecture Series'),
       '#required' => TRUE,
     ];
 
@@ -71,6 +72,7 @@ final class AZRecurringImportRuleForm extends EntityForm {
       '#type' => 'checkbox',
       '#title' => $this->t('Enabled'),
       '#default_value' => $entity->status(),
+      '#description' => $this->t('Enabled import rules will regularly import matching content into the site automatically.'),
     ];
 
     $form['owner'] = [
