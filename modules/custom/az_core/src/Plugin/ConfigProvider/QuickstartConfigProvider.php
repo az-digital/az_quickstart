@@ -196,6 +196,22 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   }
 
   /**
+   * Fetch only override config, without merging with installed config.
+   *
+   * @param \Drupal\Core\Extension\Extension[] $extensions
+   *   An associative array of Extension objects, keyed by extension name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  public function getOnlyOverrideConfig(array $extensions = []) {
+    $storage = $this->getExtensionInstallStorage(static::ID);
+    $config_names = (!empty($extensions)) ? $this->listConfig($storage, $extensions) : [];
+    $data = $storage->readMultiple($config_names);
+    return $data;
+  }
+
+  /**
    * Get permissions defined.
    *
    * @return array
