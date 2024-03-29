@@ -195,3 +195,11 @@ function az_quickstart_update_1020802() {
 function az_quickstart_update_1020803() {
   \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
 }
+
+/**
+ * Enable az_finder module by default.
+ */
+function az_quickstart_update_1020804()
+{
+  \Drupal::service('module_installer')->install(['az_finder']);
+}
