@@ -358,7 +358,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $dom = new DOMDocument();
             // Suppress loadHTML warnings.
             libxml_use_internal_errors(TRUE);
-            $dom->loadHTML($renderedText);
+            $dom->loadHTML('<?xml encoding="UTF-8">' . $renderedText);
             libxml_clear_errors();
             $divs = $dom->getElementsByTagName('div');
             foreach ($divs as $div) {
