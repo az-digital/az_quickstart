@@ -14,6 +14,7 @@ dependencies:
     - taxonomy.vocabulary.az_person_categories
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
+    - az_finder
     - draggableviews
     - node
     - taxonomy
@@ -108,7 +109,7 @@ display:
           total_pages: null
           id: 0
       exposed_form:
-        type: basic
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: false
@@ -117,6 +118,32 @@ display:
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: null
+          bef:
+            general:
+              autosubmit: false
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: false
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            sort:
+              plugin_id: default
+            filter:
+              title:
+                plugin_id: default
+              tid_1:
+                plugin_id: default
+          reset_button_position: bottom
+          reset_button_counter: false
+          orientation: horizontal
+          skip_link: false
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       access:
         type: perm
         options:
@@ -248,9 +275,163 @@ display:
           plugin_id: bundle
           value:
             az_person: az_person
+          group: 1
           expose:
             operator_limit_selection: false
             operator_list: {  }
+        title:
+          id: title
+          table: node_field_data
+          field: title
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: title
+          plugin_id: string
+          operator: contains
+          value: ''
+          group: 1
+          exposed: true
+          expose:
+            operator_id: title_op
+            label: 'Search by Name'
+            description: ''
+            use_operator: false
+            operator: title_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: title
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: and
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: tid_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: tid_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: tid_1
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          vid: az_person_categories
+          type: select
+          hierarchy: true
+          limit: true
+          error_message: true
+        tid_1:
+          id: tid_1
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          operator: and
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: tid_1_op
+            label: ''
+            description: ''
+            use_operator: false
+            operator: tid_1_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: tid_2
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          vid: az_person_categories_secondary
+          type: select
+          hierarchy: true
+          limit: true
+          error_message: true
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
       style:
         type: views_bootstrap_grid
         options:
@@ -290,6 +471,7 @@ display:
           vids:
             - az_person_categories
       css_class: az-person-grid
+      use_ajax: true
       header: {  }
       footer: {  }
       display_extenders: {  }
@@ -374,6 +556,64 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      exposed_form:
+        type: az_better_exposed_filters
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: 'Reset filters'
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: true
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              tid:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: true
+                display_inline: false
+              tid_1:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: true
+                display_inline: false
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         weight:
           id: weight
@@ -434,6 +674,7 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
+        exposed_form: false
         style: false
         style_options: false
         row: false
@@ -444,6 +685,7 @@ display:
       relationships: {  }
       display_description: ''
       style_options: null
+      exposed_block: true
       display_extenders: {  }
       path: people
     cache_metadata:
