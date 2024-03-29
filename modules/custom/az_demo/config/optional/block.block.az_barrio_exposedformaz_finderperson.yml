@@ -9,6 +9,9 @@ dependencies:
     - views
   theme:
     - az_barrio
+  enforced:
+    module:
+      - az_demo
 id: az_barrio_exposedformaz_finderperson
 theme: az_barrio
 region: sidebar_first

@@ -1,0 +1,57 @@
+# TODO: replace with more robust rules for diff exclusion.
+strip_metatags:
+  - core.entity_view_display.node.az_event.az_card
+  - core.entity_view_display.node.az_event.az_card_alternate
+  - core.entity_view_display.node.az_event.az_row
+  - core.entity_view_display.node.az_event.az_row_with_background
+  - core.entity_view_display.node.az_event.default
+  - core.entity_view_display.node.az_event.teaser
+  - core.entity_view_display.node.az_flexible_page.az_card
+  - core.entity_view_display.node.az_flexible_page.az_row
+  - core.entity_view_display.node.az_flexible_page.default
+  - core.entity_view_display.node.az_news.az_card
+  - core.entity_view_display.node.az_news.az_feature
+  - core.entity_view_display.node.az_news.az_marquee
+  - core.entity_view_display.node.az_news.az_media_list
+  - core.entity_view_display.node.az_news.az_medium_media_list
+  - core.entity_view_display.node.az_news.az_minimal_media_list
+  - core.entity_view_display.node.az_news.az_row
+  - core.entity_view_display.node.az_news.az_row_with_background
+  - core.entity_view_display.node.az_news.default
+  - core.entity_view_display.node.az_news.teaser
+  - core.entity_view_display.node.az_person.az_card
+  - core.entity_view_display.node.az_person.az_row
+  - core.entity_view_display.node.az_person.default
+  - core.entity_view_display.node.az_person.teaser
+# TODO: potentially replace with config_ignore API?
+ignore_config:
+  - core.entity_view_mode.node.teaser
+  - filter.format.plain_text
+  - core.entity_form_mode.media.media_library
+  - image.style.thumbnail
+  - core.entity_view_mode.media.media_library
+  - image.style.large
+  - image.style.medium
+  - image.style.media_library
+  - core.entity_view_mode.node.full
+  - core.entity_view_mode.block_content.full
+  - core.entity_view_mode.paragraph.preview
+  - system.menu.main
+  - core.entity_view_mode.user.compact
+  - field.storage.block_content.body
+# Ignore some config in bulk.
+ignore_config_pattern:
+  # Don't try to export block placements.
+  - '/^block\.block\./'
+  # Don't try to export system actions.
+  - '/^system\.action\./'
+# Override dev site values.
+merge:
+  automated_cron.settings:
+    interval: 10800
+  system.site:
+    uuid: ''
+    name: ''
+    mail: ''
+  az_cas.settings:
+    disable_login_form: true  
