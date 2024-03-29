@@ -199,6 +199,6 @@ function az_quickstart_update_1020803() {
 /**
  * Enable az_finder module by default.
  */
-function az_quickstart_update_1020804() {
+function az_quickstart_update_1021001() {
   \Drupal::service('module_installer')->install(['az_finder']);
 }
