@@ -15,7 +15,7 @@ use PHPUnit\Framework\TestCase;
 class AzFinderIconsTest extends TestCase {
 
   /**
-   *
+   * Ensure AzFinderIcons is generating SVG icons correctly.
    */
   public function testGenerateSvgIcons() {
     $azFinderIcons = new AzFinderIcons();
