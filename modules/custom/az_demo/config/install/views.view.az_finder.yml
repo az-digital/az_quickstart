@@ -410,23 +410,6 @@ display:
                 select_all_none: true
                 select_all_none_nested: true
                 display_inline: false
-              tid:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
-          reset_button_position: top
-          reset_button_counter: true
-          orientation: vertical
-          skip_link: true
-          skip_link_text: 'Skip to search and filter'
-          skip_link_id: search-filter
       sorts:
         created:
           id: created
