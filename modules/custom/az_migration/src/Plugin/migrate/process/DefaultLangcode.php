@@ -3,7 +3,6 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Language\LanguageInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
@@ -18,9 +17,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  *
  * This plugin can be used in a migration to set the language code of the
- * destination entity. If the incoming language value is 'und' or empty, the plugin
- * will use the destination site's default langcode. Otherwise, it will use the incoming
- * language value.
+ * destination entity. If the incoming language value is 'und' or empty, the
+ * plugin will use the destination site's default langcode. Otherwise, it will
+ * use the incoming language value.
  *
  * Example usage:
  *
