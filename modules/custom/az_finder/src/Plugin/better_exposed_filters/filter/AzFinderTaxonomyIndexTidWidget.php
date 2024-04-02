@@ -56,7 +56,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *
    * @var \Drupal\az_finder\AZFinderIcons
    */
-  protected $AZFinderIcons;
+  protected $azFinderIcons;
 
   /**
    * Constructs a new AzFinderWidget object.
@@ -86,7 +86,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->renderer = $renderer;
     $this->entityTypeManager = $entity_type_manager;
-    $this->AZFinderIcons = $az_finder_icons;
+    $this->azFinderIcons = $az_finder_icons;
   }
 
   /**
@@ -181,7 +181,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
     if (!empty($form[$field_id])) {
       $this->setFormOptions($form, $field_id);
-      $svg_icons = $this->AZFinderIcons->generateSvgIcons();
+      $svg_icons = $this->azFinderIcons->generateSvgIcons();
       foreach ($svg_icons as $key => $icon) {
         $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->renderPlain($icon);
       }
@@ -291,11 +291,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     }
   }
 
-  // /**
-  //  * {@inheritdoc}
-
   /**
-   *
+   * {@inheritdoc}
    */
   public static function isApplicable($filter = NULL, array $filter_options = []) {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
@@ -353,7 +350,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $depth = strlen($original_title) - strlen($cleaned_title);
       $list_title['#value'] = $cleaned_title;
       // Decide which icon to use based on depth.
-      $icons = $this->AZFinderIcons->generateSvgIcons();
+      $icons = $this->azFinderIcons->generateSvgIcons();
       $level_0_collapse_icon = $icons['level_0_collapse'];
       $level_1_collapse_icon = $icons['level_1_collapse'];
       if (!empty($level_0_collapse_icon) && !empty($level_1_collapse_icon)) {
