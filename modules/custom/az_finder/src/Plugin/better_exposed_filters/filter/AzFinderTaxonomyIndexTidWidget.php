@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace Drupal\az_finder\Plugin\better_exposed_filters\filter;
 
-use Drupal\az_finder\AzFinderIcons;
+use Drupal\az_finder\AZFinderIcons;
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -16,6 +16,7 @@ use Drupal\Core\Template\Attribute;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Finder widget implementation.
@@ -25,7 +26,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   label = @Translation("Quickstart Finder Term ID Widget"),
  * )
  */
-class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements ContainerFactoryPluginInterface {
+class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements ContainerFactoryPluginInterface {
+
+  use StringTranslationTrait;
 
   /**
    * The configuration for the plugin.
@@ -49,11 +52,11 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   protected $entityTypeManager;
 
   /**
-   * The AzFinderIcons service.
+   * The AZFinderIcons service.
    *
-   * @var \Drupal\az_finder\AzFinderIcons
+   * @var \Drupal\az_finder\AZFinderIcons
    */
-  protected $azFinderIcons;
+  protected $AZFinderIcons;
 
   /**
    * Constructs a new AzFinderWidget object.
@@ -68,8 +71,8 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The renderer service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
-   * @param \Drupal\az_finder\AzFinderIcons $az_finder_icons
-   *   The AzFinderIcons service.
+   * @param \Drupal\az_finder\AZFinderIcons $az_finder_icons
+   *   The AZFinderIcons service.
    */
   public function __construct(
     array $configuration,
@@ -77,7 +80,7 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $plugin_definition,
     RendererInterface $renderer,
     EntityTypeManagerInterface $entity_type_manager,
-    AzFinderIcons $az_finder_icons
+    AZFinderIcons $az_finder_icons
   ) {
     parent::__construct(
       $configuration,
@@ -87,7 +90,7 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $this->configuration = $configuration;
     $this->renderer = $renderer;
     $this->entityTypeManager = $entity_type_manager;
-    $this->azFinderIcons = $az_finder_icons;
+    $this->AZFinderIcons = $az_finder_icons;
   }
 
   /**
@@ -110,24 +113,20 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   * Overrides defaultConfiguration to adjust default values.
-   */
-  public function defaultConfiguration() {
-    $configuration = parent::defaultConfiguration();
-    // Modify or remove default configuration for 'advanced' here.
-    unset($configuration['advanced']);
-    return $configuration;
-  }
-
-  /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    $form = parent::buildConfigurationForm($form, $form_state);
-    $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
-    unset($form['advanced']);
-
-    return $form;
+  public function defaultConfiguration() {
+    return parent::defaultConfiguration() + [
+      'advanced' => [
+        'collapsible' => FALSE,
+        'is_secondary' => FALSE,
+        'placeholder_text' => '',
+        'rewrite' => [
+          'filter_rewrite_values' => '',
+        ],
+        'sort_options' => FALSE,
+      ],
+    ];
   }
 
   /**
@@ -203,7 +202,7 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
     if (!empty($form[$field_id])) {
       $this->setFormOptions($form, $field_id);
-      $svg_icons = $this->azFinderIcons->generateSvgIcons();
+      $svg_icons = $this->AZFinderIcons->generateSvgIcons();
       foreach ($svg_icons as $key => $icon) {
         $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->render($icon);
       }
@@ -305,7 +304,7 @@ class AzFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $depth = strlen($original_title) - strlen($cleaned_title);
       $list_title['#value'] = $cleaned_title;
       // Decide which icon to use based on depth.
-      $icons = $this->azFinderIcons->generateSvgIcons();
+      $icons = $this->AZFinderIcons->generateSvgIcons();
       $level_0_collapse_icon = $icons['level_0_collapse'];
       $level_1_collapse_icon = $icons['level_1_collapse'];
       if (!empty($level_0_collapse_icon) && !empty($level_1_collapse_icon)) {
