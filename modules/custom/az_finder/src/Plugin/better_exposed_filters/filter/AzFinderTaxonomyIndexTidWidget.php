@@ -74,24 +74,20 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * @param \Drupal\az_finder\AZFinderIcons $az_finder_icons
    *   The AZFinderIcons service.
    */
-  public function __construct(
-    array $configuration,
-    $plugin_id,
-    $plugin_definition,
-    RendererInterface $renderer,
-    EntityTypeManagerInterface $entity_type_manager,
-    AZFinderIcons $az_finder_icons
-  ) {
-    parent::__construct(
-      $configuration,
-      $plugin_id,
-      $plugin_definition
-    );
-    $this->configuration = $configuration;
-    $this->renderer = $renderer;
-    $this->entityTypeManager = $entity_type_manager;
-    $this->AZFinderIcons = $az_finder_icons;
-  }
+public function __construct(
+  array $configuration,
+  $plugin_id,
+  $plugin_definition,
+  RendererInterface $renderer,
+  EntityTypeManagerInterface $entity_type_manager,
+  AZFinderIcons $az_finder_icons
+) {
+  $configuration += $this->defaultConfiguration();
+  parent::__construct($configuration, $plugin_id, $plugin_definition);
+  $this->renderer = $renderer;
+  $this->entityTypeManager = $entity_type_manager;
+  $this->AZFinderIcons = $az_finder_icons;
+}
 
   /**
    * {@inheritdoc}
@@ -110,23 +106,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $container->get('entity_type.manager'),
       $container->get('az_finder.icons')
     );
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function defaultConfiguration() {
-    return parent::defaultConfiguration() + [
-      'advanced' => [
-        'collapsible' => FALSE,
-        'is_secondary' => FALSE,
-        'placeholder_text' => '',
-        'rewrite' => [
-          'filter_rewrite_values' => '',
-        ],
-        'sort_options' => FALSE,
-      ],
-    ];
   }
 
   /**
@@ -204,7 +183,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $this->setFormOptions($form, $field_id);
       $svg_icons = $this->AZFinderIcons->generateSvgIcons();
       foreach ($svg_icons as $key => $icon) {
-        $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->render($icon);
+        $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->renderPlain($icon);
       }
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
@@ -248,8 +227,77 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * {@inheritdoc}
    */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+   /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
+    $filter = $this->handler;
+
+    $form = parent::buildConfigurationForm($form, $form_state);
+    $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
+
+    $form['select_all_none'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add select all/none links'),
+      '#default_value' => !empty($this->configuration['select_all_none']),
+      '#disabled' => !$filter->options['expose']['multiple'],
+      '#description' => $this->t('Add a "Select All/None" link when rendering the exposed filter using checkboxes. If this option is disabled, edit the filter and check the "Allow multiple selections".'
+      ),
+    ];
+
+    $form['select_all_none_nested'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add nested all/none selection'),
+      '#default_value' => !empty($this->configuration['select_all_none_nested']),
+      '#disabled' => (!$filter->options['expose']['multiple']) || (isset($filter->options['hierarchy']) && !$filter->options['hierarchy']),
+      '#description' => $this->t('When a parent checkbox is checked, check all its children. If this option is disabled, edit the filter and check "Allow multiple selections" and edit the filter settings and check "Show hierarchy in dropdown".'
+      ),
+    ];
+
+    $form['display_inline'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Display inline'),
+      '#default_value' => !empty($this->configuration['display_inline']),
+      '#description' => $this->t('Display checkbox/radio options inline.'
+      ),
+    ];
+
+
+
+    return $form;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return parent::defaultConfiguration() + [
+      'select_all_none' => FALSE,
+      'select_all_none_nested' => FALSE,
+      'display_inline' => FALSE,
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    // Apply submitted form state to configuration.
+    $values = $form_state->getValues();
+    foreach ($values as $key => $value) {
+      if (array_key_exists($key,  $this->configuration)) {
+        $this->configuration[$key] = $value;
+      }
+      else {
+        // Remove from form state.
+        unset($values[$key]);
+      }
+    }
+  }
+
+  // /**
+  //  * {@inheritdoc}
+  //  */
   public static function isApplicable($filter = NULL, array $filter_options = []) {
-    // Return tru in an instance of TaxonomyIndexTid.
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     return $filter instanceof TaxonomyIndexTid;
   }
 
