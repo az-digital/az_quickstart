@@ -12,11 +12,11 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Element;
 use Drupal\Core\Render\RendererInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Template\Attribute;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Finder widget implementation.
@@ -74,20 +74,20 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * @param \Drupal\az_finder\AZFinderIcons $az_finder_icons
    *   The AZFinderIcons service.
    */
-public function __construct(
+  public function __construct(
   array $configuration,
   $plugin_id,
   $plugin_definition,
   RendererInterface $renderer,
   EntityTypeManagerInterface $entity_type_manager,
   AZFinderIcons $az_finder_icons
-) {
-  $configuration += $this->defaultConfiguration();
-  parent::__construct($configuration, $plugin_id, $plugin_definition);
-  $this->renderer = $renderer;
-  $this->entityTypeManager = $entity_type_manager;
-  $this->AZFinderIcons = $az_finder_icons;
-}
+  ) {
+    $configuration += $this->defaultConfiguration();
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+    $this->renderer = $renderer;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->AZFinderIcons = $az_finder_icons;
+  }
 
   /**
    * {@inheritdoc}
@@ -228,7 +228,7 @@ public function __construct(
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-   /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
 
     $form = parent::buildConfigurationForm($form, $form_state);
@@ -260,8 +260,6 @@ public function __construct(
       ),
     ];
 
-
-
     return $form;
   }
 
@@ -283,7 +281,7 @@ public function __construct(
     // Apply submitted form state to configuration.
     $values = $form_state->getValues();
     foreach ($values as $key => $value) {
-      if (array_key_exists($key,  $this->configuration)) {
+      if (array_key_exists($key, $this->configuration)) {
         $this->configuration[$key] = $value;
       }
       else {
@@ -295,7 +293,10 @@ public function __construct(
 
   // /**
   //  * {@inheritdoc}
-  //  */
+
+  /**
+   *
+   */
   public static function isApplicable($filter = NULL, array $filter_options = []) {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     return $filter instanceof TaxonomyIndexTid;
