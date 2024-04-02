@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\az_finder\Unit;
 
-use Drupal\az_finder\AzFinderIcons;
+use Drupal\az_finder\AZFinderIcons;
 use PHPUnit\Framework\TestCase;
 
 /**
- * Tests the AzFinderIcons class.
+ * Tests the AZFinderIcons class.
  *
  * @group az_finder
  */
-class AzFinderIconsTest extends TestCase {
+class AZFinderIconsTest extends TestCase {
 
   /**
    * Ensure AzFinderIcons is generating SVG icons correctly.
    */
   public function testGenerateSvgIcons() {
-    $azFinderIcons = new AzFinderIcons();
+    $azFinderIcons = new AZFinderIcons();
     $svgIcons = $azFinderIcons->generateSvgIcons();
 
     $this->assertNotEmpty($svgIcons);
