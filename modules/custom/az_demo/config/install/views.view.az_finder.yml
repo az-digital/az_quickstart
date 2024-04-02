@@ -104,7 +104,7 @@ display:
             offset: false
             offset_label: Offset
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -141,9 +141,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
               tid:
                 plugin_id: bef
                 advanced:
@@ -152,9 +149,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
       access:
         type: perm
         options:
@@ -403,9 +397,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: true
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
       sorts:
         created:
           id: created
@@ -592,9 +583,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -886,9 +874,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1180,7 +1165,7 @@ display:
           exposed: true
           expose:
             operator_id: field_az_news_tags_target_id_op
-            label: Tags
+            label: 'Configurable legend'
             description: 'Choose a tag'
             use_operator: false
             operator: field_az_news_tags_target_id_op
@@ -1281,9 +1266,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1569,9 +1551,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
               field_az_person_category_sec_target_id:
                 plugin_id: az_finder_tid_widget
                 advanced:
@@ -1580,9 +1559,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical

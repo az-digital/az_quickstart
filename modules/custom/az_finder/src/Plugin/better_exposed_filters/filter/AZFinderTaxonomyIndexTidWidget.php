@@ -234,44 +234,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
 
-    $form['select_all_none'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Add select all/none links'),
-      '#default_value' => !empty($this->configuration['select_all_none']),
-      '#disabled' => !$filter->options['expose']['multiple'],
-      '#description' => $this->t('Add a "Select All/None" link when rendering the exposed filter using checkboxes. If this option is disabled, edit the filter and check the "Allow multiple selections".'
-      ),
-    ];
-
-    $form['select_all_none_nested'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Add nested all/none selection'),
-      '#default_value' => !empty($this->configuration['select_all_none_nested']),
-      '#disabled' => (!$filter->options['expose']['multiple']) || (isset($filter->options['hierarchy']) && !$filter->options['hierarchy']),
-      '#description' => $this->t('When a parent checkbox is checked, check all its children. If this option is disabled, edit the filter and check "Allow multiple selections" and edit the filter settings and check "Show hierarchy in dropdown".'
-      ),
-    ];
-
-    $form['display_inline'] = [
-      '#type' => 'checkbox',
-      '#title' => $this->t('Display inline'),
-      '#default_value' => !empty($this->configuration['display_inline']),
-      '#description' => $this->t('Display checkbox/radio options inline.'
-      ),
-    ];
-
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function defaultConfiguration() {
-    return parent::defaultConfiguration() + [
-      'select_all_none' => FALSE,
-      'select_all_none_nested' => FALSE,
-      'display_inline' => FALSE,
-    ];
   }
 
   /**
