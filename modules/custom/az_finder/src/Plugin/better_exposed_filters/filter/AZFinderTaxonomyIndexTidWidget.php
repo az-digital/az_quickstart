@@ -75,12 +75,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The AZFinderIcons service.
    */
   public function __construct(
-  array $configuration,
-  $plugin_id,
-  $plugin_definition,
-  RendererInterface $renderer,
-  EntityTypeManagerInterface $entity_type_manager,
-  AZFinderIcons $az_finder_icons
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+    RendererInterface $renderer,
+    EntityTypeManagerInterface $entity_type_manager,
+    AZFinderIcons $az_finder_icons
   ) {
     $configuration += $this->defaultConfiguration();
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -272,23 +272,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       'select_all_none_nested' => FALSE,
       'display_inline' => FALSE,
     ];
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
-    // Apply submitted form state to configuration.
-    $values = $form_state->getValues();
-    foreach ($values as $key => $value) {
-      if (array_key_exists($key, $this->configuration)) {
-        $this->configuration[$key] = $value;
-      }
-      else {
-        // Remove from form state.
-        unset($values[$key]);
-      }
-    }
   }
 
   /**
