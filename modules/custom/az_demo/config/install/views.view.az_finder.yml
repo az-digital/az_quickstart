@@ -592,9 +592,9 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: 0
-                select_all_none_nested: 0
-                display_inline: 0
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -886,9 +886,9 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: 0
-                select_all_none_nested: 0
-                display_inline: 0
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1281,9 +1281,9 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: 0
-                select_all_none_nested: 0
-                display_inline: 0
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1569,9 +1569,9 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: 0
-                select_all_none_nested: 0
-                display_inline: 0
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
               field_az_person_category_sec_target_id:
                 plugin_id: az_finder_tid_widget
                 advanced:
@@ -1580,9 +1580,9 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: 0
-                select_all_none_nested: 0
-                display_inline: 0
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
