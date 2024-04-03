@@ -28,7 +28,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: ''
+      title: Filter
       fields:
         field_az_page_category:
           id: field_az_page_category
@@ -145,16 +145,13 @@ display:
                   collapsible: false
                   is_secondary: false
               tid:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: true
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -168,7 +165,20 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<em>No results found for the applied filters.</em>'
+            format: az_standard
+          tokenize: false
       sorts:
         title:
           id: title
