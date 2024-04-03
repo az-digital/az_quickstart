@@ -98,13 +98,3 @@
 .js-bef-filter-count {
   margin-left: 5px;
 }
-
-.js-active-filter-count::before {
-  content: '\0028';
-  margin-right: 2px;
-}
-
-.js-active-filter-count::after {
-  content: '\0029';
-  margin-left: 2px;
-}
