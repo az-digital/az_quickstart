@@ -14,7 +14,6 @@ dependencies:
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
     - az_finder
-    - better_exposed_filters
     - datetime
     - node
     - taxonomy
@@ -397,6 +396,12 @@ display:
                     filter_rewrite_values: ''
                   collapsible: true
                   is_secondary: false
+          reset_button_position: bottom
+          reset_button_counter: false
+          orientation: horizontal
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         created:
           id: created
