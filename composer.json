@@ -56,8 +56,12 @@
         "drupal/ckeditor_indentblock": "1.0",
         "drupal/coffee": "1.4.0",
         "drupal/config_distro": "2.0.0-alpha2",
+        "drupal/config_ignore": "3.2.0",
+        "drupal/config_ignore_readonly": "2.2.0-beta1",
         "drupal/config_provider": "3.0.0-alpha1",
+        "drupal/config_readonly": "1.0.0-beta5",
         "drupal/config_snapshot": "2.0.0-alpha1",
+        "drupal/config_split": "2.0.0",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
         "drupal/core-recommended": "10.2.4",
@@ -160,6 +164,9 @@
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
+            },
+            "drupal/config_ignore": {
+                "Ignoring any config entities with an empty config sync directory causes PHP error (3432315)": "https://www.drupal.org/files/issues/2024-04-03/3432315-13.patch"
             },
             "drupal/config_provider": {
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
