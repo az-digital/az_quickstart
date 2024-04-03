@@ -13,12 +13,7 @@ dependencies:
     - taxonomy.vocabulary.az_person_categories
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
-    - az_event
     - az_finder
-    - az_flexible_page
-    - az_news
-    - az_person
-    - better_exposed_filters
     - datetime
     - node
     - taxonomy
@@ -108,7 +103,7 @@ display:
             offset: false
             offset_label: Offset
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -145,9 +140,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
               tid:
                 plugin_id: bef
                 advanced:
@@ -156,9 +148,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
       access:
         type: perm
         options:
@@ -407,9 +396,12 @@ display:
                     filter_rewrite_values: ''
                   collapsible: true
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+          reset_button_position: bottom
+          reset_button_counter: false
+          orientation: horizontal
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         created:
           id: created
@@ -589,16 +581,13 @@ display:
                   collapsible: false
                   is_secondary: false
               field_az_event_category_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -883,16 +872,13 @@ display:
                   collapsible: false
                   is_secondary: false
               field_az_news_tags_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
+                  collapsible: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1184,7 +1170,7 @@ display:
           exposed: true
           expose:
             operator_id: field_az_news_tags_target_id_op
-            label: Tags
+            label: 'Configurable legend'
             description: 'Choose a tag'
             use_operator: false
             operator: field_az_news_tags_target_id_op
@@ -1278,16 +1264,13 @@ display:
                   collapsible: false
                   is_secondary: false
               field_az_page_category_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
-                  sort_options: false
+                  sort_options: true
                   rewrite:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1566,27 +1549,21 @@ display:
                   collapsible: false
                   is_secondary: false
               field_az_person_category_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
+                  collapsible: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
               field_az_person_category_sec_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: true
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                  collapsible: false
+                  is_secondary: false
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
