@@ -276,13 +276,7 @@ function az_core_canonical_url(array $data, bool $absolute = FALSE) {
   $node = $data['node'];
   /** @var \Drupal\Core\Url $url */
   $url = $node->toUrl();
-
-  if ($absolute) {
-    $uri = $url->setOption('absolute', TRUE)->toString();
-  }
-  else {
-    $uri = $url->toUriString();
-  }
+  $uri = $absolute ? $url->setOption('absolute', TRUE)->toString() : $url->toUriString();
 
   if (!empty($node->field_az_link[0]->uri)) {
     $uri = $node->field_az_link[0]->uri;
