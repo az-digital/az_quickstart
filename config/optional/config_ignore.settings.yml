@@ -1,8 +1,17 @@
 mode: simple
 ignored_config_entities:
   - 'block.block.*'
+  - block_class.settings
+  - easy_breadcrumb.settings
   - exclude_node_title.settings
+  - 'language.content_settings.*.*'
+  - 'language.entity.*'
+  - 'metatag.metatag_defaults.*'
+  - 'shortcut.set.*'
   - 'system.menu.*'
   - system.site
   - 'taxonomy.vocabulary.*'
   - 'webform.webform.*'
+  - xmlsitemap.settings
+  - 'xmlsitemap.settings.*.*'
+  - 'xmlsitemap.xmlsitemap.*'
