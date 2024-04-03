@@ -3,7 +3,7 @@ on:
   schedule:
     - cron:  '0 13 * * *'
   push:
-    branches:
+    tags-ignore:
       - '*'
 jobs:
   dependency-audit:
