@@ -112,36 +112,52 @@ display:
         type: az_better_exposed_filters
         options:
           submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
+          reset_button: true
+          reset_button_label: 'Reset filters'
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
           text_input_required: 'Select any filter and click on Apply to see results'
-          text_input_required_format: null
+          text_input_required_format: az_standard
           bef:
             general:
-              autosubmit: false
+              autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
-              autosubmit_hide: false
+              autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Advanced options'
               secondary_open: false
               reset_button_always_show: false
-            sort:
-              plugin_id: default
             filter:
               title:
                 plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  is_secondary: false
+              tid:
+                plugin_id: az_finder_tid_widget
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
               tid_1:
-                plugin_id: default
-          reset_button_position: bottom
-          reset_button_counter: false
-          orientation: horizontal
-          skip_link: false
+                plugin_id: az_finder_tid_widget
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
       access:
@@ -151,7 +167,20 @@ display:
       cache:
         type: none
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<em>No results found for the applied filters.</em>'
+            format: az_standard
+          tokenize: false
       sorts:
         weight_1:
           id: weight_1
@@ -556,64 +585,6 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
-      exposed_form:
-        type: az_better_exposed_filters
-        options:
-          submit_button: Apply
-          reset_button: true
-          reset_button_label: 'Reset filters'
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
-          text_input_required_format: az_standard
-          bef:
-            general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
-              secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: true
-            filter:
-              title:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
-                  collapsible: false
-                  is_secondary: false
-              tid:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: true
-                display_inline: false
-              tid_1:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: false
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: true
-                display_inline: false
-          reset_button_position: top
-          reset_button_counter: true
-          orientation: vertical
-          skip_link: true
-          skip_link_text: 'Skip to search and filter'
-          skip_link_id: search-filter
       sorts:
         weight:
           id: weight
@@ -674,7 +645,7 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
-        exposed_form: false
+        exposed_form: true
         style: false
         style_options: false
         row: false
@@ -838,6 +809,7 @@ display:
         arguments: true
       relationships: {  }
       display_description: ''
+      exposed_block: true
       display_extenders: {  }
       block_description: 'Grid - 3 col'
     cache_metadata:
@@ -1719,6 +1691,7 @@ display:
       css_class: 'az-person-grid az-person-modal'
       display_description: 'Displays Person nodes in a grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
+      exposed_block: true
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -2603,6 +2576,7 @@ display:
       css_class: 'az-person-grid az-person-modal'
       display_description: 'Displays Person nodes in a 3-column grid layout. On click, displays Person content in a modal instead of full node page.'
       style_options: null
+      exposed_block: true
       display_extenders: {  }
     cache_metadata:
       max-age: -1
@@ -2689,6 +2663,7 @@ display:
       relationships: {  }
       display_description: ''
       style_options: null
+      exposed_block: true
       display_extenders: {  }
       path: people-list
     cache_metadata:
