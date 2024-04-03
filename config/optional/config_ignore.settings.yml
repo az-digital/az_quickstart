@@ -1,5 +1,9 @@
 mode: simple
 ignored_config_entities:
+  - az_core.settings
+  - az_enterprise_attributes_import.settings
+  - az_event_trellis.settings
+  - az_publication.settings
   - 'block.block.*'
   - block_class.settings
   - easy_breadcrumb.settings
