@@ -85,11 +85,16 @@ function az_event_trellis_gather_filter_options(&$form, FormStateInterface $form
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $handler */
     foreach ($handlers as $key => $handler) {
       if ($handler->isExposed()) {
-        // Check if the handler validates versus the existing input.
+        $info = $handler->exposedInfo();
+        $identifier = $info['value'] ?? '';
+        // Make sure our input for this exposed filter isn't NULL.
+        // This won't normally happen in an actual GET form.
+        if (!isset($input[$identifier])) {
+          $input[$identifier] = '';
+        }
+        // Check if the handler validates versus the input.
         if ($handler->acceptExposedInput($input)) {
           // If the handler accepts the input, bundle it up.
-          $info = $handler->exposedInfo();
-          $identifier = $info['value'] ?? '';
           $value = $input[$identifier] ?? '';
           if (!empty($identifier) && !empty($value)) {
             if ($handler instanceof AZEventTrellisViewsAttributeFilter) {
