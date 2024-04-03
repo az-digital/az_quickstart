@@ -18,11 +18,8 @@ process:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title:
     plugin: sub_process
