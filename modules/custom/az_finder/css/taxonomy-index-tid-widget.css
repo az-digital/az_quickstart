@@ -19,6 +19,16 @@
   width: 100%;
 }
 
+.az-bef-vertical legend.col-form-label {
+  font-weight: 500 !important;
+  color: #1e5288;
+  font-size: 1.25rem;
+  width: 100%;
+  padding-top: 1rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
 .js-svg-replace-level-0 svg,
 .js-svg-replace-level-1 svg {
   pointer-events: none;
@@ -70,7 +80,6 @@
 
 .az-bef-checkboxes>li>ul>li>.checkbox {
   font-weight: 500;
-  margin-top: .25rem;
 }
 
 .az-bef-checkboxes ul>li>ul {
@@ -86,7 +95,6 @@
 
 .az-bef-checkboxes>li>ul {
   padding-left: 4px;
-  margin-top: .25rem;
 }
 
 .js-bef-filter-count {
