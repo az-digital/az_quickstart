@@ -20,7 +20,7 @@ final class AZFinderIcons {
    * Generates SVG icons.
    *
    * @return array
-   *   The the SVG render arrays for the icons.
+   *   The SVG render arrays for the icons.
    */
   public function generateSvgIcons(): array {
     if (!empty($this->svgIconCache)) {
