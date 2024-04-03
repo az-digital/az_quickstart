@@ -1,9 +1,10 @@
 name: Security workflow
 on:
+  schedule:
+    - cron:  '0 13 * * *'
+  pull_request:
   push:
-    schedule:
-      - cron:  '0 13 * * *'
-    tags-ignore:
+    branches:
       - '*'
 jobs:
   dependency-audit:
