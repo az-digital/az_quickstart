@@ -149,7 +149,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       // "Between" operator fields to validate for.
       $fields = ['min', 'max'];
       $wrapper_array = [];
-      // Check if the the element is apart of a wrapper.
+      // Check if the element is part of a wrapper.
       if ($element === $element_wrapper) {
         $wrapper_array = $form[$element];
         // Determine if wrapper element has min or max fields or if collapsible,
