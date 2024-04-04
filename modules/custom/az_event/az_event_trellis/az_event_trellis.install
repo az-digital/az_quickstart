@@ -11,3 +11,11 @@
 function az_event_trellis_update_1020801() {
   \Drupal::service('module_installer')->install(['views_remote_data']);
 }
+
+/**
+ * Ensure az_recurring_import_rule entity type is installed.
+ */
+function az_event_trellis_update_1020802() {
+  $entity_type_definition = \Drupal::service('entity_type.manager')->getDefinition('az_recurring_import_rule');
+  \Drupal::entityDefinitionUpdateManager()->installEntityType($entity_type_definition);
+}
