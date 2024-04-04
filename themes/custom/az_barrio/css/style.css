@@ -228,6 +228,11 @@ span.field-label {
   border: 1px solid #dee2e6;
 }
 
+/* Add this class to a view display to add a top margin to the pager. */
+.add-pager-top-margin > nav:has(.pagination) {
+  margin-top: 1rem;
+}
+
 /**
  * Marker.
  */
@@ -666,6 +671,15 @@ fieldset.collapsed {
   width: initial;
   max-width: 100%;
 }
+
+/* Webform field labels */
+form.webform-submission-form {
+  label:not(.form-check-label) {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
 
 .align-left {
   float: none;
