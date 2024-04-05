@@ -1,11 +1,11 @@
 <?php
 
-use Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface;
-
 /**
  * @file
  * Install, update and uninstall functions for az_event_trellis.
  */
+
+use Drupal\Core\Entity\EntityDefinitionUpdateManagerInterface;
 
 /**
  * Ensure views_remote_data module is installed.
