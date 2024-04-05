@@ -6,7 +6,7 @@ on:
       release_branch_name:
         description: The name of the new release branch (e.g. 2.9.x) to create.
         required: true
-        
+
 jobs:
   print_inputs:
     runs-on: ubuntu-latest
@@ -137,14 +137,26 @@ jobs:
           .lando.yml
           .probo.yaml
           composer.json
-          
+
   update_previous_release_branches:
     needs: [prepare_for_new_minor_release, branch_name_prep]
     runs-on: ubuntu-latest
     name: Update `${{ matrix.previous_version }}` release branch.
     strategy:
       matrix:
-        previous_version: [2.9.x, 2.8.x, 2.7.x, 2.6.x, 2.5.x, 2.4.x, 2.3.x, 2.2.x, 2.1.x, 2.0.x]
+        previous_version:
+          - main
+          - 2.0.x
+          - 2.1.x
+          - 2.2.x
+          - 2.3.x
+          - 2.4.x
+          - 2.5.x
+          - 2.6.x
+          - 2.7.x
+          - 2.8.x
+          - 2.9.x
+          - 2.10.x
     steps:
       - name: Update previous release branch `${{ matrix.previous_version }}`
         uses: actions/checkout@v4
