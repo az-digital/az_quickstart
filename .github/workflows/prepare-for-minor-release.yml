@@ -212,6 +212,8 @@ jobs:
           commit-message: Prepare `main` branch for new minor release branch ${{ inputs.release_branch_name }}
           branch: update-main-for-${{ inputs.release_branch_name }}
           base: main
+          labels: |
+            task
           delete-branch: true
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           add-paths: |
