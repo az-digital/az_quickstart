@@ -5,7 +5,10 @@ namespace Drupal\az_news_export\Plugin\views\row;
 use Drupal\az_news_export\AZNewsDataEmpty;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\file\FileInterface;
 use Drupal\image\Entity\ImageStyle;
+use Drupal\media\MediaInterface;
+use Drupal\paragraphs\ParagraphInterface;
 use Drupal\rest\Plugin\views\row\DataFieldRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -154,7 +157,8 @@ class AZNewsDataFieldRow extends DataFieldRow {
    *   The target entity type.
    *
    * @return bool
-   *   True if the field is an entity reference field with the specified target type, false otherwise.
+   *   True if the field is an entity reference field with the specified target
+   *   type, false otherwise.
    */
   protected function isReferenceFieldOfType(FieldDefinitionInterface $field_definition, string $target_type): bool {
     $reference_field_types = [
@@ -195,7 +199,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
         $item = [];
         switch ($target_type) {
           case 'media':
-            if ($referencedEntity instanceof \Drupal\media\MediaInterface) {
+            if ($referencedEntity instanceof MediaInterface) {
               $media_type = $referencedEntity->bundle();
               $fid = $referencedEntity->getSource()->getSourceFieldValue($referencedEntity);
               $file = $this->entityTypeManager->getStorage('file')->load($fid);
@@ -219,11 +223,11 @@ class AZNewsDataFieldRow extends DataFieldRow {
                     $item['alt'] = $referencedEntity->field_media_az_image->alt;
                   }
                   break;
-  
+
                 case 'az_document':
                   $item['original'] = $file->createFileUrl(FALSE);
                   break;
-  
+
                 case 'default':
                   $item['original'] = $file->createFileUrl(FALSE);
                   break;
@@ -232,7 +236,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
             break;
 
           case 'paragraph':
-            if ($referencedEntity instanceof \Drupal\paragraphs\ParagraphInterface) {
+            if ($referencedEntity instanceof ParagraphInterface) {
               $paragraph_type = $referencedEntity->bundle();
               switch ($paragraph_type) {
                 case 'az_contact':
@@ -247,7 +251,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
                     }
                   }
                   break;
-  
+
                 case 'default':
                   break;
               }
@@ -255,7 +259,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
             break;
 
           case 'file':
-            if ($referencedEntity instanceof \Drupal\file\FileInterface) {
+            if ($referencedEntity instanceof FileInterface) {
               $item = $referencedEntity->createFileUrl(FALSE);
             }
             break;
