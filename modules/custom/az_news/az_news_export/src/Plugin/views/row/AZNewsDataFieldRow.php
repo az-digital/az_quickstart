@@ -88,7 +88,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
     $entity_bundle = $entity->bundle();
     $field_definitions = $this->entityFieldManager->getFieldDefinitions($entity_type, $entity_bundle);
     foreach ($this->view->field as $field_name => $field) {
-      $field_definition = $field_definitions[$field_name];
       $value = !empty($this->rawOutputOptions[$field_name]) ? $field->getValue($row) : $field->advancedRender($row);
       if (empty($value) || empty($field_definition)) {
         continue;
