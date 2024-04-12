@@ -45,7 +45,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
   protected $token;
 
   /**
-   * A static cache of the types of entities that can be serialized.
+   * A static list of the types of entities that can be serialized.
    *
    * @var array
    */
