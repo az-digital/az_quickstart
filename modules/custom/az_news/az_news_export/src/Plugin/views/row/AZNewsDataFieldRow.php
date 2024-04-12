@@ -170,7 +170,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
   }
 
   /**
-   * Generalized method to serialize fields.
+   * Generalized method to serialize entity reference fields.
    *
    * @param mixed $value
    *   The field value(s), can be an array of entity IDs or a single entity ID.
@@ -181,7 +181,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
    * @return array
    *   The serialized field value.
    */
-  protected function serializeField($value, $target_type): array {
+  protected function serializeReferenceField($value, $target_type): array {
     $items = [];
     // Normalize $value to an array to simplify processing.
     $values = is_array($value) ? $value : [$value];
