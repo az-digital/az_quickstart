@@ -6,7 +6,6 @@ use Drupal\az_news_export\AZNewsDataEmpty;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\file\FileInterface;
-use Drupal\image\Entity\ImageStyle;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\rest\Plugin\views\row\DataFieldRow;
@@ -214,7 +213,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
                     'thumbnail_small' => 'az_enterprise_thumbnail_small',
                   ];
                   foreach ($styles as $key => $style_id) {
-                    $image_style = ImageStyle::load($style_id);
+                    $image_style = $this->entityTypeManager->getStorage('image_style')->load($style_id);
                     if (!empty($image_style)) {
                       $item[$key] = $image_style->buildUrl($uri);
                     }
