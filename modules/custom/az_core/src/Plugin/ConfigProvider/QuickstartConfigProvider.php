@@ -101,7 +101,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     // Get active configuration to look for roles.
     $existing_config = $this->getActiveStorages()->listAll();
-    // phpcs:ignore
     $existing_roles = array_filter($existing_config, function ($name) {
       return (strpos($name, 'user.role.') === 0);
     });
@@ -194,6 +193,22 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     }
 
     return $config;
+  }
+
+  /**
+   * Fetch only override config, without merging with installed config.
+   *
+   * @param \Drupal\Core\Extension\Extension[] $extensions
+   *   An associative array of Extension objects, keyed by extension name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  public function getOnlyOverrideConfig(array $extensions = []) {
+    $storage = $this->getExtensionInstallStorage(static::ID);
+    $config_names = (!empty($extensions)) ? $this->listConfig($storage, $extensions) : [];
+    $data = $storage->readMultiple($config_names);
+    return $data;
   }
 
   /**
