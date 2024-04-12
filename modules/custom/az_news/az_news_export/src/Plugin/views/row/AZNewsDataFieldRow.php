@@ -55,7 +55,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
     'media',
     'taxonomy_term',
     'paragraph',
-    'paragraph_item',
     'file',
   ];
 
