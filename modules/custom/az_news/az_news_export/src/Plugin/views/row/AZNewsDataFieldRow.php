@@ -247,6 +247,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
                 break;
             }
             break;
+
           case 'file':
             $item = $referencedEntity->createFileUrl(FALSE);
             break;
