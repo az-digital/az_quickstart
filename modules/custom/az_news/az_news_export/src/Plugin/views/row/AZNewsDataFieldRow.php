@@ -243,6 +243,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
                   }
                 }
                 break;
+
               case 'default':
                 break;
             }
