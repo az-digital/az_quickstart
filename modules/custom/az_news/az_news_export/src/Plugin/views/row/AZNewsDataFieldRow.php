@@ -195,61 +195,69 @@ class AZNewsDataFieldRow extends DataFieldRow {
         $item = [];
         switch ($target_type) {
           case 'media':
-            $media_type = $referencedEntity->bundle();
-            $fid = $referencedEntity->getSource()->getSourceFieldValue($referencedEntity);
-            $file = $this->entityTypeManager->getStorage('file')->load($fid);
-            $item['fid'] = $file->id();
-            $item['uuid'] = $file->uuid();
-            switch ($media_type) {
-              case 'az_image':
-                $item['original'] = $file->createFileUrl(FALSE);
-                $uri = $file->getFileUri();
-                $styles = [
-                  'thumbnail' => 'az_enterprise_thumbnail',
-                  'thumbnail_small' => 'az_enterprise_thumbnail_small',
-                ];
-                foreach ($styles as $key => $style_id) {
-                  $image_style = ImageStyle::load($style_id);
-                  if (!empty($image_style)) {
-                    $item[$key] = $image_style->buildUrl($uri);
+            if ($referencedEntity instanceof \Drupal\media\MediaInterface) {
+              $media_type = $referencedEntity->bundle();
+              $fid = $referencedEntity->getSource()->getSourceFieldValue($referencedEntity);
+              $file = $this->entityTypeManager->getStorage('file')->load($fid);
+              $item['fid'] = $file->id();
+              $item['uuid'] = $file->uuid();
+              switch ($media_type) {
+                case 'az_image':
+                  $item['original'] = $file->createFileUrl(FALSE);
+                  $uri = $file->getFileUri();
+                  $styles = [
+                    'thumbnail' => 'az_enterprise_thumbnail',
+                    'thumbnail_small' => 'az_enterprise_thumbnail_small',
+                  ];
+                  foreach ($styles as $key => $style_id) {
+                    $image_style = ImageStyle::load($style_id);
+                    if (!empty($image_style)) {
+                      $item[$key] = $image_style->buildUrl($uri);
+                    }
                   }
-                }
-                if (!empty($referencedEntity->field_media_az_image->alt)) {
-                  $item['alt'] = $referencedEntity->field_media_az_image->alt;
-                }
-                break;
-
-              case 'az_document':
-                $item['original'] = $file->createFileUrl(FALSE);
-                break;
-
-              case 'default':
-                $item['original'] = $file->createFileUrl(FALSE);
-                break;
+                  if (!empty($referencedEntity->field_media_az_image->alt)) {
+                    $item['alt'] = $referencedEntity->field_media_az_image->alt;
+                  }
+                  break;
+  
+                case 'az_document':
+                  $item['original'] = $file->createFileUrl(FALSE);
+                  break;
+  
+                case 'default':
+                  $item['original'] = $file->createFileUrl(FALSE);
+                  break;
+              }
             }
-          case 'paragraph':
-            $paragraph_type = $referencedEntity->bundle();
-            switch ($paragraph_type) {
-              case 'az_contact':
-                $contact_fields = [
-                  'field_az_email',
-                  'field_az_title',
-                  'field_az_phone',
-                ];
-                foreach ($contact_fields as $contact_field) {
-                  if ($referencedEntity->hasField($contact_field) && !empty($referencedEntity->{$contact_field}->value)) {
-                    $item[$contact_field] = $referencedEntity->{$contact_field}->value;
-                  }
-                }
-                break;
+            break;
 
-              case 'default':
-                break;
+          case 'paragraph':
+            if ($referencedEntity instanceof \Drupal\paragraphs\ParagraphInterface) {
+              $paragraph_type = $referencedEntity->bundle();
+              switch ($paragraph_type) {
+                case 'az_contact':
+                  $contact_fields = [
+                    'field_az_email',
+                    'field_az_title',
+                    'field_az_phone',
+                  ];
+                  foreach ($contact_fields as $contact_field) {
+                    if ($referencedEntity->hasField($contact_field) && !empty($referencedEntity->{$contact_field}->value)) {
+                      $item[$contact_field] = $referencedEntity->{$contact_field}->value;
+                    }
+                  }
+                  break;
+  
+                case 'default':
+                  break;
+              }
             }
             break;
 
           case 'file':
-            $item = $referencedEntity->createFileUrl(FALSE);
+            if ($referencedEntity instanceof \Drupal\file\FileInterface) {
+              $item = $referencedEntity->createFileUrl(FALSE);
+            }
             break;
 
           default:
