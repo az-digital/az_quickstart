@@ -36,7 +36,7 @@ third_party_settings:
       children:
         - smart_title
         - group_text_size_h4
-        - field_az_link
+        - group_cta_button
       label: 'Slide Details'
       parent_name: group_carousel_item
       region: content
@@ -61,7 +61,26 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'h4 mt-0 mb-3 text-white'
+        classes: 'h4 mt-2 mb-0 text-white'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_cta_button:
+      children:
+        - field_az_link
+      label: 'CTA Button'
+      parent_name: group_slide_details
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: mt-2
         show_empty_fields: false
         id: ''
         element: div
@@ -78,8 +97,7 @@ third_party_settings:
       smart_title__tag: h2
       smart_title__classes:
         - h1
-        - mt-0
-        - mb-2
+        - my-0
         - az-carousel-slide-title
         - text-white
 id: node.az_carousel_item.default
@@ -105,7 +123,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 3
+    weight: 4
     region: content
   field_az_media_image:
     type: entity_reference_entity_view
