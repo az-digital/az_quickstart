@@ -273,7 +273,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
     }
 
     // Provide a default case for empty items, if necessary, for specific types.
-    if (empty($items) && in_array($target_type, self::$serializableEntityTypes)) {
+    if (empty($items) && in_array($target_type, self::$serializableReferencedEntityTypes)) {
       // Ensure this class or fallback is defined.
       $items = new AZNewsDataEmpty();
     }
