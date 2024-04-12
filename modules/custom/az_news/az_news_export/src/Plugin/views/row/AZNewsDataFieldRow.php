@@ -93,7 +93,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
         continue;
       }
       $field_definition = $field_definitions[$field_name];
-      foreach ($serializable_entity_types as $target_type) {
+      foreach (self::$serializableEntityTypes as $target_type) {
         if ($this->isReferenceFieldOfType($field_definition, $target_type)) {
           $value = $this->serializeField($value, $target_type);
         }
