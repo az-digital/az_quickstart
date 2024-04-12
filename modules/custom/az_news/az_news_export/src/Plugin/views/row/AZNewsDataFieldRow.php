@@ -47,11 +47,11 @@ class AZNewsDataFieldRow extends DataFieldRow {
   protected $token;
 
   /**
-   * A static list of the types of entities that can be serialized.
+   * A static list of the types of referenced entities that can be serialized.
    *
    * @var array
    */
-  protected static $serializableEntityTypes = [
+  protected static $serializableReferencedEntityTypes = [
     'media',
     'taxonomy_term',
     'paragraph',
