@@ -31,6 +31,14 @@ how to contribute including:
 * How to [submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-requests)
 * [Local development](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#local-development)
 
+### Creating Issues and Pull Requests
+
+Create an issue in the associated repository to a request a change. That issue can then be added to a milestone to plan work for a future release.
+
+Create a pull request (PR) to change the code within a specific repository. PRs often have an issue associated with them, but not always (like in the case of dependabot making PRs). When possible, always link an issue to a PR. 
+
+Projects are created in conjunction with specific releases -- patch, minor, or major. All PRs must be added to at least one project to indicate the associated Quickstart release. These projects will aid in advance planning of release testing, writing release notes, etc.
+
 ## Where to Install Your Quickstart Site
 
 The University's Campus Web Services group provides ready-to-use sites based on
