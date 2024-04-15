@@ -157,7 +157,7 @@
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
             "drupal/config_ignore": {
-                "Ignoring any config entities with an empty config sync directory causes PHP error (3432315)": "https://www.drupal.org/files/issues/2024-04-03/3432315-13.patch"
+                "Ignoring any config entities with an empty config sync directory causes PHP error (3432315)": "https://git.drupalcode.org/project/config_ignore/-/commit/8e4d2e6b82676e6855b966c607e54f4f35243adc.diff"
             },
             "drupal/config_provider": {
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
