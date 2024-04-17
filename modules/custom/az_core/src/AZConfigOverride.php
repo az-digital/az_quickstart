@@ -119,6 +119,9 @@ class AZConfigOverride implements LoggerAwareInterface {
         $snapshots = [];
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {
+          $this->logger->info("Applying override config to @config_id.", [
+            '@config_id' => $name,
+          ]);
           $config = $this->configFactory->getEditable($name);
           $config->setData($data);
           $config->Save();
