@@ -26,7 +26,7 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
     Studio Code]( https://code.visualstudio.com/docs/remote/containers#_attached-container-config-reference)
     or see [instructions below](#user-content-visual-studio-code-integration).
 
-## Submitting a bug/issue/feature request
+## Creating Issues and Pull Requests
 
 [Create an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) in the associated repository to a request a change. That issue can then be added to one of our [milestones](https://github.com/az-digital/az_quickstart/milestones) to plan work for a future release. [More about milestones in GitHub](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones).
 
@@ -57,7 +57,7 @@ of bug or details related to new feature request.
 We follow Drupal
 [coding standards](https://www.drupal.org/docs/develop/standards).
 
-## Pull requests
+## Pull Request Guidelines
 
 First, make sure there is an issue and project associated with your pull request.
 
