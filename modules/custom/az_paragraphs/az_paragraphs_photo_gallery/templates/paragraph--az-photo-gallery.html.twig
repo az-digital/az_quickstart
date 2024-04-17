@@ -105,10 +105,17 @@
                       {{ imagestyle }}
                     </div>
 
-                    {# Render the caption, if one exists. #}
-                    {% if item.entity.field_az_caption.value %}
-                      <div class="carousel-caption{% if grid %} az-gallery-caption d-block{% else %} d-none d-md-block{% endif %}">
-                        <p>{{ item.entity.field_az_caption.value }}</p>
+                    {# Render the caption/credit area, if one exists. #}
+                    {% if (item.entity.field_az_caption.value) or (item.entity.field_az_credit.value) %}
+                      <div class="carousel-caption az-gallery-caption{% if grid %} d-block{% else %} d-none d-md-block{% endif %}">
+                        {# Render the caption, if one exists. #}
+                        {% if item.entity.field_az_caption.value %}
+                          <p>{{ item.entity.field_az_caption.value }}</p>
+                        {% endif %}
+                        {# Render the credit, if one exists. #}
+                        {% if item.entity.field_az_credit.value %}
+                          <cite class="small">{{ item.entity.field_az_credit.value }}</cite>
+                        {% endif %}
                       </div>
                     {% endif %}
                   </div>

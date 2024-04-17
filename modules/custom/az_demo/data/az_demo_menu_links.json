@@ -373,6 +373,72 @@
       "expanded": false,
       "enabled": true,
       "weight": "17"
+    },
+    {
+      "link_id": "35",
+      "parent_link_id": "0",
+      "menu": "main",
+      "title": "Finders",
+      "urlpath": "route:<button>",
+      "external": false,
+      "expanded": true,
+      "enabled": true,
+      "weight": "1"
+    },
+    {
+      "link_id": "36",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "People Finder",
+      "urlpath": "/finders/people",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "18"
+    },
+    {
+      "link_id": "37",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "News Finder",
+      "urlpath": "/finders/news",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "19"
+    },
+    {
+      "link_id": "38",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Event Finder",
+      "urlpath": "/finders/events",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "20"
+    },
+    {
+      "link_id": "39",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Page Finder",
+      "urlpath": "/finders/pages",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "21"
+    },
+    {
+      "link_id": "40",
+      "parent_link_id": "35",
+      "menu": "main",
+      "title": "Content Finder",
+      "urlpath": "/finders/content",
+      "external": false,
+      "expanded": false,
+      "enabled": true,
+      "weight": "22"
     }
   ]
 }
