@@ -37,7 +37,7 @@ how to contribute including:
 
 Create a pull request (PR) to change the code within a specific repository. PRs often have an issue associated with them, but not always (like in the case of dependabot making PRs). When possible, always link an issue to a PR. 
 
-Projects are created in conjunction with specific releases -- patch, minor, or major. All PRs must be added to at least one project to indicate the associated Quickstart release. These projects will aid in advance planning of release testing, writing release notes, etc.
+[Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) are created in conjunction with specific [releases](https://github.com/az-digital/az_quickstart/releases) in accordance with our [release policy](https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md) -- patch, minor, or major. All PRs must be added to at least one project to indicate the associated Quickstart release. These projects will aid in advance planning of release testing, writing release notes, etc.
 
 ## Where to Install Your Quickstart Site
 
