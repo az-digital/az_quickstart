@@ -33,7 +33,7 @@ how to contribute including:
 
 ### Creating Issues and Pull Requests
 
-Create an issue in the associated repository to a request a change. That issue can then be added to a milestone to plan work for a future release.
+[Create an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) in the associated repository to a request a change. That issue can then be [added to a milestone](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones) to plan work for a future release.
 
 Create a pull request (PR) to change the code within a specific repository. PRs often have an issue associated with them, but not always (like in the case of dependabot making PRs). When possible, always link an issue to a PR. 
 
