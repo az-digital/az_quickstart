@@ -28,6 +28,12 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
 
 ## Submitting a bug/issue/feature request
 
+[Create an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) in the associated repository to a request a change. That issue can then be added to one of our [milestones](https://github.com/az-digital/az_quickstart/milestones) to plan work for a future release. [More about milestones in GitHub](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones).
+
+[Create a pull request (PR)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to change the code within a specific repository. PRs often have an issue associated with them, but not always (like in the case of [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) making PRs). When possible, always link an issue to a PR. 
+
+[Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) are created in conjunction with specific [releases](https://github.com/az-digital/az_quickstart/releases) in accordance with our [release policy](https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md) -- patch, minor, or major. All PRs must be added to at least one project to indicate the associated Quickstart release. These projects will aid in advance planning of release testing, writing release notes, etc.
+
 ### Security Issues
 
 If you found a security vulnerability and it's related to Drupal core or a
@@ -42,10 +48,9 @@ az-digital-security@list.arizona.edu
 We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
 keep track of issues and bugs.
 
-If you don't see the specific issue or bug after looking at the
-[AZ Quickstart Project](https://github.com/orgs/az-digital/projects/1), please
-create a new issue with proper description of bug or details related to new
-feature request.
+If you don't see the specific issue or bug in the [az_quickstart issue list](https://github.com/az-digital/az_quickstart/issues) 
+or [arizona_bootstrap issue list](https://github.com/az-digital/arizona-bootstrap/issues), please create a new issue with proper description 
+of bug or details related to new feature request.
 
 ## Coding Standards
 
@@ -54,7 +59,7 @@ We follow Drupal
 
 ## Pull requests
 
-First, make sure there is an issue associated with your pull request.
+First, make sure there is an issue and project associated with your pull request.
 
 Use proper branch naming conventions based on your issue type:
  * `feature/<issue-number>`
