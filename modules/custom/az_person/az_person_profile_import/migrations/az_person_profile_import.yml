@@ -1,0 +1,101 @@
+id: az_person_profile_import
+label: Profiles Integration
+migration_tags:
+  - Profiles Integration
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: az_person_profile_import_json
+  urls: []
+  item_selector: /
+  ids:
+    netid:
+      type: string
+  constants:
+    NAME: 'name'
+
+  fields:
+    -
+      name: netid
+      selector: 'Person/netid'
+    -
+      name: surname
+      selector: 'Person/surname'
+    -
+      name: givenname
+      selector: 'Person/givenname'
+    -
+      name: email
+      selector: 'Person/email'
+    -
+      name: biography
+      selector: 'Bio/desc'
+    -
+      name: titles
+      selector: 'Titles'
+    -
+      name: phone
+      selector: 'Person/phone'
+    -
+      name: degrees
+      selector: 'Degrees'
+
+process:
+  type:
+    plugin: default_value
+    default_value: az_person
+  field_az_fname: givenname
+  field_az_lname: surname
+  field_az_email: email
+  field_az_body/value: biography
+  field_az_body/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_titles:
+    plugin: sub_process
+    source: titles
+    process:
+      value: desc
+  field_az_degrees:
+    -
+      plugin: sub_process
+      source: degrees
+      include_source: true,
+      source_key: original_source
+      process:
+        0: 'properties/degree_title'
+        1:
+          -
+            plugin: callback
+            callable: array_column
+            unpack_source: true
+            source:
+              - institution
+              - 'original_source/constants/NAME'
+          -
+            plugin: concat
+            delimiter: ', '
+    -
+      plugin: sub_process
+      process:
+        value:
+          -
+            plugin: concat
+            source:
+              - 0
+              - 1
+            delimiter: ', '
+  field_az_phones:
+    plugin: sub_process
+    source: phone
+    process:
+      value: number
+
+destination:
+  plugin: entity:node
+  bundle: az_person
+
+dependencies:
+  enforced:
+    module:
+      - az_person
