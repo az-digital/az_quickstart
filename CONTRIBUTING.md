@@ -49,8 +49,7 @@ We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
 keep track of issues and bugs.
 
 If you don't see the specific issue or bug in the [az_quickstart issue list](https://github.com/az-digital/az_quickstart/issues) 
-or [arizona_bootstrap issue list](https://github.com/az-digital/arizona-bootstrap/issues), please create a new issue with proper description 
-of bug or details related to new feature request.
+or [arizona_bootstrap issue list](https://github.com/az-digital/arizona-bootstrap/issues), please create a new issue with as much detail as possible about the bug or feature request.
 
 ## Coding Standards
 
