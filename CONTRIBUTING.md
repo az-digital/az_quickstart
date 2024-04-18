@@ -34,6 +34,14 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
 
 [Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) are created in conjunction with specific [releases](https://github.com/az-digital/az_quickstart/releases) in accordance with our [release policy](https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md) -- patch, minor, or major. All PRs must be added to at least one project to indicate the associated Quickstart release. These projects will aid in advance planning of release testing, writing release notes, etc.
 
+### Bug Reports and Feature Requests
+
+We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
+keep track of issues and bugs.
+
+If you don't see the specific issue or bug in the [az_quickstart issue list](https://github.com/az-digital/az_quickstart/issues) 
+or [arizona_bootstrap issue list](https://github.com/az-digital/arizona-bootstrap/issues), please create a new issue with as much detail as possible about the bug or feature request.
+
 ### Security Issues
 
 If you found a security vulnerability and it's related to Drupal core or a
@@ -42,14 +50,6 @@ Drupal contrib module, please follow
 
 If it's a security issue related to `az_quickstart` code, please email us here:
 az-digital-security@list.arizona.edu
-
-### General bug/new feature request
-
-We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
-keep track of issues and bugs.
-
-If you don't see the specific issue or bug in the [az_quickstart issue list](https://github.com/az-digital/az_quickstart/issues) 
-or [arizona_bootstrap issue list](https://github.com/az-digital/arizona-bootstrap/issues), please create a new issue with as much detail as possible about the bug or feature request.
 
 ## Coding Standards
 
