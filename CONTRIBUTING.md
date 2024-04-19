@@ -28,7 +28,12 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
 
 ## Creating Issues and Pull Requests
 
-[Create an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) in the associated repository to a request a change. That issue can then be added to one of our [milestones](https://github.com/az-digital/az_quickstart/milestones) to plan work for a future release. [More about milestones in GitHub](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones).
+[Create an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) in the associated repository to a request a change. That issue can then be added to one of our [milestones](https://github.com/az-digital/az_quickstart/milestones) to plan work for a future release. 
+
+Add info about milestones not being in other repos (any PR can be in a project)
+Issues created in the primary repo, should also be added to the milestone
+
+Milestones are created per repo and not accessible by other repos in the organization. In this case, we create milestones for the az_quickstart repo. If you need to add a particular issue from another repo to a milestone, you may link it to a coordinating issue in the az_quickstart repo (like "AZ Bootstrap issues for this release"). PRs for all repos can be added to the associated release project at will. [More about milestones in GitHub](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones)
 
 [Create a pull request (PR)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to change the code within a specific repository. PRs often have an issue associated with them, but not always (like in the case of [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) making PRs). When possible, always link an issue to a PR. 
 
