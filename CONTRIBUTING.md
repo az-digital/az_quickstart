@@ -26,7 +26,23 @@ team of web-focused volunteers that meet weekly to create projects like [Arizona
     Studio Code]( https://code.visualstudio.com/docs/remote/containers#_attached-container-config-reference)
     or see [instructions below](#user-content-visual-studio-code-integration).
 
-## Submitting a bug/issue/feature request
+## Creating Issues and Pull Requests
+
+[Create an issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/creating-an-issue) in the associated repository to a request a change. That issue can then be added to one of our [milestones](https://github.com/az-digital/az_quickstart/milestones) to plan work for a future release.
+
+Milestones are specific to individual repositories and cannot be shared across different repositories within the organization. For the az_quickstart repository, we create unique milestones for each release. To include an issue from a different repository in a milestone, link it to a corresponding issue in az_quickstart. For example, a hypothetical issue titled "AZ Bootstrap issues for this release" would be added in the az_quickstart repository. Pull Requests from any repository can be freely added to the corresponding release project. For more information on managing milestones in GitHub, refer to the [GitHub documentation on milestones](https://docs.github.com/en/issues/using-labels-and-milestones-to-track-work/about-milestones).
+
+[Create a pull request (PR)](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to change the code within a specific repository. PRs often have an issue associated with them, but not always (like in the case of [Dependabot](https://docs.github.com/en/code-security/dependabot/dependabot-security-updates/about-dependabot-security-updates) making PRs). When possible, always link an issue to a PR. 
+
+[Projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects) are created in conjunction with specific [releases](https://github.com/az-digital/az_quickstart/releases) in accordance with our [release policy](https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md) -- patch, minor, or major. All PRs must be added to at least one project to indicate the associated Quickstart release. These projects will aid in advance planning of release testing, writing release notes, etc.
+
+### Bug Reports and Feature Requests
+
+We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
+keep track of issues and bugs.
+
+If you don't see the specific issue or bug in the [az_quickstart issue list](https://github.com/az-digital/az_quickstart/issues) 
+or [arizona_bootstrap issue list](https://github.com/az-digital/arizona-bootstrap/issues), please create a new issue with as much detail as possible about the bug or feature request.
 
 ### Security Issues
 
@@ -37,24 +53,14 @@ Drupal contrib module, please follow
 If it's a security issue related to `az_quickstart` code, please email us here:
 az-digital-security@list.arizona.edu
 
-### General bug/new feature request
-
-We use [GitHub Issues](https://github.com/az-digital/az_quickstart/issues) to
-keep track of issues and bugs.
-
-If you don't see the specific issue or bug after looking at the
-[AZ Quickstart Project](https://github.com/orgs/az-digital/projects/1), please
-create a new issue with proper description of bug or details related to new
-feature request.
-
 ## Coding Standards
 
 We follow Drupal
 [coding standards](https://www.drupal.org/docs/develop/standards).
 
-## Pull requests
+## Pull Request Guidelines
 
-First, make sure there is an issue associated with your pull request.
+First, make sure there is an issue and project associated with your pull request.
 
 Use proper branch naming conventions based on your issue type:
  * `feature/<issue-number>`
