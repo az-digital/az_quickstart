@@ -3,8 +3,13 @@ entity.az_author.add_form:
   title: 'Add Author'
   appears_on:
     - entity.az_author.collection
+entity.az_publication_type.add_form:
+  route_name: entity.az_publication_type.add_form
+  title: 'Add Publication Type'
+  appears_on:
+    - entity.az_publication_type.collection
 entity.az_citation_style.add_form:
   route_name: entity.az_citation_style.add_form
-  title: 'Add Quickstart Citation Style'
+  title: 'Add Citation Style'
   appears_on:
     - entity.az_citation_style.collection

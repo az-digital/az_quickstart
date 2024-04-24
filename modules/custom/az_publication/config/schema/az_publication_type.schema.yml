@@ -1,6 +1,6 @@
-az_publication.az_citation_style.*:
+az_publication.type.*:
   type: config_entity
-  label: 'Quickstart Citation Style config'
+  label: 'Quickstart Publication Type config'
   mapping:
     id:
       type: string
@@ -8,12 +8,9 @@ az_publication.az_citation_style.*:
     label:
       type: label
       label: 'Label'
-    style:
+    type:
       type: string
-      label: 'Style'
-    custom:
-      type: boolean
-      label: 'Custom'
+      label: 'Mapped type'
     uuid:
       type: string
       label: 'Universally Unique Identifier'

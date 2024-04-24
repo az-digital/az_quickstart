@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_publication
+id: az_article_newspaper
+type: 'article-newspaper'
+label: 'Newspaper Article'
