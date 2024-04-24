@@ -57,3 +57,10 @@ function az_demo_uninstall() {
     $executable->rollback();
   }
 }
+
+/**
+ * Enable the az_finder module during update.
+ */
+function az_demo_update_1021001() {
+  \Drupal::service('module_installer')->install(['az_finder']);
+}
