@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       release_branch_name:
-        description: The name of the new release branch (e.g. 2.8.x) to create.
+        description: The name of the new release branch (e.g. 2.9.x) to create.
         required: true
         
 jobs:
@@ -52,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
-        uses: peter-evans/repository-dispatch@v2
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}
@@ -120,11 +120,11 @@ jobs:
         composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
 
     - name: Create pull request for new release branch updates
-      uses: peter-evans/create-pull-request@v5
+      uses: peter-evans/create-pull-request@v6
       with:
         title: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
         commit-message: Prepare repository for new minor release branch ${{ inputs.release_branch_name }}
-        branch: ${{ inputs.release_branch_name }}-prepare-for-minor-release
+        branch: prepare-${{ inputs.release_branch_name }}-for-minor-release
         base: ${{ inputs.release_branch_name }}
         delete-branch: true
         token: ${{ secrets.REPO_DISPATCH_TOKEN }}
@@ -144,7 +144,7 @@ jobs:
     name: Update `${{ matrix.previous_version }}` release branch.
     strategy:
       matrix:
-        previous_version: [2.7.x, 2.6.x, 2.5.x, 2.4.x, 2.3.x, 2.2.x, 2.1.x, 2.0.x]
+        previous_version: [2.9.x, 2.8.x, 2.7.x, 2.6.x, 2.5.x, 2.4.x, 2.3.x, 2.2.x, 2.1.x, 2.0.x]
     steps:
       - name: Update previous release branch `${{ matrix.previous_version }}`
         uses: actions/checkout@v4
@@ -162,11 +162,11 @@ jobs:
           composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
 
       - name: Create pull request for previous release branch updates
-        uses: peter-evans/create-pull-request@v5
+        uses: peter-evans/create-pull-request@v6
         with:
           title: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
           commit-message: Prepare ${{ matrix.previous_version }} branch for new minor release branch ${{ inputs.release_branch_name }}
-          branch: ${{ matrix.previous_version }}-update-for-${{ inputs.release_branch_name }}
+          branch: update-${{ matrix.previous_version }}-for-${{ inputs.release_branch_name }}
           base: ${{ matrix.previous_version }}
           delete-branch: true
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}

@@ -9,3 +9,4 @@ dependencies:
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
   - migrate_queue_importer:migrate_queue_importer
+configure: az_enterprise_attributes_import.settings

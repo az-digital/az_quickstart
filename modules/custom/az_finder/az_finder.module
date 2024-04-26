@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * @file
+ * Contains az_finder.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_finder_theme($existing, $type, $theme, $path) {
+  return [
+    'az_finder_widget' => [
+      'render element' => 'element',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for az_finder_widget.
+ */
+function template_preprocess_az_finder_widget(&$variables) {
+  // Check if the class exists.
+  if (class_exists('\Drupal\az_finder\Plugin\better_exposed_filters\filter\AZFinderTaxonomyIndexTidWidget')) {
+    // Create an instance of the AzFinderTaxonomyIndexTidWidget class.
+    $widget = \Drupal::service('plugin.manager.better_exposed_filters_filter_widget')
+      ->createInstance('az_finder_tid_widget', []);
+    // Call the preprocessAzFinderTaxonomyIndexTidWidget method with variables.
+    try {
+      $widget->preprocessAzFinderTaxonomyIndexTidWidget($variables);
+    }
+    catch (\Exception $e) {
+      // Log any errors.
+      \Drupal::logger('az_finder')->error('Error in preprocessAzFinderWidget: @message', ['@message' => $e->getMessage()]);
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for views_view.
+ */
+function az_finder_preprocess_views_view(&$variables) {
+  $view = $variables['view'];
+
+  if (empty($view->display_handler->options['exposed_form']['type']) ||
+      $view->display_handler->options['exposed_form']['type'] !== 'az_better_exposed_filters') {
+    return;
+  }
+  if (!empty($view->display_handler->options['exposed_form']['options'])) {
+    $options = $view->display_handler->options['exposed_form']['options'];
+    if ($options['skip_link'] === TRUE) {
+      $skip_link_id = $options['skip_link_id'] ?? 'search-filters';
+      $skip_link_text = $options['skip_link_text'] ?? 'Skip to search and filter';
+      $skip_to_filter = [
+        '#type' => 'html_tag',
+        '#tag' => 'a',
+        '#value' => $skip_link_text,
+        '#attributes' => [
+          'href' => '#' . $skip_link_id,
+          'class' => [
+            'visually-hidden',
+            'focusable',
+            'skip-link',
+          ],
+        ],
+      ];
+
+      $variables['header'][] = $skip_to_filter;
+    }
+  }
+
+}

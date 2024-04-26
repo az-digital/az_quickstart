@@ -5,13 +5,13 @@
  * Contains az_event.module.
  */
 
-use Drupal\node\Entity\NodeType;
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element;
+use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 
 /**
@@ -217,13 +217,14 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * Sets the Thumbnail Image field to match the first item of the Event Photos
- * field if the Use Featured Image as Thumbnail checkbox is checked.
+ * Sets the Thumbnail Image field to match the first item of the
+ * "Featured Images" field if the Use Featured Image as Thumbnail
+ * checkbox is checked.
  */
 function az_event_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_event'
     && $entity instanceof NodeInterface
-    && !empty($entity->field_az_featured_image_as_thumb->value)) {
-    $entity->field_az_media_thumbnail_image->target_id = $entity->field_az_photos->target_id;
+    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue()[0]['value'])) {
+    $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_photos')->target_id;
   }
 }

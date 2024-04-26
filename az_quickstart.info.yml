@@ -39,7 +39,6 @@ install:
   - drupal:menu_link_content
   - drupal:datetime
   - drupal:block_content
-  - block_content_permissions:block_content_permissions
   - drupal:editor
   - drupal:help
   - drupal:image
@@ -51,7 +50,6 @@ install:
   - easy_breadcrumb:easy_breadcrumb
   - drupal:page_cache
   - drupal:dynamic_page_cache
-  - drupal:big_pipe
   - drupal:taxonomy
   - drupal:dblog
   - drupal:search

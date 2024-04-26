@@ -1,0 +1,76 @@
+{
+  "paragraphs": [
+    {
+      "title" : "Grid View",
+      "id":100,
+      "target_id" : "az_news",
+      "display_id" : "az_grid",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id":101,
+      "title" : "Grid View with Filter",
+      "target_id" : "az_news",
+      "display_id" : "az_grid_filter",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id":102,
+      "title" : "Feature View",
+      "target_id" : "az_news",
+      "display_id" : "az_feature",
+      "data": "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 103,
+      "title" : "Grid - 3 col",
+      "target_id" : "az_person",
+      "display_id" : "grid_block_3cols",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 104,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "person",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 105,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "news",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 106,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "event",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 107,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "page",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 108,
+      "title" : "",
+      "target_id" : "az_finder",
+      "display_id" : "content",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    }
+  ]
+}
