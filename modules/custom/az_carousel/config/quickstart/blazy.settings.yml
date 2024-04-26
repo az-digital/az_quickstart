@@ -20,7 +20,7 @@ placeholder: ''
 unstyled_extensions: ''
 use_encodedbox: false
 use_oembed: false
-use_theme_blazy: true
+use_theme_blazy: false
 responsive_image: false
 blazy:
   loadInvisible: false
