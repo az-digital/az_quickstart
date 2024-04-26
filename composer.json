@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=8.1",
-        "az-digital/arizona-bootstrap": "2.0.25",
+        "az-digital/arizona-bootstrap": "2.0.26",
         "az-digital/az-icons": "1.0.1",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.19",
