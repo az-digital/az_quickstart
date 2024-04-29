@@ -106,7 +106,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access draggableviews'
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
@@ -240,10 +240,6 @@ display:
     display_plugin: block
     position: 1
     display_options:
-      access:
-        type: perm
-        options:
-          perm: 'access content'
       sorts:
         weight:
           id: weight
@@ -600,7 +596,6 @@ display:
           relationship: none
           view_mode: default
       defaults:
-        access: false
         cache: false
         title: false
         css_class: false
@@ -615,6 +610,20 @@ display:
       display_description: ''
       pager_options: null
       style_options: null
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: false
+          content:
+            value: "<strong>Save order:</strong> Saves the order set on this page.\r\n<strong>Reset order:</strong> Resets <em>every item</em> here to initial order."
+            format: az_standard
+          tokenize: false
       display_extenders: {  }
       path: admin/az-carousel/reorder-carousel-items
     cache_metadata:
