@@ -173,7 +173,8 @@
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch"
             },
             "drupal/draggableviews": {
-                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
+                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
+                "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch"
             },
             "drupal/easy_breadcrumb": {
                 "explode(): Passing null to parameter #2 ($string) of type string is deprecated (3284123)": "https://git.drupalcode.org/project/easy_breadcrumb/-/commit/e1655f4260ca82262d49deefbd717801664c5c78.diff"
