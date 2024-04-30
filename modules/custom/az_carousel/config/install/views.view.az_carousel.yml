@@ -106,7 +106,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access content'
+          perm: 'access draggableviews'
       cache:
         type: tag
         options: {  }
@@ -240,6 +240,10 @@ display:
     display_plugin: block
     position: 1
     display_options:
+      access:
+        type: perm
+        options:
+          perm: 'access content'
       sorts:
         weight:
           id: weight
