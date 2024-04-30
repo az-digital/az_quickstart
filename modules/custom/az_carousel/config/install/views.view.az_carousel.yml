@@ -106,7 +106,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access draggableviews'
+          perm: 'access content'
       cache:
         type: tag
         options: {  }
