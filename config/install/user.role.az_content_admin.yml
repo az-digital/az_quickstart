@@ -17,6 +17,7 @@ permissions:
   - 'administer block content'
   - 'administer book outlines'
   - 'administer easy breadcrumb'
+  - 'administer finder settings'
   - 'administer flaggings'
   - 'administer flags'
   - 'administer languages'

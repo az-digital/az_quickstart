@@ -1,0 +1,5 @@
+az_finder.settings_tab:
+  title: 'AZ Finder'
+  route_name: az_finder.settings
+  base_route: az_core.az_settings
+  weight: 0

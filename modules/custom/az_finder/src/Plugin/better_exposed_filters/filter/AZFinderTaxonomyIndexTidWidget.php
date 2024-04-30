@@ -108,6 +108,16 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     );
   }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function defaultConfiguration() {
+      return [
+        'default_states' => [],
+      ] + parent::defaultConfiguration();
+    }
+
+
   /**
    * {@inheritdoc}
    */
@@ -224,18 +234,96 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     return $form;
   }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
-    $filter = $this->handler;
 
-    $form = parent::buildConfigurationForm($form, $form_state);
-    $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
 
-    return $form;
+/**
+ * {@inheritdoc}
+ */
+public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  $form = parent::buildConfigurationForm($form, $form_state);
+
+  $config = $this->configuration;
+  $default_states = isset($config['default_states']) ? $config['default_states'] : [];
+  $fallback_action = isset($config['fallback_action']) ? $config['fallback_action'] : 'hide'; // Default fallback action is 'hide'.
+
+  // Get all parent terms.
+  $parent_terms = $this->getParentTerms();
+
+  // Build collapse settings table header.
+  $header = [
+    $this->t('Parent Term'),
+    $this->t('Default State'),
+  ];
+
+  // Initialize collapse settings table rows.
+  $rows = [];
+
+  // Build collapse settings for each parent term.
+  foreach ($parent_terms as $parent_term) {
+    $default_value = isset($default_states[$parent_term->id()]) ? $default_states[$parent_term->id()] : 'collapsed';
+
+    // Add parent term name to the table row.
+    $rows[$parent_term->id()]['name'] = [
+      'data' => ['#markup' => $parent_term->getName()],
+    ];
+
+    // Add collapse settings checkbox to the table row.
+    $rows[$parent_term->id()]['state'] = [
+      'data' => [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Expanded by default'),
+        '#default_value' => $default_value === 'expanded',
+      ],
+    ];
   }
+
+  // Build collapse settings table.
+  $form['default_states'] = [
+    '#type' => 'table',
+    '#header' => $header,
+    '#rows' => $rows,
+    '#empty' => $this->t('No parent terms found.'),
+  ];
+
+  // Add vocabulary-level fallback action setting.
+  $form['fallback_action'] = [
+    '#type' => 'select',
+    '#title' => $this->t('Fallback Action'),
+    '#description' => $this->t('Action to take when a parent term is not found in the default states.'),
+    '#options' => [
+      'hide' => $this->t('Hide'),
+      'expand' => $this->t('Expand'),
+      'collapse' => $this->t('Collapse'),
+      'disable' => $this->t('Disable'),
+      'remove' => $this->t('Remove'),
+    ],
+    '#default_value' => $fallback_action,
+  ];
+
+  return $form;
+}
+
+
+/**
+ * Gets all parent terms for the taxonomy vocabulary associated with the filter.
+ *
+ * @return \Drupal\taxonomy\Entity\Term[]
+ *   An array of parent terms.
+ */
+protected function getParentTerms() {
+  // Load the vocabulary associated with the filter.
+  $vocabulary_id = $this->handler->options['vid'];
+
+  // Load all parent terms for the vocabulary.
+  $query = \Drupal::entityQuery('taxonomy_term');
+  $query->condition('vid', $vocabulary_id);
+  $query->condition('parent', 0);
+  $query->accessCheck(TRUE);
+
+  $tids = $query->execute();
+
+  return \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
+}
 
   /**
    * {@inheritdoc}
@@ -402,4 +490,18 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     return ucfirst($action) . " level $level";
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    parent::submitConfigurationForm($form, $form_state);
+
+    $default_states = [];
+    $values = $form_state->getValue('default_states');
+    foreach ($values as $tid => $state) {
+      $default_states[$tid] = $state;
+    }
+
+    $this->configuration['default_states'] = $default_states;
+  }
 }

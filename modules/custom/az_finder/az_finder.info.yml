@@ -5,3 +5,4 @@ core_version_requirement: ^9 || ^10
 package: 'The University of Arizona - Experimental'
 dependencies:
   - better_exposed_filters:better_exposed_filters
+configure: az_finder.settings

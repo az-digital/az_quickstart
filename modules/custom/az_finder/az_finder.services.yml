@@ -3,3 +3,6 @@ services:
     autoconfigure: true
   az_finder.icons:
     class: Drupal\az_finder\AZFinderIcons
+  az_finder.views_usage_checker:
+    class: Drupal\az_finder\ViewsUsageChecker
+    arguments: ['@entity_type.manager', '@database']
