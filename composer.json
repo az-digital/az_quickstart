@@ -58,7 +58,7 @@
         "drupal/config_snapshot": "2.0.0-alpha1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.2.5",
+        "drupal/core-recommended": "10.2.6",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.14.0",
         "drupal/date_ap_style": "2.0.0",
