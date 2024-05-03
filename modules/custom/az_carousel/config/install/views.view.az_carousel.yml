@@ -240,6 +240,10 @@ display:
     display_plugin: block
     position: 1
     display_options:
+      access:
+        type: perm
+        options:
+          perm: 'access content'
       sorts:
         weight:
           id: weight
@@ -273,6 +277,7 @@ display:
           exposed: false
           granularity: second
       defaults:
+        access: false
         sorts: false
       display_description: ''
       display_extenders: {  }
@@ -543,6 +548,10 @@ display:
         type: none
         options:
           offset: 0
+      access:
+        type: perm
+        options:
+          perm: 'access draggableviews'
       cache:
         type: none
         options: {  }
@@ -601,7 +610,6 @@ display:
         fields: false
         sorts: false
         pager_options: false
-        footer: false
       css_class: ''
       display_description: ''
       pager_options: null
