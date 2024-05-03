@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.26",
         "az-digital/az-icons": "1.0.1",
         "az-digital/smart_title": "dev-az-digital",
-        "citation-style-language/locales": "0.0.19",
+        "citation-style-language/locales": "0.0.20",
         "citation-style-language/styles": "0.0.409",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
