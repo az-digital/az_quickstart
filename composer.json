@@ -160,7 +160,7 @@
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
             },
             "drupal/config_readonly": {
-                "Whitelist for ConfigEntityListBuilder (3042241)": "https://www.drupal.org/files/issues/2024-05-08/3042241-10.patch"
+                "Whitelist for ConfigEntityListBuilder (3042241)": "https://www.drupal.org/files/issues/2024-05-08/3042241-11.patch"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
