@@ -45,11 +45,20 @@ final class AZPersonProfileImportForm extends FormBase {
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
     $form['netid'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('NetID'),
-      '#description' => $this->t('Enter the NetID of the person you wish to import.'),
-      '#maxlength' => 64,
-      '#size' => 64,
+      '#type' => 'textarea',
+      '#title' => $this->t('List of NetID(s)'),
+      '#description' => $this->t('Enter the NetIDs of the individuals you wish to import, one per line.'),
+      '#required' => TRUE,
+    ];
+
+    $form['mode'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Choose how profiles are imported'),
+      '#options' => [
+        'normal' => $this->t('New profiles'),
+        'update' => $this->t('All listed profiles'),
+        'track_changes' => $this->t('Profiles that have been updated since last import'),
+      ],
       '#required' => TRUE,
     ];
 
@@ -72,12 +81,17 @@ final class AZPersonProfileImportForm extends FormBase {
     $config = $this->config('az_person_profile_import.settings');
     $endpoint = $config->get('endpoint');
     $apikey = $config->get('apikey');
-    $netid = $form_state->getValue('netid');
-    $url = $endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey);
+    $urls = [];
+    $netids = $form_state->getValue('netid');
+    $mode = $form_state->getValue('mode');
+    $netids = preg_split("(\r\n?|\n)", $netids);
+    $update = $mode === 'update';
+    $track = $mode === 'track_changes';
 
-    $this->messenger()->addStatus($this->t('Importing @netid from Profiles API.', [
-      '@netid' => $netid,
-    ]));
+    foreach ($netids as $netid) {
+      $netid = trim($netid);
+      $urls[] = $endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey);
+    }
 
     // Fetch the profiles integration migration.
     $migration = $this->pluginManagerMigration->createInstance('az_person_profile_import');
@@ -92,10 +106,11 @@ final class AZPersonProfileImportForm extends FormBase {
       // Set migration options.
       $options = [
         'limit' => 0,
-        'update' => 1,
+        'update' => (int) $update,
+        'track_changes' => (int) $track,
         'configuration' => [
           'source' => [
-            'urls' => $url,
+            'urls' => $urls,
           ],
         ],
       ];
