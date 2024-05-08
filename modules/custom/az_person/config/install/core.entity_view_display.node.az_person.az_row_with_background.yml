@@ -159,7 +159,7 @@ third_party_settings:
         speed: fast
     group_view_person:
       children: {  }
-      label: 'View person'
+      label: 'View profile'
       parent_name: group_column_text
       region: content
       weight: 10
