@@ -83,3 +83,10 @@ function az_paragraphs_update_920601(&$sandbox) {
   $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
   return t('Paragraph behavior settings fixed on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
 }
+
+/**
+ * Enable ckeditor_indentblock module by default.
+ */
+function az_paragraphs_update_1021001() {
+  \Drupal::service('module_installer')->install(['ckeditor_indentblock']);
+}

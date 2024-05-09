@@ -15,6 +15,7 @@ dependencies:
   - az_paragraphs_splitscreen
   - az_person
   - az_media
+  - az_finder
   - migrate:migrate
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools

@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_title
+    - paragraphs.paragraphs_type.az_link_group
+id: paragraph.az_link_group.field_az_title
+field_name: field_az_title
+entity_type: paragraph
+bundle: az_link_group
+label: 'Link group title'
+description: 'Add a custom title above your group of links.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string
