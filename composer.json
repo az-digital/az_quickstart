@@ -34,7 +34,7 @@
         "az-digital/az-icons": "1.0.2",
         "az-digital/smart_title": "dev-az-digital",
         "citation-style-language/locales": "0.0.20",
-        "citation-style-language/styles": "0.0.411",
+        "citation-style-language/styles": "0.0.413",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
