@@ -6,5 +6,5 @@ label: 'Quickstart Enterprise Attributes'
 migration: az_enterprise_attributes_import
 time: 86400
 update: true
-sync: false
+sync: true
 ignore_dependencies: false

@@ -1,0 +1,11 @@
+services:
+  _defaults:
+    autoconfigure: true
+  az_enterprise_attributes_import.events:
+    class: Drupal\az_enterprise_attributes_import\EventSubscriber\AZEnterpriseAttributesEventSubscriber
+    arguments:
+      - '@entity_type.manager'
+  logger.channel.az_enterprise_attributes_import:
+    parent: logger.channel_base
+    arguments:
+      - 'az_enterprise_attributes_import'

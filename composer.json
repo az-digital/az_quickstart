@@ -189,6 +189,9 @@
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch"
             },
+            "drupal/migrate_tools": {
+                "Migrate support for unpublishing items no longer in the incoming data (3108686)": "https://git.drupalcode.org/project/migrate_tools/-/merge_requests/28.diff"
+            },
             "drupal/quick_node_clone": {
                 "Use a custom node access operation to allow implementations of hook_node_access() to define custom access rules (3342710)": "https://www.drupal.org/files/issues/2024-01-12/3342710-5.patch"
             },
