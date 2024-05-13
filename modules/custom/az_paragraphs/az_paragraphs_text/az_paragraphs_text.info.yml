@@ -1,7 +1,7 @@
 name: 'Quickstart Paragraphs - Text'
 type: module
 description: 'Provides a text paragraph type.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ^10 || ^11
 dependencies:
   - az_paragraphs
   - drupal:field
