@@ -113,7 +113,7 @@ steps:
       - source $ASSET_DIR/test-credentials.sh
       - export SIMPLETEST_BASE_URL="http://localhost"
       - export SIMPLETEST_DB="mysql://${TEST_DATABASE_USER}:${TEST_DATABASE_PASS}@localhost/${TEST_DATABASE_NAME}"
-      - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
+      - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
       - daemonize /usr/local/bin/chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1"
       - cd /var/www/html/profiles/custom/az_quickstart
       - export RUN_TESTS_CONCURRENCY=10
