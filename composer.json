@@ -164,15 +164,13 @@
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
-                "Support SVG files for theme logo setting (2259567)": "https://www.drupal.org/files/issues/2023-12-01/2259567-179.patch",
                 "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2023-07-11/1461322-10-1-x-41.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2022-07-26/2552541-51.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch",
-                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2022-04-23/2766369-33.patch",
+                "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2024-05-13/2766369-39.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
-                "Loadjs css file load issue (Quickstart Issue 2772)": "https://gist.githubusercontent.com/tadean/163159a15080a6a7714ed13459393f80/raw/a1cebecc335a0a058141356b69857094b32af1e3/loadjs_2772.patch",
                 "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2024-01-18/2350049-30.patch",
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch"
             },

@@ -183,7 +183,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $this->setFormOptions($form, $field_id);
       $svg_icons = $this->azFinderIcons->generateSvgIcons();
       foreach ($svg_icons as $key => $icon) {
-        $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->renderPlain($icon);
+        $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->renderInIsolation($icon);
       }
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
