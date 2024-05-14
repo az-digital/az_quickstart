@@ -4,26 +4,25 @@ namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'az_card' field widget.
- *
- * @FieldWidget(
- *   id = "az_card",
- *   label = @Translation("Card"),
- *   field_types = {
- *     "az_card"
- *   }
- * )
  */
+#[FieldWidget(
+  id: 'az_card',
+  label: new TranslatableMarkup('Card'),
+  field_types: ['az_card'],
+)]
 class AZCardWidget extends WidgetBase {
 
   // Default initial text format for cards.
