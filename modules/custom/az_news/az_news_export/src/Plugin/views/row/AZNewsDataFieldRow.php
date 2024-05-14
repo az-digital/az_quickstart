@@ -3,22 +3,23 @@
 namespace Drupal\az_news_export\Plugin\views\row;
 
 use Drupal\az_news_export\AZNewsDataEmpty;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\rest\Plugin\views\row\DataFieldRow;
+use Drupal\views\Attribute\ViewsRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin which displays fields as raw data.
  *
  * @ingroup views_row_plugins
- *
- * @ViewsRow(
- *   id = "az_news_data_field",
- *   title = @Translation("Quickstart News Fields"),
- *   help = @Translation("Use News fields as row data."),
- *   display_types = {"data"}
- * )
  */
+#[ViewsRow(
+  id: "az_news_data_field",
+  title: new TranslatableMarkup("Quickstart News Fields"),
+  help: new TranslatableMarkup("Use News fields as row data."),
+  display_types: ["data"]
+)]
 class AZNewsDataFieldRow extends DataFieldRow {
 
   /**
