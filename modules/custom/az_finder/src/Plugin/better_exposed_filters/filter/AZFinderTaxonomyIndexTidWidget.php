@@ -14,9 +14,11 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Template\Attribute;
+use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Config\ConfigFactoryInterface;
 
 /**
  * Finder widget implementation.
@@ -52,11 +54,26 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   protected $entityTypeManager;
 
   /**
+   * The configuration service.
+   *
+    * @var \Drupal\Core\Config\ConfigFactoryInterface
+    */
+  protected $configFactory;
+
+  /**
    * The AZFinderIcons service.
    *
    * @var \Drupal\az_finder\AZFinderIcons
    */
   protected $azFinderIcons;
+
+  /**
+   * Static variable to hold the override configurations.
+   *
+   * @var array
+   */
+  protected static $overrides = [];
+
 
   /**
    * Constructs a new AzFinderWidget object.
@@ -73,6 +90,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The entity type manager service.
    * @param \Drupal\az_finder\AZFinderIcons $az_finder_icons
    *   The AZFinderIcons service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    */
   public function __construct(
     array $configuration,
@@ -80,13 +98,15 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $plugin_definition,
     RendererInterface $renderer,
     EntityTypeManagerInterface $entity_type_manager,
-    AZFinderIcons $az_finder_icons
+    AZFinderIcons $az_finder_icons,
+    ConfigFactoryInterface $config_factory
   ) {
     $configuration += $this->defaultConfiguration();
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->renderer = $renderer;
     $this->entityTypeManager = $entity_type_manager;
     $this->azFinderIcons = $az_finder_icons;
+    $this->configFactory = $config_factory;
   }
 
   /**
@@ -104,19 +124,19 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $plugin_definition,
       $container->get('renderer'),
       $container->get('entity_type.manager'),
-      $container->get('az_finder.icons')
+      $container->get('az_finder.icons'),
+      $container->get('config.factory')
     );
   }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function defaultConfiguration() {
-      return [
-        'default_states' => [],
-      ] + parent::defaultConfiguration();
-    }
-
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return [
+      'default_states' => [],
+    ] + parent::defaultConfiguration();
+  }
 
   /**
    * {@inheritdoc}
@@ -127,6 +147,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     }
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
+    $this->view = $filter->view;
     $filter_id = $filter->options['expose']['identifier'];
     $field_id = $this->getFieldId($filter);
     $identifier = $filter_id;
@@ -234,96 +255,94 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     return $form;
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+    $form = parent::buildConfigurationForm($form, $form_state);
 
+    $config = $this->configuration;
+    $default_states = $config['default_states'] ?? [];
+    // Default fallback action is 'hide'.
+    $fallback_action = $config['fallback_action'] ?? 'hide';
 
-/**
- * {@inheritdoc}
- */
-public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-  $form = parent::buildConfigurationForm($form, $form_state);
+    // Get all parent terms.
+    $parent_terms = $this->getParentTerms();
 
-  $config = $this->configuration;
-  $default_states = isset($config['default_states']) ? $config['default_states'] : [];
-  $fallback_action = isset($config['fallback_action']) ? $config['fallback_action'] : 'hide'; // Default fallback action is 'hide'.
-
-  // Get all parent terms.
-  $parent_terms = $this->getParentTerms();
-
-  // Build collapse settings table header.
-  $header = [
-    $this->t('Parent Term'),
-    $this->t('Default State'),
-  ];
-
-  // Initialize collapse settings table rows.
-  $rows = [];
-
-  // Build collapse settings for each parent term.
-  foreach ($parent_terms as $parent_term) {
-    $default_value = isset($default_states[$parent_term->id()]) ? $default_states[$parent_term->id()] : 'collapsed';
-
-    // Add parent term name to the table row.
-    $rows[$parent_term->id()]['name'] = [
-      'data' => ['#markup' => $parent_term->getName()],
+    // Build collapse settings table header.
+    $header = [
+      $this->t('Parent Term'),
+      $this->t('Default State'),
     ];
 
-    // Add collapse settings checkbox to the table row.
-    $rows[$parent_term->id()]['state'] = [
-      'data' => [
-        '#type' => 'checkbox',
-        '#title' => $this->t('Expanded by default'),
-        '#default_value' => $default_value === 'expanded',
+    // Initialize collapse settings table rows.
+    $rows = [];
+
+    // Build collapse settings for each parent term.
+    foreach ($parent_terms as $parent_term) {
+      $default_value = $default_states[$parent_term->id()] ?? 'collapsed';
+
+      // Add parent term name to the table row.
+      $rows[$parent_term->id()]['name'] = [
+        'data' => ['#markup' => $parent_term->getName()],
+      ];
+
+      // Add collapse settings checkbox to the table row.
+      $rows[$parent_term->id()]['state'] = [
+        'data' => [
+          '#type' => 'checkbox',
+          '#title' => $this->t('Expanded by default'),
+          '#default_value' => $default_value === 'expanded',
+        ],
+      ];
+    }
+
+    // Build collapse settings table.
+    $form['default_states'] = [
+      '#type' => 'table',
+      '#header' => $header,
+      '#rows' => $rows,
+      '#empty' => $this->t('No parent terms found.'),
+    ];
+
+    // Add vocabulary-level fallback action setting.
+    $form['fallback_action'] = [
+      '#type' => 'select',
+      '#title' => $this->t('Fallback Action'),
+      '#description' => $this->t('Action to take when a parent term is not found in the default states.'),
+      '#options' => [
+        'hide' => $this->t('Hide'),
+        'expand' => $this->t('Expand'),
+        'collapse' => $this->t('Collapse'),
+        'disable' => $this->t('Disable'),
+        'remove' => $this->t('Remove'),
       ],
+      '#default_value' => $fallback_action,
     ];
+
+    return $form;
   }
 
-  // Build collapse settings table.
-  $form['default_states'] = [
-    '#type' => 'table',
-    '#header' => $header,
-    '#rows' => $rows,
-    '#empty' => $this->t('No parent terms found.'),
-  ];
+  /**
+   * Gets all parent terms for the taxonomy vocabulary associated with the filter.
+   *
+   * @return \Drupal\taxonomy\Entity\Term[]
+   *   An array of parent terms.
+   */
+  protected function getParentTerms() {
+    // Load the vocabulary associated with the filter.
+    $vocabulary_id = $this->handler->options['vid'];
 
-  // Add vocabulary-level fallback action setting.
-  $form['fallback_action'] = [
-    '#type' => 'select',
-    '#title' => $this->t('Fallback Action'),
-    '#description' => $this->t('Action to take when a parent term is not found in the default states.'),
-    '#options' => [
-      'hide' => $this->t('Hide'),
-      'expand' => $this->t('Expand'),
-      'collapse' => $this->t('Collapse'),
-      'disable' => $this->t('Disable'),
-      'remove' => $this->t('Remove'),
-    ],
-    '#default_value' => $fallback_action,
-  ];
+    // Load all parent terms for the vocabulary.
+    $query = \Drupal::entityQuery('taxonomy_term');
+    $query->condition('vid', $vocabulary_id);
+    $query->condition('parent', 0);
+    $query->accessCheck(TRUE);
 
-  return $form;
-}
+    $tids = $query->execute();
 
-
-/**
- * Gets all parent terms for the taxonomy vocabulary associated with the filter.
- *
- * @return \Drupal\taxonomy\Entity\Term[]
- *   An array of parent terms.
- */
-protected function getParentTerms() {
-  // Load the vocabulary associated with the filter.
-  $vocabulary_id = $this->handler->options['vid'];
-
-  // Load all parent terms for the vocabulary.
-  $query = \Drupal::entityQuery('taxonomy_term');
-  $query->condition('vid', $vocabulary_id);
-  $query->condition('parent', 0);
-  $query->accessCheck(TRUE);
-
-  $tids = $query->execute();
-
-  return \Drupal\taxonomy\Entity\Term::loadMultiple($tids);
-}
+    return Term::loadMultiple($tids);
+  }
 
   /**
    * {@inheritdoc}
@@ -504,4 +523,40 @@ protected function getParentTerms() {
 
     $this->configuration['default_states'] = $default_states;
   }
+/**
+ * Retrieves and caches override configurations for a specific view and display.
+ *
+ * @param string $view_id
+ *   The ID of the view.
+ * @param string $display_id
+ *   The ID of the display.
+ *
+ * @return array
+ *   The configuration array.
+ */
+public function getOverrideConfigurations($view_id, $display_id) {
+  $config_key = "$view_id.$display_id";
+  if (!isset(self::$overrides[$config_key])) {
+    $config_name = "az_finder.tid_widget.$view_id.$display_id";
+    $config = $this->configFactory->getEditable($config_name);
+    $overrides = [];
+    if ($config) {
+      $vocabularies = $config->get('vocabularies');
+      foreach ($vocabularies as $vocabulary) {
+        $vocabulary_id = $vocabulary['vocabulary_id'];
+        $terms = $vocabulary['terms'];
+        foreach ($terms as $term) {
+          $term_id = $term['term_id'];
+          $default_state = $term['default_state'] ?? 'collapse';
+          $overrides[$vocabulary_id][$term_id] = $default_state;
+        }
+      }
+    }
+    self::$overrides[$config_key] = $overrides;
+  }
+
+  return self::$overrides[$config_key];
+}
+
+
 }

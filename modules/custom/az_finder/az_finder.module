@@ -5,10 +5,7 @@
  * Contains az_finder.module.
  */
 
-use Drupal\views\Views;
 use Drupal\Core\Routing\RouteCollection;
-use Drupal\Core\Menu\MenuLinkManager;
-
 
 /**
  * Implements hook_theme().
@@ -76,13 +73,12 @@ function az_finder_preprocess_views_view(&$variables) {
 
 }
 
-
 /**
  * Implements hook_routing_alter().
  */
 function az_finder_routing_alter(RouteCollection $collection) {
-$views_usage_checker = \Drupal::service('az_finder.views_usage_checker');
-$views_using_widget = $views_usage_checker->getViewsUsingWidget();
+  $views_usage_checker = \Drupal::service('az_finder.views_usage_checker');
+  $views_using_widget = $views_usage_checker->getViewsUsingWidget();
   foreach ($views_using_widget as $view_id => $displays) {
     foreach ($displays as $display_id) {
       $route_name = "az_finder.{$view_id}_{$display_id}";
@@ -99,8 +95,8 @@ $views_using_widget = $views_usage_checker->getViewsUsingWidget();
  * Implements hook_menu_links_discovered_alter().
  */
 function az_finder_menu_links_discovered_alter(&$links) {
-$views_usage_checker = \Drupal::service('az_finder.views_usage_checker');
-$views_using_widget = $views_usage_checker->getViewsUsingWidget();
+  $views_usage_checker = \Drupal::service('az_finder.views_usage_checker');
+  $views_using_widget = $views_usage_checker->getViewsUsingWidget();
   foreach ($views_using_widget as $view_id => $displays) {
     foreach ($displays as $display_id) {
       $menu_link_id = "az_finder.{$view_id}_{$display_id}";
@@ -112,11 +108,14 @@ $views_using_widget = $views_usage_checker->getViewsUsingWidget();
     }
   }
 }
+
+/**
+ *
+ */
 function az_finder_local_tasks_alter(array &$local_tasks, $route_match) {
-  \Drupal::logger('az_finder')->notice('RouteMatch type: @type', ['@type' => is_object($route_match) ? get_class($route_match) : gettype($route_match)]);
+  // \Drupal::logger('az_finder')->notice('RouteMatch type: @type', ['@type' => is_object($route_match) ? get_class($route_match) : gettype($route_match)]);
   // Ensure RouteMatchInterface is correctly hinted if debugging doesn’t reveal issues.
 }
-
 
 // /**
 //  * Implements hook_local_tasks_alter().
@@ -124,21 +123,17 @@ function az_finder_local_tasks_alter(array &$local_tasks, $route_match) {
 // function az_finder_local_tasks_alter(array &$local_tasks, RouteMatchInterface $route_match) {
 //   // Get the current route name to check if we are on the desired page.
 //   $route_name = $route_match->getRouteName();
-
-//   // Only add tabs if we are on the az_finder settings page or its sub-tabs.
+// // Only add tabs if we are on the az_finder settings page or its sub-tabs.
 //   if ($route_name === 'az_finder.settings' || strpos($route_name, 'az_finder.settings.') === 0) {
 //     $views_usage_checker = \Drupal::service('az_finder.views_usage_checker');
 //     $views_using_widget = $views_usage_checker->getViewsUsingWidget();
-
-//     foreach ($views_using_widget as $view_id => $display_ids) {
+// foreach ($views_using_widget as $view_id => $display_ids) {
 //       foreach ($display_ids as $display_id) {
 //         // Construct a dynamic route name for each tab. This assumes you have corresponding routes defined.
-//         $dynamic_route_name = "az_finder.settings.$view_id.$display_id";
-
-//         // Construct a unique task id for each tab.
+//         $dynamic_route_name = "az_finder.settings.$view_id.$display_id";.
+// // Construct a unique task id for each tab.
 //         $task_id = "az_finder.settings.$view_id.$display_id.tab";
-
-//         // Add the local task.
+// // Add the local task.
 //         $local_tasks[$task_id] = [
 //           'title' => "$view_id $display_id", // Customize the title as needed.
 //           'route_name' => $dynamic_route_name,

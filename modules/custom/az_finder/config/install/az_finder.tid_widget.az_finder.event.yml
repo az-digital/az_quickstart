@@ -1,0 +1,6 @@
+vocabularies:
+  az_event_categories:
+    terms:
+      245:
+        default_state: disable
+

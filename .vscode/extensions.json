@@ -2,6 +2,7 @@
   "recommendations": [
     "bmewburn.vscode-intelephense-client",
     "ms-vscode-remote.remote-containers",
-    "xdebug.php-debug"
+    "xdebug.php-debug",
+    "ms-playwright.playwright"
   ]
 }

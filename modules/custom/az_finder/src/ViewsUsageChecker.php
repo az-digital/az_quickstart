@@ -2,8 +2,8 @@
 
 namespace Drupal\az_finder;
 
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Database\Connection;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
  * Service to check views usage of AZFinderTaxonomyIndexTidWidget.
@@ -60,4 +60,5 @@ class ViewsUsageChecker {
 
     return $views_using_widget;
   }
+
 }

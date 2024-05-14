@@ -1,0 +1,74 @@
+az_finder.settings:
+  type: config_object
+  label: 'AZ Finder Settings'
+  mapping:
+    tid_widget:
+      type: mapping
+      label: 'Global Default Settings'
+      mapping:
+        default_state:
+          type: string
+          label: 'Global Default State for Exposed Filters'
+          constraints:
+            Choice:
+              - 'hide'
+              - 'disable'
+              - 'remove'
+              - 'expand'
+              - 'collapse'
+az_finder.tid_widget.[view_id].[display_id]:
+  type: config_object
+  label: 'AZ Finder Override for a specific View Display'
+  mapping:
+    vocabularies:
+      type: sequence
+      label: 'Vocabulary settings for this view display'
+      sequence:
+        type: mapping
+        mapping:
+          vocabulary_id:
+            type: string
+            label: 'Vocabulary ID'
+          terms:
+            type: sequence
+            label: 'Settings for each term in the vocabulary'
+            sequence:
+              type: mapping
+              mapping:
+                term_id:
+                  type: string
+                  label: 'Term ID'
+                default_state:
+                  type: string
+                  label: 'Setting for each term'
+                  constraints:
+                    Required: false
+                    Choice:
+                      - 'hide'
+                      - 'disable'
+                      - 'remove'
+                      - 'expand'
+                      - 'collapse'
+
+views.exposed_form.az_better_exposed_filters:
+  type: views.exposed_form.bef
+  label: 'Quickstart Exposed Filters'
+  mapping:
+    reset_button_position:
+      type: string
+      label: 'Reset Button Position'
+    reset_button_counter:
+      type: boolean
+      label: 'Show Active Filter Counter'
+    orientation:
+      type: string
+      label: 'Orientation'
+    skip_link:
+      type: boolean
+      label: 'Add Skip Link'
+    skip_link_text:
+      type: string
+      label: 'Skip Link Text'
+    skip_link_id:
+      type: string
+      label: 'Skip Link ID'
