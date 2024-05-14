@@ -3,11 +3,13 @@
 namespace Drupal\az_paragraphs\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Render\Markup;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
@@ -16,19 +18,15 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_background_media_formatter' formatter.
- *
- * @FieldFormatter(
- *   id = "az_background_media",
- *   label = @Translation("Background Media"),
- *   field_types = {
- *     "entity_reference"
- *   },
- *   description = @Translation("This formatter can be enabled on any entity reference
- *   field, but will only create a background image for media entities of
- *   bundle type az_image, or az_remote_video.
- *   For az_remote_video, it must be a youtube video."),
- * )
  */
+#[FieldFormatter(
+  id: 'az_background_media',
+  label: new TranslatableMarkup('Background Media'),
+  description: new TranslatableMarkup('This formatter can be enabled on any entity reference field, but will only create a background image for media entities of bundle type az_image, or az_remote_video. For az_remote_video, it must be a youtube video.'),
+  field_types: [
+    'entity_reference',
+  ],
+)]
 class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements ContainerFactoryPluginInterface {
 
   /**
