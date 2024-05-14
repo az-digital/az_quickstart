@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
     'text_with_summary',
   ],
 )]
- class AZEnterpriseTextExportFormatter extends TextDefaultFormatter implements TrustedCallbackInterface {
+class AZEnterpriseTextExportFormatter extends TextDefaultFormatter implements TrustedCallbackInterface {
 
   /**
    * The element_info service.

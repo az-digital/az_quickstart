@@ -22,7 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
     'az_accordion',
   ],
 )]
- class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
+class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type manager service.
