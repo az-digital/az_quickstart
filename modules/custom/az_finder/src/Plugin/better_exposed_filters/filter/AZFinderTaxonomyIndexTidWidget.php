@@ -144,7 +144,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     if (!$this->view instanceof ViewExecutable) {
       return $form;
     }
-
     $filter = $this->handler;
     $filter_id = $filter->options['expose']['identifier'];
     $field_id = $this->getFieldId($filter);
@@ -208,6 +207,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       // Load override settings.
       $view_id = $this->view->storage->id();
       $display_id = $this->view->current_display;
+      $form['#contextual_links']['az_finder.contextual_links'] = [
+        'route_parameters' => [
+          'view' => $view_id,
+          'display' => $display_id,
+        ],
+      ];
       $overrides = $this->getOverrideConfigurations($view_id, $display_id);
 
       foreach (Element::children($form[$field_id]) as $child) {
