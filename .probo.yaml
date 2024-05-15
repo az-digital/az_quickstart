@@ -120,7 +120,7 @@ steps:
       - mysqladmin create ${TEST_DATABASE_NAME}
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -p 10 -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
   - name: Install Terminus
-      plugin: script
+      plugin: Script
       script:
       - mkdir -p ~/terminus && cd ~/terminus
       - curl -L https://github.com/pantheon-systems/terminus/releases/download/3.4.0/terminus.phar --output terminus
