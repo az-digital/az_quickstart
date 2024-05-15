@@ -27,10 +27,12 @@
       {% set new_nesting_level = attribute(depth, child) %}
       {% set vars = {
         collapse_id: vars.collapse_id ?? item['#attributes']['data-collapse-id'],
+        is_expanded: vars.is_expanded ?? item['#attributes']['aria-expanded'],
       } %}
       {% include '@az_finder/az-finder-nested-elements.html.twig' with vars %}
       {% set vars = {
         collapse_id: item['#attributes']['data-collapse-id'] ?? vars.collapse_id,
+        is_expanded: item['#attributes']['aria-expanded'] ?? vars.is_expanded,
       } %}
       {% set current_nesting_level = new_nesting_level %}
     {% else %}
