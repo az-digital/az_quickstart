@@ -1,4 +1,4 @@
-image: proboci/ubuntu:22.04-php8.2
+image: proboci/ubuntu:22.04-php8.3
 assets:
   - test-credentials.sh
   - migration.settings.php
