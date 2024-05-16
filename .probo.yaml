@@ -119,7 +119,15 @@ steps:
       - export RUN_TESTS_CONCURRENCY=10
       - mysqladmin create ${TEST_DATABASE_NAME}
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -p 10 -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
-  - name: Log in to terminus
+  - name: Install Terminus
+    plugin: Script
+    script:
+      - mkdir -p ~/terminus && cd ~/terminus
+      - curl -L https://github.com/pantheon-systems/terminus/releases/download/3.4.0/terminus.phar --output terminus
+      - chmod +x terminus
+      - ./terminus self:update
+      - ln -sf ~/terminus/terminus /usr/local/bin/terminus
+  - name: Log in to Terminus
     command: 'source ${ASSET_DIR}/terminus.sh; terminus auth:login --machine-token=${TERMINUS_TOKEN}'
   - name: Migration Tests
     plugin: Script
