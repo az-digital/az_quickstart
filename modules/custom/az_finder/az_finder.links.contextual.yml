@@ -1,5 +1,5 @@
-az_finder.contextual_links:
-  title: 'Override finder settings'
+az_finder.settings:
+  title: 'Finder settings'
   route_name: 'az_finder.settings'
   group: 'block'
   weight: 0

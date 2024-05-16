@@ -207,12 +207,19 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       // Load override settings.
       $view_id = $this->view->storage->id();
       $display_id = $this->view->current_display;
+      $form['#contextual_links']['az_finder.settings'] = [
+        'route_parameters' => [
+          'view' => $view_id,
+          'display' => $display_id,
+        ],
+      ];
       $form['#contextual_links']['az_finder.contextual_links'] = [
         'route_parameters' => [
           'view' => $view_id,
           'display' => $display_id,
         ],
       ];
+
       $overrides = $this->getOverrideConfigurations($view_id, $display_id);
 
       foreach (Element::children($form[$field_id]) as $child) {
@@ -425,6 +432,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       // Apply override settings.
       $is_expanded = $default_state === 'collapse';
 
+
       if (!empty($children)) {
         $list_title_link = [
           '#type' => 'html_tag',
@@ -474,7 +482,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         }
         $list_title_link['value'] = $list_title;
         $variables['element'][$child] = $list_title_link;
-        $variables['element'][$child]['is_expanded'] = TRUE;
       }
     }
   }
