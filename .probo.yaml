@@ -126,7 +126,7 @@ steps:
       - curl -L https://github.com/pantheon-systems/terminus/releases/download/3.4.0/terminus.phar --output terminus
       - chmod +x terminus
       - ./terminus self:update
-      - ln -s ~/terminus/terminus /usr/local/bin/terminus
+      - ln -sf ~/terminus/terminus /usr/local/bin/terminus
   - name: Log in to Terminus
     command: 'source ${ASSET_DIR}/terminus.sh; terminus auth:login --machine-token=${TERMINUS_TOKEN}'
   - name: Migration Tests
