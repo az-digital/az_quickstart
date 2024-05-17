@@ -6,15 +6,22 @@ namespace Drupal\az_person_profile_import\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
+
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a Quickstart Person Profile Import form.
  */
 final class AZPersonProfileImportForm extends FormBase {
+
+  /**
+   * @var \Drupal\Core\Messenger\Messenger
+   */
+  protected $messenger;
 
   /**
    * Drupal\migrate\Plugin\MigrationPluginManagerInterface definition.
@@ -28,6 +35,7 @@ final class AZPersonProfileImportForm extends FormBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
+    $instance->messenger = $container->get('messenger');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     return $instance;
   }
@@ -44,10 +52,20 @@ final class AZPersonProfileImportForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
+    $config = $this->config('az_person_profile_import.settings');
+    $has_key = !empty(trim($config->get('apikey')));
+    if (!$has_key) {
+      $url = Url::fromRoute('az_person_profile_import.settings_form')->toString();
+      $this->messenger->addWarning($this->t('You must first configure a Profiles API token <a href=":link">here</a>.', [
+        ':link' => $url,
+      ]));
+    }
+
     $form['netid'] = [
       '#type' => 'textarea',
       '#title' => $this->t('List of NetID(s)'),
       '#description' => $this->t('Enter the NetIDs of the individuals you wish to import, one per line.'),
+      '#disabled' => !$has_key,
       '#required' => TRUE,
     ];
 
@@ -59,11 +77,13 @@ final class AZPersonProfileImportForm extends FormBase {
         'update' => $this->t('All listed profiles'),
         'track_changes' => $this->t('Profiles that have been updated since last import'),
       ],
+      '#disabled' => !$has_key,
       '#required' => TRUE,
     ];
 
     $form['actions'] = [
       '#type' => 'actions',
+      '#disabled' => !$has_key,
       'submit' => [
         '#type' => 'submit',
         '#value' => $this->t('Import'),
