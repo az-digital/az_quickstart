@@ -196,6 +196,31 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   }
 
   /**
+   * Trim specific keys from configuration data.
+   *
+   * @param array $data
+   *   A potentially nested array to prune certain keys from.
+   * @param string $remove
+   *   A key to remove from the array structure.
+   *
+   * @return array
+   *   An array with the identified keys pruned.
+   */
+  protected function trimNestedKey(array $data, $remove) {
+    // Filter out the key targeted for removal.
+    $data = array_filter($data, function ($key) use ($remove) {
+      return $key !== $remove;
+    }, ARRAY_FILTER_USE_KEY);
+    // Remove the key from nested arrays.
+    array_walk($data, function (&$value, $key) use ($remove) {
+      if (is_array($value)) {
+        $value = $this->trimNestedKey($value, $remove);
+      }
+    });
+    return $data;
+  }
+
+  /**
    * Fetch only override config, without merging with installed config.
    *
    * @param \Drupal\Core\Extension\Extension[] $extensions
@@ -251,6 +276,9 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     $active = (!empty($active)) ? $active : [];
     // Not relevant for user roles. Permissions created dynamically.
     if (strpos($name, 'user.role.') !== 0) {
+      // Prune cache_metadata if present, to not consider it for diffs.
+      $active = $this->trimNestedKey($active, 'cache_metadata');
+      $snap = $this->trimNestedKey($snap, 'cache_metadata');
       // Diff active config and snapshot of module to check for customization.
       $diff = $differ->diff($active, $snap);
       // Overrides only allowed if no changes in diff.

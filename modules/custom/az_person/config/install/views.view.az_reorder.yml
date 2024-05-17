@@ -393,7 +393,20 @@ display:
             value: '<p><strong>Note:</strong> Changing the sort order will override default alphabetical ordering.</p>'
             format: az_standard
           tokenize: false
-      footer: {  }
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: "<strong>Save order:</strong> Saves the order set on this page.\r\n<strong>Reset order:</strong> Resets <em>every item</em> here to alphabetical order."
+            format: az_standard
+          tokenize: false
       display_extenders: {  }
     cache_metadata:
       max-age: 0

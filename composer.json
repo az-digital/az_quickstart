@@ -30,18 +30,18 @@
     ],
     "require": {
         "php": ">=8.1",
-        "az-digital/arizona-bootstrap": "2.0.25",
-        "az-digital/az-icons": "1.0.1",
+        "az-digital/arizona-bootstrap": "2.0.27",
+        "az-digital/az-icons": "1.0.2",
         "az-digital/smart_title": "dev-az-digital",
-        "citation-style-language/locales": "0.0.11",
-        "citation-style-language/styles": "0.0.343",
+        "citation-style-language/locales": "0.0.20",
+        "citation-style-language/styles": "0.0.413",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.5.0",
         "drupal/antibot": "2.0.3",
         "drupal/asset_injector": "2.19.0",
         "drupal/auto_entitylabel": "3.0.0",
-        "drupal/better_exposed_filters": "6.0.3",
+        "drupal/better_exposed_filters": "6.0.5",
         "drupal/blazy": "2.24.0",
         "drupal/block_class": "2.0.11",
         "drupal/block_content_permissions": "*",
@@ -54,7 +54,7 @@
         "drupal/ckeditor_indentblock": "1.0",
         "drupal/coffee": "1.4.0",
         "drupal/config_distro": "2.0.0-alpha2",
-        "drupal/config_ignore": "3.2.0",
+        "drupal/config_ignore": "3.3.0",
         "drupal/config_ignore_readonly": "2.2.0-beta1",
         "drupal/config_provider": "3.0.0-alpha1",
         "drupal/config_readonly": "1.0.0-beta5",
@@ -62,14 +62,14 @@
         "drupal/config_split": "2.0.1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.2.5",
+        "drupal/core-recommended": "10.2.6",
         "drupal/crop": "2.3.0",
         "drupal/ctools": "3.14.0",
         "drupal/date_ap_style": "2.0.0",
         "drupal/draggableviews": "2.1.3",
         "drupal/easy_breadcrumb": "2.0.6",
         "drupal/embed": "1.7.0",
-        "drupal/entity_embed": "1.5.0",
+        "drupal/entity_embed": "1.6.0",
         "drupal/environment_indicator": "4.0.10",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.5",
@@ -85,7 +85,7 @@
         "drupal/jquery_ui": "1.6.0",
         "drupal/jquery_ui_datepicker": "2.0.0",
         "drupal/link_class": "2.1.0",
-        "drupal/linkit": "6.1.3",
+        "drupal/linkit": "6.1.4",
         "drupal/masquerade": "2.0.0-rc4",
         "drupal/media_entity_file_replace": "1.2.0",
         "drupal/media_library_edit": "3.0.3",
@@ -99,18 +99,18 @@
         "drupal/migrate_tools": "6.0.4",
         "drupal/optional_end_date": "1.3.0",
         "drupal/paragraphs": "1.17.0",
-        "drupal/paragraphs_admin": "1.5.0",
+        "drupal/paragraphs_admin": "1.6.0",
         "drupal/pathauto": "1.12.0",
         "drupal/quick_node_clone": "1.17.0",
         "drupal/redirect": "1.9.0",
         "drupal/role_delegation": "1.2.0",
         "drupal/search_exclude": "3.0.0-beta1",
         "drupal/seckit": "2.0.1",
-        "drupal/slick": "2.10.0",
+        "drupal/slick": "2.11.0",
         "drupal/slick_views": "2.8.0",
         "drupal/smart_date": "4.0.3",
         "drupal/smtp": "1.2.0",
-        "drupal/token": "1.13.0",
+        "drupal/token": "1.14.0",
         "drupal/views_bootstrap": "5.4.0",
         "drupal/views_remote_data": "1.0.2",
         "drupal/viewsreference": "2.0.0-beta7",
@@ -156,11 +156,11 @@
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
-            "drupal/config_ignore": {
-                "Ignoring any config entities with an empty config sync directory causes PHP error (3432315)": "https://www.drupal.org/files/issues/2024-04-03/3432315-13.patch"
-            },
             "drupal/config_provider": {
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
+            },
+            "drupal/config_readonly": {
+                "Whitelist for ConfigEntityListBuilder (3042241)": "https://www.drupal.org/files/issues/2024-05-08/3042241-11.patch"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
@@ -177,7 +177,8 @@
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch"
             },
             "drupal/draggableviews": {
-                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch"
+                "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
+                "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch"
             },
             "drupal/google_tag": {
                 "Enforce Privacy Consent Policy checkbox default value is checked even when it is disabled (3424623)": "https://www.drupal.org/files/issues/2024-03-01/3424623-9-allow-saving-google-tag-setting-for-consent-mode.patch"
