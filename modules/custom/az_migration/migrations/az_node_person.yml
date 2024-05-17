@@ -22,11 +22,8 @@ process:
     plugin: default_value
     default_value: az_person
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   field_az_fname:
     plugin: sub_process

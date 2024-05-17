@@ -11,7 +11,8 @@ use Drupal\config_update\ConfigListByProviderInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandler;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Class AZConfigOverride.
@@ -23,9 +24,10 @@ use Psr\Log\LoggerInterface;
  * to avoid needing to import the changes whenever an override module is
  * enabled, e.g. az_cas.
  */
-class AZConfigOverride {
+class AZConfigOverride implements LoggerAwareInterface {
 
   use ConfigSnapshotStorageTrait;
+  use LoggerAwareTrait;
 
   /**
    * Drupal\config_provider\Plugin\ConfigCollector definition.
@@ -70,23 +72,15 @@ class AZConfigOverride {
   protected $moduleHandler;
 
   /**
-   * LoggerChannel service.
-   *
-   * @var \Drupal\Core\Logger\LoggerChannel
-   */
-  protected $logger;
-
-  /**
    * Constructs a new AZConfigOverride object.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler, LoggerInterface $logger_channel) {
+  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler) {
     $this->configFactory = $config_factory;
     $this->extensionListModule = $extension_list_module;
     $this->configCollector = $config_collector;
     $this->configSyncSnapshotter = $config_sync_snapshotter;
     $this->configUpdateLister = $config_update_lister;
     $this->moduleHandler = $module_handler;
-    $this->logger = $logger_channel;
   }
 
   /**
@@ -125,6 +119,9 @@ class AZConfigOverride {
         $snapshots = [];
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {
+          $this->logger->info("Applying override config to @config_id.", [
+            '@config_id' => $name,
+          ]);
           $config = $this->configFactory->getEditable($name);
           $config->setData($data);
           $config->Save();

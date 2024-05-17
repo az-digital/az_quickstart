@@ -56,6 +56,12 @@ function az_demo_blocks_to_hide_by_path(): array {
     'az_barrio_sidebar_menu' => [
       '/pages/split-screen-no-sidebar',
       '/pages/text-background-no-sidebar',
+      '/pages/combo-page-no-sidebar',
+      '/finders/people',
+      '/finders/news',
+      '/finders/events',
+      '/finders/pages',
+      '/finders/content',
     ],
   ];
 }

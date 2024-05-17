@@ -32,7 +32,7 @@ steps:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress yarn
       - sudo npm install -g --no-progress n
-      - sudo n 18.12.1
+      - sudo n 20.13.0
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
       - yarn install
       - yarn run eslint --color .
@@ -45,21 +45,21 @@ steps:
     subDirectory: az-quickstart-scaffolding/web
     runInstall: true
     profileName: az_quickstart
-    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin --verbose --yes -n"
+    installArgs: "--site-name='Quickstart Review' --account-name=azadmin --account-pass=azadmin2024 --verbose --yes -n"
   - name: Post-Installation Steps
     plugin: Script
     script:
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_demo
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2024"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2024"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontentadmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azcontentadmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azuseradmin --password="azuseradmin"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azuseradmin --password="azuseradmin2024"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azuseradmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_user_admin azuseradmin
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin"
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azhtmladmin --password="azhtmladmin2024"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azhtmladmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_admin azhtmladmin
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_html_admin azhtmladmin

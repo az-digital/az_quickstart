@@ -33,3 +33,4 @@ dependencies:
   - 'paragraphs:paragraphs'
   - 'pathauto:pathauto'
   - 'smart_title:smart_title'
+configure: az_publication.settings
