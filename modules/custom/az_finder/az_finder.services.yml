@@ -3,6 +3,16 @@ services:
     autoconfigure: true
   az_finder.icons:
     class: Drupal\az_finder\AZFinderIcons
-  az_finder.views_usage_checker:
-    class: Drupal\az_finder\ViewsUsageChecker
-    arguments: ['@entity_type.manager', '@database']
+  az_finder.view_options:
+    class: Drupal\az_finder\Service\AZFinderViewOptions
+    arguments:
+      - '@cache.default'
+      - '@entity_type.manager'
+  az_finder.vocabulary:
+    class: Drupal\az_finder\Service\AZFinderVocabulary
+    arguments:
+      - '@entity_type.manager'
+  az_finder.overrides:
+    class: Drupal\az_finder\Service\AZFinderOverrides
+    arguments:
+      - '@config.factory'
