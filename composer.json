@@ -180,9 +180,6 @@
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch"
             },
-            "drupal/google_tag": {
-                "Enforce Privacy Consent Policy checkbox default value is checked even when it is disabled (3424623)": "https://www.drupal.org/files/issues/2024-03-01/3424623-9-allow-saving-google-tag-setting-for-consent-mode.patch"
-            },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
             },
