@@ -49,7 +49,7 @@ steps:
   - name: Post-Installation Steps
     plugin: Script
     script:
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_demo
+      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install az_demo dashboard
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontenteditor --password="azcontenteditor2024"
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:role:add az_content_editor azcontenteditor
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush user:create azcontentadmin --password="azcontentadmin2024"
