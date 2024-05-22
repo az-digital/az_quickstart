@@ -3,6 +3,8 @@
 namespace Drupal\az_publication\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
 /**
  * Defines the Quickstart Citation Style entity.
@@ -32,7 +34,8 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   config_export = {
  *     "id",
  *     "label",
- *     "style"
+ *     "style",
+ *     "custom"
  *   },
  *   config_prefix = "az_citation_style",
  *   admin_permission = "administer site configuration",
@@ -87,6 +90,43 @@ class AZQuickstartCitationStyle extends ConfigEntityBase implements AZQuickstart
   public function setStyle($style) {
     $this
       ->set('style', $style);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getStyleSheet() {
+    $sheet = $this->getStyle();
+    $custom = $this->getCustom();
+
+    // If not a custom stylesheet, load via CSL package.
+    if (empty($custom)) {
+      try {
+        $sheet = StyleSheet::loadStyleSheet($sheet);
+      }
+      catch (CiteProcException $e) {
+        $sheet = '';
+      }
+    }
+
+    return $sheet;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCustom() {
+    return (bool) $this
+      ->get('custom');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setCustom($custom) {
+    $this
+      ->set('custom', (bool) $custom);
     return $this;
   }
 

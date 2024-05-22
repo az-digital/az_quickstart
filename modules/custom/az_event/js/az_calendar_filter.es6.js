@@ -4,7 +4,7 @@
  *
  */
 
-(($, Drupal, drupalSettings) => {
+(($, Drupal, drupalSettings, once) => {
   Drupal.behaviors.azCalendarFilter = {
     attach(context, settings) {
       const filterInformation = drupalSettings.azCalendarFilter;
@@ -35,8 +35,7 @@
       $('.az-calendar-filter-calendar').datepicker('refresh');
 
       // Initialize calendar widget wrapper if needed.
-      $('.az-calendar-filter-wrapper', context)
-        .once('azCalendarFilter')
+      $(once('azCalendarFilter', '.az-calendar-filter-wrapper', context))
         // eslint-disable-next-line func-names
         .each(function () {
           const $wrapper = $(this);
@@ -231,4 +230,4 @@
         });
     },
   };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal, drupalSettings, once);

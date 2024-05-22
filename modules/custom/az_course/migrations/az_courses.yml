@@ -15,36 +15,36 @@ source:
   urls: [ ]
   item_selector: '//*[local-name()="CourseDetail"]'
   fields:
-     -
+    -
       name: title
       label: Title
       selector: ns1:title
-     -
+    -
       name: description
       label: Description
       selector: ns1:descrLong
-     -
+    -
       name: subject_code
       label: Subject Code
       selector: ns1:subject_code
-     -
+    -
       name: catalog_number
       label: Catalog Number
       selector: ns1:catalog_nbr
-     -
+    -
       # Squash data from multiple sections into this one.
       name: course_type
       label: Course Type
       selector: '//*[local-name()="course_type_descr"]'
-     -
+    -
       name: course_attributes
       label: Course Attributes
       selector: '//*[local-name()="course_attr_value_descr_formal"]'
-     -
+    -
       name: instructors
       label: Instructors
       selector: '//*[local-name()="netid"]'
-     -
+    -
       name: term_code
       label: Term Code
       selector: '//*[local-name()="term_code"]'

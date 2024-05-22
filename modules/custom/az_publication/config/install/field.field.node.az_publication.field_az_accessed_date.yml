@@ -13,7 +13,7 @@ bundle: az_publication
 label: 'Accessed Date'
 description: 'Date when the resource was accessed for information.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

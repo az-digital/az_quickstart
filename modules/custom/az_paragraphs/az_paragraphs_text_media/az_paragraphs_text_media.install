@@ -5,97 +5,10 @@
  * Install, update and uninstall functions for az_paragraphs_text_media module.
  */
 
-use Drupal\paragraphs\Entity\Paragraph;
-
 /**
- * Add default text_media padding/margin behavior setting.
- *
- * This affects all existing Text on Media paragraphs on this site.
+ * Implements hook_update_last_removed().
  */
-function az_paragraphs_text_media_update_9201(&$sandbox) {
-  if (!isset($sandbox['total'])) {
-    $count = \Drupal::entityQuery('paragraph')
-      ->accessCheck(FALSE)
-      ->condition('type', 'az_text_media')
-      ->count()
-      ->execute();
-    $sandbox['total'] = $count;
-    $sandbox['current'] = 0;
-    $sandbox['updated_count'] = 0;
-  }
-
-  $paragraphs_per_batch = 25;
-
-  $paragraph_ids = \Drupal::entityQuery('paragraph')
-    ->accessCheck(FALSE)
-    ->condition('type', 'az_text_media')
-    ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
-    ->execute();
-
-  foreach ($paragraph_ids as $id) {
-    $paragraph = Paragraph::load($id);
-    if (!empty($paragraph)) {
-      $behavior_settings = $paragraph->getAllBehaviorSettings();
-      if (!isset($behavior_settings['az_text_media_paragraph_behavior']['text_media_spacing'])) {
-        $behavior_settings['az_text_media_paragraph_behavior']['text_media_spacing'] = 'y-5';
-        $paragraph->setAllBehaviorSettings($behavior_settings);
-        $paragraph->save();
-        $sandbox['updated_count']++;
-      }
-    }
-    $sandbox['current']++;
-  }
-
-  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
-
-  return t('Default padding/margin setting added to %count Text on Media paragraphs.', ['%count' => $sandbox['updated_count']]);
-}
-
-/**
- * Update Text on Media transparent background classes.
- *
- * This affects all existing Text on Media paragraphs on this site.
- */
-function az_paragraphs_text_media_update_920401(&$sandbox) {
-  if (!isset($sandbox['total'])) {
-    $count = \Drupal::entityQuery('paragraph')
-      ->accessCheck(FALSE)
-      ->condition('type', 'az_text_media')
-      ->count()
-      ->execute();
-    $sandbox['total'] = $count;
-    $sandbox['current'] = 0;
-    $sandbox['updated_count'] = 0;
-  }
-
-  $paragraphs_per_batch = 25;
-
-  $paragraph_ids = \Drupal::entityQuery('paragraph')
-    ->accessCheck(FALSE)
-    ->condition('type', 'az_text_media')
-    ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
-    ->execute();
-
-  $style_map = [
-    'light' => 'bg-transparent-white',
-    'dark' => 'bg-transparent-black',
-    'transparent' => 'bg-transparent',
-  ];
-  foreach ($paragraph_ids as $id) {
-    $paragraph = Paragraph::load($id);
-    if (!empty($paragraph)) {
-      $behavior_settings = $paragraph->getAllBehaviorSettings();
-      if (isset($behavior_settings['az_text_media_paragraph_behavior']['bg_color'])) {
-        $behavior_settings['az_text_media_paragraph_behavior']['bg_color'] = $style_map[$behavior_settings['az_text_media_paragraph_behavior']['bg_color']];
-        $paragraph->setAllBehaviorSettings($behavior_settings);
-        $paragraph->save();
-        $sandbox['updated_count']++;
-      }
-    }
-    $sandbox['current']++;
-  }
-
-  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
-
-  return t('Transparent background classes updated in %count Text on Media paragraphs.', ['%count' => $sandbox['updated_count']]);
+function az_paragraphs_text_media_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920401;
 }

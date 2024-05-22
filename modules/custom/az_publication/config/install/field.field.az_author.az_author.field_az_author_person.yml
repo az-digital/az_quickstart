@@ -13,7 +13,7 @@ bundle: az_author
 label: Person
 description: 'Use to create a link between the author and a person in the site directory.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

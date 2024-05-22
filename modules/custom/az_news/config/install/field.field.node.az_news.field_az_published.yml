@@ -13,7 +13,7 @@ bundle: az_news
 label: 'Date of publication'
 description: 'Date when article was published'
 required: false
-translatable: false
+translatable: true
 default_value:
   -
     default_date_type: now

@@ -25,8 +25,14 @@ source:
       name: path_alias
       selector: path
     -
-      name: filename
+      name: az_media_image
       selector: az_media_image
+    -
+      name: az_thumbnail
+      selector: az_thumbnail
+    -
+      name: az_featured_image_as_thumb
+      selector: az_featured_image_as_thumb
     -
       name: az_caption
       selector: az_caption
@@ -126,12 +132,19 @@ process:
       migration: az_demo_news_tags
       source: '@pseudo_exploded_tags'
 
-  'field_az_media_image/target_id':
+  field_az_media_image/target_id:
     -
       plugin: migration_lookup
-      source: filename
+      source: az_media_image
       migration:
         - az_demo_image_file
+
+  field_az_media_thumbnail_image/target_id:
+    plugin: migration_lookup
+    source: az_thumbnail
+    migration: az_demo_image_file
+
+  field_az_featured_image_as_thumb: az_featured_image_as_thumb
 
 destination:
   plugin: entity:node

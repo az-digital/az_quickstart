@@ -88,6 +88,8 @@ az_bootstrap_cdn_version: stable
 az_bootstrap_minified: true
 az_barrio_az_icons: true
 az_barrio_az_icons_source: cdn
+az_icons_minified: true
+az_icons_cdn_version: stable
 external_links: true
 sticky_footer: true
 az_barrio_material_design_sharp_icons: true

@@ -33,11 +33,8 @@ process:
     plugin: default_value
     default_value: az_event
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title:
     plugin: sub_process
@@ -120,11 +117,11 @@ process:
     process:
       delta: delta
       target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_files
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_files
       display: display
       description: description
 
@@ -134,11 +131,11 @@ process:
     process:
       delta: delta
       target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_media
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_media
 
   field_az_contacts:
     plugin: sub_process
@@ -194,7 +191,7 @@ process:
       source: alias
       regex: true
       search: /.$/
-      replace: 0
+      replace: '0'
     - plugin: default_value
       source: alias
       default_value: 1

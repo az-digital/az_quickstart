@@ -12,7 +12,7 @@ bundle: az_author
 label: 'Parse Literal Name'
 description: 'If selected, the Literal Name will be split into its component parts. This works best on names without surname particles.'
 required: false
-translatable: false
+translatable: true
 default_value:
   -
     value: 0

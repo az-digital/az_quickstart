@@ -17,11 +17,13 @@ dependencies:
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
+    - image.style.az_medium
     - node.type.az_person
   module:
     - field_group
     - file
     - link
+    - media
     - smart_title
     - telephone
     - text
@@ -34,31 +36,10 @@ third_party_settings:
       smart_title__tag: h1
       smart_title__classes:
         - node__title
-        - d-none
-        - d-md-block
-        - my-0
         - text-blue
+        - mt-md-0
+        - mb-0
   field_group:
-    group_mobile_node_title:
-      children:
-        - field_az_fname
-        - field_az_lname
-      label: 'Mobile - Node Title'
-      parent_name: group_col_12_name_titles
-      region: content
-      weight: 6
-      format_type: html_element
-      format_settings:
-        classes: 'node__title d-md-none text-blue mb-0'
-        show_empty_fields: false
-        id: ''
-        element: h1
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_row:
       children:
         - group_col_12_name_titles
@@ -82,7 +63,6 @@ third_party_settings:
         speed: fast
     group_col_12_name_titles:
       children:
-        - group_mobile_node_title
         - smart_title
         - group_titles
       label: 'Col 12 - Name & Titles'
@@ -152,7 +132,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'card mb-4 mb-md-5'
+        classes: 'card mb-4 mb-md-0'
         show_empty_fields: false
         id: ''
         element: div
@@ -168,8 +148,8 @@ third_party_settings:
         - field_az_phones
         - field_az_email
         - field_az_pronouns
-        - field_az_links
         - group_text_break
+        - group_links
       label: 'Card Body'
       parent_name: group_card
       region: content
@@ -208,19 +188,38 @@ third_party_settings:
     group_text_break:
       children:
         - field_az_attachments
-      label: 'Text Break'
+      label: Documents
       parent_name: group_card_body
       region: content
-      weight: 12
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'text-break mt-3'
         show_empty_fields: false
         id: ''
         element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
+        show_label: true
+        label_element: h2
+        label_element_classes: h5
+        attributes: ''
+        effect: none
+        speed: fast
+    group_links:
+      children:
+        - field_az_links
+      label: Links
+      parent_name: group_card_body
+      region: content
+      weight: 12
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: h5
         attributes: ''
         effect: none
         speed: fast
@@ -242,7 +241,7 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 13
+    weight: 11
     region: content
   field_az_body:
     type: text_default
@@ -266,14 +265,6 @@ content:
     third_party_settings: {  }
     weight: 9
     region: content
-  field_az_fname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 3
-    region: content
   field_az_links:
     type: link
     label: hidden
@@ -286,20 +277,14 @@ content:
     third_party_settings: {  }
     weight: 11
     region: content
-  field_az_lname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 4
-    region: content
   field_az_media_image:
-    type: entity_reference_entity_view
+    type: media_thumbnail
     label: hidden
     settings:
-      view_mode: az_medium
-      link: false
+      image_link: ''
+      image_style: az_medium
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     weight: 6
     region: content
@@ -351,5 +336,7 @@ content:
     weight: 7
     region: content
 hidden:
+  field_az_fname: true
   field_az_link: true
+  field_az_lname: true
   links: true

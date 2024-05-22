@@ -1,13 +1,24 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - crop.type.az_square_aspect_ratio
+  module:
+    - crop
 name: az_square
 label: 'Square (220x220)'
 effects:
-  c9a0104f-9943-426f-813a-0b5e2cb765c0:
-    uuid: c9a0104f-9943-426f-813a-0b5e2cb765c0
+  d7da3cfa-110e-4af3-ac61-318519f0ae76:
+    uuid: d7da3cfa-110e-4af3-ac61-318519f0ae76
+    id: crop_crop
+    weight: -10
+    data:
+      crop_type: az_square_aspect_ratio
+      automatic_crop_provider: null
+  60965634-5fb1-411c-bb71-4420256a24c7:
+    uuid: 60965634-5fb1-411c-bb71-4420256a24c7
     id: image_scale_and_crop
-    weight: 1
+    weight: 3
     data:
       width: 220
       height: 220

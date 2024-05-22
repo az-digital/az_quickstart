@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_publication module.
+ */
+
+use Drupal\Core\Database\Database;
+use Drupal\Core\Utility\UpdateException;
+
+/**
+ * Install the new az_curated_views module (now required by az_publication).
+ */
+function az_publication_update_1020701() {
+  \Drupal::service('module_installer')->install(['az_curated_views']);
+}
+
+/**
+ * Update az_author entity name field length while not affecting data.
+ */
+function az_publication_update_1020702() {
+  // The usual approach of updateFieldStorageDefinition() does not work here.
+  // We do not want to touch existing data. UpdateFieldStorageDefinition()
+  // will throw an exception operating on data that already exists.
+  // Instead, we have to update the field storage definitions, the key-value
+  // sql storage data, and the database schema to actually make the change.
+  // The updates to the field storage and key-value information are to make sure
+  // that drupal's stored definitions of the entity field match accurately.
+  // @link https://www.drupal.org/docs/drupal-apis/update-api
+  $field_name = 'name';
+  $entity_type_id = 'az_author';
+  // Match node entity's title length.
+  // entity_autolabel is hardcoded to use this length in its truncation.
+  $field_length = 255;
+
+  /** @var \Drupal\Core\Entity\EntityLastInstalledSchemaRepositoryInterface $schema_repository */
+  $schema_repository = \Drupal::service('entity.last_installed_schema.repository');
+  /** @var \Drupal\Core\Entity\EntityFieldManager $entity_field_manager */
+  $entity_field_manager = \Drupal::service('entity_field.manager');
+  $base_field_definitions = $entity_field_manager->getBaseFieldDefinitions($entity_type_id);
+  if (empty($base_field_definitions[$field_name])) {
+    throw new UpdateException("The author name field is missing from the entity definition.");
+  }
+  $schema_repository->setLastInstalledFieldStorageDefinition($base_field_definitions[$field_name]);
+  $field_storage_definitions = $schema_repository->getLastInstalledFieldStorageDefinitions($entity_type_id);
+  if (empty($field_storage_definitions[$field_name])) {
+    throw new UpdateException("The author name field is missing from the storage defintion.");
+  }
+  /** @var \Drupal\Core\Field\BaseFieldDefinition $field_storage_definitions[$field_name] */
+  $field_storage_definitions[$field_name]->setSetting('max_length', $field_length);
+  // Seems needed so that the schema is available in field storage definition.
+  $field_storage_definitions[$field_name]->getSchema();
+
+  // Update the serialized schema property.
+  // Normally this is a protected value so we must use reflection.
+  $rc = new \ReflectionClass($field_storage_definitions[$field_name]);
+  $schema_property = $rc->getProperty('schema');
+  $schema_property->setAccessible(TRUE);
+  $schema = $schema_property->getValue($field_storage_definitions[$field_name]);
+  $schema['columns']['value']['length'] = $field_length;
+  $schema_property->setValue($field_storage_definitions[$field_name], $schema);
+
+  // Update the field definition in the last installed schema repository.
+  $schema_repository->setLastInstalledFieldStorageDefinitions($entity_type_id, $field_storage_definitions);
+
+  // Update the storage schema for the field in the key-value store.
+  $key_value = \Drupal::keyValue('entity.storage_schema.sql');
+  $key_name = $entity_type_id . '.field_schema_data.' . $field_name;
+  $storage_schema = $key_value->get($key_name);
+  // Update tables where the field is present.
+  // Commonly this is az_author_field_data and az_author_field_revision.
+  foreach (array_keys($storage_schema) as $table_name) {
+    $storage_schema[$table_name]['fields'][$field_name]['length'] = $field_length;
+  }
+  $key_value->set($key_name, $storage_schema);
+
+  // Update the actual database tables involving the field.
+  // Commonly this is az_author_field_data and az_author_field_revision.
+  // This is the actual schema change.
+  $db = Database::getConnection();
+  foreach ($storage_schema as $table_name => $table_schema) {
+    $db->schema()->changeField($table_name, $field_name, $field_name, $table_schema['fields'][$field_name]);
+  }
+
+}

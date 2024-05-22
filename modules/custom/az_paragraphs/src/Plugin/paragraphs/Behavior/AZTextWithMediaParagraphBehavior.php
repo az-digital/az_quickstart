@@ -2,10 +2,10 @@
 
 namespace Drupal\az_paragraphs\Plugin\paragraphs\Behavior;
 
-use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a behavior for text with media.

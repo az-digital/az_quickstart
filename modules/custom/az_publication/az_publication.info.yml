@@ -6,8 +6,10 @@ package: 'The University of Arizona - Experimental'
 dependencies:
   - 'auto_entitylabel:auto_entitylabel'
   - 'az_core:az_core'
+  - 'az_curated_views:az_curated_views'
   - 'better_exposed_filters:better_exposed_filters'
   - 'block_class:block_class'
+  - 'draggableviews:draggableviews'
   - 'drupal:block'
   - 'drupal:datetime'
   - 'drupal:datetime_range'
@@ -30,3 +32,5 @@ dependencies:
   - 'optional_end_date:optional_end_date'
   - 'paragraphs:paragraphs'
   - 'pathauto:pathauto'
+  - 'smart_title:smart_title'
+configure: az_publication.settings

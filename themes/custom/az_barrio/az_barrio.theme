@@ -161,6 +161,11 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['header_one_col_classes'] = theme_get_setting('header_one_col_classes');
   $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
 
+  // Define column layout for new AZ Barrio sidebar position.
+  if (theme_get_setting('bootstrap_barrio_sidebar_position') === 'az-barrio-both-below') {
+    $variables['sidebar_first_attributes']['class'][] = 'order-2 order-md-first';
+    $variables['sidebar_second_attributes']['class'][] = 'order-last';
+  }
 }
 
 /**
@@ -379,14 +384,25 @@ function az_barrio_az_bootstrap_assets_path($type) {
  */
 function az_barrio_az_icons_assets_path($type) {
   $az_icons_path = '';
+  $az_icons_cdn_version = theme_get_setting('az_icons_cdn_version');
+  if ($az_icons_cdn_version === 'stable') {
+    $az_icons_cdn_version = AZ_ICONS_STABLE_VERSION;
+  }
 
   // AZ Icons source.
   if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
-    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
+    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/'  . $az_icons_cdn_version;
   }
   else {
-    $az_icons_path = 'libraries/az-icons/az-icons-styles.css';
+    $az_icons_path = base_path() . 'libraries/az-icons';
   }
+  $az_icons_path .= '/az-icons-styles';
+
+  // AZ Icons minified.
+  if (theme_get_setting('az_icons_minified')) {
+    $az_icons_path .= '.min';
+  }
+  $az_icons_path .= '.css';
 
   return $az_icons_path;
 }
@@ -397,11 +413,17 @@ function az_barrio_az_icons_assets_path($type) {
 function az_barrio_primary_logo() {
   $return = '';
   $primary_logo_link_classes = ['qs-site-logo', 'd-block'];
-  $primary_logo_path = theme_get_setting('logo');
-  $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
+  $primary_logo_settings = theme_get_setting('logo');
+  $primary_logo_path = $primary_logo_settings['path'];
+  $primary_logo_path_parts = pathinfo($primary_logo_path);
   $primary_alt_text = theme_get_setting('primary_logo_alt_text');
   $primary_title_text = theme_get_setting('primary_logo_title_text');
   $config = \Drupal::config('az_barrio.settings');
+
+  if ($primary_logo_settings['use_default']) {
+    $primary_logo_path = $primary_logo_settings['url'];
+  }
+
   if (\Drupal::moduleHandler()->moduleExists('token')) {
     $token_service = \Drupal::token();
     $primary_alt_text = $token_service->replace($primary_alt_text);
@@ -409,11 +431,11 @@ function az_barrio_primary_logo() {
   }
 
   // Set primary logo.
-  if (!empty($primary_logo_path)) {
+  if (!empty($primary_logo_settings)) {
 
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $primary_logo_path_parts['extension'] === 'svg') {
-      $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_path['url']);
+      $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_settings['url']);
       $rendered_image = \Drupal::service('renderer')->render($svg);
       $image_markup = Markup::create($rendered_image);
       $primary_logo_link_classes[] = 'qs-logo-svg-inline';
@@ -429,10 +451,11 @@ function az_barrio_primary_logo() {
     else {
       $image_renderable = [
         '#theme' => 'image',
-        '#uri' => $primary_logo_path['path'],
+        '#uri' => $primary_logo_path,
         '#alt' => $primary_alt_text,
         '#attributes' => [
           'class' => ['img-fluid'],
+          'fetchpriority' => 'high',
         ]
       ];
       $renderer = \Drupal::service('renderer');
@@ -566,8 +589,9 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  *
  * Pass proper logo to the system branding block.
  *
- * Arizona Digital issue #1012.
  * Footer menu links styles, using default theme templates.
+ * @link https://github.com/az-digital/az_quickstart/issues/1012
+ * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
   if ($variables['base_plugin_id'] === 'system_branding_block') {
@@ -618,7 +642,7 @@ function az_barrio_preprocess_block(&$variables) {
           // Add classes to interior <li> elements and <a> elements.
           if (!empty($variables['elements']['content']['#items'])) {
             foreach ($variables['elements']['content']['#items'] as $key => $item) {
-              $item['attributes']->addClass('d-flex', 'px-0');
+              $item['attributes']->addClass('d-flex', 'px-0', 'mb-1', 'mb-md-2');
 
               // Merge existing url options with transparent.
               $options = $item['url']->getOptions();

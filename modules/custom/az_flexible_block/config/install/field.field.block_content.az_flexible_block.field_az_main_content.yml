@@ -10,7 +10,7 @@ id: block_content.az_flexible_block.field_az_main_content
 field_name: field_az_main_content
 entity_type: block_content
 bundle: az_flexible_block
-label: Content
+label: 'Block Elements'
 description: ''
 required: false
 translatable: true

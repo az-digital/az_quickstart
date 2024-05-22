@@ -4,10 +4,10 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function ($, Drupal) {
+(function ($, Drupal, once) {
   Drupal.behaviors.datetimeTweaksDefaultDate = {
-    attach: function attach() {
-      $('.az-publication-date-picker input').once('az-publication-processed').each(function () {
+    attach: function attach(context) {
+      $(once('azpublicationdate', '.az-publication-date-picker input', context)).each(function () {
         var dateFormat = $(this).data('drupal-date-format').replace('Y', 'yyyy').replace('m', 'mm').replace('d', 'dd');
         var viewmode = $(this).data('az-publication-date-mode');
         var components = dateFormat.split('-');
@@ -31,4 +31,4 @@
       });
     }
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

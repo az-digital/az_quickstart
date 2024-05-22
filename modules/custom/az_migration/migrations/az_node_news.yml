@@ -38,11 +38,8 @@ process:
     plugin: default_value
     default_value: az_news
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title:
     plugin: sub_process
@@ -164,11 +161,8 @@ process:
           to_format: 'Y-m-d'
           source: value
       langcode:
-        plugin: static_map
-        bypass: true
+        plugin: az_default_langcode
         source: language
-        map:
-          und: en
 
   field_az_published:
     plugin: sub_process
@@ -182,11 +176,8 @@ process:
           to_format: 'Y-m-d'
           source: value
       langcode:
-        plugin: static_map
-        bypass: true
+        plugin: az_default_langcode
         source: language
-        map:
-          und: en
 
   field_az_news_tags:
     -
@@ -288,7 +279,7 @@ process:
       source: alias
       regex: true
       search: /.$/
-      replace: 0
+      replace: '0'
     - plugin: default_value
       source: alias
       default_value: 1

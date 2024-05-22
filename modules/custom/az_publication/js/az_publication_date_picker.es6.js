@@ -3,11 +3,10 @@
  * Default date values.
  */
 
-(($, Drupal) => {
+(($, Drupal, once) => {
   Drupal.behaviors.datetimeTweaksDefaultDate = {
-    attach() {
-      $('.az-publication-date-picker input')
-        .once('az-publication-processed')
+    attach(context) {
+      $(once('azpublicationdate', '.az-publication-date-picker input', context))
         // eslint-disable-next-line func-names
         .each(function () {
           // Fetch field date settings.
@@ -41,4 +40,4 @@
         });
     },
   };
-})(jQuery, Drupal);
+})(jQuery, Drupal, once);

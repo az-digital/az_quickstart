@@ -12,7 +12,7 @@ bundle: az_author
 label: Suffix
 description: 'PhD., EdD., Jr., Sr., I, II, II, etc.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

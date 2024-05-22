@@ -1,15 +1,47 @@
-az_event_trellis.az_event_trellis_import_form:
-  path: '/admin/content/az-event-trellis'
-  defaults:
-    _form: '\Drupal\az_event_trellis\Form\TrellisEventImportForm'
-    _title: 'Trellis Event Importer'
-  requirements:
-    _permission: 'access administration pages'
-
 az_event_trellis.settings:
   path: '/admin/config/az-quickstart/settings/az-event-trellis'
   defaults:
     _form: '\Drupal\az_event_trellis\Form\TrellisEventSettingsForm'
     _title: 'Trellis Event Importer Settings'
+  requirements:
+    _permission: 'administer quickstart configuration'
+
+entity.az_recurring_import_rule.collection:
+  path: '/admin/config/az-quickstart/settings/az-recurring-import-rule'
+  defaults:
+    _entity_list: 'az_recurring_import_rule'
+    _title: 'Recurring Import Rule configuration'
+  requirements:
+    _permission: 'administer quickstart configuration'
+
+entity.az_recurring_import_rule.add_form:
+  path: '/admin/config/az-quickstart/settings/az-recurring-import-rule/add'
+  defaults:
+    _entity_form: 'az_recurring_import_rule.add'
+    _title: 'Add a recurring import rule'
+  requirements:
+    _permission: 'administer quickstart configuration'
+
+entity.az_recurring_import_rule.edit_form:
+  path: '/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}'
+  defaults:
+    _entity_form: 'az_recurring_import_rule.edit'
+    _title: 'Edit a recurring import rule'
+  requirements:
+    _permission: 'administer quickstart configuration'
+
+entity.az_recurring_import_rule.delete_form:
+  path: '/admin/config/az-quickstart/settings/az-recurring-import-rule/{az_recurring_import_rule}/delete'
+  defaults:
+    _entity_form: 'az_recurring_import_rule.delete'
+    _title: 'Delete a recurring import rule'
+  requirements:
+    _permission: 'administer quickstart configuration'
+
+entity.az_recurring_import_rule.modal:
+  path: '/admin/az-event-trellis-modal'
+  defaults:
+    _title: 'Entity Az Recurring Import Rule Modal'
+    _controller: '\Drupal\az_event_trellis\Controller\AZRecurringImportModalController'
   requirements:
     _permission: 'administer quickstart configuration'

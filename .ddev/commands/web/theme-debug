@@ -4,5 +4,4 @@
 ## Usage: theme-debug
 ## Example: "ddev theme-debug"
 
-echo "Enabling theme debugging..."
-vendor/bin/drupal site:mode dev
+echo "theme-debug relied on Drupal console (now deprecated) and is no longer available.  Please consult CONTRIBUTING.md for instructions on how to manually turn on Twig debug and other debugging settings."

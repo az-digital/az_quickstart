@@ -2,10 +2,10 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\media\Entity\Media;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\media\Entity\Media;
 
 /**
  * Process plugin for converting uaqs_file_download paragraphs to az_text.

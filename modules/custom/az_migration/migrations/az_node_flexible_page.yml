@@ -18,11 +18,8 @@ process:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title:
     plugin: sub_process
@@ -46,11 +43,11 @@ process:
     process:
       delta: delta
       target_id:
-      -
-        plugin: migration_lookup
-        source: fid
-        migration:
-          - az_media
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_media
 
   uid:
     -
@@ -72,7 +69,7 @@ process:
       source: alias
       regex: true
       search: /.$/
-      replace: 0
+      replace: '0'
     - plugin: default_value
       source: alias
       default_value: 1
@@ -127,10 +124,10 @@ process:
               - az_paragraph_card_deck
 
   field_az_main_content:
-      plugin: paragraphs_mapping_flexible_page
-      source:
-        - '@tmp_flexible_subpage'
-        - '@temp_pid'
+    plugin: paragraphs_mapping_flexible_page
+    source:
+      - '@tmp_flexible_subpage'
+      - '@temp_pid'
 
 dependencies:
   enforced:

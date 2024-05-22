@@ -2,8 +2,8 @@
 
 namespace Drupal\az_course;
 
-use GuzzleHttp\ClientInterface;
 use Drupal\Core\Url;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\RequestException;
 
 /**
