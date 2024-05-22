@@ -3,24 +3,24 @@ status: true
 dependencies: {  }
 id: center_mode
 name: center_mode
-label: 'Center Mode'
 weight: 0
+label: 'Center Mode'
 group: ''
 skin: ''
-breakpoints: 1
+breakpoints: 2
 optimized: false
 options:
-  options__active_tab: edit-options-settings
+  options__active_tab: edit-options-responsives
   settings:
     mobileFirst: true
     asNavFor: ''
     accessibility: true
     adaptiveHeight: false
     autoplay: false
-    autoplaySpeed: 3000
     pauseOnHover: true
     pauseOnDotsHover: false
     pauseOnFocus: true
+    autoplaySpeed: 3000
     arrows: false
     prevArrow: Previous
     nextArrow: Next
@@ -66,15 +66,52 @@ options:
   responsives:
     responsive:
       -
-        breakpoint: 1200
+        breakpoint: 1110
         unslick: false
         settings:
           adaptiveHeight: false
           autoplay: false
-          autoplaySpeed: 3000
           pauseOnHover: false
           pauseOnDotsHover: false
           pauseOnFocus: false
+          autoplaySpeed: 3000
+          arrows: false
+          centerMode: true
+          centerPadding: 10%
+          dots: true
+          draggable: false
+          fade: false
+          focusOnSelect: true
+          infinite: true
+          initialSlide: 0
+          respondTo: window
+          rows: 1
+          slidesPerRow: 1
+          slidesToShow: 1
+          slidesToScroll: 1
+          speed: 500
+          swipe: true
+          swipeToSlide: false
+          edgeFriction: 0.35
+          touchMove: true
+          touchThreshold: 5
+          cssEase: ease
+          cssEaseBezier: ''
+          cssEaseOverride: ''
+          variableWidth: true
+          vertical: false
+          verticalSwiping: false
+          waitForAnimate: false
+      -
+        breakpoint: 1309
+        unslick: false
+        settings:
+          adaptiveHeight: false
+          autoplay: false
+          pauseOnHover: false
+          pauseOnDotsHover: false
+          pauseOnFocus: false
+          autoplaySpeed: 3000
           arrows: true
           centerMode: true
           centerPadding: 10%
@@ -98,7 +135,7 @@ options:
           cssEase: ease
           cssEaseBezier: ''
           cssEaseOverride: ''
-          variableWidth: false
+          variableWidth: true
           vertical: false
           verticalSwiping: false
           waitForAnimate: false

@@ -2,13 +2,13 @@
 
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\paragraphs\ParagraphInterface;
-use Drupal\Component\Utility\Html;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_accordion_default' formatter.
@@ -90,6 +90,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $element = [];
 
+    /** @var \Drupal\az_accordion\Plugin\Field\FieldType\AZAccordionItem $item */
     foreach ($items as $delta => $item) {
 
       // Format title.
@@ -101,17 +102,14 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $parent = $item->getEntity();
 
       // Get settings from parent paragraph.
-      if (!empty($parent)) {
-        if ($parent instanceof ParagraphInterface) {
-          // Get the behavior settings for the parent.
-          $parent_config = $parent->getAllBehaviorSettings();
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
 
-          // See if the parent behavior defines some accordion-specific
-          // settings.
-          if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
-            // @todo implement az_accordion_paragraph_behavior handling.
-          }
-
+        // See if the parent behavior defines some accordion-specific
+        // settings.
+        if (!empty($parent_config['az_accordion_paragraph_behavior'])) {
+          // @todo implement az_accordion_paragraph_behavior handling.
         }
       }
 
@@ -120,10 +118,17 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
 
-      $element[] = [
+      $element[$delta] = [
         '#theme' => 'az_accordion',
         '#title' => $title,
-        '#body' => check_markup($item->body, $item->body_format),
+        // The ProcessedText element handles cache context & tag bubbling.
+        // @see \Drupal\filter\Element\ProcessedText::preRenderText()
+        '#body' => [
+          '#type' => 'processed_text',
+          '#text' => $item->body ?? '',
+          '#format' => $item->body_format,
+          '#langcode' => $item->getLangcode(),
+        ],
         '#attributes' => ['class' => $accordion_classes],
         '#accordion_item_id' => Html::getUniqueId('az_accordion'),
         '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',

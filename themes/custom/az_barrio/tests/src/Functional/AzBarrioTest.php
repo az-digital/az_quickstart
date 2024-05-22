@@ -2,14 +2,14 @@
 
 namespace Drupal\Tests\az_barrio\Functional;
 
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Tests the Arizona Barrio theme.
  *
  * @group az_barrio
  */
-class AzBarrioTest extends BrowserTestBase {
+class AzBarrioTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -33,20 +33,21 @@ class AzBarrioTest extends BrowserTestBase {
   /**
    * The created user.
    *
-   * @var User
+   * @var \Drupal\user\Entity\User
    */
   protected $adminUser;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a test user.
     $this->adminUser = $this->drupalCreateUser([
       'access administration pages',
       'administer themes',
+      'administer blocks',
     ]);
     $this->drupalLogin($this->adminUser);
   }
@@ -80,6 +81,39 @@ class AzBarrioTest extends BrowserTestBase {
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-4');
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-8');
+  }
+
+  /**
+   * Tests that the navbar off-canvas region classes are set on install.
+   */
+  public function testNavbarOffCanvaseRegionClassesSetonInstall() {
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
+  }
+
+  /**
+   * Tests that the navbar off-canvas region classes are set properly.
+   *
+   * When blocks are removed or added to regions, classes should change.
+   */
+  public function testNavbarOffCanvaseRegionClassesSetNoOffCanvasBlocks() {
+    $this->drupalLogin($this->adminUser);
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.no-off-canvas-region');
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.disable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region.no-off-canvas-region');
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.enable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region.has-off-canvas-region');
+    $this->drupalGet('admin/structure/block');
+    $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.enable a')[0]->click();
+    $this->drupalGet('');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
   }
 
 }

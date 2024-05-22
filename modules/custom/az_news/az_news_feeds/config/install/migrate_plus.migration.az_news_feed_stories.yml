@@ -1,13 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_news
+      - az_news_feeds
+      - migrate_tools
 id: az_news_feed_stories
-label: UArizona News Stories
-migration_group: az_news_feeds
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
-  - Quickstart News Feeds
-
-destination:
-  plugin: entity:node
-  default_bundle: az_news
-
+  - 'Quickstart News Feeds'
+migration_group: az_news_feeds
+label: 'UArizona News Stories'
 source:
   ids:
     uuid:
@@ -15,11 +21,11 @@ source:
   fields:
     -
       name: uuid
-      label: 'UUID'
+      label: UUID
       selector: /story/uuid
     -
       name: title
-      label: 'Title'
+      label: Title
       selector: /story/title
     -
       name: date-of-publication
@@ -31,7 +37,7 @@ source:
       selector: /story/terms
     -
       name: summary
-      label: 'Summary'
+      label: Summary
       selector: /story/summary-med
     -
       name: canonical-url
@@ -39,7 +45,7 @@ source:
       selector: /story/url-canonical
     -
       name: body
-      label: 'Body'
+      label: Body
       selector: /story/body
     -
       name: fid
@@ -47,20 +53,19 @@ source:
       selector: /story/img-fid
     -
       name: image
-      label: 'Image'
+      label: Image
       selector: /story/img-large
-
 process:
   title: title
-
   field_az_published/value:
     plugin: format_date
     from_format: 'Y-m-d\TH:i:sP'
-    to_format: 'Y-m-d'
+    to_format: Y-m-d
     source: date-of-publication
-
   field_az_link/uri: canonical-url
-
+  field_az_link/title:
+    plugin: default_value
+    default_value: 'Read more at UArizona News'
   field_az_summary/value:
     plugin: callback
     callable: trim
@@ -68,17 +73,18 @@ process:
   field_az_summary/format:
     plugin: default_value
     default_value: plain_text
-
   field_az_news_tags_processed:
-    - plugin: skip_on_empty
+    -
+      plugin: skip_on_empty
       source: tags
       method: process
       message: 'No terms listed.'
-    - plugin: explode
+    -
+      plugin: explode
       delimiter: ','
-    - plugin: callback
+    -
+      plugin: callback
       callable: trim
-
   field_az_news_tags:
     -
       plugin: entity_generate
@@ -91,22 +97,14 @@ process:
     -
       plugin: skip_on_empty
       method: process
-
   field_az_media_image/target_id:
     plugin: migration_lookup
     source: fid
     migration:
       - az_news_feed_stories_media
-
+destination:
+  plugin: 'entity:node'
+  default_bundle: az_news
 migration_dependencies:
   required:
     - az_news_feed_stories_media
-
-dependencies:
-  module:
-    - az_news_feeds
-  enforced:
-    module:
-      - az_news
-      - az_news_feeds
-      - migrate_tools

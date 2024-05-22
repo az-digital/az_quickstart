@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_core
+name: az_tiny_thumbnail
+label: 'Tiny thumbnail (50x50)'
+effects:
+  34546b60-01f5-4c37-b6fa-b06280530a0b:
+    uuid: 34546b60-01f5-4c37-b6fa-b06280530a0b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 50
+      height: 50
+      anchor: center-center

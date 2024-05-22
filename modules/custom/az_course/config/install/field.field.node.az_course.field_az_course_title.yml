@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_course_title
+    - node.type.az_course
+id: node.az_course.field_az_course_title
+field_name: field_az_course_title
+entity_type: node
+bundle: az_course
+label: 'Course Title'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

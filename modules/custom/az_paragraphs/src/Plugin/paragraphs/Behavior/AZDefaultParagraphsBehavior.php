@@ -67,7 +67,7 @@ class AZDefaultParagraphsBehavior extends ParagraphsBehaviorBase {
    */
   protected function getSettings(ParagraphInterface $paragraph) {
     $settings = $paragraph->getAllBehaviorSettings();
-    return isset($settings[$this->pluginId]) ? $settings[$this->pluginId] : [];
+    return $settings[$this->pluginId] ?? [];
   }
 
   /**

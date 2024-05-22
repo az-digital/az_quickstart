@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - block_class
     - search
   theme:
     - az_barrio
@@ -13,8 +14,8 @@ provider: null
 plugin: search_form_block
 settings:
   id: search_form_block
-  label: 'Search'
-  provider: search
+  label: Search
   label_display: '0'
+  provider: search
   page_id: ''
 visibility: {  }

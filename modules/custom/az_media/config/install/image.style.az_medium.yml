@@ -1,5 +1,6 @@
 langcode: en
 status: true
+dependencies: {  }
 name: az_medium
 label: 'Medium (760px wide)'
 effects:

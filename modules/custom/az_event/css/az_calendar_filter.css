@@ -141,3 +141,36 @@
 .az-calendar-filter-calendar .ui-icon-circle-triangle-w {
   background-position: -96px -16px;
 }
+
+.block-views-exposed-filter-blockaz-events-page-1 .form-type-select {
+  margin-bottom: 0.5em;
+}
+
+.block-views-exposed-filter-blockaz-events-page-1 .form-type-select label {
+  font-weight: bold;
+  display: block;
+}
+
+.block-views-exposed-filter-blockaz-events-page-1 .form-type-select select {
+  color: #001c48;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: .04em;
+  white-space: normal;
+  border-width: 2px;
+  background-color: #dee2e6;
+  border-color: #dee2e6;
+  display: inline-block;
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  max-width: 100%;
+}

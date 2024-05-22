@@ -1,0 +1,51 @@
+id: az_files
+label: All Files
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+source:
+  plugin: az_file_migration
+  scheme: public
+  constants:
+    source_base_path: 'sites/default/files'
+    old_files_path: ''
+
+process:
+  filename: filename
+  source_full_path:
+    -
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/old_files_path
+        - constants/source_base_path
+        - filepath
+    -
+      plugin: urlencode
+  uri:
+    plugin: file_copy
+    source:
+      - '@source_full_path'
+      - uri
+    file_exists: "use existing"
+
+  filemime: filemime
+  # filesize is dynamically computed when file entities are saved, so there is
+  # no point in migrating it.
+  # filesize: filesize
+  status: status
+  created: timestamp
+  changed: timestamp
+
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: uid
+    -
+      plugin: default_value
+      default_value: 0
+
+destination:
+  plugin: entity:file

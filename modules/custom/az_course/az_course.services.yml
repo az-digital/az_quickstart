@@ -1,0 +1,5 @@
+services:
+  az_course.search:
+    class: Drupal\az_course\CourseSearch
+    arguments:
+      - '@http_client'

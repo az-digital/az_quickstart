@@ -6,8 +6,10 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_card_default' formatter.
@@ -64,7 +66,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return ['foo' => 'bar'] + parent::defaultSettings();
+    return ['interactive_links' => TRUE] + parent::defaultSettings();
   }
 
   /**
@@ -73,11 +75,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
-    // @todo Card style selection (based on custom config entities).
-    $element['foo'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $settings['foo'],
+    $element['interactive_links'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Interactive Links'),
+      '#default_value' => $settings['interactive_links'],
+      '#description' => $this->t('If set, card links are clickable. Uncheck this setting to disable all card links. A common use-case is on the "Preview" view mode to prevent users from losing edit data if accidentally clicking on cards from the edit form.'),
     ];
     return $element;
   }
@@ -87,7 +89,12 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    */
   public function settingsSummary() {
     $settings = $this->getSettings();
-    $summary[] = $this->t('Foo: @foo', ['@foo' => $settings['foo']]);
+
+    $interactive = 'No';
+    if (!empty($settings['interactive_links'])) {
+      $interactive = 'Yes';
+    }
+    $summary[] = $this->t('Interactive: @interactive', ['@interactive' => $interactive]);
     return $summary;
   }
 
@@ -95,8 +102,10 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    $settings = $this->getSettings();
     $element = [];
 
+    /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
     foreach ($items as $delta => $item) {
 
       // Format title.
@@ -110,20 +119,41 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
       }
 
+      $attached = [];
+
       // Link.
       $link_render_array = [];
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
+        if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : '#',
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
+        if (!empty($item->options['link_style'])) {
+          $link_render_array['#attributes']['class'] = explode(' ', $item->options['link_style']);
+        }
+        if (empty($settings['interactive_links'])) {
+          $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
+          $attached['library'][] = 'az_card/az_card_no_follow';
+        }
       }
 
-      if (!empty($item->options['link_style'])) {
-        $link_render_array['#attributes']['class'] = explode(' ', $item->options['link_style']);
+      // Title alignment.
+      if (!empty($item->options['title_alignment'])) {
+        $title_alignment = $item->options['title_alignment'];
+      }
+
+      // Title display.
+      if (!empty($item->options['title_display'])) {
+        $title_display = $item->options['title_display'];
       }
 
       $card_classes = 'card';
@@ -132,29 +162,60 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       $parent = $item->getEntity();
 
       // Get settings from parent paragraph.
-      if (!empty($parent)) {
-        if ($parent instanceof ParagraphInterface) {
-          // Get the behavior settings for the parent.
-          $parent_config = $parent->getAllBehaviorSettings();
-          // See if the parent behavior defines some card-specific settings.
-          if (!empty($parent_config['az_cards_paragraph_behavior'])) {
-            $card_defaults = $parent_config['az_cards_paragraph_behavior'];
-            // Is the card clickable?
-            if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+        // See if the parent behavior defines some card-specific settings.
+        if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+          $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+
+          // Set card classes according to behavior settings.
+          $column_classes = [];
+          if (!empty($card_defaults['az_display_settings'])) {
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
+            $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
+          }
+          $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
+          $card_classes = $card_defaults['card_style'] ?? 'card';
+
+          // Is the card clickable?
+          if (isset($card_defaults['card_clickable']) && $card_defaults['card_clickable']) {
+            if (!empty($link_render_array)) {
               $link_render_array['#attributes']['class'][] = 'stretched-link';
             }
-
-            // Set card classes according to behavior settings.
-            $column_classes = [];
-            if (!empty($card_defaults['az_display_settings'])) {
-              $column_classes[] = $card_defaults['az_display_settings']['card_width_xs'] ?? 'col-12';
-              $column_classes[] = $card_defaults['az_display_settings']['card_width_sm'] ?? 'col-sm-12';
+            $card_classes .= ' shadow';
+            if ($item->link_uri) {
+              $card_classes .= ' card-with-link';
+              $attached['library'][] = 'az_card/az_card_title_hover';
             }
-            $column_classes[] = $card_defaults['card_width'] ?? 'col-md-4 col-lg-4';
-            $card_classes = $card_defaults['card_style'] ?? 'card';
+          }
+
+          // Title style.
+          if (isset($card_defaults['card_title_style'])) {
+            $title_style = $card_defaults['card_title_style'];
+            if (!empty($media_render_array)) {
+              if ($item->title && $title_style === 'title-on-image') {
+                array_push($media_render_array['#item_attributes']['class'], 'img-fluid', 'image-style-az-card-image');
+              }
+            }
+            // Force default title style if media field is not populated.
+            else {
+              $title_style = 'default';
+            }
+          }
+
+          // Title level.
+          if (isset($card_defaults['card_title_level'])) {
+            $title_level = $card_defaults['card_title_level'];
+          }
+
+          // Title display.
+          if (isset($card_defaults['card_title_display'])) {
+            $title_display = $card_defaults['card_title_display'];
           }
 
         }
+
       }
 
       // Handle class keys that contained multiple classes.
@@ -165,13 +226,25 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         $card_classes .= ' ' . $item->options['class'];
       }
 
-      $element[] = [
+      $element[$delta] = [
         '#theme' => 'az_card',
         '#media' => $media_render_array,
         '#title' => $title,
-        '#body' => check_markup($item->body, $item->body_format),
+        // The ProcessedText element handles cache context & tag bubbling.
+        // @see \Drupal\filter\Element\ProcessedText::preRenderText()
+        '#body' => [
+          '#type' => 'processed_text',
+          '#text' => $item->body ?? '',
+          '#format' => $item->body_format,
+          '#langcode' => $item->getLangcode(),
+        ],
         '#link' => $link_render_array,
+        '#title_style' => $title_style ?? 'default',
+        '#title_level' => $title_level ?? 'h3',
+        '#title_alignment' => $title_alignment ?? 'text-left',
+        '#title_display' => $title_display ?? 'h5',
         '#attributes' => ['class' => $card_classes],
+        '#attached' => $attached,
       ];
 
       $element['#items'][$delta] = new \stdClass();

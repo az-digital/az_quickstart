@@ -1,0 +1,9 @@
+az_paragraphs_splitscreen:
+  version: 1.x
+  css:
+    theme:
+      css/az_splitscreen.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap
+    - az_paragraphs/az_paragraphs.az_paragraphs_full_width
+      

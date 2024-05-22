@@ -6,13 +6,16 @@ use Drupal\migrate\Row;
 use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
 
 /**
- * Extends D7Node source plugin to convert field collection content into paragraph content.
+ * Extends D7Node source plugin with field collection to paragraphs conversion.
+ *
+ * Converts field collection content field values into paragraphs content.
  *
  * Available configuration keys:
  * - node_type: The node_types to get from the source - can be a string or
  *   an array. If not declared then nodes of all types will be retrieved.
- * - field_collection_names: The field_collection types to get from the source - can be a string or
- *   an array. If not declared then nothing will be retrieved.
+ * - field_collection_names: The field_collection types to get from the source -
+ *   can be a string or an array. If not declared then nothing will be
+ *   retrieved.
  *
  * Examples:
  *
@@ -23,8 +26,8 @@ use Drupal\node\Plugin\migrate\source\d7\Node as D7Node;
  *   field_collection_names: field_accordion
  * @endcode
  *
- * In this example nodes of type page and test along with the field_accordion and
- * field_contacts field collections are retrieved from the source database.
+ * In this example nodes of type page and test along with the field_accordion
+ * and field_contacts field collections are retrieved from the source database.
  *
  * @code
  * source:

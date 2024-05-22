@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_publication_abstract
+    - filter.format.az_standard
+    - node.type.az_publication
+  module:
+    - text
+id: node.az_publication.field_az_publication_abstract
+field_name: field_az_publication_abstract
+entity_type: node
+bundle: az_publication
+label: Abstract
+description: 'An optional summary or synopsis of the publication.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  display_summary: false
+  required_summary: false
+  allowed_formats:
+    - az_standard
+field_type: text_with_summary

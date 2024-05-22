@@ -5,10 +5,10 @@
  * Contains az_demo.install.
  */
 
-use Drupal\migrate\MigrateExecutable;
-use Drupal\migrate\MigrateMessage;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Url;
+use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate\MigrateMessage;
 
 /**
  * Implements hook_install().
@@ -33,9 +33,15 @@ function az_demo_install() {
   $site_config->set('page.front', '/node/' . $home->id())->save();
 
   // Enable optional config.
-  $config_path = drupal_get_path('theme', 'az_barrio') . '/config/optional';
+  $config_path = \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/config/optional';
   $source = new FileStorage($config_path);
   \Drupal::service('config.installer')->installOptionalConfig($source);
+
+  // Enable Marketing Campaign Page styles.
+  \Drupal::service('config.factory')
+    ->getEditable('az_flexible_page.settings')
+    ->set('marketing_page_styles.enabled', TRUE)
+    ->save();
 }
 
 /**
@@ -50,4 +56,11 @@ function az_demo_uninstall() {
     $executable = new MigrateExecutable($migration, new MigrateMessage());
     $executable->rollback();
   }
+}
+
+/**
+ * Enable the az_finder module during update.
+ */
+function az_demo_update_1021001() {
+  \Drupal::service('module_installer')->install(['az_finder']);
 }

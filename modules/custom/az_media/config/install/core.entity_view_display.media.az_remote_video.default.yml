@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.media.az_remote_video.field_media_az_image
     - field.field.media.az_remote_video.field_media_az_oembed_video
     - media.type.az_remote_video
   module:
@@ -39,10 +40,13 @@ content:
     settings:
       max_width: 0
       max_height: 0
+      loading:
+        attribute: lazy
     third_party_settings: {  }
     region: content
 hidden:
   created: true
+  field_media_az_image: true
   name: true
   thumbnail: true
   uid: true

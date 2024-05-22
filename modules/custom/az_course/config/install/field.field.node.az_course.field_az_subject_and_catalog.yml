@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_subject_and_catalog
+    - node.type.az_course
+id: node.az_course.field_az_subject_and_catalog
+field_name: field_az_subject_and_catalog
+entity_type: node
+bundle: az_course
+label: 'Subject and Catalog'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

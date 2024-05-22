@@ -8,11 +8,14 @@ dependencies:
     - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
     - date_ap_style
@@ -22,158 +25,17 @@ dependencies:
     - user
 third_party_settings:
   field_group:
-    group_span_subtitle:
-      children:
-        - field_az_subheading
-      parent_name: ''
-      weight: 7
-      format_type: html_element
-      region: hidden
-      format_settings:
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-        id: ''
-        classes: 'lead mb-3'
-      label: 'span subtitle'
-    group_category:
-      children:
-        - field_az_event_category
-      parent_name: ''
-      weight: 8
-      format_type: html_element
-      region: hidden
-      format_settings:
-        id: ''
-        classes: ''
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'Category Div'
-    group_row_1:
-      children:
-        - group_col_1
-        - group_col_2
-      parent_name: ''
-      weight: 9
-      format_type: html_element
-      region: hidden
-      format_settings:
-        id: ''
-        classes: row
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'row 1'
-    group_row_2:
-      children:
-        - group_col_3
-        - group_col_4
-      parent_name: ''
-      weight: 10
-      format_type: html_element
-      region: hidden
-      format_settings:
-        id: ''
-        classes: row
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'row 2'
-    group_col_1:
-      children: {  }
-      parent_name: group_row_1
-      weight: 21
-      format_type: html_element
-      region: hidden
-      format_settings:
-        id: ''
-        classes: col-md-6
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'column 1'
-    group_col_2:
-      children:
-        - field_az_location
-      parent_name: group_row_1
-      weight: 22
-      format_type: html_element
-      region: hidden
-      format_settings:
-        id: ''
-        classes: col-md-6
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'column 2'
-    group_col_3:
-      children: {  }
-      parent_name: group_row_2
-      weight: 21
-      format_type: html_element
-      region: hidden
-      format_settings:
-        id: ''
-        classes: col-md-6
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'column 3'
-    group_col_4:
-      children:
-        - field_az_attachments
-      parent_name: group_row_2
-      weight: 22
-      format_type: html_element
-      region: hidden
-      format_settings:
-        id: ''
-        classes: col-md-6
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-      label: 'column 4'
     group_card_clickable:
       children:
         - group_link
+      label: 'Card Clickable'
       parent_name: ''
+      region: content
       weight: 0
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'card card-borderless card-clickable bg-gray-100 mt-0 mb-4 p-0'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -181,34 +43,34 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'card card-borderless card-clickable bg-gray-100 mb-0 mt-0 mb-4 p-0'
-      label: 'Card Clickable'
     group_link:
       children:
         - group_date
         - group_heading
         - group_summary
+      label: Link
       parent_name: group_card_clickable
+      region: content
       weight: 1
       format_type: link
-      region: content
       format_settings:
+        classes: 'card-body p-4'
+        show_empty_fields: false
+        id: ''
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
-        id: ''
-        classes: 'card-body p-4'
-        show_empty_fields: false
-      label: Link
     group_date:
       children:
         - field_az_event_date
+      label: Date
       parent_name: group_link
+      region: content
       weight: 5
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'text-muted font-weight-bold small'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -216,17 +78,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'text-muted font-weight-bold small'
-      label: Date
     group_heading:
       children:
         - smart_title
+      label: Heading
       parent_name: group_link
+      region: content
       weight: 6
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'card-title text-chili h5 mt-0 mb-2'
+        id: ''
         element: h2
         show_label: false
         label_element: h3
@@ -234,17 +96,17 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'card-title text-red h5 mt-0 mb-2'
-      label: Heading
     group_summary:
       children:
         - field_az_summary
+      label: Summary
       parent_name: group_link
+      region: content
       weight: 7
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'card-text font-weight-normal small mb-0'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -252,16 +114,13 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'card-text font-weight-normal small mb-0'
-      label: Summary
   smart_title:
     enabled: true
     settings:
+      smart_title__link: false
       smart_title__tag: ''
       smart_title__classes:
         - node__title
-      smart_title__link: false
 id: node.az_event.az_card
 targetEntityType: node
 bundle: az_event
@@ -269,8 +128,6 @@ mode: az_card
 content:
   field_az_event_date:
     type: daterange_ap_style
-    weight: 1
-    region: content
     label: hidden
     settings:
       always_display_year: '1'
@@ -285,18 +142,20 @@ content:
       use_all_day: '1'
       display_day: null
     third_party_settings: {  }
+    weight: 1
+    region: content
   field_az_summary:
     type: text_default
-    weight: 8
-    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
-  smart_title:
-    weight: 1
+    weight: 8
     region: content
+  smart_title:
     settings: {  }
     third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   az_event_day: true
   az_event_month: true
@@ -304,8 +163,11 @@ hidden:
   field_az_body: true
   field_az_contacts: true
   field_az_event_category: true
+  field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_location: true
+  field_az_media_thumbnail_image: true
   field_az_photos: true
   field_az_subheading: true
+  field_az_trellis_id: true
   links: true

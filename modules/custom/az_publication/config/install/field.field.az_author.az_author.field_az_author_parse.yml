@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.az_author.field_az_author_parse
+  module:
+    - az_publication
+id: az_author.az_author.field_az_author_parse
+field_name: field_az_author_parse
+entity_type: az_author
+bundle: az_author
+label: 'Parse Literal Name'
+description: 'If selected, the Literal Name will be split into its component parts. This works best on names without surname particles.'
+required: false
+translatable: true
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

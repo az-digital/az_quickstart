@@ -6,14 +6,15 @@
  */
 
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
-include_once drupal_get_path('theme', 'az_barrio') . '/includes/common.inc';
+include_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
 use Drupal\block\Entity\Block;
-use Drupal\Core\Link;
-use Drupal\Core\Url;
-use Drupal\Core\Render\Markup;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Render\Element;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Template\Attribute;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_theme_suggestions_HOOK_alter().
@@ -67,12 +68,10 @@ function az_barrio_form_alter(&$form, FormStateInterface $form_state, $form_id) 
 /**
  * Attaches form id to all form elements.
  *
- * @param $form
+ * @param array $form
  *   The form or form element which children should have form id attached.
- * @param $form_id
+ * @param string $form_id
  *   The form id attached to form elements.
- *
- * @return array
  */
 function az_barrio_attach_form_id(&$form, $form_id) {
   if ($form_id === 'search_block_form') {
@@ -103,9 +102,25 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['az_barrio_navbar_offcanvas'] = (theme_get_setting('az_barrio_navbar_offcanvas')) ? TRUE : FALSE;
   if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
     $variables['#attached']['library'][] = 'az_barrio/az-barrio-off-canvas-nav';
+    $variables['navbar_offcanvas_attributes'] = new Attribute([
+      'id' => 'navbar-top',
+      'class' => [
+        'navbar-offcanvas'
+      ]
+    ]);
+    if ($variables['page']['navigation']) {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'has-navigation-region';
+    }
+    else {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'no-navigation-region';
+    }
+    if ($variables['page']['navigation_offcanvas']) {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'has-off-canvas-region';
+    }
+    else {
+      $variables['navbar_offcanvas_attributes']['class'][] = 'no-off-canvas-region';
+    }
   }
-  $variables['navbar_offcanvas_attributes']['id'] = 'navbar-top';
-  $variables['navbar_offcanvas_attributes']['class'][] = 'navbar-offcanvas';
 
   // Allow hiding of title of front page node.
   if (theme_get_setting('az_hide_front_title') === 1 && \Drupal::service('path.matcher')->isFrontPage()) {
@@ -151,6 +166,11 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   }
   else {
     $variables['az_barrio_header_offcanvas'] = FALSE;
+  }
+  // Define column layout for new AZ Barrio sidebar position.
+  if (theme_get_setting('bootstrap_barrio_sidebar_position') === 'az-barrio-both-below') {
+    $variables['sidebar_first_attributes']['class'][] = 'order-2 order-md-first';
+    $variables['sidebar_second_attributes']['class'][] = 'order-last';
   }
 }
 
@@ -370,14 +390,25 @@ function az_barrio_az_bootstrap_assets_path($type) {
  */
 function az_barrio_az_icons_assets_path($type) {
   $az_icons_path = '';
+  $az_icons_cdn_version = theme_get_setting('az_icons_cdn_version');
+  if ($az_icons_cdn_version === 'stable') {
+    $az_icons_cdn_version = AZ_ICONS_STABLE_VERSION;
+  }
 
   // AZ Icons source.
   if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
-    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
+    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/'  . $az_icons_cdn_version;
   }
   else {
-    $az_icons_path = 'libraries/az-icons/az-icons-styles.css';
+    $az_icons_path = base_path() . 'libraries/az-icons';
   }
+  $az_icons_path .= '/az-icons-styles';
+
+  // AZ Icons minified.
+  if (theme_get_setting('az_icons_minified')) {
+    $az_icons_path .= '.min';
+  }
+  $az_icons_path .= '.css';
 
   return $az_icons_path;
 }
@@ -388,11 +419,17 @@ function az_barrio_az_icons_assets_path($type) {
 function az_barrio_primary_logo() {
   $return = '';
   $primary_logo_link_classes = ['qs-site-logo', 'd-block'];
-  $primary_logo_path = theme_get_setting('logo');
-  $primary_logo_path_parts = pathinfo($primary_logo_path['path']);
+  $primary_logo_settings = theme_get_setting('logo');
+  $primary_logo_path = $primary_logo_settings['path'];
+  $primary_logo_path_parts = pathinfo($primary_logo_path);
   $primary_alt_text = theme_get_setting('primary_logo_alt_text');
   $primary_title_text = theme_get_setting('primary_logo_title_text');
   $config = \Drupal::config('az_barrio.settings');
+
+  if ($primary_logo_settings['use_default']) {
+    $primary_logo_path = $primary_logo_settings['url'];
+  }
+
   if (\Drupal::moduleHandler()->moduleExists('token')) {
     $token_service = \Drupal::token();
     $primary_alt_text = $token_service->replace($primary_alt_text);
@@ -400,12 +437,12 @@ function az_barrio_primary_logo() {
   }
 
   // Set primary logo.
-  if (!empty($primary_logo_path)) {
+  if (!empty($primary_logo_settings)) {
 
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_logo_svg_inline') === TRUE && $primary_logo_path_parts['extension'] === 'svg') {
-      $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_path['url']);
-      $rendered_image = render($svg);
+      $svg = file_get_contents(DRUPAL_ROOT . '/' . $primary_logo_settings['url']);
+      $rendered_image = \Drupal::service('renderer')->render($svg);
       $image_markup = Markup::create($rendered_image);
       $primary_logo_link_classes[] = 'qs-logo-svg-inline';
       $return = Link::createFromRoute($image_markup, '<front>', [], [
@@ -420,10 +457,11 @@ function az_barrio_primary_logo() {
     else {
       $image_renderable = [
         '#theme' => 'image',
-        '#uri' => $primary_logo_path['path'],
+        '#uri' => $primary_logo_path,
         '#alt' => $primary_alt_text,
         '#attributes' => [
           'class' => ['img-fluid'],
+          'fetchpriority' => 'high',
         ]
       ];
       $renderer = \Drupal::service('renderer');
@@ -475,7 +513,7 @@ function az_barrio_footer_logo() {
     // Inline SVG logo.
     if (theme_get_setting('az_barrio_footer_logo_svg_inline') === TRUE && $footer_logo_path_parts['extension'] === 'svg') {
       $svg = file_get_contents($filepath);
-      $rendered_image = render($svg);
+      $rendered_image = \Drupal::service('renderer')->render($svg);
       $image_markup = Markup::create($rendered_image);
       $attr['attributes']['class'][] = 'qs-logo-svg-inline';
       // Footer link destination is empty (default value)
@@ -530,12 +568,36 @@ function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $vari
 }
 
 /**
- *  Implements template_preprocess_block().
+ * Implements hook_preprocess_HOOK() for breadcrumb templates.
+ */
+function az_barrio_preprocess_breadcrumb(&$variables) {
+  if (\Drupal::moduleHandler()->moduleExists('easy_breadcrumb')) {
+    $add_home_class = FALSE;
+    $config = \Drupal::config('easy_breadcrumb.settings');
+    if ($config->get('include_home_segment')) {
+      $add_home_class = TRUE;
+    }
+
+    foreach ($variables['breadcrumb'] as $key => &$item) {
+      $item['classes'] = 'breadcrumb-item';
+      if ($add_home_class && $key === 0) {
+        $item['classes'] .= ' breadcrumb-item-home';
+      }
+      if (empty($item['url'])) {
+        $item['classes'] .= ' active';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block templates.
  *
- *  Pass proper logo to the system branding block.
+ * Pass proper logo to the system branding block.
  *
- *  Arizona Digital issue #1012.
- *  Footer menu links styles, using default theme templates.
+ * Footer menu links styles, using default theme templates.
+ * @link https://github.com/az-digital/az_quickstart/issues/1012
+ * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
   if ($variables['base_plugin_id'] === 'system_branding_block') {
@@ -586,7 +648,7 @@ function az_barrio_preprocess_block(&$variables) {
           // Add classes to interior <li> elements and <a> elements.
           if (!empty($variables['elements']['content']['#items'])) {
             foreach ($variables['elements']['content']['#items'] as $key => $item) {
-              $item['attributes']->addClass('d-flex', 'px-0');
+              $item['attributes']->addClass('d-flex', 'px-0', 'mb-1', 'mb-md-2');
 
               // Merge existing url options with transparent.
               $options = $item['url']->getOptions();
@@ -608,4 +670,15 @@ function az_barrio_preprocess_block(&$variables) {
       }
     }
   }
+
+/**
+ * Closes #2251 Remove block_class config for az_barrio_search block and add
+ * az-search-block class via preprocess hook.
+ *
+ * @link https://github.com/az-digital/az_quickstart/issues/2251
+ */
+  if ($variables['base_plugin_id'] === 'search_form_block' && $variables['elements']['#id'] === 'az_barrio_search') {
+    $variables['attributes']['class'][] = 'az-search-block';
+  }
+
 }

@@ -27,8 +27,8 @@ See our [contributing](./CONTRIBUTING.md) document for detailed instructions on
 how to contribute including:
 
 * What you'll need to [get started](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#things-youll-need-to-get-started)
-* How to [report a bug or request a new feature](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#submitting-a-bugissuefeature-request)
-* How to [submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-requests)
+* [How to create issues and pull requests](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#creating-issues-and-pull-requests)
+* [How to submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-request-guidelines)
 * [Local development](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#local-development)
 
 ## Where to Install Your Quickstart Site
@@ -59,7 +59,7 @@ emphasized or checked are:
   * Re-check that the required PHP extensions are added: on a recent system the usual packaging mechanism should suffice to add them (such as apt on Debian or Ubuntu versions of Linux).
   * Check that the Apache configuration enables `mod_rewrite`, and the module letting it work with PHP.
   * Check the user and group of the running web server: in many Debian-derived Linux systems these will be `www-data`, but not on all (this information is needed for setting file and directory permissions later).
-  * Install and configure the software as a normal (non-root) user with the ability to `sudo` when elevated privileges areneeded; add this user to the same group that the web server uses (so you would see something like `www-data:x:33:normaluser` in the /etc/group file).
+  * Install and configure the software as a normal (non-root) user with the ability to `sudo` when elevated privileges are needed; add this user to the same group that the web server uses (so you would see something like `www-data:x:33:normaluser` in the /etc/group file).
   * A recent version of Composer is a necessity, not an option — remove any previously installed but stale versions, and follow the [https://getcomposer.org/download/](https://getcomposer.org/download/) instructions to install it, or if upgrading is possible, try the command `sudo -H composer self-update --2` 
 
 ### Web Server Configuration
@@ -201,3 +201,15 @@ To start a debugging session, perform the following steps:
 13. In VSCode, go back to the code tab.
 14. Set any desired breakpoints.
 15. You may now proceed with debugging.
+
+### Distribution update
+
+When updating your codebase on an existing site, you should always check if
+there are distribution updates that need to be applied.
+
+This can be done by users with the administrator role on your website at this
+path: `/admin/config/development/distro`
+
+You should be able to see the upstream updates to be applied, after updating
+your codebase by employing the "Merge" strategy available under the "Advanced"
+accordion on that page.

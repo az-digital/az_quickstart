@@ -16,8 +16,8 @@ plugin: az_carousel_notice
 settings:
   id: az_carousel_notice
   label: 'Quickstart Carousel Notification Block'
-  provider: az_carousel
   label_display: '0'
+  provider: az_carousel
 visibility:
   request_path:
     id: request_path

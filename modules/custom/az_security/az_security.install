@@ -4,3 +4,11 @@
  * @file
  * Install, update and uninstall functions for az_security module.
  */
+
+/**
+ * Implements hook_update_last_removed().
+ */
+function az_security_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920101;
+}

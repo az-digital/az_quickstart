@@ -1,7 +1,7 @@
 smtp_on: true
 smtp_host: email-smtp.us-west-2.amazonaws.com
 smtp_hostbackup: ''
-smtp_port: '587'
+smtp_port: '2587'
 smtp_protocol: tls
 smtp_autotls: true
 smtp_timeout: 30

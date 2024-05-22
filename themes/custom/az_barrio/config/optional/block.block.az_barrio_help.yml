@@ -2,7 +2,9 @@ langcode: en
 status: true
 dependencies:
   module:
+    - block_class
     - help
+    - system
   theme:
     - az_barrio
 id: az_barrio_help
@@ -14,8 +16,8 @@ plugin: help_block
 settings:
   id: help_block
   label: Help
-  provider: help
   label_display: '0'
+  provider: help
 visibility:
   request_path:
     id: request_path

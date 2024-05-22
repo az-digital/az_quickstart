@@ -9,13 +9,13 @@ type: 'canonical_entities:node'
 pattern: 'news/[node:title]'
 selection_criteria:
   07e97b57-dc82-453f-8cc0-5495a8e14ceb:
-    id: node_type
-    bundles:
-      az_news: az_news
+    id: 'entity_bundle:node'
     negate: false
+    uuid: 07e97b57-dc82-453f-8cc0-5495a8e14ceb
     context_mapping:
       node: node
-    uuid: 07e97b57-dc82-453f-8cc0-5495a8e14ceb
+    bundles:
+      az_news: az_news
 selection_logic: and
 weight: -5
 relationships: {  }

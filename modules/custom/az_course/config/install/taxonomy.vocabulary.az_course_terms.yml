@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Course Terms'
+vid: az_course_terms
+description: 'Taxonomy for course terms.'
+weight: 0

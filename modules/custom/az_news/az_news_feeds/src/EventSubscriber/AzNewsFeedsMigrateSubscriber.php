@@ -67,7 +67,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
         'match'  => array_values($selected_terms),
       ];
       $processConfig['field_az_news_tags_processed'][] = $array_intersect_process;
-      $migration->set('process', $processConfig);
+      $migration->setProcess($processConfig);
     }
   }
 

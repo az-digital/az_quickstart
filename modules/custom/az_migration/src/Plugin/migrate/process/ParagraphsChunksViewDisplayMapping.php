@@ -30,6 +30,15 @@ use Drupal\migrate\Row;
  *     source: field_uaqs_view
  * @endcode
  *
+ * @deprecated in az_quickstart:2.3.0 and is removed from az_quickstart:2.4.0.
+ *   Use the
+ *   \Drupal\az_migration\Plugin\migrate\process\ViewsReferenceMapping
+ *   process plugin instead following its migration patterns.
+ * // @codingStandardsIgnoreStart
+ * @see https://github.com/az-digital/az_quickstart/pull/1109
+ * @see https://github.com/az-digital/az_quickstart/issues/880
+ * // @codingStandardsIgnoreEnd
+ *
  * @MigrateProcessPlugin(
  *   id = "paragraphs_chunks_view_display_mapping"
  * )

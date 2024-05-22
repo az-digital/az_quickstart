@@ -3,12 +3,15 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.node.az_card
+    - core.entity_view_mode.node.az_feature
     - core.entity_view_mode.node.az_marquee
     - core.entity_view_mode.node.az_media_list
     - core.entity_view_mode.node.az_medium_media_list
     - core.entity_view_mode.node.az_minimal_media_list
     - node.type.az_news
+    - taxonomy.vocabulary.az_news_tags
   module:
+    - better_exposed_filters
     - datetime
     - node
     - taxonomy
@@ -61,8 +64,8 @@ display:
           id: 0
           total_pages: null
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Previous'
+            next: 'Next ›'
             first: '« First'
             last: 'Last »'
           expose:
@@ -171,6 +174,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_published_value
           granularity: second
           plugin_id: datetime
         created:
@@ -184,18 +188,14 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: created
           granularity: second
           entity_type: node
           entity_field: created
           plugin_id: date
       title: News
       header: {  }
-      footer:
-        area_text_custom:
-          id: area_text_custom
-          table: views
-          field: area_text_custom
-          plugin_id: text_custom
+      footer: {  }
       empty: {  }
       relationships: {  }
       arguments:
@@ -216,7 +216,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -251,11 +250,83 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
+  az_feature:
+    display_plugin: block
+    id: az_feature
+    display_title: 'Feature View'
+    position: 1
+    display_options:
+      display_extenders: {  }
+      display_description: ''
+      pager:
+        type: some
+        options:
+          items_per_page: 1
+          offset: 0
+      defaults:
+        pager: false
+        pager_options: false
+        sorts: false
+        style: false
+        row: false
+        style_options: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_feature
+      pager_options: null
+      sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+            field_identifier: sticky
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+        field_az_published_value:
+          id: field_az_published_value
+          table: node__field_az_published
+          field: field_az_published_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: false
+          expose:
+            label: ''
+            field_identifier: field_az_published_value
+          granularity: second
+          plugin_id: datetime
+      style:
+        type: default
+        options:
+          row_class: media-list-row
+          default_row_class: false
+          uses_fields: false
+      style_options: null
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   az_grid:
     display_plugin: block
     id: az_grid
     display_title: 'Grid View'
-    position: 2
+    position: 3
     display_options:
       display_extenders: {  }
       display_description: ''
@@ -310,15 +381,233 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
+  az_grid_filter:
+    display_plugin: block
+    id: az_grid_filter
+    display_title: 'Grid View with Filter'
+    position: 3
+    display_options:
+      display_extenders: {  }
+      display_description: ''
+      style:
+        type: views_bootstrap_grid
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+          col_xs: col-12
+          col_sm: col-sm-12
+          col_md: col-md-4
+          col_lg: col-lg-4
+          col_xl: col-xl-4
+      defaults:
+        style: false
+        row: false
+        pager: false
+        footer: false
+        pager_options: false
+        style_options: false
+        exposed_form: false
+        filters: false
+        filter_groups: false
+        use_ajax: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_card
+      block_description: 'Three column news block'
+      allow:
+        items_per_page: false
+      pager:
+        type: full
+        options:
+          items_per_page: 9
+          offset: 0
+          id: 0
+          total_pages: null
+          tags:
+            previous: '‹ Previous'
+            next: 'Next ›'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      block_category: 'Lists (Views)'
+      footer:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          empty: true
+          tokenize: false
+          content:
+            value: "<style>\r\n#views-exposed-form-az-news-az-grid-filter {\r\n    margin-bottom: 0.5em;\r\n}\r\n#views-exposed-form-az-news-az-grid-filter label {\r\n    font-weight: bold;\r\n    display: block;\r\n}\r\n#views-exposed-form-az-news-az-grid-filter select {\r\n    color: #001c48;\r\n    font-weight: 500;\r\n    text-decoration: none;\r\n    letter-spacing: .04em;\r\n    white-space: normal;\r\n    border-width: 2px;\r\n    background-color: #dee2e6;\r\n    border-color: #dee2e6;\r\n    display: inline-block;\r\n    text-align: center;\r\n    vertical-align: middle;\r\n    -webkit-user-select: none;\r\n    -moz-user-select: none;\r\n    -ms-user-select: none;\r\n    user-select: none;\r\n    padding: 0.375rem 0.75rem;\r\n    font-size: 1rem;\r\n    line-height: 1.5;\r\n    border-radius: 0;\r\n    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;\r\n}\r\n</style>"
+            format: full_html
+          plugin_id: text
+      pager_options: null
+      style_options: null
+      exposed_form:
+        type: bef
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: false
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              tid:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
+      filters:
+        status:
+          value: '1'
+          table: node_field_data
+          field: status
+          plugin_id: boolean
+          entity_type: node
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            az_news: az_news
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: Category
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: tid_op
+            label: 'Filter by category'
+            description: ''
+            use_operator: false
+            operator: tid_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: category
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          type: select
+          limit: true
+          vid: az_news_tags
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      use_ajax: true
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - user
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   az_paged_row:
     display_plugin: page
     id: az_paged_row
     display_title: 'Paged Row View'
-    position: 1
+    position: 2
     display_options:
       display_extenders: {  }
       path: news
       display_description: ''
+      style:
+        type: default
+        options:
+          row_class: media-list-row
+          default_row_class: false
+          uses_fields: false
+      defaults:
+        css_class: false
+        style: false
+        row: false
+        style_options: false
+      css_class: add-pager-top-margin
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_media_list
+      style_options: null
     cache_metadata:
       max-age: -1
       contexts:
@@ -333,7 +622,7 @@ display:
     display_plugin: block
     id: az_sidebar
     display_title: 'Small Row View'
-    position: 3
+    position: 4
     display_options:
       display_extenders: {  }
       display_description: ''
@@ -411,7 +700,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -451,7 +739,6 @@ display:
           title: ''
           default_argument_type: node
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -489,7 +776,7 @@ display:
     display_plugin: page
     id: az_teaser_grid
     display_title: 'Teaser Grid Page'
-    position: 4
+    position: 5
     display_options:
       display_extenders: {  }
       display_description: 'Grid of teasers that appears on /news-teasers (offset by 4)'
@@ -525,8 +812,8 @@ display:
           id: 0
           total_pages: null
           tags:
-            previous: ‹‹
-            next: ››
+            previous: '‹ Previous'
+            next: 'Next ›'
             first: '« First'
             last: 'Last »'
           expose:
@@ -553,7 +840,7 @@ display:
     display_plugin: block
     id: marquee
     display_title: 'Recent News Marquee'
-    position: 5
+    position: 6
     display_options:
       display_extenders: {  }
       display_description: ''
@@ -601,7 +888,7 @@ display:
     display_plugin: attachment
     id: row_attachment
     display_title: 'Row Attachment'
-    position: 6
+    position: 7
     display_options:
       display_extenders: {  }
       title: ''

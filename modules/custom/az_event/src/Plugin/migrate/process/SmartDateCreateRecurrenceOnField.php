@@ -36,10 +36,11 @@ class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
     if (!empty($value)) {
       $rrule = SmartDateRule::load($value);
       if ($rrule) {
-        $first_instance = FALSE;
+        $values = [];
+        $first_instance = [];
         $before = NULL;
         // Retrieve all instances for this rule, with overrides applied.
-        if ($rrule->limit->isEmpty()) {
+        if (empty($rrule->get('limit')->getString())) {
           $before = strtotime('+ 24 months');
         }
         $instances = $rrule->getRuleInstances($before);
@@ -62,6 +63,7 @@ class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
         return $values;
       }
     }
+    return $value;
   }
 
 }

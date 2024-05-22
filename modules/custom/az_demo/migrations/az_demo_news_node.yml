@@ -25,8 +25,14 @@ source:
       name: path_alias
       selector: path
     -
-      name: filename
+      name: az_media_image
       selector: az_media_image
+    -
+      name: az_thumbnail
+      selector: az_thumbnail
+    -
+      name: az_featured_image_as_thumb
+      selector: az_featured_image_as_thumb
     -
       name: az_caption
       selector: az_caption
@@ -37,8 +43,11 @@ source:
       name: az_body
       selector: az_body
     -
-      name: az_link
-      selector: az_link
+      name: az_link_url
+      selector: az_link_url
+    -
+      name: az_link_title
+      selector: az_link_title
     -
       name: az_subheading
       selector: az_subheading
@@ -70,7 +79,8 @@ process:
 
   title: title
 
-  field_az_link/uri: az_link
+  field_az_link/uri: az_link_url
+  field_az_link/title: az_link_title
 
   field_az_body/value: az_body
   field_az_body/format:
@@ -122,19 +132,19 @@ process:
       migration: az_demo_news_tags
       source: '@pseudo_exploded_tags'
 
-
-  # 'path/pathauto':
-  #   plugin: default_value
-  #   default_value: 0 # Disable pathauto.
-
-  # 'path/alias': path_alias
-
-  'field_az_media_image/target_id':
+  field_az_media_image/target_id:
     -
       plugin: migration_lookup
-      source: filename
+      source: az_media_image
       migration:
         - az_demo_image_file
+
+  field_az_media_thumbnail_image/target_id:
+    plugin: migration_lookup
+    source: az_thumbnail
+    migration: az_demo_image_file
+
+  field_az_featured_image_as_thumb: az_featured_image_as_thumb
 
 destination:
   plugin: entity:node

@@ -2,6 +2,7 @@ langcode: en
 status: false
 dependencies:
   module:
+    - block_class
     - system
   theme:
     - az_barrio
@@ -14,6 +15,6 @@ plugin: system_powered_by_block
 settings:
   id: system_powered_by_block
   label: 'Powered by Drupal'
-  provider: system
   label_display: '0'
+  provider: system
 visibility: {  }

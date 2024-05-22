@@ -2,17 +2,17 @@ minimum_single: 0
 minimum_multiple: 0
 disable_search_threshold: 0
 minimum_width: 150
+max_shown_results: null
 use_relative_width: false
 jquery_selector: 'select:visible,select#edit-field-az-page-category'
 search_contains: true
 disable_search: false
 allow_single_deselect: false
-placeholder_text_multiple: 'Choose some options'
-placeholder_text_single: 'Choose an option'
-no_results_text: 'No results match'
-max_shown_results: null
 disabled_themes:
   claro: '0'
   az_barrio: '0'
   bootstrap_barrio: '0'
 chosen_include: 0
+placeholder_text_multiple: 'Choose some options'
+placeholder_text_single: 'Choose an option'
+no_results_text: 'No results match'

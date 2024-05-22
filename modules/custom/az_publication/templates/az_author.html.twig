@@ -1,0 +1,22 @@
+{#
+/**
+ * @file az_author.html.twig
+ * Default theme implementation to present Author data.
+ *
+ * This template is used when viewing Author pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_az_author()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('az_author') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

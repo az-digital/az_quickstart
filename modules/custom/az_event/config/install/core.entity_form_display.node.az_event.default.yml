@@ -7,11 +7,14 @@ dependencies:
     - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
     - field_group
@@ -29,19 +32,22 @@ third_party_settings:
     group_summary:
       children:
         - field_az_link
+        - field_az_featured_image_as_thumb
+        - field_az_media_thumbnail_image
         - field_az_summary
+      label: 'Summary fields'
+      region: content
       parent_name: ''
       weight: 15
       format_type: details_sidebar
-      region: content
       format_settings:
-        id: ''
         classes: ''
-        description: 'For use in feeds and content listings.'
+        show_empty_fields: false
+        id: ''
         open: true
+        description: 'Summary fields determine how this event appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
-      label: 'Summary fields'
+        weight: -10
 id: node.az_event.default
 targetEntityType: node
 bundle: az_event
@@ -54,23 +60,24 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_az_attachments:
+    type: file_generic
     weight: 14
+    region: content
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
-    type: file_generic
-    region: content
   field_az_body:
+    type: text_textarea
     weight: 12
+    region: content
     settings:
       rows: 9
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
-    region: content
   field_az_contacts:
     type: entity_reference_paragraphs
     weight: 16
+    region: content
     settings:
       title: Contact
       title_plural: Contacts
@@ -79,18 +86,17 @@ content:
       form_display_mode: default
       default_paragraph_type: _none
     third_party_settings: {  }
-    region: content
   field_az_event_category:
+    type: options_select
     weight: 9
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: options_select
-    region: content
   field_az_event_date:
+    type: smartdate_default
     weight: 11
+    region: content
     settings:
-      show_extra: false
-      hide_date: false
       modal: false
       default_duration: 60
       default_duration_increments: |-
@@ -99,59 +105,77 @@ content:
         90
         120|2 hours
         custom
+      show_extra: false
+      hide_date: false
+      allday: true
+      remove_seconds: false
     third_party_settings:
       smart_date_recur:
         modal: true
         allowed_recur_freq_values:
+          MINUTELY: '0'
+          HOURLY: '0'
           DAILY: DAILY
           WEEKLY: WEEKLY
           MONTHLY: MONTHLY
           YEARLY: YEARLY
-          MINUTELY: '0'
-          HOURLY: '0'
-    type: smartdate_default
+  field_az_featured_image_as_thumb:
+    type: boolean_checkbox
+    weight: 32
     region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_az_link:
-    weight: 27
+    type: link_default
+    weight: 31
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
   field_az_location:
+    type: link_default
     weight: 13
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
-    type: link_default
-    region: content
-  field_az_photos:
+  field_az_media_thumbnail_image:
     type: media_library_widget
-    weight: 10
+    weight: 33
+    region: content
     settings:
       media_types: {  }
     third_party_settings:
       media_library_edit:
         show_edit: '1'
+  field_az_photos:
+    type: media_library_widget
+    weight: 10
     region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
   field_az_subheading:
+    type: text_textfield
     weight: 8
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: text_textfield
-    region: content
   field_az_summary:
-    weight: 28
+    type: text_textarea
+    weight: 34
+    region: content
     settings:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-    type: text_textarea
-    region: content
   path:
     type: path
     weight: 5
@@ -160,24 +184,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 3
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 7
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 4
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -190,16 +214,17 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 1
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 6
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_az_trellis_id: true

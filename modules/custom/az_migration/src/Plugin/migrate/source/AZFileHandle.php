@@ -2,8 +2,8 @@
 
 namespace Drupal\az_migration\Plugin\migrate\source;
 
-use Drupal\migrate\Row;
 use Drupal\file\Plugin\migrate\source\d7\File;
+use Drupal\migrate\Row;
 
 /**
  * Drupal 7 file source from database.

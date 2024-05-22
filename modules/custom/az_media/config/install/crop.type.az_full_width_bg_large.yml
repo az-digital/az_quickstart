@@ -3,9 +3,9 @@ status: true
 dependencies: {  }
 id: az_full_width_bg_large
 label: 'Large full-width background'
-description: "Minimum crop width 1199px, or the image will be scaled up and will possibly be blurry.\t"
+description: "Minimum crop width 1920px, or the image will be scaled up and will possibly be blurry.\t"
 aspect_ratio: ''
-soft_limit_width: 1199
+soft_limit_width: 1920
 soft_limit_height: null
 hard_limit_width: null
 hard_limit_height: null

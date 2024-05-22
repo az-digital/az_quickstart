@@ -6,27 +6,27 @@
         // defaults
         const defaults = {
           ratio: 16 / 9,
-          videoId: "",
+          videoId: '',
           mute: true,
           repeat: true,
           width: $(window).width(),
-          playButtonClass: "az-video-play",
-          pauseButtonClass: "az-video-pause",
-          muteButtonClass: "az-video-mute",
-          volumeUpClass: "az-video-volume-up",
-          volumeDownClass: "az-video-volume-down",
+          playButtonClass: 'az-video-play',
+          pauseButtonClass: 'az-video-pause',
+          muteButtonClass: 'az-video-mute',
+          volumeUpClass: 'az-video-volume-up',
+          volumeDownClass: 'az-video-volume-down',
           increaseVolumeBy: 10,
           start: 0,
           minimumSupportedWidth: 600,
         };
         const { bgVideos } = settings.azFieldsMedia;
         const bgVideoParagraphs = document.getElementsByClassName(
-          "az-js-video-background"
+          'az-js-video-background',
         );
         // load yt iframe js api
-        const tag = document.createElement("script");
-        const firstScriptTag = document.getElementsByTagName("script")[0];
-        tag.src = "https://www.youtube.com/iframe_api";
+        const tag = document.createElement('script');
+        const firstScriptTag = document.getElementsByTagName('script')[0];
+        tag.src = 'https://www.youtube.com/iframe_api';
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
         // methods
         // set up iframe player, use global scope so YT api can talk
@@ -39,7 +39,7 @@
             bgVideos[youtubeId] = $.extend({}, defaults, thisContainer);
             const options = bgVideos[youtubeId];
             const videoPlayer =
-              thisContainer.getElementsByClassName("az-video-player")[0];
+              thisContainer.getElementsByClassName('az-video-player')[0];
             const YouTubePlayer = window.YT;
             thisContainer.player = new YouTubePlayer.Player(videoPlayer, {
               width: options.width,
@@ -50,7 +50,7 @@
                 controls: 0,
                 showinfo: 0,
                 rel: 0,
-                wmode: "transparent",
+                wmode: 'transparent',
               },
               events: {
                 onReady: window.onPlayerReady,
@@ -59,23 +59,23 @@
             });
             const playButton =
               bgVideoParagraphs[index].getElementsByClassName(
-                "az-video-play"
+                'az-video-play',
               )[0];
-            playButton.addEventListener("click", (event) => {
+            playButton.addEventListener('click', (event) => {
               event.preventDefault();
               bgVideoParagraphs[index].player.playVideo();
-              parentParagraph.classList.remove("az-video-paused");
-              parentParagraph.classList.add("az-video-playing");
+              parentParagraph.classList.remove('az-video-paused');
+              parentParagraph.classList.add('az-video-playing');
             });
             const pauseButton =
               bgVideoParagraphs[index].getElementsByClassName(
-                "az-video-pause"
+                'az-video-pause',
               )[0];
-            pauseButton.addEventListener("click", (event) => {
+            pauseButton.addEventListener('click', (event) => {
               event.preventDefault();
               bgVideoParagraphs[index].player.pauseVideo();
-              parentParagraph.classList.remove("az-video-playing");
-              parentParagraph.classList.add("az-video-paused");
+              parentParagraph.classList.remove('az-video-playing');
+              parentParagraph.classList.add('az-video-paused');
             });
           });
         };
@@ -83,7 +83,7 @@
           const parentParagraph = container.parentNode;
           const youtubeId = container.dataset.youtubeid;
           const thisPlayer =
-            container.getElementsByClassName("az-video-player")[0];
+            container.getElementsByClassName('az-video-player')[0];
           thisPlayer.style.zIndex = -100;
           const { style } = container.dataset;
           const width = container.offsetWidth;
@@ -94,7 +94,7 @@
           let parentHeight = parentParagraph.offsetHeight;
           parentHeight = `${parentHeight.toString()}px`;
           container.style.height = parentHeight;
-          if (style === "bottom") {
+          if (style === 'bottom') {
             container.style.top = 0;
           }
           let widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
@@ -129,18 +129,21 @@
         };
 
         window.onPlayerReady = (event) => {
-          const id = event.target.playerInfo.videoData.video_id;
+          const id = event.target.getVideoData().video_id;
           if (bgVideos[id].mute) {
             event.target.mute();
           }
           event.target.seekTo(bgVideos[id].start);
           event.target.playVideo();
+          // Create and dispatch a new event when video starts playing.
+          const azVideoPlayEvent = new Event('azVideoPlay');
+          dispatchEvent(azVideoPlayEvent);
         };
 
         window.onPlayerStateChange = (event) => {
-          const id = event.target.playerInfo.videoData.video_id;
+          const id = event.target.getVideoData().video_id;
           const stateChangeContainer = document.getElementById(
-            `${id}-bg-video-container`
+            `${id}-bg-video-container`,
           );
           const { parentid } = stateChangeContainer.dataset;
           const parentContainer = document.getElementById(parentid);
@@ -150,16 +153,16 @@
           }
           if (event.data === 1) {
             resize();
-            parentContainer.classList.add("az-video-playing");
-            parentContainer.classList.remove("az-video-loading");
+            parentContainer.classList.add('az-video-playing');
+            parentContainer.classList.remove('az-video-loading');
           }
         };
 
         // events
-        $(window).on("load", () => {
+        $(window).on('load', () => {
           resize();
         });
-        $(window).on("resize.bgVideo", () => {
+        $(window).on('resize.bgVideo', () => {
           resize();
         });
       }

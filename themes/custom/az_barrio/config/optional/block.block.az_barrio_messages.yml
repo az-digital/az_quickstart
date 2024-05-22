@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - block_class
     - system
   theme:
     - az_barrio
@@ -14,6 +15,6 @@ plugin: system_messages_block
 settings:
   id: system_messages_block
   label: 'Status messages'
-  provider: system
   label_display: '0'
+  provider: system
 visibility: {  }

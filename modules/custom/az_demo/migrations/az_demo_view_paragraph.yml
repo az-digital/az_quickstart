@@ -1,0 +1,59 @@
+id: az_demo_view_paragraph
+label: AZ Quickstart Demo Text with View Paragraphs
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page
+      - az_paragraphs_view
+      - az_news
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_view_paragraph.json
+  item_selector: paragraphs
+  ids:
+    id:
+      type: integer
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: title
+      selector: title
+    -
+      name: target_id
+      selector: target_id
+    -
+      name: display_id
+      selector: display_id
+    -
+      name: data
+      selector: data
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_view_reference
+
+process:
+  field_az_title/value:
+    - plugin: skip_on_empty
+      method: process
+      source: title
+  field_az_view_reference/target_id: target_id
+  field_az_view_reference/display_id: display_id
+  field_az_view_reference/data: data
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing

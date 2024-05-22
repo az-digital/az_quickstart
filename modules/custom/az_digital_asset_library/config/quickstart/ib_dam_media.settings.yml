@@ -1,0 +1,17 @@
+media_types:
+  image:
+    source_type: image
+    media_type: az_image
+  audio:
+    source_type: audio
+    media_type: az_audio
+  video:
+    source_type: video
+    media_type: az_video
+  file:
+    source_type: file
+    media_type: az_document
+dependencies:
+  enforced:
+    module:
+      - az_digital_asset_library

@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains az_enterprise_attributes_import.install.
+ */
+
+use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate\MigrateMessage;
+
+/**
+ * Implements hook_install().
+ */
+function az_enterprise_attributes_import_install() {
+  $tag = 'Enterprise Attributes';
+
+  // Run the migrations that are tagged as imports for enterprise attributes.
+  $migrations = \Drupal::service('plugin.manager.migration')->createInstancesByTag($tag);
+  foreach ($migrations as $migration) {
+    $executable = new MigrateExecutable($migration, new MigrateMessage());
+    $executable->import();
+  }
+
+}

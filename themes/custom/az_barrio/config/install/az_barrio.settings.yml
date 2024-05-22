@@ -1,9 +1,4 @@
-# Library
-# --------------
-bootstrap_barrio_library: 'production'
-
-# Layout clean region classes.
-# -------------------------------
+bootstrap_barrio_library: production
 bootstrap_barrio_region_clean_alert: false
 bootstrap_barrio_region_clean_header_ua_utilities: false
 bootstrap_barrio_region_clean_branding: false
@@ -34,74 +29,50 @@ bootstrap_barrio_region_clean_footer: false
 bootstrap_barrio_region_clean_footer_sub: false
 bootstrap_barrio_region_clean_footer_sub_menus: true
 bootstrap_barrio_region_clean_az_page_bottom: false
-
-# Layout region column classes.
-# -------------------------------
 bootstrap_barrio_region_class_alert: ''
 bootstrap_barrio_region_class_header_ua_utilities: 'ml-auto d-none d-lg-block d-xl-block'
 bootstrap_barrio_region_class_branding: ''
-bootstrap_barrio_region_class_header: 'col-md'
-bootstrap_barrio_region_class_header_2: 'col-md'
+bootstrap_barrio_region_class_header: col-md
+bootstrap_barrio_region_class_header_2: col-md
 bootstrap_barrio_region_class_navigation: ''
 bootstrap_barrio_region_class_navigation_offcanvas: ''
-bootstrap_barrio_region_class_help: 'col-md'
+bootstrap_barrio_region_class_help: col-md
 bootstrap_barrio_region_class_content_featured: ''
 bootstrap_barrio_region_class_sidebar_first: ''
 bootstrap_barrio_region_class_sidebar_second: ''
-bootstrap_barrio_region_class_highlighted: 'col-md'
-bootstrap_barrio_region_class_content_top: 'col-md'
-bootstrap_barrio_region_class_breadcrumb: 'col-md'
+bootstrap_barrio_region_class_highlighted: col-md
+bootstrap_barrio_region_class_content_top: col-md
+bootstrap_barrio_region_class_breadcrumb: col-md
 bootstrap_barrio_region_class_content: ''
-bootstrap_barrio_region_class_content_2_col_1: 'col-md-6'
-bootstrap_barrio_region_class_content_2_col_2: 'col-md-6'
-bootstrap_barrio_region_class_content_3_col_1: 'col-md-4'
-bootstrap_barrio_region_class_content_3_col_2: 'col-md-4'
-bootstrap_barrio_region_class_content_3_col_3: 'col-md-4'
+bootstrap_barrio_region_class_content_2_col_1: col-md-6
+bootstrap_barrio_region_class_content_2_col_2: col-md-6
+bootstrap_barrio_region_class_content_3_col_1: col-md-4
+bootstrap_barrio_region_class_content_3_col_2: col-md-4
+bootstrap_barrio_region_class_content_3_col_3: col-md-4
 bootstrap_barrio_region_class_full_width_content_bottom: ''
-bootstrap_barrio_region_class_content_4_col_1: 'col-md-3'
-bootstrap_barrio_region_class_content_4_col_2: 'col-md-3'
-bootstrap_barrio_region_class_content_4_col_3: 'col-md-3'
-bootstrap_barrio_region_class_content_4_col_4: 'col-md-3'
-bootstrap_barrio_region_class_content_bottom: 'col-md'
+bootstrap_barrio_region_class_content_4_col_1: col-md-3
+bootstrap_barrio_region_class_content_4_col_2: col-md-3
+bootstrap_barrio_region_class_content_4_col_3: col-md-3
+bootstrap_barrio_region_class_content_4_col_4: col-md-3
+bootstrap_barrio_region_class_content_bottom: col-md
 bootstrap_barrio_region_class_footer: 'col-12 col-sm-7 col-md-8 col-lg-8'
-bootstrap_barrio_region_class_footer_sub: 'col-md'
-bootstrap_barrio_region_class_footer_sub_menus: 'col-md'
+bootstrap_barrio_region_class_footer_sub: col-md
+bootstrap_barrio_region_class_footer_sub_menus: col-md
 bootstrap_barrio_region_class_az_page_bottom: ''
-
-# Layout sidebar settings.
-# -------------------------------
-bootstrap_barrio_sidebar_position: 'both'
+bootstrap_barrio_sidebar_position: both
 bootstrap_barrio_content_offset: 0
 bootstrap_barrio_sidebar_first_width: 3
 bootstrap_barrio_sidebar_first_offset: 0
 bootstrap_barrio_sidebar_second_width: 3
 bootstrap_barrio_sidebar_second_offset: 0
-
-# Responsive Header Grid.
-# -------------------------------
 header_one_col_classes: 'col-12 col-sm-6 col-lg-4'
 header_two_col_classes: 'col-12 col-sm-6 col-lg-8'
-
-# Container
-# --------------
 bootstrap_barrio_fluid_container: 0
-
-# Buttons
-# --------------
 bootstrap_barrio_button: 1
 bootstrap_barrio_button_size: ''
 bootstrap_barrio_button_outline: 0
-
-# Messages.
-# ----------------------------
-bootstrap_barrio_messages_widget: 'default'
-
-# Colors
-# --------------
+bootstrap_barrio_messages_widget: default
 bootstrap_barrio_table_hover: 1
-
-# Arizona
-# --------------
 wordmark: true
 land_acknowledgment: true
 info_security_privacy: true
@@ -111,22 +82,24 @@ az_back_to_top: true
 az_barrio_navbar_offcanvas: true
 az_barrio_header_offcanvas: false
 az_barrio_font: true
-az_bootstrap_source: 'cdn'
-az_bootstrap_cdn_version: 'stable'
+az_bootstrap_source: cdn
+az_bootstrap_cdn_version: stable
 az_bootstrap_minified: true
 az_barrio_az_icons: true
-az_barrio_az_icons_source: 'cdn'
+az_barrio_az_icons_source: cdn
+az_icons_minified: true
+az_icons_cdn_version: stable
 external_links: true
 sticky_footer: true
 az_barrio_material_design_sharp_icons: true
 az_barrio_logo_svg_inline: false
 az_barrio_footer_logo_svg_inline: false
 logo:
-  path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png'
+  path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png
   use_default: false
 primary_logo_alt_text: '[site:name] | Home'
 primary_logo_title_text: '[site:name] | Home'
 footer_logo_link_destination: ''
 footer_logo_alt_text: '[site:name] | Home'
 footer_logo_title_text: '[site:name] | Home'
-footer_logo_path: 'profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png'
+footer_logo_path: profiles/custom/az_quickstart/themes/custom/az_barrio/images/logo.png

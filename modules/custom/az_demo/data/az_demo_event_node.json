@@ -8,7 +8,6 @@
     "az_event_date" : "01/08 next year 07:30",
     "az_event_date_duration" : "custom",
     "az_event_date_to" : "01/11 next year 19:30",
-    "az_event_date_rrule" : "",
     "az_body" : "The Badwater Basin in Death Valley is the primary destination for this trip, which will combine some practical field experiments with general sightseeing. Please gather early in the parking lot to the east of the Computer Center to allow a prompt departure at 7:30 AM on Friday. We hope to be back there no later than 7:30 PM on Monday, and some people could be dropped off earlier if this doesn't involve detours from a convenient route. Remember that at this time of year Death Valley can be much cooler and possibly wetter than the notorious conditions there during the summer, so bring appropriate clothing.",
     "az_location": [
       {
@@ -17,8 +16,11 @@
       }
     ],
     "az_photos" : "badwater_panorama.jpg",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Field Trip|Geology"
   },
   {
     "id":2,
@@ -29,7 +31,7 @@
     "az_event_date_duration" : 0,
     "az_event_date" : "03/14",
     "az_event_date_to" : "03/14",
-    "az_event_date_rrule" : "1",
+    "az_event_date_rrule" : 1,
     "uaqs_summary" : "An annual celebration of the mathematical constant π (pi), always on March 14.",
     "az_body" : "The date March 14 is often written as 3/14, corresponding to the first three digits of the number π (3.14159265358979...), so has grown into national celebration of the constant. The University of Arizona generally puts on events as part of these festivities, some involving the Arizona Mathematics Road Show Bus.",
     "az_location": [
@@ -41,8 +43,11 @@
     "uaqs_link_info" : "https://en.wikipedia.org/wiki/Pi_Day",
     "uaqs_link_info_title" : "Information on Pi Day",
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "pi.pdf|approximately.pdf",
-    "az_attachments_description" : "The symbol π.|The start of the decimal expansion of π."
+    "az_attachments_description" : "The symbol π.|The start of the decimal expansion of π.",
+    "az_event_categories" : "Special Event|Mathematics"
   },
   {
     "id":3,
@@ -52,7 +57,6 @@
     "az_event_date_duration" : "0",
     "az_event_date" : "05/04 19:00",
     "az_event_date_to" : "05/04 19:00",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "A survey of literature extending backwards from the twentieth century shows no evidence for a continuous British magical tradition.",
     "az_body" : "Speaker:\nKate Usherswell, University of Cambridge.\n\nAbstract:\n“Practitioners of magic in the twentieth and later nineteenth centuries such as Crowley and Yates used texts that are (from the most charitable perspective) re-creations rather than representing extant traditions. In the early nineteenth century when Byron wished to portray a magician, he chose a Swiss setting for his Manfred, rather than drawing on anything from his native land. The persecution of witches extending back from the eighteenth through the seventeenth centuries was framed entirely within the accounts of their accusers, not by any independent literary productions. Parallel explorations of astrology and alchemy are best understood in the context of proto-science rather than some independent magical tradition (the much-discussed full collection of Newton's writings being a case in point). In the sixteenth century John Dee has a reasonable claim to be a genuine writer on magic, but this is offset by the tragic arc of his career, from high regard at court to penury and the ridicule of his contemporaries. At around the same time Marlowe turned to the already pan-European legend of Faust for his magician, rather than drawing on anything closer to hand. Figures such as John Damian in the earlier sixteenth century are again best understood as belonging to alchemical proto-science, and in Damian's case his status as a foreigner strengthens the case that there was no insular magical tradition. One has to look several centuries earlier to Michael Scott to find an insular magician famous enough to have acquired a European reputation (Dante consigns him to one of the circles of Hell), and only the entirely legendary Merlin is held in any significant regard.”",
     "az_location": [
@@ -62,8 +66,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Literature"
   },
   {
     "id":4,
@@ -73,7 +80,7 @@
     "az_event_date_duration" : "0",
     "az_event_date" : "05/04",
     "az_event_date_to" : "05/04",
-    "az_event_date_rrule" : "2",
+    "az_event_date_rrule" : 2,
     "az_event_date_rrule_index" : "1",
     "uaqs_summary" : "An annual celebration by Star Wars fans, always on May 4.",
     "az_body" : "This celebration by fans of the Star Wars movies and their spin-offs is based on a bad pun: the oft-repeated “may the Force be with you” sounds like “May the fourth...”.",
@@ -84,8 +91,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : ""
   },
   {
     "id":5,
@@ -95,7 +105,7 @@
     "az_event_date" : "06/08 09:00",
     "az_event_date_to" : "06/08 17:00",
     "az_event_date_duration" : "custom",
-    "az_event_date_rrule" : "3",
+    "az_event_date_rrule" : 3,
     "az_event_date_rrule_index" : "1",
     "uaqs_summary" : "First Summer Session intensive course on tether technologies.",
     "az_body" : "Small-scale astroengineering requires materials with very high tensile strengths, whereas for medium-scale projects the maximum strengths possible with chemical bonds are insufficient. This intensive month-long course explores the limits of current technologies and physics, as well as speculative future developments.",
@@ -106,8 +116,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Aerospace Engineering"
   },
   {"id":6,
     "title" : "Weekend Canyon Running Training",
@@ -116,7 +129,7 @@
     "az_event_date" : "Sunday 04:30",
     "az_event_date_to" : "Sunday 14:00",
     "az_event_date_duration" : "custom",
-    "az_event_date_rrule" : "4",
+    "az_event_date_rrule" : 4,
     "uaqs_summary" : "Weekend training for aspiring Canyon trail runners.",
     "az_body" : "Starting near the University, participants will extend their running distance each week, aiming first to reach the Finger Rock trailhead, and finally the top of Kimball, before returning to the starting location.",
     "az_location": [
@@ -125,9 +138,12 @@
         "title": ""
       }
     ],
-    "az_photos" : "",
+    "az_photos" : "canyon_running.jpg",
+    "az_thumbnail" : "arizona_running.png",
+    "az_featured_image_as_thumb" : "0",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Training|Athletics"
   },
   {"id":7,
     "title" : "Popular Geosciences Talk: The Earth is Solid",
@@ -135,7 +151,6 @@
     "az_subheading" : "The Earth is Solid",
     "az_event_date" : "today +10 days 19:00",
     "az_event_date_to" : "today +10 days 20:00",
-    "az_event_date_rrule" : "",
     "az_event_date_duration" : "custom",
     "uaqs_summary" : "A Geosciences talk for a general audience on igneous rocks.",
     "az_body" : "Speaker:\nJames Hutton.\n\nAbstract:\n“Vast volumes of now solid rock were once liquid. One can look at the towering granite cliffs of Yosemite and suppose that there was a time when oceans of magma existed within the Earth. However geophysical evidence shows that practically everything above the liquid outer core is solid. Even the more fluid aesthenosphere that provides the motility needed for plate tectonics is still a solid in all practical respects, and in highly active areas such as mid-ocean ridges only a small fraction of liquid magma exists at any given time; moreover currently identified magma chambers have many gradations between solid and liquid.\n\nAlthough there have been times of increased volcanic activity in the past (the flood basalts of the Columbia River basin or the Deccan Traps), there is no need to suppose that conditions beneath the earth were significantly different when igneous rocks formed. Deep time provides the correct perspective: the time during which a rock existed as liquid in a magma chamber or lava flow is almost vanishingly small compared to the time it subsequently persisted as a solid. Only the exceptional conditions for one phase of the Earth's earlier history (the postulated Late Heavy Bombardment) would have led to proportionally large volumes of liquified rock.”",
@@ -145,9 +160,12 @@
         "title": ""
       }
     ],
-    "az_photos" : "",
+    "az_photos" : "earth_solid.jpg|earth_solid_2.jpg",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Geology"
   },
   {"id":8,
     "title" : "Skeptical Astronomy Literature Survey",
@@ -156,9 +174,9 @@
     "az_event_date" : "07/13 09:00",
     "az_event_date_to" : "07/13 17:00",
     "az_event_date_duration" : "custom",
-    "az_event_date_rrule" : "5",
+    "az_event_date_rrule" : 5,
     "uaqs_summary" : "Second Summer Session intensive Skeptical Astronomy literature survey.",
-    "az_body" : "This intensive summer course explores literary references relevant to  Skeptical Astronomy, from the Epic of Gilgamesh to contemporary blog posts.",
+    "az_body" : "This intensive summer course explores literary references relevant to Skeptical Astronomy, from the Epic of Gilgamesh to contemporary blog posts.",
     "az_location": [
       {
         "url": "",
@@ -166,8 +184,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Astronomy"
   },
   {"id":9,
     "title" : "Northern European Comedy Film Festival I: Leningrad Cowboys Go America",
@@ -176,7 +197,6 @@
     "az_event_date" : "today - 6 days 18:00",
     "az_event_date_to" : "today - 6 days 20:00",
     "az_event_date_duration" : "custom",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "Screening: Leningrad Cowboys Go America.",
     "az_body" : "Directed by Aki Kaurismäki, 1889.\n\nDespite the title, this is a Finnish film. An unsuccessful band of musicians leaves their frozen homeland for New York to seek their fortune, travelling the length of the eastern US to play at a wedding in Mexico. Look out for a cameo appearance by Jim Jarmusch as the used car dealer who provides the transportation to get this road movie started.",
     "az_location": [
@@ -186,8 +206,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "europe_film.png",
+    "az_featured_image_as_thumb" : "0",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Film Screening|Film|Northern European Comedy Film Festival"
   },
   {"id":10,
     "title" : "Northern European Comedy Film Festival II: The Adventures of Picasso",
@@ -196,7 +219,6 @@
     "az_event_date" : "today + 1 days 18:00",
     "az_event_date_to" : "today + 1 days 20:00",
     "az_event_date_duration" : "custom",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "Screening: The Adventures of Picasso.",
     "az_body" : "Directed by Tage Danielsson, 1978 (original title: Picassos äventyr).\n\nIn a fantastically re-imagined biography of Pablo Picasso, the famous painter encounters many of the artistic figures and political events of the twentieth century.",
     "az_location": [
@@ -206,8 +228,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "europe_film.png",
+    "az_featured_image_as_thumb" : "0",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Film Screening|Film|Northern European Comedy Film Festival"
   },
   {"id":11,
     "title" : "Northern European Comedy Film Festival III: The 100 Year-Old Man Who Climbed Out the Window and Disappeared",
@@ -215,7 +240,6 @@
     "az_subheading" : "Comedy Film Festival III",
     "az_event_date" : "today + 8 days 18:00",
     "az_event_date_to" : "today + 8 days 20:00",
-    "az_event_date_rrule" : "",
     "az_event_date_duration" : "120",
     "uaqs_summary" : "Screening: The 100 Year-Old Man Who Climbed Out the Window and Disappeared.",
     "az_body" : "Directed by Felix Herngren, 2015 (original title: Hundraåringen som klev ut genom fönstret och försvann)\n\nThe story of an old man's adventures after fleeing his 100th birthday celebration at a nursing home interleave with flashbacks to his long life, during which he encountered many of the most famous figures of the twentieth century.",
@@ -226,8 +250,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "europe_film.png",
+    "az_featured_image_as_thumb" : "0",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Film Screening|Film|Northern European Comedy Film Festival"
   },
   {"id":12,
     "title" : "Alternative Geodesy I (introduction)",
@@ -236,7 +263,7 @@
     "az_event_date" : "08/23 15:00:00",
     "az_event_date_to" : "08/23 17:00:00",
     "az_event_date_duration" : "120",
-    "az_event_date_rrule" : "6",
+    "az_event_date_rrule" : 6,
     "uaqs_summary" : "Alternative Geodesy I introductory course.",
     "az_body" : "An introduction to alternative hypotheses in geodesy and cosmology.",
     "az_location": [
@@ -246,8 +273,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Geology"
   },
   {"id":13,
     "title" : "Cycling Faster than Light",
@@ -256,7 +286,6 @@
     "az_event_date" : "today + 1 month 12:00",
     "az_event_date_to" : "today + 1 month 13:00",
     "az_event_date_duration" : "60",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "Hi-tech handicapping lets cyclists race a pulse of light and win.",
     "az_body" : "In a unique collaboration between University of Arizona Athletics, the College of Optical Sciences and the Department of Physics, cyclists will be able to race against a pulse of light with some chance of winning. Recent advances in physics have led to the technique of slowing the speed of light by more than eight orders of magnitude. The cyclists will set off at the eastern end of the University Mall at the same time that the light pulse enters a fiber-optic cable there, but because of the delay introduced midway, they will stand a chance of reaching the end of the course before the pulse re-emerges.",
     "az_location": [
@@ -266,8 +295,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Special Event|Athletics|Physics"
   },
   {"id":14,
     "title" : "Alternative Geodesy II (advanced topics)",
@@ -276,7 +308,7 @@
     "az_event_date" : "01/14 15:00:00",
     "az_event_date_to" : "01/14 17:00:00",
     "az_event_date_duration" : "120",
-    "az_event_date_rrule" : "7",
+    "az_event_date_rrule" : 7,
     "uaqs_summary" : "Alternative Geodesy II course (advanced topics).",
     "az_body" : "Advanced explorations of topics in alternative geodesy and cosmology.",
     "az_location": [
@@ -286,16 +318,18 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Geology"
   },
   {"id":15,
-    "title" : "The Basque minority in Nueva España",
+    "title" : "The Basque Minority in Nueva España",
     "az_summary" : "",
     "az_subheading" : "Basques in Nueva España",
     "az_event_date" : "today + 2 weeks 17:00",
     "az_event_date_to" : "today + 2 weeks 18:00",
-    "az_event_date_rrule" : "",
     "az_event_date_duration" : "60",
     "uaqs_summary" : "Basques played an important role in Spanish colonial North America.",
     "az_body" : "This popular talk places the Basque minority in Spain's North American colony within a wider context of other ethnic and religious minorities in colonial settings, positing that the success of a minority within the wider society depends both on enhancing social cohesion and collaboration within the minority, and avoiding a prejudiced response from the majority. Basques were benefitted from both of these aspects, giving them a better position than other minorities in Spain's colonies, and overall a more significant role there than in the Iberian Peninsula.",
@@ -306,8 +340,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|History"
   },
   {"id":16,
     "title" : "Clever Bastards of the Fifteenth Century: Ikkyū and Du Fay",
@@ -316,7 +353,6 @@
     "az_event_date" : "today + 3 weeks 17:00",
     "az_event_date_to" : "today + 3 weeks 18:00",
     "az_event_date_duration" : "60",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "The illegitimate Japanese poet and Franco-Flemish composer compared.",
     "az_body" : "The Japanese poet Ikkyū and Franco-Flemish composer Guillaume Du Fay were near-contemporaries, and although they lived out their lives on opposite sides of the world it is instructive to compare their places in their respective societies. Both were of illegitimate birth (Ikkyū the son of the Emperor, Du Fay the son of an unnamed priest), both made innovative contributions to their arts, and both had a nominally religious position in addition to their heavy involvement in secular life.",
     "az_location": [
@@ -326,8 +362,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|History"
   },
   {"id":17,
     "title" : "Planetary Engineering I (introduction)",
@@ -336,7 +375,7 @@
     "az_event_date" : "08/26 09:30",
     "az_event_date_to" : "08/26 11:00",
     "az_event_date_duration" : "120",
-    "az_event_date_rrule" : "8",
+    "az_event_date_rrule" : 8,
     "uaqs_summary" : "Planetary Engineering I introductory course.",
     "az_body" : "An introduction to geoengineering, terraforming, and space habitat construction.",
     "az_location": [
@@ -346,28 +385,33 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Planetary Engineering"
   },
   {"id":18,
-    "title" : "GMOs: the New Ecoterrorist Hazard",
+    "title" : "GMOs: The New Ecoterrorist Hazard",
     "az_summary" : "",
     "az_subheading" : "Ecoterrorists embrace GMOs",
     "az_event_date" : "today + 10 days 12:00",
     "az_event_date_to" : "today + 10 days 13:00",
     "az_event_date_duration" : "60",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "Ecoterrorists have started to embrace genetic engineering.",
-    "az_body" : "Security briefings seminar series\n\nSpeaker:\nAllan Pinkerton\n\nAbstract:“Traditionally, ecological activists have shunned genetic engineering, boycotting GMO-derived products and sabotaging experimental crops. Recently, however, some ecologists have promoted the idea that the only hope for some species to survive projected rapid environmental change is genetic manipulation, either by selective breeding for strains pre-adapted to future conditions or direct genetic engineering. The first indication that breakaway factions in the activist community have embraced this new direction has come from an explosion disrupting logging operations in the Pacific Northwest. Investigation revealed that no bomb had been planted, but that the normal mechanisms of resin formation within the trees themselves had been genetically modified to emplace lenses of high explosive within their bark (giving them the kind of reactive armor used in tanks and other military vehicles). There is a real risk that other species may be weaponized to defend themselves against human interference, and biotechnology research groups at universities are being asked to help identify the dangerous subversives they may be harboring.”",
+    "az_body" : "Security briefings seminar series\n\nSpeaker:\nAllan Pinkerton\n\nAbstract:\n“Traditionally, ecological activists have shunned genetic engineering, boycotting GMO-derived products and sabotaging experimental crops. Recently, however, some ecologists have promoted the idea that the only hope for some species to survive projected rapid environmental change is genetic manipulation, either by selective breeding for strains pre-adapted to future conditions or direct genetic engineering. The first indication that breakaway factions in the activist community have embraced this new direction has come from an explosion disrupting logging operations in the Pacific Northwest. Investigation revealed that no bomb had been planted, but that the normal mechanisms of resin formation within the trees themselves had been genetically modified to emplace lenses of high explosive within their bark (giving them the kind of reactive armor used in tanks and other military vehicles). There is a real risk that other species may be weaponized to defend themselves against human interference, and biotechnology research groups at universities are being asked to help identify the dangerous subversives they may be harboring.”",
     "az_location": [
       {
         "url": "",
         "title": ""
       }
     ],
-    "az_photos" : "",
+    "az_photos" : "gmo.jpg",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Security|Environmental Science"
   },
   {"id":19,
     "title" : "Baroque Vocal Music in New World Indigenous Langages",
@@ -376,18 +420,20 @@
     "az_event_date" : "today + 13 days 18:30",
     "az_event_date_to" : "today + 13 days 20:30",
     "az_event_date_duration" : "120",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "Concert: Baroque vocal music from the Americas setting texts in indigenous langages.",
     "az_body" : "In addition to the Latin, Spanish and Portugese texts, Baroque composers in the New World turned to indigenous langages for their vocal settings. This concert features “Xicochi, xicochi, conetzintle” (by Gaspar Fernandez, in Nahuatl), “Hanacpachap cuisscuinin” (by Juan Pérez Bocanegra, in Quecha) and many more.",
     "az_location": [
       {
-        "url": "http://directory.arizona.edu/buildings/holsclaw-hall",
+        "url": "https://music.arizona.edu/facilities/concert-halls/",
         "title": "Holsclaw Hall"
       }
     ],
-    "az_photos" : "",
+    "az_photos" : "holsclaw_hall.jpg",
+    "az_thumbnail" : "holsclaw_hall.jpg",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Concert|Music"
   },
   {"id":20,
     "title" : "Planetary Engineering II (advanced topics)",
@@ -396,7 +442,7 @@
     "az_event_date" : "01/13 09:30",
     "az_event_date_to" : "01/13 11:00",
     "az_event_date_duration" : "120",
-    "az_event_date_rrule" : "9",
+    "az_event_date_rrule" : 9,
     "uaqs_summary" : "Planetary Engineering II course (advanced topics).",
     "az_body" : "Advanced explorations of topics in geoengineering, terraforming, and space habitat construction.",
     "az_location": [
@@ -406,8 +452,11 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Course|Planetary Engineering"
   },
   {"id":21,
     "title" : "The Historical Context of Raphael Pumpelly's Arizona Mining Adventure",
@@ -416,7 +465,6 @@
     "az_event_date" : "today + 17 days 12:00",
     "az_event_date_to" : "today + 17 days 13:00",
     "az_event_date_duration" : "60",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "Looking beneath the surface of a famous geologist's popular accounts of his experiences in Arizona.",
     "az_body" : "Raphael Pumpelly, a well-known geologist and mining engineer, published magazine articles and memoirs giving popular accounts of his experiences in the territories then recently annexed to the US by the Gadsden Purchase. Beneath the surface of his tale of mining operations beleaguered by Apache raids there are hidden themes of how the influx of Anglo settlers related to the hispanic and native populations in those areas, and how narratives of the American West were bought and sold by rest of the US population.",
     "az_location": [
@@ -425,9 +473,12 @@
         "title": ""
       }
     ],
-    "az_photos" : "",
+    "az_photos" : "pumpelly_arizona.jpg",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|History|Geology"
   },
   {"id":22,
     "title" : "The Legacy of Marin Mersenne",
@@ -436,7 +487,6 @@
     "az_event_date" : "today + 31 days 12:00",
     "az_event_date_to" : "today + 31 days 13:00",
     "az_event_date_duration" : "60",
-    "az_event_date_rrule" : "",
     "uaqs_summary" : "Marin Mersenne was an early and influential contributor to both musical theory and mathematics.",
     "az_body" : "Marin Mersenne's name enjoys wide currency at the present day because of his association with Mersenne primes, those prime numbers that are one less than some power of 2 (3, 7, 31, 127, 8191 ...); his writings also include a treatise on music theory that is a valuable window into performance and instrument construction practices in the early seventeenth century.",
     "az_location": [
@@ -446,8 +496,33 @@
       }
     ],
     "az_photos" : "",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
     "az_attachments" : "",
-    "az_attachments_description" : ""
+    "az_attachments_description" : "",
+    "az_event_categories" : "Lecture|Music|Mathematics"
+  },
+  {"id":23,
+    "title" : "Pulse: Weavings and Paintings by Marlowe Katoney",
+    "az_summary" : "",
+    "az_subheading" : "Pulse: Weavings and Paintings",
+    "az_event_date" : "today - 3 days 0:00",
+    "az_event_date_to" : "today + 27 days 23:59",
+    "az_event_date_duration" : "44639",
+    "uaqs_summary" : "First trained as a painter at the University of Arizona, Winslow-based artist Marlowe Katoney (Diné) was taught to weave by his maternal grandmother in 2010. Since then, Katoney has used a hybrid approach to his weaving practice, combining elements from painting, color theory, perspective, and composition with traditional Navajo iconography and designs.",
+    "az_body" : "First trained as a painter at the University of Arizona, Winslow-based artist Marlowe Katoney (Diné) was taught to weave by his maternal grandmother in 2010. Since then, Katoney has used a hybrid approach to his weaving practice, combining elements from painting, color theory, perspective, and composition with traditional Navajo iconography and designs.\n\nThe subjects of Katoney's work are varied, as he literally and figuratively weaves traditional imagery with contemporary pictorial practices. Many works directly relate to events in his life, while others are drawn from larger concepts related to popular culture, street art, nature, family, and Navajo culture.\n\nAs the artist explains, \"For me, being an artist is an ongoing pursuit of freedom. It's of the aesthetic of not being limited to the notion of having to abide by the popular [perceptions] of beauty or to create something readily identifiable as being 'Navajo' but instead it's to deconstruct old ideas to create new ones ... Addressing subject matter and composition in this way contextualizes traditional Navajo weaving into contemporary art.\"\n\nPulse features approximately thirty weavings and paintings created over the span of fifteen years that are drawn from both private and public collections. This exhibition is curated by Dr. Anya Montiel, Curator and Native American Art Historian, and Olivia Miller, UAMA Director and Curator.\n\nThis exhibition is made possible through support from the Terra Foundation for American Art.",
+    "az_location": [
+      {
+        "url": "https://map.arizona.edu/2",
+        "title": "Museum of Art"
+      }
+    ],
+    "az_photos" : "navajo_wool_weaving.jpg",
+    "az_thumbnail" : "",
+    "az_featured_image_as_thumb" : "1",
+    "az_attachments" : "",
+    "az_attachments_description" : "",
+    "az_event_categories" : "Special Event"
   }
 ]
 }

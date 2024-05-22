@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_core
+name: az_enterprise_thumbnail_small
+label: 'Enterprise Thumbnail Small'
+effects:
+  52c2e99e-2c6a-4683-ab16-932a1debaf76:
+    uuid: 52c2e99e-2c6a-4683-ab16-932a1debaf76
+    id: image_scale
+    weight: 1
+    data:
+      width: 190
+      height: 124
+      upscale: true

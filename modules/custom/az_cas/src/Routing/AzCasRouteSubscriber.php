@@ -32,11 +32,6 @@ class AzCasRouteSubscriber extends RouteSubscriberBase {
    * {@inheritdoc}
    */
   protected function alterRoutes(RouteCollection $collection) {
-    if ($this->configFactory->get('az_cas.settings')->get('disable_login_form')) {
-      $collection->get('user.login')->setRequirement('_access', 'FALSE');
-      $collection->get('user.login.http')->setRequirement('_access', 'FALSE');
-    }
-
     if ($this->configFactory->get('az_cas.settings')->get('disable_password_recovery_link')) {
       $collection->get('user.pass')->setRequirement('_access', 'FALSE');
       $collection->get('user.pass.http')->setRequirement('_access', 'FALSE');
