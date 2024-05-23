@@ -25,7 +25,7 @@ az-proxima-nova:
 az-icons:
   css:
     theme:
-      https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}
+      /libraries/az-icons/az-icons-styles.min.css: {}
 arizona-bootstrap:
   css:
     theme:

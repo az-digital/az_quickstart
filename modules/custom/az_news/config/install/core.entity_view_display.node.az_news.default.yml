@@ -115,7 +115,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'col-lg-10 offset-lg-1'
+        classes: 'col-12'
         id: ''
         element: div
         show_label: false
