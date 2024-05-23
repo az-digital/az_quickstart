@@ -114,6 +114,7 @@
         "drupal/views_bootstrap": "5.4.0",
         "drupal/views_remote_data": "1.0.2",
         "drupal/viewsreference": "2.0.0-beta7",
+        "drupal/viewsreference_filter": "1.0.4",
         "drupal/webform": "6.2.2",
         "drupal/workbench_access": "2.0.1",
         "drupal/xmlsitemap": "1.5.0",
@@ -210,6 +211,10 @@
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
                 "Configuration schema for Enable extra settings incorrect (3402036)": "https://www.drupal.org/files/issues/2023-11-17/configuration-schema-for-views-reference-field-settings-3402036-4.patch",
                 "View without empty handling could break caching (3017716)": "https://www.drupal.org/files/issues/2024-02-09/3017716-22.patch"
+            },
+            "drupal/viewsreference_filter": {
+                "Setup support for Better Exposed Filters via exposedFormAlter() method (3192458)": "https://www.drupal.org/files/issues/2021-01-12/3192458-2.patch",
+                "Exposed filter not working with select filters, show filters option on and default value all (3406728)": "https://www.drupal.org/files/issues/2024-05-15/3406728-7.patch"
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch",
