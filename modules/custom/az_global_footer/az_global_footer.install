@@ -194,7 +194,7 @@ function az_global_footer_update_1020801() {
  *
  * UAlert links in the global footer will be updated with Annual Security Report.
  */
-function az_global_footer_update_10201001() {
+function az_global_footer_update_1021001() {
   $updated_count = 0;
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
