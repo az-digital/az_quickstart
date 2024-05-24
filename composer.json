@@ -175,7 +175,8 @@
                 "Loadjs css file load issue (Quickstart Issue 2772)": "https://gist.githubusercontent.com/tadean/163159a15080a6a7714ed13459393f80/raw/a1cebecc335a0a058141356b69857094b32af1e3/loadjs_2772.patch",
                 "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2024-01-18/2350049-30.patch",
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch",
-                "Source path has to start with a slash exception when hitting path prefixed with index.php with RequestPath condition (3043779)": "https://www.drupal.org/files/issues/2023-01-27/3043779-46.patch"
+                "Source path has to start with a slash exception when hitting path prefixed with index.php with RequestPath condition (3043779)": "https://www.drupal.org/files/issues/2023-01-27/3043779-46.patch",
+                "AliasManager->getAliasByPath('//') PHP Warning (3215098)": "https://www.drupal.org/files/issues/2021-05-21/3215098-fix-getAliasByPath-with-multiple-slash-9.2.x-2.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
