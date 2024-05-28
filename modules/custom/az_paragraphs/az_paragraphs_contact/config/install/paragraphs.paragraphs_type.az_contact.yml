@@ -1,6 +1,8 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  module:
+    - az_paragraphs
 id: az_contact
 label: Contact
 icon_uuid: null

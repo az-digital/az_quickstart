@@ -38,11 +38,8 @@ process:
     plugin: default_value
     default_value: az_news
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title:
     plugin: sub_process
@@ -65,7 +62,9 @@ process:
     source: field_uaqs_body
     process:
       delta: delta
-      value: value
+      value:
+        plugin: az_entity_embed_process
+        source: value
       format:
         plugin: default_value
         default_value: az_standard
@@ -162,11 +161,8 @@ process:
           to_format: 'Y-m-d'
           source: value
       langcode:
-        plugin: static_map
-        bypass: true
+        plugin: az_default_langcode
         source: language
-        map:
-          und: en
 
   field_az_published:
     plugin: sub_process
@@ -180,11 +176,8 @@ process:
           to_format: 'Y-m-d'
           source: value
       langcode:
-        plugin: static_map
-        bypass: true
+        plugin: az_default_langcode
         source: language
-        map:
-          und: en
 
   field_az_news_tags:
     -
@@ -198,24 +191,31 @@ process:
     source: field_uaqs_link
     process:
       delta: delta
-      uri:
-        - plugin: str_replace
-          source: url
-          search: '[node:url]'
-          replace: ''
-      title: title
+      url:
+        plugin: str_replace
+        search: '[node:url]'
+        replace: ''
+        source: url
+      title:
+        plugin: default_value
+        source: title
+        default_value: 'Read more'
       attributes: attributes
 
   field_az_link:
     - plugin: field_link
       source: '@preprocess_field_uaqs_link'
       uri_scheme: "https://"
-
-  'field_az_link/0/uri':
-    - plugin: str_replace
-      source: field_az_link/0/uri
-      search: 'route:<nolink>'
-      replace: ''
+    - plugin: sub_process
+      process:
+        delta: delta
+        uri:
+          - plugin: str_replace
+            source: uri
+            search: 'route:<nolink>'
+            replace: ''
+        title: title
+        attributes: attributes
 
   field_az_byline:
     plugin: sub_process
@@ -274,18 +274,19 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
-
   path/pathauto:
-    -
-      plugin: skip_on_empty
+    - plugin: str_replace
       source: alias
-      method: process
-    -
-      plugin: default_value
-      default_value: 0
-
+      regex: true
+      search: /.$/
+      replace: '0'
+    - plugin: default_value
+      source: alias
+      default_value: 1
+      strict: true
+    - plugin: callback
+      callable: intval
   path/alias:
-    -
-      plugin: skip_on_empty
-      source: alias
-      method: process
+    plugin: skip_on_empty
+    source: alias
+    method: process

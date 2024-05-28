@@ -3,6 +3,7 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.az_cards.field_az_cards
+    - field.field.paragraph.az_cards.field_az_title
     - paragraphs.paragraphs_type.az_cards
   module:
     - az_card
@@ -12,11 +13,19 @@ bundle: az_cards
 mode: default
 content:
   field_az_cards:
-    weight: 0
+    type: az_card
+    weight: 1
+    region: content
     settings: {  }
     third_party_settings: {  }
-    type: az_card
+  field_az_title:
+    type: string_textfield
+    weight: 0
     region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
 hidden:
   created: true
   status: true

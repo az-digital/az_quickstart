@@ -17,7 +17,10 @@ destination:
 process:
 
   field_az_text_area/value:
-    plugin: paragraphs_extra_info_field_merge
+    -
+      plugin: paragraphs_extra_info_field_merge
+    -
+      plugin: az_entity_embed_process
   field_az_text_area/format:
     plugin: default_value
     default_value: az_standard

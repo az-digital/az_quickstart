@@ -3,9 +3,32 @@ status: true
 dependencies:
   config:
     - field.field.paragraph.az_cards.field_az_cards
+    - field.field.paragraph.az_cards.field_az_title
     - paragraphs.paragraphs_type.az_cards
   module:
     - az_card
+    - field_group
+third_party_settings:
+  field_group:
+    group_title:
+      children:
+        - field_az_title
+      label: Title
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: paragraph.az_cards.default
 targetEntityType: paragraph
 bundle: az_cards
@@ -17,6 +40,14 @@ content:
     settings:
       interactive_links: true
     third_party_settings: {  }
-    weight: 0
+    weight: 1
+    region: content
+  field_az_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
     region: content
 hidden: {  }

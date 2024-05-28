@@ -2,8 +2,8 @@
 
 namespace Drupal\az_event\Plugin\views\filter;
 
-use Drupal\views\Plugin\views\filter\Date;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Plugin\views\filter\Date;
 use Drupal\views\Views;
 
 /**
@@ -36,7 +36,10 @@ class AZCalendarFilter extends Date {
       // Prepare a wrapper for the calendar JS to access.
       $calendar_element = [
         '#type' => 'container',
-        '#attached' => ['library' => ['az_event/az_calendar_filter']],
+        '#attached' => [
+          'library' => ['az_event/az_calendar_filter'],
+          'drupalSettings' => ['azCalendarFilter' => $filter_settings],
+        ],
         '#attributes' => [
           'class' => [
             'az-calendar-filter-wrapper',

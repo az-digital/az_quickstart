@@ -287,6 +287,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: field_az_alphabetical_index_value
           plugin_id: standard
         title:
           id: title
@@ -299,6 +300,7 @@ display:
           exposed: false
           expose:
             label: ''
+            field_identifier: title
           entity_type: node
           entity_field: title
           plugin_id: standard

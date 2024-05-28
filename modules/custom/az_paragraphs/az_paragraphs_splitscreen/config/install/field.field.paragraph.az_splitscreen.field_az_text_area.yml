@@ -15,7 +15,7 @@ field_name: field_az_text_area
 entity_type: paragraph
 bundle: az_splitscreen
 label: Text
-description: ''
+description: 'White text will be highlighted in gray (only while editing) to keep the text visible.'
 required: true
 translatable: true
 default_value: {  }

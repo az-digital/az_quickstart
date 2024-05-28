@@ -10,7 +10,7 @@
           "settings": {
           "id" : "menu_block:main",
           "label" : "Main navigation",
-          "label_display" : false,
+          "label_display" : "visible",
           "provider" : "menu_block",
           "follow" : "0",
           "follow_parent" : "child",
@@ -35,7 +35,7 @@
           "settings": {
             "id" : "menu_block:main",
             "label" : "Main navigation",
-            "label_display" : false,
+            "label_display" : "visible",
             "provider" : "menu_block",
             "follow" : "0",
             "follow_parent" : "child",
@@ -61,7 +61,7 @@
           "settings": {
             "id" : "menu_block:main",
             "label" : "Main navigation",
-            "label_display" : false,
+            "label_display" : "visible",
             "provider" : "menu_block",
             "follow" : "0",
             "follow_parent" : "child",

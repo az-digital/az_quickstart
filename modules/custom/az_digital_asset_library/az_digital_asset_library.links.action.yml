@@ -1,8 +1,0 @@
-az_digital_asset_library.add_asset_page:
-  appears_on:
-    - entity.media.collection
-    - view.media_library.page
-    - view.media_library.widget_table
-  route_name: entity_browser.az_digital_asset_library
-  title: 'Add Arizona Digital Assets'
-  weight: 100

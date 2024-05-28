@@ -39,6 +39,8 @@ process:
       index:
         - 0
         - value
+    -
+      plugin: az_entity_embed_process
 
   field_az_cards/link_title:
     -
@@ -75,17 +77,38 @@ process:
       # Set the link style to default, since we can't migrate classes to this field.
       link_style: 'btn-block'
 
+  bottom_spacing_processed:
+    - plugin: default_value
+      default_value: 'mb-4'
+      source: bottom_spacing
+  card_width_processed:
+    - plugin: default_value
+      default_value: 'col-md-12 col-lg-12'
+  card_style_processed:
+    - plugin: default_value
+      default_value: 'card'
+  card_clickable_processed:
+    - plugin: default_value
+      default_value: 0
+  card_width_sm_processed:
+    - plugin: default_value
+      default_value: 'col-sm-12'
+  card_width_xs_processed:
+    - plugin: default_value
+      default_value: 'col-12'
+
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
       az_cards_paragraph_behavior:
-        card_width: 'col-md-12 col-lg-12'
-        card_style: 'card'
-        card_clickable: 0
+        card_width: '@card_width_processed'
+        card_style: '@card_style_processed'
+        card_clickable: '@card_clickable_processed'
         az_display_settings:
-            bottom_spacing: bottom_spacing
-            card_width_sm: 'col-sm-12'
-            card_width_xs: 'col-12'
+          bottom_spacing: '@bottom_spacing_processed'
+          card_width_sm: '@card_width_sm_processed'
+          card_width_xs: '@card_width_xs_processed'
+
 
 dependencies:
   enforced:

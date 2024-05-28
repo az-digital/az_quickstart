@@ -1,0 +1,93 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_trellis_events
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - Events
+migration_group: az_trellis_events
+label: 'Trellis Events'
+source:
+  plugin: az_trellis_events_api
+  trellis_ids: {  }
+  track_changes: true
+  fields:
+    -
+      name: id
+      label: ID
+      selector: Id
+    -
+      name: name
+      label: Name
+      selector: Name
+    -
+      name: url
+      label: URL
+      selector: Branded_Event_URL
+    -
+      name: summary
+      label: Summary
+      selector: Summary
+    -
+      name: owner
+      label: 'Owner NetID'
+      selector: Owner_NetID
+    -
+      name: timezone
+      label: 'Time Zone'
+      selector: tz_name
+    -
+      name: start_date_time
+      label: 'Start Date and Time'
+      selector: Start_DateTime
+    -
+      name: end_date_time
+      label: 'End Date and Time'
+      selector: End_DateTime
+    -
+      name: publish
+      label: Publish
+      selector: Publish_Formula
+  ids:
+    id:
+      type: string
+process:
+  title: name
+  field_az_trellis_id: id
+  field_az_link/uri: url
+  field_az_link/title:
+    -
+      plugin: default_value
+      default_value: 'Event details'
+  field_az_summary:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: summary
+  status:
+    -
+      plugin: get
+      source: publish
+    -
+      plugin: default_value
+      strict: true
+      default_value: 0
+  field_az_event_date/value:
+    -
+      plugin: format_date
+      source: start_date_time
+      from_format: 'Y-m-d\TH:i:s.vp'
+      to_format: U
+  field_az_event_date/end_value:
+    -
+      plugin: format_date
+      source: end_date_time
+      from_format: 'Y-m-d\TH:i:s.vp'
+      to_format: U
+destination:
+  plugin: 'entity:node'
+  default_bundle: az_event
+  validate: false
+migration_dependencies: null

@@ -13,3 +13,21 @@ function az_person_preprocess_node__az_person(&$variables) {
   $variables['#attached']['library'][] = 'az_person/az_person';
 
 }
+
+/**
+ * Implements template_preprocess_views_view()
+ *
+ * Modal view display uses fields instead of content. Ensure CSS loads for
+ * the view as well.
+ */
+function az_person_preprocess_views_view(&$variables) {
+
+  $view = $variables['view'];
+  $id = $view->storage->id();
+  $variables['id'] = $id;
+
+  if ($id === 'az_person') {
+    $variables['#attached']['library'][] = 'az_person/az_person';
+  }
+
+}

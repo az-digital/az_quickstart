@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.az_author.field_az_author_literal
+  module:
+    - az_publication
+id: az_author.az_author.field_az_author_literal
+field_name: field_az_author_literal
+entity_type: az_author
+bundle: az_author
+label: Literal
+description: 'A complete name, e.g. The University of Arizona, Wilbur Wildcat, Wilma Wildcat. Use for a complete name that should be displayed as-is.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

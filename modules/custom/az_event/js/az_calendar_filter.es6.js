@@ -4,7 +4,7 @@
  *
  */
 
-(($, Drupal, drupalSettings) => {
+(($, Drupal, drupalSettings, once) => {
   Drupal.behaviors.azCalendarFilter = {
     attach(context, settings) {
       const filterInformation = drupalSettings.azCalendarFilter;
@@ -35,8 +35,7 @@
       $('.az-calendar-filter-calendar').datepicker('refresh');
 
       // Initialize calendar widget wrapper if needed.
-      $('.az-calendar-filter-wrapper', context)
-        .once('azCalendarFilter')
+      $(once('azCalendarFilter', '.az-calendar-filter-wrapper', context))
         // eslint-disable-next-line func-names
         .each(function () {
           const $wrapper = $(this);
@@ -109,11 +108,28 @@
               .attr('aria-pressed', 'false');
           }
 
+          // Get initial day if present.
+          const $inputWrapper = $wrapper.closest(
+            '.views-widget-az-calendar-filter',
+          );
+          const initial = $inputWrapper.find('input').eq(0).val();
+          let calendarInitialDay = new Date();
+          if (typeof initial !== 'undefined') {
+            const initialDates = initial.split('-');
+            if (initialDates.length === 3) {
+              calendarInitialDay = new Date(
+                initialDates[0],
+                initialDates[1] - 1,
+                initialDates[2],
+              );
+            }
+          }
           // Initialize the calendar datepicker options.
           $calendar.datepicker({
             dateFormat: 'm-d-yy',
             showOtherMonths: true,
             selectOtherMonths: true,
+            defaultDate: calendarInitialDay,
             dayNamesMin: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
             beforeShowDay(date) {
               // Loop through date ranges to determine if a day qualifies.
@@ -214,4 +230,4 @@
         });
     },
   };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal, drupalSettings, once);

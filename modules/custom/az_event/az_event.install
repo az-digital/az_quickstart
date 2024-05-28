@@ -6,9 +6,9 @@
  */
 
 /**
- * Enable the jquery_ui_datepicker module.
+ * Implements hook_update_last_removed().
  */
-function az_event_update_9201() {
-  $module_list = ['jquery_ui_datepicker'];
-  \Drupal::service('module_installer')->install($module_list);
+function az_event_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 9201;
 }

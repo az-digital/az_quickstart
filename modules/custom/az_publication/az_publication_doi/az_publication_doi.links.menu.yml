@@ -1,0 +1,6 @@
+az_publication_doi.import_doi:
+  title: 'Import DOI Publication'
+  description: 'Import a Quickstart publication from a digital object identifier (DOI).'
+  route_name: az_publication_doi.az_publication_doi_import_form
+  parent: az_publication_import.admin.content
+  weight: 1

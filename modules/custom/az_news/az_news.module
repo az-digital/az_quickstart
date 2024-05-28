@@ -5,6 +5,14 @@
  * Contains az_news.module.
  */
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
+
 /**
  * Implements hook_theme().
  */
@@ -15,4 +23,60 @@ function az_news_theme($existing, $type, $theme, $path) {
       'base hook' => 'field',
     ],
   ];
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function az_news_entity_extra_field_info() {
+  $extra = [];
+
+  // Check to see if our content type exists.
+  $bundle = NodeType::load('az_news');
+  if ($bundle) {
+    // Link title pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_news_read_more'] = [
+      'label' => t('Read more pseudo link.'),
+      'description' => "This is a pseudo field from az_news",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function az_news_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_link')) {
+    // Read more pseudo field.
+    if ($display->getComponent('az_news_read_more')) {
+      $bubbleable_metadata = new BubbleableMetadata();
+      $build['az_news_read_more'][] = [
+        '#type' => 'markup',
+        '#markup' => Html::escape(\Drupal::service('token')
+          ->replace('[node:az-canonical-summary-link-title]', [
+            'node' => $entity,
+          ], [], $bubbleable_metadata)),
+      ];
+    }
+  }
+
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Sets the Thumbnail Image field to match the "Featured Image" field if the
+ * Use Featured Image as Thumbnail checkbox is checked.
+ */
+function az_news_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_news'
+    && $entity instanceof NodeInterface
+    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue()[0]['value'])) {
+    $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_media_image')->target_id;
+  }
 }

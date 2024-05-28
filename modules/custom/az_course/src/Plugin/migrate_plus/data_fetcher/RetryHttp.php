@@ -2,11 +2,12 @@
 
 namespace Drupal\az_course\Plugin\migrate_plus\data_fetcher;
 
-use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use Drupal\migrate\MigrateException;
-use GuzzleHttp\Exception\RequestException;
+use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * Retrieve data over an HTTP connection for migration. Retry if necessary.
@@ -36,7 +37,7 @@ class RetryHttp extends Http {
   /**
    * {@inheritdoc}
    */
-  public function getResponse($url) {
+  public function getResponse($url): ResponseInterface {
     // Schedule sometimes returns 500 during outages.
     for ($i = 0; $i < self::MAX_REQUESTS; $i++) {
       try {

@@ -20,6 +20,8 @@ content:
     settings:
       image_style: az_carousel_item
       image_link: ''
+      image_loading:
+        attribute: lazy
     third_party_settings: {  }
     type: image
     weight: 1

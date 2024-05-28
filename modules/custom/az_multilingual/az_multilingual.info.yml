@@ -1,0 +1,9 @@
+name: 'Quickstart Multilingual'
+type: module
+description: 'Allows users to serve content in multiple languages.'
+core_version_requirement: ^9 || ^10
+package: The University of Arizona
+dependencies:
+  - az_core
+  - drupal:language
+  - drupal:content_translation

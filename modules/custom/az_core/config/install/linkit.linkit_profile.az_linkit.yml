@@ -10,13 +10,14 @@ dependencies:
   enforced:
     module:
       - az_core
-label: 'Quickstart LinkIt'
 id: az_linkit
+label: 'Quickstart LinkIt'
 description: 'Provides easy linking to Quickstart content and media for site editors.'
 matchers:
   3a30add7-6018-45d3-afea-c0c311ac4bc9:
-    id: 'entity:node'
     uuid: 3a30add7-6018-45d3-afea-c0c311ac4bc9
+    id: 'entity:node'
+    weight: 0
     settings:
       metadata: 'Path: [node:url:path] | ID: [node:nid]'
       bundles:
@@ -25,10 +26,10 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
-    weight: 0
   829301bf-f4fa-42e3-a3fe-4c89a8868633:
-    id: 'entity:file'
     uuid: 829301bf-f4fa-42e3-a3fe-4c89a8868633
+    id: 'entity:file'
+    weight: 0
     settings:
       metadata: 'Created: [file:created:custom:m/d/Y - g:i a] | Modified: [file:changed:custom:m/d/Y - g:i a] | ID: [file:fid]'
       bundles: null
@@ -41,10 +42,10 @@ matchers:
         show_dimensions: false
         show_thumbnail: true
         thumbnail_image_style: az_tiny_thumbnail
-    weight: 0
   b1491acc-6a1b-4122-998c-311aaa699e48:
-    id: 'entity:node'
     uuid: b1491acc-6a1b-4122-998c-311aaa699e48
+    id: 'entity:node'
+    weight: 0
     settings:
       metadata: 'Date: [node:field_az_event_date:value-custom:m/d/Y - g:i a]'
       bundles:
@@ -53,10 +54,10 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
-    weight: 0
   1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879:
-    id: 'entity:node'
     uuid: 1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879
+    id: 'entity:node'
+    weight: 0
     settings:
       metadata: 'Publication date: [node:field_az_published:date:custom:m/d/Y - g:i a]'
       bundles:
@@ -65,10 +66,10 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
-    weight: 0
   5b479f8e-72a3-4398-91d2-fbd9e07b7cb0:
-    id: 'entity:node'
     uuid: 5b479f8e-72a3-4398-91d2-fbd9e07b7cb0
+    id: 'entity:node'
+    weight: 0
     settings:
       metadata: '[node:field_az_titles]'
       bundles:
@@ -77,4 +78,3 @@ matchers:
       substitution_type: canonical
       limit: 100
       include_unpublished: false
-    weight: 0

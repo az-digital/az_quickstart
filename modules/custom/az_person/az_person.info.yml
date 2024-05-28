@@ -1,7 +1,7 @@
 name: 'Quickstart Person'
 type: module
 description: 'Allows users to create and order person profiles.'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 package: The University of Arizona
 dependencies:
   - auto_entitylabel:auto_entitylabel
@@ -18,4 +18,5 @@ dependencies:
   - drupal:taxonomy
   - drupal:telephone
   - drupal:user
+  - smart_title:smart_title
   - views_bootstrap:views_bootstrap

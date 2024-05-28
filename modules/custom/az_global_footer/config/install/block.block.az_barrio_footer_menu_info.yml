@@ -23,8 +23,8 @@ plugin: 'menu_block:az-footer-information-for'
 settings:
   id: 'menu_block:az-footer-information-for'
   label: 'Information For'
-  provider: menu_block
   label_display: visible
+  provider: menu_block
   follow: false
   follow_parent: child
   level: 1

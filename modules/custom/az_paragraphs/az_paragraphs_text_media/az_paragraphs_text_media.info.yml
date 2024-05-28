@@ -1,7 +1,7 @@
 name: 'Quickstart Paragraphs - Text on Media'
 type: module
 description: 'Provides a text on media paragraph type.'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 dependencies:
   - az_paragraphs
   - field

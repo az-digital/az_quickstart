@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_trellis_events
+label: 'AZ Trellis Events'
+description: 'Import AZ Events from Trellis Events.'
+source_type: 'Trellis Event'
+module: az_event_trellis
+shared_configuration: null
