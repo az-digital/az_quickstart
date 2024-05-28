@@ -18,11 +18,8 @@ process:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title: title
   uid:
@@ -40,22 +37,22 @@ process:
   changed: changed
   promote: promote
   sticky: sticky
-
   path/pathauto:
-    -
-      plugin: skip_on_empty
+    - plugin: str_replace
       source: alias
-      method: process
-    -
-      plugin: default_value
-      default_value: 0
-
+      regex: true
+      search: /.$/
+      replace: '0'
+    - plugin: default_value
+      source: alias
+      default_value: 1
+      strict: true
+    - plugin: callback
+      callable: intval
   path/alias:
-    -
-      plugin: skip_on_empty
-      source: alias
-      method: process
-
+    plugin: skip_on_empty
+    source: alias
+    method: process
   field_az_main_content/target_id:
     -
       plugin: migration_lookup

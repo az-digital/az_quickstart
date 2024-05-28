@@ -11,7 +11,7 @@ field_name: field_az_text_area
 entity_type: paragraph
 bundle: az_text_media
 label: Body
-description: ''
+description: 'White text will be highlighted in gray (only while editing) to keep the text visible.'
 required: false
 translatable: true
 default_value: {  }

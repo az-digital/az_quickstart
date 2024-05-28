@@ -68,8 +68,8 @@ process:
       method: process
     - plugin: concat
       source:
-       - constants/MENU_ITEM_PREFIX
-       - '@pseudo_parent_uuid'
+        - constants/MENU_ITEM_PREFIX
+        - '@pseudo_parent_uuid'
       delimiter: ":"
 destination:
   plugin: entity:block_content

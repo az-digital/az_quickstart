@@ -1,21 +1,26 @@
 /*
-  Overrides Claro layout for node form.
+  Overrides Claro layout and styling for node form.
   @see https://github.com/az-digital/az_quickstart/issues/1716
+  @see https://github.com/az-digital/az_quickstart/issues/2824
   @see https://www.drupal.org/project/drupal/issues/3184667
 */
 
 @media screen and (min-width: 61rem) {
-  .layout-region--node-main,
-  .layout-region--node-footer {
-    width: 65% !important;
+  div.layout-node-form {
+    grid-template-columns: calc(65% - var(--space-l)) minmax(22.5rem, 1fr);
   }
 
-  .layout-region--node-main .layout-region__content,
-  .layout-region--node-footer .layout-region__content {
-    max-width: 100% !important;
+  .layout-region.layout-region--node-main,
+  .layout-region.layout-region--node-footer {
+    margin-inline: 0;
+    width: initial;
   }
+}
 
-  .layout-region--node-secondary {
-    width: 35% !important;
-  }
+.layout-region--node-main .claro-details__summary {
+  color: unset;
+}
+
+tr.odd {
+  background-color: #eee;
 }

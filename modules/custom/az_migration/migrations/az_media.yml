@@ -21,9 +21,20 @@ process:
 
   # Bundles must exist, previous machine names were image, document, etc.
   bundle:
-    plugin: az_media_bundle_recognizer
-    source: bundle
-    prefix: 'az_'
+    -
+      plugin: skip_on_value
+      source: type
+      method: row
+      value:
+        - image
+        - video
+        - document
+        - audio
+      not_equals: true
+      message: "Not a Quickstart 1 file_entity type, create a custom migration for this file_entity type."
+    -
+      plugin: az_media_bundle_recognizer
+      prefix: 'az_'
 
   # The mfid field is temporary, and is not present in the source.
   # Lookup fid through migration lookup. Should not depend on fid not changing.

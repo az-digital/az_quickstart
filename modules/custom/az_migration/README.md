@@ -77,7 +77,7 @@ You can skip most of the rest of this README unless you run into trouble.
   * Install the module using the below command.
 
   ```
-    drush en az_migration
+    drush install az_migration
   ```
 
   ### Configure the settings.php to connect source database
@@ -157,12 +157,12 @@ Luckily this is fairly simple and only requires a structure shown below:
 Example [migration group file](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/config/install/migrate_plus.migration_group.az_migration.yml)
 
 Compare source site pathauto settings to ensure new content and migrated content are consistent.
-  
+
 
 # Quickstart migrations usage notes
-  
+
 Usage notes for the built-in Quickstart migrations provided by this module.
-  
+
 ### Contents
   - [User migration](#user-migration)
   - [File migration](#file-migration)
@@ -173,10 +173,10 @@ Usage notes for the built-in Quickstart migrations provided by this module.
   - [Carousel item migration](#carousel-item-migration)
   - [Paragraph migrations](#paragraph-migrations)
 
-  
+
 ## User migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Block any users you don’t want to migrate.
 * Check for any custom or overridden fields on users.
@@ -204,7 +204,7 @@ drush mr az_user
 
 ## File migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any files you don’t want migrated.
 
@@ -221,31 +221,47 @@ drush mr az_files
 
 ## Media migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any files you don’t want migrated.
 * Check for any custom or overridden fields on file_entities.
 * Check for any custom file entity types.
+* Take note of any file types other than `image`, `audio`, `document`, `video`
+* Check pathauto patterns.
 
 Migrate the related files using the below command :
 ```
-drush mim az_media
+drush migrate:import az_media
 ```
 
-To rollback the migrated file :
+Update migrated media after updating the codebase:
 ```
-drush mr az_media
+drush cache:rebuild
+drush migrate:import az_media --update
 ```
+
+View messages for skipped media items:
+```
+drush migrate:messages az_media
+```
+
+To rollback the migrated media:
+```
+drush migrate:rollback az_media
+```
+**Note: If you have custom file_entity types that you would like to migrate, you
+must create a custom migration.**
 
 ## Person migrations
 
 ### Person category migration
 
-Source site pre-migration tasks :
+### Suggested pre-migration tasks (for source site)
 
 * Delete any terms you don’t want migrated.
 * Check for any custom or overridden fields on uaqs_person_category taxonomy.
 * Check for any custom or overridden fields on uaqs_person_category_secondary taxonomy.
+* Check pathauto patterns.
 
 Dependencies :
 
@@ -302,6 +318,7 @@ Source site pre-migration tasks :
 
 * Delete any categories you don’t want migrated.
 * Check for any custom or overridden fields on event_categories taxonomy.
+* Check pathauto patterns.
 
 Migrate event categories using the below command :
 ```
@@ -343,7 +360,7 @@ Source site pre-migration tasks :
 
 * Delete any news tags you don’t want migrated.
 * Check for any custom or overridden fields on uaqs_news_tags taxonomy.
-
+* Check pathauto patterns.
 
 Migrate news tags using the below command :
 ```
@@ -361,6 +378,7 @@ Source site pre-migration tasks :
 
 * Delete any news content you don’t want migrated.
 * Check for any custom or overridden fields on uaqs_news content type.
+* Check pathauto patterns.
 
 Migrate news content using the below command :
 ```
@@ -382,10 +400,10 @@ drush mim az_node_carousel
 To rollback the  carousel item using the below command :
 ```
 drush mr az_node_carousel
-```  
+```
 
 ## Paragraph migrations
-  
+
 ### Contact paragraph migration
 
 Migrate contact paragraphs using the below command :
@@ -443,7 +461,7 @@ Notes:
 
 This migration only imports the first link for cards from the multi-value link field in Quickstart v1. If there are multiple links on a card, you can edit the migrated card after the migration and add the links to the text area as HTML instead of using the link field.
 
-Source site pre-migration tasks:
+### Suggested pre-migration tasks (for source site)
 
 * Check for any custom or overridden fields on uaqs_content_chunks_card_deck paragraph type.
 * Delete any card decks you don’t want migrated.
@@ -479,6 +497,11 @@ drush mr az_paragraph_column_image
 ```
 
 ## Menu links migration
+
+### Suggested pre-migration tasks (for source site)
+
+* Prepare your menus for migration by removing any unused menu items, and deleting links that do not work.
+* Duplicate unpublished menu links will collide with live menu links, so it would be best to delete unpublished menu links.
 
 Quickstart 1 menu links can be migrated using the following command:
 ```
@@ -523,9 +546,9 @@ To rollback menu links, use the following command:
 drush mr az_exclude_node_title
 ```
 
- 
+
 # Migrate plugins
-  
+
 Migrate plugins provided by Quickstart modules.
 
 ## Reusable plugins
@@ -537,6 +560,8 @@ These plugins are designed to be reusable in custom migrations.
 - [EntityEmbedProcess (az_entity_embed_process)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/EntityEmbedProcess.php)
 - [MigratedPathLookup (az_migrated_path_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/MigratedPathLookup.php)
 - [TextFormatRecognizer (text_format_recognizer)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/TextFormatRecognizer.php)
+- [ManualMigrationLookup (az_manual_migration_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ManualMigrationLookup.php)
+- [ArrayIntersect (array_intersect)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ArrayIntersect.php)
 - [ParagraphsMappingFlexiblePage (paragraphs_mapping_flexible_page)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
 - [ParagraphsBehavior
   (paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/2.2.x/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehavior.php)
@@ -544,6 +569,7 @@ These plugins are designed to be reusable in custom migrations.
 - [ParagraphsBehaviorSettings (az_paragraphs_behavior_settings)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_paragraphs/src/Plugin/migrate/process/ParagraphsBehaviorSettings.php)
 - [DateTimeToSmartDate (az_drupal_date_to_smart_date)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/DateTimeToSmartDate.php)
 - [ViewsReferenceMapping (az_views_reference_mapping)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ViewsReferenceMapping.php)
+- [DefaultLangcode (az_default_langcode)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/DefaultLangcode.php)
 
 ### Source plugins
 

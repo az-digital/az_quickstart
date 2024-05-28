@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_card
     - core.entity_view_mode.node.az_media_list
+    - core.entity_view_mode.node.az_row
     - core.entity_view_mode.node.full
     - core.entity_view_mode.node.teaser
   module:
@@ -18,11 +19,10 @@ type_settings:
   display_plugins:
     - 'view_mode:node.az_card'
     - 'view_mode:node.az_media_list'
+    - 'view_mode:node.az_row'
     - 'view_mode:node.full'
     - 'view_mode:node.teaser'
-  entity_browser: ''
-  entity_browser_settings: {  }
 icon:
-  data: iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAA7EAAAOxAGVKw4bAAAAz0lEQVRYhe2W4Q2CMBBGn8YxGETDGriHi5iwB65B0kHYA/8UbbAHPW0FtC+5cJBre/S+Ngf/zi7h3AVwtL4BuoRreamA3lolBe2/ls5aEzh4vonbJXCzT7fmAKXgw4wmeqW5iYeOefzkKkswYICrYi4DnJ33ErhYvwbaUazIsE2NYnEfv3UMG/SiDGJKA5/iakKseWgC7XzICx3PO0JFLBEGkVID2zgFKTUQNYHaWnQWvweyBjajgWRM7UCBvj1zOb07UNuSqVqwMYuXIJO5AwPmbJF9Gh3mAAAAAElFTkSuQmCC
-  uri: 'public://embed_buttons/sharp_post_add_black_24dp.png'
+  uri: 'public://embed_buttons/post_add_FILL0_wght400_GRAD0_opsz24.svg'
+  data: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgLTk2MCA5NjAgOTYwIiB3aWR0aD0iMjQiPjxwYXRoIGQ9Ik0zMjAtNTIwdi04MGgzMjB2ODBIMzIwWm0wIDEyMHYtODBoMzIwdjgwSDMyMFptMCAxMjB2LTgwaDMyMHY4MEgzMjBabTM2MC0zMjB2LTgwaC04MHYtODBoODB2LTgwaDgwdjgwaDgwdjgwaC04MHY4MGgtODBaTTEyMC0xMjB2LTcyMGg0NDB2ODBIMjAwdjU2MGg1NjB2LTM2MGg4MHY0NDBIMTIwWiIvPjwvc3ZnPg==
 icon_uuid: null

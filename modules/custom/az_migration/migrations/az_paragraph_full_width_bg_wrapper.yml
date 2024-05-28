@@ -22,7 +22,9 @@ process:
       source: field_uaqs_summary
       process:
         delta: delta
-        value: value
+        value:
+          plugin: az_entity_embed_process
+          source: value
         format:
           plugin: default_value
           default_value: az_standard
@@ -83,7 +85,7 @@ process:
         text_background_pattern: '@text_background_pattern_processed'
         text_background_padding: '@text_background_padding_processed'
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

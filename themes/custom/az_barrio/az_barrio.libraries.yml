@@ -5,6 +5,9 @@ global-styling:
       css/style.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap
+az-ajax:
+  js:
+    js/az-ajax.js: {}
 az-media-display:
   css:
     component:
@@ -22,7 +25,7 @@ az-proxima-nova:
 az-icons:
   css:
     theme:
-      https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}
+      /libraries/az-icons/az-icons-styles.min.css: {}
 arizona-bootstrap:
   css:
     theme:

@@ -6,9 +6,9 @@
  */
 
 /**
- * Ensure the migmag (Migrate Magician) module is installed.
+ * Implements hook_update_last_removed().
  */
-function az_migration_update_920301() {
-  \Drupal::service('module_installer')->install(['migmag']);
-  return t('Migrate Magician module installed.');
+function az_migration_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920301;
 }

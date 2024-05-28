@@ -60,16 +60,19 @@ class ParagraphsExtraInfoFieldMerge extends ProcessPluginBase {
     $field_uaqs_short_title = $row->getSourceProperty('field_uaqs_short_title');
     $field_uaqs_body = $row->getSourceProperty('field_uaqs_body');
     $field_uaqs_link = $row->getSourceProperty('field_uaqs_link');
+    $url = $field_uaqs_link[0]['url'] ?? '';
+    $classes = $field_uaqs_link[0]['attributes']['class'] ?? '';
+    $title = $field_uaqs_link[0]['title'] ?? $url;
+    $short_title = $field_uaqs_short_title[0]['value'] ?? '';
+    $body = $field_uaqs_body[0]['value'] ?? '';
+
     $value['markup'] = '<div class="border-thick border-top border-azurite">
       <div class="border card-body">';
-    if (!empty($field_uaqs_link[0]['url'])) {
+    if (!empty($url)) {
       $value['markup'] .= '<h3>More information</h3>';
-      $value['markup'] .= '<a href="' . $field_uaqs_link[0]['url'] . '" class="' . $field_uaqs_link[0]['attributes']['class'] . '">' . $field_uaqs_link[0]['title'] . '</a>';
+      $value['markup'] .= '<a href="' . $url . '" class="' . $classes . '">' . $title . '</a>';
     }
-    $value['markup'] .= '<h2 class="h3">' . $field_uaqs_short_title[0]['value'] . '</h2>
-    ' . $field_uaqs_body[0]['value'] . '
-    </div>
-    </div>';
+    $value['markup'] .= '<h2 class="h3">' . $short_title . '</h2>' . $body . '</div></div>';
     return $value['markup'];
   }
 

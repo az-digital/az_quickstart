@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Publication Categories'
+vid: az_publication_categories
+description: 'Taxonomy for categorizing publications'
+weight: 0

@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Contains az_paragraphs_views_side_by_side.module.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_paragraphs_views_side_by_side_theme() {
+  return [
+    'field__field_az_first_view_button' => [
+      'template' => 'field--field-az-first-view-button',
+      'base hook' => 'field',
+    ],
+    'field__field_az_second_view_button' => [
+      'template' => 'field--field-az-second-view-button',
+      'base hook' => 'field',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ *
+ * When this module becomes stable, merge this code into az_event.module
+ * (add the view id condition to the corresponding hook function).
+ */
+function az_paragraphs_views_side_by_side_preprocess_views_view(&$variables) {
+
+  // EntityRow views do not give the entity access to a row_index.
+  // We need to provide one to understand the delta relationship
+  // of the row.
+  if ($variables['id'] === 'az_side_by_side_views') {
+    if (!empty($variables['rows'][0]['#rows'])) {
+      foreach ($variables['rows'][0]['#rows'] as $i => $n) {
+        $variables['rows'][0]['#rows'][$i]['#az_view_row_index'] = $i;
+      }
+    }
+  }
+}

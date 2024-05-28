@@ -10,7 +10,7 @@ id: node.az_flexible_page.field_az_main_content
 field_name: field_az_main_content
 entity_type: node
 bundle: az_flexible_page
-label: 'Main Content'
+label: 'Page Elements'
 description: ''
 required: false
 translatable: false

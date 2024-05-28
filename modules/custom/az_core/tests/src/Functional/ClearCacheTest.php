@@ -26,7 +26,7 @@ class ClearCacheTest extends QuickstartFunctionalTestBase {
   /**
    * @var string
    */
-  protected $defaultTheme = 'seven';
+  protected $defaultTheme = 'claro';
 
   /**
    * Tests the clear cache button on the Quickstart settings page.

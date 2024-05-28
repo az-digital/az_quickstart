@@ -1,0 +1,5 @@
+services:
+  _defaults:
+    autoconfigure: true
+  az_finder.icons:
+    class: Drupal\az_finder\AZFinderIcons

@@ -6,9 +6,6 @@ dependencies:
     - system
   theme:
     - az_barrio
-third_party_settings:
-  block_class:
-    classes: null
 id: az_barrio_breadcrumbs
 theme: az_barrio
 region: breadcrumb

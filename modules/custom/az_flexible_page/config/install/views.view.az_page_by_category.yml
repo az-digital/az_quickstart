@@ -217,7 +217,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -313,9 +312,11 @@ display:
           default_row_class: false
           uses_fields: false
       defaults:
+        css_class: false
         style: false
         row: false
         style_options: false
+      css_class: add-pager-top-margin
       row:
         type: 'entity:node'
         options:
