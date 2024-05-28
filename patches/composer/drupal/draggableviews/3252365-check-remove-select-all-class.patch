@@ -1,0 +1,15 @@
+diff --git a/draggableviews.module b/draggableviews.module
+index 17583f0..e897eb4 100644
+--- a/draggableviews.module
++++ b/draggableviews.module
+@@ -87,6 +87,10 @@ function draggableviews_preprocess_views_view_table(&$variables) {
+     return;
+   }
+ 
++  if (isset($variables['header']['draggableviews']['attributes'])) {
++    $variables['header']['draggableviews']['attributes']->removeClass('select-all');
++  }
++
+   $draggableviews = new DraggableViews($variables['view']);
+ 
+   // Add hierarchy.

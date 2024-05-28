@@ -9,5 +9,5 @@ index f8ba2f1..c14c62a 100644
 -    return new static($container->get('cas.helper'), $container->get('request_stack'), $container->get('config.factory'), $container->get('url_generator.non_bubbling'));
 +    return new static($container->get('cas.helper'), $container->get('request_stack'), $container->get('config.factory'), $container->get('url_generator'));
    }
-
+ 
    /**

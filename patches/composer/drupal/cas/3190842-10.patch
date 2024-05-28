@@ -1,8 +1,14 @@
+commit 89121081b8234e11f50f9ba48d951077ead10f2c
+Author: Joe Parsons <parsonsj@arizona.edu>
+Date:   Fri Sep 15 13:11:48 2023 -0700
+
+    Applied patch #8.
+
 diff --git a/src/Service/CasUserManager.php b/src/Service/CasUserManager.php
-index 2c2bd8a..db19f46 100644
+index 977e5ba..0f57df2 100644
 --- a/src/Service/CasUserManager.php
 +++ b/src/Service/CasUserManager.php
-@@ -227,7 +227,7 @@ class CasUserManager {
+@@ -240,7 +240,7 @@ class CasUserManager {
      }
  
      $this->externalAuth->userLoginFinalize($account, $property_bag->getUsername(), $this->provider);
@@ -11,7 +17,7 @@ index 2c2bd8a..db19f46 100644
      $this->session->set('is_cas_user', TRUE);
      $this->session->set('cas_username', $property_bag->getOriginalUsername());
  
-@@ -244,13 +244,15 @@ class CasUserManager {
+@@ -257,13 +257,15 @@ class CasUserManager {
    /**
     * Store the Session ID and ticket for single-log-out purposes.
     *
@@ -27,6 +33,6 @@ index 2c2bd8a..db19f46 100644
 +      // first persist the session so a proper ID is generated first.
 +      // See https://www.drupal.org/project/cas/issues/3190842.
 +      $session_id = $this->session->getId();
-       $this->connection->insert('cas_login_data')
+       $this->connection->upsert('cas_login_data')
          ->fields(
            ['sid', 'plainsid', 'ticket', 'created'],

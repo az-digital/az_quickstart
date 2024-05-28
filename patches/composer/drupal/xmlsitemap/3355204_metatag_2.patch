@@ -1,0 +1,26 @@
+diff --git a/xmlsitemap.module b/xmlsitemap.module
+index ce17ae7..6060d83 100644
+--- a/xmlsitemap.module
++++ b/xmlsitemap.module
+@@ -2639,8 +2639,19 @@ function metatag_xmlsitemap_link_alter(array &$link, array $context) {
+     /** @var \Drupal\metatag\MetatagManagerInterface $metatagManager */
+     $metatagManager = \Drupal::service('metatag.manager');
+     $metatags = $metatagManager->tagsFromEntity($context['entity']);
+-    if (!empty($metatags['robots']) && strpos($metatags['robots'], 'noindex') !== FALSE) {
+-      $link['access'] = FALSE;
++    if (!empty($metatags['robots'])) {
++      $has_noindex = FALSE;
++      if (is_string($metatags['robots'])) {
++        // Check for `noindex` value in legacy string format.
++        $has_noindex = strpos($metatags['robots'], 'noindex');
++      }
++      if (is_array($metatags['robots'] && isset($metatags['robots']['noindex']))) {
++        // Check for `noindex` value in current array format.
++        $has_noindex = $metatags['robots']['noindex'] === 1;
++      }
++      if ($has_noindex !== FALSE) {
++        $link['access'] = FALSE;
++      }
+     }
+   }
+ }

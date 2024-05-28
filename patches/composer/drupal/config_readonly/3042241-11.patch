@@ -1,0 +1,58 @@
+diff --git a/src/EventSubscriber/ReadOnlyFormSubscriber.php b/src/EventSubscriber/ReadOnlyFormSubscriber.php
+index 4ce7731..fa1665c 100644
+--- a/src/EventSubscriber/ReadOnlyFormSubscriber.php
++++ b/src/EventSubscriber/ReadOnlyFormSubscriber.php
+@@ -67,6 +67,14 @@ class ReadOnlyFormSubscriber implements EventSubscriberInterface {
+       }
+     }
+ 
++    if ($mark_form_read_only && $form_object instanceof ConfigEntityListBuilder) {
++      $entity_type = $form_object->getStorage()->getEntityType();
++      $name = $entity_type->getConfigPrefix() . '.*';
++      if ($this->matchesWhitelistPattern($name)) {
++        $mark_form_read_only = FALSE;
++      }
++    }
++
+     if ($mark_form_read_only && $form_object instanceof ConfigFormBase) {
+       // Get the editable configuration names.
+       $editable_config = $this->getEditableConfigNames($form_object);
+diff --git a/tests/modules/config_readonly_whitelist_test/config_readonly_whitelist_test.module b/tests/modules/config_readonly_whitelist_test/config_readonly_whitelist_test.module
+index 49e5b2f..65161a8 100644
+--- a/tests/modules/config_readonly_whitelist_test/config_readonly_whitelist_test.module
++++ b/tests/modules/config_readonly_whitelist_test/config_readonly_whitelist_test.module
+@@ -12,5 +12,6 @@ function config_readonly_whitelist_test_config_readonly_whitelist_patterns() {
+   return [
+     '*article2*',
+     'system.performance',
++    'block.block.*',
+   ];
+ }
+diff --git a/tests/src/Functional/ReadOnlyConfigWhitelistTest.php b/tests/src/Functional/ReadOnlyConfigWhitelistTest.php
+index 5f2cc85..3290207 100644
+--- a/tests/src/Functional/ReadOnlyConfigWhitelistTest.php
++++ b/tests/src/Functional/ReadOnlyConfigWhitelistTest.php
+@@ -17,6 +17,7 @@ class ReadOnlyConfigWhitelistTest extends ReadOnlyConfigTest {
+     'config_readonly',
+     'node',
+     'config_readonly_whitelist_test',
++    'block',
+   ];
+ 
+   /**
+@@ -72,4 +73,15 @@ class ReadOnlyConfigWhitelistTest extends ReadOnlyConfigTest {
+     $assert_session->pageTextNotContains('This form will not be saved because the configuration active store is read-only.');
+   }
+ 
++  /**
++   * Test ConfigEntityListBuilder form with whitelisted entity type.
++   */
++  public function testConfigEntityListBuilder() {
++    $assert_session = $this->assertSession();
++    $this->turnOnReadOnlySetting();
++    $this->drupalGet('admin/structure/block');
++    // Warning not shown on admin block listing form.
++    $assert_session->pageTextNotContains('This form will not be saved because the configuration active store is read-only.');
++  }
++
+ }

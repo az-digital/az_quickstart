@@ -1,0 +1,66 @@
+diff --git a/src/Plugin/AccessControlHierarchy/Menu.php b/src/Plugin/AccessControlHierarchy/Menu.php
+index 1721366609a3a9d40af88d6945023a39ad6a2f22..4ebb2d438a1548ea25bc6b6de83dd2f31042be8f 100644
+--- a/src/Plugin/AccessControlHierarchy/Menu.php
++++ b/src/Plugin/AccessControlHierarchy/Menu.php
+@@ -144,6 +144,14 @@ class Menu extends AccessControlHierarchyBase {
+     $element = &$form['menu'];
+     $menu_check = [];
+     $user_sections = $this->userSectionStorage->getUserSections($scheme);
++
++    // If the user cannot assign content to a menu, remove this option.
++    if (empty(($user_sections))) {
++      $element['#access'] = FALSE;
++    }
++
++    // Now restrict to available options. Note that if the default item
++    // is not accessible, it is removed.
+     foreach ($element['link']['menu_parent']['#options'] as $id => $data) {
+       // The menu value here prepends the menu name. Remove that.
+       $parts = explode(':', $id);
+@@ -157,26 +165,25 @@ class Menu extends AccessControlHierarchyBase {
+         $sections = [implode(':', $parts)];
+       }
+       $menu_parent = $menu . ':';
++
+       // Remove unusable elements, except the existing parent.
+       // Do not remove top-level menus, we check those separately.
+-      if ((!empty($element['link']['menu_parent']['#default_value']) && $id != $menu_parent) && empty(WorkbenchAccessManager::checkTree($scheme, $sections, $user_sections))) {
++      if (!empty($element['link']['menu_parent']['#options'][$id]) && $id != $menu_parent && empty(WorkbenchAccessManager::checkTree($scheme, $sections, $user_sections))) {
+         unset($element['link']['menu_parent']['#options'][$id]);
+-        if ($id === $element['link']['menu_parent']['#default_value']) {
+-          unset($element['link']['menu_parent']['#default_value']);
+-        }
+       }
+       // Check for the root menu item.
+       if (!isset($menu_check[$menu]) && isset($element['link']['menu_parent']['#options'][$menu . ':'])) {
+         if (empty(WorkbenchAccessManager::checkTree($scheme, [$menu], $user_sections))) {
++          $base_menu = $element['link']['menu_parent']['#options'][$menu . ':'];
+           unset($element['link']['menu_parent']['#options'][$menu . ':']);
+         }
+         $menu_check[$menu] = TRUE;
+       }
+     }
+-    // As long as there are menu options available, check that the default value
+-    // is still in the options, if not then default to the root item.
+-    if (!empty($element['link']['menu_parent']['#options']) && empty($element['link']['menu_parent']['#default_value'])) {
+-      $element['link']['menu_parent']['#default_value'] = current(array_keys($element['link']['menu_parent']['#options']));
++    // Fallback in case no options remains, we re-add the top-level item.
++    // Ideally, we would never get here.
++    if ($element['#access'] !== FALSE && empty($element['link']['menu_parent']['#options']) && isset($base_menu)) {
++      $element['link']['menu_parent']['#options'][$menu . ':'] = $base_menu;
+     }
+   }
+ 
+diff --git a/tests/src/Functional/NodeFormMenuTest.php b/tests/src/Functional/NodeFormMenuTest.php
+index 6da3f4ecc0f51a365ac2fd64995b3796c3c5c852..b860d6658c8310cb6a903d77d331a49079f146ad 100644
+--- a/tests/src/Functional/NodeFormMenuTest.php
++++ b/tests/src/Functional/NodeFormMenuTest.php
+@@ -237,7 +237,7 @@ class NodeFormMenuTest extends BrowserTestBase {
+     $web_assert->elementExists('named', ['option', $staff_link->label()], $select);
+     $web_assert->elementExists('named', ['option', $super_staff_link->label()], $select);
+     $web_assert->elementNotExists('named', ['option', $deny_link->label()], $select);
+-    $web_assert->responseContains('selected="selected">-- ' . $staff_link->label() . '</option>');
++    $web_assert->responseContains('-- ' . $staff_link->label() . '</option>');
+   }
+ 
+ }

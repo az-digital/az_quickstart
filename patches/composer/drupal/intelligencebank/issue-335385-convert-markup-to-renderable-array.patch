@@ -1,0 +1,618 @@
+diff --git a/modules/ib_dam_media/ib_dam_media.info.yml b/modules/ib_dam_media/ib_dam_media.info.yml
+index d338f70..35d18e8 100644
+--- a/modules/ib_dam_media/ib_dam_media.info.yml
++++ b/modules/ib_dam_media/ib_dam_media.info.yml
+@@ -4,5 +4,7 @@ core_version_requirement: ^9 || ^10
+ type: module
+ package: 'IntelligenceBank DAM'
+ dependencies:
++  - drupal:link
+   - drupal:media (>= 8.5.0)
++  - drupal:media_library
+   - ib_dam:ib_dam
+diff --git a/modules/ib_dam_media/ib_dam_media.module b/modules/ib_dam_media/ib_dam_media.module
+index f7b4519..89c6cd0 100644
+--- a/modules/ib_dam_media/ib_dam_media.module
++++ b/modules/ib_dam_media/ib_dam_media.module
+@@ -16,10 +16,10 @@ use Drupal\Core\Form\FormStateInterface;
+  * Add Asset Browser button on media_library_add_form_upload form.
+  */
+ function ib_dam_media_form_media_library_add_form_upload_alter(array &$form, FormStateInterface $formState): void {
+-  $link_url = Url::fromRoute('id_dam_media.asset_browser_form');
+-  $link_url->setOptions([
++  $url = Url::fromRoute('id_dam_media.asset_browser_form');
++  $url->setOptions([
+     'attributes' => [
+-      'class' => ['use-ajax', 'button', 'button--primary'],
++      'class' => ['use-ajax', 'button', 'button--primary', 'js-button-add-ib-asset'],
+       'data-dialog-type' => 'modal',
+       'data-dialog-options' => Json::encode([
+         'dialogClass' => 'media-library-widget-modal',
+@@ -31,18 +31,17 @@ function ib_dam_media_form_media_library_add_form_upload_alter(array &$form, For
+     'query' => $formState->get('media_library_state')->all(),
+   ]);
+ 
++  $link = Link::fromTextAndUrl(t('Open IntelligenceBank Browser'), $url);
++
++  $renderable_link = $link->toRenderable();
++
+   $form['ib_dam_container'] = [
+     "#type" => "container",
+-    'asset_browser' => [
+-      '#type' => 'markup',
+-      '#markup' => Link::fromTextAndUrl(t('Open IntelligenceBank Browser'), $link_url)->toString(),
+-      '#attached' => ['library' => [
+-        'core/drupal.dialog.ajax',
+-        'ib_dam/ckeditor',
+-      ]]
+-    ],
+   ];
++  $form['ib_dam_container']['asset_browser'] = $renderable_link;
+ 
++  $form['ib_dam_container']['asset_browser']['#attached']['library'][] = 'core/drupal.dialog.ajax';
++  $form['ib_dam_container']['asset_browser']['#attached']['library'][] = 'ib_dam/ckeditor';
+   $dialogMode = 'regular';
+   if ($dialogMode === 'stacked') {
+     $form['ib_dam_container']['asset_browser']['#attached']['library'][] = 'ib_dam/dialog';
+diff --git a/tests/TESTING.md b/tests/TESTING.md
+index a1e89dc..a28bf72 100644
+--- a/tests/TESTING.md
++++ b/tests/TESTING.md
+@@ -2,11 +2,19 @@
+ 
+ ## Using DrupalPod
+ [How to install DrupalPod](https://github.com/shaal/DrupalPod).
++You may need to manually run a site installation here is the command:
+ 
+-## Testing
++```
++ ddev drush si --account-mail=noreply@example.com --account-name=intelligencebank --account-pass=intelligencebank --db-url=mysql://db:db@db:3306/db -y --verbose
++ ```
++
++ Then install the required modules:
+ 
+-You must download entity_browser.
+-`ddev composer require drupal/entity_browser`
++ ```
++ ddev drush -y pm:install ib_dam_media ib_dam ib_dam_wysiwyg
++ ```
++
++## Testing
+ You can test using a PHPUnit group
+ `ddev phpunit --group intelligencebank`
+ 
+diff --git a/tests/modules/intelligencebank_test/config/install/core.entity_form_display.node.content_with_media.default.yml b/tests/modules/intelligencebank_test/config/install/core.entity_form_display.node.content_with_media.default.yml
+new file mode 100644
+index 0000000..dda06e2
+--- /dev/null
++++ b/tests/modules/intelligencebank_test/config/install/core.entity_form_display.node.content_with_media.default.yml
+@@ -0,0 +1,73 @@
++langcode: en
++status: true
++dependencies:
++  config:
++    - field.field.node.content_with_media.field_media
++    - node.type.content_with_media
++  module:
++    - media_library
++    - path
++id: node.content_with_media.default
++targetEntityType: node
++bundle: content_with_media
++mode: default
++content:
++  created:
++    type: datetime_timestamp
++    weight: 10
++    region: content
++    settings: {  }
++    third_party_settings: {  }
++  field_media:
++    type: media_library_widget
++    weight: 121
++    region: content
++    settings:
++      media_types: {  }
++    third_party_settings: {  }
++  path:
++    type: path
++    weight: 30
++    region: content
++    settings: {  }
++    third_party_settings: {  }
++  promote:
++    type: boolean_checkbox
++    weight: 15
++    region: content
++    settings:
++      display_label: true
++    third_party_settings: {  }
++  status:
++    type: boolean_checkbox
++    weight: 120
++    region: content
++    settings:
++      display_label: true
++    third_party_settings: {  }
++  sticky:
++    type: boolean_checkbox
++    weight: 16
++    region: content
++    settings:
++      display_label: true
++    third_party_settings: {  }
++  title:
++    type: string_textfield
++    weight: -5
++    region: content
++    settings:
++      size: 60
++      placeholder: ''
++    third_party_settings: {  }
++  uid:
++    type: entity_reference_autocomplete
++    weight: 5
++    region: content
++    settings:
++      match_operator: CONTAINS
++      match_limit: 10
++      size: 60
++      placeholder: ''
++    third_party_settings: {  }
++hidden: {  }
+diff --git a/tests/modules/intelligencebank_test/config/install/entity_browser.browser.search_ib_dam_test.yml b/tests/modules/intelligencebank_test/config/install/entity_browser.browser.search_ib_dam_test.yml
+deleted file mode 100644
+index 5b79c51..0000000
+--- a/tests/modules/intelligencebank_test/config/install/entity_browser.browser.search_ib_dam_test.yml
++++ /dev/null
+@@ -1,29 +0,0 @@
+-langcode: en
+-status: true
+-dependencies:
+-  config:
+-    - media.type.ib_dam_embed
+-  module:
+-    - ib_dam_media
+-    - media
+-  enforced:
+-    module:
+-      - intelligencebank_test
+-name: search_ib_dam_test
+-label: 'Search IB DAM Test'
+-display: standalone
+-display_configuration:
+-  path: /admin/content/media/ibdam-test-form
+-selection_display: no_display
+-selection_display_configuration: {  }
+-widget_selector: single
+-widget_selector_configuration: {  }
+-widgets:
+-  7204a225-7d17-466c-884b-7e6a3b504feb:
+-    id: ib_dam_search
+-    uuid: 7204a225-7d17-466c-884b-7e6a3b504feb
+-    label: ib_dam_search_test
+-    weight: 1
+-    settings:
+-      submit_text: 'Select entities test'
+-      upload_location: 'public://intelligencebank-test'
+diff --git a/tests/modules/intelligencebank_test/config/install/field.field.node.content_with_media.field_media.yml b/tests/modules/intelligencebank_test/config/install/field.field.node.content_with_media.field_media.yml
+new file mode 100644
+index 0000000..f967790
+--- /dev/null
++++ b/tests/modules/intelligencebank_test/config/install/field.field.node.content_with_media.field_media.yml
+@@ -0,0 +1,38 @@
++langcode: en
++status: true
++dependencies:
++  config:
++    - field.storage.node.field_media
++    - media.type.audio
++    - media.type.document
++    - media.type.ib_dam_embed
++    - media.type.image
++    - media.type.remote_video
++    - media.type.video
++    - node.type.content_with_media
++id: node.content_with_media.field_media
++field_name: field_media
++entity_type: node
++bundle: content_with_media
++label: Media
++description: ''
++required: false
++translatable: true
++default_value: {  }
++default_value_callback: ''
++settings:
++  handler: 'default:media'
++  handler_settings:
++    target_bundles:
++      audio: audio
++      document: document
++      image: image
++      ib_dam_embed: ib_dam_embed
++      remote_video: remote_video
++      video: video
++    sort:
++      field: _none
++      direction: ASC
++    auto_create: false
++    auto_create_bundle: audio
++field_type: entity_reference
+diff --git a/tests/modules/intelligencebank_test/config/install/field.storage.node.field_media.yml b/tests/modules/intelligencebank_test/config/install/field.storage.node.field_media.yml
+new file mode 100644
+index 0000000..bbec21d
+--- /dev/null
++++ b/tests/modules/intelligencebank_test/config/install/field.storage.node.field_media.yml
+@@ -0,0 +1,19 @@
++langcode: en
++status: true
++dependencies:
++  module:
++    - media
++    - node
++id: node.field_media
++field_name: field_media
++entity_type: node
++type: entity_reference
++settings:
++  target_type: media
++module: core
++locked: false
++cardinality: 1
++translatable: true
++indexes: {  }
++persist_with_no_fields: false
++custom_storage: false
+diff --git a/tests/modules/intelligencebank_test/config/install/node.type.content_with_media.yml b/tests/modules/intelligencebank_test/config/install/node.type.content_with_media.yml
+new file mode 100644
+index 0000000..e4ff357
+--- /dev/null
++++ b/tests/modules/intelligencebank_test/config/install/node.type.content_with_media.yml
+@@ -0,0 +1,17 @@
++langcode: en
++status: true
++dependencies:
++  module:
++    - menu_ui
++third_party_settings:
++  menu_ui:
++    available_menus:
++      - main
++    parent: 'main:'
++name: 'Content with media'
++type: content_with_media
++description: 'A test content type for testing intelligence bank media'
++help: ''
++new_revision: true
++preview_mode: 1
++display_submitted: true
+diff --git a/tests/modules/intelligencebank_test/intelligencebank_test.install b/tests/modules/intelligencebank_test/intelligencebank_test.install
+deleted file mode 100644
+index b0d3f23..0000000
+--- a/tests/modules/intelligencebank_test/intelligencebank_test.install
++++ /dev/null
+@@ -1,10 +0,0 @@
+-<?php
+-
+-/**
+- * @file
+- * Contains install/uninstall hooks.
+- */
+-
+-function intelligencebank_test_uninstall() {
+-  \Drupal::configFactory()->getEditable('ib_dam_media.settings')->delete();
+-}
+diff --git a/tests/modules/intelligencebank_test/intelligencebank_test.links.action.yml b/tests/modules/intelligencebank_test/intelligencebank_test.links.action.yml
+deleted file mode 100644
+index 8b52e9a..0000000
+--- a/tests/modules/intelligencebank_test/intelligencebank_test.links.action.yml
++++ /dev/null
+@@ -1,8 +0,0 @@
+-intelligencebank_test.add_asset_page:
+-  appears_on:
+-    - entity.media.collection
+-    - view.media_library.page
+-    - view.media_library.widget_table
+-  route_name: entity_browser.search_ib_dam_test
+-  title: 'Test Add Intelligencebank Assets'
+-  weight: 100
+diff --git a/tests/modules/intelligencebank_test/intelligencebank_test.module b/tests/modules/intelligencebank_test/intelligencebank_test.module
+index c9db3ec..43642ff 100644
+--- a/tests/modules/intelligencebank_test/intelligencebank_test.module
++++ b/tests/modules/intelligencebank_test/intelligencebank_test.module
+@@ -6,24 +6,20 @@
+  *
+  */
+ 
+-use Drupal\Core\Form\FormStateInterface;
+-use Drupal\Core\Url;
++ use Drupal\Component\Serialization\Json;
++ use Drupal\Core\Form\FormStateInterface;
+ 
+ /**
+- * Custom submit handler to redirect to /admin/content/media.
+- */
+-function intelligencebank_test_form_submit(array $form, FormStateInterface $form_state) {
+-  $url = Url::fromRoute('entity.media.collection');
+-  $form_state->setRedirectUrl($url);
+-}
+-
+-/**
+- * Implements hook_FORM_ID_alter().
++ * Implements hook_form_alter().
++ *
++ * Change label text for open browser button.
++ * Change dialog title option.
+  *
+- * Add custom submit handler to form.
+- * See
+- * @link https://git.drupalcode.org/project/intelligencebank/-/blob/8.x-2.x/modules/ib_dam_media/src/Plugin/EntityBrowser/Widget/IbDamEbWidget.php#L249 @endlink.
++ * See @link drupal.org/project/intelligencebank/issues/3353858
+  */
+-function intelligencebank_test_form_entity_browser_search_ib_dam_test_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+-  $form['#submit'][] = 'intelligencebank_test_form_submit';
++function intelligencebank_test_form_media_library_add_form_upload_alter(&$form, FormStateInterface $form_state, $form_id) {
++  $form['ib_dam_container']['asset_browser']['#title'] = t('Add Custom Assets');
++  $data_dialog_options = Json::decode($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options']);
++  $data_dialog_options['title'] = 'Custom Asset Browser';
++  $form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'] = Json::encode($data_dialog_options);
+ }
+diff --git a/tests/src/Functional/IntelligenceBankFunctionalTest.php b/tests/src/Functional/IntelligenceBankFunctionalTest.php
+index 547f7e8..b74c07f 100644
+--- a/tests/src/Functional/IntelligenceBankFunctionalTest.php
++++ b/tests/src/Functional/IntelligenceBankFunctionalTest.php
+@@ -55,9 +55,7 @@ class IntelligenceBankFunctionalTest extends BrowserTestBase {
+     // Create and log in an administrative user.
+     $this->adminUser = $this->drupalCreateUser([
+       'administer intelligencebank configuration',
+-      'administer entity browsers',
+-      'access administration pages',
+-      'access search_ib_dam_test entity browser pages',
++      'access administration pages'
+     ]);
+     $this->drupalLogin($this->adminUser);
+   }
+@@ -98,29 +96,11 @@ class IntelligenceBankFunctionalTest extends BrowserTestBase {
+     // Ensure media type filtering is working for IntelligenceBank embeds.
+     $expected_embed_options = [
+       '--' => '--',
+-      'ib_dam_embed' => 'IntelligenceBank DAM Embed',
++      'ib_dam_embed' => 'IntelligenceBank Embed',
+     ];
+     $actual_embed_options = $this->getOptions('media_types[embed][media_type][id]');
+     $this->assertEquals($actual_embed_options, $expected_embed_options);
+ 
+   }
+ 
+-  /**
+-   * Tests that the proper options appear on the entity browser widget edit form.
+-   */
+-  public function testIntelligenceBankEntityBrowserConfigIntegration() {
+-    $this->drupalGet('/admin/config/content/entity_browser/search_ib_dam_test/widgets');
+-    $widget_options = $this->getOptions('widget');
+-    $this->assertArrayHasKey('intelligencebank_file', $widget_options);
+-    $this->assertArrayHasKey('ib_dam_search', $widget_options);
+-  }
+-
+-  /**
+-   * Tests that ib_dam_search entity browser widget works.
+-   */
+-  public function testIntelligenceBankEntityBrowserViewIntegration() {
+-    $this->drupalGet('/admin/content/media/ibdam-test-form');
+-    $this->assertSession()->elementExists('css', 'iframe.ib-dam-app-browser');
+-  }
+-
+ }
+diff --git a/tests/src/FunctionalJavascript/WidgetOpenBrowserTest.php b/tests/src/FunctionalJavascript/WidgetOpenBrowserTest.php
+new file mode 100644
+index 0000000..3db9be2
+--- /dev/null
++++ b/tests/src/FunctionalJavascript/WidgetOpenBrowserTest.php
+@@ -0,0 +1,206 @@
++<?php
++
++namespace Drupal\Tests\intelligencebank\FunctionalJavascript;
++
++use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
++
++
++/**
++ * Tests that renaming intelligencebank button via hook_form_FORM_ID_alter() works.
++ *
++ * @group intelligencebank
++ * @group intelligencebankJS
++ *
++ */
++class WidgetOpenBrowserTest extends WebDriverTestBase {
++
++  /**
++   * A user with permission to work with pages.
++   *
++   * @var \Drupal\user\UserInterface
++   */
++  protected $user;
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'intelligencebank_test',
++  ];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected $defaultTheme = 'stark';
++
++  /**
++   * The profile to install as a basis for testing.
++   *
++   * @var string
++   */
++  protected $profile = 'standard';
++
++
++  protected function setUp(): void {
++    parent::setUp();
++
++    // Create a user that can add media of type image,document,audio,video.
++    $user = $this->drupalCreateUser([
++      'access administration pages',
++      'view the administration theme',
++      'access content',
++      'create content_with_media content',
++      'create image media',
++      'create document media',
++      'create audio media',
++      'create video media',
++      'access media overview',
++      'view media',
++    ]);
++    $this->drupalLogin($user);
++
++  }
++
++  /**
++   * Tests that uploads in the Media library's widget works as expected.
++   */
++  public function testWidgetOverride() {
++    $assert_session = $this->assertSession();
++    // Visit a node create page and open the media library.
++    $this->drupalGet('node/add/content_with_media');
++    $this->openMediaLibraryForField('field_media');
++    // Assert the upload form is visible for image.
++    $this->switchToMediaType('Image');
++    $assert_session->fieldExists('Add file');
++    $button_selector = 'a.js-button-add-ib-asset';
++    $assert_session->elementExists('css', $button_selector);
++    $assert_session->elementContains('css', $button_selector, 'Add Custom Assets');
++    $assert_session->linkExists('Add Custom Assets');
++
++    $this->switchToMediaType('Document');
++    $assert_session->fieldExists('Add file');
++    $assert_session->elementExists('css', $button_selector);
++
++    $this->switchToMediaType('Image');
++    $assert_session->fieldExists('Add file');
++    $assert_session->elementExists('css', $button_selector);
++
++    $this->getSession()->getPage()->clickLink('Add Custom Assets');
++    $this->waitForElementTextContains('.id-dam-browser-dialog','Custom Asset Browser');
++
++  }
++
++  /**
++   * Asserts that text appears in an element after a wait.
++   *
++   * @param string $selector
++   *   The CSS selector of the element to check.
++   * @param string $text
++   *   The text that should appear in the element.
++   * @param int $timeout
++   *   Timeout in milliseconds, defaults to 10000.
++   *
++   * @todo replace with whatever gets added in
++   *   https://www.drupal.org/node/3061852
++   */
++  protected function waitForElementTextContains($selector, $text, $timeout = 10000) {
++    $element = $this->assertSession()->waitForElement('css', "$selector:contains('$text')", $timeout);
++    $this->assertNotEmpty($element);
++  }
++
++  /**
++   * Clicks a button that opens a media widget and confirms it is open.
++   *
++   * @param string $field_name
++   *   The machine name of the field for which to open the media library.
++   * @param string $after_open_selector
++   *   The selector to look for after the button is clicked.
++   *
++   * @return \Behat\Mink\Element\NodeElement
++   *   The NodeElement found via $after_open_selector.
++   */
++  protected function openMediaLibraryForField($field_name, $after_open_selector = '.js-media-library-menu') {
++    $this->assertElementExistsAfterWait('css', "#$field_name-media-library-wrapper.js-media-library-widget")
++      ->pressButton('Add media');
++    $this->waitForText('Add or select media');
++
++    return $this->assertElementExistsAfterWait('css', $after_open_selector);
++  }
++
++  /**
++   * Waits for the specified selector and returns it if not empty.
++   *
++   * @param string $selector
++   *   The selector engine name. See ElementInterface::findAll() for the
++   *   supported selectors.
++   * @param string|array $locator
++   *   The selector locator.
++   * @param int $timeout
++   *   Timeout in milliseconds, defaults to 10000.
++   *
++   * @return \Behat\Mink\Element\NodeElement
++   *   The page element node if found. If not found, the test fails.
++   *
++   * @todo replace with whatever gets added in
++   *   https://www.drupal.org/node/3061852
++   */
++  protected function assertElementExistsAfterWait($selector, $locator, $timeout = 10000) {
++    $element = $this->assertSession()->waitForElement($selector, $locator, $timeout);
++    $this->assertNotEmpty($element);
++    return $element;
++  }
++
++  /**
++   * Clicks a media type tab and waits for it to appear.
++   */
++  protected function switchToMediaType($type) {
++
++    $link = $this->assertSession()
++      ->elementExists('named', ['link', "$type"], $this->getTypesMenu());
++
++    if ($link->hasClass('active')) {
++      // There is nothing to do as the type is already active.
++      return;
++    }
++
++    $link->click();
++    $result = $link->waitFor(10, function ($link) {
++      /** @var \Behat\Mink\Element\NodeElement $link */
++      return $link->hasClass('active');
++    });
++    $this->assertNotEmpty($result);
++
++    // assertWaitOnAjaxRequest() required for input "id" attributes to
++    // consistently match their label's "for" attribute.
++    $this->assertSession()->assertWaitOnAjaxRequest();
++  }
++
++  /**
++   * Gets the menu of available media types.
++   *
++   * @return \Behat\Mink\Element\NodeElement
++   *   The menu of available media types.
++   */
++  protected function getTypesMenu() {
++
++    return $this->assertSession()
++      ->elementExists('css', '.js-media-library-menu');
++  }
++
++  /**
++   * Asserts that text appears on page after a wait.
++   *
++   * @param string $text
++   *   The text that should appear on the page.
++   * @param int $timeout
++   *   Timeout in milliseconds, defaults to 10000.
++   *
++   * @todo replace with whatever gets added in
++   *   https://www.drupal.org/node/3061852
++   */
++  protected function waitForText($text, $timeout = 10000) {
++    $result = $this->assertSession()->waitForText($text, $timeout);
++    $this->assertNotEmpty($result, "\"$text\" not found");
++  }
++
++}

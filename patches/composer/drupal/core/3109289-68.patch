@@ -1,0 +1,52 @@
+diff --git a/core/modules/media/src/Form/EditorMediaDialog.php b/core/modules/media/src/Form/EditorMediaDialog.php
+index c76bb9153c..5b672e0df3 100644
+--- a/core/modules/media/src/Form/EditorMediaDialog.php
++++ b/core/modules/media/src/Form/EditorMediaDialog.php
+@@ -193,11 +193,6 @@ public function buildForm(array $form, FormStateInterface $form_state, EditorInt
+       '#access' => count($view_mode_options) >= 2,
+     ];
+ 
+-    // Store the default from the MediaEmbed filter, so that if the selected
+-    // view mode matches the default, we can drop the 'data-view-mode'
+-    // attribute.
+-    $form_state->set('filter_default_view_mode', $media_embed_filter->settings['default_view_mode']);
+-
+     if ((empty($form['alt']) || $form['alt']['#access'] === FALSE) && $form['align']['#access'] === FALSE && $form['caption']['#access'] === FALSE && $form['view_mode']['#access'] === FALSE) {
+       $format = $editor->getFilterFormat();
+       $warning = $this->t('There is nothing to configure for this media.');
+@@ -253,12 +248,6 @@ public function submitForm(array &$form, FormStateInterface $form_state) {
+       $form_state->setValue(['attributes', 'alt'], FALSE);
+     }
+ 
+-    // If the selected view mode matches the default on the filter, remove the
+-    // attribute.
+-    if (!empty($form_state->get('filter_default_view_mode')) && $form_state->getValue(['attributes', 'data-view-mode']) === $form_state->get('filter_default_view_mode')) {
+-      $form_state->setValue(['attributes', 'data-view-mode'], FALSE);
+-    }
+-
+     if ($form_state->getErrors()) {
+       unset($form['#prefix'], $form['#suffix']);
+       $form['status_messages'] = [
+diff --git a/core/modules/media_library/src/MediaLibraryEditorOpener.php b/core/modules/media_library/src/MediaLibraryEditorOpener.php
+index ab5674c875..7359240630 100644
+--- a/core/modules/media_library/src/MediaLibraryEditorOpener.php
++++ b/core/modules/media_library/src/MediaLibraryEditorOpener.php
+@@ -70,6 +70,18 @@ public function getSelectionResponse(MediaLibraryState $state, array $selected_i
+         'data-entity-uuid' => $selected_media->uuid(),
+       ],
+     ];
++
++    // Set 'data-view-mode' attribute if a default view mode is configured
++    // for the filter format.
++    $filter_format = $this->filterStorage->load($state->getOpenerParameters()['filter_format_id']);
++    if ($filter_format && $filter_format->filters('media_embed')) {
++      $filter = $filter_format->filters('media_embed');
++      $default_view_mode = $filter->settings['default_view_mode'];
++      if ($default_view_mode) {
++        $values['attributes']['data-view-mode'] = $default_view_mode;
++      }
++    }
++
+     $response->addCommand(new EditorDialogSave($values));
+ 
+     return $response;

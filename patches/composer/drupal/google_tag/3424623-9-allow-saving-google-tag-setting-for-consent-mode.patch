@@ -1,0 +1,13 @@
+diff --git a/src/Form/TagContainerForm.php b/src/Form/TagContainerForm.php
+index 186d3af4570862944f0e206c0cdcecd647e8b4bd..b445a004f852f29c2f23968c4ce1ff5e842f4865 100644
+--- a/src/Form/TagContainerForm.php
++++ b/src/Form/TagContainerForm.php
+@@ -466,7 +466,7 @@ class TagContainerForm extends EntityForm {
+       '#type' => 'checkbox',
+       '#title' => $this->t('Enforce Privacy Consent Policy'),
+       '#description' => $this->t("In certain countries and for certain tags (Ads), user consent is required before sending any data. Please review this  <a href='https://www.google.com/about/company/user-consent-policy-help/'>Google FAQ</a> before disabling."),
+-      '#default_value' => $advanced_settings['consent_mode'] ?? TRUE,
++      '#default_value' => !empty($this->entity->get('advanced_settings')['consent_mode']),
+     ];
+
+     // Only show Advanced GTM settings if one of the IDs belong to GTM.

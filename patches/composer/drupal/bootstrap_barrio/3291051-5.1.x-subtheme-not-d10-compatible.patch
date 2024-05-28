@@ -1,0 +1,14 @@
+diff --git a/subtheme/bootstrap_barrio_subtheme.info.yml b/subtheme/bootstrap_barrio_subtheme.info.yml
+index 4263fbb..6d2a638 100644
+--- a/subtheme/bootstrap_barrio_subtheme.info.yml
++++ b/subtheme/bootstrap_barrio_subtheme.info.yml
+@@ -1,8 +1,7 @@
+ name: Bootstrap Barrio Subtheme
+ type: theme
+ description: 'Basic structure for a Bootstrap Barrio SubTheme.'
+-core: 8.x
+-core_version_requirement: ^8 || ^9
++core_version_requirement: ^8 || ^9 || ^10
+ base theme: bootstrap_barrio
+ 
+ libraries:

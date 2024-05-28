@@ -1,0 +1,151 @@
+diff --git a/config/schema/bootstrap_barrio.schema.yml b/config/schema/bootstrap_barrio.schema.yml
+index e835bbe..1d9ed95 100644
+--- a/config/schema/bootstrap_barrio.schema.yml
++++ b/config/schema/bootstrap_barrio.schema.yml
+@@ -23,68 +23,134 @@ bootstrap_barrio.settings:
+     # Region.
+     # ----------------------------
+     bootstrap_barrio_region_clean_top_header:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Top header region'
+-    bootstrap_barrio_region_clean_top_header_form:
++    bootstrap_barrio_region_class_top_header:
+       type: string
++      label: 'Classes for Top header region'
++    bootstrap_barrio_region_clean_top_header_form:
++      type: boolean
+       label: 'Clean wrapper for Top header form region'
+-    bootstrap_barrio_region_clean_header:
++    bootstrap_barrio_region_class_top_header_form:
+       type: string
++      label: 'Classes for Top header form region'
++    bootstrap_barrio_region_clean_header:
++      type: boolean
+       label: 'Clean wrapper for Header region'
++    bootstrap_barrio_region_class_header:
++      type: string
++      label: 'Classes for Header region'
++    bootstrap_barrio_region_clean_header_form:
++      type: boolean
++      label: 'Clean wrapper for Header form region'
+     bootstrap_barrio_region_class_header_form:
+       type: string
+       label: 'Classes for Header form region'
+     bootstrap_barrio_region_clean_primary_menu:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Primary menu region'
++    bootstrap_barrio_region_class_primary_menu:
++      type: string
++      label: 'Classes for Primary menu region'
++    bootstrap_barrio_region_clean_secondary_menu:
++      type: boolean
++      label: 'Clean wrapper for Secondary menu region'
+     bootstrap_barrio_region_class_secondary_menu:
+       type: string
+       label: 'Classes for Secondary menu region'
+     bootstrap_barrio_region_clean_page_top:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Page top region'
++    bootstrap_barrio_region_class_page_top:
++      type: string
++      label: 'Classes for Page top region'
++    bootstrap_barrio_region_clean_page_bottom:
++      type: boolean
++      label: 'Clean wrapper for Page bottom region'
+     bootstrap_barrio_region_class_page_bottom:
+       type: string
+       label: 'Classes for Page bottom region'
+     bootstrap_barrio_region_clean_highlighted:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Highlighted region'
++    bootstrap_barrio_region_class_highlighted:
++      type: string
++      label: 'Classes for Highlighted region'
++    bootstrap_barrio_region_clean_featured_top:
++      type: boolean
++      label: 'Clean wrapper for Featured top region'
+     bootstrap_barrio_region_class_featured_top:
+       type: string
+       label: 'Classes for Featured top region'
+     bootstrap_barrio_region_clean_breadcrumb:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Breadcrumb region'
++    bootstrap_barrio_region_class_breadcrumb:
++      type: string
++      label: 'Classes for Breadcrumb region'
++    bootstrap_barrio_region_clean_content:
++      type: boolean
++      label: 'Clean wrapper for Content region'
+     bootstrap_barrio_region_class_content:
+       type: string
+       label: 'Classes for Content region'
+     bootstrap_barrio_region_clean_sidebar_first:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Sidebar first region'
++    bootstrap_barrio_region_class_sidebar_first:
++      type: string
++      label: 'Classes for Sidebar first region'
++    bootstrap_barrio_region_clean_sidebar_second:
++      type: boolean
++      label: 'Clean wrapper for Sidebar second region'
+     bootstrap_barrio_region_class_sidebar_second:
+       type: string
+       label: 'Classes for Sidebar second region'
+     bootstrap_barrio_region_clean_featured_bottom_first:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Featured bottom first region'
++    bootstrap_barrio_region_class_featured_bottom_first:
++      type: string
++      label: 'Classes for Featured bottom first region'
++    bootstrap_barrio_region_clean_featured_bottom_second:
++      type: boolean
++      label: 'Clean wrapper for Featured bottom second region'
+     bootstrap_barrio_region_class_featured_bottom_second:
+       type: string
+       label: 'Classes for Featured bottom second region'
+     bootstrap_barrio_region_clean_featured_bottom_third:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Featured bottom third region'
++    bootstrap_barrio_region_class_featured_bottom_third:
++      type: string
++      label: 'Classes for Featured bottom third region'
++    bootstrap_barrio_region_clean_footer_first:
++      type: boolean
++      label: 'Clean wrapper for Footer first region'
+     bootstrap_barrio_region_class_footer_first:
+       type: string
+       label: 'Classes for Footer first region'
+     bootstrap_barrio_region_clean_footer_second:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Footer second region'
++    bootstrap_barrio_region_class_footer_second:
++      type: string
++      label: 'Classes for Footer second region'
++    bootstrap_barrio_region_clean_footer_third:
++      type: boolean
++      label: 'Clean wrapper for Footer third region'
+     bootstrap_barrio_region_class_footer_third:
+       type: string
+       label: 'Classes for Footer third region'
+     bootstrap_barrio_region_clean_footer_fourth:
+-      type: string
++      type: boolean
+       label: 'Clean wrapper for Footer fourth region'
++    bootstrap_barrio_region_class_footer_fourth:
++      type: string
++      label: 'Classes for Footer fourth region'
++    bootstrap_barrio_region_clean_footer_fifth:
++      type: boolean
++      label: 'Clean wrapper for Footer fifth region'
+     bootstrap_barrio_region_class_footer_fifth:
+       type: string
+       label: 'Classes for Footer fifth region'

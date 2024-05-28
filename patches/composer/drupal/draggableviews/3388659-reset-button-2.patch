@@ -1,0 +1,83 @@
+diff --git a/draggableviews.module b/draggableviews.module
+index 17583f0..aa1ea18 100644
+--- a/draggableviews.module
++++ b/draggableviews.module
+@@ -147,15 +147,23 @@ function draggableviews_form_alter(&$form, FormStateInterface $form_state, $form
+       '#type' => 'submit',
+       '#limit_validation_errors' => [],
+     ];
++    // Create draggableviews save order button.
++    $form['actions']['reset_order'] = [
++      '#value' => t('Reset order'),
++      '#type' => 'submit',
++      '#limit_validation_errors' => [],
++    ];
+   }
+ 
+   // If there is no results remove the save-order button.
+   if (!isset($form['draggableviews'][0])) {
+     $form['actions']['save_order']['#access'] = FALSE;
++    $form['actions']['reset_order']['#access'] = FALSE;
+     return;
+   }
+ 
+   $form['actions']['save_order']['#submit'][] = 'draggableviews_views_submit';
++  $form['actions']['reset_order']['#submit'][] = 'draggableviews_views_reset';
+ }
+ 
+ /**
+@@ -220,6 +228,54 @@ function draggableviews_views_submit(&$form, FormStateInterface $form_state) {
+   }
+ }
+ 
++/**
++ * Reset handler.
++ */
++function draggableviews_views_reset(&$form, FormStateInterface $form_state) {
++  $input = $form_state->getUserInput();
++
++  /** @var \Drupal\views\ViewExecutable $view */
++  $view = $form_state->getBuildInfo()['args'][0];
++  $view_name = $view->id();
++  $view_display = $view->current_display;
++  $view_args = !empty($view->args) ? json_encode($view->args) : '[]';
++
++  $connection = Database::getConnection();
++  $transaction = $connection->startTransaction();
++  try {
++    foreach ($input['draggableviews'] as $item) {
++      // Remove old data.
++      $connection->delete('draggableviews_structure')
++        ->condition('view_name', $view_name)
++        ->condition('view_display', $view_display)
++        ->condition('args', $view_args)
++        ->condition('entity_id', $item['id'])
++        ->execute();
++    }
++    // We invalidate the entity list cache, so other views are also aware of the
++    // cache.
++    $views_entity_table_info = $view->query->getEntityTableInfo();
++    // Find the entity type used by the view.
++    $result = array_keys(array_filter($views_entity_table_info, function ($info) {
++      return $info['relationship_id'] == 'none';
++    }));
++    $entity_type_id = reset($result);
++    $list_cache_tags = \Drupal::entityTypeManager()->getDefinition($entity_type_id)->getListCacheTags();
++
++    // Add the view configuration cache tag to let third-party integrations to
++    // rely on it.
++    $list_cache_tags[] = 'config:views.view.' . $view_name;
++    $list_cache_tags[] = 'config:views.view.' . $view_name . '.' . $view_display;
++
++    Cache::invalidateTags($list_cache_tags);
++  }
++  catch (\Exception $e) {
++    $transaction->rollback();
++    \Drupal::logger('draggableviews')->error('Failed with @message', ['@message' => $e->getMessage()]);
++    \Drupal::messenger()->addMessage(t('There was an error while saving the data. Please, try again.'), 'warning');
++  }
++}
++
+ /**
+  * Implements hook_contextual_links_alter().
+  */

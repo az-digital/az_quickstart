@@ -29,150 +29,197 @@
         }
     ],
     "require": {
-        "php": ">=7.4",
-        "az-digital/arizona-bootstrap": "2.0.18",
-        "bower-asset/chosen": "1.8.7",
-        "composer/installers": "^1.9",
+        "php": ">=8.1",
+        "az-digital/arizona-bootstrap": "2.0.27",
+        "az-digital/az-icons": "1.0.2",
+        "az-digital/smart_title": "dev-az-digital",
+        "citation-style-language/locales": "0.0.20",
+        "citation-style-language/styles": "0.0.413",
+        "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
-        "drupal/access_unpublished": "1.4.0",
-        "drupal/antibot": "2.0.0",
-        "drupal/auto_entitylabel": "3.0-beta4",
-        "drupal/background_image_formatter": "1.7",
-        "drupal/better_exposed_filters": "5.0",
-        "drupal/block_class": "2.0.7",
-        "drupal/block_content_permissions": "1.10",
-        "drupal/block_field": "1.0-rc3",
-        "drupal/bootstrap_barrio": "4.30",
-        "drupal/bootstrap_utilities": "1.2.0",
-        "drupal/cas": "2.0.2",
-        "drupal/chosen": "3.0.3",
-        "drupal/ckeditor_bs_grid": "2.0.7",
-        "drupal/coffee": "1.2",
-        "drupal/config_distro": "1.0-alpha4",
-        "drupal/config_provider": "2.0-rc4",
-        "drupal/config_snapshot": "1.0-rc2",
-        "drupal/config_sync": "2.0-beta7",
-        "drupal/config_update": "1.7",
-        "drupal/core-recommended": "9.4.7",
-        "drupal/crop": "2.2.0",
-        "drupal/ctools": "3.11",
-        "drupal/date_ap_style": "1.5.0",
-        "drupal/draggableviews": "2.0.1",
-        "drupal/easy_breadcrumb": "2.0.3",
-        "drupal/embed": "1.6.0",
-        "drupal/entity_browser": "2.8.0",
-        "drupal/entity_embed": "1.2",
-        "drupal/environment_indicator": "4.0.9",
+        "drupal/access_unpublished": "1.5.0",
+        "drupal/antibot": "2.0.3",
+        "drupal/asset_injector": "2.20.0",
+        "drupal/auto_entitylabel": "3.0.0",
+        "drupal/better_exposed_filters": "6.0.5",
+        "drupal/blazy": "2.24.0",
+        "drupal/block_class": "2.0.11",
+        "drupal/block_content_permissions": "*",
+        "drupal/block_field": "1.0.0-rc4",
+        "drupal/bootstrap_barrio": "5.1.10",
+        "drupal/bootstrap_utilities": "2.0.0",
+        "drupal/cas": "2.2.0",
+        "drupal/chosen": "4.0.0",
+        "drupal/ckeditor_bs_grid": "2.0.11",
+        "drupal/ckeditor_indentblock": "1.0",
+        "drupal/coffee": "1.4.0",
+        "drupal/config_distro": "2.0.0-alpha2",
+        "drupal/config_ignore": "3.3.0",
+        "drupal/config_ignore_readonly": "2.2.0-beta1",
+        "drupal/config_provider": "3.0.0-alpha1",
+        "drupal/config_readonly": "1.0.0-beta5",
+        "drupal/config_snapshot": "2.0.0-alpha1",
+        "drupal/config_split": "2.0.1",
+        "drupal/config_sync": "3.0.0-alpha3",
+        "drupal/config_update": "2.0.0-alpha3",
+        "drupal/core-recommended": "10.2.6",
+        "drupal/crop": "2.3.0",
+        "drupal/ctools": "3.14.0",
+        "drupal/date_ap_style": "2.0.0",
+        "drupal/draggableviews": "2.1.3",
+        "drupal/easy_breadcrumb": "2.0.6",
+        "drupal/embed": "1.7.0",
+        "drupal/entity_embed": "1.6.0",
+        "drupal/environment_indicator": "4.0.10",
         "drupal/exclude_node_title": "1.4.0",
-        "drupal/externalauth": "2.0.2",
-        "drupal/field_group": "3.3.0",
-        "drupal/field_group_link": "3.0.0",
-        "drupal/google_tag": "1.5.0",
-        "drupal/honeypot": "2.1.1",
-        "drupal/image_widget_crop": "2.3",
-        "drupal/intelligencebank": "3.0.0",
-        "drupal/jquery_ui": "1.4",
-        "drupal/jquery_ui_datepicker": "1.3.0",
-        "drupal/link_class": "2.0.0",
-        "drupal/linkit": "6.0.0-beta3",
-        "drupal/masquerade": "2.0.0-rc1",
-        "drupal/media_library_edit": "2.3.0",
-        "drupal/media_library_form_element": "2.0.4",
-        "drupal/media_library_theme_reset": "1.3.0",
-        "drupal/media_migration": "1.0.0-alpha14",
-        "drupal/menu_block": "1.7.0",
-        "drupal/menu_link_attributes": "1.2",
-        "drupal/metatag": "1.22.0",
-        "drupal/migrate_plus": "5.3.0",
-        "drupal/migrate_queue_importer": "2.0",
-        "drupal/migrate_tools": "5.1.0",
-        "drupal/paragraphs": "1.15.0",
-        "drupal/paragraphs_admin": "1.3.0",
-        "drupal/pathauto": "1.11.0",
-        "drupal/quick_node_clone": "1.15",
-        "drupal/redirect": "1.8.0",
+        "drupal/externalauth": "2.0.5",
+        "drupal/extlink": "1.7",
+        "drupal/field_group": "3.4.0",
+        "drupal/field_group_link": "3.1.0",
+        "drupal/flag": "4.0-beta4",
+        "drupal/google_tag": "2.0.4",
+        "drupal/honeypot": "2.1.3",
+        "drupal/image_widget_crop": "2.4.0",
+        "drupal/inline_entity_form": "3.0.0-rc19",
+        "drupal/intelligencebank": "4.0.0",
+        "drupal/jquery_ui": "1.6.0",
+        "drupal/jquery_ui_datepicker": "2.0.0",
+        "drupal/link_class": "2.1.0",
+        "drupal/linkit": "6.1.4",
+        "drupal/masquerade": "2.0.0-rc4",
+        "drupal/media_entity_file_replace": "1.2.0",
+        "drupal/media_library_edit": "3.0.3",
+        "drupal/media_library_form_element": "2.0.6",
+        "drupal/media_migration": "1.0.0-alpha16",
+        "drupal/menu_block": "1.10.0",
+        "drupal/menu_link_attributes": "1.3.0",
+        "drupal/metatag": "2.0.0",
+        "drupal/migrate_plus": "6.0.2",
+        "drupal/migrate_queue_importer": "2.1.0",
+        "drupal/migrate_tools": "6.0.4",
+        "drupal/optional_end_date": "1.3.0",
+        "drupal/paragraphs": "1.17.0",
+        "drupal/paragraphs_admin": "1.6.0",
+        "drupal/pathauto": "1.12.0",
+        "drupal/quick_node_clone": "1.17.0",
+        "drupal/redirect": "1.9.0",
         "drupal/role_delegation": "1.2.0",
-        "drupal/search_exclude": "2.0.0-beta2",
-        "drupal/seckit": "2.0.0",
-        "drupal/slick": "2.6.0",
-        "drupal/slick_views": "2.6.0",
-        "drupal/smart_date": "3.6.1",
-        "drupal/smart_title": "1.0-beta1",
-        "drupal/smtp": "1.1.0",
-        "drupal/token": "1.11.0",
+        "drupal/search_exclude": "3.0.0-beta1",
+        "drupal/seckit": "2.0.1",
+        "drupal/slick": "2.11.0",
+        "drupal/slick_views": "2.8.0",
+        "drupal/smart_date": "4.0.3",
+        "drupal/smtp": "1.2.0",
+        "drupal/token": "1.14.0",
         "drupal/views_bootstrap": "5.4.0",
-        "drupal/viewsreference": "2.0.0-beta3",
-        "drupal/webform": "6.1.3",
-        "drupal/xmlsitemap": "1.4.0",
+        "drupal/views_remote_data": "1.0.2",
+        "drupal/viewsreference": "2.0.0-beta7",
+        "drupal/webform": "6.2.2",
+        "drupal/workbench_access": "2.0.1",
+        "drupal/xmlsitemap": "1.5.0",
+        "jjj/chosen": "2.2.1",
+        "kevinrob/guzzle-cache-middleware": "5.1.0",
         "npm-asset/blazy": "1.8.2",
+        "npm-asset/bootstrap-datepicker": "1.10.0",
+        "npm-asset/easepick--bundle": "1.2.1",
         "npm-asset/jquery-ui-touch-punch": "0.2.3",
-        "npm-asset/slick-carousel": "1.8.0"
+        "npm-asset/slick-carousel": "1.8.0",
+        "renanbr/bibtex-parser": "2.2.0",
+        "seboettg/citeproc-php": "2.6.2"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
     },
+    "conflict": {
+        "drush/drush": "<12.4.3"
+    },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.6.x-dev"
+            "dev-main": "2.11.x-dev"
         },
         "patches": {
             "drupal/antibot": {
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "web/profiles/custom/az_quickstart/patches/composer/drupal/antibot/3205217-1.patch"
             },
-            "drupal/better_exposed_filters": {
-                "Remove jquery_ui_slider (3210947)": "web/profiles/custom/az_quickstart/patches/composer/drupal/better_exposed_filters/3210947-12.patch"
+            "drupal/auto_entitylabel": {
+                "Support entities without bundles (2945387)": "web/profiles/custom/az_quickstart/patches/composer/drupal/auto_entitylabel/2945387-19-support-bundleless-entities.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Fix schema (3217958)": "web/profiles/custom/az_quickstart/patches/composer/drupal/bootstrap_barrio/3217958.txt"
+                "Affix library still broken (3366908)": "web/profiles/custom/az_quickstart/patches/composer/drupal/bootstrap_barrio/3366908-3_5-x.patch",
+                "Fix schema (3217958)": "web/profiles/custom/az_quickstart/patches/composer/drupal/bootstrap_barrio/3217958-5-x.patch",
+                "Subtheme not D10 Compatible (3291051)": "web/profiles/custom/az_quickstart/patches/composer/drupal/bootstrap_barrio/3291051-5.1.x-subtheme-not-d10-compatible.patch"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "web/profiles/custom/az_quickstart/patches/composer/drupal/cas/cas_logout_error-2948185-2.patch",
-                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "web/profiles/custom/az_quickstart/patches/composer/drupal/cas/3190842-only-get-session-id-when-necessary.patch"
-            },
-            "drupal/config_sync": {
-                "Config_sync_test core constraint": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_sync/config_sync_test_core_requirement_issue.patch"
-            },
-            "drupal/core": {
-                "Unnecessary restrictions on logo format: Can't upload replacement SVG logo (2259567)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2259567-160-9-3-x.patch",
-                "Ajax CSS load order issue (1461322)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/1461322-25.patch",
-                "Layout builder revisions issue (3033516)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3033516-17.patch",
-                "Allow text field to enforce a specific text format (784672)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/784672-231.patch",
-                "Unable to select single view display for view settings (2552541)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2552541-43.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/drupal_core-mediaembed_default_view_mode-3109289-24.patch",
-                "Unrelated error message when running tests with database errors (3163925)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3163925-19-9-2-x.patch",
-                "Add skip-method option to file_copy and download process plugins (2766369)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2766369-33.patch",
-                "Move content overview default task link out of content_moderation module (3199682)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3199682-11-9-4-x.patch",
-                "Changing an existing embedded media does not get saved with CKEditor (3102249)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3102249-21.patch"
+                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "web/profiles/custom/az_quickstart/patches/composer/drupal/cas/3190842-10.patch"
             },
             "drupal/config_distro": {
-                "fnmatch issue": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_distro/3144145-replace-fnmatch-with-preg-match-6.patch",
-                "missing parent class": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_distro/c312096d486caa2f01703ca7de1abf2285b6fac8.diff",
-                "Storage comparer issue": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_distro/config_distro_comparer.patch"
+                "Storage comparer issue": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_distro/config_distro_storage_comparer_issue.patch"
             },
             "drupal/config_provider": {
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_provider/3281977-2.patch"
             },
-            "drupal/date_ap_style": {
-                "All Day Setting hides time display (3272760)": "web/profiles/custom/az_quickstart/patches/composer/drupal/date_ap_style/3272760-7.patch"
+            "drupal/config_readonly": {
+                "Whitelist for ConfigEntityListBuilder (3042241)": "web/profiles/custom/az_quickstart/patches/composer/drupal/config_readonly/3042241-11.patch"
             },
-            "drupal/image_widget_crop": {
-                "Reset crop triggered when ENTER is pressed in the form": "web/profiles/custom/az_quickstart/patches/composer/drupal/image_widget_crop/image_widget_crop-3117828-2.patch"
+            "drupal/core": {
+                "Views Date Filter Datetime Granularity Option (2868014)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2868014-127.datetime-granularity.patch",
+                "Support SVG files for theme logo setting (2259567)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2259567-179.patch",
+                "Ajax CSS load order issue (1461322)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/1461322-10-1-x-41.patch",
+                "Layout builder revisions issue (3033516)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3033516-17.patch",
+                "Unable to select single view display for view settings (2552541)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2552541-51.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3109289-68.patch",
+                "Add skip-method option to file_copy and download process plugins (2766369)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2766369-33.patch",
+                "Move content overview default task link out of content_moderation module (3199682)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3199682-11-9-4-x.patch",
+                "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/3154156-12.patch",
+                "Loadjs css file load issue (Quickstart Issue 2772)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/loadjs_2772.patch",
+                "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/2350049-30.patch",
+                "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "web/profiles/custom/az_quickstart/patches/composer/drupal/core/drupal-revert-source-editing-validation-tightening-3410100-38.patch"
             },
-            "drupal/linkit": {
-                "Multiple Linkit elements breaks (2925828)": "web/profiles/custom/az_quickstart/patches/composer/drupal/linkit/2925828-10-reroll-6.x.patch",
-                "Deprecated function Return type of SimpleSuggestion::jsonSerialize() (3262401)": "web/profiles/custom/az_quickstart/patches/composer/drupal/linkit/linkit-jsonserialize-3262401-11.patch"
+            "drupal/draggableviews": {
+                "Row weights not displaying on sort view (3252365)": "web/profiles/custom/az_quickstart/patches/composer/drupal/draggableviews/3252365-check-remove-select-all-class.patch",
+                "Reset button, to reset the weight all back to 0 (3388659)": "web/profiles/custom/az_quickstart/patches/composer/drupal/draggableviews/3388659-reset-button-2.patch"
+            },
+            "drupal/google_tag": {
+                "Enforce Privacy Consent Policy checkbox default value is checked even when it is disabled (3424623)": "web/profiles/custom/az_quickstart/patches/composer/drupal/google_tag/3424623-9-allow-saving-google-tag-setting-for-consent-mode.patch"
+            },
+            "drupal/intelligencebank": {
+                "Use a renderable array for link buttons (3353858)": "web/profiles/custom/az_quickstart/patches/composer/drupal/intelligencebank/issue-335385-convert-markup-to-renderable-array.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "web/profiles/custom/az_quickstart/patches/composer/drupal/media_migration/3268480-2.patch"
             },
             "drupal/migrate_plus": {
-                "XML namespacing issue (2933531)": "web/profiles/custom/az_quickstart/patches/composer/drupal/migrate_plus/register_namespaces-2933531-7.patch"
+                "XML namespacing issue (2933531)": "web/profiles/custom/az_quickstart/patches/composer/drupal/migrate_plus/register_namespaces-2933531-7.patch",
+                "entity_lookup plugin fails if $value is empty (2830058)": "web/profiles/custom/az_quickstart/patches/composer/drupal/migrate_plus/migrate_plus-lookup-2830058-10.patch"
+            },
+            "drupal/quick_node_clone": {
+                "Use a custom node access operation to allow implementations of hook_node_access() to define custom access rules (3342710)": "web/profiles/custom/az_quickstart/patches/composer/drupal/quick_node_clone/3342710-5.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "web/profiles/custom/az_quickstart/patches/composer/drupal/role_delegation/3299201-4.patch"
             },
+            "drupal/search_exclude": {
+                "Request for a Views Handler (2882683)": "web/profiles/custom/az_quickstart/patches/composer/drupal/search_exclude/request_for_a_views-2882683-14_0.patch"
+            },
+            "drupal/smart_date": {
+                "Creation of dynamic property Date::$dateFormatter is deprecated (3381131)": "web/profiles/custom/az_quickstart/patches/composer/drupal/smart_date/15d9092432fecccdef38751636fff4917cb7c0d3.diff",
+                "Deprecation in Drupal 10.2: Smart Date List Item allowed values must be passed as array (3409287)": "web/profiles/custom/az_quickstart/patches/composer/drupal/smart_date/3409287.patch"
+            },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "web/profiles/custom/az_quickstart/patches/composer/drupal/viewsreference/add_label_formatter-2938433-7.patch"
+                "Add Label field formatter (2938433)": "web/profiles/custom/az_quickstart/patches/composer/drupal/viewsreference/add_label_formatter-2938433-7.patch",
+                "Configuration schema for Enable extra settings incorrect (3402036)": "web/profiles/custom/az_quickstart/patches/composer/drupal/viewsreference/configuration-schema-for-views-reference-field-settings-3402036-4.patch",
+                "View without empty handling could break caching (3017716)": "web/profiles/custom/az_quickstart/patches/composer/drupal/viewsreference/3017716-22.patch"
+            },
+            "drupal/workbench_access": {
+                "Allow multiple access schemas (2982550)": "web/profiles/custom/az_quickstart/patches/composer/drupal/workbench_access/2982550-39.patch",
+                "Content is assigned to wrong menu level if user does not have access to the current level (3187152)": "web/profiles/custom/az_quickstart/patches/composer/drupal/workbench_access/3187152-workbench_access-menu-default-20.patch"
+            },
+            "drupal/xmlsitemap": {
+                "Module incorrectly assumes string, triggering PHP 8 fatal error (3355204)": "web/profiles/custom/az_quickstart/patches/composer/drupal/xmlsitemap/3355204_metatag_2.patch"
+            },
+            "renanbr/bibtex-parser": {
+                "Parser performance issue": "web/profiles/custom/az_quickstart/patches/composer/renanbr/bibtex-parser/renanbr_bibtex_parser_performance.patch"
             }
         },
         "drupal-scaffold": {
@@ -239,12 +286,6 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true,
-        "allow-plugins": {
-            "composer/installers": true,
-            "cweagans/composer-patches": false,
-            "dealerdirect/phpcodesniffer-composer-installer": true,
-            "drupal/console-extend-plugin": true
-        }
+        "sort-packages": true
     }
 }

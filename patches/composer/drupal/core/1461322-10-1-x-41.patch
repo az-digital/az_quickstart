@@ -1,0 +1,13 @@
+diff --git a/core/misc/ajax.js b/core/misc/ajax.js
+index 739c67046d..d65ecab2fd 100644
+--- a/core/misc/ajax.js
++++ b/core/misc/ajax.js
+@@ -1684,7 +1684,7 @@
+           message:
+             'Passing a string to the Drupal.ajax.add_css() method is deprecated in 10.1.0 and is removed from drupal:11.0.0. See https://www.drupal.org/node/3154948.',
+         });
+-        $('head').prepend(response.data);
++        $('head').append(response.data);
+         return;
+       }
+ 
