@@ -206,13 +206,6 @@
                 "Creation of dynamic property Date::$dateFormatter is deprecated (3381131)": "web/profiles/custom/az_quickstart/patches/composer/drupal/smart_date/15d9092432fecccdef38751636fff4917cb7c0d3.diff",
                 "Deprecation in Drupal 10.2: Smart Date List Item allowed values must be passed as array (3409287)": "web/profiles/custom/az_quickstart/patches/composer/drupal/smart_date/3409287.patch"
             },
-            "drupal/search_exclude": {
-                "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
-            },
-            "drupal/smart_date": {
-                "Creation of dynamic property Date::$dateFormatter is deprecated (3381131)": "https://git.drupalcode.org/project/smart_date/-/commit/15d9092432fecccdef38751636fff4917cb7c0d3.diff",
-                "Deprecation in Drupal 10.2: Smart Date List Item allowed values must be passed as array (3409287)": "https://www.drupal.org/files/issues/2023-12-18/3409287.patch"
-            },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "web/profiles/custom/az_quickstart/patches/composer/drupal/viewsreference/add_label_formatter-2938433-7.patch",
                 "Configuration schema for Enable extra settings incorrect (3402036)": "web/profiles/custom/az_quickstart/patches/composer/drupal/viewsreference/configuration-schema-for-views-reference-field-settings-3402036-4.patch",
