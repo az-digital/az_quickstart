@@ -22,8 +22,6 @@ type_settings:
     - 'view_mode:node.az_row'
     - 'view_mode:node.full'
     - 'view_mode:node.teaser'
-  entity_browser: ''
-  entity_browser_settings: {  }
 icon:
   uri: 'public://embed_buttons/post_add_FILL0_wght400_GRAD0_opsz24.svg'
   data: PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgLTk2MCA5NjAgOTYwIiB3aWR0aD0iMjQiPjxwYXRoIGQ9Ik0zMjAtNTIwdi04MGgzMjB2ODBIMzIwWm0wIDEyMHYtODBoMzIwdjgwSDMyMFptMCAxMjB2LTgwaDMyMHY4MEgzMjBabTM2MC0zMjB2LTgwaC04MHYtODBoODB2LTgwaDgwdjgwaDgwdjgwaC04MHY4MGgtODBaTTEyMC0xMjB2LTcyMGg0NDB2ODBIMjAwdjU2MGg1NjB2LTM2MGg4MHY0NDBIMTIwWiIvPjwvc3ZnPg==

@@ -1,52 +1,164 @@
 {
-    "page_categories": [
-    { "name" : "Accordions",
-      "description" : "A page with accordions.",
-      "parent_name" : ""
+  "page_categories": [
+    {
+      "name": "Home Page",
+      "description": "The home page for the site.",
+      "parent_name": ""
     },
-    { "name" : "Cards",
-      "description" : "A page with cards.",
-      "parent_name" : ""
+    {
+      "name": "Marketing Campaign",
+      "description": "A page intended to be used for a marketing campaign.",
+      "parent_name": ""
     },
-    { "name" : "Carousel",
-      "description" : "A page with a carousel.",
-      "parent_name" : ""
+    {
+      "name": "Menu Blocks",
+      "description": "A page with embedded menu blocks.",
+      "parent_name": ""
     },
-    { "name" : "Events",
-      "description" : "A page with events.",
-      "parent_name" : ""
+    {
+      "name": "No Sidebar",
+      "description": "A page which is included in the main navigation menu but has the sidebar hidden.",
+      "parent_name": ""
     },
-    { "name" : "Home Page",
-      "description" : "The home page for the site.",
-      "parent_name" : ""
+    {
+      "name": "Accordions",
+      "description": "A page with accordions.",
+      "parent_name": ""
     },
-    { "name" : "Marketing Campaign",
-      "description" : "A page intended to be used for a marketing campaign.",
-      "parent_name" : ""
+    {
+      "name": "Collapsible Sections",
+      "description": "A page with collapsible sections.",
+      "parent_name": "Accordions"
     },
-    { "name" : "Menu Blocks",
-      "description" : "A page with embedded menu blocks.",
-      "parent_name" : ""
+    {
+      "name": "Expandable Panels",
+      "description": "A page with expandable panels.",
+      "parent_name": "Accordions"
     },
-    { "name" : "No Sidebar",
-      "description" : "A page which is included in the main navigation menu but has the sidebar hidden.",
-      "parent_name" : ""
+    {
+      "name": "Cards",
+      "description": "A page with cards.",
+      "parent_name": ""
     },
-    { "name" : "Photo Galleries",
-      "description" : "A page with photo galleries.",
-      "parent_name" : ""
+    {
+      "name": "Info Cards",
+      "description": "A page with informational cards.",
+      "parent_name": "Cards"
     },
-    { "name" : "Split Screen",
-      "description" : "A page with split screen paragraphs.",
-      "parent_name" : ""
+    {
+      "name": "Technical Info Cards",
+      "description": "A page with technical information cards.",
+      "parent_name": "Info Cards"
     },
-    { "name" : "Text",
-      "description" : "A page with text paragraphs.",
-      "parent_name" : ""
+    {
+      "name": "Product Info Cards",
+      "description": "A page with product information cards.",
+      "parent_name": "Info Cards"
     },
-    { "name" : "Views",
-      "description":"A page containing views.",
-      "parent_name" : ""
+    {
+      "name": "Software Technical Info Cards",
+      "description": "A page with software technical information cards.",
+      "parent_name": "Technical Info Cards"
+    },
+    {
+      "name": "Hardware Technical Info Cards",
+      "description": "A page with hardware technical information cards.",
+      "parent_name": "Technical Info Cards"
+    },
+    {
+      "name": "Content Boxes",
+      "description": "A page with content boxes.",
+      "parent_name": "Cards"
+    },
+    {
+      "name": "Carousel",
+      "description": "A page with a carousel.",
+      "parent_name": ""
+    },
+    {
+      "name": "Image Slider",
+      "description": "A page with an image slider.",
+      "parent_name": "Carousel"
+    },
+    {
+      "name": "Rotating Banner",
+      "description": "A page with a rotating banner.",
+      "parent_name": "Carousel"
+    },
+    {
+      "name": "Events",
+      "description": "A page with events.",
+      "parent_name": ""
+    },
+    {
+      "name": "Event Listings",
+      "description": "A page listing various events.",
+      "parent_name": "Events"
+    },
+    {
+      "name": "Upcoming Events",
+      "description": "A page showcasing upcoming events.",
+      "parent_name": "Events"
+    },
+    {
+      "name": "Photo Galleries",
+      "description": "A page with photo galleries.",
+      "parent_name": ""
+    },
+    {
+      "name": "Image Galleries",
+      "description": "A page with image galleries.",
+      "parent_name": "Photo Galleries"
+    },
+    {
+      "name": "Media Galleries",
+      "description": "A page with media galleries.",
+      "parent_name": "Photo Galleries"
+    },
+    {
+      "name": "Split Screen",
+      "description": "A page with split screen paragraphs.",
+      "parent_name": ""
+    },
+    {
+      "name": "Text",
+      "description": "A page with text paragraphs.",
+      "parent_name": ""
+    },
+    {
+      "name": "Views",
+      "description": "A page containing views.",
+      "parent_name": ""
+    },
+    {
+      "name": "FAQ Sections",
+      "description": "A page with frequently asked questions sections.",
+      "parent_name": "Collapsible Sections"
+    },
+    {
+      "name": "User Guides",
+      "description": "A page dedicated to user guides.",
+      "parent_name": "Technical Info Cards"
+    },
+    {
+      "name": "Installation Guides",
+      "description": "A page with installation guides for products.",
+      "parent_name": "User Guides"
+    },
+    {
+      "name": "Troubleshooting Guides",
+      "description": "A page with troubleshooting guides for products.",
+      "parent_name": "User Guides"
+    },
+    {
+      "name": "Feature Highlights",
+      "description": "A page showcasing product feature highlights.",
+      "parent_name": "Product Info Cards"
+    },
+    {
+      "name": "Comparison Charts",
+      "description": "A page with comparison charts for products.",
+      "parent_name": "Product Info Cards"
     }
   ]
 }

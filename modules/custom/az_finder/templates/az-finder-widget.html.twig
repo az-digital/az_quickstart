@@ -1,0 +1,40 @@
+{#
+  Themes Views' default multi-select element as a hierarchical list of headings
+  and checkboxes.
+
+  Available variables:
+    - wrapper_attributes: attributes for the wrapper element.
+    - element: The collection of checkboxes.
+    - children: An array of keys for the children of element.
+    - is_nested: TRUE if this is to be rendered as a nested list.
+    - depth: If is_nested is TRUE, this holds an array in the form of
+      child_id => nesting_level which defines the depth a given element should
+      appear in the nested list.
+#}
+
+{% set classes = [
+  'form-checkboxes',
+  is_nested ? 'bef-nested',
+  show_select_all_none ? 'bef-select-all-none',
+  show_select_all_none_nested ? 'bef-select-all-none-nested',
+  display_inline ? 'form--inline'
+] %}
+<div{{ wrapper_attributes.addClass(classes) }}>
+  {% set current_nesting_level = 0 %}
+  {% for child in children %}
+    {% set item = attribute(element, child) %}
+    {% if is_nested %}
+      {% set new_nesting_level = attribute(depth, child) %}
+      {% set vars = {
+        collapse_id: vars.collapse_id ?? item['#attributes']['data-collapse-id'],
+      } %}
+      {% include '@az_finder/az-finder-nested-elements.html.twig' with vars %}
+      {% set vars = {
+        collapse_id: item['#attributes']['data-collapse-id'] ?? vars.collapse_id,
+      } %}
+      {% set current_nesting_level = new_nesting_level %}
+    {% else %}
+      {{ item }}
+    {% endif %}
+  {% endfor %}
+</div>

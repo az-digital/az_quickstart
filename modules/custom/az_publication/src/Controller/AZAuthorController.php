@@ -5,41 +5,25 @@ namespace Drupal\az_publication\Controller;
 use Drupal\az_publication\Entity\AZAuthorInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class AZAuthorController.
  *
  *  Returns responses for Author routes.
  */
-class AZAuthorController extends ControllerBase implements ContainerInjectionInterface {
+class AZAuthorController extends ControllerBase {
 
   /**
-   * The date formatter.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatter
+   * Constructs a new \Drupal\az_publication\Controller object.
    */
-  protected $dateFormatter;
-
-  /**
-   * The renderer.
-   *
-   * @var \Drupal\Core\Render\Renderer
-   */
-  protected $renderer;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    $instance = parent::create($container);
-    $instance->dateFormatter = $container->get('date.formatter');
-    $instance->renderer = $container->get('renderer');
-    return $instance;
-  }
+  public function __construct(
+    protected DateFormatterInterface $dateFormatter,
+    protected RendererInterface $renderer,
+  ) {}
 
   /**
    * Displays a Author revision.

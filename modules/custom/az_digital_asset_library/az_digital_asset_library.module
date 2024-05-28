@@ -53,6 +53,7 @@ function az_digital_asset_library_form_media_library_add_form_upload_alter(&$for
     $data_dialog_options = Json::decode($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options']);
   }
   $data_dialog_options['title'] = 'Arizona Digital Asset Library Browser';
+  $data_dialog_options['width'] = '75%';
   $form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'] = Json::encode($data_dialog_options);
 }
 
