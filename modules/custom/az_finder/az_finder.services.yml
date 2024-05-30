@@ -12,6 +12,7 @@ services:
     class: Drupal\az_finder\Service\AZFinderVocabulary
     arguments:
       - '@entity_type.manager'
+      - '@string_translation'
   az_finder.overrides:
     class: Drupal\az_finder\Service\AZFinderOverrides
     arguments:

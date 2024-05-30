@@ -5,36 +5,35 @@ declare(strict_types=1);
 namespace Drupal\az_finder\Service;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\Core\StringTranslation\TranslationInterface;
 use Drupal\taxonomy\Entity\Vocabulary;
 
 class AZFinderVocabulary {
+  use StringTranslationTrait;
+
   protected $entityTypeManager;
 
-  public function __construct(EntityTypeManagerInterface $entity_type_manager) {
+  public function __construct(EntityTypeManagerInterface $entity_type_manager, TranslationInterface $string_translation) {
     $this->entityTypeManager = $entity_type_manager;
+    $this->stringTranslation = $string_translation;
   }
 
   public function getVocabularyIdsForFilter($view_id, $display_id, $filter_id) {
     $vocabulary_ids = [];
     $view = $this->entityTypeManager->getStorage('view')->load($view_id);
-
     if ($view) {
       $display = $view->getDisplay($display_id);
       $filters = $display['display_options']['filters'] ?? [];
-
-      if (isset($filters[$filter_id])) {
-        $filter = $filters[$filter_id];
-
-        if (isset($filter['vid'])) {
-          $vocabulary_id = $filter['vid'];
-          $vocabulary = Vocabulary::load($vocabulary_id);
-          if ($vocabulary) {
-            $vocabulary_ids[] = $vocabulary->id();
-          }
+      foreach ($filters as $filter) {
+        if (($filter['exposed'] ?? FALSE) !== TRUE) {
+          continue;
+        }
+        if (isset($filter['plugin_id']) && $filter['plugin_id'] === 'taxonomy_index_tid') {
+          $vocabulary_ids[] = $filter['vid'];
         }
       }
     }
-
     return $vocabulary_ids;
   }
 

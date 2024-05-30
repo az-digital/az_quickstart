@@ -1,6 +1,5 @@
 <?php
 
-
 declare(strict_types=1);
 
 namespace Drupal\az_finder\Form;
@@ -20,7 +19,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZFinderSettingsForm extends ConfigFormBase {
 
   protected $viewOptions;
-  protected $vocabulary;
+  protected $vocabularyService;
   protected $overrides;
 
   public function __construct(
@@ -29,7 +28,7 @@ class AZFinderSettingsForm extends ConfigFormBase {
     AZFinderOverrides $overrides
   ) {
     $this->viewOptions = $view_options;
-    $this->vocabulary = $vocabulary;
+    $this->vocabularyService = $vocabulary;
     $this->overrides = $overrides;
   }
 
@@ -51,6 +50,32 @@ class AZFinderSettingsForm extends ConfigFormBase {
 
   public function submitForm(array &$form, FormStateInterface $form_state) {
     parent::submitForm($form, $form_state);
+
+    // Debug form state
+    dpm($form_state->getValues(), 'Form State on Submit');
+
+    // Save the default state setting
+    $this->config('az_finder.settings')
+      ->set('tid_widget.default_state', $form_state->getValue(['az_finder_tid_widget', 'default_state']))
+      ->save();
+
+    // Save the overrides
+    $overrides = $form_state->get('overrides') ?? [];
+    dpm($overrides, 'Overrides on Submit');
+    foreach ($overrides as $key => $override) {
+      if (isset($override['vocabularies'])) {
+        $view_id = $override['view_id'];
+        $display_id = $override['display_id'];
+        $config_path = "az_finder.tid_widget.$view_id.$display_id";
+        foreach ($override['vocabularies'] as $vocabulary_id => $terms) {
+          foreach ($terms as $term_id => $state) {
+            $this->config($config_path)
+              ->set("vocabularies.$vocabulary_id.terms.$term_id.default_state", $state)
+              ->save();
+          }
+        }
+      }
+    }
   }
 
   public function overrideSettingsCallback(array &$form, FormStateInterface $form_state) {
@@ -61,7 +86,9 @@ class AZFinderSettingsForm extends ConfigFormBase {
       if (!empty($view_id) && !empty($display_id)) {
         $key = $view_id . '_' . $display_id;
         $overrides = $form_state->get('overrides') ?? [];
-        $overrides[$key] = ['view_id' => $view_id, 'display_id' => $display_id];
+        if (!isset($overrides[$key])) {
+          $overrides[$key] = ['view_id' => $view_id, 'display_id' => $display_id, 'vocabularies' => []];
+        }
         $form_state->set('overrides', $overrides);
 
         $this->addOverrideSection($form, $form_state, $key, $view_id, $display_id);
@@ -69,6 +96,13 @@ class AZFinderSettingsForm extends ConfigFormBase {
     }
 
     $form_state->setRebuild(TRUE);
+
+    // Debug form state
+    dpm($form_state->getValues(), 'Form State on Override');
+
+    // Rebuild the select_view_display with new options and reset selection
+    $form['az_finder_tid_widget']['overrides']['select_view_display_container']['select_view_display']['#options'] = $this->viewOptions->getViewOptions();
+    $form['az_finder_tid_widget']['overrides']['select_view_display_container']['select_view_display']['#value'] = '';
 
     $response = new AjaxResponse();
     $response->addCommand(new ReplaceCommand('#js-az-finder-tid-widget-overrides-container', $form['az_finder_tid_widget']['overrides']));
@@ -108,12 +142,13 @@ class AZFinderSettingsForm extends ConfigFormBase {
       '#suffix' => '</div>',
     ];
 
-    if (!$form_state->has('az_finder_tid_widget', 'overrides')) {
-      $overrides = $this->overrides->getExistingOverrides();
-      $form_state->set('az_finder_tid_widget', 'overrides', $overrides);
-    } else {
-      $overrides = $form_state->get('az_finder_tid_widget', 'overrides') ?? [];
+    $overrides = $form_state->get('overrides') ?? [];
+    if (!is_array($overrides)) {
+      $overrides = [];
     }
+    $form_state->set('overrides', $overrides);
+
+    dpm($overrides, 'Overrides on Build');
 
     foreach ($overrides as $key => $override) {
       $this->addOverrideSection($form, $form_state, $key, $override['view_id'], $override['display_id']);
@@ -146,6 +181,9 @@ class AZFinderSettingsForm extends ConfigFormBase {
       ],
     ];
 
+    // Debug form state
+    dpm($form_state->getValues(), 'Form State on Build');
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -162,7 +200,9 @@ class AZFinderSettingsForm extends ConfigFormBase {
 
       $vocabulary_ids = $this->vocabularyService->getVocabularyIdsForFilter($view_id, $display_id, 'az_finder_tid_widget');
       foreach ($vocabulary_ids as $vocabulary_id) {
-        $this->vocabulary->addTermsTable($form['az_finder_tid_widget']['overrides'][$key], $vocabulary_id, $view_id, $display_id, $this->config("az_finder.tid_widget.$view_id.$display_id"));
+        $form_element = &$form['az_finder_tid_widget']['overrides'][$key];
+
+        $this->vocabularyService->addTermsTable($form_element, $vocabulary_id, $view_id, $display_id, $this->config("az_finder.tid_widget.$view_id.$display_id"));
       }
     }
   }
