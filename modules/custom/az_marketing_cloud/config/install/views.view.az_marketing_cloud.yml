@@ -1029,7 +1029,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/70-30-layou-image-right/{{ nid }}\">70/30 Layout (Image right)</a>\r\n{% endif %}"
+            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/70-30-layout-image-right/{{ nid }}\">70/30 Layout (Image right)</a>\r\n{% endif %}"
             make_link: false
             path: ''
             absolute: false
