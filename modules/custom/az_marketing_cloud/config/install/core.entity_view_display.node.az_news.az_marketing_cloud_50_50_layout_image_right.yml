@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.node.az_marketing_cloud_50_50_layout
+    - core.entity_view_mode.node.az_marketing_cloud_50_50_layout_image_right
     - field.field.node.az_news.field_az_attachments
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
@@ -32,10 +32,10 @@ third_party_settings:
       smart_title__tag: ''
       smart_title__classes:
         - text-midnight
-id: node.az_news.az_marketing_cloud_50_50_layout
+id: node.az_news.az_marketing_cloud_50_50_layout_image_right
 targetEntityType: node
 bundle: az_news
-mode: az_marketing_cloud_50_50_layout
+mode: az_marketing_cloud_50_50_layout_image_right
 content:
   field_az_link:
     type: link
