@@ -263,6 +263,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
       '#default_value' => $item->link_title ?? NULL,
+      '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html#examples">best accessibility</a> of this content. The purpose of the link should be determined by the link text alone.'),
     ];
 
     $element['link_uri'] = [
