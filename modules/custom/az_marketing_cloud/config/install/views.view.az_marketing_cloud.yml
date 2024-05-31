@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_marketing_cloud_30_70_layout
     - core.entity_view_mode.node.az_marketing_cloud_50_50_layout
+    - core.entity_view_mode.node.az_marketing_cloud_70_30_layout_image_right
     - core.entity_view_mode.node.az_marketing_cloud_event_layout
     - core.entity_view_mode.node.az_marketing_cloud_hero_layout
     - core.entity_view_mode.node.az_marketing_cloud_text_layout
@@ -123,7 +124,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -238,6 +238,40 @@ display:
       style_options: null
       display_extenders: {  }
       path: export/marketing-cloud/50-50-layout/%node
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  70_30_layout:
+    id: 70_30_layout
+    display_title: '70/30 Layout (Image right)'
+    display_plugin: page
+    position: 3
+    display_options:
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_marketing_cloud_70_30_layout_image_right
+      defaults:
+        style: false
+        style_options: false
+        row: false
+      display_description: ''
+      style_options: null
+      display_extenders: {  }
+      path: export/marketing-cloud/70-30-layout-image-right/%node
     cache_metadata:
       max-age: -1
       contexts:
@@ -983,6 +1017,55 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
+        nothing_6:
+          id: nothing_6
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: '70/30 Layout (Image right)'
+          exclude: true
+          alter:
+            alter_text: true
+            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/70-30-layou-image-right/{{ nid }}\">70/30 Layout (Image right)</a>\r\n{% endif %}"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
         nothing_4:
           id: nothing_4
           table: views
@@ -1192,6 +1275,7 @@ display:
             nothing_1: nothing_1
             nothing_2: nothing_2
             nothing_3: nothing_3
+            nothing_6: nothing_6
             nothing_4: nothing_4
             nothing_5: nothing_5
             nid: 0
@@ -1203,6 +1287,7 @@ display:
             status: 0
             changed: 0
             created: 0
+            delta: 0
           dropbutton_type: extrasmall
           click_action: js-click2copy
           validate_links: 0
@@ -1681,7 +1766,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -1721,7 +1805,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
