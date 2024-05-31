@@ -1003,6 +1003,55 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
+        nothing_7:
+          id: nothing_7
+          table: views
+          field: nothing
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: custom
+          label: '50/50 Layout (Image right)'
+          exclude: true
+          alter:
+            alter_text: true
+            text: "{% if type == 'News' %}\r\n<a href=\"/export/marketing-cloud/50-50-layout-image-right/{{ nid }}\">50/50 Layout (Image right)</a>\r\n{% endif %}"
+            make_link: false
+            path: ''
+            absolute: false
+            external: false
+            replace_spaces: false
+            path_case: none
+            trim_whitespace: false
+            alt: ''
+            rel: ''
+            link_class: ''
+            prefix: ''
+            suffix: ''
+            target: ''
+            nl2br: false
+            max_length: 0
+            word_boundary: true
+            ellipsis: true
+            more_link: false
+            more_link_text: ''
+            more_link_path: ''
+            strip_tags: false
+            trim: false
+            preserve_tags: ''
+            html: false
+          element_type: ''
+          element_class: ''
+          element_label_type: ''
+          element_label_class: ''
+          element_label_colon: true
+          element_wrapper_type: ''
+          element_wrapper_class: ''
+          element_default_classes: true
+          empty: ''
+          hide_empty: false
+          empty_zero: false
+          hide_alter_empty: false
         nothing_3:
           id: nothing_3
           table: views
@@ -1309,6 +1358,7 @@ display:
           fields:
             nothing_1: nothing_1
             nothing_2: nothing_2
+            nothing_7: nothing_7
             nothing_3: nothing_3
             nothing_6: nothing_6
             nothing_4: nothing_4
