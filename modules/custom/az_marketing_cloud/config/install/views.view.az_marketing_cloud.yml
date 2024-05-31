@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_marketing_cloud_30_70_layout
     - core.entity_view_mode.node.az_marketing_cloud_50_50_layout
+    - core.entity_view_mode.node.az_marketing_cloud_50_50_layout_image_right
     - core.entity_view_mode.node.az_marketing_cloud_70_30_layout_image_right
     - core.entity_view_mode.node.az_marketing_cloud_event_layout
     - core.entity_view_mode.node.az_marketing_cloud_hero_layout
@@ -247,8 +248,42 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  70_30_layout:
-    id: 70_30_layout
+  50_50_layout_image_right:
+    id: 50_50_layout_image_right
+    display_title: '50/50 Layout (Image right)'
+    display_plugin: page
+    position: 2
+    display_options:
+      style:
+        type: default
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_marketing_cloud_50_50_layout_image_right
+      defaults:
+        style: false
+        style_options: false
+        row: false
+      display_description: ''
+      style_options: null
+      display_extenders: {  }
+      path: export/marketing-cloud/50-50-layout-image-right/%node
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  70_30_layout_image_right:
+    id: 70_30_layout_image_right
     display_title: '70/30 Layout (Image right)'
     display_plugin: page
     position: 3

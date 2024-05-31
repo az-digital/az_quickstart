@@ -26,6 +26,10 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'node--view--az-marketing-cloud--50-50-layout',
       'base hook' => 'node',
     ],
+    'node__view__az_marketing_cloud__50_50_layout_image_right' => [
+      'template' => 'node--view--az-marketing-cloud--50-50-layout-image-right',
+      'base hook' => 'node',
+    ],
     'node__view__az_marketing_cloud__text_layout' => [
       'template' => 'node--view--az-marketing-cloud--text-layout',
       'base hook' => 'node',
@@ -107,6 +111,10 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
             $variables['images']['az_marketing_cloud_50_50_layout'] = $images_dir . '50-50-layout-unpublished.png';
             break;
 
+          case 'az_marketing_cloud_50_50_layout_image_right':
+            $variables['images']['az_marketing_cloud_50_50_layout'] = $images_dir . '50-50-layout-unpublished.png';
+            break;
+
           case 'az_marketing_cloud_hero_layout':
             $variables['images']['az_marketing_cloud_hero_layout'] = $images_dir . 'hero-layout-unpublished.png';
             break;
@@ -172,6 +180,9 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
   if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout_image_right') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
   if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
@@ -195,6 +206,9 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
 function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
   $route_name = \Drupal::routeMatch()->getRouteName();
   if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout_image_right') {
     $suggestions[] = 'views_view__az_marketing_cloud';
   }
   if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
