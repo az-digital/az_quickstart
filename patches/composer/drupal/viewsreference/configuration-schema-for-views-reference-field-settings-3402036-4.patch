@@ -1,0 +1,13 @@
+diff --git a/config/schema/viewsreference.schema.yml b/config/schema/viewsreference.schema.yml
+index 3458d52..1666c07 100644
+--- a/config/schema/viewsreference.schema.yml
++++ b/config/schema/viewsreference.schema.yml
+@@ -39,7 +39,7 @@ field.field_settings.viewsreference:
+       type: sequence
+       label: 'Enabled settings'
+       sequence:
+-        type: viewsreference.enabled_settings.[%key]
++        type: string
+ 
+ field.value.viewsreference:
+   type: mapping

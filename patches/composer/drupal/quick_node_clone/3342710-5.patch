@@ -1,0 +1,97 @@
+diff --git a/quick_node_clone.module b/quick_node_clone.module
+index 2123699..d7ee0a4 100644
+--- a/quick_node_clone.module
++++ b/quick_node_clone.module
+@@ -6,11 +6,13 @@
+  */
+ 
+ use Drupal\Component\Utility\Html;
+-use Drupal\Core\Entity\ContentEntityInterface;
++use Drupal\Core\Access\AccessResult;
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Routing\RouteMatchInterface;
++use Drupal\Core\Session\AccountInterface;
+ use Drupal\Core\Url;
+ use Drupal\group\Entity\GroupContent;
++use Drupal\node\NodeInterface;
+ 
+ /**
+  * Implements hook_entity_type_build().
+@@ -33,7 +35,7 @@ function quick_node_clone_entity_operation(EntityInterface $entity) {
+     return $operations;
+   }
+ 
+-  if (!_quick_node_clone_has_clone_permission($entity)) {
++  if (!$entity->access('clone')) {
+     return $operations;
+   }
+ 
+@@ -71,20 +73,17 @@ function quick_node_clone_help($route_name, RouteMatchInterface $route_match) {
+ }
+ 
+ /**
+- * Determine if the current user has permission to clone a specified node.
+- *
+- * @param \Drupal\Core\Entity\ContentEntityInterface $node
+- *   The node to examine.
+- *
+- * @return bool
+- *   TRUE or FALSE
++ * Implements hook_ENTITY_TYPE_access().
+  */
+-function _quick_node_clone_has_clone_permission(ContentEntityInterface $node) {
+-  $current_user = \Drupal::currentUser();
+-  $bundle = $node->bundle();
+-  if ($current_user->hasPermission("clone $bundle content")) {
++function quick_node_clone_node_access(EntityInterface $entity, $operation, AccountInterface $account) {
++  if (!$entity instanceof NodeInterface || $operation !== 'clone') {
++    return AccessResult::neutral();
++  }
++
++  $bundle = $entity->bundle();
++  if ($account->hasPermission("clone $bundle content")) {
+     if (\Drupal::moduleHandler()->moduleExists('gnode')) {
+-      $group_contents = GroupContent::loadByEntity($node);
++      $group_contents = GroupContent::loadByEntity($entity);
+       foreach ($group_contents as $group_content) {
+         // We check via createEntityAccess() for "create group entity", not via
+         // createAccess() for "relate existing entity to group", as we do in
+@@ -92,9 +91,9 @@ function _quick_node_clone_has_clone_permission(ContentEntityInterface $node) {
+         // @see \Drupal\group\Access\GroupContentCreateAnyEntityAccessCheck::access
+         // @todo Use group access control handler when we can rely on group 1.0.
+         $access = $group_content->getContentPlugin()
+-          ->createEntityAccess($group_content->getGroup(), $current_user);
++          ->createEntityAccess($group_content->getGroup(), $account);
+         if ($access->isAllowed()) {
+-          return TRUE;
++          return AccessResult::allowed();
+         }
+       }
+     }
+@@ -102,10 +101,10 @@ function _quick_node_clone_has_clone_permission(ContentEntityInterface $node) {
+     // Only check global access if we there is no group module enabled, or
+     // content does not have group(s).
+     if (empty($group_contents)) {
+-      if ($node->access('create')) {
+-        return TRUE;
++      if ($entity->access('create')) {
++        return AccessResult::allowed();
+       }
+     }
+   }
+-  return FALSE;
++  return AccessResult::forbidden();
+ }
+diff --git a/src/Controller/QuickNodeCloneNodeAccess.php b/src/Controller/QuickNodeCloneNodeAccess.php
+index 15a58fc..ad4e2a2 100644
+--- a/src/Controller/QuickNodeCloneNodeAccess.php
++++ b/src/Controller/QuickNodeCloneNodeAccess.php
+@@ -26,7 +26,7 @@ class QuickNodeCloneNodeAccess {
+   public function cloneNode(AccountInterface $account, $node) {
+     $node = Node::load($node);
+ 
+-    if (_quick_node_clone_has_clone_permission($node)) {
++    if ($node->access('clone', $account)) {
+       $result = AccessResult::allowed();
+     }
+     else {

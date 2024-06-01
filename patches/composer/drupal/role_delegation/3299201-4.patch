@@ -1,0 +1,26 @@
+diff --git a/role_delegation.module b/role_delegation.module
+index abd86be..a27cc65 100644
+--- a/role_delegation.module
++++ b/role_delegation.module
+@@ -257,3 +257,21 @@ function role_delegation_entity_operation(EntityInterface $entity) {
+ function role_delegation_views_data_alter(array &$data) {
+   $data['users']['user_bulk_form']['field']['id'] = 'role_delegation_user_bulk_form';
+ }
++
++/**
++ * Implements hook_ENTITY_TYPE_access().
++ *
++ * Require role assign permission for all roles assigned to a user to be able to
++ * access the user entity delete (cancel/remove) operation.
++ */
++function role_delegation_user_access(EntityInterface $entity, $operation, AccountInterface $account) {
++  if ($operation === 'delete') {
++    foreach ($entity->getRoles(TRUE) as $rid) {
++      if (!$account->hasPermission(sprintf('assign %s role', $rid)) && !$account->hasPermission('assign all roles')) {
++        return AccessResult::forbidden()->cachePerUser();
++      }
++    }
++  }
++
++  return AccessResult::neutral();
++}

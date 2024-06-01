@@ -1,0 +1,367 @@
+diff --git a/config/install/workbench_access.settings.yml b/config/install/workbench_access.settings.yml
+index a1b2f71..4d43d4a 100644
+--- a/config/install/workbench_access.settings.yml
++++ b/config/install/workbench_access.settings.yml
+@@ -1 +1,2 @@
+ deny_on_empty: false
++deny_strict: false
+diff --git a/config/schema/workbench_access.schema.yml b/config/schema/workbench_access.schema.yml
+index bb79dd6..f237296 100644
+--- a/config/schema/workbench_access.schema.yml
++++ b/config/schema/workbench_access.schema.yml
+@@ -5,6 +5,9 @@ workbench_access.settings:
+     deny_on_empty:
+       type: boolean
+       label: 'Deny access to unassigned content'
++    deny_strict:
++      type: boolean
++      label: 'When multiple schemes apply, deny access if any scheme does not provide access'
+ 
+ 
+ entity_reference_selection.workbench_access:
+diff --git a/src/Form/WorkbenchAccessConfigForm.php b/src/Form/WorkbenchAccessConfigForm.php
+index d4117cc..b9759e5 100644
+--- a/src/Form/WorkbenchAccessConfigForm.php
++++ b/src/Form/WorkbenchAccessConfigForm.php
+@@ -35,6 +35,12 @@ class WorkbenchAccessConfigForm extends ConfigFormBase {
+       '#default_value' => $config->get('deny_on_empty'),
+       '#description' => $this->t('For content under access control, deny access for any content not assigned to a section. This setting is off by default so that installing the module does not break existing site behavior.'),
+     ];
++    $form['deny_strict'] = [
++      '#type' => 'checkbox',
++      '#title' => $this->t('Deny access if any scheme does not provide access'),
++      '#default_value' => $config->get('deny_strict'),
++      '#description' => $this->t('When multiple schemes apply, deny access if any scheme does not provide access. Without this checked, access is only denied if all schemes do not provide access.'),
++    ];
+ 
+     return parent::buildForm($form, $form_state);
+   }
+@@ -45,6 +51,7 @@ class WorkbenchAccessConfigForm extends ConfigFormBase {
+   public function submitForm(array &$form, FormStateInterface $form_state) {
+     $config = $this->config('workbench_access.settings');
+     $config->set('deny_on_empty', $form_state->getValue('deny_on_empty'))->save();
++    $config->set('deny_strict', $form_state->getValue('deny_strict'))->save();
+     parent::submitForm($form, $form_state);
+   }
+ 
+diff --git a/tests/src/Functional/MultipleSchemeAccessTest.php b/tests/src/Functional/MultipleSchemeAccessTest.php
+new file mode 100644
+index 0000000..0e731e1
+--- /dev/null
++++ b/tests/src/Functional/MultipleSchemeAccessTest.php
+@@ -0,0 +1,206 @@
++<?php
++
++namespace Drupal\Tests\workbench_access\Functional;
++
++use Drupal\menu_link_content\Entity\MenuLinkContent;
++use Drupal\taxonomy\Entity\Term;
++use Drupal\Tests\BrowserTestBase;
++use Drupal\workbench_access\WorkbenchAccessManagerInterface;
++use Drupal\Tests\workbench_access\Traits\WorkbenchAccessTestTrait;
++
++/**
++ * Tests cases where two schemes apply to a node.
++ *
++ * @group workbench_access
++ */
++class MultipleSchemeAccessTest extends BrowserTestBase {
++
++  use WorkbenchAccessTestTrait;
++
++  /**
++   * The default theme.
++   *
++   * @var string
++   */
++  protected $defaultTheme = 'stark';
++
++  /**
++   * Simple array.
++   */
++  protected $terms = [];
++
++  /**
++   * {@inheritdoc}
++   */
++  protected static $modules = [
++    'workbench_access',
++    'node',
++    'taxonomy',
++    'menu_ui',
++    'link',
++    'menu_link_content',
++    'options',
++    'user',
++    'system',
++  ];
++
++  /**
++   * Tests that the user can edit the node based on settings.
++   */
++  public function testNodeForm() {
++    // Set up a content type and menu scheme.
++    $node_type_values = [
++      'type' => 'page',
++      'third_party_settings' => [
++        'menu_ui' => [
++          'available_menus' => [
++            'main',
++            'account',
++          ],
++        ],
++      ],
++    ];
++
++    $node_type = $this->createContentType($node_type_values);
++    $menu_scheme = $this->setUpMenuScheme(['page'], ['main', 'account'], 'menu_scheme');
++
++    $vocab = $this->setUpVocabulary();
++    $field = $this->setUpTaxonomyFieldForEntityType('node', $node_type->id(), $vocab->id());
++    $this->assertEquals($field->getDefaultValueLiteral(), []);
++    $taxonomy_scheme = $this->setUpTaxonomyScheme($node_type, $vocab);
++    $user_storage = \Drupal::service('workbench_access.user_section_storage');
++
++    // Set up an editor and log in as them.
++    $editor = $this->setUpEditorUser();
++    $this->drupalLogin($editor);
++
++    // Set up some roles and terms for this test.
++    // Create terms and roles.
++    $staff_term = Term::create([
++      'vid' => $vocab->id(),
++      'name' => 'Staff',
++    ]);
++    $staff_term->save();
++    $super_staff_term = Term::create([
++      'vid' => $vocab->id(),
++      'name' => 'Super staff',
++    ]);
++    $super_staff_term->save();
++    $base_term = Term::create([
++      'vid' => $vocab->id(),
++      'name' => 'Editor',
++    ]);
++    $base_term->save();
++
++    // Set up some roles and menu links for this test.
++    $staff_link = MenuLinkContent::create([
++      'title' => 'Link 1',
++      'link' => [['uri' => 'route:<front>']],
++      'menu_name' => 'main',
++    ]);
++    $staff_link->save();
++    $super_staff_link = MenuLinkContent::create([
++      'title' => 'Link 2',
++      'link' => [['uri' => 'route:<front>']],
++      'menu_name' => 'main',
++    ]);
++    $super_staff_link->save();
++    $base_link = MenuLinkContent::create([
++      'title' => 'Link 3',
++      'link' => [['uri' => 'route:<front>']],
++      'menu_name' => 'main',
++    ]);
++    $base_link->save();
++
++    // Add the user to the base section.
++    $user_storage->addUser($taxonomy_scheme, $editor, [$staff_term->id()]);
++    $expected = [$editor->id()];
++    $existing_users = $user_storage->getEditors($taxonomy_scheme, $staff_term->id());
++    $this->assertEquals($expected, array_keys($existing_users));
++
++    $this->drupalGet('node/add/page');
++    $this->assertSession()->statusCodeEquals(200);
++
++    // Strict checking does not affect creation.
++    $config = $this->config('workbench_access.settings');
++    $config->set('deny_strict', TRUE)->save();
++
++    $this->drupalGet('node/add/page');
++    $this->assertSession()->statusCodeEquals(200);
++
++    // Create a node and try to edit it.
++    $node_values = [
++      'type' => 'page',
++      'title' => 'foo',
++      WorkbenchAccessManagerInterface::FIELD_NAME => $staff_term->id(),
++    ];
++    $node = $this->createNode($node_values);
++    _menu_ui_node_save($node, [
++      'title' => 'baz',
++      'menu_name' => 'main',
++      'description' => 'view baz',
++      'parent' => $staff_link->getPluginId(),
++    ]);
++
++    $this->drupalGet('node/' . $node->id() . '/edit');
++    $this->assertSession()->statusCodeEquals(403);
++
++    $config = $this->config('workbench_access.settings');
++    $config->set('deny_strict', FALSE)->save();
++
++    $this->drupalGet('node/' . $node->id() . '/edit');
++    $this->assertSession()->statusCodeEquals(200);
++
++    // Create a node and try to edit it.
++    $node_values = [
++      'type' => 'page',
++      'title' => 'foo',
++      WorkbenchAccessManagerInterface::FIELD_NAME => $staff_term->id(),
++    ];
++    $node2 = $this->createNode($node_values);
++    _menu_ui_node_save($node2, [
++      'title' => 'bar',
++      'menu_name' => 'main',
++      'description' => 'view bar',
++      'parent' => $base_link->getPluginId(),
++    ]);
++
++    $this->drupalGet('node/' . $node2->id() . '/edit');
++    $this->assertSession()->statusCodeEquals(200);
++
++    $config = $this->config('workbench_access.settings');
++    $config->set('deny_strict', TRUE)->save();
++
++    $this->drupalGet('node/' . $node2->id() . '/edit');
++    $this->assertSession()->statusCodeEquals(403);
++
++    // Add the user to the base menu section.
++    $user_storage->addUser($menu_scheme, $editor, [$base_link->getPluginId()]);
++    $expected = [$editor->id()];
++    $existing_users = $user_storage->getEditors($menu_scheme, $base_link->getPluginId());
++    $this->assertEquals($expected, array_keys($existing_users));
++
++    $this->drupalGet('node/' . $node2->id() . '/edit');
++    $this->assertSession()->statusCodeEquals(200);
++
++    // In cases where one scheme is empty, access should be allowed unless
++    // deny on empty is enforced.
++    // Create a node and try to edit it.
++    $node_values = [
++      'type' => 'page',
++      'title' => 'foo',
++      WorkbenchAccessManagerInterface::FIELD_NAME => $staff_term->id(),
++    ];
++    $node3 = $this->createNode($node_values);
++    $this->drupalGet('node/' . $node3->id() . '/edit');
++    $this->assertSession()->statusCodeEquals(200);
++
++    $config = $this->config('workbench_access.settings');
++    $config->set('deny_on_empty', TRUE)->save();
++
++    $this->drupalGet('node/' . $node3->id() . '/edit');
++    $this->assertSession()->statusCodeEquals(403);
++
++  }
++
++}
+diff --git a/workbench_access.install b/workbench_access.install
+index 71646d5..37f24fc 100644
+--- a/workbench_access.install
++++ b/workbench_access.install
+@@ -11,3 +11,17 @@
+ function workbench_access_update_last_removed(): int {
+   return 8004;
+ }
++
++/**
++ * Update general configuration with new multi-scheme variable.
++ */
++function workbench_access_update_8005() {
++  /** @var Drupal\Core\Config\ConfigFactoryInterface $config_factory */
++  $config_factory = \Drupal::service('config.factory');
++
++  $config = $config_factory->getEditable('workbench_access.settings');
++  // This is not the new default value, but we don't want to change behavior
++  // for existing sites.
++  $config->set('deny_strict', TRUE);
++  $config->save();
++}
+diff --git a/workbench_access.module b/workbench_access.module
+index 1ad58cc..cdb0e1b 100644
+--- a/workbench_access.module
++++ b/workbench_access.module
+@@ -55,17 +55,47 @@ function workbench_access_form_alter(&$form, FormStateInterface $form_state) {
+  * Implements hook_entity_access().
+  */
+ function workbench_access_entity_access(EntityInterface $entity, $op, AccountInterface $account) {
+-  // Return net result of all enabled access schemes. If one scheme allows
+-  // access, then it is granted.
+   // We don't care about the View operation right now.
+   if ($op === 'view' || $op === 'view label' || $account->hasPermission('bypass workbench access')) {
+     // Return early.
+     return AccessResult::neutral();
+   }
+-  return array_reduce(\Drupal::entityTypeManager()->getStorage('access_scheme')->loadMultiple(), function (AccessResult $carry, AccessSchemeInterface $scheme) use ($entity, $op, $account) {
+-    $carry->addCacheableDependency($scheme)->cachePerPermissions()->addCacheableDependency($entity);
+-    return $carry->orIf($scheme->getAccessScheme()->checkEntityAccess($scheme, $entity, $op, $account));
+-  }, AccessResult::neutral());
++
++  // Return net result of all enabled access schemes.
++  $aggregate_access_result = AccessResult::neutral();
++
++  $schemes = \Drupal::entityTypeManager()->getStorage('access_scheme')->loadMultiple();
++
++  if (count($schemes) > 0) {
++    /** @var Drupal\Core\Config\ConfigFactoryInterface $config_factory */
++    $config_factory = \Drupal::service('config.factory');
++    $config = $config_factory->get('workbench_access.settings');
++
++    if ($config->get('deny_strict') === TRUE) {
++      foreach ($schemes as $scheme) {
++        if ($scheme->getAccessScheme()->checkEntityAccess($scheme, $entity, $op, $account)->isForbidden()) {
++          $aggregate_access_result = AccessResult::forbidden();
++        }
++      }
++    }
++    else {
++      $aggregate_access_result = AccessResult::forbidden();
++      foreach ($schemes as $scheme) {
++        if ($scheme->getAccessScheme()->checkEntityAccess($scheme, $entity, $op, $account)->isNeutral()) {
++          $aggregate_access_result = AccessResult::neutral();
++        }
++      }
++    }
++  }
++
++  $aggregate_access_result->addCacheableDependency($entity);
++  $aggregate_access_result->addCacheableDependency($account);
++  $aggregate_access_result->cachePerPermissions();
++  foreach ($schemes as $scheme) {
++    $aggregate_access_result->addCacheableDependency($scheme);
++  }
++
++  return $aggregate_access_result;
+ }
+ 
+ /**
+@@ -111,18 +141,23 @@ function workbench_access_entity_create_access(AccountInterface $account, $conte
+   }
+ 
+   // Check that the user is able to assign content to a section.
++  // Note that 'strict' access checking for multiple schemes does not apply
++  // when creating content.
+   $user_section_storage = \Drupal::service('workbench_access.user_section_storage');
+   $forbidden = AccessResult::forbidden();
+-  $invalid_schemes = array_reduce($schemes, function ($carry, AccessSchemeInterface $scheme) use ($user_section_storage, $account, $forbidden) {
++  $valid_schemes = array_reduce($schemes, function ($carry, AccessSchemeInterface $scheme) use ($user_section_storage, $account, $forbidden, $return) {
+     $sections = $user_section_storage->getUserSections($scheme, $account);
+-    if (!$sections) {
++    if ($sections) {
+       $carry[] = $scheme->label();
++      $return->addCacheableDependency($scheme);
++    }
++    else {
++      $forbidden->addCacheableDependency($scheme);
+     }
+-    $forbidden->addCacheableDependency($scheme);
+     return $carry;
+   }, []);
+-  if ($invalid_schemes) {
+-    return $forbidden->setReason(sprintf('User has no active sections for the following access scheme(s): %s', implode(', ', $invalid_schemes)));
++  if (empty($valid_schemes)) {
++    return $forbidden->setReason(sprintf('User has no active sections.'));
+   }
+   return $return;
+ }

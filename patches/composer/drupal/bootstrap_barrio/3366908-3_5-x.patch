@@ -1,0 +1,42 @@
+diff --git a/bootstrap_barrio.libraries.yml b/bootstrap_barrio.libraries.yml
+index 9446235..55a44b2 100644
+--- a/bootstrap_barrio.libraries.yml
++++ b/bootstrap_barrio.libraries.yml
+@@ -51,6 +51,9 @@ affix:
+   css:
+     component:
+       css/components/affix.css: {}
++  dependencies:
++    - core/jquery
++    - core/once
+ alerts:
+   version: VERSION
+   css:
+diff --git a/js/affix.js b/js/affix.js
+index 7c71c5f..f04ead8 100644
+--- a/js/affix.js
++++ b/js/affix.js
+@@ -4,7 +4,7 @@
+  * https://www.codeply.com/users/skelly
+  *
+  */
+-(function ($, Drupal) {
++(function ($, Drupal, once) {
+ 
+   'use strict';
+ 
+@@ -26,7 +26,7 @@
+ 
+       };
+ 
+-      $(once('affixed', '[data-toggle="affix"]', context)).each(function () {
++      once('affixed', '[data-toggle="affix"]', context).forEach(function () {
+         var ele = $(this),
+             wrapper = $('<div></div>');
+ 
+@@ -40,4 +40,4 @@
+       });
+     }
+   }
+-})(jQuery, Drupal);
++})(jQuery, Drupal, once);

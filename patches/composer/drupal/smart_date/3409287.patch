@@ -1,0 +1,16 @@
+diff --git a/src/Plugin/Field/FieldType/SmartDateListItemBase.php b/src/Plugin/Field/FieldType/SmartDateListItemBase.php
+index 3c4c549..b5c451e 100644
+--- a/src/Plugin/Field/FieldType/SmartDateListItemBase.php
++++ b/src/Plugin/Field/FieldType/SmartDateListItemBase.php
+@@ -14,7 +14,10 @@ abstract class SmartDateListItemBase extends ListItemBase {
+    */
+   public static function parseValues($values) {
+     // Use the ListItemBase parsing function, but don't allow generated keys.
+-    $result = static::extractAllowedValues($values, 1);
++    $list = explode("\n", $values);
++    $list = array_map('trim', $list);
++    $list = array_filter($list, 'strlen');
++    $result = static::extractAllowedValues($list, 1);
+     return $result;
+   }
+ 

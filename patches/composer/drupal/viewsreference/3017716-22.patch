@@ -1,0 +1,18 @@
+diff --git a/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php b/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php
+index b79351dbe1f52ed045808020daf63b44f1700d85..8db480755631413ff033caeed10699500428a141 100644
+--- a/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php
++++ b/src/Plugin/Field/FieldFormatter/ViewsReferenceFieldFormatter.php
+@@ -132,6 +132,13 @@ class ViewsReferenceFieldFormatter extends FormatterBase {
+ 
+           $elements[$delta]['contents'] = $render_array;
+         }
++        else {
++
++          // If an exception is thrown in SOLR for example, the Views cache
++          // is set to max age of 0 to try again later. These cache settings
++          // should be respected.
++          $elements[$delta]['contents']['#cache'] = $render_array['#cache'];
++        }
+       }
+     }
+ 

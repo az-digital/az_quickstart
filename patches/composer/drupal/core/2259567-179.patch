@@ -1,0 +1,68 @@
+diff --git a/core/modules/system/src/Form/ThemeSettingsForm.php b/core/modules/system/src/Form/ThemeSettingsForm.php
+index b68fa58cde..3895f31762 100644
+--- a/core/modules/system/src/Form/ThemeSettingsForm.php
++++ b/core/modules/system/src/Form/ThemeSettingsForm.php
+@@ -240,7 +240,9 @@ public function buildForm(array $form, FormStateInterface $form_state, $theme =
+         '#title' => $this->t('Upload logo image'),
+         '#description' => $this->t("If you don't have direct file access to the server, use this field to upload your logo."),
+         '#upload_validators' => [
+-          'FileIsImage' => [],
++          'FileExtension' => [
++            'extensions' => 'png gif jpg jpeg apng svg',
++          ],
+         ],
+       ];
+     }
+diff --git a/core/modules/system/system.permissions.yml b/core/modules/system/system.permissions.yml
+index d18fd177ca..d5c6c6b1d6 100644
+--- a/core/modules/system/system.permissions.yml
++++ b/core/modules/system/system.permissions.yml
+@@ -5,6 +5,7 @@ administer site configuration:
+   restrict access: true
+ administer themes:
+   title: 'Administer themes'
++  restrict access: true
+ administer software updates:
+   title: 'Administer software updates'
+   restrict access: true
+diff --git a/core/modules/system/tests/src/Functional/System/ThemeTest.php b/core/modules/system/tests/src/Functional/System/ThemeTest.php
+index 2bec2adc5f..5ab2e11e56 100644
+--- a/core/modules/system/tests/src/Functional/System/ThemeTest.php
++++ b/core/modules/system/tests/src/Functional/System/ThemeTest.php
+@@ -189,20 +189,23 @@ public function testThemeSettings() {
+       $this->assertSession()->pageTextContains('The custom logo path is invalid.');
+     }
+ 
+-    // Upload a file to use for the logo.
+-    $edit = [
+-      'default_logo' => FALSE,
+-      'logo_path' => '',
+-      'files[logo_upload]' => \Drupal::service('file_system')->realpath($file->uri),
+-    ];
+-    $this->drupalGet('admin/appearance/settings');
+-    $this->submitForm($edit, 'Save configuration');
+-
+-    $uploaded_filename = 'public://' . $this->getSession()->getPage()->findField('logo_path')->getValue();
++    // Upload a file to use for the logo. Try both the test image we've been
++    // using so far and an SVG file.
++    $upload_uris = [$file->uri, 'core/themes/olivero/logo.svg'];
++    foreach ($upload_uris as $upload_uri) {
++      $edit = [
++        'default_logo' => FALSE,
++        'logo_path' => '',
++        'files[logo_upload]' => \Drupal::service('file_system')->realpath($upload_uri),
++      ];
++      $this->drupalGet('admin/appearance/settings');
++      $this->submitForm($edit, 'Save configuration');
+ 
+-    $this->drupalPlaceBlock('system_branding_block', ['region' => 'header']);
+-    $this->drupalGet('');
+-    $this->assertSession()->elementAttributeContains('xpath', '//header//a[@rel="home"]/img', 'src', $file_url_generator->generateString($uploaded_filename));
++      $uploaded_filename = 'public://' . $this->getSession()->getPage()->findField('logo_path')->getValue();
++      $this->drupalPlaceBlock('system_branding_block', ['region' => 'header']);
++      $this->drupalGet('');
++      $this->assertSession()->elementAttributeContains('xpath', '//header//a[@rel="home"]/img', 'src', $file_url_generator->generateString($uploaded_filename));
++    }
+ 
+     $this->container->get('theme_installer')->install(['olivero']);
+ 

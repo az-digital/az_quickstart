@@ -1,0 +1,17 @@
+diff --git a/src/Parser.php b/src/Parser.php
+index 1c0cfa0..c253dd1 100644
+--- a/src/Parser.php
++++ b/src/Parser.php
+@@ -122,9 +122,10 @@ public function parseString($string)
+      */
+     private function parse($text)
+     {
+-        $length = mb_strlen($text);
++        $text = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
++        $length = count($text);
+         for ($position = 0; $position < $length; ++$position) {
+-            $char = mb_substr($text, $position, 1);
++            $char = $text[$position];
+             $this->read($char);
+             if ("\n" === $char) {
+                 ++$this->line;

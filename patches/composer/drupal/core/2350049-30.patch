@@ -1,0 +1,63 @@
+diff --git a/core/modules/filter/filter.module b/core/modules/filter/filter.module
+index c6cae99e5a..4156aa1aed 100644
+--- a/core/modules/filter/filter.module
++++ b/core/modules/filter/filter.module
+@@ -736,7 +736,7 @@ function _filter_autop($text) {
+     elseif (!$ignore) {
+       // just to make things a little easier, pad the end
+       $chunk = preg_replace('|\n*$|', '', $chunk) . "\n\n";
+-      $chunk = preg_replace('|<br />\s*<br />|', "\n\n", $chunk);
++      $chunk = preg_replace('|<br>\s*<br>|', "\n\n", $chunk);
+       // Space things out a little
+       $chunk = preg_replace('!(<' . $block . '[^>]*>)!', "\n$1", $chunk);
+       // Space things out a little
+@@ -755,9 +755,9 @@ function _filter_autop($text) {
+       $chunk = preg_replace('!<p>\s*(</?' . $block . '[^>]*>)!', "$1", $chunk);
+       $chunk = preg_replace('!(</?' . $block . '[^>]*>)\s*</p>!', "$1", $chunk);
+       // make line breaks
+-      $chunk = preg_replace('|(?<!<br />)\s*\n|', "<br />\n", $chunk);
+-      $chunk = preg_replace('!(</?' . $block . '[^>]*>)\s*<br />!', "$1", $chunk);
+-      $chunk = preg_replace('!<br />(\s*</?(?:p|li|div|dl|dd|dt|th|pre|td|ul|ol)>)!', '$1', $chunk);
++      $chunk = preg_replace('|(?<!<br>)\s*\n|', "<br>\n", $chunk);
++      $chunk = preg_replace('!(</?' . $block . '[^>]*>)\s*<br>!', "$1", $chunk);
++      $chunk = preg_replace('!<br>(\s*</?(?:p|li|div|dl|dd|dt|th|pre|td|ul|ol)>)!', '$1', $chunk);
+       $chunk = preg_replace('/&([^#])(?![A-Za-z0-9]{1,8};)/', '&amp;$1', $chunk);
+     }
+     $output .= $chunk;
+diff --git a/core/modules/filter/tests/src/Kernel/FilterKernelTest.php b/core/modules/filter/tests/src/Kernel/FilterKernelTest.php
+index 357437c334..6bfcc9f449 100644
+--- a/core/modules/filter/tests/src/Kernel/FilterKernelTest.php
++++ b/core/modules/filter/tests/src/Kernel/FilterKernelTest.php
+@@ -413,10 +413,10 @@ public function testLineBreakFilter() {
+     // here.
+     // cSpell:disable
+     $tests = [
+-      // Single line breaks should be changed to <br /> tags, while paragraphs
++      // Single line breaks should be changed to <br> tags, while paragraphs
+       // separated with double line breaks should be enclosed with <p></p> tags.
+       "aaa\nbbb\n\nccc" => [
+-        "<p>aaa<br />\nbbb</p>\n<p>ccc</p>" => TRUE,
++        "<p>aaa<br>\nbbb</p>\n<p>ccc</p>" => TRUE,
+       ],
+       // Skip contents of certain block tags entirely.
+       "<script>aaa\nbbb\n\nccc</script>
+@@ -449,7 +449,7 @@ public function testLineBreakFilter() {
+       ],
+       "<pre>aaa\nbbb\nccc</pre>\nddd\neee" => [
+         "<pre>aaa\nbbb\nccc</pre>" => TRUE,
+-        "<p>ddd<br />\neee</p>" => TRUE,
++        "<p>ddd<br>\neee</p>" => TRUE,
+       ],
+       // Comments remain unchanged and subsequent lines/paragraphs are
+       // transformed normally.
+@@ -1064,8 +1064,8 @@ public function testHtmlCorrectorFilter() {
+     $f = Html::normalize('<img src="http://example.com/test.jpg">test</img>');
+     $this->assertEquals('<img src="http://example.com/test.jpg">test', $f, 'HTML corrector -- Fix self-closing single tags.');
+ 
+-    $f = Html::normalize('<br></br>');
+-    $this->assertEquals('<br><br>', $f, "HTML corrector -- Transform empty tags to a self-closed tag if the tag's content model is EMPTY.");
++    $f = Html::normalize('<br>');
++    $this->assertEquals('<br />', $f, "HTML corrector -- Transform empty tags to a self-closed tag if the tag's content model is EMPTY.");
+ 
+     $f = Html::normalize('<div></div>');
+     $this->assertEquals('<div></div>', $f, "HTML corrector -- Do not transform empty tags to a single closed tag if the tag's content model is not EMPTY.");

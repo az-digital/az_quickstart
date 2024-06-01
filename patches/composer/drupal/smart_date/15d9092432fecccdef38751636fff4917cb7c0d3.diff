@@ -1,0 +1,20 @@
+diff --git a/src/Plugin/views/filter/Date.php b/src/Plugin/views/filter/Date.php
+index 02ffd87a22545c2e90e1e9c819ebb94d5272a59c..feb42f874b66977601aa9b3d82e93d2bb785e8a2 100644
+--- a/src/Plugin/views/filter/Date.php
++++ b/src/Plugin/views/filter/Date.php
+@@ -26,7 +26,14 @@ use Drupal\date_popup\DatePopupHelper;
+ class Date extends CoreDate implements ContainerFactoryPluginInterface {
+ 
+   use FieldAPIHandlerTrait;
+-
++  
++  /**
++   * The date formatter.
++   *
++   * @var \Drupal\Core\Datetime\DateFormatterInterface
++   */
++  protected $dateFormatter;
++  
+   /**
+    * The request stack used to determine current time.
+    *

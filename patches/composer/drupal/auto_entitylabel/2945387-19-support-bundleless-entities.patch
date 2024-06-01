@@ -1,0 +1,175 @@
+diff --git a/auto_entitylabel.module b/auto_entitylabel.module
+index 2d2b8d9..f690f38 100644
+--- a/auto_entitylabel.module
++++ b/auto_entitylabel.module
+@@ -7,6 +7,7 @@
+ 
+ use Drupal\auto_entitylabel\AutoEntityLabelManager;
+ use Drupal\Core\Entity\ContentEntityInterface;
++use Drupal\Core\Entity\ContentEntityType;
+ use Drupal\Core\Entity\EntityFormInterface;
+ use Drupal\Core\Entity\EntityInterface;
+ use Drupal\Core\Form\FormStateInterface;
+@@ -45,6 +46,20 @@ function auto_entitylabel_entity_type_alter(array &$entity_types) {
+     if ($entity_type->getBundleOf() && $entity_type->hasLinkTemplate('edit-form')) {
+       $entity_type->setLinkTemplate('auto-label', $entity_type->getLinkTemplate('edit-form') . "/auto-label");
+     }
++    // Also enable for Core's fieldable ContentEntityTypes without bundles.
++    // Currently can't be solved generically as Routing table isn't available
++    // at this point, see #2924075.
++    elseif ($entity_type instanceof ContentEntityType && !empty($entity_type->get('field_ui_base_route')) && empty($entity_type->getBundleEntityType())) {
++      switch ($entity_type->id()) {
++        case 'aggregator_feed':
++          $entity_type->setLinkTemplate('auto-label', '/admin/config/services/aggregator/auto-label');
++          break;
++
++        case 'user':
++          $entity_type->setLinkTemplate('auto-label', '/admin/config/people/accounts/auto-label');
++          break;
++      }
++    }
+   }
+ }
+ 
+@@ -110,31 +125,39 @@ function auto_entitylabel_inline_entity_label_callback($entity, $variables) {
+ function auto_entitylabel_prepare_entityform(array &$form, ContentEntityInterface $entity) {
+   if (empty($form['#auto_entitylabel_processed'])) {
+     $decorator = \Drupal::service('auto_entitylabel.entity_decorator');
++    $entity_type_id = $entity->getEntityTypeId();
+     /** @var \Drupal\auto_entitylabel\AutoEntityLabelManager $entity */
+     $entity = $decorator->decorate($entity);
+     $label = $entity->getLabelName();
+-    $widget = &$form[$label]['widget'][0];
++
++    // Special treatment for Core's user entity.
++    if ($entity_type_id == 'user') {
++      $widget = &$form['account']['name'];
++    }
++    else {
++      $widget = &$form[$label]['widget'][0]['value'];
++    }
+ 
+     switch ($entity->getStatus()) {
+       case AutoEntityLabelManager::ENABLED:
+         // Hide the label field. It will be automatically generated in
+         // hook_entity_presave().
+-        $widget['value']['#type'] = 'hidden';
+-        $widget['value']['#required'] = FALSE;
+-        if (empty($widget['value']['#default_value'])) {
+-          $widget['value']['#default_value'] = '%AutoEntityLabel%';
++        $widget['#type'] = 'hidden';
++        $widget['#required'] = FALSE;
++        if (empty($widget['#default_value'])) {
++          $widget['#default_value'] = '.AutoEntityLabel.';
+         }
+         break;
+ 
+       case AutoEntityLabelManager::OPTIONAL:
+         // Allow label field to be empty. It will be automatically generated
+         // in hook_entity_presave().
+-        $widget['value']['#required'] = FALSE;
++        $widget['#required'] = FALSE;
+         break;
+ 
+       case AutoEntityLabelManager::PREFILLED:
+-        if (empty($widget['value']['#default_value'])) {
+-          $widget['value']['#default_value'] = $entity->setLabel();
++        if (empty($widget['#default_value'])) {
++          $widget['#default_value'] = $entity->setLabel();
+         }
+         break;
+     }
+diff --git a/src/AutoEntityLabelManager.php b/src/AutoEntityLabelManager.php
+index eb5ab60..c2457bf 100644
+--- a/src/AutoEntityLabelManager.php
++++ b/src/AutoEntityLabelManager.php
+@@ -151,7 +151,8 @@ class AutoEntityLabelManager implements AutoEntityLabelManagerInterface {
+     /** @var \Drupal\Core\Entity\EntityTypeInterface $definition */
+     $definition = $this->entityTypeManager
+       ->getDefinition($this->entity->getEntityTypeId());
+-    return $definition->hasKey('label');
++    // Special treatment for Core's user entity.
++    return $definition->id() == 'user' ? TRUE : $definition->hasKey('label');
+   }
+ 
+   /**
+@@ -242,7 +243,8 @@ class AutoEntityLabelManager implements AutoEntityLabelManagerInterface {
+     if ($this->hasLabel()) {
+       $definition = $this->entityTypeManager
+         ->getDefinition($this->entity->getEntityTypeId());
+-      $label_field = $definition->getKey('label');
++      // Special treatment for Core's user entity.
++      $label_field = $definition->id() == 'user' ? 'name' : $definition->getKey('label');
+     }
+ 
+     return $label_field;
+diff --git a/src/Form/AutoEntityLabelForm.php b/src/Form/AutoEntityLabelForm.php
+index 4a2ad58..f6ece45 100644
+--- a/src/Form/AutoEntityLabelForm.php
++++ b/src/Form/AutoEntityLabelForm.php
+@@ -4,6 +4,7 @@ namespace Drupal\auto_entitylabel\Form;
+ 
+ use Drupal\auto_entitylabel\AutoEntityLabelManager;
+ use Drupal\Core\Config\ConfigFactoryInterface;
++use Drupal\Core\Config\Entity\ConfigEntityType;
+ use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\Core\Extension\ModuleHandlerInterface;
+ use Drupal\Core\Form\ConfigFormBase;
+@@ -106,8 +107,14 @@ class AutoEntityLabelForm extends ConfigFormBase {
+     $array_keys = array_keys($route_options['parameters']);
+     $this->entityType = array_shift($array_keys);
+     $entity_type = $this->routeMatch->getParameter($this->entityType);
+-    $this->entityBundle = $entity_type->id();
+-    $this->entityTypeBundleOf = $entity_type->getEntityType()->getBundleOf();
++    if (!empty($entity_type)) {
++      $this->entityBundle = $entity_type->id();
++      $this->entityTypeBundleOf = $entity_type->getEntityType()->getBundleOf();
++    }
++    else {
++      $this->entityBundle = $this->entityType;
++      $this->entityTypeBundleOf = $this->entityType;
++    }
+     $this->moduleHandler = $moduleHandler;
+     $this->user = $user;
+   }
+@@ -300,10 +307,12 @@ class AutoEntityLabelForm extends ConfigFormBase {
+     $storage = $this->entityTypeManager->getStorage($this->entityType);
+     /** @var \Drupal\Core\Config\Entity\ConfigEntityType $entity_type */
+     $entity_type = $storage->getEntityType();
+-    $prefix = $entity_type->getConfigPrefix();
+-    $bundle = $entity_type->getBundleOf();
++    if ($entity_type instanceof ConfigEntityType) {
++      $prefix = $entity_type->getConfigPrefix();
++      $bundle = $entity_type->getBundleOf();
+ 
+-    $config->set('dependencies', ['config' => [$prefix . '.' . $this->entityBundle]]);
++      $config->set('dependencies', ['config' => [$prefix . '.' . $this->entityBundle]]);
++    }
+     $config->save();
+ 
+     // If user checked the re-save option, set batch for re-saving labels.
+diff --git a/src/Plugin/Derivative/AutoEntityLabelConfigTask.php b/src/Plugin/Derivative/AutoEntityLabelConfigTask.php
+index d5f4f41..c2a79da 100644
+--- a/src/Plugin/Derivative/AutoEntityLabelConfigTask.php
++++ b/src/Plugin/Derivative/AutoEntityLabelConfigTask.php
+@@ -3,6 +3,7 @@
+ namespace Drupal\auto_entitylabel\Plugin\Derivative;
+ 
+ use Drupal\Component\Plugin\Derivative\DeriverBase;
++use Drupal\Core\Entity\ContentEntityType;
+ use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\Core\Plugin\Discovery\ContainerDeriverInterface;
+ use Drupal\Core\StringTranslation\StringTranslationTrait;
+@@ -48,8 +49,11 @@ class AutoEntityLabelConfigTask extends DeriverBase implements ContainerDeriverI
+     $this->derivatives = [];
+ 
+     foreach ($this->entityTypeManager->getDefinitions() as $entity_type_id => $entity_type) {
++      if ($entity_type instanceof ContentEntityType) {
++        $base_route = $entity_type->get("field_ui_base_route");
++      }
+       // Special handling of Taxonomy. See https://www.drupal.org/node/2822546
+-      if ($entity_type_id == "taxonomy_vocabulary") {
++      elseif ($entity_type_id == "taxonomy_vocabulary") {
+         $base_route = "entity.{$entity_type_id}.overview_form";
+       }
+       else {

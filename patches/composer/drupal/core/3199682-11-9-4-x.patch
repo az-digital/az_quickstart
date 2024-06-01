@@ -1,0 +1,47 @@
+diff --git a/core/modules/content_moderation/content_moderation.links.task.yml b/core/modules/content_moderation/content_moderation.links.task.yml
+index d2189570f4..f92e92e1cb 100644
+--- a/core/modules/content_moderation/content_moderation.links.task.yml
++++ b/core/modules/content_moderation/content_moderation.links.task.yml
+@@ -1,8 +1,3 @@
+ content_moderation.workflows:
+   deriver: 'Drupal\content_moderation\Plugin\Derivative\DynamicLocalTasks'
+   weight: 100
+-
+-content_moderation.content:
+-  title: 'Overview'
+-  route_name: system.admin_content
+-  parent_id: system.admin_content
+diff --git a/core/modules/system/system.links.task.yml b/core/modules/system/system.links.task.yml
+index db8f8564d8..91724a3d32 100644
+--- a/core/modules/system/system.links.task.yml
++++ b/core/modules/system/system.links.task.yml
+@@ -68,6 +68,10 @@ system.admin_content:
+   title: Content
+   route_name: system.admin_content
+   base_route: system.admin_content
++system.admin_content_overview:
++  title: 'Overview'
++  route_name: system.admin_content
++  parent_id: system.admin_content
+ 
+ system.performance_settings:
+   title: 'Performance'
+diff --git a/core/modules/system/tests/src/Unit/Menu/SystemLocalTasksTest.php b/core/modules/system/tests/src/Unit/Menu/SystemLocalTasksTest.php
+index 9c59b4c48c..4308b03803 100644
+--- a/core/modules/system/tests/src/Unit/Menu/SystemLocalTasksTest.php
++++ b/core/modules/system/tests/src/Unit/Menu/SystemLocalTasksTest.php
+@@ -60,7 +60,13 @@ public function testSystemAdminLocalTasks($route, $expected) {
+    */
+   public function getSystemAdminRoutes() {
+     return [
+-      ['system.admin_content', [['system.admin_content']]],
++      [
++        'system.admin_content',
++        [
++          ['system.admin_content'],
++          ['system.admin_content_overview'],
++        ],
++      ],
+       [
+         'system.theme_settings_theme',
+         [

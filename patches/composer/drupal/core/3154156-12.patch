@@ -1,0 +1,43 @@
+diff --git a/core/modules/migrate_drupal/src/Plugin/migrate/source/DrupalSqlBase.php b/core/modules/migrate_drupal/src/Plugin/migrate/source/DrupalSqlBase.php
+index 0df37ea256..5b3dbd2c18 100644
+--- a/core/modules/migrate_drupal/src/Plugin/migrate/source/DrupalSqlBase.php
++++ b/core/modules/migrate_drupal/src/Plugin/migrate/source/DrupalSqlBase.php
+@@ -38,6 +38,16 @@ abstract class DrupalSqlBase extends SqlBase implements DependentPluginInterface
+    */
+   protected $systemData;
+ 
++  /**
++   * The contents of the system table.
++   *
++   * This is safe to share across all source plugin instances because the source
++   * database must be the same for all of them.
++   *
++   * @var array
++   */
++  protected static $sharedSystemData;
++
+   /**
+    * If the source provider is missing.
+    *
+@@ -67,6 +77,12 @@ public function __construct(array $configuration, $plugin_id, $plugin_definition
+    *   List of system table information keyed by type and name.
+    */
+   public function getSystemData() {
++    // Use the cross-instance static cache if primed.
++    if (isset(static::$sharedSystemData)) {
++      $this->systemData = static::$sharedSystemData;
++      return $this->systemData;
++    }
++
+     if (!isset($this->systemData)) {
+       $this->systemData = [];
+       try {
+@@ -76,6 +92,8 @@ public function getSystemData() {
+         foreach ($results as $result) {
+           $this->systemData[$result['type']][$result['name']] = $result;
+         }
++        // Prime the cross-instance static cache.
++        static::$sharedSystemData = $this->systemData;
+       }
+       catch (\Exception $e) {
+         // The table might not exist for example in tests.

@@ -1,0 +1,36 @@
+diff --git a/src/Plugin/migrate/process/EntityLookup.php b/src/Plugin/migrate/process/EntityLookup.php
+index 8d6f496..2a8c2a9 100644
+--- a/src/Plugin/migrate/process/EntityLookup.php
++++ b/src/Plugin/migrate/process/EntityLookup.php
+@@ -125,9 +125,9 @@ class EntityLookup extends ProcessPluginBase implements ContainerFactoryPluginIn
+    * {@inheritdoc}
+    */
+   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+-    // If the source data is an empty array, return the same.
+-    if (gettype($value) === 'array' && count($value) === 0) {
+-      return [];
++    // If the source data is empty, return the same.
++    if (empty($value)) {
++      return $value;
+     }
+ 
+     // In case of subfields ('field_reference/target_id'), extract the field
+diff --git a/tests/src/Kernel/Plugin/migrate/process/EntityLookupTest.php b/tests/src/Kernel/Plugin/migrate/process/EntityLookupTest.php
+index aabff5d..cf81ed8 100644
+--- a/tests/src/Kernel/Plugin/migrate/process/EntityLookupTest.php
++++ b/tests/src/Kernel/Plugin/migrate/process/EntityLookupTest.php
+@@ -101,6 +101,14 @@ final class EntityLookupTest extends KernelTestBase {
+     // Check an unknown user is not found.
+     $value = $plugin->transform('orange', $this->migrateExecutable, $row, 'name');
+     $this->assertNull($value);
++
++    // Check that an empty array is handled gracefully.
++    $value = $plugin->transform([], $this->migrateExecutable, $row, 'name');
++    $this->assertSame([], $value);
++
++    // Check a null value is handled gracefully.
++    $value = $plugin->transform(NULL, $this->migrateExecutable, $row, 'name');
++    $this->assertNull($value);
+   }
+ 
+   /**
