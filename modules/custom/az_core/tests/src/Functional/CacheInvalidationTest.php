@@ -53,7 +53,7 @@ class CacheInvalidationTest extends BrowserTestBase {
       'az_person' => 'field_az_body',
       'az_course' => 'field_az_course_description',
       'az_publication' => 'field_az_publication_abstract',
-      'az_carousel' => 'field_az_carousel_short_summary',
+      'az_carousel_item' => 'field_az_carousel_short_summary',
     ];
     $initialValue = 'Test value';
     $updatedValue = 'Updated test value';
