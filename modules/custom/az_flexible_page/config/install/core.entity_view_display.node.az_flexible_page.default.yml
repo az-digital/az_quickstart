@@ -35,3 +35,4 @@ hidden:
   field_az_media_image: true
   field_az_page_category: true
   field_az_summary: true
+  smart_title: true

@@ -11,4 +11,6 @@ bootstrap-datepicker:
   js:
     /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.js: {}
   dependencies:
+    - core/drupal
     - core/jquery
+    - core/once

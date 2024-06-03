@@ -6,7 +6,13 @@ az_event_trellis.az_event_trellis_settings_task:
 
 az_event.import_form_task:
   title: 'Trellis event importer'
-  route_name: az_event_trellis.az_event_trellis_import_form
+  route_name: view.az_event_trellis_import.page_1
   parent_id: system.admin_content
   description: 'Import events from the Trellis Events API.'
   weight: 101
+
+az_event_trellis.az_recurring_import_rules_tab:
+  route_name: entity.az_recurring_import_rule.collection
+  title: 'Recurring Imports'
+  base_route: az_core.az_settings
+  weight: 5

@@ -84,6 +84,6 @@ process:
               - az_paragraph_card_deck
 
   field_az_main_content:
-      plugin: paragraphs_mapping_flexible_page
-      source:
-        - '@temp_pid'
+    plugin: paragraphs_mapping_flexible_page
+    source:
+      - '@temp_pid'

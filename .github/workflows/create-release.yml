@@ -5,48 +5,35 @@ on:
       version:
         description: The version to tag and release
         required: true
-
+      pre_release:
+        description: Is this a pre-release?
+        required: false
+        default: false
+        type: boolean
 jobs:
   build:
     name: Upload Release Asset
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
-      - name: Add version to info file
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          echo -e "version: ${{ github.event.inputs.version }}" >> az_quickstart.info.yml
-          git add az_quickstart.info.yml
-          git commit -m "Preparing to tag ${{ github.event.inputs.version }}."
-          git push
-          echo "RELEASE_SHA=$(git rev-parse HEAD)" >> ${GITHUB_ENV}
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.event.inputs.version }}
-          release_name: ${{ github.event.inputs.version }}
-          commitish: ${{ env.RELEASE_SHA }}
-          draft: false
-          prerelease: false
-      - name: Remove version from info file
+          php-version: '8.2'
+      - name: Create Tag
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           sed -i "/version: /d" az_quickstart.info.yml
+          echo -e "version: ${{ github.event.inputs.version }}" >> az_quickstart.info.yml
           git add az_quickstart.info.yml
-          git commit -m "Back to dev."
+          git commit -m "Preparing to tag ${{ github.event.inputs.version }}."
           git push
+          git tag ${{ github.event.inputs.version }}
+          git push origin ${{ github.event.inputs.version }}
       - name: Build project # This would actually build your project, using zip for an example artifact
         run: |
           git clone https://github.com/az-digital/az-quickstart-scaffolding.git az_quickstart
@@ -61,26 +48,27 @@ jobs:
       - name: Tar Assets
         run: |
           tar --exclude '*.git*' -c -z -f az_quickstart.tar.gz az_quickstart
-      - name: Upload Zip Assets
-        id: upload-zip-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v2
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./az_quickstart.zip
-          asset_name: az_quickstart.zip
-          asset_content_type: application/zip
-      - name: Upload Tar Asset
-        id: upload-tar-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
-          asset_path: ./az_quickstart.tar.gz
-          asset_name: az_quickstart.tar.gz
-          asset_content_type: application/x-gzip
+          token: ${{ secrets.GITHUB_TOKEN }}
+          tag_name: ${{ github.event.inputs.version }}
+          name: ${{ github.event.inputs.version }}
+          draft: false
+          prerelease: ${{ github.event.inputs.pre_release }}
+          files: |
+            ./az_quickstart.zip
+            ./az_quickstart.tar.gz
+      - name: Remove version from info file
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          sed -i "/version: /d" az_quickstart.info.yml
+          git add az_quickstart.info.yml
+          git commit -m "Back to dev."
+          git push
+
   dispatch:
     needs: build
     strategy:
@@ -90,7 +78,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Notify dependencies
-        uses: peter-evans/repository-dispatch@1708dda5703a768a0fb0ef6a7a03a0c3805ebc59
+        uses: peter-evans/repository-dispatch@v3
         with:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}

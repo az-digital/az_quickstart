@@ -13,7 +13,7 @@ bundle: az_publication
 label: Link
 description: 'Online link where the resource can be accessed.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

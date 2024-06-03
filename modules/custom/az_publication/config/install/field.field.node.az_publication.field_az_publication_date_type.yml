@@ -13,7 +13,7 @@ bundle: az_publication
 label: 'Date Type'
 description: 'Type of publication date.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

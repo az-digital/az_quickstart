@@ -10,6 +10,8 @@ block_default_region: 'content'
 libraries:
   - az_barrio/global-styling
 
+logo: images/logo.png
+
 regions:
   alert: Alert
   header_ua_utilities: 'UA header utilities'
@@ -44,8 +46,15 @@ regions:
 
 ckeditor_stylesheets:
   - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
-  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest/css/arizona-bootstrap.min.css
+  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-2.x/css/arizona-bootstrap.min.css
+
+ckeditor5-stylesheets:
+  - css/ckeditor5.css
+  - https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css
+  - https://cdn.digital.arizona.edu/lib/arizona-bootstrap/latest-2.x/css/arizona-bootstrap.min.css
 
 libraries-extend:
   system/base:
     - az_barrio/az-media-display
+  core/drupal.ajax:
+    - az_barrio/az-ajax

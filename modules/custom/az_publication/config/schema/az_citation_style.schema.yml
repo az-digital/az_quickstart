@@ -11,5 +11,8 @@ az_publication.az_citation_style.*:
     style:
       type: string
       label: 'Style'
+    custom:
+      type: boolean
+      label: 'Custom'
     uuid:
       type: string

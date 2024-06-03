@@ -124,12 +124,19 @@
 }
 
 /* Desktop Styles */
-@media (min-width: 1200px) {
+@media (min-width: 1110px) {
+
+	.az-carousel .slick-initialized .slick-slide {
+		display: block;
+		flex-grow: unset;
+	}
+
 	.az-carousel-slide-details {
 		position: absolute;
 		background-color: rgba(0,28,72,.8);
 	}
 	.az-carousel-slide img {
 		min-height: 500px;
+		width: 1110px;
 	}
 }

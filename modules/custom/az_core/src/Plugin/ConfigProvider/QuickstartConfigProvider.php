@@ -2,11 +2,12 @@
 
 namespace Drupal\az_core\Plugin\ConfigProvider;
 
+use Drupal\Component\Diff\Diff;
 use Drupal\config_provider\Plugin\ConfigProviderBase;
-use Drupal\Core\Config\InstallStorage;
-use Drupal\Core\Config\StorageInterface;
 use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
+use Drupal\Core\Config\InstallStorage;
+use Drupal\Core\Config\StorageInterface;
 
 /**
  * Class for providing configuration from a quickstart default directory.
@@ -100,7 +101,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     // Get active configuration to look for roles.
     $existing_config = $this->getActiveStorages()->listAll();
-    // phpcs:ignore
     $existing_roles = array_filter($existing_config, function ($name) {
       return (strpos($name, 'user.role.') === 0);
     });
@@ -196,6 +196,47 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   }
 
   /**
+   * Trim specific keys from configuration data.
+   *
+   * @param array $data
+   *   A potentially nested array to prune certain keys from.
+   * @param string $remove
+   *   A key to remove from the array structure.
+   *
+   * @return array
+   *   An array with the identified keys pruned.
+   */
+  protected function trimNestedKey(array $data, $remove) {
+    // Filter out the key targeted for removal.
+    $data = array_filter($data, function ($key) use ($remove) {
+      return $key !== $remove;
+    }, ARRAY_FILTER_USE_KEY);
+    // Remove the key from nested arrays.
+    array_walk($data, function (&$value, $key) use ($remove) {
+      if (is_array($value)) {
+        $value = $this->trimNestedKey($value, $remove);
+      }
+    });
+    return $data;
+  }
+
+  /**
+   * Fetch only override config, without merging with installed config.
+   *
+   * @param \Drupal\Core\Extension\Extension[] $extensions
+   *   An associative array of Extension objects, keyed by extension name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  public function getOnlyOverrideConfig(array $extensions = []) {
+    $storage = $this->getExtensionInstallStorage(static::ID);
+    $config_names = (!empty($extensions)) ? $this->listConfig($storage, $extensions) : [];
+    $data = $storage->readMultiple($config_names);
+    return $data;
+  }
+
+  /**
    * Get permissions defined.
    *
    * @return array
@@ -235,10 +276,31 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     $active = (!empty($active)) ? $active : [];
     // Not relevant for user roles. Permissions created dynamically.
     if (strpos($name, 'user.role.') !== 0) {
+      // Prune cache_metadata if present, to not consider it for diffs.
+      $active = $this->trimNestedKey($active, 'cache_metadata');
+      $snap = $this->trimNestedKey($snap, 'cache_metadata');
       // Diff active config and snapshot of module to check for customization.
       $diff = $differ->diff($active, $snap);
       // Overrides only allowed if no changes in diff.
-      if (!$diff->isEmpty() && !empty($active)) {
+      if (!$this->diffIsEmpty($diff) && !empty($active)) {
+        return FALSE;
+      }
+    }
+    return TRUE;
+  }
+
+  /**
+   * Checks if a diff is empty.
+   *
+   * @param \Drupal\Component\Diff\Diff $diff
+   *   A diff object.
+   *
+   * @return bool
+   *   True if two sequences were identical.
+   */
+  protected function diffIsEmpty(Diff $diff) {
+    foreach ($diff->getEdits() as $edit) {
+      if ($edit->type !== 'copy') {
         return FALSE;
       }
     }

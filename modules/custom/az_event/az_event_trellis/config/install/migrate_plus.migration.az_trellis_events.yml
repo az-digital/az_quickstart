@@ -1,14 +1,17 @@
+langcode: en
+status: true
+dependencies: {  }
 id: az_trellis_events
-label: Trellis Events
+class: null
+field_plugin_method: null
+cck_plugin_method: null
 migration_tags:
   - Events
 migration_group: az_trellis_events
+label: 'Trellis Events'
 source:
-  plugin: url
-  data_fetcher_plugin: http
-  data_parser_plugin: json
-  urls: [ ]
-  item_selector: /0/data
+  plugin: az_trellis_events_api
+  trellis_ids: {  }
   track_changes: true
   fields:
     -
@@ -29,36 +32,27 @@ source:
       selector: Summary
     -
       name: owner
-      label: Owner NetID
+      label: 'Owner NetID'
       selector: Owner_NetID
     -
       name: timezone
-      label: Time Zone
+      label: 'Time Zone'
       selector: tz_name
     -
       name: start_date_time
-      label: Start Date and Time
-      selector: Event_Start_DateTime
+      label: 'Start Date and Time'
+      selector: Start_DateTime
     -
       name: end_date_time
-      label: End Date and Time
-      selector: Event_End_DateTime
-    -
-      name: external_visibility
-      label: External Visibility
-      selector: External_Visibility
+      label: 'End Date and Time'
+      selector: End_DateTime
     -
       name: publish
       label: Publish
-      selector: Publish
-    -
-      name: status_formula
-      label: Status Formula
-      selector: Status_Formula
+      selector: Publish_Formula
   ids:
     id:
       type: string
-
 process:
   title: name
   field_az_trellis_id: id
@@ -66,78 +60,34 @@ process:
   field_az_link/title:
     -
       plugin: default_value
-      default_value: Event details
+      default_value: 'Event details'
   field_az_summary:
     -
       plugin: skip_on_empty
       method: process
       source: summary
-
-  # Events are considered "published" unless any of these conditions are met:
-  # - 'External_Visibility' is "Don't Broadcast to any Platform (invite only)"
-  # - 'Status_Formula' is "Canceled"
-  # = 'Publish' is "false"
-  external_visibility:
-    -
-      plugin: callback
-      callable: strtolower
-      source: external_visibility
-    -
-      plugin: static_map
-      map:
-        "don't broadcast to any platform (invite only)": false
-      default_value: true
-  status_formula:
-    -
-      plugin: callback
-      callable: strtolower
-      source: status_formula
-    -
-      plugin: static_map
-      map:
-        'canceled': false
-      default_value: true
-  publish:
-    plugin: static_map
-    source: publish
-    map:
-      'true': true
-    default_value: false
-  combined_status:
-    -
-      plugin: skip_on_empty
-      source: '@external_visibility'
-      method: process
-    -
-      plugin: skip_on_empty
-      source: '@status_formula'
-      method: process
-    -
-      plugin: get
-      source: '@publish'
   status:
     -
       plugin: get
-      source: '@combined_status'
+      source: publish
     -
       plugin: default_value
       strict: true
       default_value: 0
-
-  # field_az_event_date/timezone: timezone
   field_az_event_date/value:
     -
       plugin: format_date
       source: start_date_time
       from_format: 'Y-m-d\TH:i:s.vp'
-      to_format: 'U'
+      to_format: U
   field_az_event_date/end_value:
     -
       plugin: format_date
       source: end_date_time
       from_format: 'Y-m-d\TH:i:s.vp'
-      to_format: 'U'
-
+      to_format: U
 destination:
-  plugin: entity:node
+  plugin: 'entity:node'
   default_bundle: az_event
+  validate: false
+migration_dependencies: null

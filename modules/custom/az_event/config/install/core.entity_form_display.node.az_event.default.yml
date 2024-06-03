@@ -7,8 +7,10 @@ dependencies:
     - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -30,6 +32,8 @@ third_party_settings:
     group_summary:
       children:
         - field_az_link
+        - field_az_featured_image_as_thumb
+        - field_az_media_thumbnail_image
         - field_az_summary
       label: 'Summary fields'
       region: content
@@ -38,11 +42,12 @@ third_party_settings:
       format_type: details_sidebar
       format_settings:
         classes: ''
+        show_empty_fields: false
         id: ''
         open: true
-        description: 'For use in feeds and content listings.'
+        description: 'Summary fields determine how this event appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
+        weight: -10
 id: node.az_event.default
 targetEntityType: node
 bundle: az_event
@@ -102,6 +107,8 @@ content:
         custom
       show_extra: false
       hide_date: false
+      allday: true
+      remove_seconds: false
     third_party_settings:
       smart_date_recur:
         modal: true
@@ -112,9 +119,16 @@ content:
           WEEKLY: WEEKLY
           MONTHLY: MONTHLY
           YEARLY: YEARLY
+  field_az_featured_image_as_thumb:
+    type: boolean_checkbox
+    weight: 32
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
   field_az_link:
     type: link_default
-    weight: 27
+    weight: 31
     region: content
     settings:
       placeholder_url: ''
@@ -128,6 +142,15 @@ content:
       placeholder_url: ''
       placeholder_title: ''
     third_party_settings: {  }
+  field_az_media_thumbnail_image:
+    type: media_library_widget
+    weight: 33
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
   field_az_photos:
     type: media_library_widget
     weight: 10
@@ -147,7 +170,7 @@ content:
     third_party_settings: {  }
   field_az_summary:
     type: text_textarea
-    weight: 28
+    weight: 34
     region: content
     settings:
       rows: 5

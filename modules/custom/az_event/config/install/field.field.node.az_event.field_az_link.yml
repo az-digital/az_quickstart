@@ -11,9 +11,9 @@ field_name: field_az_link
 entity_type: node
 bundle: az_event
 label: 'Link to external event'
-description: 'In most cases, leave this field blank. Enter an external URL if you want the calendar listings for this event to link directly to event information on another website (e.g. the master calendar).'
+description: 'In most cases, leave this field blank. Enter an external URL if the calendar listings for this event should link directly to event information on another website (e.g. the University calendar).'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

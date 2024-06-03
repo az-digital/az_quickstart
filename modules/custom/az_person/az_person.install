@@ -6,9 +6,9 @@
  */
 
 /**
- * Delete legacy view reorder people block in favor of contextual links.
+ * Implements hook_update_last_removed().
  */
-function az_person_update_920501() {
-  \Drupal::service('config.factory')->getEditable('block.block.az_person_reorder_notification')->delete();
-  return t('Deleted legacy view reorder people block in favor of contextual links.');
+function az_person_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920501;
 }

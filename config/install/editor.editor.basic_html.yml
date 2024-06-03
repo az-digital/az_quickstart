@@ -4,42 +4,108 @@ dependencies:
   config:
     - filter.format.basic_html
   module:
-    - ckeditor
+    - ckeditor5
 format: basic_html
-editor: ckeditor
+editor: ckeditor5
 settings:
   toolbar:
-    rows:
-      -
+    items:
+      - bold
+      - italic
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - '|'
+      - blockQuote
+      - drupalInsertImage
+      - '|'
+      - heading
+      - '|'
+      - code
+      - codeBlock
+      - '|'
+      - showBlocks
+      - sourceEditing
+  plugins:
+    ckeditor5_codeBlock:
+      languages:
         -
-          name: Formatting
-          items:
-            - Bold
-            - Italic
+          label: 'Plain text'
+          language: plaintext
         -
-          name: Linking
-          items:
-            - DrupalLink
-            - DrupalUnlink
+          label: C
+          language: c
         -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
+          label: 'C#'
+          language: cs
         -
-          name: Media
-          items:
-            - Blockquote
-            - DrupalImage
+          label: C++
+          language: cpp
         -
-          name: 'Block Formatting'
-          items:
-            - Format
+          label: CSS
+          language: css
         -
-          name: Tools
-          items:
-            - Source
-  plugins: {  }
+          label: Diff
+          language: diff
+        -
+          label: HTML
+          language: html
+        -
+          label: Java
+          language: java
+        -
+          label: JavaScript
+          language: javascript
+        -
+          label: PHP
+          language: php
+        -
+          label: Python
+          language: python
+        -
+          label: Ruby
+          language: ruby
+        -
+          label: TypeScript
+          language: typescript
+        -
+          label: XML
+          language: xml
+    ckeditor5_heading:
+      enabled_headings:
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_imageResize:
+      allow_resize: true
+    ckeditor5_list:
+      properties:
+        reversed: false
+        startIndex: true
+      multiBlock: true
+    ckeditor5_sourceEditing:
+      allowed_tags:
+        - '<cite>'
+        - '<dl>'
+        - '<dt>'
+        - '<dd>'
+        - '<span>'
+        - '<footer class="blockquote-footer">'
+        - '<a hreflang>'
+        - '<blockquote cite>'
+        - '<ul type>'
+        - '<ol type>'
+        - '<h2 id>'
+        - '<h3 id>'
+        - '<h4 id>'
+        - '<h5 id>'
+        - '<h6 id>'
+    linkit_extension:
+      linkit_enabled: false
 image_upload:
   status: true
   scheme: public

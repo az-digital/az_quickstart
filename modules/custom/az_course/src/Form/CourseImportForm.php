@@ -2,12 +2,12 @@
 
 namespace Drupal\az_course\Form;
 
+use Drupal\az_course\CourseMigrateBatchExecutable;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\migrate\Plugin\MigrationInterface;
-use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\MigrateExecutable;
-use Drupal\az_course\CourseMigrateBatchExecutable;
+use Drupal\migrate\MigrateMessage;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

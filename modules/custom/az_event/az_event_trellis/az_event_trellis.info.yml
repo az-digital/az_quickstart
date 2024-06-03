@@ -9,9 +9,11 @@ php: 8.0
 dependencies:
   - az_core
   - az_event
+  - drupal:views
   - migrate:migrate
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
   - migrate_queue_importer:migrate_queue_importer
+  - views_remote_data:views_remote_data
 
 configure: az_event_trellis.settings

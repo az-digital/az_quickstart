@@ -37,7 +37,7 @@ class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
       $rrule = SmartDateRule::load($value);
       if ($rrule) {
         $values = [];
-        $first_instance = FALSE;
+        $first_instance = [];
         $before = NULL;
         // Retrieve all instances for this rule, with overrides applied.
         if (empty($rrule->get('limit')->getString())) {

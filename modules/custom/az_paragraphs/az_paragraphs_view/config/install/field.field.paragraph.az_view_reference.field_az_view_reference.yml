@@ -13,20 +13,18 @@ bundle: az_view_reference
 label: View
 description: ''
 required: true
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   handler: 'default:view'
   handler_settings:
     target_bundles: null
-    auto_create: 0
+    auto_create: false
   plugin_types:
     default: default
     block: block
     page: page
-    attachment: 0
-    feed: 0
   preselect_views:
     az_courses: az_courses
     az_events: az_events
@@ -34,25 +32,10 @@ settings:
     az_page_by_category: az_page_by_category
     az_person: az_person
     az_publications: az_publications
-    az_reorder: 0
-    block_content: 0
-    content: 0
-    content_recent: 0
-    files: 0
-    frontpage: 0
-    media: 0
-    media_library: 0
-    moderated_content: 0
-    redirect: 0
-    taxonomy_term: 0
-    user_admin_people: 0
-    watchdog: 0
-    who_s_new: 0
-    who_s_online: 0
   enabled_settings:
-    limit: limit
+    pager: pager
+    offset: offset
     argument: argument
     title: title
-    offset: offset
-    pager: pager
+    limit: limit
 field_type: viewsreference

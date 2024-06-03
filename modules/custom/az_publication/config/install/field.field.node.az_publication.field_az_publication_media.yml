@@ -12,7 +12,7 @@ bundle: az_publication
 label: 'Publication File'
 description: 'Upload a copy of the publication to be available on this site, if desired.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

@@ -12,7 +12,7 @@ bundle: az_author
 label: Literal
 description: 'A complete name, e.g. The University of Arizona, Wilbur Wildcat, Wilma Wildcat. Use for a complete name that should be displayed as-is.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings: {  }

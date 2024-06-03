@@ -91,7 +91,7 @@
             <div class="row">
               {% if wordmark %}
               <a class="arizona-logo" href="https://www.arizona.edu" title="The University of Arizona homepage">
-                <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"/>
+                <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" fetchpriority="high" />
               </a>
               {% endif %}
               {% if page.header_ua_utilities %}
@@ -100,7 +100,7 @@
             </div> <!-- /.row -->
           </div> <!-- /.container -->
           {% if az_barrio_navbar_offcanvas %}
-          <div class="redbar-buttons d-lg-none">
+          <div class="redbar-buttons d-lg-none d-flex">
             <button data-toggle="offcanvas" type="button" data-target="#navbar-top" aria-controls="navbar-top" class="btn btn-redbar" id="jsAzSearch">
               <span class="icon material-icons-sharp"> search </span>
               <span class="icon-text"> search </span>
@@ -200,14 +200,16 @@
               <main{{ content_attributes }}>
                 {{ page.content }}
               </main>
-              {% if page.sidebar_first %}
+              {% set has_sidebar_first = page.sidebar_first|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
+              {% if has_sidebar_first is not empty %}
               <div{{ sidebar_first_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_first }}
                 </aside>
               </div>
               {% endif %}
-              {% if page.sidebar_second %}
+              {% set has_sidebar_second = page.sidebar_second|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
+              {% if has_sidebar_second is not empty %}
               <div{{ sidebar_second_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_second }}

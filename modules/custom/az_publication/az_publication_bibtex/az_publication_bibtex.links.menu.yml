@@ -1,0 +1,6 @@
+az_publication_bibtex.import_bibtex:
+  title: 'Import BibTeX Publication'
+  description: 'Import a Quickstart publication from a BibTeX document.'
+  route_name: az_publication_bibtex.az_publication_bibtex_import_form
+  parent: az_publication_import.admin.content
+  weight: 0

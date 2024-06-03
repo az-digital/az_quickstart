@@ -7,8 +7,10 @@ dependencies:
     - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
@@ -31,7 +33,7 @@ third_party_settings:
       label: 'Subtitle Div'
       parent_name: ''
       region: content
-      weight: 1
+      weight: 0
       format_type: html_element
       format_settings:
         classes: 'lead mb-4'
@@ -182,7 +184,7 @@ third_party_settings:
       label: Wrapper
       parent_name: ''
       region: content
-      weight: 2
+      weight: 1
       format_type: html_element
       format_settings:
         classes: mb-5
@@ -283,7 +285,9 @@ content:
 hidden:
   az_event_day: true
   az_event_month: true
+  field_az_featured_image_as_thumb: true
   field_az_link: true
+  field_az_media_thumbnail_image: true
   field_az_summary: true
   field_az_trellis_id: true
   links: true

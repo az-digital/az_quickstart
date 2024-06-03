@@ -5,42 +5,8 @@
  * Contains az_digital_asset_library.module.
  */
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
-
-/**
- * Custom submit handler to redirect to /admin/content/media.
- */
-function az_digital_asset_library_form_submit(array $form, FormStateInterface $form_state) {
-  $url = Url::fromRoute('entity.media.collection');
-  $form_state->setRedirectUrl($url);
-}
-
-/**
- * Implements hook_FORM_ID_alter().
- *
- * Add custom submit handler to form.
- * Allow using remote media.
- * See
- * @link https://git.drupalcode.org/project/intelligencebank/-/blob/8.x-2.x/modules/ib_dam_media/src/Plugin/EntityBrowser/Widget/IbDamEbWidget.php#L249 @endlink.
- */
-function az_digital_asset_library_form_entity_browser_az_digital_asset_library_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  $form['#submit'][] = 'az_digital_asset_library_form_submit';
-}
-
-/**
- * Implements hook_preprocess_HOOK().
- *
- * Hide default media type provided by IntelligenceBank from media select
- * dialog.
- *
- * See @link https://github.com/az-digital/az_quickstart/issues/1741
- */
-function az_digital_asset_library_preprocess_links__media_library_menu(&$variables) {
-  if (isset($variables['links']['media-library-menu-ib_dam_embed']['link'])) {
-    $variables['links']['media-library-menu-ib_dam_embed']['link']['#access'] = FALSE;
-  }
-}
 
 /**
  * Implements hook_preprocess_HOOK().
@@ -53,4 +19,55 @@ function az_digital_asset_library_preprocess_entity_add_list(&$variables) {
   if (isset($variables['bundles']['ib_dam_embed'])) {
     unset($variables['bundles']['ib_dam_embed']);
   }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Move az_digital_asset_library to the end of the list of modules that
+ * implement hook_form_alter.
+ *
+ * This could possibly be done in az_digital_asset_library.install, but it's
+ * not clear how to get the module weight of az_digital_asset_library.
+ */
+function az_digital_asset_library_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'form_alter' && isset($implementations['az_digital_asset_library'])) {
+    $form_alters = $implementations['az_digital_asset_library'];
+    unset($implementations['az_digital_asset_library']);
+    $implementations['az_digital_asset_library'] = $form_alters;
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Change label text for open browser button.
+ * Change dialog title option.
+ *
+ * See @link drupal.org/project/intelligencebank/issues/3353858
+ */
+function az_digital_asset_library_form_media_library_add_form_upload_alter(&$form, FormStateInterface $form_state) {
+  $data_dialog_options = [];
+  $form['ib_dam_container']['asset_browser']['#title'] = t('Add Arizona Digital Asset Library Media');
+  if (isset($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'])) {
+    $data_dialog_options = Json::decode($form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options']);
+  }
+  $data_dialog_options['title'] = 'Arizona Digital Asset Library Browser';
+  $data_dialog_options['width'] = '75%';
+  $form['ib_dam_container']['asset_browser']['#attributes']['data-dialog-options'] = Json::encode($data_dialog_options);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Remove image style option and always use the default image style.
+ * Remove image link option.
+ * Remove image loading options.
+ *
+ * See @link https://github.com/az-digital/az_quickstart/pull/2163
+ */
+function az_digital_asset_library_form_ib_dam_browser_form_alter(&$form, FormStateInterface $form_state) {
+  $form['settings']['image_style']['#access'] = FALSE;
+  $form['settings']['image_link']['#access'] = FALSE;
+  $form['settings']['image_loading']['#access'] = FALSE;
 }

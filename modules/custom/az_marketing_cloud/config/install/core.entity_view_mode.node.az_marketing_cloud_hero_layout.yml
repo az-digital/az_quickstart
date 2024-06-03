@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_marketing_cloud_hero_layout
+label: 'Marketing Cloud - Hero Layout'
+targetEntityType: node
+cache: true

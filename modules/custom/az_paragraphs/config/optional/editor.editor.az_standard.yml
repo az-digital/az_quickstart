@@ -4,96 +4,328 @@ dependencies:
   config:
     - filter.format.az_standard
   module:
-    - ckeditor
+    - ckeditor5
 format: az_standard
-editor: ckeditor
+editor: ckeditor5
 settings:
   toolbar:
-    rows:
-      -
-        -
-          name: Undo/Redo
-          items:
-            - Undo
-            - Redo
-        -
-          name: Formatting
-          items:
-            - Bold
-            - Strike
-            - Italic
-            - Superscript
-            - Subscript
-            - SpecialChar
-        -
-          name: Links
-          items:
-            - DrupalLink
-            - DrupalUnlink
-        -
-          name: Lists
-          items:
-            - BulletedList
-            - NumberedList
-        -
-          name: Alignment
-          items:
-            - JustifyLeft
-            - JustifyCenter
-            - JustifyRight
-        -
-          name: Structure
-          items:
-            - bs_grid
-            - Table
-            - HorizontalRule
-            - Blockquote
-        -
-          name: 'Text styles'
-          items:
-            - Format
-            - Styles
-        -
-          name: Embed
-          items:
-            - DrupalMediaLibrary
-            - az_embed_content
-            - az_embed_content_block
-        -
-          name: Tools
-          items:
-            - Source
-            - Maximize
-            - RemoveFormat
+    items:
+      - undo
+      - redo
+      - '|'
+      - bold
+      - strikethrough
+      - italic
+      - superscript
+      - subscript
+      - specialCharacters
+      - '|'
+      - link
+      - '|'
+      - bulletedList
+      - numberedList
+      - '|'
+      - alignment
+      - indent
+      - outdent
+      - '|'
+      - bootstrapGrid
+      - insertTable
+      - horizontalLine
+      - blockQuote
+      - '|'
+      - heading
+      - style
+      - '|'
+      - drupalMedia
+      - az_embed_content
+      - az_embed_content_block
+      - '|'
+      - code
+      - codeBlock
+      - '|'
+      - showBlocks
+      - sourceEditing
+      - removeFormat
   plugins:
-    drupallink:
-      linkit_enabled: true
-      linkit_profile: az_linkit
-    stylescombo:
-      styles: "a.btn.btn-red|Button Red\r\na.btn.btn-blue|Button Blue\r\na.btn.btn-outline-red|Button Outline Red\r\na.btn.btn-outline-blue|Button Outline Blue\r\na.btn.btn-outline-white|Button Outline White\r\na.btn.btn-link|Button Link\r\nspan.text-white|Text White\r\nspan.text-sky|Text Sky\r\nspan.text-oasis|Text Oasis\r\nspan.text-azurite|Text Azurite\r\nspan.text-blue|Text Blue\r\nspan.text-midnight|Text Midnight\r\nspan.text-dark-silver|Text Dark Silver\r\nspan.text-ash|Text Ash\r\nspan.text-sans|Sanserif Text\r\nspan.text-capitalize|Capitalized Text\r\nspan.text-uppercase|UPPERCASE TEXT\r\nspan.text-lowercase|lowercase text\r\nul.ul-triangles|Triangle Bullets\r\nul.nav.nav-pills|Unordered List Pills\r\nspan.badge.badge-red|Label Red\r\nspan.badge.badge-blue|Label Blue\r\nspan.badge.badge-success|Label Green\r\nspan.badge.badge-info|Label Sky\r\nspan.badge.badge-warning|Label Warning\r\nspan.badge.badge-danger|Label Danger\r\nspan.small|Text Size Small\r\nspan.lead|Text Size Lead\r\nspan.h1|Text Size H1\r\nspan.h2|Text Size H2\r\nspan.h3|Text Size H3\r\nspan.h4|Text Size H4\r\nspan.h5|Text Size H5\r\nspan.h6|Text Size H6\r\nspan.align-top|Text Align Top\r\nspan.align-middle|Text Align Middle\r\nspan.align-bottom|Text Align Bottom\r\nspan.mt-0|Zero Margin Top\r\nspan.mb-0|Zero Margin Bottom\r\nblockquote.blockquote|Blockquote\r\nblockquote.blockquote.text-center|Blockquote Center\r\nblockquote.blockquote.text-right|Blockquote Right\r\nblockquote.blockquote.blockquote-reverse.text-right|Blockquote Reverse\r\nfooter.blockquote-footer|Blockquote Footer"
-    bs_grid:
+    ckeditor5_alignment:
+      enabled_alignments:
+        - center
+        - justify
+        - left
+        - right
+    ckeditor5_codeBlock:
+      languages:
+        -
+          label: 'Plain text'
+          language: plaintext
+        -
+          label: C
+          language: c
+        -
+          label: 'C#'
+          language: cs
+        -
+          label: C++
+          language: cpp
+        -
+          label: CSS
+          language: css
+        -
+          label: Diff
+          language: diff
+        -
+          label: HTML
+          language: html
+        -
+          label: Java
+          language: java
+        -
+          label: JavaScript
+          language: javascript
+        -
+          label: PHP
+          language: php
+        -
+          label: Python
+          language: python
+        -
+          label: Ruby
+          language: ruby
+        -
+          label: TypeScript
+          language: typescript
+        -
+          label: XML
+          language: xml
+    ckeditor5_heading:
+      enabled_headings:
+        - heading1
+        - heading2
+        - heading3
+        - heading4
+        - heading5
+        - heading6
+    ckeditor5_list:
+      properties:
+        reversed: false
+        startIndex: true
+      multiBlock: true
+    ckeditor5_sourceEditing:
+      allowed_tags:
+        - '<abbr>'
+        - '<address>'
+        - '<cite>'
+        - '<dl>'
+        - '<dt>'
+        - '<dd>'
+        - '<div class name id data-*>'
+        - '<span class name id>'
+        - '<img src alt data-entity-type data-entity-uuid>'
+        - '<footer class>'
+        - '<blockquote class>'
+        - '<ul type class>'
+        - '<ol type class>'
+        - '<li class>'
+        - '<h1 class name id>'
+        - '<h2 class name id>'
+        - '<h3 class name id>'
+        - '<h4 class name id>'
+        - '<h5 class name id>'
+        - '<h6 class name id>'
+        - '<table class>'
+        - '<tbody class>'
+        - '<thead class>'
+        - '<tfoot class>'
+        - '<th class scope>'
+        - '<td class>'
+        - '<tr class colspan rowspan>'
+        - '<hr class>'
+        - '<a class target name id title>'
+        - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode>'
+        - '<drupal-media title>'
+        - '<p class>'
+    ckeditor5_style:
+      styles:
+        -
+          label: 'Button Red'
+          element: '<a class="btn btn-red">'
+        -
+          label: 'Button Blue'
+          element: '<a class="btn btn-blue">'
+        -
+          label: 'Button Outline Red'
+          element: '<a class="btn btn-outline-red">'
+        -
+          label: 'Button Outline Blue'
+          element: '<a class="btn btn-outline-blue">'
+        -
+          label: 'Button Outline White'
+          element: '<a class="btn btn-outline-white">'
+        -
+          label: 'Button Link'
+          element: '<a class="btn btn-link">'
+        -
+          label: 'Text White'
+          element: '<span class="text-white">'
+        -
+          label: 'Text Sky'
+          element: '<span class="text-sky">'
+        -
+          label: 'Text Oasis'
+          element: '<span class="text-oasis">'
+        -
+          label: 'Text Azurite'
+          element: '<span class="text-azurite">'
+        -
+          label: 'Text Blue'
+          element: '<span class="text-blue">'
+        -
+          label: 'Text Midnight'
+          element: '<span class="text-midnight">'
+        -
+          label: 'Text Dark Silver'
+          element: '<span class="text-dark-silver">'
+        -
+          label: 'Text Ash'
+          element: '<span class="text-ash">'
+        -
+          label: 'Sanserif Text'
+          element: '<span class="text-sans">'
+        -
+          label: 'Capitalized Text'
+          element: '<span class="text-capitalize">'
+        -
+          label: 'UPPERCASE TEXT'
+          element: '<span class="text-uppercase">'
+        -
+          label: 'lowercase text'
+          element: '<span class="text-lowercase">'
+        -
+          label: 'Triangle Bullets'
+          element: '<ul class="ul-triangles">'
+        -
+          label: 'Unordered List Pills'
+          element: '<ul class="nav nav-pills">'
+        -
+          label: 'Label Red'
+          element: '<span class="badge badge-red">'
+        -
+          label: 'Label Blue'
+          element: '<span class="badge badge-blue">'
+        -
+          label: 'Label Green'
+          element: '<span class="badge badge-success">'
+        -
+          label: 'Label Sky'
+          element: '<span class="badge badge-info">'
+        -
+          label: 'Label Warning'
+          element: '<span class="badge badge-warning">'
+        -
+          label: 'Label Danger'
+          element: '<span class="badge badge-danger">'
+        -
+          label: 'Text Size Small'
+          element: '<span class="small">'
+        -
+          label: 'Text Size Lead'
+          element: '<span class="lead">'
+        -
+          label: 'Text Size H1'
+          element: '<span class="h1">'
+        -
+          label: 'Text Size H2'
+          element: '<span class="h2">'
+        -
+          label: 'Text Size H3'
+          element: '<span class="h3">'
+        -
+          label: 'Text Size H4'
+          element: '<span class="h4">'
+        -
+          label: 'Text Size H5'
+          element: '<span class="h5">'
+        -
+          label: 'Text Size H6'
+          element: '<span class="h6">'
+        -
+          label: 'Text Align Top'
+          element: '<span class="align-top">'
+        -
+          label: 'Text Align Middle'
+          element: '<span class="align-middle">'
+        -
+          label: 'Text Align Bottom'
+          element: '<span class="align-bottom">'
+        -
+          label: 'Zero Margin Top'
+          element: '<span class="mt-0">'
+        -
+          label: 'Zero Margin Bottom'
+          element: '<span class="mb-0">'
+        -
+          label: Blockquote
+          element: '<blockquote class="blockquote">'
+        -
+          label: 'Blockquote Center'
+          element: '<blockquote class="blockquote text-center">'
+        -
+          label: 'Blockquote Right'
+          element: '<blockquote class="blockquote text-right">'
+        -
+          label: 'Blockquote Reverse'
+          element: '<blockquote class="blockquote blockquote-reverse text-right">'
+        -
+          label: 'Blockquote Footer'
+          element: '<footer class="blockquote-footer">'
+        -
+          label: 'Bordered table'
+          element: '<table class="table table-bordered">'
+        -
+          label: 'Hover table'
+          element: '<table class="table table-hover">'
+        -
+          label: 'Small table'
+          element: '<table class="table table-sm">'
+        -
+          label: 'Striped table'
+          element: '<table class="table table-striped">'
+        -
+          label: 'Dark table'
+          element: '<table class="table table-dark">'
+        -
+          label: 'Dark table heading'
+          element: '<thead class="thead-dark">'
+    ckeditor_bs_grid_grid:
       use_cdn: false
       cdn_url: ''
       available_columns:
-        1: '1'
-        2: '2'
-        3: '3'
-        4: '4'
-        5: '5'
-        6: '6'
-        7: '7'
-        8: '8'
-        9: '9'
-        10: '10'
-        11: '11'
-        12: '12'
+        - '1'
+        - '2'
+        - '3'
+        - '4'
+        - '5'
+        - '6'
+        - '7'
+        - '8'
+        - '9'
+        - '10'
+        - '11'
+        - '12'
       available_breakpoints:
-        xs: xs
-        sm: sm
-        md: md
-        lg: lg
-        xl: 0
-        xxl: 0
+        - xs
+        - sm
+        - md
+        - lg
+        - xl
+    ckeditor_indentblock_indent:
+      enable: true
+    linkit_extension:
+      linkit_enabled: true
+      linkit_profile: az_linkit
+    media_media:
+      allow_view_mode_override: true
 image_upload:
   status: false
   scheme: public

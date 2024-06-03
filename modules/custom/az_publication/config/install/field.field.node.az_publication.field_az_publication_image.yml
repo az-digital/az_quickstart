@@ -12,7 +12,7 @@ bundle: az_publication
 label: 'Publication Image'
 description: 'An optional image associated with the publication, e.g. thumbnail, cover image, etc.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

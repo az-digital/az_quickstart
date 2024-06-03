@@ -7,10 +7,13 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_contacts
+    - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_featured_image_as_thumb
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_media_thumbnail_image
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -51,7 +54,7 @@ third_party_settings:
         speed: fast
     group_link:
       children:
-        - field_az_media_image
+        - field_az_media_thumbnail_image
         - group_heading
         - group_text_muted
         - group_summary
@@ -73,7 +76,7 @@ third_party_settings:
       label: Heading
       parent_name: group_link
       region: content
-      weight: 7
+      weight: 2
       format_type: html_element
       format_settings:
         classes: 'card-title text-midnight h5 mb-0'
@@ -91,7 +94,7 @@ third_party_settings:
       label: 'Text Muted'
       parent_name: group_link
       region: content
-      weight: 8
+      weight: 3
       format_type: html_element
       format_settings:
         classes: 'text-muted font-weight-normal small mt-2'
@@ -109,7 +112,7 @@ third_party_settings:
       label: Summary
       parent_name: group_link
       region: content
-      weight: 9
+      weight: 4
       format_type: html_element
       format_settings:
         classes: 'card-text font-weight-normal mt-2'
@@ -127,7 +130,7 @@ third_party_settings:
       label: 'Read more'
       parent_name: group_link
       region: content
-      weight: 10
+      weight: 5
       format_type: html_element
       format_settings:
         classes: 'card-clickable-link mt-2'
@@ -169,14 +172,14 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
-  field_az_media_image:
+  field_az_media_thumbnail_image:
     type: entity_reference_entity_view
     label: hidden
     settings:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 6
+    weight: 0
     region: content
   field_az_published:
     type: timestamp_ap_style
@@ -212,9 +215,12 @@ hidden:
   field_az_body: true
   field_az_byline: true
   field_az_contacts: true
+  field_az_enterprise_attributes: true
   field_az_expiration_date: true
+  field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_main_content: true
+  field_az_media_image: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_subheading: true
