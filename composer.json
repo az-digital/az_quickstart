@@ -48,7 +48,7 @@
         "drupal/block_field": "1.0.0-rc4",
         "drupal/bootstrap_barrio": "5.1.10",
         "drupal/bootstrap_utilities": "2.0.0",
-        "drupal/cas": "2.2.0",
+        "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.1",
         "drupal/ckeditor_bs_grid": "2.0.11",
         "drupal/ckeditor_indentblock": "1.0",
@@ -150,8 +150,7 @@
                 "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch"
             },
             "drupal/cas": {
-                "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
-                "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2023-09-15/3190842-10.patch"
+                "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
