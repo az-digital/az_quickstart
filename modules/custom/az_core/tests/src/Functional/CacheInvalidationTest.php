@@ -38,22 +38,29 @@ class CacheInvalidationTest extends BrowserTestBase {
     'az_event',
     'az_news',
     'az_person',
+    'az_flexible_page',
+    'az_course',
+    'az_publication',
+    'az_carousel',
   ];
 
   /**
    * Tests that updating a node invalidates the appropriate cache.
    */
   public function testCacheInvalidation() {
-    $contentTypes = [
-      'az_event',
-      'az_news',
-      'az_person',
+    $contentTypeFields = [
+      'az_event' => 'field_az_body',
+      'az_news' => 'field_az_body',
+      'az_person' => 'field_az_body',
+      'az_flexible_page' => 'field_az_summary',
+      'az_course' => 'field_az_course_description',
+      'az_publication' => 'field_az_publication_abstract',
+      'az_carousel' => 'field_az_carousel_short_summary',
     ];
-    $fieldToUpdate = 'field_az_body';
-    $initialValue = 'Test body';
-    $updatedValue = 'Updated test body';
+    $initialValue = 'Test value';
+    $updatedValue = 'Updated test value';
 
-    foreach ($contentTypes as $contentType) {
+    foreach ($contentTypeFields as $contentType => $fieldToUpdate) {
       // Create a new node.
       $node = $this->createNode([
         'type' => $contentType,
