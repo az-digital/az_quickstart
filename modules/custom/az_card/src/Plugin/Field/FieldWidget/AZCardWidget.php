@@ -24,8 +24,7 @@ use Symfony\Component\Validator\ConstraintViolationInterface;
  *   }
  * )
  */
-class AZCardWidget extends WidgetBase
-{
+class AZCardWidget extends WidgetBase {
 
   // Default initial text format for cards.
   const AZ_CARD_DEFAULT_TEXT_FORMAT = 'az_standard';
@@ -54,8 +53,7 @@ class AZCardWidget extends WidgetBase
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
-  {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create(
       $container,
       $configuration,
@@ -72,8 +70,7 @@ class AZCardWidget extends WidgetBase
   /**
    * {@inheritdoc}
    */
-  public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL)
-  {
+  public function form(FieldItemListInterface $items, array &$form, FormStateInterface $form_state, $get_delta = NULL) {
 
     // Create shared settings for widget elements.
     // This is necessary because widgets have to be AJAX replaced together,
@@ -110,8 +107,7 @@ class AZCardWidget extends WidgetBase
   /**
    * {@inheritdoc}
    */
-  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state)
-  {
+  public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
 
     /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
     $item = $items[$delta];
@@ -179,7 +175,8 @@ class AZCardWidget extends WidgetBase
         if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
-        } else {
+        }
+        else {
           $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
         }
         $element['preview_container']['card_preview']['#link'] = [
@@ -327,8 +324,7 @@ class AZCardWidget extends WidgetBase
   /**
    * {@inheritdoc}
    */
-  protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state)
-  {
+  protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
     $elements = parent::formMultipleElements($items, $form, $form_state);
     $field_name = $this->fieldDefinition->getName();
     $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
@@ -374,8 +370,7 @@ class AZCardWidget extends WidgetBase
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The form state.
    */
-  public function cardSubmit(array $form, FormStateInterface $form_state)
-  {
+  public function cardSubmit(array $form, FormStateInterface $form_state) {
 
     // Get triggering element.
     $triggering_element = $form_state->getTriggeringElement();
@@ -415,8 +410,7 @@ class AZCardWidget extends WidgetBase
    * @return array
    *   Ajax response as render array.
    */
-  public function cardAjax(array &$form, FormStateInterface $form_state)
-  {
+  public function cardAjax(array &$form, FormStateInterface $form_state) {
 
     // Find the widget and return it.
     $element = [];
@@ -433,8 +427,7 @@ class AZCardWidget extends WidgetBase
    *
    * Disallows saving inaccessible or untrusted URLs.
    */
-  public function validateCardLink(&$element, FormStateInterface $form_state, &$complete_form)
-  {
+  public function validateCardLink(&$element, FormStateInterface $form_state, &$complete_form) {
 
     if (!empty($element['#value'])) {
       // Check to make sure the path can be found.
@@ -459,16 +452,14 @@ class AZCardWidget extends WidgetBase
   /**
    * {@inheritdoc}
    */
-  public function errorElement(array $element, ConstraintViolationInterface $violation, array $form, FormStateInterface $form_state)
-  {
+  public function errorElement(array $element, ConstraintViolationInterface $violation, array $form, FormStateInterface $form_state) {
     return isset($violation->arrayPropertyPath[0]) ? $element[$violation->arrayPropertyPath[0]] : $element;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function massageFormValues(array $values, array $form, FormStateInterface $form_state)
-  {
+  public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
     foreach ($values as $delta => $value) {
       if ($value['title'] === '') {
         $values[$delta]['title'] = NULL;
@@ -497,4 +488,5 @@ class AZCardWidget extends WidgetBase
     }
     return $values;
   }
+
 }
