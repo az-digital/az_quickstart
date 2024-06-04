@@ -67,4 +67,4 @@
 - [ ] All new and existing tests passed.
 
 ## Release Notes
-<!-- Provide a summary of changes, how to use this change, and any related links. This content will be pasted in the Important notes section of the [release notes](https://github.com/az-digital/az_quickstart/releases). -->
+Provide a summary of changes, how to use this change, and any related links. This content will be pasted in the Important notes section of the [release notes](https://github.com/az-digital/az_quickstart/releases).
