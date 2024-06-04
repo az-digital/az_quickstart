@@ -242,7 +242,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#langcode' => $item->getLangcode(),
         ],
         '#link' => $link_render_array,
-        '#link_url' => $this->pathValidator->getUrlIfValid($item->link_url ?? '<none>'),
+        '#link_url' => $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>'),
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
         '#title_alignment' => $title_alignment ?? 'text-left',
