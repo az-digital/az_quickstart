@@ -1,17 +1,16 @@
 admin_css: true
-lazy_html: false
 nojs:
   lazy: '0'
-  polyfill: '0'
   classlist: '0'
+  polyfill: '0'
   promise: '0'
   raf: '0'
-  webp: '0'
 fx: ''
 blur_client: false
 blur_storage: false
 blur_minwidth: 0
 noscript: false
+responsive_image: false
 one_pixel: true
 visible_class: false
 wrapper_class: false
@@ -20,8 +19,8 @@ placeholder: ''
 unstyled_extensions: ''
 use_encodedbox: false
 use_oembed: false
-use_theme_blazy: false
-responsive_image: false
+use_theme_blazy: true
+extras: {}
 blazy:
   loadInvisible: false
   offset: 100
@@ -33,4 +32,3 @@ io:
   rootMargin: 0px
   threshold: '0'
   disconnect: false
-extras: {  }
