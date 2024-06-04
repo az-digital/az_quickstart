@@ -113,7 +113,7 @@
         "drupal/token": "1.14.0",
         "drupal/views_bootstrap": "5.4.0",
         "drupal/views_remote_data": "1.0.2",
-        "drupal/viewsreference": "2.0.0-beta7",
+        "drupal/viewsreference": "2.0.0-beta8",
         "drupal/webform": "6.2.2",
         "drupal/workbench_access": "2.0.1",
         "drupal/xmlsitemap": "1.5.0",
@@ -199,9 +199,7 @@
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
             },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
-                "Configuration schema for Enable extra settings incorrect (3402036)": "https://www.drupal.org/files/issues/2023-11-17/configuration-schema-for-views-reference-field-settings-3402036-4.patch",
-                "View without empty handling could break caching (3017716)": "https://www.drupal.org/files/issues/2024-02-09/3017716-22.patch"
+                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch",
