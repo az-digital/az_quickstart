@@ -2,7 +2,7 @@ name: 'Quickstart News Export'
 type: module
 description: 'Provides a REST export for the Quickstart News content type.'
 core_version_requirement: ^9 || ^10
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
 dependencies:
   - 'az_core:az_core'
   - 'az_news:az_news'

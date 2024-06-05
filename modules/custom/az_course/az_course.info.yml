@@ -2,7 +2,7 @@ name: 'Quickstart Course'
 type: module
 description: 'Imports courses from the UAccess schedule of classes service.'
 core_version_requirement: ^9 || ^10
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
 dependencies:
   - auto_entitylabel
   - field

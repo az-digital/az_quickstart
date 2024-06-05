@@ -2,7 +2,7 @@ name: 'Quickstart Publication BibTeX Import'
 type: module
 description: 'Allows BibTeX import of publications'
 core_version_requirement: ^9 || ^10
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
 dependencies:
   - 'az_core:az_core'
   - 'az_publication:az_publication'
