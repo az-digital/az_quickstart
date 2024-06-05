@@ -1,6 +1,6 @@
 name: 'Quickstart SEO'
 type: module
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 package: The University of Arizona
 dependencies:
   - xmlsitemap:xmlsitemap
