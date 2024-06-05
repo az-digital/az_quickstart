@@ -32,7 +32,7 @@ steps:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress yarn
       - sudo npm install -g --no-progress n
-      - sudo n 18.12.1
+      - sudo n 20.13.0
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
       - yarn install
       - yarn run eslint --color .
