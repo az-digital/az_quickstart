@@ -182,9 +182,6 @@
             "drupal/environment_indicator": {
                 "Make version indicator source and version indicator source fallback configurable. (3324621)": "https://www.drupal.org/files/issues/2024-06-05/33243324621-29-add-version-indicator-source-and-fallback-options.patch"
             },
-            "drupal/google_tag": {
-                "Enforce Privacy Consent Policy checkbox default value is checked even when it is disabled (3424623)": "https://www.drupal.org/files/issues/2024-03-01/3424623-9-allow-saving-google-tag-setting-for-consent-mode.patch"
-            },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
             },
