@@ -4,7 +4,7 @@
 <!--- Describe your changes in detail (include keywords close/fix/resolve) -->
 
 ### Release notes
-Provide a summary of changes, how to use this change, and any related links. This content will be 
+If this change requires release notes: provide a summary of changes, how to use this change, and any related links. This content will be 
 pasted in the [release notes](https://github.com/az-digital/az_quickstart/releases). Use markdown 
 format to ensure proper pasting of information.
 
