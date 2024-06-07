@@ -139,6 +139,7 @@ Experimental modules to Stable with each minor release.
 - **Review and Approval**: Conduct a thorough review and seek approval from the
   development team and key stakeholders before transitioning the module to a
   stable release.
+  
 ## Update hook numbering convention
 
 In order to allow update hooks to be added to different minor release branches
