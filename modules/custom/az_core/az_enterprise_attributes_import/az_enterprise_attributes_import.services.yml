@@ -1,10 +1,15 @@
 services:
   _defaults:
     autoconfigure: true
-  az_enterprise_attributes_import.events:
-    class: Drupal\az_enterprise_attributes_import\EventSubscriber\AZEnterpriseAttributesEventSubscriber
+  az_enterprise_attributes_import.sync:
+    public: false
+    class: Drupal\az_enterprise_attributes_import\EventSubscriber\AZEnterpriseAttributesMigrationSync
+    decorates: migrate_tools.migration_sync
     arguments:
+      - '@event_dispatcher'
+      - '@state'
       - '@entity_type.manager'
+      - '@logger.channel.az_enterprise_attributes_import'
   logger.channel.az_enterprise_attributes_import:
     parent: logger.channel_base
     arguments:

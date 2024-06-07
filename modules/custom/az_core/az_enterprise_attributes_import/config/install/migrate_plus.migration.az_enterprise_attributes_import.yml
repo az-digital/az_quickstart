@@ -31,6 +31,9 @@ process:
   name: value
   field_az_attribute_key: key
   field_az_attribute_type: type
+  status:
+    plugin: default_value
+    default_value: 1
   vid:
     plugin: default_value
     default_value: az_enterprise_attributes
