@@ -4,6 +4,7 @@
 <!--- Describe your changes in detail (include keywords close/fix/resolve) -->
 
 ### Release notes
+<!--- This section is intended to be deleted if there are no notes. -->
 If this change requires release notes: provide a summary of changes, how to use this change, and any related links. This content will be 
 pasted in the [release notes](https://github.com/az-digital/az_quickstart/releases). Use markdown 
 format to ensure proper pasting of information.
