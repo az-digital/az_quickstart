@@ -100,20 +100,9 @@ creation of the feature.
 - **Risks**: May introduce breaking changes; not recommended for critical
   production sites without thorough testing.
 
-### Identifying Experimental Modules
-To add a module as experimental, define the package as 'The University of
-Arizona - Experimental' in the module's info.yml file.
-
-### Graduating an Experimental Module to Stable
-For the overall stability of the Quickstart project, the number of Experimental
-modules at any time should be kept to a minimum, and effort should be made to
-convert Experimental Modules to Stable with each minor release.
-
-## Experimental Modules
-
-### Identifying Experimental Modules
-To add a module as experimental, define the package as 'The University of
-Arizona - Experimental' in the module's info.yml file.
+### Classifying Modules as Experimental
+To add a module as experimental, define the `package` as 
+`'The University of Arizona - Experimental'` in the module's `info.yml` file.
 
 ### Transition Plan for Experimental Modules
 
