@@ -260,4 +260,5 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
     return $element;
   }
+
 }
