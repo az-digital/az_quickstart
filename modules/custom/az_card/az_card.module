@@ -10,9 +10,10 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function az_card_help($route_name, RouteMatchInterface $route_match) {
+function az_card_help($route_name, RouteMatchInterface $route_match)
+{
   switch ($route_name) {
-    // Main module help for the az_card module.
+      // Main module help for the az_card module.
     case 'help.page.az_card':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
@@ -26,7 +27,8 @@ function az_card_help($route_name, RouteMatchInterface $route_match) {
 /**
  * Implements hook_theme().
  */
-function az_card_theme($existing, $type, $theme, $path) {
+function az_card_theme($existing, $type, $theme, $path)
+{
   return [
     'az_card' => [
       'variables' => [
@@ -35,6 +37,7 @@ function az_card_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'body' => NULL,
         'link' => NULL,
+        'link_uri' => NULL,
         'title_style' => 'default',
         'title_alignment' => 'text-left',
         'title_level' => 'h3',

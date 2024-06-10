@@ -27,7 +27,13 @@
       {{ media }}
       {% if title and title_style == 'title-on-image' %}
         <div class="card-img-overlay p-0 d-flex flex-column">
-          <{{ title_level }} class="bold mt-auto card-title bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">{{ title }}</{{ title_level }}>
+          <{{ title_level }} class="bold mt-auto card-title bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
+            {% if link|render %}
+              <a href="{{ link_uri }}">{{ title }}</a>
+            {% else %}
+              {{ title }}
+            {% endif %}
+          </{{ title_level }}>
         </div>
       {% endif %}
     </div>
@@ -42,7 +48,11 @@
     <div class="card-body d-flex flex-column">
       {% if title and title_style == 'default' %}
         <{{ title_level }} class="bold mt-0 mb-3 card-title {{ title_alignment }} {{ title_display }}">
-          <a href="{{ link_uri }}">{{ title }}</a>
+          {% if link|render %}
+            <a href="{{ link_uri }}">{{ title }}</a>
+          {% else %}
+            {{ title }}
+          {% endif %}
         </{{ title_level }}>
       {% endif %}
       {% if body %}
