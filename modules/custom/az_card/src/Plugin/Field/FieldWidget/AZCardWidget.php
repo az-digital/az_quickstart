@@ -139,7 +139,7 @@ class AZCardWidget extends WidgetBase {
         '#type' => 'container',
         '#attributes' => [
           'class' =>
-          ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview'],
+            ['col-12', 'col-sm-6', 'col-md-6', 'col-lg-4', 'card-preview'],
         ],
       ];
 
@@ -149,8 +149,7 @@ class AZCardWidget extends WidgetBase {
         '#title' => $item->title ?? '',
         '#body' => check_markup(
           $item->body ?? '',
-          $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT
-        ),
+          $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
         '#attributes' => ['class' => ['card']],
       ];
 

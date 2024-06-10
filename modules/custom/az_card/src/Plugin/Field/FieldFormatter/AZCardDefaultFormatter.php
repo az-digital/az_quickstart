@@ -22,8 +22,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *   }
  * )
  */
-class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface
-{
+class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
    * The entity type manager service.
@@ -49,8 +48,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition)
-  {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create(
       $container,
       $configuration,
@@ -67,16 +65,14 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings()
-  {
+  public static function defaultSettings() {
     return ['interactive_links' => TRUE] + parent::defaultSettings();
   }
 
   /**
    * {@inheritdoc}
    */
-  public function settingsForm(array $form, FormStateInterface $form_state)
-  {
+  public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
     $element['interactive_links'] = [
@@ -91,8 +87,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function settingsSummary()
-  {
+  public function settingsSummary() {
     $settings = $this->getSettings();
 
     $interactive = 'No';
@@ -106,8 +101,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public function viewElements(FieldItemListInterface $items, $langcode)
-  {
+  public function viewElements(FieldItemListInterface $items, $langcode) {
     $settings = $this->getSettings();
     $element = [];
 
@@ -133,7 +127,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
-        } else {
+        }
+        else {
           $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
         }
         $link_render_array = [
