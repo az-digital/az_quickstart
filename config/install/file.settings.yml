@@ -9,5 +9,5 @@ filename_sanitization:
   replace_whitespace: true
   replace_non_alphanumeric: true
   deduplicate_separators: true
-  lowercase: true
+  lowercase: false
   replacement_character: '-'
