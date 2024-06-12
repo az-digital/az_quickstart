@@ -15,3 +15,9 @@ az-enterprise-attributes:
   css:
     component:
       css/az-enterprise-attributes.css: {}
+click-to-copy:
+  css:
+    component:
+      css/click-to-copy.css: {}
+  js:
+    js/click-to-copy.js: {}
