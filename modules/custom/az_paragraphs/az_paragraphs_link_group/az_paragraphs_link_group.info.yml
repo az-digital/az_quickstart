@@ -6,6 +6,7 @@ description: 'Provides structured content for a group of links, which come with 
 dependencies:
   - field
   - link
+  - linkit
   - paragraphs
   - az_core
   - az_paragraphs
