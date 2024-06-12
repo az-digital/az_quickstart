@@ -5,7 +5,6 @@ package: 'The University of Arizona - Experimental'
 description: 'Provides structured content for a group of links, which come with a handful of style options.'
 dependencies:
   - field
-  - link
   - linkit
   - paragraphs
   - az_core

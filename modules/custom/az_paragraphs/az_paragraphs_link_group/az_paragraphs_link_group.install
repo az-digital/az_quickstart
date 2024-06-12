@@ -6,7 +6,7 @@
  */
 
 /**
- * Ensure views_remote_data module is installed.
+ * Ensure linkit module is installed.
  */
 function az_paragraphs_link_group_update_1021001() {
   \Drupal::service('module_installer')->install(['linkit']);
