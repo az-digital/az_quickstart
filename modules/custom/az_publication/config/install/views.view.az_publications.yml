@@ -13,7 +13,6 @@ dependencies:
     - datetime_range
     - draggableviews
     - node
-    - options
     - taxonomy
     - user
 id: az_publications
@@ -187,7 +186,7 @@ display:
         type: bef
         options:
           submit_button: Search
-          reset_button: false
+          reset_button: true
           reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
@@ -303,7 +302,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -341,7 +339,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -537,27 +534,27 @@ display:
             default_group_multiple: {  }
             group_items: {  }
           granularity: year
-        field_az_publication_type_value:
-          id: field_az_publication_type_value
+        field_az_publication_type_value_selective:
+          id: field_az_publication_type_value_selective
           table: node__field_az_publication_type
-          field: field_az_publication_type_value
+          field: field_az_publication_type_value_selective
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: list_field
+          plugin_id: az_publication_list_field
           operator: or
           value: {  }
           group: 1
           exposed: true
           expose:
-            operator_id: field_az_publication_type_value_op
+            operator_id: field_az_publication_type_value_selective_op
             label: 'Publication Type'
             description: ''
             use_operator: false
-            operator: field_az_publication_type_value_op
+            operator: field_az_publication_type_value_selective_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: field_az_publication_type_value
+            identifier: field_az_publication_type_value_selective
             required: false
             remember: false
             multiple: false
@@ -569,7 +566,7 @@ display:
               az_user_admin: '0'
               az_html_admin: '0'
               administrator: '0'
-            reduce: false
+            reduce: 0
           is_grouped: false
           group_info:
             label: ''
@@ -582,7 +579,7 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          reduce_duplicates: false
+          reduce_duplicates: 0
       filter_groups:
         operator: AND
         groups:
@@ -709,7 +706,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -747,7 +743,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -789,7 +784,6 @@ display:
           title: ''
           default_argument_type: node
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
