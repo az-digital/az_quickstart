@@ -64,7 +64,7 @@
         "drupal/config_update": "2.0.0-alpha3",
         "drupal/core-recommended": "10.2.6",
         "drupal/crop": "2.3.0",
-        "drupal/ctools": "4.1.0",
+        "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.0",
         "drupal/draggableviews": "2.1.4",
         "drupal/easy_breadcrumb": "2.0.6",
