@@ -3,6 +3,9 @@ status: true
 dependencies:
   module:
     - node
+  enforced:
+    module:
+      - az_publication
 id: az_publication_url_pattern
 label: 'Publication Content Type'
 type: 'canonical_entities:node'

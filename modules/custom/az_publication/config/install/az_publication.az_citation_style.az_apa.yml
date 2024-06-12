@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  enforced:
+    module:
+      - az_publication
 id: az_apa
 label: 'American Psychological Association Style (APA)'
 style: apa
