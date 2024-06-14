@@ -7,6 +7,7 @@ dependencies:
     - paragraphs.paragraphs_type.az_cards
     - paragraphs.paragraphs_type.az_photo_gallery
     - paragraphs.paragraphs_type.az_text
+    - paragraphs.paragraphs_type.az_html
   module:
     - entity_reference_revisions
 id: node.az_news.field_az_main_content
@@ -40,4 +41,7 @@ settings:
       az_view_reference:
         weight: 7
         enabled: false
+      az_html:
+        weight: 8
+        enabled: true
 field_type: entity_reference_revisions
