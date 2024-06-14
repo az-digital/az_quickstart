@@ -40,7 +40,7 @@
         "drupal/access_unpublished": "1.5.0",
         "drupal/antibot": "2.0.3",
         "drupal/asset_injector": "2.20.0",
-        "drupal/auto_entitylabel": "3.0.0",
+        "drupal/auto_entitylabel": "3.2.0",
         "drupal/better_exposed_filters": "6.0.5",
         "drupal/blazy": "2.24.0",
         "drupal/block_class": "2.0.11",
@@ -83,7 +83,7 @@
         "drupal/inline_entity_form": "3.0.0-rc19",
         "drupal/intelligencebank": "4.0.0",
         "drupal/jquery_ui": "1.7.0",
-        "drupal/jquery_ui_datepicker": "2.0.0",
+        "drupal/jquery_ui_datepicker": "2.1.0",
         "drupal/link_class": "2.1.0",
         "drupal/linkit": "6.1.4",
         "drupal/masquerade": "2.0.0-rc4",
@@ -142,7 +142,7 @@
                 "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
             },
             "drupal/auto_entitylabel": {
-                "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2022-05-20/2945387-19-support-bundleless-entities.patch"
+                "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
             "drupal/bootstrap_barrio": {
                 "Affix library still broken (3366908)": "https://www.drupal.org/files/issues/2023-06-14/3366908-3_5-x.patch",
