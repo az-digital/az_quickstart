@@ -107,6 +107,7 @@ display:
           items_per_page: 0
           total_pages: null
           id: 0
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:

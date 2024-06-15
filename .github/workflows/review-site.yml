@@ -13,7 +13,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
 
       - name: Install Terminus and authenticate Terminus
         uses: pantheon-systems/terminus-github-actions@release/v1
@@ -35,7 +35,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
 
       - name: Set up SSH
         run: |
@@ -71,7 +71,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
 
       - name: Set up SSH
         run: |

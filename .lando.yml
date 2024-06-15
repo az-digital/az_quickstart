@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal10
 config:
-  php: '8.2'
+  php: '8.3'
   via: apache:2.4
   webroot: web
   database: mariadb:10.4
@@ -30,7 +30,7 @@ services:
       environment:
         SIMPLETEST_DB: 'mysql://drupal10:drupal10@database/drupal10'
         SIMPLETEST_BASE_URL: 'http://appserver'
-        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"],"w3c":false}},"http://chromedriver:4444/wd/hub"]'
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"],"w3c":false}},"http://chromedriver:4444/wd/hub"]'
         XDEBUG_MODE: debug
       volumes:
         # Don't share our host working directory as /app. We want /app empty for composer.
