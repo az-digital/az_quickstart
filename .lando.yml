@@ -4,7 +4,7 @@ config:
   php: '8.3'
   via: apache:2.4
   webroot: web
-  database: mariadb:10.4
+  database: mariadb:10.6
   xdebug: false
 services:
   # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
