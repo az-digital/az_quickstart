@@ -5,3 +5,4 @@ name: 'Course Types'
 vid: az_course_types
 description: 'Taxonomy for course types.'
 weight: 0
+new_revision: false

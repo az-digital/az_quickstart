@@ -5,5 +5,6 @@ dependencies:
     - node
 id: node.az_marketing_cloud_70_30_layout_image_right
 label: 'Marketing Cloud - 70/30 Layout (Image Right)'
+description: ''
 targetEntityType: node
 cache: true
