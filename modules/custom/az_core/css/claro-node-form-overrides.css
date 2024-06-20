@@ -6,7 +6,7 @@
 */
 
 @media screen and (min-width: 61rem) {
-  div.layout-node-form {
+  div.layout-form {
     grid-template-columns: calc(65% - var(--space-l)) minmax(22.5rem, 1fr);
   }
 
