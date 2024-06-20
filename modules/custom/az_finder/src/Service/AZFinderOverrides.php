@@ -6,13 +6,24 @@ namespace Drupal\az_finder\Service;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 
+/**
+ * Class AZFinderOverrides for managing overrides.
+ */
 class AZFinderOverrides {
   protected $configFactory;
 
+  /**
+   * AZFinderOverrides constructor.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   */
   public function __construct(ConfigFactoryInterface $config_factory) {
     $this->configFactory = $config_factory;
   }
 
+  /**
+   * Get existing overrides.
+   */
   public function getExistingOverrides() {
     $config_names = $this->configFactory->listAll('az_finder.tid_widget.');
     $overrides = [];
@@ -26,9 +37,11 @@ class AZFinderOverrides {
         'view_id' => $view_id,
         'display_id' => $display_id,
         'vocabularies' => $config->get('vocabularies') ?? [],
+        'origin' => 'config',
       ];
     }
 
     return $overrides;
   }
+
 }

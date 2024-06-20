@@ -7,15 +7,24 @@ namespace Drupal\az_finder\Service;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
+/**
+ *
+ */
 class AZFinderViewOptions {
   protected $cacheBackend;
   protected $entityTypeManager;
 
+  /**
+   *
+   */
   public function __construct(CacheBackendInterface $cache_backend, EntityTypeManagerInterface $entity_type_manager) {
     $this->cacheBackend = $cache_backend;
     $this->entityTypeManager = $entity_type_manager;
   }
 
+  /**
+   *
+   */
   public function getViewOptions(string $plugin_id = 'az_finder_tid_widget', bool $force_refresh = FALSE): array {
     $cache_id = 'az_finder:view_options:' . $plugin_id;
     if (!$force_refresh) {
@@ -30,6 +39,9 @@ class AZFinderViewOptions {
     return $viewOptions;
   }
 
+  /**
+   *
+   */
   private function getViewsUsingPlugin(string $plugin_id): array {
     $options = ['' => '- Select -'];
     $views = $this->entityTypeManager->getStorage('view')->loadMultiple();
@@ -50,4 +62,5 @@ class AZFinderViewOptions {
 
     return $options;
   }
+
 }

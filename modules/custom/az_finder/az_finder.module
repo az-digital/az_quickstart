@@ -5,8 +5,6 @@
  * Contains az_finder.module.
  */
 
-use Drupal\Core\Routing\RouteCollection;
-
 /**
  * Implements hook_theme().
  */

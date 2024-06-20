@@ -226,10 +226,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         $term_id = str_replace('tid:', '', $child);
         $default_state = $overrides[$term_id] ?? 'default';
 
-        if ($default_state == 'collapse') {
+        if ($default_state === 'collapse') {
           $form[$field_id][$child]['#attributes']['class'][] = 'accordion-close';
         }
-        elseif ($default_state == 'expand') {
+        elseif ($default_state === 'expand') {
           $form[$field_id][$child]['#attributes']['class'][] = 'accordion-open';
         }
       }
@@ -432,7 +432,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       // Apply override settings.
       $is_expanded = $default_state === 'collapse';
 
-
       if (!empty($children)) {
         $list_title_link = [
           '#type' => 'html_tag',
@@ -458,7 +457,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title_link['#attributes']['class'][] = 'accordion-close';
           $list_title_link['#attributes']['class'][] = 'collapsed';
         }
-        elseif ($default_state == 'expand') {
+        elseif ($default_state === 'expand') {
           $list_title_link['#attributes']['class'][] = 'accordion-open';
         }
         if ($depth === 0) {
@@ -493,6 +492,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The option to calculate the depth for.
    *
    * @return int
+   *   The depth of the option.
    */
   protected function calculateDepth($option): int {
     $depth = 0;
