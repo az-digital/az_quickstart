@@ -10,12 +10,19 @@ use Drupal\Core\Config\ConfigFactoryInterface;
  * Class AZFinderOverrides for managing overrides.
  */
 class AZFinderOverrides {
+
+  /**
+   * The config factory.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
   protected $configFactory;
 
   /**
    * AZFinderOverrides constructor.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
    */
   public function __construct(ConfigFactoryInterface $config_factory) {
     $this->configFactory = $config_factory;

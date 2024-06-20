@@ -8,14 +8,26 @@ use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
- *
+ * Provides helper methods for working with view options in AZ Finder.
  */
 class AZFinderViewOptions {
+
+  /**
+   * The cache backend.
+   *
+   * @var \Drupal\Core\Cache\CacheBackendInterface
+   */
   protected $cacheBackend;
+
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
   protected $entityTypeManager;
 
   /**
-   *
+   * Constructs a new AZFinderViewOptions object.
    */
   public function __construct(CacheBackendInterface $cache_backend, EntityTypeManagerInterface $entity_type_manager) {
     $this->cacheBackend = $cache_backend;
@@ -23,7 +35,7 @@ class AZFinderViewOptions {
   }
 
   /**
-   *
+   * Get the view options for a plugin.
    */
   public function getViewOptions(string $plugin_id = 'az_finder_tid_widget', bool $force_refresh = FALSE): array {
     $cache_id = 'az_finder:view_options:' . $plugin_id;
@@ -40,7 +52,7 @@ class AZFinderViewOptions {
   }
 
   /**
-   *
+   * Get the views using a specific plugin id.
    */
   private function getViewsUsingPlugin(string $plugin_id): array {
     $options = ['' => '- Select -'];

@@ -9,15 +9,21 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\StringTranslation\TranslationInterface;
 
 /**
- *
+ * Provides helper methods for working with vocabularies in AZ Finder.
  */
 class AZFinderVocabulary {
+
   use StringTranslationTrait;
 
+  /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
   protected $entityTypeManager;
 
   /**
-   *
+   * Constructs a new AZFinderVocabulary object.
    */
   public function __construct(EntityTypeManagerInterface $entity_type_manager, TranslationInterface $string_translation) {
     $this->entityTypeManager = $entity_type_manager;
@@ -25,7 +31,7 @@ class AZFinderVocabulary {
   }
 
   /**
-   *
+   * Get the vocabulary IDs for a filter.
    */
   public function getVocabularyIdsForFilter($view_id, $display_id, $filter_id) {
     $vocabulary_ids = [];
@@ -46,7 +52,18 @@ class AZFinderVocabulary {
   }
 
   /**
+   * Add a section to the form for configuring vocabulary terms.
    *
+   * @param array $form_section
+   *   The form section to add the terms table to.
+   * @param int $vocabulary_id
+   *   The vocabulary ID.
+   * @param string $view_id
+   *   The view ID.
+   * @param string $display_id
+   *   The display ID.
+   * @param \Drupal\Core\Config\Config $config
+   *   The configuration object.
    */
   public function addTermsTable(&$form_section, $vocabulary_id, $view_id, $display_id, $config) {
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary_id);

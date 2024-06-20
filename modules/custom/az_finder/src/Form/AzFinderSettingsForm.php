@@ -188,11 +188,19 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
   /**
    * Separate submit handler for the override button.
+   *
+   * @param array $form
+   *   The form array.
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
+   *   The form state object.
    */
   public function submitOverride(array &$form, FormStateInterface $form_state) {
     // Retrieve selected view and display.
     $selected_view_display = $form_state->getValue([
-      'az_finder_tid_widget', 'overrides', 'select_view_display_container', 'select_view_display',
+      'az_finder_tid_widget',
+      'overrides',
+      'select_view_display_container',
+      'select_view_display',
     ]);
     [$view_id, $display_id] = explode(':', $selected_view_display);
 
@@ -221,17 +229,22 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
    *   The form state object.
    *
    * @return array
+   *   The updated overrides container.
    */
-  public function ajaxAddOverride(array &$form, FormStateInterface $form_state) {
+  public function ajaxAddOverride(array &$form, FormStateInterface $form_state): array {
     // Get the selected option from the form state.
-    $selected_option = $form_state->getValue(['az_finder_tid_widget', 'overrides', 'select_view_display_container', 'select_view_display']);
+    $selected_option = $form_state->getValue([
+      'az_finder_tid_widget',
+      'overrides',
+      'select_view_display_container',
+      'select_view_display',
+    ]);
 
     // Split the selected option into view_id and display_id.
     [$view_id, $display_id] = explode(':', $selected_option);
     $override = [
       'view_id' => $view_id,
       'display_id' => $display_id,
-    // Mark as session-added.
       'origin' => 'session',
     ];
 
@@ -273,7 +286,10 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     if (!isset($form['az_finder_tid_widget']['overrides'][$key])) {
       $form['az_finder_tid_widget']['overrides'][$key] = [
         '#type' => 'details',
-        '#title' => $this->t("Override Settings for :view_id - :display_id", [":view_id" => $view_id, ":display_id" => $display_id]),
+        '#title' => $this->t("Override Settings for :view_id - :display_id", [
+          ":view_id" => $view_id,
+          ":display_id" => $display_id,
+        ]),
         '#open' => FALSE,
         '#description' => $this->t('Overrides are grouped by vocabulary. Each vocabulary can have its own settings for how term ID widgets behave when they have child terms.'),
         '#tree' => TRUE,
@@ -333,14 +349,11 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
    * Separate submit handler for the delete button.
    *
    * @param array $form
-   *  The form array.
+   *   The form array.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
-   * The form state object.
-   *
-   * @return array
-   * The form array.
+   *   The form state object.
    */
-  public function submitDeleteOverride(array &$form, FormStateInterface $form_state): array{
+  public function submitDeleteOverride(array &$form, FormStateInterface $form_state) {
     $triggering_element = $form_state->getTriggeringElement();
     $button_name = $triggering_element['#name'];
     $key = str_replace('delete-', '', $button_name);

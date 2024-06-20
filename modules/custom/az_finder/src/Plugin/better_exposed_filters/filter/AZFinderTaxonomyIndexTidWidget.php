@@ -90,6 +90,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * @param \Drupal\az_finder\AZFinderIcons $az_finder_icons
    *   The AZFinderIcons service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory service.
    */
   public function __construct(
     array $configuration,
@@ -239,14 +240,14 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   *
+   * Get the field ID.
    */
   protected function getFieldId($filter): string {
     return $filter->options['is_grouped'] ? $filter->options['group_info']['identifier'] : $filter->options['expose']['identifier'];
   }
 
   /**
-   *
+   * Add context to the form element.
    */
   protected function setFormOptions(array &$form, $field_id): array {
     $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
@@ -258,7 +259,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
@@ -317,7 +318,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   *
+   * Get the parent terms.
    */
   protected function getParentTerms() {
     $vocabulary_id = $this->handler->options['vid'];
@@ -333,7 +334,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public static function isApplicable($filter = NULL, array $filter_options = []) {
     return $filter instanceof TaxonomyIndexTid;
@@ -505,7 +506,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   *
+   * Get the accessible action title.
    */
   protected function getAccessibleActionTitle($action, $depth): ?string {
     if (!in_array($action, ['expand', 'collapse']) || !in_array($depth, [0, 1])) {
@@ -517,7 +518,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   *
+   * {@inheritdoc}
    */
   public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
     parent::submitConfigurationForm($form, $form_state);
@@ -532,7 +533,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   *
+   * Get override configurations.
    */
   public function getOverrideConfigurations($view_id, $display_id) {
     $config_key = "$view_id.$display_id";
