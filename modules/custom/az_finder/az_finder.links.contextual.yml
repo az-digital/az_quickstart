@@ -1,5 +1,5 @@
 az_finder.settings:
-  title: 'Finder settings'
+  title: 'Finder settings and overrides'
   route_name: 'az_finder.settings'
   group: 'block'
   weight: 0

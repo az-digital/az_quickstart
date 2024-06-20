@@ -126,14 +126,12 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       '#type' => 'select',
       '#title' => $this->t('Select Default State Setting'),
       '#options' => [
-        'hide' => $this->t('Hide'),
-        'disable' => $this->t('Disable'),
-        'remove' => $this->t('Remove'),
         'expand' => $this->t('Expand'),
         'collapse' => $this->t('Collapse'),
+        'remove' => $this->t('Remove'),
       ],
       '#empty_option' => $this->t('- Select -'),
-      '#description' => $this->t('Choose how term ID widgets should behave by default everywhere.'),
+      '#description' => $this->t('Choose how term ID widgets should behave by default everywhere. These settings are not context aware, so if you choose collapse, your term must be using a collapsible element for this to work.'),
       '#config_target' => 'az_finder.settings:tid_widget.default_state',
     ];
 

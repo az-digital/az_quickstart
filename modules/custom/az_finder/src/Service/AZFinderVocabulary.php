@@ -62,10 +62,8 @@ class AZFinderVocabulary {
    *   The view ID.
    * @param string $display_id
    *   The display ID.
-   * @param \Drupal\Core\Config\Config $config
-   *   The configuration object.
    */
-  public function addTermsTable(&$form_section, $vocabulary_id, $view_id, $display_id, $config) {
+  public function addTermsTable(&$form_section, $vocabulary_id, $view_id, $display_id) {
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary_id);
     $config_id = "az_finder.tid_widget.$view_id.$display_id";
     $vocabulary_config_path = "$config_id:vocabularies.$vocabulary_id";
@@ -84,14 +82,11 @@ class AZFinderVocabulary {
         '#type' => 'select',
         '#options' => [
           '' => $this->t('Default'),
-          'hide' => $this->t('Hide'),
-          'disable' => $this->t('Disable'),
-          'remove' => $this->t('Remove'),
           'expand' => $this->t('Expand'),
           'collapse' => $this->t('Collapse'),
+          'remove' => $this->t('Remove'),
         ],
-        // '#default_value' => $config->get("vocabularies.$vocabulary_id.terms.$term_tid.default_state"),
-        '#config_target' => "$vocabulary_config_path.terms.$term->tid.default_state",
+        '#config_target' => "$vocabulary_config_path.terms.{$term->tid}.default_state",
       ];
     }
   }

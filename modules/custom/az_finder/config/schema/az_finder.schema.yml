@@ -11,11 +11,9 @@ az_finder.settings:
           label: 'Global Default State for Exposed Filters'
           constraints:
             Choice:
-              - 'hide'
-              - 'disable'
-              - 'remove'
               - 'expand'
               - 'collapse'
+              - 'remove'
 az_finder.tid_widget.[view_id].[display_id]:
   type: config_object
   label: 'AZ Finder Override for a specific View Display'
@@ -44,11 +42,9 @@ az_finder.tid_widget.[view_id].[display_id]:
                   constraints:
                     Required: false
                     Choice:
-                      - 'hide'
-                      - 'disable'
-                      - 'remove'
                       - 'expand'
                       - 'collapse'
+                      - 'remove'
 
 views.exposed_form.az_better_exposed_filters:
   type: views.exposed_form.bef

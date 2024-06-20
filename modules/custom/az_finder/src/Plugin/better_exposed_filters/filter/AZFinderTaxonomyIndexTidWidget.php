@@ -145,6 +145,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     if (!$this->view instanceof ViewExecutable) {
       return $form;
     }
+
     $filter = $this->handler;
     $filter_id = $filter->options['expose']['identifier'];
     $field_id = $this->getFieldId($filter);
@@ -220,20 +221,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           'display' => $display_id,
         ],
       ];
-
-      $overrides = $this->getOverrideConfigurations($view_id, $display_id);
-
-      foreach (Element::children($form[$field_id]) as $child) {
-        $term_id = str_replace('tid:', '', $child);
-        $default_state = $overrides[$term_id] ?? 'default';
-
-        if ($default_state === 'collapse') {
-          $form[$field_id][$child]['#attributes']['class'][] = 'accordion-close';
-        }
-        elseif ($default_state === 'expand') {
-          $form[$field_id][$child]['#attributes']['class'][] = 'accordion-open';
-        }
-      }
     }
 
     return $form;
@@ -305,10 +292,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       '#title' => $this->t('Fallback Action'),
       '#description' => $this->t('Action to take when a parent term is not found in the default states.'),
       '#options' => [
-        'hide' => $this->t('Hide'),
         'expand' => $this->t('Expand'),
         'collapse' => $this->t('Collapse'),
-        'disable' => $this->t('Disable'),
         'remove' => $this->t('Remove'),
       ],
       '#default_value' => $fallback_action,
@@ -392,6 +377,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
     // Load override settings.
     $overrides = $this->getOverrideConfigurations($view_id, $display_id);
+    $flattened_override_list = [];
+    // create a flat array of the overrides by term id.
+    foreach ($overrides as $vid => $override) {
+      $flattened_override_list = $override['state_overrides'] ?? [];
+    }
+    $variables['overrides'] = $flattened_override_list;
     $state_overrides = $overrides[$vid]['state_overrides'] ?? [];
 
     // Load global default settings.
@@ -403,7 +394,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         $variables['depth'][$child] = 0;
         continue;
       }
-
       $entity_type = 'taxonomy_term';
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
       $entity_storage = $this->entityTypeManager->getStorage($entity_type);
@@ -422,7 +412,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       ];
       $depth = strlen($original_title) - strlen($cleaned_title);
       $list_title['#value'] = $cleaned_title;
-
       $icons = $this->azFinderIcons->generateSvgIcons();
       $default_state = $state_overrides[$entity_id] ?? $global_default_state;
       $icon_name = $default_state === 'collapse' ? 'expand' : 'collapse';
