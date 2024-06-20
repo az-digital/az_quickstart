@@ -1,4 +1,4 @@
-name: collapse-config
+name: az_quickstart
 recipe: drupal10
 config:
   php: '8.2'
