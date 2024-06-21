@@ -9,7 +9,7 @@
  * - title: The title field of a card.
  * - body: The body field of a card.
  * - link: The link field on a card.
- * - link_uri: The link URL field on a card.
+ * - link_url: The link URL only.
  * - title_style: The title style to use.
  * - title_alignment: The title alignment to use.
  * - title_level: The heading level to use.
@@ -29,7 +29,7 @@
         <div class="card-img-overlay p-0 d-flex flex-column">
           <{{ title_level }} class="bold mt-auto card-title bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
             {% if link|render %}
-              <a href="{{ link_uri }}">{{ title }}</a>
+              <a href="{{ link_url }}">{{ title }}</a>
             {% else %}
               {{ title }}
             {% endif %}
@@ -49,7 +49,7 @@
       {% if title and title_style == 'default' %}
         <{{ title_level }} class="bold mt-0 mb-3 card-title {{ title_alignment }} {{ title_display }}">
           {% if link|render %}
-            <a href="{{ link_uri }}">{{ title }}</a>
+            <a href="{{ link_url }}">{{ title }}</a>
           {% else %}
             {{ title }}
           {% endif %}
