@@ -153,6 +153,9 @@
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch",
                 "Drupal 9.2's change to session handling is not compatible with this module (3190842)": "https://www.drupal.org/files/issues/2023-09-15/3190842-10.patch"
             },
+            "drupal/ckeditor_bs_grid": {
+                "Warning: Undefined array key 'default_layout' (3442400)": "https://www.drupal.org/files/issues/2024-04-22/ckeditor_bs_grid-suppress_warnings.patch"
+            },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
