@@ -378,14 +378,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
     // Load override settings.
     $overrides = $this->getOverrideConfigurations($view_id, $display_id);
-    $flattened_override_list = [];
+    $state_overrides = [];
     // Create a flat array of the overrides by term id.
     foreach ($overrides as $vid => $override) {
-      $flattened_override_list = $override['state_overrides'] ?? [];
+      $state_overrides += $override['state_overrides'] ?? [];
     }
-    $variables['overrides'] = $flattened_override_list;
-    $state_overrides = $overrides[$vid]['state_overrides'] ?? [];
-
+    $variables['overrides'] = $state_overrides;
     // Load global default settings.
     $global_settings = $this->configFactory->get('az_finder.settings');
     $global_default_state = $global_settings->get('tid_widget.default_state') ?? 'default';
