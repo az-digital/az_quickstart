@@ -379,7 +379,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     // Load override settings.
     $overrides = $this->getOverrideConfigurations($view_id, $display_id);
     $flattened_override_list = [];
-    // create a flat array of the overrides by term id.
+    // Create a flat array of the overrides by term id.
     foreach ($overrides as $vid => $override) {
       $flattened_override_list = $override['state_overrides'] ?? [];
     }
