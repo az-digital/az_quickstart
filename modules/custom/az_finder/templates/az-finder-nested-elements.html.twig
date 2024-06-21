@@ -12,9 +12,6 @@
     - collapse_id: The id of the collapse element.
     - is_expanded: The state of the collapse element.
 #}
-{% set override = overrides[item['#return_value']] ?? 'default' %}
-
-{% if override != 'remove' %}
   {% apply spaceless %}
     {% set delta = (current_nesting_level - new_nesting_level) | abs %}
     {% if loop.first %}
@@ -43,4 +40,3 @@
       {% endfor %}
     {% endif %}
   {% endapply %}
-{% endif %}
