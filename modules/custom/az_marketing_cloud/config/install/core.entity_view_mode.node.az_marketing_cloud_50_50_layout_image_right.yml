@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_marketing_cloud_50_50_layout_image_right
+label: 'Marketing Cloud - 50/50 Layout (Image right)'
+targetEntityType: node
+cache: true
