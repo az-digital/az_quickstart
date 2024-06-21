@@ -67,10 +67,15 @@ class AZFinderVocabulary {
     $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadTree($vocabulary_id);
     $config_id = "az_finder.tid_widget.$view_id.$display_id";
     $vocabulary_config_path = "$config_id:vocabularies.$vocabulary_id";
+    $vocabulary_label = $this->entityTypeManager->getStorage('taxonomy_vocabulary')->load($vocabulary_id)->label();
 
     $form_section['terms_table'] = [
       '#type' => 'table',
-      '#header' => [$this->t('Term'), $this->t('Override')],
+      '#header' => [
+        $this->t('Terms in :vocabulary vocabulary', [':vocabulary' => $vocabulary_label]),
+        $this->t('Default state'),
+        $this->t('Override'),
+      ],
       '#empty' => $this->t('No terms found.'),
     ];
 

@@ -298,7 +298,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
       foreach ($vocabulary_ids as $vocabulary_id) {
         $this->azFinderVocabulary->addTermsTable(
-              $form['az_finder_tid_widget']['overrides'][$key],
+              $form['az_finder_tid_widget']['overrides'][$key]['vocabularies'][$vocabulary_id],
               $vocabulary_id,
               $view_id,
               $display_id
