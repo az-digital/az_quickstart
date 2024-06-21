@@ -13,14 +13,6 @@ active-filter-reset:
       - minified: false
   dependencies:
     - core/drupal
-admin:
-  js:
-    js/admin.js: {}
-  dependencies:
-    - core/jquery
-    - core/drupal
-    - core/drupalSettings
-    - core/jquery.once
 taxonomy-index-tid-widget:
   css:
     theme:
