@@ -532,7 +532,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $config = $this->configFactory->getEditable($config_name);
       $overrides = [];
       if ($config) {
-        $vocabularies = $config->get('vocabularies');
+        $vocabularies = $config->get('vocabularies') ?? [];
         foreach ($vocabularies as $vocabulary_id => $vocabulary) {
           $terms = $vocabulary['terms'];
           foreach ($terms as $term_id => $override) {
