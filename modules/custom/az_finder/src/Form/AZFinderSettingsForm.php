@@ -301,8 +301,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
               $form['az_finder_tid_widget']['overrides'][$key],
               $vocabulary_id,
               $view_id,
-              $display_id,
-              $config
+              $display_id
           );
 
       }

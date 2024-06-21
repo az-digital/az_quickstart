@@ -145,7 +145,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     if (!$this->view instanceof ViewExecutable) {
       return $form;
     }
-
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
     $filter_id = $filter->options['expose']['identifier'];
     $field_id = $this->getFieldId($filter);
@@ -306,8 +306,9 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * Get the parent terms.
    */
   protected function getParentTerms() {
-    $vocabulary_id = $this->handler->options['vid'];
-
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $handler */
+    $handler = $this->handler;
+    $vocabulary_id = $handler->options['vid'];
     $query = \Drupal::entityQuery('taxonomy_term');
     $query->condition('vid', $vocabulary_id);
     $query->condition('parent', 0);
