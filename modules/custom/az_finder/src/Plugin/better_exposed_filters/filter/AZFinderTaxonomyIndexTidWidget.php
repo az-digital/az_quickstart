@@ -400,10 +400,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       if (empty($children) && $entity_type !== 'taxonomy_term') {
         continue;
       }
-    if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'remove') {
-      unset($variables['element'][$child]);
-      continue;
-    }
+      if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'remove') {
+        unset($variables['element'][$child]);
+        continue;
+      }
 
       $original_title = $element[$child]['#title'];
       if (empty($original_title)) {
