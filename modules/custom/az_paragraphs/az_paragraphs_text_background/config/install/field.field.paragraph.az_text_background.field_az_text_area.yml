@@ -12,7 +12,7 @@ entity_type: paragraph
 bundle: az_text_background
 label: Text
 description: 'White text will be highlighted in gray (only while editing) to keep the text visible.'
-required: true
+required: false
 translatable: true
 default_value: {  }
 default_value_callback: ''

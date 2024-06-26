@@ -217,8 +217,9 @@ function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * Sets the Thumbnail Image field to match the first item of the "Featured Images"
- * field if the Use Featured Image as Thumbnail checkbox is checked.
+ * Sets the Thumbnail Image field to match the first item of the
+ * "Featured Images" field if the Use Featured Image as Thumbnail
+ * checkbox is checked.
  */
 function az_event_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_event'
