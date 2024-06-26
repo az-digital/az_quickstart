@@ -364,10 +364,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
     // Get the handler options for taxonomy reference fields.
     $vid = NULL;
-    foreach ($display_options['filters'] as $filter) {
-      if ($filter['plugin_id'] === 'taxonomy_index_tid') {
-        $vid = $filter['vid'];
-        break;
+    if (isset($display_options['filters'])) {
+      foreach ($display_options['filters'] as $filter) {
+        if ($filter['plugin_id'] === 'taxonomy_index_tid') {
+          $vid = $filter['vid'];
+          break;
+        }
       }
     }
 
