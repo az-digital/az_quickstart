@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override to display a node with a 50/50 Layout for AZ Marketing Cloud.
+ * Theme override to display a node with a 70/30 Layout (Image right) for AZ Marketing Cloud.
  *
  * Available variables:
  * - node: The node entity with limited access to object properties and methods.
@@ -70,26 +70,26 @@
 #}
 
 <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
-  style="text-align: left; min-width: 100%; border-top: 1px solid #D4D4D4;"
+  style="text-align: left; min-width: 100%;"
   class="stylingblock-content-wrapper">
   <tbody>
     <tr>
-      <td style="padding: 15px 20px;" class="stylingblock-content-wrapper" align="left">
-        <table cellspacing="0" cellpadding="0" role="presentation" class="qs-layout-5050" style="width: 100%;">
+      <td style="padding: 15px;" class="stylingblock-content-wrapper" align="left">
+        <table cellspacing="0" cellpadding="0" role="presentation" class="qs-layout-7030" style="width: 100%;" dir="rtl">
           <tbody>
             <tr>
-              <td valign="top" class="responsive-td" style="width: 50%; padding-right: 7.5px;">
+              <td valign="top" class="responsive-td" style="width: 30%; padding-left: 7.5px;" dir="ltr">
                 <table width="100%" cellspacing="0" cellpadding="0" role="presentation">
                   <tbody>
                     <tr>
                       <td align="center">
-                        <img class="qs-img" src="{{ images.az_marketing_cloud_50_50_layout }}" alt="" width="270" style="display: block; height: auto; width: 100%;">
+                        <img class="qs-img" src="{{ images.az_marketing_cloud_30_70_layout }}" alt="" width="200" style="display: block; height: auto; width: 100%;">
                       </td>
                     </tr>
                   </tbody>
                 </table>
               </td>
-              <td valign="top" class="responsive-td" style="width: 50%; padding-left: 7.5px;">
+              <td valign="top" class="responsive-td" style="width: 70%; padding-right: 7.5px;" dir="ltr">
                 <table cellpadding="0" cellspacing="0" width="100%" role="presentation"
                   style="text-align: left; min-width: 100%; " class="stylingblock-content-wrapper">
                   <tbody>
