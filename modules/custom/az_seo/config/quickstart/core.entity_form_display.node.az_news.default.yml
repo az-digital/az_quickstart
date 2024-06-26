@@ -49,11 +49,12 @@ third_party_settings:
       format_type: details_sidebar
       format_settings:
         classes: 'group-summary field-group-tab'
+        show_empty_fields: false
         id: ''
-        open: false
+        open: true
+        description: 'Summary fields determine how this news article appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
-        direction: vertical
+        weight: -10
     group_az_extra_fields:
       children:
         - field_az_attachments
@@ -121,13 +122,13 @@ content:
     region: content
     settings:
       allowed_attributes:
-        Arizona_County__c: Arizona_County__c
         Audiences__c: Audiences__c
         Topic__c: Topic__c
-        Tribal_Nation__c: Tribal_Nation__c
-        Display_Name_Formula__c: Display_Name_Formula__c
+        Arizona_County__c: 0
         Category1__c: 0
         Event_Format__c: 0
+        Tribal_Nation__c: 0
+        Display_Name_Formula__c: 0
     third_party_settings: {  }
   field_az_expiration_date:
     type: datetime_datelist

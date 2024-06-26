@@ -2,13 +2,16 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
-use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\WidgetBase;
-use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\Validator\ConstraintViolationInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Field\WidgetBase;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\Url;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'az_card' field widget.
@@ -91,8 +94,9 @@ class AZCardWidget extends WidgetBase {
     static::setWidgetState($field_parents, $field_name, $form_state, $field_state);
 
     $container = parent::form($items, $form, $form_state, $get_delta);
-    $container['widget']['#prefix'] = '<div id="' . $wrapper_id . '">';
-    $container['widget']['#suffix'] = '</div>';
+    // We need to be sure not to clobber the parent class ajax wrapper.
+    $container['widget']['#prefix'] = ($container['widget']['#prefix'] ?? '') . '<div id="' . $wrapper_id . '">';
+    $container['widget']['#suffix'] = '</div>' . ($container['widget']['#suffix'] ?? '');
 
     if (isset($container['widget']['add_more']['#ajax']['wrapper'])) {
       $container['widget']['add_more']['#ajax']['wrapper'] = $wrapper_id;
@@ -167,11 +171,17 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
+        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
         $element['preview_container']['card_preview']['#link'] = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : '#',
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
       }
@@ -231,6 +241,17 @@ class AZCardWidget extends WidgetBase {
       '#maxlength' => 255,
     ];
 
+    $element['title_alignment'] = [
+      '#type' => 'select',
+      '#options' => [
+        'text-left' => $this->t('Title left'),
+        'text-center' => $this->t('Title center'),
+        'text-right' => $this->t('Title right'),
+      ],
+      '#title' => $this->t('Card Title Alignment'),
+      '#default_value' => (!empty($item->options['title_alignment'])) ? $item->options['title_alignment'] : 'text-left',
+    ];
+
     $element['body'] = [
       '#type' => 'text_format',
       '#title' => $this->t('Card Body'),
@@ -242,6 +263,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
       '#default_value' => $item->link_title ?? NULL,
+      '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".'),
     ];
 
     $element['link_uri'] = [
@@ -271,13 +293,12 @@ class AZCardWidget extends WidgetBase {
     ];
 
     if (!$item->isEmpty()) {
-      $button_name = implode('-', array_merge($field_parents,
+      $button_name = implode('-', array_merge(
+        $field_parents,
         [$field_name, $delta, 'toggle']
       ));
-      $remove_name = implode('-', array_merge($field_parents,
-        [$field_name, $delta, 'remove']
-      ));
-      $element['toggle'] = [
+      // Extra card_actions wrapper needed for core delete ajax submit nesting.
+      $element['card_actions']['toggle'] = [
         '#type' => 'submit',
         '#limit_validation_errors' => [],
         '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
@@ -289,23 +310,6 @@ class AZCardWidget extends WidgetBase {
           'wrapper' => $wrapper,
         ],
       ];
-
-      if (!empty($widget_state['items_count']) && ($widget_state['items_count'] > 1)) {
-        $element['remove'] = [
-          '#name' => $remove_name,
-          '#delta' => $delta,
-          '#type' => 'submit',
-          '#value' => $this->t('Delete Card'),
-          '#validate' => [],
-          '#submit' => [[$this, 'cardRemove']],
-          '#limit_validation_errors' => [],
-          '#attributes' => ['class' => ['button--extrasmall', 'ml-3']],
-          '#ajax' => [
-            'callback' => [$this, 'cardAjax'],
-            'wrapper' => $wrapper,
-          ],
-        ];
-      }
     }
 
     $element['#theme_wrappers'] = ['container', 'form_element'];
@@ -314,6 +318,47 @@ class AZCardWidget extends WidgetBase {
     $element['#attached']['library'][] = 'az_card/az_card';
 
     return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function formMultipleElements(FieldItemListInterface $items, array &$form, FormStateInterface $form_state) {
+    $elements = parent::formMultipleElements($items, $form, $form_state);
+    $field_name = $this->fieldDefinition->getName();
+    $cardinality = $this->fieldDefinition->getFieldStorageDefinition()->getCardinality();
+    $is_multiple = $this->fieldDefinition->getFieldStorageDefinition()->isMultiple();
+    $is_unlimited_not_programmed = FALSE;
+    $parents = $form['#parents'];
+
+    $max = 0;
+    // Determine the number of widgets.
+    switch ($cardinality) {
+      case FieldStorageDefinitionInterface::CARDINALITY_UNLIMITED:
+        $field_state = static::getWidgetState($parents, $field_name, $form_state);
+        $max = $field_state['items_count'];
+        $is_unlimited_not_programmed = !$form_state->isProgrammed();
+        break;
+
+      default:
+        $max = $cardinality - 1;
+        break;
+    }
+
+    // Check to see if we have delete buttons.
+    for ($delta = 0; $delta <= $max; $delta++) {
+      // Let's relocate the core remove button if we can.
+      if (!empty($elements[$delta]['_actions']['delete'])) {
+        $remove = $elements[$delta]['_actions']['delete'];
+        unset($elements[$delta]['_actions']['delete']);
+        // Relocate the delete button alongside our field collapse button.
+        $elements[$delta]['card_actions']['delete'] = $remove;
+        // Attempt to style it like collapse button.
+        $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'button--extrasmall';
+        $elements[$delta]['card_actions']['delete']['#attributes']['class'][] = 'ml-3';
+      }
+    }
+    return $elements;
   }
 
   /**
@@ -328,8 +373,7 @@ class AZCardWidget extends WidgetBase {
 
     // Get triggering element.
     $triggering_element = $form_state->getTriggeringElement();
-    $array_parents = $triggering_element['#array_parents'];
-    array_pop($array_parents);
+    $array_parents = $array_parents = array_slice($triggering_element['#array_parents'], 0, -2);
 
     // Determine delta.
     $delta = array_pop($array_parents);
@@ -355,133 +399,6 @@ class AZCardWidget extends WidgetBase {
   }
 
   /**
-   * Submit handler for remove button. See multiple_fields_remove_button module.
-   *
-   * @param array $form
-   *   The build form.
-   * @param \Drupal\Core\Form\FormStateInterface $form_state
-   *   The form state.
-   */
-  public function cardRemove(array $form, FormStateInterface $form_state) {
-    $formValues = $form_state->getValues();
-    $formInputs = $form_state->getUserInput();
-    $button = $form_state->getTriggeringElement();
-    $delta = $button['#delta'];
-    // Where in the form we'll find the parent element.
-    $address = array_slice($button['#array_parents'], 0, -2);
-
-    // Go one level up in the form, to the widgets container.
-    $parent_element = NestedArray::getValue($form, $address);
-    $field_name = $parent_element['#field_name'];
-    $parents = $parent_element['#field_parents'];
-    $field_state = WidgetBase::getWidgetState($parents, $field_name, $form_state);
-
-    // Go ahead and renumber everything from our delta to the last
-    // item down one. This will overwrite the item being removed.
-    for ($i = $delta; $i <= $field_state['items_count']; $i++) {
-      $old_element_address = array_merge($address, [$i + 1]);
-      $new_element_address = array_merge($address, [$i]);
-
-      $moving_element = NestedArray::getValue($form, $old_element_address);
-      $keys = array_keys($old_element_address, 'widget', TRUE);
-      foreach ($keys as $key) {
-        unset($old_element_address[$key]);
-      }
-      $moving_element_value = NestedArray::getValue($formValues, $old_element_address);
-      $moving_element_input = NestedArray::getValue($formInputs, $old_element_address);
-
-      $keys = array_keys($new_element_address, 'widget', TRUE);
-      foreach ($keys as $key) {
-        unset($new_element_address[$key]);
-      }
-      // Tell the element where it's being moved to.
-      $moving_element['#parents'] = $new_element_address;
-
-      // Delete default value for the last deleted element.
-      if ($field_state['items_count'] === 0) {
-        $struct_key = NestedArray::getValue($formInputs, $new_element_address);
-        if (is_null($moving_element_value)) {
-          foreach ($struct_key as &$key) {
-            $key = '';
-          }
-          $moving_element_value = $struct_key;
-        }
-        if (is_null($moving_element_input)) {
-          $moving_element_input = $moving_element_value;
-        }
-      }
-
-      // Move the element around.
-      NestedArray::setValue($formValues, $moving_element['#parents'], $moving_element_value, TRUE);
-      NestedArray::setValue($formInputs, $moving_element['#parents'], $moving_element_input);
-
-      // Save new element values.
-      foreach ($formValues as $key => $value) {
-        $form_state->setValue($key, $value);
-      }
-      $form_state->setUserInput($formInputs);
-
-      // Move the entity in our saved state.
-      if (isset($field_state['original_deltas'][$i + 1])) {
-        $field_state['original_deltas'][$i] = $field_state['original_deltas'][$i + 1];
-      }
-      else {
-        unset($field_state['original_deltas'][$i]);
-      }
-    }
-
-    // Replace the deleted entity with an empty one. This helps to ensure that
-    // trying to add a new entity won't resurrect a deleted entity
-    // from the trash bin.
-    // $count = count($field_state['entity']);
-    // Then remove the last item. But we must not go negative.
-    if ($field_state['items_count'] > 0) {
-      $field_state['items_count']--;
-    }
-
-    // Fix the weights. Field UI lets the weights be in a range of
-    // (-1 * item_count) to (item_count). This means that when we remove one,
-    // the range shrinks; weights outside of that range then get set to
-    // the first item in the select by the browser, floating them to the top.
-    // We use a brute force method because we lost weights on both ends
-    // and if the user has moved things around, we have to cascade because
-    // if I have items weight weights 3 and 4, and I change 4 to 3 but leave
-    // the 3, the order of the two 3s now is undefined and may not match what
-    // the user had selected.
-    $address = array_slice($button['#array_parents'], 0, -2);
-    $keys = array_keys($address, 'widget', TRUE);
-    foreach ($keys as $key) {
-      unset($address[$key]);
-    }
-    $input = NestedArray::getValue($formInputs, $address);
-
-    if ($input && is_array($input)) {
-      // Sort by weight.
-      // phpcs:ignore
-      uasort($input, '_field_multiple_value_form_sort_helper');
-
-      // Reweight everything in the correct order.
-      $weight = -1 * $field_state['items_count'];
-      foreach ($input as $key => $item) {
-        if ($item) {
-          $input[$key]['_weight'] = $weight++;
-        }
-      }
-      NestedArray::setValue($formInputs, $address, $input);
-      $form_state->setUserInput($formInputs);
-    }
-
-    $element_id = $form[$field_name]['#id'] ?? '';
-    if (!$element_id) {
-      $element_id = $parent_element['#id'];
-    }
-    $field_state['wrapper_id'] = $element_id;
-    WidgetBase::setWidgetState($parents, $field_name, $form_state, $field_state);
-
-    $form_state->setRebuild();
-  }
-
-  /**
    * Ajax callback returning list widget container for ajax submit.
    *
    * @param array $form
@@ -498,7 +415,7 @@ class AZCardWidget extends WidgetBase {
     $element = [];
     $triggering_element = $form_state->getTriggeringElement();
     $oops = $triggering_element['#array_parents'];
-    $array_parents = array_slice($triggering_element['#array_parents'], 0, -2);
+    $array_parents = array_slice($triggering_element['#array_parents'], 0, -3);
     $element = NestedArray::getValue($form, $array_parents);
 
     return $element;
@@ -515,6 +432,13 @@ class AZCardWidget extends WidgetBase {
       // Check to make sure the path can be found.
       if ($url = $this->pathValidator->getUrlIfValid($element['#value'])) {
         // Url is valid, no conversion required.
+        return;
+      }
+      if (
+        str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
+        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))
+      ) {
+        // Link to a public file which is confirmed to exist.
         return;
       }
       $form_state
@@ -555,6 +479,7 @@ class AZCardWidget extends WidgetBase {
         $values[$delta]['options'] = [
           'class' => $value['options'],
           'link_style' => $value['link_style'],
+          'title_alignment' => $value['title_alignment'],
         ];
       }
       $values[$delta]['body'] = $value['body']['value'];

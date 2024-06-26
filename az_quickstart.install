@@ -6,8 +6,11 @@
  */
 
 use Drupal\Core\Extension\MissingDependencyException;
-use Drupal\user\Entity\User;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+use Drupal\Core\Url;
 use Drupal\shortcut\Entity\Shortcut;
+use Drupal\user\Entity\User;
 
 /**
  * Implements hook_install().
@@ -39,21 +42,71 @@ function az_quickstart_install() {
   ]);
   $shortcut->save();
 
-  // Install Pantheon module dependencies when running on Pantheon.
+  // Install additional modules if site is running on Pantheon (or not).
   if (defined('PANTHEON_ENVIRONMENT')) {
-    $pantheon_modules = [
+    // Modules to install only on Pantheon.
+    $extra_modules = [
       'pantheon_advanced_page_cache',
       'environment_indicator',
     ];
-    foreach ($pantheon_modules as $module) {
-      try {
-        \Drupal::service('module_installer')->install([$module]);
-      }
-      catch (MissingDependencyException $e) {
-        \Drupal::logger('az_quickstart')->warning('@module module not available to install.', ['@module' => $module]);
-      }
+  }
+  else {
+    // Modules to install if not on Pantheon.
+    $extra_modules = [
+      'big_pipe',
+    ];
+  }
+  foreach ($extra_modules as $module) {
+    try {
+      \Drupal::service('module_installer')->install([$module]);
+    }
+    catch (MissingDependencyException $e) {
+      \Drupal::logger('az_quickstart')->warning('@module module not available to install.', ['@module' => $module]);
     }
   }
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function az_quickstart_requirements($phase) {
+  $requirements = [];
+  if ($phase === 'runtime') {
+    // Reset the extension lists.
+    /** @var \Drupal\Core\Extension\ModuleExtensionList $module_extension_list */
+    $module_extension_list = \Drupal::service('extension.list.module');
+    $module_extension_list->reset();
+
+    // Gather all deprecated modules that are enabled.
+    $azqs_deprecated_modules = [
+      'block_content_permissions',
+      'ctools',
+    ];
+    $enabled_deprecated_modules = [];
+    $enabled_modules = \Drupal::moduleHandler()->getModuleList();
+    foreach ($enabled_modules as $module => $data) {
+      if (in_array($module, $azqs_deprecated_modules)) {
+        $enabled_deprecated_modules[$module] = $module_extension_list->getExtensionInfo($module)['name'];
+      }
+    }
+
+    // Warn if any deprecated modules are installed.
+    if (!empty($enabled_deprecated_modules)) {
+      foreach ($enabled_deprecated_modules as $deprecated_module => $name) {
+        $deprecated_modules_link_list[] = (string) Link::fromTextAndUrl($name, Url::fromUri('https://www.drupal.org/project/' . $deprecated_module))->toString();
+      }
+      $requirements['azqs_deprecated_modules'] = [
+        'title' => t('Quickstart deprecated modules enabled'),
+        'description' => t('These modules are no longer used by Arizona Quickstart and will be removed in a future release.  These modules should be uninstalled or should be added to a site-specific composer.json file if they are still needed, or your site will not be able to be updated via Composer.  Some action is required prior to updating to the next minor version.'),
+        'value' => t('Enabled Quickstart deprecated modules found: %module_list.', [
+          '%module_list' => Markup::create(implode(', ', $deprecated_modules_link_list)),
+        ]),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    }
+  }
+
+  return $requirements;
 }
 
 /**
@@ -117,4 +170,55 @@ function az_quickstart_update_920701() {
  */
 function az_quickstart_update_920702() {
   \Drupal::service('module_installer')->install(['az_paragraphs_splitscreen']);
+}
+
+/**
+ * Ensure ckeditor5 module is installed.
+ */
+function az_quickstart_update_1020801() {
+  \Drupal::service('module_installer')->install(['ckeditor5']);
+}
+
+/**
+ * Enable extlink module by default.
+ */
+function az_quickstart_update_1020802() {
+  \Drupal::service('module_installer')->install(['extlink']);
+}
+
+/**
+ * Uninstall unsupported media_library_theme_reset module.
+ */
+function az_quickstart_update_1020803() {
+  \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
+}
+
+/**
+ * Update langcode for migrated menu links to be the site's default language.
+ */
+function az_quickstart_update_1020901(&$sandbox) {
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = \Drupal::entityQuery('menu_link_content')
+      ->accessCheck(FALSE)
+      ->condition('langcode', 'und')
+      ->count()
+      ->execute();
+  }
+  $batch_size = 25;
+  $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+
+  $ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('langcode', 'und')
+    ->range(0, $batch_size)
+    ->execute();
+  $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
+  foreach ($menu_links as $menu_link) {
+    $menu_link->langcode = $default_langcode;
+    $menu_link->save();
+    $sandbox['progress']++;
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
+  return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
 }

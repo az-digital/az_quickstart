@@ -4,11 +4,11 @@ namespace Drupal\az_publication_bibtex\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\file\Entity\File;
+use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
-use Drupal\migrate\MigrateMessage;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * BibTeX import form.
@@ -54,7 +54,7 @@ class AZPublicationBibtexForm extends FormBase {
       '#title' => $this->t('Upload a BibTeX document'),
       '#upload_location' => 'temporary://bibtex/',
       '#upload_validators' => [
-        'file_validate_extensions' => ['bib'],
+        'FileExtension' => ['extensions' => 'bib'],
       ],
       '#required' => TRUE,
     ];
@@ -64,14 +64,6 @@ class AZPublicationBibtexForm extends FormBase {
     ];
 
     return $form;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function validateForm(array &$form, FormStateInterface $form_state) {
-
-    parent::validateForm($form, $form_state);
   }
 
   /**

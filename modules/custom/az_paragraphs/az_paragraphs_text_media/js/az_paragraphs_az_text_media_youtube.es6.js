@@ -129,7 +129,7 @@
         };
 
         window.onPlayerReady = (event) => {
-          const id = event.target.playerInfo.videoData.video_id;
+          const id = event.target.getVideoData().video_id;
           if (bgVideos[id].mute) {
             event.target.mute();
           }
@@ -141,7 +141,7 @@
         };
 
         window.onPlayerStateChange = (event) => {
-          const id = event.target.playerInfo.videoData.video_id;
+          const id = event.target.getVideoData().video_id;
           const stateChangeContainer = document.getElementById(
             `${id}-bg-video-container`,
           );

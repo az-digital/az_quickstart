@@ -74,6 +74,8 @@ process:
         - az_demo_text_media_paragraph
         - az_demo_splitscreen_paragraph
         - az_demo_card_paragraph
+        - az_demo_view_paragraph
+        - az_demo_paragraph_gallery
       source: '@pseudo_exploded_paragraphs'
 
   field_az_main_content:
@@ -119,7 +121,9 @@ migration_dependencies:
     - az_demo_text_media_paragraph
     - az_demo_splitscreen_paragraph
     - az_demo_card_paragraph
+    - az_demo_view_paragraph
     - az_demo_page_categories
+    - az_demo_paragraph_gallery
 
 dependencies:
   enforced:

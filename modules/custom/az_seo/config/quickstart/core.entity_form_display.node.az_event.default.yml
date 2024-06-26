@@ -44,11 +44,12 @@ third_party_settings:
       format_type: details_sidebar
       format_settings:
         classes: ''
+        show_empty_fields: false
         id: ''
         open: true
-        description: 'For use in feeds and content listings.'
+        description: 'Summary fields determine how this event appears in feeds, listings and other displays throughout the site.'
         required_fields: true
-        weight: 0
+        weight: -10
 id: node.az_event.default
 targetEntityType: node
 bundle: az_event
@@ -108,6 +109,8 @@ content:
         custom
       show_extra: false
       hide_date: false
+      allday: true
+      remove_seconds: false
     third_party_settings:
       smart_date_recur:
         modal: true

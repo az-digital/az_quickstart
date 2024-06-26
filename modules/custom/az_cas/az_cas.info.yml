@@ -6,3 +6,4 @@ package: 'The University of Arizona'
 dependencies:
   - cas:cas
   - az_core
+configure: az_cas.settings

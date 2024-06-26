@@ -66,21 +66,6 @@
             "bottom_spacing" : "mb-0"
         },
         {
-            "id":28,
-            "az_text_area" : "<h2>Clickable Borderless Cards</h2>\r\n",
-            "bottom_spacing" : "mb-0"
-        },
-        {
-          "id":29,
-          "az_text_area" : "<h2>Clickable Title-on-Image Cards</h2>\r\n",
-          "bottom_spacing" : "mb-0"
-        },
-        {
-          "id":30,
-          "az_text_area" : "<h2>Borderless Title-on-Image Cards</h2>\r\n",
-          "bottom_spacing" : "mb-0"
-        },
-        {
             "id":84,
             "az_text_area":"<div class=\"bs_grid\"><div class=\"no-gutters row \" data-row-lg=\"equal_equal\" data-row-md=\"none\" data-row-none=\"12_12\" data-row-sm=\"none\" data-row-xl=\"\" data-row-xxl=\"\"><div class=\"col-12 col-lg\"><h3>Settings:<\/h3><ul>\t<li><strong>Label:&nbsp;<\/strong>Main navigation<\/li>\t<li><strong>Label display<\/strong>: True<\/li>\t<li><strong>Follow<\/strong>: False<\/li>\t<li><strong>Follow parent<\/strong>: child<\/li>\t<li><strong>Level<\/strong>: 2<\/li>\t<li><strong>Depth<\/strong>: Unlimited<\/li>\t<li><strong>Expand all items<\/strong><span>: True<\/span><\/li>\t<li><strong>Parent<\/strong>: main:<\/li>\t<li><strong>Theme hook suggestion<\/strong>: sidebar<\/li><\/ul><\/div><div class=\"col-12 col-lg\"><drupal-entity data-embed-button=\"az_embed_content_block\" data-entity-embed-display=\"view_mode:block_content.full\" data-entity-type=\"block_content\" data-entity-uuid=\"3a7fffab-e13b-429e-9405-f2bb89c83d63\"><\/drupal-entity><\/div><\/div><\/div><hr \/>",
             "bottom_spacing" : "mb-0"

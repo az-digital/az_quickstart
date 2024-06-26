@@ -6,7 +6,7 @@
  * of these @include files will be combined into a single file.
  */
 
-/* For structuring header utilities*/
+/* For structuring header utilities */
 header#header_arizona {
   min-height: 10px;
 }
@@ -30,9 +30,15 @@ html.sticky-footer #main-wrapper {
   flex: 1 0 auto;
   width: 100%;
 }
+
 /* Footer Social Media Icons */
 .az-icon-spacing::before {
   margin-right:  .4rem;
+}
+
+/* Footer Nav */
+#footer_sub .nav-utility {
+  line-height: 1.25;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
@@ -204,6 +210,27 @@ span.field-label {
 /* The current page's list item. */
 .pager-current {
   font-weight: bold;
+}
+
+/* On mobile, limit pager number items and hide previous/next buttons. */
+@media screen and (max-width: 576px) {
+  .hide-pager-item-mobile {
+    display: none;
+  }
+}
+
+/* Match ellipsis item styling to Bootstrap .page-link styles. */
+.pager__item--ellipsis {
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+/* Add this class to a view display to add a top margin to the pager. */
+.add-pager-top-margin > nav:has(.pagination) {
+  margin-top: 1rem;
 }
 
 /**
@@ -645,6 +672,15 @@ fieldset.collapsed {
   max-width: 100%;
 }
 
+/* Webform field labels */
+form.webform-submission-form {
+  label:not(.form-check-label) {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+
 .align-left {
   float: none;
 }
@@ -695,11 +731,13 @@ fieldset.collapsed {
 /* end Bootstrap Barrio image field styles */
 
 @media (min-width: 768px) {
-  #content .form-item .form-select,
-  #content .form-item .form-email,
-  #content .form-item .form-file,
-  #content .form-item .form-number,
-  #content .form-item .form-text {
+  #content .form-select,
+  #content .form-email,
+  #content .form-file,
+  #content .form-number,
+  #content .form-tel,
+  #content input[type="text"].form-control,
+  #content .webform-signature-pad .button {
     width: initial;
     max-width: 100%;
   }

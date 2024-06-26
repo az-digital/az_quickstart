@@ -5,10 +5,10 @@
  * Contains az_demo.install.
  */
 
-use Drupal\migrate\MigrateExecutable;
-use Drupal\migrate\MigrateMessage;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Url;
+use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate\MigrateMessage;
 
 /**
  * Implements hook_install().
@@ -56,4 +56,11 @@ function az_demo_uninstall() {
     $executable = new MigrateExecutable($migration, new MigrateMessage());
     $executable->rollback();
   }
+}
+
+/**
+ * Enable the az_finder module during update.
+ */
+function az_demo_update_1021001() {
+  \Drupal::service('module_installer')->install(['az_finder']);
 }

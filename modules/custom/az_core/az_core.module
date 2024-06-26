@@ -5,17 +5,17 @@
  * Contains az_core.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\BubbleableMetadata;
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Url;
-use Drupal\pathauto\PathautoPatternInterface;
 use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
-use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Url;
+use Drupal\pathauto\PathautoPatternInterface;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Implements hook_help().
@@ -26,7 +26,7 @@ function az_core_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.az_core':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Settings and configuration common to other Quickstart componenets..') . '</p>';
+      $output .= '<p>' . t('Settings and configuration common to other Quickstart components.') . '</p>';
       return $output;
 
     default:
@@ -115,7 +115,7 @@ function az_core_toolbar() {
     $items['az_quickstart']['tray']['az_links']['#links'] = $admin_items + $items['az_quickstart']['tray']['az_links']['#links'];
 
     if (!empty($version)) {
-      $items['az_quickstart']['tray']['az_links']['#links']['releases']['url'] = Url::fromUri("https://github.com/az-digital/az_quickstart/releases/${version}");
+      $items['az_quickstart']['tray']['az_links']['#links']['releases']['url'] = Url::fromUri("https://github.com/az-digital/az_quickstart/releases/{$version}");
     }
 
   }
@@ -193,6 +193,10 @@ function az_core_token_info() {
           'name' => t("AZ Canonical URL"),
           'description' => t("Returns the URI value of field_az_link if present on the node or the default node URI if not."),
         ],
+        'az-canonical-absolute-url' => [
+          'name' => t("AZ Canonical Absolute URL"),
+          'description' => t("Returns an absolute URL for field_az_link if present on the node or the default node URL if not."),
+        ],
         'az-canonical-summary-link-title' => [
           'name' => t("AZ Canonical Summary Link Title"),
           'description' => t("Returns the link title value of field_az_link if present on the node or nothing if not."),
@@ -213,6 +217,10 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
       switch ($name) {
         case 'az-canonical-url':
           $replacements[$original] = az_core_canonical_url($data);
+          break;
+
+        case 'az-canonical-absolute-url':
+          $replacements[$original] = az_core_canonical_url($data, TRUE);
           break;
 
         case 'az-canonical-summary-link-title':
@@ -250,23 +258,25 @@ function az_core_canonical_summary_link_title(array $data) {
 }
 
 /**
- * Token replacement callback providing the canonical URI for a node.
+ * Token replacement callback providing the canonical URI or URL for a node.
  *
  * Returns the URI value of field_az_link if present on the node or the default
- * node URI if not.
+ * node URI if not. Optionally return an absolute URL instead.
  *
  * @param array $data
  *   Node data from hook_tokens().
+ * @param bool $absolute
+ *   Flag to determine whether to return an absolute URL.
  *
  * @return string
- *   The node's canononical URI.
+ *   The node's canonical URI or URL.
  */
-function az_core_canonical_url(array $data) {
+function az_core_canonical_url(array $data, bool $absolute = FALSE) {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'];
   /** @var \Drupal\Core\Url $url */
   $url = $node->toUrl();
-  $uri = $url->toUriString();
+  $uri = $absolute ? $url->setOption('absolute', TRUE)->toString() : $url->toUriString();
 
   if (!empty($node->field_az_link[0]->uri)) {
     $uri = $node->field_az_link[0]->uri;
@@ -315,10 +325,11 @@ function az_core_form_block_form_alter(&$form, &$form_state, $form_id) {
 /**
  * Implements hook_form_BASE_FORM_ID_alter() for \Drupal\node\NodeForm.
  *
- * Adds style overrides for claro/node-form.
+ * Adds style overrides for claro/node-form and arizona-bootstrap.
  */
 function az_core_form_node_form_alter(&$form, FormStateInterface $form_state) {
   $form['#attached']['library'][] = 'az_core/claro-node-form-overrides';
+  $form['#attached']['library'][] = 'az_core/arizona-bootstrap-node-form-overrides';
 }
 
 /**

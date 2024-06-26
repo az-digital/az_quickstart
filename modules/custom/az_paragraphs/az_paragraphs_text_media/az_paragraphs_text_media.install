@@ -5,8 +5,6 @@
  * Install, update and uninstall functions for az_paragraphs_text_media module.
  */
 
-use Drupal\paragraphs\Entity\Paragraph;
-
 /**
  * Implements hook_update_last_removed().
  */

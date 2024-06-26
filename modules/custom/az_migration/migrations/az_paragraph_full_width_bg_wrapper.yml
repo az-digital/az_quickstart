@@ -85,7 +85,7 @@ process:
         text_background_pattern: '@text_background_pattern_processed'
         text_background_padding: '@text_background_padding_processed'
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

@@ -75,20 +75,19 @@
   <tbody>
     <tr>
       <td style="padding: 10px 15px; " class="stylingblock-content-wrapper camarker-inner">
-
-        <!-- QS: TITLE (recommended 80 character max) -->
         <h3 class="qs-heading"
           style="color:#403635; font-family:inherit; font-size:18px; font-weight:bold; line-height:115%;">
-          {{ content.smart_title }}</h3>
-
-        <!-- QS: SUMMARY (recommended 220 character max) -->
-        <p class="qs-summary">{{ content.field_az_summary }}<br>
-          <br>
-          <!-- QS: CALL TO ACTION LINK (recommended 30 character max) -->
+          {{ content.smart_title }}
+        </h3>
+        <div class="qs-summary">
+          {{ content.field_az_summary }}
+        </div>
+        <p>
           <a class="qs-link" href="{{ az_canonical_url }}"
-              style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">{{ az_canonical_summary_link_title }}</a>
+            style="color:#8B0015; text-decoration:underline; font-weight:700; line-height:100%;">
+            {{ az_canonical_summary_link_title }}
+          </a>
         </p>
-
       </td>
     </tr>
   </tbody>

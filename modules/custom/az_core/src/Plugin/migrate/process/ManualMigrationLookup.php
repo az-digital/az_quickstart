@@ -55,6 +55,7 @@ use Drupal\migrate\Row;
  *      delta: delta
  *      target_id:
  *        - plugin: az_manual_migration_lookup
+ *          source_db_key: migrate
  *          source_entity_type: taxonomy_term
  *          source: tid
  *        - plugin: entity_lookup
@@ -71,6 +72,7 @@ use Drupal\migrate\Row;
  *  process:
  *   uid:
  *    - plugin: az_manual_migration_lookup
+ *      source_db_key: custom_db
  *      source_entity_type: user
  *      source: node_uid
  *    - plugin: entity_lookup
@@ -87,10 +89,17 @@ class ManualMigrationLookup extends ProcessPluginBase {
    * {@inheritdoc}
    */
   public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+    $configuration += ['source_db_key' => 'migrate'];
+
     if (!array_key_exists('source_entity_type', $configuration)) {
       throw new \InvalidArgumentException('Manual Migration Lookup plugin is missing source_entity_type configuration. Valid values are: node, taxonomy_term.');
     }
-
+    if (!is_string($configuration['source_db_key'])) {
+      throw new \InvalidArgumentException('Source_db_key must be a string.');
+    }
+    if (!Database::getConnectionInfo($configuration['source_db_key'])) {
+      throw new \InvalidArgumentException('Source_db_key must be a valid database key.');
+    }
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
 
@@ -100,19 +109,20 @@ class ManualMigrationLookup extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
     $source_entity_type = $this->configuration['source_entity_type'];
+    $source_db_key = $this->configuration['source_db_key'];
 
     $id = $value;
     switch ($source_entity_type) {
       case 'node':
         // Lookup of content type.
-        $value = Database::getConnection('default', 'migrate')
+        $value = Database::getConnection('default', $source_db_key)
           ->query('SELECT title FROM {node} WHERE nid = :nid', [':nid' => $id])
           ->fetchField();
         break;
 
       case 'taxonomy_term':
         // Lookup of taxonomy term.
-        $value = Database::getConnection('default', 'migrate')
+        $value = Database::getConnection('default', $source_db_key)
           ->query('SELECT name FROM {taxonomy_term_data} WHERE tid = :tid', [':tid' => $id])
           ->fetchField();
 
@@ -120,7 +130,7 @@ class ManualMigrationLookup extends ProcessPluginBase {
 
       case 'user':
         // Lookup of user.
-        $value = Database::getConnection('default', 'migrate')
+        $value = Database::getConnection('default', $source_db_key)
           ->query('SELECT name FROM {users} WHERE uid = :uid', [':uid' => $id])
           ->fetchField();
         break;

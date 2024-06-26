@@ -3,8 +3,8 @@
 namespace Drupal\az_publication;
 
 use Drupal\Core\Language\LanguageManagerInterface;
-use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
 /**
  * Fetches locale information for publications.

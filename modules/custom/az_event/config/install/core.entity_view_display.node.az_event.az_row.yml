@@ -180,7 +180,7 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: 'h5 text-chili mt-0'
+        classes: 'h5 text-chili mt-3 mt-lg-0'
         id: ''
         element: div
         show_label: false
@@ -236,14 +236,14 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: 'col-lg-3 pt-3 px-3 pr-lg-0'
+        classes: 'col-lg-3 pt-3 px-3 pr-lg-0 mb-lg-0'
         show_empty_fields: false
         id: ''
         element: div
         show_label: false
         label_element: h3
         label_element_classes: ''
-        attributes: ''
+        attributes: 'style="margin-bottom: -1.2em"'
         effect: none
         speed: fast
   smart_title:

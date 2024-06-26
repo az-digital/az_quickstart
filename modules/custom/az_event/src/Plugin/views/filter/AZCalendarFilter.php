@@ -2,8 +2,8 @@
 
 namespace Drupal\az_event\Plugin\views\filter;
 
-use Drupal\views\Plugin\views\filter\Date;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Plugin\views\filter\Date;
 use Drupal\views\Views;
 
 /**

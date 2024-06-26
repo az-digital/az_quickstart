@@ -12,7 +12,7 @@ field_name: field_az_summary
 entity_type: node
 bundle: az_event
 label: Summary
-description: ''
+description: '<strong>Suggested character limit:</strong> 160.'
 required: false
 translatable: true
 default_value: {  }

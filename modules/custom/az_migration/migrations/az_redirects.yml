@@ -73,14 +73,14 @@ destination:
   plugin: entity:redirect
 migration_dependencies:
   required:
-      - az_event_categories
-      - az_flexible_page_categories
-      - az_news_tags
-      - az_person_categories_secondary
-      - az_person_categories
-      - az_node_carousel
-      - az_node_event
-      - az_node_flexible_page
-      - az_node_news
-      - az_node_person
-      - az_user
+    - az_event_categories
+    - az_flexible_page_categories
+    - az_news_tags
+    - az_person_categories_secondary
+    - az_person_categories
+    - az_node_carousel
+    - az_node_event
+    - az_node_flexible_page
+    - az_node_news
+    - az_node_person
+    - az_user
