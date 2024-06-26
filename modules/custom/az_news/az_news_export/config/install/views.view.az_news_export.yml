@@ -1553,33 +1553,39 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-        field_az_enterprise_attributes_target_id:
-          id: field_az_enterprise_attributes_target_id
+        field_az_enterprise_attributes_az_attribute_key:
+          id: field_az_enterprise_attributes_az_attribute_key
           table: node__field_az_enterprise_attributes
-          field: field_az_enterprise_attributes_target_id
+          field: field_az_enterprise_attributes_az_attribute_key
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: 'not empty'
+          plugin_id: az_attribute_tid
+          operator: or
           value: {  }
           group: 1
-          exposed: false
+          exposed: true
           expose:
-            operator_id: ''
-            label: ''
+            operator_id: filter
+            label: 'Content with Enterprise Attributes attribute key'
             description: ''
-            use_operator: false
-            operator: ''
+            use_operator: true
+            operator: field_az_enterprise_attributes_az_attribute_key_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: ''
+            identifier: attribute
             required: false
             remember: false
-            multiple: false
+            multiple: true
             remember_roles:
               authenticated: authenticated
-            reduce: false
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: 0
           is_grouped: false
           group_info:
             label: ''
@@ -1592,12 +1598,12 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
-          reduce_duplicates: false
-          vid: az_enterprise_attributes
+          reduce_duplicates: 1
           type: select
-          hierarchy: false
           limit: true
-          error_message: true
+          vid: az_enterprise_attributes
+          hierarchy: false
+          error_message: 1
       style:
         type: default
         options:

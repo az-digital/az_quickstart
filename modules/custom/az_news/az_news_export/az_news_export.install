@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_news_export module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function az_news_export_install($is_syncing) {
+  // We provide an entity reference filter, so run after the taxonomy module.
+  module_set_weight('az_news_export', 1);
+}
+
+/**
+ * Ensure our module weight is higher than the taxonomy module.
+ */
+function az_news_export_update_1021101() {
+  module_set_weight('az_news_export', 1);
+}
