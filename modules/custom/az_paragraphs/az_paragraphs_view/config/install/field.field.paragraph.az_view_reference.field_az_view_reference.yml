@@ -1,3 +1,5 @@
+
+uuid: aefb616d-0319-4447-b3e4-81e0a9ade8eb
 langcode: en
 status: true
 dependencies:
@@ -6,6 +8,8 @@ dependencies:
     - paragraphs.paragraphs_type.az_view_reference
   module:
     - viewsreference
+_core:
+  default_config_hash: JMasze9bsX0o4f64PHDak4KqkCOgUDgFGAapYtOs2I0
 id: paragraph.az_view_reference.field_az_view_reference
 field_name: field_az_view_reference
 entity_type: paragraph
@@ -23,19 +27,20 @@ settings:
     auto_create: false
   plugin_types:
     default: default
-    block: block
     page: page
+    block: block
   preselect_views:
-    az_courses: az_courses
     az_events: az_events
+    az_exposed_news: az_exposed_news
     az_news: az_news
     az_page_by_category: az_page_by_category
     az_person: az_person
-    az_publications: az_publications
   enabled_settings:
-    pager: pager
-    offset: offset
-    argument: argument
     title: title
+    offset: offset
+    pager: pager
     limit: limit
+    argument: argument
+    exposed_filters: exposed_filters
 field_type: viewsreference
+
