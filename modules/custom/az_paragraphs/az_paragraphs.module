@@ -57,7 +57,7 @@ function az_paragraphs_theme_registry_alter(&$theme_registry) {
 /**
  * Implements hook_library_info_alter().
  *
- * Alter path of CKE5 anchor link library to match the one installed by 
+ * Alter path of CKE5 anchor link library to match the one installed by
  * composer.
  * @link https://www.drupal.org/project/anchor_link/issues/3406349#comment-15463373
  */
