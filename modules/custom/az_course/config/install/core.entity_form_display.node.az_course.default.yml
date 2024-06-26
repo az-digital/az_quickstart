@@ -10,6 +10,7 @@ dependencies:
     - field.field.node.az_course.field_az_course_term
     - field.field.node.az_course.field_az_course_title
     - field.field.node.az_course.field_az_course_types
+    - field.field.node.az_course.field_az_course_units
     - field.field.node.az_course.field_az_subject_and_catalog
     - field.field.node.az_course.field_az_subject_code
     - node.type.az_course
@@ -30,7 +31,7 @@ content:
     third_party_settings: {  }
   field_az_academic_program:
     type: options_select
-    weight: 16
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -44,7 +45,7 @@ content:
     third_party_settings: {  }
   field_az_course_attributes:
     type: options_select
-    weight: 14
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -58,7 +59,7 @@ content:
     third_party_settings: {  }
   field_az_course_instructor:
     type: link_default
-    weight: 17
+    weight: 18
     region: content
     settings:
       placeholder_url: ''
@@ -66,7 +67,7 @@ content:
     third_party_settings: {  }
   field_az_course_term:
     type: options_select
-    weight: 15
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -80,9 +81,16 @@ content:
     third_party_settings: {  }
   field_az_course_types:
     type: options_select
-    weight: 13
+    weight: 14
     region: content
     settings: {  }
+    third_party_settings: {  }
+  field_az_course_units:
+    type: number
+    weight: 13
+    region: content
+    settings:
+      placeholder: ''
     third_party_settings: {  }
   field_az_subject_and_catalog:
     type: string_textfield
