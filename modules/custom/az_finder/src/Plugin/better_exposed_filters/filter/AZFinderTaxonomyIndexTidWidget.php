@@ -418,13 +418,11 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $icons = $this->azFinderIcons->generateSvgIcons();
       $default_state = $state_overrides[$entity_id] ?? $global_default_state;
       $icon_name = $default_state === 'collapse' ? 'expand' : 'collapse';
-      $icon = $icons['level_' . $depth . '_' . $icon_name];
+      $icon = $icons['level_' . $depth . '_' . $icon_name] ?? NULL;
       $variables['depth'][$child] = $depth;
       $list_title['#value'] = $cleaned_title;
       $variables['element'][$child]['#title'] = $list_title['#value'];
       // Apply override settings.
-      $is_expanded = $default_state === 'collapse';
-
       if (!empty($children)) {
         $list_title_link = [
           '#type' => 'html_tag',

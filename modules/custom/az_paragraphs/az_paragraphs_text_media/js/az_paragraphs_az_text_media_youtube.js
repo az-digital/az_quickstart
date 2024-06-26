@@ -110,7 +110,7 @@
           });
         };
         window.onPlayerReady = function (event) {
-          var id = event.target.getVideoData().video_id;
+          const id = event.target.getVideoData().video_id;
           if (bgVideos[id].mute) {
             event.target.mute();
           }
@@ -120,7 +120,7 @@
           dispatchEvent(azVideoPlayEvent);
         };
         window.onPlayerStateChange = function (event) {
-          var id = event.target.getVideoData().video_id;
+          const id = event.target.getVideoData().video_id;
           var stateChangeContainer = document.getElementById("".concat(id, "-bg-video-container"));
           var parentid = stateChangeContainer.dataset.parentid;
           var parentContainer = document.getElementById(parentid);

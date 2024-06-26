@@ -335,7 +335,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $overrides = $form_state->get('overrides') ?? [];
     unset($overrides[$key]);
     $form_state->set('overrides', $overrides);
-
+    $this->config('az_finder.tid_widget.' . $key)->delete();
     // Rebuild the form.
     $form_state->setRebuild(TRUE);
 
