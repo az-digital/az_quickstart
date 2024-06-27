@@ -156,6 +156,7 @@ class AZNewsDataFieldRow extends DataFieldRow {
             ->addTag('taxonomy_term_access')
             ->condition('vid', 'az_enterprise_attributes')
             ->condition('tid', $value, 'IN')
+            ->condition('status', 1)
             ->sort('tid')->execute();
           $terms = $term_storage->loadMultiple($terms);
           foreach ($terms as $term) {
