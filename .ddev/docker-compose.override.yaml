@@ -1,9 +1,5 @@
 services:
   web:
-    environment:
-      SIMPLETEST_DB: 'mysql://db:db@db/db'
-      SIMPLETEST_BASE_URL: 'http://web'
-      MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://selenium-chrome:4444/wd/hub"]'
     volumes:
       # Don't share our host working directory as /var/www/html. We want /var/www/html empty for composer.
       - /var/www/html
