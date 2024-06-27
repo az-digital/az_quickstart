@@ -21,6 +21,7 @@ class AZAttributeTid extends TaxonomyIndexTid {
   protected function defineOptions() {
     $options = parent::defineOptions();
 
+    // Default to the dropdown filter, unlike parent class.
     $options['type'] = ['default' => 'select'];
 
     return $options;
@@ -39,6 +40,7 @@ class AZAttributeTid extends TaxonomyIndexTid {
       return;
     }
     $options = [];
+    // Generate our list of attribute-key-based options.
     $query = \Drupal::entityQuery('taxonomy_term')
       ->accessCheck(TRUE)
       ->sort('weight')
@@ -67,6 +69,7 @@ class AZAttributeTid extends TaxonomyIndexTid {
    */
   public function buildExtraOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildExtraOptionsForm($form, $form_state);
+    // We don't use these elements of the parent class.
     unset($form['type']);
     unset($form['hierarchy']);
   }
@@ -109,7 +112,7 @@ class AZAttributeTid extends TaxonomyIndexTid {
 
     // Swap in translated values for the actual query.
     $this->value = $value;
-    // Helper ads our actual query with term ids to the view.
+    // Helper adds our actual query with term ids to the view.
     $this->helper->addFilter();
 
     // Put our original values back for the form build.
