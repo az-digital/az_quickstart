@@ -112,7 +112,7 @@
         "drupal/smtp": "1.2.0",
         "drupal/token": "1.14.0",
         "drupal/views_bootstrap": "5.4.0",
-        "drupal/views_remote_data": "1.0.2",
+        "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta8",
         "drupal/webform": "6.2.2",
         "drupal/workbench_access": "2.0.1",
