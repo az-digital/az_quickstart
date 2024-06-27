@@ -1,14 +1,12 @@
-version: '3.6'
-
 services:
   web:
     environment:
       SIMPLETEST_DB: 'mysql://db:db@db/db'
       SIMPLETEST_BASE_URL: 'http://web'
-      MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://chromedriver:9515"]'
+      MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://selenium-chrome:4444/wd/hub"]'
     volumes:
       # Don't share our host working directory as /var/www/html. We want /var/www/html empty for composer.
-      -  /var/www/html
+      - /var/www/html
       # Instead share our host working directory as a standalone package.
       - type: bind
         source: ../
@@ -18,11 +16,4 @@ services:
       - ddev-global-cache:/mnt/ddev-global-cache
       - ddev-ssh-agent_socket_dir:/home/.ssh-agent
     links:
-      - chromedriver:$DDEV_HOSTNAME
-  chromedriver:
-    container_name: ddev-${DDEV_SITENAME}-chromedriver
-    image: drupalci/chromedriver:production
-    labels:
-      com.ddev.site-name: ${DDEV_SITENAME}
-      com.ddev.approot: $DDEV_APPROOT
-      com.ddev.app-url: $DDEV_URL
+      - selenium-chrome
