@@ -1,9 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Create a new quickstart project and use the installation profile as a non-packagist repository using the matching scaffolding branch if available.
 ## Usage: install
-## Example: "ddev install"
+## Example: ddev install
 
+# Make sure the script stops on failure
+set -eu -o pipefail
+
+# Passive aggressive message.
+echo "Deleting all project files and folders..."
+
+# Remove all files and folders in the project directory within the web
+# container, and not the project directory on the host.
 rm -rf /var/www/html/*
 BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /var/www/html
 composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update az-digital/az_quickstart:\*@dev
