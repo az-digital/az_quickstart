@@ -170,7 +170,6 @@ class AZNewsDataFieldRow extends DataFieldRow {
             }
           }
         }
-
         // Avoid returning an empty array.
         if (empty($items)) {
           $items = new AZNewsDataEmpty();
