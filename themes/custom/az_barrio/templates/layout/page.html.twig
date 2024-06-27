@@ -200,16 +200,14 @@
               <main{{ content_attributes }}>
                 {{ page.content }}
               </main>
-              {% set has_sidebar_first = page.sidebar_first|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
-              {% if has_sidebar_first is not empty %}
+              {% if page.sidebar_first %}
               <div{{ sidebar_first_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_first }}
                 </aside>
               </div>
               {% endif %}
-              {% set has_sidebar_second = page.sidebar_second|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
-              {% if has_sidebar_second is not empty %}
+              {% if page.sidebar_second %}
               <div{{ sidebar_second_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_second }}
