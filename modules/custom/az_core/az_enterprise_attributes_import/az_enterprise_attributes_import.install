@@ -26,6 +26,6 @@ function az_enterprise_attributes_import_install() {
 /**
  * Enable migrate_queue_importer module for dependency.
  */
-function az_enterprise_attributes_import_update_1020801() {
+function az_enterprise_attributes_import_update_1021101() {
   \Drupal::service('module_installer')->install(['migrate_queue_importer']);
 }
