@@ -13,5 +13,7 @@ smtp_client_hostname: ''
 smtp_client_helo: ''
 smtp_allowhtml: '0'
 smtp_test_address: ''
+smtp_reroute_address: ''
 smtp_debugging: false
+prev_mail_system: php_mail
 smtp_keepalive: false
