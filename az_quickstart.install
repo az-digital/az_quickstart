@@ -80,6 +80,7 @@ function az_quickstart_requirements($phase) {
     // Gather all deprecated modules that are enabled.
     $azqs_deprecated_modules = [
       'block_content_permissions',
+      'ctools',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
