@@ -36,6 +36,7 @@ capitalizator_forced_words_first_letter: false
 follow_redirects: true
 limit_segment_display: false
 segment_display_limit: 0
+segment_display_minimum: null
 truncator_mode: false
 truncator_length: 100
 truncator_dots: true
