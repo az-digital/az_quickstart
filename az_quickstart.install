@@ -10,7 +10,6 @@ use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
 use Drupal\shortcut\Entity\Shortcut;
-use Drupal\user\Entity\User;
 
 /**
  * Implements hook_install().
@@ -20,11 +19,6 @@ use Drupal\user\Entity\User;
  * @see system_install()
  */
 function az_quickstart_install() {
-  // Assign user 1 the "administrator" role.
-  $user = User::load(1);
-  $user->roles[] = 'administrator';
-  $user->save();
-
   // Populate the default shortcut set.
   $shortcut = Shortcut::create([
     'shortcut_set' => 'default',

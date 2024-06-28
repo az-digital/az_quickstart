@@ -5,3 +5,4 @@ name: 'Course Terms'
 vid: az_course_terms
 description: 'Taxonomy for course terms.'
 weight: 0
+new_revision: false

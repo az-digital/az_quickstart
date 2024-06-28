@@ -4,7 +4,7 @@ namespace Drupal\az_core\Plugin\migrate\process;
 
 use Drupal\Core\Database\Database;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\MigrateSkipProcessException;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
@@ -142,7 +142,9 @@ class ManualMigrationLookup extends ProcessPluginBase {
 
     if (empty($value)) {
       $message = sprintf('Processing of destination property %s was skipped: No value found for source entity type %s with id %s.', $destination_property, $source_entity_type, $id);
-      throw new MigrateSkipProcessException($message);
+      $migrate_executable->saveMessage($message, MigrationInterface::MESSAGE_INFORMATIONAL);
+      $this->stopPipeline();
+      return NULL;
     }
 
     return $value;
