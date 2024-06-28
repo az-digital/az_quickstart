@@ -149,14 +149,25 @@ class AZNewsDataFieldRow extends DataFieldRow {
       // Serialize the taxonomy terms as an array of enterprise keys.
       'field_az_enterprise_attributes' => function ($value, $entity) {
         $items = [];
-        $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple($value);
-        foreach ($terms as $term) {
-          if (!$term->access('view')) {
-            continue;
-          }
-          if (!empty($term->parent->entity)) {
-            if (!empty($term->field_az_attribute_key->value) && !empty($term->parent->entity->field_az_attribute_key->value)) {
-              $items[$term->parent->entity->field_az_attribute_key->value][] = $term->field_az_attribute_key->value;
+        if (!empty($value)) {
+          $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+
+          $terms = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
+            ->accessCheck(TRUE)
+            ->addTag('taxonomy_term_access')
+            ->condition('vid', 'az_enterprise_attributes')
+            ->condition('tid', $value, 'IN')
+            ->condition('status', 1)
+            ->sort('tid')->execute();
+          $terms = $term_storage->loadMultiple($terms);
+          foreach ($terms as $term) {
+            if (!$term->access('view')) {
+              continue;
+            }
+            if (!empty($term->parent->entity)) {
+              if (!empty($term->field_az_attribute_key->value) && !empty($term->parent->entity->field_az_attribute_key->value)) {
+                $items[$term->parent->entity->field_az_attribute_key->value][] = $term->field_az_attribute_key->value;
+              }
             }
           }
         }
