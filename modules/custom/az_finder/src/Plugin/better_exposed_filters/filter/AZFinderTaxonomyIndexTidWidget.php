@@ -99,7 +99,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     RendererInterface $renderer,
     EntityTypeManagerInterface $entity_type_manager,
     AZFinderIcons $az_finder_icons,
-    ConfigFactoryInterface $config_factory
+    ConfigFactoryInterface $config_factory,
   ) {
     $configuration += $this->defaultConfiguration();
     parent::__construct($configuration, $plugin_id, $plugin_definition);
