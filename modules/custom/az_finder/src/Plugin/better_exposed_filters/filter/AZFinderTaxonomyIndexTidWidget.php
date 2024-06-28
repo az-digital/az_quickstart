@@ -234,56 +234,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
     $form = parent::buildConfigurationForm($form, $form_state);
-
-    $config = $this->configuration;
-    $default_states = $config['default_states'] ?? [];
-    $fallback_action = $config['fallback_action'] ?? 'hide';
-
-    $parent_terms = $this->getParentTerms();
-
-    $header = [
-      $this->t('Parent Term'),
-      $this->t('Default State'),
-    ];
-
-    $rows = [];
-
-    foreach ($parent_terms as $parent_term) {
-      $default_value = $default_states[$parent_term->id()] ?? 'collapsed';
-
-      $rows[$parent_term->id()]['name'] = [
-        'data' => ['#markup' => $parent_term->getName()],
-      ];
-
-      $rows[$parent_term->id()]['state'] = [
-        'data' => [
-          '#type' => 'checkbox',
-          '#title' => $this->t('Expanded by default'),
-          '#default_value' => $default_value === 'expanded',
-        ],
-      ];
-    }
-
-    $form['default_states'] = [
-      '#type' => 'table',
-      '#header' => $header,
-      '#rows' => $rows,
-      '#empty' => $this->t('No parent terms found.'),
-    ];
-
-    $form['fallback_action'] = [
-      '#type' => 'select',
-      '#title' => $this->t('Fallback Action'),
-      '#description' => $this->t('Action to take when a parent term is not found in the default states.'),
-      '#options' => [
-        'expand' => $this->t('Expand'),
-        'collapse' => $this->t('Collapse'),
-        'remove' => $this->t('Remove'),
-      ],
-      '#default_value' => $fallback_action,
-    ];
+    unset($form['advanced']);
 
     return $form;
+
   }
 
   /**
@@ -386,7 +340,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       if (empty($children) && $entity_type !== 'taxonomy_term') {
         continue;
       }
-      if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'remove') {
+      if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'hidden') {
         unset($variables['element'][$child]);
         continue;
       }
