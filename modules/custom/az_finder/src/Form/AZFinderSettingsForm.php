@@ -7,7 +7,7 @@ namespace Drupal\az_finder\Form;
 use Drupal\az_finder\Service\AZFinderOverrides;
 use Drupal\az_finder\Service\AZFinderViewOptions;
 use Drupal\az_finder\Service\AZFinderVocabulary;
-use Drupal\Core\Config\ConfigFactory;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -51,8 +51,8 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
   /**
    * Constructs a new AZFinderSettingsForm object.
    *
-   * @param \Drupal\Core\Config\ConfigFactory $config_factory
-   *   The configuration factory.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory.
    * @param \Drupal\Core\Config\TypedConfigManagerInterface $typed_config_manager
    *   The typed configuration manager.
    * @param \Drupal\az_finder\Service\AZFinderViewOptions $az_finder_view_options
@@ -65,14 +65,15 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
    *   The EntityTypeManager service.
    */
   public function __construct(
-    ConfigFactory $config_factory,
+    ConfigFactoryInterface $config_factory,
     TypedConfigManagerInterface $typed_config_manager,
     AZFinderViewOptions $az_finder_view_options,
     AZFinderVocabulary $az_finder_vocabulary,
     AZFinderOverrides $az_finder_overrides,
     EntityTypeManagerInterface $entity_type_manager
   ) {
-    parent::__construct($config_factory, $typed_config_manager);
+    parent::__construct($config_factory);
+    $this->typedConfigManager = $typed_config_manager;
     $this->azFinderViewOptions = $az_finder_view_options;
     $this->azFinderVocabulary = $az_finder_vocabulary;
     $this->azFinderOverrides = $az_finder_overrides;
@@ -335,7 +336,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $overrides = $form_state->get('overrides') ?? [];
     unset($overrides[$key]);
     $form_state->set('overrides', $overrides);
-    $this->config('az_finder.tid_widget.' . $key)->delete();
+    $this->configFactory->getEditable('az_finder.tid_widget.' . $key)->delete();
     // Rebuild the form.
     $form_state->setRebuild(TRUE);
 
