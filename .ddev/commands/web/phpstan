@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpstan tooling to check for code quality and deprecated code.
 ## Usage: phpstan [flags] [args]
 ## Example: "ddev phpstan --version"
 
-vendor/bin/phpstan --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart $@
+vendor/bin/phpstan --configuration=/var/www/html/web/profiles/custom/az_quickstart/phpstan.neon -- /var/www/html/web/profiles/custom/az_quickstart $@

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpcs tooling to check coding standards.
 ## Usage: phpcs [flags] [args]
