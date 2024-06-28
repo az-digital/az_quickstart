@@ -89,7 +89,7 @@ class AZFinderVocabulary {
           '' => $this->t('Default'),
           'expand' => $this->t('Expanded'),
           'collapse' => $this->t('Collapsed'),
-          'hidden' => $this->t('Hidden'),
+          'hide' => $this->t('Hidden'),
         ],
         '#config_target' => "$vocabulary_config_path.terms.{$term->tid}.default_state",
       ];
