@@ -123,6 +123,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
       // Link.
       $link_render_array = [];
+      $link_url = '';
       if ($item->link_title || $item->link_uri) {
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
@@ -213,9 +214,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           if (isset($card_defaults['card_title_display'])) {
             $title_display = $card_defaults['card_title_display'];
           }
-
         }
-
       }
 
       // Handle class keys that contained multiple classes.
@@ -239,6 +238,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#langcode' => $item->getLangcode(),
         ],
         '#link' => $link_render_array,
+        '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
         '#title_alignment' => $title_alignment ?? 'text-left',
