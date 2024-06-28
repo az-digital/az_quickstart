@@ -70,7 +70,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     AZFinderViewOptions $az_finder_view_options,
     AZFinderVocabulary $az_finder_vocabulary,
     AZFinderOverrides $az_finder_overrides,
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     parent::__construct($config_factory, $typed_config_manager);
     $this->azFinderViewOptions = $az_finder_view_options;
