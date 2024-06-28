@@ -263,6 +263,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
       '#default_value' => $item->link_title ?? NULL,
+      '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".'),
     ];
 
     $element['link_uri'] = [
@@ -292,7 +293,8 @@ class AZCardWidget extends WidgetBase {
     ];
 
     if (!$item->isEmpty()) {
-      $button_name = implode('-', array_merge($field_parents,
+      $button_name = implode('-', array_merge(
+        $field_parents,
         [$field_name, $delta, 'toggle']
       ));
       // Extra card_actions wrapper needed for core delete ajax submit nesting.
@@ -432,8 +434,10 @@ class AZCardWidget extends WidgetBase {
         // Url is valid, no conversion required.
         return;
       }
-      if (str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
-        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))) {
+      if (
+        str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
+        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))
+      ) {
         // Link to a public file which is confirmed to exist.
         return;
       }

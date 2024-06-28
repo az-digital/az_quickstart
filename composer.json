@@ -41,7 +41,7 @@
         "drupal/antibot": "2.0.3",
         "drupal/asset_injector": "2.20.0",
         "drupal/auto_entitylabel": "3.2.0",
-        "drupal/better_exposed_filters": "6.0.5",
+        "drupal/better_exposed_filters": "6.0.6",
         "drupal/blazy": "3.0.8",
         "drupal/block_class": "2.0.11",
         "drupal/block_content_permissions": "*",
@@ -64,7 +64,7 @@
         "drupal/config_update": "2.0.0-alpha3",
         "drupal/core-recommended": "10.2.7",
         "drupal/crop": "2.3.0",
-        "drupal/ctools": "3.14.0",
+        "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.0",
         "drupal/draggableviews": "2.1.4",
         "drupal/easy_breadcrumb": "2.0.6",
@@ -112,7 +112,7 @@
         "drupal/smtp": "1.2.0",
         "drupal/token": "1.14.0",
         "drupal/views_bootstrap": "5.4.0",
-        "drupal/views_remote_data": "1.0.2",
+        "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta8",
         "drupal/webform": "6.2.2",
         "drupal/workbench_access": "2.0.1",
@@ -152,6 +152,9 @@
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
             },
+            "drupal/ckeditor_bs_grid": {
+                "Warning: Undefined array key 'default_layout' (3442400)": "https://www.drupal.org/files/issues/2024-04-22/ckeditor_bs_grid-suppress_warnings.patch"
+            },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
@@ -177,7 +180,8 @@
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
-                "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch"
+                "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
+                "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch"
             },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
