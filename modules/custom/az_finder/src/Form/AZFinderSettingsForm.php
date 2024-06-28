@@ -357,14 +357,13 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     [$view_id, $display_id] = explode(':', $key);
     $config_name = "az_finder.tid_widget.$view_id.$display_id";
     $config = $this->config($config_name);
-    if ($config && !$config->isNew()) {
+    if ($config) {
       $editable_config = $this->configFactory->getEditable($config_name);
       $editable_config->delete();
     }
     // Update the overrides in form state.
     $overrides = $form_state->get('overrides') ?? [];
     unset($overrides[$key]);
-    $this->config('az_finder.tid_widget.' . $key)->delete();
     $form_state->set('overrides', $overrides);
 
     // Set the rebuild flag to ensure the form is rebuilt.

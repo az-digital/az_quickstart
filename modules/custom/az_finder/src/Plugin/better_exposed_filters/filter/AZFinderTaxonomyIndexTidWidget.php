@@ -205,22 +205,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->renderPlain($icon);
       }
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
-
-      // Load override settings.
-      $view_id = $this->view->storage->id();
-      $display_id = $this->view->current_display;
-      $form['#contextual_links']['az_finder.settings'] = [
-        'route_parameters' => [
-          'view' => $view_id,
-          'display' => $display_id,
-        ],
-      ];
-      $form['#contextual_links']['az_finder.contextual_links'] = [
-        'route_parameters' => [
-          'view' => $view_id,
-          'display' => $display_id,
-        ],
-      ];
     }
 
     return $form;
@@ -424,6 +408,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $variables['depth'][$child] = $depth;
       $list_title['#value'] = $cleaned_title;
       $variables['element'][$child]['#title'] = $list_title['#value'];
+      $is_expanded = $default_state === 'collapse';
       // Apply override settings.
       if (!empty($children)) {
         $list_title_link = [
