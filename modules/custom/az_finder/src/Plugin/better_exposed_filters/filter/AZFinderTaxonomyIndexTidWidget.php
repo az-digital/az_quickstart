@@ -269,9 +269,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array{
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
+    unset($form['advanced']);
 
     return $form;
   }
@@ -298,7 +299,9 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       'children' => Element::children($element),
       'attributes' => ['name' => $element['#name']],
     ];
-
+    if (!empty($element['#hierarchy'])) {
+      $variables['is_nested'] = TRUE;
+    }
     $variables['is_nested'] = TRUE;
     $variables['depth'] = [];
     $element = $variables['element'];

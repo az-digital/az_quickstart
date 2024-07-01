@@ -41,7 +41,6 @@ function template_preprocess_az_finder_widget(&$variables) {
  */
 function az_finder_preprocess_views_view(&$variables) {
   $view = $variables['view'];
-
   if (empty($view->display_handler->options['exposed_form']['type']) ||
       $view->display_handler->options['exposed_form']['type'] !== 'az_better_exposed_filters') {
     return;
