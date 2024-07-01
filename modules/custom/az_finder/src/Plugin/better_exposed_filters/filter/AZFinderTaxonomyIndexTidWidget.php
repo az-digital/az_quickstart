@@ -322,6 +322,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $this->logger->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
       return;
     }
+
     // Get the handler options for taxonomy reference fields.
     $vid = NULL;
     if (isset($display_options['filters'])) {
@@ -360,13 +361,16 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
       $state = $state_overrides[$entity_id] ?? $global_default_state;
       $variables['element'][$child]['#state'] = $state;
-      $entity_storage = $this->entityTypeManager->getStorage($entity_type);
-      $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
+
       if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'hide') {
+        // Remove the element and its children.
         unset($variables['element'][$child]);
         continue;
       }
 
+      // Additional processing for elements that are not hidden.
+      $entity_storage = $this->entityTypeManager->getStorage($entity_type);
+      $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
       $original_title = $element[$child]['#title'];
       if (empty($original_title)) {
         continue;

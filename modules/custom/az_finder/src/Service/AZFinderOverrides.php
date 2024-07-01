@@ -40,10 +40,20 @@ final class AZFinderOverrides {
       $view_id_display_id = substr($config_name, strlen('az_finder.tid_widget.'));
       [$view_id, $display_id] = explode('.', $view_id_display_id);
 
+      // Get the specific display config.
+      $view_config = $this->configFactory->get('views.view.' . $view_id);
+      $display_options = $view_config->get('display.' . $display_id . '.display_options') ?? [];
+
+      // If filters are not set, inherit from the default display.
+      if (empty($display_options['filters'])) {
+        $default_filters = $view_config->get('display.default.display_options.filters') ?? [];
+        $display_options['filters'] = $default_filters;
+      }
+
       $overrides[$view_id . '_' . $display_id] = [
         'view_id' => $view_id,
         'display_id' => $display_id,
-        'vocabularies' => $config->get('vocabularies') ?? [],
+        'vocabularies' => $display_options['filters']['vocabularies'] ?? [],
         'origin' => 'config',
       ];
     }
