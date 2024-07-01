@@ -98,7 +98,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The AZFinderIcons service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
-   * @param \Psr\Log\LoggerInterface
+   * @param \Psr\Log\LoggerInterface $logger
    *   The logger service.
    */
   public function __construct(
