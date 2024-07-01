@@ -5,3 +5,4 @@ name: 'Academic Programs'
 vid: az_academic_programs
 description: 'Taxonomy for academic programs.'
 weight: 0
+new_revision: false

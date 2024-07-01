@@ -13,7 +13,7 @@ az_finder.settings:
             Choice:
               - 'expand'
               - 'collapse'
-              - 'hidden'
+              - 'hide'
 
 az_finder.tid_widget.[view_id].[display_id]:
   type: config_object
@@ -45,7 +45,7 @@ az_finder.tid_widget.[view_id].[display_id]:
                     Choice:
                       - 'expand'
                       - 'collapse'
-                      - 'hidden'
+                      - 'hide'
 
 views.exposed_form.az_better_exposed_filters:
   type: views.exposed_form.bef
