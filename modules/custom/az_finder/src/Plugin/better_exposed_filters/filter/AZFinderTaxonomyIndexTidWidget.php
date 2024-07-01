@@ -298,13 +298,11 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       'children' => Element::children($element),
       'attributes' => ['name' => $element['#name']],
     ];
-    if (!empty($element['#hierarchy'])) {
-      $variables['is_nested'] = TRUE;
-    }
 
     $variables['is_nested'] = TRUE;
     $variables['depth'] = [];
     $element = $variables['element'];
+
     // Retrieve view_id and display_id from the element's #context.
     $view_id = $element['#context']['#view_id'];
     $display_id = $element['#context']['#display_id'];
@@ -348,12 +346,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $global_default_state = $global_settings->get('tid_widget.default_state') ?? '';
 
     foreach ($variables['children'] as $child) {
-
       if ($child === 'All') {
         // Special handling for "All" option.
         $variables['depth'][$child] = 0;
         continue;
       }
+
       $entity_type = 'taxonomy_term';
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
 
@@ -375,17 +373,18 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $list_title = [
         '#type' => 'html_tag',
       ];
+
       // Determine if the child has sub-elements (actual children).
       // Calculate depth based on hyphens in the title as a proxy for hierarchy.
       $depth = strlen($original_title) - strlen($cleaned_title);
       $list_title['#value'] = $cleaned_title;
+
       // Decide which icon to use based on depth.
       $icons = $this->azFinderIcons->generateSvgIcons();
       $level_0_collapse_icon = $icons['level_0_collapse'];
       $level_1_collapse_icon = $icons['level_1_collapse'];
       if (!empty($level_0_collapse_icon) && !empty($level_1_collapse_icon)) {
         $collapse_icon = $depth === 0 ? $level_0_collapse_icon : $level_1_collapse_icon;
-
       }
       else {
         $collapse_icon = $icons['level_0_collapse'];
@@ -447,8 +446,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       }
 
     }
-
-    // dpm($variables);
   }
 
   /**
@@ -464,9 +461,9 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     // Initialize depth.
     $depth = 0;
     // Ensure $option is a string before processing.
-    $optionLabel = is_object($option) ? (property_exists($option, 'label') ? $option->label : '') : $option;
+    $label = is_object($option) ? (property_exists($option, 'label') ? $option->label : '') : $option;
     // Use a loop or string function to count leading hyphens in the label.
-    while (isset($optionLabel[$depth]) && $optionLabel[$depth] === '-') {
+    while (isset($label[$depth]) && $label[$depth] === '-') {
       $depth++;
     }
 
