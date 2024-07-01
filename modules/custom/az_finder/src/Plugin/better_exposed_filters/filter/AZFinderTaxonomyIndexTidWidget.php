@@ -317,7 +317,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         $default_filters = $view->get('display')['default']['display_options']['filters'];
         $display_options['filters'] = $default_filters;
       }
-    } else {
+    }
+    else {
       $this->logger->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
       return;
     }
