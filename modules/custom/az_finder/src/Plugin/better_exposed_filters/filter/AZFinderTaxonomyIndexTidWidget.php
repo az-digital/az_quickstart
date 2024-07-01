@@ -349,7 +349,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     // Load global default settings.
     $global_settings = $this->configFactory->get('az_finder.settings');
     $global_default_state = $global_settings->get('tid_widget.default_state') ?? '';
-
     foreach ($variables['children'] as $child) {
       if ($child === 'All') {
         // Special handling for "All" option.
@@ -361,16 +360,13 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
       $state = $state_overrides[$entity_id] ?? $global_default_state;
       $variables['element'][$child]['#state'] = $state;
-
+      $entity_storage = $this->entityTypeManager->getStorage($entity_type);
+      $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
       if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'hide') {
-        // Remove the element and its children.
         unset($variables['element'][$child]);
         continue;
       }
 
-      // Additional processing for elements that are not hidden.
-      $entity_storage = $this->entityTypeManager->getStorage($entity_type);
-      $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
       $original_title = $element[$child]['#title'];
       if (empty($original_title)) {
         continue;
