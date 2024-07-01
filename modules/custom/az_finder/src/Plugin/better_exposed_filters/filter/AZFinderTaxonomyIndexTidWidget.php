@@ -299,9 +299,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       'children' => Element::children($element),
       'attributes' => ['name' => $element['#name']],
     ];
-    if (!empty($element['#hierarchy'])) {
-      $variables['is_nested'] = TRUE;
-    }
     $variables['is_nested'] = TRUE;
     $variables['depth'] = [];
     $element = $variables['element'];
@@ -315,18 +312,15 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $view = $view_storage->load($view_id);
     if ($view) {
       $display_options = $view->get('display')[$display_id]['display_options'] ?? [];
-      // Merge with default display options if
-      // display-specific options are not set.
-      if (empty($display_options) && isset($view->get('display')['default']['display_options'])) {
-        $default_display_options = $view->get('display')['default']['display_options'];
-        $display_options = array_merge_recursive($default_display_options, $display_options);
+      // Check if 'filters' is set in display-specific options.
+      if (empty($display_options['filters']) && isset($view->get('display')['default']['display_options']['filters'])) {
+        $default_filters = $view->get('display')['default']['display_options']['filters'];
+        $display_options['filters'] = $default_filters;
       }
-    }
-    else {
+    } else {
       $this->logger->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
       return;
     }
-
     // Get the handler options for taxonomy reference fields.
     $vid = NULL;
     if (isset($display_options['filters'])) {
