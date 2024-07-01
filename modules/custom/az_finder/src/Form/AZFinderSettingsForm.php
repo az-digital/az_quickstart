@@ -332,11 +332,11 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $triggering_element = $form_state->getTriggeringElement();
     $button_name = $triggering_element['#name'];
     $key = str_replace('delete-', '', $button_name);
-
     $overrides = $form_state->get('overrides') ?? [];
     unset($overrides[$key]);
-    $form_state->set('overrides', $overrides);
+    unset($form['az_finder_tid_widget']['overrides'][$key]);
     $this->configFactory->getEditable('az_finder.tid_widget.' . $key)->delete();
+    $form_state->set('overrides', $overrides);
     // Rebuild the form.
     $form_state->setRebuild(TRUE);
 
