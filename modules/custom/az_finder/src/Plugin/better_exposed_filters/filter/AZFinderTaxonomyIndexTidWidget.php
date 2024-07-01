@@ -385,22 +385,28 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $level_1_expand_icon = $icons['level_1_expand'];
 
       if ($depth === 0) {
-          // Use level 0 icons.
-          $collapse_icon = $level_0_collapse_icon;
-          $expand_icon = $level_0_expand_icon;
-      } else {
-          // Use level 1 icons.
-          $collapse_icon = $level_1_collapse_icon;
-          $expand_icon = $level_1_expand_icon;
+        // Use level 0 icons.
+        $collapse_icon = $level_0_collapse_icon;
+        $expand_icon = $level_0_expand_icon;
+      }
+      else {
+        // Use level 1 icons.
+        $collapse_icon = $level_1_collapse_icon;
+        $expand_icon = $level_1_expand_icon;
       }
 
       // Select the icon based on the state if it is expand or collapse.
       if ($state === 'expand') {
-          $icon = $collapse_icon; // Use collapse icon when expanded.
-      } elseif ($state === 'collapse') {
-          $icon = $expand_icon; // Use expand icon when collapsed.
-      } else {
-          $icon = null; // Do not set an icon for other states.
+        // Use collapse icon when expanded.
+        $icon = $collapse_icon;
+      }
+      elseif ($state === 'collapse') {
+        // Use expand icon when collapsed.
+        $icon = $expand_icon;
+      }
+      else {
+        // Do not set an icon for other states.
+        $icon = NULL;
       }
 
       $variables['depth'][$child] = $depth;
@@ -433,8 +439,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         $list_title_link['#attributes']['class'][] = 'collapser';
         $list_title_link['#attributes']['class'][] = 'level-' . $depth;
         $list_title_link['#attributes']['class'][] = 'text-decoration-none';
-        if ($icon !== null) {
-            $list_title['icon'] = $icon;
+        if ($icon !== NULL) {
+          $list_title['icon'] = $icon;
         }
         if ($depth === 0) {
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-0';
