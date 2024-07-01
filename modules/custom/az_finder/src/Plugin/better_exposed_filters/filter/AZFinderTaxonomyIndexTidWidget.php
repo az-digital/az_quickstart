@@ -15,9 +15,9 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Template\Attribute;
-use Drupal\taxonomy\Entity\Term;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -68,6 +68,13 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   protected $azFinderIcons;
 
   /**
+   * The logger service.
+   * 
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * The override settings.
    *
    * @var array
@@ -91,6 +98,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The AZFinderIcons service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
+   * @param \Psr\Log\LoggerInterface
+   *   The logger service.
    */
   public function __construct(
     array $configuration,
@@ -100,6 +109,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     EntityTypeManagerInterface $entity_type_manager,
     AZFinderIcons $az_finder_icons,
     ConfigFactoryInterface $config_factory,
+    LoggerInterface $logger,
   ) {
     $configuration += $this->defaultConfiguration();
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -107,6 +117,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $this->entityTypeManager = $entity_type_manager;
     $this->azFinderIcons = $az_finder_icons;
     $this->configFactory = $config_factory;
+    $this->logger = $logger;
   }
 
   /**
@@ -125,7 +136,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $container->get('renderer'),
       $container->get('entity_type.manager'),
       $container->get('az_finder.icons'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('logger.channel.az_finder')
     );
   }
 
@@ -211,7 +223,13 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   * Get the field ID.
+   * Get the field ID for a views filter.
+   * 
+   * @param \Drupal\views\Plugin\views\filter\FilterPluginBase $filter
+   *   A views filter plugin.
+   * 
+   * @return string
+   *   The field ID.
    */
   protected function getFieldId($filter): string {
     return $filter->options['is_grouped'] ? $filter->options['group_info']['identifier'] : $filter->options['expose']['identifier'];
@@ -242,19 +260,23 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
   /**
    * Get the parent terms.
+   * 
+   * @return \Drupal\taxonomy\TermInterface[]
+   *   A numerically index array of term objects.
    */
   protected function getParentTerms() {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $handler */
     $handler = $this->handler;
     $vocabulary_id = $handler->options['vid'];
-    $query = \Drupal::entityQuery('taxonomy_term');
+    $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+    $query = $term_storage ->getQuery();
     $query->condition('vid', $vocabulary_id);
     $query->condition('parent', 0);
     $query->accessCheck(TRUE);
 
     $tids = $query->execute();
 
-    return Term::loadMultiple($tids);
+    return $term_storage->loadMultiple($tids);
   }
 
   /**
@@ -268,9 +290,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * Preprocesses variables for the az-finder-widget template.
    *
    * @param array &$variables
-   *   An associative array containing the element being processed.
+   *   An associative array containing the element being processed (passed by
+   *   reference).
    */
-  public function preprocessAzFinderTaxonomyIndexTidWidget(array &$variables) {
+  public function preprocessAzFinderTaxonomyIndexTidWidget(array &$variables): void {
     $element = $variables['element'];
     $variables += [
       'wrapper_attributes' => new Attribute(),
@@ -290,13 +313,13 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $display_id = $element['#context']['#display_id'];
 
     // Load the view entity and get the display options.
-    $view_storage = \Drupal::entityTypeManager()->getStorage('view');
+    $view_storage = $this->entityTypeManager->getStorage('view');
     $view = $view_storage->load($view_id);
     if ($view) {
       $display_options = $view->get('display')[$display_id]['display_options'] ?? [];
     }
     else {
-      \Drupal::logger('az_finder')->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
+      $this->logger->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
       return;
     }
 
@@ -312,7 +335,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     }
 
     if (!$vid) {
-      \Drupal::logger('az_finder')->error('Unable to find vocabulary ID (vid) in handler options.');
+      $this->logger->error('Unable to find vocabulary ID (vid) in handler options.');
       return;
     }
 

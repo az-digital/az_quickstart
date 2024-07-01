@@ -17,3 +17,6 @@ services:
     class: Drupal\az_finder\Service\AZFinderOverrides
     arguments:
       - '@config.factory'
+  logger.channel.az_finder:
+    parent: logger.channel_base
+    arguments: ['az_finder']
