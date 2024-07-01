@@ -9,7 +9,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 /**
  * Class AZFinderOverrides for managing overrides.
  */
-class AZFinderOverrides {
+final class AZFinderOverrides {
 
   /**
    * The config factory.
