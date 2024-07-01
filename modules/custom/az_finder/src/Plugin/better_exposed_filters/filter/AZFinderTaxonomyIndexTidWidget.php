@@ -269,7 +269,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * {@inheritdoc}
    */
-  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array{
+  public function buildConfigurationForm(array $form, FormStateInterface $form_state): array {
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
     unset($form['advanced']);
@@ -315,6 +315,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $view = $view_storage->load($view_id);
     if ($view) {
       $display_options = $view->get('display')[$display_id]['display_options'] ?? [];
+      // Merge with default display options if
+      // display-specific options are not set.
+      if (empty($display_options) && isset($view->get('display')['default']['display_options'])) {
+        $default_display_options = $view->get('display')['default']['display_options'];
+        $display_options = array_merge_recursive($default_display_options, $display_options);
+      }
     }
     else {
       $this->logger->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
@@ -468,7 +474,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         // Apply the modified list title to the element.
         $variables['element'][$child] = $list_title_link;
       }
-
     }
   }
 
