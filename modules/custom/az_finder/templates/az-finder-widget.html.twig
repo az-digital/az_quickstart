@@ -10,6 +10,7 @@
     - depth: If is_nested is TRUE, this holds an array in the form of
       child_id => nesting_level which defines the depth a given element should
       appear in the nested list.
+    - state: The state of the element.
 #}
 
 {% set classes = [
@@ -26,13 +27,16 @@
     {% if is_nested %}
       {% set new_nesting_level = attribute(depth, child) %}
       {% set vars = {
+        id: item['#id'],
         collapse_id: vars.collapse_id ?? item['#attributes']['data-collapse-id'],
         is_expanded: vars.is_expanded ?? item['#attributes']['aria-expanded'],
+        state: vars.state ?? item['#state'],
       } %}
       {% include '@az_finder/az-finder-nested-elements.html.twig' with vars %}
       {% set vars = {
         collapse_id: item['#attributes']['data-collapse-id'] ?? vars.collapse_id,
         is_expanded: item['#attributes']['aria-expanded'] ?? vars.is_expanded,
+        state: item['#state'] ?? vars.state,
       } %}
       {% set current_nesting_level = new_nesting_level %}
     {% else %}

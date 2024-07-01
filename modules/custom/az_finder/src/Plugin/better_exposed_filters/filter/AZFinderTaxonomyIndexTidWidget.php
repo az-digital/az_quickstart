@@ -7,6 +7,7 @@ namespace Drupal\az_finder\Plugin\better_exposed_filters\filter;
 use Drupal\az_finder\AZFinderIcons;
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -59,6 +60,13 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   protected $azFinderIcons;
 
   /**
+   * The config factory service.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * The override settings.
    *
    * @var array
@@ -80,6 +88,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The entity type manager service.
    * @param \Drupal\az_finder\AZFinderIcons $az_finder_icons
    *   The AZFinderIcons service.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The config factory service.
    */
   public function __construct(
     array $configuration,
@@ -87,13 +97,15 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $plugin_definition,
     RendererInterface $renderer,
     EntityTypeManagerInterface $entity_type_manager,
-    AZFinderIcons $az_finder_icons
+    AZFinderIcons $az_finder_icons,
+    ConfigFactoryInterface $config_factory
   ) {
     $configuration += $this->defaultConfiguration();
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->renderer = $renderer;
     $this->entityTypeManager = $entity_type_manager;
     $this->azFinderIcons = $az_finder_icons;
+    $this->configFactory = $config_factory;
   }
 
   /**
@@ -111,8 +123,18 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $plugin_definition,
       $container->get('renderer'),
       $container->get('entity_type.manager'),
-      $container->get('az_finder.icons')
+      $container->get('az_finder.icons'),
+      $container->get('config.factory')
     );
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function defaultConfiguration() {
+    return [
+      'default_states' => [],
+    ] + parent::defaultConfiguration();
   }
 
   /**
@@ -235,9 +257,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * {@inheritdoc}
    */
   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
-    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
-    $filter = $this->handler;
-
     $form = parent::buildConfigurationForm($form, $form_state);
     $form['help'] = ['#markup' => $this->t('This widget allows you to use the Finder widget for hierarchical taxonomy terms.')];
 
@@ -272,8 +291,48 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $variables['is_nested'] = TRUE;
     $variables['depth'] = [];
     $element = $variables['element'];
+    // Retrieve view_id and display_id from the element's #context.
+    $view_id = $element['#context']['#view_id'];
+    $display_id = $element['#context']['#display_id'];
 
-    // Example logic to structure elements (simplified for illustration).
+    // Load the view entity and get the display options.
+    $view_storage = \Drupal::entityTypeManager()->getStorage('view');
+    $view = $view_storage->load($view_id);
+    if ($view) {
+      $display_options = $view->get('display')[$display_id]['display_options'] ?? [];
+    }
+    else {
+      \Drupal::logger('az_finder')->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
+      return;
+    }
+
+    // Get the handler options for taxonomy reference fields.
+    $vid = NULL;
+    if (isset($display_options['filters'])) {
+      foreach ($display_options['filters'] as $filter) {
+        if ($filter['plugin_id'] === 'taxonomy_index_tid') {
+          $vid = $filter['vid'];
+          break;
+        }
+      }
+    }
+    if (!$vid) {
+      \Drupal::logger('az_finder')->error('Unable to find vocabulary ID (vid) in handler options.');
+      return;
+    }
+
+    // Load override settings.
+    $overrides = $this->getOverrideConfigurations($view_id, $display_id);
+    $state_overrides = [];
+    // Create a flat array of the overrides by term id.
+    foreach ($overrides as $vid => $override) {
+      $state_overrides += $override['state_overrides'] ?? [];
+    }
+    $variables['overrides'] = $state_overrides;
+    // Load global default settings.
+    $global_settings = $this->configFactory->get('az_finder.settings');
+    $global_default_state = $global_settings->get('tid_widget.default_state') ?? '';
+
     foreach ($variables['children'] as $child) {
 
       if ($child === 'All') {
@@ -281,12 +340,18 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
         $variables['depth'][$child] = 0;
         continue;
       }
-      // $entity_type = $child_element['#entity_type'];
       $entity_type = 'taxonomy_term';
-      $entity_id = $child;
+      $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
+            // dpm($entity_id);
+
+      $state = $state_overrides[$entity_id] ?? $global_default_state;
+      $variables['element'][$child]['#state'] = $state;
+            // dpm($variables['element'][$child]);
+
       $entity_storage = $this->entityTypeManager->getStorage($entity_type);
       $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
-      if (empty($children) && $entity_type !== 'taxonomy_term') {
+      if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'hide') {
+        unset($variables['element'][$child]);
         continue;
       }
 
@@ -313,23 +378,32 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       else {
         $collapse_icon = $icons['level_0_collapse'];
       }
+
       $variables['depth'][$child] = $depth;
       $list_title['#value'] = $cleaned_title;
       $variables['element'][$child]['#title'] = $list_title['#value'];
       if (!empty($children)) {
         $list_title_link = [
+          '#state' => $state,
           '#type' => 'html_tag',
           '#tag' => 'a',
           '#attributes' => [
             'class' => [],
           ],
         ];
+
         $collapse_id = 'collapse-az-finder-' . $entity_id;
         $list_title_link['#attributes']['data-toggle'] = 'collapse';
         $list_title_link['#attributes']['href'] = '#' . $collapse_id;
         $list_title_link['#attributes']['class'][] = 'd-block';
         $list_title_link['#attributes']['role'] = 'button';
-        $list_title_link['#attributes']['aria-expanded'] = 'true';
+        if ($state === 'expand') {
+          $list_title_link['#attributes']['aria-expanded'] = 'true';
+        }
+        else {
+          $list_title_link['#attributes']['aria-expanded'] = 'false';
+          $list_title_link['#attributes']['class'][] = 'collapsed';
+        }
         $list_title_link['#attributes']['aria-controls'] = $collapse_id;
         $list_title_link['#attributes']['data-collapse-id'] = $collapse_id;
         $list_title_link['#attributes']['class'][] = 'collapser';
@@ -356,22 +430,23 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title['#attributes']['class'][] = 'align-items-center';
         }
         $list_title_link['value'] = $list_title;
-
         // Apply the modified list title to the element.
         $variables['element'][$child] = $list_title_link;
       }
+
     }
 
+    // dpm($variables);
   }
 
   /**
-   * Calculates depth for a given option label.
+   * Calculate the depth of the option.
    *
    * @param mixed $option
-   *   The option, which can be a string label or an object with properties.
+   *   The option to calculate the depth for.
    *
    * @return int
-   *   The calculated depth.
+   *   The depth of the option.
    */
   protected function calculateDepth($option): int {
     // Initialize depth.
@@ -407,6 +482,46 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     // Adjusting depth to match level naming convention.
     $level = $depth + 1;
     return ucfirst($action) . " level $level";
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+    parent::submitConfigurationForm($form, $form_state);
+
+    $default_states = [];
+    $values = $form_state->getValue('default_states');
+    foreach ($values as $tid => $state) {
+      $default_states[$tid] = $state;
+    }
+
+    $this->configuration['default_states'] = $default_states;
+  }
+
+  /**
+   * Get override configurations.
+   */
+  public function getOverrideConfigurations($view_id, $display_id) {
+    $config_key = "$view_id.$display_id";
+    if (!isset(self::$overrides[$config_key])) {
+      $config_name = "az_finder.tid_widget.$view_id.$display_id";
+      $config = $this->configFactory->getEditable($config_name) ?? NULL;
+      $overrides = [];
+      if ($config) {
+        $vocabularies = $config->get('vocabularies') ?? [];
+        foreach ($vocabularies as $vocabulary_id => $vocabulary) {
+          $terms = $vocabulary['terms'];
+          foreach ($terms as $term_id => $override) {
+            if (!empty($override['default_state'])) {
+              $overrides[$vocabulary_id]['state_overrides'][$term_id] = $override['default_state'];
+            }
+          }
+        }
+      }
+      self::$overrides[$config_key] = $overrides;
+    }
+    return self::$overrides[$config_key];
   }
 
 }
