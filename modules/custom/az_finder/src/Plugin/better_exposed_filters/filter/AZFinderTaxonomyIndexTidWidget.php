@@ -17,6 +17,7 @@ use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Template\Attribute;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -67,6 +68,13 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   protected $configFactory;
 
   /**
+   * The logger service.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
    * The override settings.
    *
    * @var array
@@ -90,6 +98,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The AZFinderIcons service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
+   * @param \Psr\Log\LoggerInterface $logger
+   *   The logger service.
    */
   public function __construct(
     array $configuration,
@@ -99,6 +109,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     EntityTypeManagerInterface $entity_type_manager,
     AZFinderIcons $az_finder_icons,
     ConfigFactoryInterface $config_factory,
+    LoggerInterface $logger,
   ) {
     $configuration += $this->defaultConfiguration();
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -106,6 +117,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $this->entityTypeManager = $entity_type_manager;
     $this->azFinderIcons = $az_finder_icons;
     $this->configFactory = $config_factory;
+    $this->logger = $logger;
   }
 
   /**
@@ -124,7 +136,8 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $container->get('renderer'),
       $container->get('entity_type.manager'),
       $container->get('az_finder.icons'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('logger.channel.az_finder')
     );
   }
 
@@ -221,10 +234,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   }
 
   /**
-   * Returns the field ID for the filter.
+   * Returns the field ID for a views filter.
    *
-   * @param object $filter
-   *   The filter object.
+   * @param \Drupal\views\Plugin\views\filter\FilterPluginBase $filter
+   *   A views filter plugin object.
    *
    * @return string
    *   The field ID.
@@ -275,34 +288,33 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    * Preprocesses variables for the az-finder-widget template.
    *
    * @param array &$variables
-   *   An associative array containing the element being processed.
+   *   An associative array containing the element being processed (passed by
+   *   reference).
    */
-  public function preprocessAzFinderTaxonomyIndexTidWidget(array &$variables) {
+  public function preprocessAzFinderTaxonomyIndexTidWidget(array &$variables): void {
     $element = $variables['element'];
     $variables += [
       'wrapper_attributes' => new Attribute(),
       'children' => Element::children($element),
       'attributes' => ['name' => $element['#name']],
     ];
-    if (!empty($element['#hierarchy'])) {
-      $variables['is_nested'] = TRUE;
-    }
 
     $variables['is_nested'] = TRUE;
     $variables['depth'] = [];
     $element = $variables['element'];
+
     // Retrieve view_id and display_id from the element's #context.
     $view_id = $element['#context']['#view_id'];
     $display_id = $element['#context']['#display_id'];
 
     // Load the view entity and get the display options.
-    $view_storage = \Drupal::entityTypeManager()->getStorage('view');
+    $view_storage = $this->entityTypeManager->getStorage('view');
     $view = $view_storage->load($view_id);
     if ($view) {
       $display_options = $view->get('display')[$display_id]['display_options'] ?? [];
     }
     else {
-      \Drupal::logger('az_finder')->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
+      $this->logger->error('Unable to load view: @view_id', ['@view_id' => $view_id]);
       return;
     }
 
@@ -317,7 +329,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       }
     }
     if (!$vid) {
-      \Drupal::logger('az_finder')->error('Unable to find vocabulary ID (vid) in handler options.');
+      $this->logger->error('Unable to find vocabulary ID (vid) in handler options.');
       return;
     }
 
@@ -334,12 +346,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $global_default_state = $global_settings->get('tid_widget.default_state') ?? '';
 
     foreach ($variables['children'] as $child) {
-
       if ($child === 'All') {
         // Special handling for "All" option.
         $variables['depth'][$child] = 0;
         continue;
       }
+
       $entity_type = 'taxonomy_term';
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
       $state = $state_overrides[$entity_id] ?? $global_default_state;
@@ -359,10 +371,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $list_title = [
         '#type' => 'html_tag',
       ];
+
       // Determine if the child has sub-elements (actual children).
       // Calculate depth based on hyphens in the title as a proxy for hierarchy.
       $depth = strlen($original_title) - strlen($cleaned_title);
       $list_title['#value'] = $cleaned_title;
+
       // Decide which icon to use based on depth and state.
       $icons = $this->azFinderIcons->generateSvgIcons();
       $level_0_collapse_icon = $icons['level_0_collapse'];
@@ -453,7 +467,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       }
 
     }
-
   }
 
   /**
@@ -469,9 +482,9 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     // Initialize depth.
     $depth = 0;
     // Ensure $option is a string before processing.
-    $optionLabel = is_object($option) ? (property_exists($option, 'label') ? $option->label : '') : $option;
+    $label = is_object($option) ? (property_exists($option, 'label') ? $option->label : '') : $option;
     // Use a loop or string function to count leading hyphens in the label.
-    while (isset($optionLabel[$depth]) && $optionLabel[$depth] === '-') {
+    while (isset($label[$depth]) && $label[$depth] === '-') {
       $depth++;
     }
 
