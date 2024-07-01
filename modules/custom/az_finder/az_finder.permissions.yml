@@ -1,0 +1,3 @@
+administer az_finder settings:
+  title: 'Administer Quickstart Finder Settings'
+  description: 'Allows users to manage Quickstart Finder settings.'

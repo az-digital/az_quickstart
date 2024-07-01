@@ -21,7 +21,7 @@
     {% if delta %}
       {% for i in 1..delta %}
         {% if new_nesting_level > current_nesting_level %}
-          <ul {{ attributes.setAttribute('id', collapse_id).setAttribute('class', 'az-bef-ul list-unstyled collapse show') }}>
+          <ul {{ attributes.setAttribute('id', collapse_id).setAttribute('class', 'az-bef-ul list-unstyled collapse' ~ (state == 'expand' ? ' show' : '')) }}>
         {% else %}
           </ul>
         {% endif %}

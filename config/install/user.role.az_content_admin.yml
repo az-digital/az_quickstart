@@ -16,6 +16,7 @@ permissions:
   - 'administer blocks'
   - 'administer book outlines'
   - 'administer easy breadcrumb'
+  - 'administer az_finder settings'
   - 'administer flaggings'
   - 'administer flags'
   - 'administer languages'
