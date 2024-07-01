@@ -39,6 +39,12 @@ final class AZFinderVocabulary {
     if ($view) {
       $display = $view->getDisplay($display_id);
       $filters = $display['display_options']['filters'] ?? [];
+
+      // Check if 'filters' is set in display-specific options.
+      if (empty($filters) && isset($view->get('display')['default']['display_options']['filters'])) {
+        $default_filters = $view->get('display')['default']['display_options']['filters'];
+        $filters = array_merge($filters, $default_filters);
+      }
       foreach ($filters as $filter) {
         if (($filter['exposed'] ?? FALSE) !== TRUE) {
           continue;
