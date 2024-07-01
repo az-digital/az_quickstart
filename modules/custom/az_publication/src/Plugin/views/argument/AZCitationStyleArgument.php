@@ -3,15 +3,17 @@
 namespace Drupal\az_publication\Plugin\views\argument;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsArgument;
 use Drupal\views\Plugin\views\argument\ArgumentPluginBase;
 
 /**
  * Argument handler that allows a placeholder citation style.
  *
  * @ingroup views_argument_handlers
- *
- * @ViewsArgument("az_citation_style_argument")
  */
+#[ViewsArgument(
+  id: 'az_citation_style_argument',
+)]
 class AZCitationStyleArgument extends ArgumentPluginBase {
 
   /**
