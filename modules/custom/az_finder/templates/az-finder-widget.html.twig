@@ -27,7 +27,6 @@
     {% if is_nested %}
       {% set new_nesting_level = attribute(depth, child) %}
       {% set vars = {
-        id: item['#id'],
         collapse_id: vars.collapse_id ?? item['#attributes']['data-collapse-id'],
         is_expanded: vars.is_expanded ?? item['#attributes']['aria-expanded'],
         state: vars.state ?? item['#state'],
