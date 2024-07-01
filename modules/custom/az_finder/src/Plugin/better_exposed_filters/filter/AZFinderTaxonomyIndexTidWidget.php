@@ -69,7 +69,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
   /**
    * The logger service.
-   * 
+   *
    * @var \Psr\Log\LoggerInterface
    */
   protected $logger;
@@ -235,10 +235,10 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
 
   /**
    * Returns the field ID for a views filter.
-   * 
+   *
    * @param \Drupal\views\Plugin\views\filter\FilterPluginBase $filter
    *   A views filter plugin object.
-   * 
+   *
    * @return string
    *   The field ID.
    */
@@ -356,11 +356,9 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       }
       $entity_type = 'taxonomy_term';
       $entity_id = is_numeric($child) ? $child : str_replace('tid:', '', $child);
-            // dpm($entity_id);
 
       $state = $state_overrides[$entity_id] ?? $global_default_state;
       $variables['element'][$child]['#state'] = $state;
-            // dpm($variables['element'][$child]);
 
       $entity_storage = $this->entityTypeManager->getStorage($entity_type);
       $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
