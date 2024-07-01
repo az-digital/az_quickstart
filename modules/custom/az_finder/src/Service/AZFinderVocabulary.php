@@ -11,7 +11,7 @@ use Drupal\Core\StringTranslation\TranslationInterface;
 /**
  * Provides helper methods for working with vocabularies in AZ Finder.
  */
-class AZFinderVocabulary {
+final class AZFinderVocabulary {
 
   use StringTranslationTrait;
 
@@ -20,7 +20,7 @@ class AZFinderVocabulary {
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  private $entityTypeManager;
 
   /**
    * Constructs a new AZFinderVocabulary object.

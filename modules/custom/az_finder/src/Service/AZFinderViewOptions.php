@@ -10,21 +10,21 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 /**
  * Provides helper methods for working with view options in AZ Finder.
  */
-class AZFinderViewOptions {
+final class AZFinderViewOptions {
 
   /**
    * The cache backend.
    *
    * @var \Drupal\Core\Cache\CacheBackendInterface
    */
-  protected $cacheBackend;
+  private $cacheBackend;
 
   /**
    * The entity type manager.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entityTypeManager;
+  private $entityTypeManager;
 
   /**
    * Constructs a new AZFinderViewOptions object.

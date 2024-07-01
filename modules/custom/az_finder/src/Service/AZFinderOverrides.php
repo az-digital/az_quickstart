@@ -16,7 +16,7 @@ final class AZFinderOverrides {
    *
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
-  protected $configFactory;
+  private $configFactory;
 
   /**
    * AZFinderOverrides constructor.
