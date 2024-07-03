@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Editing Teams'
+vid: az_editing_teams
+description: 'Teams that are authorized to make changes on the site'
+weight: 0
+new_revision: false
