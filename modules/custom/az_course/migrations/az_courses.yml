@@ -32,6 +32,10 @@ source:
       label: Catalog Number
       selector: ns1:catalog_nbr
     -
+      name: units
+      label: Units
+      selector: ns1:units
+    -
       # Squash data from multiple sections into this one.
       name: course_type
       label: Course Type
@@ -58,6 +62,10 @@ process:
   field_az_course_description/value: description
   field_az_subject_code: subject_code
   field_az_catalog_number: catalog_number
+  field_az_course_units:
+    plugin: callback
+    callable: intval
+    source: units
   field_az_subject_and_catalog:
     plugin: concat
     source:

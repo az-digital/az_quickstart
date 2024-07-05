@@ -3,27 +3,28 @@
 namespace Drupal\az_accordion\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Defines the 'az_accordion' field type.
- *
- * @FieldType(
- *   id = "az_accordion",
- *   label = @Translation("Accordion"),
- *   category = @Translation("AZ Quickstart"),
- *   default_widget = "az_accordion",
- *   default_formatter = "az_accordion_default"
- * )
  *
  * @property string $title
  * @property string $body
  * @property string $body_format
  * @property bool $collapsed
  */
+#[FieldType(
+  id: "az_accordion",
+  label: new TranslatableMarkup("Accordion"),
+  category: new TranslatableMarkup("AZ Quickstart"),
+  default_widget: "az_accordion",
+  default_formatter: "az_accordion_default",
+)]
 class AZAccordionItem extends FieldItemBase {
 
   /**
