@@ -12,6 +12,10 @@
           $('#block-az-barrio-offcanvas-searchform input').trigger('focus');
         }
       });
+
+      $('#headerOffcanvas>section').removeClass('col-md');
+      $('#headerOffcanvas ul').removeClass().addClass('clearfix navbar-nav');
+      $('#headerOffcanvas .nav-item>a').removeClass('text-muted');
     }
   };
 })(jQuery, Drupal);
