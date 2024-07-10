@@ -117,35 +117,39 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     // Page description.
     $form['description'] = [
       '#type' => 'item',
-      '#markup' => t('Manage the settings you would like to use with exposed AZ Finder forms.'),
+      '#markup' => t('
+        <p>Manage the settings you would like to use with exposed AZ Finder forms.</p>
+        <p>For more information about the Quickstart Finder, please <a href="https://quickstart.arizona.edu/create-content/quickstart-finder">visit the Quickstart website</a>.</p>
+      '),
     ];
 
-    // How this feature works section.
+    // How these settings work section.
     $form['how_it_works'] = [
       '#type' => 'details',
-      '#title' => $this->t('How does this feature work?'),
+      '#title' => $this->t('How do these settings work?'),
       '#open' => FALSE,
-      '#description' => $this->t('Details on how it works.'),
+      '#description' => $this->t('
+      <p>The default settings are appied to all taxonomy vocabularies as a starting point.</p>
+      <p>Each Finder view display can have custom overrides to expand or collapse specific sections by default.</p>
+      '),
     ];
 
-    // Term ID Widget Settings section.
+    // Filter Widget Settings section.
     $form['az_finder_tid_widget'] = [
       '#type' => 'details',
-      '#title' => $this->t('Term ID Widget Settings'),
+      '#title' => $this->t('Filter Widget Settings'),
       '#open' => TRUE,
-      '#description' => $this->t('Configure the default settings for term ID widgets.'),
     ];
 
     // Default state select field.
     $form['az_finder_tid_widget']['default_state'] = [
       '#type' => 'select',
-      '#title' => $this->t('Select Default State Setting'),
+      '#title' => $this->t('Default Display'),
+      '#description' => $this->t('Choose how taxonomy terms with children should behave by default everywhere.<br />These settings are not context aware, so if you choose collapsed, your term must be using a collapsible element for this to work.'),
       '#options' => [
         'expand' => $this->t('Expanded'),
         'collapse' => $this->t('Collapsed'),
       ],
-      '#empty_option' => $this->t('- Select -'),
-      '#description' => $this->t('Choose how term ID widgets should behave by default everywhere. These settings are not context aware, so if you choose collapse, your term must be using a collapsible element for this to work.'),
       '#config_target' => 'az_finder.settings:tid_widget.default_state',
     ];
 
@@ -166,11 +170,10 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
     $form['az_finder_tid_widget']['overrides']['select_view_display_container'] = [
       '#type' => 'container',
-      '#prefix' => '<div class="container-inline">',
-      '#suffix' => '</div>',
       'select_view_display' => [
         '#type' => 'select',
-        '#title' => $this->t('Select View and Display'),
+        '#title' => $this->t('Overrides'),
+        '#description' => $this->t('Select a particular filter widget to override the default display for each taxonomy term.'),
         '#options' => $this->azFinderViewOptions->getViewOptions(),
         '#empty_option' => $this->t('- Select -'),
         '#attributes' => ['id' => 'js-az-select-view-display'],
