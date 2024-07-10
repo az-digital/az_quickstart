@@ -49,7 +49,7 @@ final class AZFinderOverrides {
         $display_options['filters'] = $default_filters;
       }
 
-      $overrides[$view_id . '_' . $display_id] = [
+      $overrides[$view_id . ':' . $display_id] = [
         'view_id' => $view_id,
         'display_id' => $display_id,
         'vocabularies' => $display_options['filters']['vocabularies'] ?? [],
