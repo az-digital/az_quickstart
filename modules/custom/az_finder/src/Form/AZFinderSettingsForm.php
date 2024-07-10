@@ -117,7 +117,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     // Page description.
     $form['description'] = [
       '#type' => 'item',
-      '#markup' => t('
+      '#markup' => $this->t('
         <p>Manage the settings you would like to use with exposed AZ Finder forms.</p>
         <p>For more information about the Quickstart Finder, please <a href="https://quickstart.arizona.edu/create-content/quickstart-finder">visit the Quickstart website</a>.</p>
       '),
@@ -157,10 +157,19 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $config_overrides = $this->azFinderOverrides->getExistingOverrides();
 
     // Get current overrides from form state.
-    $session_overrides = $form_state->get('overrides') ?? [];
+    $session_overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
+
+    // Normalize session overrides structure if needed.
+    $normalized_session_overrides = [];
+    foreach ($session_overrides as $key => $override) {
+      if (!isset($override['origin'])) {
+        $override['origin'] = 'session';
+      }
+      $normalized_session_overrides[$key] = $override;
+    }
 
     // Combine overrides.
-    $overrides = array_merge($config_overrides, $session_overrides);
+    $overrides = array_merge($config_overrides, $normalized_session_overrides);
 
     $form['az_finder_tid_widget']['overrides'] = [
       '#type' => 'container',
@@ -207,10 +216,8 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     }
 
     // Save combined overrides to the form state.
-    $form_state->set('overrides', $overrides);
-
+    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
     return parent::buildForm($form, $form_state);
-
   }
 
   /**
@@ -224,8 +231,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
   public function submitOverride(array &$form, FormStateInterface $form_state) {
     // Retrieve selected view and display.
     $selected_view_display = $form_state->getValue([
-      'description',
-      'how_it_works',
       'az_finder_tid_widget',
       'overrides',
       'select_view_display_container',
@@ -244,9 +249,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
     // Optionally, provide feedback or perform additional actions.
     $this->messenger()->addMessage($this->t('Override created for @view_display.', ['@view_display' => $selected_view_display]));
-
-    // Rebuild the form to reflect changes.
-    $form_state->setRebuild(TRUE);
   }
 
   /**
@@ -263,8 +265,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
   public function ajaxAddOverride(array &$form, FormStateInterface $form_state): array {
     // Get the selected option from the form state.
     $selected_option = $form_state->getValue([
-      'description',
-      'how_it_works',
       'az_finder_tid_widget',
       'overrides',
       'select_view_display_container',
@@ -280,15 +280,12 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     ];
 
     // Ensure the overrides array is present in the form state.
-    $overrides = $form_state->get('overrides') ?? [];
-
+    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
     // Update the overrides with the new override.
     $overrides["$view_id:$display_id"] = $override;
-    $form_state->set('overrides', $overrides);
-
+    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
     // Add the override section to the form.
     $this->addOverrideSection($form, $form_state, $override);
-
     // Set the rebuild flag to ensure the form is rebuilt.
     $form_state->setRebuild(TRUE);
 
@@ -306,15 +303,14 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
    * @param array $override
    *   The override data.
    *
-   * @return array
-   *   The form array.
+   * @return ?array
+   *   Return the override section or null.
    */
-  public function addOverrideSection(array &$form, FormStateInterface $form_state, array $override) {
+  public function addOverrideSection(array &$form, FormStateInterface $form_state, array $override): ?array {
     $key = "{$override['view_id']}:{$override['display_id']}";
     $view_id = $override['view_id'];
     $display_id = $override['display_id'];
-
-    if (!isset($form['az_finder_tid_widget']['overrides'][$key])) {
+    if ($key !== ':' && !isset($form['az_finder_tid_widget']['overrides'][$key])) {
       $form['az_finder_tid_widget']['overrides'][$key] = [
         '#type' => 'details',
         '#title' => $this->t("Override Settings for :view_id - :display_id", [
@@ -355,9 +351,8 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       }
 
     }
-    $overrides = $form_state->get('overrides') ?? [];
-    $form_state->set('overrides', $overrides);
-    $form_state->setRebuild(TRUE);
+    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
+    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
     return $form['az_finder_tid_widget']['overrides'][$key];
   }
 
@@ -368,11 +363,12 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $triggering_element = $form_state->getTriggeringElement();
     $button_name = $triggering_element['#name'];
     $key = str_replace('delete-', '', $button_name);
-    $overrides = $form_state->get('overrides') ?? [];
+    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
     unset($overrides[$key]);
     unset($form['az_finder_tid_widget']['overrides'][$key]);
     $this->configFactory->getEditable('az_finder.tid_widget.' . $key)->delete();
-    $form_state->set('overrides', $overrides);
+    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
+
     // Rebuild the form.
     $form_state->setRebuild(TRUE);
 
@@ -399,12 +395,9 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       $editable_config->delete();
     }
     // Update the overrides in form state.
-    $overrides = $form_state->get('overrides') ?? [];
+    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
     unset($overrides[$key]);
-    $form_state->set('overrides', $overrides);
-
-    // Set the rebuild flag to ensure the form is rebuilt.
-    $form_state->setRebuild(TRUE);
+    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
   }
 
 }
