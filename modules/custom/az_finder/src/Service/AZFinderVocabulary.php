@@ -79,7 +79,6 @@ final class AZFinderVocabulary {
       '#type' => 'table',
       '#header' => [
         $this->t('Terms in :vocabulary vocabulary', [':vocabulary' => $vocabulary_label]),
-        $this->t('Default state'),
         $this->t('Override'),
       ],
       '#empty' => $this->t('No terms found.'),
@@ -95,7 +94,6 @@ final class AZFinderVocabulary {
           '' => $this->t('Default'),
           'expand' => $this->t('Expanded'),
           'collapse' => $this->t('Collapsed'),
-          'hide' => $this->t('Hidden'),
         ],
         '#config_target' => "$vocabulary_config_path.terms.{$term->tid}.default_state",
       ];

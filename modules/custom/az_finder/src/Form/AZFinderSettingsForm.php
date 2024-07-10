@@ -129,7 +129,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       '#options' => [
         'expand' => $this->t('Expanded'),
         'collapse' => $this->t('Collapsed'),
-        'hide' => $this->t('Hidden'),
       ],
       '#empty_option' => $this->t('- Select -'),
       '#description' => $this->t('Choose how term ID widgets should behave by default everywhere. These settings are not context aware, so if you choose collapse, your term must be using a collapsible element for this to work.'),
@@ -171,6 +170,17 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
           'effect' => 'fade',
         ],
         '#submit' => ['::submitOverride'],
+        '#attributes' => [
+          'class' => [
+            'button',
+            'button--primary'
+          ],
+        ],
+        '#states' => [
+          'disabled' => [
+            ':input[name="az_finder_tid_widget[overrides][select_view_display_container][select_view_display]"]' => ['value' => ''],
+          ],
+        ],
       ],
     ];
 
@@ -293,6 +303,21 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
         '#description' => $this->t('Overrides are grouped by vocabulary. Each vocabulary can have its own settings for how term ID widgets behave when they have child terms.'),
         '#tree' => TRUE,
       ];
+      $form['az_finder_tid_widget']['overrides'][$key]['delete'] = [
+        '#type' => 'submit',
+        '#value' => $this->t('Delete'),
+        '#ajax' => [
+          'callback' => '::ajaxDeleteOverride',
+          'wrapper' => 'js-overrides-container',
+          'effect' => 'fade',
+        ],
+        '#name' => 'delete-' . $key,
+        '#submit' => ['::submitDeleteOverride'],
+        '#attributes' => [
+          'class' => ['button--small'],
+        ],
+      ];
+
       $config_name = "az_finder.tid_widget.{$view_id}.{$display_id}";
       $config = $this->config($config_name);
       $vocabulary_ids = $this->azFinderVocabulary->getVocabularyIdsForFilter($view_id, $display_id, 'taxonomy_index_tid');
@@ -307,17 +332,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
       }
 
-      $form['az_finder_tid_widget']['overrides'][$key]['delete'] = [
-        '#type' => 'submit',
-        '#value' => $this->t('Delete'),
-        '#ajax' => [
-          'callback' => '::ajaxDeleteOverride',
-          'wrapper' => 'js-overrides-container',
-          'effect' => 'fade',
-        ],
-        '#name' => 'delete-' . $key,
-        '#submit' => ['::submitDeleteOverride'],
-      ];
     }
     $overrides = $form_state->get('overrides') ?? [];
     $form_state->set('overrides', $overrides);

@@ -362,11 +362,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $variables['element'][$child]['#state'] = $state;
       $entity_storage = $this->entityTypeManager->getStorage($entity_type);
       $children = method_exists($entity_storage, 'loadChildren') ? $entity_storage->loadChildren($entity_id) : [];
-      if (isset($state_overrides[$entity_id]) && $state_overrides[$entity_id] === 'hide') {
-        unset($variables['element'][$child]);
-        continue;
-      }
-
       $original_title = $element[$child]['#title'];
       if (empty($original_title)) {
         continue;
