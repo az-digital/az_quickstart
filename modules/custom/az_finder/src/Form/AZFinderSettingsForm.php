@@ -153,7 +153,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $config_overrides = $this->azFinderOverrides->getExistingOverrides();
 
     // Get current overrides from form state.
-    $session_overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
+    $session_overrides = $form_state->get('overrides') ?? [];
 
     // Combine overrides.
     $overrides = array_merge($config_overrides, $session_overrides);
@@ -207,6 +207,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $form_state->set('overrides', $overrides);
 
     return parent::buildForm($form, $form_state);
+
   }
 
   /**
