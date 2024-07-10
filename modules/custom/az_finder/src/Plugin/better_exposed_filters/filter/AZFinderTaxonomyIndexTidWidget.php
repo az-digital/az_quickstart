@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\az_finder\Plugin\better_exposed_filters\filter;
 
-use Drupal\az_finder\AZFinderIcons;
+use Drupal\az_finder\Service\AZFinderIcons;
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
@@ -56,7 +56,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * The AZFinderIcons service.
    *
-   * @var \Drupal\az_finder\AZFinderIcons
+   * @var \Drupal\az_finder\Service\AZFinderIcons
    */
   protected $azFinderIcons;
 
@@ -94,7 +94,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The renderer service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
-   * @param \Drupal\az_finder\AZFinderIcons $az_finder_icons
+   * @param \Drupal\az_finder\Service\AZFinderIcons $az_finder_icons
    *   The AZFinderIcons service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory service.
