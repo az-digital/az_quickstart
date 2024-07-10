@@ -114,6 +114,20 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
   public function buildForm(array $form, FormStateInterface $form_state): array {
     $form['#tree'] = TRUE;
 
+    // Page description.
+    $form['description'] = [
+      '#type' => 'item',
+      '#markup' => t('Manage the settings you would like to use with exposed AZ Finder forms.'),
+    ];
+
+    // How this feature works section.
+    $form['how_it_works'] = [
+      '#type' => 'details',
+      '#title' => $this->t('How does this feature work?'),
+      '#open' => FALSE,
+      '#description' => $this->t('Details on how it works.'),
+    ];
+
     // Term ID Widget Settings section.
     $form['az_finder_tid_widget'] = [
       '#type' => 'details',
@@ -206,6 +220,8 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
   public function submitOverride(array &$form, FormStateInterface $form_state) {
     // Retrieve selected view and display.
     $selected_view_display = $form_state->getValue([
+      'description',
+      'how_it_works',
       'az_finder_tid_widget',
       'overrides',
       'select_view_display_container',
@@ -243,6 +259,8 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
   public function ajaxAddOverride(array &$form, FormStateInterface $form_state): array {
     // Get the selected option from the form state.
     $selected_option = $form_state->getValue([
+      'description',
+      'how_it_works',
       'az_finder_tid_widget',
       'overrides',
       'select_view_display_container',
