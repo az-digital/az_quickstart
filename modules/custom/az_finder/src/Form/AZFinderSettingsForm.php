@@ -185,7 +185,9 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
         '#description' => $this->t('Select a particular filter widget to override the default display for each taxonomy term.'),
         '#options' => $this->azFinderViewOptions->getViewOptions(),
         '#empty_option' => $this->t('- Select -'),
-        '#attributes' => ['id' => ['js-az-select-view-display'],],
+        '#attributes' => [
+          'id' => 'js-az-select-view-display',
+        ],
       ],
       'override' => [
         '#type' => 'submit',
