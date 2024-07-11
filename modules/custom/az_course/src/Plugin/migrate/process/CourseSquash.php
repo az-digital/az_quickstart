@@ -2,6 +2,7 @@
 
 namespace Drupal\az_course\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -29,12 +30,11 @@ use Drupal\migrate\Row;
  * a three items array [bar, alpha, beta], suitable for import.
  *
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
- *
- * @MigrateProcessPlugin(
- *   id = "course_squash",
- *   handle_multiples = TRUE
- * )
  */
+#[MigrateProcess(
+  id: "course_squash",
+  handle_multiples: TRUE,
+)]
 class CourseSquash extends ProcessPluginBase {
 
   /**

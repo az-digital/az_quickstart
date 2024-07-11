@@ -5,6 +5,7 @@ namespace Drupal\az_paragraphs\Plugin\migrate\process;
 use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\Component\Plugin\Exception\PluginNotFoundException;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
@@ -106,11 +107,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *         az_display_settings:
  *           bottom_spacing: '@bottom_spacing_processed'
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "az_paragraphs_behavior_settings"
- * )
  */
+#[MigrateProcess('az_paragraphs_behavior_settings')]
 class ParagraphsBehaviorSettings extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**

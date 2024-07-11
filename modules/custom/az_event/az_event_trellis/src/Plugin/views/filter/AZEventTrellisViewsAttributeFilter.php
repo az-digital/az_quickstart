@@ -6,6 +6,7 @@ namespace Drupal\az_event_trellis\Plugin\views\filter;
 
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\taxonomy\Entity\Term;
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views_remote_data\Plugin\views\PropertyPluginTrait;
 use Drupal\views_remote_data\Plugin\views\query\RemoteDataQuery;
@@ -13,9 +14,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Filter Trellis event API values according to Enterprise Attributes.
- *
- * @ViewsFilter("az_event_trellis_views_attribute_filter")
  */
+#[ViewsFilter("az_event_trellis_views_attribute_filter")]
 class AZEventTrellisViewsAttributeFilter extends FilterPluginBase {
 
   use PropertyPluginTrait;

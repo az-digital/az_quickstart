@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_core\Drush\Commands;
 
@@ -26,7 +26,7 @@ final class AZEntityListCommands extends DrushCommands {
    * Constructs a new AzEntityListDrushCommands object.
    */
   public function __construct(
-    EntityTypeManagerInterface $entity_type_manager
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     parent::__construct();
     $this->entityTypeManager = $entity_type_manager;
