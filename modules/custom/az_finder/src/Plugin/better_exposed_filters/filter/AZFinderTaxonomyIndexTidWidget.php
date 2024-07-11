@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_finder\Plugin\better_exposed_filters\filter;
 
@@ -80,7 +80,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     $plugin_definition,
     RendererInterface $renderer,
     EntityTypeManagerInterface $entity_type_manager,
-    AZFinderIcons $az_finder_icons
+    AZFinderIcons $az_finder_icons,
   ) {
     $configuration += $this->defaultConfiguration();
     parent::__construct($configuration, $plugin_id, $plugin_definition);
@@ -96,7 +96,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     ContainerInterface $container,
     array $configuration,
     $plugin_id,
-    $plugin_definition
+    $plugin_definition,
   ) {
     return new static(
       $configuration,
@@ -183,7 +183,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $this->setFormOptions($form, $field_id);
       $svg_icons = $this->azFinderIcons->generateSvgIcons();
       foreach ($svg_icons as $key => $icon) {
-        $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->renderPlain($icon);
+        $form['#attached']['drupalSettings']['azFinder']['icons'][$key] = $this->renderer->renderInIsolation($icon);
       }
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
