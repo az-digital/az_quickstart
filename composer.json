@@ -36,7 +36,7 @@
         "citation-style-language/styles": "0.0.434",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
-        "drupal/access_unpublished": "1.5.0",
+        "drupal/access_unpublished": "1.6.0",
         "drupal/antibot": "2.0.3",
         "drupal/asset_injector": "2.20.0",
         "drupal/auto_entitylabel": "3.2.0",
@@ -48,20 +48,20 @@
         "drupal/bootstrap_utilities": "2.0.0",
         "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.1",
-        "drupal/ckeditor_bs_grid": "2.0.11",
+        "drupal/ckeditor_bs_grid": "2.0.12",
         "drupal/ckeditor_indentblock": "1.0",
         "drupal/coffee": "1.4.0",
         "drupal/config_distro": "2.0.0-alpha2",
         "drupal/config_ignore": "3.3.0",
         "drupal/config_ignore_readonly": "2.2.0-beta1",
         "drupal/config_provider": "3.0.0-alpha1",
-        "drupal/config_readonly": "1.0.0-beta5",
+        "drupal/config_readonly": "1.0.0",
         "drupal/config_snapshot": "2.0.0-alpha1",
         "drupal/config_split": "2.0.1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.3.0",
-        "drupal/crop": "2.3.0",
+        "drupal/core-recommended": "10.3.1",
+        "drupal/crop": "2.4.0",
         "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.0",
         "drupal/draggableviews": "2.1.4",
@@ -151,17 +151,11 @@
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
             },
-            "drupal/ckeditor_bs_grid": {
-                "Warning: Undefined array key 'default_layout' (3442400)": "https://www.drupal.org/files/issues/2024-04-22/ckeditor_bs_grid-suppress_warnings.patch"
-            },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
             "drupal/config_provider": {
                 "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
-            },
-            "drupal/config_readonly": {
-                "Whitelist for ConfigEntityListBuilder (3042241)": "https://www.drupal.org/files/issues/2024-05-08/3042241-11.patch"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
