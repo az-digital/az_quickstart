@@ -1,0 +1,24 @@
+<?php
+/**
+ * @file
+ * Install, update and uninstall functions for az_paragraphs_views_side_by_side
+ * module.
+ */
+
+/**
+ * Install az_news, az_person, az_event, az_flexible_page modules.
+ *
+ * Install modules that contain configuration dependencies.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/3445
+ * @see https://github.com/az-digital/az_quickstart/pull/3446
+ */
+function az_paragraphs_views_side_by_side_update_1021101() {
+  $modules_to_install = [
+    'az_news',
+    'az_event',
+    'az_person',
+    'az_flexible_page',
+  ];
+  \Drupal::service('module_installer')->install($modules_to_install);
+}
