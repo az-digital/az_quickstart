@@ -1,8 +1,8 @@
 <?php
+
 /**
  * @file
- * Install, update and uninstall functions for az_paragraphs_views_side_by_side
- * module.
+ * Install, update and uninstall functions for this module.
  */
 
 /**
