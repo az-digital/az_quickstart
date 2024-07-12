@@ -1,4 +1,3 @@
-uuid: 54fe15dc-c31b-41b9-acec-46732c7b90f5
 langcode: en
 status: true
 dependencies:
@@ -20,8 +19,6 @@ dependencies:
     - taxonomy
     - user
     - views_bootstrap
-_core:
-  default_config_hash: gVHDx_AS9aFKOCP99iH1aKt2JOs2vzc2OpcAAPFGy-o
 id: az_exposed_news
 label: 'AZ News Exposed Filters'
 module: views
