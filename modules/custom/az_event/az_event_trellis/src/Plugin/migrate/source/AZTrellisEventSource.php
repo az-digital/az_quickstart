@@ -1,19 +1,17 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Plugin\migrate\source;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 use Drupal\migrate\Plugin\MigrationInterface;
 
 /**
  * Source plugin for retrieving data via Trellis events.
- *
- * @MigrateSource(
- *   id = "az_trellis_events_api"
- * )
  */
+#[MigrateProcess('az_trellis_events_api')]
 class AZTrellisEventSource extends SourcePluginBase {
 
   /**
