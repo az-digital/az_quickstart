@@ -129,7 +129,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       '#title' => $this->t('How do these settings work?'),
       '#open' => FALSE,
       '#description' => $this->t('
-        <p>The default settings are appied to all taxonomy vocabularies as a starting point.</p>
+        <p>The default settings are applied to all taxonomy vocabularies as a starting point.</p>
         <p>Each Finder view display can have custom overrides to expand or collapse specific sections by default.</p>
       '),
     ];
