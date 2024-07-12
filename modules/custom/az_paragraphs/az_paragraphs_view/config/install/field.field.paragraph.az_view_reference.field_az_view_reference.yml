@@ -1,5 +1,3 @@
-
-uuid: aefb616d-0319-4447-b3e4-81e0a9ade8eb
 langcode: en
 status: true
 dependencies:
@@ -8,8 +6,6 @@ dependencies:
     - paragraphs.paragraphs_type.az_view_reference
   module:
     - viewsreference
-_core:
-  default_config_hash: JMasze9bsX0o4f64PHDak4KqkCOgUDgFGAapYtOs2I0
 id: paragraph.az_view_reference.field_az_view_reference
 field_name: field_az_view_reference
 entity_type: paragraph
