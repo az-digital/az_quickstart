@@ -586,6 +586,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $css_settings = $settings['css_settings'];
     $fid = $media->getSource()->getSourceFieldValue($media);
     $file = $this->entityTypeManager->getStorage('file')->load($fid);
+    if (empty($file)) {
+      return $az_background_media;
+    }
     $file_uri = $file->getFileUri();
 
     if ($settings['style'] !== 'bottom') {
