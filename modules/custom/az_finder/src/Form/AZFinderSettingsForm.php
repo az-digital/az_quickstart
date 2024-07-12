@@ -317,6 +317,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       $form['az_finder_tid_widget']['configure_overrides'] = [
         '#type' => 'item',
         '#title' => $this->t('Configure Applied Overrides'),
+        '#weight' => -1,
       ];
       $form['az_finder_tid_widget']['overrides'][$key] = [
         '#type' => 'details',
