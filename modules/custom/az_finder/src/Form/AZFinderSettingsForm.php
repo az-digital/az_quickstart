@@ -146,6 +146,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       '#type' => 'select',
       '#title' => $this->t('Default Display'),
       '#description' => $this->t('Choose how taxonomy terms with children should behave by default everywhere.<br />These settings are not context aware, so if you choose collapsed, your term must be using a collapsible element for this to work.'),
+      '#weight' => -2,
       '#options' => [
         'expand' => $this->t('Expanded'),
         'collapse' => $this->t('Collapsed'),
