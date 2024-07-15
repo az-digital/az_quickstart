@@ -2,6 +2,7 @@
 
 namespace Drupal\az_event\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -10,12 +11,8 @@ use Drupal\smart_date_recur\Entity\SmartDateRule;
 /**
  * Process plugin to create smart_date rule instances.
  *
- * @MigrateProcessPlugin(
- *   id = "smart_date_create_recurrence_on_field"
- * )
- *
- *  To create smart_date recurring date instances on the date field do
- *  the following.
+ * To create smart_date recurring date instances on the date field do
+ * the following.
  *
  * @code
  * field_az_event_date:
@@ -23,6 +20,7 @@ use Drupal\smart_date_recur\Entity\SmartDateRule;
  *   source: rid
  * @endcode
  */
+#[MigrateProcess('smart_date_create_recurrence_on_field')]
 class SmartDateCreateRecurrenceOnField extends ProcessPluginBase {
 
   /**

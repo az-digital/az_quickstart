@@ -15,7 +15,7 @@ steps:
       - cd az-quickstart-scaffolding
       - composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
       - composer config use-github-api false
-      - composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:dev-${BRANCH_NAME}
+      - composer require --no-update az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
       - composer install -o
   - name: Run PHP_CodeSniffer coding standards checks

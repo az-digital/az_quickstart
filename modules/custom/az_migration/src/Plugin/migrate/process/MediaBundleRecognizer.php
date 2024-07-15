@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -28,12 +29,9 @@ use Drupal\migrate\Row;
  *     prefix: 'az_'
  * @endcode
  *
- * @MigrateProcessPlugin(
- *   id = "az_media_bundle_recognizer"
- * )
- *
  * @return String that represents a bundle machine name.
  */
+#[MigrateProcess('az_media_bundle_recognizer')]
 class MediaBundleRecognizer extends ProcessPluginBase {
 
   /**

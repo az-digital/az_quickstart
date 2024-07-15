@@ -6,18 +6,19 @@ namespace Drupal\az_finder\Plugin\views\exposed_form;
 
 use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\views\Attribute\ViewsExposedForm;
 
 /**
  * Exposed form plugin that provides a basic exposed form.
  *
  * @ingroup views_exposed_form_plugins
- *
- * @ViewsExposedForm(
- *   id = "az_better_exposed_filters",
- *   title = @Translation("Quickstart Exposed Filters"),
- *   help = @Translation("Better exposed filters with additional Quickstart Settings.")
- * )
  */
+#[ViewsExposedForm(
+  id: 'az_better_exposed_filters',
+  title: new TranslatableMarkup('Quickstart Exposed Filters'),
+  help: new TranslatableMarkup('Better exposed filters with additional Quickstart Settings.')
+)]
 class QuickstartExposedFilters extends BetterExposedFilters {
 
   /**
