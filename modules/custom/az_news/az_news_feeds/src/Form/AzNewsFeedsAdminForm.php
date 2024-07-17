@@ -71,7 +71,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   }
 
   /**
-   * Returns array of term options from UArizona News.
+   * Returns array of term options from University of Arizona News.
    */
   public function getRemoteTermOptions(): array {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
