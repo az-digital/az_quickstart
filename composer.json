@@ -92,7 +92,7 @@
         "drupal/menu_block": "1.11.0",
         "drupal/menu_link_attributes": "1.3.0",
         "drupal/metatag": "2.0.0",
-        "drupal/migrate_plus": "6.0.2",
+        "drupal/migrate_plus": "6.0.3",
         "drupal/migrate_queue_importer": "2.1.1",
         "drupal/migrate_tools": "6.0.4",
         "drupal/optional_end_date": "1.3.0",
