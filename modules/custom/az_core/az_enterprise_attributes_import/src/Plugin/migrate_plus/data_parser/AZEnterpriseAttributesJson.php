@@ -17,7 +17,7 @@ class AZEnterpriseAttributesJson extends Json {
   /**
    * {@inheritdoc}
    */
-  protected function getSourceData($url): array {
+  protected function getSourceData($url, $item_selector = ''): array {
     $source_data = parent::getSourceData($url);
     // Create nested children.
     foreach ($source_data as $index => $item) {
