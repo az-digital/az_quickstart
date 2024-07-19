@@ -163,6 +163,11 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     // Normalize session overrides structure if needed.
     $normalized_session_overrides = [];
     foreach ($session_overrides as $key => $override) {
+      // Filter out non-override form elements.
+      if (empty($override['view_id'])) {
+        continue;
+      }
+      // Provide an origin if one is missing.
       if (!isset($override['origin'])) {
         $override['origin'] = 'session';
       }
@@ -215,6 +220,13 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       ],
     ];
 
+    // Add tooltip if we have overrides.
+    if (!empty($overrides)) {
+      $form['az_finder_tid_widget']['overrides']['configure_overrides'] = [
+        '#type' => 'item',
+        '#title' => $this->t('Configure Applied Overrides'),
+      ];
+    }
     // Add override sections.
     foreach ($overrides as $override) {
       $this->addOverrideSection($form, $form_state, $override);
@@ -252,6 +264,19 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     // Save the configuration.
     $config->save();
 
+    // Create the override for form state.
+    $override = [
+      'view_id' => $view_id,
+      'display_id' => $display_id,
+      'origin' => 'session',
+    ];
+    // Ensure the overrides array is present in the form state.
+    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
+    // Update the overrides with the new override.
+    $overrides["$view_id:$display_id"] = $override;
+    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
+    $form_state->setRebuild(TRUE);
+
     // Optionally, provide feedback or perform additional actions.
     $this->messenger()->addMessage($this->t('Override created for @view_display.', ['@view_display' => $selected_view_display]));
   }
@@ -268,32 +293,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
    *   The updated overrides container.
    */
   public function ajaxAddOverride(array &$form, FormStateInterface $form_state): array {
-    // Get the selected option from the form state.
-    $selected_option = $form_state->getValue([
-      'az_finder_tid_widget',
-      'overrides',
-      'select_view_display_container',
-      'select_view_display',
-    ]);
-
-    // Split the selected option into view_id and display_id.
-    [$view_id, $display_id] = explode(':', $selected_option);
-    $override = [
-      'view_id' => $view_id,
-      'display_id' => $display_id,
-      'origin' => 'session',
-    ];
-
-    // Ensure the overrides array is present in the form state.
-    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
-    // Update the overrides with the new override.
-    $overrides["$view_id:$display_id"] = $override;
-    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
-    // Add the override section to the form.
-    $this->addOverrideSection($form, $form_state, $override);
-    // Set the rebuild flag to ensure the form is rebuilt.
-    $form_state->setRebuild(TRUE);
-
     // Return the updated overrides container.
     return $form['az_finder_tid_widget']['overrides'];
   }
@@ -316,10 +315,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $view_id = $override['view_id'];
     $display_id = $override['display_id'];
     if ($key !== ':' && !isset($form['az_finder_tid_widget']['overrides'][$key])) {
-      $form['az_finder_tid_widget']['configure_overrides'] = [
-        '#type' => 'item',
-        '#title' => $this->t('Configure Applied Overrides'),
-      ];
       $form['az_finder_tid_widget']['overrides'][$key] = [
         '#type' => 'details',
         '#title' => $this->t("Override Settings for :view_id - :display_id", [
@@ -369,18 +364,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
    * Ajax callback for the delete button.
    */
   public function ajaxDeleteOverride(array &$form, FormStateInterface $form_state) {
-    $triggering_element = $form_state->getTriggeringElement();
-    $button_name = $triggering_element['#name'];
-    $key = str_replace('delete-', '', $button_name);
-    $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
-    unset($overrides[$key]);
-    unset($form['az_finder_tid_widget']['overrides'][$key]);
-    $this->configFactory->getEditable('az_finder.tid_widget.' . $key)->delete();
-    $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
-
-    // Rebuild the form.
-    $form_state->setRebuild(TRUE);
-
+    // Return the updated overrides container.
     return $form['az_finder_tid_widget']['overrides'];
   }
 
@@ -407,6 +391,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
     unset($overrides[$key]);
     $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
+    $form_state->setRebuild(TRUE);
   }
 
 }
