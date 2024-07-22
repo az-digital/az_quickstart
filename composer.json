@@ -180,7 +180,7 @@
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch"
             },
             "drupal/environment_indicator": {
-                "Make version indicator source and version indicator source fallback configurable. (3324621)": "https://www.drupal.org/files/issues/2024-06-05/33243324621-29-add-version-indicator-source-and-fallback-options.patch"
+                "Make version indicator source and version indicator source fallback configurable. (3324621)": "https://www.drupal.org/files/issues/2024-07-22/3324621-39.patch"
             },
             "drupal/intelligencebank": {
                 "Use a renderable array for link buttons (3353858)": "https://www.drupal.org/files/issues/2023-06-02/issue-335385-convert-markup-to-renderable-array.patch"
