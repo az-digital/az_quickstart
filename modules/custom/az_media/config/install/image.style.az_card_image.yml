@@ -23,3 +23,9 @@ effects:
     data:
       crop_type: az_card_image
       automatic_crop_provider: null
+  9dd15099-5e22-4f86-86d4-bfdf481c1aa2:
+    uuid: 9dd15099-5e22-4f86-86d4-bfdf481c1aa2
+    id: image_convert
+    weight: 3
+    data:
+      extension: webp

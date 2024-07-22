@@ -31,7 +31,9 @@ settings:
   depth: 1
   expand_all_items: true
   parent: 'az-footer-social-media:'
+  render_parent: false
   suggestion: sub_footer
   label_type: root
   label_link: false
+  hide_on_nonactive: false
 visibility: {  }

@@ -2,22 +2,21 @@
 
 namespace Drupal\az_accordion\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'az_accordion' field widget.
- *
- * @FieldWidget(
- *   id = "az_accordion",
- *   label = @Translation("accordion"),
- *   field_types = {
- *     "az_accordion"
- *   }
- * )
  */
+#[FieldWidget(
+  id: 'az_accordion',
+  label: new TranslatableMarkup('accordion'),
+  field_types: ['az_accordion'],
+)]
 class AZAccordionWidget extends WidgetBase {
 
   /**
