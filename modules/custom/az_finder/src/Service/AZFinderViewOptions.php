@@ -63,8 +63,17 @@ final class AZFinderViewOptions {
       $view_exec = $view->getExecutable();
       $displays = $view->get('display') ?: [];
       foreach ($displays as $display_id => $display) {
-        $exposed_form_options = $display['display_options']['exposed_form']['options'] ?? [];
-        $filters = $exposed_form_options['bef']['filter'] ?? [];
+        // Initialize the view with the selected display.
+        $view_exec->initDisplay();
+        $view_exec->setDisplay($display_id);
+        // Load the display handler so we have access to the overridden options.
+        $display_handler = $view_exec->getDisplay();
+        if ($display_handler->isDefaultDisplay()) {
+          // Don't display master displays as override options.
+          continue;
+        }
+        $exposed_form_options = $display_handler->getOption('exposed_form') ?? [];
+        $filters = $exposed_form_options['options']['bef']['filter'] ?? [];
         foreach ($filters as $filter_id => $filter_settings) {
           if (isset($filter_settings['plugin_id']) && $filter_settings['plugin_id'] === $plugin_id) {
             $options[$view->id() . ':' . $display_id] = $view->label() . ' (' . $display_id . ')';
