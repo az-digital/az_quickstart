@@ -270,6 +270,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       'display_id' => $display_id,
       'origin' => 'session',
     ];
+
     // Ensure the overrides array is present in the form state.
     $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
     // Update the overrides with the new override.
@@ -346,15 +347,14 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
       foreach ($vocabulary_ids as $vocabulary_id) {
         $this->azFinderVocabulary->addTermsTable(
-              $form['az_finder_tid_widget']['overrides'][$key]['vocabularies'][$vocabulary_id],
-              $vocabulary_id,
-              $view_id,
-              $display_id
-          );
-
+          $form['az_finder_tid_widget']['overrides'][$key]['vocabularies'][$vocabulary_id],
+          $vocabulary_id,
+          $view_id,
+          $display_id
+        );
       }
-
     }
+
     $overrides = $form_state->getValue(['az_finder_tid_widget', 'overrides']) ?? [];
     $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
     return $form['az_finder_tid_widget']['overrides'][$key];
