@@ -59,6 +59,8 @@ final class AZFinderViewOptions {
     $views = $this->entityTypeManager->getStorage('view')->loadMultiple();
 
     foreach ($views as $view) {
+      // Get the view executable.
+      $view_exec = $view->getExecutable();
       $displays = $view->get('display') ?: [];
       foreach ($displays as $display_id => $display) {
         $exposed_form_options = $display['display_options']['exposed_form']['options'] ?? [];
