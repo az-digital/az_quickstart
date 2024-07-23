@@ -144,7 +144,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     // Default state select field.
     $form['az_finder_tid_widget']['default_state'] = [
       '#type' => 'select',
-      '#title' => $this->t('Default Display'),
+      '#title' => $this->t('Default Display of Parent Terms'),
       '#description' => $this->t('Choose how taxonomy terms with children should behave by default everywhere.<br />These settings are not context aware, so if you choose collapsed, your term must be using a collapsible element for this to work.'),
       '#weight' => -2,
       '#options' => [
@@ -174,8 +174,8 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       $normalized_session_overrides[$key] = $override;
     }
 
-    // Combine overrides.
-    $overrides = array_merge($config_overrides, $normalized_session_overrides);
+    // Combine overrides. Session overrides will not overwrite existing ones.
+    $overrides = $config_overrides + $normalized_session_overrides;
 
     $form['az_finder_tid_widget']['overrides'] = [
       '#type' => 'container',
@@ -198,7 +198,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       ],
       'override' => [
         '#type' => 'submit',
-        '#value' => $this->t('Override'),
+        '#value' => $this->t('Add Override'),
         '#ajax' => [
           'callback' => '::ajaxAddOverride',
           'wrapper' => 'js-overrides-container',
@@ -224,7 +224,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     if (!empty($overrides)) {
       $form['az_finder_tid_widget']['overrides']['configure_overrides'] = [
         '#type' => 'item',
-        '#title' => $this->t('Configure Applied Overrides'),
+        '#title' => $this->t('Configure Added Overrides'),
       ];
     }
     // Add override sections.
@@ -279,7 +279,9 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $form_state->setRebuild(TRUE);
 
     // Optionally, provide feedback or perform additional actions.
-    $this->messenger()->addMessage($this->t('Override created for @view_display.', ['@view_display' => $selected_view_display]));
+    $this->messenger()->addMessage($this->t('Override created for @view_display.', [
+      '@view_display' => $form_state->getCompleteForm()['az_finder_tid_widget']['overrides']['select_view_display_container']['select_view_display']['#options'][$selected_view_display],
+    ]));
   }
 
   /**
@@ -318,9 +320,9 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     if ($key !== ':' && !isset($form['az_finder_tid_widget']['overrides'][$key])) {
       $form['az_finder_tid_widget']['overrides'][$key] = [
         '#type' => 'details',
-        '#title' => $this->t("Override Settings for :view_id - :display_id", [
-          ":view_id" => $view_id,
-          ":display_id" => $display_id,
+        '#title' => $this->t("Override Settings for :view_label (:display_label)", [
+          ":view_label" => $override['view_label'],
+          ":display_label" => $override['display_label'],
         ]),
         '#open' => FALSE,
         '#description' => $this->t('Overrides are grouped by taxonomy vocabulary. Each vocabulary can have its own settings for how filter widgets behave when they have child terms.'),
