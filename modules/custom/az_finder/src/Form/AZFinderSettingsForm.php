@@ -320,9 +320,9 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     if ($key !== ':' && !isset($form['az_finder_tid_widget']['overrides'][$key])) {
       $form['az_finder_tid_widget']['overrides'][$key] = [
         '#type' => 'details',
-        '#title' => $this->t("Override Settings for :view_label (:display_label)", [
+        '#title' => $this->t("Override Settings for :view_label (:display_title)", [
           ":view_label" => $override['view_label'],
-          ":display_label" => $override['display_label'],
+          ":display_title" => $override['display_title'],
         ]),
         '#open' => FALSE,
         '#description' => $this->t('Overrides are grouped by taxonomy vocabulary. Each vocabulary can have its own settings for how filter widgets behave when they have child terms.'),
