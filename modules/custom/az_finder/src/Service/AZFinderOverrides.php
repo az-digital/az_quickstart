@@ -55,7 +55,6 @@ final class AZFinderOverrides {
         'view_label' => $view_config->get('label') ?? '',
         'display_title' => $view_config->get('display.' . $display_id . '.display_title') ?? '',
         'vocabularies' => $display_options['filters']['vocabularies'] ?? [],
-        'origin' => 'config',
       ];
     }
 

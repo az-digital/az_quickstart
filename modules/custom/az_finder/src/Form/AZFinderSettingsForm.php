@@ -167,10 +167,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       if (empty($override['view_id'])) {
         continue;
       }
-      // Provide an origin if one is missing.
-      if (!isset($override['origin'])) {
-        $override['origin'] = 'session';
-      }
       $normalized_session_overrides[$key] = $override;
     }
 
@@ -268,7 +264,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     $override = [
       'view_id' => $view_id,
       'display_id' => $display_id,
-      'origin' => 'session',
     ];
 
     // Ensure the overrides array is present in the form state.
