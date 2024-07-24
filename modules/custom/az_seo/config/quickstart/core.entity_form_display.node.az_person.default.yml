@@ -167,7 +167,7 @@ content:
     weight: 6
     region: content
     settings:
-      size: 60
+      size: 30
       placeholder: ''
     third_party_settings: {  }
   field_az_person_category:
