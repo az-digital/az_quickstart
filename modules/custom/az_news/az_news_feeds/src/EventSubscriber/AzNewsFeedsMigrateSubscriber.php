@@ -32,7 +32,7 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
   }
 
   /**
-   * Helper method to check if we are migrating University News stories.
+   * Helper method to check if we are migrating university news stories.
    *
    * @param \Drupal\migrate\Event\EventBase $event
    *   The migrate event.
