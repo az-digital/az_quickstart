@@ -154,7 +154,7 @@ content:
         show_edit: '1'
   field_az_netid:
     type: string_textfield
-    weight: 6
+    weight: 7
     region: content
     settings:
       size: 30
@@ -189,7 +189,7 @@ content:
     third_party_settings: {  }
   field_az_titles:
     type: string_textfield
-    weight: 7
+    weight: 6
     region: content
     settings:
       size: 60
