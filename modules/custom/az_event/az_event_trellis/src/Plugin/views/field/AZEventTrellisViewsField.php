@@ -136,4 +136,12 @@ class AZEventTrellisViewsField extends BulkForm {
 
   }
 
+  /**
+   * {@inheritdoc}
+   */
+  public function isWorkspaceSafeForm(array $form, FormStateInterface $form_state): bool {
+    // This field is not backed by an entity like BulkForm expects.
+    return FALSE;
+  }
+
 }
