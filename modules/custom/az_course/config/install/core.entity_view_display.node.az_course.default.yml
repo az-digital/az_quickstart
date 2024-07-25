@@ -15,12 +15,34 @@ dependencies:
     - field.field.node.az_course.field_az_subject_code
     - node.type.az_course
   module:
+    - field_group
+    - link
     - smart_title
     - text
     - user
 third_party_settings:
   smart_title:
     enabled: false
+  field_group:
+    group_instructor:
+      children:
+        - field_az_course_instructor
+      label: Instructor(s)
+      parent_name: ''
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: div
+        label_element_classes: font-weight-bolder
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.az_course.default
 targetEntityType: node
 bundle: az_course
@@ -32,6 +54,18 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_az_course_instructor:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_az_course_units:
     type: number_integer
@@ -51,7 +85,6 @@ hidden:
   field_az_academic_program: true
   field_az_catalog_number: true
   field_az_course_attributes: true
-  field_az_course_instructor: true
   field_az_course_term: true
   field_az_course_title: true
   field_az_course_types: true
