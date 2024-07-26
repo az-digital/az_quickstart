@@ -42,8 +42,7 @@ class InstructorLink extends ProcessPluginBase implements ContainerFactoryPlugin
 
     $link = ['uri' => 'route:<nolink>', 'title' => $value];
 
-    // Placeholder. Check for presence of instructor when field is available
-    // to create a link to faculty pages.
+    // This is the API placeholder for an unassigned section.
     if ($value === 'netid-not-found') {
       $link['title'] = 'unassigned';
     }
