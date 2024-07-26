@@ -50,6 +50,7 @@ class InstructorLink extends ProcessPluginBase implements ContainerFactoryPlugin
       // See if there is a person with a matching netid.
       $persons = $this->entityTypeManager->getStorage('node')->loadByProperties([
         'field_az_netid' => $value,
+        'type' => 'az_person',
         'status' => [1, TRUE],
       ]);
       if (!empty($persons)) {
