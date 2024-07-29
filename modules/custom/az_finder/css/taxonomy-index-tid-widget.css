@@ -1,11 +1,25 @@
 .az-bef-vertical .checkbox {
   width: 100% !important;
-  line-height: 1.5rem;
+  display: flex;
+  align-items: center;
+  line-height: 1.25rem;
+  margin-bottom: 0.375rem;
+}
+
+.az-bef-vertical .bef-nested {
+  width: 100%;
 }
 
 .az-bef-vertical>h2 {
   margin-top: 3rem !important;
   font-size: 1.5rem;
+}
+
+.az-bef-vertical h4,
+.az-bef-vertical h5,
+.az-bef-vertical h6 {
+  line-height: 1.25rem;
+  margin-bottom: 0.375rem !important;
 }
 
 .az-bef-vertical .form-type-textfield {
@@ -33,12 +47,17 @@
 .js-svg-replace-level-1 svg {
   pointer-events: none;
   display: flex;
-  min-width: 16px;
 }
 
 .js-svg-replace-level-0 svg {
   margin-left: auto;
   min-width: 24px;
+}
+
+.js-svg-replace-level-1 svg {
+  margin-left: -1.5px;
+  margin-right: 5.5px;
+  min-width: 16px;
 }
 
 .az-bef-vertical fieldset {
@@ -58,24 +77,33 @@
   padding: 1rem 0;
 }
 
-.az-bef-ul>li:has(.collapser) {
-  margin-top: 0.5rem;
+/*
+  Note: Using bottom margins and padding within .az-bef-checkboxes may affect
+  the smoothness of the collapse and expand animations.
+*/
+.az-bef-checkboxes > li:first-child,
+.az-bef-checkboxes > li:not(:has(.collapser)) + li:has(.collapser) {
+  border-top: 1px solid #e9ecef;
+  margin-top: 1rem;
 }
 
-.az-bef-ul>li:has(.collapser) li {
-  margin-top: 0.25rem;
+.az-bef-checkboxes > li:has(.collapser) + li:not(:has(.collapser)) {
+  margin-top: 0.75rem;
 }
 
 .az-bef-checkboxes>li>.checkbox {
-  display: block;
-  margin-top: .5rem;
+  margin-top: 0.5rem;
+  padding-top: 0.25rem;
   font-size: 1rem;
   font-weight: 500;
   color: #1e5288;
 }
 
 .az-bef-checkboxes .form-checkbox {
-  margin-top: 0.25rem;
+  display: flex;
+  vertical-align: middle;
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .az-bef-checkboxes>li>ul>li>.checkbox {
@@ -92,7 +120,18 @@
 
 .az-bef-checkboxes>li>ul {
   padding-left: 4px;
-  margin-top: 5px;
+}
+
+.az-bef-checkboxes ul {
+  margin-top: 0;
+}
+
+.az-bef-checkboxes > li > ul > li:first-child {
+  margin-top: 0.5rem;
+}
+
+.az-bef-checkboxes > li > ul > li:last-child {
+  margin-bottom: 0;
 }
 
 .js-bef-filter-count {
