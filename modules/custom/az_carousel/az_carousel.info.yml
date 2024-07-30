@@ -18,5 +18,4 @@ dependencies:
   - pathauto:pathauto
   - search_exclude:search_exclude
   - slick:slick
-  - slick_ui:slick_ui
   - slick_views:slick_views

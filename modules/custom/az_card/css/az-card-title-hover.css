@@ -6,3 +6,21 @@
   transform: scale(1.03);
   transition: ease .25s;
 }
+
+h2.card-title>a,
+h3.card-title>a,
+h4.card-title>a,
+h5.card-title>a,
+h6.card-title>a {
+  color: inherit;
+  text-decoration: inherit;
+  font-weight: inherit;
+}
+
+h2.card-title>a:hover,
+h3.card-title>a:hover,
+h4.card-title>a:hover,
+h5.card-title>a:hover,
+h6.card-title>a:hover {
+  text-decoration: underline;
+}

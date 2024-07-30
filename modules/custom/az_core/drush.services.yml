@@ -1,8 +1,13 @@
 services:
   az_core_config.commands:
-    class: \Drupal\az_core\Commands\AZCoreConfigCommands
+    class: \Drupal\az_core\Drush\Commands\AZCoreConfigCommands
     arguments:
+      - '@config.factory'
       - '@config_provider.collector'
+      - '@config_update.config_diff'
       - '@extension.list.module'
+      - '@serialization.yaml'
+      - '@user.permissions'
+      - '@config.storage'
     tags:
       - { name: drush.command }

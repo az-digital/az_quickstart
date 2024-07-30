@@ -3,22 +3,16 @@
 namespace Drupal\az_card\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\Core\TypedData\MapDataDefinition;
 
 /**
  * Defines the 'az_card' field type.
- *
- * @FieldType(
- *   id = "az_card",
- *   label = @Translation("Card"),
- *   category = @Translation("AZ Quickstart"),
- *   default_widget = "az_card",
- *   default_formatter = "az_card_default"
- * )
  *
  * @property string $title
  * @property string $body
@@ -26,6 +20,13 @@ use Drupal\Core\TypedData\MapDataDefinition;
  * @property string $link_title
  * @property string $link_uri
  */
+#[FieldType(
+  id: "az_card",
+  label: new TranslatableMarkup("Card"),
+  category: new TranslatableMarkup("AZ Quickstart"),
+  default_widget: "az_card",
+  default_formatter: "az_card_default",
+)]
 class AZCardItem extends FieldItemBase {
 
   /**

@@ -25,7 +25,7 @@ az-proxima-nova:
 az-icons:
   css:
     theme:
-      https://cdn.digital.arizona.edu/lib/az-icons/main/az-icons-styles.css: {}
+      /libraries/az-icons/az-icons-styles.min.css: {}
 arizona-bootstrap:
   css:
     theme:
@@ -42,4 +42,7 @@ button-no-conflict:
 material-design-icons-sharp:
   css:
     theme:
-      https://fonts.googleapis.com/css?family=Material+Icons+Sharp: {}
+      # Appends `#.css` as workaround for known issue with loadjs library.
+      # see https://github.com/kubetail-org/loadjs/issues/39
+      # see https://github.com/az-digital/az_quickstart/issues/2772
+      https://fonts.googleapis.com/css?family=Material+Icons+Sharp#.css: {}

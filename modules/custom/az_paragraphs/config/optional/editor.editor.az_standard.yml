@@ -26,6 +26,8 @@ settings:
       - numberedList
       - '|'
       - alignment
+      - indent
+      - outdent
       - '|'
       - bootstrapGrid
       - insertTable
@@ -317,6 +319,8 @@ settings:
         - md
         - lg
         - xl
+    ckeditor_indentblock_indent:
+      enable: true
     linkit_extension:
       linkit_enabled: true
       linkit_profile: az_linkit
@@ -324,9 +328,3 @@ settings:
       allow_view_mode_override: true
 image_upload:
   status: false
-  scheme: public
-  directory: inline-images
-  max_size: ''
-  max_dimensions:
-    width: null
-    height: null

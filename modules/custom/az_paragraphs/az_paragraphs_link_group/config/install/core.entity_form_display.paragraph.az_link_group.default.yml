@@ -1,0 +1,35 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_link_group.field_az_link_item
+    - field.field.paragraph.az_link_group.field_az_title
+    - paragraphs.paragraphs_type.az_link_group
+  module:
+    - linkit
+id: paragraph.az_link_group.default
+targetEntityType: paragraph
+bundle: az_link_group
+mode: default
+content:
+  field_az_link_item:
+    type: linkit
+    weight: 1
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+      linkit_profile: az_linkit
+      linkit_auto_link_text: false
+    third_party_settings: {  }
+  field_az_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

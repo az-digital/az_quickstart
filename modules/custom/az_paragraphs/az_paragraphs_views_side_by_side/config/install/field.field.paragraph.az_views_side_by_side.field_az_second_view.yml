@@ -20,39 +20,16 @@ settings:
   handler: 'default:view'
   handler_settings:
     target_bundles: null
-    auto_create: 0
+    auto_create: false
   plugin_types:
-    block: block
     page: page
-    default: 0
-    attachment: 0
-    feed: 0
+    block: block
   preselect_views:
     az_side_by_side_views: az_side_by_side_views
-    az_events: 0
-    az_news: 0
-    az_page_by_category: 0
-    az_person: 0
-    az_reorder: 0
-    az_taxonomy: 0
-    block_content: 0
-    content: 0
-    content_recent: 0
-    files: 0
-    frontpage: 0
-    media: 0
-    media_library: 0
-    moderated_content: 0
-    redirect: 0
-    taxonomy_term: 0
-    user_admin_people: 0
-    watchdog: 0
-    who_s_new: 0
-    who_s_online: 0
   enabled_settings:
     pager: pager
-    limit: limit
-    title: title
     offset: offset
     argument: argument
+    title: title
+    limit: limit
 field_type: viewsreference
