@@ -13,7 +13,7 @@ source:
   data_fetcher_plugin: file
   data_parser_plugin: json
   urls:
-  - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_taxonomy_term_publication_categories.json
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_taxonomy_term_publication_categories.json
   item_selector: publication_categories
   ids:
     name:
@@ -35,8 +35,8 @@ process:
     plugin: default_value
     default_value: az_publication_categories
   parent:
-  - plugin: migration_lookup
-    migration: az_demo_taxonomy_term_publication_categories
-    source: parent
-  - plugin: default_value
-    default_value: 0
+    - plugin: migration_lookup
+      migration: az_demo_taxonomy_term_publication_categories
+      source: parent
+    - plugin: default_value
+      default_value: 0

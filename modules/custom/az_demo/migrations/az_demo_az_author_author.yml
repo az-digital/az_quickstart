@@ -1,14 +1,14 @@
 id: az_demo_az_author_author
 label: AZ Quickstart Demo Authors
 migration_tags:
-- Quickstart Demo Content
-- Content
-- Publications
-- Authors
+  - Quickstart Demo Content
+  - Content
+  - Publications
+  - Authors
 dependencies:
   enforced:
     module:
-    - az_demo
+      - az_demo
 migration_dependencies:
   required:
     - az_demo_person_node
@@ -17,32 +17,32 @@ source:
   data_fetcher_plugin: file
   data_parser_plugin: json
   urls:
-  - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_az_author_author.json
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_az_author_author.json
   item_selector: authors
   ids:
     id:
       type: integer
   fields:
-  - name: id
-    selector: id
-  - name: "drop_particle"
-    selector: drop_particle
-  - name: "fname"
-    selector: fname
-  - name: "link"
-    selector: link
-  - name: "literal"
-    selector: literal
-  - name: "lname"
-    selector: lname
-  - name: "nondrop_particle"
-    selector: nondrop_particle
-  - name: "parse"
-    selector: parse
-  - name: "person"
-    selector: person
-  - name: "suffix"
-    selector: suffix
+    - name: id
+      selector: id
+    - name: "drop_particle"
+      selector: drop_particle
+    - name: "fname"
+      selector: fname
+    - name: "link"
+      selector: link
+    - name: "literal"
+      selector: literal
+    - name: "lname"
+      selector: lname
+    - name: "nondrop_particle"
+      selector: nondrop_particle
+    - name: "parse"
+      selector: parse
+    - name: "person"
+      selector: person
+    - name: "suffix"
+      selector: suffix
 process:
   type:
     plugin: default_value
@@ -55,13 +55,13 @@ process:
   field_az_author_nondrop_particle: nondrop_particle
   field_az_author_parse: parse
   field_az_author_person:
-  - plugin: entity_lookup
-    source: person
-    value_key: title
-    entity_type: node
-    bundle: az_person
-    ignore_case: true
-    bundle_key: type
+    - plugin: entity_lookup
+      source: person
+      value_key: title
+      entity_type: node
+      bundle: az_person
+      ignore_case: true
+      bundle_key: type
   field_az_author_suffix: suffix
 destination:
   plugin: entity:az_author
