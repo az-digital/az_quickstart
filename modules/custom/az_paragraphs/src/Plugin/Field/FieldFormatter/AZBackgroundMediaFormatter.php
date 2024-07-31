@@ -64,11 +64,11 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
    * {@inheritdoc}
    */
   public static function create(
-      ContainerInterface $container,
-      array $configuration,
-      $plugin_id,
-      $plugin_definition
-    ) {
+    ContainerInterface $container,
+    array $configuration,
+    $plugin_id,
+    $plugin_definition,
+  ) {
     $instance = parent::create(
       $container,
       $configuration,
