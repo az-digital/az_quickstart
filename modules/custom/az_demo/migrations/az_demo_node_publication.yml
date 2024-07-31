@@ -1,0 +1,37 @@
+id: az_demo_node_publication
+label: AZ Quickstart Demo Publication Content
+migration_tags:
+- Quickstart Demo Content
+- Content
+- Publications
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+  - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_node_publication.json
+  item_selector: publications
+  ids:
+    id:
+      type: integer
+  fields:
+  - name: id
+    selector: id
+  - name: title
+    selector: title
+process:
+  type:
+    plugin: default_value
+    default_value: az_publication
+  title: title
+destination:
+  plugin: entity:node
+  bundle: az_flexible_page
+migration_dependencies:
+  required:
+    - az_demo_az_author_author
+
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page

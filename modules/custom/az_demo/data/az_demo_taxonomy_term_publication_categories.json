@@ -1,0 +1,59 @@
+{
+  "publication_categories": [
+    {
+      "name": "Astronomy",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Communications",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Education",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Government and Public Service",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "History",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Mathematics",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Music",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Nutrition and Food Systems",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Philosophy",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Psychology",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "World Literature",
+      "description": "",
+      "parent_name": ""
+    }
+  ]
+}

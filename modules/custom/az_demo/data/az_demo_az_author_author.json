@@ -1,0 +1,169 @@
+{
+  "authors": [
+    {
+      "id":1,
+      "drop_particle": "",
+      "fname": "Wilbur",
+      "link": "",
+      "literal": "",
+      "lname": "Wildcat",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Wilbur Wildcat"
+    },
+    {
+      "id":2,
+      "drop_particle": "",
+      "fname": "Wilma",
+      "link": "",
+      "literal": "",
+      "lname": "Wildcat",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Wilma Wildcat"
+    },
+    {
+      "id":3,
+      "drop_particle": "",
+      "fname": "Anders",
+      "link": "http://www.example.edu",
+      "literal": "",
+      "lname": "And",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Anders And"
+    },
+    {
+      "id":4,
+      "drop_particle": "",
+      "fname": "Donald",
+      "link": "",
+      "literal": "",
+      "lname": "Giovanni",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Donald Giovanni"
+    },
+    {
+      "id":5,
+      "drop_particle": "",
+      "fname": "Urania",
+      "link": "",
+      "literal": "",
+      "lname": "Muse",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Urania Muse"
+    },
+    {
+      "id":6,
+      "drop_particle": "",
+      "fname": "Barbara",
+      "link": "",
+      "literal": "",
+      "lname": "Strozzi",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Barbara Strozzi"
+    },
+    {
+      "id":7,
+      "drop_particle": "de",
+      "fname": "Antonio",
+      "link": "",
+      "literal": "",
+      "lname": "Espinosa",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Antonio de Espinosa"
+    },
+    {
+      "id":8,
+      "drop_particle": "",
+      "fname": "Janet",
+      "link": "",
+      "literal": "",
+      "lname": "Horne",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Janet Horne"
+    },
+    {
+      "id":9,
+      "drop_particle": "",
+      "fname": "Thomas",
+      "link": "",
+      "literal": "",
+      "lname": "Urquhart",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Thomas Urquhart"
+    },
+    {
+      "id":10,
+      "drop_particle": "",
+      "fname": "Alcofribas",
+      "link": "",
+      "literal": "",
+      "lname": "Nasier",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Alcofribas Nasier"
+    },
+    {
+      "id":11,
+      "drop_particle": "",
+      "fname": "José",
+      "link": "",
+      "literal": "",
+      "lname": "An'ersen",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "José An'ersen"
+    },
+    {
+      "id":12,
+      "drop_particle": "",
+      "fname": "Grimme",
+      "link": "",
+      "literal": "",
+      "lname": "Ælling",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": "Grimme Ælling"
+    },
+    {
+      "id":13,
+      "drop_particle": "",
+      "fname": "Hans",
+      "link": "",
+      "literal": "",
+      "lname": "Christian Andersen",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": ""
+    },
+    {
+      "id":14,
+      "drop_particle": "van",
+      "fname": "Ludwig",
+      "link": "",
+      "literal": "",
+      "lname": "Beethoven",
+      "nondrop_particle": "",
+      "suffix": "",
+      "person": ""
+    },
+    {
+      "id":15,
+      "drop_particle": "",
+      "fname": "Vincent",
+      "link": "",
+      "literal": "",
+      "lname": "Gogh",
+      "nondrop_particle": "van",
+      "suffix": "",
+      "person": ""
+    }
+  ]
+}
