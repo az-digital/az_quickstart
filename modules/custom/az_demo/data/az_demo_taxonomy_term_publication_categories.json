@@ -1,17 +1,32 @@
 {
   "publication_categories": [
     {
-      "name": "Astronomy",
+      "name": "Artificial Intelligence",
       "description": "",
       "parent_name": ""
     },
     {
-      "name": "Communications",
+      "name": "Biography",
       "description": "",
       "parent_name": ""
     },
     {
-      "name": "Education",
+      "name": "Chemistry",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Computer Science",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Ethics",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Environmental Science",
       "description": "",
       "parent_name": ""
     },
@@ -46,7 +61,12 @@
       "parent_name": ""
     },
     {
-      "name": "Psychology",
+      "name": "Physics",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Statistics",
       "description": "",
       "parent_name": ""
     },

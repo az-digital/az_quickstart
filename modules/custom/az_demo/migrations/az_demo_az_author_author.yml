@@ -9,6 +9,9 @@ dependencies:
   enforced:
     module:
     - az_demo
+migration_dependencies:
+  required:
+    - az_demo_person_node
 source:
   plugin: url
   data_fetcher_plugin: file
