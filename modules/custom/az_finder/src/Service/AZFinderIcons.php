@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\az_finder;
+namespace Drupal\az_finder\Service;
 
 /**
  * Provides SVG icons for the Quickstart Finder module.
