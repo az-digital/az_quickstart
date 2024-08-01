@@ -5,6 +5,8 @@
  * Contains az_person.module.
  */
 
+use Drupal\Core\Entity\EntityTypeInterface;
+
 /**
  * Implements hook_preprocess_node().
  */
@@ -30,4 +32,15 @@ function az_person_preprocess_views_view(&$variables) {
     $variables['#attached']['library'][] = 'az_person/az_person';
   }
 
+}
+
+/**
+ * Implements hook_entity_bundle_field_info_alter().
+ */
+function az_person_entity_bundle_field_info_alter(&$fields, EntityTypeInterface $entity_type, $bundle) {
+  if (($entity_type->id() === 'node') && ($bundle === 'az_person') && (!empty($fields['field_az_netid']))) {
+    // Alter a unique constraint to the netID field.
+    // \Drupal\Core\Validation\Plugin\Validation\Constraint\UniqueFieldConstraint.
+    $fields['field_az_netid']->addConstraint('UniqueField');
+  }
 }
