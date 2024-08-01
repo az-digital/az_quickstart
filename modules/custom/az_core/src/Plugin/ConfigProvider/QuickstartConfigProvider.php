@@ -262,7 +262,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     $lister = \Drupal::service('config_update.config_list');
     /** @var \Drupal\config_update\ConfigDiffer $differ */
     $differ = \Drupal::service('config_update.config_diff');
-
     // Read active config value for name.
     $active = $this->getActiveStorages()->read($name);
     // Find out which module owns the configuration and load the snapshot value.
@@ -274,11 +273,19 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     // Guard against missing items.
     $snap = (!empty($snap)) ? $snap : [];
     $active = (!empty($active)) ? $active : [];
+
     // Not relevant for user roles. Permissions created dynamically.
     if (strpos($name, 'user.role.') !== 0) {
       // Prune cache_metadata if present, to not consider it for diffs.
       $active = $this->trimNestedKey($active, 'cache_metadata');
       $snap = $this->trimNestedKey($snap, 'cache_metadata');
+      // If $snap is empty, then we can't compare it to $active.
+      // In this case, we can assume that the configuration is not customized
+      // because it is not present in the snapshot.
+      // This means that the module (config provider) is not yet installed.
+      if (empty($snap)) {
+        return TRUE;
+      }
       // Diff active config and snapshot of module to check for customization.
       $diff = $differ->diff($active, $snap);
       // Overrides only allowed if no changes in diff.
