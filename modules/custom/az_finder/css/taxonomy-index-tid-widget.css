@@ -1,13 +1,6 @@
-.az-bef-vertical .checkbox {
-  width: 100% !important;
-  display: flex;
-  align-items: center;
-  line-height: 1.25rem;
-  margin-bottom: 0.375rem;
-}
-
 .az-bef-vertical .bef-nested {
   width: 100%;
+  margin-top: 1rem;
 }
 
 .az-bef-vertical>h2 {
@@ -19,7 +12,7 @@
 .az-bef-vertical h5,
 .az-bef-vertical h6 {
   line-height: 1.25rem;
-  margin-bottom: 0.375rem !important;
+  margin-top: 0.75rem !important;
 }
 
 .az-bef-vertical .form-type-textfield {
@@ -64,36 +57,51 @@
   min-width: 100%;
 }
 
-.az-bef-vertical .collapser {
-  font-weight: 500;
-}
-
-.az-bef-vertical .collapser:not(.level-0) {
-  color: unset !important;
-}
-
-.az-bef-vertical li:has(.collapser.level-0) {
-  border-bottom: 1px solid #e9ecef;
-  padding: 1rem 0;
-}
-
 /*
   Note: Using bottom margins and padding within .az-bef-checkboxes may affect
   the smoothness of the collapse and expand animations.
 */
-.az-bef-checkboxes > li:first-child,
-.az-bef-checkboxes > li:not(:has(.collapser)) + li:has(.collapser) {
-  border-top: 1px solid #e9ecef;
-  margin-top: 1rem;
+.az-bef-checkboxes .checkbox {
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  line-height: 1.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.125rem;
 }
 
+.az-bef-checkboxes .collapser {
+  font-weight: 500;
+}
+
+.az-bef-checkboxes .collapser:not(.level-0) {
+  color: unset !important;
+}
+
+.az-bef-checkboxes li:has(.collapser.level-0) {
+  padding: 1rem 0;
+  border-top: 1px solid #e9ecef;
+}
+
+.az-bef-checkboxes > li:not(:has(.collapser)) + li:has(.collapser) {
+  margin-top: 1.125rem;
+}
+
+.az-bef-checkboxes > li:first-child:not(:has(.collapser)),
 .az-bef-checkboxes > li:has(.collapser) + li:not(:has(.collapser)) {
-  margin-top: 0.75rem;
+  padding-top: 0.25rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.az-bef-checkboxes > li:last-child {
+  margin-bottom: 1rem;
+}
+
+.az-bef-checkboxes > li:last-child:has(.collapser) {
+  margin-bottom: 0.25rem;
 }
 
 .az-bef-checkboxes>li>.checkbox {
-  margin-top: 0.5rem;
-  padding-top: 0.25rem;
   font-size: 1rem;
   font-weight: 500;
   color: #1e5288;
@@ -111,27 +119,19 @@
 }
 
 .az-bef-checkboxes ul>li>ul {
-  padding-left: 20px;
+  padding-left: 24px;
 }
 
 .az-bef-checkboxes>li>ul>li>ul {
-  padding-left: 15px;
+  padding-left: 18px;
 }
 
 .az-bef-checkboxes>li>ul {
-  padding-left: 4px;
+  padding-left: 6px;
 }
 
 .az-bef-checkboxes ul {
   margin-top: 0;
-}
-
-.az-bef-checkboxes > li > ul > li:first-child {
-  margin-top: 0.5rem;
-}
-
-.az-bef-checkboxes > li > ul > li:last-child {
-  margin-bottom: 0;
 }
 
 .js-bef-filter-count {
