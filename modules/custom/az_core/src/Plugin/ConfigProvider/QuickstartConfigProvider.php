@@ -273,7 +273,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     // Guard against missing items.
     $snap = (!empty($snap)) ? $snap : [];
     $active = (!empty($active)) ? $active : [];
-
     // Not relevant for user roles. Permissions created dynamically.
     if (strpos($name, 'user.role.') !== 0) {
       // Prune cache_metadata if present, to not consider it for diffs.
