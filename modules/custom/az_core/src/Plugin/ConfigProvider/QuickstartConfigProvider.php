@@ -269,6 +269,13 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     if (!empty($owner[1])) {
       $snapshot_storage = $this->getConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $owner[0], $owner[1]);
       $snap = $snapshot_storage->read($name);
+      // StorageInterface::read() returns FALSE if the config does not exist.
+      // In this case, we can assume that the configuration is not customized
+      // because it is not present in the snapshot, likely because the module
+      // is newly installed.
+      if ($snap === FALSE) {
+        return TRUE;
+      }
     }
     // Guard against missing items.
     $snap = (!empty($snap)) ? $snap : [];
@@ -278,13 +285,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       // Prune cache_metadata if present, to not consider it for diffs.
       $active = $this->trimNestedKey($active, 'cache_metadata');
       $snap = $this->trimNestedKey($snap, 'cache_metadata');
-      // If $snap is empty, then we can't compare it to $active.
-      // In this case, we can assume that the configuration is not customized
-      // because it is not present in the snapshot.
-      // This means that the module (config provider) is not yet installed.
-      if (empty($snap)) {
-        return TRUE;
-      }
       // Diff active config and snapshot of module to check for customization.
       $diff = $differ->diff($active, $snap);
       // Overrides only allowed if no changes in diff.
