@@ -6,7 +6,7 @@
  */
 
 /**
- * Implementation of hook_theme().
+ * Implements hook_theme().
  */
 function az_zoom_theme() {
   return [
@@ -20,12 +20,8 @@ function az_zoom_theme() {
 }
 
 /**
- * Implements template_preprocess_az_zoom().
- *
- * @param mixed $variables
- *    Variables storage.
+ * Implements hook_preprocess_az_zoom().
  */
 function template_preprocess_az_zoom(&$variables) {
   $variables['#attached']['library'][] = 'az_zoom/drupal';
 }
-

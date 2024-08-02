@@ -1,20 +1,20 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_zoom\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityStorageInterface;
-use Drupal\Core\File\FileUrlGeneratorInterface;
-use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
+use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\File\FileUrlGeneratorInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Link;
-use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Cache\Cache;
 
 /**
  * Plugin implementation of the 'az_zoom_field_formatter' formatter.
@@ -94,7 +94,7 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
     $current_user,
     EntityStorageInterface $image_style_storage,
     EntityStorageInterface $responsive_image_style_storage,
-    FileUrlGeneratorInterface $file_url_generator
+    FileUrlGeneratorInterface $file_url_generator,
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->currentUser = $current_user;
@@ -139,16 +139,16 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
 
   /**
    * {@inheritdoc}
-    */
+   */
   public static function defaultSettings() {
     return [
-        'image_zoom_factor' => '250%',
-        'image_smoother' => TRUE,
-        'image_width' => '100%',
-        'image_height' => '66.7%',
-        'display_loc' => FALSE,
-        'display_zoom' => FALSE,
-        'zoom_on_scroll' => FALSE,
+      'image_zoom_factor' => '250%',
+      'image_smoother' => TRUE,
+      'image_width' => '100%',
+      'image_height' => '66.7%',
+      'display_loc' => FALSE,
+      'display_zoom' => FALSE,
+      'zoom_on_scroll' => FALSE,
     ] + parent::defaultSettings();
   }
 
@@ -214,74 +214,73 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
     $element = parent::settingsForm($form, $form_state);
 
     $element['image_zoom_factor'] = [
-        '#title' => $this->t('Image Zoom Factor'),
-        '#type' => 'textfield',
-        '#default_value' => $this->getSetting('image_zoom_factor'),
-        '#description' => $this->t('Define the zoom factor, e.g., 250%.'),
+      '#title' => $this->t('Image Zoom Factor'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('image_zoom_factor'),
+      '#description' => $this->t('Define the zoom factor, e.g., 250%.'),
     ];
 
     $element['image_smoother'] = [
-        '#title' => $this->t('Smoother Zoom'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('image_smoother'),
-        '#description' => $this->t('Enable to make the zoom effect smoother.'),
+      '#title' => $this->t('Smoother Zoom'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('image_smoother'),
+      '#description' => $this->t('Enable to make the zoom effect smoother.'),
     ];
 
     $element['display_loc'] = [
-        '#title' => $this->t('Display Location HUD'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('display_loc'),
-        '#description' => $this->t('Enable to display location heads-up display.'),
+      '#title' => $this->t('Display Location HUD'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('display_loc'),
+      '#description' => $this->t('Enable to display location heads-up display.'),
     ];
 
     $element['display_zoom'] = [
-        '#title' => $this->t('Display Zoom HUD'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('display_zoom'),
-        '#description' => $this->t('Enable to display zoom level heads-up display.'),
+      '#title' => $this->t('Display Zoom HUD'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('display_zoom'),
+      '#description' => $this->t('Enable to display zoom level heads-up display.'),
     ];
 
     $element['zoom_on_scroll'] = [
-        '#title' => $this->t('Zoom on Scroll'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('zoom_on_scroll'),
-        '#description' => $this->t('Allow zooming with mouse scroll.'),
+      '#title' => $this->t('Zoom on Scroll'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('zoom_on_scroll'),
+      '#description' => $this->t('Allow zooming with mouse scroll.'),
     ];
     $element['image_zoom_factor'] = [
-        '#title' => $this->t('Image Zoom Factor'),
-        '#type' => 'textfield',
-        '#default_value' => $this->getSetting('image_zoom_factor'),
-        '#description' => $this->t('Define the zoom factor, e.g., 250%.'),
+      '#title' => $this->t('Image Zoom Factor'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('image_zoom_factor'),
+      '#description' => $this->t('Define the zoom factor, e.g., 250%.'),
     ];
 
     $element['image_smoother'] = [
-        '#title' => $this->t('Smoother Zoom'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('image_smoother'),
-        '#description' => $this->t('Enable to make the zoom effect smoother.'),
+      '#title' => $this->t('Smoother Zoom'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('image_smoother'),
+      '#description' => $this->t('Enable to make the zoom effect smoother.'),
     ];
 
     $element['display_loc'] = [
-        '#title' => $this->t('Display Location HUD'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('display_loc'),
-        '#description' => $this->t('Enable to display location heads-up display.'),
+      '#title' => $this->t('Display Location HUD'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('display_loc'),
+      '#description' => $this->t('Enable to display location heads-up display.'),
     ];
 
     $element['display_zoom'] = [
-        '#title' => $this->t('Display Zoom HUD'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('display_zoom'),
-        '#description' => $this->t('Enable to display zoom level heads-up display.'),
+      '#title' => $this->t('Display Zoom HUD'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('display_zoom'),
+      '#description' => $this->t('Enable to display zoom level heads-up display.'),
     ];
 
     $element['zoom_on_scroll'] = [
-        '#title' => $this->t('Zoom on Scroll'),
-        '#type' => 'checkbox',
-        '#default_value' => $this->getSetting('zoom_on_scroll'),
-        '#description' => $this->t('Allow zooming with mouse scroll.'),
+      '#title' => $this->t('Zoom on Scroll'),
+      '#type' => 'checkbox',
+      '#default_value' => $this->getSetting('zoom_on_scroll'),
+      '#description' => $this->t('Allow zooming with mouse scroll.'),
     ];
-
 
     return $element;
   }
@@ -324,17 +323,17 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
     $summary[] = $this->t('Fade Duration: @value', ['@value' => $this->getSetting('image_fade_duration')]);
 
     if ($this->getSetting('image_zoom_factor')) {
-        $summary[] = $this->t('Image Zoom Factor: @factor', ['@factor' => $this->getSetting('image_zoom_factor')]);
+      $summary[] = $this->t('Image Zoom Factor: @factor', ['@factor' => $this->getSetting('image_zoom_factor')]);
     }
 
     $summary[] = $this->t('Smoother Zoom: @smoother', ['@smoother' => $this->getSetting('image_smoother') ? $this->t('Yes') : $this->t('No')]);
 
     if ($this->getSetting('display_loc')) {
-        $summary[] = $this->t('Display Location HUD: @display', ['@display' => $this->getSetting('display_loc') ? $this->t('Yes') : $this->t('No')]);
+      $summary[] = $this->t('Display Location HUD: @display', ['@display' => $this->getSetting('display_loc') ? $this->t('Yes') : $this->t('No')]);
     }
 
     if ($this->getSetting('display_zoom')) {
-        $summary[] = $this->t('Display Zoom HUD: @display', ['@display' => $this->getSetting('display_zoom') ? $this->t('Yes') : $this->t('No')]);
+      $summary[] = $this->t('Display Zoom HUD: @display', ['@display' => $this->getSetting('display_zoom') ? $this->t('Yes') : $this->t('No')]);
     }
 
     $summary[] = $this->t('Zoom on Scroll: @zoomOnScroll', ['@zoomOnScroll' => $this->getSetting('zoom_on_scroll') ? $this->t('Yes') : $this->t('No')]);
@@ -388,7 +387,7 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
       $cache_contexts = [];
       // Handle responsive image formatting.
       if ($responsive_image_style) {
-      $image_uri = $file->getFileUri();
+        $image_uri = $file->getFileUri();
         $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
 
         // Extract field item attributes for the theme function, and unset them
