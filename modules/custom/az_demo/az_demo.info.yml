@@ -3,6 +3,7 @@ type: module
 description: 'WARNING:Do not enable this on live/production sites, it will alter your homepage, and provide sample content to demonstrate various features of the AZ Quickstart distribution.'
 core_version_requirement: ^9 || ^10
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
 dependencies:
   - az_custom_menu_block
   - az_core

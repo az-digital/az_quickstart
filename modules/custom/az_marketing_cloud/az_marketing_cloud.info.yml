@@ -3,6 +3,7 @@ description: 'Makes Quickstart News and Events available in a raw HTML format de
 core_version_requirement: ^9 || ^10
 type: module
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
 dependencies:
   - az_news
   - az_event
