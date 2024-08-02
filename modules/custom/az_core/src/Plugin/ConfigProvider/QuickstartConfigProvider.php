@@ -262,7 +262,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     $lister = \Drupal::service('config_update.config_list');
     /** @var \Drupal\config_update\ConfigDiffer $differ */
     $differ = \Drupal::service('config_update.config_diff');
-
     // Read active config value for name.
     $active = $this->getActiveStorages()->read($name);
     // Find out which module owns the configuration and load the snapshot value.
@@ -270,6 +269,13 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     if (!empty($owner[1])) {
       $snapshot_storage = $this->getConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $owner[0], $owner[1]);
       $snap = $snapshot_storage->read($name);
+      // StorageInterface::read() returns FALSE if the config does not exist.
+      // In this case, we can assume that the configuration is not customized
+      // because it is not present in the snapshot, likely because the module
+      // is newly installed.
+      if ($snap === FALSE) {
+        return TRUE;
+      }
     }
     // Guard against missing items.
     $snap = (!empty($snap)) ? $snap : [];
