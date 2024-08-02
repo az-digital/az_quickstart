@@ -1,6 +1,7 @@
 name: 'Quickstart Paragraphs - Views Side-by-Side'
 type: module
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
 description: 'Provides a paragraph type to show two views side-by-side on desktop screens.'
 core_version_requirement: ^9 || ^10
 dependencies:
