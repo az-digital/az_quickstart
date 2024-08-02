@@ -2,6 +2,7 @@
 
 namespace Drupal\az_course\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -10,11 +11,8 @@ use Drupal\migrate\Row;
  * Transforms a PeopleSoft year code into a text term name.
  *
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
- *
- * @MigrateProcessPlugin(
- *   id = "peoplesoft_year",
- * )
  */
+#[MigrateProcess('peoplesoft_year')]
 class PeopleSoftYear extends ProcessPluginBase {
 
   /**

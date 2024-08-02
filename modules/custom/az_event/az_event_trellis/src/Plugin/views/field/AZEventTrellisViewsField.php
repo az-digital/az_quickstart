@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
+use Drupal\views\Attribute\ViewsField;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\field\BulkForm;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
@@ -14,9 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a views form element for trellis integration views.
- *
- * @ViewsField("az_event_trellis_views_field")
  */
+#[ViewsField("az_event_trellis_views_field")]
 class AZEventTrellisViewsField extends BulkForm {
 
   /**
@@ -134,6 +134,14 @@ class AZEventTrellisViewsField extends BulkForm {
 
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isWorkspaceSafeForm(array $form, FormStateInterface $form_state): bool {
+    // This field is not backed by an entity like BulkForm expects.
+    return FALSE;
   }
 
 }

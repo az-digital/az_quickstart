@@ -4,26 +4,25 @@ namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'az_card' field widget.
- *
- * @FieldWidget(
- *   id = "az_card",
- *   label = @Translation("Card"),
- *   field_types = {
- *     "az_card"
- *   }
- * )
  */
+#[FieldWidget(
+  id: 'az_card',
+  label: new TranslatableMarkup('Card'),
+  field_types: ['az_card'],
+)]
 class AZCardWidget extends WidgetBase {
 
   // Default initial text format for cards.
@@ -263,6 +262,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
       '#default_value' => $item->link_title ?? NULL,
+      '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".'),
     ];
 
     $element['link_uri'] = [
@@ -292,7 +292,8 @@ class AZCardWidget extends WidgetBase {
     ];
 
     if (!$item->isEmpty()) {
-      $button_name = implode('-', array_merge($field_parents,
+      $button_name = implode('-', array_merge(
+        $field_parents,
         [$field_name, $delta, 'toggle']
       ));
       // Extra card_actions wrapper needed for core delete ajax submit nesting.
@@ -432,8 +433,10 @@ class AZCardWidget extends WidgetBase {
         // Url is valid, no conversion required.
         return;
       }
-      if (str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
-        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))) {
+      if (
+        str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
+        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))
+      ) {
         // Link to a public file which is confirmed to exist.
         return;
       }

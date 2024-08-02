@@ -2,26 +2,27 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_card_default' formatter.
- *
- * @FieldFormatter(
- *   id = "az_card_default",
- *   label = @Translation("Default"),
- *   field_types = {
- *     "az_card"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'az_card_default',
+  label: new TranslatableMarkup('Default'),
+  field_types: [
+    'az_card',
+  ],
+)]
 class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -123,6 +124,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
 
       // Link.
       $link_render_array = [];
+      $link_url = '';
       if ($item->link_title || $item->link_uri) {
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
@@ -213,9 +215,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           if (isset($card_defaults['card_title_display'])) {
             $title_display = $card_defaults['card_title_display'];
           }
-
         }
-
       }
 
       // Handle class keys that contained multiple classes.
@@ -239,6 +239,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           '#langcode' => $item->getLangcode(),
         ],
         '#link' => $link_render_array,
+        '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
         '#title_level' => $title_level ?? 'h3',
         '#title_alignment' => $title_alignment ?? 'text-left',
