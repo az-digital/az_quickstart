@@ -81,11 +81,11 @@ Beta releases serve as a preview of the upcoming stable release and are meant fo
 ### Release Candidates (rc)
 Release candidates are the final step before the stable release. These versions are considered feature complete, with all proposed features implemented and bugs addressed. The primary purpose of an RC is to ensure that there are no critical issues that were missed during beta testing. If no significant problems are identified in an RC, it can be promoted to a stable release. However, if issues are found, they are addressed, and a new RC is issued for testing.
 
-## Experimental Modules
+## Experimental Features
 When adding new features to Quickstart, particularly large or complicated
-features, we usually add these modules as "experimental" to indicate to site
-owners that these modules are not fully tested or feature complete and will
-likely experience significant or breaking changes. These modules should only be
+features, we usually encapsulate these in modules labeled as "experimental" to indicate to site
+owners that these features are not fully tested or feature-complete and will
+likely undergo significant or breaking changes. These features should only be
 used by site owners that are actively tracking Quickstart development and are
 prepared to resolve the consequences of breaking changes. 
 
