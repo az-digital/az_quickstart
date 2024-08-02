@@ -81,6 +81,54 @@ Beta releases serve as a preview of the upcoming stable release and are meant fo
 ### Release Candidates (rc)
 Release candidates are the final step before the stable release. These versions are considered feature complete, with all proposed features implemented and bugs addressed. The primary purpose of an RC is to ensure that there are no critical issues that were missed during beta testing. If no significant problems are identified in an RC, it can be promoted to a stable release. However, if issues are found, they are addressed, and a new RC is issued for testing.
 
+## Experimental Features
+When adding new features to Quickstart, particularly large or complicated
+features, we usually encapsulate these in modules labeled as "experimental" to indicate to site
+owners that these features are not fully tested or feature-complete and will
+likely undergo significant or breaking changes. These features should only be
+used by site owners that are actively tracking Quickstart development and are
+prepared to resolve the consequences of breaking changes. 
+
+Any modules with the experimental status bypass all of the minor release
+controls so that ongoing development can be released quickly through patch
+releases. This allows for fast development of new sites that are motivating the
+creation of the feature.
+
+### Best Practices for Using Experimental Modules
+- **Ideal for**: Testing new features on staging or development sites before
+  production deployment.
+- **Risks**: May introduce breaking changes; not recommended for critical
+  production sites without thorough testing.
+
+### Classifying Modules as Experimental
+To add a module as experimental, define the `package` as 
+`'The University of Arizona - Experimental'` in the module's `info.yml` file.
+
+### Transition Plan for Experimental Modules
+
+To ensure the stability and reliability of Quickstart, the number of
+Experimental modules should be minimized, and efforts should be made to convert
+Experimental modules to Stable with each minor release.
+
+#### Qualifications for Updating from Experimental to Stable
+- **Feature Complete**: The module should have all planned features fully
+  implemented.
+- **Testing on Live Websites**: Ideally, the module should be installed on live
+  websites for at least one complete minor release cycle with all known issues
+  resolved.
+- **Stable Parent Modules**: All parent modules of the experimental module
+  should be in a stable state.
+
+#### Transition Plan
+- **Testing Phases**: The module should be fully tested in Probo.ci before being
+  moved to Stable. The pre-release testing phase should incorporate complete
+  testing on sample sites during the minor release cycle.
+- **Documentation**: Update and finalize comprehensive documentation covering
+  the module’s features, configurations, and any known issues.
+- **Review and Approval**: Conduct a thorough review and seek approval from the
+  development team and key stakeholders before transitioning the module to a
+  stable release.
+  
 ## Update hook numbering convention
 
 In order to allow update hooks to be added to different minor release branches
