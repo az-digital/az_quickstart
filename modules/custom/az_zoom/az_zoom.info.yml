@@ -1,0 +1,8 @@
+name: Quickstart Zoom
+type: module
+description: Provides field formatter for image fields to enlarge on touch, click, or mouseover.
+core_version_requirement: ^9.3 || ^10 || ^11
+dependencies:
+  - drupal:image
+  - drupal:responsive_image
+  - drupal:field

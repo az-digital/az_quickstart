@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * AZ Zoom module.
+ */
+
+/**
+ * Implementation of hook_theme().
+ */
+function az_zoom_theme() {
+  return [
+    'az_zoom' => [
+      'variables' => [
+        'images' => NULL,
+      ],
+      'template' => 'az-zoom',
+    ],
+  ];
+}
+
+/**
+ * Implements template_preprocess_az_zoom().
+ *
+ * @param mixed $variables
+ *    Variables storage.
+ */
+function template_preprocess_az_zoom(&$variables) {
+  $variables['#attached']['library'][] = 'az_zoom/drupal';
+}
+

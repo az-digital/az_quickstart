@@ -1,0 +1,22 @@
+zoom:
+  version: 1.x
+  css:
+    theme:
+      css/az-zoom.css: {}
+  js:
+    js/az-zoom.js:
+      attributes:
+        type: 'module'
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+drupal:
+  version: 1.x
+  js:
+    js/az-zoom.drupal.js:
+      attributes:
+        type: 'module'
+
+  dependencies:
+    - az_zoom/zoom
