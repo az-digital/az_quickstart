@@ -13,8 +13,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
-use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Drupal\file\FileInterface;
+use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -95,7 +95,7 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
     $current_user,
     EntityStorageInterface $image_style_storage,
     EntityStorageInterface $responsive_image_style_storage,
-    FileUrlGeneratorInterface $file_url_generator
+    FileUrlGeneratorInterface $file_url_generator,
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->currentUser = $current_user;
@@ -354,13 +354,10 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
         if ($responsive_image_style) {
           $image_uri = $file->getFileUri();
           $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
-
-          // Extract field item attributes for the theme function, and unset them
-          // from the $item so that the field template does not re-render them.
+          // Extract field item attributes for the theme function, and unset
+          // them from the $item so that the field template does not re-render
+          // them.
           $cache_tags = Cache::mergeTags($cache_tags, $file->getCacheTags());
-
-          // Extract field item attributes for the theme function, and unset them
-          // from the $item so that the field template does not re-render them.
           $item = $file->_referringItem;
           if (!empty($item->_attributes)) {
             $item_attributes = $item->_attributes;
@@ -401,9 +398,9 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
           $cache_contexts[] = 'url.site';
           $image_uri = $file->getFileUri();
           $cache_tags = Cache::mergeTags($cache_tags, $file->getCacheTags());
-
-          // Extract field item attributes for the theme function, and unset them
-          // from the $item so that the field template does not re-render them.
+          // Extract field item attributes for the theme function, and unset
+          // them from the $item so that the field template does not re-render
+          // them.
           $item = $file->_referringItem;
           if (!empty($item->_attributes)) {
             $item_attributes = $item->_attributes;
