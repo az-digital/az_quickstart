@@ -48,7 +48,7 @@ class ConfigOverrideTest extends BrowserTestBase {
 
     // Check that the cas server hostname has been overridden.
     $hostname = $this->config('cas.settings')->get('server.hostname');
-    $this->assertEquals('shibboleth.arizona.edu', $hostname);
+    $this->assertSame('shibboleth.arizona.edu', $hostname);
   }
 
   /**
@@ -58,25 +58,26 @@ class ConfigOverrideTest extends BrowserTestBase {
     // Install the az_mail module.
     $this->container->get('module_installer')->install(['az_mail']);
     $config = $this->config('smtp.settings');
-    $this->assertEquals(TRUE, $config->get('smtp_on'));
-    $this->assertEquals('email-smtp.us-west-2.amazonaws.com', $config->get('smtp_host'));
-    $this->assertEquals('', $config->get('smtp_hostbackup'));
-    $this->assertEquals('2587', $config->get('smtp_port'));
-    $this->assertEquals('tls', $config->get('smtp_protocol'));
-    $this->assertEquals(TRUE, $config->get('smtp_autotls'));
-    $this->assertEquals(30, $config->get('smtp_timeout'));
-    $this->assertEquals('', $config->get('smtp_username'));
-    $this->assertEquals('', $config->get('smtp_password'));
-    $this->assertEquals('', $config->get('smtp_from'));
-    $this->assertEquals('', $config->get('smtp_fromname'));
-    $this->assertEquals('', $config->get('smtp_client_hostname'));
-    $this->assertEquals('', $config->get('smtp_client_helo'));
-    $this->assertEquals('0', $config->get('smtp_allowhtml'));
-    $this->assertEquals('', $config->get('smtp_test_address'));
-    $this->assertEquals('', $config->get('smtp_reroute_address'));
-    $this->assertEquals(FALSE, $config->get('smtp_debugging'));
-    $this->assertEquals('php_mail', $config->get('prev_mail_system'));
-    $this->assertEquals(FALSE, $config->get('smtp_keepalive'));
+    $this->assertSame(TRUE, $config->get('smtp_on'));
+    $this->assertSame('email-smtp.us-west-2.amazonaws.com', $config->get('smtp_host'));
+    $this->assertSame('', $config->get('smtp_hostbackup'));
+    $this->assertSame('2587', $config->get('smtp_port'));
+    $this->assertSame('tls', $config->get('smtp_protocol'));
+    $this->assertSame(TRUE, $config->get('smtp_autotls'));
+    $this->assertSame(30, $config->get('smtp_timeout'));
+    $this->assertSame('', $config->get('smtp_username'));
+    $this->assertSame('', $config->get('smtp_password'));
+    $this->assertSame('', $config->get('smtp_from'));
+    $this->assertSame('', $config->get('smtp_fromname'));
+    $this->assertSame('', $config->get('smtp_client_hostname'));
+    $this->assertSame('', $config->get('smtp_client_helo'));
+    $this->assertSame('FALSE', $config->get('smtp_allowhtml'));
+    $this->assertSame('', $config->get('smtp_test_address'));
+    $this->assertSame('', $config->get('smtp_reroute_address'));
+    $this->assertSame(FALSE, $config->get('smtp_debugging'));
+    $this->assertSame('php_mail', $config->get('prev_mail_system'));
+    $this->assertSame(FALSE, $config->get('smtp_keepalive'));
+    $this->assertSame(1, $config->get('smtp_debug_level'));
   }
 
 }
