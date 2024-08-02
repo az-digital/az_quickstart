@@ -10,7 +10,7 @@ dependencies:
     module:
       - az_demo
 migration_dependencies:
-  required:
+  optional:
     - az_demo_person_node
 source:
   plugin: url
