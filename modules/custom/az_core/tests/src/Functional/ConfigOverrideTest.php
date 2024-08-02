@@ -58,12 +58,12 @@ class ConfigOverrideTest extends BrowserTestBase {
     // Install the az_mail module.
     $this->container->get('module_installer')->install(['az_mail']);
     $config = $this->config('smtp.settings');
-    $this->assertSame(TRUE, $config->get('smtp_on'));
+    $this->assertTrue($config->get('smtp_on');
     $this->assertSame('email-smtp.us-west-2.amazonaws.com', $config->get('smtp_host'));
     $this->assertSame('', $config->get('smtp_hostbackup'));
     $this->assertSame('2587', $config->get('smtp_port'));
     $this->assertSame('tls', $config->get('smtp_protocol'));
-    $this->assertSame(TRUE, $config->get('smtp_autotls'));
+    $this->assertTrue($config->get('smtp_autotls');
     $this->assertSame(30, $config->get('smtp_timeout'));
     $this->assertSame('', $config->get('smtp_username'));
     $this->assertSame('', $config->get('smtp_password'));
@@ -71,12 +71,12 @@ class ConfigOverrideTest extends BrowserTestBase {
     $this->assertSame('', $config->get('smtp_fromname'));
     $this->assertSame('', $config->get('smtp_client_hostname'));
     $this->assertSame('', $config->get('smtp_client_helo'));
-    $this->assertSame('FALSE', $config->get('smtp_allowhtml'));
+    $this->assertFalse($config->get('smtp_allowhtml');
     $this->assertSame('', $config->get('smtp_test_address'));
     $this->assertSame('', $config->get('smtp_reroute_address'));
-    $this->assertSame(FALSE, $config->get('smtp_debugging'));
+    $this->assertFalse($config->get('smtp_debugging');
     $this->assertSame('php_mail', $config->get('prev_mail_system'));
-    $this->assertSame(FALSE, $config->get('smtp_keepalive'));
+    $this->assertFalse($config->get('smtp_keepalive');
     $this->assertSame(1, $config->get('smtp_debug_level'));
   }
 
