@@ -40,16 +40,28 @@ class InstructorLink extends ProcessPluginBase implements ContainerFactoryPlugin
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $link = ['uri' => 'route:<nolink>', 'title' => $value];
+    $instructor = [];
+    /** @var \SimpleXMLElement $xml */
+    $xml = $value;
+    // Get the child components of the instructor element.
+    foreach ($xml->children() as $node) {
+      $instructor[$node->getName()] = (string) $node;
+    }
+
+    $netid = $instructor['netid'] ?? 'netid-not-found';
+    $fullname = $instructor['fullname'] ?? '';
+    // We prefer to display their fullname if possible.
+    $displayname = (!empty($fullname)) ? $fullname : $netid;
+    $link = ['uri' => 'route:<nolink>', 'title' => $displayname];
 
     // This is the API placeholder for an unassigned section.
-    if ($value === 'netid-not-found') {
+    if ($netid === 'netid-not-found') {
       $link['title'] = 'unassigned';
     }
     else {
       // See if there is a person with a matching netid.
       $persons = $this->entityTypeManager->getStorage('node')->loadByProperties([
-        'field_az_netid' => $value,
+        'field_az_netid' => $netid,
         'type' => 'az_person',
         'status' => [1, TRUE],
       ]);
