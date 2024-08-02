@@ -14,6 +14,7 @@ use Drupal\Core\Link;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Url;
 use Drupal\image\Plugin\Field\FieldFormatter\ImageFormatterBase;
+use Drupal\file\FileInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -74,7 +75,7 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
-   * @param object $current_user
+   * @param \Drupal\Core\Session\AccountInterface $current_user
    *   The current user.
    * @param \Drupal\Core\Entity\EntityStorageInterface $image_style_storage
    *   Image style storage.
@@ -94,7 +95,7 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
     $current_user,
     EntityStorageInterface $image_style_storage,
     EntityStorageInterface $responsive_image_style_storage,
-    FileUrlGeneratorInterface $file_url_generator,
+    FileUrlGeneratorInterface $file_url_generator
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
     $this->currentUser = $current_user;
@@ -117,9 +118,6 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
    *
    * @return static
    *   Returns an instance of this plugin.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     return new static(
@@ -213,40 +211,6 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
     ];
     $element = parent::settingsForm($form, $form_state);
 
-    $element['image_zoom_factor'] = [
-      '#title' => $this->t('Image Zoom Factor'),
-      '#type' => 'textfield',
-      '#default_value' => $this->getSetting('image_zoom_factor'),
-      '#description' => $this->t('Define the zoom factor, e.g., 250%.'),
-    ];
-
-    $element['image_smoother'] = [
-      '#title' => $this->t('Smoother Zoom'),
-      '#type' => 'checkbox',
-      '#default_value' => $this->getSetting('image_smoother'),
-      '#description' => $this->t('Enable to make the zoom effect smoother.'),
-    ];
-
-    $element['display_loc'] = [
-      '#title' => $this->t('Display Location HUD'),
-      '#type' => 'checkbox',
-      '#default_value' => $this->getSetting('display_loc'),
-      '#description' => $this->t('Enable to display location heads-up display.'),
-    ];
-
-    $element['display_zoom'] = [
-      '#title' => $this->t('Display Zoom HUD'),
-      '#type' => 'checkbox',
-      '#default_value' => $this->getSetting('display_zoom'),
-      '#description' => $this->t('Enable to display zoom level heads-up display.'),
-    ];
-
-    $element['zoom_on_scroll'] = [
-      '#title' => $this->t('Zoom on Scroll'),
-      '#type' => 'checkbox',
-      '#default_value' => $this->getSetting('zoom_on_scroll'),
-      '#description' => $this->t('Allow zooming with mouse scroll.'),
-    ];
     $element['image_zoom_factor'] = [
       '#title' => $this->t('Image Zoom Factor'),
       '#type' => 'textfield',
@@ -384,97 +348,98 @@ class AzZoomFieldFormatter extends ImageFormatterBase implements ContainerFactor
     }
     // Loop over files.
     foreach ($files as $delta => $file) {
-      $cache_contexts = [];
-      // Handle responsive image formatting.
-      if ($responsive_image_style) {
-        $image_uri = $file->getFileUri();
-        $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
+      if ($file instanceof FileInterface) {
+        $cache_contexts = [];
+        // Handle responsive image formatting.
+        if ($responsive_image_style) {
+          $image_uri = $file->getFileUri();
+          $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
 
-        // Extract field item attributes for the theme function, and unset them
-        // from the $item so that the field template does not re-render them.
-        $image_uri = $file->getFileUri();
-        $cache_tags = Cache::mergeTags($cache_tags, $file->getCacheTags());
+          // Extract field item attributes for the theme function, and unset them
+          // from the $item so that the field template does not re-render them.
+          $cache_tags = Cache::mergeTags($cache_tags, $file->getCacheTags());
 
-        // Extract field item attributes for the theme function, and unset them
-        // from the $item so that the field template does not re-render them.
-        $item = $file->_referringItem;
-        if (!empty($item->_attributes)) {
-          $item_attributes = $item->_attributes;
+          // Extract field item attributes for the theme function, and unset them
+          // from the $item so that the field template does not re-render them.
+          $item = $file->_referringItem;
+          if (!empty($item->_attributes)) {
+            $item_attributes = $item->_attributes;
+          }
+          $image_target_id = $item->getValue()['target_id'];
+
+          $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
+          // Use style image as origin if set.
+          if (isset($zoomed_image_style)) {
+            $image_uri = $zoomed_image_style->buildUrl($file->getFileUri());
+          }
+          $image_uri = parse_url($image_uri);
+          $original_urls[$image_target_id] = $image_uri['path'];
+          // Add image style parameters.
+          if (isset($image_uri['query'])) {
+            $original_urls[$image_target_id] .= '?' . $image_uri['query'];
+          }
+          // Adding custom attributes to the img.
+          $item_attributes['class'][] = 'original-image';
+          $item_attributes['fid'] = $image_target_id;
+          unset($item->_attributes);
+
+          $images[$delta] = [
+            '#theme' => 'responsive_image_formatter',
+            '#item' => $item,
+            '#item_attributes' => $item_attributes,
+            '#responsive_image_style_id' => $responsive_image_style->id(),
+            '#prefix' => '<span class="image-zoom">',
+            '#suffix' => '</span>',
+            '#cache' => [
+              'tags' => $cache_tags,
+            ],
+          ];
+
         }
-        $image_target_id = $item->getValue()['target_id'];
+        else {
+          // Handle image formatting.
+          $cache_contexts[] = 'url.site';
+          $image_uri = $file->getFileUri();
+          $cache_tags = Cache::mergeTags($cache_tags, $file->getCacheTags());
 
-        $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
-        // Use style image as origin if set.
-        if (isset($zoomed_image_style)) {
-          $image_uri = $zoomed_image_style->buildUrl($file->uri->value);
+          // Extract field item attributes for the theme function, and unset them
+          // from the $item so that the field template does not re-render them.
+          $item = $file->_referringItem;
+          if (!empty($item->_attributes)) {
+            $item_attributes = $item->_attributes;
+          }
+          $image_target_id = $item->getValue()['target_id'];
+
+          $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
+          // Use style image as origin if set.
+          if (isset($zoomed_image_style)) {
+            $image_uri = $zoomed_image_style->buildUrl($file->getFileUri());
+          }
+          $image_uri = parse_url($image_uri);
+          $original_urls[$image_target_id] = $image_uri['path'];
+          // Add image style parameters.
+          if (isset($image_uri['query'])) {
+            $original_urls[$image_target_id] .= '?' . $image_uri['query'];
+          }
+
+          // Adding custom attributes to the img.
+          $item_attributes['class'][] = 'original-image';
+          $item_attributes['fid'] = $image_target_id;
+          unset($item->_attributes);
+
+          $images[$delta] = [
+            '#theme' => 'image_formatter',
+            '#item' => $item,
+            '#item_attributes' => $item_attributes,
+            '#image_style' => $image_style_setting,
+            '#prefix' => '<span class="image-zoom">',
+            '#suffix' => '</span>',
+            '#cache' => [
+              'tags' => $cache_tags,
+              'contexts' => $cache_contexts,
+            ],
+          ];
         }
-        $image_uri = parse_url($image_uri);
-        $original_urls[$image_target_id] = $image_uri['path'];
-        // Add image style parameters.
-        if (isset($image_uri['query'])) {
-          $original_urls[$image_target_id] .= '?' . $image_uri['query'];
-        }
-        // Adding custom attributes to the img.
-        $item_attributes['class'][] = 'original-image';
-        $item_attributes['fid'] = $image_target_id;
-        unset($item->_attributes);
-
-        $images[$delta] = [
-          '#theme' => 'responsive_image_formatter',
-          '#item' => $item,
-          '#item_attributes' => $item_attributes,
-          '#responsive_image_style_id' => $responsive_image_style->id(),
-          '#prefix' => '<span class="image-zoom">',
-          '#suffix' => '</span>',
-          '#cache' => [
-            'tags' => $cache_tags,
-          ],
-        ];
-
-      }
-      else {
-        // Handle image formatting.
-        $cache_contexts[] = 'url.site';
-        $image_uri = $file->getFileUri();
-        $cache_tags = Cache::mergeTags($cache_tags, $file->getCacheTags());
-
-        // Extract field item attributes for the theme function, and unset them
-        // from the $item so that the field template does not re-render them.
-        $item = $file->_referringItem;
-        if (!empty($item->_attributes)) {
-          $item_attributes = $item->_attributes;
-        }
-        $image_target_id = $item->getValue()['target_id'];
-
-        $image_uri = $this->fileUrlGenerator->generateAbsoluteString($image_uri);
-        // Use style image as origin if set.
-        if (isset($zoomed_image_style)) {
-          $image_uri = $zoomed_image_style->buildUrl($file->uri->value);
-        }
-        $image_uri = parse_url($image_uri);
-        $original_urls[$image_target_id] = $image_uri['path'];
-        // Add image style parameters.
-        if (isset($image_uri['query'])) {
-          $original_urls[$image_target_id] .= '?' . $image_uri['query'];
-        }
-
-        // Adding custom attributes to the img.
-        $item_attributes['class'][] = 'original-image';
-        $item_attributes['fid'] = $image_target_id;
-        unset($item->_attributes);
-
-        $images[$delta] = [
-          '#theme' => 'image_formatter',
-          '#item' => $item,
-          '#item_attributes' => $item_attributes,
-          '#image_style' => $image_style_setting,
-          '#prefix' => '<span class="image-zoom">',
-          '#suffix' => '</span>',
-          '#cache' => [
-            'tags' => $cache_tags,
-            'contexts' => $cache_contexts,
-          ],
-        ];
       }
     }
     $new_zoom = [
