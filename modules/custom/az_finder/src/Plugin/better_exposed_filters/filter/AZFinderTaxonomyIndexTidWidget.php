@@ -446,7 +446,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title['#tag'] = 'h3';
           $list_title['#attributes']['class'][] = 'text-azurite';
           $list_title['#attributes']['class'][] = 'text-size-h5';
-          $list_title['#attributes']['class'][] = 'm-0';
+          $list_title['#attributes']['class'][] = 'mt-0';
           $list_title['#attributes']['class'][] = 'd-flex';
           $list_title['#attributes']['class'][] = 'align-items-center';
         }
@@ -459,6 +459,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title['#attributes']['class'][] = 'flex-row-reverse';
           $list_title['#attributes']['class'][] = 'justify-content-end';
           $list_title['#attributes']['class'][] = 'align-items-center';
+          $list_title['#attributes']['class'][] = 'mt-0';
         }
         $list_title_link['value'] = $list_title;
         // Apply the modified list title to the element.
