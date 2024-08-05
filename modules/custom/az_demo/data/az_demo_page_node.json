@@ -270,6 +270,16 @@
       "az_main_content" : "108",
       "az_media_image" : "",
       "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":28,
+      "title" : "Publications",
+      "path" : "/publications",
+      "exclude_title" : false,
+      "az_page_category" : "Publications",
+      "az_main_content" : "109",
+      "az_media_image" : "",
+      "az_summary" : "A page with publications."
     }
   ]
 }

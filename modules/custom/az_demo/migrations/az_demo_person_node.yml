@@ -54,6 +54,9 @@ source:
     -
       name: filename
       selector: az_photo
+    -
+      name: netid
+      selector: netid
 
 process:
   type:
@@ -126,6 +129,8 @@ process:
       source: filename
       migration:
         - az_demo_image_file
+
+  field_az_netid: netid
 
 destination:
   plugin: entity:node
