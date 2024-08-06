@@ -4,7 +4,6 @@ dependencies:
   config:
     - views.view.az_finder
   module:
-    - block_class
     - system
     - views
   theme:

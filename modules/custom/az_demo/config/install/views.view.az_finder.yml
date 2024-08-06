@@ -102,6 +102,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: az_better_exposed_filters
         options:
@@ -579,15 +580,20 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_event_category_target_id:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -858,27 +864,34 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_byline_value:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: true
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_published_value:
                 plugin_id: bef_datepicker
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_news_tags_target_id:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1262,15 +1275,20 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_page_category_target_id:
                 plugin_id: az_finder_tid_widget
                 advanced:
-                  sort_options: true
+                  sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -1547,23 +1565,32 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_person_category_target_id:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                default_states: {  }
               field_az_person_category_sec_target_id:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical

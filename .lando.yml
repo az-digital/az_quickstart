@@ -1,10 +1,10 @@
 name: az_quickstart
 recipe: drupal10
 config:
-  php: '8.2'
+  php: '8.3'
   via: apache:2.4
   webroot: web
-  database: mariadb:10.4
+  database: mariadb:10.6
   xdebug: false
 services:
   # Replaces default lando MariaDB image with arm64 (Apple M1) compatible one.
@@ -12,7 +12,7 @@ services:
   database:
     type: compose
     services:
-      image: mariadb:10.4
+      image: mariadb:10.6
       command: docker-entrypoint.sh mariadbd
       restart: always
       ports:
@@ -30,7 +30,7 @@ services:
       environment:
         SIMPLETEST_DB: 'mysql://drupal10:drupal10@database/drupal10'
         SIMPLETEST_BASE_URL: 'http://appserver'
-        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"],"w3c":false}},"http://chromedriver:4444/wd/hub"]'
+        MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"],"w3c":false}},"http://chromedriver:4444/wd/hub"]'
         XDEBUG_MODE: debug
       volumes:
         # Don't share our host working directory as /app. We want /app empty for composer.
@@ -41,7 +41,7 @@ services:
       # Create a new quickstart project and use the installation profile as a non-packagist repository.
       # Use the matching scaffolding branch if available.
       - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /app
-      - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:\*@dev
+      - composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update az-digital/az_quickstart:\*@dev
       # Use the matching require-dev metapackage branch if available.
       - BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi; composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
       - composer install
@@ -87,10 +87,10 @@ tooling:
   # Provide phpunit tooling to run unit tests.
   phpunit:
     service: appserver
-    cmd: /app/vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
+    cmd: /app/vendor/bin/phpunit --configuration /app/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap /app/web/core/tests/bootstrap.php /app/web/profiles/custom/az_quickstart
   phpunit-fastest:
     service: appserver
-    cmd: find web/profiles/custom/az_quickstart/ -name "*Test.php" | /app/vendor/bin/fastest -vvv "/app/vendor/bin/phpunit {} --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart;"
+    cmd: find web/profiles/custom/az_quickstart/ -name "*Test.php" | /app/vendor/bin/fastest -vvv "/app/vendor/bin/phpunit {} --configuration /app/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap /app/web/core/tests/bootstrap.php /app/web/profiles/custom/az_quickstart;"
   # Provide phpstan tooling to check for code quality and deprecated code.
   phpstan:
     service: appserver

@@ -2,6 +2,7 @@
 
 namespace Drupal\az_course\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -10,11 +11,8 @@ use Drupal\migrate\Row;
  * Returns a link to a user, or a non-link.
  *
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
- *
- * @MigrateProcessPlugin(
- *   id = "instructor_link",
- * )
  */
+#[MigrateProcess('instructor_link')]
 class InstructorLink extends ProcessPluginBase {
 
   /**
