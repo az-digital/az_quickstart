@@ -28,8 +28,8 @@ third_party_settings:
   field_group:
     group_row:
       children:
-        - group_text_column
         - group_media
+        - group_text_column
       label: Row
       parent_name: group_bottom_border
       region: content
@@ -52,7 +52,7 @@ third_party_settings:
       label: 'Text Column'
       parent_name: group_row
       region: content
-      weight: 4
+      weight: 6
       format_type: html_element
       format_settings:
         classes: col
@@ -73,7 +73,8 @@ third_party_settings:
       weight: 5
       format_type: html_element
       format_settings:
-        classes: float-right
+        classes: 'pl-3 w-25'
+        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -178,7 +179,7 @@ third_party_settings:
       weight: 2
       format_type: html_element
       format_settings:
-        classes: 'text-chili small mt-2 mb-4'
+        classes: 'text-chili small mt-2 mb-4 bold'
         show_empty_fields: false
         id: ''
         element: div
