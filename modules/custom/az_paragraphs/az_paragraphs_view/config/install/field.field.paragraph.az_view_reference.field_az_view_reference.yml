@@ -22,7 +22,6 @@ settings:
     target_bundles: null
     auto_create: false
   plugin_types:
-    default: default
     block: block
     page: page
   preselect_views:
