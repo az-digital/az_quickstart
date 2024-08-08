@@ -73,14 +73,10 @@ process:
       - catalog_number
   field_az_course_instructor:
     -
-      plugin: skip_on_empty
-      method: process
+      plugin: single_value
       source: instructors
-    -
-      plugin: multiple_values
     -
       plugin: instructor_link
-      source: instructors
   field_az_course_types:
     -
       plugin: skip_on_empty

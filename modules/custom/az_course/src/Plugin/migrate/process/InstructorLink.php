@@ -40,25 +40,33 @@ class InstructorLink extends ProcessPluginBase implements ContainerFactoryPlugin
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $instructor = [];
-    /** @var \SimpleXMLElement $xml */
-    $xml = $value;
+    $instructors = [];
+    $links = [];
+
+    // Depending on course, value may be a single element.
+    if (!is_array($value)) {
+      $value = !empty($value) ? [$value] : [];
+    }
+
+    /** @var array \SimpleXMLElement $xml */
+    $elements = $value;
     // Get the child components of the instructor element.
-    foreach ($xml->children() as $node) {
-      $instructor[$node->getName()] = (string) $node;
+    foreach ($elements as $xml) {
+      if (!empty($xml->netid)) {
+        $netid = (string) $xml->netid;
+        // Prefer fullname if there is one.
+        $fullname = (!empty($xml->fullname)) ? ((string) $xml->fullname) : $netid;
+        // Use netid as key to prevent duplicates.
+        $instructors[$netid] = $fullname;
+      }
     }
 
-    $netid = $instructor['netid'] ?? 'netid-not-found';
-    $fullname = $instructor['fullname'] ?? '';
-    // We prefer to display their fullname if possible.
-    $displayname = (!empty($fullname)) ? $fullname : $netid;
-    $link = ['uri' => 'route:<nolink>', 'title' => $displayname];
+    // Remove placeholder for sections with no instructor.
+    unset($instructors['netid-not-found']);
 
-    // This is the API placeholder for an unassigned section.
-    if ($netid === 'netid-not-found') {
-      $link['title'] = 'unassigned';
-    }
-    else {
+    // Create links to each unique instructor.
+    foreach ($instructors as $netid => $fullname) {
+      $link = ['uri' => 'route:<nolink>', 'title' => $fullname];
       // See if there is a person with a matching netid.
       $persons = $this->entityTypeManager->getStorage('node')->loadByProperties([
         'field_az_netid' => $netid,
@@ -69,9 +77,10 @@ class InstructorLink extends ProcessPluginBase implements ContainerFactoryPlugin
         $person = reset($persons);
         $link['uri'] = 'entity:node/' . $person->id();
       }
+      $links[] = $link;
     }
 
-    return $link;
+    return $links;
   }
 
 }
