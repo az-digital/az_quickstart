@@ -48,7 +48,7 @@ class InstructorLink extends ProcessPluginBase implements ContainerFactoryPlugin
       $value = !empty($value) ? [$value] : [];
     }
 
-    /** @var array \SimpleXMLElement $xml */
+    /** @var array \SimpleXMLElement $elements */
     $elements = $value;
     // Get the child components of the instructor element.
     foreach ($elements as $xml) {
