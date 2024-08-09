@@ -47,7 +47,7 @@ source:
     -
       name: instructors
       label: Instructors
-      selector: '//*[local-name()="netid"]'
+      selector: '//*[local-name()="Instructor"]'
     -
       name: term_code
       label: Term Code
@@ -73,14 +73,8 @@ process:
       - catalog_number
   field_az_course_instructor:
     -
-      plugin: skip_on_empty
-      method: process
+      plugin: single_value
       source: instructors
-    -
-      plugin: course_squash
-      source: instructors
-    -
-      plugin: multiple_values
     -
       plugin: instructor_link
   field_az_course_types:
