@@ -12,12 +12,11 @@
         var filterCountDisplay = container.querySelector('.js-active-filter-count');
         var textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
         var checkboxesAndRadios = container.querySelectorAll('input[type="checkbox"], input[type="radio"]');
-        var minSearchLength = settings.azFinder.minSearchLength || 1;
         var alwaysDisplayResetButton = settings.azFinder.alwaysDisplayResetButton || false;
         var calculateActiveFilterCount = function calculateActiveFilterCount() {
           var count = container.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked').length;
           textInputFields.forEach(function (inputField) {
-            if (inputField.value.trim().length >= minSearchLength) {
+            if (inputField.value.trim().length >= 1) {
               count += 1;
             }
           });
