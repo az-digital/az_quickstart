@@ -30,8 +30,8 @@ third_party_settings:
   field_group:
     group_row:
       children:
-        - group_text_column
         - group_media
+        - group_text_column
       label: Row
       parent_name: group_bottom_border
       region: content
@@ -74,7 +74,7 @@ third_party_settings:
       label: 'Text Column'
       parent_name: group_row
       region: content
-      weight: 4
+      weight: 6
       format_type: html_element
       format_settings:
         classes: col
@@ -267,6 +267,7 @@ content:
       time_before_date: 0
       use_all_day: 0
       capitalize_noon_and_midnight: 0
+      hide_date: 0
     third_party_settings: {  }
     weight: 5
     region: content
