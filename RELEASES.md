@@ -101,7 +101,7 @@ creation of the feature.
   production sites without thorough testing.
 
 ### Classifying Modules as Experimental
-To classify a module as experimental, define the following properities in the module's `.info.yml` file:
+To classify a module as experimental, define the following properties in the module's `.info.yml` file:
 - `package`: `'The University of Arizona - Experimental'`
 - `lifecycle`: `experimental`
 - `lifecycle_link`: `'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'`
