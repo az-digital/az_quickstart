@@ -39,7 +39,7 @@
         "drupal/access_unpublished": "1.6.0",
         "drupal/antibot": "2.0.3",
         "drupal/asset_injector": "2.21.0",
-        "drupal/auto_entitylabel": "3.2.0",
+        "drupal/auto_entitylabel": "3.3.0",
         "drupal/better_exposed_filters": "6.0.6",
         "drupal/blazy": "3.0.10",
         "drupal/block_class": "2.0.11",
