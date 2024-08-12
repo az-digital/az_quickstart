@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
@@ -20,7 +21,11 @@ dependencies:
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
+    - smart_title
     - user
+third_party_settings:
+  smart_title:
+    enabled: false
 id: node.az_person.teaser
 targetEntityType: node
 bundle: az_person
@@ -42,6 +47,7 @@ hidden:
   field_az_links: true
   field_az_lname: true
   field_az_media_image: true
+  field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
   field_az_phones: true

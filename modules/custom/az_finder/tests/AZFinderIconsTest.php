@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\Tests\az_finder\Unit;
 
-use Drupal\az_finder\AZFinderIcons;
+use Drupal\az_finder\Service\AZFinderIcons;
 use PHPUnit\Framework\TestCase;
 
 /**
