@@ -171,7 +171,21 @@
       "alt" : "Navajo wool weaving",
       "title": "",
       "caption": "Axis Radius, 2016, Wool, aniline dyes, vegetal dyes, Lent by James Wezelman and Denise Grusin"
+    },
+    {
+      "filename" : "az-news-featured-image-placeholder.jpeg",
+      "alt" : "Alternate text",
+      "title" : "",
+      "caption" : "The innovative treatment, known as Insulix-21, has demonstrated remarkable success in early clinical trials.",
+      "credit" : "Photo by Rachel Thompson, University of Arizona"
+    },
+    {
+      "filename" : "az-small-image-placeholder.jpeg",
+      "alt" : "Alternate text",
+      "title" : "",
+      "caption" : "Insulix-21 is a novel therapy that combines cutting-edge stem cell technology with advanced immunomodulation techniques",
+      "credit" : "Courtesy of Rachel Thompson (rendering for illustrative purposes only)",
+      "uuid": "aec26a34-72da-4a7c-94e1-8e2793ec67c2"
     }
   ]
 }
-
