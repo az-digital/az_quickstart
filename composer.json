@@ -114,7 +114,7 @@
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta9",
         "drupal/webform": "6.2.7",
-        "drupal/workbench_access": "2.0.1",
+        "drupal/workbench_access": "2.0.3",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
         "kevinrob/guzzle-cache-middleware": "5.1.0",
@@ -199,7 +199,7 @@
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
             },
             "drupal/workbench_access": {
-                "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2023-08-16/2982550-39.patch",
+                "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2024-05-07/2982550-41.patch",
                 "Content is assigned to wrong menu level if user does not have access to the current level (3187152)": "https://www.drupal.org/files/issues/2023-09-26/3187152-workbench_access-menu-default-20.patch"
             },
             "drupal/xmlsitemap": {
