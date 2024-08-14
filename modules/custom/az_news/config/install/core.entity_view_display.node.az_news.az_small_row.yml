@@ -182,8 +182,6 @@ third_party_settings:
       smart_title__link: false
       smart_title__tag: ''
       smart_title__classes: {  }
-_core:
-  default_config_hash: dtHBUX3zj1zcCAqiHuFHgM_5ysUH81to09wykS-Xkqg
 id: node.az_news.az_small_row
 targetEntityType: node
 bundle: az_news
