@@ -213,8 +213,6 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-_core:
-  default_config_hash: MEwXfSHkf_eMP78jYRqO_WGve2x7PBKfwbWJ8r5HPpQ
 id: node.az_news.az_feature
 targetEntityType: node
 bundle: az_news
