@@ -3,6 +3,8 @@ description: 'Provides functionality to sticky or remove view items.'
 core_version_requirement: ^10 || ^11
 type: module
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
   - drupal:views
   - draggableviews:draggableviews
