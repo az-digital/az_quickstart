@@ -17,27 +17,15 @@ class AZAuthorListBuilder extends EntityListBuilder {
   /**
    * {@inheritdoc}
    */
-  public function buildHeader() {
-    $header['id'] = $this->t('Author ID');
-    $header['name'] = $this->t('Name');
-    return $header + parent::buildHeader();
-  }
+  protected const SORT_KEY = 'label';
 
   /**
    * {@inheritdoc}
    */
-  protected function getEntityListQuery() : QueryInterface {
-    // @todo In Drupal 11, replace this with usage of SORT_KEY.
-    $query = $this->getStorage()
-      ->getQuery()
-      ->accessCheck(TRUE)
-      ->sort($this->entityType
-        ->getKey('label'));
-    // Only add the pager if a limit is specified.
-    if ($this->limit) {
-      $query->pager($this->limit);
-    }
-    return $query;
+  public function buildHeader() {
+    $header['id'] = $this->t('Author ID');
+    $header['name'] = $this->t('Name');
+    return $header + parent::buildHeader();
   }
 
   /**
