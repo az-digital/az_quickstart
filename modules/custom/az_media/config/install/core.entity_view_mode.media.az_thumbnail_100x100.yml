@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - media
+id: media.az_thumbnail_100x100
+label: 'AZ Thumbnail (100x100)'
+description: ''
+targetEntityType: media
+cache: true

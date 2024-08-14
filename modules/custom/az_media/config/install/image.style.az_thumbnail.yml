@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_square_aspect_ratio
+  module:
+    - crop
+name: az_thumbnail
+label: 'AZ Thumbnail (Scale and crop to 100x100)'
+effects:
+  08ccf5df-08a7-4630-9ff2-3787237bc611:
+    uuid: 08ccf5df-08a7-4630-9ff2-3787237bc611
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: az_square_aspect_ratio
+      automatic_crop_provider: null
+  0fcc33d1-1821-4e3f-9f0a-680ecd2bdeb2:
+    uuid: 0fcc33d1-1821-4e3f-9f0a-680ecd2bdeb2
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 100
+      height: 100
+      anchor: center-center
