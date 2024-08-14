@@ -18,8 +18,6 @@ dependencies:
     - taxonomy
     - user
     - views_bootstrap
-_core:
-  default_config_hash: J1JPu5iLVwj7lTbdvB-OnEDxQj1Hg5kEU5wI385KVyg
 id: az_news
 label: 'AZ News'
 module: views
