@@ -209,7 +209,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: az_thumbnail_100x100
+      view_mode: az_thumbnail
       link: false
     third_party_settings: {  }
     weight: 5

@@ -66,15 +66,15 @@ third_party_settings:
         target_attribute: default
     group_media:
       children:
-        - group_media_right
         - group_media_body
+        - group_media_right
       label: Media
       parent_name: group_story_link
       region: content
       weight: 4
       format_type: html_element
       format_settings:
-        classes: row
+        classes: media
         show_empty_fields: false
         id: ''
         element: div
@@ -92,10 +92,10 @@ third_party_settings:
       label: 'Media body'
       parent_name: group_media
       region: content
-      weight: 22
+      weight: 20
       format_type: html_element
       format_settings:
-        classes: 'media-body text-decoration-none text-dark-silver font-weight-normal col d-flex flex-column my-auto pb-3'
+        classes: 'media-body text-decoration-none text-dark-silver font-weight-normal'
         show_empty_fields: false
         id: ''
         element: div
@@ -114,7 +114,7 @@ third_party_settings:
       weight: 21
       format_type: html_element
       format_settings:
-        classes: 'col-12 col-sm-3'
+        classes: 'media-right ml-3'
         show_empty_fields: false
         id: ''
         element: div
@@ -182,7 +182,6 @@ content:
       time_before_date: 0
       display_noon_and_midnight: 0
       capitalize_noon_and_midnight: 0
-      hide_date: 0
     third_party_settings: {  }
     weight: 0
     region: content
@@ -210,6 +209,7 @@ hidden:
   field_az_link: true
   field_az_main_content: true
   field_az_media_thumbnail_image: true
+  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_summary: true
