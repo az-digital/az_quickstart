@@ -37,7 +37,7 @@
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.6.0",
-        "drupal/antibot": "2.0.3",
+        "drupal/antibot": "2.0.4",
         "drupal/asset_injector": "2.21.0",
         "drupal/auto_entitylabel": "3.3.0",
         "drupal/better_exposed_filters": "6.0.6",
