@@ -179,6 +179,9 @@
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
                 "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch"
             },
+            "drupal/intelligencebank": {
+                "PHP warnings when using CKEditor plugin to access DAM through media library (3468426)": "https://git.drupalcode.org/project/intelligencebank/-/commit/4388fd4f5f9560b2a298f3c320858ab14085b45e.diff"
+            },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
