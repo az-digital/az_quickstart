@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_person_profile_import\Plugin\migrate_plus\data_parser;
 
