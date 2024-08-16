@@ -378,7 +378,7 @@ whether the configuration in question should be exported.
 ```
 
 When a prompt is raised, selecting `yes` will update the configuration in the source module
-with the copy that is in the currenct active local development site.
+with the copy that is in the current active local development site.
 
 Dependency analysis takes place to determine if new dependent configuration exists that
 does not yet exist in the module files, but may need to be exported. This happens most
