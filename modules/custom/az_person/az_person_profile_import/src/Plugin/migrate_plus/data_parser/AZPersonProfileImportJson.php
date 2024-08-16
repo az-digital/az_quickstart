@@ -19,7 +19,7 @@ class AZPersonProfileImportJson extends Json {
   /**
    * {@inheritdoc}
    */
-  protected function getSourceData(string $url): array {
+  protected function getSourceData(string $url, string|int $item_selector = ''): array {
     $source_data = parent::getSourceData($url);
 
     // Profiles returns a single item, not an array as the Json parser expects.
