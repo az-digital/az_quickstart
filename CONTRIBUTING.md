@@ -401,7 +401,7 @@ in these cases if they should not be exported.
 
 ### Configuration from Optional Modules
 
-This can be particularly complex in the cases of overriden configuration, most notably
+This can be particularly complex in the cases of overridden configuration, most notably
 in entity view displays which contain `metatag` fields or settings for the `az_finder` 
 module. This is because multiple copies of this configuration exists, copies of 
 configuration with the optional module enabled, and copies without the optional module enabled.
