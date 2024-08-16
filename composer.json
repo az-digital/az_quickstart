@@ -137,9 +137,6 @@
             "dev-main": "2.12.x-dev"
         },
         "patches": {
-            "drupal/antibot": {
-                "drupalSettings not updated on rendering form in Ajax (3205217)": "https://www.drupal.org/files/issues/2021-03-24/3205217-1.patch"
-            },
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
