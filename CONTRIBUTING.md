@@ -366,7 +366,7 @@ these cases. Quickstart contains a Drush command to automate some of this:
 drush az-core-distribution-config
 ```
 
-This command examines the site of the local build and compares them to the saved configuration
+This command examines the active configuration of the local build and compares them to the saved configuration
 files in the distribution, and raises an alert if changes are detected. It will prompt asking
 whether the configuration in question should be exported.
 
