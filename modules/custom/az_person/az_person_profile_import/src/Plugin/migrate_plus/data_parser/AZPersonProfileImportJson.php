@@ -22,6 +22,26 @@ class AZPersonProfileImportJson extends Json {
   protected function getSourceData(string $url, string|int $item_selector = ''): array {
     $source_data = parent::getSourceData($url);
 
+    // We'll attempt to do some formatting on the phone number.
+    if (!empty($source_data['Person']['phone'])) {
+      $phones = $source_data['Person']['phone'];
+      if (is_array($phones)) {
+        foreach ($phones as &$phone) {
+          if (empty($phone['number'])) {
+            continue;
+          }
+          $formatted = [];
+          // Match hoping to split up the relevant digits.
+          if (preg_match('/^(\+\d{1,2}\s?)?(\(?\d{3}\)?)[\s.-]?(\d{3})[\s.-]?(\d{4})$/', $phone['number'], $formatted)) {
+            array_shift($formatted);
+            $number = vsprintf("%s (%s) %s-%s", $formatted);
+            // Area code might be empty.
+            $phone['number'] = trim(str_replace('()', '', $number));
+          }
+        }
+        $source_data['Person']['phone'] = $phones;
+      }
+    }
     // Profiles returns a single item, not an array as the Json parser expects.
     return [$source_data];
   }
