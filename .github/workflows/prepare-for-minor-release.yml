@@ -6,7 +6,7 @@ on:
       release_branch_name:
         description: The name of the new release branch (e.g. 2.9.x) to create.
         required: true
-        
+
 jobs:
   print_inputs:
     runs-on: ubuntu-latest
@@ -137,14 +137,25 @@ jobs:
           .lando.yml
           .probo.yaml
           composer.json
-          
+
   update_previous_release_branches:
     needs: [prepare_for_new_minor_release, branch_name_prep]
     runs-on: ubuntu-latest
     name: Update `${{ matrix.previous_version }}` release branch.
     strategy:
       matrix:
-        previous_version: [2.9.x, 2.8.x, 2.7.x, 2.6.x, 2.5.x, 2.4.x, 2.3.x, 2.2.x, 2.1.x, 2.0.x]
+        previous_version:
+          - 2.0.x
+          - 2.1.x
+          - 2.2.x
+          - 2.3.x
+          - 2.4.x
+          - 2.5.x
+          - 2.6.x
+          - 2.7.x
+          - 2.8.x
+          - 2.9.x
+          - 2.10.x
     steps:
       - name: Update previous release branch `${{ matrix.previous_version }}`
         uses: actions/checkout@v4
@@ -172,5 +183,38 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           labels: |
             ${{ matrix.previous_version }} only
+          add-paths: |
+            composer.json
+  update_composer_dev_branch_alias_on_main_branch:
+    needs: [prepare_for_new_minor_release, branch_name_prep]
+    runs-on: ubuntu-latest
+    name: Update the composer dev branch alias on the `main` branch.
+    steps:
+      - name: Update `main` branch with new minor release branch alias.
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+
+      - name: Update dev branch alias via Composer
+        run: |
+          composer config extra.branch-alias.dev-main ${{ needs.branch_name_prep.outputs.next_minor_release }}.x-dev
+
+      - name: Create pull request for main branch updates
+        uses: peter-evans/create-pull-request@v6
+        with:
+          title: Prepare `main` branch for new minor release branch ${{ inputs.release_branch_name }}
+          commit-message: Prepare `main` branch for new minor release branch ${{ inputs.release_branch_name }}
+          branch: update-main-for-${{ inputs.release_branch_name }}
+          base: main
+          labels: |
+            task
+          delete-branch: true
+          token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           add-paths: |
             composer.json
