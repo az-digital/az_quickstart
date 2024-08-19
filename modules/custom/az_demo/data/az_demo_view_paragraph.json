@@ -71,6 +71,14 @@
       "display_id" : "content",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 109,
+      "title" : "Recent News Marquee",
+      "target_id" : "az_news",
+      "display_id" : "marquee",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
     }
   ]
 }
