@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.az_thumbnail_100x100
+    - core.entity_view_mode.media.az_thumbnail
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
@@ -13,74 +13,18 @@ dependencies:
     - image
 third_party_settings:
   field_group:
-    group_figure:
-      children:
-        - field_media_az_image
-        - group_fig_caption
-      label: Figure
-      parent_name: ''
-      region: hidden
-      weight: 1
-      format_type: html_element
-      format_settings:
-        classes: ''
-        id: ''
-        element: figure
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: 'style="max-width: 360px;"'
-        effect: none
-        speed: fast
-    group_fig_caption:
-      children:
-        - field_az_caption
-        - group_cite
-      label: 'Fig Caption'
-      parent_name: group_figure
-      region: hidden
-      weight: 2
-      format_type: html_element
-      format_settings:
-        classes: figure-caption
-        id: ''
-        element: figcaption
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_content:
       children:
         - group_row
       label: Content
       parent_name: ''
       region: hidden
-      weight: 5
+      weight: 7
       format_type: html_element
       format_settings:
         classes: ''
         id: ''
         element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_cite:
-      children:
-        - field_az_credit
-      label: Cite
-      parent_name: group_fig_caption
-      region: hidden
-      weight: 4
-      format_type: html_element
-      format_settings:
-        classes: small
-        id: ''
-        element: cite
         show_label: false
         label_element: h3
         label_element_classes: ''
@@ -109,7 +53,7 @@ third_party_settings:
       label: 'Caption Row'
       parent_name: ''
       region: hidden
-      weight: 6
+      weight: 8
       format_type: html_element
       format_settings:
         classes: row
@@ -121,14 +65,14 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-id: media.az_image.az_thumbnail_100x100
+id: media.az_image.az_thumbnail
 targetEntityType: media
 bundle: az_image
-mode: az_thumbnail_100x100
+mode: az_thumbnail
 content:
-  thumbnail:
+  field_media_az_image:
     type: image
-    label: hidden
+    label: visually_hidden
     settings:
       image_link: ''
       image_style: az_thumbnail
@@ -141,6 +85,6 @@ hidden:
   created: true
   field_az_caption: true
   field_az_credit: true
-  field_media_az_image: true
   name: true
+  thumbnail: true
   uid: true
