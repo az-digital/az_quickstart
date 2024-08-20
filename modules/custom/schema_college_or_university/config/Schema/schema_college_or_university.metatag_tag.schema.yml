@@ -1,0 +1,11 @@
+metatag.metatag_tag.schema_college_or_university_name:
+  type: text
+  label: 'name'
+
+metatag.metatag_tag.schema_college_or_university_description:
+  type: text_long
+  label: 'description'
+
+metatag.metatag_tag.schema_college_or_university_url:
+  type: text
+  label: 'url'
