@@ -19,6 +19,7 @@ migration_dependencies:
   optional:
     - az_news_tags
     - az_paragraph_callout
+    - az_paragraph_card_deck
     - az_paragraph_carousel
     - az_paragraph_chucks_view
     - az_paragraph_column_image
@@ -35,7 +36,6 @@ migration_dependencies:
     - az_paragraph_plain_text
     - az_paragraph_single_card
     - az_paragraph_well
-    - az_paragraph_card_deck
 
 source:
   plugin: az_node
@@ -91,6 +91,7 @@ process:
           plugin: migration_lookup
           migration:
             - az_paragraph_callout
+            - az_paragraph_card_deck
             - az_paragraph_carousel
             - az_paragraph_chucks_view
             - az_paragraph_column_image
@@ -107,7 +108,6 @@ process:
             - az_paragraph_plain_text
             - az_paragraph_single_card
             - az_paragraph_well
-            - az_paragraph_card_deck
           source: value
           no_stub: true
         -
@@ -119,6 +119,7 @@ process:
           plugin: migration_lookup
           migration:
             - az_paragraph_callout
+            - az_paragraph_card_deck
             - az_paragraph_carousel
             - az_paragraph_chucks_view
             - az_paragraph_column_image
