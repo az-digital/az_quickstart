@@ -2,6 +2,6 @@ name: Schema.org CollegeOrUniversity
 type: module
 description: 'Adds CollegeOrUniversity to the JSON LD array.'
 core_version_requirement: ^9 || ^10
-package: 'Custom'
+package: 'SEO'
 dependencies:
   - schema_metatag:schema_metatag
