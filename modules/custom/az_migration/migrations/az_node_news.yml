@@ -17,10 +17,12 @@ migration_dependencies:
     - az_media
     - az_user
   optional:
+    - az_news_tags
     - az_paragraph_callout
     - az_paragraph_carousel
     - az_paragraph_chucks_view
     - az_paragraph_column_image
+    - az_paragraph_contact
     - az_paragraph_extra_info
     - az_paragraph_file_download
     - az_paragraph_full_width_bg_wrapper
@@ -92,6 +94,7 @@ process:
             - az_paragraph_carousel
             - az_paragraph_chucks_view
             - az_paragraph_column_image
+            - az_paragraph_contact
             - az_paragraph_extra_info
             - az_paragraph_file_download
             - az_paragraph_full_width_bg_wrapper
@@ -119,6 +122,7 @@ process:
             - az_paragraph_carousel
             - az_paragraph_chucks_view
             - az_paragraph_column_image
+            - az_paragraph_contact
             - az_paragraph_extra_info
             - az_paragraph_file_download
             - az_paragraph_full_width_bg_wrapper
