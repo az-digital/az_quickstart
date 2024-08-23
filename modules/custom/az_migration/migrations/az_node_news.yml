@@ -136,7 +136,6 @@ process:
             - az_paragraph_plain_text
             - az_paragraph_single_card
             - az_paragraph_well
-            - az_paragraph_card_deck
           source: value
           no_stub: true
         -
