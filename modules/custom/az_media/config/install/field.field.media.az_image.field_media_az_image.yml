@@ -33,7 +33,7 @@ settings:
   title_field_required: false
   default_image:
     uuid: ''
-    alt: ' '
+    alt: ''
     title: ''
     width: null
     height: null
