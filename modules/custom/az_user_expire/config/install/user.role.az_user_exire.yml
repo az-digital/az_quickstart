@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_user_expire
+label: 'Auto expire user'
+weight: 6
+is_admin: false
+permissions: {  }
