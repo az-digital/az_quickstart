@@ -34,6 +34,8 @@ class SchemaCollegeOrUniversityTest extends SchemaMetatagTagsTestBase {
     'schema_college_or_university_name' => 'SchemaCollegeOrUniversityName',
     'schema_college_or_university_description' => 'SchemaCollegeOrUniversityDescription',
     'schema_college_or_university_url' => 'SchemaCollegeOrUniversityUrl',
+    'schema_college_or_university_address' => 'SchemaCollegeOrUniversityAddress',
+    'schema_college_or_university_email' => 'SchemaCollegeOrUniversityEmail',
   ];
 
 }

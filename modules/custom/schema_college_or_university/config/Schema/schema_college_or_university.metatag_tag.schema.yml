@@ -9,3 +9,11 @@ metatag.metatag_tag.schema_college_or_university_description:
 metatag.metatag_tag.schema_college_or_university_url:
   type: text
   label: 'url'
+
+metatag.metatag_tag.schema_college_or_university_address:
+  type: text
+  label: 'address'
+
+metatag.metatag_tag.schema_college_or_university_email:
+  type: text
+  label: 'email'
