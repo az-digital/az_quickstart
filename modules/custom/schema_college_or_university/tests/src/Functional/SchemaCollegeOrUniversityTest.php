@@ -34,8 +34,13 @@ class SchemaCollegeOrUniversityTest extends SchemaMetatagTagsTestBase {
     'schema_college_or_university_name' => 'SchemaCollegeOrUniversityName',
     'schema_college_or_university_description' => 'SchemaCollegeOrUniversityDescription',
     'schema_college_or_university_url' => 'SchemaCollegeOrUniversityUrl',
+    'schema_college_or_university_image' => 'SchemaCollegeOrUniversityImage',
+    'schema_college_or_university_logo' => 'SchemaCollegeOrUniversityLogo',
     'schema_college_or_university_address' => 'SchemaCollegeOrUniversityAddress',
     'schema_college_or_university_email' => 'SchemaCollegeOrUniversityEmail',
+    'schema_college_or_university_telephone' => 'SchemaCollegeOrUniversityTelephone',
+    'schema_college_or_university_parent_organization' => 'SchemaCollegeOrUniversityParentOrganization',
+    'schema_college_or_university_same_as' => 'SchemaCollegeOrUniversitySameAs',
   ];
 
 }
