@@ -36,7 +36,7 @@
         "citation-style-language/styles": "0.0.434",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
-        "drupal/anchor_link": "3.0.0-alpha2",
+        "drupal/anchor_link": "3.0.0-beta1",
         "drupal/access_unpublished": "1.6.0",
         "drupal/antibot": "2.0.3",
         "drupal/asset_injector": "2.20.0",
