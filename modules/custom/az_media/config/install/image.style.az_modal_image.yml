@@ -23,3 +23,9 @@ effects:
       width: 568
       height: 630
       anchor: center-center
+  cbdd1d84-2c06-4fac-98f4-570ec68b5678:
+    uuid: cbdd1d84-2c06-4fac-98f4-570ec68b5678
+    id: image_convert
+    weight: 3
+    data:
+      extension: webp

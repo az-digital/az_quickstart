@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -45,11 +46,8 @@ use Drupal\migrate\Row;
  *     plugin: default_value
  *     default_value: az_standard
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_extra_info_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_extra_info_field_merge')]
 class ParagraphsExtraInfoFieldMerge extends ProcessPluginBase {
 
   /**

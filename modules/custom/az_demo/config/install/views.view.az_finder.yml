@@ -13,15 +13,14 @@ dependencies:
     - taxonomy.vocabulary.az_person_categories
     - taxonomy.vocabulary.az_person_categories_secondary
   module:
-    - az_event
-    - az_flexible_page
-    - az_news
-    - az_person
-    - better_exposed_filters
+    - az_finder
     - datetime
     - node
     - taxonomy
     - user
+  enforced:
+    module:
+      - az_demo
 id: az_finder
 label: 'AZ Finder'
 module: views
@@ -103,8 +102,9 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -141,9 +141,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
               tid:
                 plugin_id: bef
                 advanced:
@@ -152,9 +149,6 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
       access:
         type: perm
         options:
@@ -366,7 +360,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -403,20 +397,12 @@ display:
                     filter_rewrite_values: ''
                   collapsible: true
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
-              tid:
-                plugin_id: bef
-                advanced:
-                  sort_options: false
-                  rewrite:
-                    filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
+          reset_button_position: bottom
+          reset_button_counter: false
+          orientation: horizontal
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         created:
           id: created
@@ -566,7 +552,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -594,18 +580,26 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_event_category_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
-                select_all_none: false
-                select_all_none_nested: false
-                display_inline: false
+                default_states: {  }
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value
@@ -842,7 +836,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -870,30 +864,40 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_byline_value:
                 plugin_id: default
                 advanced:
                   placeholder_text: ''
                   collapsible: true
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_published_value:
                 plugin_id: bef_datepicker
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_news_tags_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                default_states: {  }
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_published_value:
           id: field_az_published_value
@@ -1179,7 +1183,7 @@ display:
           exposed: true
           expose:
             operator_id: field_az_news_tags_target_id_op
-            label: Tags
+            label: 'Configurable legend'
             description: 'Choose a tag'
             use_operator: false
             operator: field_az_news_tags_target_id_op
@@ -1243,7 +1247,7 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
@@ -1271,18 +1275,26 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_page_category_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                default_states: {  }
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         changed:
           id: changed
@@ -1525,11 +1537,11 @@ display:
     position: 3
     display_options:
       exposed_form:
-        type: bef
+        type: az_better_exposed_filters
         options:
           submit_button: Apply
           reset_button: true
-          reset_button_label: Reset
+          reset_button_label: 'Clear all filters'
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
@@ -1553,29 +1565,38 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               field_az_person_category_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                default_states: {  }
               field_az_person_category_sec_target_id:
-                plugin_id: bef
+                plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
-                  collapsible: true
-                  is_secondary: true
-                select_all_none: true
-                select_all_none_nested: true
-                display_inline: false
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                default_states: {  }
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       sorts:
         field_az_lname_value:
           id: field_az_lname_value

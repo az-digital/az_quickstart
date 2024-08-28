@@ -4,11 +4,13 @@ dependencies:
   config:
     - views.view.az_finder
   module:
-    - block_class
     - system
     - views
   theme:
     - az_barrio
+  enforced:
+    module:
+      - az_demo
 id: az_barrio_exposedformaz_findernews
 theme: az_barrio
 region: sidebar_first
