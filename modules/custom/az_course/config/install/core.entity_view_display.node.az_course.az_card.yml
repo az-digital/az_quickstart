@@ -31,7 +31,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card mb-4'
+        classes: 'card border-light card-clickable mb-4'
         show_empty_fields: false
         id: ''
         element: div
@@ -44,17 +44,31 @@ third_party_settings:
     group_card_block:
       children:
         - smart_title
-        - field_az_course_description
-        - field_az_course_units
-        - links
-      label: 'Card Body'
+        - group_text_muted
+      label: 'Card Link'
       parent_name: group_card
       region: content
       weight: 2
+      format_type: link
+      format_settings:
+        classes: 'card-body p-4'
+        show_empty_fields: true
+        id: ''
+        target: entity
+        custom_uri: ''
+        target_attribute: default
+    group_text_muted:
+      children:
+        - field_az_course_description
+        - field_az_course_units
+      label: 'Text Muted'
+      parent_name: group_card_block
+      region: content
+      weight: 4
       format_type: html_element
       format_settings:
-        classes: card-body
-        show_empty_fields: true
+        classes: 'text-muted font-weight-normal'
+        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -70,7 +84,7 @@ third_party_settings:
       smart_title__tag: h5
       smart_title__classes:
         - card-title
-        - mt-0
+        - text-midnight
 id: node.az_course.az_card
 targetEntityType: node
 bundle: az_course
@@ -81,7 +95,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   field_az_course_units:
     type: number_integer
@@ -89,11 +103,6 @@ content:
     settings:
       thousand_separator: ''
       prefix_suffix: true
-    third_party_settings: {  }
-    weight: 5
-    region: content
-  links:
-    settings: {  }
     third_party_settings: {  }
     weight: 6
     region: content
@@ -112,3 +121,4 @@ hidden:
   field_az_course_types: true
   field_az_subject_and_catalog: true
   field_az_subject_code: true
+  links: true
