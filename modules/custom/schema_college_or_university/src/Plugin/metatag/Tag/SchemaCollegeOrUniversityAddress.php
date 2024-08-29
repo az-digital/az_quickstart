@@ -17,7 +17,7 @@ use Drupal\schema_metatag\Plugin\metatag\Tag\SchemaNameBase;
  *   description = @Translation("Physical address of the College or University."),
  *   name = "address",
  *   group = "schema_college_or_university",
- *   weight = 1,
+ *   weight = -15,
  *   type = "string",
  *   secure = FALSE,
  *   multiple = FALSE,

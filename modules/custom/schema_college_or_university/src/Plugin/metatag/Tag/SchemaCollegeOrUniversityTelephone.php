@@ -17,7 +17,7 @@ use Drupal\schema_metatag\Plugin\metatag\Tag\SchemaNameBase;
  *   description = @Translation("RECOMMENDED BY GOOGLE. The telephone of the College or University."),
  *   name = "telephone",
  *   group = "schema_college_or_university",
- *   weight = -34,
+ *   weight = -10,
  *   type = "string",
  *   property_type = "text",
  *   tree_parent = {},

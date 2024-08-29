@@ -17,7 +17,7 @@ use Drupal\schema_metatag\Plugin\metatag\Tag\SchemaNameBase;
  *   description = @Translation("RECOMMENDED BY GOOGLE. The image of the College or University."),
  *   name = "image",
  *   group = "schema_college_or_university",
- *   weight = -35,
+ *   weight = -25,
  *   type = "image",
  *   property_type = "image_object",
  *   tree_parent = {

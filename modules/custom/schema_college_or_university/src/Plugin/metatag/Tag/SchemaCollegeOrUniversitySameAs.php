@@ -17,7 +17,7 @@ use Drupal\schema_metatag\Plugin\metatag\Tag\SchemaNameBase;
  *   description = @Translation("RECOMMENDED BY GOOGLE. URL of a reference Web page that unambiguously indicates the College or University's identity."),
  *   name = "same_as",
  *   group = "schema_college_or_university",
- *   weight = -35,
+ *   weight = -20,
  *   type = "string",
  *   property_type = "url",
  *   tree_parent = {},

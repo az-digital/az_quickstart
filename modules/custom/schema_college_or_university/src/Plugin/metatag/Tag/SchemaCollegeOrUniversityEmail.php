@@ -17,7 +17,7 @@ use Drupal\schema_metatag\Plugin\metatag\Tag\SchemaNameBase;
  *   description = @Translation("RECOMMENDED BY GOOGLE. The email of the College or University."),
  *   name = "email",
  *   group = "schema_college_or_university",
- *   weight = -35,
+ *   weight = -5,
  *   type = "string",
  *   property_type = "text",
  *   tree_parent = {},

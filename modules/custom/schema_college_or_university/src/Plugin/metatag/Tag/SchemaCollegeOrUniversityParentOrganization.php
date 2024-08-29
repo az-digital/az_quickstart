@@ -17,7 +17,7 @@ use Drupal\schema_metatag\Plugin\metatag\Tag\SchemaNameBase;
  *   description = @Translation("RECOMMENDED BY GOOGLE. The Parent Organization of the College or University."),
  *   name = "parent_organization",
  *   group = "schema_college_or_university",
- *   weight = -35,
+ *   weight = 0,
  *   type = "string",
  *   property_type = "organization",
  *   tree_parent = {},
