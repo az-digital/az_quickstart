@@ -41,6 +41,7 @@ class SchemaCollegeOrUniversityTest extends SchemaMetatagTagsTestBase {
     'schema_college_or_university_telephone' => 'SchemaCollegeOrUniversityTelephone',
     'schema_college_or_university_parent_organization' => 'SchemaCollegeOrUniversityParentOrganization',
     'schema_college_or_university_same_as' => 'SchemaCollegeOrUniversitySameAs',
+    'schema_college_or_university_custom_field' => 'SchemaCollegeOrUniversityCustomField',
   ];
 
 }

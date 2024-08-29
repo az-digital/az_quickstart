@@ -22,21 +22,25 @@ metatag.metatag_tag.schema_college_or_university_telephone:
   type: text
   label: 'telephone'
 
-  metatag.metatag_tag.schema_college_or_university_image:
+metatag.metatag_tag.schema_college_or_university_image:
   type: image
   label: 'image'
 
-  metatag.metatag_tag.schema_college_or_university_logo:
+metatag.metatag_tag.schema_college_or_university_logo:
   type: image
   label: 'logo'
 
-  metatag.metatag_tag.schema_college_or_university_parent_organization:
+metatag.metatag_tag.schema_college_or_university_parent_organization:
   type: organization
   label: 'parent_organization'
 
-  metatag.metatag_tag.schema_college_or_university_same_as:
+metatag.metatag_tag.schema_college_or_university_same_as:
   type: url
   label: 'same_as'
+
+metatag.metatag_tag.schema_college_or_university_custom_field:
+  type: string
+  label: 'custom_field'
 
 
 
