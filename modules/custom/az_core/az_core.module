@@ -373,6 +373,26 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
 }
 
 /**
+ * Implements hook_page_attachments_alter().
+ *
+ * Override Drupal core generator metatag for distribution.
+ */
+function az_core_page_attachments_alter(array &$page) {
+  // Verify we're not trying to add tag to some page that should not have it.
+  if (!empty($page['#attached']['html_head'])) {
+    foreach ($page['#attached']['html_head'] as &$head_item) {
+      // Check if the current item is the meta generator.
+      if (is_array($head_item) && in_array('system_meta_generator', $head_item, TRUE)) {
+        // Update the tag if it's present.
+        if (!empty($head_item[0]['#attributes']['content'])) {
+          $head_item[0]['#attributes']['content'] = 'Arizona Quickstart (https://quickstart.arizona.edu)';
+        }
+      }
+    }
+  }
+}
+
+/**
  * Form validation that fails validation on protected term pages.
  *
  * @param array $form
