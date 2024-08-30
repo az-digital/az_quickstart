@@ -41,6 +41,7 @@ source:
       selector: 'Degrees'
 
 process:
+  field_az_netid: netid
   type:
     plugin: default_value
     default_value: az_person
