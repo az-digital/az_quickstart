@@ -514,7 +514,7 @@ drush mr az_menu_links
 ```
 ## Exclude Node Title Migration
 
-This migration uses migration_lookup to match source node id to the nid of
+This migration uses migmag_lookup to match source node id to the nid of
 migrated content.
 
 Optional Migration Dependencies:
@@ -560,7 +560,7 @@ These plugins are designed to be reusable in custom migrations.
 - [EntityEmbedProcess (az_entity_embed_process)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/EntityEmbedProcess.php)
 - [MigratedPathLookup (az_migrated_path_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/MigratedPathLookup.php)
 - [TextFormatRecognizer (text_format_recognizer)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/TextFormatRecognizer.php)
-- [ManualMigrationLookup (az_manual_migration_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ManualMigrationLookup.php)
+- [ManualMigrationLookup (az_manual_migmag_lookup)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ManualMigrationLookup.php)
 - [ArrayIntersect (array_intersect)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_core/src/Plugin/migrate/process/ArrayIntersect.php)
 - [ParagraphsMappingFlexiblePage (paragraphs_mapping_flexible_page)](https://github.com/az-digital/az_quickstart/blob/main/modules/custom/az_migration/src/Plugin/migrate/process/ParagraphMappingFlexiblePage.php)
 - [ParagraphsBehavior
