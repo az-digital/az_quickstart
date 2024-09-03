@@ -141,7 +141,6 @@
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Affix library still broken (3366908)": "https://www.drupal.org/files/issues/2023-06-14/3366908-3_5-x.patch",
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",
                 "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch"
             },
