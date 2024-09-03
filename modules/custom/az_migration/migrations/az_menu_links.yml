@@ -1,0 +1,92 @@
+id: az_menu_links
+label: AZ Menu Links
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+source:
+  plugin: menu_link
+  menu_name:
+    - 'main-menu'
+    - 'uaqs-utility-links'
+    - 'uaqs-footer-information-for'
+    - 'uaqs-footer-topics'
+    - 'uaqs-footer-resources'
+    - 'uaqs-footer-main'
+  constants:
+    bundle: menu_link_content
+process:
+  skip_translation:
+    plugin: skip_on_empty
+    method: row
+    source: skip_translation
+  id: mlid
+  langcode:
+    plugin: az_default_langcode
+    source: language
+  bundle: 'constants/bundle'
+  title: link_title
+  description: description
+  menu_name:
+    plugin: static_map
+    source: menu_name
+    map:
+      'main-menu': 'main'
+      'uaqs-utility-links': 'az-utility-links'
+      'uaqs-footer-information-for': 'az-footer-information-for'
+      'uaqs-footer-topics': 'az-footer-topics'
+      'uaqs-footer-resources': 'az-footer-resources'
+      'uaqs-footer-main': 'az-footer-main'
+  link_path_processed:
+    plugin: az_migrated_path_lookup
+    term_migration:
+      - az_event_categories
+      - az_flexible_page_categories
+      - az_news_tags
+      - az_person_categories_secondary
+      - az_person_categories
+    node_migration:
+      - az_node_carousel
+      - az_node_event
+      - az_node_flexible_page
+      - az_node_news
+      - az_node_person
+    source: link_path
+  link/uri:
+    plugin: link_uri
+    source: '@link_path_processed'
+  link/options: options
+  route:
+    plugin: route
+    source:
+      - link_path
+      - options
+  route_name: '@route/route_name'
+  route_parameters: '@route/route_parameters'
+  url: '@route/url'
+  options: '@route/options'
+  external: external
+  weight: weight
+  expanded: expanded
+  enabled: enabled
+  parent:
+    plugin: menu_link_parent
+    source:
+      - plid
+      - '@menu_name'
+      - parent_link_path
+  changed: updated
+destination:
+  plugin: entity:menu_link_content
+  no_stub: true
+migration_dependencies:
+  required:
+    - az_node_carousel
+    - az_node_event
+    - az_node_flexible_page
+    - az_node_news
+    - az_node_person
+    - az_event_categories
+    - az_flexible_page_categories
+    - az_news_tags
+    - az_person_categories_secondary
+    - az_person_categories

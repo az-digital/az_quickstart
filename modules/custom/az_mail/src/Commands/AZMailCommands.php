@@ -2,8 +2,8 @@
 
 namespace Drupal\az_mail\Commands;
 
-use Drush\Commands\DrushCommands;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drush\Commands\DrushCommands;
 
 /**
  * Drush commandfile for az_mail.
@@ -54,7 +54,7 @@ class AZMailCommands extends DrushCommands {
    */
   private function sesSign($key, $msg) {
     //phpcs:ignore Security.BadFunctions.CryptoFunctions.WarnCryptoFunc
-    return hash_hmac('sha256', utf8_encode($msg), $key, TRUE);
+    return hash_hmac('sha256', mb_convert_encoding($msg, 'UTF-8', mb_list_encodings()), $key, TRUE);
   }
 
   /**
@@ -69,7 +69,7 @@ class AZMailCommands extends DrushCommands {
     $terminal = "aws4_request";
     $version = 0x04;
 
-    $signature = $this->sesSign(utf8_encode("AWS4" . $secret), $date);
+    $signature = $this->sesSign(mb_convert_encoding("AWS4" . $secret, 'UTF-8', mb_list_encodings()), $date);
     $signature = $this->sesSign($signature, $region);
     $signature = $this->sesSign($signature, $service);
     $signature = $this->sesSign($signature, $terminal);
@@ -77,7 +77,7 @@ class AZMailCommands extends DrushCommands {
     $signature_and_version = pack("C*", $version) . $signature;
     //phpcs:ignore Security.BadFunctions.CryptoFunctions.WarnCryptoFunc
     $smtp_password = base64_encode($signature_and_version);
-    return utf8_decode($smtp_password);
+    return mb_convert_encoding($smtp_password, 'ISO-8859-1', 'UTF-8');
   }
 
 }

@@ -3,9 +3,10 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
+use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
-use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -34,11 +35,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *       - az_node_person
  *     source: link_path
  * @endcode
- *
- * @MigrateProcessPlugin(
- *  id = "az_migrated_path_lookup"
- * )
  */
+#[MigrateProcess('az_migrated_path_lookup')]
 class MigratedPathLookup extends ProcessPluginBase implements ContainerFactoryPluginInterface {
   /**
    * The migration plugin manager.

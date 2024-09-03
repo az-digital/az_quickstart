@@ -4,6 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.node.az_card
     - field.field.node.az_flexible_page.field_az_main_content
+    - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
@@ -180,4 +181,5 @@ content:
     region: content
 hidden:
   field_az_main_content: true
+  field_az_marketing_page_style: true
   field_az_page_category: true

@@ -5,15 +5,18 @@
  * Install, update and uninstall functions for az_seo module.
  */
 
-use Drupal\Core\Config\FileStorage;
+/**
+ * Implements hook_update_last_removed().
+ */
+function az_seo_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 9201;
+}
 
 /**
- * Force import of field.storage.node.field_az_metatag config.
+ * This update has been removed.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/3647
  */
-function az_seo_update_9201() {
-  $module_handler = \Drupal::service('module_handler');
-  $config_path = $module_handler->getModule('az_seo')->getPath() . '/config/install';
-  $storage = new FileStorage($config_path);
-  $config_installer = \Drupal::service('config.installer');
-  $config_installer->installOptionalConfig($storage);
+function az_seo_update_1021001() {
 }

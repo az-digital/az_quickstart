@@ -4,6 +4,7 @@
           "id": 80,
           "card_width": "col-lg-6",
           "card_style": "card",
+          "card_title": "Borderless Cards",
           "card_title_style": "default",
           "card_clickable": false,
           "az_cards": [
@@ -34,6 +35,7 @@
         "id": 81,
         "card_width": "col-lg-4",
         "card_style": "card card-borderless",
+        "card_title": "Clickable Borderless Cards",
         "card_title_style": "default",
         "card_clickable": true,
         "az_cards": [
@@ -74,6 +76,7 @@
       "id": 82,
       "card_width": "col-lg-4",
       "card_style": "card",
+      "card_title": "Clickable Title-on-Image Cards",
       "card_title_style": "title-on-image",
       "card_clickable": true,
       "az_cards": [
@@ -114,6 +117,7 @@
         "id": 83,
         "card_width": "col-lg-6",
         "card_style": "card card-borderless",
+        "card_title": "Borderless Title-on-Image Cards",
         "card_title_style": "title-on-image",
         "card_clickable": false,
         "az_cards": [
@@ -139,6 +143,34 @@
           }
         ],
         "bottom_spacing" : "mb-5"
+    },
+    {
+      "id": 109,
+      "card_width": "col-lg-12",
+      "card_style": "card",
+      "card_title_style": "default",
+      "card_clickable": false,
+      "az_cards": [
+        {
+          "delta": 0,
+          "title": "Related Stories",
+          "body": "<p><a href=\"/news/could-mans-best-friend-be-mans-best-medicine\">Could Man's Best Friend Be Man's Best Medicine?</a></p><p><a href=\"/news/runners-brains-may-have-more-connectivity-ua-research-shows\">Runners' Brains May Have More Connectivity, UA Research Shows</a></p><p><a href=\"/news/fruit-flies-and-cellular-demise-zeroing-causes-als\">Fruit Flies and Cellular Demise – Zeroing in on the Causes of ALS</a></p>"
+        }
+      ]
+    },
+    {
+      "id": 110,
+      "card_width": "col-lg-12",
+      "card_style": "card",
+      "card_title_style": "default",
+      "card_clickable": false,
+      "az_cards": [
+        {
+          "delta": 1,
+          "title": "Contact",
+          "body": "<p>Wilma Wildcat<br>University of Arizona<br>520-621-1986, wilma.wildcat@arizona.edu</p>"
+        }
+      ]
     }
   ]
 }

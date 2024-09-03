@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.az_custom_menu_block
+    - field.storage.block_content.field_az_block
+  module:
+    - block_field
+  enforced:
+    module:
+      - az_custom_menu_block
+id: block_content.az_custom_menu_block.field_az_block
+field_name: field_az_block
+entity_type: block_content
+bundle: az_custom_menu_block
+label: Menu
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  selection: blocks
+  selection_settings:
+    plugin_ids:
+      'menu_block:main': 'menu_block:main'
+      'menu_block:az-utility-links': 'menu_block:az-utility-links'
+field_type: block_field

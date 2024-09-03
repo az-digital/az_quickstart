@@ -12,7 +12,6 @@ dependencies:
   enforced:
     module:
       - az_paragraphs_splitscreen
-
 id: paragraph.az_splitscreen.default
 targetEntityType: paragraph
 bundle: az_splitscreen

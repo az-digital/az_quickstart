@@ -9,17 +9,9 @@
  */
 
 /**
- * Update media fields to allow editing media from the referencing entity.
- *
- * Enable breakpoint.
- * Enable media_library_edit.
- * Enable responsive_image.
+ * Implements hook_update_last_removed().
  */
-function az_media_update_9201() {
-  $module_list = [
-    'breakpoint',
-    'responsive_image',
-    'media_library_edit',
-  ];
-  \Drupal::service('module_installer')->install($module_list);
+function az_media_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 9201;
 }

@@ -1,0 +1,10 @@
+entity.az_author.add_form:
+  route_name: entity.az_author.add_form
+  title: 'Add Author'
+  appears_on:
+    - entity.az_author.collection
+entity.az_citation_style.add_form:
+  route_name: entity.az_citation_style.add_form
+  title: 'Add Quickstart Citation Style'
+  appears_on:
+    - entity.az_citation_style.collection

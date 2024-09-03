@@ -1,0 +1,246 @@
+<?php
+
+/**
+ * @file
+ * Contains az_marketing_cloud.module.
+ */
+
+use Drupal\Core\Render\BubbleableMetadata;
+use Drupal\Core\Url;
+use Drupal\image\Entity\ImageStyle;
+
+/**
+ * Implements hook_theme().
+ */
+function az_marketing_cloud_theme($existing, $type, $theme, $path) {
+  return [
+    'node__view__az_marketing_cloud__30_70_layout' => [
+      'template' => 'node--view--az-marketing-cloud--30-70-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__70_30_layout_image_right' => [
+      'template' => 'node--view--az-marketing-cloud--70-30-layout-image-right',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__50_50_layout' => [
+      'template' => 'node--view--az-marketing-cloud--50-50-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__50_50_layout_image_right' => [
+      'template' => 'node--view--az-marketing-cloud--50-50-layout-image-right',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__text_layout' => [
+      'template' => 'node--view--az-marketing-cloud--text-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__hero_layout' => [
+      'template' => 'node--view--az-marketing-cloud--hero-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__event_layout' => [
+      'template' => 'node--view--az-marketing-cloud--event-layout',
+      'base hook' => 'node',
+    ],
+    'region__az_marketing_cloud' => [
+      'template' => 'region--az-marketing-cloud',
+      'base hook' => 'region',
+    ],
+    'block__az_marketing_cloud' => [
+      'template' => 'block--az-marketing-cloud',
+      'base hook' => 'block',
+    ],
+    'container__view__az_marketing_cloud' => [
+      'template' => 'container--view--az-marketing-cloud',
+      'base hook' => 'container',
+    ],
+    'page__export__marketing_cloud' => [
+      'template' => 'page--export--marketing-cloud',
+      'base hook' => 'page',
+    ],
+    'html__export__marketing_cloud' => [
+      'template' => 'html--export--marketing-cloud',
+      'base hook' => 'html',
+    ],
+    'block__az_barrio_page_title__az_marketing_cloud' => [
+      'template' => 'block--az-barrio-page-title--az-marketing-cloud',
+      'base hook' => 'block',
+    ],
+    'views_view__az_marketing_cloud' => [
+      'template' => 'views-view--az-marketing-cloud',
+      'base hook' => 'views_view',
+    ],
+    'views_view__az_marketing_cloud__admin' => [
+      'template' => 'views-view',
+      'base hook' => 'views_view',
+    ],
+    'views_view_unformatted__az_marketing_cloud' => [
+      'template' => 'views-view-unformatted--az-marketing-cloud',
+      'base hook' => 'views_view_unformatted',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variables) {
+  $node = $variables['node'];
+  $content_type = $node->getType();
+  if (in_array($content_type, ['az_news', 'az_event'])) {
+    // If the node is unpublished, replace the content and set it to published
+    // (in $variables only) to display it to anonymous users.
+    if (!$node->isPublished()) {
+      $variables['content']['smart_title'] = 'Unpublished content';
+      $variables['content']['field_az_summary'] = 'This URL will be updated with real content once the item is published on the website.';
+      $variables['az_canonical_url'] = '';
+      $variables['az_canonical_summary_link_title'] = 'Link';
+
+      if ($content_type === 'az_news' && $variables['view_mode'] !== 'az_marketing_cloud_text_layout') {
+        $images_dir = '/profiles/custom/az_quickstart/modules/custom/az_marketing_cloud/images/';
+        switch ($variables['view_mode']) {
+          case 'az_marketing_cloud_30_70_layout':
+            $variables['images']['az_marketing_cloud_30_70_layout'] = $images_dir . '30-70-layout-unpublished.png';
+            break;
+
+          case 'az_marketing_cloud_70_30_layout_image_right':
+            $variables['images']['az_marketing_cloud_30_70_layout'] = $images_dir . '30-70-layout-unpublished.png';
+            break;
+
+          case 'az_marketing_cloud_50_50_layout':
+            $variables['images']['az_marketing_cloud_50_50_layout'] = $images_dir . '50-50-layout-unpublished.png';
+            break;
+
+          case 'az_marketing_cloud_50_50_layout_image_right':
+            $variables['images']['az_marketing_cloud_50_50_layout'] = $images_dir . '50-50-layout-unpublished.png';
+            break;
+
+          case 'az_marketing_cloud_hero_layout':
+            $variables['images']['az_marketing_cloud_hero_layout'] = $images_dir . 'hero-layout-unpublished.png';
+            break;
+        }
+      }
+      if ($content_type === 'az_event') {
+        $variables['content']['az_event_month'] = 'Jan';
+        $variables['content']['az_event_day'] = '00';
+      }
+
+      $node->setPublished();
+      return;
+    }
+
+    $token_service = \Drupal::token();
+    $bubbleable_metadata = new BubbleableMetadata();
+    $az_canonical_url = $token_service->replace('[node:az-canonical-url]', ['node' => $node], [], $bubbleable_metadata);
+    $az_canonical_url_object = Url::fromUri($az_canonical_url, [
+      'language' => \Drupal::languageManager()->getCurrentLanguage(),
+    ]);
+    $az_canonical_absolute_url = $az_canonical_url_object->setAbsolute()->toString();
+    $variables['az_canonical_url'] = $az_canonical_absolute_url;
+    $variables['az_canonical_summary_link_title'] = $token_service->replace('[node:az-canonical-summary-link-title]', ['node' => $node], [], $bubbleable_metadata);
+    $media = $node->field_az_media_image->entity ?? NULL;
+    $file = $media->field_media_az_image->entity ?? NULL;
+    if (!empty($file)) {
+      $uri = $file->getFileUri();
+      $styles = [
+        'az_marketing_cloud_30_70_layout',
+        'az_marketing_cloud_50_50_layout',
+        'az_marketing_cloud_hero_layout',
+      ];
+      foreach ($styles as $style) {
+        $image_style = ImageStyle::load($style);
+        if (!empty($image_style)) {
+          $variables['images'][$style] = $image_style->buildUrl($uri);
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_marketing_cloud_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  // If a view route context is found, add block suggestions for view context.
+  $view_id = \Drupal::routeMatch()->getParameter('view_id');
+  if (!empty($view_id)) {
+    $previous = $suggestions;
+    $view_id = strtr($view_id, '-', '_');
+    foreach ($previous as $p) {
+      $suggestions[] = $p . '__' . $view_id;
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, array $variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout_image_right') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.70_30_layout_image_right') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.hero_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.event_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ */
+function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout_image_right') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.70_30_layout_image_right') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.text_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.event_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function az_marketing_cloud_preprocess_views_view(&$variables) {
+
+  // EntityRow views do not give the entity access to a row_index.
+  // We need to provide one to understand the delta relationship
+  // of the row.
+  if ($variables['id'] === 'az_marketing_cloud') {
+    if (!empty($variables['rows'][0]['#rows'])) {
+      foreach ($variables['rows'][0]['#rows'] as $i => $n) {
+        if (is_array($variables['rows'][0]['#rows'][$i])) {
+          $variables['rows'][0]['#rows'][$i]['#az_view_row_index'] = $i;
+        }
+      }
+    }
+  }
+
+}

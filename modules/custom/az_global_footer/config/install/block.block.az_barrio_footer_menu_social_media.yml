@@ -23,11 +23,17 @@ plugin: 'menu_block:az-footer-social-media'
 settings:
   id: 'menu_block:az-footer-social-media'
   label: Connect
-  provider: menu_block
   label_display: visible
+  provider: menu_block
+  follow: 0
+  follow_parent: child
   level: 1
   depth: 1
   expand_all_items: true
+  parent: 'az-footer-social-media:'
+  render_parent: false
   suggestion: sub_footer
   label_type: root
+  label_link: false
+  hide_on_nonactive: false
 visibility: {  }

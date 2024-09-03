@@ -14,7 +14,7 @@ bundle: az_news
 label: Subheading
 description: 'Add a subhead beneath the article title.'
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:

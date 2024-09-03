@@ -4,7 +4,6 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-
 (function ($, Drupal) {
   Drupal.behaviors.az_youtube_video_bg = {
     attach: function attach(context, settings) {
@@ -30,7 +29,6 @@
         var firstScriptTag = document.getElementsByTagName('script')[0];
         tag.src = 'https://www.youtube.com/iframe_api';
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
         window.onYouTubeIframeAPIReady = function () {
           $.each(bgVideoParagraphs, function (index) {
             var thisContainer = bgVideoParagraphs[index];
@@ -73,7 +71,6 @@
             });
           });
         };
-
         var setDimensions = function setDimensions(container) {
           var parentParagraph = container.parentNode;
           var youtubeId = container.dataset.youtubeid;
@@ -88,16 +85,13 @@
           var parentHeight = parentParagraph.offsetHeight;
           parentHeight = "".concat(parentHeight.toString(), "px");
           container.style.height = parentHeight;
-
           if (style === 'bottom') {
             container.style.top = 0;
           }
-
           var widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
           widthMinuspWidthdividedbyTwo = "".concat(widthMinuspWidthdividedbyTwo.toString(), "px");
           var pHeightRatio = (height - pHeight) / 2;
           pHeightRatio = "".concat(pHeightRatio.toString(), "px");
-
           if (width / ratio < height) {
             thisPlayer.width = pWidth;
             thisPlayer.height = height;
@@ -110,43 +104,35 @@
             thisPlayer.style.left = 0;
           }
         };
-
         var resize = function resize() {
           $.each(bgVideoParagraphs, function (index) {
             setDimensions(bgVideoParagraphs[index]);
           });
         };
-
         window.onPlayerReady = function (event) {
-          var id = event.target.playerInfo.videoData.video_id;
-
+          var id = event.target.getVideoData().video_id;
           if (bgVideos[id].mute) {
             event.target.mute();
           }
-
           event.target.seekTo(bgVideos[id].start);
           event.target.playVideo();
           var azVideoPlayEvent = new Event('azVideoPlay');
           dispatchEvent(azVideoPlayEvent);
         };
-
         window.onPlayerStateChange = function (event) {
-          var id = event.target.playerInfo.videoData.video_id;
+          var id = event.target.getVideoData().video_id;
           var stateChangeContainer = document.getElementById("".concat(id, "-bg-video-container"));
           var parentid = stateChangeContainer.dataset.parentid;
           var parentContainer = document.getElementById(parentid);
-
           if (event.data === 0 && bgVideos[id].repeat) {
             stateChangeContainer.player.seekTo(bgVideos[id].start);
           }
-
           if (event.data === 1) {
             resize();
             parentContainer.classList.add('az-video-playing');
             parentContainer.classList.remove('az-video-loading');
           }
         };
-
         $(window).on('load', function () {
           resize();
         });

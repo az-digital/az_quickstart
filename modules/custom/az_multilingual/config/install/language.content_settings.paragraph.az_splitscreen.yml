@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - paragraphs.paragraphs_type.az_splitscreen
+  module:
+    - content_translation
+third_party_settings:
+  content_translation:
+    enabled: true
+    bundle_settings:
+      untranslatable_fields_hide: '0'
+id: paragraph.az_splitscreen
+target_entity_type_id: paragraph
+target_bundle: az_splitscreen
+default_langcode: site_default
+language_alterable: true

@@ -1,12 +1,14 @@
 name: AZ Quickstart Migration
 description: 'Provides migrations for the site.'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 type: module
 package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
- - drupal:migrate
- - drupal:migrate_plus
- - drupal:migrate_tools
- - drupal:migrate_drupal
- - drupal:media_migration
- - az_carousel
+  - drupal:migrate
+  - drupal:migrate_plus
+  - drupal:migrate_tools
+  - drupal:migrate_drupal
+  - drupal:media_migration
+  - az_carousel

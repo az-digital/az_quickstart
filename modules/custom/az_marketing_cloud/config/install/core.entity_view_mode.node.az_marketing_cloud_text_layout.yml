@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_marketing_cloud_text_layout
+label: 'Marketing Cloud - Text Layout'
+description: ''
+targetEntityType: node
+cache: true

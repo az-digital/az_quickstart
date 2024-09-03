@@ -23,6 +23,7 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
    * {@inheritdoc}
    */
   protected function setUp(): void {
+    parent::setup();
     $this->videoEmbedHelper = new AZVideoEmbedHelper();
   }
 
@@ -40,7 +41,7 @@ class AZVideoEmbedHelperTest extends UnitTestCase {
   /**
    * Array of links and the ids they should output.
    */
-  public function providerYouTubeVideoData() {
+  public static function providerYouTubeVideoData() {
     return [
       [
         'http://youtube.com/v/dQw4w9WgXcQ?feature=youtube_gdata_player',

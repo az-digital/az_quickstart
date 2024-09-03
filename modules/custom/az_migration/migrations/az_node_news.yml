@@ -1,0 +1,330 @@
+id: az_node_news
+label: AZ News Content
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+  module:
+    - az_news
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_user
+  optional:
+    - az_news_tags
+    - az_paragraph_callout
+    - az_paragraph_card_deck
+    - az_paragraph_carousel
+    - az_paragraph_chucks_view
+    - az_paragraph_column_image
+    - az_paragraph_contact
+    - az_paragraph_extra_info
+    - az_paragraph_file_download
+    - az_paragraph_full_width_bg_wrapper
+    - az_paragraph_full_width_media_row
+    - az_paragraph_gallery
+    - az_paragraph_headed_text
+    - az_paragraph_html
+    - az_paragraph_jumbotron
+    - az_paragraph_panel_group
+    - az_paragraph_plain_text
+    - az_paragraph_single_card
+    - az_paragraph_well
+
+source:
+  plugin: az_node
+  node_type: uaqs_news
+
+destination:
+  plugin: entity:node
+  bundle: az_news
+
+process:
+  type:
+    plugin: default_value
+    default_value: az_news
+  langcode:
+    plugin: az_default_langcode
+    source: language
+
+  title:
+    plugin: sub_process
+    source: title_field
+    process:
+      delta: delta
+      value: value
+      format: format
+
+  field_az_subheading:
+    plugin: sub_process
+    source: field_uaqs_summary_short
+    process:
+      delta: delta
+      value: value
+      format: format
+
+  field_az_body:
+    plugin: sub_process
+    source: field_uaqs_body
+    process:
+      delta: delta
+      value:
+        plugin: az_entity_embed_process
+        source: value
+      format:
+        plugin: default_value
+        default_value: az_standard
+
+  field_az_main_content:
+    plugin: sub_process
+    source: field_uaqs_main_content
+    process:
+      delta: delta
+      target_id:
+        -
+          plugin: migration_lookup
+          migration:
+            - az_paragraph_callout
+            - az_paragraph_card_deck
+            - az_paragraph_carousel
+            - az_paragraph_chucks_view
+            - az_paragraph_column_image
+            - az_paragraph_contact
+            - az_paragraph_extra_info
+            - az_paragraph_file_download
+            - az_paragraph_full_width_bg_wrapper
+            - az_paragraph_full_width_media_row
+            - az_paragraph_gallery
+            - az_paragraph_headed_text
+            - az_paragraph_html
+            - az_paragraph_jumbotron
+            - az_paragraph_panel_group
+            - az_paragraph_plain_text
+            - az_paragraph_single_card
+            - az_paragraph_well
+          source: value
+          no_stub: true
+        -
+          plugin: extract
+          index:
+            - 0
+      target_revision_id:
+        -
+          plugin: migration_lookup
+          migration:
+            - az_paragraph_callout
+            - az_paragraph_card_deck
+            - az_paragraph_carousel
+            - az_paragraph_chucks_view
+            - az_paragraph_column_image
+            - az_paragraph_contact
+            - az_paragraph_extra_info
+            - az_paragraph_file_download
+            - az_paragraph_full_width_bg_wrapper
+            - az_paragraph_full_width_media_row
+            - az_paragraph_gallery
+            - az_paragraph_headed_text
+            - az_paragraph_html
+            - az_paragraph_jumbotron
+            - az_paragraph_panel_group
+            - az_paragraph_plain_text
+            - az_paragraph_single_card
+            - az_paragraph_well
+          source: value
+          no_stub: true
+        -
+          plugin: extract
+          index:
+            - 1
+
+  field_az_summary:
+    plugin: sub_process
+    source: field_uaqs_summary
+    process:
+      delta: delta
+      value:
+        -
+          plugin: callback
+          callable: strip_tags
+          source: value
+        -
+          plugin: callback
+          callable: html_entity_decode
+      format:
+        plugin: default_value
+        default_value: plain_text
+
+  field_az_attachments:
+    plugin: sub_process
+    source: field_uaqs_attachments
+    process:
+      delta: delta
+      target_id:
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_files
+      display: display
+      description: description
+
+  field_az_media_image:
+    -
+      plugin: sub_process
+      source: field_uaqs_photo
+      process:
+        delta: delta
+        target_id:
+          -
+            plugin: migration_lookup
+            source: fid
+            migration:
+              - az_media
+
+  field_az_expiration_date:
+    plugin: sub_process
+    source: field_uaqs_expiration_date
+    process:
+      delta: delta
+      value:
+        -
+          plugin: format_date
+          from_format: 'Y-m-d H:i:s'
+          to_format: 'Y-m-d'
+          source: value
+      langcode:
+        plugin: az_default_langcode
+        source: language
+
+  field_az_published:
+    plugin: sub_process
+    source: field_uaqs_published
+    process:
+      delta: delta
+      value:
+        -
+          plugin: format_date
+          from_format: 'Y-m-d H:i:s'
+          to_format: 'Y-m-d'
+          source: value
+      langcode:
+        plugin: az_default_langcode
+        source: language
+
+  field_az_news_tags:
+    -
+      plugin: migration_lookup
+      source: field_uaqs_news_tags
+      migration:
+        - az_news_tags
+
+  preprocess_field_uaqs_link:
+    plugin: sub_process
+    source: field_uaqs_link
+    process:
+      delta: delta
+      url:
+        plugin: str_replace
+        search: '[node:url]'
+        replace: ''
+        source: url
+      title:
+        plugin: default_value
+        source: title
+        default_value: 'Read more'
+      attributes: attributes
+
+  field_az_link:
+    - plugin: field_link
+      source: '@preprocess_field_uaqs_link'
+      uri_scheme: "https://"
+    - plugin: sub_process
+      process:
+        delta: delta
+        uri:
+          - plugin: str_replace
+            source: uri
+            search: 'route:<nolink>'
+            replace: ''
+        title: title
+        attributes: attributes
+
+  field_az_byline:
+    plugin: sub_process
+    source: field_uaqs_byline
+    process:
+      delta: delta
+      value: value
+      format: format
+
+  field_az_short_title:
+    plugin: sub_process
+    source: field_uaqs_short_title
+    process:
+      delta: delta
+      value: value
+      format: format
+
+  field_az_contacts:
+    plugin: sub_process
+    source: field_uaqs_contacts
+    process:
+      delta: delta
+      target_id:
+        -
+          plugin: migration_lookup
+          migration: az_paragraph_contact
+          source: value
+          no_stub: true
+        -
+          plugin: extract
+          index:
+            - 0
+      target_revision_id:
+        -
+          plugin: migration_lookup
+          migration: az_paragraph_contact
+          source: value
+          no_stub: true
+        -
+          plugin: extract
+          index:
+            - 1
+
+  uid:
+    -
+      plugin: migration_lookup
+      migration: az_user
+      no_stub: true
+      source: node_uid
+    -
+      plugin: default_value
+      default_value: 0
+
+  status: status
+  created: created
+  changed: changed
+  promote: promote
+  sticky: sticky
+  path/pathauto:
+    - plugin: str_replace
+      source: alias
+      regex: true
+      search: /.$/
+      replace: '0'
+    - plugin: default_value
+      source: alias
+      default_value: 1
+      strict: true
+    - plugin: callback
+      callable: intval
+  path/alias:
+    plugin: skip_on_empty
+    source: alias
+    method: process

@@ -2,10 +2,11 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\media\Entity\Media;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\media\Entity\Media;
 
 /**
  * Process Plugin to field merge for Column Image paragraphs.
@@ -41,11 +42,8 @@ use Drupal\media\Entity\Media;
  *     credit: field_uaqs_image_credit
  *     format: 'az_standard'
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_column_image_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_column_image_field_merge')]
 class ParagraphsColumnImageFieldMerge extends ProcessPluginBase {
 
   /**

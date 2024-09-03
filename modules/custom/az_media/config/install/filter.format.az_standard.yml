@@ -7,9 +7,11 @@ dependencies:
     - core.entity_view_mode.media.az_natural_size
     - core.entity_view_mode.media.az_small
     - core.entity_view_mode.media.az_square
+    - core.entity_view_mode.media.az_very_small
   module:
     - bootstrap_utilities
     - entity_embed
+    - linkit
     - media
 name: Standard
 format: az_standard
@@ -19,35 +21,35 @@ filters:
     id: filter_htmlcorrector
     provider: filter
     status: true
-    weight: 10
+    weight: -44
     settings: {  }
   filter_html:
     id: filter_html
     provider: filter
     status: true
-    weight: -10
+    weight: -50
     settings:
-      allowed_html: '<em> <strong> <s> <abbr> <address> <cite> <blockquote class=""> <br> <div class="" name="" id="" class=* data-*> <ul type class=""> <ol start type class=""> <li class=""> <dl> <dt> <dd> <h1 class="" name="" id=""> <h2 class="" name="" id=""> <h3 class="" name="" id=""> <h4 class="" name="" id=""> <h5 class="" name="" id=""> <h6 class="" name="" id=""> <sup> <sub> <table class=""> <caption> <tbody class=""> <thead class=""> <tfoot class=""> <th class="" scope="" colspan="" rowspan=""> <td class="" colspan="" rowspan=""> <tr class="" colspan="" rowspan=""> <hr class=""> <a href class="" target="" name="" id=""> <span class="" name="" id=""> <img src alt data-entity-type data-entity-uuid> <drupal-entity data-entity-type data-entity-uuid data-entity-embed-display data-entity-embed-display-settings data-align="" data-caption data-embed-button alt title> <drupal-media data-view-mode="" data-align="" data-entity-type data-entity-uuid alt title> <p class=""> <footer class="">'
+      allowed_html: '<br> <p class> <h1 class name id> <h2 class name id> <h3 class name id> <h4 class name id> <h5 class name id> <h6 class name id> <a class target name id title href data-entity-type data-entity-uuid data-entity-substitution> <span class name id> <ul class type> <blockquote class> <footer class> <table class> <thead class> <abbr> <address> <cite> <dl> <dt> <dd> <div class name id data-*> <img src alt data-entity-type data-entity-uuid> <ol type class start> <li class> <tbody class> <tfoot class> <th class scope rowspan colspan> <td class rowspan colspan> <tr class colspan rowspan> <hr class> <drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode> <drupal-media title data-entity-type data-entity-uuid alt data-view-mode data-align> <strong> <em> <code class="language-*"> <pre class="text-align-left text-align-center text-align-right text-align-justify"> <s> <sub> <sup> <caption>'
       filter_html_help: true
       filter_html_nofollow: false
   filter_autop:
     id: filter_autop
     provider: filter
     status: true
-    weight: 0
+    weight: -42
     settings: {  }
   filter_url:
     id: filter_url
     provider: filter
     status: true
-    weight: 0
+    weight: -46
     settings:
       filter_url_length: 72
   media_embed:
     id: media_embed
     provider: media
     status: true
-    weight: 100
+    weight: -43
     settings:
       default_view_mode: default
       allowed_view_modes:
@@ -56,24 +58,25 @@ filters:
         az_natural_size: az_natural_size
         az_small: az_small
         az_square: az_square
+        az_very_small: az_very_small
       allowed_media_types: {  }
   entity_embed:
     id: entity_embed
     provider: entity_embed
     status: true
-    weight: 100
+    weight: -41
     settings: {  }
   bootstrap_utilities_blockquote_filter:
     id: bootstrap_utilities_blockquote_filter
     provider: bootstrap_utilities
     status: true
-    weight: 0
+    weight: -49
     settings: {  }
   bootstrap_utilities_table_filter:
     id: bootstrap_utilities_table_filter
     provider: bootstrap_utilities
     status: true
-    weight: 0
+    weight: -48
     settings:
       table_remove_width_height: '1'
       table_row_striping: '0'
@@ -84,5 +87,12 @@ filters:
     id: filter_align
     provider: filter
     status: true
-    weight: 0
+    weight: -47
     settings: {  }
+  linkit:
+    id: linkit
+    provider: linkit
+    status: true
+    weight: -45
+    settings:
+      title: true

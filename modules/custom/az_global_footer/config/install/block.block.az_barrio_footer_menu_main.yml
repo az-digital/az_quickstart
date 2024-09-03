@@ -19,15 +19,17 @@ plugin: 'menu_block:az-footer-main'
 settings:
   id: 'menu_block:az-footer-main'
   label: 'Footer - Main'
-  provider: menu_block
   label_display: '0'
+  provider: menu_block
   follow: false
   follow_parent: child
   level: 1
   depth: 0
   expand_all_items: false
   parent: 'az-footer-main:'
+  render_parent: false
   suggestion: az_footer_main
   label_type: block
   label_link: false
+  hide_on_nonactive: false
 visibility: {  }

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_ama
+label: 'American Medical Association Style (AMA)'
+style: american-medical-association
+custom: false

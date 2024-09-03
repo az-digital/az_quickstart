@@ -3,6 +3,7 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -47,11 +48,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *           - az_person_categories
  *           - neuroscience_person_categories
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "az_views_reference_mapping"
- * )
  */
+#[MigrateProcess('az_views_reference_mapping')]
 class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -118,6 +116,23 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
       'argument_migrations' => [
         'az_flexible_page_categories',
       ],
+    ],
+    'uaqs_alphabetical_listing' => [
+      'view' => 'az_alphabetical_listing',
+      'display' => [
+        'default' => 'az_alphabetical_listing_main',
+        'page' => 'az_alphabetical_listing_main',
+      ],
+      'argument_migrations' => [],
+    ],
+    'uaqs_hero_carousel' => [
+      'view' => 'az_carousel',
+      'display' => [
+        'default' => 'front_carousel_block',
+        'hero_block' => 'front_carousel_block',
+        'hero_nav' => 'front_carousel_block',
+      ],
+      'argument_migrations' => [],
     ],
   ];
 

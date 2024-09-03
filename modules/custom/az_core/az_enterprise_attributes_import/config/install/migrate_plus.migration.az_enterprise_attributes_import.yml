@@ -1,0 +1,56 @@
+id: az_enterprise_attributes_import
+label: Enterprise Attributes
+migration_tags:
+  - Enterprise Attributes
+  - Taxonomy
+source:
+  plugin: url
+  data_fetcher_plugin: http
+  data_parser_plugin: az_enterprise_attributes_import_json
+  urls: []
+  item_selector: attributes
+  ids:
+    key:
+      type: string
+
+  fields:
+    -
+      name: value
+      selector: value
+    -
+      name: key
+      selector: key
+    -
+      name: type
+      selector: type
+    -
+      name: parent
+      selector: parent
+
+process:
+  name: value
+  field_az_attribute_key: key
+  field_az_attribute_type: type
+  status:
+    plugin: default_value
+    default_value: 1
+  vid:
+    plugin: default_value
+    default_value: az_enterprise_attributes
+  parent:
+    -
+      plugin: migration_lookup
+      migration: az_enterprise_attributes_import
+      source: parent
+    -
+      plugin: default_value
+      default_value: 0
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_enterprise_attributes
+
+dependencies:
+  enforced:
+    module:
+      - az_core

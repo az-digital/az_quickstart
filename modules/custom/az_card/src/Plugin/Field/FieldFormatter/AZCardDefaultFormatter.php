@@ -2,24 +2,27 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldFormatter;
 
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_card_default' formatter.
- *
- * @FieldFormatter(
- *   id = "az_card_default",
- *   label = @Translation("Default"),
- *   field_types = {
- *     "az_card"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'az_card_default',
+  label: new TranslatableMarkup('Default'),
+  field_types: [
+    'az_card',
+  ],
+)]
 class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -64,7 +67,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return ['foo' => 'bar'] + parent::defaultSettings();
+    return ['interactive_links' => TRUE] + parent::defaultSettings();
   }
 
   /**
@@ -73,11 +76,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
   public function settingsForm(array $form, FormStateInterface $form_state) {
     $settings = $this->getSettings();
 
-    // @todo Card style selection (based on custom config entities).
-    $element['foo'] = [
-      '#type' => 'textfield',
-      '#title' => $this->t('Foo'),
-      '#default_value' => $settings['foo'],
+    $element['interactive_links'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Interactive Links'),
+      '#default_value' => $settings['interactive_links'],
+      '#description' => $this->t('If set, card links are clickable. Uncheck this setting to disable all card links. A common use-case is on the "Preview" view mode to prevent users from losing edit data if accidentally clicking on cards from the edit form.'),
     ];
     return $element;
   }
@@ -87,7 +90,12 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    */
   public function settingsSummary() {
     $settings = $this->getSettings();
-    $summary[] = $this->t('Foo: @foo', ['@foo' => $settings['foo']]);
+
+    $interactive = 'No';
+    if (!empty($settings['interactive_links'])) {
+      $interactive = 'Yes';
+    }
+    $summary[] = $this->t('Interactive: @interactive', ['@interactive' => $interactive]);
     return $summary;
   }
 
@@ -95,6 +103,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
    * {@inheritdoc}
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
+    $settings = $this->getSettings();
     $element = [];
 
     /** @var \Drupal\az_card\Plugin\Field\FieldType\AZCardItem $item */
@@ -111,26 +120,48 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
       }
 
+      $attached = [];
+
       // Link.
       $link_render_array = [];
+      $link_url = '';
       if ($item->link_title || $item->link_uri) {
-        $link_url = $this->pathValidator->getUrlIfValid($item->link_uri);
+        if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
+          // Link to public file: use fromUri() to get the URL.
+          $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
+        }
+        else {
+          $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
+        }
         $link_render_array = [
           '#type' => 'link',
           '#title' => $item->link_title ?? '',
-          '#url' => $link_url ? $link_url : '#',
+          '#url' => $link_url ?: Url::fromRoute('<none>'),
           '#attributes' => ['class' => ['btn', 'btn-default', 'w-100']],
         ];
         if (!empty($item->options['link_style'])) {
           $link_render_array['#attributes']['class'] = explode(' ', $item->options['link_style']);
         }
+        if (empty($settings['interactive_links'])) {
+          $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
+          $attached['library'][] = 'az_card/az_card_no_follow';
+        }
+      }
+
+      // Title alignment.
+      if (!empty($item->options['title_alignment'])) {
+        $title_alignment = $item->options['title_alignment'];
+      }
+
+      // Title display.
+      if (!empty($item->options['title_display'])) {
+        $title_display = $item->options['title_display'];
       }
 
       $card_classes = 'card';
       $column_classes = [];
       $column_classes[] = 'col-md-4 col-lg-4';
       $parent = $item->getEntity();
-      $attached = [];
 
       // Get settings from parent paragraph.
       if ($parent instanceof ParagraphInterface) {
@@ -174,8 +205,17 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
               $title_style = 'default';
             }
           }
-        }
 
+          // Title level.
+          if (isset($card_defaults['card_title_level'])) {
+            $title_level = $card_defaults['card_title_level'];
+          }
+
+          // Title display.
+          if (isset($card_defaults['card_title_display'])) {
+            $title_display = $card_defaults['card_title_display'];
+          }
+        }
       }
 
       // Handle class keys that contained multiple classes.
@@ -194,12 +234,16 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         // @see \Drupal\filter\Element\ProcessedText::preRenderText()
         '#body' => [
           '#type' => 'processed_text',
-          '#text' => $item->body,
+          '#text' => $item->body ?? '',
           '#format' => $item->body_format,
           '#langcode' => $item->getLangcode(),
         ],
         '#link' => $link_render_array,
+        '#link_url' => $link_url,
         '#title_style' => $title_style ?? 'default',
+        '#title_level' => $title_level ?? 'h3',
+        '#title_alignment' => $title_alignment ?? 'text-left',
+        '#title_display' => $title_display ?? 'h5',
         '#attributes' => ['class' => $card_classes],
         '#attached' => $attached,
       ];

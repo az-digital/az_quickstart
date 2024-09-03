@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_custom_menu_block
+id: az_custom_menu_block
+label: 'Menu Block'
+revision: 0
+description: 'Adds an embeddable content block for placing menu blocks anywhere.'

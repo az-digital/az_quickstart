@@ -1,0 +1,69 @@
+id: az_paragraph_file_download
+label: AZ Paragraph File Download
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_file_download
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text
+
+process:
+
+  temp_download_file:
+    -
+      plugin: sub_process
+      source: field_uaqs_download_file
+      process:
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_media
+
+  temp_download_preview:
+    -
+      plugin: sub_process
+      source: field_uaqs_download_preview
+      process:
+        -
+          plugin: migration_lookup
+          source: fid
+          migration:
+            - az_media
+
+  field_az_text_area/value:
+    -
+      plugin: merge
+      source:
+        - '@temp_download_file'
+        - '@temp_download_preview'
+    -
+      plugin: paragraphs_file_download_field_merge
+
+  field_az_text_area/format:
+    plugin: default_value
+    default_value: az_standard
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_files

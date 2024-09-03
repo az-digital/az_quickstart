@@ -1,9 +1,22 @@
 services:
+  _defaults:
+    autoconfigure: true
   az_core.page_cache_request_policy.deny_monitoring_page:
     class: Drupal\az_core\PageCache\DenyMonitoringPage
-    arguments: ['@current_route_match']
+    arguments:
+      - '@current_route_match'
     tags:
       - { name: page_cache_response_policy }
+  logger.channel.az_core:
+    parent: logger.channel_base
+    arguments:
+      - 'az_core'
   az_core.override_import:
     class: Drupal\az_core\AZConfigOverride
-    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector', '@config_sync.snapshotter', '@config_update.config_list', '@module_handler']
+    arguments:
+      - '@config.factory'
+      - '@extension.list.module'
+      - '@config_provider.collector'
+      - '@config_sync.snapshotter'
+      - '@config_update.config_list'
+      - '@module_handler'
