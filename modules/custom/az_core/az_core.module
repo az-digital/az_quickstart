@@ -378,6 +378,14 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
  * Override Drupal core generator metatag for distribution.
  */
 function az_core_page_attachments_alter(array &$page) {
+  $az_core_config = \Drupal::config('az_core.settings');
+
+  // Check whether to perform the replacement.
+  $generator = $az_core_config->get('generator_metatag.enabled');
+  if (empty($generator)) {
+    return;
+  }
+
   // Verify we're not trying to add tag to some page that should not have it.
   if (!empty($page['#attached']['html_head'])) {
     foreach ($page['#attached']['html_head'] as &$head_item) {

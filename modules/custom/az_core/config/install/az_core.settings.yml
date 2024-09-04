@@ -3,3 +3,5 @@ monitoring_page:
   path: ''
 enterprise_attributes:
   locked: true
+generator_metatag:
+  enabled: true
