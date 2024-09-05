@@ -202,20 +202,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['generator'] = [
-      '#type' => 'details',
-      '#title' => t('Generator'),
-      '#open' => FALSE,
-      '#access' => $this->currentUser()->hasPermission('administer site configuration'),
-    ];
-
-    $form['generator']['generator_metatag_enabled'] = [
-      '#title' => t('Enable generator metatag'),
-      '#type' => 'checkbox',
-      '#description' => t("Alter the standard Drupal generator metatag to cite AZ Quickstart as the site generator."),
-      '#default_value' => $az_core_config->get('generator_metatag.enabled'),
-    ];
-
     $form['enterprise_attributes'] = [
       '#type' => 'details',
       '#title' => t('Enterprise attributes'),
@@ -320,7 +306,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $this->config('az_core.settings')
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
-      ->set('generator_metatag.enabled', $form_state->getValue('generator_metatag_enabled'))
       ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
       ->save();
 

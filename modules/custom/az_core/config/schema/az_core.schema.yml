@@ -19,10 +19,3 @@ az_core.settings:
         locked:
           type: boolean
           label: 'Enterprise attribute edits prohibited'
-    generator_metatag:
-      type: mapping
-      label: 'Generator Metatag'
-      mapping:
-        enabled:
-          type: boolean
-          label: 'Show AZ Quickstart as the site generator metatag'
