@@ -47,6 +47,7 @@ process:
     default_value: az_person
   field_az_fname: givenname
   field_az_lname: surname
+  field_az_netid: netid
   field_az_email: email
   field_az_body/value: biography
   field_az_body/format:
@@ -58,34 +59,8 @@ process:
     process:
       value: desc
   field_az_degrees:
-    -
-      plugin: sub_process
-      source: degrees
-      include_source: true,
-      source_key: original_source
-      process:
-        0: 'properties/degree_title'
-        1:
-          -
-            plugin: callback
-            callable: array_column
-            unpack_source: true
-            source:
-              - institution
-              - 'original_source/constants/NAME'
-          -
-            plugin: concat
-            delimiter: ', '
-    -
-      plugin: sub_process
-      process:
-        value:
-          -
-            plugin: concat
-            source:
-              - 0
-              - 1
-            delimiter: ', '
+    plugin: az_person_degrees
+    source: degrees
   field_az_phones:
     plugin: sub_process
     source: phone
