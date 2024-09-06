@@ -10,6 +10,8 @@ use Drupal\Core\Url;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Client;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -97,7 +99,6 @@ final class AZPersonProfileImportForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-
     $config = $this->config('az_person_profile_import.settings');
     $endpoint = $config->get('endpoint');
     $apikey = $config->get('apikey');
@@ -108,36 +109,63 @@ final class AZPersonProfileImportForm extends FormBase {
     $update = $mode === 'update';
     $track = $mode === 'track_changes';
 
+    $client = new Client();
+
     foreach ($netids as $netid) {
       $netid = trim($netid);
-      $urls[] = $endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey);
+      try {
+        // Make a request to check if the NetID exists.
+        $response = $client->get($endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey), [
+          'http_errors' => false,
+        ]);
+
+        // Check if the response is valid.
+        if ($response->getStatusCode() === 200) {
+          $urls[] = $endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey);
+        }
+        else {
+          // Log or inform the user that the NetID was not found.
+          $this->messenger->addWarning($this->t('NetID %netid was not found in the Profiles API.', ['%netid' => $netid]));
+        }
+      }
+      catch (RequestException $e) {
+        // Handle request exceptions.
+        $this->messenger->addError($this->t('Error fetching data for NetID %netid: %message', [
+          '%netid' => $netid,
+          '%message' => $e->getMessage(),
+        ]));
+      }
     }
 
-    // Fetch the profiles integration migration.
-    $migration = $this->pluginManagerMigration->createInstance('az_person_profile_import');
-    // Phpstan doesn't know this can be NULL.
-    // @phpstan-ignore-next-line
-    if (!empty($migration)) {
-      // Reset status.
-      $status = $migration->getStatus();
-      if ($status !== MigrationInterface::STATUS_IDLE) {
-        $migration->setStatus(MigrationInterface::STATUS_IDLE);
-      }
-      // Set migration options.
-      $options = [
-        'limit' => 0,
-        'update' => (int) $update,
-        'track_changes' => (int) $track,
-        'configuration' => [
-          'source' => [
-            'urls' => $urls,
+    if (!empty($urls)) {
+      // Continue with the migration only if there are valid URLs.
+      $migration = $this->pluginManagerMigration->createInstance('az_person_profile_import');
+      if (!empty($migration)) {
+        // Reset status.
+        $status = $migration->getStatus();
+        if ($status !== MigrationInterface::STATUS_IDLE) {
+          $migration->setStatus(MigrationInterface::STATUS_IDLE);
+        }
+        // Set migration options.
+        $options = [
+          'limit' => 0,
+          'update' => (int) $update,
+          'track_changes' => (int) $track,
+          'configuration' => [
+            'source' => [
+              'urls' => $urls,
+            ],
           ],
-        ],
-      ];
+        ];
 
-      // Run the migration.
-      $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
-      $executable->batchImport();
+        // Run the migration.
+        $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
+        $executable->batchImport();
+      }
+    }
+    else {
+      // Inform the user if no valid NetIDs were found.
+      $this->messenger->addError($this->t('No valid NetIDs were found for import.'));
     }
   }
 
