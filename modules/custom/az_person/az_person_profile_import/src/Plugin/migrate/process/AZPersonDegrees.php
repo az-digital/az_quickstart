@@ -37,7 +37,7 @@ class AZPersonDegrees extends ProcessPluginBase {
     foreach ($value as $degree) {
       $d = [];
       $title = $degree['properties']['degree_title'] ?? '';
-      $discipline = $degree['properties']['degree_title'] ?? '';
+      $discipline = $degree['properties']['discipline'] ?? '';
       $institution = $degree['institution'][0]['name'] ?? '';
       // Don't add the discipline if it's already in the degree.
       if (str_contains($title, $discipline)) {
