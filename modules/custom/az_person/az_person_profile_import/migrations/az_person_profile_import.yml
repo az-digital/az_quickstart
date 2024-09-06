@@ -46,6 +46,7 @@ process:
     default_value: az_person
   field_az_fname: givenname
   field_az_lname: surname
+  field_az_netid: netid
   field_az_email: email
   field_az_body/value: biography
   field_az_body/format:
