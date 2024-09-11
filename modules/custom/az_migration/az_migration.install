@@ -12,3 +12,10 @@ function az_migration_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 920301;
 }
+
+/**
+ * Ensure the migmag_process module is installed.
+ */
+function az_migration_update_1021001() {
+  \Drupal::service('module_installer')->install(['migmag_process']);
+}

@@ -31,7 +31,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           source: fid
           migration:
             - az_media
