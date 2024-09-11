@@ -33,8 +33,7 @@
       const lastFullWidthElement =
         allFullWidthElements[allFullWidthElements.length - 1];
       const contentRegionPosition = contentRegion.getBoundingClientRect();
-      const style =
-        window.getComputedStyle(lastFullWidthElement, '');
+      const style = window.getComputedStyle(lastFullWidthElement, '');
       const bottomMargin = parseFloat(style.marginBottom);
       const contentRegionTop = contentRegionPosition.top;
       const lastFullWidthElementPosition =
