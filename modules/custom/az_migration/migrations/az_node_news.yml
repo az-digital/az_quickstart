@@ -76,7 +76,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration:
             - az_paragraph_column_image
             - az_paragraph_extra_info
@@ -91,7 +91,7 @@ process:
             - 0
       target_revision_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration:
             - az_paragraph_column_image
             - az_paragraph_extra_info
@@ -129,7 +129,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           source: fid
           migration:
             - az_files
@@ -144,7 +144,7 @@ process:
         delta: delta
         target_id:
           -
-            plugin: migration_lookup
+            plugin: migmag_lookup
             source: fid
             migration:
               - az_media
@@ -181,7 +181,7 @@ process:
 
   field_az_news_tags:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       source: field_uaqs_news_tags
       migration:
         - az_news_tags
@@ -240,7 +240,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration: az_paragraph_contact
           source: value
           no_stub: true
@@ -250,7 +250,7 @@ process:
             - 0
       target_revision_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration: az_paragraph_contact
           source: value
           no_stub: true
@@ -261,7 +261,7 @@ process:
 
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid

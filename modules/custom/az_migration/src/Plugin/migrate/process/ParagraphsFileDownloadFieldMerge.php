@@ -35,7 +35,7 @@ use Drupal\migrate\Row;
  *       source: field_uaqs_download_file
  *       process:
  *         -
- *           plugin: migration_lookup
+ *           plugin: migmag_lookup
  *           source: fid
  *           migration:
  *             - az_media
@@ -46,7 +46,7 @@ use Drupal\migrate\Row;
  *       source: field_uaqs_download_preview
  *       process:
  *         -
- *           plugin: migration_lookup
+ *           plugin: migmag_lookup
  *           source: fid
  *           migration:
  *             - az_media
