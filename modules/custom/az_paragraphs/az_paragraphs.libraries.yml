@@ -9,11 +9,14 @@ az_paragraphs.az_text:
 az_paragraphs.az_paragraphs_full_width:
   version: VERSION
   header: true
+  dependencies:
+    - core/drupal
   css:
     theme:
       css/az_paragraphs_full_width.css: {}
   js:
     js/az_paragraphs_full_width.js: {}
+
 az_paragraphs.az_text_background:
   version: VERSION
   css:
