@@ -10,15 +10,20 @@ use Drupal\Core\Url;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Client;
-
+use GuzzleHttp\Exception\RequestException;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * Provides a Quickstart Person Profile Import form.
  */
 final class AZPersonProfileImportForm extends FormBase {
+
+  /**
+   * The HTTP client.
+   */
+  protected ?Client $httpClient;
 
   /**
    * @var \Drupal\Core\Messenger\Messenger
@@ -39,6 +44,15 @@ final class AZPersonProfileImportForm extends FormBase {
     $instance = parent::create($container);
     $instance->messenger = $container->get('messenger');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
+    try {
+      // Use the distribution cached http client if it is available.
+      $instance->httpClient = $container->get('az_http.http_client');
+    }
+    catch (ServiceNotFoundException $e) {
+      // Otherwise, fall back on the Drupal core guzzle client.
+      $instance->httpClient = $container->get('http_client');
+    }
+
     return $instance;
   }
 
@@ -109,14 +123,12 @@ final class AZPersonProfileImportForm extends FormBase {
     $update = $mode === 'update';
     $track = $mode === 'track_changes';
 
-    $client = new Client();
-
     foreach ($netids as $netid) {
       $netid = trim($netid);
       try {
         // Make a request to check if the NetID exists.
-        $response = $client->get($endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey), [
-          'http_errors' => false,
+        $response = $this->httpClient->get($endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey), [
+          'http_errors' => FALSE,
         ]);
 
         // Check if the response is valid.
@@ -140,6 +152,8 @@ final class AZPersonProfileImportForm extends FormBase {
     if (!empty($urls)) {
       // Continue with the migration only if there are valid URLs.
       $migration = $this->pluginManagerMigration->createInstance('az_person_profile_import');
+      // Phpstan doesn't know this can be NULL.
+      // @phpstan-ignore-next-line
       if (!empty($migration)) {
         // Reset status.
         $status = $migration->getStatus();
