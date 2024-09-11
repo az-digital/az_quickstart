@@ -103,7 +103,7 @@
         "drupal/redirect": "1.10.0",
         "drupal/role_delegation": "1.2.0",
         "drupal/search_exclude": "3.0.0-beta1",
-        "drupal/seckit": "2.0.1",
+        "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.3",
         "drupal/slick_views": "3.0.2",
         "drupal/smart_date": "4.1.5",
