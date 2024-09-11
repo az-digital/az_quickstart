@@ -13,7 +13,7 @@ az_paragraphs.az_paragraphs_full_width:
     theme:
       css/az_paragraphs_full_width.css: {}
   js:
-    js/az_paragraphs_full_width.js: {header:true}
+    js/az_paragraphs_full_width.js: {}
 az_paragraphs.az_text_background:
   version: VERSION
   css:
