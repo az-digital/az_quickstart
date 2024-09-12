@@ -38,9 +38,4 @@ metatag.metatag_tag.schema_college_or_university_same_as:
   type: url
   label: 'same_as'
 
-metatag.metatag_tag.schema_college_or_university_custom_field:
-  type: string
-  label: 'custom_field'
-
-
 
