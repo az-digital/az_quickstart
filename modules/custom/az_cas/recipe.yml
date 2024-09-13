@@ -1,0 +1,18 @@
+name: 'Quicsktart CAS Recipe'
+description: 'Installs and configures CAS module with U of A WebAuth specific settings.'
+type: 'University of Arizona'
+install:
+  - cas
+config:
+  actions:
+    # Apply U of A WebAuth specific CAS module settings.
+    cas.settings:
+      simple_config_update:
+        login_link_enabled: true
+        login_link_label: 'Log in using University of Arizona WebAuth'
+        login_success_message: 'Logged in via University of Arizona WebAuth as [cas:username].'
+        server.hostname: shibboleth.arizona.edu
+        server.path: /webauth
+        user_accounts.email_hostname: arizona.edu
+        error_handling.message_prevent_normal_login: 'This account must log in using <a href="[cas:login-url]">University of Arizona WebAuth</a>.'
+        error_handling.message_restrict_password_management: 'The requested account is associated with University of Arizona WebAuth and its password cannot be managed from this website.'

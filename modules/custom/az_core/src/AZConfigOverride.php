@@ -11,6 +11,8 @@ use Drupal\config_update\ConfigListByProviderInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandler;
+use Drupal\Core\Recipe\Recipe;
+use Drupal\Core\Recipe\RecipeRunner;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
@@ -105,6 +107,18 @@ class AZConfigOverride implements LoggerAwareInterface {
     // Previously enabled extensions.
     $old_extensions = array_diff_key($module_list, $module_keys);
 
+    foreach ($extensions as $extension) {
+      $path = $extension->getPath();
+      $name = $extension->getName();
+      // Run recipes for distribution modules.
+      if (str_starts_with($name, 'az_') && file_exists($path . '/recipe.yml')) {
+        $recipe = Recipe::createFromDirectory($path);
+        $this->logger->info("Applying recipe from @extension.", [
+          '@extension' => $name,
+        ]);
+        RecipeRunner::processRecipe($recipe);
+      }
+    }
     // Ask the override provider for direct overrides available.
     foreach ($providers as $provider) {
       // Only query config for the Quickstart provider.
