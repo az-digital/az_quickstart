@@ -31,7 +31,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card border-light card-clickable mb-4'
+        classes: 'card card-clickable border hover mb-4'
         show_empty_fields: false
         id: ''
         element: div
@@ -51,7 +51,7 @@ third_party_settings:
       weight: 2
       format_type: link
       format_settings:
-        classes: 'card-body p-4'
+        classes: 'card-body'
         show_empty_fields: true
         id: ''
         target: entity
@@ -85,6 +85,8 @@ third_party_settings:
       smart_title__classes:
         - card-title
         - text-midnight
+        - mt-1
+        - hover-text-underline
 id: node.az_course.az_card
 targetEntityType: node
 bundle: az_course
