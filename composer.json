@@ -63,7 +63,7 @@
         "drupal/core-recommended": "10.3.4",
         "drupal/crop": "2.4.0",
         "drupal/ctools": "*",
-        "drupal/date_ap_style": "2.0.1",
+        "drupal/date_ap_style": "2.0.2",
         "drupal/draggableviews": "2.1.4",
         "drupal/easy_breadcrumb": "2.0.8",
         "drupal/embed": "1.9.0",
