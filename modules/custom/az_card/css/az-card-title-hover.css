@@ -1,5 +1,5 @@
 .card-with-link:hover .card-title,
-.card-img-overlay > .card-title > a:hover {
+.card-title > a:hover {
   text-decoration: underline;
 }
 
@@ -8,6 +8,6 @@
   transition: ease .25s;
 }
 
-.card-img-overlay > .card-title > a {
+.card-title > a {
   text-decoration: inherit;
 }
