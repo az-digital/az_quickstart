@@ -112,7 +112,7 @@
         "drupal/token": "1.15.0",
         "drupal/views_bootstrap": "5.4.1",
         "drupal/views_remote_data": "1.0.3",
-        "drupal/viewsreference": "2.0.0-beta9",
+        "drupal/viewsreference": "2.0.0-beta10",
         "drupal/webform": "6.2.7",
         "drupal/workbench_access": "2.0.3",
         "drupal/xmlsitemap": "1.5.0",
