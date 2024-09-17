@@ -1,1 +1,3 @@
 jpeg_quality: 92
+webp_quality: 92
+webp_lossless: true
