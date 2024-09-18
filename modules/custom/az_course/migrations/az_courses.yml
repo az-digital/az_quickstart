@@ -13,7 +13,9 @@ source:
   constants:
     space: ' '
   urls: [ ]
-  item_selector: '/UA_Courses_CourseDetail_Response'
+  # Only select responses that actually have children, e.g. courses.
+  # We are operating at the response level to have access to all sections.
+  item_selector: '/UA_Courses_CourseDetail_Response[node()]'
   fields:
     -
       name: title
