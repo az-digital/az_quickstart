@@ -64,6 +64,16 @@ class InstructorLink extends ProcessPluginBase implements ContainerFactoryPlugin
     // Remove placeholder for sections with no instructor.
     unset($instructors['netid-not-found']);
 
+    // Sort instructors by name. Need to sort by last/first and/or netid.
+    // It's important to preserve keys (the NetID), thus uasort.
+    uasort($instructors, function ($a, $b) {
+      // Names might not be full names. Add last to front if one exists.
+      $a = trim(strrchr($a, ' ') ?: '') . ' ' . $a;
+      $b = trim(strrchr($b, ' ') ?: '') . ' ' . $b;
+      // Now, compare the two.
+      return strcmp(strtolower($a), strtolower($b));
+    });
+
     // Create links to each unique instructor.
     foreach ($instructors as $netid => $fullname) {
       $link = ['uri' => 'route:<nolink>', 'title' => $fullname];
