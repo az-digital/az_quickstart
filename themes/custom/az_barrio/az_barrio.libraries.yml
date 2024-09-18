@@ -31,7 +31,7 @@ arizona-bootstrap:
     theme:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
   js:
-    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
+    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
   dependencies:
     - core/jquery
 button-no-conflict:
