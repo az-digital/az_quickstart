@@ -1,0 +1,40 @@
+# The 'type' should be "label" for short meta tags and "text" for ones which
+# could get longer, especially ones which use a textarea field instead of a
+# textfield.
+
+metatag.metatag_tag.schema_college_or_university_address:
+  type: text
+  label: 'address'
+metatag.metatag_tag.schema_college_or_university_description:
+  type: text
+  label: 'description'
+metatag.metatag_tag.schema_college_or_university_id:
+  type: text
+  label: '@id'
+metatag.metatag_tag.schema_college_or_university_image:
+  type: text
+  label: 'image'
+metatag.metatag_tag.schema_college_or_university_logo:
+  type: text
+  label: 'logo'
+metatag.metatag_tag.schema_college_or_university_name:
+  type: text
+  label: 'name'
+metatag.metatag_tag.schema_college_or_university_same_as:
+  type: text
+  label: 'sameAs'
+metatag.metatag_tag.schema_college_or_university_telephone:
+  type: text
+  label: 'telephone'
+metatag.metatag_tag.schema_college_or_university_email:
+  type: text
+  label: 'email'
+metatag.metatag_tag.schema_college_or_university_type:
+  type: string
+  label: '@type'
+metatag.metatag_tag.schema_college_or_university_url:
+  type: text
+  label: 'url'
+metatag.metatag_tag.schema_college_or_university_parent_organization:
+  type: text
+  label: 'parentOrganization'
