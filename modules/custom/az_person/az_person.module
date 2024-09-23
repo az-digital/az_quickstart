@@ -6,6 +6,9 @@
  */
 
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\node\Entity\NodeType;
 
 /**
  * Implements hook_preprocess_node().
@@ -42,5 +45,52 @@ function az_person_entity_bundle_field_info_alter(&$fields, EntityTypeInterface 
     // Alter a unique constraint to the netID field.
     // \Drupal\Core\Validation\Plugin\Validation\Constraint\UniqueFieldConstraint.
     $fields['field_az_netid']->addConstraint('UniqueField');
+  }
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function az_person_entity_extra_field_info() {
+  $extra = [];
+
+  // Check to see if our content type exists.
+  $bundle = NodeType::load('az_person');
+  if ($bundle) {
+    // Comma pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_person_suffix'] = [
+      'label' => t('Person name suffix with leading comma.'),
+      'description' => "This is a pseudo field from az_person.",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity instanceof \Drupal\Core\Entity\FieldableEntityInterface) {
+    if ($entity->hasField('field_az_suffix')) {
+      $suffix_field = $entity->get('field_az_suffix');
+      $items = [];
+      foreach ($suffix_field as $suffix_item) {
+        $items[] = [
+          '#markup' => $suffix_item->value,
+          '#wrapper_attributes' => ['class' => ['list-inline-item']],
+        ];
+      }
+      $build['az_person_suffix'] = [
+        '#theme' => 'item_list',
+        '#items' => $items,
+        '#context' => ['list_style' => 'comma-list'],
+        '#attributes' => ['class' => ['list-inline']],
+        '#wrapper_attributes' => ['class' => ['inline','with-leading-comma']],
+        '#theme_wrappers' => [],
+      ];
+    }
   }
 }

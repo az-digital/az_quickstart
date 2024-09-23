@@ -25,6 +25,9 @@ source:
       name: field_az_lname
       selector: az_lname
     -
+      name: field_az_suffix
+      selector: az_suffix
+    -
       name: field_az_email
       selector: az_email
     -
@@ -63,6 +66,11 @@ process:
   field_az_fname: field_az_fname
 
   field_az_lname: field_az_lname
+
+  field_az_suffix:
+    plugin: explode
+    source: field_az_suffix
+    delimiter: '|'
 
   field_az_email: field_az_email
 

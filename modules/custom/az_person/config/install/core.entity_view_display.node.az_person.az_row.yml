@@ -18,6 +18,7 @@ dependencies:
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - image.style.az_medium
     - node.type.az_person
@@ -113,6 +114,7 @@ third_party_settings:
     group_title_link:
       children:
         - smart_title
+        - az_person_suffix
       label: 'Title Link'
       parent_name: group_title_heading
       region: content
@@ -170,12 +172,17 @@ targetEntityType: node
 bundle: az_person
 mode: az_row
 content:
+  az_person_suffix:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
+    region: content
   field_az_email:
     type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 6
+    weight: 7
     region: content
   field_az_media_image:
     type: media_thumbnail
@@ -202,7 +209,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   field_az_titles:
     type: string
@@ -210,7 +217,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 22
+    weight: 21
     region: content
   smart_title:
     settings: {  }
@@ -229,4 +236,5 @@ hidden:
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
+  field_az_suffix: true
   links: true
