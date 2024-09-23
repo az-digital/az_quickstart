@@ -18,6 +18,7 @@ dependencies:
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -34,9 +35,10 @@ content:
   links:
     settings: {  }
     third_party_settings: {  }
-    weight: 100
+    weight: 0
     region: content
 hidden:
+  az_person_suffix: true
   field_az_address: true
   field_az_attachments: true
   field_az_body: true
@@ -52,5 +54,6 @@ hidden:
   field_az_person_category_sec: true
   field_az_phones: true
   field_az_pronouns: true
+  field_az_suffix: true
   field_az_titles: true
   smart_title: true

@@ -13,11 +13,13 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_metatag
     - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -121,6 +123,7 @@ third_party_settings:
     group_column_text:
       children:
         - smart_title
+        - az_person_suffix
         - group_job_titles
         - group_view_person
       label: 'Column - Text'
@@ -145,7 +148,7 @@ third_party_settings:
       label: 'Job Title(s)'
       parent_name: group_column_text
       region: content
-      weight: 9
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'text-muted font-weight-normal'
@@ -163,7 +166,7 @@ third_party_settings:
       label: 'View profile'
       parent_name: group_column_text
       region: content
-      weight: 10
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'card-clickable-link mt-2 pb-3'
@@ -193,6 +196,11 @@ targetEntityType: node
 bundle: az_person
 mode: az_row_with_background
 content:
+  az_person_suffix:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 9
+    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     label: hidden
@@ -208,7 +216,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 3
     region: content
   smart_title:
     settings: {  }
@@ -225,9 +233,11 @@ hidden:
   field_az_link: true
   field_az_links: true
   field_az_lname: true
+  field_az_metatag: true
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
   field_az_phones: true
   field_az_pronouns: true
+  field_az_suffix: true
   links: true
