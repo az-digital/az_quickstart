@@ -445,8 +445,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-0';
           $list_title['#tag'] = 'h3';
           $list_title['#attributes']['class'][] = 'text-azurite';
-          $list_title['#attributes']['class'][] = 'text-size-h5';
-          $list_title['#attributes']['class'][] = 'mt-0';
+          $list_title['#attributes']['class'][] = 'my-0';
           $list_title['#attributes']['class'][] = 'd-flex';
           $list_title['#attributes']['class'][] = 'align-items-center';
         }
