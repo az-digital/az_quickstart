@@ -5,7 +5,6 @@
  * Contains az_core.module.
  */
 
-use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Form\FormStateInterface;
@@ -14,6 +13,7 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\block\Entity\Block;
 use Drupal\pathauto\PathautoPatternInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
