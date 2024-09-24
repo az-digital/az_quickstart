@@ -5,9 +5,10 @@
  * Contains az_person.module.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\node\Entity\NodeType;
 
 /**
@@ -73,7 +74,7 @@ function az_person_entity_extra_field_info() {
  * Implements hook_ENTITY_TYPE_view().
  */
 function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  if ($entity instanceof \Drupal\Core\Entity\FieldableEntityInterface) {
+  if ($entity instanceof FieldableEntityInterface) {
     if ($entity->hasField('field_az_suffix')) {
       $suffix_field = $entity->get('field_az_suffix');
       $items = [];
@@ -88,7 +89,7 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
         '#items' => $items,
         '#context' => ['list_style' => 'comma-list'],
         '#attributes' => ['class' => ['list-inline']],
-        '#wrapper_attributes' => ['class' => ['inline','with-leading-comma']],
+        '#wrapper_attributes' => ['class' => ['inline', 'with-leading-comma']],
         '#theme_wrappers' => [],
       ];
     }
