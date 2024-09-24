@@ -36,8 +36,7 @@ third_party_settings:
     settings:
       smart_title__link: false
       smart_title__tag: span
-      smart_title__classes:
-        - d-inline
+      smart_title__classes: {  }
   field_group:
     group_row:
       children:
