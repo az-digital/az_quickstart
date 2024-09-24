@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\az_paragraphs\Unit;
 
-use Drupal\az_paragraphs\AZVideoEmbedHelper;
 use Drupal\Tests\UnitTestCase;
+use Drupal\az_paragraphs\AZVideoEmbedHelper;
 
 /**
  * @coversDefaultClass \Drupal\az_paragraphs\AZVideoEmbedHelper
