@@ -81,7 +81,7 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
       foreach ($suffix_field as $suffix_item) {
         $item_value = $suffix_item->getValue();
         $items[] = [
-          '#markup' => $item_value['value'],
+          '#markup' => $item_value['value'] ?? '',
           '#wrapper_attributes' => ['class' => ['list-inline-item']],
         ];
       }
