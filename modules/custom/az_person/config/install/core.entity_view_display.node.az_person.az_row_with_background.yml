@@ -122,7 +122,7 @@ third_party_settings:
     group_column_text:
       children:
         - smart_title
-        - az_person_suffix
+        - group_az_suffix
         - group_job_titles
         - group_view_person
       label: 'Column - Text'
@@ -147,7 +147,7 @@ third_party_settings:
       label: 'Job Title(s)'
       parent_name: group_column_text
       region: content
-      weight: 10
+      weight: 11
       format_type: html_element
       format_settings:
         classes: 'text-muted font-weight-normal'
@@ -165,7 +165,7 @@ third_party_settings:
       label: 'View profile'
       parent_name: group_column_text
       region: content
-      weight: 11
+      weight: 12
       format_type: html_element
       format_settings:
         classes: 'card-clickable-link mt-2 pb-3'
@@ -174,6 +174,26 @@ third_party_settings:
         element: div
         show_label: true
         label_element: span
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_suffix:
+      children:
+        - field_az_suffix
+      label: Suffix(es)
+      parent_name: group_column_text
+      region: content
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: with-leading-comma
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: span
+        show_label: false
+        label_element: h3
         label_element_classes: ''
         attributes: ''
         effect: none
@@ -209,6 +229,14 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  field_az_suffix:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 10
+    region: content
   field_az_titles:
     type: string
     label: hidden
@@ -237,5 +265,4 @@ hidden:
   field_az_person_category_sec: true
   field_az_phones: true
   field_az_pronouns: true
-  field_az_suffix: true
   links: true
