@@ -68,7 +68,7 @@ third_party_settings:
       children:
         - group_media_right
         - group_media_body
-      label: Media
+      label: Row
       parent_name: group_story_link
       region: content
       weight: 4
