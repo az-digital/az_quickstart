@@ -89,7 +89,7 @@ third_party_settings:
         - group_text_muted
         - smart_title
         - field_az_subheading
-      label: 'Media body'
+      label: Body
       parent_name: group_media
       region: content
       weight: 22
