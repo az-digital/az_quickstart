@@ -56,8 +56,6 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
     if ($entity->hasField('field_az_suffix')) {
       $suffix_field = $entity->get('field_az_suffix');
       $items = [];
-      // dpm($suffix_field);
-
       foreach ($suffix_field as $suffix_item) {
         $item_value = $suffix_item->getValue();
         $items[] = [
