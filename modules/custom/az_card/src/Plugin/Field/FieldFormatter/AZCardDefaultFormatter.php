@@ -146,6 +146,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $link_render_array['#attributes']['class'][] = 'az-card-no-follow';
           $attached['library'][] = 'az_card/az_card_no_follow';
         }
+        $attached['library'][] = 'az_card/az_card_title_hover';
       }
 
       // Title alignment.
@@ -188,7 +189,6 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             $card_classes .= ' shadow';
             if ($item->link_uri) {
               $card_classes .= ' card-with-link';
-              $attached['library'][] = 'az_card/az_card_title_hover';
             }
           }
 

@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\az_finder\Plugin\better_exposed_filters\filter;
 
-use Drupal\az_finder\Service\AZFinderIcons;
-use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
-use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -15,6 +12,9 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Template\Attribute;
+use Drupal\az_finder\Service\AZFinderIcons;
+use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
+use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
 use Psr\Log\LoggerInterface;
@@ -445,8 +445,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
           $list_title_link['#attributes']['class'][] = 'js-svg-replace-level-0';
           $list_title['#tag'] = 'h3';
           $list_title['#attributes']['class'][] = 'text-azurite';
-          $list_title['#attributes']['class'][] = 'text-size-h5';
-          $list_title['#attributes']['class'][] = 'mt-0';
+          $list_title['#attributes']['class'][] = 'my-0';
           $list_title['#attributes']['class'][] = 'd-flex';
           $list_title['#attributes']['class'][] = 'align-items-center';
         }

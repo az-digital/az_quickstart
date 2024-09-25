@@ -9,7 +9,7 @@ bootstrap-datepicker:
     theme:
       /libraries/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.css: {}
   js:
-    /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.js: {}
+    /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.js: { minified: true }
   dependencies:
     - core/drupal
     - core/jquery
