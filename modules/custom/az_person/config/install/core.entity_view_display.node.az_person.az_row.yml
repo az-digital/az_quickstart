@@ -114,7 +114,7 @@ third_party_settings:
     group_title_link:
       children:
         - smart_title
-        - az_person_suffix
+        - group_az_suffix
       label: 'Title Link'
       parent_name: group_title_heading
       region: content
@@ -161,6 +161,26 @@ third_party_settings:
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
+    group_az_suffix:
+      children:
+        - field_az_suffix
+      label: Suffix(es)
+      parent_name: group_title_link
+      region: content
+      weight: 6
+      format_type: html_element
+      format_settings:
+        classes: with-leading-comma
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: span
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
     settings:
@@ -211,6 +231,14 @@ content:
     third_party_settings: {  }
     weight: 8
     region: content
+  field_az_suffix:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 23
+    region: content
   field_az_titles:
     type: string
     label: hidden
@@ -236,5 +264,4 @@ hidden:
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
-  field_az_suffix: true
   links: true
