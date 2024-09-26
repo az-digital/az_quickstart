@@ -71,7 +71,7 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 23
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -124,7 +124,7 @@ content:
     third_party_settings: {  }
   field_az_link:
     type: link_default
-    weight: 1
+    weight: 22
     region: content
     settings:
       placeholder_url: ''
@@ -157,7 +157,7 @@ content:
         show_edit: '1'
   field_az_metatag:
     type: metatag_firehose
-    weight: 21
+    weight: 24
     region: content
     settings:
       sidebar: true
@@ -251,7 +251,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 22
+    weight: 21
     region: content
     settings:
       match_operator: CONTAINS
@@ -260,7 +260,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 24
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
