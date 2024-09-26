@@ -54,6 +54,9 @@ function az_person_entity_bundle_field_info_alter(&$fields, EntityTypeInterface 
 function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   if ($entity instanceof FieldableEntityInterface) {
     if ($entity->hasField('field_az_suffix')) {
+      if (empty($entity->get('field_az_suffix')->getValue())){
+        return;
+      };
       $suffix_field = $entity->get('field_az_suffix');
       $items = [];
       foreach ($suffix_field as $suffix_item) {
@@ -63,6 +66,7 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
           '#wrapper_attributes' => ['class' => ['list-inline-item']],
         ];
       }
+      // dpm($build['field_az_suffix']);
       $build['field_az_suffix'] = [
         '#theme' => 'item_list',
         '#items' => $items,
@@ -71,6 +75,8 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
         '#wrapper_attributes' => ['class' => ['inline']],
         '#theme_wrappers' => [],
       ];
+      // dpm($build['field_az_suffix']);
+
     }
   }
 }
