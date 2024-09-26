@@ -54,7 +54,7 @@ function az_person_entity_bundle_field_info_alter(&$fields, EntityTypeInterface 
 function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   if ($entity instanceof FieldableEntityInterface) {
     if ($entity->hasField('field_az_suffix')) {
-      if (empty($entity->get('field_az_suffix')->getValue())){
+      if (empty($entity->get('field_az_suffix')->getValue())) {
         return;
       };
       $suffix_field = $entity->get('field_az_suffix');
