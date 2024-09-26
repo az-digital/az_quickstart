@@ -66,7 +66,6 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
           '#wrapper_attributes' => ['class' => ['list-inline-item']],
         ];
       }
-      // dpm($build['field_az_suffix']);
       $build['field_az_suffix'] = [
         '#theme' => 'item_list',
         '#items' => $items,
@@ -75,8 +74,6 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
         '#wrapper_attributes' => ['class' => ['inline']],
         '#theme_wrappers' => [],
       ];
-      // dpm($build['field_az_suffix']);
-
     }
   }
 }
