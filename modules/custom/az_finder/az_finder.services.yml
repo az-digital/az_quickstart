@@ -20,3 +20,5 @@ services:
   logger.channel.az_finder:
     parent: logger.channel_base
     arguments: ['az_finder']
+  az_finder.ajax_response_subscriber:
+    class: Drupal\az_finder\EventSubscriber\AZFinderAjaxResponseSubscriber
