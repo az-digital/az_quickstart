@@ -1,7 +1,7 @@
 name: az_quickstart
 recipe: drupal10
 config:
-  php: '8.3'
+  php: '8.2'
   via: apache:2.4
   webroot: web
   database: mariadb:10.6
@@ -47,7 +47,7 @@ services:
       - composer install
       - ln -s /usr/local/quickstart-install-profile/.vscode /app/.vscode
   node:
-    type: node:20
+    type: node:18
     build:
       - yarn install
   chromedriver:
