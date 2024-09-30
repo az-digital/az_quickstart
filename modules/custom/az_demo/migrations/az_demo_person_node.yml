@@ -67,10 +67,7 @@ process:
 
   field_az_lname: field_az_lname
 
-  field_az_suffix:
-    plugin: explode
-    source: field_az_suffix
-    delimiter: '|'
+  field_az_suffix: field_az_suffix
 
   field_az_email: field_az_email
 
