@@ -75,7 +75,7 @@ function az_person_entity_extra_field_info() {
 function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
   if ($entity instanceof FieldableEntityInterface) {
     if ($entity->hasField('field_az_suffix')) {
-       $suffix = $entity->get('field_az_suffix')->getValue()[0]['value'] ?? '';
+      $suffix = $entity->get('field_az_suffix')->getValue()[0]['value'] ?? '';
     };
     if ($entity->hasField('title')) {
       $title = $entity->get('title')->getValue()[0]['value'] ?? '';
