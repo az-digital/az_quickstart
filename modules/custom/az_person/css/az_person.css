@@ -38,8 +38,3 @@
 .az-person-modal .az-person-modal-close {
 	mix-blend-mode: difference;
 }
-
-.with-leading-comma:before {
-  display: inline;
-  content: ', ';
-}
