@@ -18,7 +18,6 @@ dependencies:
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
-    - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -122,7 +121,6 @@ third_party_settings:
     group_column_text:
       children:
         - smart_title
-        - group_az_suffix
         - group_job_titles
         - group_view_person
       label: 'Column - Text'
@@ -147,7 +145,7 @@ third_party_settings:
       label: 'Job Title(s)'
       parent_name: group_column_text
       region: content
-      weight: 11
+      weight: 9
       format_type: html_element
       format_settings:
         classes: 'text-muted font-weight-normal'
@@ -165,7 +163,7 @@ third_party_settings:
       label: 'View profile'
       parent_name: group_column_text
       region: content
-      weight: 12
+      weight: 10
       format_type: html_element
       format_settings:
         classes: 'card-clickable-link mt-2 pb-3'
@@ -174,26 +172,6 @@ third_party_settings:
         element: div
         show_label: true
         label_element: span
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
-    group_az_suffix:
-      children:
-        - field_az_suffix
-      label: Suffix(es)
-      parent_name: group_column_text
-      region: content
-      weight: 9
-      format_type: html_element
-      format_settings:
-        classes: with-leading-comma
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: span
-        show_label: false
-        label_element: h3
         label_element_classes: ''
         attributes: ''
         effect: none
@@ -215,11 +193,6 @@ targetEntityType: node
 bundle: az_person
 mode: az_row_with_background
 content:
-  az_person_suffix:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 9
-    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     label: hidden
@@ -229,21 +202,13 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
-  field_az_suffix:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 10
-    region: content
   field_az_titles:
     type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 3
+    weight: 10
     region: content
   smart_title:
     settings: {  }

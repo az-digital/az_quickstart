@@ -170,7 +170,7 @@ third_party_settings:
       weight: 6
       format_type: html_element
       format_settings:
-        classes: with-leading-comma
+        classes: d-inline-block
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -185,8 +185,9 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: false
-      smart_title__tag: ''
-      smart_title__classes: {  }
+      smart_title__tag: span
+      smart_title__classes:
+        - d-inline-block
 id: node.az_person.az_row
 targetEntityType: node
 bundle: az_person
