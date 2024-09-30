@@ -73,6 +73,8 @@ function az_person_entity_extra_field_info() {
  * Implements hook_ENTITY_TYPE_view().
  */
 function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  $suffix = '';
+  $title = '';
   if ($entity instanceof FieldableEntityInterface) {
     if ($entity->hasField('field_az_suffix')) {
       $suffix = $entity->get('field_az_suffix')->getValue()[0]['value'] ?? '';
