@@ -79,7 +79,6 @@ function az_person_node_view(array &$build, EntityInterface $entity, EntityViewD
     };
     if ($entity->hasField('title')) {
       $title = $entity->get('title')->getValue()[0]['value'] ?? '';
-      dpm($title);
     };
     $build['az_person_name'] = [
       '#markup' => $title . $suffix,
