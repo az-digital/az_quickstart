@@ -74,7 +74,7 @@
     },
     {
       "id" : 111,
-      "title" : "",
+      "title" : "Grid - Modal",
       "target_id" : "az_person",
       "display_id" : "grid_modal",
       "data" : "",
@@ -82,7 +82,7 @@
     },
     {
       "id" : 112,
-      "title" : "",
+      "title" : "Grid - 3 col - Modal",
       "target_id" : "az_person",
       "display_id" : "grid_modal_3cols",
       "data" : "",
