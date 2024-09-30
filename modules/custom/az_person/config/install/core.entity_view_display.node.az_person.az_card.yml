@@ -126,8 +126,7 @@ third_party_settings:
         speed: fast
     group_title_link:
       children:
-        - smart_title
-        - group_az_suffix
+        - az_person_name
       label: 'Title Link'
       parent_name: group_title_heading
       region: content
@@ -140,38 +139,18 @@ third_party_settings:
         target: custom_uri
         custom_uri: '[node:az-canonical-url]'
         target_attribute: default
-    group_az_suffix:
-      children:
-        - field_az_suffix
-      label: Suffix(es)
-      parent_name: group_title_link
-      region: content
-      weight: 10
-      format_type: html_element
-      format_settings:
-        classes: d-inline-block
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: span
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
   smart_title:
     enabled: true
-    settings:
-      smart_title__link: false
-      smart_title__tag: span
-      smart_title__classes:
-        - d-inline-block
 id: node.az_person.az_card
 targetEntityType: node
 bundle: az_person
 mode: az_card
 content:
+  az_person_name:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
   az_person_suffix:
     settings: {  }
     third_party_settings: {  }
@@ -209,14 +188,6 @@ content:
     third_party_settings: {  }
     weight: 9
     region: content
-  field_az_suffix:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 3
-    region: content
   field_az_titles:
     type: string
     label: hidden
@@ -224,11 +195,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 2
-    region: content
-  smart_title:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 9
     region: content
 hidden:
   field_az_address: true
@@ -242,4 +208,6 @@ hidden:
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
+  field_az_suffix: true
   links: true
+  smart_title: true
