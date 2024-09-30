@@ -33,11 +33,6 @@ dependencies:
 third_party_settings:
   smart_title:
     enabled: true
-    settings:
-      smart_title__link: false
-      smart_title__tag: span
-      smart_title__classes:
-        - d-inline-block
   field_group:
     group_row:
       children:
@@ -152,7 +147,7 @@ third_party_settings:
       label: 'Card Body'
       parent_name: group_card
       region: content
-      weight: 13
+      weight: 18
       format_type: html_element
       format_settings:
         classes: card-body
@@ -224,8 +219,7 @@ third_party_settings:
         speed: fast
     group_az_name:
       children:
-        - smart_title
-        - group_az_suffix
+        - az_person_name
       label: Name
       parent_name: group_col_12_name_titles
       region: content
@@ -243,31 +237,16 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-    group_az_suffix:
-      children:
-        - field_az_suffix
-      label: Suffix(es)
-      parent_name: group_az_name
-      region: content
-      weight: 12
-      format_type: html_element
-      format_settings:
-        classes: d-inline-block
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: span
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
 id: node.az_person.default
 targetEntityType: node
 bundle: az_person
 mode: default
 content:
+  az_person_name:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 15
+    region: content
   field_az_address:
     type: text_default
     label: hidden
@@ -281,14 +260,14 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 11
+    weight: 10
     region: content
   field_az_body:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   field_az_degrees:
     type: string
@@ -296,14 +275,14 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 11
     region: content
   field_az_email:
     type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 10
     region: content
   field_az_links:
     type: link
@@ -315,7 +294,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 11
+    weight: 14
     region: content
   field_az_media_image:
     type: media_thumbnail
@@ -326,7 +305,7 @@ content:
       image_loading:
         attribute: lazy
     third_party_settings: {  }
-    weight: 12
+    weight: 17
     region: content
   field_az_person_category:
     type: entity_reference_entity_view
@@ -360,15 +339,7 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
-    region: content
-  field_az_suffix:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 13
+    weight: 11
     region: content
   field_az_titles:
     type: string
@@ -378,15 +349,12 @@ content:
     third_party_settings: {  }
     weight: 9
     region: content
-  smart_title:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 11
-    region: content
 hidden:
   az_person_suffix: true
   field_az_fname: true
   field_az_link: true
   field_az_lname: true
   field_az_netid: true
+  field_az_suffix: true
   links: true
+  smart_title: true
