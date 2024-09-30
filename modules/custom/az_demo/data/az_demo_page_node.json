@@ -197,7 +197,7 @@
       "path" : "/pages/person-view-paragraphs",
       "exclude_title" : true,
       "az_page_category" : "Views",
-      "az_main_content" : "103",
+      "az_main_content" : "103|111|112",
       "az_media_image" : "",
       "az_summary" : "Person Grid 3-column."
     },
