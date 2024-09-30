@@ -5,7 +5,10 @@
  * Contains az_person.module.
  */
 
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
 
 /**
  * Implements hook_preprocess_node().
@@ -42,5 +45,44 @@ function az_person_entity_bundle_field_info_alter(&$fields, EntityTypeInterface 
     // Alter a unique constraint to the netID field.
     // \Drupal\Core\Validation\Plugin\Validation\Constraint\UniqueFieldConstraint.
     $fields['field_az_netid']->addConstraint('UniqueField');
+  }
+}
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function az_person_entity_extra_field_info() {
+  $extra = [];
+  $entity_type_manager = \Drupal::entityTypeManager();
+  $node_type_storage = $entity_type_manager->getStorage('node_type');
+  $bundle = $node_type_storage->load('az_person');
+  if ($bundle) {
+    // Suffix pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_person_name'] = [
+      'label' => t('Combined Name'),
+      'description' => "This is a pseudo field from az_person.",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity instanceof FieldableEntityInterface) {
+    if ($entity->hasField('field_az_suffix')) {
+       $suffix = $entity->get('field_az_suffix')->getValue()[0]['value'] ?? '';
+    };
+    if ($entity->hasField('title')) {
+      $title = $entity->get('title')->getValue()[0]['value'] ?? '';
+      dpm($title);
+    };
+    $build['az_person_name'] = [
+      '#markup' => $title . $suffix,
+    ];
   }
 }
