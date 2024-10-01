@@ -17,7 +17,7 @@ process:
   vid:
     plugin: default_value
     default_value: az_news_tags
-  
+
   name: name
   weight: weight
 
@@ -31,9 +31,9 @@ process:
       method: process
       source: parent
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_news_tags
-      
+
   parent:
     plugin: default_value
     default_value: 0
