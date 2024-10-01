@@ -1,0 +1,16 @@
+{
+    "paragraphs": [
+        {
+            "id":200,
+            "az_photos" : "placeduck01.jpg|placeduck02.jpg|placeduck03.jpg|placeduck04.jpg|placeduck05.jpg|placeduck06.jpg|placeduck07.jpg|placeduck08.jpg|placeduck09.jpg|placeduck10.jpg|placeduck11.jpg",
+            "bottom_spacing" : "mb-0",
+            "gallery_display" : "grid"
+        },
+        {
+            "id":201,
+            "az_photos" : "earth_solid.jpg|earth_solid_2.jpg|placeduck02.jpg|placeduck04.jpg|placeduck08.jpg",
+            "bottom_spacing" : "mb-0",
+            "gallery_display" : "slider"
+        }
+    ]
+}

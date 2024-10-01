@@ -3,14 +3,16 @@
 namespace Drupal\az_core\Routing;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\DependencyInjection\AutowireTrait;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Routing\Route;
 
 /**
  * Defines dynamic routes.
  */
 class Routes implements ContainerInjectionInterface {
+
+  use AutowireTrait;
 
   /**
    * The config factory.
@@ -27,15 +29,6 @@ class Routes implements ContainerInjectionInterface {
    */
   public function __construct(ConfigFactoryInterface $config_factory) {
     $this->configFactory = $config_factory;
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('config.factory')
-    );
   }
 
   /**

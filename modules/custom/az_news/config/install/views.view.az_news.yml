@@ -77,6 +77,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       style:
         type: default
         options:
@@ -440,6 +441,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       block_category: 'Lists (Views)'
       footer:
         area:
@@ -597,9 +599,11 @@ display:
           default_row_class: false
           uses_fields: false
       defaults:
+        css_class: false
         style: false
         row: false
         style_options: false
+      css_class: add-pager-top-margin
       row:
         type: 'entity:node'
         options:
@@ -823,6 +827,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       pager_options: null
     cache_metadata:
       max-age: -1

@@ -1,11 +1,11 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Plugin\migrate\source;
 
-use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 
 /**
  * Source plugin for retrieving data via Trellis events.
@@ -67,7 +67,9 @@ class AZTrellisEventSource extends SourcePluginBase {
     $this->trellisIds = $configuration['trellis_ids'] ?? [];
     // If no arguments are supplied, fetch the list currently on the site.
     if (empty($this->trellisIds)) {
-      $this->trellisIds = $this->trellisHelper->getImportedEventIds();
+      $ids = $this->trellisHelper->getImportedEventIds();
+      $ids += $this->trellisHelper->getRecurringEventIds();
+      $this->trellisIds = array_unique($ids);
     }
   }
 

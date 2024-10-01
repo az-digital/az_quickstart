@@ -5,14 +5,14 @@ namespace Drupal\az_curated_views\Plugin\views\field;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsField;
 use Drupal\views\Plugin\views\field\BulkForm;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * Defines a views form element for curated views.
- *
- * @ViewsField("az_curated_views_field")
  */
+#[ViewsField("az_curated_views_field")]
 class AZCuratedViewsField extends BulkForm {
 
   /**

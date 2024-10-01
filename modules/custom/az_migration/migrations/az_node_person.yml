@@ -22,11 +22,8 @@ process:
     plugin: default_value
     default_value: az_person
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   field_az_fname:
     plugin: sub_process
@@ -161,14 +158,14 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           source: fid
           migration:
             - az_media
 
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid
@@ -199,14 +196,14 @@ process:
     method: process
   field_az_person_category:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       source: field_uaqs_person_category
       migration:
         - az_person_categories
 
   field_az_person_category_sec:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       source: field_uaqs_person_categories
       migration:
         - az_person_categories_secondary

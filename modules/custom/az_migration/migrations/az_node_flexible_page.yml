@@ -18,11 +18,8 @@ process:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title:
     plugin: sub_process
@@ -47,14 +44,14 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           source: fid
           migration:
             - az_media
 
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid
@@ -85,14 +82,14 @@ process:
     method: process
   field_az_page_category:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       source: field_uaqs_flexible_category
       migration:
         - az_flexible_page_categories
 
   tmp_flexible_subpage:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       source: nid
       migration:
         - az_paragraph_flexible_page_sub
@@ -104,7 +101,7 @@ process:
       process:
         value:
           -
-            plugin: migration_lookup
+            plugin: migmag_lookup
             source: value
             migration:
               - az_paragraph_callout

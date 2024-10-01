@@ -68,7 +68,8 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
     // Logout manually because $this->drupalLogout() checks for prescence of
     // fields on login form which don't exist if login form is disabled.
     $destination = Url::fromRoute('<front>')->toString();
-    $this->drupalGet(Url::fromRoute('user.logout', [], ['query' => ['destination' => $destination]]));
+    $this->drupalGet(Url::fromRoute('user.logout.confirm', options: ['query' => ['destination' => $destination]]));
+    $this->submitForm([], 'Log out');
 
     $this->drupalGet('user/login');
     if ($disable_login_form) {
@@ -114,7 +115,7 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
   /**
    * Data provider for testUserLoginFormBehavior and testPasswordResetBehavior.
    */
-  public function azCasSettingsProvider() {
+  public static function azCasSettingsProvider() {
     return [[FALSE], [TRUE]];
   }
 

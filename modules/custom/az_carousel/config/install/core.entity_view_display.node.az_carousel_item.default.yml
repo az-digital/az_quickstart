@@ -17,11 +17,14 @@ third_party_settings:
       children:
         - field_az_media_image
         - group_slide_details
+      label: 'Carousel Slide'
       parent_name: ''
+      region: content
       weight: 1
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'az-carousel-slide d-flex flex-column justify-content-start'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -29,19 +32,19 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'az-carousel-slide d-flex flex-column justify-content-start'
-      label: 'Carousel Slide'
     group_slide_details:
       children:
         - smart_title
         - group_text_size_h4
-        - field_az_link
+        - group_cta_button
+      label: 'Slide Details'
       parent_name: group_carousel_item
+      region: content
       weight: 3
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'az-carousel-slide-details px-4 py-3 d-flex flex-column justify-content-center'
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -49,17 +52,18 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-        id: ''
-        classes: 'az-carousel-slide-details px-4 py-3 d-flex flex-column justify-content-center'
-      label: 'Slide Details'
     group_text_size_h4:
       children:
         - field_az_carousel_short_summary
+      label: 'Text Size H4'
       parent_name: group_slide_details
+      region: content
       weight: 2
       format_type: html_element
-      region: content
       format_settings:
+        classes: 'h4 mt-2 mb-0 text-white'
+        show_empty_fields: false
+        id: ''
         element: div
         show_label: false
         label_element: h3
@@ -67,34 +71,50 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_cta_button:
+      children:
+        - field_az_link
+      label: 'CTA Button'
+      parent_name: group_slide_details
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: mt-2
+        show_empty_fields: false
         id: ''
-        classes: 'h4 mt-2 mb-3 text-white'
-      label: 'Text Size H4'
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
     settings:
+      smart_title__link: false
       smart_title__tag: h2
       smart_title__classes:
         - h1
         - my-0
         - az-carousel-slide-title
         - text-white
-      smart_title__link: false
 id: node.az_carousel_item.default
 targetEntityType: node
 bundle: az_carousel_item
 mode: default
 content:
   field_az_carousel_short_summary:
-    weight: 4
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 4
     region: content
   field_az_link:
-    weight: 3
+    type: link
     label: hidden
     settings:
       trim_length: 80
@@ -103,25 +123,25 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    weight: 4
     region: content
   field_az_media_image:
-    weight: 2
+    type: entity_reference_entity_view
     label: hidden
     settings:
       view_mode: az_carousel_item
       link: false
     third_party_settings: {  }
-    type: entity_reference_entity_view
+    weight: 2
     region: content
   links:
+    settings: {  }
+    third_party_settings: {  }
     weight: 0
     region: content
+  smart_title:
     settings: {  }
     third_party_settings: {  }
-  smart_title:
     weight: 1
     region: content
-    settings: {  }
-    third_party_settings: {  }
 hidden: {  }

@@ -21,9 +21,8 @@ process:
     source: skip_translation
   id: mlid
   langcode:
-    plugin: default_value
+    plugin: az_default_langcode
     source: language
-    default_value: und
   bundle: 'constants/bundle'
   title: link_title
   description: description
