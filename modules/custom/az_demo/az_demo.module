@@ -5,10 +5,10 @@
  * Contains az_demo.module.
  */
 
-use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
+use Drupal\block\Entity\Block;
 
 /**
  * Implements hook_help().
