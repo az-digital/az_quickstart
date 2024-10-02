@@ -135,12 +135,14 @@ content:
       cap_today: '1'
       display_time: '1'
       time_before_date: '1'
-      display_noon_and_midnight: '0'
-      capitalize_noon_and_midnight: '0'
+      display_noon_and_midnight: '1'
+      use_all_day: '1'
       separator: endash
       timezone: ''
-      use_all_day: '1'
-      display_day: null
+      display_day: 0
+      month_only: 0
+      hide_date: 0
+      capitalize_noon_and_midnight: 0
     third_party_settings: {  }
     weight: 1
     region: content
