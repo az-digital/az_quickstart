@@ -33,14 +33,16 @@ class AZFinderAjaxResponseSubscriber implements EventSubscriberInterface {
 
     // Only modify commands if this is an AJAX response for a view using
     // Quickstart Exposed Filters for the exposed form.
-    if ($response instanceof ViewAjaxResponse &&
-      $response->getView()->display_handler->getOption('exposed_form')['type'] === 'az_better_exposed_filters') {
-      $commands = &$response->getCommands();
-      foreach ($commands as $key => $value) {
-        if ($value['command'] === 'scrollTop') {
-          unset($commands[$key]);
-          // Only one scrollTop command is expected.
-          return;
+    if ($response instanceof ViewAjaxResponse) {
+      $exposedForm = $response->getView()->display_handler->getOption('exposed_form');
+      if (is_array($exposedForm) && $exposedForm['type'] === 'az_better_exposed_filters') {
+        $commands = &$response->getCommands();
+        foreach ($commands as $key => $value) {
+          if ($value['command'] === 'scrollTop') {
+            unset($commands[$key]);
+            // Only one scrollTop command is expected.
+            return;
+          }
         }
       }
     }
