@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\az_person_profile_import\Plugin\migrate_plus\data_fetcher;
 
-use Drupal\Component\Utility\Crypt;
 use Drupal\migrate\MigrateException;
 use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use GuzzleHttp\Exception\RequestException;
@@ -34,23 +33,10 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
  */
 class AZProfileAPIFetcher extends Http {
 
-  const PROFILE_API_CACHE_KEY = 'az_profile_api_fetcher_netid_cache:';
-  const PROFILE_API_WARNING_EXPIRY = 1800;
-
-  /**
-   * @var \Drupal\Core\Cache\CacheBackendInterface
-   */
-  protected $cache;
-
   /**
    * @var \Drupal\Core\Config\ConfigFactory
    */
   protected $configFactory;
-
-  /**
-   * @var \Drupal\Core\Messenger\Messenger
-   */
-  protected $messenger;
 
   /**
    * {@inheritdoc}
@@ -62,8 +48,6 @@ class AZProfileAPIFetcher extends Http {
       $plugin_definition,
     );
 
-    $instance->cache = $container->get('cache.default');
-    $instance->messenger = $container->get('messenger');
     try {
       // Use the distribution cached http client if it is available.
       $instance->httpClient = $container->get('az_http.http_client');
@@ -94,17 +78,8 @@ class AZProfileAPIFetcher extends Http {
     }
     catch (MigrateException | RequestException $e) {
       // Response from API had no data.
-      $body = '{}';
-      // Generate a cache key for this netid.
-      // We don't want to constantly warn in the batch iterator.
-      $cache_key = self::PROFILE_API_CACHE_KEY . Crypt::hashBase64($netid);
-      $cached = $this->cache->get($cache_key);
-      // Emit a message only if we haven't seen this warning yet.
-      if ($cached === FALSE) {
-        $this->messenger->addWarning($this->t('NetID %netid was not found in the Profiles API.', ['%netid' => $netid]));
-      }
-      // Mark that we've seen a failure for this netid recently.
-      $this->cache->set($cache_key, TRUE, time() + self::PROFILE_API_WARNING_EXPIRY);
+      $json = ['Person' => ['netid' => $netid]];
+      $body = json_encode($json);
     }
     return $body;
   }

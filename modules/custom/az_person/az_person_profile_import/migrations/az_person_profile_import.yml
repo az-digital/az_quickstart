@@ -47,7 +47,14 @@ process:
   field_az_fname: givenname
   field_az_lname: surname
   field_az_netid: netid
-  field_az_email: email
+  field_az_email:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: email
+      message: 'unavailable in the profiles API'
+    -
+      plugin: get
   field_az_body/value: biography
   field_az_body/format:
     plugin: default_value
