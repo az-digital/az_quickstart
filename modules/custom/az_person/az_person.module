@@ -73,17 +73,14 @@ function az_person_entity_extra_field_info() {
  * Implements hook_ENTITY_TYPE_view().
  */
 function az_person_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-  $suffix = '';
-  $title = '';
-  if ($entity instanceof FieldableEntityInterface) {
-    if ($entity->hasField('field_az_suffix')) {
-      $suffix = $entity->get('field_az_suffix')->getValue()[0]['value'] ?? '';
-    };
-    if ($entity->hasField('title')) {
-      $title = $entity->get('title')->getValue()[0]['value'] ?? '';
-    };
-    $build['az_person_name'] = [
-      '#markup' => $title . $suffix,
-    ];
+  if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_suffix') && $entity->hasField('title')) {
+    $suffix = $entity->get('field_az_suffix')->value ?? '';
+    $title = $entity->get('title')->value ?? '';
+
+    if ($title && $suffix) {
+      $build['az_person_name'] = [
+        '#markup' => $title . ', ' . $suffix,
+      ];
+    }
   }
 }

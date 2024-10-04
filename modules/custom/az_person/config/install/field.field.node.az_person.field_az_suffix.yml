@@ -9,7 +9,7 @@ field_name: field_az_suffix
 entity_type: node
 bundle: az_person
 label: Suffix(es)
-description: 'Add a suffix or list of suffixes to appear after the name of the person. If you need a leading comma, add it via this field followed by the suffix. Example: <code>, Ph.D., M.S.</code>. Example 2: <code>Jr., Ph.D.</code>'
+description: "<p>This field automatically prepends a comma upon display. See the <a href=\"https://marcom.arizona.edu/communications/written-style-guide#d\" target=\"_blank\">UA Written Style Guide</a> for formatting guidelines.</p>\r\n"
 required: false
 translatable: false
 default_value: {  }
