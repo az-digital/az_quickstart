@@ -97,10 +97,6 @@ final class AZPersonProfileImportForm extends FormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-
-    $config = $this->config('az_person_profile_import.settings');
-    $endpoint = $config->get('endpoint');
-    $apikey = $config->get('apikey');
     $urls = [];
     $netids = $form_state->getValue('netid');
     $mode = $form_state->getValue('mode');
@@ -109,8 +105,9 @@ final class AZPersonProfileImportForm extends FormBase {
     $track = $mode === 'track_changes';
 
     foreach ($netids as $netid) {
+      // For the profiles API fetcher, the url is the netid.
       $netid = trim($netid);
-      $urls[] = $endpoint . '/get/' . urlencode($netid) . '?apikey=' . urlencode($apikey);
+      $urls[] = $netid;
     }
 
     // Fetch the profiles integration migration.

@@ -4,7 +4,7 @@ migration_tags:
   - Profiles Integration
 source:
   plugin: url
-  data_fetcher_plugin: http
+  data_fetcher_plugin: az_profile_api_fetcher
   data_parser_plugin: az_person_profile_import_json
   urls: []
   item_selector: /

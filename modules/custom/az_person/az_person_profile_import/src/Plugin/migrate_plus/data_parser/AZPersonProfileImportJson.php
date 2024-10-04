@@ -22,6 +22,11 @@ class AZPersonProfileImportJson extends Json {
   protected function getSourceData(string $url, string|int $item_selector = ''): array {
     $source_data = parent::getSourceData($url);
 
+    // API returned nothing for this netid.
+    if (empty($source_data)) {
+      return [];
+    }
+
     // We'll attempt to do some formatting on the phone number.
     if (!empty($source_data['Person']['phone'])) {
       $phones = $source_data['Person']['phone'];
