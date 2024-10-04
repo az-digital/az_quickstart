@@ -38,6 +38,7 @@ content:
     weight: 0
     region: content
 hidden:
+  az_person_name: true
   az_person_suffix: true
   field_az_address: true
   field_az_attachments: true
