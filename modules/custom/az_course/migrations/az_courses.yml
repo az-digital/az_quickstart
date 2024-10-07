@@ -5,7 +5,7 @@ migration_tags:
 source:
   plugin: url
   data_fetcher_plugin: retry_http
-  data_parser_plugin: simple_xml
+  data_parser_plugin: xml
   skip_count: True
   namespaces:
     n: "http://uamobile.arizona.edu/schema/UA_Courses"
@@ -13,28 +13,30 @@ source:
   constants:
     space: ' '
   urls: [ ]
-  item_selector: '//*[local-name()="CourseDetail"]'
+  # Only select responses that actually have children, e.g. courses.
+  # We are operating at the response level to have access to all sections.
+  item_selector: '/UA_Courses_CourseDetail_Response[node()]'
   fields:
     -
       name: title
       label: Title
-      selector: ns1:title
+      selector: '(//*[local-name()="title"])[1]'
     -
       name: description
       label: Description
-      selector: ns1:descrLong
+      selector: '(//*[local-name()="descrLong"])[1]'
     -
       name: subject_code
       label: Subject Code
-      selector: ns1:subject_code
+      selector: '(//*[local-name()="subject_code"])[1]'
     -
       name: catalog_number
       label: Catalog Number
-      selector: ns1:catalog_nbr
+      selector: '(//*[local-name()="catalog_nbr"])[1]'
     -
       name: units
       label: Units
-      selector: ns1:units
+      selector: '(//*[local-name()="units"])[1]'
     -
       # Squash data from multiple sections into this one.
       name: course_type
@@ -47,7 +49,7 @@ source:
     -
       name: instructors
       label: Instructors
-      selector: '//*[local-name()="netid"]'
+      selector: '//*[local-name()="Instructor"]'
     -
       name: term_code
       label: Term Code
@@ -60,8 +62,20 @@ source:
 process:
   field_az_course_title: title
   field_az_course_description/value: description
-  field_az_subject_code: subject_code
-  field_az_catalog_number: catalog_number
+  field_az_subject_code:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: subject_code
+    -
+      plugin: get
+  field_az_catalog_number:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: catalog_number
+    -
+      plugin: get
   field_az_course_units:
     plugin: callback
     callable: intval
@@ -73,14 +87,8 @@ process:
       - catalog_number
   field_az_course_instructor:
     -
-      plugin: skip_on_empty
-      method: process
+      plugin: single_value
       source: instructors
-    -
-      plugin: course_squash
-      source: instructors
-    -
-      plugin: multiple_values
     -
       plugin: instructor_link
   field_az_course_types:
