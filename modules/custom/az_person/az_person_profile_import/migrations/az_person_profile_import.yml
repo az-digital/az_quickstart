@@ -52,7 +52,7 @@ process:
       plugin: skip_on_empty
       method: row
       source: email
-      message: 'unavailable in the profiles API'
+      message: 'is unavailable in the profiles API'
     -
       plugin: get
   field_az_body/value: biography

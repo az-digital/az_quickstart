@@ -5,6 +5,7 @@ namespace Drupal\az_person_profile_import\EventSubscriber;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\migrate\Event\MigrateEvents;
+use Drupal\migrate\Event\MigrateIdMapMessageEvent;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -44,7 +45,28 @@ class AZPersonProfileImportEventSubscriber implements EventSubscriberInterface {
   public static function getSubscribedEvents() {
     $events = [];
     $events[MigrateEvents::POST_ROW_SAVE] = ['onPostRowSave'];
+    $events[MigrateEvents::IDMAP_MESSAGE] = ['onMapMessage'];
     return $events;
+  }
+
+  /**
+   * Respond to events on migration message.
+   *
+   * @param \Drupal\migrate\Event\MigrateIdMapMessageEvent $event
+   *   The map message event object.
+   */
+  public function onMapMessage(MigrateIdMapMessageEvent $event) {
+    $migration = $event->getMigration()->getBaseId();
+    // Only emit warnings for the profile import.
+    if ($migration === 'az_person_profile_import') {
+      $sourceIds = $event->getSourceIdValues();
+      $netid = $sourceIds['netid'] ?? '';
+      $message = $event->getMessage();
+      // Consume name of migration and field that prepends message.
+      $message = preg_replace('/^.*:.*: /', '', $message);
+      // Output the migration message.
+      $this->messenger->addWarning(t('NetID %netid @message.', ['%netid' => $netid, '@message' => $message]));
+    }
   }
 
   /**
