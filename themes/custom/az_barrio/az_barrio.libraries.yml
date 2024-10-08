@@ -8,6 +8,8 @@ global-styling:
 az-ajax:
   js:
     js/az-ajax.js: {}
+  dependencies:
+    - core/drupal
 az-media-display:
   css:
     component:
@@ -38,6 +40,7 @@ button-no-conflict:
   js:
     js/button-no-conflict.js: {}
   dependencies:
+    - core/drupal
     - core/jquery
 material-design-icons-sharp:
   css:
