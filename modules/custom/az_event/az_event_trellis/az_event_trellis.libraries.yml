@@ -16,4 +16,4 @@ easepick_bundle:
 easepick_styles:
   css:
     theme:
-      /libraries/easepick--bundle/dist/index.css: {}
+      /libraries/easepick--bundle/dist/index.css: { minified: true }

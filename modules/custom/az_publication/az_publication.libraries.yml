@@ -7,9 +7,9 @@ az_publication_picker:
 bootstrap-datepicker:
   css:
     theme:
-      /libraries/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.css: {}
+      /libraries/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css: { minified: true }
   js:
-    /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.js: { minified: true }
+    /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js: { minified: true }
   dependencies:
     - core/drupal
     - core/jquery
