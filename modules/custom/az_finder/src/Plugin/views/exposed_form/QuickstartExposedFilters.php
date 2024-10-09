@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\az_finder\Plugin\views\exposed_form;
 
-use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\views\Attribute\ViewsExposedForm;
 
 /**

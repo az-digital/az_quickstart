@@ -42,7 +42,7 @@ destination:
 process:
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid
@@ -61,7 +61,7 @@ process:
       process:
         value:
           -
-            plugin: migration_lookup
+            plugin: migmag_lookup
             source: value
             migration:
               - az_paragraph_callout
