@@ -209,7 +209,6 @@ hidden:
   field_az_link: true
   field_az_main_content: true
   field_az_media_thumbnail_image: true
-  field_az_metatag: true
   field_az_news_tags: true
   field_az_short_title: true
   field_az_summary: true
