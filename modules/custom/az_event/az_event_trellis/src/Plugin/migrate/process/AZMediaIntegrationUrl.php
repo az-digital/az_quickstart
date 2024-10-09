@@ -2,6 +2,7 @@
 
 namespace Drupal\az_event_trellis\Plugin\migrate\process;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\media\Entity\Media;
 use Drupal\migrate\Attribute\MigrateProcess;
@@ -99,8 +100,8 @@ class AZMediaIntegrationUrl extends ProcessPluginBase implements ContainerFactor
         $file = $media->field_media_az_image->entity;
         if ($file) {
           // Compare the files via hash.
-          $current_hash = hash_file('sha256', $file->getFileUri());
-          $hash = hash('sha256', $contents);
+          $current_hash = Crypt::hashBase64(file_get_contents($file->getFileUri()));
+          $hash = Crypt::hashBase64($contents);
           // File is unchanged. Nothing to do.
           if ($hash === $current_hash) {
             return $media->id();
