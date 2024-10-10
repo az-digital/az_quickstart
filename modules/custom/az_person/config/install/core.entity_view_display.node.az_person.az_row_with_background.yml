@@ -179,14 +179,15 @@ third_party_settings:
         speed: fast
     group_name:
       children:
-        - az_person_name
+        - smart_title
+        - field_az_suffix
       label: Name
       parent_name: group_column_text
       region: content
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'text-midnight, card-title, h4, mt-0, mb-2, hover-text-underline'
+        classes: 'text-midnight card-title h4 mt-0 mb-2 hover-text-underline d-flex'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -199,6 +200,10 @@ third_party_settings:
         speed: fast
   smart_title:
     enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: ''
+      smart_title__classes: {  }
 id: node.az_person.az_row_with_background
 targetEntityType: node
 bundle: az_person
@@ -223,11 +228,24 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  field_az_suffix:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
   field_az_titles:
     type: string
     label: hidden
     settings:
       link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  smart_title:
+    settings: {  }
     third_party_settings: {  }
     weight: 3
     region: content
@@ -246,6 +264,4 @@ hidden:
   field_az_person_category_sec: true
   field_az_phones: true
   field_az_pronouns: true
-  field_az_suffix: true
   links: true
-  smart_title: true
