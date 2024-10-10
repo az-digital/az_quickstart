@@ -114,7 +114,7 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'h5 mt-0 d-flex'
+        classes: 'h5 mt-0'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -135,7 +135,7 @@ third_party_settings:
       weight: 1
       format_type: link
       format_settings:
-        classes: d-table
+        classes: 'az-display-inline-no-spaces '
         show_empty_fields: false
         id: ''
         label_as_html: false
