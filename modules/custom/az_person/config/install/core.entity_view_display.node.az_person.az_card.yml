@@ -114,9 +114,10 @@ third_party_settings:
       weight: 1
       format_type: html_element
       format_settings:
-        classes: 'h5 mt-0'
+        classes: 'h5 mt-0 d-flex'
         show_empty_fields: false
         id: ''
+        label_as_html: false
         element: h3
         show_label: false
         label_element: h3
