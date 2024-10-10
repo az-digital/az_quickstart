@@ -209,16 +209,6 @@ targetEntityType: node
 bundle: az_person
 mode: az_row_with_background
 content:
-  az_person_name:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 3
-    region: content
-  az_person_suffix:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 9
-    region: content
   field_az_media_image:
     type: entity_reference_entity_view
     label: hidden

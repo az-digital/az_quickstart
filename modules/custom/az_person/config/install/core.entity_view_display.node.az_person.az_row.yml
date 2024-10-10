@@ -174,16 +174,6 @@ targetEntityType: node
 bundle: az_person
 mode: az_row
 content:
-  az_person_name:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 6
-    region: content
-  az_person_suffix:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 6
-    region: content
   field_az_email:
     type: email_mailto
     label: hidden

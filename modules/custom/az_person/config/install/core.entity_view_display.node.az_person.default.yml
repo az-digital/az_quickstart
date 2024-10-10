@@ -247,11 +247,6 @@ targetEntityType: node
 bundle: az_person
 mode: default
 content:
-  az_person_name:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 15
-    region: content
   field_az_address:
     type: text_default
     label: hidden
@@ -368,7 +363,6 @@ content:
     weight: 6
     region: content
 hidden:
-  az_person_suffix: true
   field_az_fname: true
   field_az_link: true
   field_az_lname: true
