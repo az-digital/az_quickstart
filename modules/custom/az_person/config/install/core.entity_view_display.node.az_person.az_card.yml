@@ -153,16 +153,6 @@ targetEntityType: node
 bundle: az_person
 mode: az_card
 content:
-  az_person_name:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 3
-    region: content
-  az_person_suffix:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 10
-    region: content
   field_az_email:
     type: email_mailto
     label: hidden
