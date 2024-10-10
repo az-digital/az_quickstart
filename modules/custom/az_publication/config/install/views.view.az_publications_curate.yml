@@ -348,7 +348,7 @@ display:
           exposed: false
           draggable_views_reference: this
           draggable_views_null_order: before
-          draggable_views_pass_arguments: true
+          draggable_views_pass_arguments: 1
         field_az_publication_date_value:
           id: field_az_publication_date_value
           table: node__field_az_publication_date
