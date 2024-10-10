@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_self_service_editor
+label: 'Self-Service Editor'
+weight: 5
+is_admin: null
+permissions:
+  - 'access toolbar'
+  - 'edit matching netid content'
+  - 'edit own az_person content'
+  - 'use text format az_standard'
+  - 'view the administration theme'
