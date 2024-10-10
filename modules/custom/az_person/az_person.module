@@ -5,10 +5,7 @@
  * Contains az_person.module.
  */
 
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
 
 /**
  * Implements hook_preprocess_node().
