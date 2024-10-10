@@ -1028,7 +1028,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<h3 class="h5 mt-0 text-blue">{{ title }}{%if ( field_az_suffix | length > 0 )%}, {{ field_az_suffix }}{% endif %}</h3>'
+            text: '<h3 class="h5 mt-0 text-blue">{{ title }}{% if (field_az_suffix | length > 0) %}, {{ field_az_suffix }}{% endif %}</h3>'
             make_link: false
             path: ''
             absolute: false
