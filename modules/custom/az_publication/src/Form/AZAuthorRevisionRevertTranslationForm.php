@@ -2,8 +2,8 @@
 
 namespace Drupal\az_publication\Form;
 
-use Drupal\az_publication\Entity\AZAuthorInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\az_publication\Entity\AZAuthorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

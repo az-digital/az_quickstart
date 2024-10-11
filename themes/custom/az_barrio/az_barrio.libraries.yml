@@ -8,6 +8,8 @@ global-styling:
 az-ajax:
   js:
     js/az-ajax.js: {}
+  dependencies:
+    - core/drupal
 az-media-display:
   css:
     component:
@@ -21,25 +23,29 @@ az-barrio-off-canvas-nav:
 az-proxima-nova:
   css:
     theme:
-      https://use.typekit.net/emv3zbo.css: {}
+      https://use.typekit.net/emv3zbo.css: { external: true, preprocess: false }
 az-icons:
   css:
     theme:
-      /libraries/az-icons/az-icons-styles.min.css: {}
+      /libraries/az-icons/az-icons-styles.min.css: { minified: true }
 arizona-bootstrap:
   css:
     theme:
-      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: {}
+      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
   js:
-    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: {}
+    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
   dependencies:
     - core/jquery
 button-no-conflict:
   js:
     js/button-no-conflict.js: {}
   dependencies:
+    - core/drupal
     - core/jquery
 material-design-icons-sharp:
   css:
     theme:
-      https://fonts.googleapis.com/css?family=Material+Icons+Sharp: {}
+      # Appends `#.css` as workaround for known issue with loadjs library.
+      # see https://github.com/kubetail-org/loadjs/issues/39
+      # see https://github.com/az-digital/az_quickstart/issues/2772
+      https://fonts.googleapis.com/css?family=Material+Icons+Sharp#.css: { external: true, preprocess: false }

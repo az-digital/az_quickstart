@@ -36,8 +36,8 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   public function __construct(
     ConfigFactoryInterface $config_factory,
     TypedConfigManagerInterface|null $typedConfigManager,
-    ClientInterface $http_client
-    ) {
+    ClientInterface $http_client,
+  ) {
     parent::__construct($config_factory, $typedConfigManager);
     $this->httpClient = $http_client;
   }

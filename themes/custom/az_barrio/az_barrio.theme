@@ -288,6 +288,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 
     if (theme_get_setting('az_bootstrap_minified')) {
       $az_bootstrap_css_info['minified'] = TRUE;
+      $az_bootstrap_js_info['minified'] = TRUE;
     }
 
     $az_bootstrap_css_path .= $az_bootstrap_token;
