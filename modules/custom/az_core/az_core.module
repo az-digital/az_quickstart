@@ -46,6 +46,7 @@ function az_core_toolbar() {
       '#title' => t('Quickstart 2'),
       '#url' => Url::fromRoute('az_core.az_quickstart'),
       '#attributes' => [
+        'target' => t('_blank'),
         'title' => t('AZ Quickstart 2'),
         'class' => [
           'toolbar-item',
