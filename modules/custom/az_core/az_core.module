@@ -50,9 +50,6 @@ function az_core_toolbar() {
         'class' => [
           'toolbar-item',
         ],
-        'style' => [
-          'display: block;',
-        ],
       ],
     ],
     'tray' => [
