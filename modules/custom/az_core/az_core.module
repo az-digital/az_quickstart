@@ -44,7 +44,7 @@ function az_core_toolbar() {
     'tab' => [
       '#type' => 'link',
       '#title' => t('Quickstart 2'),
-      '#url' => Url::fromRoute('<nolink>'),
+      '#url' => Url::fromRoute('az_core.az_quickstart'),
       '#attributes' => [
         'title' => t('AZ Quickstart 2'),
         'class' => [
