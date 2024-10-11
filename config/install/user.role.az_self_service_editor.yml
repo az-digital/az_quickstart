@@ -6,6 +6,7 @@ label: 'Self-Service Editor'
 weight: 5
 is_admin: null
 permissions:
+  - 'access contextual links'
   - 'access toolbar'
   - 'edit matching netid content'
   - 'edit own az_person content'
