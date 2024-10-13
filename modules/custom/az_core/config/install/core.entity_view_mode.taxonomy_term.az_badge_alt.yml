@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - taxonomy
+id: taxonomy_term.az_badge_alt
+label: Alternate Badge
+targetEntityType: taxonomy_term
+cache: true
