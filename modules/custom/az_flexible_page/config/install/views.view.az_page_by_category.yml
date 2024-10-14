@@ -9,7 +9,6 @@ dependencies:
     - node.type.az_flexible_page
     - taxonomy.vocabulary.az_page_categories
   module:
-    - az_finder
     - node
     - taxonomy
     - user
@@ -28,7 +27,7 @@ display:
     display_plugin: default
     position: 0
     display_options:
-      title: Filter
+      title: ''
       fields:
         field_az_page_category:
           id: field_az_page_category
@@ -116,54 +115,15 @@ display:
             offset_label: Offset
           quantity: 9
       exposed_form:
-        type: az_better_exposed_filters
+        type: basic
         options:
           submit_button: Apply
-          reset_button: true
-          reset_button_label: 'Reset filters'
+          reset_button: false
+          reset_button_label: Reset
           exposed_sorts_label: 'Sort by'
           expose_sort_order: true
           sort_asc_label: Asc
           sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
-          text_input_required_format: az_standard
-          bef:
-            general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
-              secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: false
-            filter:
-              title:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
-                  collapsible: false
-                  collapsible_disable_automatic_open: false
-                  is_secondary: false
-              tid:
-                plugin_id: az_finder_tid_widget
-                advanced:
-                  sort_options: false
-                  placeholder_text: ''
-                  rewrite:
-                    filter_rewrite_values: ''
-                    filter_rewrite_values_key: false
-                  collapsible: false
-                  collapsible_disable_automatic_open: false
-                  is_secondary: false
-                default_states: {  }
-          reset_button_position: top
-          reset_button_counter: true
-          orientation: vertical
-          skip_link: true
-          skip_link_text: 'Skip to search and filter'
-          skip_link_id: search-filter
       access:
         type: perm
         options:
@@ -171,20 +131,7 @@ display:
       cache:
         type: tag
         options: {  }
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text
-          empty: true
-          content:
-            value: '<em>No results found for the applied filters.</em>'
-            format: az_standard
-          tokenize: false
+      empty: {  }
       sorts:
         title:
           id: title
@@ -269,104 +216,6 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        title:
-          id: title
-          table: node_field_data
-          field: title
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: title
-          plugin_id: string
-          operator: contains
-          value: ''
-          group: 1
-          exposed: true
-          expose:
-            operator_id: title_op
-            label: 'Search by Title'
-            description: ''
-            use_operator: false
-            operator: title_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: title
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            placeholder: ''
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-        tid:
-          id: tid
-          table: taxonomy_index
-          field: tid
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: taxonomy_index_tid
-          operator: and
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: tid_op
-            label: ''
-            description: ''
-            use_operator: false
-            operator: tid_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: filter
-            required: false
-            remember: false
-            multiple: true
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              az_content_editor: '0'
-              az_content_admin: '0'
-              az_user_admin: '0'
-              az_html_admin: '0'
-              administrator: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: true
-          vid: az_page_categories
-          type: select
-          hierarchy: true
-          limit: true
-          error_message: true
       style:
         type: default
         options:
@@ -391,7 +240,6 @@ display:
           replica: false
           query_tags: {  }
       relationships: {  }
-      use_ajax: true
       group_by: false
       header: {  }
       footer: {  }
@@ -413,55 +261,6 @@ display:
     display_plugin: page
     position: 2
     display_options:
-      exposed_form:
-        type: az_better_exposed_filters
-        options:
-          submit_button: Apply
-          reset_button: true
-          reset_button_label: 'Reset filters'
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
-          text_input_required_format: az_standard
-          bef:
-            general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
-              secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: false
-            filter:
-              title:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
-                  collapsible: false
-                  collapsible_disable_automatic_open: false
-                  is_secondary: false
-              tid:
-                plugin_id: az_finder_tid_widget
-                advanced:
-                  sort_options: false
-                  placeholder_text: ''
-                  rewrite:
-                    filter_rewrite_values: ''
-                    filter_rewrite_values_key: false
-                  collapsible: false
-                  collapsible_disable_automatic_open: false
-                  is_secondary: false
-                default_states: {  }
-          reset_button_position: top
-          reset_button_counter: true
-          orientation: vertical
-          skip_link: true
-          skip_link_text: 'Skip to search and filter'
-          skip_link_id: search-filter
       style:
         type: views_bootstrap_grid
         options:
@@ -480,13 +279,11 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
-        exposed_form: false
         style: false
         style_options: false
         row: false
       display_description: ''
       style_options: null
-      exposed_block: true
       display_extenders: {  }
       path: page-grid
     cache_metadata:
@@ -506,55 +303,6 @@ display:
     display_plugin: page
     position: 1
     display_options:
-      exposed_form:
-        type: az_better_exposed_filters
-        options:
-          submit_button: Apply
-          reset_button: true
-          reset_button_label: 'Reset filters'
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-          text_input_required: 'Select any filter and click on Apply to see results'
-          text_input_required_format: az_standard
-          bef:
-            general:
-              autosubmit: true
-              autosubmit_exclude_textfield: false
-              autosubmit_textfield_delay: 500
-              autosubmit_hide: true
-              input_required: false
-              allow_secondary: false
-              secondary_label: 'Advanced options'
-              secondary_open: false
-              reset_button_always_show: false
-            filter:
-              title:
-                plugin_id: default
-                advanced:
-                  placeholder_text: ''
-                  collapsible: false
-                  collapsible_disable_automatic_open: false
-                  is_secondary: false
-              tid:
-                plugin_id: az_finder_tid_widget
-                advanced:
-                  sort_options: false
-                  placeholder_text: ''
-                  rewrite:
-                    filter_rewrite_values: ''
-                    filter_rewrite_values_key: false
-                  collapsible: false
-                  collapsible_disable_automatic_open: false
-                  is_secondary: false
-                default_states: {  }
-          reset_button_position: top
-          reset_button_counter: true
-          orientation: vertical
-          skip_link: true
-          skip_link_text: 'Skip to search and filter'
-          skip_link_id: search-filter
       style:
         type: default
         options:
@@ -568,14 +316,12 @@ display:
           view_mode: az_row
       defaults:
         css_class: false
-        exposed_form: false
         style: false
         style_options: false
         row: false
       css_class: add-pager-top-margin
       display_description: ''
       style_options: null
-      exposed_block: true
       display_extenders: {  }
       path: page-list
     cache_metadata:
