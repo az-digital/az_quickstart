@@ -11,7 +11,7 @@ use Drupal\Core\Url;
  * Implements hook_toolbar_alter().
  */
 function az_google_tag_toolbar_alter(&$items) {
-  if (\Drupal::service('module_handler')->moduleExists('az_core')) {    
+  if (\Drupal::service('module_handler')->moduleExists('az_core')) {
     $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = _az_google_tag_analytics_dashboard_link_info();
   }
 }
@@ -20,7 +20,7 @@ function az_google_tag_toolbar_alter(&$items) {
  * Implements hook_menu_links_discovered_alter().
  */
 function az_google_tag_menu_links_discovered_alter(&$links) {
-  if (\Drupal::service('module_handler')->moduleExists('az_core')) {    
+  if (\Drupal::service('module_handler')->moduleExists('az_core')) {
     $links['az_google_tag.analytics_dashboard'] = _az_google_tag_analytics_dashboard_link_info();
     $links['az_google_tag.analytics_dashboard']['parent'] = 'az_core.az_quickstart';
     $links['az_google_tag.analytics_dashboard']['description'] = t('Site Analytics Dashboard');
