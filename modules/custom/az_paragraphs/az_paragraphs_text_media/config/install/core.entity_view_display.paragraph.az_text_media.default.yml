@@ -47,7 +47,7 @@ third_party_settings:
         effect: none
         speed: fast
         id: ''
-        classes: az-full-width-row
+        classes: 'd-flex az-full-width-row'
         show_empty_fields: false
       label: Row
     group_az_title:
