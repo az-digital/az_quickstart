@@ -11,22 +11,40 @@ use Drupal\Core\Url;
  * Implements hook_toolbar_alter().
  */
 function az_google_tag_toolbar_alter(&$items) {
-  if (\Drupal::service('module_handler')->moduleExists('az_core')) {
-    $site_url = \Drupal::request()->getHost();
-    $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = [
-      'title' => t('Analytics Dashboard'),
-      'url' => Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', [
-        'query' => [
-          'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '"}',
-        ],
-        'absolute' => TRUE,
-      ]),
-      'attributes' => [
-        'title' => t('Site Analytics Dashboard'),
-        'target' => t('_blank'),
-      ],
-    ];
+  if (\Drupal::service('module_handler')->moduleExists('az_core')) {    
+    $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = _az_google_tag_analytics_dashboard_link_info();
   }
+}
+
+/**
+ * Implements hook_menu_links_discovered_alter().
+ */
+function az_google_tag_menu_links_discovered_alter(&$links) {
+  if (\Drupal::service('module_handler')->moduleExists('az_core')) {    
+    $links['az_google_tag.analytics_dashboard'] = _az_google_tag_analytics_dashboard_link_info();
+    $links['az_google_tag.analytics_dashboard']['parent'] = 'az_core.az_quickstart';
+    $links['az_google_tag.analytics_dashboard']['description'] = t('Site Analytics Dashboard');
+  }
+}
+
+/**
+ * Returns analytics dashboard link info common to various render elements.
+ */
+function _az_google_tag_analytics_dashboard_link_info() {
+  $site_url = \Drupal::request()->getHost();
+  return [
+    'title' => t('Analytics Dashboard'),
+    'url' => Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', [
+      'query' => [
+        'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '"}',
+      ],
+      'absolute' => TRUE,
+    ]),
+    'attributes' => [
+      'title' => t('Site Analytics Dashboard'),
+      'target' => t('_blank'),
+    ],
+  ];
 }
 
 /**
