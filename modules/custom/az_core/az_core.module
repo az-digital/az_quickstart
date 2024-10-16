@@ -456,7 +456,6 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
         try {
           // Look up user mapping for CAS.
           $auth = \Drupal::service('externalauth.authmap')->get($account->id(), 'cas');
-          \Drupal::logger('netid_auth')->notice($auth);
           if (($auth !== FALSE) && (!empty($netid)) && ($auth === $netid)) {
             return AccessResult::allowed()->cachePerPermissions();
           }
