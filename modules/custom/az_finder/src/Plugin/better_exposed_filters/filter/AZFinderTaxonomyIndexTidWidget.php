@@ -11,7 +11,7 @@ use Drupal\Core\Render\Element;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\Core\Template\Attribute;
-use Drupal\az_finder\Service\AZFinderIcons;
+use Drupal\az_finder\AZFinderIcons;
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
