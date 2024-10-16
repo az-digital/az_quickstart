@@ -113,7 +113,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     ];
     $form['help'] = [
       '#type' => 'item',
-      '#markup' => '<p>To import the most recent stories regardless of tag, select "All".</p>' .
+      '#markup' => '<p>To import the most recent stories from <a href="https://news.arizona.edu" target="_blank">news.arizona.edu</a> regardless of tag, select "All".</p>' .
       '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
       '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
       '<p>This importer will create taxonomy terms from the selected tags, if they exist on a story in the feed.</p>',
