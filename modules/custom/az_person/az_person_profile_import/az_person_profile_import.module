@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Contains az_person_profile_import.module.
+ */
+
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\node\Entity\Node;
+
+/**
+ * Implements hook_entity_presave().
+ */
+function az_person_profile_import_node_presave(EntityInterface $entity) {
+  // Set a new revision to be created if this is a migrating profile.
+  // Nodes from migrations are isSyncing().
+  if (($entity instanceof Node) && ($entity->bundle() === 'az_person') && $entity->isSyncing() && !$entity->isNew()) {
+    // Create new revision on syncing person records.
+    $entity->setNewRevision(TRUE);
+    $entity->setRevisionLogMessage('Updated from profile import.');
+    $entity->isDefaultRevision(TRUE);
+  }
+}
