@@ -210,6 +210,9 @@
                 "Creation of dynamic property Date::$dateFormatter is deprecated (3381131)": "https://git.drupalcode.org/project/smart_date/-/commit/15d9092432fecccdef38751636fff4917cb7c0d3.diff",
                 "Deprecation in Drupal 10.2: Smart Date List Item allowed values must be passed as array (3409287)": "https://www.drupal.org/files/issues/2023-12-18/3409287.patch"
             },
+            "drupal/smtp": {
+                "prev_mail_system is not saved after being set (3267467)": "https://www.drupal.org/files/issues/2022-03-03/3267467-7.patch"
+            },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
                 "Configuration schema for Enable extra settings incorrect (3402036)": "https://www.drupal.org/files/issues/2023-11-17/configuration-schema-for-views-reference-field-settings-3402036-4.patch",
