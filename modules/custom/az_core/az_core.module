@@ -126,6 +126,17 @@ function az_core_toolbar() {
 }
 
 /**
+ * Implements hook_toolbar_alter().
+ */
+function az_core_toolbar_alter(&$items) {
+  // Alter the user module user-specific links, if present.
+  if (!empty($items['user']['tray']['user_links']['#lazy_builder'])) {
+    $items['user']['tray']['user_links']['#lazy_builder'] = ['az_core.toolbar_link_builder:renderToolbarLinks', []];
+  }
+
+}
+
+/**
  * Implements hook_pathauto_pattern_alter().
  *
  * Provide a fallback if the current node is not in a menu.
