@@ -30,7 +30,7 @@ function az_google_tag_menu_links_discovered_alter(&$links) {
   if (\Drupal::service('module_handler')->moduleExists('az_core')) {
     $links['az_google_tag.analytics_dashboard'] = [
       'title' => t('Analytics Dashboard'),
-      'url' => _az_google_tag_analytics_dashboard_url()->toString();
+      'url' => _az_google_tag_analytics_dashboard_url()->toString(),
       'parent' => 'az_core.az_quickstart',
       'description => t('Site Analytics Dashboard'),
       'options' => [
@@ -51,12 +51,15 @@ function az_google_tag_menu_links_discovered_alter(&$links) {
  */
 function _az_google_tag_analytics_dashboard_url() {
   $site_url = \Drupal::request()->getHost();
-  return Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', [
-    'query' => [
-      'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '"}',
-    ],
-    'absolute' => TRUE,
-  ]);
+  return Url::fromUri(
+    'https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', 
+    [
+      'query' => [
+        'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '"}',
+      ],
+      'absolute' => TRUE,
+    ]
+  );
 }
 
 /**
