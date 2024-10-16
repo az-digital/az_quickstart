@@ -11,7 +11,7 @@ az_core.az_settings:
   description: 'Settings provided by Quickstart Core and various other Arizona Quickstart modules.'
 
 az_core.az_docs:
-  url: https://quickstart.arizona.edu
+  url: 'https://quickstart.arizona.edu'
   parent: az_core.az_quickstart
   title: 'Documentation'
   description: 'Arizona Quickstart 2 Documentation'
@@ -20,7 +20,7 @@ az_core.az_docs:
       target: '_blank'
 
 az_core.az_releases:
-  url: https://github.com/az-digital/az_quickstart/releases
+  url: 'https://github.com/az-digital/az_quickstart/releases'
   parent: az_core.az_quickstart
   title: 'Releases'
   description: 'Arizona Quickstart 2 Releases'
