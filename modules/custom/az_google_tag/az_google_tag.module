@@ -32,7 +32,7 @@ function az_google_tag_menu_links_discovered_alter(&$links) {
       'title' => t('Analytics Dashboard'),
       'url' => _az_google_tag_analytics_dashboard_url()->toString(),
       'parent' => 'az_core.az_quickstart',
-      'description => t('Site Analytics Dashboard'),
+      'description' => t('Site Analytics Dashboard'),
       'options' => [
         'attributes' => [
           'title' => t('Site Analytics Dashboard'),
