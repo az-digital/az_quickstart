@@ -4,9 +4,6 @@ declare(strict_types=1);
 
 namespace Drupal\az_finder\Plugin\better_exposed_filters\filter;
 
-use Drupal\az_finder\AZFinderIcons;
-use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
-use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
