@@ -2,7 +2,7 @@ az_news_feeds.admin_importers:
   path: '/admin/content/az-news-feeds'
   defaults:
     _form: '\Drupal\az_news_feeds\Form\AzNewsFeedsAdminForm'
-    _title: 'Configure UArizona News Importer'
+    _title: 'Configure University News Importer'
   requirements:
     _permission: 'administer quickstart configuration'
 
