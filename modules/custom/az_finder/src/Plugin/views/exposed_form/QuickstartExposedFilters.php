@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\az_finder\Plugin\views\exposed_form;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 
 /**
  * Exposed form plugin that provides a basic exposed form.
