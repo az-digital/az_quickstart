@@ -12,7 +12,14 @@ use Drupal\Core\Url;
  */
 function az_google_tag_toolbar_alter(&$items) {
   if (\Drupal::service('module_handler')->moduleExists('az_core')) {
-    $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = _az_google_tag_analytics_dashboard_link_info();
+    $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = [
+      'title' => t('Analytics Dashboard'),
+      'url' => _az_google_tag_analytics_dashboard_url(),
+      'attributes' => [
+        'title' => t('Site Analytics Dashboard'),
+        'target' => t('_blank'),
+      ],
+    ];
   }
 }
 
@@ -21,30 +28,35 @@ function az_google_tag_toolbar_alter(&$items) {
  */
 function az_google_tag_menu_links_discovered_alter(&$links) {
   if (\Drupal::service('module_handler')->moduleExists('az_core')) {
-    $links['az_google_tag.analytics_dashboard'] = _az_google_tag_analytics_dashboard_link_info();
-    $links['az_google_tag.analytics_dashboard']['parent'] = 'az_core.az_quickstart';
-    $links['az_google_tag.analytics_dashboard']['description'] = t('Site Analytics Dashboard');
+    $links['az_google_tag.analytics_dashboard'] = [
+      'title' => t('Analytics Dashboard'),
+      'url' => _az_google_tag_analytics_dashboard_url()->toString();
+      'parent' => 'az_core.az_quickstart',
+      'description => t('Site Analytics Dashboard'),
+      'options' => [
+        'attributes' => [
+          'title' => t('Site Analytics Dashboard'),
+          'target' => t('_blank'),
+       ],
+      ],
+    ];    
   }
 }
 
 /**
  * Returns analytics dashboard link info common to various render elements.
+ *
+ * @return \Drupal\Core\Url
+ *   URL object for site-specific Analytics Dashboard URL.
  */
-function _az_google_tag_analytics_dashboard_link_info() {
+function _az_google_tag_analytics_dashboard_url() {
   $site_url = \Drupal::request()->getHost();
-  return [
-    'title' => t('Analytics Dashboard'),
-    'url' => Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', [
-      'query' => [
-        'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '"}',
-      ],
-      'absolute' => TRUE,
-    ]),
-    'attributes' => [
-      'title' => t('Site Analytics Dashboard'),
-      'target' => t('_blank'),
+  return Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', [
+    'query' => [
+      'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '"}',
     ],
-  ];
+    'absolute' => TRUE,
+  ]);
 }
 
 /**
