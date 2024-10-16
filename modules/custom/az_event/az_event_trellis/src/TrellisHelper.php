@@ -2,11 +2,11 @@
 
 namespace Drupal\az_event_trellis;
 
-use Drupal\az_event_trellis\Plugin\views\filter\AZEventTrellisViewsAttributeFilter;
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Cache\CacheBackendInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\az_event_trellis\Plugin\views\filter\AZEventTrellisViewsAttributeFilter;
 use Drupal\views\Views;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;

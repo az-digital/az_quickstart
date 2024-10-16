@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Form;
 
-use Drupal\az_event_trellis\Entity\AZRecurringImportRule;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\az_event_trellis\Entity\AZRecurringImportRule;
 use Drupal\taxonomy\Entity\Term;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 

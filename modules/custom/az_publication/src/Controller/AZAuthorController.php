@@ -2,13 +2,13 @@
 
 namespace Drupal\az_publication\Controller;
 
-use Drupal\az_publication\Entity\AZAuthorInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
+use Drupal\az_publication\Entity\AZAuthorInterface;
 
 /**
  * Class AZAuthorController.
