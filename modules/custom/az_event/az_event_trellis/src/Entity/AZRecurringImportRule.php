@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Entity;
 
-use Drupal\az_event_trellis\AZRecurringImportRuleInterface;
 use Drupal\Core\Config\Entity\ConfigEntityBase;
+use Drupal\az_event_trellis\AZRecurringImportRuleInterface;
 
 /**
  * Defines the recurring import rule entity type.
