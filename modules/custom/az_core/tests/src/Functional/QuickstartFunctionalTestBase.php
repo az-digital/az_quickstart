@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\az_core\Functional;
 
-use Drupal\Tests\az_core\Traits\AllowDrupalLoginSetupTrait;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Traits\AllowDrupalLoginSetupTrait;
 
 /**
  * Provides helper methods for Quickstart tests.

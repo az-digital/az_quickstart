@@ -49,7 +49,7 @@ process:
       source: picture
       default_value: null
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: d7_file
 destination:
   plugin: entity:user
