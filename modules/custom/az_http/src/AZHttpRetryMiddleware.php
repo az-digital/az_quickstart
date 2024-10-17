@@ -54,7 +54,7 @@ class AZHttpRetryMiddleware {
    * @return bool
    *   Whether to retry the request or not.
    */
-  public function decideRetry($retries, RequestInterface $request, ResponseInterface $response = NULL, RequestException $exception = NULL) {
+  public function decideRetry($retries, RequestInterface $request, ?ResponseInterface $response = NULL, ?RequestException $exception = NULL) {
     // Abort if we are beyond our limit.
     if ($retries >= $this->requests) {
       return FALSE;
