@@ -343,7 +343,7 @@
     },
     {
       "link_id": "32",
-      "parent_link_id": "6",
+      "parent_link_id": "3",
       "menu": "main",
       "title": "Person Views",
       "urlpath": "/pages/person-view-paragraphs",
