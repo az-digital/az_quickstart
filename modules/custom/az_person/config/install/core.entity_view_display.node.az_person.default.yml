@@ -231,7 +231,7 @@ third_party_settings:
       weight: 10
       format_type: html_element
       format_settings:
-        classes: 'node__title text-blue mt-md-0 mb-0 d-flex'
+        classes: 'node__title text-blue mt-md-0 mb-0'
         show_empty_fields: false
         id: ''
         label_as_html: false
