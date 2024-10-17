@@ -71,6 +71,14 @@
       "display_id" : "content",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 190,
+      "title" : "",
+      "target_id" : "az_publications",
+      "display_id" : "az_search",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
     }
   ]
 }
