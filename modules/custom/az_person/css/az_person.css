@@ -38,15 +38,3 @@
 .az-person-modal .az-person-modal-close {
 	mix-blend-mode: difference;
 }
-
-/*
- * This fix is to overcome the issue of browsers adding a space between inline
- * elements if they are on separate lines.
- */
-.az-display-inline-no-spaces {
-  word-spacing: -1em;
-}
-.az-display-inline-no-spaces > * {
-  word-spacing: normal;
-  display: inline;
-}
