@@ -2,3 +2,7 @@ administer quickstart configuration:
   title: 'Administer Quickstart configuration'
   description: 'Administer Quickstart settings for AZQS modules.'
   restrict access: FALSE
+
+edit matching netid content:
+  title: 'Edit content matching NetID'
+  description: 'This permission allows a user to edit content with a NetID that matches their user account.'
