@@ -51,6 +51,7 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
    */
   public function renderToolbarLinks() {
     $build = parent::renderToolbarLinks();
+    $additional_links = [];
     // Only valid if we have the externalauth module.
     if (!empty($this->authmap)) {
       // Check if we have permission.
@@ -65,19 +66,39 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
           ]);
           if (!empty($persons)) {
             $person = reset($persons);
-            // If we have a linked az person, generate a link to edit form.
-            if (!empty($build['#links'])) {
-              $build['#links']['az_person_edit'] = [
-                'title' => $this->t('Edit Person'),
+            // If we have a linked az person, generate links.
+            $additional_links = [
+              'az_person' => [
+                'title' => $this->t('View person'),
+                'url' => Url::fromRoute('entity.node.canonical', ['node' => $person->id()]),
+                'attributes' => [
+                  'title' => $this->t('View person node'),
+                ],
+              ],
+              'az_person_edit' => [
+                'title' => $this->t('Edit person'),
                 'url' => Url::fromRoute('entity.node.edit_form', ['node' => $person->id()]),
                 'attributes' => [
                   'title' => $this->t('Edit person node'),
                 ],
-              ];
-            }
+              ],
+            ];
           }
         }
       }
+    }
+    // Transform some of the user module links for clarity.
+    if (!empty($build['#links'])) {
+      $original_links = $build['#links'];
+      if (!empty($original_links['account'])) {
+        $original_links['account']['title'] = $this->t('View user account');
+      }
+      if (!empty($original_links['account_edit'])) {
+        $original_links['account_edit']['title'] = $this->t('Edit user account');
+      }
+      // Add in our links among the user module links.
+      $links = array_merge($additional_links, $original_links);
+      $build['#links'] = $links;
     }
     return $build;
   }
