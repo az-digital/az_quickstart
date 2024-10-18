@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'AZ Plain Text'
+format: az_plain_text
+weight: 0
+filters:
+  filter_autop:
+    id: filter_autop
+    provider: filter
+    status: true
+    weight: 0
+    settings: {  }
