@@ -99,7 +99,7 @@ class AZCuratedViewsField extends BulkForm {
    *   Thrown when the user tried to access an action without access to it.
    */
   public function viewsFormSubmit(&$form, FormStateInterface $form_state) {
-    if (!\Drupal::currentUser()->hasPermission('access draggableviews')) {
+    if (!\Drupal::currentUser()->hasPermission('access az_curated_views')) {
       throw new AccessDeniedHttpException();
     }
     $input = $form_state->getUserInput();

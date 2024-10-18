@@ -24,3 +24,9 @@ services:
       - '@config_sync.snapshotter'
       - '@config_update.config_list'
       - '@module_handler'
+  az_core.toolbar_link_builder:
+    class: Drupal\az_core\AZUserToolbarLinkBuilder
+    arguments:
+      - '@current_user'
+      - '@entity_type.manager'
+      - '@?externalauth.authmap'
