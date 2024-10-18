@@ -134,7 +134,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#accordion_item_id' => Html::getUniqueId('az_accordion'),
         '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
-        '#aria_controls' => Html::getUniqueId('az_accordion_aria_controls'),
+        '#aria_controls' => Html::getUniqueId('az_accordion'),
       ];
 
     }
