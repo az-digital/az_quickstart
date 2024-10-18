@@ -53,3 +53,21 @@ function az_paragraphs_theme_registry_alter(&$theme_registry) {
     }
   }
 }
+
+/**
+ * Implements hook_library_info_alter().
+ *
+ * Alter path of CKE5 anchor link library to match the one installed by
+ * composer.
+ * @link https://www.drupal.org/project/anchor_link/issues/3406349#comment-15463373
+ */
+function az_paragraphs_library_info_alter(&$libraries, $extension) {
+  if ($extension === 'anchor_link' && isset($libraries['cke5_anchor_link'])) {
+    $libraries['cke5_anchor_link']['js'] = [
+      '/libraries/northernco--ckeditor5-anchor-drupal/build/anchor-drupal.js' => [
+        'preprocess' => FALSE,
+        'minified' => TRUE,
+      ],
+    ];
+  }
+}
