@@ -19,7 +19,8 @@
       ],
       "az_photo" : "placeduck10.jpg",
       "az_person_category" : "Director",
-      "az_person_categories" : "Communications"
+      "az_person_categories" : "Communications",
+      "netid" : ""
     },
     {
       "id":2,
@@ -40,7 +41,8 @@
       ],
       "az_photo" : "placeduck01.jpg",
       "az_person_category" : "Departmental Faculty",
-      "az_person_categories" : "Psychology|World Literature"
+      "az_person_categories" : "Psychology|World Literature",
+      "netid" : ""
     },
     {
       "id":3,
@@ -61,7 +63,8 @@
       ],
       "az_photo" : "placeduck04.jpg",
       "az_person_category" : "Joint Faculty",
-      "az_person_categories" : "Philosophy"
+      "az_person_categories" : "Philosophy",
+      "netid" : ""
     },
     {
       "id":4,
@@ -82,7 +85,8 @@
       ],
       "az_photo" : "placeduck11.jpg",
       "az_person_category" : "Departmental Faculty",
-      "az_person_categories" : "History"
+      "az_person_categories" : "History",
+      "netid" : ""
     },
     {
       "id":5,
@@ -107,7 +111,8 @@
       ],
       "az_photo" : "placeduck05.jpg",
       "az_person_category" : "Joint Faculty",
-      "az_person_categories" : "World Literature"
+      "az_person_categories" : "World Literature",
+      "netid" : ""
     },
     {
       "id":6,
@@ -128,7 +133,8 @@
       ],
       "az_photo" : "placeduck07.jpg",
       "az_person_category" : "Research Associates",
-      "az_person_categories" : "Mathematics"
+      "az_person_categories" : "Mathematics",
+      "netid" : ""
     },
     {
       "id":7,
@@ -149,7 +155,8 @@
       ],
       "az_photo" : "placeduck06.jpg",
       "az_person_category" : "Departmental Faculty",
-      "az_person_categories" : "Nutrition and Food Systems"
+      "az_person_categories" : "Nutrition and Food Systems",
+      "netid" : ""
     },
     {
       "id":8,
@@ -170,7 +177,8 @@
       ],
       "az_photo" : "placeduck08.jpg",
       "az_person_category" : "Research Associates",
-      "az_person_categories" : "World Literature"
+      "az_person_categories" : "World Literature",
+      "netid" : ""
     },
     {
       "id":9,
@@ -191,7 +199,8 @@
       ],
       "az_photo" : "placeduck02.jpg",
       "az_person_category" : "Departmental Faculty",
-      "az_person_categories" : "Music"
+      "az_person_categories" : "Music",
+      "netid" : ""
     },
     {
       "id":10,
@@ -212,7 +221,8 @@
       ],
       "az_photo" : "placeduck03.jpg",
       "az_person_category" : "Director",
-      "az_person_categories" : "Astronomy"
+      "az_person_categories" : "Astronomy",
+      "netid" : ""
     },
     {
       "id":11,
@@ -233,7 +243,8 @@
       ],
       "az_photo" : "placeduck09.jpg",
       "az_person_category" : "Joint Faculty",
-      "az_person_categories" : "Education"
+      "az_person_categories" : "Education",
+      "netid" : ""
     },
     {
       "id":12,
@@ -254,7 +265,8 @@
       ],
       "az_photo" : "wilbur-wildcat.jpg",
       "az_person_category" : "Undergraduates",
-      "az_person_categories" : "Government and Public Service"
+      "az_person_categories" : "Government and Public Service",
+      "netid" : "wilburwildcat"
     },
     {
       "id":13,
@@ -275,7 +287,8 @@
       ],
       "az_photo" : "wilma-wildcat.jpg",
       "az_person_category" : "Undergraduates",
-      "az_person_categories" : "Government and Public Service"
+      "az_person_categories" : "Government and Public Service",
+      "netid" : "wilmawildcat"
     }
   ]
 }
