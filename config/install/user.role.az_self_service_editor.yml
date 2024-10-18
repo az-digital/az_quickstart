@@ -6,9 +6,9 @@ label: 'Self-Service Editor'
 weight: 5
 is_admin: null
 permissions:
+  - 'access az_curated_views'
   - 'access environment indicator'
   - 'access contextual links'
-  - 'access draggableviews'
   - 'access toolbar'
   - 'create az_document media'
   - 'create az_image media'

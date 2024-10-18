@@ -8,6 +8,7 @@ is_admin: false
 permissions:
   - 'access administration pages'
   - 'access any webform configuration'
+  - 'access az_curated_views'
   - 'access block library'
   - 'access coffee'
   - 'access content overview'
