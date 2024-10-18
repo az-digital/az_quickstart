@@ -21,12 +21,12 @@
 .layout-sidebar-second .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width));
 }
-.region-content .full-width-background {
+.region .full-width-background {
     margin-left: var(--full-width-left-distance);
     margin-right: var(--full-width-right-distance);
     overflow: hidden;
 }
-.region-content .az-full-width-row {
+.region .az-full-width-row {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
@@ -34,7 +34,7 @@
     margin-right: -15px;
     margin-left: -15px;
 }
-.region-content .az-full-width-column-content {
+.region .az-full-width-column-content {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
     -ms-flex-positive: 1;
