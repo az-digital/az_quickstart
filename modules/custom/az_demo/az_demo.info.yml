@@ -4,6 +4,7 @@ description: 'WARNING:Do not enable this on live/production sites, it will alter
 core_version_requirement: ^9 || ^10
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
   - az_custom_menu_block
   - az_core
@@ -15,6 +16,7 @@ dependencies:
   - az_paragraphs_text_media
   - az_paragraphs_splitscreen
   - az_person
+  - az_publication
   - az_media
   - az_finder
   - migrate:migrate

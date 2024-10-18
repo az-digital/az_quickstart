@@ -439,6 +439,17 @@
       "expanded": false,
       "enabled": true,
       "weight": "22"
+    },
+    {
+      "link_id": "41",
+      "parent_link_id": "0",
+      "menu": "main",
+      "title": "Publications",
+      "urlpath": "/publications",
+      "external": false,
+      "expanded": true,
+      "enabled": true,
+      "weight": "1"
     }
   ]
 }

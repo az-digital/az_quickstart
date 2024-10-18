@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Drupal\az_finder\Form;
 
-use Drupal\az_finder\Service\AZFinderOverrides;
-use Drupal\az_finder\Service\AZFinderViewOptions;
-use Drupal\az_finder\Service\AZFinderVocabulary;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\az_finder\Service\AZFinderOverrides;
+use Drupal\az_finder\Service\AZFinderViewOptions;
+use Drupal\az_finder\Service\AZFinderVocabulary;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**

@@ -2,9 +2,9 @@
 
 namespace Drupal\az_course\Form;
 
-use Drupal\az_course\CourseMigrateBatchExecutable;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\az_course\CourseMigrateBatchExecutable;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
