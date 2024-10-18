@@ -10,7 +10,7 @@ dependencies:
 id: az_news_feeds
 label: 'AZ Quickstart News Feeds'
 description: 'Migrate News content from news.arizona.edu'
-source_type: 'UArizona News Article'
+source_type: 'University of Arizona News Article'
 module: az_news_feeds
 shared_configuration:
   source:

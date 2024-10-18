@@ -1,6 +1,6 @@
 # Quickstart Global Footer
 
-Enabling the Quickstart Global Footer module on your site will add default UArizona resource and social media links to your footer.
+Enabling the Quickstart Global Footer module on your site will add default University of Arizona resource and social media links to your footer.
 
 ## Permissions
 
