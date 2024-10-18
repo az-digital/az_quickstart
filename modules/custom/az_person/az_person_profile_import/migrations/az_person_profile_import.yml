@@ -41,6 +41,20 @@ source:
       selector: 'Degrees'
 
 process:
+  nid:
+    - 
+      plugin: entity_lookup
+      entity_type: node
+      bundle_key: type
+      bundle: az_person
+      value_key: field_az_netid
+      source: netid
+    - 
+      plugin: skip_on_empty
+      method: process
+  field_az_person_imported:
+    plugin: default_value
+    default_value: 1
   type:
     plugin: default_value
     default_value: az_person
