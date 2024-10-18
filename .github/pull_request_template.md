@@ -3,19 +3,20 @@
 ## Description
 <!--- Describe your changes in detail (include keywords close/fix/resolve) -->
 
-### Release notes
-<!--- This section is intended to be deleted if there are no notes. -->
 
-If this change requires release notes: provide a summary of changes, how to 
-use this change, and any related links. This content will be pasted in the 
-[release notes](https://github.com/az-digital/az_quickstart/releases). Use 
-markdown format to ensure proper pasting of information.
+### Release notes
+<!--- Delete this line (and the closing comment line) to enable release notes.
+
+If this change requires release notes: provide a summary of changes, how to use this change, and any related links. This content will be pasted in the [release notes](https://github.com/az-digital/az_quickstart/releases). Use markdown format to ensure proper pasting of information. [Release notes example](https://github.com/az-digital/az_quickstart/releases/tag/2.11.0)
 
 Make sure to add the `release notes` label to this PR.
 
 ```
 Add markdown of release notes here.
 ```
+
+Delete this line to enable release notes.  -->
+
 
 ## Related issues
 <!--- This project only accepts pull requests related to open issues -->
