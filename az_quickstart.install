@@ -74,6 +74,7 @@ function az_quickstart_requirements($phase) {
     // Gather all deprecated modules that are enabled.
     $azqs_deprecated_modules = [
       'ctools',
+      'jquery_ui_touch_punch',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
