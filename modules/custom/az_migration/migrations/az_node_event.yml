@@ -107,7 +107,7 @@ process:
     process:
       delta: delta
       value: value
-      format: 
+      format:
         plugin: default_value
         default_value: 'az_plain_text'
 
