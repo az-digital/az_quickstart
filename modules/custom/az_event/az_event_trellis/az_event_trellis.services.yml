@@ -15,3 +15,8 @@ services:
       - '@messenger'
       - '@entity_type.manager'
       - '@current_user'
+      - '@queue'
+  logger.channel.az_event_trellis:
+    parent: logger.channel_base
+    arguments:
+      - 'az_event_trellis'

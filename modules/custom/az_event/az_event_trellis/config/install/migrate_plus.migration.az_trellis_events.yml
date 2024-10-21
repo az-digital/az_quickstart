@@ -78,11 +78,6 @@ process:
       plugin: default_value
       strict: true
       default_value: 0
-  field_az_photos/target_id:
-    -
-      plugin: az_media_integration_url
-      source: image_url
-      integration_id: id
   field_az_event_date/value:
     -
       plugin: format_date
