@@ -83,6 +83,7 @@
         "drupal/intelligencebank": "4.1.1",
         "drupal/jquery_ui": "1.7.0",
         "drupal/jquery_ui_datepicker": "2.1.0",
+        "drupal/jquery_ui_slider": "*",
         "drupal/jquery_ui_touch_punch": "*",
         "drupal/link_class": "2.1.0",
         "drupal/linkit": "6.1.4",
