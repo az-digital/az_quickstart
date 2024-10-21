@@ -31,11 +31,11 @@
     "az_event_date" : "03/14 00:00",
     "az_event_date_to" : "03/14 23:59",
     "az_event_date_rrule" : 1,
-    "uaqs_summary" : "An annual celebration of the mathematical constant π (pi), always on March 14.",
+    "uaqs_summary" : "An annual celebration of the mathematical constant π (pi), always on March 14. See map: https://map.arizona.edu/89",
     "az_body" : "The date March 14 is often written as 3/14, corresponding to the first three digits of the number π (3.14159265358979...), so has grown into national celebration of the constant. The University of Arizona generally puts on events as part of these festivities, some involving the Arizona Mathematics Road Show Bus.",
     "az_location": [
       {
-        "url": "http://uanow.org/3EW",
+        "url": "https://map.arizona.edu/89",
         "title": "Math"
       }
     ],
@@ -60,7 +60,7 @@
     "az_body" : "Speaker:\nKate Usherswell, University of Cambridge.\n\nAbstract:\n“Practitioners of magic in the twentieth and later nineteenth centuries such as Crowley and Yates used texts that are (from the most charitable perspective) re-creations rather than representing extant traditions. In the early nineteenth century when Byron wished to portray a magician, he chose a Swiss setting for his Manfred, rather than drawing on anything from his native land. The persecution of witches extending back from the eighteenth through the seventeenth centuries was framed entirely within the accounts of their accusers, not by any independent literary productions. Parallel explorations of astrology and alchemy are best understood in the context of proto-science rather than some independent magical tradition (the much-discussed full collection of Newton's writings being a case in point). In the sixteenth century John Dee has a reasonable claim to be a genuine writer on magic, but this is offset by the tragic arc of his career, from high regard at court to penury and the ridicule of his contemporaries. At around the same time Marlowe turned to the already pan-European legend of Faust for his magician, rather than drawing on anything closer to hand. Figures such as John Damian in the earlier sixteenth century are again best understood as belonging to alchemical proto-science, and in Damian's case his status as a foreigner strengthens the case that there was no insular magical tradition. One has to look several centuries earlier to Michael Scott to find an insular magician famous enough to have acquired a European reputation (Dante consigns him to one of the circles of Hell), and only the entirely legendary Merlin is held in any significant regard.”",
     "az_location": [
       {
-        "url": "http://uanow.org/UA6",
+        "url": "https://map.arizona.edu/2",
         "title": "Museum of Art"
       }
     ],
