@@ -85,7 +85,11 @@ process:
       delta: delta
       uri: url
       title: title
-
+  field_az_summary/value: az_summary
+  field_az_summary/format:
+    -
+      plugin: default_value
+      default_value: az_plain_text
   field_az_body/value: az_body
   field_az_body/format:
     -
