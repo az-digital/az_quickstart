@@ -12,6 +12,7 @@ dependencies:
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
     - field.field.node.az_event.field_az_media_thumbnail_image
+    - field.field.node.az_event.field_az_metatag
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
