@@ -144,7 +144,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * {@inheritdoc}
    */
-  public function defaultConfiguration() {
+  public function defaultConfiguration(): array {
     return [
       'default_states' => [],
     ] + parent::defaultConfiguration();
@@ -153,9 +153,9 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * {@inheritdoc}
    */
-  public function exposedFormAlter(array &$form, FormStateInterface $form_state): array {
+  public function exposedFormAlter(array &$form, FormStateInterface $form_state): void {
     if (!$this->view instanceof ViewExecutable) {
-      return $form;
+      return;
     }
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
@@ -230,7 +230,6 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
       $form[$field_id]['#type'] = !empty($form[$field_id]['#multiple']) ? 'checkboxes' : 'radios';
     }
 
-    return $form;
   }
 
   /**
@@ -280,7 +279,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * {@inheritdoc}
    */
-  public static function isApplicable($filter = NULL, array $filter_options = []) {
+  public static function isApplicable($filter = NULL, array $filter_options = []): bool {
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     return $filter instanceof TaxonomyIndexTid;
   }
@@ -515,7 +514,7 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
   /**
    * {@inheritdoc}
    */
-  public function submitConfigurationForm(array &$form, FormStateInterface $form_state) {
+  public function submitConfigurationForm(array &$form, FormStateInterface $form_state): void {
     parent::submitConfigurationForm($form, $form_state);
 
     $default_states = [];
