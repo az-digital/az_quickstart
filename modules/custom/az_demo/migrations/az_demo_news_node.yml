@@ -96,9 +96,8 @@ process:
 
   field_az_summary/value: az_summary
   field_az_summary/format:
-    -
-      plugin: default_value
-      default_value: az_plain_text
+    plugin: default_value
+    default_value: az_plain_text
 
   field_az_subheading/value: az_subheading
   field_az_subheading/format:
