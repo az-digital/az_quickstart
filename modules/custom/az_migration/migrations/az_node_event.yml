@@ -107,9 +107,10 @@ process:
     process:
       delta: delta
       value: value
-      format:
-        plugin: default_value
-        default_value: plain_text
+      format: 
+        - 
+          plugin: default_value
+          default_value: 'az_plain_text'
 
   field_az_attachments:
     plugin: sub_process
