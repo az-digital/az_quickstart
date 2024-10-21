@@ -1,0 +1,153 @@
+.az-bef-vertical {
+  margin-top: 3rem;
+}
+
+.az-bef-vertical .bef-nested {
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.az-bef-vertical>h2 {
+  margin-top: 0 !important;
+  font-size: 1.5rem;
+}
+
+.az-bef-vertical h3 {
+  font-size: 1.125rem !important;
+}
+
+.az-bef-vertical h4,
+.az-bef-vertical h5,
+.az-bef-vertical h6 {
+  line-height: 1.25rem;
+  margin-top: 0.75rem !important;
+}
+
+.az-bef-vertical .form-type-textfield>label {
+  font-weight: 500;
+  color: #1e5288;
+  font-size: 1.25rem;
+  width: 100%;
+}
+
+.az-bef-vertical legend.col-form-label {
+  font-weight: 500 !important;
+  color: #1e5288;
+  font-size: 1.25rem;
+  width: 100%;
+  padding-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.js-svg-replace-level-0 svg,
+.js-svg-replace-level-1 svg {
+  pointer-events: none;
+  display: flex;
+}
+
+.js-svg-replace-level-0 svg {
+  margin-left: auto;
+  min-width: 24px;
+}
+
+.js-svg-replace-level-1 svg {
+  margin-left: -1.5px;
+  margin-right: 5.5px;
+  min-width: 16px;
+}
+
+.az-bef-vertical fieldset {
+  min-width: 100%;
+}
+
+.az-bef-vertical fieldset.fieldgroup {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.az-bef-vertical fieldset.fieldgroup small {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.az-bef-vertical .form-actions {
+  margin-bottom: 0;
+}
+
+/*
+  Note: Using bottom margins and padding within .az-bef-checkboxes may affect
+  the smoothness of the collapse and expand animations.
+*/
+.az-bef-checkboxes .checkbox {
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  line-height: 1.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.125rem;
+}
+
+.az-bef-checkboxes .collapser {
+  font-weight: 500;
+}
+
+.az-bef-checkboxes .collapser:not(.level-0) {
+  color: unset !important;
+}
+
+.az-bef-checkboxes li:has(.collapser.level-0) {
+  padding: 1rem 0;
+  border-top: 1px solid #e9ecef;
+}
+
+.az-bef-checkboxes > li:not(:has(.collapser)) + li:has(.collapser) {
+  margin-top: 1.125rem;
+}
+
+.az-bef-checkboxes > li:first-child:not(:has(.collapser)),
+.az-bef-checkboxes > li:has(.collapser) + li:not(:has(.collapser)) {
+  padding-top: 0.25rem;
+  border-top: 1px solid #e9ecef;
+}
+
+.az-bef-checkboxes > li:last-child {
+  margin-bottom: 1rem;
+}
+
+.az-bef-checkboxes > li:last-child:has(.collapser) {
+  margin-bottom: 0.25rem;
+}
+
+.az-bef-checkboxes>li>.checkbox {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #1e5288;
+}
+
+.az-bef-checkboxes .form-checkbox {
+  display: flex;
+  vertical-align: middle;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.az-bef-checkboxes>li>ul>li>.checkbox {
+  font-weight: 500;
+}
+
+.az-bef-checkboxes ul>li>ul {
+  padding-left: 22px;
+}
+
+.az-bef-checkboxes>li>ul {
+  padding-left: 6px;
+}
+
+.az-bef-checkboxes ul {
+  margin-top: 0;
+}
+
+.js-bef-filter-count {
+  margin-left: 5px;
+}

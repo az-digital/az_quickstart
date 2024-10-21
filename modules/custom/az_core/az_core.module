@@ -5,7 +5,6 @@
  * Contains az_core.module.
  */
 
-use Drupal\block\Entity\Block;
 use Drupal\Core\Access\AccessResult;
 use Drupal\Core\Extension\Exception\UnknownExtensionException;
 use Drupal\Core\Form\FormStateInterface;
@@ -14,6 +13,7 @@ use Drupal\Core\Render\BubbleableMetadata;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\block\Entity\Block;
 use Drupal\pathauto\PathautoPatternInterface;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -44,7 +44,7 @@ function az_core_toolbar() {
     'tab' => [
       '#type' => 'link',
       '#title' => t('Quickstart 2'),
-      '#url' => Url::fromUri('https://quickstart.arizona.edu'),
+      '#url' => Url::fromRoute('az_core.az_quickstart'),
       '#attributes' => [
         'target' => t('_blank'),
         'title' => t('AZ Quickstart 2'),
@@ -193,6 +193,10 @@ function az_core_token_info() {
           'name' => t("AZ Canonical URL"),
           'description' => t("Returns the URI value of field_az_link if present on the node or the default node URI if not."),
         ],
+        'az-canonical-absolute-url' => [
+          'name' => t("AZ Canonical Absolute URL"),
+          'description' => t("Returns an absolute URL for field_az_link if present on the node or the default node URL if not."),
+        ],
         'az-canonical-summary-link-title' => [
           'name' => t("AZ Canonical Summary Link Title"),
           'description' => t("Returns the link title value of field_az_link if present on the node or nothing if not."),
@@ -213,6 +217,10 @@ function az_core_tokens($type, $tokens, array $data, array $options, BubbleableM
       switch ($name) {
         case 'az-canonical-url':
           $replacements[$original] = az_core_canonical_url($data);
+          break;
+
+        case 'az-canonical-absolute-url':
+          $replacements[$original] = az_core_canonical_url($data, TRUE);
           break;
 
         case 'az-canonical-summary-link-title':
@@ -250,23 +258,25 @@ function az_core_canonical_summary_link_title(array $data) {
 }
 
 /**
- * Token replacement callback providing the canonical URI for a node.
+ * Token replacement callback providing the canonical URI or URL for a node.
  *
  * Returns the URI value of field_az_link if present on the node or the default
- * node URI if not.
+ * node URI if not. Optionally return an absolute URL instead.
  *
  * @param array $data
  *   Node data from hook_tokens().
+ * @param bool $absolute
+ *   Flag to determine whether to return an absolute URL.
  *
  * @return string
- *   The node's canononical URI.
+ *   The node's canonical URI or URL.
  */
-function az_core_canonical_url(array $data) {
+function az_core_canonical_url(array $data, bool $absolute = FALSE) {
   /** @var \Drupal\node\NodeInterface $node */
   $node = $data['node'];
   /** @var \Drupal\Core\Url $url */
   $url = $node->toUrl();
-  $uri = $url->toUriString();
+  $uri = $absolute ? $url->setOption('absolute', TRUE)->toString() : $url->toUriString();
 
   if (!empty($node->field_az_link[0]->uri)) {
     $uri = $node->field_az_link[0]->uri;
@@ -358,6 +368,26 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
           '@settings' => $url->toString(),
         ]), MessengerInterface::TYPE_ERROR);
         throw new AccessDeniedHttpException();
+    }
+  }
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ *
+ * Override Drupal core generator metatag for distribution.
+ */
+function az_core_page_attachments_alter(array &$page) {
+  // Verify we're not trying to add tag to some page that should not have it.
+  if (!empty($page['#attached']['html_head'])) {
+    foreach ($page['#attached']['html_head'] as &$head_item) {
+      // Check if the current item is the meta generator.
+      if (is_array($head_item) && in_array('system_meta_generator', $head_item, TRUE)) {
+        // Update the tag if it's present.
+        if (!empty($head_item[0]['#attributes']['content'])) {
+          $head_item[0]['#attributes']['content'] = 'Arizona Quickstart (https://quickstart.arizona.edu)';
+        }
+      }
     }
   }
 }

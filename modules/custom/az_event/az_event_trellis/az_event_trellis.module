@@ -5,9 +5,12 @@
  * Contains az_event_trellis.module.
  */
 
-use Drupal\az_event_trellis\TrellisHelper;
+use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+use Drupal\az_event_trellis\Plugin\views\filter\AZEventTrellisViewsAttributeFilter;
+use Drupal\az_event_trellis\TrellisHelper;
 
 /**
  * Implements hook_form_FORM_ID_alter() for node_az_event_edit_form.
@@ -50,6 +53,102 @@ function az_event_trellis_form_node_az_event_edit_form_alter(&$form, FormStateIn
       foreach ($no_access_fields as $field) {
         $form[$field]['#access'] = FALSE;
       }
+    }
+  }
+}
+
+/**
+ * Gather exposed API parameters from view.
+ *
+ * @param mixed $form
+ *   An associative array containing the structure of the form.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ *
+ * @return array
+ *   The remote API search values.
+ */
+function az_event_trellis_gather_filter_options(&$form, FormStateInterface $form_state) {
+  $search = [];
+  /** @var \Drupal\views\ViewExecutable $view */
+  $view = $form_state->get('view');
+  // Consult the filter handlers of the view.
+  if (!empty($view->filter)) {
+    /** @var \Drupal\views\Plugin\views\ViewsHandlerInterface[] $handlers */
+    $handlers = $view->filter;
+    // Get exposed search information.
+    $input = $view->getExposedInput();
+    if (empty($input)) {
+      return [];
+    }
+    // Loops through handlers to find inputs we want.
+    /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $handler */
+    foreach ($handlers as $key => $handler) {
+      if ($handler->isExposed()) {
+        $info = $handler->exposedInfo();
+        $identifier = $info['value'] ?? '';
+        // Make sure our input for this exposed filter isn't NULL.
+        // This won't normally happen in an actual GET form.
+        if (!isset($input[$identifier])) {
+          $input[$identifier] = '';
+        }
+        // Check if the handler validates versus the input.
+        if ($handler->acceptExposedInput($input)) {
+          // If the handler accepts the input, bundle it up.
+          $value = $input[$identifier] ?? '';
+          if (!empty($identifier) && !empty($value)) {
+            if ($handler instanceof AZEventTrellisViewsAttributeFilter) {
+              // Attributes handled separately since they are from a remote API.
+              $search['attributes'][$identifier] = $value;
+            }
+            else {
+              $search[$identifier] = $value;
+            }
+          }
+        }
+      }
+    }
+  }
+  // Don't return id or date fields, unnecessary for recurring imports.
+  unset($search['id']);
+  unset($search['start']);
+  unset($search['modified']);
+  return $search;
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Add clickable link that opens import configuration modal.
+ */
+function az_event_trellis_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $view = $form_state->get('view');
+  if (($view->id() === 'az_event_trellis_import') && ($view->current_display === 'page_1')) {
+
+    // Don't create configuration link if user does not have permission.
+    if (!\Drupal::currentUser()->hasPermission('administer quickstart configuration')) {
+      return;
+    }
+    $search = az_event_trellis_gather_filter_options($form, $form_state);
+    if (!empty($search)) {
+      // We cannot use an ajax response here to open a dialog.
+      // Exposed forms do not support ajax callbacks. Cache search parameters.
+      // Compute cache key of parameters.
+      $key = 'az_recurring_import_modal:' . Crypt::hashBase64(serialize($search));
+      $expire = time() + 1200;
+      // Cache the search.
+      \Drupal::service('cache.default')->set($key, $search, $expire);
+      $form['#attached']['library'][] = 'core/drupal.dialog.ajax';
+      // Add a link to open the modal.
+      $form['actions']['recurring'] = [
+        '#type' => 'link',
+        '#title' => t('Create Recurring Import'),
+        '#url' => Url::fromRoute('entity.az_recurring_import_rule.modal'),
+        // Pass the search parameters cache key as an argument.
+        '#options' => ['query' => ['search' => $key]],
+        '#attributes' => ['class' => ['use-ajax', 'button']],
+      ];
     }
   }
 }

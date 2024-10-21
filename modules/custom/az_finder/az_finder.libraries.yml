@@ -13,3 +13,13 @@ active-filter-reset:
       - minified: false
   dependencies:
     - core/drupal
+taxonomy-index-tid-widget:
+  css:
+    theme:
+      css/taxonomy-index-tid-widget.css: {}
+  js:
+    js/taxonomy-index-tid-widget.js:
+      - type: module
+      - minified: false
+  dependencies:
+    - core/drupal

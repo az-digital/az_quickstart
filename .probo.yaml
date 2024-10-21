@@ -1,4 +1,4 @@
-image: proboci/ubuntu:22.04-php8.2
+image: proboci/ubuntu:22.04-php8.3
 assets:
   - test-credentials.sh
   - migration.settings.php
@@ -15,7 +15,7 @@ steps:
       - cd az-quickstart-scaffolding
       - composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
       - composer config use-github-api false
-      - composer require --no-update drupal/core-recommended:* zaporylie/composer-drupal-optimizations:* az-digital/az_quickstart:dev-${BRANCH_NAME}
+      - composer require --no-update az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
       - composer install -o
   - name: Run PHP_CodeSniffer coding standards checks
@@ -32,7 +32,7 @@ steps:
       - sudo npm cache clean -f --silent --no-progress
       - sudo npm install -g --no-progress yarn
       - sudo npm install -g --no-progress n
-      - sudo n 18.12.1
+      - sudo n 20.13.0
       - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
       - yarn install
       - yarn run eslint --color .
@@ -69,7 +69,7 @@ steps:
       - chown www-data:www-data -R /var/www/html/sites/default/files
       - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush -y -n pm:install environment_indicator
       - chmod 777 /var/www/html/sites/default/settings.php
-      - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';\n\$config['environment_indicator.indicator']['fg_color'] = '#ffffff';" >> /var/www/html/sites/default/settings.php
+      - echo -e "\$config['environment_indicator.indicator']['name'] = '$BRANCH_NAME (ProboCI)';\n\$config['environment_indicator.indicator']['bg_color'] = '#440027';" >> /var/www/html/sites/default/settings.php
       - chmod 444 /var/www/html/sites/default/settings.php
   - name: Check for PHP errors and notices
     plugin: Script
@@ -113,13 +113,21 @@ steps:
       - source $ASSET_DIR/test-credentials.sh
       - export SIMPLETEST_BASE_URL="http://localhost"
       - export SIMPLETEST_DB="mysql://${TEST_DATABASE_USER}:${TEST_DATABASE_PASS}@localhost/${TEST_DATABASE_NAME}"
-      - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
+      - export MINK_DRIVER_ARGS_WEBDRIVER='["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"]}}, "http://localhost:9515"]'
       - daemonize /usr/local/bin/chromedriver --log-path=/tmp/chromedriver.log --verbose --whitelisted-ips="127.0.0.1"
       - cd /var/www/html/profiles/custom/az_quickstart
       - export RUN_TESTS_CONCURRENCY=10
       - mysqladmin create ${TEST_DATABASE_NAME}
       - sudo -u www-data -E find $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | sudo -u www-data -E $SRC_DIR/az-quickstart-scaffolding/vendor/bin/fastest -p 10 -vvv "$SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
-  - name: Log in to terminus
+  - name: Install Terminus
+    plugin: Script
+    script:
+      - mkdir -p ~/terminus && cd ~/terminus
+      - curl -L https://github.com/pantheon-systems/terminus/releases/download/3.4.0/terminus.phar --output terminus
+      - chmod +x terminus
+      - ./terminus self:update
+      - ln -sf ~/terminus/terminus /usr/local/bin/terminus
+  - name: Log in to Terminus
     command: 'source ${ASSET_DIR}/terminus.sh; terminus auth:login --machine-token=${TERMINUS_TOKEN}'
   - name: Migration Tests
     plugin: Script

@@ -3,17 +3,15 @@
 namespace Drupal\az_core\Plugin\migrate\process;
 
 use Drupal\Core\Database\Database;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\MigrateSkipProcessException;
+use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Process plugin to handle content that was manually migrated.
  *
- * @MigrateProcessPlugin(
- *   id = "az_manual_migration_lookup"
- * )
  * Only works when the source database is a Drupal 7 database.
  *
  * This plugin looks up content from the source database and returns the field
@@ -83,6 +81,7 @@ use Drupal\migrate\Row;
  *      default_value: 0
  * @endcode
  */
+#[MigrateProcess('az_manual_migration_lookup')]
 class ManualMigrationLookup extends ProcessPluginBase {
 
   /**
@@ -142,7 +141,9 @@ class ManualMigrationLookup extends ProcessPluginBase {
 
     if (empty($value)) {
       $message = sprintf('Processing of destination property %s was skipped: No value found for source entity type %s with id %s.', $destination_property, $source_entity_type, $id);
-      throw new MigrateSkipProcessException($message);
+      $migrate_executable->saveMessage($message, MigrationInterface::MESSAGE_INFORMATIONAL);
+      $this->stopPipeline();
+      return NULL;
     }
 
     return $value;
