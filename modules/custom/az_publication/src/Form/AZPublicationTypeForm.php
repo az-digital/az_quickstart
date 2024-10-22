@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication\Form;
 
-use Drupal\az_publication\Entity\AZPublicationType;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\az_publication\Entity\AZPublicationType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
