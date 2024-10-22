@@ -132,7 +132,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         ],
       ],
       'type' => [
-        'data' => $this->t('Mapped Type'),
+        'data' => $this->t('Mapped CSL Type'),
         'field' => 'type',
         'specifier' => 'type',
         '#attributes' => [
