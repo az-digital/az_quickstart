@@ -99,7 +99,6 @@ permissions:
   - 'enable publication type entities'
   - 'renew token'
   - 'revert all publication type revisions'
-  - 'update content translations'
   - 'update any media'
   - 'update content translations'
   - 'use advanced search'
