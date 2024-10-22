@@ -80,7 +80,7 @@ function az_paragraphs_ckeditor5_plugin_info_alter(array &$plugin_definitions) {
   if (isset($plugin_definitions['anchor_link_ckeditor5_anchor']) && $plugin_definitions['anchor_link_ckeditor5_anchor'] instanceof CKEditor5PluginDefinition) {
     $anchor_plugin_definition = $plugin_definitions['anchor_link_ckeditor5_anchor']->toArray();
     $anchor_plugin_definition['drupal']['library'] = 'az_paragraphs/ckeditor_anchor_icon';
-    $anchor_plugin_definition['drupal']['admin_library'] = 'az_paragraphs.ckeditor_anchor_icon_admin';
+    $anchor_plugin_definition['drupal']['admin_library'] = 'az_paragraphs/ckeditor_anchor_icon_admin';
     $plugin_definitions['anchor_link_ckeditor5_anchor'] = new CKEditor5PluginDefinition($anchor_plugin_definition);
   }
 }
