@@ -165,8 +165,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         'field_az_author_literal' => 'literal',
       ];
       $default_config = \Drupal::config('az_publication.settings');
-      $default_citation_style = $default_config->get('default_citation_style');
-
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
@@ -186,9 +184,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       // Load default citation settings.
       $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
       $repository = \Drupal::service('entity.repository');
-      $default_config = \Drupal::config('az_publication.settings');
       $style_context = $default_config->get('default_citation_style');
-
       // Attempt to find citation argument context.
       if (function_exists('views_get_current_view')) {
         $view = views_get_current_view();
