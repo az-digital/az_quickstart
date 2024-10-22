@@ -69,17 +69,17 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
             // If we have a linked az person, generate links.
             $additional_links = [
               'az_person' => [
-                'title' => $this->t('View person'),
+                'title' => $this->t('View my web page'),
                 'url' => Url::fromRoute('entity.node.canonical', ['node' => $person->id()]),
                 'attributes' => [
-                  'title' => $this->t('View person node'),
+                  'title' => $this->t('View my web page'),
                 ],
               ],
               'az_person_edit' => [
-                'title' => $this->t('Edit person'),
+                'title' => $this->t('Edit my web page'),
                 'url' => Url::fromRoute('entity.node.edit_form', ['node' => $person->id()]),
                 'attributes' => [
-                  'title' => $this->t('Edit person node'),
+                  'title' => $this->t('Edit my web page'),
                 ],
               ],
             ];
