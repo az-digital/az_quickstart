@@ -35,6 +35,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *     "id",
  *     "label",
  *     "type",
+ *     "uuid",
  *     "status"
  *   },
  *   config_prefix = "type",
@@ -42,6 +43,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBase;
  *   entity_keys = {
  *     "id" = "id",
  *     "label" = "label",
+ *     "type" = "type",
  *     "uuid" = "uuid",
  *     "status" = "status",
  *   },
