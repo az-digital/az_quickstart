@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\az_publication\Form;
 
-use Drupal\az_publication\Entity\AZPublicationType;
 use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\az_publication\Entity\AZPublicationTypeInterface;
 
 /**
  * Form controller for Publication Type add forms.
@@ -55,7 +55,7 @@ class AZPublicationTypeForm extends EntityForm {
       '#type' => 'machine_name',
       '#default_value' => $az_publication_type->id(),
       '#machine_name' => [
-        'exists' => '\Drupal\az_publication\Entity\AZPublicationType::load',
+        'exists' => '\Drupal\az_publication\Entity\AZPublicationTypeInterface::load',
       ],
       '#disabled' => !$az_publication_type->isNew(),
     ];
@@ -91,10 +91,10 @@ class AZPublicationTypeForm extends EntityForm {
    * {@inheritdoc}
    */
   public function save(array $form, FormStateInterface $form_state) {
-    /** @var \Drupal\az_publication\Entity\AZPublicationType $az_publication_type */
+    /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $az_publication_type */
     $az_publication_type = $this->entity;
     // Ensure the entity is of the correct type.
-    if (!$az_publication_type instanceof AZPublicationType) {
+    if (!$az_publication_type instanceof AZPublicationTypeInterface) {
       // Handle the case where $az_publication_type is not the expected type.
       throw new \UnexpectedValueException("Unexpected entity type.");
     }
