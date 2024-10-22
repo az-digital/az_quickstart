@@ -165,7 +165,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         'field_az_author_literal' => 'literal',
       ];
       $default_config = \Drupal::config('az_publication.settings');
-      $style_context = $default_config->get('default_citation_style');
+      $default_citation_style = $default_config->get('default_citation_style');
 
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
