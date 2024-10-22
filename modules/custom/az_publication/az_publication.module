@@ -180,7 +180,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $blob->type = $az_publication_mapped_type->get('type');
         }
         else {
-          $blob->type = $default_citation_style;
+          $blob->type = 'article';
         }
       }
       // Load default citation settings.
