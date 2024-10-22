@@ -213,7 +213,7 @@
     "az_event_date" : "today + 1 days 18:00",
     "az_event_date_to" : "today + 1 days 20:00",
     "az_event_date_duration" : "custom",
-    "az_summary" : "Screening: The Adventures of Picasso.",
+    "az_summary" : "Screening: The Adventures of Picasso. https://example.com/The_Adventures_of_Picasso",
     "az_body" : "Directed by Tage Danielsson, 1978 (original title: Picassos äventyr).\n\nIn a fantastically re-imagined biography of Pablo Picasso, the famous painter encounters many of the artistic figures and political events of the twentieth century.",
     "az_location": [
       {
