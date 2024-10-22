@@ -61,14 +61,14 @@ az_paragraphs.az_html:
   header: true
   dependencies:
     - core/jquery
-az_paragraphs.ckeditor_anchor_icon:
+ckeditor_anchor_icon:
   version: VERSION
   css:
     theme:
       css/az_paragraphs_ckeditor_anchor_icon.css: {}
   dependencies:
     - anchor_link/cke5_anchor_link
-az_paragraphs.ckeditor_anchor_icon_admin:
+ckeditor_anchor_icon_admin:
   version: VERSION
   css:
     theme:
