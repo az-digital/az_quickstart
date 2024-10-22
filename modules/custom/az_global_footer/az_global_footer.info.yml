@@ -1,6 +1,6 @@
 name: 'Quickstart Global Footer'
 type: module
-description: 'Provides global footer content which links to UArizona social media accounts and resources.'
+description: 'Provides global footer content which links to University of Arizona social media accounts and resources.'
 core_version_requirement: ^9 || ^10
 package: 'The University of Arizona'
 dependencies:
