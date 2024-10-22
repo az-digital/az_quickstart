@@ -708,6 +708,7 @@ function az_publication_form_node_az_publication_edit_form_alter(&$form, FormSta
 
   _az_publication_form_revisions($form, $form_state, $form_id);
 }
+
 /**
  * Implements hook_views_data_alter().
  *
