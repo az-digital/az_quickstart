@@ -69,6 +69,13 @@ function az_paragraphs_library_info_alter(&$libraries, $extension) {
         'minified' => TRUE,
       ],
     ];
-    $libraries['cke5_anchor_link']['dependencies'][] = 'az_paragraphs/ckeditor_anchor_icon';
   }
+}
+
+/**
+ * Implements hook_ckeditor5_plugin_info_alter().
+ */
+function az_paragraphs_ckeditor5_plugin_info_alter(&$plugin_definitions) {
+  $plugin_definitions['anchor_link_ckeditor5_anchor']['drupal']['library'] = 'az_paragraphs/ckeditor_anchor_icon';
+  $plugin_definitions['anchor_link_ckeditor5_anchor']['drupal']['admin_library'] = 'az_paragraphs.ckeditor_anchor_icon_admin';
 }
