@@ -94,6 +94,6 @@ function az_paragraphs_update_1021001() {
 /**
  * Enable anchor_link module for CKEditor5 by default.
  */
-function az_paragraphs_update_1021002() {
+function az_paragraphs_update_1021201() {
   \Drupal::service('module_installer')->install(['anchor_link']);
 }
