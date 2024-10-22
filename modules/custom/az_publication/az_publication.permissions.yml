@@ -27,7 +27,7 @@ revert all author revisions:
 
 delete all author revisions:
   title: 'Delete all revisions'
-  description: 'Role requires permission to <em>view Publication Type revisions</em> and <em>delete rights</em> for author entities in question or <em>administer author entities</em>.'
+  description: 'Role requires permission to <em>view Author revisions</em> and <em>delete rights</em> for author entities in question or <em>administer author entities</em>.'
 
 add publication type entities:
   title: 'Create new Publication Type entities'

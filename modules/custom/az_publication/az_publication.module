@@ -459,7 +459,7 @@ function az_publication_preprocess_views_view(&$variables) {
     if ($variables['id'] === 'az_publications') {
       // Reduce the width of the text input form elements from the default.
       $resize_element = [
-        'name',
+        'author-name',
         'title',
       ];
       foreach ($resize_element as $element) {
@@ -468,15 +468,13 @@ function az_publication_preprocess_views_view(&$variables) {
         }
       }
       // Year field doesn't need a standard width text field.
-      if (!empty($variables['exposed']['field_az_publication_date_value'])) {
-        $variables['exposed']['field_az_publication_date_value']['#size'] = 6;
+      if (!empty($variables['exposed']['date'])) {
+        $variables['exposed']['date']['#size'] = 6;
       }
-      if (!empty($variables['exposed']['field_az_publication_type_value'])) {
-        // Add class so publication type select is styled like text inputs.
-        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-text';
+      if (!empty($variables['exposed']['type'])) {
         // Make sure type filter is styled as a form control.
-        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-select';
-        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-control';
+        $variables['exposed']['type']['#attributes']['class'][] = 'form-select';
+        $variables['exposed']['type']['#attributes']['class'][] = 'form-control';
       }
     }
   }
