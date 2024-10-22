@@ -63,7 +63,7 @@ class AZPublicationTypeDeleteForm extends EntityConfirmFormBase {
    */
   public function access(AccountInterface $account) {
     // Check for the custom delete permission.
-    return $account->hasPermission('delete az publication type entities') ? AccessResult::allowed() : AccessResult::forbidden();
+    return $account->hasPermission('delete publication type entities') ? AccessResult::allowed() : AccessResult::forbidden();
   }
 
 }

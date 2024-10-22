@@ -33,7 +33,7 @@ entity.az_author.collection:
 
 az_publication.az_publication_settings_tab:
   route_name: az_publication.settings
-  title: 'Publication'
+  title: 'AZ Publication'
   base_route: az_core.az_settings
   weight: 2
 

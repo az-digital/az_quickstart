@@ -23,3 +23,9 @@ effects:
     data:
       crop_type: az_full_width_bg_medium
       automatic_crop_provider: null
+  7f25b717-08c2-4be8-b0e8-6c7b2b4a333b:
+    uuid: 7f25b717-08c2-4be8-b0e8-6c7b2b4a333b
+    id: image_convert
+    weight: 3
+    data:
+      extension: webp

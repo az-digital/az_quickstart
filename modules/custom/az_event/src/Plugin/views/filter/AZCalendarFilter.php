@@ -3,6 +3,7 @@
 namespace Drupal\az_event\Plugin\views\filter;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\Date;
 use Drupal\views\Views;
 
@@ -10,9 +11,8 @@ use Drupal\views\Views;
  * Filter to handle dates stored as a timestamp.
  *
  * @ingroup views_filter_handlers
- *
- * @ViewsFilter("az_calendar_filter")
  */
+#[ViewsFilter("az_calendar_filter")]
 class AZCalendarFilter extends Date {
 
   /**

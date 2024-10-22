@@ -35,13 +35,13 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   public function getDefaultOperations(EntityInterface $entity) {
     $operations = parent::getDefaultOperations($entity);
     $current_user = \Drupal::currentUser();
-    if (!$current_user->hasPermission('delete az publication type entities') && isset($operations['delete'])) {
+    if (!$current_user->hasPermission('delete publication type entities') && isset($operations['delete'])) {
       unset($operations['delete']);
     }
-    if (!$current_user->hasPermission('disable az publication type entities') && isset($operations['disable'])) {
+    if (!$current_user->hasPermission('disable publication type entities') && isset($operations['disable'])) {
       unset($operations['disable']);
     }
-    if (!$current_user->hasPermission('enable az publication type entities') && isset($operations['enable'])) {
+    if (!$current_user->hasPermission('enable publication type entities') && isset($operations['enable'])) {
       unset($operations['enable']);
     }
     // Ensure ajax.js focuses on appropriate element by setting
@@ -62,6 +62,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
       'disabled' => [],
     ];
     foreach (parent::load() as $entity) {
+      /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
       if ($entity->get('status')) {
         $entities['enabled'][] = $entity;
       }
@@ -76,6 +77,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
+    /** @var \Drupal\az_publication\Entity\AZPublicationTypeInterface $entity */
     $row = parent::buildRow($entity);
     return [
       'data' => [
@@ -97,7 +99,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         'operations' => $row['operations'],
       ],
       '#attributes' => [
-        'class' => [$entity->status() ? 'az-publication-ui-list-enabled' : 'az-publication-ui-list-disabled'],
+        'class' => [$entity->get('status') ? 'az-publication-ui-list-enabled' : 'az-publication-ui-list-disabled'],
       ],
     ];
   }
@@ -130,7 +132,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
         ],
       ],
       'type' => [
-        'data' => $this->t('Mapped Type'),
+        'data' => $this->t('Mapped CSL Type'),
         'field' => 'type',
         'specifier' => 'type',
         '#attributes' => [

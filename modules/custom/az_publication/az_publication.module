@@ -5,7 +5,6 @@
  * Contains az_publication.module.
  */
 
-use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Datetime\Element\Datetime;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
@@ -13,6 +12,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
@@ -42,15 +42,10 @@ function az_publication_form_view_add_form_alter(&$form, FormStateInterface $for
  */
 function az_publication_sort_options_by_render(array &$options, $key) {
   if (isset($options[$key]) && is_array($options[$key])) {
-    uasort($options[$key], ' az_publication_compare_render');
+    uasort($options[$key], function ($a, $b) {
+      return $a->render() <=> $b->render();
+    });
   }
-}
-
-/**
- * Comparison function for uasort.
- */
-function az_publication_compare_render($a, $b) {
-  return $a->render() <=> $b->render();
 }
 
 /**
@@ -156,6 +151,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         'field_az_publication_publisher' => 'publisher',
         'field_az_publication_doi' => 'DOI',
         'field_az_publication_pmid' => 'PMID',
+        'field_az_publication_pmcid' => 'PMCID',
+        'field_az_publication_isbn' => 'ISBN',
+        'field_az_publication_issn' => 'ISSN',
       ];
       // Author fields to CSL schema mappings.
       $amap = [
@@ -167,7 +165,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         'field_az_author_literal' => 'literal',
       ];
       $default_config = \Drupal::config('az_publication.settings');
-      $style_context = $default_config->get('default_citation_style');
+      $default_citation_style = $default_config->get('default_citation_style');
 
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
@@ -182,7 +180,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $blob->type = $az_publication_mapped_type->get('type');
         }
         else {
-          $blob->type = $style_context;
+          $blob->type = $default_citation_style;
         }
       }
       // Load default citation settings.
@@ -360,7 +358,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $dom = new DOMDocument();
             // Suppress loadHTML warnings.
             libxml_use_internal_errors(TRUE);
-            $dom->loadHTML($renderedText);
+            $dom->loadHTML('<?xml encoding="UTF-8">' . $renderedText);
             libxml_clear_errors();
             $divs = $dom->getElementsByTagName('div');
             foreach ($divs as $div) {

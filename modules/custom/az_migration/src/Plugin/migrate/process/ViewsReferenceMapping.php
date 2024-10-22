@@ -3,6 +3,7 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -47,11 +48,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *           - az_person_categories
  *           - neuroscience_person_categories
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "az_views_reference_mapping"
- * )
  */
+#[MigrateProcess('az_views_reference_mapping')]
 class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**

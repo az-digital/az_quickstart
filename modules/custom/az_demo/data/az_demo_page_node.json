@@ -65,7 +65,7 @@
       "title"  : "Annual Events",
       "path" : "/pages/annual-events",
       "exclude_title" : false,
-      "az_page_category"  : "Events",
+      "az_page_category"  : "Events|Event Listings",
       "az_main_content"  : "",
       "az_media_image"    : "",
       "az_summary" : ""
@@ -95,8 +95,8 @@
       "title"  : "Photo Galleries",
       "path" : "/pages/photo-galleries",
       "exclude_title" : false,
-      "az_page_category"  : "Photo Galleries",
-      "az_main_content"  : "7|10",
+      "az_page_category"  : "Photo Galleries|Image Galleries",
+      "az_main_content"  : "7|200|10|201",
       "az_media_image"    : "",
       "az_summary" : ""
     },
@@ -105,7 +105,7 @@
       "title"  : "Split Screen",
       "path" : "/pages/split-screen",
       "exclude_title" : false,
-      "az_page_category"  : "Split Screen",
+      "az_page_category"  : "Split Screen|Info Cards",
       "az_main_content"  : "69|70|71|72|73",
       "az_media_image"    : "",
       "az_summary" : ""
@@ -220,6 +220,66 @@
       "az_main_content" : "18|3|2|20",
       "az_media_image" : "",
       "az_summary" : "This is a page with text and text with background elements."
+    },
+    {
+      "id":23,
+      "title" : "People Finder",
+      "path" : "/finders/people",
+      "exclude_title" : false,
+      "az_page_category" : "Views",
+      "az_main_content" : "104",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":24,
+      "title" : "News Finder",
+      "path" : "/finders/news",
+      "exclude_title" : false,
+      "az_page_category" : "Views",
+      "az_main_content" : "105",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":25,
+      "title" : "Event Finder",
+      "path" : "/finders/events",
+      "exclude_title" : false,
+      "az_page_category" : "Views|Event Listings",
+      "az_main_content" : "106",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":26,
+      "title" : "Page Finder",
+      "path" : "/finders/pages",
+      "exclude_title" : false,
+      "az_page_category" : "Views",
+      "az_main_content" : "107",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":27,
+      "title" : "Content Finder",
+      "path" : "/finders/content",
+      "exclude_title" : false,
+      "az_page_category" : "Views",
+      "az_main_content" : "108",
+      "az_media_image" : "",
+      "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":28,
+      "title" : "Publications",
+      "path" : "/publications",
+      "exclude_title" : false,
+      "az_page_category" : "Publications",
+      "az_main_content" : "190",
+      "az_media_image" : "",
+      "az_summary" : "A page with publications."
     }
   ]
 }

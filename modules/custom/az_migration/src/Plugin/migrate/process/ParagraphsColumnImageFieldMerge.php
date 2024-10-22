@@ -3,6 +3,7 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\media\Entity\Media;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -21,7 +22,7 @@ use Drupal\migrate\Row;
  * Examples:
  *
  * Consider a paragraph item migration, where you want to convert a previously
- * migrated media entity via migration_lookup, to an embedded media entity
+ * migrated media entity via migmag_lookup, to an embedded media entity
  * (i.e. <drupal-media>) and place it into a text field that is allowed to use a
  * text formatter that is configured to process <drupal-media> elements.
  *
@@ -31,7 +32,7 @@ use Drupal\migrate\Row;
  *    plugin: sub_process
  *    source: field_uaqs_photo
  *    process:
- *      - plugin: migration_lookup
+ *      - plugin: migmag_lookup
  *        source: fid
  *        migration:
  *          - az_media
@@ -41,11 +42,8 @@ use Drupal\migrate\Row;
  *     credit: field_uaqs_image_credit
  *     format: 'az_standard'
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_column_image_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_column_image_field_merge')]
 class ParagraphsColumnImageFieldMerge extends ProcessPluginBase {
 
   /**

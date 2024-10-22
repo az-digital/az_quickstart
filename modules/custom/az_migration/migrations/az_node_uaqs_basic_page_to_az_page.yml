@@ -18,16 +18,13 @@ process:
     plugin: default_value
     default_value: az_flexible_page
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title: title
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid
@@ -58,7 +55,7 @@ process:
     method: process
   field_az_main_content/target_id:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_paragraph_uaqs_basic_page_to_az_page
       source: nid
       no_stub: true
@@ -68,7 +65,7 @@ process:
         - 0
   field_az_main_content/target_revision_id:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_paragraph_uaqs_basic_page_to_az_page
       source: nid
       no_stub: true

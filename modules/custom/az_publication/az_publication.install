@@ -89,7 +89,7 @@ function az_publication_update_1020702() {
 /**
  * Adds field_az_publication_mapped_type field.
  */
-function az_publication_update_1020901() {
+function az_publication_update_1021001() {
   $module_dir = \Drupal::service('extension.list.module')->getPath('az_publication');
   $module_path = $module_dir . '/config/install';
   // Create a new FileStorage object.
@@ -117,7 +117,7 @@ function az_publication_update_1020901() {
 /**
  * Map and move data from static text field to dynamic type reference field.
  */
-function az_publication_update_1020902(&$sandbox) {
+function az_publication_update_1021002(&$sandbox) {
   // Initialize or retrieve the batch progress information.
   if (!isset($sandbox['progress'])) {
     $sandbox['progress'] = 0;
