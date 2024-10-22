@@ -69,5 +69,6 @@ function az_paragraphs_library_info_alter(&$libraries, $extension) {
         'minified' => TRUE,
       ],
     ];
+    $libraries['cke5_anchor_link']['dependencies'][] = 'az_paragraphs/ckeditor_anchor_icon';
   }
 }
