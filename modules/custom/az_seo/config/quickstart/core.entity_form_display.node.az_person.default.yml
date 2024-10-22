@@ -16,7 +16,6 @@ dependencies:
     - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
-    - field.field.node.az_person.field_az_person_imported
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
@@ -256,5 +255,4 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden:
-  field_az_person_imported: true
+hidden: { }

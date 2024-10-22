@@ -16,7 +16,6 @@ dependencies:
     - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
-    - field.field.node.az_person.field_az_person_imported
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_titles
@@ -230,5 +229,4 @@ hidden:
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
-  field_az_person_imported: true
   links: true

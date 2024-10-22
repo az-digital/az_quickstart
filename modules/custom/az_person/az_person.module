@@ -47,21 +47,32 @@ function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterfac
   if ($form_object instanceof EntityFormInterface) {
     /** @var \Drupal\node\NodeInterface $node */
     $node = $form_object->getEntity();
-    if ($node->hasField('field_az_person_imported')) {
-      $imported = $node->get('field_az_person_imported')->value;
-      if (!empty($imported)) {
-        $person_warning = t('This person has been imported from the Profiles API.');
-        \Drupal::messenger()->addWarning($person_warning);
-        $disabled_fields = [
-          'field_az_fname',
-          'field_az_lname',
-          'field_az_netid',
-          'field_az_email',
-          'field_az_phones',
-        ];
-        foreach ($disabled_fields as $field) {
-          if (!empty($form[$field])) {
-            $form[$field]['#disabled'] = TRUE;
+    if ($node->hasField('field_az_netid')) {
+      $netid = $node->get('field_az_netid')->value;
+      if (!empty($netid)) {
+        $imported = [];
+        try {
+          // See if a migration map exists for this person.
+          $imported = \Drupal::service('migrate.lookup')->lookup('az_person_profile_import', [$netid]);
+        }
+        catch (\Exception $e) {
+          // Migration did not exist, or migrate service not found.
+          // We have no data on this person being imported or not.
+        }
+        if (!empty($imported)) {
+          $person_warning = t('This person has been imported from the Profiles API.');
+          \Drupal::messenger()->addWarning($person_warning);
+          $disabled_fields = [
+            'field_az_fname',
+            'field_az_lname',
+            'field_az_netid',
+            'field_az_email',
+            'field_az_phones',
+          ];
+          foreach ($disabled_fields as $field) {
+            if (!empty($form[$field])) {
+              $form[$field]['#disabled'] = TRUE;
+            }
           }
         }
       }
