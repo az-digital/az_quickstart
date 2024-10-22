@@ -6,6 +6,7 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\ckeditor5\Plugin\CKEditor5PluginDefinition;
 
 /**
  * Implements hook_help().
