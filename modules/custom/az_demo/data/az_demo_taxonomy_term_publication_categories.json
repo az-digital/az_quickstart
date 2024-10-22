@@ -1,0 +1,79 @@
+{
+  "publication_categories": [
+    {
+      "name": "Artificial Intelligence",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Biography",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Chemistry",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Computer Science",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Ethics",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Environmental Science",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Government and Public Service",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "History",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Mathematics",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Music",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Nutrition and Food Systems",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Philosophy",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Physics",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "Statistics",
+      "description": "",
+      "parent_name": ""
+    },
+    {
+      "name": "World Literature",
+      "description": "",
+      "parent_name": ""
+    }
+  ]
+}

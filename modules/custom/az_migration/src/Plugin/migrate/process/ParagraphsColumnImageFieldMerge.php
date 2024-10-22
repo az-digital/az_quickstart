@@ -22,7 +22,7 @@ use Drupal\migrate\Row;
  * Examples:
  *
  * Consider a paragraph item migration, where you want to convert a previously
- * migrated media entity via migration_lookup, to an embedded media entity
+ * migrated media entity via migmag_lookup, to an embedded media entity
  * (i.e. <drupal-media>) and place it into a text field that is allowed to use a
  * text formatter that is configured to process <drupal-media> elements.
  *
@@ -32,7 +32,7 @@ use Drupal\migrate\Row;
  *    plugin: sub_process
  *    source: field_uaqs_photo
  *    process:
- *      - plugin: migration_lookup
+ *      - plugin: migmag_lookup
  *        source: fid
  *        migration:
  *          - az_media

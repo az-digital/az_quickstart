@@ -27,7 +27,7 @@ class AZPoliteCacheStrategy extends PrivateCacheStrategy {
    * @param int $defaultTtl
    *   A default TTL in absence of actual cache headers.
    */
-  public function __construct(CacheStorageInterface $cache = NULL, $defaultTtl = 600) {
+  public function __construct(?CacheStorageInterface $cache = NULL, $defaultTtl = 600) {
     $this->defaultTtl = $defaultTtl;
     parent::__construct($cache);
   }

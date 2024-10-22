@@ -10,8 +10,8 @@
     "entity_type": "node",
     "bundle" : "az_event",
     "field_name" : "field_az_event_date",
-    "start" : "03/14",
-    "end" : "03/14"
+    "start" : "03/14 00:00",
+    "end" : "03/14 23:59"
   },
   {
     "rid":2,
@@ -23,8 +23,8 @@
     "entity_type": "node",
     "bundle" : "az_event",
     "field_name" : "field_az_event_date",
-    "start" : "05/04",
-    "end" : "05/04"
+    "start" : "05/04 00:00",
+    "end" : "05/04 23:59"
   },
   {
     "rid":3,
