@@ -11,7 +11,7 @@ third_party_settings:
 name: Page
 type: az_flexible_page
 description: 'Use this content type to add a standard page to your site'
-help: ''
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false

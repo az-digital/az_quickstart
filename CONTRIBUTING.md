@@ -321,6 +321,111 @@ development best practices to enhance your Drupal projects.
 that is downloaded when installing a site locally via Lando, or DDev.  See 
 "Visual Studio Code Integration"
 
+## Exporting Configuration
+
+While working on features in local development in Quickstart, there are
+situations where the local build will have configuration changes that are not
+reflected in the saved configuration files of the distribution. This means
+that the changes made will not be reflected in new site builds.
+
+In order for changes to the local site to be reflected in the file tree
+of the feature branch, configuration changes must be exported from the
+development site.
+
+### Exporting Individual Configuration Items
+
+If it is known exactly which configuration entities are changed, they 
+can be exported via the following:
+
+```
+drush az-core-config-export-single name.of.configuration.item
+```
+
+For example, to export `az_cas.settings`, use:
+
+```
+drush az-core-config-export-single az_cas.settings
+```
+
+Note that the `.yml` suffix should not be used when referring to exporting
+these items.
+
+Alternatively, configuration is also available to export through the
+Drupal UI in the local site at the path `/admin/config/development/configuration/full/export`
+or `/admin/config/development/configuration/single/export`
+
+### Exporting Complex Configuration Changes
+
+Some types of changes affect multiple configuration entities. For example, adding new
+fields to a content type typically results in changes to the form display and view display
+of that content type, along with additional field instances and field storage for the fields
+added. It can sometimes be difficult to track down all changes that need to be exported in
+these cases. Quickstart contains a Drush command to automate some of this:
+
+```
+drush az-core-distribution-config
+```
+
+This command examines the active configuration of the local build and compares them to the saved configuration
+files in the distribution, and raises an alert if changes are detected. It will prompt asking
+whether the configuration in question should be exported.
+
+```
+    -- unmodified -- core.entity_view_display.block_content.basic.default
+    -- unmodified -- core.entity_view_display.user.user.compact
+    -- unmodified -- core.entity_view_display.user.user.default
+     Update [az_quickstart/config/install] easy_breadcrumb.settings? (yes/no) [yes]:
+```
+
+When a prompt is raised, selecting `yes` will update the configuration in the source module
+with the copy that is in the current active local development site.
+
+Dependency analysis takes place to determine if new dependent configuration exists that
+does not yet exist in the module files, but may need to be exported. This happens most
+commonly in the case of new fields.
+
+```
+Examining dependencies...
+ Export NEW dependent configuration field.field.node.az_event.field_az_brand_new_field? (yes/no) [yes]:
+ > 
+```
+If `yes` is selected, the command  will prompt asking which module should receive the exported
+configuration.
+
+### Configuration Not to Export
+
+Not all changes need to be exported. Some changes are made in the local development site
+that do not necessarily relate to new features being created. If a difference is detected
+in configuration unrelated to the contribution, it may not need to be exported. Select `no`
+in these cases if they should not be exported.
+
+### Configuration from Optional Modules
+
+This can be particularly complex in the cases of overridden configuration, most notably
+in entity view displays which contain `metatag` fields or settings for the `az_finder` 
+module. This is because multiple copies of this configuration exists, copies of 
+configuration with the optional module enabled, and copies without the optional module enabled.
+These config entities still require some edits to produce the variants where the optional
+module has not been enabled. Future versions of the `az-core-distribution-config` 
+command may make this process simpler.
+
+That effect is most notable in some of the following configuration items that have
+optional overrides:
+
+```
+core.entity_form_display.node.az_flexible_page.default
+core.entity_form_display.node.az_event.default
+core.entity_form_display.node.az_person.default
+core.entity_form_display.node.az_news.default
+views.view.az_person
+views.view.az_news
+views.view.az_events
+views.view.az_page_by_category
+```
+
+When exporting these configuration items, alternate versions must be produced that
+do not have optional `metatag` or `az_finder` configuration.
+
 ## Configuration Management and Database Updates
 
 A question that frequently arises for Quickstart contributors is whether a change that they are making requires a database update or if configuration file changes are sufficient.

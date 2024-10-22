@@ -4,6 +4,7 @@ namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Language\LanguageInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -11,10 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides a 'az_default_langcode' migrate process plugin.
- *
- * @MigrateProcessPlugin(
- *  id = "az_default_langcode"
- * )
  *
  * This plugin can be used in a migration to set the language code of the
  * destination entity. If the incoming language value is 'und' or empty, the
@@ -30,6 +27,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     source: source_langcode
  * @endcode
  */
+#[MigrateProcess('az_default_langcode')]
 class DefaultLangcode extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**

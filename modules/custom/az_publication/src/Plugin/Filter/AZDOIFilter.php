@@ -3,18 +3,20 @@
 namespace Drupal\az_publication\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
+use Drupal\filter\Plugin\FilterInterface;
 
 /**
  * Provides a filter to convert DOI identifiers to links.
- *
- * @Filter(
- *   id = "az_doi_filter",
- *   title = @Translation("Convert DOI (Digital Object Identifiers) to links"),
- *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
- * )
  */
+#[Filter(
+  id: "az_doi_filter",
+  title: new TranslatableMarkup("Convert DOI (Digital Object Identifiers) to links"),
+  type: FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE
+)]
 class AZDOIFilter extends FilterBase {
 
   /**

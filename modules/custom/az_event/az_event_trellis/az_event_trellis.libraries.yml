@@ -12,8 +12,8 @@ az_event_trellis_date:
     - az_event_trellis/easepick_bundle
 easepick_bundle:
   js:
-    /libraries/easepick--bundle/dist/index.umd.js: {}
+    /libraries/easepick--bundle/dist/index.umd.js: { minified: true }
 easepick_styles:
   css:
     theme:
-      /libraries/easepick--bundle/dist/index.css: {}
+      /libraries/easepick--bundle/dist/index.css: { minified: true }
