@@ -259,12 +259,12 @@ class AZCardWidget extends WidgetBase {
     ];
 
     $link_uri_unique_id = Html::getUniqueId('az_card_link_uri_input');
-    
+
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
       '#default_value' => $item->link_title ?? NULL,
-      '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".'),
+      '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs". This field is required when a Card Link URL is provided.'),
       '#states' => [
         'required' => [
           ':input[data-az-card-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
@@ -430,7 +430,7 @@ class AZCardWidget extends WidgetBase {
 
     return $element;
   }
-
+  
   /**
    * Form element validation handler for the 'link_url' field.
    *
