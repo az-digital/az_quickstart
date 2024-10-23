@@ -11,3 +11,9 @@ filters:
     status: true
     weight: 0
     settings: {  }
+  filter_html_escape:
+    id: filter_html_escape
+    provider: filter
+    status: true
+    weight: -10
+    settings: {  }
