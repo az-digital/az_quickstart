@@ -1,0 +1,18 @@
+.image-zoom {
+  display: none;
+}
+.image-zoom-container {
+  position: relative;
+overflow: hidden;
+}
+
+.image-zoom-container:after {
+  content: '';
+  display: block;
+  width: 33px;
+  height: 33px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url(../images/icon.png);
+}
