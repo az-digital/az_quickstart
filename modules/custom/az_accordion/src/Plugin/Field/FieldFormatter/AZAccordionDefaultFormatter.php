@@ -135,7 +135,8 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
         '#accordion_item_id' => $accordion_id,
         '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
-        // TODO: remove this in 2.13.x (see https://github.com/az-digital/az_quickstart/issues/3807).
+        // @todo Remove this in 2.13.x.
+        // @url see https://github.com/az-digital/az_quickstart/issues/3807
         '#aria_controls' => $accordion_id,
       ];
 
