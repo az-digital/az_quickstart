@@ -26,6 +26,8 @@ settings:
       - numberedList
       - '|'
       - alignment
+      - indent
+      - outdent
       - '|'
       - bootstrapGrid
       - insertTable
@@ -39,12 +41,12 @@ settings:
       - az_embed_content
       - az_embed_content_block
       - '|'
-      - sourceEditing
-      - showBlocks
-      - removeFormat
-      - '|'
       - code
       - codeBlock
+      - '|'
+      - showBlocks
+      - sourceEditing
+      - removeFormat
   plugins:
     ckeditor5_alignment:
       enabled_alignments:
@@ -117,22 +119,30 @@ settings:
         - '<dl>'
         - '<dt>'
         - '<dd>'
-        - '<div name id>'
+        - '<div class name id data-*>'
         - '<span class name id>'
         - '<img src alt data-entity-type data-entity-uuid>'
         - '<footer class>'
-        - '<ul type>'
-        - '<ol type>'
+        - '<blockquote class>'
+        - '<ul type class>'
+        - '<ol type class>'
+        - '<li class>'
         - '<h1 class name id>'
         - '<h2 class name id>'
         - '<h3 class name id>'
         - '<h4 class name id>'
         - '<h5 class name id>'
         - '<h6 class name id>'
-        - '<th scope>'
-        - '<tr colspan rowspan>'
-        - '<a target name id title>'
-        - '<drupal-entity data-entity-type data-embed-button>'
+        - '<table class>'
+        - '<tbody class>'
+        - '<thead class>'
+        - '<tfoot class>'
+        - '<th class scope>'
+        - '<td class>'
+        - '<tr class colspan rowspan>'
+        - '<hr class>'
+        - '<a class target name id title>'
+        - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode>'
         - '<drupal-media title>'
         - '<p class>'
     ckeditor5_style:
@@ -309,6 +319,8 @@ settings:
         - md
         - lg
         - xl
+    ckeditor_indentblock_indent:
+      enable: true
     linkit_extension:
       linkit_enabled: true
       linkit_profile: az_linkit
@@ -316,9 +328,3 @@ settings:
       allow_view_mode_override: true
 image_upload:
   status: false
-  scheme: public
-  directory: inline-images
-  max_size: ''
-  max_dimensions:
-    width: null
-    height: null

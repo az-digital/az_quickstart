@@ -3,24 +3,25 @@
 namespace Drupal\az_accordion\Plugin\Field\FieldFormatter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_accordion_default' formatter.
- *
- * @FieldFormatter(
- *   id = "az_accordion_default",
- *   label = @Translation("Default"),
- *   field_types = {
- *     "az_accordion"
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'az_accordion_default',
+  label: new TranslatableMarkup('Default'),
+  field_types: [
+    'az_accordion',
+  ],
+)]
 class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFactoryPluginInterface {
 
   /**

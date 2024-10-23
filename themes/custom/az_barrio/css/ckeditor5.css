@@ -55,3 +55,10 @@
   background-color: #6c757d;
   padding: 0.2rem;
 }
+
+/** 
+ * Hide disabled styles.
+ */
+.ck-dropdown__panel .ck.ck-style-panel .ck-style-grid .ck-disabled {
+  display: none;
+}

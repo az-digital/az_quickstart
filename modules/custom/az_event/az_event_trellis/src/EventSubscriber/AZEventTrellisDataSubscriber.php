@@ -2,10 +2,10 @@
 
 namespace Drupal\az_event_trellis\EventSubscriber;
 
-use Drupal\az_event_trellis\TrellisHelper;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Session\AccountProxy;
+use Drupal\az_event_trellis\TrellisHelper;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
 use Drupal\views\ResultRow;
@@ -120,7 +120,8 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
           }
         }
       }
-      if (empty($parameters)) {
+      // Don't perform search if empty or publish is the only field.
+      if (empty($parameters) || (count($parameters) <= 1)) {
         return;
       }
       $ids = $this->trellisHelper->searchEvents($parameters);

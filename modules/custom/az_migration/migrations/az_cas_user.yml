@@ -13,7 +13,7 @@ source:
 process:
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       source: uid
     -

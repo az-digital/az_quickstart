@@ -5,3 +5,4 @@ name: 'Person Categories'
 vid: az_person_categories
 description: 'Taxonomy for categorizing people'
 weight: 0
+new_revision: false

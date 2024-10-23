@@ -25,20 +25,21 @@ class AzNewsFeedsMigrateSubscriber implements EventSubscriberInterface {
    *   The factory for configuration objects.
    */
   public function __construct(
-    ConfigFactoryInterface $config_factory
-    ) {
+    ConfigFactoryInterface $config_factory,
+  ) {
     $this->configFactory = $config_factory;
 
   }
 
   /**
-   * Helper method to check if we are migrating UArizona News stories.
+   * Helper method to check if we are migrating from news.arizona.edu.
    *
    * @param \Drupal\migrate\Event\EventBase $event
    *   The migrate event.
    *
    * @return bool
-   *   True if we are migrating UArizona News stories, false otherwise.
+   *   True if we are migrating University of Arizona News stories, false
+   *   otherwise.
    */
   protected function isUarizonaNews(EventBase $event): bool {
     $uarizonaNewsUrl = 'news.arizona.edu';

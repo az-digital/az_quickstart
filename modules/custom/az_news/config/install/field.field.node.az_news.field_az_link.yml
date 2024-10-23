@@ -11,7 +11,7 @@ field_name: field_az_link
 entity_type: node
 bundle: az_news
 label: 'Link to external news'
-description: 'In most cases, leave this field blank. Enter an external URL if you want the news listings for this article to link directly to a news story on another website (e.g. UArizona News or an external publication).'
+description: 'In most cases, leave this field blank. Enter an external URL if you want the news listings for this article to link directly to a news story on another website (e.g. University of Arizona News or an external publication).'
 required: false
 translatable: true
 default_value: {  }

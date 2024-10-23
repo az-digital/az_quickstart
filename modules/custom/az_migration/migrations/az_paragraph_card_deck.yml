@@ -85,7 +85,7 @@ process:
             - 0
             - fid
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration:
             - az_media
 
