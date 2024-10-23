@@ -280,6 +280,7 @@ class AZCardWidget extends WidgetBase {
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
+        'sr-only' => $this->t('Hidden link title'),
         'btn-block' => $this->t('Text link'),
         'btn btn-block btn-red' => $this->t('Red button'),
         'btn btn-block btn-blue' => $this->t('Blue button'),
