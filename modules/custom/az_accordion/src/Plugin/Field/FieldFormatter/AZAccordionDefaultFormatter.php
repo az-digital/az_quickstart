@@ -117,6 +117,7 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
       $column_classes = implode(' ', $column_classes);
       $column_classes = explode(' ', $column_classes);
       $column_classes[] = 'pb-4';
+      $accordion_id = Html::getUniqueId('az_accordion');
 
       $element[$delta] = [
         '#theme' => 'az_accordion',
@@ -130,10 +131,10 @@ class AZAccordionDefaultFormatter extends FormatterBase implements ContainerFact
           '#langcode' => $item->getLangcode(),
         ],
         '#attributes' => ['class' => $accordion_classes],
-        '#accordion_item_id' => Html::getUniqueId('az_accordion'),
+        '#accordion_item_id' => $accordion_id,
         '#collapsed' => $item->collapsed ? 'collapse' : 'collapse show',
         '#aria_expanded' => !$item->collapsed ? 'true' : 'false',
-        '#aria_controls' => Html::getUniqueId('az_accordion_aria_controls'),
+        '#aria_controls' => $accordion_id,
       ];
 
     }
