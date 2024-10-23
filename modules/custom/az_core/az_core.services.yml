@@ -7,6 +7,10 @@ services:
       - '@current_route_match'
     tags:
       - { name: page_cache_response_policy }
+  az_core_generator:
+    public: false
+    class: Drupal\az_core\EventSubscriber\AZGeneratorSubscriber
+    decorates: response_generator_subscriber
   logger.channel.az_core:
     parent: logger.channel_base
     arguments:

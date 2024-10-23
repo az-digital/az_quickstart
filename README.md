@@ -1,7 +1,8 @@
 # Arizona Quickstart
 
 Demonstration/starter Drupal distribution and installation profile that packages
-various features consistent with community best practices and UArizona brand strategy.
+various features consistent with community best practices and University of
+Arizona brand strategy.
 
 ## A Complete Customized Drupal
 
@@ -33,12 +34,12 @@ how to contribute including:
 
 ## Where to Install Your Quickstart Site
 
-The University's Campus Web Services group provides ready-to-use sites based on
+The university's Campus Web Services group provides ready-to-use sites based on
 Quickstart for anyone who isn't comfortable with web development or system
 administration. Behind the scenes, a web hosting service called Pantheon hosts
 these sites, so in cases where people require more control and flexibility
 in a Quickstart site than these can provide, there are ways they can also host
-it independently on Pantheon, and many important University sites are already
+it independently on Pantheon, and many important university sites are already
 there. However, there are many other options for hosting web sites based on
 Arizona Quickstart; the only caveat is that anyone following one of these has
 to maintain their responsibility for keeping the system and web site secure
