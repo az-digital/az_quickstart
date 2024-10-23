@@ -4,4 +4,3 @@ az_paragraphs_text_media.youtube:
   dependencies:
     - core/jquery
     - core/drupalSettings
-
