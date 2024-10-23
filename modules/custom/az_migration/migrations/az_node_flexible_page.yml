@@ -35,7 +35,9 @@ process:
     process:
       delta: delta
       value: value
-      format: format
+      format:
+        plugin: default_value
+        default_value: plain_text
 
   field_az_media_image:
     plugin: sub_process
