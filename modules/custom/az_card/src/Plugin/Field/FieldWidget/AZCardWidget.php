@@ -264,6 +264,7 @@ class AZCardWidget extends WidgetBase {
       '#default_value' => $item->link_title ?? NULL,
       '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".'),
       '#states' => [
+        'required' => [
           ':input[name="link_uri"]' => ['filled' => TRUE],
         ],
       ],
