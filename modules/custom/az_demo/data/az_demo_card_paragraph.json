@@ -51,13 +51,13 @@
           },
           {
             "delta": 1,
-            "title": "No link title",
+            "title": "Hidden link title",
             "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-            "link_title": "",
+            "link_title": "Hidden Card Link Title",
             "link_url": "#",
             "media": "mans_best_friend.jpeg",
             "background": "bg-river",
-            "link_style": "btn-block"
+            "link_style": "sr-only"
           },
           {
             "delta": 2,
@@ -92,13 +92,13 @@
         },
         {
           "delta": 1,
-          "title": "No link title",
+          "title": "Hidden link title",
           "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
-          "link_title": "",
+          "link_title": "Hidden Card Link Title",
           "link_url": "#",
           "media": "mans_best_friend.jpeg",
           "background": "bg-white",
-          "link_style": "btn-block"
+          "link_style": "sr-only"
         },
         {
           "delta": 2,
