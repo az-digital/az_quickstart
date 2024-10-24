@@ -47,7 +47,7 @@ class AZPublicationTest extends BrowserTestBase {
    */
   public function testIsUninstallableAndReinstallable() {
 
-    // Uninstalls the az_publication modules, so hook_modules_uninstalled()
+    // Uninstalls the az_publication modules, so `az_publication_uninstall()`
     // is executed.
     $this->container
       ->get('module_installer')
