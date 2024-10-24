@@ -430,7 +430,7 @@ class AZCardWidget extends WidgetBase {
 
     return $element;
   }
-  
+
   /**
    * Form element validation handler for the 'link_url' field.
    *
