@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 id: az_content_admin
 label: 'Content administrator'
-weight: 3
+weight: 4
 is_admin: false
 permissions:
   - 'access news feeds'
