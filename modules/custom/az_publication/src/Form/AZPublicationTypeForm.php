@@ -55,7 +55,7 @@ class AZPublicationTypeForm extends EntityForm {
       '#type' => 'machine_name',
       '#default_value' => $az_publication_type->id(),
       '#machine_name' => [
-        'exists' => '\Drupal\az_publication\Entity\AZPublicationTypeInterface::load',
+        'exists' => [\Drupal::entityTypeManager()->getStorage('az_publication_type'), 'load'],
       ],
       '#disabled' => !$az_publication_type->isNew(),
     ];
