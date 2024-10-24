@@ -88,7 +88,7 @@ process:
   field_az_summary/value: az_summary
   field_az_summary/format:
     plugin: default_value
-    default_value: az_plain_text
+    default_value: plain_text
   field_az_marketing_page_style: az_marketing_page_style
 
   'field_az_media_image/target_id':

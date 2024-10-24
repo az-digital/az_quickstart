@@ -158,7 +158,7 @@ process:
           callable: html_entity_decode
       format:
         plugin: default_value
-        default_value: az_plain_text
+        default_value: plain_text
 
   field_az_attachments:
     plugin: sub_process
