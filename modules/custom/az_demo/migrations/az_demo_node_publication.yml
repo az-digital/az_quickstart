@@ -116,7 +116,7 @@ process:
   field_az_publication_pmcid: pmcid
   field_az_publication_pmid: pmid
   field_az_publication_publisher: publisher
-  field_az_publication_type: type
+  field_az_publication_mapped_type/0/target_id: type
   field_az_publication_version: version
   field_az_publication_volume: volume
 destination:

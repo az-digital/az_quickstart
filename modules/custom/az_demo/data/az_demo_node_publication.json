@@ -24,7 +24,7 @@
       "pmcid": "",
       "pmid": "",
       "publisher": "Historical Books Publishing",
-      "type": "book",
+      "type": "az_book",
       "version": "1st Edition",
       "volume": ""
     },
@@ -52,7 +52,7 @@
       "pmcid": "",
       "pmid": "",
       "publisher": "Mathematical Works Publishing",
-      "type": "article",
+      "type": "az_article",
       "version": "2nd Edition",
       "volume": ""
     },
@@ -80,7 +80,7 @@
       "pmcid": "PMC1234567",
       "pmid": "987654321",
       "publisher": "Science Journal Publishing",
-      "type": "article-journal",
+      "type": "az_article_journal",
       "version": "Final",
       "volume": "12"
     },
@@ -108,7 +108,7 @@
       "pmcid": "",
       "pmid": "",
       "publisher": "Tech books Publishing",
-      "type": "book",
+      "type": "az_book",
       "version": "3rd Edition",
       "volume": ""
     },
@@ -136,7 +136,7 @@
       "pmcid": "",
       "pmid": "",
       "publisher": "AI Conference Publishing",
-      "type": "Conference Paper",
+      "type": "az_paper_conference",
       "version": "1st Edition",
       "volume": ""
     },
@@ -164,7 +164,7 @@
       "pmcid": "",
       "pmid": "",
       "publisher": "Tech books Publishing",
-      "type": "book",
+      "type": "az_book",
       "version": "4th Edition",
       "volume": ""
     },
@@ -192,7 +192,7 @@
       "pmcid": "",
       "pmid": "",
       "publisher": "AI Books Publishing",
-      "type": "book",
+      "type": "az_book",
       "version": "1st Edition",
       "volume": ""
     },
@@ -220,7 +220,7 @@
       "pmcid": "PMC7654321",
       "pmid": "123456789",
       "publisher": "Statistical Journal Publishing",
-      "type": "article-journal",
+      "type": "az_article_journal",
       "version": "Final",
       "volume": "15"
     },
@@ -248,7 +248,7 @@
       "pmcid": "",
       "pmid": "",
       "publisher": "Ethics Books Publishing",
-      "type": "book",
+      "type": "az_book",
       "version": "2nd Edition",
       "volume": ""
     },
@@ -276,7 +276,7 @@
       "pmcid": "PMC2345678",
       "pmid": "234567890",
       "publisher": "Environmental Journal Publishing",
-      "type": "article-journal",
+      "type": "az_article_journal",
       "version": "Final",
       "volume": "20"
     }

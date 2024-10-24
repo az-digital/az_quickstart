@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_publication
+id: az_article_journal
+type: 'article-journal'
+label: 'Journal Article'
