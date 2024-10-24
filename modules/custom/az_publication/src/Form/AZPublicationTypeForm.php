@@ -62,7 +62,7 @@ class AZPublicationTypeForm extends EntityForm {
 
     $form['type'] = [
       '#required' => TRUE,
-      '#type' => 'radios',
+      '#type' => 'select',
       '#title' => $this->t('CSL Type Mapping'),
       '#options' => $az_publication_type->getMappableTypeOptions(),
       '#default_value' => $az_publication_type->get('type'),
