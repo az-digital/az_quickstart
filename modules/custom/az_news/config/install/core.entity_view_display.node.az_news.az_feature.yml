@@ -22,11 +22,11 @@ dependencies:
     - image.style.az_medium
     - node.type.az_news
   module:
+    - az_core
     - date_ap_style
     - field_group
     - media
     - smart_title
-    - text
     - user
   enforced:
     module:

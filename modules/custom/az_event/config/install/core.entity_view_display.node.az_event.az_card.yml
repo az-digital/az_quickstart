@@ -18,10 +18,10 @@ dependencies:
     - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
+    - az_core
     - date_ap_style
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   field_group:
