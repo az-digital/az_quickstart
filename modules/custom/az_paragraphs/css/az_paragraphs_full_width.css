@@ -12,6 +12,8 @@
 }
 .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width));
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
 }
 /* See https://github.com/az-digital/az_quickstart/pull/1365 */
 .sidebar_first {
@@ -44,9 +46,6 @@
     width: 100%;
     padding-right: 15px;
     padding-left: 15px;
-}
-.region:not(.region-content) .background-wrapper {
-    width:initial;
 }
 .az-aspect-ratio.full-width-background .container {
     bottom: 0;
