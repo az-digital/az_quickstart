@@ -258,8 +258,6 @@ class AZCardWidget extends WidgetBase {
       '#format' => $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT,
     ];
 
-    $link_uri_unique_id = Html::getUniqueId('az_card_link_uri_input');
-
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
@@ -267,13 +265,6 @@ class AZCardWidget extends WidgetBase {
       '#default_value' => $item->link_title ?? NULL,
       '#description' => $this->t('<p>Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".</p><p>This field is required when a Card Link URL is provided. Card Link Title may be visually hidden with Card Link Style selection.</p>'),
     ];
-    if ($status) {
-      $element['link_title']['#states'] = [
-        'required' => [
-          ':input[data-az-card-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
-        ],
-      ];
-    }
 
     $element['link_uri'] = [
       '#type' => 'linkit',
@@ -285,10 +276,18 @@ class AZCardWidget extends WidgetBase {
       '#element_validate' => [[$this, 'validateCardLink']],
       '#default_value' => $item->link_uri ?? NULL,
       '#maxlength' => 2048,
-      '#attributes' => [
-        'data-az-card-link-uri-input-id' => $link_uri_unique_id,
-      ],
     ];
+
+    // Add client side validation for link title if not collapsed.
+    if ($status) {
+      $link_uri_unique_id = Html::getUniqueId('az_card_link_uri_input');
+      $element['link_uri']['#attributes']['data-az-card-link-uri-input-id'] = $link_uri_unique_id;
+      $element['link_title']['#states'] = [
+        'required' => [
+          ':input[data-az-card-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
+        ],
+      ];
+    }
 
     $element['link_style'] = [
       '#type' => 'select',
