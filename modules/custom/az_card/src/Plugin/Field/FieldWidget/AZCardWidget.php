@@ -274,9 +274,6 @@ class AZCardWidget extends WidgetBase {
         ],
       ];
     }
-    else {
-      unset($element['link_title']['#states']);
-    }
 
     $element['link_uri'] = [
       '#type' => 'linkit',
