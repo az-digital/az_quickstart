@@ -11,7 +11,7 @@
     }
 }
 .full-width-background {
-    max-width: calc(100vw - var(--scrollbar-width));
+    max-width: calc(100vw);
 }
 /* See https://github.com/az-digital/az_quickstart/pull/1365 */
 .sidebar_first {
@@ -21,10 +21,13 @@
 .layout-sidebar-second .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width));
 }
-.region .full-width-background {
+.region-content .full-width-background {
     margin-left: var(--full-width-left-distance);
     margin-right: var(--full-width-right-distance);
     overflow: hidden;
+}
+.region:not(.region-content) .background-wrapper {
+    width:initial;
 }
 .region .az-full-width-row {
     display: -ms-flexbox;
@@ -34,7 +37,7 @@
     margin-right: -15px;
     margin-left: -15px;
 }
-.region .az-full-width-column-content {
+.region-content .az-full-width-column-content {
     -ms-flex-preferred-size: 0;
     flex-basis: 0;
     -ms-flex-positive: 1;
