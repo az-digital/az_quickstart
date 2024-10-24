@@ -10,7 +10,6 @@
  * - collapsed: The collapsed field of an accordion.
  * - accordion_item_id: Unique ID for an accordion item.
  * - aria_expanded: Aria field equal to the collapsed value.
- * - aria_controls: Unique ID for aria controls.
  *
  * @ingroup themeable
  */
@@ -22,7 +21,7 @@
   <div class="card">
     <div class="card-header">
       <h3 class="my-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ aria_controls }}">
+        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
           {% if title %}
             {{ title }}
           {% endif %}
