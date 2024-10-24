@@ -263,14 +263,20 @@ class AZCardWidget extends WidgetBase {
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
+      '#element_validate' => [[$this, 'validateCardLinkTitle']],
       '#default_value' => $item->link_title ?? NULL,
       '#description' => $this->t('<p>Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".</p><p>This field is required when a Card Link URL is provided. Card Link Title may be visually hidden with Card Link Style selection.</p>'),
-      '#states' => [
+    ];
+    if ($status) {
+      $element['link_title']['#states'] = [
         'required' => [
           ':input[data-az-card-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
         ],
-      ],
-    ];
+      ];
+    }
+    else {
+      unset($element['link_title']['#states']);
+    }
 
     $element['link_uri'] = [
       '#type' => 'linkit',
@@ -429,6 +435,20 @@ class AZCardWidget extends WidgetBase {
     $element = NestedArray::getValue($form, $array_parents);
 
     return $element;
+  }
+
+  /**
+   * Form element validation handler for the 'link_title' field.
+   *
+   * Makes field required if link_uri is provided.
+   */
+  public function validateCardLinkTitle(&$element, FormStateInterface $form_state, &$complete_form) {
+    $parents = $element['#array_parents'];
+    array_pop($parents);
+    $parent_element = NestedArray::getValue($complete_form, $parents);
+    if (empty($element['#value']) && !empty($parent_element['link_uri']['#value'])) {
+      $form_state->setError($element, t('Card link title is required when a URL is provided.'));
+    }
   }
 
   /**
