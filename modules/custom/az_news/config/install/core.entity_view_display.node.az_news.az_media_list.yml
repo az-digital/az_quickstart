@@ -21,10 +21,10 @@ dependencies:
     - field.field.node.az_news.field_az_summary
     - node.type.az_news
   module:
+    - az_core
     - date_ap_style
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   field_group:
@@ -272,7 +272,7 @@ content:
     weight: 5
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }
