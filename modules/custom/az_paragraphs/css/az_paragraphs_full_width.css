@@ -45,6 +45,9 @@
     padding-right: 15px;
     padding-left: 15px;
 }
+.region:not(.region-content) .background-wrapper {
+    width:initial;
+}
 .az-aspect-ratio.full-width-background .container {
     bottom: 0;
     top: 0;
