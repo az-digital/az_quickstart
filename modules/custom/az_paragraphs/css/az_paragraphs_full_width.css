@@ -11,7 +11,7 @@
     }
 }
 .full-width-background {
-    max-width: calc(100vw);
+    max-width: calc(100vw - var(--scrollbar-width));
 }
 /* See https://github.com/az-digital/az_quickstart/pull/1365 */
 .sidebar_first {
@@ -25,9 +25,6 @@
     margin-left: var(--full-width-left-distance);
     margin-right: var(--full-width-right-distance);
     overflow: hidden;
-}
-.region:not(.region-content) .background-wrapper {
-    width:initial;
 }
 .region .az-full-width-row {
     display: -ms-flexbox;
