@@ -51,6 +51,13 @@ function az_event_trellis_views_data(): array {
       'id' => 'az_event_trellis_views_attribute_filter',
     ],
   ];
+  $data['az_event_trellis_data']['Approval'] = [
+    'title' => t('Approval status'),
+    'help' => t('Trellis event search API approval status'),
+    'filter' => [
+      'id' => 'az_event_trellis_views_approval_filter',
+    ],
+  ];
   $data['az_event_trellis_data']['Date'] = [
     'title' => t('Trellis Date'),
     'help' => t('Trellis event search API dates'),

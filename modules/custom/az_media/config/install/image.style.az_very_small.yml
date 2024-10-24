@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies: {  }
+name: az_very_small
+label: 'Very Small (220px)'
+effects:
+  c76c732e-e6da-4b89-9175-77698c196389:
+    uuid: c76c732e-e6da-4b89-9175-77698c196389
+    id: image_scale
+    weight: -9
+    data:
+      width: 220
+      height: null
+      upscale: true
+  3a4c1aa7-a71b-4137-a44d-2d790fff634d:
+    uuid: 3a4c1aa7-a71b-4137-a44d-2d790fff634d
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

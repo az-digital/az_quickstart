@@ -17,6 +17,7 @@ dependencies:
     - field.storage.node.field_az_subheading
     - field.storage.node.field_az_summary
     - node.type.az_news
+    - taxonomy.vocabulary.az_enterprise_attributes
   module:
     - az_core
     - az_news_export
@@ -1412,6 +1413,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -1466,7 +1468,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -1553,6 +1554,57 @@ display:
             default_group: All
             default_group_multiple: {  }
             group_items: {  }
+        field_az_enterprise_attributes_az_attribute_key:
+          id: field_az_enterprise_attributes_az_attribute_key
+          table: node__field_az_enterprise_attributes
+          field: field_az_enterprise_attributes_az_attribute_key
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_attribute_tid
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: filter
+            label: 'Content with Enterprise Attributes attribute key'
+            description: ''
+            use_operator: true
+            operator: field_az_enterprise_attributes_az_attribute_key_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: attribute
+            required: false
+            remember: false
+            multiple: true
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+            reduce: 0
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: 1
+          type: select
+          limit: true
+          vid: az_enterprise_attributes
+          hierarchy: false
+          error_message: 1
       style:
         type: default
         options:
@@ -1569,7 +1621,7 @@ display:
         options:
           query_comment: ''
           disable_sql_rewrite: false
-          distinct: false
+          distinct: true
           replica: false
           query_tags: {  }
       relationships: {  }
@@ -1623,6 +1675,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       style:
         type: serializer
         options:

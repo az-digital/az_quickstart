@@ -497,6 +497,7 @@ display:
             items_per_page_options_all_label: '- All -'
             offset: false
             offset_label: Offset
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -990,6 +991,90 @@ display:
             Custom: Custom
           api_param_custom_begin: modified_begin
           api_param_custom_end: modified_end
+        property_4:
+          id: property_4
+          table: az_event_trellis_data
+          field: property
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: views_remote_data_property
+          operator: '='
+          value: 'true'
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          property_path: publish
+        Approval:
+          id: Approval
+          table: az_event_trellis_data
+          field: Approval
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: az_event_trellis_views_approval_filter
+          operator: '='
+          value: approved
+          group: 1
+          exposed: true
+          expose:
+            operator_id: Approval_op
+            label: 'Approved for University Calendar'
+            description: 'Limits results to events curated by University Communications for the University Calendar.'
+            use_operator: false
+            operator: Approval_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: approval
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              az_content_editor: '0'
+              az_content_admin: '0'
+              az_user_admin: '0'
+              az_html_admin: '0'
+              administrator: '0'
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          property_path: approval
       filter_groups:
         operator: AND
         groups:

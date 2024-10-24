@@ -17,11 +17,14 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_doi
     - field.field.node.az_publication.field_az_publication_extra_links
     - field.field.node.az_publication.field_az_publication_image
+    - field.field.node.az_publication.field_az_publication_isbn
+    - field.field.node.az_publication.field_az_publication_issn
     - field.field.node.az_publication.field_az_publication_issue
     - field.field.node.az_publication.field_az_publication_link
     - field.field.node.az_publication.field_az_publication_location
     - field.field.node.az_publication.field_az_publication_media
     - field.field.node.az_publication.field_az_publication_page
+    - field.field.node.az_publication.field_az_publication_pmcid
     - field.field.node.az_publication.field_az_publication_pmid
     - field.field.node.az_publication.field_az_publication_publisher
     - field.field.node.az_publication.field_az_publication_type
@@ -151,11 +154,14 @@ hidden:
   field_az_publication_date_type: true
   field_az_publication_doi: true
   field_az_publication_extra_links: true
+  field_az_publication_isbn: true
+  field_az_publication_issn: true
   field_az_publication_issue: true
   field_az_publication_link: true
   field_az_publication_location: true
   field_az_publication_media: true
   field_az_publication_page: true
+  field_az_publication_pmcid: true
   field_az_publication_pmid: true
   field_az_publication_publisher: true
   field_az_publication_type: true

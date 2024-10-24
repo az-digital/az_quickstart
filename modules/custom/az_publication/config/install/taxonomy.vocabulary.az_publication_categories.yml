@@ -8,3 +8,4 @@ name: 'Publication Categories'
 vid: az_publication_categories
 description: 'Taxonomy for categorizing publications'
 weight: 0
+new_revision: false

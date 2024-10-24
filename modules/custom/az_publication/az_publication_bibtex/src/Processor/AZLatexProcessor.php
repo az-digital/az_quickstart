@@ -394,6 +394,7 @@ class AZLatexProcessor {
             $text = $this->detex($text);
           }
         });
+
       }
     }
 

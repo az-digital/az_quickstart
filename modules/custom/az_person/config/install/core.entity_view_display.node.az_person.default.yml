@@ -12,10 +12,12 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - image.style.az_medium
     - node.type.az_person
@@ -33,34 +35,9 @@ third_party_settings:
     enabled: true
     settings:
       smart_title__link: false
-      smart_title__tag: h1
-      smart_title__classes:
-        - node__title
-        - d-none
-        - d-md-block
-        - my-0
-        - text-blue
+      smart_title__tag: ''
+      smart_title__classes: {  }
   field_group:
-    group_mobile_node_title:
-      children:
-        - field_az_fname
-        - field_az_lname
-      label: 'Mobile - Node Title'
-      parent_name: group_col_12_name_titles
-      region: content
-      weight: 6
-      format_type: html_element
-      format_settings:
-        classes: 'node__title d-md-none text-blue mb-0'
-        show_empty_fields: false
-        id: ''
-        element: h1
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
     group_row:
       children:
         - group_col_12_name_titles
@@ -84,8 +61,7 @@ third_party_settings:
         speed: fast
     group_col_12_name_titles:
       children:
-        - group_mobile_node_title
-        - smart_title
+        - group_az_name
         - group_titles
       label: 'Col 12 - Name & Titles'
       parent_name: group_row
@@ -175,7 +151,7 @@ third_party_settings:
       label: 'Card Body'
       parent_name: group_card
       region: content
-      weight: 7
+      weight: 18
       format_type: html_element
       format_settings:
         classes: card-body
@@ -194,7 +170,7 @@ third_party_settings:
       label: Titles
       parent_name: group_col_12_name_titles
       region: content
-      weight: 8
+      weight: 13
       format_type: html_element
       format_settings:
         classes: 'h4 d-block mt-0'
@@ -213,7 +189,7 @@ third_party_settings:
       label: Documents
       parent_name: group_card_body
       region: content
-      weight: 11
+      weight: 12
       format_type: html_element
       format_settings:
         classes: 'text-break mt-3'
@@ -232,7 +208,7 @@ third_party_settings:
       label: Links
       parent_name: group_card_body
       region: content
-      weight: 12
+      weight: 13
       format_type: html_element
       format_settings:
         classes: ''
@@ -242,6 +218,27 @@ third_party_settings:
         show_label: true
         label_element: h2
         label_element_classes: h5
+        attributes: ''
+        effect: none
+        speed: fast
+    group_az_name:
+      children:
+        - smart_title
+        - field_az_suffix
+      label: Name
+      parent_name: group_col_12_name_titles
+      region: content
+      weight: 10
+      format_type: html_element
+      format_settings:
+        classes: 'node__title text-blue mt-md-0 mb-0'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: h1
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
         attributes: ''
         effect: none
         speed: fast
@@ -255,7 +252,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 8
     region: content
   field_az_attachments:
     type: file_default
@@ -263,14 +260,14 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    weight: 11
+    weight: 10
     region: content
   field_az_body:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 9
+    weight: 2
     region: content
   field_az_degrees:
     type: string
@@ -278,22 +275,14 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 3
     region: content
   field_az_email:
     type: email_mailto
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 9
-    region: content
-  field_az_fname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 3
+    weight: 10
     region: content
   field_az_links:
     type: link
@@ -305,15 +294,7 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    weight: 11
-    region: content
-  field_az_lname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 4
+    weight: 14
     region: content
   field_az_media_image:
     type: media_thumbnail
@@ -324,7 +305,7 @@ content:
       image_loading:
         attribute: lazy
     third_party_settings: {  }
-    weight: 6
+    weight: 17
     region: content
   field_az_person_category:
     type: entity_reference_entity_view
@@ -333,7 +314,7 @@ content:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 11
+    weight: 4
     region: content
   field_az_person_category_sec:
     type: entity_reference_entity_view
@@ -342,7 +323,7 @@ content:
       view_mode: az_badge
       link: false
     third_party_settings: {  }
-    weight: 12
+    weight: 5
     region: content
   field_az_phones:
     type: telephone_link
@@ -350,7 +331,7 @@ content:
     settings:
       title: ''
     third_party_settings: {  }
-    weight: 8
+    weight: 9
     region: content
   field_az_pronouns:
     type: string
@@ -358,7 +339,15 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 10
+    weight: 11
+    region: content
+  field_az_suffix:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_az_titles:
     type: string
@@ -371,8 +360,11 @@ content:
   smart_title:
     settings: {  }
     third_party_settings: {  }
-    weight: 7
+    weight: 6
     region: content
 hidden:
+  field_az_fname: true
   field_az_link: true
+  field_az_lname: true
+  field_az_netid: true
   links: true

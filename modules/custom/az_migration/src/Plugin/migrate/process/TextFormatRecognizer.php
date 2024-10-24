@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -41,11 +42,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *     required_module: 'az_paragraphs_html'
  *     module_missing: 'az_text'
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "text_format_recognizer"
- * )
  */
+#[MigrateProcess('text_format_recognizer')]
 class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
