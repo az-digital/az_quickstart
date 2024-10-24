@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  enforced:
+    module:
+      - az_publication
 name: 'Publication Categories'
 vid: az_publication_categories
 description: 'Taxonomy for categorizing publications'
