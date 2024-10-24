@@ -193,7 +193,7 @@ content:
     weight: 2
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }
