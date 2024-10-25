@@ -110,17 +110,6 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
   public function buildHeader() {
     return [
       'id' => [
-        'data' => $this->t('Machine name'),
-        'field' => 'id',
-        'specifier' => 'id',
-        '#attributes' => [
-          'class' => [
-            RESPONSIVE_PRIORITY_LOW,
-            'az-publication-type-machine-name',
-          ],
-        ],
-      ],
-      'label' => [
         'data' => $this->t('Label'),
         'field' => 'label',
         'specifier' => 'label',
@@ -128,6 +117,17 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
           'class' => [
             RESPONSIVE_PRIORITY_LOW,
             'az-publication-type-label',
+          ],
+        ],
+      ],
+      'label' => [
+        'data' => $this->t('Machine name'),
+        'field' => 'id',
+        'specifier' => 'id',
+        '#attributes' => [
+          'class' => [
+            RESPONSIVE_PRIORITY_LOW,
+            'az-publication-type-machine-name',
           ],
         ],
       ],
