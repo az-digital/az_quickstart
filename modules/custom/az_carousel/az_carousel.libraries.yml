@@ -1,5 +1,4 @@
 az_carousel:
-  version: 1.x
   css:
     theme:
       css/az_carousel.css: {}

@@ -1,5 +1,4 @@
 az_calendar_filter:
-  version: VERSION
   css:
     theme:
       css/az_calendar_filter.css: {}
