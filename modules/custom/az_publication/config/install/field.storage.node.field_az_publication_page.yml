@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - az_publication
   module:
     - node
 id: node.field_az_publication_page
