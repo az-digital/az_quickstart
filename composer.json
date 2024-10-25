@@ -45,7 +45,7 @@
         "drupal/blazy": "3.0.12",
         "drupal/block_class": "2.0.11",
         "drupal/block_field": "1.0.0-rc5",
-        "drupal/bootstrap_barrio": "5.1.10",
+        "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.3",
@@ -147,9 +147,9 @@
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
             "drupal/bootstrap_barrio": {
-                "Affix library still broken (3366908)": "https://www.drupal.org/files/issues/2023-06-14/3366908-3_5-x.patch",
                 "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",
-                "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch"
+                "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch",
+                "Fix The specified library bootstrap_barrio/messages does not exist issue (3471821)": "https://git.drupalcode.org/project/bootstrap_barrio/-/commit/a26e7af7c007aced43f0347553104434d11e3681.patch"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
