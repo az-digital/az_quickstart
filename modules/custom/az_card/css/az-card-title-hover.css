@@ -1,4 +1,5 @@
-.card-with-link:hover .card-title {
+.card-with-link:hover .card-title,
+.card-title > a:hover {
   text-decoration: underline;
 }
 
@@ -7,20 +8,11 @@
   transition: ease .25s;
 }
 
-h2.card-title>a,
-h3.card-title>a,
-h4.card-title>a,
-h5.card-title>a,
-h6.card-title>a {
-  color: inherit;
+.card-title > a {
   text-decoration: inherit;
-  font-weight: inherit;
 }
 
-h2.card-title>a:hover,
-h3.card-title>a:hover,
-h4.card-title>a:hover,
-h5.card-title>a:hover,
-h6.card-title>a:hover {
-  text-decoration: underline;
+.card-body .sr-only {
+  display: block;
+  position: static;
 }

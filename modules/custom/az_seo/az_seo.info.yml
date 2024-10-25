@@ -3,10 +3,6 @@ type: module
 core_version_requirement: ^10 || ^11
 package: The University of Arizona
 dependencies:
-  - az_news:az_news
-  - az_event:az_event
-  - az_person:az_person
-  - az_flexible_page:az_flexible_page
   - xmlsitemap:xmlsitemap
   - xmlsitemap:xmlsitemap_engines
   - redirect:redirect

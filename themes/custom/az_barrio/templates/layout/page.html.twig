@@ -170,7 +170,7 @@
     </header>
 
     <div id="main-wrapper" class="layout-main-wrapper clearfix">
-        <div id="main" role="main">
+        <div id="main">
           {% if page.content_featured %}
           <section id="content_featured">
             {{ page.content_featured }}
@@ -200,14 +200,16 @@
               <main{{ content_attributes }}>
                 {{ page.content }}
               </main>
-              {% if page.sidebar_first %}
+              {% set has_sidebar_first = page.sidebar_first|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
+              {% if has_sidebar_first is not empty %}
               <div{{ sidebar_first_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_first }}
                 </aside>
               </div>
               {% endif %}
-              {% if page.sidebar_second %}
+              {% set has_sidebar_second = page.sidebar_second|render|striptags('<drupal-render-placeholder><embed><hr><iframe><img><input><link><object><script><source><style><video>')|trim %}
+              {% if has_sidebar_second is not empty %}
               <div{{ sidebar_second_attributes }}>
                 <aside class="section" role="complementary">
                   {{ page.sidebar_second }}

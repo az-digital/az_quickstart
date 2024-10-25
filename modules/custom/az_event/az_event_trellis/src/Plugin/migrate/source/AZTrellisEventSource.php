@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Plugin\migrate\source;
 
-use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 
 /**
  * Source plugin for retrieving data via Trellis events.
