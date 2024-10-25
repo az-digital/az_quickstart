@@ -81,14 +81,14 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
     $row = parent::buildRow($entity);
     return [
       'data' => [
-        'id' => [
-          'data' => [
-            '#plain_text' => $entity->id(),
-          ],
-        ],
         'label' => [
           'data' => [
             '#plain_text' => $entity->label(),
+          ],
+        ],
+        'id' => [
+          'data' => [
+            '#plain_text' => $entity->id(),
           ],
         ],
         'type' => [
