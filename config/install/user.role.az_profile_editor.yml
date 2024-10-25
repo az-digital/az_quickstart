@@ -1,8 +1,8 @@
 langcode: en
 status: true
 dependencies: {  }
-id: az_self_service_editor
-label: 'Self-service profile editor'
+id: az_profile_editor
+label: 'Profile editor'
 weight: 2
 is_admin: null
 permissions:
