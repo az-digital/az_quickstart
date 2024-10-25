@@ -136,7 +136,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.12.x-dev"
+            "dev-main": "2.13.x-dev"
         },
         "patches": {
             "drupal/auto_entitylabel": {
