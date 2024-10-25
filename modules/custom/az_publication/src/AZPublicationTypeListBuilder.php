@@ -109,7 +109,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
    */
   public function buildHeader() {
     return [
-      'id' => [
+      'label' => [
         'data' => $this->t('Label'),
         'field' => 'label',
         'specifier' => 'label',
