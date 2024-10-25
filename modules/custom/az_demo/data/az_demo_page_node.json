@@ -8,7 +8,7 @@
       "az_page_category"  : "Home Page",
       "az_main_content"  : "1|15",
       "az_media_image":"lynx.jpg",
-      "az_summary" : ""
+      "az_summary" : "Email wilburwildcat@arizona.edu for more information."
     },
     {
       "id":2,
@@ -197,7 +197,7 @@
       "path" : "/pages/person-view-paragraphs",
       "exclude_title" : true,
       "az_page_category" : "Views",
-      "az_main_content" : "103",
+      "az_main_content" : "103|111|112",
       "az_media_image" : "",
       "az_summary" : "Person Grid 3-column."
     },
