@@ -443,7 +443,7 @@ class AZCardWidget extends WidgetBase {
     array_pop($parents);
     $parent_element = NestedArray::getValue($complete_form, $parents);
     if (empty($element['#value']) && !empty($parent_element['link_uri']['#value'])) {
-      $form_state->setError($element, t('Card link title is required when a URL is provided.'));
+      $form_state->setError($element, t('Card Link Title field is required when a URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.'));
     }
   }
 
