@@ -120,7 +120,7 @@ class AZPublicationTypeListBuilder extends ConfigEntityListBuilder {
           ],
         ],
       ],
-      'label' => [
+      'id' => [
         'data' => $this->t('Machine name'),
         'field' => 'id',
         'specifier' => 'id',
