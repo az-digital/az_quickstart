@@ -10,6 +10,11 @@ on:
         required: false
         default: false
         type: boolean
+      make_latest:
+        description: Should this be made the latest release?
+        required: false
+        default: false
+        type: boolean
 jobs:
   build:
     name: Upload Release Asset
@@ -56,10 +61,12 @@ jobs:
           tag_name: ${{ github.event.inputs.version }}
           name: ${{ github.event.inputs.version }}
           draft: false
+          make_latest: ${{ github.event.inputs.make_latest }}
           prerelease: ${{ github.event.inputs.pre_release }}
           files: |
             ./az_quickstart.zip
             ./az_quickstart.tar.gz
+
       - name: Remove version from info file
         run: |
           git config user.name github-actions
