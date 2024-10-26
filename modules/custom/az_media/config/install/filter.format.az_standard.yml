@@ -96,3 +96,4 @@ filters:
         az_square: az_square
         az_very_small: az_very_small
       allowed_media_types: {  }
+      show_contextual_links: true
