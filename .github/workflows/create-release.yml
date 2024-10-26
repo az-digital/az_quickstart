@@ -90,4 +90,4 @@ jobs:
           token: ${{ secrets.REPO_DISPATCH_TOKEN }}
           repository: ${{ matrix.repo }}
           event-type: az_quickstart_release
-          client-payload: '{"version": "${{ github.event.inputs.version }}"}'
+          client-payload: '{"version": "${{ github.event.inputs.version }}", "make_latest": "${{ github.event.inputs.make_latest }}"}'
