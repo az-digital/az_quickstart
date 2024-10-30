@@ -33,7 +33,7 @@ settings:
     width: null
     height: null
   file_directory: '[date:custom:Y]-[date:custom:m]'
-  file_extensions: 'png gif jpg jpeg'
+  file_extensions: 'png gif jpg jpeg webp'
   max_filesize: ''
   handler: 'default:file'
   handler_settings: {  }
