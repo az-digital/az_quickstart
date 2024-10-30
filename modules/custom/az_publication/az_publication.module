@@ -168,6 +168,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
+      $blob->type = 'article-journal';
       $az_publication_mapped_type_field = $entity->get('field_az_publication_mapped_type');
       if (!$az_publication_mapped_type_field->isEmpty()) {
         $az_publication_mapped_type_id = $az_publication_mapped_type_field->target_id;
@@ -177,9 +178,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         if ($az_publication_mapped_type->get('type')) {
           $blob->type = $az_publication_mapped_type->get('type');
         }
-      }
-      else {
-        $blob->type = 'article-journal';
       }
       // Load default citation settings.
       $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
