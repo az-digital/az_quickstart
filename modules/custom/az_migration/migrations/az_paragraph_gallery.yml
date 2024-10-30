@@ -1,0 +1,50 @@
+id: az_paragraph_gallery
+label: AZ Paragraph Gallery
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_gallery
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_photo_gallery
+
+process:
+
+
+  field_az_photos:
+    plugin: sub_process
+    source: field_uaqs_photos
+    process:
+      delta: delta
+      target_id:
+        -
+          plugin: migmag_lookup
+          source: fid
+          migration:
+            - az_media
+  gallery_display_processed:
+    plugin: default_value
+    default_value: 'grid'
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_photo_gallery_paragraph_behavior:
+        gallery_display: '@gallery_display_processed'
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_files

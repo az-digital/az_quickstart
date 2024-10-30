@@ -18,7 +18,7 @@ parameters:
 		- '#Call to deprecated method readAttribute\(\) of class PHPUnit\\Framework\\Assert.*#'
 		# Ignore entitiy_embed cache tag warning (see https://www.drupal.org/project/entity_embed/issues/3087572#comment-13307163).
 		- '#config:entity_view_mode_list cache tag might be unclear and does not contain the cache key in it.#'
-	excludes_analyse:
+	excludePaths:
 		# Exclude files with missing parent classes from optional module dependencies.
 		- */entity_reference_revisions/src/Plugin/diff/Field/EntityReferenceRevisionsFieldDiffBuilder.php
 		- */paragraphs/modules/paragraphs_library/tests/src/FunctionalJavascript/ParagraphsLibraryItemEntityBrowserTest.php

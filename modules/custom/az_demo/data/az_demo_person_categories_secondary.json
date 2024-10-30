@@ -1,48 +1,59 @@
 {
   "person_categories_secondary": [
-    { "name" : "Astronomy",
-      "description" : "The study of astronomy.",
-      "parent_name" : ""
+    {
+      "name": "Astronomy",
+      "description": "The study of astronomy.",
+      "parent_name": ""
     },
-    { "name" : "Communications",
-      "description" : "The study of communications.",
-      "parent_name" : ""
+    {
+      "name": "Communications",
+      "description": "The study of communications.",
+      "parent_name": ""
     },
-    { "name" : "Education",
-      "description" : "The study of Education.",
-      "parent_name" : ""
+    {
+      "name": "Education",
+      "description": "The study of Education.",
+      "parent_name": ""
     },
-    { "name" : "Government and Public Service",
-      "description" : "The study of government and public service.",
-      "parent_name" : ""
+    {
+      "name": "Government and Public Service",
+      "description": "The study of government and public service.",
+      "parent_name": ""
     },
-    { "name" : "History",
-      "description" : "The study of history.",
-      "parent_name" : ""
+    {
+      "name": "History",
+      "description": "The study of history.",
+      "parent_name": ""
     },
-    { "name" : "Mathematics",
-      "description" : "The study of mathematics.",
-      "parent_name" : ""
+    {
+      "name": "Mathematics",
+      "description": "The study of mathematics.",
+      "parent_name": ""
     },
-    { "name" : "Music",
-      "description" : "The study of music.",
-      "parent_name" : ""
+    {
+      "name": "Music",
+      "description": "The study of music.",
+      "parent_name": ""
     },
-    { "name" : "Nutrition and Food Systems",
-      "description" : "The study of nutrition and food systems.",
-      "parent_name" : ""
+    {
+      "name": "Nutrition and Food Systems",
+      "description": "The study of nutrition and food systems.",
+      "parent_name": ""
     },
-    { "name" : "Philosophy",
-      "description" : "The study of philosophy.",
-      "parent_name" : ""
+    {
+      "name": "Philosophy",
+      "description": "The study of philosophy.",
+      "parent_name": ""
     },
-    { "name" : "Psychology",
-      "description" : "The study of psychology.",
-      "parent_name" : ""
+    {
+      "name": "Psychology",
+      "description": "The study of psychology.",
+      "parent_name": ""
     },
-    { "name" : "World Literature",
-      "description" : "The study of world literature.",
-      "parent_name" : ""
+    {
+      "name": "World Literature",
+      "description": "The study of world literature.",
+      "parent_name": ""
     }
   ]
 }

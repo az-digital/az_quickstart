@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_paragraphs
+  enforced:
+    module:
+      - az_paragraphs_splitscreen
+id: az_splitscreen
+label: 'Split Screen'
+icon_uuid: null
+icon_default: null
+description: 'Use this paragraph type to add a "split screen" component to your page. One half contains an image, and the other contains a background color and text.'
+behavior_plugins:
+  az_split_screen:
+    enabled: true

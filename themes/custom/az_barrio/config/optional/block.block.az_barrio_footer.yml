@@ -4,6 +4,7 @@ dependencies:
   config:
     - system.menu.footer
   module:
+    - block_class
     - system
   theme:
     - az_barrio

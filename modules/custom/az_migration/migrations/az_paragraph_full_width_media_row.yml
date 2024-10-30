@@ -1,0 +1,118 @@
+id: az_paragraph_full_width_media_row
+label: AZ Paragraph Full Width Media Row
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_full_width_media_row
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text_media
+
+process:
+
+  field_az_title:
+    plugin: sub_process
+    source: field_uaqs_summary_short
+    process:
+      delta: delta
+      value: value
+
+  field_az_media:
+    plugin: sub_process
+    source: field_uaqs_photo
+    process:
+      delta: delta
+      target_id:
+        -
+          plugin: migmag_lookup
+          source: fid
+          migration:
+            - az_media
+
+  bg_attach_processed:
+    - plugin: get
+      source: field_uaqs_setting_bg_attach/0/value
+    - plugin: static_map
+      default_value: ''
+      map:
+        bg-attachment-fixed: bg-fixed
+        bg-fixed: bg-fixed
+        bg-attachment-scroll: ''
+
+  full_width_processed:
+    plugin: default_value
+    default_value: 'full-width-background'
+
+  field_az_text_area/value:
+    -
+      plugin: paragraphs_fw_media_row_field_merge
+      body: field_uaqs_summary
+      link: field_uaqs_links
+    -
+      plugin: az_entity_embed_process
+
+  field_az_text_area/format:
+    plugin: default_value
+    default_value: az_standard
+
+  bg_color_processed:
+    - plugin: extract
+      source: field_uaqs_setting_text_bg_color
+      index:
+        - 0
+        - value
+      default: 'bg-transparent-white'
+    - plugin: static_map
+      default_value: 'bg-transparent-white'
+      map:
+        bg-transparent: bg-transparent
+        bg-trans-white: bg-transparent-white
+        bg-trans-sky: bg-transparent-white
+        bg-trans-arizona-blue: bg-transparent-black
+        bg-trans-black: bg-transparent-black
+        dark: bg-transparent-black
+        light: bg-transparent-white
+
+  view_mode_processed:
+    - plugin: static_map
+      source: view_mode
+      map:
+        uaqs_bg_img_content_left: 'col-md-8 col-lg-6'
+        uaqs_bg_img_content_center: 'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3'
+        uaqs_bg_img_content_right: 'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6'
+      default_value: 'col-md-8 col-lg-6'
+  content_style_processed:
+    - plugin: default_value
+      default_value: 'column'
+  text_media_spacing_processed:
+    - plugin: default_value
+      default_value: 'y-5'
+  bottom_spacing_processed:
+    - plugin: default_value
+      default_value: 'mb-0'
+      source: bottom_spacing
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_text_media_paragraph_behavior:
+        bg_color: '@bg_color_processed'
+        bg_attachment: '@bg_attach_processed'
+        position: '@view_mode_processed'
+        full_width: '@full_width_processed'
+        style: '@content_style_processed'
+        text_media_spacing: '@text_media_spacing_processed'
+        az_display_settings:
+          bottom_spacing: '@bottom_spacing_processed'
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_paragraphs

@@ -1,0 +1,80 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - image.style.az_tiny_thumbnail
+  module:
+    - file
+    - image
+    - node
+  enforced:
+    module:
+      - az_core
+id: az_linkit
+label: 'Quickstart LinkIt'
+description: 'Provides easy linking to Quickstart content and media for site editors.'
+matchers:
+  3a30add7-6018-45d3-afea-c0c311ac4bc9:
+    uuid: 3a30add7-6018-45d3-afea-c0c311ac4bc9
+    id: 'entity:node'
+    weight: 0
+    settings:
+      metadata: 'Path: [node:url:path] | ID: [node:nid]'
+      bundles:
+        az_flexible_page: az_flexible_page
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+  829301bf-f4fa-42e3-a3fe-4c89a8868633:
+    uuid: 829301bf-f4fa-42e3-a3fe-4c89a8868633
+    id: 'entity:file'
+    weight: 0
+    settings:
+      metadata: 'Created: [file:created:custom:m/d/Y - g:i a] | Modified: [file:changed:custom:m/d/Y - g:i a] | ID: [file:fid]'
+      bundles: null
+      group_by_bundle: null
+      substitution_type: file
+      limit: 100
+      file_extensions: 'pdf doc docx pps ppt xlsx xls png jpg jpeg'
+      file_status: 1
+      images:
+        show_dimensions: false
+        show_thumbnail: true
+        thumbnail_image_style: az_tiny_thumbnail
+  b1491acc-6a1b-4122-998c-311aaa699e48:
+    uuid: b1491acc-6a1b-4122-998c-311aaa699e48
+    id: 'entity:node'
+    weight: 0
+    settings:
+      metadata: 'Date: [node:field_az_event_date:value-custom:m/d/Y - g:i a]'
+      bundles:
+        az_event: az_event
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+  1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879:
+    uuid: 1d0eb8f7-5cd7-4d1b-9503-1a06dfdef879
+    id: 'entity:node'
+    weight: 0
+    settings:
+      metadata: 'Publication date: [node:field_az_published:date:custom:m/d/Y - g:i a]'
+      bundles:
+        az_news: az_news
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false
+  5b479f8e-72a3-4398-91d2-fbd9e07b7cb0:
+    uuid: 5b479f8e-72a3-4398-91d2-fbd9e07b7cb0
+    id: 'entity:node'
+    weight: 0
+    settings:
+      metadata: '[node:field_az_titles]'
+      bundles:
+        az_person: az_person
+      group_by_bundle: true
+      substitution_type: canonical
+      limit: 100
+      include_unpublished: false

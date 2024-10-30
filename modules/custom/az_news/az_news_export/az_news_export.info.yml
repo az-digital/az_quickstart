@@ -1,0 +1,21 @@
+name: 'Quickstart News Export'
+type: module
+description: 'Provides a REST export for the Quickstart News content type.'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - 'az_core:az_core'
+  - 'az_news:az_news'
+  - 'drupal:datetime'
+  - 'drupal:file'
+  - 'drupal:link'
+  - 'drupal:node'
+  - 'drupal:rest'
+  - 'drupal:serialization'
+  - 'drupal:taxonomy'
+  - 'drupal:text'
+  - 'drupal:user'
+  - 'drupal:views'
+  - 'entity_reference_revisions:entity_reference_revisions'

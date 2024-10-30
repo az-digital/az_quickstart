@@ -1,0 +1,7 @@
+az_enterprise_attributes_import.settings:
+  path: '/admin/config/az-enterprise-attributes-import/settings'
+  defaults:
+    _form: '\Drupal\az_enterprise_attributes_import\Form\AZEnterpriseAttributesImportForm'
+    _title: 'Enterprise Attributes Settings'
+  requirements:
+    _permission: 'administer quickstart configuration'

@@ -2,17 +2,17 @@
 
 namespace Drupal\az_event\Plugin\views\filter;
 
-use Drupal\views\Plugin\views\filter\Date;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsFilter;
+use Drupal\views\Plugin\views\filter\Date;
 use Drupal\views\Views;
 
 /**
  * Filter to handle dates stored as a timestamp.
  *
  * @ingroup views_filter_handlers
- *
- * @ViewsFilter("az_calendar_filter")
  */
+#[ViewsFilter("az_calendar_filter")]
 class AZCalendarFilter extends Date {
 
   /**
@@ -36,7 +36,10 @@ class AZCalendarFilter extends Date {
       // Prepare a wrapper for the calendar JS to access.
       $calendar_element = [
         '#type' => 'container',
-        '#attached' => ['library' => ['az_event/az_calendar_filter']],
+        '#attached' => [
+          'library' => ['az_event/az_calendar_filter'],
+          'drupalSettings' => ['azCalendarFilter' => $filter_settings],
+        ],
         '#attributes' => [
           'class' => [
             'az-calendar-filter-wrapper',
@@ -65,12 +68,13 @@ class AZCalendarFilter extends Date {
       return $cells;
     }
     $view = Views::getView($this->view->id());
-    $view = Views::executableFactory()->get($this->view->storage);
-    $view->cellQuery = TRUE;
-
     if (empty($view)) {
       return $cells;
     }
+    $view = Views::executableFactory()->get($this->view->storage);
+    // @phpstan-ignore-next-line
+    $view->cellQuery = TRUE;
+
     $view->setDisplay($this->view->current_display);
 
     // Turn off the pager for the cell query.
@@ -144,7 +148,9 @@ class AZCalendarFilter extends Date {
     }
 
     // Add aliases to gather cell data.
+    // @phpstan-ignore-next-line
     $this->query->addField($this->tableAlias, $this->realField . '_value', 'az_calendar_filter_start');
+    // @phpstan-ignore-next-line
     $this->query->addField($this->tableAlias, $this->realField . '_end_value', 'az_calendar_filter_end');
 
     $field2 = "$this->tableAlias.$this->realField" . '_end_value';
@@ -170,6 +176,7 @@ class AZCalendarFilter extends Date {
     // Compute date overlap between ranges.
     // This is safe because we are manually scrubbing the values.
     // It is necessary to do it this way since $a and $b might be formulae.
+    // @phpstan-ignore-next-line
     $this->query->addWhereExpression($this->options['group'], "$field <= $b AND $field2 >= $a");
   }
 

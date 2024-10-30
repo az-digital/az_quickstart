@@ -1,3 +1,5 @@
 monitoring_page:
   enabled: false
   path: ''
+enterprise_attributes:
+  locked: true

@@ -2,3 +2,15 @@ az_card:
   css:
     component:
       css/az-card-widget.css: {}
+az_card_no_follow:
+  css:
+    component:
+      css/az-card-no-follow.css: {}
+  js:
+    js/az-card-no-follow.js: {}
+  dependencies:
+    - core/drupal.nodelist.foreach
+az_card_title_hover:
+  css:
+    component:
+      css/az-card-title-hover.css: {}

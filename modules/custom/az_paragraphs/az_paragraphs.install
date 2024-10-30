@@ -9,71 +9,91 @@
  */
 
 /**
- * Update card deck breakpoints for tablet and desktop media queries.
+ * Implements hook_update_last_removed().
  */
-function az_paragraphs_update_920301(&$sandbox) {
+function az_paragraphs_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920301;
+}
+
+/**
+ * Replace broken migrated paragraph_behavior settings with defaults.
+ */
+function az_paragraphs_update_920601(&$sandbox) {
 
   if (!isset($sandbox['total'])) {
     $count = \Drupal::entityQuery('paragraph')
+      ->accessCheck(FALSE)
       ->count()
       ->execute();
+    // Set the total number of paragraphs to be updated.
     $sandbox['total'] = $count;
+    // Set current to 0.
     $sandbox['current'] = 0;
+    // Set updated_count to 0.
     $sandbox['updated_count'] = 0;
+    // If there are no paragraphs to be updated, set the finished flag to 1.
+    if (empty($sandbox['total'])) {
+      \Drupal::messenger()
+        ->addMessage('No broken behavior settings found.');
+      $sandbox['#finished'] = 1;
+      return;
+    }
   }
-
+  // Set the number of paragraphs to be updated per batch.
   $paragraphs_per_batch = 25;
-
+  // Get the paragraph ids to be updated.
   $paragraph_ids = \Drupal::entityQuery('paragraph')
+    ->accessCheck(FALSE)
+    // Update 25 paragraphs per batch.
     ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
     ->execute();
 
-  foreach ($paragraph_ids as $id) {
-    $paragraph = \Drupal::entityTypeManager()->getStorage('paragraph')->load($id);
-    if (!empty($paragraph)) {
-      $behavior_settings = $paragraph->getAllBehaviorSettings();
-      if (!empty($behavior_settings['az_cards_paragraph_behavior'])) {
-
-        // Update "desktop" settings.
-        if (!empty($behavior_settings['az_cards_paragraph_behavior']['card_width'])) {
-          $desktop_card_width = $behavior_settings['az_cards_paragraph_behavior']['card_width'];
-          $desktop_mappings = [
-            'col-md-12 col-lg-12' => 'col-lg-12',
-            'col-md-6 col-lg-6' => 'col-lg-6',
-            'col-md-4 col-lg-4' => 'col-lg-4',
-            'col-md-3 col-lg-3' => 'col-lg-3',
-          ];
-          if (isset($desktop_mappings[$desktop_card_width])) {
-            $behavior_settings['az_cards_paragraph_behavior']['card_width'] = $desktop_mappings[$desktop_card_width];
-          }
-        }
-
-        // Update "tablet" settings.
-        if (!empty($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'])) {
-          $tablet_card_width = $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'];
-          $tablet_mappings = [
-            'col-sm-12' => 'col-md-12',
-            'col-sm-6' => 'col-md-6',
-            'col-sm-4' => 'col-md-4',
-            'col-sm-3' => 'col-md-3',
-          ];
-          if (isset($tablet_mappings[$tablet_card_width])) {
-            $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = $tablet_mappings[$tablet_card_width];
-          }
-        }
-
-        $paragraph->setAllBehaviorSettings($behavior_settings);
-        $paragraph->save();
-        $sandbox['updated_count']++;
-
-      }
-
+  $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($paragraph_ids);
+  foreach ($paragraphs as $paragraph) {
+    $needs_update = FALSE;
+    $behavior_settings = $paragraph->getAllBehaviorSettings();
+    if (isset($behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'])
+      && is_array($behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'])
+    ) {
+      $needs_update = TRUE;
+      $behavior_settings['az_default_paragraph_behavior']['az_display_settings']['bottom_spacing'] = 'mb-0';
+    }
+    if (isset($behavior_settings['az_cards_paragraph_behavior'])
+      && is_null($behavior_settings['az_cards_paragraph_behavior']['card_width'])
+      && is_null($behavior_settings['az_cards_paragraph_behavior']['card_style'])
+      && is_null($behavior_settings['az_cards_paragraph_behavior']['card_clickable'])
+      && is_null($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'])
+      && is_null($behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_xs'])
+    ) {
+      $needs_update = TRUE;
+      $behavior_settings['az_cards_paragraph_behavior']['card_width'] = 'col-md-4 col-lg-4';
+      $behavior_settings['az_cards_paragraph_behavior']['card_style'] = 'card';
+      $behavior_settings['az_cards_paragraph_behavior']['card_clickable'] = 0;
+      $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_sm'] = 'col-sm-12';
+      $behavior_settings['az_cards_paragraph_behavior']['az_display_settings']['card_width_xs'] = 'col-12';
+    }
+    if ($needs_update) {
+      $paragraph->setAllBehaviorSettings($behavior_settings);
+      $paragraph->save();
+      $sandbox['updated_count']++;
     }
     $sandbox['current']++;
   }
+  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
+  return t('Paragraph behavior settings fixed on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
+}
 
-  $sandbox['#finished'] = ($sandbox['total'] === 0) ? 1 : ($sandbox['current'] / $sandbox['total']);
+/**
+ * Enable ckeditor_indentblock module by default.
+ */
+function az_paragraphs_update_1021001() {
+  \Drupal::service('module_installer')->install(['ckeditor_indentblock']);
+}
 
-  return t('Breakpoint settings updated on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
-
+/**
+ * Enable anchor_link module for CKEditor5 by default.
+ */
+function az_paragraphs_update_1021201() {
+  \Drupal::service('module_installer')->install(['anchor_link']);
 }

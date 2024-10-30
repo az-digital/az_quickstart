@@ -6,13 +6,9 @@
  */
 
 /**
- * Delete seckit settings if they were mistakenly installed.
+ * Implements hook_update_last_removed().
  */
-function az_security_update_920101() {
-  $module_handler = \Drupal::service('module_handler');
-  if (!$module_handler->moduleExists('seckit')) {
-    // Remove seckit settings if they were installed too early.
-    $config_factory = \Drupal::service('config.factory');
-    $config_factory->getEditable('seckit.settings')->delete();
-  }
+function az_security_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920101;
 }

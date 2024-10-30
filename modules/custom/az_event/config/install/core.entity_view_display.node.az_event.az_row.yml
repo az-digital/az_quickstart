@@ -8,17 +8,20 @@ dependencies:
     - field.field.node.az_event.field_az_contacts
     - field.field.node.az_event.field_az_event_category
     - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
     - field.field.node.az_event.field_az_link
     - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
     - field.field.node.az_event.field_az_photos
     - field.field.node.az_event.field_az_subheading
     - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
+    - az_core
     - date_ap_style
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   field_group:
@@ -28,7 +31,7 @@ third_party_settings:
       label: Link
       parent_name: ''
       region: content
-      weight: 1
+      weight: 0
       format_type: link
       format_settings:
         classes: text-decoration-none
@@ -76,7 +79,7 @@ third_party_settings:
         speed: fast
     group_column_two:
       children:
-        - group_summary
+        - group_summary_row
       label: 'Column two'
       parent_name: group_row
       region: content
@@ -152,13 +155,14 @@ third_party_settings:
         - group_heading
         - group_strong
         - field_az_summary
-      label: Summary
-      parent_name: group_column_two
+      label: 'Summary Text'
+      parent_name: group_summary_row
       region: content
-      weight: 20
+      weight: 8
       format_type: html_element
       format_settings:
-        classes: 'bg-gray-100 p-3'
+        classes: 'col-lg-9 pt-lg-3 px-3 pl-lg-4 pb-3'
+        show_empty_fields: false
         id: ''
         element: div
         show_label: false
@@ -173,10 +177,10 @@ third_party_settings:
       label: Heading
       parent_name: group_summary
       region: content
-      weight: 3
+      weight: 5
       format_type: html_element
       format_settings:
-        classes: 'h5 text-red mt-0'
+        classes: 'h5 text-chili mt-3 mt-lg-0'
         id: ''
         element: div
         show_label: false
@@ -191,7 +195,7 @@ third_party_settings:
       label: Strong
       parent_name: group_summary
       region: content
-      weight: 4
+      weight: 6
       format_type: html_element
       format_settings:
         classes: font-weight-bold
@@ -201,6 +205,45 @@ third_party_settings:
         label_element: h3
         label_element_classes: ''
         attributes: ''
+        effect: none
+        speed: fast
+    group_summary_row:
+      children:
+        - group_summary_thumbnail
+        - group_summary
+      label: 'Summary Row'
+      parent_name: group_column_two
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: 'row no-gutters bg-gray-100 ml-n3 ml-md-0'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_summary_thumbnail:
+      children:
+        - field_az_media_thumbnail_image
+      label: 'Summary Thumbnail'
+      parent_name: group_summary_row
+      region: content
+      weight: 6
+      format_type: html_element
+      format_settings:
+        classes: 'col-lg-3 pt-3 px-3 pr-lg-0 mb-lg-0'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: 'style="margin-bottom: -1.2em"'
         effect: none
         speed: fast
   smart_title:
@@ -233,26 +276,32 @@ content:
       cap_today: '1'
       display_time: '1'
       time_before_date: '1'
-      display_noon_and_midnight: '0'
+      display_noon_and_midnight: '1'
+      use_all_day: '1'
       separator: endash
       timezone: ''
-      use_all_day: '1'
-      capitalize_noon_and_midnight: 0
-      display_day: null
+      display_day: 0
+      month_only: 0
+      hide_date: 0
+      capitalize_noon_and_midnight: 1
     third_party_settings: {  }
-    weight: 5
+    weight: 4
+    region: content
+  field_az_media_thumbnail_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_square
+      link: false
+    third_party_settings: {  }
+    weight: 7
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 5
-    region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
+    weight: 7
     region: content
   smart_title:
     settings: {  }
@@ -264,7 +313,10 @@ hidden:
   field_az_body: true
   field_az_contacts: true
   field_az_event_category: true
+  field_az_featured_image_as_thumb: true
   field_az_link: true
   field_az_location: true
   field_az_photos: true
   field_az_subheading: true
+  field_az_trellis_id: true
+  links: true

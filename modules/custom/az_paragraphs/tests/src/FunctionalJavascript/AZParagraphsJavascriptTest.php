@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\az_paragraphs\FunctionalJavascript;
 
-use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
+use Drupal\Tests\az_core\FunctionalJavascript\QuickstartFunctionalJavascriptTestBase;
 
 /**
  * Run tests of paragraph bundles.
@@ -11,7 +11,7 @@ use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
  *
  * @group az_paragraphs_js
  */
-class AZParagraphsJavascriptTest extends WebDriverTestBase {
+class AZParagraphsJavascriptTest extends QuickstartFunctionalJavascriptTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -59,7 +59,7 @@ class AZParagraphsJavascriptTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Set up our initial permissions.
@@ -89,6 +89,7 @@ class AZParagraphsJavascriptTest extends WebDriverTestBase {
     // Make sure that our node was created.
     $this->assertNotNull($this->node);
 
+    /** @var \Drupal\FunctionalJavascriptTests\WebDriverWebAssert $assert */
     $assert = $this->assertSession();
     $page = $this->getSession()->getPage();
 

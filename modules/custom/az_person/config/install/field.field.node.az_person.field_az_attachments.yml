@@ -13,14 +13,14 @@ bundle: az_person
 label: CV/Documents
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
 settings:
   file_directory: ''
   file_extensions: pdf
   max_filesize: ''
-  description_field: false
+  description_field: true
   handler: 'default:file'
   handler_settings: {  }
 field_type: file

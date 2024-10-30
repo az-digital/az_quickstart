@@ -1,7 +1,7 @@
 smtp_on: true
 smtp_host: email-smtp.us-west-2.amazonaws.com
 smtp_hostbackup: ''
-smtp_port: '587'
+smtp_port: '2587'
 smtp_protocol: tls
 smtp_autotls: true
 smtp_timeout: 30
@@ -11,7 +11,10 @@ smtp_from: ''
 smtp_fromname: ''
 smtp_client_hostname: ''
 smtp_client_helo: ''
-smtp_allowhtml: '0'
+smtp_allowhtml: false
 smtp_test_address: ''
+smtp_reroute_address: ''
 smtp_debugging: false
+smtp_debug_level: 1
+prev_mail_system: php_mail
 smtp_keepalive: false

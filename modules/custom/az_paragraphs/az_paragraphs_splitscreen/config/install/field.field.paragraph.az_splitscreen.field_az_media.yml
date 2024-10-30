@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_media
+    - media.type.az_image
+    - paragraphs.paragraphs_type.az_splitscreen
+  enforced:
+    module:
+      - az_paragraphs_splitscreen
+id: paragraph.az_splitscreen.field_az_media
+field_name: field_az_media
+entity_type: paragraph
+bundle: az_splitscreen
+label: Image
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      az_image: az_image
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

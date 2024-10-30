@@ -1,0 +1,147 @@
+id: az_courses
+label: Courses
+migration_tags:
+  - Courses
+source:
+  plugin: url
+  data_fetcher_plugin: retry_http
+  data_parser_plugin: xml
+  skip_count: True
+  namespaces:
+    n: "http://uamobile.arizona.edu/schema/UA_Courses"
+    ns1: "http://uamobile.arizona.edu/schema/UA_Courses"
+  constants:
+    space: ' '
+  urls: [ ]
+  # Only select responses that actually have children, e.g. courses.
+  # We are operating at the response level to have access to all sections.
+  item_selector: '/UA_Courses_CourseDetail_Response[node()]'
+  fields:
+    -
+      name: title
+      label: Title
+      selector: '(//*[local-name()="title"])[1]'
+    -
+      name: description
+      label: Description
+      selector: '(//*[local-name()="descrLong"])[1]'
+    -
+      name: subject_code
+      label: Subject Code
+      selector: '(//*[local-name()="subject_code"])[1]'
+    -
+      name: catalog_number
+      label: Catalog Number
+      selector: '(//*[local-name()="catalog_nbr"])[1]'
+    -
+      name: units
+      label: Units
+      selector: '(//*[local-name()="units"])[1]'
+    -
+      # Squash data from multiple sections into this one.
+      name: course_type
+      label: Course Type
+      selector: '//*[local-name()="course_type_descr"]'
+    -
+      name: course_attributes
+      label: Course Attributes
+      selector: '//*[local-name()="course_attr_value_descr_formal"]'
+    -
+      name: instructors
+      label: Instructors
+      selector: '//*[local-name()="Instructor"]'
+    -
+      name: term_code
+      label: Term Code
+      selector: '//*[local-name()="term_code"]'
+  ids:
+    subject_code:
+      type: string
+    catalog_number:
+      type: string
+process:
+  field_az_course_title: title
+  field_az_course_description/value: description
+  field_az_subject_code:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: subject_code
+    -
+      plugin: get
+  field_az_catalog_number:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: catalog_number
+    -
+      plugin: get
+  field_az_course_units:
+    plugin: callback
+    callable: intval
+    source: units
+  field_az_subject_and_catalog:
+    plugin: concat
+    source:
+      - subject_code
+      - catalog_number
+  field_az_course_instructor:
+    -
+      plugin: single_value
+      source: instructors
+    -
+      plugin: instructor_link
+  field_az_course_types:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: course_type
+    -
+      plugin: course_squash
+    -
+      plugin: multiple_values
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_course_types
+      value_key: name
+      ignore_case: true
+  field_az_course_attributes:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: course_attributes
+    -
+      plugin: course_squash
+    -
+      plugin: multiple_values
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_course_attributes
+      value_key: name
+      ignore_case: true
+  field_az_course_term:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: term_code
+    -
+      plugin: course_squash
+    -
+      plugin: multiple_values
+    -
+      plugin: peoplesoft_year
+    -
+      plugin: entity_generate
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_course_terms
+      value_key: name
+      ignore_case: true
+
+destination:
+  plugin: entity:node
+  default_bundle: az_course

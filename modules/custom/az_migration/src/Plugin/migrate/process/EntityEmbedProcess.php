@@ -2,19 +2,16 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
-use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\migrate\MigrateExecutableInterface;
-use Drupal\migrate\ProcessPluginBase;
-use Drupal\migrate\Row;
 use Drupal\Core\Database\Database;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
+use Drupal\migrate\MigrateExecutableInterface;
+use Drupal\migrate\Row;
+use Drupal\migrate_plus\Plugin\migrate\process\Dom;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Process Plugin to handle embedded entities in HTML text.
- *
- * @MigrateProcessPlugin(
- *   id = "az_entity_embed_process"
- * )
  *
  * This plugin processes HTML text that has had markup embedded within
  * it from the entity_embed module of D7. It does this by parsing the relevant
@@ -43,7 +40,8 @@ use Drupal\Core\Database\Database;
  *         original_view_mode2: new_view_mode2
  * @endcode
  */
-class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+#[MigrateProcess('az_entity_embed_process')]
+class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface {
 
   /**
    * The migrate lookup service.
@@ -72,6 +70,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    * @var array
    */
   const MIGRATION_MAPPING = [
+    'uaqs_flexible_block' => 'az_block_content_flexible_block',
     'uaqs_flexible_page' => 'az_node_flexible_page',
     'uaqs_page' => 'az_node_uaqs_basic_page_to_az_page',
     'uaqs_carousel_item' => 'az_node_carousel',
@@ -111,6 +110,15 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       'uaqs_card' => 'az_card',
       'uaqs_marquee' => 'az_marquee',
     ],
+    'bean' => [
+      'default' => 'full',
+      'full' => 'full',
+      'teaser' => 'teaser',
+      'rss' => 'rss',
+      'search_index' => 'search_index',
+      'search_result' => 'search_result',
+      'token' => 'token',
+    ],
   ];
 
   /**
@@ -127,6 +135,24 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
     $instance->migrateStub = $container->get('migrate.stub');
     $instance->entityTypeManager = $container->get('entity_type.manager');
     return $instance;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $configuration, $plugin_id, $plugin_definition) {
+    $configuration += $this->defaultValues();
+    parent::__construct($configuration, $plugin_id, $plugin_definition);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function defaultValues(): array {
+    return [
+      'method' => 'import',
+      'import_method' => 'html',
+    ] + parent::defaultValues();
   }
 
   /**
@@ -199,6 +225,12 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         $changed->setAttribute('data-embed-button', "az_embed_content");
         $changed->setAttribute('data-entity-embed-display', "view_mode:node.{$view}");
         break;
+
+      case 'block_content':
+        $changed->setAttribute('data-embed-button', "az_embed_content_block");
+        $changed->setAttribute('data-entity-embed-display', "view_mode:block_content.{$view}");
+        break;
+
     }
     return $changed;
   }
@@ -208,8 +240,14 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
-    $dom = new \DOMDocument();
-    $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    // Return $value if there are no <drupal-entity> elements.
+    if (strpos($value, '<drupal-entity ') === FALSE) {
+      return $value;
+    }
+    // Convert $value to UTF-8.
+    $value = $this->getNonRootHtml($value);
+    $dom = new \DOMDocument($this->configuration['version'], $this->configuration['encoding']);
+    $dom->loadHTML($value, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD | LIBXML_NOWARNING | LIBXML_NOERROR);
     $elements = $dom->getElementsByTagName("drupal-entity");
 
     // Configuration of custom content.
@@ -259,7 +297,7 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
         // node only is defined if it's a type that can be migrated.
         case 'node':
           // Lookup of content type.
-          $node_type = Database::getConnection('migrate')
+          $node_type = Database::getConnection('default', 'migrate')
             ->query('SELECT type FROM {node} WHERE nid = :nid', [':nid' => $id])
             ->fetchField();
           if (!empty($node_type)) {
@@ -268,6 +306,26 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
             if (!empty($migrations[$node_type])) {
               $migration = $migrations[$node_type];
               $post = $this->updateEmbedTag($id, 'node', 'drupal-entity', $view, $dom, $element, $migration, 'node');
+            }
+
+          }
+
+          break;
+
+        // Embedded bean. Special consideration, as we need to know which
+        // migration the bean is part of, if any. Migration of an Embedded
+        // bean only is defined if it's a type that can be migrated.
+        case 'bean':
+          // Lookup of bean type.
+          $bean_type = Database::getConnection('default', 'migrate')
+            ->query('SELECT type FROM {bean} WHERE bid = :bid', [':bid' => $id])
+            ->fetchField();
+          if (!empty($bean_type)) {
+            // Map our D7 bean type to a migration. If we can't, we have no
+            // guarantee our bean is a migrated one.
+            if (!empty($migrations[$bean_type])) {
+              $migration = $migrations[$bean_type];
+              $post = $this->updateEmbedTag($id, 'block_content', 'drupal-entity', $view, $dom, $element, $migration, 'block_content');
             }
 
           }
@@ -288,7 +346,9 @@ class EntityEmbedProcess extends ProcessPluginBase implements ContainerFactoryPl
       }
     }
 
-    $value = $dom->SaveHTML();
+    // @see https://www.php.net/manual/en/domdocument.savehtml.php#121444 Remove the root tags added by getNonRootHtml.
+    $body = $dom->getElementsByTagName('body');
+    $value = str_replace(['<body>', '</body>'], '', $dom->saveHTML($body->item(0)));
     return $value;
   }
 

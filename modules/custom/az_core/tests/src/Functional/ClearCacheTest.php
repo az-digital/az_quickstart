@@ -3,14 +3,13 @@
 namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
 
 /**
  * Test to ensure the Quickstart settings clear cache button works correctly.
  *
  * @group az_core
  */
-class ClearCacheTest extends BrowserTestBase {
+class ClearCacheTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -27,7 +26,7 @@ class ClearCacheTest extends BrowserTestBase {
   /**
    * @var string
    */
-  protected $defaultTheme = 'seven';
+  protected $defaultTheme = 'claro';
 
   /**
    * Tests the clear cache button on the Quickstart settings page.

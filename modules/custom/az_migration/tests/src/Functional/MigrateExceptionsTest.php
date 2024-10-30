@@ -35,7 +35,7 @@ class MigrateExceptionsTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['az_migration'];
+  protected static $modules = ['az_migration'];
 
   /**
    * Tests that the Quickstart Global Footer module can be installed.

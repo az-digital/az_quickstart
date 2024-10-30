@@ -2,17 +2,15 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Process Plugin to map paragraph to the flexible page.
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_mapping_flexible_page"
- * )
  */
+#[MigrateProcess('paragraphs_mapping_flexible_page')]
 class ParagraphMappingFlexiblePage extends ProcessPluginBase {
 
   /**

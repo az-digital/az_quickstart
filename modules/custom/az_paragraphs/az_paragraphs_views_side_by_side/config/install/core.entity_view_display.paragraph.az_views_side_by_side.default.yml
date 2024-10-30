@@ -1,0 +1,246 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_views_side_by_side.field_az_first_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_title
+    - field.field.paragraph.az_views_side_by_side.field_az_title
+    - field.field.paragraph.az_views_side_by_side.field_az_view_reference
+    - paragraphs.paragraphs_type.az_views_side_by_side
+  module:
+    - field_group
+    - link
+    - viewsreference
+third_party_settings:
+  field_group:
+    group_container:
+      children:
+        - group_row
+      label: Container
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: container
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_row:
+      children:
+        - group_first_column
+        - group_second_column
+      label: Row
+      parent_name: group_container
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: row
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_first_column:
+      children:
+        - group_first_column_title
+        - field_az_view_reference
+        - group_center_first_button
+      label: 'First Column'
+      parent_name: group_row
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: col-md-6
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_second_column:
+      children:
+        - group_second_column_title
+        - field_az_second_view
+        - group_center_second_button
+      label: 'Second Column'
+      parent_name: group_row
+      region: content
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: col-md-6
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_first_column_title:
+      children:
+        - field_az_title
+      label: 'First Column Title'
+      parent_name: group_first_column
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: text-center
+        show_empty_fields: false
+        id: ''
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_second_column_title:
+      children:
+        - field_az_second_view_title
+      label: 'Second Column Title'
+      parent_name: group_second_column
+      region: content
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: text-center
+        show_empty_fields: false
+        id: ''
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_center_first_button:
+      children:
+        - field_az_first_view_button
+      label: 'Center First Button'
+      parent_name: group_first_column
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: text-center
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_center_second_button:
+      children:
+        - field_az_second_view_button
+      label: 'Center Second Button'
+      parent_name: group_second_column
+      region: content
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: text-center
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: paragraph.az_views_side_by_side.default
+targetEntityType: paragraph
+bundle: az_views_side_by_side
+mode: default
+content:
+  field_az_first_view_button:
+    type: link
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_az_second_view:
+    type: viewsreference_formatter
+    label: hidden
+    settings:
+      plugin_types:
+        default: default
+        block: block
+        page: page
+        attachment: 0
+        feed: 0
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_second_view_button:
+    type: link
+    label: hidden
+    settings:
+      trim_length: null
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_az_second_view_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_az_view_reference:
+    type: viewsreference_formatter
+    label: hidden
+    settings:
+      plugin_types:
+        default: default
+        block: block
+        page: page
+        attachment: 0
+        feed: 0
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

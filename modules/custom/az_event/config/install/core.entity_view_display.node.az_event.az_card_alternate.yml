@@ -1,0 +1,184 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.az_card_alternate
+    - field.field.node.az_event.field_az_attachments
+    - field.field.node.az_event.field_az_body
+    - field.field.node.az_event.field_az_contacts
+    - field.field.node.az_event.field_az_event_category
+    - field.field.node.az_event.field_az_event_date
+    - field.field.node.az_event.field_az_featured_image_as_thumb
+    - field.field.node.az_event.field_az_link
+    - field.field.node.az_event.field_az_location
+    - field.field.node.az_event.field_az_media_thumbnail_image
+    - field.field.node.az_event.field_az_photos
+    - field.field.node.az_event.field_az_subheading
+    - field.field.node.az_event.field_az_summary
+    - field.field.node.az_event.field_az_trellis_id
+    - node.type.az_event
+  module:
+    - az_core
+    - date_ap_style
+    - field_group
+    - smart_title
+    - user
+third_party_settings:
+  field_group:
+    group_card_clickable:
+      children:
+        - group_link
+      label: 'Card Clickable'
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'card card-borderless card-clickable bg-gray-100 mt-0 mb-4 p-0'
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_link:
+      children:
+        - field_az_media_thumbnail_image
+        - group_date
+        - group_heading
+        - group_summary
+      label: Link
+      parent_name: group_card_clickable
+      region: content
+      weight: 1
+      format_type: link
+      format_settings:
+        classes: 'card-body p-4'
+        show_empty_fields: false
+        id: ''
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
+        target_attribute: default
+    group_date:
+      children:
+        - field_az_event_date
+      label: Date
+      parent_name: group_link
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: 'text-muted font-weight-bold small'
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_heading:
+      children:
+        - smart_title
+      label: Heading
+      parent_name: group_link
+      region: content
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: 'card-title text-red h5 mt-0 mb-2'
+        id: ''
+        element: h2
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_summary:
+      children:
+        - field_az_summary
+      label: Summary
+      parent_name: group_link
+      region: content
+      weight: 9
+      format_type: html_element
+      format_settings:
+        classes: 'card-text font-weight-normal small mb-0'
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: ''
+      smart_title__classes:
+        - node__title
+id: node.az_event.az_card_alternate
+targetEntityType: node
+bundle: az_event
+mode: az_card_alternate
+content:
+  field_az_event_date:
+    type: daterange_ap_style
+    label: hidden
+    settings:
+      always_display_year: '1'
+      use_today: '1'
+      cap_today: '1'
+      display_time: '1'
+      time_before_date: '1'
+      display_noon_and_midnight: '1'
+      use_all_day: '1'
+      separator: endash
+      timezone: ''
+      display_day: 0
+      month_only: 0
+      hide_date: 0
+      capitalize_noon_and_midnight: 1
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_az_media_thumbnail_image:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: az_card_image
+      link: false
+    third_party_settings: {  }
+    weight: 6
+    region: content
+  field_az_summary:
+    type: az_text_summary
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  smart_title:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  az_event_day: true
+  az_event_month: true
+  field_az_attachments: true
+  field_az_body: true
+  field_az_contacts: true
+  field_az_event_category: true
+  field_az_featured_image_as_thumb: true
+  field_az_link: true
+  field_az_location: true
+  field_az_photos: true
+  field_az_subheading: true
+  field_az_trellis_id: true
+  links: true

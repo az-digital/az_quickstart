@@ -3,9 +3,10 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
+use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
-use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -34,11 +35,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *       - az_node_person
  *     source: link_path
  * @endcode
- *
- * @MigrateProcessPlugin(
- *  id = "az_migrated_path_lookup"
- * )
  */
+#[MigrateProcess('az_migrated_path_lookup')]
 class MigratedPathLookup extends ProcessPluginBase implements ContainerFactoryPluginInterface {
   /**
    * The migration plugin manager.
@@ -57,7 +55,7 @@ class MigratedPathLookup extends ProcessPluginBase implements ContainerFactoryPl
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration = NULL) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, ?MigrationInterface $migration = NULL) {
     $instance = new static(
       $configuration,
       $plugin_id,
@@ -98,10 +96,10 @@ class MigratedPathLookup extends ProcessPluginBase implements ContainerFactoryPl
         'migration' => $migration_ids,
       ];
 
-      /** @var \Drupal\migrate\Plugin\migrate\process\MigrationLookup|bool $migration_lookup */
-      $migration_lookup = $this->migrationPluginManager->createInstance('migration_lookup', $config, $this->migration);
-      if ($migration_lookup) {
-        $migrated_id = $migration_lookup->transform($id, $migrate_executable, $row, $destination_property);
+      /** @var \Drupal\migrate\Plugin\migrate\process\MigrationLookup|bool $migmag_lookup */
+      $migmag_lookup = $this->migrationPluginManager->createInstance('migmag_lookup', $config, $this->migration);
+      if ($migmag_lookup) {
+        $migrated_id = $migmag_lookup->transform($id, $migrate_executable, $row, $destination_property);
         if ($migrated_id) {
           $value = $base_path . '/' . $migrated_id;
         }

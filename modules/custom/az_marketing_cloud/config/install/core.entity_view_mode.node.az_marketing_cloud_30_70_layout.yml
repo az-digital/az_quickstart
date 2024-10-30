@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_marketing_cloud_30_70_layout
+label: 'Marketing Cloud - 30/70 Layout'
+description: ''
+targetEntityType: node
+cache: true

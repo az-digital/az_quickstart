@@ -1,0 +1,38 @@
+id: az_cas_user
+label: AZ CAS User
+
+migration_group: az_migration
+status: true
+
+migration_tags:
+  - Drupal 7
+  - Content
+  - Quickstart Content Migration
+source:
+  plugin: d7_cas_user
+process:
+  uid:
+    -
+      plugin: migmag_lookup
+      migration: az_user
+      source: uid
+    -
+      plugin: skip_on_empty
+      method: row
+  provider:
+    -
+      plugin: default_value
+      default_value: cas
+  authname: cas_name
+destination:
+  plugin: authmap
+
+migration_dependencies:
+  required:
+    - az_user
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_cas

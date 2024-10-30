@@ -1,0 +1,43 @@
+id: az_paragraph_extra_info
+label: AZ Paragraph Extra Info
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_extra_info
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_text
+
+process:
+
+  field_az_text_area/value:
+    -
+      plugin: paragraphs_extra_info_field_merge
+    -
+      plugin: az_entity_embed_process
+  field_az_text_area/format:
+    plugin: default_value
+    default_value: az_standard
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+
+migration_dependencies:
+  required:
+    - az_media
+    - az_files

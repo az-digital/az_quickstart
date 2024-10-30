@@ -4,6 +4,7 @@ dependencies:
   config:
     - system.menu.main
   module:
+    - block_class
     - menu_block
   theme:
     - az_barrio

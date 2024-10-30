@@ -1,6 +1,9 @@
 .nav-link, .nav-pills .nav-link, .nav-tabs .nav-link {
   background-color: white;
 }
+:root {
+  --sidebar-top-margin: 0;
+}
 @media (min-width: 768px) {
     #sidebar_second,
     #sidebar_first {
@@ -8,7 +11,9 @@
     }
 }
 .full-width-background {
-    max-width: calc(100vw - var(--scrollbar-width) / 2);
+    max-width: calc(100vw - var(--scrollbar-width));
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
 }
 /* See https://github.com/az-digital/az_quickstart/pull/1365 */
 .sidebar_first {
@@ -19,11 +24,11 @@
     max-width: calc(100vw - var(--scrollbar-width));
 }
 .region-content .full-width-background {
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    margin-left: var(--full-width-left-distance);
+    margin-right: var(--full-width-right-distance);
     overflow: hidden;
 }
-.region-content .az-full-width-row {
+.region .az-full-width-row {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;

@@ -1,12 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Process plugin to recognize text formats with configurable response values.
@@ -39,11 +42,8 @@ use Drupal\migrate\Row;
  *     required_module: 'az_paragraphs_html'
  *     module_missing: 'az_text'
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "text_format_recognizer"
- * )
  */
+#[MigrateProcess('text_format_recognizer')]
 class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -75,13 +75,11 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
     if (isset($value['value'])) {
       $value = $value['value'];
     }
-
     if (!empty($this->configuration['required_module'])) {
       // Don't proceed if the specified module is not loaded.
       if (!$this->moduleHandler->moduleExists($this->configuration['required_module'])) {
         return $this->configuration['module_missing'];
       }
-
     }
 
     if (!empty($this->configuration['format']) &&
@@ -90,23 +88,26 @@ class TextFormatRecognizer extends ProcessPluginBase implements ContainerFactory
 
       // Render as full html first.
       $full = trim(_filter_autop(check_markup($value, 'full_html')));
-      // Attempt to parse the resultant html.
-      $full = @\DOMDocument::loadHTML($full);
+      // Attempt to parse the resultant html and convert back to canonical html
+      // if successful.
+      $fullDoc = new \DOMDocument();
+      if (!empty($full) && @$fullDoc->loadHTML($full)) {
+        $full = $fullDoc->saveXML();
+      }
 
       // Render the text according to the format.
-      // Attempt to put autoparagraphs back in after the fact, since they
-      // Are likely to exist in the source regardless of intent.
+      // Attempt to put autoparagraphs back in after the fact, since they are
+      // likely to exist in the source regardless of intent.
       $markup = trim(_filter_autop(check_markup($value, $format)));
-      // Attempt to parse the resultant html.
-      $markup = @\DOMDocument::loadHTML($markup);
-
-      // Let's convert back to canonical HTML if parsing was successful.
-      if (!empty($full)) {
-        $full = $full->saveXML();
-      }
       if (!empty($markup)) {
-        $markup = $markup->saveXML();
+        // Attempt to parse the resultant html and convert back to canonical
+        // html if successful.
+        $markupDoc = new \DOMDocument();
+        if (@$markupDoc->loadHTML($markup)) {
+          $markup = $markupDoc->saveXML();
+        }
       }
+
       // Let's compare canonical markup after going back from parsed html.
       // If the HTML nodes were comparable, output should be the same.
       if ($full === $markup) {

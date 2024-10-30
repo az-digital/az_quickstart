@@ -4,19 +4,12 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
+function _slicedToArray(r, e) { return _arrayWithHoles(r) || _iterableToArrayLimit(r, e) || _unsupportedIterableToArray(r, e) || _nonIterableRest(); }
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
+function _unsupportedIterableToArray(r, a) { if (r) { if ("string" == typeof r) return _arrayLikeToArray(r, a); var t = {}.toString.call(r).slice(8, -1); return "Object" === t && r.constructor && (t = r.constructor.name), "Map" === t || "Set" === t ? Array.from(r) : "Arguments" === t || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(t) ? _arrayLikeToArray(r, a) : void 0; } }
+function _arrayLikeToArray(r, a) { (null == a || a > r.length) && (a = r.length); for (var e = 0, n = Array(a); e < a; e++) n[e] = r[e]; return n; }
+function _iterableToArrayLimit(r, l) { var t = null == r ? null : "undefined" != typeof Symbol && r[Symbol.iterator] || r["@@iterator"]; if (null != t) { var e, n, i, u, a = [], f = !0, o = !1; try { if (i = (t = t.call(r)).next, 0 === l) { if (Object(t) !== t) return; f = !1; } else for (; !(f = (e = i.call(t)).done) && (a.push(e.value), a.length !== l); f = !0); } catch (r) { o = !0, n = r; } finally { try { if (!f && null != t.return && (u = t.return(), Object(u) !== u)) return; } finally { if (o) throw n; } } return a; } }
+function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
 (function ($, Drupal, window, document, once) {
   Drupal.azSelectMenu = Drupal.azSelectMenu || {};
   Drupal.behaviors.azSelectMenu = {
@@ -64,7 +57,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       }
     }
   };
-
   Drupal.azSelectMenu.handleEvents = function (event) {
     if (event.type === 'touchstart') {
       if (event.target.classList.contains('js_select_menu_button')) {
@@ -74,28 +66,22 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         return;
       }
     }
-
     var selectForm = event.target.closest('form');
     var $selectForm = $(selectForm);
     var selectElement = selectForm.querySelector('select');
-
     var _selectElement$select = _slicedToArray(selectElement.selectedOptions, 1),
-        optionsSelected = _selectElement$select[0];
-
+      optionsSelected = _selectElement$select[0];
     var selectElementHref = optionsSelected.dataset.href;
     var button = selectForm.querySelector('button');
-
     if (selectElementHref !== '') {
       $selectForm.popover('hide');
       button.classList.remove('disabled');
       button.setAttribute('aria-disabled', 'false');
-
       switch (event.type) {
         case 'click':
           event.stopImmediatePropagation();
           window.location = selectElementHref;
           break;
-
         default:
           break;
       }
@@ -103,16 +89,13 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       button.classList.add('disabled');
       button.setAttribute('aria-disabled', 'true');
       selectElement.setAttribute('aria-disabled', 'true');
-
       switch (event.type) {
         case 'click':
           if (event.target.classList.contains('js_select_menu_button')) {
             $selectForm.popover('show');
             selectElement.focus();
           }
-
           break;
-
         case 'focus':
         case 'mouseenter':
           if (event.target.classList.contains('js_select_menu_button')) {
@@ -120,13 +103,10 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           } else {
             $selectForm.popover('hide');
           }
-
           break;
-
         case 'mouseleave':
           $selectForm.popover('hide');
           break;
-
         default:
           break;
       }

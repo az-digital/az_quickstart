@@ -1,0 +1,176 @@
+{
+  "paragraphs": [
+      {
+          "id": 80,
+          "card_width": "col-lg-6",
+          "card_style": "card",
+          "card_title": "Borderless Cards",
+          "card_title_style": "default",
+          "card_clickable": false,
+          "az_cards": [
+            {
+              "delta": 0,
+              "title": "Gray 100",
+              "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>",
+              "link_title": "Card link",
+              "link_url": "#",
+              "media": "",
+              "background": "bg-gray-100",
+              "link_style": "btn btn-block btn-blue"
+            },
+            {
+              "delta": 1,
+              "title": "Chili",
+              "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+              "link_title": "",
+              "link_url": "",
+              "media": "",
+              "background": "bg-chili",
+              "link_style": "btn-block"
+            }
+          ],
+          "bottom_spacing" : "mb-0"
+      },
+      {
+        "id": 81,
+        "card_width": "col-lg-4",
+        "card_style": "card card-borderless",
+        "card_title": "Clickable Borderless Cards",
+        "card_title_style": "default",
+        "card_clickable": true,
+        "az_cards": [
+          {
+            "delta": 0,
+            "title": "Arizona Blue",
+            "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "link_title": "Card link",
+            "link_url": "#",
+            "media": "runners_brains.jpeg",
+            "background": "bg-blue",
+            "link_style": "btn btn-block btn-outline-white"
+          },
+          {
+            "delta": 1,
+            "title": "Hidden link title",
+            "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "link_title": "Visually hidden card link",
+            "link_url": "#",
+            "media": "mans_best_friend.jpeg",
+            "background": "bg-river",
+            "link_style": "sr-only"
+          },
+          {
+            "delta": 2,
+            "title": "No link",
+            "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+            "link_title": "",
+            "link_url": "",
+            "media": "",
+            "background": "bg-gray-300",
+            "link_style": "btn-block"
+          }
+        ],
+        "bottom_spacing" : "mb-0"
+    },
+    {
+      "id": 82,
+      "card_width": "col-lg-4",
+      "card_style": "card",
+      "card_title": "Clickable Title-on-Image Cards",
+      "card_title_style": "title-on-image",
+      "card_clickable": true,
+      "az_cards": [
+        {
+          "delta": 0,
+          "title": "No body",
+          "body":"",
+          "link_title": "Card Link",
+          "link_url": "#",
+          "media": "runners_brains.jpeg",
+          "background": "bg-warm-gray",
+          "link_style": "btn btn-blue btn-block"
+        },
+        {
+          "delta": 1,
+          "title": "Hidden link title",
+          "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+          "link_title": "Visually hidden card link",
+          "link_url": "#",
+          "media": "mans_best_friend.jpeg",
+          "background": "bg-white",
+          "link_style": "sr-only"
+        },
+        {
+          "delta": 2,
+          "title": "No image",
+          "body":"<p>Default title style is used when no image is present.</p>",
+          "link_title": "Card Link",
+          "link_url": "#",
+          "media": "",
+          "background": "bg-azurite",
+          "link_style": "btn-block"
+        }
+      ],
+      "bottom_spacing" : "mb-5"
+    },
+    {
+        "id": 83,
+        "card_width": "col-lg-6",
+        "card_style": "card card-borderless",
+        "card_title": "Borderless Title-on-Image Cards",
+        "card_title_style": "title-on-image",
+        "card_clickable": false,
+        "az_cards": [
+          {
+            "delta": 0,
+            "title": "No link",
+            "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>",
+            "link_title": "",
+            "link_url": "",
+            "media": "mans_best_friend.jpeg",
+            "background": "bg-river",
+            "link_style": "btn-block"
+          },
+          {
+            "delta": 1,
+            "title": "Cool Gray",
+            "body":"<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>",
+            "link_title": "External link",
+            "link_url": "https://www.arizona.edu",
+            "media": "",
+            "background": "bg-cool-gray",
+            "link_style": "btn-block"
+          }
+        ],
+        "bottom_spacing" : "mb-5"
+    },
+    {
+      "id": 109,
+      "card_width": "col-lg-12",
+      "card_style": "card",
+      "card_title_style": "default",
+      "card_clickable": false,
+      "az_cards": [
+        {
+          "delta": 0,
+          "title": "Related Stories",
+          "body": "<p><a href=\"/news/could-mans-best-friend-be-mans-best-medicine\">Could Man's Best Friend Be Man's Best Medicine?</a></p><p><a href=\"/news/runners-brains-may-have-more-connectivity-ua-research-shows\">Runners' Brains May Have More Connectivity, UA Research Shows</a></p><p><a href=\"/news/fruit-flies-and-cellular-demise-zeroing-causes-als\">Fruit Flies and Cellular Demise – Zeroing in on the Causes of ALS</a></p>"
+        }
+      ]
+    },
+    {
+      "id": 110,
+      "card_width": "col-lg-12",
+      "card_style": "card",
+      "card_title_style": "default",
+      "card_clickable": false,
+      "az_cards": [
+        {
+          "delta": 1,
+          "title": "Contact",
+          "body": "<p>Wilma Wildcat<br>University of Arizona<br>520-621-1986, wilma.wildcat@arizona.edu</p>"
+        }
+      ]
+    }
+  ]
+}

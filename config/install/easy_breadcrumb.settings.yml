@@ -1,26 +1,44 @@
 applies_admin_routes: false
-include_home_segment: false
-home_segment_title: Home
-home_segment_keep: false
-include_title_segment: false
-language_path_prefix_as_segment: false
-use_menu_title_as_fallback: true
-use_page_title_as_menu_title_fallback: true
-remove_repeated_segments: true
-term_hierarchy: false
-absolute_paths: false
-hide_single_home_item: false
-title_from_page_when_available: false
-capitalizator_mode: ucwords
-capitalizator_ignored_words: 'of and or de del y o a'
-capitalizator_forced_words_first_letter: 0
-capitalizator_forced_words_case_sensitivity: 1
-add_structured_data_jsonld: false
-use_site_title: false
-include_invalid_paths: false
-add_structured_data_json_ld: 0
+include_invalid_paths: true
 excluded_paths: ''
 replaced_titles: ''
 custom_paths: ''
+include_home_segment: true
+alternative_title_field: field_breadcrumb_title
+home_segment_title: Home
+home_segment_keep: false
+include_title_segment: true
+title_from_page_when_available: false
 title_segment_as_link: false
-capitalizator_forced_words: ''
+use_menu_title_as_fallback: true
+use_page_title_as_menu_title_fallback: true
+menu_title_preferred_menu: main
+remove_repeated_segments: true
+language_path_prefix_as_segment: false
+absolute_paths: false
+hide_single_home_item: false
+term_hierarchy: false
+use_site_title: false
+add_structured_data_json_ld: false
+capitalizator_mode: ucwords
+capitalizator_ignored_words:
+  - of
+  - and
+  - or
+  - de
+  - del
+  - 'y'
+  - o
+  - a
+capitalizator_forced_words: {  }
+capitalizator_forced_words_case_sensitivity: true
+capitalizator_forced_words_first_letter: false
+follow_redirects: true
+limit_segment_display: false
+segment_display_limit: 0
+segment_display_minimum: null
+truncator_mode: false
+truncator_length: 100
+truncator_dots: true
+remove_repeated_segments_text_only: false
+home_segment_validation_skip: false

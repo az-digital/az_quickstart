@@ -1,0 +1,6 @@
+admin:
+  js:
+    js/az-marketing-cloud-admin.js: {}
+  css:
+    theme:
+      css/az-marketing-cloud-admin.css: {}

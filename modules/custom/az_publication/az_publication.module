@@ -1,0 +1,654 @@
+<?php
+
+/**
+ * @file
+ * Contains az_publication.module.
+ */
+
+use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Datetime\Element\Datetime;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Link;
+use Drupal\Core\Url;
+use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
+use Drupal\filter\Entity\FilterFormat;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
+use Drupal\views\Plugin\Block\ViewsBlock;
+use Seboettg\CiteProc\CiteProc;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Implements hook_entity_extra_field_info().
+ */
+function az_publication_entity_extra_field_info() {
+  $extra = [];
+
+  // Check to see if our content type exists.
+  $bundle = NodeType::load('az_publication');
+  if ($bundle) {
+    // Link title pseudo field.
+    $extra['node'][$bundle->id()]['display']['az_publication_bibliography'] = [
+      'label' => t('Bibliography'),
+      'description' => "Bibliographic reference for content",
+      'weight' => 50,
+      'visible' => FALSE,
+    ];
+  }
+
+  return $extra;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter().
+ *
+ * Add block--views-block--viewname suggestion. This suggestion is missing.
+ *
+ * @inheritdoc
+ */
+function az_publication_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  if (!empty($variables['elements']['content']['#view_id'])) {
+    $suggestions[] = 'block__views_block__' . $variables['elements']['content']['#view_id'];
+  }
+  // Check if this is a content block.
+  if (!empty($variables['elements']['content']['#block_content'])) {
+    $block = $variables['elements']['content']['#block_content'];
+    // Check if this is a Flexible Block.
+    if ($block->bundle() === 'az_flexible_block') {
+      try {
+        // Attempt to find a view reference field to add a suggestion.
+        foreach ($block->field_az_main_content->referencedEntities() as $paragraph) {
+          if ($paragraph->hasField('field_az_view_reference')) {
+            if ($reference = $paragraph->get('field_az_view_reference')) {
+              if (!empty($reference->target_id) && !empty($reference->display_id)) {
+                // Add a content block suggestion based on view references.
+                $suggestions[] = 'block__block_content__views_reference__' . $reference->target_id . '__' . $reference->display_id;
+              }
+            }
+          }
+        }
+      }
+      catch (\InvalidArgumentException $e) {
+        // We ran into a field that didn't exist. Don't alter theme suggestions.
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_publication_theme() {
+  return [
+    'block__views_block__az_publications_az_author_person' => [
+      'template' => 'block--views-block--az-publications-az-author-person',
+      'base hook' => 'block',
+    ],
+    'block__block_content__views_reference__az_publications__az_author_person' => [
+      'template' => 'block--block-content--views-reference--az-publications--az-author-person',
+      'base hook' => 'block',
+    ],
+    'views_exposed_form__az_publications' => [
+      'template' => 'views-exposed-form--az-publications',
+      'base hook' => 'views_exposed_form',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_view().
+ */
+function az_publication_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+
+  // Only if fields suggest a publication.
+  if ($entity instanceof NodeInterface &&
+      $entity instanceof FieldableEntityInterface &&
+      $entity->hasField('field_az_publication_type') &&
+      !empty($entity->field_az_publication_type->value)) {
+    if ($display->getComponent('az_publication_bibliography')) {
+      // Publication fields to CSL schema mappings.
+      $pmap = [
+        'field_az_publication_container' => 'container-title',
+        'field_az_publication_issue' => 'issue',
+        'field_az_publication_volume' => 'volume',
+        'field_az_publication_version' => 'version',
+        'field_az_publication_location' => 'publisher-place',
+        'field_az_publication_page' => 'page',
+        'field_az_publication_publisher' => 'publisher',
+        'field_az_publication_doi' => 'DOI',
+        'field_az_publication_pmid' => 'PMID',
+        'field_az_publication_pmcid' => 'PMCID',
+        'field_az_publication_isbn' => 'ISBN',
+        'field_az_publication_issn' => 'ISSN',
+      ];
+      // Author fields to CSL schema mappings.
+      $amap = [
+        'field_az_author_fname' => 'given',
+        'field_az_author_lname' => 'family',
+        'field_az_author_drop_particle' => 'dropping-particle',
+        'field_az_author_nondrop_particle' => 'non-dropping-particle',
+        'field_az_author_suffix' => 'suffix',
+        'field_az_author_literal' => 'literal',
+      ];
+      $blob = new stdClass();
+      $blob->title = $entity->getTitle();
+      $blob->id = $entity->id();
+      $blob->type = $entity->field_az_publication_type->value;
+      // Load default citation settings.
+      $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
+      $repository = \Drupal::service('entity.repository');
+      $default_config = \Drupal::config('az_publication.settings');
+      $style_context = $default_config->get('default_citation_style');
+
+      // Attempt to find citation argument context.
+      if (function_exists('views_get_current_view')) {
+        $view = views_get_current_view();
+        // Phpstan doesn't know this can be NULL.
+        // @phpstan-ignore-next-line
+        if (!empty($view)) {
+          if (!empty($view->argument)) {
+            foreach ($view->argument as $arg) {
+              // Only use the argument as style if it's a style argument.
+              if ($arg instanceof AZCitationStyleArgument) {
+                $citation_style_argument = $arg->getValue();
+                // If the argument exists, set our style to it.
+                if (!empty($citation_style_argument)) {
+                  $style_context = $citation_style_argument;
+                }
+              }
+            }
+          }
+        }
+      }
+      // Search for style configuration.
+      $style_info = '';
+      /** @var \Drupal\az_publication\Entity\AZQuickstartCitationStyle $style */
+      $style = \Drupal::entityTypeManager()->getStorage('az_citation_style')->load($style_context);
+      // Load style if available.
+      // Phpstan doesn't know this can be NULL.
+      // @phpstan-ignore-next-line
+      if (!empty($style)) {
+        $style_info = $style->getStyleSheet();
+      }
+
+      if (!empty($style_info)) {
+        // Add cache tag based on citation mode.
+        $cache_tag = "citation:az_publication.az_citation_style." . $style_context;
+        $renderer = \Drupal::service('renderer');
+        $renderer->addCacheableDependency($build, $cache_tag);
+        // Map authorship information.
+        foreach ($pmap as $source => $destination) {
+          if (!empty($entity->{$source}->value)) {
+            $blob->{$destination} = trim($entity->{$source}->value);
+          }
+        }
+        if (!empty($entity->field_az_authors)) {
+          foreach ($entity->field_az_authors as $item) {
+            if (!empty($item->entity)) {
+              $author = new stdClass();
+              $author_entity = $repository->getTranslationFromContext($item->entity);
+              // Only literal name.
+              if (!empty($author_entity->field_az_author_literal->value) && empty($author_entity->field_az_author_parse->value)) {
+                $author->family = trim($author_entity->field_az_author_literal->value);
+              }
+              else {
+                // Map regular string fields.
+                foreach ($amap as $asource => $adestination) {
+                  if (!empty($author_entity->{$asource}->value)) {
+                    $author->{$adestination} = trim($author_entity->{$asource}->value);
+                  }
+                }
+              }
+              // Special field due to being an URL.
+              if (!empty($author_entity->field_az_author_link->uri)) {
+                $author->itemlink = $author_entity->field_az_author_link->uri;
+              }
+              // Special field handling for person reference.
+              if (!empty($author_entity->field_az_author_person->entity)) {
+                $person = $repository->getTranslationFromContext($author_entity->field_az_author_person->entity);
+                $author->itemlink = $person->toUrl()->toString();
+              }
+              $blob->author[] = $author;
+            }
+          }
+        }
+        // Handle publication date if available.
+        if (!empty($entity->field_az_publication_date->value)) {
+          $blob->issued = _az_publication_publication_date_object($entity);
+          if (isset($blob->issued->{'status'}) && $blob->issued->{'status'} === 'forthcoming') {
+            $blob->status = t('forthcoming');
+          }
+        }
+        // Handle accessed date if available.
+        if (!empty($entity->field_az_accessed_date->value)) {
+          $date = new stdClass();
+          $date->{'date-parts'}[] = explode('-', $entity->field_az_accessed_date->value);
+          $blob->accessed = $date;
+        }
+        // By default, provide a link to the node page if nothing else applies.
+        try {
+          // Canonical full node should not link to itself.
+          if ($view_mode !== 'full') {
+            $has_cover = !empty($entity->field_az_publication_image->target_id);
+            $has_abstract = !empty($entity->field_az_publication_abstract->value);
+            $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
+            // Linking to full node if there is an abstract or cover page.
+            if ($has_cover || $has_abstract) {
+              $blob->itemlink = $url->toString();
+            }
+          }
+        }
+        catch (Exception $e) {
+        }
+        // Handle link field if available.
+        if (!empty($entity->field_az_publication_link->uri)) {
+          $blob->itemlink = $entity->field_az_publication_link->uri;
+        }
+        // Handle file link if available.
+        if (!empty($entity->field_az_publication_media->entity)) {
+          // @todo Remove urldecode() if we figure out a better way to prevent
+          // encoded URLs from getting double-encoded by CiteProc.
+          $media_entity = $repository->getTranslationFromContext($entity->field_az_publication_media->entity);
+          if (!empty($media_entity->field_media_az_document->entity)) {
+            /** @var Drupal\file\FileInterface $file_entity */
+            $file_entity = $repository->getTranslationFromContext($media_entity->field_media_az_document->entity);
+            $blob->itemlink = urldecode($file_entity->createFileUrl(TRUE));
+          }
+        }
+
+        $additionalLinks = [];
+        if (!empty($entity->field_az_publication_extra_links)) {
+          foreach ($entity->field_az_publication_extra_links as $item) {
+            if (!empty($item->uri)) {
+              try {
+                $url = Url::fromUserInput($item->uri, ['absolute' => TRUE]);
+              }
+              catch (InvalidArgumentException $e) {
+                $url = Url::fromUri($item->uri, ['absolute' => TRUE]);
+              }
+              $title = $url->toString();
+              if (!empty($item->title)) {
+                $title = $item->title;
+              }
+              $link = Link::fromTextAndUrl($title, $url);
+              $buildLink = $link->toRenderable();
+              $additionalLinks[] = \Drupal::service('renderer')->render($buildLink);
+            }
+          }
+        }
+        $additionalLinks = implode(' ', $additionalLinks);
+        if (!empty($additionalLinks)) {
+          $blob->{'additionalLinks'} = $additionalLinks;
+        }
+        // Rendering extension for creating links from titles and authors.
+        $renderlink = function ($cslItem, $renderedText) {
+          // Rendering extension for text with links.
+          if (!empty($cslItem->itemlink)) {
+            try {
+              $url = Url::fromUserInput($cslItem->itemlink);
+            }
+            catch (InvalidArgumentException $e) {
+              $url = Url::fromUri($cslItem->itemlink);
+            }
+            $link = Link::fromTextAndUrl($renderedText, $url);
+            $buildLink = $link->toRenderable();
+            $renderedText = \Drupal::service('renderer')->render($buildLink);
+            // @todo CiteProc seems to add extra smart quotes to link. Figure out how to escape.
+            $renderedText = str_replace('"', '', $renderedText);
+          }
+          return $renderedText;
+        };
+        $additionalMarkup = [
+          "title" => $renderlink,
+          "author" => $renderlink,
+          "csl-entry" => function ($cslItem, $renderedText) {
+            // Remove citation number tag.
+            // In general it's never a good idea to parse html with regex.
+            // This works ONLY because the output is a known pattern.
+            if (!empty($cslItem->additionalLinks)) {
+              $renderedText .= ' ' . $cslItem->additionalLinks;
+            }
+            return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);
+          },
+        ];
+        // Set up CSL rendering.
+        $citeProc = new CiteProc($style_info, $locale, $additionalMarkup);
+        $biblio = $citeProc->render([$blob], "bibliography");
+        // Check if our filter format exists prior to use.
+        $az_citation_format = FilterFormat::load('az_citation');
+        if ($az_citation_format !== NULL) {
+          // Provide reference-specific filters.
+          $biblio = check_markup($biblio, 'az_citation');
+        }
+        $build['az_publication_bibliography'] = [
+          '#type' => 'markup',
+          '#markup' => ($biblio),
+        ];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_draggableviews_join_withargs_alter().
+ */
+function az_publication_draggableviews_join_withargs_alter(&$view_args, &$context) {
+  if (!empty($context['view_query']->view) && ($context['view_query']->view->id() === 'az_publications')) {
+    // Set draggableview context args to the current node for publications.
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof NodeInterface) {
+      $view_args = [$node->id()];
+    }
+    elseif (count($view_args) === 3) {
+      // View preview lacks Node context. Provide it.
+      $view_args = [end($view_args)];
+    }
+  }
+}
+
+/**
+ * Implements hook_contextual_links_alter().
+ */
+function az_publication_contextual_links_alter(array &$links, $group, array $route_parameters) {
+  $curation_key = 'az_publication.view.curate_publications';
+  $link_key = 'draggableviews.view.order_view';
+  // Provide route to curation page.
+  if ($group === $curation_key) {
+    $links[$curation_key]['route_name'] = 'view.az_publications_curate.curation_page';
+    return;
+  }
+  // Unset traditional draggable views link for publications.
+  if ($group !== $link_key || empty($links[$link_key]['metadata'])) {
+    return;
+  }
+  $metadata = $links[$link_key]['metadata'];
+  /** @var \Drupal\views\ViewEntityInterface $view */
+  $view = \Drupal::entityTypeManager()->getStorage('view')->load($metadata['name']);
+  if ($view->id() === 'az_publications') {
+    unset($links[$link_key]);
+  }
+}
+
+/**
+ * Implements hook_block_view_alter().
+ */
+function az_publication_block_view_alter(array &$build, BlockPluginInterface $block) {
+
+  // Check if we are dealing with the person publication block.
+  if ($block instanceof ViewsBlock) {
+    $view = $block->getViewExecutable();
+    $view_id = $view->id();
+    $view_display = $view->current_display ?? '';
+    if (($view_id === 'az_publications') && ($view_display === 'az_author_person')) {
+      // If there is a node context, create curation contextual link.
+      $node = \Drupal::routeMatch()->getParameter('node');
+      if ($node instanceof NodeInterface) {
+        $build['#contextual_links']['az_publication.view.curate_publications'] = [
+          'route_parameters' => ['node' => $node->id()],
+        ];
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_views_view().
+ */
+function az_publication_preprocess_views_view(&$variables) {
+  if (!empty($variables['id'])) {
+    // Only run for publication search.
+    if ($variables['id'] === 'az_publications') {
+      // Reduce the width of the text input form elements from the default.
+      $resize_element = [
+        'name',
+        'title',
+      ];
+      foreach ($resize_element as $element) {
+        if (!empty($variables['exposed'][$element])) {
+          $variables['exposed'][$element]['#size'] = 20;
+        }
+      }
+      // Year field doesn't need a standard width text field.
+      if (!empty($variables['exposed']['field_az_publication_date_value'])) {
+        $variables['exposed']['field_az_publication_date_value']['#size'] = 6;
+      }
+      if (!empty($variables['exposed']['field_az_publication_type_value'])) {
+        // Add class so publication type select is styled like text inputs.
+        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-text';
+        // Make sure type filter is styled as a form control.
+        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-select';
+        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-control';
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_publication_form_auto_entitylabel_settings_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Provide az_author tokens to the auto_entitylabel settings form.
+  if (\Drupal::routeMatch()->getRawParameters()->has('az_author')) {
+    $form['auto_entitylabel']['token_help']['#token_types'][] = 'az_author';
+  }
+}
+
+/**
+ * Create a CSL schema date object with date-parts based on a entity.
+ *
+ * To send a a publication for CSL processing, dates need to be transformed
+ * into CSL format. This is an object with a date-parts property and the primary
+ * processing needing to be done is making sure the date-parts nested array has
+ * the number of components dictated by the date type, e.g. we do not want to
+ * send a date with three components if there should be only a year component.
+ * Drupal dates fields are always Y-m-d, so we may need fewer components than
+ * the full date.
+ *
+ * @param \Drupal\Core\Entity\EntityInterface $entity
+ *   A publication node that needs a date computed.
+ *
+ * @return object
+ *   A computed date object for this entity.
+ */
+function _az_publication_publication_date_object(EntityInterface $entity) {
+  // @see https://github.com/citation-style-language/schema/blob/master/schemas/input/csl-data.json
+  $date = new stdClass();
+  $date_type = (!empty($entity->field_az_publication_date_type->value)) ? $entity->field_az_publication_date_type->value : 'default';
+  // Y-m-d.
+  $slices = 3;
+  // Depending on date type, we should send fewer date components to CSL.
+  switch ($date_type) {
+    case 'year';
+      $slices = 1;
+      break;
+
+    case 'month';
+    case 'season';
+      $slices = 2;
+      break;
+
+    default;
+      $slices = 3;
+      break;
+  }
+  // Handle publishing date.
+  if (!empty($entity->field_az_publication_date->value)) {
+    $components = explode('-', $entity->field_az_publication_date->value);
+    $components = array_slice($components, 0, $slices);
+    $date->{'date-parts'}[] = $components;
+  }
+  // Handle end of date range if appropriate.
+  if (!empty($entity->field_az_publication_date->end_value)) {
+    $components = explode('-', $entity->field_az_publication_date->end_value);
+    $components = array_slice($components, 0, $slices);
+    $date->{'date-parts'}[] = $components;
+  }
+  // Handle approximate dates, e.g. (ca. 2000)
+  if (!empty($entity->field_az_publication_approximate->value)) {
+    $date->{'circa'} = 1;
+  }
+  // Handle forthcoming/future dates.
+  if (!empty($entity->field_az_publication_date->value)) {
+    $issue_date = strtotime($entity->field_az_publication_date->value);
+    $now = \Drupal::time()->getCurrentTime();
+    if ($issue_date > $now) {
+      $date->{'status'} = 'forthcoming';
+    }
+  }
+  return $date;
+}
+
+/**
+ * Ajax callback for date type field.
+ *
+ * @param array $form
+ *   The triggering form render array.
+ * @param Drupal\Core\Form\FormStateInterface $form_state
+ *   Form state of current form.
+ * @param \Symfony\Component\HttpFoundation\Request $request
+ *   The request object, holding current path and request uri.
+ *
+ * @return array
+ *   Date element render array.
+ */
+function _az_publication_ajax_callback(array &$form, FormStateInterface $form_state, Request $request) {
+  // Return publication date array as this is what will actually change.
+  return $form['field_az_publication_date'];
+}
+
+/**
+ * Adds multiple date format support to publication dates.
+ *
+ * Transforms the field_az_publication_date field into a text field allowing
+ * different date formats depending on which date type is selected. The
+ * bootstrap-datepicker library is attached and a javascript helper added
+ * that pads or removes components from the date as needed based on type.
+ *
+ * @param array $form
+ *   The complete form structure.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ * @param string $form_id
+ *   The form ID of the form.
+ */
+function _az_publication_form_revisions(array &$form, FormStateInterface $form_state, $form_id) {
+
+  $id = 'az-publication-ajax';
+  $date_field = 'field_az_publication_date';
+  $type_field = 'field_az_publication_date_type';
+
+  // Check that date and date field are present.
+  if (!empty($form[$type_field]) && !empty($form[$date_field])) {
+    // Find the current date type value.
+    $date_type = $form_state->getValue([$type_field, '0', 'value']);
+    if (empty($date_type)) {
+      if (!empty($form[$type_field]['widget']['#default_value'][0])) {
+        $date_type = $form[$type_field]['widget']['#default_value'][0];
+      }
+      else {
+        $date_type = 'default';
+      }
+    }
+
+    // Add ajax callback for type field. This triggers the date field to change.
+    $form[$type_field]['widget']['#ajax'] = [
+      'callback' => '_az_publication_ajax_callback',
+      'disable-refocus' => TRUE,
+      'event' => 'change',
+      'wrapper' => $id,
+      'progress' => [
+        'type' => 'throbber',
+      ],
+    ];
+
+    // Add js library and ajax wrapper to date field.
+    $form[$type_field]['widget']['#attached']['library'][] = 'az_publication/az_publication_picker';
+    $form[$date_field]['#prefix'] = "<div id=\"$id\">";
+    $form[$date_field]['#suffix'] = "</div>";
+
+    // Gather settings based on type.
+    switch ($date_type) {
+      case 'month';
+      case 'season';
+        $format = 'Y-m';
+        $viewmode = 'months';
+        break;
+
+      case 'year';
+        $format = 'Y';
+        $viewmode = 'years';
+        break;
+
+      default;
+        $format = 'Y-m-d';
+        $viewmode = 'days';
+        break;
+    }
+
+    // Add classes and settings to the individual date input elements.
+    $components = ['value', 'end_value'];
+    foreach ($components as $component) {
+      $form[$date_field]['widget'][0][$component]['#attributes']['data-drupal-date-format'] = [$format];
+      $form[$date_field]['widget'][0][$component]['#attributes']['data-az-publication-date-mode'] = [$viewmode];
+      $form[$date_field]['widget'][0][$component]['#attributes']['type'] = 'text';
+      $form[$date_field]['widget'][0][$component]['#attributes']['class'][] = 'az-publication-date-picker';
+      $form[$date_field]['widget'][0][$component]['#value_callback'] = '_az_publication_value_callback';
+    }
+  }
+
+}
+
+/**
+ * Accounts for submitted dates not matching Drupal format.
+ *
+ * Drupal expects dates in format Y-m-d, but form elements may be submitted
+ * in formats lacking a month or day. For dates missing a month or day, a 1
+ * is added for that component before the value is sent to core. This means
+ * that a year date gains the month and day components of January 1st, etc.
+ *
+ * @param array $element
+ *   An associative array containing the properties of the element.
+ * @param mixed $input
+ *   The incoming input to populate the form element. If this is FALSE,
+ *   the element's default value should be returned.
+ * @param \Drupal\Core\Form\FormStateInterface $form_state
+ *   The current state of the form.
+ *
+ * @return mixed
+ *   The value to assign to the element.
+ */
+function _az_publication_value_callback(array &$element, $input, FormStateInterface $form_state) {
+  // Check if value is present.
+  if (!empty($input['date'])) {
+    $date = $input['date'];
+    $date = explode('-', $date);
+    // Drupal core expects Y-m-d. We may have less. Pad missing elements.
+    while (count($date) < 3) {
+      array_push($date, '01');
+    }
+    // Put our date back together.
+    $input['date'] = implode('-', $date);
+  }
+  // Depend on the real callback for actual value.
+  return Datetime::valueCallback($element, $input, $form_state);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_publication_form_node_az_publication_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  _az_publication_form_revisions($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_publication_form_node_az_publication_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  _az_publication_form_revisions($form, $form_state, $form_id);
+}

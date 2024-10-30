@@ -2,14 +2,14 @@
 
 namespace Drupal\Tests\az_barrio\Functional;
 
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Tests the Arizona Barrio theme.
  *
  * @group az_barrio
  */
-class AzBarrioTest extends BrowserTestBase {
+class AzBarrioTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -33,14 +33,14 @@ class AzBarrioTest extends BrowserTestBase {
   /**
    * The created user.
    *
-   * @var User
+   * @var \Drupal\user\Entity\User
    */
   protected $adminUser;
 
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create a test user.

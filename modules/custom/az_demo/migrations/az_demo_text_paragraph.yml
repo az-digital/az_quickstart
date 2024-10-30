@@ -41,7 +41,7 @@ process:
     paragraph_behavior_plugins:
       az_default_paragraph_behavior:
         az_display_settings:
-            bottom_spacing: bottom_spacing
+          bottom_spacing: bottom_spacing
 
 dependencies:
   enforced:

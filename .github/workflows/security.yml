@@ -1,23 +1,30 @@
 name: Security workflow
 on:
+  schedule:
+    - cron:  '0 13 * * *'
+  pull_request:
   push:
-    schedule:
-      - cron:  '0 13 * * *'
+    branches:
+      - '*'
 jobs:
   dependency-audit:
     name: Dependency Check
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '8.3'
+      - name: Find the push source branch name
+        if: ${{ github.event_name != 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Find the pull request source branch name
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
       - name: Set variables
         run: |
-          export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
-          echo "AZ_TRIMMED_REF=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
             echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           else
@@ -29,7 +36,7 @@ jobs:
             echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
           fi
       - name: Clone scaffolding repo
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: az-digital/az-quickstart-scaffolding
           path: az-quickstart-scaffolding
@@ -43,7 +50,7 @@ jobs:
           composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
       - name: Check dependencies for vulnerabilities
-        uses: symfonycorp/security-checker-action@038cecb1ee1bf871d1ef43e873f813d900a1125c
+        uses: symfonycorp/security-checker-action@v5
         with:
           lock: az-quickstart-scaffolding/composer.lock
   code-check:
@@ -51,13 +58,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
       - name: Setup PHP
-        uses: shivammathur/setup-php@d2f58713aaf7809d0c4d11e827c9e9dbbc55b34e
+        uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
-      - name: Set variables
+          php-version: '8.3'
+      - name: Find the push source branch name
+        if: ${{ github.event_name != 'pull_request' }}
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Find the pull request source branch name
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
       - name: Install dependencies
         run: |
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi

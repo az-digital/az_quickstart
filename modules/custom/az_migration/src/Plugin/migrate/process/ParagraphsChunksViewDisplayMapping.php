@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -38,11 +39,8 @@ use Drupal\migrate\Row;
  * @see https://github.com/az-digital/az_quickstart/pull/1109
  * @see https://github.com/az-digital/az_quickstart/issues/880
  * // @codingStandardsIgnoreEnd
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_chunks_view_display_mapping"
- * )
  */
+#[MigrateProcess('paragraphs_chunks_view_display_mapping')]
 class ParagraphsChunksViewDisplayMapping extends ProcessPluginBase {
 
   /**

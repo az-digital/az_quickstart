@@ -8,6 +8,10 @@ use Drupal\paragraphs\Plugin\migrate\source\d7\ParagraphsItem;
 /**
  * Drupal 7 Paragraph Item source plugin.
  *
+ * Available configuration keys:
+ * - bundle: (optional) If supplied, this will only return paragraphs
+ *   of that particular type.
+ *
  * @MigrateSource(
  *   id = "az_paragraphs_item"
  * )
@@ -15,9 +19,19 @@ use Drupal\paragraphs\Plugin\migrate\source\d7\ParagraphsItem;
 class AZParagraphsItem extends ParagraphsItem {
 
   /**
+   * Whether to migrate archived paragraphs.
+   *
+   * @var bool
+   */
+  protected $allowArchivedParagraphs;
+
+  /**
    * {@inheritdoc}
    */
   public function query() {
+    // @phpstan-ignore-next-line
+    $this->allowArchivedParagraphs = \Drupal::config('az_migration.settings')->get('allow_archived_paragraphs');
+
     $query = $this->select('paragraphs_item', 'p')
       ->fields('p',
         ['item_id',
@@ -29,8 +43,11 @@ class AZParagraphsItem extends ParagraphsItem {
         ])
       ->fields('pr', ['revision_id']);
     $query->innerJoin('paragraphs_item_revision', 'pr', static::JOIN);
-    // Omit archived (deleted) paragraphs.
-    $query->condition('p.archived', 0);
+
+    if (!$this->allowArchivedParagraphs) {
+      // Omit archived (deleted or stale) paragraphs.
+      $query->condition('p.archived', 0);
+    }
     // This configuration item may be set by a deriver to restrict the
     // bundles retrieved.
     if ($this->configuration['bundle']) {
@@ -96,7 +113,12 @@ class AZParagraphsItem extends ParagraphsItem {
 
       }
     }
-    return parent::prepareRow($row);
+
+    foreach (array_keys($this->getFields('paragraphs_item', $row->getSourceProperty('bundle'))) as $field) {
+      $row->setSourceProperty($field, $this->getFieldValues('paragraphs_item', $field, $item_id, $revision_id));
+    }
+
+    return $row;
   }
 
 }

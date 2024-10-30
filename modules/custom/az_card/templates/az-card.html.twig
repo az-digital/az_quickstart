@@ -6,9 +6,14 @@
  * Available variables:
  * - attributes: Card element attributes.
  * - media: The media field of a card.
- * - title: The title field of a card..
+ * - title: The title field of a card.
  * - body: The body field of a card.
  * - link: The link field on a card.
+ * - link_url: The link URL only.
+ * - title_style: The title style to use.
+ * - title_alignment: The title alignment to use.
+ * - title_level: The heading level to use.
+ * - title_display: The title text display size to use.
  *
  * @ingroup themeable
  */
@@ -18,17 +23,44 @@
 
 <div{{ attributes }}>
   {% if media %}
-    {{ media }}
+    <div class="position-relative overflow-hidden">
+      {{ media }}
+      {% if title and title_style == 'title-on-image' %}
+        <div class="card-img-overlay p-0 d-flex flex-column">
+          <{{ title_level }} class="bold mt-auto card-title bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
+            {% if link|render %}
+              <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
+            {% else %}
+              {{ title }}
+            {% endif %}
+          </{{ title_level }}>
+        </div>
+      {% endif %}
+    </div>
   {% endif %}
-  <div class="card-body d-flex flex-column">
-    {% if title %}
-      <h3 class="h5 bold mt-0">{{ title }}</h3>
-    {% endif %}
-    {% if body %}
-      <div class="card-text">{{ body }}</div>
-    {% endif %}
-    {% if link %}
-      <div class="mt-auto">{{ link }}</div>
-    {% endif %}
-  </div>
+  {% if title_style == 'title-on-image' and body['#text'] == '' and link['#title'] == '' %}
+    <div class="d-flex flex-column">
+      {% if link|render %}
+        <div class="mt-auto">{{ link }}</div>
+      {% endif %}
+    </div>
+  {% else %}
+    <div class="card-body d-flex flex-column">
+      {% if title and title_style == 'default' %}
+        <{{ title_level }} class="bold mt-0 mb-3 card-title {{ title_alignment }} {{ title_display }}">
+          {% if link|render %}
+            <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
+          {% else %}
+            {{ title }}
+          {% endif %}
+        </{{ title_level }}>
+      {% endif %}
+      {% if body %}
+        <div class="card-text">{{ body }}</div>
+      {% endif %}
+      {% if link %}
+        <div class="mt-auto">{{ link }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
 </div>

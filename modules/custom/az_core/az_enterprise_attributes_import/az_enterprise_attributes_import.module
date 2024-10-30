@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Contains az_enterprise_attributes_import.module.
+ */
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function az_enterprise_attributes_import_migration_plugins_alter(array &$migrations) {
+
+  if (!empty($migrations['migration_config_deriver:az_enterprise_attributes_import'])) {
+    $endpoint = \Drupal::config('az_enterprise_attributes_import.settings')->get('endpoint');
+    if (!empty($endpoint)) {
+      $migrations['migration_config_deriver:az_enterprise_attributes_import']['source']['urls'] = [$endpoint];
+    }
+  }
+}

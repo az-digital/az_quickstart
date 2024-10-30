@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -42,11 +43,8 @@ use Drupal\migrate\Row;
  *     background: field_uaqs_callout_background
  *     border: field_uaqs_callout_border_color
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_callout_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_callout_field_merge')]
 class ParagraphsCalloutFieldMerge extends ProcessPluginBase {
 
   /**

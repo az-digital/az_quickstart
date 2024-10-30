@@ -5,11 +5,14 @@
  * Contains az_event.module.
  */
 
-use Drupal\node\Entity\NodeType;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
@@ -70,7 +73,7 @@ function az_event_preprocess_field(&$variables, $hook) {
 function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   // We only know what to do with event pseudo fields if our date seems defined.
-  if ($entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
+  if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
     $timestamp = $entity->field_az_event_date->value;
     $formatter = \Drupal::service('date.formatter');
 
@@ -164,4 +167,64 @@ function az_event_preprocess_views_view(&$variables) {
     }
   }
 
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Hide the event view category search if there are no options.
+ */
+function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $view = $form_state->get('view');
+  if (($view->id() === 'az_events') && ($view->current_display === 'page_1')) {
+
+    // Check to see if the event category filter seems to exist in this display.
+    if (isset($form['term_node_tid_depth'])) {
+      if (isset($form['term_node_tid_depth']['#options']) &&
+        is_array($form['term_node_tid_depth']['#options'])) {
+        // We will only show the category filter in some cases.
+        $keep_filter = TRUE;
+
+        // Get the arguments statically, as this hook is called multiple times.
+        // At some points in the request, the arguments disappear.
+        $view_args = &drupal_static(__FUNCTION__);
+        if (!isset($view_args)) {
+          $view_args = $view->args;
+        }
+
+        // Check if our event category filter doesn't contain multiple terms.
+        // The implication is this site probably doesn't use this vocabulary.
+        if (count($form['term_node_tid_depth']['#options']) <= 1) {
+          $keep_filter = FALSE;
+        }
+
+        // Check if we seem to have contextual filter arguments.
+        if (isset($view_args) && is_array($view_args) && !empty($view_args)) {
+          $keep_filter = FALSE;
+        }
+
+        // Hide the category filter if either of the above were the case.
+        // Our goal is to hide the filter if it conflicts or has no terms.
+        if (!$keep_filter) {
+          $form['term_node_tid_depth']['#access'] = FALSE;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Sets the Thumbnail Image field to match the first item of the
+ * "Featured Images" field if the Use Featured Image as Thumbnail
+ * checkbox is checked.
+ */
+function az_event_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_event'
+    && $entity instanceof NodeInterface
+    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue()[0]['value'])) {
+    $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_photos')->target_id;
+  }
 }
