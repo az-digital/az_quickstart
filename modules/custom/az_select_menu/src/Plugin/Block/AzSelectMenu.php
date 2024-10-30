@@ -127,8 +127,7 @@ class AzSelectMenu extends MenuBlock {
   public function build() {
 
     $build = parent::build();
-    $block_id_prefix = 'az-select-menu-' . Html::getId($build['#menu_block_configuration']['id']);
-    $menu_name = $block_id_prefix . '-' . Html::getId($build['#menu_name']);
+    $menu_name = Html::getId($build['#menu_block_configuration']['id']);
 
     $form_attributes = new Attribute([
       'id' => $menu_name . '-form',
