@@ -1,5 +1,4 @@
 az_publication_picker:
-  version: 1.x
   js:
     js/az_publication_date_picker.js: {}
   dependencies:

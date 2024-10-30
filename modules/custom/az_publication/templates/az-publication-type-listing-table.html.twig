@@ -27,11 +27,11 @@
   <tbody>
     {% for row in rows %}
       <tr{{ row.attributes }}>
-        <td class="views-ui-view-id" data-drupal-selector="az-publication-type-table-filter-text-source">
-          {{ row.data.id.data }}
-        </td>
         <td class="az-publication-type-label">
           <strong data-drupal-selector="az-publication-type-table-filter-text-source">{{ row.data.label.data }}</strong>
+        </td>
+        <td class="az-publication-type-machine-name" data-drupal-selector="az-publication-type-table-filter-text-source">
+          {{ row.data.id.data }}
         </td>
         <td class="az-publication-type" data-drupal-selector="az-publication-type-table-filter-text-source">
           {{ row.data.type.data }}
