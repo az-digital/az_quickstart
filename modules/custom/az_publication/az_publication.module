@@ -177,9 +177,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         if ($az_publication_mapped_type->get('type')) {
           $blob->type = $az_publication_mapped_type->get('type');
         }
-        else {
-          $blob->type = 'article';
-        }
+      }
+      else {
+        $blob->type = 'article-journal';
       }
       // Load default citation settings.
       $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
