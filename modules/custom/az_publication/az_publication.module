@@ -175,7 +175,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         $entity_type_manager = \Drupal::entityTypeManager();
         $az_publication_type_storage = $entity_type_manager->getStorage('az_publication_type');
         $az_publication_mapped_type = $az_publication_type_storage->load($az_publication_mapped_type_id);
-        if ($az_publication_mapped_type->get('type')) {
+        if (isset($az_publication_mapped_type) && $az_publication_mapped_type->get('type')) {
           $blob->type = $az_publication_mapped_type->get('type');
         }
       }
