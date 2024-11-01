@@ -14,7 +14,9 @@ use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\block\Entity\Block;
+use Drupal\node\NodeInterface;
 use Drupal\pathauto\PathautoPatternInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
@@ -44,7 +46,7 @@ function az_core_toolbar() {
     'tab' => [
       '#type' => 'link',
       '#title' => t('Quickstart 2'),
-      '#url' => Url::fromUri('https://quickstart.arizona.edu'),
+      '#url' => Url::fromRoute('az_core.az_quickstart'),
       '#attributes' => [
         'target' => t('_blank'),
         'title' => t('AZ Quickstart 2'),
@@ -435,6 +437,37 @@ function az_core_form_taxonomy_overview_terms_alter(&$form, FormStateInterface $
   if (!empty($vocabulary) && ($vocabulary->id() === 'az_enterprise_attributes')) {
     _az_core_check_attribute_form($form, $form_state, $form_id);
   }
+}
+
+/**
+ * Implements hook_entity_access().
+ */
+function az_core_node_access(NodeInterface $node, $op, AccountInterface $account) {
+
+  // NetID permission is only viable for update operation.
+  if ($account->hasPermission('edit matching netid content') && ($op === 'update')) {
+    $bundle = $node->getType();
+    // We are only interested in Person content.
+    if ($bundle === 'az_person') {
+      // Determine if netid field exists.
+      if ($node->hasField('field_az_netid')) {
+        /** @var \Drupal\Core\Entity\ContentEntityBase $node */
+        $netid = $node->field_az_netid->value;
+        try {
+          // Look up user mapping for CAS.
+          $auth = \Drupal::service('externalauth.authmap')->get($account->id(), 'cas');
+          if (($auth !== FALSE) && (!empty($netid)) && ($auth === $netid)) {
+            return AccessResult::allowed()->cachePerPermissions();
+          }
+        }
+        catch (ServiceNotFoundException $e) {
+        }
+      }
+    }
+  }
+
+  // No opinion about other permissions.
+  return AccessResult::neutral();
 }
 
 /**
