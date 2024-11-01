@@ -346,23 +346,12 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           "author" => $renderlink,
           "csl-entry" => function ($cslItem, $renderedText) {
             // Remove citation number tag.
+            // In general it's never a good idea to parse html with regex.
+            // This works ONLY because the output is a known pattern.
             if (!empty($cslItem->additionalLinks)) {
               $renderedText .= ' ' . $cslItem->additionalLinks;
             }
-            $dom = new DOMDocument();
-            // Suppress loadHTML warnings.
-            libxml_use_internal_errors(TRUE);
-            $dom->loadHTML('<?xml encoding="UTF-8">' . $renderedText);
-            libxml_clear_errors();
-            $divs = $dom->getElementsByTagName('div');
-            foreach ($divs as $div) {
-              if ($div->getAttribute('class') === 'csl-left-margin') {
-                $div->parentNode->removeChild($div);
-              }
-            }
-            $renderedText = $dom->saveHTML();
-            return $renderedText;
-          },
+            return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);          },
         ];
         // Set up CSL rendering.
         $citeProc = new CiteProc($style_info, $locale, $additionalMarkup);
