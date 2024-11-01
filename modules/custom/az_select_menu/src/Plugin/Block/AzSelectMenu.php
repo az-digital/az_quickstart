@@ -133,7 +133,7 @@ class AzSelectMenu extends MenuBlock {
     $menu_name = Html::getUniqueId($build['#menu_block_configuration']['id']);
 
     $form_attributes = new Attribute([
-      'id' => 'az-' . $build['#menu_name'] . '-form',
+      'id' => 'az-' . $menu_name . '-form',
       'data-toggle' => 'popover',
       'data-trigger' => 'focus',
       'data-placement' => 'top',
