@@ -351,7 +351,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             if (!empty($cslItem->additionalLinks)) {
               $renderedText .= ' ' . $cslItem->additionalLinks;
             }
-            return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);         
+            return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);
           },
         ];
         // Set up CSL rendering.
