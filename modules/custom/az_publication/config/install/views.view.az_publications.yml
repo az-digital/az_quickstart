@@ -624,7 +624,7 @@ display:
           admin_label: 'field_az_authors: Author'
           plugin_id: standard
           required: false
-      use_ajax: false
+      use_ajax: true
       group_by: true
       header: {  }
       footer: {  }
