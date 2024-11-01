@@ -143,6 +143,9 @@
             "dev-main": "2.13.x-dev"
         },
         "patches": {
+            "seboettg/citeproc-php": {
+                "Group/label test chain issue (158)": "https://gist.githubusercontent.com/tadean/1d43d4bdf46d3157c50755621391c1df/raw/e5aa9846c1c2002dbd163d0a9dcbe7d462da8f19/issue_3852.patch"
+            },
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
             },
