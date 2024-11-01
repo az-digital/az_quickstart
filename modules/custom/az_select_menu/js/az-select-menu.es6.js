@@ -8,7 +8,6 @@
     attach(context, settings) {
       //  az_select_menu form id's are added in an array depending
       //  on the page you are on, and how many select menus are on the page.
-      //  casting settings.azSelectMenu values to an array azSelectMenuArr
       Object.keys(settings.azSelectMenu).forEach(function (property) {
         if (settings.azSelectMenu.hasOwnProperty(property)) {
           const selectFormId = settings.azSelectMenu.ids[property];
