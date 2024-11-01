@@ -211,6 +211,9 @@
             },
             "renanbr/bibtex-parser": {
                 "Parser performance issue": "https://gist.githubusercontent.com/tadean/39b90d00cd3edfff7c5653f907e15721/raw/8feb59cb4447b0f667fe5f4936a25c4d30211e1b/renanbr_bibtex_parser_performance.patch"
+            },
+            "seboettg/citeproc-php": {
+                "Group/label test chain issue (158)": "https://gist.githubusercontent.com/tadean/1d43d4bdf46d3157c50755621391c1df/raw/e5aa9846c1c2002dbd163d0a9dcbe7d462da8f19/issue_3852.patch"
             }
         },
         "drupal-scaffold": {
