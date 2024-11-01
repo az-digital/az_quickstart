@@ -130,6 +130,7 @@ class AzSelectMenu extends MenuBlock {
   public function build() {
 
     $build = parent::build();
+    $menu_name = Html::getUniqueId($build['#menu_block_configuration']['id']);
 
     $form_attributes = new Attribute([
       'id' => 'az-' . $build['#menu_name'] . '-form',
@@ -153,7 +154,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#select_attributes'] = $select_attributes;
 
     $button_attributes = new Attribute([
-      'id' => 'az-' . $build['#menu_name'] . '-button',
+      'id' => Html::getUniqueId('az-' . $build['#menu_name'] . '-button'),
       'class' => [
         'btn',
         'btn-primary',
@@ -169,7 +170,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#button_attributes'] = $button_attributes;
 
     $build['#attached']['library'][] = 'az_select_menu/az_select_menu';
-    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az-select-menu-' . $build['#menu_name'] . '-form';
+    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az-' . $build['#menu_name'] . '-form';
 
     return $build;
   }
