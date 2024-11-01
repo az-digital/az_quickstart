@@ -14,8 +14,8 @@ function _arrayWithHoles(r) { if (Array.isArray(r)) return r; }
   Drupal.azSelectMenu = Drupal.azSelectMenu || {};
   Drupal.behaviors.azSelectMenu = {
     attach: function attach(context, settings) {
-      Object.keys(settings.azSelectMenu).forEach(function (property) {
-        if (settings.azSelectMenu.hasOwnProperty(property)) {
+      Object.keys(settings.azSelectMenu.ids).forEach(function (property) {
+        if (settings.azSelectMenu.ids.hasOwnProperty(property)) {
           var selectFormId = settings.azSelectMenu.ids[property];
           var selectForm = document.querySelector("#".concat(selectFormId));
           once('azSelectMenu', selectForm, context).forEach(function (element) {
