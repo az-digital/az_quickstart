@@ -377,21 +377,6 @@ display:
           separator: ', '
           field_api_classes: false
       sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -545,21 +530,6 @@ display:
           separator: ', '
           field_api_classes: false
       sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -1499,21 +1469,6 @@ display:
           empty_zero: false
           hide_alter_empty: false
       sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -2462,21 +2417,6 @@ display:
           empty_zero: false
           hide_alter_empty: false
       sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
         weight:
           id: weight
           table: draggableviews_structure
@@ -2574,21 +2514,6 @@ display:
     position: 3
     display_options:
       sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: ''
-          exposed: false
         weight:
           id: weight
           table: draggableviews_structure

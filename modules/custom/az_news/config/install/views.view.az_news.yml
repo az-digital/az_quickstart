@@ -122,21 +122,6 @@ display:
         options: {  }
       empty: {  }
       sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-          order: DESC
-          expose:
-            label: ''
-            field_identifier: sticky
-          exposed: false
         field_az_published_value:
           id: field_az_published_value
           table: node__field_az_published
@@ -278,6 +263,36 @@ display:
         options:
           offset: 0
           items_per_page: 1
+      sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: sticky
+          exposed: false
+        field_az_published_value:
+          id: field_az_published_value
+          table: node__field_az_published
+          field: field_az_published_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: datetime
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: field_az_published_value
+          exposed: false
+          granularity: second
       style:
         type: default
         options:
@@ -294,7 +309,7 @@ display:
         style: false
         style_options: false
         row: false
-        sorts: true
+        sorts: false
         pager_options: false
       display_description: ''
       pager_options: null
