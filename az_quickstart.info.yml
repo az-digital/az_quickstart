@@ -78,3 +78,4 @@ install:
 themes:
   - az_barrio
   - claro
+version: 2.10.11
