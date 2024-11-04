@@ -8,10 +8,12 @@
    * `--scrollbar-width` CSS variable on the html element.
    */
   function calculateScrollbarWidth() {
+    scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.documentElement.style.setProperty(
       '--scrollbar-width',
-      `${window.innerWidth - document.documentElement.clientWidth}px`,
+      `${scrollbarWidth}px`,
     );
+    return scrollbarWidth;
   }
 
   /**
@@ -56,14 +58,14 @@
    * This function assigns values to the `--full-width-left-distance` and
    * `--full-width-right-distance` CSS variables on the `html` element.
    */
-  function calculateFullWidthNegativeMargins() {
+  function calculateFullWidthNegativeMargins(scrollbarWidth) {
     const contentRegion = document.querySelectorAll('.block-system-main-block');
     if (contentRegion.length > 0) {
       const contentRegionPosition = contentRegion[0].getBoundingClientRect();
       const distanceFromLeft = contentRegionPosition.left;
       const distanceFromRight = contentRegionPosition.right;
-      const negativeLeftMargin = 0 - distanceFromLeft;
-      const negativeRightMargin = 0 - distanceFromRight;
+      const negativeLeftMargin = 0 - distanceFromLeft - (scrollbarWidth / 2);
+      const negativeRightMargin = 0 - distanceFromRight - (scrollbarWidth / 2);
       document.documentElement.style.setProperty(
         '--full-width-left-distance',
         `${negativeLeftMargin}px`,
@@ -78,26 +80,18 @@
   /**
    * Executes functions to set up the page layout.
    */
-  function initialize() {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
+  function setFullWidthLayout() {
+    scrollbarWidth = calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins(scrollbarWidth);
     pushSidebarsDown();
   }
 
   // Initialize on page load
-  document.addEventListener('DOMContentLoaded', initialize);
+  document.addEventListener('DOMContentLoaded', setFullWidthLayout);
 
   // Recalculate values on window resize
-  window.addEventListener('resize', () => {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
+  window.addEventListener('resize', setFullWidthLayout);
 
   // Recalculate values when azVideoPlay custom event fires
-  window.addEventListener('azVideoPlay', () => {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
+  window.addEventListener('azVideoPlay', setFullWidthLayout);
 })();

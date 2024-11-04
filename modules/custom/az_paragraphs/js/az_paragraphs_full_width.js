@@ -6,7 +6,9 @@
 **/
 (function () {
   function calculateScrollbarWidth() {
-    document.documentElement.style.setProperty('--scrollbar-width', "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
+    scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', "".concat(scrollbarWidth, "px"));
+    return scrollbarWidth;
   }
   function pushSidebarsDown() {
     var contentRegion = document.querySelector('main.main-content');
@@ -28,32 +30,24 @@
       }
     }
   }
-  function calculateFullWidthNegativeMargins() {
+  function calculateFullWidthNegativeMargins(scrollbarWidth) {
     var contentRegion = document.querySelectorAll('.block-system-main-block');
     if (contentRegion.length > 0) {
       var contentRegionPosition = contentRegion[0].getBoundingClientRect();
       var distanceFromLeft = contentRegionPosition.left;
       var distanceFromRight = contentRegionPosition.right;
-      var negativeLeftMargin = 0 - distanceFromLeft;
-      var negativeRightMargin = 0 - distanceFromRight;
+      var negativeLeftMargin = 0 - distanceFromLeft - scrollbarWidth / 2;
+      var negativeRightMargin = 0 - distanceFromRight - scrollbarWidth / 2;
       document.documentElement.style.setProperty('--full-width-left-distance', "".concat(negativeLeftMargin, "px"));
       document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
     }
   }
-  function initialize() {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
+  function setFullWidthLayout() {
+    scrollbarWidth = calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins(scrollbarWidth);
     pushSidebarsDown();
   }
-  document.addEventListener('DOMContentLoaded', initialize);
-  window.addEventListener('resize', function () {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
-  window.addEventListener('azVideoPlay', function () {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
+  document.addEventListener('DOMContentLoaded', setFullWidthLayout);
+  window.addEventListener('resize', setFullWidthLayout);
+  window.addEventListener('azVideoPlay', setFullWidthLayout);
 })();
