@@ -6,9 +6,12 @@
   /**
    * Calculates scroll bar width if any and assigns the value to the
    * `--scrollbar-width` CSS variable on the html element.
+   *
+   * @return {int} scrollbarWidth The width of the scrollbar, in pixels.
    */
   function calculateScrollbarWidth() {
-    scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
     document.documentElement.style.setProperty(
       '--scrollbar-width',
       `${scrollbarWidth}px`,
@@ -57,6 +60,8 @@
    *
    * This function assigns values to the `--full-width-left-distance` and
    * `--full-width-right-distance` CSS variables on the `html` element.
+   *
+   * @param {int} scrollbarWidth The width of the scrollbar, in pixels.
    */
   function calculateFullWidthNegativeMargins(scrollbarWidth) {
     const contentRegion = document.querySelectorAll('.block-system-main-block');
@@ -64,8 +69,8 @@
       const contentRegionPosition = contentRegion[0].getBoundingClientRect();
       const distanceFromLeft = contentRegionPosition.left;
       const distanceFromRight = contentRegionPosition.right;
-      const negativeLeftMargin = 0 - distanceFromLeft - (scrollbarWidth / 2);
-      const negativeRightMargin = 0 - distanceFromRight - (scrollbarWidth / 2);
+      const negativeLeftMargin = 0 - distanceFromLeft - scrollbarWidth / 2;
+      const negativeRightMargin = 0 - distanceFromRight - scrollbarWidth / 2;
       document.documentElement.style.setProperty(
         '--full-width-left-distance',
         `${negativeLeftMargin}px`,
@@ -81,7 +86,7 @@
    * Executes functions to set up the page layout.
    */
   function setFullWidthLayout() {
-    scrollbarWidth = calculateScrollbarWidth();
+    const scrollbarWidth = calculateScrollbarWidth();
     calculateFullWidthNegativeMargins(scrollbarWidth);
     pushSidebarsDown();
   }

@@ -6,7 +6,7 @@
 **/
 (function () {
   function calculateScrollbarWidth() {
-    scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
     document.documentElement.style.setProperty('--scrollbar-width', "".concat(scrollbarWidth, "px"));
     return scrollbarWidth;
   }
@@ -43,7 +43,7 @@
     }
   }
   function setFullWidthLayout() {
-    scrollbarWidth = calculateScrollbarWidth();
+    var scrollbarWidth = calculateScrollbarWidth();
     calculateFullWidthNegativeMargins(scrollbarWidth);
     pushSidebarsDown();
   }
