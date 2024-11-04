@@ -7,7 +7,7 @@
    * Calculates scroll bar width if any and assigns the value to the
    * `--scrollbar-width` CSS variable on the html element.
    *
-   * @return {int} scrollbarWidth The width of the scrollbar, in pixels.
+   * @return {number} scrollbarWidth The width of the scrollbar, in pixels.
    */
   function calculateScrollbarWidth() {
     const scrollbarWidth =
@@ -61,7 +61,7 @@
    * This function assigns values to the `--full-width-left-distance` and
    * `--full-width-right-distance` CSS variables on the `html` element.
    *
-   * @param {int} scrollbarWidth The width of the scrollbar, in pixels.
+   * @param {number} scrollbarWidth The width of the scrollbar, in pixels.
    */
   function calculateFullWidthNegativeMargins(scrollbarWidth) {
     const contentRegion = document.querySelectorAll('.block-system-main-block');
