@@ -184,26 +184,26 @@ display:
             format: az_standard
           tokenize: false
       sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
+        weight_1:
+          id: weight_1
+          table: taxonomy_term_field_data
+          field: weight
+          relationship: term_node_tid
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: sticky
+          entity_type: taxonomy_term
+          entity_field: weight
           plugin_id: standard
-          order: DESC
+          order: ASC
           expose:
             label: ''
-            field_identifier: ''
+            field_identifier: weight_1
           exposed: false
         weight:
           id: weight
           table: draggableviews_structure
           field: weight
-          relationship: none
+          relationship: term_node_tid
           group_type: group
           admin_label: ''
           plugin_id: standard
@@ -212,9 +212,8 @@ display:
             label: ''
             field_identifier: weight
           exposed: false
-          draggable_views_reference: 'az_reorder:reorder_people'
+          draggable_views_reference: 'azqs_reorder:page_1'
           draggable_views_null_order: after
-          draggable_views_pass_arguments: 0
         field_az_lname_value:
           id: field_az_lname_value
           table: node__field_az_lname
@@ -241,7 +240,49 @@ display:
             label: ''
             field_identifier: field_az_fname_value
           exposed: false
-      arguments: {  }
+      arguments:
+        tid:
+          id: tid
+          table: taxonomy_index
+          field: tid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: taxonomy_index_tid
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: true
+          title: '<none>'
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: ignore
+          validate_options:
+            bundles:
+              az_person_categories: az_person_categories
+              az_person_categories_secondary: az_person_categories_secondary
+            access: false
+            operation: view
+            multiple: 1
+          break_phrase: true
+          add_table: false
+          require_value: false
+          reduce_duplicates: true
       filters:
         status:
           id: status
@@ -546,6 +587,64 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: weight
+          exposed: false
+          draggable_views_reference: 'az_reorder:reorder_people'
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
+        field_az_lname_value:
+          id: field_az_lname_value
+          table: node__field_az_lname
+          field: field_az_lname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_lname_value
+          exposed: false
+        field_az_fname_value:
+          id: field_az_fname_value
+          table: node__field_az_fname
+          field: field_az_fname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_fname_value
+          exposed: false
       style:
         type: views_bootstrap_grid
         options:
@@ -569,7 +668,7 @@ display:
         row: false
         relationships: false
         fields: false
-        sorts: true
+        sorts: false
         arguments: true
       relationships: {  }
       display_description: ''
@@ -658,6 +757,64 @@ display:
           multi_type: separator
           separator: ', '
           field_api_classes: false
+      sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: weight
+          exposed: false
+          draggable_views_reference: 'az_reorder:reorder_people'
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
+        field_az_lname_value:
+          id: field_az_lname_value
+          table: node__field_az_lname
+          field: field_az_lname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_lname_value
+          exposed: false
+        field_az_fname_value:
+          id: field_az_fname_value
+          table: node__field_az_fname
+          field: field_az_fname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_fname_value
+          exposed: false
       style:
         type: views_bootstrap_grid
         options:
@@ -680,7 +837,7 @@ display:
         row: false
         relationships: false
         fields: false
-        sorts: true
+        sorts: false
         arguments: true
       relationships: {  }
       display_description: ''
@@ -1555,6 +1712,64 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
+      sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: weight
+          exposed: false
+          draggable_views_reference: 'az_reorder:reorder_people'
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
+        field_az_lname_value:
+          id: field_az_lname_value
+          table: node__field_az_lname
+          field: field_az_lname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_lname_value
+          exposed: false
+        field_az_fname_value:
+          id: field_az_fname_value
+          table: node__field_az_fname
+          field: field_az_fname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_fname_value
+          exposed: false
       style:
         type: views_bootstrap_grid
         options:
@@ -1580,7 +1795,7 @@ display:
         row: false
         relationships: false
         fields: false
-        sorts: true
+        sorts: false
         arguments: true
       relationships: {  }
       css_class: 'az-person-grid az-person-modal'
@@ -2461,6 +2676,64 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: false
+      sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: weight
+          exposed: false
+          draggable_views_reference: 'az_reorder:reorder_people'
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
+        field_az_lname_value:
+          id: field_az_lname_value
+          table: node__field_az_lname
+          field: field_az_lname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_lname_value
+          exposed: false
+        field_az_fname_value:
+          id: field_az_fname_value
+          table: node__field_az_fname
+          field: field_az_fname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_fname_value
+          exposed: false
       style:
         type: views_bootstrap_grid
         options:
@@ -2486,7 +2759,7 @@ display:
         row: false
         relationships: false
         fields: false
-        sorts: true
+        sorts: false
         arguments: true
       relationships: {  }
       css_class: 'az-person-grid az-person-modal'
@@ -2516,6 +2789,64 @@ display:
     display_plugin: page
     position: 3
     display_options:
+      sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+        weight:
+          id: weight
+          table: draggableviews_structure
+          field: weight
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: weight
+          exposed: false
+          draggable_views_reference: 'az_reorder:reorder_people'
+          draggable_views_null_order: after
+          draggable_views_pass_arguments: 0
+        field_az_lname_value:
+          id: field_az_lname_value
+          table: node__field_az_lname
+          field: field_az_lname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_lname_value
+          exposed: false
+        field_az_fname_value:
+          id: field_az_fname_value
+          table: node__field_az_fname
+          field: field_az_fname_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: standard
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_fname_value
+          exposed: false
       style:
         type: default
         options:
@@ -2533,7 +2864,7 @@ display:
         style_options: false
         row: false
         relationships: false
-        sorts: true
+        sorts: false
       relationships: {  }
       display_description: ''
       style_options: null
