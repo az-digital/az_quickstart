@@ -7,14 +7,12 @@ dependencies:
     - field.field.node.az_news.field_az_body
     - field.field.node.az_news.field_az_byline
     - field.field.node.az_news.field_az_contacts
-    - field.field.node.az_news.field_az_enterprise_attributes
     - field.field.node.az_news.field_az_expiration_date
     - field.field.node.az_news.field_az_featured_image_as_thumb
     - field.field.node.az_news.field_az_link
     - field.field.node.az_news.field_az_main_content
     - field.field.node.az_news.field_az_media_image
     - field.field.node.az_news.field_az_media_thumbnail_image
-    - field.field.node.az_news.field_az_metatag
     - field.field.node.az_news.field_az_news_tags
     - field.field.node.az_news.field_az_published
     - field.field.node.az_news.field_az_short_title
@@ -51,7 +49,7 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
-  field_az_media_image:
+  field_az_media_thumbnail_image:
     type: entity_reference_label
     label: hidden
     settings:
@@ -77,11 +75,10 @@ hidden:
   field_az_body: true
   field_az_byline: true
   field_az_contacts: true
-  field_az_enterprise_attributes: true
   field_az_expiration_date: true
   field_az_featured_image_as_thumb: true
   field_az_main_content: true
-  field_az_media_thumbnail_image: true
+  field_az_media_image: true
   field_az_metatag: true
   field_az_news_tags: true
   field_az_published: true
