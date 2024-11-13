@@ -903,7 +903,7 @@ display:
         filter_groups: false
       display_description: ''
       display_extenders: {  }
-      block_description: 'Sidebar News Block'
+      block_description: 'Small Row News Block'
     cache_metadata:
       max-age: -1
       contexts:
