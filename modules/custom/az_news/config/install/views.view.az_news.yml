@@ -151,8 +151,8 @@ display:
             field_identifier: field_az_published_value
           exposed: false
           granularity: second
-        created_1:
-          id: created_1
+        created:
+          id: created
           table: node_field_data
           field: created
           relationship: none
