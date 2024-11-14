@@ -275,7 +275,7 @@ function az_global_footer_update_1021202() {
 
   // Skip creating the Campus Store link if it already exists.
   if (isset($campus_store_link_id)) {
-    return t('Updated %asr Annual Security Report menu link(s) in Footer - Main.\nDeleted %outreach Outreach & Extension menu link(s) in Footer - Topics.\nCampus Store link already exists in Footer - Topics.',
+    return t('Updated %asr Annual Security Report menu link(s) in Footer - Main. Deleted %outreach Outreach & Extension menu link(s) in Footer - Topics. Campus Store link not created: link already exists in Footer - Topics.',
       [
         '%asr' => $asr_updates,
         '%outreach' => count($outreach_link_ids),
@@ -284,7 +284,7 @@ function az_global_footer_update_1021202() {
 
   // Skip creating the Campus Store link if Athletics & Recreation is missing.
   if (!isset($athletics_link_weight)) {
-    return t('Updated %asr Annual Security Report menu link(s) in Footer - Main.\nDeleted %outreach Outreach & Extension menu link(s) in Footer - Topics.\nNo Athletics & Recreation link found in Footer - Topics: aborted creation of Campus Store link.',
+    return t('Updated %asr Annual Security Report menu link(s) in Footer - Main. Deleted %outreach Outreach & Extension menu link(s) in Footer - Topics. Campus Store link not created: no Athletics & Recreation link found in Footer - Topics.',
       [
         '%asr' => $asr_updates,
         '%outreach' => count($outreach_link_ids),
@@ -322,7 +322,7 @@ function az_global_footer_update_1021202() {
   ]);
   $menu_link->save();
 
-  return t('Updated %asr Annual Security Report menu link(s) in Footer - Main.\nDeleted %outreach Outreach & Extension menu link(s) in Footer - Topics.\nCreated 1 Campus Store link in Footer - Topics.',
+  return t('Updated %asr Annual Security Report menu link(s) in Footer - Main. Deleted %outreach Outreach & Extension menu link(s) in Footer - Topics. Created 1 Campus Store link in Footer - Topics.',
   [
     '%asr' => $asr_updates,
     '%outreach' => count($outreach_link_ids),
