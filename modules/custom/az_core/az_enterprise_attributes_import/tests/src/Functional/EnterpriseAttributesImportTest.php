@@ -7,13 +7,13 @@ use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 
 /**
- * Test to ensure attributes can be unpublished.
+ * Test of attribute import functionality.
  *
- * @ingroup az_core
+ * @ingroup az_enterprise_attributes_import
  *
- * @group az_core
+ * @group az_enterprise_attributes_import
  */
-class EnterpriseAttributesUnpublishTest extends BrowserTestBase {
+class EnterpriseAttributesImportTest extends BrowserTestBase {
 
   /**
    * The profile to install as a basis for testing.
