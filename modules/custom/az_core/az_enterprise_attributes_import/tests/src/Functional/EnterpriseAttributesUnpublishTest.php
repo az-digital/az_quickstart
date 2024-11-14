@@ -3,7 +3,7 @@
 namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Tests\BrowserTestBase;
-use Drupal\migrate\MigrateExecutable;
+use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
 
 /**
@@ -78,7 +78,7 @@ class EnterpriseAttributesUnpublishTest extends BrowserTestBase {
       'vid' => 'az_enterprise_attributes',
       'status' => 1,
     ]);
-    // Asset we have exactly one published term.
+    // Assert we have exactly one published term.
     $this->assertSame(count($terms), 1);
 
     // Change source to have no terms available.
@@ -86,14 +86,19 @@ class EnterpriseAttributesUnpublishTest extends BrowserTestBase {
     $options['source']['data_rows'] = [];
     // Rerun modified migration.
     $migration = $manager->createInstance('az_enterprise_attributes_import', $options);
-    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage());
+    // Sync the migration to test unpublishing the missing term.
+    $sync = [
+      'sync' => 1,
+      'update' => 1,
+    ];
+    $migrate_exec = new MigrateExecutable($migration, new MigrateMessage(), $sync);
     $migrate_exec->import();
     // Get unpublished terms.
     $terms = $term_storage->loadByProperties([
       'vid' => 'az_enterprise_attributes',
       'status' => 0,
     ]);
-    // Asset we have exactly one unpublished term.
+    // Assert we have exactly one unpublished term.
     $this->assertSame(count($terms), 1);
   }
 
