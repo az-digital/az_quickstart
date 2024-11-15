@@ -3,8 +3,8 @@
 namespace Drupal\Tests\az_core\Functional;
 
 use Drupal\Tests\BrowserTestBase;
-use Drupal\migrate_tools\MigrateExecutable;
 use Drupal\migrate\MigrateMessage;
+use Drupal\migrate_tools\MigrateExecutable;
 
 /**
  * Test of attribute import functionality.
