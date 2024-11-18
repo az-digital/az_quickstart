@@ -12,10 +12,12 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
@@ -36,7 +38,7 @@ third_party_settings:
       label: Categories
       region: content
       parent_name: ''
-      weight: 5
+      weight: 6
       format_type: details
       format_settings:
         classes: ''
@@ -50,7 +52,7 @@ third_party_settings:
       label: 'Summary fields'
       region: content
       parent_name: ''
-      weight: 17
+      weight: 20
       format_type: details_sidebar
       format_settings:
         classes: 'group-summary field-group-tab'
@@ -67,26 +69,11 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 19
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_address:
-    type: text_textarea
-    weight: 9
-    region: content
-    settings:
-      rows: 9
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_attachments:
-    type: file_generic
-    weight: 12
-    region: content
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
-  field_az_body:
     type: text_textarea
     weight: 11
     region: content
@@ -94,9 +81,24 @@ content:
       rows: 9
       placeholder: ''
     third_party_settings: {  }
+  field_az_attachments:
+    type: file_generic
+    weight: 14
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_az_body:
+    type: text_textarea
+    weight: 13
+    region: content
+    settings:
+      rows: 9
+      placeholder: ''
+    third_party_settings: {  }
   field_az_degrees:
     type: string_textfield
-    weight: 13
+    weight: 15
     region: content
     settings:
       size: 60
@@ -104,7 +106,7 @@ content:
     third_party_settings: {  }
   field_az_email:
     type: email_default
-    weight: 7
+    weight: 9
     region: content
     settings:
       placeholder: ''
@@ -128,7 +130,7 @@ content:
     third_party_settings: {  }
   field_az_links:
     type: link_default
-    weight: 10
+    weight: 12
     region: content
     settings:
       placeholder_url: ''
@@ -144,13 +146,21 @@ content:
     third_party_settings: {  }
   field_az_media_image:
     type: media_library_widget
-    weight: 4
+    weight: 5
     region: content
     settings:
       media_types: {  }
     third_party_settings:
       media_library_edit:
         show_edit: '1'
+  field_az_netid:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 30
+      placeholder: ''
+    third_party_settings: {  }
   field_az_person_category:
     type: options_buttons
     weight: 1
@@ -165,12 +175,20 @@ content:
     third_party_settings: {  }
   field_az_phones:
     type: telephone_default
-    weight: 8
+    weight: 10
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_az_pronouns:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_suffix:
     type: string_textfield
     weight: 3
     region: content
@@ -180,7 +198,7 @@ content:
     third_party_settings: {  }
   field_az_titles:
     type: string_textfield
-    weight: 6
+    weight: 7
     region: content
     settings:
       size: 60
@@ -188,27 +206,27 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 17
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 15
+    weight: 17
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 14
+    weight: 16
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 16
+    weight: 18
     region: content
     settings:
       display_label: true
@@ -223,7 +241,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 18
+    weight: 21
     region: content
     settings:
       match_operator: CONTAINS
@@ -232,7 +250,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 20
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }

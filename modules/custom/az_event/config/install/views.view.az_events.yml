@@ -108,6 +108,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 3
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -453,6 +454,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+          pagination_heading_level: h4
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value

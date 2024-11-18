@@ -5,3 +5,4 @@ name: 'Person Categories (Secondary)'
 vid: az_person_categories_secondary
 description: 'Secondary taxonomy for categorizing people'
 weight: 0
+new_revision: false

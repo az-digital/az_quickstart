@@ -2,16 +2,13 @@
 
 namespace Drupal\az_core\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Enables use of array_intersect within a migration.
- *
- * @MigrateProcessPlugin(
- *   id = "array_intersect"
- * )
  *
  * @See https://git.drupalcode.org/project/migrate_process_array/-/blob/8.x-1.x/src/Plugin/migrate/process/ArrayIntersect.php
  *
@@ -26,6 +23,7 @@ use Drupal\migrate\Row;
  *      - match
  * @endcode
  */
+#[MigrateProcess('array_intersect')]
 class ArrayIntersect extends ProcessPluginBase {
 
   /**

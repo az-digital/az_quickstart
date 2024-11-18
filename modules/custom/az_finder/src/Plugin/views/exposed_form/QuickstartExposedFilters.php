@@ -1,29 +1,30 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_finder\Plugin\views\exposed_form;
 
-use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\better_exposed_filters\Plugin\views\exposed_form\BetterExposedFilters;
+use Drupal\views\Attribute\ViewsExposedForm;
 
 /**
  * Exposed form plugin that provides a basic exposed form.
  *
  * @ingroup views_exposed_form_plugins
- *
- * @ViewsExposedForm(
- *   id = "az_better_exposed_filters",
- *   title = @Translation("Quickstart Exposed Filters"),
- *   help = @Translation("Better exposed filters with additional Quickstart Settings.")
- * )
  */
+#[ViewsExposedForm(
+  id: 'az_better_exposed_filters',
+  title: new TranslatableMarkup('Quickstart Exposed Filters'),
+  help: new TranslatableMarkup('Better exposed filters with additional Quickstart Settings.')
+)]
 class QuickstartExposedFilters extends BetterExposedFilters {
 
   /**
    * {@inheritdoc}
    */
-  public function exposedFormAlter(&$form, FormStateInterface $form_state) {
+  public function exposedFormAlter(&$form, FormStateInterface $form_state): void {
     parent::exposedFormAlter($form, $form_state);
     $options = $this->options;
     if ($options['skip_link']) {
@@ -96,7 +97,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   /**
    * {@inheritdoc}
    */
-  protected function defineOptions() {
+  protected function defineOptions(): array {
     $options = parent::defineOptions();
     $options['reset_button_position'] = ['default' => 'bottom'];
     $options['reset_button_counter'] = ['default' => FALSE];
@@ -111,7 +112,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   /**
    * {@inheritdoc}
    */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+  public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
     parent::buildOptionsForm($form, $form_state);
     $reset_button_option = $form['bef']['general']['reset_button'];
     unset($form['bef']['general']['reset_button']);
@@ -194,7 +195,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   /**
    * {@inheritdoc}
    */
-  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
+  public function submitOptionsForm(&$form, FormStateInterface $form_state): void {
     // Extract the entire 'bef' section from the form state.
     $bef_settings = $form_state->getValue(['exposed_form_options', 'bef']);
     // Check and ensure the 'general' section exists within 'bef'.

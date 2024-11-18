@@ -4,6 +4,7 @@ namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Database\Database;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Row;
 use Drupal\migrate_plus\Plugin\migrate\process\Dom;
@@ -11,10 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Process Plugin to handle embedded entities in HTML text.
- *
- * @MigrateProcessPlugin(
- *   id = "az_entity_embed_process"
- * )
  *
  * This plugin processes HTML text that has had markup embedded within
  * it from the entity_embed module of D7. It does this by parsing the relevant
@@ -43,6 +40,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *         original_view_mode2: new_view_mode2
  * @endcode
  */
+#[MigrateProcess('az_entity_embed_process')]
 class EntityEmbedProcess extends Dom implements ContainerFactoryPluginInterface {
 
   /**

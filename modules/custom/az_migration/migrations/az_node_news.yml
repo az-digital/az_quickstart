@@ -18,12 +18,24 @@ migration_dependencies:
     - az_user
   optional:
     - az_news_tags
+    - az_paragraph_callout
     - az_paragraph_card_deck
+    - az_paragraph_carousel
+    - az_paragraph_chucks_view
     - az_paragraph_column_image
     - az_paragraph_contact
     - az_paragraph_extra_info
     - az_paragraph_file_download
+    - az_paragraph_full_width_bg_wrapper
+    - az_paragraph_full_width_media_row
+    - az_paragraph_gallery
     - az_paragraph_headed_text
+    - az_paragraph_html
+    - az_paragraph_jumbotron
+    - az_paragraph_panel_group
+    - az_paragraph_plain_text
+    - az_paragraph_single_card
+    - az_paragraph_well
 
 source:
   plugin: az_node
@@ -76,13 +88,26 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration:
+            - az_paragraph_callout
+            - az_paragraph_card_deck
+            - az_paragraph_carousel
+            - az_paragraph_chucks_view
             - az_paragraph_column_image
+            - az_paragraph_contact
             - az_paragraph_extra_info
             - az_paragraph_file_download
+            - az_paragraph_full_width_bg_wrapper
+            - az_paragraph_full_width_media_row
+            - az_paragraph_gallery
             - az_paragraph_headed_text
-            - az_paragraph_card_deck
+            - az_paragraph_html
+            - az_paragraph_jumbotron
+            - az_paragraph_panel_group
+            - az_paragraph_plain_text
+            - az_paragraph_single_card
+            - az_paragraph_well
           source: value
           no_stub: true
         -
@@ -91,13 +116,26 @@ process:
             - 0
       target_revision_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration:
+            - az_paragraph_callout
+            - az_paragraph_card_deck
+            - az_paragraph_carousel
+            - az_paragraph_chucks_view
             - az_paragraph_column_image
+            - az_paragraph_contact
             - az_paragraph_extra_info
             - az_paragraph_file_download
+            - az_paragraph_full_width_bg_wrapper
+            - az_paragraph_full_width_media_row
+            - az_paragraph_gallery
             - az_paragraph_headed_text
-            - az_paragraph_card_deck
+            - az_paragraph_html
+            - az_paragraph_jumbotron
+            - az_paragraph_panel_group
+            - az_paragraph_plain_text
+            - az_paragraph_single_card
+            - az_paragraph_well
           source: value
           no_stub: true
         -
@@ -129,7 +167,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           source: fid
           migration:
             - az_files
@@ -144,7 +182,7 @@ process:
         delta: delta
         target_id:
           -
-            plugin: migration_lookup
+            plugin: migmag_lookup
             source: fid
             migration:
               - az_media
@@ -181,7 +219,7 @@ process:
 
   field_az_news_tags:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       source: field_uaqs_news_tags
       migration:
         - az_news_tags
@@ -240,7 +278,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration: az_paragraph_contact
           source: value
           no_stub: true
@@ -250,7 +288,7 @@ process:
             - 0
       target_revision_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration: az_paragraph_contact
           source: value
           no_stub: true
@@ -261,7 +299,7 @@ process:
 
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid
