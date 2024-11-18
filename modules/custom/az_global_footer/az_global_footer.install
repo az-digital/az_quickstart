@@ -225,7 +225,7 @@ function az_global_footer_update_1020901() {
 /**
  * Make three updates to global footer links (az_quickstart #3863).
  */
-function az_global_footer_update_1021202() {
+function az_global_footer_update_1021101() {
 
   // Update the URL for the Annual Security Report link.
   $asr_updates = 0;
