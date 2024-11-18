@@ -21,7 +21,6 @@ settings:
       - specialCharacters
       - '|'
       - link
-      - anchor
       - '|'
       - bulletedList
       - numberedList
