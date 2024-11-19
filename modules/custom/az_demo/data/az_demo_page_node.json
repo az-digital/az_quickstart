@@ -186,7 +186,6 @@
       "exclude_title" : true,
       "title" : "News Views",
       "path" : "/pages/news-view-paragraphs",
-      "exclude_title" : true,
       "az_page_category" : "Views",
       "az_main_content" : "100|101|102",
       "az_media_image" : "",
@@ -207,7 +206,7 @@
       "title" : "Media Embed",
       "path" : "/pages/media-embeds",
       "exclude_title" : true,
-      "az_page_category" : "Views",
+      "az_page_category" : "Media Galleries",
       "az_main_content" : "90",
       "az_media_image" : "",
       "az_summary" : "Remote media embeds."
@@ -233,7 +232,7 @@
       "az_summary" : "This is a page with text and text with background elements."
     },
     {
-      "id":23,
+      "id":24,
       "title" : "People Finder",
       "path" : "/finders/people",
       "exclude_title" : false,
@@ -243,7 +242,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":24,
+      "id":25,
       "title" : "News Finder",
       "path" : "/finders/news",
       "exclude_title" : false,
@@ -253,7 +252,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":25,
+      "id":26,
       "title" : "Event Finder",
       "path" : "/finders/events",
       "exclude_title" : false,
@@ -263,7 +262,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":26,
+      "id":27,
       "title" : "Page Finder",
       "path" : "/finders/pages",
       "exclude_title" : false,
@@ -273,7 +272,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":27,
+      "id":28,
       "title" : "Content Finder",
       "path" : "/finders/content",
       "exclude_title" : false,
@@ -283,7 +282,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":28,
+      "id":29,
       "title" : "Publications",
       "path" : "/publications",
       "exclude_title" : false,
@@ -292,6 +291,5 @@
       "az_media_image" : "",
       "az_summary" : "A page with publications."
     }
-
   ]
 }
