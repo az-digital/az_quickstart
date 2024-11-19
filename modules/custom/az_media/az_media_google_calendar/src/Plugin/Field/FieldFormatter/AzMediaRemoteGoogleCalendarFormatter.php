@@ -13,7 +13,6 @@ use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
  *
  * Google documentation:
  * https://support.google.com/calendar/answer/41207?hl=en .
- *
  */
 #[FieldFormatter(
   id: 'az_media_remote_google_calendar',
