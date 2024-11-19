@@ -3,9 +3,12 @@ status: true
 dependencies:
   module:
     - media_remote
-id: az_google_calendar
-label: 'Google Calendar'
-description: 'Embed Google calendars'
+  enforced:
+    module:
+      - az_media_tableau
+id: az_tableau
+label: 'Tableau Visualization'
+description: 'Embed Tableau Visualizations'
 source: media_remote
 queue_thumbnail_downloads: false
 new_revision: false

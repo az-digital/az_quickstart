@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_media_google_calendar\Plugin\Field\FieldFormatter;
+namespace Drupal\az_media_tableau\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -9,26 +9,22 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
 
 /**
- * Plugin implementation of the 'az_media_remote_google_calendar' formatter.
- *
- * Google documentation:
- * https://support.google.com/calendar/answer/41207?hl=en .
- *
+ * Plugin implementation of the 'az_media_remote_tableau' formatter.
  */
 #[FieldFormatter(
-  id: 'az_media_remote_google_calendar',
-  label: new TranslatableMarkup('Remote Media - Google Calendar'),
+  id: 'az_media_remote_tableau',
+  label: new TranslatableMarkup('Remote Media - Tableau Visualization'),
   field_types: [
     'string',
   ],
 )]
-class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
+class AzMediaRemoteTableauFormatter extends MediaRemoteFormatterBase {
 
   /**
    * {@inheritdoc}
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/calendar\.google\.com\/calendar\/embed\?src=/';
+    return '/^https:\/\/bi\.arizona\.edu\/t\/UA\/views\/([a-zA-Z0-9_\-]+)\/([a-zA-Z0-9_\-]+)\?/';
   }
 
   /**
@@ -36,7 +32,7 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
    */
   public static function getValidUrlExampleStrings(): array {
     return [
-      'https://calendar.google.com/calendar/embed?src=[your-calendar-hash]',
+      'https://bi.arizona.edu/t/UA/views/[your-viz-name]/[your-dashboard-name]?embed=y&:tabs=n&:navSrc=Parse&:showVizHome=no',
     ];
   }
 
@@ -48,7 +44,7 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
     $pattern = static::getUrlRegexPattern();
     preg_match_all($pattern, $url, $matches);
     if (!empty($matches[1][0])) {
-      return t('Google calendar from @url', [
+      return t('Tableau Visualization from @url', [
         '@url' => $url,
       ]);
     }
@@ -68,10 +64,8 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
       $fieldValue = $item->getValue();
 
       $elements[$delta] = [
-        '#theme' => 'az_media_google_calendar',
+        '#theme' => 'az_media_tableau',
         '#url' => $fieldValue['value'],
-        '#width' => $this->getSetting('width') ?? 960,
-        '#height' => $this->getSetting('height') ?? 600,
       ];
     }
     return $elements;
@@ -81,36 +75,14 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return [
-      'width' => 960,
-      'height' => 600,
-    ] + parent::defaultSettings();
+    return [] + parent::defaultSettings();
   }
 
   /**
    * {@inheritdoc}
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
-    return parent::settingsForm($form, $form_state) + [
-      'width' => [
-        '#type' => 'number',
-        '#title' => $this->t('Width'),
-        '#default_value' => $this->getSetting('width'),
-        '#size' => 5,
-        '#maxlength' => 5,
-        '#field_suffix' => $this->t('pixels'),
-        '#min' => 50,
-      ],
-      'height' => [
-        '#type' => 'number',
-        '#title' => $this->t('Height'),
-        '#default_value' => $this->getSetting('height'),
-        '#size' => 5,
-        '#maxlength' => 5,
-        '#field_suffix' => $this->t('pixels'),
-        '#min' => 50,
-      ],
-    ];
+    return parent::settingsForm($form, $form_state) + [];
   }
 
   /**
@@ -118,10 +90,6 @@ class AzMediaRemoteGoogleCalendarFormatter extends MediaRemoteFormatterBase {
    */
   public function settingsSummary() {
     $summary = parent::settingsSummary();
-    $summary[] = $this->t('Iframe size: %width x %height pixels', [
-      '%width' => $this->getSetting('width'),
-      '%height' => $this->getSetting('height'),
-    ]);
     return $summary;
   }
 
