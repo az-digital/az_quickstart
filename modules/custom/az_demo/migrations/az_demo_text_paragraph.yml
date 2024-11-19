@@ -10,7 +10,8 @@ migration_dependencies:
 dependencies:
   enforced:
     module:
-      - az_flexible_page
+      - az_paragraphs_text
+      - az_media_google_calendar
 
 source:
   plugin: url
