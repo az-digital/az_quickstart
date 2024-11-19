@@ -6,12 +6,14 @@ migration_tags:
 migration_dependencies:
   required:
     - az_demo_media_google_calendar
+    - az_demo_media_tableau
 
 dependencies:
   enforced:
     module:
       - az_paragraphs_text
       - az_media_google_calendar
+      - az_media_tableau
 
 source:
   plugin: url
