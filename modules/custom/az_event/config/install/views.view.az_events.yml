@@ -108,6 +108,7 @@ display:
             offset: false
             offset_label: Offset
           quantity: 3
+          pagination_heading_level: h4
       exposed_form:
         type: basic
         options:
@@ -425,6 +426,169 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
+  az_past_grid_images:
+    id: az_past_grid_images
+    display_title: 'Past Grid View with Images'
+    display_plugin: block
+    position: 2
+    display_options:
+      title: Events
+      pager:
+        type: full
+        options:
+          offset: 0
+          items_per_page: 12
+          total_pages: null
+          id: 0
+          tags:
+            next: 'Next ›'
+            previous: '‹ Previous'
+            first: '« First'
+            last: 'Last »'
+          expose:
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+          pagination_heading_level: h4
+      sorts:
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: field_az_event_date_value
+          exposed: false
+          granularity: second
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            az_event: az_event
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+        field_az_event_date_end_value:
+          id: field_az_event_date_end_value
+          table: node__field_az_event_date
+          field: field_az_event_date_end_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          operator: '<='
+          value:
+            min: ''
+            max: ''
+            value: now
+            type: offset
+            granularity: second
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: views_bootstrap_grid
+        options:
+          row_class: ''
+          default_row_class: false
+          uses_fields: true
+          col_xs: col-12
+          col_sm: col-sm-12
+          col_md: col-md-4
+          col_lg: col-lg-4
+          col_xl: col-xl-4
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_card_alternate
+      defaults:
+        title: false
+        pager: false
+        style: false
+        style_options: false
+        row: false
+        sorts: false
+        filters: false
+        filter_groups: false
+        pager_options: false
+        footer: false
+      display_description: 'Use in a region that spans at least 12 columns.'
+      pager_options: null
+      style_options: null
+      footer: {  }
+      display_extenders: {  }
+      allow:
+        items_per_page: false
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   az_sidebar:
     id: az_sidebar
     display_title: 'Grid Sidebar'
@@ -723,7 +887,7 @@ display:
         row: false
         filters: false
         filter_groups: false
-      css_class: ''
+      css_class: add-pager-top-margin
       use_ajax: true
       display_description: ''
       style_options: null
@@ -736,7 +900,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
-        - user
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }

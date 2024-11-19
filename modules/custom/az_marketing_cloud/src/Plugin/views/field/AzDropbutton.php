@@ -3,6 +3,7 @@
 namespace Drupal\az_marketing_cloud\Plugin\views\field;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsField;
 use Drupal\views\Plugin\views\field\Links;
 use Drupal\views\ResultRow;
 
@@ -10,9 +11,8 @@ use Drupal\views\ResultRow;
  * Renders links as a drop button.
  *
  * @ingroup views_field_handlers
- *
- * @ViewsField("az_dropbutton")
  */
+#[ViewsField("az_dropbutton")]
 class AzDropbutton extends Links {
 
   /**

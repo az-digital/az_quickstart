@@ -6,6 +6,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\migrate\MigrateMessage;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate_tools\MigrateBatchExecutable;
+use Drupal\views\Attribute\ViewsField;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\field\BulkForm;
 use Drupal\views\Plugin\views\field\FieldPluginBase;
@@ -14,9 +15,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a views form element for trellis integration views.
- *
- * @ViewsField("az_event_trellis_views_field")
  */
+#[ViewsField("az_event_trellis_views_field")]
 class AZEventTrellisViewsField extends BulkForm {
 
   /**
@@ -46,7 +46,7 @@ class AZEventTrellisViewsField extends BulkForm {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL) {
     FieldPluginBase::init($view, $display, $options);
     $this->actions = [];
   }
@@ -63,21 +63,16 @@ class AZEventTrellisViewsField extends BulkForm {
 
     foreach ($this->view->result as $row_index => $row) {
       $form[$this->options['id']][$row_index] = [
-        '#tree' => TRUE,
+        '#type' => 'checkbox',
+        // We are not able to determine a main "title" for each row, so we can
+        // only output a generic label.
+        '#title' => $this->t('Update this item'),
+        '#title_display' => 'invisible',
+        '#return_value' => $row->Id ?? '',
+        '#default_value' => !empty($form_state->getValue($this->options['id'])[$row_index]) ? 1 : NULL,
       ];
-
-      foreach ($this->view->result as $row_index => $row) {
-        $form[$this->options['id']][$row_index] = [
-          '#type' => 'checkbox',
-          // We are not able to determine a main "title" for each row, so we can
-          // only output a generic label.
-          '#title' => $this->t('Update this item'),
-          '#title_display' => 'invisible',
-          '#return_value' => $row->Id ?? '',
-          '#default_value' => !empty($form_state->getValue($this->options['id'])[$row_index]) ? 1 : NULL,
-        ];
-      }
     }
+
     // Change default BulkForm label.
     if (!empty($form['actions']['submit'])) {
       $form['actions']['submit']['#value'] = $this->t('Import');
@@ -139,6 +134,14 @@ class AZEventTrellisViewsField extends BulkForm {
 
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function isWorkspaceSafeForm(array $form, FormStateInterface $form_state): bool {
+    // This field is not backed by an entity like BulkForm expects.
+    return FALSE;
   }
 
 }

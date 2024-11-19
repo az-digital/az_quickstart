@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.paragraph.az_views_side_by_side.field_az_view_reference
     - field.field.paragraph.az_views_side_by_side.field_az_first_view_button
-    - field.field.paragraph.az_views_side_by_side.field_az_title
     - field.field.paragraph.az_views_side_by_side.field_az_second_view
-    - field.field.paragraph.az_views_side_by_side.field_az_second_view_title
     - field.field.paragraph.az_views_side_by_side.field_az_second_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_title
+    - field.field.paragraph.az_views_side_by_side.field_az_title
+    - field.field.paragraph.az_views_side_by_side.field_az_view_reference
     - paragraphs.paragraphs_type.az_views_side_by_side
   module:
     - field_group
@@ -177,19 +177,6 @@ targetEntityType: paragraph
 bundle: az_views_side_by_side
 mode: default
 content:
-  field_az_view_reference:
-    type: viewsreference_formatter
-    label: hidden
-    settings:
-      plugin_types:
-        default: default
-        block: block
-        page: page
-        attachment: 0
-        feed: 0
-    third_party_settings: {  }
-    weight: 2
-    region: content
   field_az_first_view_button:
     type: link
     label: hidden
@@ -201,14 +188,6 @@ content:
       target: '0'
     third_party_settings: {  }
     weight: 4
-    region: content
-  field_az_title:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 2
     region: content
   field_az_second_view:
     type: viewsreference_formatter
@@ -223,14 +202,6 @@ content:
     third_party_settings: {  }
     weight: 3
     region: content
-  field_az_second_view_title:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 3
-    region: content
   field_az_second_view_button:
     type: link
     label: hidden
@@ -242,5 +213,34 @@ content:
       target: '0'
     third_party_settings: {  }
     weight: 5
+    region: content
+  field_az_second_view_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_az_view_reference:
+    type: viewsreference_formatter
+    label: hidden
+    settings:
+      plugin_types:
+        default: default
+        block: block
+        page: page
+        attachment: 0
+        feed: 0
+    third_party_settings: {  }
+    weight: 2
     region: content
 hidden: {  }
