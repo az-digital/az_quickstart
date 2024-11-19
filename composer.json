@@ -50,7 +50,7 @@
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.0.12",
         "drupal/ckeditor_indentblock": "1.0",
-        "drupal/coffee": "1.4.0",
+        "drupal/coffee": "2.0.0",
         "drupal/config_distro": "2.0.0-alpha2",
         "drupal/config_ignore": "3.3.0",
         "drupal/config_ignore_readonly": "2.2.0",
