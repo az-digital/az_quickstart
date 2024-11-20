@@ -18,6 +18,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_issue
     - field.field.node.az_publication.field_az_publication_link
     - field.field.node.az_publication.field_az_publication_location
+    - field.field.node.az_publication.field_az_publication_mapped_type
     - field.field.node.az_publication.field_az_publication_media
     - field.field.node.az_publication.field_az_publication_page
     - field.field.node.az_publication.field_az_publication_pmcid
@@ -176,6 +177,12 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_az_publication_mapped_type:
+    type: options_select
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_az_publication_media:
     type: media_library_widget
     weight: 29
@@ -214,12 +221,6 @@ content:
     settings:
       size: 60
       placeholder: ''
-    third_party_settings: {  }
-  field_az_publication_type:
-    type: options_select
-    weight: 9
-    region: content
-    settings: {  }
     third_party_settings: {  }
   field_az_publication_version:
     type: string_textfield
@@ -287,4 +288,5 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  field_az_publication_type: true
