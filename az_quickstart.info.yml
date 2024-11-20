@@ -77,3 +77,4 @@ install:
 themes:
   - az_barrio
   - claro
+version: 2.12.0-beta2
