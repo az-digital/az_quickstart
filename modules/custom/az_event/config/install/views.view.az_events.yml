@@ -584,7 +584,6 @@ display:
         style_options: false
         row: false
         sorts: false
-        arguments: true
         filters: false
         filter_groups: false
         pager_options: false
