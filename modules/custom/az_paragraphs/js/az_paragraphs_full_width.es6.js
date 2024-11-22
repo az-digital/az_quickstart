@@ -6,8 +6,6 @@
   /**
    * Calculates scroll bar width if any and assigns the value to the
    * `--scrollbar-width` CSS variable on the html element.
-   *
-   * @return {number} scrollbarWidth The width of the scrollbar, in pixels.
    */
   function calculateScrollbarWidth() {
     document.documentElement.style.setProperty(
@@ -65,7 +63,8 @@
       const distanceFromLeft = contentRegionPosition.left;
       const distanceFromRight = contentRegionPosition.right;
       const negativeLeftMargin = 0 - distanceFromLeft;
-      const negativeRightMargin = distanceFromRight - document.documentElement.clientWidth;
+      const negativeRightMargin =
+        distanceFromRight - document.documentElement.clientWidth;
       document.documentElement.style.setProperty(
         '--full-width-left-distance',
         `${negativeLeftMargin}px`,
