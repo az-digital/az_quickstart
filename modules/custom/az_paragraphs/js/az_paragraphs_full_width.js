@@ -6,9 +6,7 @@
 **/
 (function () {
   function calculateScrollbarWidth() {
-    var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-    document.documentElement.style.setProperty('--scrollbar-width', "".concat(scrollbarWidth, "px"));
-    return scrollbarWidth;
+    document.documentElement.style.setProperty('--scrollbar-width', "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
   }
   function pushSidebarsDown() {
     var contentRegion = document.querySelector('main.main-content');
@@ -30,21 +28,21 @@
       }
     }
   }
-  function calculateFullWidthNegativeMargins(scrollbarWidth) {
+  function calculateFullWidthNegativeMargins() {
     var contentRegion = document.querySelectorAll('.block-system-main-block');
     if (contentRegion.length > 0) {
       var contentRegionPosition = contentRegion[0].getBoundingClientRect();
       var distanceFromLeft = contentRegionPosition.left;
       var distanceFromRight = contentRegionPosition.right;
-      var negativeLeftMargin = 0 - distanceFromLeft - scrollbarWidth / 2;
-      var negativeRightMargin = 0 - distanceFromRight - scrollbarWidth / 2;
+      var negativeLeftMargin = 0 - distanceFromLeft;
+      var negativeRightMargin = distanceFromRight - document.documentElement.clientWidth;
       document.documentElement.style.setProperty('--full-width-left-distance', "".concat(negativeLeftMargin, "px"));
       document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
     }
   }
   function setFullWidthLayout() {
-    var scrollbarWidth = calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins(scrollbarWidth);
+    calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   }
   document.addEventListener('DOMContentLoaded', setFullWidthLayout);

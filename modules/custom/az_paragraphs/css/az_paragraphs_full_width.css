@@ -14,11 +14,10 @@
 .sidebar_first {
     z-index: 3;
 }
-.layout-sidebar-first .full-width-background,
-.layout-sidebar-second .full-width-background {
-    max-width: calc(100vw);
-}
-.region-content .full-width-background {
+.region-content .full-width-background,
+.region-content-top .full-width-background,
+.region-content-bottom .full-width-background {
+    max-width: calc(100vw - var(--scrollbar-width));
     margin-left: var(--full-width-left-distance);
     margin-right: var(--full-width-right-distance);
     overflow: hidden;

@@ -551,9 +551,9 @@ a.nolink + ul .sf-clone-parent {
 .region-content-featured .paragraph,
 .region-full-width-content-bottom .paragraph,
 .region-az-page-bottom .paragraph {
-    max-width: calc(100vw);
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
 }
 .region .az-full-width-row {
   display: -ms-flexbox;
