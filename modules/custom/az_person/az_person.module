@@ -68,6 +68,10 @@ function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterfac
             'field_az_netid',
             'field_az_email',
             'field_az_phones',
+            'field_az_titles',
+            'field_az_degrees',
+            'field_az_address',
+            'field_az_body',
           ];
           foreach ($disabled_fields as $field) {
             if (!empty($form[$field])) {
