@@ -103,6 +103,7 @@
         "drupal/quick_node_clone": "1.17.0",
         "drupal/redirect": "1.10.0",
         "drupal/role_delegation": "1.3.0",
+        "drupal/schema_metatag": "3.0.3",
         "drupal/search_exclude": "3.0.0-beta1",
         "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.4",
