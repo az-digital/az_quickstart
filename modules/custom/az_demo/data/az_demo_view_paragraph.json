@@ -71,6 +71,30 @@
       "display_id" : "content",
       "data" : "",
       "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 111,
+      "title" : "Grid - Modal",
+      "target_id" : "az_person",
+      "display_id" : "grid_modal",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 112,
+      "title" : "Grid - Modal 3 col",
+      "target_id" : "az_person",
+      "display_id" : "grid_modal_3cols",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 190,
+      "title" : "",
+      "target_id" : "az_publications",
+      "display_id" : "az_search",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
     }
   ]
 }

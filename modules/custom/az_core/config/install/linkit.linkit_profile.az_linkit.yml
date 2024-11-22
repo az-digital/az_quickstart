@@ -36,7 +36,7 @@ matchers:
       group_by_bundle: null
       substitution_type: file
       limit: 100
-      file_extensions: 'pdf doc docx pps ppt xlsx xls png jpg jpeg'
+      file_extensions: 'pdf doc docx pps ppt xlsx xls png jpg jpeg webp'
       file_status: 1
       images:
         show_dimensions: false

@@ -11,3 +11,8 @@
 .card-title > a {
   text-decoration: inherit;
 }
+
+.card-body .sr-only {
+  display: block;
+  position: static;
+}

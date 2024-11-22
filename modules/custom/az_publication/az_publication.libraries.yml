@@ -1,16 +1,16 @@
 az_publication_picker:
-  version: 1.x
   js:
     js/az_publication_date_picker.js: {}
   dependencies:
     - az_publication/bootstrap-datepicker
-bootstrap-datepicker:
-  css:
-    theme:
-      /libraries/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.css: {}
-  js:
-    /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.js: { minified: true }
-  dependencies:
     - core/drupal
     - core/jquery
     - core/once
+bootstrap-datepicker:
+  css:
+    theme:
+      /libraries/bootstrap-datepicker/dist/css/bootstrap-datepicker.standalone.min.css: { minified: true }
+  js:
+    /libraries/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js: { minified: true }
+  dependencies:
+    - core/jquery

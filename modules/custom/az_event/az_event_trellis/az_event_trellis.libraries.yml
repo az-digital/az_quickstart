@@ -1,5 +1,4 @@
 az_event_trellis_date:
-  version: 1.x
   js:
     js/az_event_trellis_date.js: {}
   css:
@@ -16,4 +15,4 @@ easepick_bundle:
 easepick_styles:
   css:
     theme:
-      /libraries/easepick--bundle/dist/index.css: {}
+      /libraries/easepick--bundle/dist/index.css: { minified: true }
