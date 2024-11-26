@@ -39,6 +39,8 @@ source:
       selector: category
     - name: container
       selector: container
+    - name: content
+      selector: content
     - name: date
       selector: date
     - name: date_type
@@ -89,7 +91,10 @@ process:
     - plugin: migration_lookup
       migration: az_demo_az_author_author
   field_az_accessed_date: accessed_date
-  field_az_publication_abstract: abstract
+  field_az_publication_abstract/value: abstract
+  field_az_publication_abstract/format:
+    plugin: default_value
+    default_value: az_standard
   field_az_publication_approximate: approximate
   field_az_publication_category:
     - plugin: explode
@@ -101,6 +106,10 @@ process:
       migration: az_demo_taxonomy_term_publication_categories
       ignore_case: true
   field_az_publication_container: container
+  field_az_publication_content/value: content
+  field_az_publication_content/format:
+    plugin: default_value
+    default_value: az_standard
   field_az_publication_date: date
   field_az_publication_date_type: date_type
   field_az_publication_doi: doi

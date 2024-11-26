@@ -8,6 +8,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_category
     - field.field.node.az_publication.field_az_publication_container
+    - field.field.node.az_publication.field_az_publication_content
     - field.field.node.az_publication.field_az_publication_date
     - field.field.node.az_publication.field_az_publication_date_type
     - field.field.node.az_publication.field_az_publication_doi
@@ -100,6 +101,14 @@ content:
     region: content
     settings:
       size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_content:
+    type: text_textarea
+    weight: 32
+    region: content
+    settings:
+      rows: 20
       placeholder: ''
     third_party_settings: {  }
   field_az_publication_date:

@@ -9,6 +9,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_category
     - field.field.node.az_publication.field_az_publication_container
+    - field.field.node.az_publication.field_az_publication_content
     - field.field.node.az_publication.field_az_publication_date
     - field.field.node.az_publication.field_az_publication_date_type
     - field.field.node.az_publication.field_az_publication_doi
@@ -19,6 +20,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_issue
     - field.field.node.az_publication.field_az_publication_link
     - field.field.node.az_publication.field_az_publication_location
+    - field.field.node.az_publication.field_az_publication_mapped_type
     - field.field.node.az_publication.field_az_publication_media
     - field.field.node.az_publication.field_az_publication_page
     - field.field.node.az_publication.field_az_publication_pmcid
@@ -147,6 +149,7 @@ hidden:
   field_az_publication_approximate: true
   field_az_publication_category: true
   field_az_publication_container: true
+  field_az_publication_content: true
   field_az_publication_date: true
   field_az_publication_date_type: true
   field_az_publication_doi: true
@@ -156,6 +159,7 @@ hidden:
   field_az_publication_issue: true
   field_az_publication_link: true
   field_az_publication_location: true
+  field_az_publication_mapped_type: true
   field_az_publication_media: true
   field_az_publication_page: true
   field_az_publication_pmcid: true
