@@ -1,6 +1,7 @@
 id: az_demo_media_document
 label: AZ Quickstart Demo Media Documents
 migration_tags:
+  - Quickstart Demo Content
   - Media
 source:
   constants:
