@@ -1,0 +1,74 @@
+id: az_demo_media_document
+label: AZ Quickstart Demo Media Documents
+migration_tags:
+  - Media
+source:
+  constants:
+    DEMO_FILE_DIRECTORY: profiles/custom/az_quickstart/modules/custom/az_demo/media/document
+    DRUPAL_FILE_SCHEME: 'public://'
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_media_document.json
+  item_selector: documents
+  ids:
+    filename:
+      type: string
+
+  fields:
+    -
+      name: uuid
+      selector: uuid
+    -
+      name: filename
+      selector: filename
+
+destination:
+  plugin: 'entity:media'
+process:
+  uuid:
+    plugin: skip_on_empty
+    method: process
+    source: uuid
+  bundle:
+    plugin: default_value
+    default_value: az_document
+
+  pseudo_source_path:
+    -
+      plugin: concat
+      delimiter: /
+      source:
+        - constants/DEMO_FILE_DIRECTORY
+        - filename
+
+  pseudo_destination_path:
+    -
+      plugin: concat
+      delimiter: ''
+      source:
+        - constants/DRUPAL_FILE_SCHEME
+        - filename
+
+  filename: filename
+  uri:
+    -
+      plugin: file_copy
+      source:
+        - '@pseudo_source_path'
+        - '@pseudo_destination_path'
+      file_exists: replace
+      move: false
+
+  'field_media_az_document/target_id':
+    plugin: entity_generate
+    source: '@uri'
+    entity_type: file
+    value_key: uri
+
+# Dependencies.
+dependencies:
+  enforced:
+    module:
+      - az_media

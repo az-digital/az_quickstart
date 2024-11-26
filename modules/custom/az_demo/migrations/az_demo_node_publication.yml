@@ -8,6 +8,8 @@ migration_dependencies:
   required:
     - az_demo_az_author_author
     - az_demo_taxonomy_term_publication_categories
+    - az_demo_image_file
+    - az_demo_media_document
 dependencies:
   enforced:
     module:
@@ -114,13 +116,21 @@ process:
   field_az_publication_date_type: date_type
   field_az_publication_doi: doi
   field_az_publication_extra_links: extra_links
-  field_az_publication_image: image
+  field_az_publication_image/target_id:
+    - plugin: migration_lookup
+      source: image
+      migration:
+        - az_demo_image_file
   field_az_publication_isbn: isbn
   field_az_publication_issn: issn
   field_az_publication_issue: issue
   field_az_publication_link: link
   field_az_publication_location: location
-  field_az_publication_media: media
+  field_az_publication_media/target_id:
+    - plugin: migration_lookup
+      source: media
+      migration:
+        - az_demo_media_document
   field_az_publication_page: page
   field_az_publication_pmcid: pmcid
   field_az_publication_pmid: pmid
