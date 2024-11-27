@@ -25,7 +25,7 @@ az_finder.tid_widget.[view_id].[display_id]:
         type: mapping
         mapping:
           vocabulary_id:
-            type: string
+            type: machine_name
             label: 'Vocabulary ID'
           terms:
             type: sequence
@@ -34,7 +34,7 @@ az_finder.tid_widget.[view_id].[display_id]:
               type: mapping
               mapping:
                 term_id:
-                  type: string
+                  type: machine_name
                   label: 'Term ID'
                 default_state:
                   type: string

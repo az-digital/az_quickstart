@@ -3,7 +3,7 @@ az_publication.az_citation_style.*:
   label: 'Quickstart Citation Style config'
   mapping:
     id:
-      type: string
+      type: machine_name
       label: 'ID'
     label:
       type: label

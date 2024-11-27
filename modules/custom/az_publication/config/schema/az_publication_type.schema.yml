@@ -3,7 +3,7 @@ az_publication.type.*:
   label: 'Quickstart Publication Type config'
   mapping:
     id:
-      type: string
+      type: machine_name
       label: 'ID'
     label:
       type: label
