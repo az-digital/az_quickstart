@@ -40,7 +40,7 @@ az_finder.tid_widget.[view_id].[display_id]:
               type: mapping
               mapping:
                 term_id:
-                  type: machine_name
+                  type: string
                   label: 'Term ID'
                 default_state:
                   type: string
