@@ -26,6 +26,12 @@ az_finder.tid_widget.[view_id].[display_id]:
         mapping:
           vocabulary_id:
             type: machine_name
+            label: 'Machine name'
+            # Vocabulary machine names are specifically limited to 32 characters.
+            # @see \Drupal\taxonomy\VocabularyForm::form()
+            constraints:
+              Length:
+                max: 32
             label: 'Vocabulary ID'
           terms:
             type: sequence
