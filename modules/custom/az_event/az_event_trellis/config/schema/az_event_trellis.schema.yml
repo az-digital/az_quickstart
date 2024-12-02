@@ -22,7 +22,7 @@ az_event_trellis.az_recurring_import_rule.*:
       type: label
       label: Label
     uuid:
-      type: uuid
+      type: string
     host:
       type: string
     owner:

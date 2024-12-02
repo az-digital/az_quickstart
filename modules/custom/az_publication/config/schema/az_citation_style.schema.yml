@@ -15,5 +15,5 @@ az_publication.az_citation_style.*:
       type: boolean
       label: 'Custom'
     uuid:
-      type: uuid
+      type: string
       label: 'Universally Unique Identifier'
