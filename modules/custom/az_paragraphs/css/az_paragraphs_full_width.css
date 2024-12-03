@@ -14,12 +14,18 @@
 .sidebar_first {
     z-index: 3;
 }
-.region-content .full-width-background,
-.region-content-top .full-width-background,
-.region-content-bottom .full-width-background {
+.region-content .full-width-background {
     max-width: calc(100vw - var(--scrollbar-width));
     margin-left: var(--full-width-left-distance);
     margin-right: var(--full-width-right-distance);
+    overflow: hidden;
+}
+.region-content-top .full-width-background,
+.region-content-bottom .full-width-background
+{
+    max-width: calc(100vw - var(--scrollbar-width));
+    margin-left: var(--full-width-auto-distance);
+    margin-right: var(--full-width-auto-distance);
     overflow: hidden;
 }
 .region-content .az-full-width-column-content {

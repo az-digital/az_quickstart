@@ -74,6 +74,20 @@
         `${negativeRightMargin}px`,
       );
     }
+    const contentTopAndBottomBlocks = document.querySelectorAll(
+      '.region-content-top > .block, .region-content-bottom > .block',
+    );
+    if (contentTopAndBottomBlocks.length > 0) {
+      const negativeAutoMargin =
+        -(
+          document.documentElement.clientWidth -
+          contentTopAndBottomBlocks[0].getBoundingClientRect().width
+        ) / 2;
+      document.documentElement.style.setProperty(
+        '--full-width-auto-distance',
+        `${negativeAutoMargin}px`,
+      );
+    }
   }
 
   /**

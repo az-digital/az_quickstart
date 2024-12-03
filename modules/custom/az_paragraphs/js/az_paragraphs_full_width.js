@@ -39,6 +39,11 @@
       document.documentElement.style.setProperty('--full-width-left-distance', "".concat(negativeLeftMargin, "px"));
       document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
     }
+    var contentTopAndBottomBlocks = document.querySelectorAll('.region-content-top > .block, .region-content-bottom > .block');
+    if (contentTopAndBottomBlocks.length > 0) {
+      var negativeAutoMargin = -(document.documentElement.clientWidth - contentTopAndBottomBlocks[0].getBoundingClientRect().width) / 2;
+      document.documentElement.style.setProperty('--full-width-auto-distance', "".concat(negativeAutoMargin, "px"));
+    }
   }
   function setFullWidthLayout() {
     calculateScrollbarWidth();
