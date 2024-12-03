@@ -1,11 +1,19 @@
+.az-bef-vertical {
+  margin-top: 3rem;
+}
+
 .az-bef-vertical .bef-nested {
   width: 100%;
   margin-top: 1rem;
 }
 
 .az-bef-vertical>h2 {
-  margin-top: 3rem !important;
+  margin-top: 0 !important;
   font-size: 1.5rem;
+}
+
+.az-bef-vertical h3 {
+  font-size: 1.125rem !important;
 }
 
 .az-bef-vertical h4,
@@ -13,10 +21,6 @@
 .az-bef-vertical h6 {
   line-height: 1.25rem;
   margin-top: 0.75rem !important;
-}
-
-.az-bef-vertical .form-type-textfield {
-  margin-bottom: 0;
 }
 
 .az-bef-vertical .form-type-textfield>label {
@@ -31,7 +35,7 @@
   color: #1e5288;
   font-size: 1.25rem;
   width: 100%;
-  padding-top: 1rem;
+  padding-top: 0;
   margin-bottom: 0;
   padding-bottom: 0;
 }
@@ -55,6 +59,20 @@
 
 .az-bef-vertical fieldset {
   min-width: 100%;
+}
+
+.az-bef-vertical fieldset.fieldgroup {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.az-bef-vertical fieldset.fieldgroup small {
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.az-bef-vertical .form-actions {
+  margin-bottom: 0;
 }
 
 /*

@@ -10,9 +10,9 @@ dependencies:
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
   module:
+    - az_core
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   smart_title:
@@ -193,7 +193,7 @@ content:
     weight: 2
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }

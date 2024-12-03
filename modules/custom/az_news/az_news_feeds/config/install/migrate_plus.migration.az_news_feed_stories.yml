@@ -13,7 +13,7 @@ cck_plugin_method: null
 migration_tags:
   - 'Quickstart News Feeds'
 migration_group: az_news_feeds
-label: 'UArizona News Stories'
+label: 'University of Arizona News Stories'
 source:
   ids:
     uuid:
@@ -65,7 +65,7 @@ process:
   field_az_link/uri: canonical-url
   field_az_link/title:
     plugin: default_value
-    default_value: 'Read more at UArizona News'
+    default_value: 'Read more at University of Arizona News'
   field_az_summary/value:
     plugin: callback
     callable: trim

@@ -20,7 +20,7 @@ process:
     -
       plugin: multiple_values
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration:
         - az_node_carousel
         - az_node_event

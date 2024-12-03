@@ -90,3 +90,9 @@ function az_paragraphs_update_920601(&$sandbox) {
 function az_paragraphs_update_1021001() {
   \Drupal::service('module_installer')->install(['ckeditor_indentblock']);
 }
+
+/**
+ * Empty update since we reverted our addition of the anchor_link module.
+ */
+function az_paragraphs_update_1021201() {
+}

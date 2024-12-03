@@ -21,3 +21,5 @@ taxonomy-index-tid-widget:
     js/taxonomy-index-tid-widget.js:
       - type: module
       - minified: false
+  dependencies:
+    - core/drupal

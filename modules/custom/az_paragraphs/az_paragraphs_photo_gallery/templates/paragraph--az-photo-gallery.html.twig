@@ -67,7 +67,7 @@
                 '#attributes': { class: [ 'photo-gallery-grid-img' ] },
               } %}
               <div class="col-6 col-md-4 col-lg-3 px-min py-min" data-toggle="modal" data-target="#{{ modal }}">
-                <a href="#{{ gallery }}" data-slide-to="{{ loop.index0 }}">
+                <a class="az-gallery-open-modal" role="button" data-target="#{{ gallery }}" data-slide-to="{{ loop.index0 }}">
                   <picture class="card-img img-responsive">
                   {{ modalimage }}
                   </picture>
@@ -122,11 +122,11 @@
                 {% endif %}
               {% endfor %}
             </div>
-            <a class="carousel-control-prev" href="#{{ gallery }}" role="button" data-slide="prev">
+            <a class="carousel-control-prev" role="button" data-target="#{{ gallery }}" data-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" href="#{{ gallery }}" role="button" data-slide="next">
+            <a class="carousel-control-next" role="button" data-target="#{{ gallery }}" data-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>
