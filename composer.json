@@ -49,7 +49,7 @@
         "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.0.12",
-        "drupal/ckeditor_indentblock": "1.0",
+        "drupal/ckeditor_indentblock": "1.1.0",
         "drupal/coffee": "2.0.0",
         "drupal/config_distro": "2.0.0-alpha2",
         "drupal/config_ignore": "3.3.0",
@@ -152,10 +152,6 @@
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
-            },
-            "drupal/ckeditor_indentblock": {
-                "Symfony\\Component\\Validator\\Exception\\LogicException: The LangcodeRequiredIfTranslatableValues constraint can only operate on the root object being validated. (3457094)": "https://www.drupal.org/files/issues/2024-07-25/ckeditor_indentblock-3457094-schema-error.patch",
-                "Plugin blocks other classes on P elements (3402570)": "https://www.drupal.org/files/issues/2024-05-15/ckeditor_indentblock-class-names-3402570-6.patch"
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
