@@ -19,6 +19,17 @@ use Drupal\node\NodeInterface;
  */
 function az_event_theme($existing, $type, $theme, $path) {
   return [
+    'az_event_calendar_add_block' => [
+      'variables' => [
+        'title' => NULL,
+        'start_date' => NULL,
+        'end_date' => NULL,
+        'description' => NULL,
+        'location' => NULL,
+        'modal' => NULL,
+      ],
+      'render element' => 'children',
+    ],
     'field__node__az_event' => [
       'template' => 'field--node--az-event',
       'base hook' => 'field',
