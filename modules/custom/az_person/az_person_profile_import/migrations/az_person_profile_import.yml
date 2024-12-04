@@ -37,6 +37,9 @@ source:
       name: phone
       selector: 'Person/phone'
     -
+      name: office
+      selector: 'Person/office'
+    -
       name: degrees
       selector: 'Degrees'
 
@@ -83,7 +86,22 @@ process:
     source: phone
     process:
       value: number
-
+  field_az_address:
+    -
+      plugin: sub_process
+      source: office
+      process:
+        0:
+          plugin: concat
+          source:
+            - building_name
+            - room_nbr
+          delimiter: ' '
+    -
+      plugin: flatten
+    -
+      plugin: concat
+      delimiter: "\n"
 destination:
   plugin: entity:node
   bundle: az_person
