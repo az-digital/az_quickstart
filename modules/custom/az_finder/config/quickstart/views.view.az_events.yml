@@ -138,7 +138,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no upcoming events listed.</em>'
+            value: '<p><em>There are no upcoming events listed.</em></p>'
             format: az_standard
           tokenize: false
       sorts:
@@ -974,7 +974,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no past events listed.</em>'
+            value: '<p><em>There are no past events listed.</em></p>'
             format: az_standard
           tokenize: false
       sorts:
