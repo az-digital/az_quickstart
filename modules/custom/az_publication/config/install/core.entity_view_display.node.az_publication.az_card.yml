@@ -5,11 +5,11 @@ dependencies:
     - core.entity_view_mode.node.az_card
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_main_content
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_category
     - field.field.node.az_publication.field_az_publication_container
-    - field.field.node.az_publication.field_az_publication_content
     - field.field.node.az_publication.field_az_publication_date
     - field.field.node.az_publication.field_az_publication_date_type
     - field.field.node.az_publication.field_az_publication_doi
@@ -145,11 +145,11 @@ content:
 hidden:
   field_az_accessed_date: true
   field_az_authors: true
+  field_az_main_content: true
   field_az_publication_abstract: true
   field_az_publication_approximate: true
   field_az_publication_category: true
   field_az_publication_container: true
-  field_az_publication_content: true
   field_az_publication_date: true
   field_az_publication_date_type: true
   field_az_publication_doi: true

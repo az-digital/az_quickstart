@@ -4,11 +4,11 @@ dependencies:
   config:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_main_content
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_category
     - field.field.node.az_publication.field_az_publication_container
-    - field.field.node.az_publication.field_az_publication_content
     - field.field.node.az_publication.field_az_publication_date
     - field.field.node.az_publication.field_az_publication_date_type
     - field.field.node.az_publication.field_az_publication_doi
@@ -35,6 +35,7 @@ dependencies:
     - inline_entity_form
     - link
     - media_library
+    - paragraphs
     - path
     - text
 id: node.az_publication.default
@@ -72,6 +73,25 @@ content:
       revision: false
       removed_reference: optional
     third_party_settings: {  }
+  field_az_main_content:
+    type: paragraphs
+    weight: 33
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: all
+      closed_mode_threshold: 0
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings: {  }
   field_az_publication_abstract:
     type: text_textarea_with_summary
     weight: 31
@@ -101,14 +121,6 @@ content:
     region: content
     settings:
       size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_publication_content:
-    type: text_textarea
-    weight: 32
-    region: content
-    settings:
-      rows: 20
       placeholder: ''
     third_party_settings: {  }
   field_az_publication_date:

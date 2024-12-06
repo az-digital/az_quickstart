@@ -114,10 +114,35 @@ process:
       migration: az_demo_taxonomy_term_publication_categories
       ignore_case: true
   field_az_publication_container: container
-  field_az_publication_content/value: content
-  field_az_publication_content/format:
-    plugin: default_value
-    default_value: az_standard
+  pseudo_exploded_paragraphs:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: content
+    -
+      plugin: explode
+      source: content
+      delimiter: '|'
+
+  pseudo_paragraphs:
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_text_paragraph
+        - az_demo_text_background_paragraph
+        - az_demo_text_media_paragraph
+        - az_demo_splitscreen_paragraph
+        - az_demo_card_paragraph
+        - az_demo_view_paragraph
+        - az_demo_paragraph_gallery
+      source: '@pseudo_exploded_paragraphs'
+
+  field_az_main_content:
+    plugin: sub_process
+    source: '@pseudo_paragraphs'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
   field_az_publication_date: date
   field_az_publication_date_type: date_type
   field_az_publication_doi: doi
