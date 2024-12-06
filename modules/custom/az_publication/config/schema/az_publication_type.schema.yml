@@ -12,5 +12,5 @@ az_publication.type.*:
       type: string
       label: 'Mapped type'
     uuid:
-      type: string
+      type: uuid
       label: 'Universally Unique Identifier'
