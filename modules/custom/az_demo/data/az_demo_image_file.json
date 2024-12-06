@@ -107,7 +107,9 @@
     {
       "filename" : "mans_best_friend.jpeg",
       "alt" : "Cute dog",
-      "title": ""
+      "title": "",
+      "caption": "Research shows that dog owners often experience lower levels of stress, anxiety, and depression compared to those without pets.",
+      "credit": "Photo by Wilma Wildcat"
     },
     {
       "filename" : "connection-647206_1920.jpeg",
