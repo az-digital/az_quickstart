@@ -79,10 +79,16 @@ source:
       selector: version
     - name: volume
       selector: volume
+    - name: uuid
+      selector: uuid
 process:
   type:
     plugin: default_value
     default_value: az_publication
+  uuid:
+    - plugin: skip_on_empty
+      method: process
+      source: uuid
   title: title
   field_az_authors:
     - plugin: skip_on_empty
