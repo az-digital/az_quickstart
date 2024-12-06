@@ -13,8 +13,8 @@ effects:
     id: image_scale_and_crop
     weight: -9
     data:
-      width: 600
-      height: 300
+      width: 1200
+      height: 600
       anchor: center-center
   462a4762-1b73-4823-b82e-b10e767d6bda:
     uuid: 462a4762-1b73-4823-b82e-b10e767d6bda
