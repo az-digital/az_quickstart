@@ -133,7 +133,7 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         else {
           if (strcmp($item->link_uri, "#") === 0) {
             $link_url = $this->pathValidator->getUrlIfValid('<none>');
-          } 
+          }
           else {
             $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
           }
