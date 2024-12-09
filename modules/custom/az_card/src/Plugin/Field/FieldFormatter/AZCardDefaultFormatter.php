@@ -131,9 +131,10 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
         else {
-          if (strcmp($item->link_uri, "#") == 0) {
+          if (strcmp($item->link_uri, "#") === 0) {
             $link_url = $this->pathValidator->getUrlIfValid('<none>');
-          } else {
+          } 
+          else {
             $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
           }
         }
