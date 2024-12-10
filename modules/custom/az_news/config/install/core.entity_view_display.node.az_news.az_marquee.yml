@@ -72,7 +72,7 @@ third_party_settings:
       weight: 3
       format_type: html_element
       format_settings:
-        classes: card-img
+        classes: 'card-img mb-1'
         id: ''
         element: div
         show_label: false
@@ -192,7 +192,7 @@ content:
     type: entity_reference_entity_view
     label: hidden
     settings:
-      view_mode: az_large
+      view_mode: az_card_image
       link: false
     third_party_settings: {  }
     weight: 1
