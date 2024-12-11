@@ -1,0 +1,12 @@
+az_person_profiles_import.import_tab:
+  title: 'Import Person'
+  route_name: az_person_profiles_import.form
+  parent_id: system.admin_content
+  description: 'Import a person from the Profiles API'
+  weight: 102
+
+az_person_profiles_import.settings_tab:
+  route_name: az_person_profiles_import.settings_form
+  title: 'Profiles Integration'
+  base_route: az_core.az_settings
+  weight: 6
