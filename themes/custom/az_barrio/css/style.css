@@ -768,6 +768,6 @@ form.webform-submission-form {
   color: #333;
 }
 
-.contextual-region {
+.field--name-field-az-text-area .contextual-region {
   display: inline-block;
 }
