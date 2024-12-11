@@ -1,4 +1,5 @@
 name: 'Quickstart Select Menu Block'
+description: "Allows displaying a menu as a dropdown selection, also known as persona menu."
 type: module
 core_version_requirement: ^9 || ^10
 package: The University of Arizona

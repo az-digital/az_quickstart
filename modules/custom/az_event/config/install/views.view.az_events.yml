@@ -137,7 +137,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no upcoming events listed.</em>'
+            value: '<p><em>There are no upcoming events listed.</em></p>'
             format: az_standard
           tokenize: false
       sorts:
@@ -470,6 +470,20 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p><em>There are no past events listed.</em></p>'
+            format: az_standard
+          tokenize: false
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value
@@ -578,6 +592,7 @@ display:
           relationship: none
           view_mode: az_card_alternate
       defaults:
+        empty: false
         title: false
         pager: false
         style: false
