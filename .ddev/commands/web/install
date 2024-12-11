@@ -9,7 +9,7 @@ BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-re
 composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update az-digital/az_quickstart:\*@dev
 BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi; composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
 composer install
-drush --root=/var/www/html/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2024 --db-url=mysql://db:db@db:3306/db -y --verbose
+drush --root=/var/www/html/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://db:db@db:3306/db -y --verbose
 drush --root=/var/www/html/web config:set -y az_cas.settings disable_login_form 0
 drush --root=/var/www/html/web cache:rebuild
 yarn --cwd /usr/local/quickstart-install-profile install
