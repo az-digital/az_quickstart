@@ -34,8 +34,17 @@ process:
     source: field_uaqs_summary
     process:
       delta: delta
-      value: value
-      format: format
+      value:
+        -
+          plugin: callback
+          callable: strip_tags
+          source: value
+        -
+          plugin: callback
+          callable: html_entity_decode
+      format:
+        plugin: default_value
+        default_value: plain_text
 
   field_az_media_image:
     plugin: sub_process
