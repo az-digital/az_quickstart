@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\az_person_profile_import\Form;
+namespace Drupal\az_person_profiles_import\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
@@ -14,9 +14,9 @@ use Drupal\migrate_tools\MigrateBatchExecutable;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Provides a Quickstart Person Profile Import form.
+ * Provides a Quickstart Person Profiles Import form.
  */
-final class AZPersonProfileImportForm extends FormBase {
+final class AZPersonProfilesImportForm extends FormBase {
 
   /**
    * @var \Drupal\Core\Messenger\Messenger
@@ -44,7 +44,7 @@ final class AZPersonProfileImportForm extends FormBase {
    * {@inheritdoc}
    */
   public function getFormId(): string {
-    return 'az_person_profile_import';
+    return 'az_person_profiles_import';
   }
 
   /**
@@ -52,10 +52,10 @@ final class AZPersonProfileImportForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
 
-    $config = $this->config('az_person_profile_import.settings');
+    $config = $this->config('az_person_profiles_import.settings');
     $has_key = !empty(trim($config->get('apikey')));
     if (!$has_key) {
-      $url = Url::fromRoute('az_person_profile_import.settings_form')->toString();
+      $url = Url::fromRoute('az_person_profiles_import.settings_form')->toString();
       $this->messenger->addWarning($this->t('You must first configure a Profiles API token <a href=":link">here</a>.', [
         ':link' => $url,
       ]));
@@ -111,7 +111,7 @@ final class AZPersonProfileImportForm extends FormBase {
     }
 
     // Fetch the profiles integration migration.
-    $migration = $this->pluginManagerMigration->createInstance('az_person_profile_import');
+    $migration = $this->pluginManagerMigration->createInstance('az_person_profiles_import');
     // Phpstan doesn't know this can be NULL.
     // @phpstan-ignore-next-line
     if (!empty($migration)) {

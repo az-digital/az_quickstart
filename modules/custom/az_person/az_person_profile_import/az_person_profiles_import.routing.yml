@@ -1,15 +1,15 @@
-az_person_profile_import.settings_form:
+az_person_profiles_import.settings_form:
   path: '/admin/config/az-quickstart/settings/az-person-profiles-import'
   defaults:
     _title: 'Profiles Import Settings'
-    _form: 'Drupal\az_person_profile_import\Form\AZPersonProfileImportSettingsForm'
+    _form: 'Drupal\az_person_profiles_import\Form\AZPersonProfilesImportSettingsForm'
   requirements:
     _permission: 'administer site configuration'
 
-az_person_profile_import.form:
+az_person_profiles_import.form:
   path: '/admin/content/profiles/import'
   defaults:
-    _title: 'Import Profile'
-    _form: 'Drupal\az_person_profile_import\Form\AZPersonProfileImportForm'
+    _title: 'Import Profiles'
+    _form: 'Drupal\az_person_profiles_import\Form\AZPersonProfilesImportForm'
   requirements:
     _permission: 'create az_person content'

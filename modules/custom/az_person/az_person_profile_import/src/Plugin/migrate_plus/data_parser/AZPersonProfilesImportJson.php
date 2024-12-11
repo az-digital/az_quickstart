@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\az_person_profile_import\Plugin\migrate_plus\data_parser;
+namespace Drupal\az_person_profiles_import\Plugin\migrate_plus\data_parser;
 
 use Drupal\migrate_plus\Plugin\migrate_plus\data_parser\Json;
 
@@ -10,11 +10,11 @@ use Drupal\migrate_plus\Plugin\migrate_plus\data_parser\Json;
  * Obtain JSON data for migration from Profiles Integration.
  *
  * @DataParser(
- *   id = "az_person_profile_import_json",
+ *   id = "az_person_profiles_import_json",
  *   title = @Translation("Profiles Integration JSON")
  * )
  */
-class AZPersonProfileImportJson extends Json {
+class AZPersonProfilesImportJson extends Json {
 
   /**
    * {@inheritdoc}

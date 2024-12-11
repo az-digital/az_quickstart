@@ -1,4 +1,4 @@
-name: 'Quickstart Person Profile Import'
+name: 'Quickstart Person Profiles Import'
 type: module
 description: 'Import people via UA Vitae Profiles.'
 core_version_requirement: ^9 || ^10

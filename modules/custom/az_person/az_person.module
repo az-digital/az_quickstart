@@ -53,7 +53,7 @@ function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterfac
         $imported = [];
         try {
           // See if a migration map exists for this person.
-          $imported = \Drupal::service('migrate.lookup')->lookup('az_person_profile_import', [$netid]);
+          $imported = \Drupal::service('migrate.lookup')->lookup('az_person_profiles_import', [$netid]);
         }
         catch (\Exception $e) {
           // Migration did not exist, or migrate service not found.

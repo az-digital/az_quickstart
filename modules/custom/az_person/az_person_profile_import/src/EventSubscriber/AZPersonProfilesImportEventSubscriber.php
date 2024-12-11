@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_person_profile_import\EventSubscriber;
+namespace Drupal\az_person_profiles_import\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Repond to import of persons from the profiles API.
  */
-class AZPersonProfileImportEventSubscriber implements EventSubscriberInterface {
+class AZPersonProfilesImportEventSubscriber implements EventSubscriberInterface {
 
   /**
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -25,7 +25,7 @@ class AZPersonProfileImportEventSubscriber implements EventSubscriberInterface {
   protected $messenger;
 
   /**
-   * Constructs an AZPersonProfileImportEventSubscriber.
+   * Constructs an AZPersonProfilesImportEventSubscriber.
    *
    * @param \Drupal\Core\Messenger\Messenger $messenger
    *   The messenger service.
@@ -57,8 +57,8 @@ class AZPersonProfileImportEventSubscriber implements EventSubscriberInterface {
    */
   public function onMapMessage(MigrateIdMapMessageEvent $event) {
     $migration = $event->getMigration()->getBaseId();
-    // Only emit warnings for the profile import.
-    if ($migration === 'az_person_profile_import') {
+    // Only emit warnings for the profiles import.
+    if ($migration === 'az_person_profiles_import') {
       $sourceIds = $event->getSourceIdValues();
       $netid = $sourceIds['netid'] ?? '';
       $message = $event->getMessage();
@@ -79,7 +79,7 @@ class AZPersonProfileImportEventSubscriber implements EventSubscriberInterface {
     $migration = $event->getMigration()->getBaseId();
     $ids = $event->getDestinationIdValues();
     $id = reset($ids);
-    if ($migration === 'az_person_profile_import') {
+    if ($migration === 'az_person_profiles_import') {
       $person = $this->entityTypeManager->getStorage('node')->load($id);
       if (!empty($person)) {
         $url = $person->toUrl()->toString();

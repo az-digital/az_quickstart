@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains az_person_profile_import.module.
+ * Contains az_person_profiles_import.module.
  */
 
 use Drupal\Core\Entity\EntityInterface;
@@ -12,7 +12,7 @@ use Drupal\node\Entity\Node;
 /**
  * Implements hook_entity_presave().
  */
-function az_person_profile_import_node_presave(EntityInterface $entity) {
+function az_person_profiles_import_node_presave(EntityInterface $entity) {
   $fields = [
     'field_az_fname',
     'field_az_lname',
@@ -27,7 +27,7 @@ function az_person_profile_import_node_presave(EntityInterface $entity) {
   // Nodes from migrations are isSyncing().
   if (($entity instanceof Node) && ($entity->bundle() === 'az_person') && $entity->isSyncing() && !$entity->isNew()) {
     // Create new revision on syncing person records.
-    $revision_log = 'Updated from profile import.';
+    $revision_log = 'Updated from profiles import.';
     foreach ($fields as $field) {
       if ($entity->hasField($field) && !empty($entity->original)) {
         // Check if field changed.

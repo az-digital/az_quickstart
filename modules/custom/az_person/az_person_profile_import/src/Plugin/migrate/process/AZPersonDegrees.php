@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_person_profile_import\Plugin\migrate\process;
+namespace Drupal\az_person_profiles_import\Plugin\migrate\process;
 
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;

@@ -2,35 +2,35 @@
 
 declare(strict_types=1);
 
-namespace Drupal\az_person_profile_import\Form;
+namespace Drupal\az_person_profiles_import\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Configure Quickstart Person Profile Import settings for this site.
+ * Configure Quickstart Person Profiles Import settings for this site.
  */
-final class AZPersonProfileImportSettingsForm extends ConfigFormBase {
+final class AZPersonProfilesImportSettingsForm extends ConfigFormBase {
 
   /**
    * {@inheritdoc}
    */
   public function getFormId(): string {
-    return 'az_person_profile_import_settings';
+    return 'az_person_profiles_import_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames(): array {
-    return ['az_person_profile_import.settings'];
+    return ['az_person_profiles_import.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state): array {
-    $config = $this->config('az_person_profile_import.settings');
+    $config = $this->config('az_person_profiles_import.settings');
     $form['endpoint'] = [
       '#type' => 'url',
       '#title' => $this->t('Profiles API Endpoint'),
@@ -53,7 +53,7 @@ final class AZPersonProfileImportSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state): void {
-    $this->config('az_person_profile_import.settings')
+    $this->config('az_person_profiles_import.settings')
       ->set('endpoint', $form_state->getValue('endpoint'))
       ->set('apikey', $form_state->getValue('apikey'))
       ->save();

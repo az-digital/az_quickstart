@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\az_person_profile_import\Plugin\migrate_plus\data_fetcher;
+namespace Drupal\az_person_profiles_import\Plugin\migrate_plus\data_fetcher;
 
 use Drupal\migrate\MigrateException;
 use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
  * @code
  * source:
  *   plugin: url
- *   data_fetcher_plugin: az_profile_api_fetcher
+ *   data_fetcher_plugin: az_profiles_api_fetcher
  *   headers:
  *     Accept: application/json
  *     User-Agent: Internet Explorer 6
@@ -27,11 +27,11 @@ use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
  * @endcode
  *
  * @DataFetcher(
- *   id = "az_profile_api_fetcher",
+ *   id = "az_profiles_api_fetcher",
  *   title = @Translation("Quickstart HTTP Fetcher with optional cache")
  * )
  */
-class AZProfileAPIFetcher extends Http {
+class AZProfilesAPIFetcher extends Http {
 
   /**
    * @var \Drupal\Core\Config\ConfigFactory
@@ -65,7 +65,7 @@ class AZProfileAPIFetcher extends Http {
    */
   public function getResponseContent(string $url): string {
     // Grab the profiles API settings from configuration.
-    $config = $this->configFactory->get('az_person_profile_import.settings');
+    $config = $this->configFactory->get('az_person_profiles_import.settings');
     $endpoint = $config->get('endpoint');
     $apikey = $config->get('apikey');
 
