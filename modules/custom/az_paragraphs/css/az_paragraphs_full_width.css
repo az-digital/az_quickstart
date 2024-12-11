@@ -117,7 +117,6 @@
     .layout-sidebar-first .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;
-        max-width: 100%;
     }
     .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .az-full-width-row,
     .layout-sidebar-second .region-content .az-aspect-ratio.full-width-background .az-full-width-row {
@@ -141,7 +140,6 @@
     .layout-sidebar-second .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;
-        max-width: 100%;
         -ms-flex-pack: start!important;
         justify-content: flex-start!important;
     }
@@ -152,7 +150,6 @@
     .layout-two-sidebars .region-content .full-width-background .az-full-width-row {
         -ms-flex: 0 0 100%;
         flex: 0 0 100%;
-        max-width: 100%;
     }
     .region-content .paragraph--type--az-text-background.full-width-background .az-full-width-column-content {
         padding-left: 0;
