@@ -3,6 +3,7 @@
 namespace Drupal\az_core;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Extension\ModuleHandlerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\Core\Url;
 use Drupal\externalauth\AuthmapInterface;
@@ -28,6 +29,13 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
   protected $entityTypeManager;
 
   /**
+   * The module handler.
+   *
+   * @var \Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
    * ToolbarHandler constructor.
    *
    * @param \Drupal\Core\Session\AccountProxyInterface $account
@@ -36,11 +44,14 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
    *   The entity type manager.
    * @param \Drupal\externalauth\AuthmapInterface $authmap
    *   The authmap service.
+   * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
+   *  The module handler.
    */
-  public function __construct(AccountProxyInterface $account, EntityTypeManagerInterface $entityTypeManager, ?AuthmapInterface $authmap) {
+  public function __construct(AccountProxyInterface $account, EntityTypeManagerInterface $entityTypeManager, ?AuthmapInterface $authmap, ModuleHandlerInterface $moduleHandler) {
     parent::__construct($account);
     $this->entityTypeManager = $entityTypeManager;
     $this->authmap = $authmap;
+    $this->moduleHandler = $moduleHandler;
   }
 
   /**
@@ -51,9 +62,11 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
    */
   public function renderToolbarLinks() {
     $build = parent::renderToolbarLinks();
+    // Check if the az_person module is enabled.
+    $az_person_enabled = $this->moduleHandler->moduleExists('az_person');
     $additional_links = [];
     // Only valid if we have the externalauth module.
-    if (!empty($this->authmap)) {
+    if (!empty($this->authmap) && $az_person_enabled) {
       // Check if we have permission.
       if ($this->account->hasPermission('edit matching netid content')) {
         $auth = $this->authmap->get($this->account->id(), 'cas');

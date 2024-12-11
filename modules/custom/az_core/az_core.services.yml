@@ -34,3 +34,4 @@ services:
     arguments:
       - '@entity_type.manager'
       - '@?externalauth.authmap'
+      - '@module_handler'
