@@ -763,3 +763,11 @@ form.webform-submission-form {
 .hide-contextual-links .contextual button {
   display: none;
 }
+
+.contextual-region .contextual .contextual-links a {
+  color: #333;
+}
+
+.contextual-region {
+  display: inline-block;
+}
