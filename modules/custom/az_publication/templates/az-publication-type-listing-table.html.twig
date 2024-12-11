@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * Default theme implementation for views listing table.
+ *
+ * Available variables:
+ * - headers: Contains table headers.
+ * - rows: Contains multiple rows. Each row contains:
+ *   - label: The human-readable name of the type.
+ *   - id: Machine name of the type.
+ *   - type: The mapped publication type.
+ *   - operations: List of available operations.
+ *
+ * @see template_preprocess_az_publication_type_listing_table()
+ *
+ * @ingroup themeable
+ */
+#}
+<table{{ attributes.addClass('responsive-enabled') }}>
+  <thead>
+    <tr>
+      {% for header in headers %}
+        <th{{ header.attributes }}>{{ header.data }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for row in rows %}
+      <tr{{ row.attributes }}>
+        <td class="az-publication-type-label">
+          <strong data-drupal-selector="az-publication-type-table-filter-text-source">{{ row.data.label.data }}</strong>
+        </td>
+        <td class="az-publication-type-machine-name" data-drupal-selector="az-publication-type-table-filter-text-source">
+          {{ row.data.id.data }}
+        </td>
+        <td class="az-publication-type" data-drupal-selector="az-publication-type-table-filter-text-source">
+          {{ row.data.type.data }}
+        </td>
+        <td class="az-publication-type-operations">
+          {{ row.data.operations.data }}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>

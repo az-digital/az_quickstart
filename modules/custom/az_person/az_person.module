@@ -61,3 +61,17 @@ function az_person_preprocess_field(array &$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_theme().
+ */
+function az_person_theme() {
+  $base_hook = [
+    'base hook' => 'field_group_html_element',
+  ];
+  return [
+    'field_group_html_element__node__az_person__h1' => $base_hook,
+    'field_group_html_element__node__az_person__h2' => $base_hook,
+    'field_group_html_element__node__az_person__h3' => $base_hook,
+  ];
+}
