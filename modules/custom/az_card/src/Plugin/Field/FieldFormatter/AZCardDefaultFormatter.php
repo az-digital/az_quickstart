@@ -125,14 +125,16 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
       // Link.
       $link_render_array = [];
       $link_url = '';
+      $current_path = \Drupal::service('path.current')->getPath();
       if ($item->link_title || $item->link_uri) {
         if (str_starts_with($item->link_uri ?? '', '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
         else {
-          if (strcmp($item->link_uri, "#") === 0) {
-            $link_url = $this->pathValidator->getUrlIfValid('<none>');
+          // Check if the link is an anchor within the current page
+          if (str_starts_with($item->link_uri, "#")) {
+            $link_url = $this->pathValidator->getUrlIfValid($current_path . $item->link_uri);
           }
           else {
             $link_url = $this->pathValidator->getUrlIfValid($item->link_uri ?? '<none>');
