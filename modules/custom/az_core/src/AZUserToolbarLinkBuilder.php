@@ -15,7 +15,7 @@ use Drupal\user\ToolbarLinkBuilder;
 class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
 
   /**
-   * Authmap service definition.
+   * Drupal\externalauth\AuthmapInterface definition.
    *
    * @var \Drupal\externalauth\AuthmapInterface
    */
