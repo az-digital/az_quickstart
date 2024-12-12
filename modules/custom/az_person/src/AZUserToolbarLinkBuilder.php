@@ -75,10 +75,9 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
       if ($this->account->hasPermission('edit matching netid content')) {
         $auth = $this->authmap->get($this->account->id(), 'cas');
 
-        if ($auth !== FALSE && is_string($auth)) {
+        if (($auth !== FALSE)) {
           // Verify that 'field_az_netid' exists for 'az_person' content type.
           $field_definitions = $this->entityFieldManager->getFieldDefinitions('node', 'az_person');
-
           if (isset($field_definitions['field_az_netid'])) {
             // Check if we have a linked person.
             $persons = $this->entityTypeManager->getStorage('node')->loadByProperties([
