@@ -68,13 +68,11 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
   public function renderToolbarLinks() {
     $build = parent::renderToolbarLinks();
     $additional_links = [];
-
     // Only valid if we have the externalauth module.
     if (!empty($this->authmap)) {
       // Check if we have permission.
       if ($this->account->hasPermission('edit matching netid content')) {
         $auth = $this->authmap->get($this->account->id(), 'cas');
-
         if (($auth !== FALSE)) {
           // Verify that 'field_az_netid' exists for 'az_person' content type.
           $field_definitions = $this->entityFieldManager->getFieldDefinitions('node', 'az_person');
@@ -85,7 +83,6 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
               'type' => 'az_person',
               'status' => [1, TRUE],
             ]);
-
             if (!empty($persons)) {
               $person = reset($persons);
               // If we have a linked az person, generate links.
