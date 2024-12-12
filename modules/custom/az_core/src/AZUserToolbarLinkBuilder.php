@@ -45,7 +45,7 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
    * @param \Drupal\externalauth\AuthmapInterface $authmap
    *   The authmap service.
    * @param \Drupal\Core\Extension\ModuleHandlerInterface $moduleHandler
-   *  The module handler.
+   *   The module handler.
    */
   public function __construct(AccountProxyInterface $account, EntityTypeManagerInterface $entityTypeManager, ?AuthmapInterface $authmap, ModuleHandlerInterface $moduleHandler) {
     parent::__construct($account);
