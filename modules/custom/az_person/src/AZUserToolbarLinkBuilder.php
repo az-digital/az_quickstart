@@ -51,7 +51,7 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
     AccountProxyInterface $account,
     EntityTypeManagerInterface $entityTypeManager,
     EntityFieldManagerInterface $entityFieldManager,
-    ?AuthmapInterface $authmap
+    ?AuthmapInterface $authmap,
   ) {
     parent::__construct($account);
     $this->entityTypeManager = $entityTypeManager;
