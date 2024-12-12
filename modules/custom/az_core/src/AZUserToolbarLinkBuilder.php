@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_person;
+namespace Drupal\az_core;
 
 use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -108,19 +108,6 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
       }
     }
 
-    // Transform some of the user module links for clarity.
-    if (!empty($build['#links'])) {
-      $original_links = $build['#links'];
-      if (!empty($original_links['account'])) {
-        $original_links['account']['title'] = $this->t('View user account');
-      }
-      if (!empty($original_links['account_edit'])) {
-        $original_links['account_edit']['title'] = $this->t('Edit user account');
-      }
-      // Add in our links among the user module links.
-      $links = array_merge($additional_links, $original_links);
-      $build['#links'] = $links;
-    }
 
     return $build;
   }
