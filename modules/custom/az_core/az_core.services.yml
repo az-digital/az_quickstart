@@ -25,7 +25,7 @@ services:
       - '@config_update.config_list'
       - '@module_handler'
   # Decorates the normal user module links.
-  az_person.toolbar_link_builder:
+  az_core.toolbar_link_builder:
     class: Drupal\az_core\AZUserToolbarLinkBuilder
     decorates: user.toolbar_link_builder
     parent: user.toolbar_link_builder
