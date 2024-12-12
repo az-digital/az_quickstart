@@ -22,7 +22,7 @@ class AZUserToolbarLinkBuilder extends ToolbarLinkBuilder {
   protected $authmap;
 
   /**
-   * Entity type manager service definition.
+   * Drupal\Core\Entity\EntityTypeManagerInterface definition.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
