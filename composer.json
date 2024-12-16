@@ -68,7 +68,7 @@
         "drupal/easy_breadcrumb": "2.0.7",
         "drupal/embed": "1.9.0",
         "drupal/entity_embed": "1.6.0",
-        "drupal/environment_indicator": "4.0.19",
+        "drupal/environment_indicator": "4.0.20",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.6",
         "drupal/extlink": "2.0.2",
@@ -178,9 +178,6 @@
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
                 "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch"
-            },
-            "drupal/environment_indicator": {
-                "Make version indicator source and version indicator source fallback configurable. (3324621)": "https://www.drupal.org/files/issues/2024-07-22/3324621-39.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
