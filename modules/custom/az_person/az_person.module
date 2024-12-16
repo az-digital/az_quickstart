@@ -44,3 +44,34 @@ function az_person_entity_bundle_field_info_alter(&$fields, EntityTypeInterface 
     $fields['field_az_netid']->addConstraint('UniqueField');
   }
 }
+
+/**
+ * Implements hook_preprocess_field().
+ */
+function az_person_preprocess_field(array &$variables) {
+  $entity_type = $variables['element']['#entity_type'] ?? '';
+  $bundle = $variables['element']['#bundle'] ?? '';
+  $field_name = $variables['element']['#field_name'] ?? '';
+  if ($entity_type === 'node' && $bundle === 'az_person' && $field_name === 'field_az_suffix') {
+    $suffix = $variables['element']['#items'][0]->value ?? '';
+    if (!empty($suffix)) {
+      $variables['items'][0]['content']['#context'] = [
+        'value' => ', ' . $suffix,
+      ];
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_person_theme() {
+  $base_hook = [
+    'base hook' => 'field_group_html_element',
+  ];
+  return [
+    'field_group_html_element__node__az_person__h1' => $base_hook,
+    'field_group_html_element__node__az_person__h2' => $base_hook,
+    'field_group_html_element__node__az_person__h3' => $base_hook,
+  ];
+}

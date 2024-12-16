@@ -1,15 +1,14 @@
 name: 'Quickstart SEO'
+description: "Provides configuration to implement metadata for search engine optimization and track website traffic."
 type: module
 core_version_requirement: ^9 || ^10
 package: The University of Arizona
 dependencies:
-  - az_news:az_news
-  - az_event:az_event
-  - az_person:az_person
-  - az_flexible_page:az_flexible_page
+  - az_core
   - xmlsitemap:xmlsitemap
   - xmlsitemap:xmlsitemap_engines
   - redirect:redirect
   - metatag:metatag
   - metatag:metatag_open_graph
   - metatag:metatag_twitter_cards
+  - schema_metatag:schema_metatag

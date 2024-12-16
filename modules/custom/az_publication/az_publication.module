@@ -5,21 +5,48 @@
  * Contains az_publication.module.
  */
 
-use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Datetime\Element\Datetime;
 use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
+use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\filter\Entity\FilterFormat;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
 use Drupal\views\Plugin\Block\ViewsBlock;
 use Seboettg\CiteProc\CiteProc;
 use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function az_publication_form_view_add_form_alter(&$form, FormStateInterface $form_state) {
+  $options = [];
+  foreach ($form['displays']['show']['wizard_key']['#options'] as $key => $option) {
+    $group = (strpos($key, 'standard:') === 0 || strpos($key, 'az_publication') === 0) ? 'Configuration' : 'Content';
+    $options[$group][$key] = $option;
+  }
+
+  // Refactored sorting logic.
+  az_publication_sort_options_by_render($options, 'Content');
+  az_publication_sort_options_by_render($options, 'Configuration');
+
+  $form['displays']['show']['wizard_key']['#options'] = $options;
+}
+
+/**
+ * Sorts options by render method.
+ */
+function az_publication_sort_options_by_render(array &$options, $key) {
+  if (isset($options[$key]) && is_array($options[$key])) {
+    uasort($options[$key], function ($a, $b) {
+      return $a->render() <=> $b->render();
+    });
+  }
+}
 
 /**
  * Implements hook_entity_extra_field_info().
@@ -95,6 +122,14 @@ function az_publication_theme() {
       'template' => 'views-exposed-form--az-publications',
       'base hook' => 'views_exposed_form',
     ],
+    'az_publication_type_listing_table' => [
+      'variables' => [
+        'headers' => NULL,
+        'rows' => NULL,
+        '#attributes' => [],
+      ],
+      'file' => 'az_publication_type.theme.inc',
+    ],
   ];
 }
 
@@ -102,13 +137,9 @@ function az_publication_theme() {
  * Implements hook_ENTITY_TYPE_view().
  */
 function az_publication_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
+  if ($entity instanceof NodeInterface) {
+    if ($display->getComponent('az_publication_bibliography') && $entity->hasField('field_az_publication_mapped_type')) {
 
-  // Only if fields suggest a publication.
-  if ($entity instanceof NodeInterface &&
-      $entity instanceof FieldableEntityInterface &&
-      $entity->hasField('field_az_publication_type') &&
-      !empty($entity->field_az_publication_type->value)) {
-    if ($display->getComponent('az_publication_bibliography')) {
       // Publication fields to CSL schema mappings.
       $pmap = [
         'field_az_publication_container' => 'container-title',
@@ -133,16 +164,25 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
         'field_az_author_suffix' => 'suffix',
         'field_az_author_literal' => 'literal',
       ];
+      $default_config = \Drupal::config('az_publication.settings');
       $blob = new stdClass();
       $blob->title = $entity->getTitle();
       $blob->id = $entity->id();
-      $blob->type = $entity->field_az_publication_type->value;
+      $blob->type = 'article-journal';
+      $az_publication_mapped_type_field = $entity->get('field_az_publication_mapped_type');
+      if (!$az_publication_mapped_type_field->isEmpty()) {
+        $az_publication_mapped_type_id = $az_publication_mapped_type_field->target_id;
+        $entity_type_manager = \Drupal::entityTypeManager();
+        $az_publication_type_storage = $entity_type_manager->getStorage('az_publication_type');
+        $az_publication_mapped_type = $az_publication_type_storage->load($az_publication_mapped_type_id);
+        if (isset($az_publication_mapped_type) && $az_publication_mapped_type->get('type')) {
+          $blob->type = $az_publication_mapped_type->get('type');
+        }
+      }
       // Load default citation settings.
       $locale = \Drupal::service('az_publication.locale_metadata')->getLocaleId();
       $repository = \Drupal::service('entity.repository');
-      $default_config = \Drupal::config('az_publication.settings');
       $style_context = $default_config->get('default_citation_style');
-
       // Attempt to find citation argument context.
       if (function_exists('views_get_current_view')) {
         $view = views_get_current_view();
@@ -228,7 +268,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $date->{'date-parts'}[] = explode('-', $entity->field_az_accessed_date->value);
           $blob->accessed = $date;
         }
-        // By default, provide a link to the node page if nothing else applies.
+        // By default, provide a link to the node page
+        // if nothing else applies.
         try {
           // Canonical full node should not link to itself.
           if ($view_mode !== 'full') {
@@ -258,7 +299,6 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $blob->itemlink = urldecode($file_entity->createFileUrl(TRUE));
           }
         }
-
         $additionalLinks = [];
         if (!empty($entity->field_az_publication_extra_links)) {
           foreach ($entity->field_az_publication_extra_links as $item) {
@@ -403,7 +443,7 @@ function az_publication_preprocess_views_view(&$variables) {
     if ($variables['id'] === 'az_publications') {
       // Reduce the width of the text input form elements from the default.
       $resize_element = [
-        'name',
+        'author-name',
         'title',
       ];
       foreach ($resize_element as $element) {
@@ -412,15 +452,13 @@ function az_publication_preprocess_views_view(&$variables) {
         }
       }
       // Year field doesn't need a standard width text field.
-      if (!empty($variables['exposed']['field_az_publication_date_value'])) {
-        $variables['exposed']['field_az_publication_date_value']['#size'] = 6;
+      if (!empty($variables['exposed']['date'])) {
+        $variables['exposed']['date']['#size'] = 6;
       }
-      if (!empty($variables['exposed']['field_az_publication_type_value'])) {
-        // Add class so publication type select is styled like text inputs.
-        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-text';
+      if (!empty($variables['exposed']['type'])) {
         // Make sure type filter is styled as a form control.
-        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-select';
-        $variables['exposed']['field_az_publication_type_value']['#attributes']['class'][] = 'form-control';
+        $variables['exposed']['type']['#attributes']['class'][] = 'form-select';
+        $variables['exposed']['type']['#attributes']['class'][] = 'form-control';
       }
     }
   }
@@ -651,4 +689,15 @@ function az_publication_form_node_az_publication_form_alter(&$form, FormStateInt
 function az_publication_form_node_az_publication_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   _az_publication_form_revisions($form, $form_state, $form_id);
+}
+
+/**
+ * Implements hook_views_data_alter().
+ *
+ * See https://www.drupal.org/project/drupal/issues/3347343
+ */
+function az_publication_views_data_alter(&$data) {
+  // Use entity reference for the field 'field_az_publication_mapped_type'.
+  $field_name = 'field_az_publication_mapped_type';
+  $data['node__' . $field_name][$field_name . '_target_id']['filter']['id'] = 'entity_reference';
 }
