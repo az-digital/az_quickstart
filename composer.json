@@ -65,10 +65,10 @@
         "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.2",
         "drupal/draggableviews": "2.1.4",
-        "drupal/easy_breadcrumb": "2.0.8",
+        "drupal/easy_breadcrumb": "2.0.9",
         "drupal/embed": "1.9.0",
         "drupal/entity_embed": "1.6.0",
-        "drupal/environment_indicator": "4.0.10",
+        "drupal/environment_indicator": "4.0.21",
         "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.6",
         "drupal/extlink": "2.0.4",
@@ -97,7 +97,7 @@
         "drupal/metatag": "2.0.2",
         "drupal/migrate_plus": "6.0.5",
         "drupal/migrate_queue_importer": "2.1.1",
-        "drupal/migrate_tools": "6.0.4",
+        "drupal/migrate_tools": "6.0.5",
         "drupal/optional_end_date": "1.4.0",
         "drupal/paragraphs": "1.18.0",
         "drupal/paragraphs_admin": "1.6.0",
@@ -118,7 +118,7 @@
         "drupal/views_bulk_operations": "4.3.2",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
-        "drupal/webform": "6.2.8",
+        "drupal/webform": "6.2.9",
         "drupal/workbench_access": "2.0.3",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
@@ -199,7 +199,8 @@
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
             },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch"
+                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
+                "Allow overriding offset with zero value (3494566)": "https://www.drupal.org/files/issues/2024-12-18/3494566-10-allow-overriding-offset-with-0-value.patch"
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2024-05-07/2982550-41.patch",
