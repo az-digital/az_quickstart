@@ -201,7 +201,7 @@
             },
             "drupal/viewsreference": {
                 "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
-                "Allow overriding offset with zero value (3494566)": "https://www.drupal.org/files/issues/2024-12-18/3494566-8-allow-overriding-offset-with-0-value.patch"
+                "Allow overriding offset with zero value (3494566)": "https://www.drupal.org/files/issues/2024-12-18/3494566-10-allow-overriding-offset-with-0-value.patch"
             },
             "drupal/workbench_access": {
                 "Allow multiple access schemas (2982550)": "https://www.drupal.org/files/issues/2024-05-07/2982550-41.patch",
