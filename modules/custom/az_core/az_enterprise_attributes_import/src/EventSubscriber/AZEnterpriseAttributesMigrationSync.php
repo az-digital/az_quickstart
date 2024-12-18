@@ -6,9 +6,9 @@ namespace Drupal\az_enterprise_attributes_import\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannel;
-use Drupal\Core\State\StateInterface;
 use Drupal\migrate\Event\MigrateImportEvent;
 use Drupal\migrate_tools\EventSubscriber\MigrationImportSync;
+use Drupal\migrate_tools\MigrateTools;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -31,17 +31,16 @@ final class AZEnterpriseAttributesMigrationSync extends MigrationImportSync {
    *
    * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $dispatcher
    *   The event dispatcher.
-   * @param \Drupal\Core\State\StateInterface $state
-   *   The Key/Value Store to use for tracking synced source rows.
+   * @param \Drupal\migrate_tools\MigrateTools $migrateTools
+   *   The MigrateTools helper for source id tracking.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
    *   The entity type manager service.
    * @param \Drupal\Core\Logger\LoggerChannel $logger
    *   The logger channel service.
    */
-  public function __construct(EventDispatcherInterface $dispatcher, StateInterface $state, EntityTypeManagerInterface $entityTypeManager, LoggerChannel $logger) {
+  public function __construct(EventDispatcherInterface $dispatcher, MigrateTools $migrateTools, EntityTypeManagerInterface $entityTypeManager, LoggerChannel $logger) {
     $this->dispatcher = $dispatcher;
-    $this->state = $state;
-    $this->state->set('migrate_tools_sync', []);
+    $this->migrateTools = $migrateTools;
     $this->entityTypeManager = $entityTypeManager;
     $this->logger = $logger;
   }
@@ -51,12 +50,18 @@ final class AZEnterpriseAttributesMigrationSync extends MigrationImportSync {
    */
   public function sync(MigrateImportEvent $event): void {
     $migration = $event->getMigration();
+    $migrationId = $migration->getPluginId();
     // If this isn't a migration we're concerned with, use the parent.
-    if ($migration->id() !== 'az_enterprise_attributes_import') {
+    if ($migrationId !== 'az_enterprise_attributes_import') {
       parent::sync($event);
       return;
     }
     if (!empty($migration->syncSource)) {
+      // Clear Sync IDs for this migration before starting preparing rows.
+      $this->migrateTools->clearSyncSourceIds($migrationId);
+      // Activate the syncing state for this migration, so
+      // migrate_tools_migrate_prepare_row() can record all IDs.
+      $this->migrateTools->setMigrationSyncingState($migrationId, TRUE);
 
       // Loop through the source to register existing source ids.
       // @see migrate_tools_migrate_prepare_row().
@@ -68,7 +73,12 @@ final class AZEnterpriseAttributesMigrationSync extends MigrationImportSync {
         $source->next();
       }
 
-      $source_id_values = $this->state->get('migrate_tools_sync', []);
+      // Deactivate the syncing state for this migration, so
+      // migrate_tools_migrate_prepare_row() does not record any further IDs
+      // during the actual migration process.
+      $this->migrateTools->setMigrationSyncingState($migrationId, FALSE);
+
+      $source_id_values = $this->migrateTools->getSyncSourceIds($migrationId);
 
       $id_map = $migration->getIdMap();
       $id_map->rewind();
