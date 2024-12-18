@@ -9,8 +9,6 @@ use Drupal\migrate_tools\MigrateExecutable;
 /**
  * Test of attribute import functionality.
  *
- * @ingroup az_enterprise_attributes_import
- *
  * @group az_enterprise_attributes_import
  */
 class EnterpriseAttributesImportTest extends BrowserTestBase {
