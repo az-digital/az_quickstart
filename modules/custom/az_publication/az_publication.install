@@ -216,7 +216,7 @@ function az_publication_update_1021002(&$sandbox) {
   }
 
   // Inform the batch API about the progress.
-  $sandbox['#finished'] = $sandbox['progress'] / $sandbox['max'];
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
 }
 
 /**
