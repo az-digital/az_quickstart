@@ -170,7 +170,7 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+        if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
@@ -261,8 +261,9 @@ class AZCardWidget extends WidgetBase {
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
+      '#element_validate' => [[$this, 'validateCardLinkTitle']],
       '#default_value' => $item->link_title ?? NULL,
-      '#description' => $this->t('Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".'),
+      '#description' => $this->t('<p>Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".</p><p>This field is required when a Card Link URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.</p>'),
     ];
 
     $element['link_uri'] = [
@@ -277,9 +278,21 @@ class AZCardWidget extends WidgetBase {
       '#maxlength' => 2048,
     ];
 
+    // Add client side validation for link title if not collapsed.
+    if ($status) {
+      $link_uri_unique_id = Html::getUniqueId('az_card_link_uri_input');
+      $element['link_uri']['#attributes']['data-az-card-link-uri-input-id'] = $link_uri_unique_id;
+      $element['link_title']['#states'] = [
+        'required' => [
+          ':input[data-az-card-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
+        ],
+      ];
+    }
+
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
+        'sr-only' => $this->t('Hidden link title'),
         'btn-block' => $this->t('Text link'),
         'btn btn-block btn-red' => $this->t('Red button'),
         'btn btn-block btn-blue' => $this->t('Blue button'),
@@ -418,6 +431,20 @@ class AZCardWidget extends WidgetBase {
     $element = NestedArray::getValue($form, $array_parents);
 
     return $element;
+  }
+
+  /**
+   * Form element validation handler for the 'link_title' field.
+   *
+   * Makes field required if link_uri is provided.
+   */
+  public function validateCardLinkTitle(&$element, FormStateInterface $form_state, &$complete_form) {
+    $parents = $element['#array_parents'];
+    array_pop($parents);
+    $parent_element = NestedArray::getValue($complete_form, $parents);
+    if (empty($element['#value']) && !empty($parent_element['link_uri']['#value'])) {
+      $form_state->setError($element, t('Card Link Title field is required when a URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.'));
+    }
   }
 
   /**

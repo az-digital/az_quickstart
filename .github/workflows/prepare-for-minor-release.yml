@@ -156,6 +156,8 @@ jobs:
           - 2.8.x
           - 2.9.x
           - 2.10.x
+          - 2.11.x
+          - 2.12.x
     steps:
       - name: Update previous release branch `${{ matrix.previous_version }}`
         uses: actions/checkout@v4

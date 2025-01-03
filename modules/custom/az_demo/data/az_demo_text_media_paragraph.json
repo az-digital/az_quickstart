@@ -29,7 +29,7 @@
         {
             "id":43,
             "az_title" : "Join the Best Students in the Country",
-            "az_text_area" : "<p>Beyond employment, are you looking to design your ideal career and life?<\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"https:\/\/www.arizona.edu\/how-apply-uarizona\">Apply<\/a> <a class=\"btn btn-blue\" href=\"https:\/\/admissions.arizona.edu\/visit\">Visit<\/a><\/p>\r\n",
+            "az_text_area" : "<p>Beyond employment, are you looking to design your ideal career and life?<\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"https:\/\/www.arizona.edu\/admissions\/apply\">Apply<\/a> <a class=\"btn btn-blue\" href=\"https:\/\/admissions.arizona.edu\/visit\">Visit<\/a><\/p>\r\n",
             "filename" : "study.jpeg",
             "full_width" : false,
             "bg_attachment" : "",
