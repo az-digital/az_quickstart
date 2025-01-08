@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Drupal\az_core\Drush\Commands;
 
+use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Attributes\Usage;
 use Drush\Attributes\FieldLabels;
 use Drush\Attributes\DefaultFields;
 use Drush\Attributes\Command;
-use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Commands\DrushCommands;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
