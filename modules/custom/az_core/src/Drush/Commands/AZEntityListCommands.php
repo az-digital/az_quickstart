@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Drupal\az_core\Drush\Commands;
 
-use CLI\Usage;
-use CLI\FieldLabels;
-use CLI\DefaultFields;
-use CLI\Command;
+use Drush\Attributes\Usage;
+use Drush\Attributes\FieldLabels;
+use Drush\Attributes\DefaultFields;
+use Drush\Attributes\Command;
 use Consolidation\OutputFormatters\StructuredData\RowsOfFields;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drush\Commands\DrushCommands;
