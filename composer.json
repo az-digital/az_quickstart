@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.27",
         "az-digital/az-icons": "1.0.2",
         "citation-style-language/locales": "0.0.25",
-        "citation-style-language/styles": "0.0.569",
+        "citation-style-language/styles": "0.0.575",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "drupal/access_unpublished": "1.6.0",
@@ -70,7 +70,7 @@
         "drupal/entity_embed": "1.6.0",
         "drupal/environment_indicator": "4.0.21",
         "drupal/exclude_node_title": "1.4.0",
-        "drupal/externalauth": "2.0.6",
+        "drupal/externalauth": "2.0.7",
         "drupal/extlink": "2.0.4",
         "drupal/field_group": "3.6.0",
         "drupal/field_group_link": "3.2.0",
@@ -199,7 +199,7 @@
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
             },
             "drupal/viewsreference": {
-                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2021-01-27/add_label_formatter-2938433-7.patch",
+                "Add Label field formatter (2938433)": "https://www.drupal.org/files/issues/2024-12-18/2938433-20-add-label-field-formatter.patch",
                 "Allow overriding offset with zero value (3494566)": "https://www.drupal.org/files/issues/2024-12-18/3494566-10-allow-overriding-offset-with-0-value.patch"
             },
             "drupal/workbench_access": {
