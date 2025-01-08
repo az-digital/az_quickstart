@@ -20,3 +20,10 @@ function az_seo_update_last_removed() {
  */
 function az_seo_update_1021001() {
 }
+
+/**
+ * Ensure schema_metatag module is installed.
+ */
+function az_seo_update_1021101() {
+  \Drupal::service('module_installer')->install(['schema_metatag']);
+}
