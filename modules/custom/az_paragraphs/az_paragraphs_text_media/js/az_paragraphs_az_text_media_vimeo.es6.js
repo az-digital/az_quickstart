@@ -28,7 +28,7 @@
           $.each(bgVideoParagraphs, index => {
             const thisContainer = bgVideoParagraphs[index];
             const parentParagraph = thisContainer.parentNode;
-            const vimeoId = thisContainer.dataset.vimeo-id;
+            const vimeoId = thisContainer.dataset.vimeoId;
             bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
             const options = bgVideos[vimeoId];
             const videoPlayer = thisContainer.getElementsByClassName(
@@ -40,6 +40,7 @@
             thisContainer.player = new VimeoPlayer(videoPlayer, {
               id: vimeoId,
               width: options.width,
+              height: Math.ceil(options.width / options.ratio),
               autoplay: true,
               muted: options.mute,
               loop: options.repeat
@@ -90,8 +91,9 @@
               const videoPlayer = thisContainer.getElementsByClassName(
                 "az-video-player"
               )[0];
+              const { ratio } = bgVideos[vimeoId];
               const width = thisContainer.offsetWidth;
-              const height = Math.ceil(width / defaults.ratio);
+              const height = Math.ceil(width / ratio);
               videoPlayer.style.width = `${width}px`;
               videoPlayer.style.height = `${height}px`;
             });

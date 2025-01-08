@@ -27,7 +27,7 @@
         $.each(bgVideoParagraphs, function (index) {
           var thisContainer = bgVideoParagraphs[index];
           var parentParagraph = thisContainer.parentNode;
-          var vimeoId = thisContainer.dataset.vimeoid;
+          var vimeoId = thisContainer.dataset.vimeoId;
           bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
           var options = bgVideos[vimeoId];
           var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
@@ -35,6 +35,7 @@
           thisContainer.player = new VimeoPlayer(videoPlayer, {
             id: vimeoId,
             width: options.width,
+            height: Math.ceil(options.width / options.ratio),
             autoplay: true,
             muted: options.mute,
             loop: options.repeat
@@ -69,8 +70,9 @@
           $.each(bgVideoParagraphs, function (index) {
             var thisContainer = bgVideoParagraphs[index];
             var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
+            var ratio = bgVideos[vimeoId].ratio;
             var width = thisContainer.offsetWidth;
-            var height = Math.ceil(width / defaults.ratio);
+            var height = Math.ceil(width / ratio);
             videoPlayer.style.width = "".concat(width, "px");
             videoPlayer.style.height = "".concat(height, "px");
           });
