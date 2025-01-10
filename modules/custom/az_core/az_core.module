@@ -484,15 +484,15 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
 /**
  * Implements hook_views_pre_view().
  *
- * Modifies sort order of the user administration view.
+ * Modifies sort order of the core user administration view.
  */
 function az_core_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
   if ($view->id() === 'user_admin_people') {
     $display = $view->getDisplay();
-    $style = $display->getPlugin('style');
-    // @todo should this rely on a Quickstart configuration setting?
-    if (!empty($style->options['default'])) {
-      $style->options['default'] = 'access';
+    if ($style = $display->getPlugin('style')) {
+      if (!empty($style->options['default'])) {
+        $style->options['default'] = 'access';
+      }
     }
   }
 }
