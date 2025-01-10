@@ -47,6 +47,10 @@ source:
       label: 'End Date and Time'
       selector: End_DateTime
     -
+      name: image_url
+      label: 'Image URL'
+      selector: Image_URL
+    -
       name: publish
       label: Publish
       selector: Publish_Formula
