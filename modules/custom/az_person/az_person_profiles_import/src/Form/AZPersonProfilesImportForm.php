@@ -73,9 +73,9 @@ final class AZPersonProfilesImportForm extends FormBase {
       '#type' => 'select',
       '#title' => $this->t('Choose how profiles are imported'),
       '#options' => [
-        'normal' => $this->t('New profiles'),
-        'update' => $this->t('All listed profiles'),
-        'track_changes' => $this->t('Profiles that have been updated since last import'),
+        'normal' => $this->t('Import new profiles only'),
+        'track_changes' => $this->t('Import new profiles and profiles updated since the last import'),
+        'update' => $this->t('Import all listed profiles'),
       ],
       '#disabled' => !$has_key,
       '#required' => TRUE,
