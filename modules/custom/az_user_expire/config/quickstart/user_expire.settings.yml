@@ -6,5 +6,5 @@ user_expire_roles:
   az_content_admin: 0
   az_user_admin: 0
   az_html_admin: 0
-  az_user_expire: 2592000
+  az_auto_expiring_user: 2592000
   administrator: 0

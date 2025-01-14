@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies: {  }
 id: az_user_expire
-label: 'Auto expire user'
+label: 'Auto expiring user'
 weight: 7
 is_admin: false
 permissions: {  }
