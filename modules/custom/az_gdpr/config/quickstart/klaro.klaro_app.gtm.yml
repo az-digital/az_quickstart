@@ -1,0 +1,22 @@
+id: gtm
+label: 'Google Tag Manager'
+description: 'Manages and deploys marketing tags.'
+langcode: en
+status: true
+default: false
+purposes:
+  - advertising
+cookies: { }
+required: false
+opt_out: false
+only_once: false
+weight: 2
+info_url: 'https://marketingplatform.google.com/intl/de/about/tag-manager/'
+privacy_policy_url: 'https://policies.google.com/privacy'
+javascripts:
+  - gtm.js
+  - gtag.js
+  - 'https://www.googletagmanager.com/ns.html'
+attachments:
+  - gtm
+

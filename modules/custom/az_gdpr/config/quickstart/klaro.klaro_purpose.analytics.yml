@@ -1,0 +1,4 @@
+langcode: en
+id: analytics
+label: 'Analytics'
+weight: 1

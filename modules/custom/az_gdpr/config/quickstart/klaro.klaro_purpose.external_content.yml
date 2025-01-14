@@ -1,0 +1,4 @@
+langcode: en
+id: external_content
+label: 'Embedded external content'
+weight: 6

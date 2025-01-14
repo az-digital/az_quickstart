@@ -1,0 +1,22 @@
+id: ga
+label: 'Google Analytics'
+description: 'Tracks online visits of the website as a service.'
+langcode: en
+status: true
+default: false
+purposes:
+  - analytics
+cookies:
+  - { regex: '^_ga(_.*)?', path: '', domain: ''}
+  - { regex: '^_gid', path: '', domain: ''}
+  - { regex: '^IDE', path: '', domain: ''}
+required: false
+opt_out: false
+only_once: false
+weight: 1
+info_url: 'https://marketingplatform.google.com/intl/de/about/analytics/'
+privacy_policy_url: 'https://policies.google.com/privacy'
+javascripts:
+  - analytics.js
+attachments:
+  - ga4_google_analytics
