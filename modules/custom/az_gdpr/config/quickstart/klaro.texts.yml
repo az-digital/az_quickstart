@@ -4,14 +4,14 @@ consentModal:
   description: >
     Please choose the services and 3rd party applications we would like to use.
   privacyPolicy:
-    name: privacy policy
+    name: Privacy Statement
     text: >
       To learn more, please read our {privacyPolicy}.
     url: 'https://privacy.arizona.edu/privacy-statement'
 consentNotice:
   changeDescription: There were changes since your last visit, please update your consent.
   description: >
-    We use cookies and process personal data for the following purposes: {purposes}.
+    The University of Arizona websites utilize cookies to improve your browsing experience, analyze site performance, and support outreach and enrollment efforts. By continuing to use this site, you consent to our use of cookies. For more information, please review our {privacyPolicy}.
   learnMore: 
 ok: Ok, I Agree
 save: Save

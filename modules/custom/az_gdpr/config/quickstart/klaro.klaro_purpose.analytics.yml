@@ -1,4 +1,8 @@
 langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: HOBvXe9sLYbADwAG6LELlOHNV13mU0Zp-bjGx26ZVjk
 id: analytics
-label: 'Analytics'
+label: Analytics
 weight: 1
