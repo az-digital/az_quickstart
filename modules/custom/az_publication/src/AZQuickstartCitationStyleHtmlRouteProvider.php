@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\az_publication;
 
 use Drupal\Core\Entity\EntityTypeInterface;
