@@ -1,6 +1,6 @@
 # Quickstart GDPR Drupal module
 
-Pre-configures the contrib Drupal [Klaro module](https://www.drupal.org/project/cas) to include default settings.
+Pre-configures the contrib Drupal [Klaro module](https://www.drupal.org/project/klaro) to include default settings.
 
 ## Requirements
 
@@ -8,4 +8,4 @@ Pre-configures the contrib Drupal [Klaro module](https://www.drupal.org/project/
 This module requires the following module available.
 
 #### Packaged Dependencies
--[Klaro module](https://www.drupal.org/project/cas)
+-[Klaro module](https://www.drupal.org/project/klaro)
