@@ -482,13 +482,21 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
 }
 
 /**
- * Implements hook_views_pre_view().
+ * Implements hook_views_pre_build().
  *
  * Modifies sort order of the core user administration view.
  */
-function az_core_views_pre_view(ViewExecutable $view, $display_id, array &$args) {
+function az_core_views_pre_build(ViewExecutable $view) {
   if ($view->id() === 'user_admin_people') {
     $display = $view->getDisplay();
+    // Modify the created sort on the existing view.
+    if (!empty($view->sort['created'])) {
+      $view->sort['access'] = $view->sort['created'];
+      unset($view->sort['created']);
+      $view->sort['access']->realField = 'access';
+      $view->sort['access']->field = 'access';
+    }
+    // Change the default click sorting.
     if ($style = $display->getPlugin('style')) {
       if (!empty($style->options['default'])) {
         $style->options['default'] = 'access';
