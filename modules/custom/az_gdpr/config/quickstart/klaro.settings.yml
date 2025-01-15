@@ -1,7 +1,7 @@
 langcode: en
 deletable_cookie_domains: { }
-exclude_urls: {\/admin\/}
-disable_urls: {\/admin\/}
+exclude_urls: { }
+disable_urls: { }
 styles:
   - light
 dialog_mode: notice #Show notice dialog if no decision has yet been made. The dialog does not open in modal and visitors can use the page normally.
