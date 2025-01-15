@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: yyjkpL26vTTIyZC_SLONChBpsPgofe37TnGSSn9YcJE
 id: external_content
 label: 'Embedded external content'
 weight: 6
