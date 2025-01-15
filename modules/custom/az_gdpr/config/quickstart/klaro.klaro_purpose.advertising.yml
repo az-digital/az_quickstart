@@ -1,8 +1,6 @@
 langcode: en
 status: true
 dependencies: {  }
-_core:
-  default_config_hash: hzNuWhf3WlOXqQ4aeg63ScLpSiaAV-xAMchc7a8ZyQs
 id: advertising
 label: 'Advertising and Marketing'
 weight: 0
