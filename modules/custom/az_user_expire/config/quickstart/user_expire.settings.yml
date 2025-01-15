@@ -1,5 +1,5 @@
-frequency: 172800
-offset: 604800
+frequency: 0
+offset: 0
 user_expire_roles:
   authenticated: 0
   az_content_editor: 0
@@ -8,3 +8,8 @@ user_expire_roles:
   az_html_admin: 0
   az_auto_expiring_user: 2592000
   administrator: 0
+  az_profile_editor: 0
+send_expiration_warnings: false
+expiration_warning_mail:
+  subject: ''
+  body: ''
