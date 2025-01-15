@@ -32,7 +32,7 @@
         "php": ">=8.1",
         "az-digital/arizona-bootstrap": "2.0.27",
         "az-digital/az-icons": "1.0.2",
-        "citation-style-language/locales": "0.0.25",
+        "citation-style-language/locales": "0.0.26",
         "citation-style-language/styles": "0.0.576",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
