@@ -20,7 +20,7 @@
           minimumSupportedWidth: 600
         };
         var bgVideos = settings.azFieldsMedia.bgVideos;
-        var bgVideoParagraphs = document.getElementsByClassName("az-js-video-background");
+        var bgVideoParagraphs = document.getElementsByClassName("az-js-vimeo-video-background");
         var tag = document.createElement("script");
         tag.src = "https://player.vimeo.com/api/player.js";
         document.head.appendChild(tag);

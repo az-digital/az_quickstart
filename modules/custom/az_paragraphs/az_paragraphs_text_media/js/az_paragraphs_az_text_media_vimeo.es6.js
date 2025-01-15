@@ -17,7 +17,7 @@
           };
           const { bgVideos } = settings.azFieldsMedia;
           const bgVideoParagraphs = document.getElementsByClassName(
-            "az-js-video-background"
+            "az-js-vimeo-video-background"
           );
           // Load Vimeo API
           const tag = document.createElement("script");
@@ -45,7 +45,7 @@
                   height: Math.ceil(options.width / options.ratio),
                   autoplay: true,
                   muted: options.mute,
-                  loop: options.repeat
+                  loop: options.repeat,
                 });
       
                 // Event Listeners
