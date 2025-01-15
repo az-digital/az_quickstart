@@ -88,18 +88,52 @@
           }
   
           // Resize Logic (optional, similar to YouTube)
+          const setDimensions = (container) => {
+            const parentParagraph = container.parentNode;
+            const vimeoId = container.dataset.vimeoId;
+            const thisPlayer =
+              container.getElementsByClassName('az-video-player')[0];
+            thisPlayer.style.zIndex = -100;
+            const { style } = container.dataset;
+            const width = container.offsetWidth;
+            const height = container.offsetHeight;
+            const { ratio } = bgVideos[vimeoId];
+            const pWidth = Math.ceil(height * ratio); // get new player width
+            const pHeight = Math.ceil(width / ratio); // get new player height
+            let parentHeight = parentParagraph.offsetHeight;
+            parentHeight = `${parentHeight.toString()}px`;
+            container.style.height = parentHeight;
+            if (style === 'bottom') {
+              container.style.top = 0;
+            }
+            let widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
+            widthMinuspWidthdividedbyTwo = `${widthMinuspWidthdividedbyTwo.toString()}px`;
+            let pHeightRatio = (height - pHeight) / 2;
+            pHeightRatio = `${pHeightRatio.toString()}px`;
+            // when screen aspect ratio differs from video,
+            // video must center and underlay one dimension.
+            if (width / ratio < height) {
+              // if new video height < window height (gap underneath)
+              thisPlayer.width = pWidth;
+              thisPlayer.height = height;
+              thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
+              thisPlayer.style.top = 0;
+              // player width is greater, offset left; reset top
+            } else {
+              // new video width < window width (gap to right)
+              // get new player height
+              thisPlayer.height = pHeight;
+              thisPlayer.width = width;
+              thisPlayer.style.top = pHeightRatio;
+              thisPlayer.style.left = 0;
+            }
+          };
+  
+          // Resize handler updates width, height and offset
+          // of player after resize/init.
           const resize = () => {
-            $.each(bgVideoParagraphs, index => {
-              const thisContainer = bgVideoParagraphs[index];
-              const videoPlayer = thisContainer.getElementsByClassName(
-                "az-video-player"
-              )[0];
-              const vimeoId = thisContainer.dataset.vimeoId;
-              const { ratio } = bgVideos[vimeoId];
-              const width = thisContainer.offsetWidth;
-              const height = Math.ceil(width / ratio);
-              videoPlayer.style.width = `${width}px`;
-              videoPlayer.style.height = `${height}px`;
+            $.each(bgVideoParagraphs, (index) => {
+              setDimensions(bgVideoParagraphs[index]);
             });
           };
   

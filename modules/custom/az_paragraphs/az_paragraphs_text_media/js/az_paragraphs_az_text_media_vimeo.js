@@ -68,16 +68,42 @@
             });
           });
         };
+        var setDimensions = function setDimensions(container) {
+          var parentParagraph = container.parentNode;
+          var vimeoId = container.dataset.vimeoId;
+          var thisPlayer = container.getElementsByClassName('az-video-player')[0];
+          thisPlayer.style.zIndex = -100;
+          var style = container.dataset.style;
+          var width = container.offsetWidth;
+          var height = container.offsetHeight;
+          var ratio = bgVideos[vimeoId].ratio;
+          var pWidth = Math.ceil(height * ratio);
+          var pHeight = Math.ceil(width / ratio);
+          var parentHeight = parentParagraph.offsetHeight;
+          parentHeight = "".concat(parentHeight.toString(), "px");
+          container.style.height = parentHeight;
+          if (style === 'bottom') {
+            container.style.top = 0;
+          }
+          var widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
+          widthMinuspWidthdividedbyTwo = "".concat(widthMinuspWidthdividedbyTwo.toString(), "px");
+          var pHeightRatio = (height - pHeight) / 2;
+          pHeightRatio = "".concat(pHeightRatio.toString(), "px");
+          if (width / ratio < height) {
+            thisPlayer.width = pWidth;
+            thisPlayer.height = height;
+            thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
+            thisPlayer.style.top = 0;
+          } else {
+            thisPlayer.height = pHeight;
+            thisPlayer.width = width;
+            thisPlayer.style.top = pHeightRatio;
+            thisPlayer.style.left = 0;
+          }
+        };
         var resize = function resize() {
           $.each(bgVideoParagraphs, function (index) {
-            var thisContainer = bgVideoParagraphs[index];
-            var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
-            var vimeoId = thisContainer.dataset.vimeoId;
-            var ratio = bgVideos[vimeoId].ratio;
-            var width = thisContainer.offsetWidth;
-            var height = Math.ceil(width / ratio);
-            videoPlayer.style.width = "".concat(width, "px");
-            videoPlayer.style.height = "".concat(height, "px");
+            setDimensions(bgVideoParagraphs[index]);
           });
         };
         $(window).on("load", function () {
