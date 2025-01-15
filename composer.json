@@ -60,7 +60,7 @@
         "drupal/config_split": "2.0.1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.3.11",
+        "drupal/core-recommended": "10.4.1",
         "drupal/crop": "2.4.0",
         "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.2",
@@ -171,8 +171,7 @@
                 "filter_autop returns self closing br element with slash, lets alter to br (2350049)": "https://www.drupal.org/files/issues/2024-08-15/2350049-48-reroll-against-11.x.patch",
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch",
                 "[Apache only] Wrong file header returned, when converting an image for example to webp (3310963)": "https://www.drupal.org/files/issues/2024-05-15/3310963-32.patch",
-                "Hardcode a higher WebP conversion quality setting (3320689)": "https://gist.githubusercontent.com/joeparsons/d99b6c6eef240e8eaf768ba79e1c9f1b/raw/9b99325bd20907db0506969fc4f5823b46065c6b/3320689-10-3-x-hardcoded.patch",
-                "Add Views EntityReference filter to support better UX for exposed filters (3347343)": "https://gist.githubusercontent.com/trackleft/812286289ec98b72897ba9f59962d62a/raw/185b3481844d28c2d64a5f344e865da9382d0a08/add-Views-EntityReference-filter.patch"
+                "Hardcode a higher WebP conversion quality setting (3320689)": "https://gist.githubusercontent.com/joeparsons/d99b6c6eef240e8eaf768ba79e1c9f1b/raw/9b99325bd20907db0506969fc4f5823b46065c6b/3320689-10-3-x-hardcoded.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
