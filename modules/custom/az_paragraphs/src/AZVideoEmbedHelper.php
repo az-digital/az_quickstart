@@ -28,7 +28,7 @@ class AZVideoEmbedHelper {
       }
     }
 
-    // Extract the last segment from the path for both YouTube (shortened) and Vimeo.
+    // Extract the last segment from the path for both YouTube and Vimeo.
     if (isset($parts['path'])) {
       $path = explode('/', trim($parts['path'], '/'));
       return $path[count($path) - 1];
