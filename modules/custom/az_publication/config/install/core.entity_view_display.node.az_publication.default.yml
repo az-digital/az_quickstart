@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_main_content
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_category
@@ -18,6 +19,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_issue
     - field.field.node.az_publication.field_az_publication_link
     - field.field.node.az_publication.field_az_publication_location
+    - field.field.node.az_publication.field_az_publication_mapped_type
     - field.field.node.az_publication.field_az_publication_media
     - field.field.node.az_publication.field_az_publication_page
     - field.field.node.az_publication.field_az_publication_pmcid
@@ -28,6 +30,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_volume
     - node.type.az_publication
   module:
+    - entity_reference_revisions
     - field_group
     - smart_title
     - text
@@ -97,6 +100,7 @@ third_party_settings:
         - group_az_publication_reference
         - field_az_publication_abstract
         - group_file
+        - field_az_main_content
       label: Information
       parent_name: group_row
       region: content
@@ -159,6 +163,15 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_az_main_content:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 6
+    region: content
   field_az_publication_abstract:
     type: text_default
     label: above
@@ -204,6 +217,7 @@ hidden:
   field_az_publication_issue: true
   field_az_publication_link: true
   field_az_publication_location: true
+  field_az_publication_mapped_type: true
   field_az_publication_page: true
   field_az_publication_pmcid: true
   field_az_publication_pmid: true
