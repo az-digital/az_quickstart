@@ -71,18 +71,18 @@
                 const playButton = bgVideoParagraphs[index].getElementsByClassName(
                   "az-video-play"
                 )[0];
-                playButton.addEventListener("click", event => {
+                playButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  bgVideoParagraphs[index].player.play();
+                  await bgVideoParagraphs[index].player.play();
                 });
       
                 // Pause Button
                 const pauseButton = bgVideoParagraphs[index].getElementsByClassName(
                   "az-video-pause"
                 )[0];
-                pauseButton.addEventListener("click", event => {
+                pauseButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  bgVideoParagraphs[index].player.pause();
+                  await bgVideoParagraphs[index].player.pause();
                 });
               });
           }
