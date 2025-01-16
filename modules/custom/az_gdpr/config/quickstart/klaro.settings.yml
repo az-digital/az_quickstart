@@ -1,27 +1,28 @@
 langcode: en
-deletable_cookie_domains: { }
-exclude_urls: { }
-disable_urls: { }
-styles:
-  - light
-dialog_mode: notice #Show notice dialog if no decision has yet been made. The dialog does not open in modal and visitors can use the page normally.
-show_toggle_button: false
-show_close_button: false
-process_descriptions: false
-override_css: true
+dialog_mode: notice
+auto_decorate_final_html: false
 auto_decorate_js_alter: true
 auto_decorate_page_attachments: true
 auto_decorate_preprocess_field: true
 get_entity_thumbnail: true
-auto_decorate_final_html: false
 block_unknown: false
 log_unknown_resources: false
 block_unknown_label: 'Unknown services'
 block_unknown_description: 'Allow loading of unknown external resources'
+show_toggle_button: false
+show_close_button: false
+deletable_cookie_domains: {  }
+exclude_urls:
+  - \/admin\/
+disable_urls:
+  - \/admin\/
+styles:
+  - light
+process_descriptions: false
 library:
-  element_id: 'klaro'
-  storage_method: 'cookie'
-  cookie_name: 'klaro'
+  element_id: klaro
+  storage_method: cookie
+  cookie_name: klaro
   cookie_expires_after_days: 180
   cookie_domain: ''
   group_by_purpose: false
@@ -32,4 +33,4 @@ library:
   additional_class: ''
   html_texts: false
   auto_focus: true
-  
+override_css: true
