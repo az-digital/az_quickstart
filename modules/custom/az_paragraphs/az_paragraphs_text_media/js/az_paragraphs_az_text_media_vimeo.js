@@ -32,7 +32,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           $.each(bgVideoParagraphs, function (index) {
             var thisContainer = bgVideoParagraphs[index];
             var parentParagraph = thisContainer.parentNode;
-            var vimeoId = thisContainer.dataset.vimeoId;
+            var vimeoId = thisContainer.dataset.vimeoId2;
             bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
             var options = bgVideos[vimeoId];
             var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];

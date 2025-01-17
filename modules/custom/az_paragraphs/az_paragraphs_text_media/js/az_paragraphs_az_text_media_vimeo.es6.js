@@ -30,7 +30,7 @@
             $.each(bgVideoParagraphs, index => {
                 const thisContainer = bgVideoParagraphs[index];
                 const parentParagraph = thisContainer.parentNode;
-                const vimeoId = thisContainer.dataset.vimeoId;
+                const vimeoId = thisContainer.dataset.vimeoId2;
                 bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
                 const options = bgVideos[vimeoId];
                 const videoPlayer = thisContainer.getElementsByClassName(

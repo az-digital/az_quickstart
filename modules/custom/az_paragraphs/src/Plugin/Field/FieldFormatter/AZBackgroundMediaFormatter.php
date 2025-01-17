@@ -604,7 +604,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'az-video-background',
             'az-js-vimeo-video-background',
           ],
-          'data-vimeo-id' => $video_oembed_id,
+          'data-vimeo-id2' => $video_oembed_id,
           'data-style' => $settings['style'],
           'data-parentid' => HTML::getId($settings['css_settings']['selector']),
         ],
