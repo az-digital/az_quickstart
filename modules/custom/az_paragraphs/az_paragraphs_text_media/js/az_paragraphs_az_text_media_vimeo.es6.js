@@ -77,7 +77,21 @@
                 )[0];
                 playButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  await bgVideoParagraphs[index].player.play();
+                  bgVideoParagraphs[index].player.play().then(function () {
+                    console.log("the video is playing");
+                  }).catch(function (error) {
+                    switch (error.name) {
+                      case 'PasswordError':
+                        window.alert("the video is password-protected");
+                        break;
+                      case 'PrivacyError':
+                        window.alert("the video is private");
+                        break;
+                      default:
+                        console.log("Some errors occurred: ".concat(error.name));
+                        break;
+                    }
+                  });
                 });
       
                 // Pause Button
@@ -86,7 +100,21 @@
                 )[0];
                 pauseButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  await bgVideoParagraphs[index].player.pause();
+                  bgVideoParagraphs[index].player.pause().then(function () {
+                    console.log("the video is paused");
+                  }).catch(function (error) {
+                    switch (error.name) {
+                      case 'PasswordError':
+                        window.alert("the video is password-protected");
+                        break;
+                      case 'PrivacyError':
+                        window.alert("the video is private");
+                        break;
+                      default:
+                        console.log("Some errors occurred: ".concat(error.name));
+                        break;
+                    }
+                  });
                 });
               });
           }

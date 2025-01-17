@@ -71,9 +71,22 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   while (1) switch (_context.prev = _context.next) {
                     case 0:
                       event.preventDefault();
-                      _context.next = 3;
-                      return bgVideoParagraphs[index].player.play();
-                    case 3:
+                      bgVideoParagraphs[index].player.play().then(function () {
+                        console.log("the video is playing");
+                      }).catch(function (error) {
+                        switch (error.name) {
+                          case 'PasswordError':
+                            window.alert("the video is password-protected");
+                            break;
+                          case 'PrivacyError':
+                            window.alert("the video is private");
+                            break;
+                          default:
+                            console.log("Some errors occurred: ".concat(error.name));
+                            break;
+                        }
+                      });
+                    case 2:
                     case "end":
                       return _context.stop();
                   }
@@ -90,9 +103,22 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   while (1) switch (_context2.prev = _context2.next) {
                     case 0:
                       event.preventDefault();
-                      _context2.next = 3;
-                      return bgVideoParagraphs[index].player.pause();
-                    case 3:
+                      bgVideoParagraphs[index].player.pause().then(function () {
+                        console.log("the video is paused");
+                      }).catch(function (error) {
+                        switch (error.name) {
+                          case 'PasswordError':
+                            window.alert("the video is password-protected");
+                            break;
+                          case 'PrivacyError':
+                            window.alert("the video is private");
+                            break;
+                          default:
+                            console.log("Some errors occurred: ".concat(error.name));
+                            break;
+                        }
+                      });
+                    case 2:
                     case "end":
                       return _context2.stop();
                   }
