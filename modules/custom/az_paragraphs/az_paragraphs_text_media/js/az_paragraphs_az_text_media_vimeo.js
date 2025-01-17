@@ -32,7 +32,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           $.each(bgVideoParagraphs, function (index) {
             var thisContainer = bgVideoParagraphs[index];
             var parentParagraph = thisContainer.parentNode;
-            var vimeoId = thisContainer.dataset.vimeoId2;
+            var vimeoId = thisContainer.dataset.vimeoId;
             bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
             var options = bgVideos[vimeoId];
             var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
@@ -102,8 +102,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         };
         var setDimensions = function setDimensions(container) {
           var parentParagraph = container.parentNode;
-          var vimeoId = container.dataset.vimeoId2;
-          var thisPlayer = container.getElementsByClassName('az-video-player')[0].firstChild;
+          var vimeoId = container.dataset.vimeoId;
+          var thisPlayer = container.getElementsByClassName('az-video-player')[0];
           thisPlayer.style.zIndex = -100;
           var style = container.dataset.style;
           var width = container.offsetWidth;

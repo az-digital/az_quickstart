@@ -30,7 +30,7 @@
             $.each(bgVideoParagraphs, index => {
                 const thisContainer = bgVideoParagraphs[index];
                 const parentParagraph = thisContainer.parentNode;
-                const vimeoId = thisContainer.dataset.vimeoId2;
+                const vimeoId = thisContainer.dataset.vimeoId;
                 bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
                 const options = bgVideos[vimeoId];
                 const videoPlayer = thisContainer.getElementsByClassName(
@@ -46,10 +46,6 @@
                   autoplay: true,
                   muted: options.mute,
                   loop: options.repeat,
-                  background: options.background,
-                  title: options.title,
-                  byline: options.byline,
-                  portrait: options.portrait,
                 });
       
                 // Event Listeners
@@ -77,26 +73,7 @@
                 )[0];
                 playButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  console.log("play clicked");
-                  bgVideoParagraphs[index].player.play().then(() => {
-                    // The video is playing
-                    console.log("the video is playing");
-                  }).catch((error) => {
-                    switch (error.name) {
-                      case 'PasswordError':
-                          // The video is password-protected
-                          window.alert("the video is password-protected");
-                          break;
-                      case 'PrivacyError':
-                          // The video is private
-                          window.alert("the video is private");
-                          break;
-                      default:
-                          // Some other error occurred
-                          console.log(`Some errors occurred: ${error.name}`);
-                          break;
-                    }
-                  });
+                  await bgVideoParagraphs[index].player.play();
                 });
       
                 // Pause Button
@@ -105,41 +82,22 @@
                 )[0];
                 pauseButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  console.log("pause clicked");
-                  bgVideoParagraphs[index].player.pause().then(() => {
-                    // The video is paused
-                    console.log("the video is paused");
-                  }).catch((error) => {
-                    switch (error.name) {
-                      case 'PasswordError':
-                          // The video is password-protected
-                          window.alert("the video is password-protected");
-                          break;
-                      case 'PrivacyError':
-                          // The video is private
-                          window.alert("the video is private");
-                          break;
-                      default:
-                          // Some other error occurred
-                          console.log(`Some errors occurred: ${error.name}`);
-                          break;
-                    }
-                  });
+                  await bgVideoParagraphs[index].player.pause();
                 });
               });
           }
   
-          // Resize Logic
+          // Resize Logic (optional, similar to YouTube)
           const setDimensions = (container) => {
             const parentParagraph = container.parentNode;
-            const vimeoId = container.dataset.vimeoId2;
+            const vimeoId = container.dataset.vimeoId;
             const thisPlayer =
-              container.getElementsByClassName('az-video-player')[0].firstChild; // this is div tag - parent of iframe tag
+              container.getElementsByClassName('az-video-player')[0];
             thisPlayer.style.zIndex = -100;
             const { style } = container.dataset;
-            const width = container.offsetWidth; // why offset
+            const width = container.offsetWidth;
             const height = container.offsetHeight;
-            const { ratio } = bgVideos[vimeoId]; // what ratio: 16/9
+            const { ratio } = bgVideos[vimeoId];
             const pWidth = Math.ceil(height * ratio); // get new player width
             const pHeight = Math.ceil(width / ratio); // get new player height
             let parentHeight = parentParagraph.offsetHeight;
