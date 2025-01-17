@@ -77,9 +77,9 @@
                 )[0];
                 playButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  bgVideoParagraphs[index].player.play().then(function () {
+                  bgVideoParagraphs[index].player.play().then(() => {
                     console.log("the video is playing");
-                  }).catch(function (error) {
+                  }).catch((error) => {
                     switch (error.name) {
                       case 'PasswordError':
                         window.alert("the video is password-protected");
@@ -88,7 +88,7 @@
                         window.alert("the video is private");
                         break;
                       default:
-                        console.log("Some errors occurred: ".concat(error.name));
+                        console.log(`Some errors occurred: ${error.name}`);
                         break;
                     }
                   });
@@ -100,9 +100,9 @@
                 )[0];
                 pauseButton.addEventListener("click", async (event) => {
                   event.preventDefault();
-                  bgVideoParagraphs[index].player.pause().then(function () {
+                  bgVideoParagraphs[index].player.pause().then(() => {
                     console.log("the video is paused");
-                  }).catch(function (error) {
+                  }).catch((error) => {
                     switch (error.name) {
                       case 'PasswordError':
                         window.alert("the video is password-protected");
@@ -111,7 +111,7 @@
                         window.alert("the video is private");
                         break;
                       default:
-                        console.log("Some errors occurred: ".concat(error.name));
+                        console.log(`Some errors occurred: ${error.name}`);
                         break;
                     }
                   });
@@ -119,10 +119,10 @@
               });
           }
   
-          // Resize Logic (optional, similar to YouTube)
+          // Resize Logic
           const setDimensions = (container) => {
             const parentParagraph = container.parentNode;
-            const vimeoId = container.dataset.vimeoId;
+            const vimeoId = container.dataset.vimeoId2;
             const thisPlayer =
               container.getElementsByClassName('az-video-player')[0].firstChild;
             thisPlayer.style.zIndex = -100;

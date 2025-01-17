@@ -132,7 +132,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         };
         var setDimensions = function setDimensions(container) {
           var parentParagraph = container.parentNode;
-          var vimeoId = container.dataset.vimeoId;
+          var vimeoId = container.dataset.vimeoId2;
           var thisPlayer = container.getElementsByClassName('az-video-player')[0].firstChild;
           thisPlayer.style.zIndex = -100;
           var style = container.dataset.style;
