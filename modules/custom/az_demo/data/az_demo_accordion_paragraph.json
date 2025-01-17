@@ -1,0 +1,22 @@
+{
+  "paragraphs": [
+    {
+      "id": 200,
+      "az_accordion": [
+        {
+         "delta": 0,
+         "title": "Title #1",
+         "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ornare nisi vitae magna venenatis sodales. Duis maximus risus sit amet metus hendrerit dapibus. Vivamus faucibus ante magna, sit amet varius dui interdum in. In a metus venenatis, euismod arcu eget, tempus arcu. Sed cursus elementum semper. Duis euismod maximus lorem, non condimentum arcu bibendum in. Praesent laoreet efficitur orci sed egestas. Curabitur vehicula metus ut lectus pulvinar faucibus. Maecenas vitae mi tristique enim interdum interdum vel a nulla. Aenean dignissim nibh a semper suscipit. Mauris fermentum interdum lectus, non porta massa malesuada non. Nulla facilisi. Aenean sagittis, erat sit amet ornare congue, metus elit dictum urna, quis tempor massa elit in leo. Fusce faucibus nunc sit amet est ultricies, in semper magna cursus. Donec bibendum ut purus in ultrices. Sed at malesuada purus.",
+         "collapsed": false
+        },
+        {
+          "delta": 1,
+          "title": "Title #2",
+          "body": "Mauris at diam rhoncus, condimentum diam eu, interdum nunc. Sed ultricies ante id elit aliquet semper eget nec ex. Quisque turpis risus, porta in facilisis ut, maximus nec neque. Pellentesque volutpat nunc vel ex luctus cursus. Ut quis mauris at nibh finibus accumsan sed nec erat. Aliquam tempor augue nec luctus lacinia. Mauris vestibulum, metus in posuere feugiat, elit velit porttitor dui, quis sollicitudin massa felis ut arcu. Nulla eleifend nunc ligula, non tristique turpis sagittis quis. Nam bibendum, libero et imperdiet accumsan, risus felis auctor sem, et ornare ex massa nec dolor. Curabitur quis eleifend felis. Etiam vel tristique lectus. Pellentesque egestas elit libero, eu auctor sem fringilla eu. Praesent at accumsan tortor. Fusce dignissim pellentesque dui in pulvinar.",
+          "collapsed": true
+        }
+      ],
+      "bottom_spacing": "mb-0"
+    }
+  ]
+}
