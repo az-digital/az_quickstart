@@ -43,7 +43,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               height: Math.ceil(options.width / options.ratio),
               autoplay: true,
               muted: options.mute,
-              loop: options.repeat
+              loop: options.repeat,
+              background: options.background,
+              title: options.title,
+              byline: options.byline,
+              portrait: options.portrait
             });
             thisContainer.player.on("play", function () {
               parentParagraph.classList.add("az-video-playing");

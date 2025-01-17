@@ -46,6 +46,10 @@
                   autoplay: true,
                   muted: options.mute,
                   loop: options.repeat,
+                  background: options.background,
+                  title: options.title,
+                  byline: options.byline,
+                  portrait: options.portrait
                 });
       
                 // Event Listeners
