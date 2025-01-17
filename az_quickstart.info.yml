@@ -73,6 +73,7 @@ install:
   - role_delegation:role_delegation
   - media_entity_file_replace:media_entity_file_replace
   - extlink:extlink
+  - dashboard:dashboard
 
 themes:
   - az_barrio
