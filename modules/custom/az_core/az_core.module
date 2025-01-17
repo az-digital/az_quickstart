@@ -16,6 +16,7 @@ use Drupal\Core\Url;
 use Drupal\block\Entity\Block;
 use Drupal\node\NodeInterface;
 use Drupal\pathauto\PathautoPatternInterface;
+use Drupal\views\Plugin\views\query\QueryPluginBase;
 use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -484,23 +485,39 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
 /**
  * Implements hook_views_pre_build().
  *
- * Modifies sort order of the core user administration view.
+ * Modifies default click sort order of the core user administration view.
  */
 function az_core_views_pre_build(ViewExecutable $view) {
+  // Only operate on core user admin view.
   if ($view->id() === 'user_admin_people') {
     $display = $view->getDisplay();
-    // Modify the created sort on the existing view.
-    if (!empty($view->sort['created'])) {
-      $view->sort['access'] = $view->sort['created'];
-      unset($view->sort['created']);
-      $view->sort['access']->realField = 'access';
-      $view->sort['access']->field = 'access';
-    }
     // Change the default click sorting.
     if ($style = $display->getPlugin('style')) {
       if (!empty($style->options['default'])) {
         $style->options['default'] = 'access';
       }
+    }
+  }
+}
+
+/**
+ * Implements hook_views_query_alter().
+ *
+ * Modifies query of the core user administration view to sort by access.
+ */
+function az_core_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
+  // Only operate on core user admin view.
+  if ($view->id() === 'user_admin_people') {
+    $exposed = $view->getExposedInput();
+    // If click sorting isn't specificed, filter by access.
+    // The core default is to filter by created.
+    if (empty($exposed['order']) && !empty($query->orderby)) {
+      $query->orderby = [
+        [
+          'field' => 'users_field_data.access',
+          'direction' => 'DESC',
+        ],
+      ];
     }
   }
 }
