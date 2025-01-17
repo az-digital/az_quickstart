@@ -96,7 +96,7 @@
             const parentParagraph = container.parentNode;
             const vimeoId = container.dataset.vimeoId;
             const thisPlayer =
-              container.getElementsByClassName('az-video-player')[0];
+              container.getElementsByClassName('az-video-player')[0].firstChild;
             thisPlayer.style.zIndex = -100;
             const { style } = container.dataset;
             const width = container.offsetWidth;
