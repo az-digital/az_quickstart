@@ -1,0 +1,112 @@
+id: az_person_profiles_import
+label: Profiles Integration
+migration_tags:
+  - Profiles Integration
+source:
+  plugin: url
+  data_fetcher_plugin: az_profiles_api_fetcher
+  data_parser_plugin: az_person_profiles_import_json
+  urls: []
+  item_selector: /
+  ids:
+    netid:
+      type: string
+  constants:
+    NAME: 'name'
+
+  fields:
+    -
+      name: netid
+      selector: 'Person/netid'
+    -
+      name: surname
+      selector: 'Person/surname'
+    -
+      name: givenname
+      selector: 'Person/givenname'
+    -
+      name: email
+      selector: 'Person/email'
+    -
+      name: biography
+      selector: 'Bio/desc'
+    -
+      name: titles
+      selector: 'Titles'
+    -
+      name: phone
+      selector: 'Person/phone'
+    -
+      name: office
+      selector: 'Person/office'
+    -
+      name: degrees
+      selector: 'Degrees'
+
+process:
+  nid:
+    - 
+      plugin: entity_lookup
+      entity_type: node
+      bundle_key: type
+      bundle: az_person
+      value_key: field_az_netid
+      source: netid
+    - 
+      plugin: skip_on_empty
+      method: process
+  type:
+    plugin: default_value
+    default_value: az_person
+  field_az_fname: givenname
+  field_az_lname: surname
+  field_az_netid: netid
+  field_az_email:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: email
+      message: 'is unavailable in the profiles API'
+    -
+      plugin: get
+  field_az_body/value: biography
+  field_az_body/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_titles:
+    plugin: sub_process
+    source: titles
+    process:
+      value: desc
+  field_az_degrees:
+    plugin: az_person_degrees
+    source: degrees
+  field_az_phones:
+    plugin: sub_process
+    source: phone
+    process:
+      value: number
+  field_az_address:
+    -
+      plugin: sub_process
+      source: office
+      process:
+        0:
+          plugin: concat
+          source:
+            - building_name
+            - room_nbr
+          delimiter: ' '
+    -
+      plugin: flatten
+    -
+      plugin: concat
+      delimiter: "\n"
+destination:
+  plugin: entity:node
+  bundle: az_person
+
+dependencies:
+  enforced:
+    module:
+      - az_person
