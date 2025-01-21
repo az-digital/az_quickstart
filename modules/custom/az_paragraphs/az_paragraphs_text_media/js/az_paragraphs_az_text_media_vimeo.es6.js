@@ -36,7 +36,7 @@
             const videoPlayer =
               thisContainer.getElementsByClassName('az-video-player')[0];
             const VimeoPlayer = window.Vimeo;
-  
+
             // Initialize Vimeo Player
             thisContainer.player = new VimeoPlayer.Player(videoPlayer, {
               id: vimeoId,
@@ -50,18 +50,18 @@
               byline: options.byline,
               portrait: options.portrait,
             });
-  
+
             // Event Listeners
             thisContainer.player.on('play', () => {
               parentParagraph.classList.add('az-video-playing');
               parentParagraph.classList.remove('az-video-paused');
             });
-  
+
             thisContainer.player.on('pause', () => {
               parentParagraph.classList.add('az-video-paused');
               parentParagraph.classList.remove('az-video-playing');
             });
-  
+
             thisContainer.player.on('ended', () => {
               if (options.repeat) {
                 thisContainer.player.setCurrentTime(0).then(() => {
@@ -69,7 +69,7 @@
                 });
               }
             });
-  
+
             // Play Button
             const playButton =
               bgVideoParagraphs[index].getElementsByClassName(
@@ -96,7 +96,7 @@
                   }
                 });
             });
-  
+
             // Pause Button
             const pauseButton =
               bgVideoParagraphs[index].getElementsByClassName(
@@ -185,6 +185,5 @@
         });
       }
     },
-    };
-  })(jQuery, Drupal, drupalSettings);
-  
+  };
+})(jQuery, Drupal, drupalSettings);  
