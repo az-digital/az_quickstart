@@ -23,7 +23,7 @@ use Drupal\Core\TypedData\MapDataDefinition;
 #[FieldType(
   id: "az_card",
   label: new TranslatableMarkup("Card"),
-  category: new TranslatableMarkup("AZ Quickstart"),
+  category: "az_quickstart",
   default_widget: "az_card",
   default_formatter: "az_card_default",
 )]

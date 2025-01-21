@@ -1,0 +1,4 @@
+az_quickstart:
+  label: 'AZ Quickstart'
+  description: 'AZ Quickstart Field types.'
+  weight: 0

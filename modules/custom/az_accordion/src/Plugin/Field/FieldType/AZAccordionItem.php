@@ -21,7 +21,7 @@ use Drupal\Core\TypedData\DataDefinition;
 #[FieldType(
   id: "az_accordion",
   label: new TranslatableMarkup("Accordion"),
-  category: new TranslatableMarkup("AZ Quickstart"),
+  category: "az_quickstart",
   default_widget: "az_accordion",
   default_formatter: "az_accordion_default",
 )]
