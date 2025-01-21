@@ -14,19 +14,19 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       if (window.screen && window.screen.width > 768) {
         var defaults = {
           ratio: 16 / 9,
-          vimeoId: "",
+          vimeoId: '',
           mute: true,
           repeat: true,
           width: $(window).width(),
-          playButtonClass: "az-video-play",
-          pauseButtonClass: "az-video-pause",
+          playButtonClass: 'az-video-play',
+          pauseButtonClass: 'az-video-pause',
           start: 0,
           minimumSupportedWidth: 600
         };
         var bgVideos = settings.azFieldsMedia.bgVideos;
-        var bgVideoParagraphs = document.getElementsByClassName("az-js-vimeo-video-background");
-        var tag = document.createElement("script");
-        tag.src = "https://player.vimeo.com/api/player.js";
+        var bgVideoParagraphs = document.getElementsByClassName('az-js-vimeo-video-background');
+        var tag = document.createElement('script');
+        tag.src = 'https://player.vimeo.com/api/player.js';
         document.head.appendChild(tag);
         tag.onload = function () {
           $.each(bgVideoParagraphs, function (index) {
@@ -35,7 +35,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             var vimeoId = thisContainer.dataset.vimeoId2;
             bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
             var options = bgVideos[vimeoId];
-            var videoPlayer = thisContainer.getElementsByClassName("az-video-player")[0];
+            var videoPlayer = thisContainer.getElementsByClassName('az-video-player')[0];
             var VimeoPlayer = window.Vimeo;
             thisContainer.player = new VimeoPlayer.Player(videoPlayer, {
               id: vimeoId,
@@ -49,37 +49,35 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               byline: options.byline,
               portrait: options.portrait
             });
-            thisContainer.player.on("play", function () {
-              parentParagraph.classList.add("az-video-playing");
-              parentParagraph.classList.remove("az-video-paused");
+            thisContainer.player.on('play', function () {
+              parentParagraph.classList.add('az-video-playing');
+              parentParagraph.classList.remove('az-video-paused');
             });
-            thisContainer.player.on("pause", function () {
-              parentParagraph.classList.add("az-video-paused");
-              parentParagraph.classList.remove("az-video-playing");
+            thisContainer.player.on('pause', function () {
+              parentParagraph.classList.add('az-video-paused');
+              parentParagraph.classList.remove('az-video-playing');
             });
-            thisContainer.player.on("ended", function () {
+            thisContainer.player.on('ended', function () {
               if (options.repeat) {
                 thisContainer.player.setCurrentTime(0).then(function () {
                   thisContainer.player.play();
                 });
               }
             });
-            var playButton = bgVideoParagraphs[index].getElementsByClassName("az-video-play")[0];
-            playButton.addEventListener("click", function () {
+            var playButton = bgVideoParagraphs[index].getElementsByClassName('az-video-play')[0];
+            playButton.addEventListener('click', function () {
               var _ref = _asyncToGenerator(_regeneratorRuntime().mark(function _callee(event) {
                 return _regeneratorRuntime().wrap(function _callee$(_context) {
                   while (1) switch (_context.prev = _context.next) {
                     case 0:
                       event.preventDefault();
-                      bgVideoParagraphs[index].player.play().then(function () {
-                        console.log("the video is playing");
-                      }).catch(function (error) {
+                      bgVideoParagraphs[index].player.play().then(function () {}).catch(function (error) {
                         switch (error.name) {
                           case 'PasswordError':
-                            window.alert("the video is password-protected");
+                            window.alert('the video is password-protected');
                             break;
                           case 'PrivacyError':
-                            window.alert("the video is private");
+                            window.alert('the video is private');
                             break;
                           default:
                             console.log("Some errors occurred: ".concat(error.name));
@@ -96,25 +94,23 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 return _ref.apply(this, arguments);
               };
             }());
-            var pauseButton = bgVideoParagraphs[index].getElementsByClassName("az-video-pause")[0];
-            pauseButton.addEventListener("click", function () {
+            var pauseButton = bgVideoParagraphs[index].getElementsByClassName('az-video-pause')[0];
+            pauseButton.addEventListener('click', function () {
               var _ref2 = _asyncToGenerator(_regeneratorRuntime().mark(function _callee2(event) {
                 return _regeneratorRuntime().wrap(function _callee2$(_context2) {
                   while (1) switch (_context2.prev = _context2.next) {
                     case 0:
                       event.preventDefault();
-                      bgVideoParagraphs[index].player.pause().then(function () {
-                        console.log("the video is paused");
-                      }).catch(function (error) {
+                      bgVideoParagraphs[index].player.pause().then(function () {}).catch(function (error) {
                         switch (error.name) {
                           case 'PasswordError':
-                            window.alert("the video is password-protected");
+                            window.alert('the video is password-protected');
                             break;
                           case 'PrivacyError':
-                            window.alert("the video is private");
+                            window.alert('the video is private');
                             break;
                           default:
-                            console.log("Some errors occurred: ".concat(error.name));
+                            window.alert("Some errors occurred: ".concat(error.name));
                             break;
                         }
                       });
@@ -168,10 +164,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             setDimensions(bgVideoParagraphs[index]);
           });
         };
-        $(window).on("load", function () {
+        $(window).on('load', function () {
           resize();
         });
-        $(window).on("resize.bgVideo", function () {
+        $(window).on('resize.bgVideo', function () {
           resize();
         });
       }
