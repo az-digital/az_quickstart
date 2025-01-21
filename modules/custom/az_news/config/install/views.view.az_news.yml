@@ -95,23 +95,48 @@ display:
             first: '« First'
             last: 'Last »'
           expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-          group: 1
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          value:
-            az_news: az_news
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
+            items_per_page: false
+            items_per_page_label: 'Items per page'
+            items_per_page_options: '5, 10, 25, 50'
+            items_per_page_options_all: false
+            items_per_page_options_all_label: '- All -'
+            offset: false
+            offset_label: Offset
+          quantity: 9
+      exposed_form:
+        type: basic
+        options:
+          submit_button: Apply
+          reset_button: false
+          reset_button_label: Reset
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+      access:
+        type: perm
+        options:
+          perm: 'access content'
+      cache:
+        type: tag
+        options: {  }
+      empty: {  }
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         field_az_published_value:
           id: field_az_published_value
           table: node__field_az_published
@@ -139,7 +164,8 @@ display:
           order: DESC
           expose:
             label: ''
-            field_identifier: created
+            field_identifier: ''
+          exposed: false
           granularity: second
       arguments:
         term_node_tid_depth:
@@ -251,55 +277,27 @@ display:
         type: some
         options:
           offset: 0
-      defaults:
-        pager: false
-        pager_options: false
-        sorts: false
-        style: false
-        row: false
-        style_options: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_feature
-      pager_options: null
-      sorts:
-        sticky:
-          id: sticky
-          table: node_field_data
-          field: sticky
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-            field_identifier: sticky
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
-        field_az_published_value:
-          id: field_az_published_value
-          table: node__field_az_published
-          field: field_az_published_value
-          relationship: none
-          group_type: group
-          admin_label: ''
-          order: DESC
-          exposed: false
-          expose:
-            label: ''
-            field_identifier: field_az_published_value
-          granularity: second
-          plugin_id: datetime
+          items_per_page: 1
       style:
         type: default
         options:
           row_class: media-list-row
           default_row_class: false
           uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_feature
+      defaults:
+        pager: false
+        style: false
+        style_options: false
+        row: false
+        sorts: true
+        pager_options: false
+      display_description: ''
+      pager_options: null
       style_options: null
       display_extenders: {  }
     cache_metadata:
@@ -314,7 +312,8 @@ display:
   az_grid:
     id: az_grid
     display_title: 'Grid View'
-    position: 3
+    display_plugin: block
+    position: 4
     display_options:
       pager:
         type: some
@@ -372,7 +371,8 @@ display:
   az_grid_filter:
     id: az_grid_filter
     display_title: 'Grid View with Filter'
-    position: 3
+    display_plugin: block
+    position: 5
     display_options:
       pager:
         type: full
@@ -607,65 +607,47 @@ display:
       tags: {  }
   az_sidebar:
     id: az_sidebar
-    display_title: 'Small Row View'
-    position: 4
+    display_title: 'Sidebar Row View'
+    display_plugin: block
+    position: 9
     display_options:
       title: News
       pager:
         type: some
         options:
           offset: 0
-      defaults:
-        pager: false
-        filters: false
-        filter_groups: false
-        title: false
-        style: false
-        row: false
-        arguments: false
-      filters:
-        status:
-          value: '1'
-          table: node_field_data
-          field: status
-          plugin_id: boolean
-          entity_type: node
-          entity_field: status
-          id: status
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-          group: 1
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          value:
-            az_news: az_news
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      block_description: 'Sidebar News Block'
-      title: News
-      style:
-        type: default
-        options:
-          row_class: media-list-row
-          default_row_class: false
-          uses_fields: false
-      row:
-        type: 'entity:node'
-        options:
+          items_per_page: 3
+      sorts:
+        field_az_published_value:
+          id: field_az_published_value
+          table: node__field_az_published
+          field: field_az_published_value
           relationship: none
-          view_mode: az_minimal_media_list
+          group_type: group
+          admin_label: ''
+          plugin_id: datetime
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: field_az_published_value
+          exposed: false
+          granularity: second
+        created:
+          id: created
+          table: node_field_data
+          field: created
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: created
+          plugin_id: date
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
+          granularity: second
       arguments:
         term_node_tid_depth:
           id: term_node_tid_depth
@@ -753,8 +735,207 @@ display:
           table: node_field_data
           field: status
           entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            az_news: az_news
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: default
+        options:
+          row_class: media-list-row
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_minimal_media_list
+      defaults:
+        title: false
+        pager: false
+        style: false
+        row: false
+        sorts: false
+        arguments: false
+        filters: false
+        filter_groups: false
+      display_description: ''
+      display_extenders: {  }
+      block_description: 'Sidebar News Block'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  az_small_row:
+    id: az_small_row
+    display_title: 'Small Row View'
+    display_plugin: block
+    position: 3
+    display_options:
+      title: News
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 3
+      arguments:
+        term_node_tid_depth:
+          id: term_node_tid_depth
+          table: node_field_data
+          field: term_node_tid_depth
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          plugin_id: taxonomy_index_tid_depth
+          default_action: ignore
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: fixed
+          default_argument_options:
+            argument: ''
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:taxonomy_term'
+            fail: ignore
+          validate_options:
+            bundles: {  }
+            access: false
+            operation: view
+            multiple: 1
+          break_phrase: true
+          depth: 1
+          use_taxonomy_term_path: false
+        nid:
+          id: nid
+          table: node_field_data
+          field: nid
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
           entity_field: nid
           plugin_id: node_nid
+          default_action: default
+          exception:
+            value: all
+            title_enable: false
+            title: All
+          title_enable: false
+          title: ''
+          default_argument_type: node
+          default_argument_options: {  }
+          summary_options:
+            base_path: ''
+            count: true
+            override: false
+            items_per_page: 25
+          summary:
+            sort_order: asc
+            number_of_records: 0
+            format: default_summary
+          specify_validation: true
+          validate:
+            type: 'entity:node'
+            fail: 'not found'
+          validate_options:
+            bundles:
+              az_news: az_news
+            access: false
+            operation: view
+            multiple: 0
+          break_phrase: false
+          not: true
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          value:
+            az_news: az_news
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: default
+        options:
+          row_class: media-list-row
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_small_row
+      defaults:
+        title: false
+        pager: false
+        style: false
+        row: false
+        arguments: false
+        filters: false
+        filter_groups: false
+      display_description: ''
+      display_extenders: {  }
+      block_description: 'Small Row News Block'
     cache_metadata:
       max-age: -1
       contexts:
@@ -767,7 +948,8 @@ display:
   az_teaser_grid:
     id: az_teaser_grid
     display_title: 'Teaser Grid Page'
-    position: 5
+    display_plugin: page
+    position: 6
     display_options:
       pager:
         type: full
@@ -831,7 +1013,8 @@ display:
   marquee:
     id: marquee
     display_title: 'Recent News Marquee'
-    position: 6
+    display_plugin: block
+    position: 7
     display_options:
       title: ''
       pager:
@@ -878,7 +1061,8 @@ display:
   row_attachment:
     id: row_attachment
     display_title: 'Row Attachment'
-    position: 7
+    display_plugin: attachment
+    position: 8
     display_options:
       title: ''
       pager:
