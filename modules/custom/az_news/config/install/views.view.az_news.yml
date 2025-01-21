@@ -8,6 +8,7 @@ dependencies:
     - core.entity_view_mode.node.az_media_list
     - core.entity_view_mode.node.az_medium_media_list
     - core.entity_view_mode.node.az_minimal_media_list
+    - core.entity_view_mode.node.az_small_row
     - node.type.az_news
     - taxonomy.vocabulary.az_news_tags
   module:
@@ -94,45 +95,22 @@ display:
             first: '« First'
             last: 'Last »'
           expose:
-            items_per_page: false
-            items_per_page_label: 'Items per page'
-            items_per_page_options: '5, 10, 25, 50'
-            items_per_page_options_all: false
-            items_per_page_options_all_label: '- All -'
-            offset: false
-            offset_label: Offset
-          quantity: 9
-      exposed_form:
-        type: basic
-        options:
-          submit_button: Apply
-          reset_button: false
-          reset_button_label: Reset
-          exposed_sorts_label: 'Sort by'
-          expose_sort_order: true
-          sort_asc_label: Asc
-          sort_desc_label: Desc
-      access:
-        type: perm
-        options:
-          perm: 'access content'
-      cache:
-        type: tag
-        options: {  }
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text
-          empty: true
-          content:
-            value: '<em>There are no news items listed.</em>'
-            format: az_standard
-          tokenize: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            az_news: az_news
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
       sorts:
         field_az_published_value:
           id: field_az_published_value
@@ -162,7 +140,6 @@ display:
           expose:
             label: ''
             field_identifier: created
-          exposed: false
           granularity: second
       arguments:
         term_node_tid_depth:
@@ -274,7 +251,19 @@ display:
         type: some
         options:
           offset: 0
-          items_per_page: 1
+      defaults:
+        pager: false
+        pager_options: false
+        sorts: false
+        style: false
+        row: false
+        style_options: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_feature
+      pager_options: null
       sorts:
         sticky:
           id: sticky
@@ -283,14 +272,14 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          entity_type: node
-          entity_field: sticky
-          plugin_id: standard
           order: DESC
+          exposed: false
           expose:
             label: ''
             field_identifier: sticky
-          exposed: false
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
         field_az_published_value:
           id: field_az_published_value
           table: node__field_az_published
@@ -298,33 +287,19 @@ display:
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: datetime
           order: DESC
+          exposed: false
           expose:
             label: ''
             field_identifier: field_az_published_value
-          exposed: false
           granularity: second
+          plugin_id: datetime
       style:
         type: default
         options:
           row_class: media-list-row
           default_row_class: false
           uses_fields: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_feature
-      defaults:
-        pager: false
-        style: false
-        style_options: false
-        row: false
-        sorts: false
-        pager_options: false
-      display_description: ''
-      pager_options: null
       style_options: null
       display_extenders: {  }
     cache_metadata:
@@ -339,7 +314,6 @@ display:
   az_grid:
     id: az_grid
     display_title: 'Grid View'
-    display_plugin: block
     position: 3
     display_options:
       pager:
@@ -398,7 +372,6 @@ display:
   az_grid_filter:
     id: az_grid_filter
     display_title: 'Grid View with Filter'
-    display_plugin: block
     position: 3
     display_options:
       pager:
@@ -635,7 +608,6 @@ display:
   az_sidebar:
     id: az_sidebar
     display_title: 'Small Row View'
-    display_plugin: block
     position: 4
     display_options:
       title: News
@@ -643,7 +615,57 @@ display:
         type: some
         options:
           offset: 0
-          items_per_page: 3
+      defaults:
+        pager: false
+        filters: false
+        filter_groups: false
+        title: false
+        style: false
+        row: false
+        arguments: false
+      filters:
+        status:
+          value: '1'
+          table: node_field_data
+          field: status
+          plugin_id: boolean
+          entity_type: node
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            az_news: az_news
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      block_description: 'Sidebar News Block'
+      title: News
+      style:
+        type: default
+        options:
+          row_class: media-list-row
+          default_row_class: false
+          uses_fields: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: az_minimal_media_list
       arguments:
         term_node_tid_depth:
           id: term_node_tid_depth
@@ -731,52 +753,8 @@ display:
           table: node_field_data
           field: status
           entity_type: node
-          entity_field: status
-          plugin_id: boolean
-          value: '1'
-          group: 1
-          expose:
-            operator: ''
-            operator_limit_selection: false
-            operator_list: {  }
-        type:
-          id: type
-          table: node_field_data
-          field: type
-          entity_type: node
-          entity_field: type
-          plugin_id: bundle
-          value:
-            az_news: az_news
-          expose:
-            operator_limit_selection: false
-            operator_list: {  }
-      filter_groups:
-        operator: AND
-        groups:
-          1: AND
-      style:
-        type: default
-        options:
-          row_class: media-list-row
-          default_row_class: false
-          uses_fields: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_minimal_media_list
-      defaults:
-        title: false
-        pager: false
-        style: false
-        row: false
-        arguments: false
-        filters: false
-        filter_groups: false
-      display_description: ''
-      display_extenders: {  }
-      block_description: 'Sidebar News Block'
+          entity_field: nid
+          plugin_id: node_nid
     cache_metadata:
       max-age: -1
       contexts:
@@ -789,7 +767,6 @@ display:
   az_teaser_grid:
     id: az_teaser_grid
     display_title: 'Teaser Grid Page'
-    display_plugin: page
     position: 5
     display_options:
       pager:
@@ -854,7 +831,6 @@ display:
   marquee:
     id: marquee
     display_title: 'Recent News Marquee'
-    display_plugin: block
     position: 6
     display_options:
       title: ''
@@ -902,7 +878,6 @@ display:
   row_attachment:
     id: row_attachment
     display_title: 'Row Attachment'
-    display_plugin: attachment
     position: 7
     display_options:
       title: ''
