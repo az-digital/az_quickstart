@@ -1,0 +1,28 @@
+name: 'Quickstart Admin People Order by Accessed'
+description: 'Changes default filtering of Drupal Core user_admin_people view to last accessed.'
+type: 'The University of Arizona'
+install:
+  - user
+config:
+  actions:
+    # Apply access-based filtering to user_admin_people.
+    views.view.user_admin_people:
+      simple_config_update:
+        display.default.display_options.style.options.default: access
+        display.default.display_options.sorts:
+          access:
+            id: access
+            table: users_field_data
+            field: access
+            relationship: none
+            group_type: group
+            admin_label: ''
+            entity_type: user
+            entity_field: access
+            plugin_id: date
+            order: DESC
+            expose:
+              label: ''
+              field_identifier: 'access'
+            exposed: false
+            granularity: second

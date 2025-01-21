@@ -16,8 +16,6 @@ use Drupal\Core\Url;
 use Drupal\block\Entity\Block;
 use Drupal\node\NodeInterface;
 use Drupal\pathauto\PathautoPatternInterface;
-use Drupal\views\Plugin\views\query\QueryPluginBase;
-use Drupal\views\ViewExecutable;
 use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
@@ -480,46 +478,6 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
 
   // No opinion about other permissions.
   return AccessResult::neutral();
-}
-
-/**
- * Implements hook_views_pre_build().
- *
- * Modifies default click sort order of the core user administration view.
- */
-function az_core_views_pre_build(ViewExecutable $view) {
-  // Only operate on core user admin view.
-  if ($view->id() === 'user_admin_people') {
-    $display = $view->getDisplay();
-    // Change the default click sorting.
-    if ($style = $display->getPlugin('style')) {
-      if (!empty($style->options['default'])) {
-        $style->options['default'] = 'access';
-      }
-    }
-  }
-}
-
-/**
- * Implements hook_views_query_alter().
- *
- * Modifies query of the core user administration view to sort by access.
- */
-function az_core_views_query_alter(ViewExecutable $view, QueryPluginBase $query) {
-  // Only operate on core user admin view.
-  if ($view->id() === 'user_admin_people') {
-    $exposed = $view->getExposedInput();
-    // If click sorting isn't specificed, filter by access.
-    // The core default is to filter by created.
-    if (empty($exposed['order']) && !empty($query->orderby)) {
-      $query->orderby = [
-        [
-          'field' => 'users_field_data.access',
-          'direction' => 'DESC',
-        ],
-      ];
-    }
-  }
 }
 
 /**
