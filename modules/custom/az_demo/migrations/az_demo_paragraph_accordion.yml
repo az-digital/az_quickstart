@@ -1,4 +1,4 @@
-id: az_demo_accordion_paragraph
+id: az_demo_paragraph_accordion
 label: AZ Quickstart Demo Accordion Paragraphs
 migration_tags:
   - Quickstart Demo Content
@@ -12,7 +12,7 @@ source:
   data_fetcher_plugin: file
   data_parser_plugin: json
   urls:
-    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_accordion_paragraph.json
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_paragraph_accordion.json
   item_selector: paragraphs
   ids:
     id:
