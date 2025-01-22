@@ -53,3 +53,9 @@ process:
         plugin: skip_on_empty
         method: process
         source: collapsed
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_default_paragraph_behavior:
+        az_display_settings:
+          bottom_spacing: bottom_spacing
