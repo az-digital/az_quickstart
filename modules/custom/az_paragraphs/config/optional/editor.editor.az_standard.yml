@@ -259,9 +259,6 @@ settings:
           label: 'Text Align Bottom'
           element: '<span class="align-bottom">'
         -
-          label: 'Zero Margin Top'
-          element: '<p class="mt-0">'
-        -
           label: 'Zero Margin Bottom'
           element: '<p class="mb-0">'
         -
