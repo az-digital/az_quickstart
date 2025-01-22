@@ -11,7 +11,7 @@
         },
         {
           "delta": 1,
-          "title": "Title #2",
+          "title": "Title #2 is an extremely long title that wraps to the next line and this accordion item is collapsed by default",
           "body": "Mauris at diam rhoncus, condimentum diam eu, interdum nunc. Sed ultricies ante id elit aliquet semper eget nec ex. Quisque turpis risus, porta in facilisis ut, maximus nec neque. Pellentesque volutpat nunc vel ex luctus cursus. Ut quis mauris at nibh finibus accumsan sed nec erat. Aliquam tempor augue nec luctus lacinia. Mauris vestibulum, metus in posuere feugiat, elit velit porttitor dui, quis sollicitudin massa felis ut arcu. Nulla eleifend nunc ligula, non tristique turpis sagittis quis. Nam bibendum, libero et imperdiet accumsan, risus felis auctor sem, et ornare ex massa nec dolor. Curabitur quis eleifend felis. Etiam vel tristique lectus. Pellentesque egestas elit libero, eu auctor sem fringilla eu. Praesent at accumsan tortor. Fusce dignissim pellentesque dui in pulvinar.",
           "collapsed": true
         },
@@ -23,9 +23,9 @@
          },
          {
            "delta": 3,
-           "title": "Title #4",
+           "title": "Title #4 is an extremely long title that wraps to the next line and this accordion item is not collapsed by default",
            "body": "Donec at facilisis diam, ac ornare nisi. Praesent volutpat, ante vitae luctus hendrerit, ex urna facilisis velit, vitae congue velit tellus ac purus. Nam ullamcorper purus eu lacus scelerisque dignissim. Curabitur scelerisque purus sit amet justo pellentesque, sit amet consequat nunc accumsan. Nulla blandit quis arcu eu congue. Pellentesque risus velit, porttitor a faucibus eu, mattis sit amet magna. Nulla facilisi. Duis bibendum tempus augue eget accumsan.",
-           "collapsed": true
+           "collapsed": false
          },
          {
            "delta": 4,
