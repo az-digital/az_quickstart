@@ -75,7 +75,7 @@
               bgVideoParagraphs[index].getElementsByClassName(
                 'az-video-play',
               )[0];
-            playButton.addEventListener('click', async (event) => {
+            playButton.addEventListener('click', (event) => {
               event.preventDefault();
               bgVideoParagraphs[index].player
                 .play()
