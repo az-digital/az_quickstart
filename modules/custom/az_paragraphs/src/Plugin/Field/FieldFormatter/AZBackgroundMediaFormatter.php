@@ -478,22 +478,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     if ($settings['style'] === 'bottom') {
       $css_settings['selector'] = $css_settings['selector'] . ' .text-on-video';
     }
-    if ($provider === 'YouTube') {
+    if ($provider === 'YouTube' || $provider === 'Vimeo') {
       $source_url = $media->get('field_media_az_oembed_video')->value;
       $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
-      $attached_library = [
-        'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
-        'drupalSettings' => [
-          'azFieldsMedia' => [
-            'bgVideos' => [
-              $video_oembed_id => [
-                'videoId' => $video_oembed_id,
-                'start' => 0,
-              ],
-            ],
-          ],
-        ],
-      ];
       $responsive_image_style_element = [
         '#theme' => 'az_responsive_background_image',
         '#selector' => $css_settings['selector'],
@@ -508,23 +495,69 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
         '#uri' => $file_uri,
         '#z_index' => $css_settings['z_index'],
       ];
-      $background_video = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#allowed_tags' => ['iframe', 'img'],
-        '#attributes' => [
-          'id' => [$video_oembed_id . '-bg-video-container'],
-          'class' => [
-            'az-video-background',
-            'az-js-video-background',
+      if ($provider === 'YouTube') {
+        $attached_library = [
+          'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
+          'drupalSettings' => [
+            'azFieldsMedia' => [
+              'bgVideos' => [
+                $video_oembed_id => [
+                  'videoId' => $video_oembed_id,
+                  'start' => 0,
+                ],
+              ],
+            ],
           ],
-          'data-youtubeid' => $video_oembed_id,
-          'data-style' => $settings['style'],
-          'data-parentid' => HTML::getId($settings['css_settings']['selector']),
-        ],
-        'child' => $background_media,
-        '#attached' => $attached_library,
-      ];
+        ];
+        $background_video = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#allowed_tags' => ['iframe', 'img'],
+          '#attributes' => [
+            'id' => [$video_oembed_id . '-bg-video-container'],
+            'class' => [
+              'az-video-background',
+              'az-js-video-background',
+            ],
+            'data-youtubeid' => $video_oembed_id,
+            'data-style' => $settings['style'],
+            'data-parentid' => HTML::getId($settings['css_settings']['selector']),
+          ],
+          'child' => $background_media,
+          '#attached' => $attached_library,
+        ];
+      }
+      elseif ($provider === 'Vimeo') {
+        $attached_library = [
+          'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.vimeo',
+          'drupalSettings' => [
+            'azFieldsMedia' => [
+              'bgVideos' => [
+                $video_oembed_id => [
+                  'videoId' => $video_oembed_id,
+                ],
+              ],
+            ],
+          ],
+        ];
+        $background_video = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#allowed_tags' => ['iframe', 'img'],
+          '#attributes' => [
+            'id' => [$video_oembed_id . '-bg-video-container'],
+            'class' => [
+              'az-video-background',
+              'az-js-vimeo-video-background',
+            ],
+            'data-vimeo-video-id' => $video_oembed_id,
+            'data-style' => $settings['style'],
+            'data-parentid' => HTML::getId($settings['css_settings']['selector']),
+          ],
+          'child' => $background_media,
+          '#attached' => $attached_library,
+        ];
+      }
 
       if ($settings['style'] !== 'bottom') {
         $az_background_media[] = $responsive_image_style_element;
@@ -561,95 +594,9 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
           ],
         ];
         $az_background_media[] = $text_on_bottom;
-
       }
     }
-    elseif ($provider === 'Vimeo') {
-      $source_url = $media->get('field_media_az_oembed_video')->value;
-      $video_oembed_id = $this->videoEmbedHelper->getYoutubeIdFromUrl($source_url);
-      $attached_library = [
-        'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.vimeo',
-        'drupalSettings' => [
-          'azFieldsMedia' => [
-            'bgVideos' => [
-              $video_oembed_id => [
-                'videoId' => $video_oembed_id,
-                'start' => 0,
-              ],
-            ],
-          ],
-        ],
-      ];
-      $responsive_image_style_element = [
-        '#theme' => 'az_responsive_background_image',
-        '#selector' => $css_settings['selector'],
-        '#repeat' => $css_settings['repeat'],
-        '#important' => $css_settings['important'],
-        '#color' => $css_settings['color'],
-        '#x' => $css_settings['x'],
-        '#y' => $css_settings['y'],
-        '#size' => $css_settings['size'],
-        '#attachment' => $css_settings['attachment'],
-        '#responsive_image_style_id' => $settings['image_style'],
-        '#uri' => $file_uri,
-        '#z_index' => $css_settings['z_index'],
-      ];
-      $background_video = [
-        '#type' => 'html_tag',
-        '#tag' => 'div',
-        '#allowed_tags' => ['iframe', 'img'],
-        '#attributes' => [
-          'id' => [$video_oembed_id . '-bg-video-container'],
-          'class' => [
-            'az-video-background',
-            'az-js-vimeo-video-background',
-          ],
-          'data-vimeo-id2' => $video_oembed_id,
-          'data-style' => $settings['style'],
-          'data-parentid' => HTML::getId($settings['css_settings']['selector']),
-        ],
-        'child' => $background_media,
-        '#attached' => $attached_library,
-      ];
 
-      if ($settings['style'] !== 'bottom') {
-        $az_background_media[] = $responsive_image_style_element;
-        $az_background_media[] = $background_video;
-        if ($settings['text_media_spacing'] === 'az-aspect-ratio' && isset($settings['full_width']) && $settings['full_width'] === 'full-width-background') {
-          $image_renderable = [
-            '#theme' => 'responsive_image_formatter',
-            '#responsive_image_style_id' => 'az_full_width_background',
-            '#item' => $media->get('thumbnail'),
-            '#item_attributes' => [
-              'class' => ['img-fluid', ' w-100', 'invisible'],
-            ],
-          ];
-          $az_background_media[] = $image_renderable;
-        }
-      }
-      elseif ($settings['style'] === 'bottom') {
-        $image_renderable = [
-          '#theme' => 'responsive_image_formatter',
-          '#responsive_image_style_id' => 'az_full_width_background',
-          '#item' => $media->get('thumbnail'),
-          '#item_attributes' => [
-            'class' => ['img-fluid'],
-          ],
-        ];
-        $text_on_bottom = [
-          '#type' => 'html_tag',
-          '#tag' => 'div',
-          'img' => $image_renderable,
-          'style' => $responsive_image_style_element,
-          'video' => $background_video,
-          '#attributes' => [
-            'class' => ['text-on-media-bottom', 'text-on-video'],
-          ],
-        ];
-        $az_background_media[] = $text_on_bottom;
-
-      }
-    }
     return $az_background_media;
   }
 

@@ -9,5 +9,6 @@ az_paragraphs_text_media.vimeo:
   js:
     js/az_paragraphs_az_text_media_vimeo.js: {}
   dependencies:
-    - core/jquery
     - core/drupalSettings
+    - core/jquery
+    - core/once
