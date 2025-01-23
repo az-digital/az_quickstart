@@ -42,13 +42,10 @@
               id: vimeoId,
               width: options.width,
               height: Math.ceil(options.width / options.ratio),
-              autoplay: true,
-              muted: options.mute,
-              loop: options.repeat,
+              autoplay: options.autoplay,
               background: options.background,
-              title: options.title,
-              byline: options.byline,
-              portrait: options.portrait,
+              muted: options.mute,
+              loop: options.loop,
             });
 
             // Event Listeners
