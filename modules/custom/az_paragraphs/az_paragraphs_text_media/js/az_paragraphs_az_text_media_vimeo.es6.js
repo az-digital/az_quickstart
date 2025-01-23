@@ -102,7 +102,7 @@
               bgVideoParagraphs[index].getElementsByClassName(
                 'az-video-pause',
               )[0];
-            pauseButton.addEventListener('click', async (event) => {
+            pauseButton.addEventListener('click', (event) => {
               event.preventDefault();
               bgVideoParagraphs[index].player
                 .pause()
