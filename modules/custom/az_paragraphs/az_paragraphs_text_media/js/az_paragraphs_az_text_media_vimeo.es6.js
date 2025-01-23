@@ -5,14 +5,14 @@
         // @see https://developer.vimeo.com/player/sdk/basics
         // Defaults
         const defaults = {
-          ratio: 16 / 9,
           vimeoId: '',
-          mute: true,
-          repeat: true,
           width: $(window).width(),
+          ratio: 16 / 9,
+          autoplay: true,
+          background: true,
+          loop: true,
           playButtonClass: 'az-video-play',
           pauseButtonClass: 'az-video-pause',
-          start: 0,
           minimumSupportedWidth: 600,
         };
         const { bgVideos } = settings.azFieldsMedia;
