@@ -129,22 +129,25 @@
         // Resize Logic
         const setDimensions = (container) => {
           const parentParagraph = container.parentNode;
-          const vimeoId = container.dataset.vimeoId2;
+          let parentHeight = parentParagraph.offsetHeight;
+          parentHeight = `${parentHeight.toString()}px`;
+          container.style.height = parentHeight;
+          const { style } = container.dataset;
+          if (style === 'bottom') {
+            container.style.top = 0;
+          }
           const thisPlayer =
             container.getElementsByClassName('az-video-player')[0].firstChild;
+          if (thisPlayer === null) {
+            return;
+          }
           thisPlayer.style.zIndex = -100;
-          const { style } = container.dataset;
+          const vimeoId = container.dataset.vimeoId2;
           const width = container.offsetWidth;
           const height = container.offsetHeight;
           const { ratio } = bgVideos[vimeoId];
           const pWidth = Math.ceil(height * ratio); // get new player width
           const pHeight = Math.ceil(width / ratio); // get new player height
-          let parentHeight = parentParagraph.offsetHeight;
-          parentHeight = `${parentHeight.toString()}px`;
-          container.style.height = parentHeight;
-          if (style === 'bottom') {
-            container.style.top = 0;
-          }
           let widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
           widthMinuspWidthdividedbyTwo = `${widthMinuspWidthdividedbyTwo.toString()}px`;
           let pHeightRatio = (height - pHeight) / 2;
