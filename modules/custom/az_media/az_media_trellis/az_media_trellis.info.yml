@@ -1,0 +1,7 @@
+name: Quickstart Media - Trellis
+type: module
+description: Trellis RFI media entity type.
+core_version_requirement: ^10
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
