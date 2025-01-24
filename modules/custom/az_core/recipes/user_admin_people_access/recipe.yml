@@ -1,4 +1,4 @@
-name: 'Quickstart Admin People Order by Accessed'
+name: 'Quickstart Admin People Order by Last Access'
 description: 'Changes default filtering of Drupal Core user_admin_people view to last accessed.'
 type: 'The University of Arizona'
 install:
