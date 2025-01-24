@@ -73,7 +73,6 @@
             if (pauseButtons[0]) {
               pauseButtons[0].addEventListener('click', function (event) {
                 event.preventDefault();
-                console.log('click pause');
                 bgVideoParagraphs[index].player.pause().catch(function (error) {
                   return vimeoError(error);
                 });
