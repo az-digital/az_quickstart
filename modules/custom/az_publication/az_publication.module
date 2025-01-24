@@ -500,12 +500,12 @@ function _az_publication_publication_date_object(EntityInterface $entity) {
   $slices = 3;
   // Depending on date type, we should send fewer date components to CSL.
   switch ($date_type) {
-    case 'year';
+    case 'year':
       $slices = 1;
       break;
 
-    case 'month';
-    case 'season';
+    case 'month':
+    case 'season':
       $slices = 2;
       break;
 
@@ -610,13 +610,13 @@ function _az_publication_form_revisions(array &$form, FormStateInterface $form_s
 
     // Gather settings based on type.
     switch ($date_type) {
-      case 'month';
-      case 'season';
+      case 'month':
+      case 'season':
         $format = 'Y-m';
         $viewmode = 'months';
         break;
 
-      case 'year';
+      case 'year':
         $format = 'Y';
         $viewmode = 'years';
         break;
