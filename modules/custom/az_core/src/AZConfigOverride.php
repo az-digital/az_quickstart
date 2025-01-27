@@ -2,15 +2,15 @@
 
 namespace Drupal\az_core;
 
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
 use Drupal\config_provider\Plugin\ConfigCollector;
 use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\config_sync\ConfigSyncSnapshotter;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 use Drupal\config_update\ConfigListByProviderInterface;
-use Drupal\Core\Config\ConfigFactoryInterface;
-use Drupal\Core\Extension\ModuleExtensionList;
-use Drupal\Core\Extension\ModuleHandler;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 

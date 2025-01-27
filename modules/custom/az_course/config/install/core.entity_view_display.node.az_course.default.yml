@@ -15,12 +15,112 @@ dependencies:
     - field.field.node.az_course.field_az_subject_code
     - node.type.az_course
   module:
+    - field_group
+    - linkit
     - smart_title
     - text
     - user
 third_party_settings:
   smart_title:
     enabled: false
+  field_group:
+    group_instructor:
+      children:
+        - field_az_course_instructor
+      label: Instructor(s)
+      parent_name: group_card
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: true
+        label_element: h2
+        label_element_classes: 'font-weight-bold mb-0 text-body text-size-h6'
+        attributes: ''
+        effect: none
+        speed: fast
+    group_row:
+      children:
+        - group_details
+        - group_description
+      label: Row
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'row mb-4'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_description:
+      children:
+        - field_az_course_description
+      label: Description
+      parent_name: group_row
+      region: hidden
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'col-12 col-md-8'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_details:
+      children:
+        - group_card
+      label: Details
+      parent_name: group_row
+      region: content
+      weight: 5
+      format_type: html_element
+      format_settings:
+        classes: 'col-12 col-md-4'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card:
+      children:
+        - field_az_course_units
+        - group_instructor
+      label: Card
+      parent_name: group_details
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: 'card card-body'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: node.az_course.default
 targetEntityType: node
 bundle: az_course
@@ -31,7 +131,20 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 1
+    weight: 2
+    region: content
+  field_az_course_instructor:
+    type: linkit
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+      linkit_profile: default
+    third_party_settings: {  }
+    weight: 3
     region: content
   field_az_course_units:
     type: number_integer
@@ -40,21 +153,16 @@ content:
       thousand_separator: ''
       prefix_suffix: true
     third_party_settings: {  }
-    weight: 2
-    region: content
-  links:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
+    weight: 4
     region: content
 hidden:
   field_az_academic_program: true
   field_az_catalog_number: true
   field_az_course_attributes: true
-  field_az_course_instructor: true
   field_az_course_term: true
   field_az_course_title: true
   field_az_course_types: true
   field_az_subject_and_catalog: true
   field_az_subject_code: true
+  links: true
   smart_title: true

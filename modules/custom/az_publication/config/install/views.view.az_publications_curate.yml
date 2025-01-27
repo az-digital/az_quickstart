@@ -314,7 +314,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access draggableviews'
+          perm: 'access az_curated_views'
       cache:
         type: tag
         options: {  }
@@ -846,7 +846,8 @@ display:
           required: true
       display_description: ''
       display_extenders: {  }
-      path: admin/az-publication/curation/%node
+      path: az-publication/curation/%node
+      use_admin_theme: true
     cache_metadata:
       max-age: 0
       contexts:

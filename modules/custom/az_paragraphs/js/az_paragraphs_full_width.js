@@ -4,7 +4,7 @@
 * https://www.drupal.org/node/2815083
 * @preserve
 **/
-(function (Drupal, window, document) {
+(function () {
   function calculateScrollbarWidth() {
     document.documentElement.style.setProperty('--scrollbar-width', "".concat(window.innerWidth - document.documentElement.clientWidth, "px"));
   }
@@ -17,7 +17,7 @@
       }
       var lastFullWidthElement = allFullWidthElements[allFullWidthElements.length - 1];
       var contentRegionPosition = contentRegion.getBoundingClientRect();
-      var style = allFullWidthElements[0].currentStyle || window.getComputedStyle(lastFullWidthElement, '');
+      var style = window.getComputedStyle(lastFullWidthElement, '');
       var bottomMargin = parseFloat(style.marginBottom);
       var contentRegionTop = contentRegionPosition.top;
       var lastFullWidthElementPosition = lastFullWidthElement.getBoundingClientRect();
@@ -30,7 +30,7 @@
   }
   function calculateFullWidthNegativeMargins() {
     var contentRegion = document.querySelectorAll('.block-system-main-block');
-    if (contentRegion !== null) {
+    if (contentRegion.length > 0) {
       var contentRegionPosition = contentRegion[0].getBoundingClientRect();
       var distanceFromLeft = contentRegionPosition.left;
       var distanceFromRight = contentRegionPosition.right;
@@ -40,13 +40,12 @@
       document.documentElement.style.setProperty('--full-width-right-distance', "".concat(negativeRightMargin, "px"));
     }
   }
-  Drupal.behaviors.azParagraphsFullWidthElements = {
-    attach: function attach() {
-      calculateScrollbarWidth();
-      calculateFullWidthNegativeMargins();
-      pushSidebarsDown();
-    }
-  };
+  function initialize() {
+    calculateScrollbarWidth();
+    calculateFullWidthNegativeMargins();
+    pushSidebarsDown();
+  }
+  document.addEventListener('DOMContentLoaded', initialize);
   window.addEventListener('resize', function () {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
@@ -57,4 +56,4 @@
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   });
-})(Drupal, this, this.document);
+})();
