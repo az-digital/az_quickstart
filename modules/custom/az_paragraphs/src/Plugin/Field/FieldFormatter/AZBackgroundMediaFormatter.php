@@ -86,6 +86,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   public static function defaultSettings(): array {
     return [
       'image_style' => '',
+      'autoplay_remote_video' => TRUE,
       'css_settings' => [
         'z_index' => 'auto',
         'color' => '#FFFFFF',
@@ -118,6 +119,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       '#type' => 'select',
       '#options' => $responsive_image_style_options,
       '#default_value' => $this->getSetting('image_style'),
+    ];
+    $form['autoplay_remote_video'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Autoplay Remote Video'),
+      '#default_value' => $settings['autoplay_remote_video'],
+      '#description' => $this->t('Uncheck this setting to prevent remote video from playing automatically (such as on the "Preview" view mode).'),
     ];
     // Fieldset for css settings.
     $form['css_settings'] = [
@@ -271,6 +278,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     else {
       $summary[] = $this->t('Original image style');
     }
+    $summary[] = $this->t('Autoplay Remote Video: @style', ['@style' => empty($settings['autoplay_remote_video']) ? 'No' : 'Yes']);
     $summary[] = Markup::create('<p></p><strong>CSS settings:</strong>');
     if (isset($settings['css_settings']['selector'])) {
       $summary[] = $this->t('CSS selector: @selector', ['@selector' => $settings['css_settings']['selector']]);
@@ -522,6 +530,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'data-youtubeid' => $video_oembed_id,
             'data-style' => $settings['style'],
             'data-parentid' => HTML::getId($settings['css_settings']['selector']),
+            'data-autoplay' => $settings['autoplay_remote_video'] ? 'true' : 'false',
           ],
           'child' => $background_media,
           '#attached' => $attached_library,
@@ -553,6 +562,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'data-vimeo-video-id' => $video_oembed_id,
             'data-style' => $settings['style'],
             'data-parentid' => HTML::getId($settings['css_settings']['selector']),
+            'data-autoplay' => $settings['autoplay_remote_video'] ? 'true' : 'false',
           ],
           'child' => $background_media,
           '#attached' => $attached_library,

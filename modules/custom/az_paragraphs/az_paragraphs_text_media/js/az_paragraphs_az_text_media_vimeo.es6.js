@@ -26,8 +26,9 @@
           width: $(window).width(),
           ratio: 16 / 9,
           autoplay: true,
-          background: true,
+          controls: 0,
           loop: true,
+          muted: true,
           playButtonClass: 'az-video-play',
           pauseButtonClass: 'az-video-pause',
           minimumSupportedWidth: 600,
@@ -60,10 +61,10 @@
               id: vimeoId,
               width: options.width,
               height: Math.ceil(options.width / options.ratio),
-              autoplay: options.autoplay,
-              background: options.background,
-              muted: options.mute,
+              autoplay: thisContainer.dataset.autoplay === 'true',
+              controls: 0,
               loop: options.loop,
+              muted: options.muted,
             });
 
             // Event listener for starting play.
