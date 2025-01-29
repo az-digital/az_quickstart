@@ -278,7 +278,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     else {
       $summary[] = $this->t('Original image style');
     }
-    $summary[] = $this->t('Autoplay Remote Video: @style', ['@style' => empty($settings['autoplay_remote_video']) ? 'No' : 'Yes']);
+    $summary[] = $this->t('Autoplay remote video: @style', ['@style' => empty($settings['autoplay_remote_video']) ? 'No' : 'Yes']);
     $summary[] = Markup::create('<p></p><strong>CSS settings:</strong>');
     if (isset($settings['css_settings']['selector'])) {
       $summary[] = $this->t('CSS selector: @selector', ['@selector' => $settings['css_settings']['selector']]);
