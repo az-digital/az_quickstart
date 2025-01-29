@@ -7,6 +7,10 @@ services:
       - '@current_route_match'
     tags:
       - { name: page_cache_response_policy }
+  az_core_generator:
+    public: false
+    class: Drupal\az_core\EventSubscriber\AZGeneratorSubscriber
+    decorates: response_generator_subscriber
   logger.channel.az_core:
     parent: logger.channel_base
     arguments:
@@ -20,4 +24,14 @@ services:
       - '@config_sync.snapshotter'
       - '@config_update.config_list'
       - '@module_handler'
-      - '@logger.channel.az_core'
+  # Decorates the normal user module links.
+  az_core.toolbar_link_builder:
+    class: Drupal\az_core\AZUserToolbarLinkBuilder
+    decorates: user.toolbar_link_builder
+    parent: user.toolbar_link_builder
+    # Append arguments to parent service arguments.
+    # externalauth.authmap declared optional because CAS may or may not be enabled.
+    arguments:
+      - '@entity_type.manager'
+      - '@entity_field.manager'
+      - '@?externalauth.authmap'

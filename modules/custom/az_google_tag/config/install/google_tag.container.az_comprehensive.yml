@@ -10,38 +10,28 @@ weight: 0
 tag_container_ids:
   - GTM-ML2BZB
 advanced_settings:
+  consent_mode: 0
   gtm:
-    data_layer: dataLayer
-    include_classes: false
-    allowlist_classes: |-
-      google
-      nonGooglePixels
-      nonGoogleScripts
-      nonGoogleIframes
-    blocklist_classes: |-
-      customScripts
-      customPixels
-    include_environment: false
-    environment_id: ''
-    environment_token: ''
+    GTM-ML2BZB:
+      data_layer: dataLayer
+      include_classes: false
+      allowlist_classes: |-
+        google
+        nonGooglePixels
+        nonGoogleScripts
+        nonGoogleIframes
+      blocklist_classes: |-
+        customScripts
+        customPixels
+      include_environment: false
+      environment_id: ''
+      environment_token: ''
 dimensions_metrics: {  }
 conditions:
   request_path:
     id: request_path
     negate: true
-    pages: |-
-      /admin*
-      batch*
-      block/add/*
-      /block/*/edit
-      file/add
-      file/*/edit
-      /node/add*
-      /node/*/edit
-      /node/*/delete
-      /user/*/edit*
-      /user/*/cancel*
-      taxonomy/term/*/edit
+    pages: "/admin*\r\n/batch*\r\n/clone/*\r\n/devel/*\r\n/node/add*\r\n/node/*/edit\r\n/node/*/delete\r\n/node/*/revisions\r\n/node/*/usage\r\n/user/*/edit*\r\n/user/*/cancel*\r\n/user/*/scheduled*\r\n/user/*/connected-accounts\r\n/user/*/submissions\r\n/group/*/edit\r\n/group/*/delete\r\n/group/*/content*\r\n/group/*/nodes\r\n/group/*/revisions\r\n/group/*/members\r\n/group/*/media*\r\n/group/*/usage\r\n/group/*/subgroups\r\n/group/*/create\r\n/media/*/edit\r\n/media/*/delete\r\n/media/*/usage\r\n/taxonomy/*/edit\r\n/taxonomy/*/delete\r\n/taxonomy/*/usage"
   response_code:
     id: response_code
     negate: true
@@ -56,12 +46,12 @@ conditions:
     roles:
       anonymous: anonymous
 events:
+  login:
+    method: CMS
   generate_lead:
     value: ''
     currency: ''
+  search: {  }
   custom: {  }
   sign_up:
-    method: CMS
-  search: {  }
-  login:
     method: CMS

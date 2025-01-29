@@ -228,6 +228,11 @@ span.field-label {
   border: 1px solid #dee2e6;
 }
 
+/* Add this class to a view display to add a top margin to the pager. */
+.add-pager-top-margin > nav:has(.pagination) {
+  margin-top: 1rem;
+}
+
 /**
  * Marker.
  */
@@ -540,6 +545,25 @@ a.nolink + ul .sf-clone-parent {
   background: none 0 0 scroll no-repeat transparent;
 }
 
+/* Styling for full-width regions and paragraphs. */
+.full-width-background,
+.region-alert .paragraph,
+.region-content-featured .paragraph,
+.region-full-width-content-bottom .paragraph,
+.region-az-page-bottom .paragraph {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.region .az-full-width-row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
 .region-sidebar-first .block,
 .region-sidebar-second .block {
   margin-bottom: 24px !important;
@@ -666,6 +690,15 @@ fieldset.collapsed {
   width: initial;
   max-width: 100%;
 }
+
+/* Webform field labels */
+form.webform-submission-form {
+  label:not(.form-check-label) {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
 
 .align-left {
   float: none;

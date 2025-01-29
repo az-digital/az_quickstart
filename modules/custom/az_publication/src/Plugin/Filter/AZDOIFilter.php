@@ -3,18 +3,20 @@
 namespace Drupal\az_publication\Plugin\Filter;
 
 use Drupal\Component\Utility\Html;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\filter\Attribute\Filter;
 use Drupal\filter\FilterProcessResult;
 use Drupal\filter\Plugin\FilterBase;
+use Drupal\filter\Plugin\FilterInterface;
 
 /**
  * Provides a filter to convert DOI identifiers to links.
- *
- * @Filter(
- *   id = "az_doi_filter",
- *   title = @Translation("Convert DOI (Digital Object Identifiers) to links"),
- *   type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
- * )
  */
+#[Filter(
+  id: "az_doi_filter",
+  title: new TranslatableMarkup("Convert DOI (Digital Object Identifiers) to links"),
+  type: FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE
+)]
 class AZDOIFilter extends FilterBase {
 
   /**
@@ -29,7 +31,6 @@ class AZDOIFilter extends FilterBase {
     $ignore_tags = 'a|script|style|code|pre';
 
     _filter_url_escape_comments('', TRUE);
-    // phpcs:ignore
     $text = is_null($text) ? '' : preg_replace_callback('`<!--(.*?)-->`s', '_filter_url_escape_comments', $text);
 
     // Split at all tags; ensures that no tags or attributes are processed.
@@ -58,7 +59,6 @@ class AZDOIFilter extends FilterBase {
             // If there is a match, inject a link into this chunk.
             // Match DOI identifiers.
             $pattern = "/(doi:\s*)?(10\.\d{4,9}\/[-._;()\/:A-Z0-9]*[-_;()\/:A-Z0-9]+)/i";
-            // phpcs:ignore
             $chunks[$i] = preg_replace_callback($pattern, [static::class, 'filterDoi'], $chunks[$i]);
           }
 
@@ -90,7 +90,6 @@ class AZDOIFilter extends FilterBase {
 
     // Revert to the original comment contents.
     _filter_url_escape_comments('', FALSE);
-    // phpcs:ignore
     $text = $text ? preg_replace_callback('`<!--(.*?)-->`', '_filter_url_escape_comments', $text) : $text;
 
     // Make sure our regex chunking didn't eat the text due to a broken tag.

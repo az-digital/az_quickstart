@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_profile_editor
+label: 'Profile editor'
+weight: 2
+is_admin: null
+permissions:
+  - 'access az_curated_views'
+  - 'access contextual links'
+  - 'access environment indicator'
+  - 'access toolbar'
+  - 'create az_document media'
+  - 'create az_image media'
+  - 'delete own az_document media'
+  - 'delete own az_image media'
+  - 'delete own files'
+  - 'edit matching netid content'
+  - 'edit own az_document media'
+  - 'edit own az_image media'
+  - 'edit own az_person content'
+  - 'use text format az_standard'
+  - 'view own unpublished content'
+  - 'view own unpublished media'
+  - 'view the administration theme'

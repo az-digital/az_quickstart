@@ -26,6 +26,8 @@ settings:
       - numberedList
       - '|'
       - alignment
+      - indent
+      - outdent
       - '|'
       - bootstrapGrid
       - insertTable
@@ -257,11 +259,8 @@ settings:
           label: 'Text Align Bottom'
           element: '<span class="align-bottom">'
         -
-          label: 'Zero Margin Top'
-          element: '<span class="mt-0">'
-        -
           label: 'Zero Margin Bottom'
-          element: '<span class="mb-0">'
+          element: '<p class="mb-0">'
         -
           label: Blockquote
           element: '<blockquote class="blockquote">'
@@ -317,6 +316,8 @@ settings:
         - md
         - lg
         - xl
+    ckeditor_indentblock_indent:
+      enable: true
     linkit_extension:
       linkit_enabled: true
       linkit_profile: az_linkit
@@ -324,9 +325,3 @@ settings:
       allow_view_mode_override: true
 image_upload:
   status: false
-  scheme: public
-  directory: inline-images
-  max_size: ''
-  max_dimensions:
-    width: null
-    height: null

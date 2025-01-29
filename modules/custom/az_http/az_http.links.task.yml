@@ -1,0 +1,5 @@
+az_http.az_http_settings_tab:
+  route_name: az_http.settings
+  title: 'AZ HTTP'
+  base_route: az_core.az_settings
+  weight: 3

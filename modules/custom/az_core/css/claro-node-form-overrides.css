@@ -6,18 +6,18 @@
 */
 
 @media screen and (min-width: 61rem) {
-  div.layout-node-form {
+  div.layout-form {
     grid-template-columns: calc(65% - var(--space-l)) minmax(22.5rem, 1fr);
   }
 
-  .layout-region.layout-region--node-main,
-  .layout-region.layout-region--node-footer {
+  .layout-region.layout-region--main,
+  .layout-region.layout-region--footer {
     margin-inline: 0;
     width: initial;
   }
 }
 
-.layout-region--node-main .claro-details__summary {
+.layout-region--main .claro-details__summary {
   color: unset;
 }
 

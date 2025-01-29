@@ -24,6 +24,18 @@ function az_course_help($route_name, RouteMatchInterface $route_match) {
 }
 
 /**
+ * Implements hook_theme().
+ */
+function az_course_theme() {
+  return [
+    'field__node__field_az_course_instructor__az_course' => [
+      'template' => 'field--node--field-az-course-instructor--az-course',
+      'base hook' => 'field',
+    ],
+  ];
+}
+
+/**
  * Implements hook_migration_plugins_alter().
  */
 function az_course_migration_plugins_alter(array &$migrations) {
@@ -48,7 +60,6 @@ function az_course_migration_plugins_alter(array &$migrations) {
           }
         }
       }
-      \Drupal::logger('az_course')->notice(print_r($course_urls, TRUE));
       if (!empty($migrations['az_courses']['source']) && empty($migrations['az_courses']['source']['urls'])) {
         $migrations['az_courses']['source']['urls'] = $course_urls;
       }

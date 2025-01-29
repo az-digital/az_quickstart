@@ -18,10 +18,10 @@ dependencies:
     - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
+    - az_core
     - date_ap_style
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   field_group:
@@ -136,12 +136,14 @@ content:
       cap_today: '1'
       display_time: '1'
       time_before_date: '1'
-      display_noon_and_midnight: '0'
-      capitalize_noon_and_midnight: '0'
+      display_noon_and_midnight: '1'
+      use_all_day: '1'
       separator: endash
       timezone: ''
-      use_all_day: '1'
-      display_day: null
+      display_day: 0
+      month_only: 0
+      hide_date: 0
+      capitalize_noon_and_midnight: 1
     third_party_settings: {  }
     weight: 1
     region: content
@@ -155,7 +157,7 @@ content:
     weight: 6
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }
