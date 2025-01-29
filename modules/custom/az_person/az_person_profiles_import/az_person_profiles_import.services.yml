@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autoconfigure: true
+  az_person_profiles_import_subscriber:
+    class: Drupal\az_person_profiles_import\EventSubscriber\AZPersonProfilesImportEventSubscriber
+    arguments:
+      - '@messenger'
+      - '@entity_type.manager'
