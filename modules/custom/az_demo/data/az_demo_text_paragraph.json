@@ -86,7 +86,7 @@
             "bottom_spacing": "mb-0"
         },
         {
-            "id": 104,
+            "id": 90,
             "az_text_area": "<h2>Text Filter Testing</h2><p>Save this page and then confirm that the styling below is correct.<br>&nbsp;</p><div class=\"bg-blue\"><p><strong>Div class test: bg-blue</strong></p></div><p><a class=\"bg-blue\" href=\"https://quickstart.arizona.edu\">Anchor class test: bg-blue</a></p><ul class=\"bg-blue\"><li>UL class test: bg-blue</li><li class=\"bg-cool-gray\">LI class: bg-cool-gray</li></ul><blockquote class=\"bg-blue\"><p>Blockquote class test: bg-blue</p></blockquote><table class=\"border border-success border-thick table\"><thead><tr><th class=\"bg-sky\">Table class test: border border-success border-thick<br>th class test: bg-sky</th><th>&nbsp;</th></tr></thead><tbody class=\"bg-blue\"><tr><td>tbody class test: bg-blue</td><td>&nbsp;</td></tr><tr class=\"bg-cool-gray\"><td>TR class test: bg-cool-gray</td><td class=\"bg-sky\">TD class test: bg-sky</td></tr></tbody></table><p>&nbsp;</p><p>hr test: border border-success border-thick</p><hr class=\"border border-success border-thick\"><p>&nbsp;</p><h2>Sample Table</h2><table><thead><tr><th>Header 1</th><th>Header 2</th><th>Header 3</th></tr></thead><tbody><tr><td>Data 1</td><td>Data 2</td><td>Data 3</td></tr><tr><td>Data 4</td><td>Data 5</td><td>Data 6</td></tr><tr><td>Data 7</td><td>Data 8</td><td>Data 9</td></tr></tbody></table>",
             "bottom_spacing": "mb-0"
         }
