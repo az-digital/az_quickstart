@@ -1,6 +1,23 @@
-(($, Drupal) => {
+(($, Drupal, once) => {
   Drupal.behaviors.az_vimeo_video_bg = {
     attach(context, settings) {
+      // Error messaging function
+      function vimeoError(error) {
+        switch (error.name) {
+          case 'PasswordError':
+            console.log('The Vimeo video is password-protected.');
+            break;
+          case 'PrivacyError':
+            console.log('The Vimeo video is private.');
+            break;
+          default:
+            console.log(
+              `Some errors occurred with the Vimeo video: ${error.name}`,
+            );
+            break;
+        }
+      }
+
       if (window.screen && window.screen.width > 768) {
         // @see https://developer.vimeo.com/player/sdk/basics
         // Defaults
@@ -9,8 +26,9 @@
           width: $(window).width(),
           ratio: 16 / 9,
           autoplay: true,
-          background: true,
+          controls: 0,
           loop: true,
+          muted: true,
           playButtonClass: 'az-video-play',
           pauseButtonClass: 'az-video-pause',
           minimumSupportedWidth: 600,
@@ -19,6 +37,7 @@
         const bgVideoParagraphs = document.getElementsByClassName(
           'az-js-vimeo-video-background',
         );
+
         // Load Vimeo API
         const tag = document.createElement('script');
         tag.src = 'https://player.vimeo.com/api/player.js';
@@ -30,7 +49,7 @@
           $.each(bgVideoParagraphs, (index) => {
             const thisContainer = bgVideoParagraphs[index];
             const parentParagraph = thisContainer.parentNode;
-            const vimeoId = thisContainer.dataset.vimeoId2;
+            const vimeoId = thisContainer.dataset.vimeoVideoId;
             bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
             const options = bgVideos[vimeoId];
             const videoPlayer =
@@ -42,84 +61,48 @@
               id: vimeoId,
               width: options.width,
               height: Math.ceil(options.width / options.ratio),
-              autoplay: options.autoplay,
-              background: options.background,
-              muted: options.mute,
+              autoplay: thisContainer.dataset.autoplay === 'true',
+              controls: 0,
               loop: options.loop,
+              muted: options.muted,
             });
 
-            // Event Listeners
+            // Event listener for starting play.
             thisContainer.player.on('play', () => {
               parentParagraph.classList.add('az-video-playing');
-              parentParagraph.classList.remove('az-video-paused');
-            });
-
-            thisContainer.player.on('pause', () => {
-              parentParagraph.classList.add('az-video-paused');
-              parentParagraph.classList.remove('az-video-playing');
-            });
-
-            thisContainer.player.on('ended', () => {
-              if (options.repeat) {
-                thisContainer.player.setCurrentTime(0).then(() => {
-                  thisContainer.player.play();
-                });
-              }
             });
 
             // Play Button
-            const playButton =
-              bgVideoParagraphs[index].getElementsByClassName(
-                'az-video-play',
-              )[0];
-            playButton.addEventListener('click', (event) => {
-              event.preventDefault();
-              bgVideoParagraphs[index].player
-                .play()
-                .then(() => {
-                  // the video is playing
-                })
-                .catch((error) => {
-                  switch (error.name) {
-                    case 'PasswordError':
-                      window.alert('the video is password-protected');
-                      break;
-                    case 'PrivacyError':
-                      window.alert('the video is private');
-                      break;
-                    default:
-                      console.log(`Some errors occurred: ${error.name}`);
-                      break;
-                  }
-                });
-            });
+            const playButtons = once(
+              'play-once',
+              bgVideoParagraphs[index].getElementsByClassName('az-video-play'),
+            );
+            if (playButtons[0]) {
+              playButtons[0].addEventListener('click', (event) => {
+                event.preventDefault();
+                bgVideoParagraphs[index].player
+                  .play()
+                  .catch((error) => vimeoError(error));
+                parentParagraph.classList.add('az-video-playing');
+                parentParagraph.classList.remove('az-video-paused');
+              });
+            }
 
             // Pause Button
-            const pauseButton =
-              bgVideoParagraphs[index].getElementsByClassName(
-                'az-video-pause',
-              )[0];
-            pauseButton.addEventListener('click', (event) => {
-              event.preventDefault();
-              bgVideoParagraphs[index].player
-                .pause()
-                .then(() => {
-                  // the video is paused
-                })
-                .catch((error) => {
-                  switch (error.name) {
-                    case 'PasswordError':
-                      window.alert('the video is password-protected');
-                      break;
-                    case 'PrivacyError':
-                      window.alert('the video is private');
-                      break;
-                    default:
-                      window.alert(`Some errors occurred: ${error.name}`);
-                      break;
-                  }
-                });
-            });
+            const pauseButtons = once(
+              'pause-once',
+              bgVideoParagraphs[index].getElementsByClassName('az-video-pause'),
+            );
+            if (pauseButtons[0]) {
+              pauseButtons[0].addEventListener('click', (event) => {
+                event.preventDefault();
+                bgVideoParagraphs[index].player
+                  .pause()
+                  .catch((error) => vimeoError(error));
+                parentParagraph.classList.add('az-video-paused');
+                parentParagraph.classList.remove('az-video-playing');
+              });
+            }
           });
         };
 
@@ -139,7 +122,7 @@
             return;
           }
           thisPlayer.style.zIndex = -100;
-          const vimeoId = container.dataset.vimeoId2;
+          const vimeoId = container.dataset.vimeoVideoId;
           const width = container.offsetWidth;
           const height = container.offsetHeight;
           const { ratio } = bgVideos[vimeoId];
@@ -186,4 +169,4 @@
       }
     },
   };
-})(jQuery, Drupal, drupalSettings);
+})(jQuery, Drupal, once);
