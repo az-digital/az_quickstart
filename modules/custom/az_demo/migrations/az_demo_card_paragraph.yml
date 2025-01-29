@@ -37,6 +37,9 @@ source:
       name: card_clickable
       selector: card_clickable
     -
+      name: card_title
+      selector: card_title
+    -
       name: az_cards
       selector: az_cards
     -
@@ -48,6 +51,7 @@ destination:
   default_bundle: az_cards
 
 process:
+  field_az_title: card_title
   field_az_cards:
     source: az_cards
     plugin: sub_process

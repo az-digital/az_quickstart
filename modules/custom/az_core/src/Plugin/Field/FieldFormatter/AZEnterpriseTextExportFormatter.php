@@ -2,25 +2,26 @@
 
 namespace Drupal\az_core\Plugin\Field\FieldFormatter;
 
-use Drupal\text\Plugin\Field\FieldFormatter\TextDefaultFormatter;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Security\TrustedCallbackInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Drupal\text\Plugin\Field\FieldFormatter\TextDefaultFormatter;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_enterprise_text_export' formatter.
- *
- * @FieldFormatter(
- *   id = "az_enterprise_text_export",
- *   label = @Translation("Quickstart Enterprise Export"),
- *   field_types = {
- *     "text",
- *     "text_long",
- *     "text_with_summary",
- *   }
- * )
  */
+#[FieldFormatter(
+  id: 'az_enterprise_text_export',
+  label: new TranslatableMarkup('Quickstart Enterprise Export'),
+  field_types: [
+    'text',
+    'text_long',
+    'text_with_summary',
+  ],
+)]
 class AZEnterpriseTextExportFormatter extends TextDefaultFormatter implements TrustedCallbackInterface {
 
   /**

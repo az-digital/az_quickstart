@@ -1,6 +1,7 @@
 services:
   az_mail.commands:
     class: \Drupal\az_mail\Commands\AZMailCommands
-    arguments: ['@config.factory']
+    arguments:
+      - '@config.factory'
     tags:
       - { name: drush.command }

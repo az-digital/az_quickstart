@@ -1,5 +1,4 @@
 az_alphabetical_listing:
-  version: 1.x
   css:
     theme:
       css/alphabetical_listing.css: {}

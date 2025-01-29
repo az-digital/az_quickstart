@@ -74,6 +74,9 @@ process:
         - az_demo_text_media_paragraph
         - az_demo_splitscreen_paragraph
         - az_demo_card_paragraph
+        - az_demo_view_paragraph
+        - az_demo_paragraph_gallery
+        - az_demo_paragraph_accordion
       source: '@pseudo_exploded_paragraphs'
 
   field_az_main_content:
@@ -83,6 +86,10 @@ process:
       target_id: '0'
       target_revision_id: '1'
 
+  field_az_summary/value: az_summary
+  field_az_summary/format:
+    plugin: default_value
+    default_value: plain_text
   field_az_marketing_page_style: az_marketing_page_style
 
   'field_az_media_image/target_id':
@@ -119,7 +126,10 @@ migration_dependencies:
     - az_demo_text_media_paragraph
     - az_demo_splitscreen_paragraph
     - az_demo_card_paragraph
+    - az_demo_view_paragraph
     - az_demo_page_categories
+    - az_demo_paragraph_gallery
+    - az_demo_paragraph_accordion
 
 dependencies:
   enforced:

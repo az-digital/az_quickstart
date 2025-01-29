@@ -2,15 +2,15 @@
 
 az_news_feeds.settings:
   type: config_object
-  label: 'UArizona News Feed Settings'
+  label: 'University of Arizona News Feed Settings'
   mapping:
     uarizona_news_base_uri:
       type: string
       label: 'Base site url where feeds live.'
-    uarizona_news_category_path: 
+    uarizona_news_category_path:
       type: string
       label: 'Path to category feed'
-    uarizona_news_feed_path:
+    uarizona_news_content_path:
       type: string
       label: 'Path to the content feed'
     uarizona_news_terms:

@@ -91,7 +91,7 @@
             <div class="row">
               {% if wordmark %}
               <a class="arizona-logo" href="https://www.arizona.edu" title="The University of Arizona homepage">
-                <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg"/>
+                <img class="arizona-line-logo" alt="The University of Arizona Wordmark Line Logo White" src="https://cdn.digital.arizona.edu/logos/v1.0.0/ua_wordmark_line_logo_white_rgb.min.svg" fetchpriority="high" />
               </a>
               {% endif %}
               {% if page.header_ua_utilities %}
@@ -170,7 +170,7 @@
     </header>
 
     <div id="main-wrapper" class="layout-main-wrapper clearfix">
-        <div id="main" role="main">
+        <div id="main">
           {% if page.content_featured %}
           <section id="content_featured">
             {{ page.content_featured }}

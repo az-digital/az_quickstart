@@ -2,8 +2,8 @@
 
 namespace Drupal\az_news_export\Normalizer;
 
-use Drupal\serialization\Normalizer\NormalizerBase;
 use Drupal\az_news_export\AZNewsDataEmpty;
+use Drupal\serialization\Normalizer\NormalizerBase;
 
 /**
  * Normalizes AZNewsDataEmpty objects into an empty object.

@@ -66,21 +66,6 @@
             "bottom_spacing" : "mb-0"
         },
         {
-            "id":28,
-            "az_text_area" : "<h2>Clickable Borderless Cards</h2>\r\n",
-            "bottom_spacing" : "mb-0"
-        },
-        {
-          "id":29,
-          "az_text_area" : "<h2>Clickable Title-on-Image Cards</h2>\r\n",
-          "bottom_spacing" : "mb-0"
-        },
-        {
-          "id":30,
-          "az_text_area" : "<h2>Borderless Title-on-Image Cards</h2>\r\n",
-          "bottom_spacing" : "mb-0"
-        },
-        {
             "id":84,
             "az_text_area":"<div class=\"bs_grid\"><div class=\"no-gutters row \" data-row-lg=\"equal_equal\" data-row-md=\"none\" data-row-none=\"12_12\" data-row-sm=\"none\" data-row-xl=\"\" data-row-xxl=\"\"><div class=\"col-12 col-lg\"><h3>Settings:<\/h3><ul>\t<li><strong>Label:&nbsp;<\/strong>Main navigation<\/li>\t<li><strong>Label display<\/strong>: True<\/li>\t<li><strong>Follow<\/strong>: False<\/li>\t<li><strong>Follow parent<\/strong>: child<\/li>\t<li><strong>Level<\/strong>: 2<\/li>\t<li><strong>Depth<\/strong>: Unlimited<\/li>\t<li><strong>Expand all items<\/strong><span>: True<\/span><\/li>\t<li><strong>Parent<\/strong>: main:<\/li>\t<li><strong>Theme hook suggestion<\/strong>: sidebar<\/li><\/ul><\/div><div class=\"col-12 col-lg\"><drupal-entity data-embed-button=\"az_embed_content_block\" data-entity-embed-display=\"view_mode:block_content.full\" data-entity-type=\"block_content\" data-entity-uuid=\"3a7fffab-e13b-429e-9405-f2bb89c83d63\"><\/drupal-entity><\/div><\/div><\/div><hr \/>",
             "bottom_spacing" : "mb-0"
@@ -92,7 +77,7 @@
         },
         {
             "id":88,
-            "az_text_area" : "<h2 class=\"text-blue mt-4\">A Robust Solution for All Campus Websites</h2><h3 class=\"h4 mb-4\">Whether you need a small lab website or an innovative site to represent your department, Quickstart has you covered.</h3><p>Arizona Quickstart is the result of developers across campus collaborating together in the Arizona Digital working group to bring a shared resource to campus that meets the most common needs of diverse units united behind one brand and embracing the challenges of security and accessibility.</p><p class=\"mb-5\">Quickstart was built so that you can focus on <strong>the actual purpose of your website</strong>: making your desired actions easier, whether that action is <strong>enrolling, engaging, donating, or using your services</strong>.</p><h2 class=\"h3 text-blue\">Core Benefits</h2><ul class=\"mb-5\">    <li><span class=\"h5\">UArizona Branded</span></li><li><span class=\"h5\">Mobile Responsive</span></li><li><span class=\"h5\">Accessible</span></li><li><span class=\"h5\">Flexible</span></li><li><span class=\"h5\">Scalable</span></li></ul><h2 class=\"h3 text-blue\">Get Started Today</h2><p>Ready to build your own website? Check out the Quickstart site to learn more!</p><p><a class=\"btn btn-red mt-2\" href=\"https://quickstart.arizona.edu/\">Visit Quickstart Site</a></p>",
+            "az_text_area" : "<h2 class=\"text-blue mt-4\">A Robust Solution for All Campus Websites</h2><h3 class=\"h4 mb-4\">Whether you need a small lab website or an innovative site to represent your department, Quickstart has you covered.</h3><p>Arizona Quickstart is the result of developers across campus collaborating together in the Arizona Digital working group to bring a shared resource to campus that meets the most common needs of diverse units united behind one brand and embracing the challenges of security and accessibility.</p><p class=\"mb-5\">Quickstart was built so that you can focus on <strong>the actual purpose of your website</strong>: making your desired actions easier, whether that action is <strong>enrolling, engaging, donating, or using your services</strong>.</p><h2 class=\"h3 text-blue\">Core Benefits</h2><ul class=\"mb-5\">    <li><span class=\"h5\">University of Arizona Branded</span></li><li><span class=\"h5\">Mobile Responsive</span></li><li><span class=\"h5\">Accessible</span></li><li><span class=\"h5\">Flexible</span></li><li><span class=\"h5\">Scalable</span></li></ul><h2 class=\"h3 text-blue\">Get Started Today</h2><p>Ready to build your own website? Check out the Quickstart site to learn more!</p><p><a class=\"btn btn-red mt-2\" href=\"https://quickstart.arizona.edu/\">Visit Quickstart Site</a></p>",
             "bottom_spacing" : "mb-5"
         },
         {

@@ -4,42 +4,26 @@ namespace Drupal\az_publication\Controller;
 
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
-use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
 use Drupal\az_publication\Entity\AZAuthorInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Class AZAuthorController.
  *
  *  Returns responses for Author routes.
  */
-class AZAuthorController extends ControllerBase implements ContainerInjectionInterface {
+class AZAuthorController extends ControllerBase {
 
   /**
-   * The date formatter.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatter
+   * Constructs a new \Drupal\az_publication\Controller object.
    */
-  protected $dateFormatter;
-
-  /**
-   * The renderer.
-   *
-   * @var \Drupal\Core\Render\Renderer
-   */
-  protected $renderer;
-
-  /**
-   * {@inheritdoc}
-   */
-  public static function create(ContainerInterface $container) {
-    $instance = parent::create($container);
-    $instance->dateFormatter = $container->get('date.formatter');
-    $instance->renderer = $container->get('renderer');
-    return $instance;
-  }
+  public function __construct(
+    protected DateFormatterInterface $dateFormatter,
+    protected RendererInterface $renderer,
+  ) {}
 
   /**
    * Displays a Author revision.
@@ -51,10 +35,6 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
    *   An array suitable for drupal_render().
    */
   public function revisionShow($az_author_revision) {
-    // @todo Re-enable after upgrading to Drupal 10.2.x / phpstan-drupal 1.2.x.
-    // @see https://www.drupal.org/project/drupal/issues/3383215
-    // @see https://github.com/mglaman/phpstan-drupal/pull/596
-    // @phpstan-ignore-next-line
     $az_author = $this->entityTypeManager()->getStorage('az_author')
       ->loadRevision($az_author_revision);
     $view_builder = $this->entityTypeManager()->getViewBuilder('az_author');
@@ -73,10 +53,6 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
    */
   public function revisionPageTitle($az_author_revision) {
     /** @var \Drupal\az_publication\Entity\AZAuthorInterface $az_author */
-    // @todo Re-enable after upgrading to Drupal 10.2.x / phpstan-drupal 1.2.x.
-    // @see https://www.drupal.org/project/drupal/issues/3383215
-    // @see https://github.com/mglaman/phpstan-drupal/pull/596
-    // @phpstan-ignore-next-line
     $az_author = $this->entityTypeManager()->getStorage('az_author')
       ->loadRevision($az_author_revision);
     return $this->t('Revision of %title from %date', [
@@ -120,10 +96,6 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
 
     foreach (array_reverse($vids) as $vid) {
       /** @var \Drupal\az_publication\Entity\AZAuthorInterface $revision */
-      // @todo Re-enable after upgrading to Drupal 10.2.x / phpstan-drupal 1.2.x.
-      // @see https://www.drupal.org/project/drupal/issues/3383215
-      // @see https://github.com/mglaman/phpstan-drupal/pull/596
-      // @phpstan-ignore-next-line
       $revision = $az_author_storage->loadRevision($vid);
       // Only show revisions that are affected by the language that is being
       // displayed.
@@ -152,7 +124,7 @@ class AZAuthorController extends ControllerBase implements ContainerInjectionInt
             '#template' => '{% trans %}{{ date }} by {{ username }}{% endtrans %}{% if message %}<p class="revision-log">{{ message }}</p>{% endif %}',
             '#context' => [
               'date' => $link,
-              'username' => $this->renderer->renderPlain($username),
+              'username' => $this->renderer->renderInIsolation($username),
               'message' => [
                 '#markup' => $revision->getRevisionLogMessage(),
                 '#allowed_tags' => Xss::getHtmlTagList(),

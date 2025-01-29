@@ -94,6 +94,11 @@ process:
       plugin: default_value
       default_value: plain_text
 
+  field_az_summary/value: az_summary
+  field_az_summary/format:
+    plugin: default_value
+    default_value: plain_text
+
   field_az_subheading/value: az_subheading
   field_az_subheading/format:
     -
@@ -138,6 +143,32 @@ process:
       source: az_media_image
       migration:
         - az_demo_image_file
+
+  pseudo_exploded_paragraphs:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: field_az_main_content
+    -
+      plugin: explode
+      source: field_az_main_content
+      delimiter: '|'
+
+  pseudo_paragraphs:
+    -
+      plugin: migration_lookup
+      migration:
+        - az_demo_card_paragraph
+        - az_demo_text_paragraph
+        - az_demo_paragraph_gallery
+      source: '@pseudo_exploded_paragraphs'
+
+  field_az_main_content:
+    plugin: sub_process
+    source: '@pseudo_paragraphs'
+    process:
+      target_id: '0'
+      target_revision_id: '1'
 
   field_az_media_thumbnail_image/target_id:
     plugin: migration_lookup

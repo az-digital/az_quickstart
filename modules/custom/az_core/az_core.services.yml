@@ -1,12 +1,37 @@
 services:
+  _defaults:
+    autoconfigure: true
   az_core.page_cache_request_policy.deny_monitoring_page:
     class: Drupal\az_core\PageCache\DenyMonitoringPage
-    arguments: ['@current_route_match']
+    arguments:
+      - '@current_route_match'
     tags:
       - { name: page_cache_response_policy }
+  az_core_generator:
+    public: false
+    class: Drupal\az_core\EventSubscriber\AZGeneratorSubscriber
+    decorates: response_generator_subscriber
   logger.channel.az_core:
     parent: logger.channel_base
-    arguments: ['az_core']
+    arguments:
+      - 'az_core'
   az_core.override_import:
     class: Drupal\az_core\AZConfigOverride
-    arguments: ['@config.factory', '@extension.list.module', '@config_provider.collector', '@config_sync.snapshotter', '@config_update.config_list', '@module_handler', '@logger.channel.az_core']
+    arguments:
+      - '@config.factory'
+      - '@extension.list.module'
+      - '@config_provider.collector'
+      - '@config_sync.snapshotter'
+      - '@config_update.config_list'
+      - '@module_handler'
+  # Decorates the normal user module links.
+  az_core.toolbar_link_builder:
+    class: Drupal\az_core\AZUserToolbarLinkBuilder
+    decorates: user.toolbar_link_builder
+    parent: user.toolbar_link_builder
+    # Append arguments to parent service arguments.
+    # externalauth.authmap declared optional because CAS may or may not be enabled.
+    arguments:
+      - '@entity_type.manager'
+      - '@entity_field.manager'
+      - '@?externalauth.authmap'

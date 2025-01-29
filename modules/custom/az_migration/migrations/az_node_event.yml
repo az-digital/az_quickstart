@@ -33,11 +33,8 @@ process:
     plugin: default_value
     default_value: az_event
   langcode:
-    plugin: static_map
-    bypass: true
+    plugin: az_default_langcode
     source: language
-    map:
-      und: en
 
   title:
     plugin: sub_process
@@ -121,7 +118,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           source: fid
           migration:
             - az_files
@@ -135,7 +132,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           source: fid
           migration:
             - az_media
@@ -147,7 +144,7 @@ process:
       delta: delta
       target_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration: az_paragraph_contact
           source: value
           no_stub: true
@@ -157,7 +154,7 @@ process:
             - 0
       target_revision_id:
         -
-          plugin: migration_lookup
+          plugin: migmag_lookup
           migration: az_paragraph_contact
           source: value
           no_stub: true
@@ -176,7 +173,7 @@ process:
 
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid
@@ -207,7 +204,7 @@ process:
     method: process
   field_az_event_category:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       source: field_uaqs_event_category
       migration:
         - az_event_categories

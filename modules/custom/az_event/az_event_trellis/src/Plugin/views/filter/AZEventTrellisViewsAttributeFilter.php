@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Drupal\az_event_trellis\Plugin\views\filter;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\taxonomy\Entity\Term;
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views_remote_data\Plugin\views\PropertyPluginTrait;
 use Drupal\views_remote_data\Plugin\views\query\RemoteDataQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\taxonomy\Entity\Term;
 
 /**
  * Filter Trellis event API values according to Enterprise Attributes.
- *
- * @ViewsFilter("az_event_trellis_views_attribute_filter")
  */
+#[ViewsFilter("az_event_trellis_views_attribute_filter")]
 class AZEventTrellisViewsAttributeFilter extends FilterPluginBase {
 
   use PropertyPluginTrait;
@@ -129,6 +129,18 @@ class AZEventTrellisViewsAttributeFilter extends FilterPluginBase {
       '#default_value' => $this->options['az_attribute_key'] ?? '',
       '#required' => TRUE,
     ];
+  }
+
+  /**
+   * Return the attribute id and api parameter name.
+   *
+   * @return array
+   *   An array with the key as the attribute id and the value as the api path.
+   */
+  public function getApiMapping(): array {
+    $key = $this->options['az_attribute_key'] ?? '';
+    $path = $this->options['property_path'] ?? '';
+    return [$key => $path];
   }
 
   /**

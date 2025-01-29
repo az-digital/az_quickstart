@@ -2,24 +2,28 @@
 
 namespace Drupal\az_select_menu\Plugin\Block;
 
+use Drupal\Component\Utility\Html;
+use Drupal\Core\Block\Attribute\Block;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Template\Attribute;
 use Drupal\menu_block\Plugin\Block\MenuBlock;
+use Drupal\menu_block\Plugin\Derivative\MenuBlock as MenuBlockDeriver;
+use Drupal\system\Form\SystemMenuOffCanvasForm;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides an extended Menu block.
- *
- * @Block(
- *   id = "az_select_menu",
- *   admin_label = @Translation("Quickstart select menu block"),
- *   category = @Translation("Quickstart select menu block"),
- *   deriver = "Drupal\menu_block\Plugin\Derivative\MenuBlock",
- *   forms = {
- *     "settings_tray" = "\Drupal\system\Form\SystemMenuOffCanvasForm",
- *   },
- * )
  */
+#[Block(
+  id: 'az_select_menu',
+  admin_label: new TranslatableMarkup('Quickstart select menu block'),
+  category: new TranslatableMarkup('Quickstart select menu block'),
+  deriver: MenuBlockDeriver::class,
+  forms: [
+    'settings_tray' => SystemMenuOffCanvasForm::class,
+  ],
+)]
 class AzSelectMenu extends MenuBlock {
 
   /**
@@ -126,9 +130,10 @@ class AzSelectMenu extends MenuBlock {
   public function build() {
 
     $build = parent::build();
+    $menu_name = Html::getUniqueId('az-' . $build['#menu_name']);
 
     $form_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-form',
+      'id' => $menu_name . '-form',
       'data-toggle' => 'popover',
       'data-trigger' => 'focus',
       'data-placement' => 'top',
@@ -138,7 +143,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#form_attributes'] = $form_attributes;
 
     $select_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-select',
+      'id' => $menu_name . '-select',
       'class' => [
         'form-control',
         'select-primary',
@@ -149,7 +154,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#select_attributes'] = $select_attributes;
 
     $button_attributes = new Attribute([
-      'id' => 'az-select-menu-' . $build['#menu_name'] . '-button',
+      'id' => $menu_name . '-button',
       'class' => [
         'btn',
         'btn-primary',
@@ -165,7 +170,7 @@ class AzSelectMenu extends MenuBlock {
     $build['#button_attributes'] = $button_attributes;
 
     $build['#attached']['library'][] = 'az_select_menu/az_select_menu';
-    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][] = 'az-select-menu-' . $build['#menu_name'] . '-form';
+    $build['#attached']['drupalSettings']['azSelectMenu']['ids'][$menu_name] = $menu_name . '-form';
 
     return $build;
   }

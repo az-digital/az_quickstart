@@ -2,10 +2,10 @@
 
 namespace Drupal\az_course\Plugin\migrate_plus\data_fetcher;
 
-use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use Drupal\migrate\MigrateException;
-use GuzzleHttp\Exception\RequestException;
+use Drupal\migrate_plus\Plugin\migrate_plus\data_fetcher\Http;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Exception\ServerException;
 use Psr\Http\Message\ResponseInterface;
 

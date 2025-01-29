@@ -314,7 +314,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access draggableviews'
+          perm: 'access az_curated_views'
       cache:
         type: tag
         options: {  }
@@ -397,7 +397,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -435,7 +434,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -782,7 +780,6 @@ display:
           title: 'Curate Publications for {{ arguments.nid }}'
           default_argument_type: node
           default_argument_options: {  }
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -849,7 +846,8 @@ display:
           required: true
       display_description: ''
       display_extenders: {  }
-      path: admin/az-publication/curation/%node
+      path: az-publication/curation/%node
+      use_admin_theme: true
     cache_metadata:
       max-age: 0
       contexts:

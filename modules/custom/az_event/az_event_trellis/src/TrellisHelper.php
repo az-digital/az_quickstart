@@ -4,9 +4,11 @@ namespace Drupal\az_event_trellis;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Cache\CacheBackendInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use GuzzleHttp\ClientInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\az_event_trellis\Plugin\views\filter\AZEventTrellisViewsAttributeFilter;
+use Drupal\views\Views;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -110,6 +112,8 @@ final class TrellisHelper {
         $json = json_decode($json, TRUE);
         if ($json !== NULL) {
           $ids = $json['data']['Event_IDs'] ?? [];
+          // Ensure events are in Id order.
+          sort($ids);
           // @todo determine cache expiration.
           $expire = time() + 1800;
           // Cache search result.
@@ -135,6 +139,8 @@ final class TrellisHelper {
     $events = [];
     $fetch = [];
     $url = $this->getEventEndpoint();
+    // Remove any duplicate ids to mimic remote API.
+    $trellis_ids = array_unique($trellis_ids);
     // Grab events that are in cache.
     foreach ($trellis_ids as $trellis_id) {
       $cached = $this->getTrellisCache($trellis_id);
@@ -165,6 +171,12 @@ final class TrellisHelper {
       catch (GuzzleException $e) {
       }
     }
+    // Make sure events are in Id order regardless of cached/fetched.
+    // phpcs:disable Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
+    usort($events, function ($a, $b) {
+      return strcmp($a['Id'], $b['Id']);
+    });
+   // phpcs:enable Security.BadFunctions.CallbackFunctions.WarnCallbackFunctions
     return $events;
   }
 
@@ -189,6 +201,47 @@ final class TrellisHelper {
       $event_api_ids[] = $n->get('field_az_trellis_id')->getString();
     }
     return $event_api_ids;
+  }
+
+  /**
+   * Fetch the recurring search list of ids to import.
+   *
+   * @return array
+   *   Returns an array of event ids.
+   */
+  public function getRecurringEventIds() {
+    // Find enabled import configurations.
+    $imports = \Drupal::entityTypeManager()->getStorage('az_recurring_import_rule')->loadByProperties([
+      'status' => [1, TRUE],
+    ]);
+
+    $event_api_ids = [];
+    foreach ($imports as $import) {
+      /** @var \Drupal\az_event_trellis\Entity\AZRecurringImportRule $import */
+      $event_api_ids += $import->getEventIds();
+    }
+    // Remove duplicates in case searches overlapped.
+    $event_api_ids = array_unique($event_api_ids);
+    return $event_api_ids;
+  }
+
+  /**
+   * Return mapped array of api names of attributes.
+   *
+   * @return array
+   *   The array of attribute ids mapped to API names.
+   */
+  public function getAttributeMappings() {
+    $mappings = [];
+    $view = Views::getView('az_event_trellis_import');
+    $display = $view->getDisplay() ?? NULL;
+    $filters = $display->getHandlers('filter');
+    foreach ($filters as $filter) {
+      if ($filter instanceof AZEventTrellisViewsAttributeFilter) {
+        $mappings += $filter->getApiMapping();
+      }
+    }
+    return $mappings;
   }
 
   /**

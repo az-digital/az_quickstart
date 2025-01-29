@@ -6,7 +6,7 @@
  * of these @include files will be combined into a single file.
  */
 
-/* For structuring header utilities*/
+/* For structuring header utilities */
 header#header_arizona {
   min-height: 10px;
 }
@@ -210,6 +210,27 @@ span.field-label {
 /* The current page's list item. */
 .pager-current {
   font-weight: bold;
+}
+
+/* On mobile, limit pager number items and hide previous/next buttons. */
+@media screen and (max-width: 576px) {
+  .hide-pager-item-mobile {
+    display: none;
+  }
+}
+
+/* Match ellipsis item styling to Bootstrap .page-link styles. */
+.pager__item--ellipsis {
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+/* Add this class to a view display to add a top margin to the pager. */
+.add-pager-top-margin > nav:has(.pagination) {
+  margin-top: 1rem;
 }
 
 /**
@@ -524,6 +545,25 @@ a.nolink + ul .sf-clone-parent {
   background: none 0 0 scroll no-repeat transparent;
 }
 
+/* Styling for full-width regions and paragraphs. */
+.full-width-background,
+.region-alert .paragraph,
+.region-content-featured .paragraph,
+.region-full-width-content-bottom .paragraph,
+.region-az-page-bottom .paragraph {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+.region .az-full-width-row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
 .region-sidebar-first .block,
 .region-sidebar-second .block {
   margin-bottom: 24px !important;
@@ -650,6 +690,15 @@ fieldset.collapsed {
   width: initial;
   max-width: 100%;
 }
+
+/* Webform field labels */
+form.webform-submission-form {
+  label:not(.form-check-label) {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
 
 .align-left {
   float: none;

@@ -11,7 +11,7 @@ field_name: field_az_location
 entity_type: node
 bundle: az_event
 label: Where
-description: "Specify a URL if there is an online map for the location.<br />\r\nIf there is no map, simply fill in the location name or address in the title field.<br />\r\n<strong>Campus Map: </strong> http://map.arizona.edu<br />\r\n<strong>Google Maps: </strong> http://maps.google.com"
+description: "To link to an online map for the location, enter a URL above.<br />\r\nOtherwise, enter <em>&lt;nolink&gt;</em> in the URL field and enter the location name or address in the Link text field.<br />\r\n<strong>Campus Map: </strong> <a href=\"https://map.arizona.edu\" target=\"_blank\">https://map.arizona.edu</a><br />\r\n<strong>Google Maps: </strong> <a href=\"https://maps.google.com\" target=\"_blank\">https://maps.google.com</a>"
 required: false
 translatable: true
 default_value: {  }

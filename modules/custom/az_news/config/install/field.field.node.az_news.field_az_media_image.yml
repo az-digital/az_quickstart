@@ -9,7 +9,7 @@ id: node.az_news.field_az_media_image
 field_name: field_az_media_image
 entity_type: node
 bundle: az_news
-label: Photo
+label: 'Featured Image'
 description: 'Minimum size: 568 x 426 pixels. Card image crop is used in the directory.'
 required: false
 translatable: true
@@ -22,6 +22,7 @@ settings:
       az_image: az_image
     sort:
       field: _none
+      direction: ASC
     auto_create: false
     auto_create_bundle: ''
 field_type: entity_reference

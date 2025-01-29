@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -36,11 +37,8 @@ use Drupal\migrate\Row;
  *   body: field_uaqs_summary
  *   link: field_uaqs_links
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "paragraphs_fw_media_row_field_merge"
- * )
  */
+#[MigrateProcess('paragraphs_fw_media_row_field_merge')]
 class ParagraphsFWMediaRowFieldMerge extends ProcessPluginBase {
 
   /**

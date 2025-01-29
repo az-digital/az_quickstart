@@ -9,7 +9,6 @@ use Drupal\Core\Extension\MissingDependencyException;
 use Drupal\Core\Link;
 use Drupal\Core\Render\Markup;
 use Drupal\Core\Url;
-use Drupal\user\Entity\User;
 use Drupal\shortcut\Entity\Shortcut;
 
 /**
@@ -20,11 +19,6 @@ use Drupal\shortcut\Entity\Shortcut;
  * @see system_install()
  */
 function az_quickstart_install() {
-  // Assign user 1 the "administrator" role.
-  $user = User::load(1);
-  $user->roles[] = 'administrator';
-  $user->save();
-
   // Populate the default shortcut set.
   $shortcut = Shortcut::create([
     'shortcut_set' => 'default',
@@ -79,9 +73,9 @@ function az_quickstart_requirements($phase) {
 
     // Gather all deprecated modules that are enabled.
     $azqs_deprecated_modules = [
-      'background_image_formatter',
-      'ckeditor',
-      'entity_browser',
+      'ctools',
+      'jquery_ui_slider',
+      'jquery_ui_touch_punch',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
@@ -185,4 +179,41 @@ function az_quickstart_update_1020801() {
  */
 function az_quickstart_update_1020802() {
   \Drupal::service('module_installer')->install(['extlink']);
+}
+
+/**
+ * Uninstall unsupported media_library_theme_reset module.
+ */
+function az_quickstart_update_1020803() {
+  \Drupal::service('module_installer')->uninstall(['media_library_theme_reset']);
+}
+
+/**
+ * Update langcode for migrated menu links to be the site's default language.
+ */
+function az_quickstart_update_1020901(&$sandbox) {
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['max'] = \Drupal::entityQuery('menu_link_content')
+      ->accessCheck(FALSE)
+      ->condition('langcode', 'und')
+      ->count()
+      ->execute();
+  }
+  $batch_size = 25;
+  $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+
+  $ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('langcode', 'und')
+    ->range(0, $batch_size)
+    ->execute();
+  $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
+  foreach ($menu_links as $menu_link) {
+    $menu_link->langcode = $default_langcode;
+    $menu_link->save();
+    $sandbox['progress']++;
+  }
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
+  return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
 }

@@ -39,7 +39,6 @@ install:
   - drupal:menu_link_content
   - drupal:datetime
   - drupal:block_content
-  - block_content_permissions:block_content_permissions
   - drupal:editor
   - drupal:help
   - drupal:image
@@ -61,7 +60,6 @@ install:
   - drupal:file
   - drupal:views
   - drupal:views_ui
-  - drupal:tour
   - drupal:automated_cron
   - drupal:google_tag
   - block_class:block_class

@@ -1,0 +1,29 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.az_publications
+  module:
+    - system
+    - views
+  theme:
+    - az_barrio
+id: az_barrio_views_block__az_publications_az_author_person
+theme: az_barrio
+region: content
+weight: 10
+provider: null
+plugin: 'views_block:az_publications-az_author_person'
+settings:
+  id: 'views_block:az_publications-az_author_person'
+  label: ''
+  label_display: visible
+  provider: views
+  views_label: ''
+  items_per_page: none
+  context_mapping: {  }
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '/person/*'

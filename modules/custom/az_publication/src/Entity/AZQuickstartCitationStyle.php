@@ -1,23 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\az_publication\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBase;
-use Seboettg\CiteProc\StyleSheet;
 use Seboettg\CiteProc\Exception\CiteProcException;
+use Seboettg\CiteProc\StyleSheet;
 
 /**
  * Defines the Quickstart Citation Style entity.
  *
  * @ConfigEntityType(
  *   id = "az_citation_style",
- *   label = @Translation("Quickstart Citation Style"),
- *   label_collection = @Translation("Quickstart Citation Styles"),
- *   label_singular = @Translation("Quickstart Citation Style"),
- *   label_plural = @Translation("Quickstart Citation Styles"),
+ *   label = @Translation("Citation Style"),
+ *   label_collection = @Translation("Citation Styles"),
+ *   label_singular = @Translation("Citation Style"),
+ *   label_plural = @Translation("Citation Styles"),
  *   label_count = @PluralTranslation(
- *     singular = "@count Quickstart Citation Style",
- *     plural = "@count Quickstart Citation Styles"
+ *     singular = "@count Citation Style",
+ *     plural = "@count Citation Styles"
  *   ),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
@@ -45,11 +47,11 @@ use Seboettg\CiteProc\Exception\CiteProcException;
  *     "uuid" = "uuid"
  *   },
  *   links = {
- *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/{az_citation_style}",
- *     "add-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/add",
- *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/{az_citation_style}/edit",
- *     "delete-form" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style/{az_citation_style}/delete",
- *     "collection" = "/admin/config/az-quickstart/settings/az-publication/az_citation_style"
+ *     "canonical" = "/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}",
+ *     "add-form" = "/admin/config/az-quickstart/settings/az-publication/style/add",
+ *     "edit-form" = "/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}/edit",
+ *     "delete-form" = "/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}/delete",
+ *     "collection" = "/admin/config/az-quickstart/settings/az-publication/styles"
  *   }
  * )
  */

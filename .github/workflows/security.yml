@@ -1,9 +1,10 @@
 name: Security workflow
 on:
+  schedule:
+    - cron:  '0 13 * * *'
+  pull_request:
   push:
-    schedule:
-      - cron:  '0 13 * * *'
-    tags-ignore:
+    branches:
       - '*'
 jobs:
   dependency-audit:
@@ -15,11 +16,15 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.3'
+      - name: Find the push source branch name
+        if: ${{ github.event_name != 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Find the pull request source branch name
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
       - name: Set variables
         run: |
-          export AZ_TRIMMED_REF="${GITHUB_REF#refs/*/}"
-          echo "AZ_TRIMMED_REF=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
             echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           else
@@ -57,9 +62,13 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
-      - name: Set variables
+          php-version: '8.3'
+      - name: Find the push source branch name
+        if: ${{ github.event_name != 'pull_request' }}
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Find the pull request source branch name
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
       - name: Install dependencies
         run: |
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi

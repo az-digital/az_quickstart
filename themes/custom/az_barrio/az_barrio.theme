@@ -130,7 +130,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   // Check if land acknowledgment should be displayed.
   $land_acknowledgment = '';
   if (theme_get_setting('land_acknowledgment')) {
-    $land_acknowledgment = '<p class="font-weight-light"><em>We respectfully acknowledge the University of Arizona is on the land and territories of Indigenous peoples. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. Committed to diversity and inclusion, the University strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
+    $land_acknowledgment = '<p class="font-weight-light"><em>We respectfully acknowledge <a href="https://www.arizona.edu/university-arizona-land-acknowledgment">the University of Arizona is on the land and territories of Indigenous peoples</a>. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. Committed to diversity and inclusion, the University strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
   }
 
   // Check if information security policy should be displayed.
@@ -282,6 +282,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 
     if (theme_get_setting('az_bootstrap_minified')) {
       $az_bootstrap_css_info['minified'] = TRUE;
+      $az_bootstrap_js_info['minified'] = TRUE;
     }
 
     $az_bootstrap_css_path .= $az_bootstrap_token;
@@ -384,14 +385,25 @@ function az_barrio_az_bootstrap_assets_path($type) {
  */
 function az_barrio_az_icons_assets_path($type) {
   $az_icons_path = '';
+  $az_icons_cdn_version = theme_get_setting('az_icons_cdn_version');
+  if ($az_icons_cdn_version === 'stable') {
+    $az_icons_cdn_version = AZ_ICONS_STABLE_VERSION;
+  }
 
   // AZ Icons source.
   if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
-    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/' . AZ_ICONS_STABLE_VERSION . '/az-icons-styles.css';
+    $az_icons_path = 'https://cdn.digital.arizona.edu/lib/az-icons/'  . $az_icons_cdn_version;
   }
   else {
-    $az_icons_path = 'libraries/az-icons/az-icons-styles.css';
+    $az_icons_path = base_path() . 'libraries/az-icons';
   }
+  $az_icons_path .= '/az-icons-styles';
+
+  // AZ Icons minified.
+  if (theme_get_setting('az_icons_minified')) {
+    $az_icons_path .= '.min';
+  }
+  $az_icons_path .= '.css';
 
   return $az_icons_path;
 }
@@ -444,6 +456,7 @@ function az_barrio_primary_logo() {
         '#alt' => $primary_alt_text,
         '#attributes' => [
           'class' => ['img-fluid'],
+          'fetchpriority' => 'high',
         ]
       ];
       $renderer = \Drupal::service('renderer');
@@ -579,7 +592,7 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  *
  * Footer menu links styles, using default theme templates.
  * @link https://github.com/az-digital/az_quickstart/issues/1012
- * @link https://github.com/az-digital/az_quickstart/issues/1613 
+ * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
   if ($variables['base_plugin_id'] === 'system_branding_block') {

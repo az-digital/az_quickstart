@@ -16,16 +16,21 @@ parameters:
 		- '#Plugin manager has cache backend specified but does not declare cache tags.#'
 		- '#Unsafe usage of new static\(\)#'
 
+	universalObjectCratesClasses:
+		- XMLReader
+
 	drupal:
 		entityMapping:
 			az_author:
 				class: Drupal\az_publication\Entity\AZAuthor
 			az_citation_style:
 				class: Drupal\az_publication\Entity\AZQuickstartCitationStyle
+			az_publication_type:
+				class: Drupal\az_publication\Entity\AZPublicationType
 			paragraph:
 				class: Drupal\paragraphs\Entity\Paragraph
 			paragraphs_type:
 				class: Drupal\paragraphs\Entity\ParagraphsType
 
-	phpVersion: 80100
+	phpVersion: 80200
 	level: 2

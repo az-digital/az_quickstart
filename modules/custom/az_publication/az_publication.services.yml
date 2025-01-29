@@ -1,4 +1,5 @@
 services:
   az_publication.locale_metadata:
     class: Drupal\az_publication\AZPublicationLocaleMetadata
-    arguments: ['@language_manager']
+    arguments:
+      - '@language_manager'

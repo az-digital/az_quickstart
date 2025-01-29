@@ -2,16 +2,13 @@
 
 namespace Drupal\az_core\Plugin\migrate\process;
 
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
  * Converts a flat array to a nested array for use with sub_process.
- *
- * @MigrateProcessPlugin(
- *   id = "az_prepare_array_for_sub_process"
- * )
  *
  * Available configuration keys:
  * - source: A flat array of values.
@@ -36,6 +33,7 @@ use Drupal\migrate\Row;
  *         delta: delta
  * @endcode
  */
+#[MigrateProcess('az_prepare_array_for_sub_process')]
 class PrepareArrayForSubProcess extends ProcessPluginBase {
 
   /**
