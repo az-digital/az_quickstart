@@ -5,8 +5,10 @@
  * Install, update and uninstall functions for az_publication module.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Database\Database;
 use Drupal\Core\Utility\UpdateException;
+use Drupal\node\Entity\Node;
 
 /**
  * Install the new az_curated_views module (now required by az_publication).
@@ -82,4 +84,173 @@ function az_publication_update_1020702() {
     $db->schema()->changeField($table_name, $field_name, $field_name, $table_schema['fields'][$field_name]);
   }
 
+}
+
+/**
+ * Adds field_az_publication_mapped_type field.
+ */
+function az_publication_update_1021001() {
+  $module_dir = \Drupal::service('extension.list.module')->getPath('az_publication');
+  $module_path = $module_dir . '/config/install';
+  // Create a new FileStorage object.
+  $source_storage = new FileStorage($module_path);
+  $config_factory = \Drupal::service('config.factory');
+  // Install the az_publication_type entity type.
+  $entity_type_manager = \Drupal::service('entity_type.manager');
+  $entity_type_definition = $entity_type_manager->getDefinition('az_publication_type');
+  \Drupal::entityDefinitionUpdateManager()->installEntityType($entity_type_definition);
+  $entity_type_manager->clearCachedDefinitions();
+  // If the field storage and field config are new, import them.
+  if ($config_factory->get('field.storage.node.field_az_publication_mapped_type')->isNew()) {
+    $field_storage_config = $source_storage->read('field.storage.node.field_az_publication_mapped_type');
+    \Drupal::entityTypeManager()->getStorage('field_storage_config')->create($field_storage_config)->save();
+  }
+  if ($config_factory->get('field.field.node.az_publication.field_az_publication_mapped_type')->isNew()) {
+    $field_config = $source_storage->read('field.field.node.az_publication.field_az_publication_mapped_type');
+    \Drupal::entityTypeManager()->getStorage('field_config')->create($field_config)->save();
+  }
+  // Clear caches after importing the configurations.
+  \Drupal::service('entity_field.manager')->clearCachedFieldDefinitions();
+
+}
+
+/**
+ * Map and move data from static text field to dynamic type reference field.
+ */
+function az_publication_update_1021002(&$sandbox) {
+  // Initialize or retrieve the batch progress information.
+  if (!isset($sandbox['progress'])) {
+    $sandbox['progress'] = 0;
+    $sandbox['current_node'] = 0;
+
+    // Query all node IDs of type 'az_publication'.
+    $sandbox['nids'] = \Drupal::entityQuery('node')
+      ->condition('type', 'az_publication')
+      ->accessCheck(FALSE)
+      ->execute();
+
+    $sandbox['max'] = count($sandbox['nids']);
+  }
+
+  // Define the mapping from old field values to new config entity IDs.
+  $mapping = [
+    'article' => 'az_article',
+    'article-journal' => 'az_article_journal',
+    'article-magazine' => 'az_article_magazine',
+    'article-newspaper' => 'az_article_newspaper',
+    'bill' => 'az_bill',
+    'book' => 'az_book',
+    'broadcast' => 'az_broadcast',
+    'chapter' => 'az_chapter',
+    'classic' => 'az_classic',
+    'collection' => 'az_collection',
+    'dataset' => 'az_dataset',
+    'document' => 'az_document',
+    'entry' => 'az_entry',
+    'entry-dictionary' => 'az_entry_dictionary',
+    'entry-encyclopedia' => 'az_entry_encyclopedia',
+    'event' => 'az_event',
+    'figure' => 'az_figure',
+    'graphic' => 'az_graphic',
+    'hearing' => 'az_hearing',
+    'interview' => 'az_interview',
+    'legal_case' => 'az_legal_case',
+    'legislation' => 'az_legislation',
+    'manuscript' => 'az_manuscript',
+    'map' => 'az_map',
+    'motion_picture' => 'az_motion_picture',
+    'musical_score' => 'az_musical_score',
+    'pamphlet' => 'az_pamphlet',
+    'paper-conference' => 'az_paper_conference',
+    'patent' => 'az_patent',
+    'performance' => 'az_performance',
+    'periodical' => 'az_periodical',
+    'personal_communication' => 'az_personal_communication',
+    'post' => 'az_post',
+    'post-weblog' => 'az_post_weblog',
+    'regulation' => 'az_regulation',
+    'report' => 'az_report',
+    'review' => 'az_review',
+    'review-book' => 'az_review_book',
+    'software' => 'az_software',
+    'song' => 'az_song',
+    'speech' => 'az_speech',
+    'standard' => 'az_standard',
+    'thesis' => 'az_thesis',
+    'treaty' => 'az_treaty',
+    'webpage' => 'az_webpage',
+  ];
+
+  // Process nodes in batches.
+  // Number of nodes to process per batch.
+  $limit = 50;
+  $nids_slice = array_slice($sandbox['nids'], $sandbox['progress'], $limit);
+  $nodes = Node::loadMultiple($nids_slice);
+  $time = \Drupal::service('datetime.time');
+
+  foreach ($nodes as $node) {
+    if ($node->hasField('field_az_publication_type') && !$node->get('field_az_publication_type')->isEmpty()) {
+      $old_value = $node->get('field_az_publication_type')->value;
+      $new_value = $mapping[$old_value];
+
+      // Map and update the new entity reference field.
+      if (isset($mapping[$old_value])) {
+        $node->set('field_az_publication_mapped_type', ['target_id' => $mapping[$old_value]]);
+        $node->setNewRevision(TRUE);
+        $node->isDefaultRevision(TRUE);
+        // Construct a detailed message.
+        $revision_log_message = sprintf(
+          "Publication type updated from '%s' to '%s' as part of data migration to a customizable type reference field. For more information about how to use this feature, see https://quickstart.arizona.edu/node/220",
+          $old_value,
+          $new_value
+        );
+        $node->setRevisionLogMessage($revision_log_message);
+        $node->setRevisionCreationTime($time->getRequestTime());
+        $node->setRevisionUserId(1);
+        $node->save();
+      }
+    }
+
+    $sandbox['progress']++;
+    $sandbox['current_node'] = $node->id();
+  }
+
+  // Inform the batch API about the progress.
+  $sandbox['#finished'] = empty($sandbox['max']) ? 1 : ($sandbox['progress'] / $sandbox['max']);
+}
+
+/**
+ * Helper function to return batch info.
+ */
+function az_publication_batch_info() {
+  return [
+    'title' => t('Updating AZ Publication Nodes...'),
+    'operations' => [
+      ['az_publication_update_1020902', []],
+    ],
+    'finished' => 'az_publication_batch_finished',
+  ];
+}
+
+/**
+ * Finished callback for the batch.
+ */
+function az_publication_batch_finished($success, $results, $operations) {
+  $messenger = \Drupal::messenger();
+
+  if ($success) {
+    $message = \Drupal::translation()->formatPlural(count($results),
+      'One publication successfully processed.', '@count publications successfully processed.');
+  }
+  else {
+    // Handle the case where the batch did not complete successfully.
+    // $operations contains the operations that remained unprocessed.
+    $error_operation = reset($operations);
+    $message = t('An error occurred while processing %error_operation with arguments: @arguments', [
+      '%error_operation' => $error_operation[0],
+      '@arguments' => print_r($error_operation[1], TRUE),
+    ]);
+  }
+
+  $messenger->addMessage($message);
 }

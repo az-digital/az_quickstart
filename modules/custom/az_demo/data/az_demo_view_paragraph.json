@@ -73,6 +73,30 @@
       "bottom_spacing" : "mb-4"
     },
     {
+      "id" : 191,
+      "title" : "Recent News Marquee",
+      "target_id" : "az_news",
+      "display_id" : "marquee",
+      "data" : "",
+      "bottom_spacing" : "mb-0"
+    },
+    {
+      "id" : 111,
+      "title" : "Grid - Modal",
+      "target_id" : "az_person",
+      "display_id" : "grid_modal",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
+      "id" : 112,
+      "title" : "Grid - Modal 3 col",
+      "target_id" : "az_person",
+      "display_id" : "grid_modal_3cols",
+      "data" : "",
+      "bottom_spacing" : "mb-4"
+    },
+    {
       "id" : 190,
       "title" : "",
       "target_id" : "az_publications",

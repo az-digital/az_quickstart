@@ -18,10 +18,10 @@ dependencies:
     - field.field.node.az_event.field_az_trellis_id
     - node.type.az_event
   module:
+    - az_core
     - date_ap_style
     - field_group
     - smart_title
-    - text
     - user
 third_party_settings:
   field_group:
@@ -297,7 +297,7 @@ content:
     weight: 7
     region: content
   field_az_summary:
-    type: text_default
+    type: az_text_summary
     label: hidden
     settings: {  }
     third_party_settings: {  }
