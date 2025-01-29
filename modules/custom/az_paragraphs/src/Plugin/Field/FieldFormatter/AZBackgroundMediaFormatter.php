@@ -122,7 +122,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     ];
     $form['autoplay_remote_video'] = [
       '#type' => 'checkbox',
-      '#title' => $this->t('Autoplay Remote Video'),
+      '#title' => $this->t('Autoplay remote video'),
       '#default_value' => $settings['autoplay_remote_video'],
       '#description' => $this->t('Uncheck this setting to prevent remote video from playing automatically (such as on the "Preview" view mode).'),
     ];
