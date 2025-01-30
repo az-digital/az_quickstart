@@ -24,15 +24,15 @@ source:
     -
       name: fid
       label: 'File ID'
-      selector: /story/img-fid
+      selector: /field_az_media_image/fid
     -
       name: uuid
       label: 'Story UUID'
-      selector: /story/uuid
+      selector: /uuid
     -
       name: image
       label: Image
-      selector: /story/img-thumb
+      selector: /field_az_media_image
 process:
   field_media_az_image/target_id:
     -
