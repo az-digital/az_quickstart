@@ -1,6 +1,6 @@
 uarizona_news_base_uri: 'https://news.arizona.edu'
 uarizona_news_category_path: /feed/json/categories/
-uarizona_news_content_path: /feed/json/stories/id/
+uarizona_news_content_path: /az_quickstart/export/az_news/v1/az_news.json
 uarizona_news_vocabularies:
   uanews_categories: Sections
   uanews_tags: Tags
