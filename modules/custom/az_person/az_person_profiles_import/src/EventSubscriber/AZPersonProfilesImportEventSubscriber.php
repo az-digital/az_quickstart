@@ -2,6 +2,7 @@
 
 namespace Drupal\az_person_profiles_import\EventSubscriber;
 
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\migrate\Event\MigrateEvents;
@@ -82,6 +83,46 @@ class AZPersonProfilesImportEventSubscriber implements EventSubscriberInterface 
     if ($migration === 'az_person_profiles_import') {
       $person = $this->entityTypeManager->getStorage('node')->load($id);
       if (!empty($person)) {
+        $image = $event->getRow()->get('image_url');
+        // See if we have an image url.
+        // @todo move this functionality to process plugin.
+        if (!empty($image) && UrlHelper::isValid($image)) {
+          $fileStorage = $this->entityTypeManager->getStorage('file');
+          // Check if we already have a managed file for this Url.
+          $files = $fileStorage->loadByProperties(['uri' => $image]);
+          $file = reset($files);
+          if (!$file) {
+            $file = $fileStorage->create([
+              'uri' => $image,
+            ]);
+            $file->save();
+          }
+          // Hook up file to media field or create new media entity.
+          if ($person->hasField('field_az_media_image')) {
+            /** @var \Drupal\media\MediaInterface $media */
+            $media = $person->field_az_media_image->entity;
+            // Media entity needs to be updated.
+            if ($media) {
+              \Drupal::logger('my_module')->notice("we are updating");
+              // @todo cleanup this field access do be configured by process plugin.
+              // @phpstan-ignore-next-line
+              $media->field_media_az_image->target_id = $file->id();
+              $media->save();
+            }
+            else {
+              // Media doesn't exist yet, need to create it.
+              $media = $this->entityTypeManager->getStorage('media')->create([
+                'bundle' => 'az_image',
+                'field_media_az_image' => [
+                  'target_id' => $file->id(),
+                ],
+              ]);
+              $media->save();
+              $person->field_az_media_image->target_id = $media->id();
+              $person->save();
+            }
+          }
+        }
         $url = $person->toUrl()->toString();
         $this->messenger->addMessage(t('Imported <a href="@link">@name</a>.', [
           '@link' => $url,

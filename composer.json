@@ -104,6 +104,8 @@
         "drupal/pathauto": "1.13.0",
         "drupal/quick_node_clone": "1.17.0",
         "drupal/redirect": "1.11.0",
+        "drupal/remote_stream_wrapper": "2.1.0",
+        "drupal/remote_stream_wrapper_widget": "1.4.0",
         "drupal/role_delegation": "1.3.0",
         "drupal/schema_metatag": "3.0.3",
         "drupal/search_exclude": "3.0.0-beta1",
@@ -194,6 +196,9 @@
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
+            },
+            "drupal/remote_stream_wrapper": {
+                "Image styles setting extension cause access denied (3068898)": "https://www.drupal.org/files/issues/2024-12-02/3068898-12.patch"
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
