@@ -85,12 +85,13 @@ content:
       edit_mode: closed
       closed_mode: preview
       autocollapse: all
-      closed_mode_threshold: 0
+      closed_mode_threshold: 6
       add_mode: button
       form_display_mode: default
       default_paragraph_type: _none
       features:
         add_above: '0'
+        convert: convert
         collapse_edit_all: collapse_edit_all
         duplicate: duplicate
     third_party_settings: {  }
