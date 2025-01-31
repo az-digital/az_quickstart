@@ -3,6 +3,6 @@ status: true
 dependencies: {  }
 id: az_auto_expiring_user
 label: 'Auto expiring user'
-weight: 7
+weight: -8
 is_admin: false
 permissions: {  }
