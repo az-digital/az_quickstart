@@ -280,6 +280,11 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {
-        "sort-packages": true
+        "sort-packages": true,
+        "audit": {
+            "ignore": {
+                "CVE-2025-24374": "Believed not to affect Drupal core see https://www.drupal.org/project/drupal/issues/3503195."
+            }
+        }
     }
 }
