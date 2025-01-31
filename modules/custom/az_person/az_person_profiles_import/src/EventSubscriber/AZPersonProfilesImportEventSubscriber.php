@@ -103,7 +103,6 @@ class AZPersonProfilesImportEventSubscriber implements EventSubscriberInterface 
             $media = $person->field_az_media_image->entity;
             // Media entity needs to be updated.
             if ($media) {
-              \Drupal::logger('my_module')->notice("we are updating");
               // @todo cleanup this field access do be configured by process plugin.
               // @phpstan-ignore-next-line
               $media->field_media_az_image->target_id = $file->id();
