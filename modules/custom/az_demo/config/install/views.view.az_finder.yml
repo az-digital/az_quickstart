@@ -350,7 +350,7 @@ display:
           admin_label: ''
           plugin_id: result
           empty: false
-          content: 'Displaying @start - @end of @total'
+          content: '<p>Displaying @start - @end of @total</p>'
       footer: {  }
       display_extenders: {  }
     cache_metadata:
