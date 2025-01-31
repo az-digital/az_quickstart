@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.az_media_trellis.field_media_az_media_remote
+    - media.type.az_media_trellis
+  module:
+    - az_media_trellis
+  enforced:
+    module:
+      - az_media_trellis
+id: media.az_media_trellis.default
+targetEntityType: media
+bundle: az_media_trellis
+mode: default
+content:
+  field_media_az_media_remote:
+    type: az_media_remote_trellis
+    label: visually_hidden
+    settings:
+      width: '960'
+      height: '600'
+      formatter_class: Drupal\az_media_trellis\Plugin\Field\FieldFormatter\AzMediaRemoteTrellisFormatter
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
