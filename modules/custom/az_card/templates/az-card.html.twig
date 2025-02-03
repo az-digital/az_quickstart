@@ -38,10 +38,10 @@
       {% endif %}
     </div>
   {% endif %}
-  {% if title_style == 'title-on-image' and body['#text'] == '' and (link['#title'] == '' or link['#attributes']['class'][0] == 'sr-only') %}
+  {% if title_style == 'title-on-image' and body['#text'] == '' and (link['#title'] == '' or 'sr-only' in link['#attributes']['class'] ) %}
     <div class="d-flex flex-column">
       {% if link|render %}
-        {% if link['#title'] != '' and link['#attributes']['class'][0] == 'sr-only' and link['#attributes']['class'][1] == 'stretched-link' %}
+        {% if 'sr-only' in link['#attributes']['class'] and 'stretched-link' in link['#attributes']['class'] %}
           <div class="mt-auto">
             <a href="{{ link['#url'] }}" class="stretched-link" aria-label="{{ link['#title'] }}"></a>
           </div>
