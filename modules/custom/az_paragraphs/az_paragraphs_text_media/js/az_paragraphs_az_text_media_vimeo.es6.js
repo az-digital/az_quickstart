@@ -62,6 +62,7 @@
               id: vimeoId,
               width: options.width,
               height: Math.ceil(options.width / options.ratio),
+              autopause: options.autopause,
               autoplay: thisContainer.dataset.autoplay === 'true',
               controls: 0,
               loop: options.loop,
