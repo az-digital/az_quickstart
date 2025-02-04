@@ -25,6 +25,7 @@
           vimeoId: '',
           width: $(window).width(),
           ratio: 16 / 9,
+          autopause: false,
           autoplay: true,
           controls: 0,
           loop: true,
