@@ -275,9 +275,14 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           if ($view_mode !== 'full') {
             $has_cover = !empty($entity->field_az_publication_image->target_id);
             $has_abstract = !empty($entity->field_az_publication_abstract->value);
+            // Check if publication has paragraph content.
+            $has_content = (
+              $entity->hasField('field_az_main_content') &&
+              !empty($entity->get('field_az_main_content'))
+            );
             $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
-            // Linking to full node if there is an abstract or cover page.
-            if ($has_cover || $has_abstract) {
+            // Link to full node if there is abstract, cover page, or content.
+            if ($has_cover || $has_abstract || $has_content) {
               $blob->itemlink = $url->toString();
             }
           }
