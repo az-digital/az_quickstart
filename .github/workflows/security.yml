@@ -51,6 +51,7 @@ jobs:
           composer install -o
       - name: Audit composer dependencies
         run: |
+          cd az-quickstart-scaffolding
           composer audit
   code-check:
     name: Static Code Check
