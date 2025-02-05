@@ -8,6 +8,7 @@ dependencies:
     - image.style.thumbnail
     - media.type.az_image
   module:
+    - decorative_image_widget
     - image_widget_crop
     - path
     - text
