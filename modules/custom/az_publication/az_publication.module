@@ -278,7 +278,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             // Check if publication has paragraph content.
             $has_content = (
               $entity->hasField('field_az_main_content') &&
-              !empty($entity->get('field_az_main_content'))
+              !empty($entity->get('field_az_main_content')->referencedEntities())
             );
             $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
             // Link to full node if there is abstract, cover page, or content.
