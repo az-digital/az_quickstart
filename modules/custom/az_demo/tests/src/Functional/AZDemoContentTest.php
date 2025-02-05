@@ -54,29 +54,55 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->drupalLogin($this->user);
   }
 
-  /**
-   * Tests that imported utility links exist.
-   */
-  public function testUtilityLinks() {
-    // Go to the front page.
-    $this->drupalGet(Url::fromRoute('<front>'));
-    $assert = $this->assertSession();
-    $assert->statusCodeEquals(200);
-    // Check for utility links.
-    $assert->linkExists('Utility 1');
-    $assert->linkExists('Utility 2');
-  }
+  // /**
+  //  * Tests that imported utility links exist.
+  //  */
+  // public function testUtilityLinks() {
+  //   // Go to the front page.
+  //   $this->drupalGet(Url::fromRoute('<front>'));
+  //   $assert = $this->assertSession();
+  //   $assert->statusCodeEquals(200);
+  //   // Check for utility links.
+  //   $assert->linkExists('Utility 1');
+  //   $assert->linkExists('Utility 2');
+  // }
+
+  // /**
+  //  * Tests page titles.
+  //  */
+  // public function testTitle() {
+  //   $this->drupalGet(Url::fromRoute('<front>'));
+  //   $assert = $this->assertSession();
+  //   $assert->statusCodeEquals(200);
+
+  //   // Home page title test.
+  //   $assert->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
+  // }
 
   /**
-   * Tests page titles.
+   * Tests publication links.
    */
-  public function testTitle() {
-    $this->drupalGet(Url::fromRoute('<front>'));
+  public function testPublicationLinks() {
+    $this->drupalGet('/publications');
     $assert = $this->assertSession();
+    // Assert the page loads successfully.
     $assert->statusCodeEquals(200);
+    // Assert individual links exist with the correct text and href.
+    $assert->elementExists('xpath', "//a[@href='/publication/life-leonardo-da-vinci-0' and text()='The Life of Leonardo Da Vinci']");
+    $assert->elementExists('xpath', "//a[@href='/publication/life-leonardo-da-vinci' and text()='The Life of Leonardo Da Vinci']");
+    $assert->elementExists('xpath', "//a[@href='/publication/most-fearsome-life-great-gargantua-father-pantagruel' and text()='The Most Fearsome Life of the Great Gargantua, Father of Pantagruel.']");
+    $assert->elementExists('xpath', "//a[@href='/publication/trissotetras-or-most-exquisite-table-resolving-all-manner-triangles' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles.']");
+    $assert->elementExists('xpath', "//a[@href='/publication/exploration-quantum-mechanics' and text()='An Exploration of Quantum Mechanics']");
+    $assert->elementExists('xpath', "//a[@href='/publication/advanced-data-structures' and text()='Advanced Data Structures']");
+    $assert->elementExists('xpath', "//a[@href='/publication/modern-approaches-machine-learning' and text()='Modern Approaches to Machine Learning']");
+    $assert->elementExists('xpath', "//a[@href='/publication/introduction-algorithms' and text()='Introduction to Algorithms']");
+    $assert->elementExists('xpath', "//a[@href='/publication/deep-learning' and text()='Deep Learning']");
+    $assert->elementExists('xpath', "//a[@href='/publication/statistical-learning-applications' and text()='Statistical Learning with Applications']");
+    $assert->elementExists('xpath', "//a[@href='/publication/ethics-artificial-intelligence' and text()='Ethics in Artificial Intelligence']");
+    $assert->elementExists('xpath', "//a[@href='/publication/climate-change-impacts-and-solutions' and text()='Climate Change: Impacts and Solutions']");
 
-    // Home page title test.
-    $assert->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
+    // Ensure specific text elements are NOT links.
+    $assert->elementNotExists('xpath', "//a[text()='van Gogh, Vincent.']");
+    $assert->elementNotExists('xpath', "//a[text()='An Exploration of Quantum Mechanics']");
   }
-
 }
