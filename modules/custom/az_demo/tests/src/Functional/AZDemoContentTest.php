@@ -105,4 +105,5 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementNotExists('xpath', "//a[text()='van Gogh, Vincent.']");
     $assert->elementNotExists('xpath', "//a[text()='An Exploration of Quantum Mechanics']");
   }
+
 }
