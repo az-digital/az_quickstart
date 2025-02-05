@@ -54,30 +54,30 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $this->drupalLogin($this->user);
   }
 
-  // /**
-  //  * Tests that imported utility links exist.
-  //  */
-  // public function testUtilityLinks() {
-  //   // Go to the front page.
-  //   $this->drupalGet(Url::fromRoute('<front>'));
-  //   $assert = $this->assertSession();
-  //   $assert->statusCodeEquals(200);
-  //   // Check for utility links.
-  //   $assert->linkExists('Utility 1');
-  //   $assert->linkExists('Utility 2');
-  // }
+  /**
+   * Tests that imported utility links exist.
+   */
+  public function testUtilityLinks() {
+    // Go to the front page.
+    $this->drupalGet(Url::fromRoute('<front>'));
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
+    // Check for utility links.
+    $assert->linkExists('Utility 1');
+    $assert->linkExists('Utility 2');
+  }
 
-  // /**
-  //  * Tests page titles.
-  //  */
-  // public function testTitle() {
-  //   $this->drupalGet(Url::fromRoute('<front>'));
-  //   $assert = $this->assertSession();
-  //   $assert->statusCodeEquals(200);
+  /**
+   * Tests page titles.
+   */
+  public function testTitle() {
+    $this->drupalGet(Url::fromRoute('<front>'));
+    $assert = $this->assertSession();
+    $assert->statusCodeEquals(200);
 
-  //   // Home page title test.
-  //   $assert->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
-  // }
+    // Home page title test.
+    $assert->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
+  }
 
   /**
    * Tests publication links.
