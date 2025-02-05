@@ -74,7 +74,7 @@
     },
     {
       "id": 82,
-      "card_width": "col-lg-4",
+      "card_width": "col-lg-6",
       "card_style": "card",
       "card_title": "Clickable Title-on-Image Cards",
       "card_title_style": "title-on-image",
