@@ -87,7 +87,8 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert = $this->assertSession();
     // Assert the page loads successfully.
     $assert->statusCodeEquals(200);
-    // If field_az_publication_link has a value, assert that the value is used as the link.
+    // If field_az_publication_link has a value, assert that the value is used
+    // as the link.
     $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
     $assert->elementNotExists('xpath', "//a[@href='/publication/ethics-artificial-intelligence' and span[text()='Ethics in Artificial Intelligence']]");
     // Ensure specific text elements are NOT links.
