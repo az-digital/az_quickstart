@@ -89,8 +89,14 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert = $this->assertSession();
     // Assert the page loads successfully.
     $assert->statusCodeEquals(200);
+    // Assert specific text elements are links.
+    $assert->linkExists('Ethics in Artificial Intelligence');
+
     // Ensure specific text elements are NOT links.
-    $assert->linkNotExists('Ethics in Artificial Intelligence');
+    $assert->linkNotExists('Statistical Learning with Applications');
+    $assert->linkNotExists('van Gogh, Vincent');
+    $assert->linkNotExists('Christian Andersen, Hans');
+    $assert->linkNotExists('Ludwig van Beethoven');
   }
 
 }
