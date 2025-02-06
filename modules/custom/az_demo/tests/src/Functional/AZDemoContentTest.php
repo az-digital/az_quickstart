@@ -91,7 +91,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='/publication/life-leonardo-da-vinci-0' and text()='The Life of Leonardo Da Vinci']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/wildcat-book-review' and text()='The Life of Leonardo Da Vinci']");
     $assert->elementExists('xpath', "//a[@href='/publication/most-fearsome-life-great-gargantua-father-pantagruel' and text()='The Most Fearsome Life of the Great Gargantua, Father of Pantagruel.']");
-    $assert->elementExists('xpath', "//a[@href='/sites/default/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles.']");
+    $assert->elementExists('xpath', "//a[@href='/sites/default/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles. ']");
     $assert->elementExists('xpath', "//a[@href='/publication/exploration-quantum-mechanics' and text()='An Exploration of Quantum Mechanics']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/data-structures-book' and text()='Advanced Data Structures']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/machine-learning-paper' and text()='Modern Approaches to Machine Learning']");
