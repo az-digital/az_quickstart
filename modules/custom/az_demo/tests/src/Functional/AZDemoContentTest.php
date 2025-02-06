@@ -98,12 +98,14 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='https://example.com/algorithms-book' and text()='Introduction to Algorithms']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/deep-learning-book' and text()='Deep Learning']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/statistical-learning-journal' and text()='Statistical Learning with Applications']");
-    $assert->elementExists('xpath', "//a[@href='/publication/ethics-artificial-intelligence' and text()='Ethics in Artificial Intelligence']");
-    $assert->elementExists('xpath', "//a[@href='/publication/climate-change-impacts-and-solutions' and text()='Climate Change: Impacts and Solutions']");
+    $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
+    $assert->elementExists('xpath', "//a[@href='https://example.com/climate-change-journal' and text()='Climate Change: Impacts and Solutions']");
 
     // Ensure specific text elements are NOT links.
-    $assert->elementNotExists('xpath', "//a[text()='van Gogh, Vincent.']");
-    $assert->elementNotExists('xpath', "//a[text()='An Exploration of Quantum Mechanics']");
+    $assert->linkNotExists('van Gogh, Vincent');
+    $assert->linkNotExists('Ludwig van Beethoven');
+    $assert->linkNotExists('Christian Andersen, Hans');
+    $assert->linkNotExists('An Exploration of Quantum Mechanics');
   }
 
 }
