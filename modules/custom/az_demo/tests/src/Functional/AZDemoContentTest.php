@@ -81,19 +81,21 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**
    * Tests publication links.
-   *
-   * @group az_demo_links
    */
   public function testPublicationLinks() {
     $this->drupalGet('/publications');
     $assert = $this->assertSession();
     // Assert the page loads successfully.
     $assert->statusCodeEquals(200);
-    // Assert specific text elements are links.
-    $assert->linkExists('Ethics in Artificial Intelligence');
+    // If field_az_link has a value, assert that the value is used as the link.
+    $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
 
     // Ensure specific text elements are NOT links.
+    // If there is no link, cover, abstract, or page content, ensure that
+    // the title is NOT a link.
     $assert->linkNotExists('Statistical Learning with Applications');
+    // If the author is not referenced to a person, ensure that the author
+    // is NOT a link.
     $assert->linkNotExists('van Gogh, Vincent');
     $assert->linkNotExists('Christian Andersen, Hans');
     $assert->linkNotExists('Ludwig van Beethoven');
