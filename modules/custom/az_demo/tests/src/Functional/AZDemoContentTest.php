@@ -79,4 +79,18 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
   }
 
+  /**
+   * Tests publication links.
+   *
+   * @group az_demo_links
+   */
+  public function testPublicationLinks() {
+    $this->drupalGet('/publications');
+    $assert = $this->assertSession();
+    // Assert the page loads successfully.
+    $assert->statusCodeEquals(200);
+    // Ensure specific text elements are NOT links.
+    $assert->linkNotExists('Ethics in Artificial Intelligence');
+  }
+
 }
