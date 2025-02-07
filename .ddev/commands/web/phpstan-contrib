@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpstan tooling to check for deprecated contrib module/theme code.
 ## Usage: phpstan-contrib [flags] [args]
