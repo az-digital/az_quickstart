@@ -81,8 +81,6 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**
    * Tests publication links.
-   *
-   * @group az_demo_links
    */
   public function testPublicationLinks() {
     $this->drupalGet('/publications');
@@ -99,6 +97,27 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='https://example.com/deep-learning-book' and text()='Deep Learning']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/climate-change-journal' and text()='Climate Change: Impacts and Solutions']");
     $assert->elementExists('xpath', "//a[@href='/sites/default/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles. ']");
+    // If field_az_publication_link has a value, assert that the value is used
+    // as the link.
+    $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
+    $assert->elementNotExists('xpath', "//a[@href='/publication/ethics-artificial-intelligence' and span[text()='Ethics in Artificial Intelligence']]");
+    // Ensure specific text elements are NOT links.
+    // If there is no value in:
+    // - field_az_publication_link
+    // - field_az_publication_image
+    // - field_az_publication_abstract
+    // ensure that the title is NOT a link, and that there is
+    // no link to the full node.
+    $assert->linkNotExists('Statistical Learning with Applications');
+    $assert->elementNotExists('xpath', "//a[@href='/publication/statistical-learning-applications' and span[text()='Statistical Learning with Applications']]");
+    // If the author IS referenced to a person, ensure that the author
+    // IS a link.
+    $assert->linkExists('An\'ersen, José, M.A., Ph.D.');
+    // If the author is NOT referenced to a person, ensure that the author
+    // is NOT a link.
+    $assert->linkNotExists('van Gogh, Vincent');
+    $assert->linkNotExists('Christian Andersen, Hans');
+    $assert->linkNotExists('Ludwig van Beethoven');
   }
 
 }
