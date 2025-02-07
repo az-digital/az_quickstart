@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpunit tooling to run unit tests.
 ## Usage: phpunit [flags] [args]
