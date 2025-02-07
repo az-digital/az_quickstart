@@ -98,7 +98,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='https://example.com/algorithms-book' and text()='Introduction to Algorithms']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/deep-learning-book' and text()='Deep Learning']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/climate-change-journal' and text()='Climate Change: Impacts and Solutions']");
-    $assert->elementExists('xpath', "//a[@href='/sites/default/files/Small-PDF.pdf' and text()='The Trissotetras']");
+    $assert->elementExists('xpath', "//a[@href='/sites/default/files/Small-PDF.pdf' and text()='The trissotetras: or, a most exquisite table for resolving all manner of triangles...']");
   }
 
 }

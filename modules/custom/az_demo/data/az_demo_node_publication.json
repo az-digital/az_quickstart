@@ -31,7 +31,7 @@
     },
     {
       "id": 2,
-      "title": "The trissotetras",
+      "title": "The trissotetras: or, a most exquisite table for resolving all manner of triangles...",
       "authors": "9",
       "accessed_date": "2023-07-21",
       "abstract": "An intricate guide on solving various types of triangles.",
@@ -208,7 +208,7 @@
       "title": "Statistical Learning with Applications",
       "authors": "11|12",
       "accessed_date": "2023-07-27",
-      "abstract": "",
+      "abstract": "An application-focused approach to statistical learning.",
       "approximate": "true",
       "category": "Statistics",
       "container": "Journal",
