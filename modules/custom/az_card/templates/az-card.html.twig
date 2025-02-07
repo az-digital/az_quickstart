@@ -29,7 +29,7 @@
         <div class="card-img-overlay p-0 d-flex flex-column">
           <{{ title_level }} class="bold mt-auto card-title bg-gradient-black text-white mb-0 p-card pt-8 {{ title_alignment }} {{ title_display }}">
             {% if link|render %}
-              <a href="{{ link_url }}">{{ title }}</a>
+              <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
             {% else %}
               {{ title }}
             {% endif %}
@@ -38,10 +38,16 @@
       {% endif %}
     </div>
   {% endif %}
-  {% if title_style == 'title-on-image' and body['#text'] == '' and link['#title'] == '' %}
+  {% if title_style == 'title-on-image' and body['#text'] == '' and (link['#title'] == '' or 'sr-only' in link['#attributes']['class'] ) %}
     <div class="d-flex flex-column">
       {% if link|render %}
-        <div class="mt-auto">{{ link }}</div>
+        {% if 'sr-only' in link['#attributes']['class'] and 'stretched-link' in link['#attributes']['class'] %}
+          <div class="mt-auto">
+            <a href="{{ link['#url'] }}" class="stretched-link" aria-label="{{ link['#title'] }}"></a>
+          </div>
+        {% else %}
+          <div class="mt-auto">{{ link }}</div>
+        {% endif %}
       {% endif %}
     </div>
   {% else %}
@@ -49,13 +55,13 @@
       {% if title and title_style == 'default' %}
         <{{ title_level }} class="bold mt-0 mb-3 card-title {{ title_alignment }} {{ title_display }}">
           {% if link|render %}
-            <a href="{{ link_url }}">{{ title }}</a>
+            <a href="{{ link_url }}" class="text-reset">{{ title }}</a>
           {% else %}
             {{ title }}
           {% endif %}
         </{{ title_level }}>
       {% endif %}
-      {% if body %}
+      {% if body['#text'] %}
         <div class="card-text">{{ body }}</div>
       {% endif %}
       {% if link %}

@@ -14,7 +14,7 @@ process:
     method: row
   uid:
     -
-      plugin: migration_lookup
+      plugin: migmag_lookup
       migration: az_user
       no_stub: true
       source: node_uid

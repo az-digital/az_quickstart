@@ -514,7 +514,7 @@ drush mr az_menu_links
 ```
 ## Exclude Node Title Migration
 
-This migration uses migration_lookup to match source node id to the nid of
+This migration uses migmag_lookup to match source node id to the nid of
 migrated content.
 
 Optional Migration Dependencies:

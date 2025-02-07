@@ -3,11 +3,12 @@ status: true
 dependencies: {  }
 id: az_content_editor
 label: 'Content editor'
-weight: 2
+weight: -6
 is_admin: false
 permissions:
   - 'access administration pages'
   - 'access any webform configuration'
+  - 'access az_curated_views'
   - 'access block library'
   - 'access coffee'
   - 'access content overview'

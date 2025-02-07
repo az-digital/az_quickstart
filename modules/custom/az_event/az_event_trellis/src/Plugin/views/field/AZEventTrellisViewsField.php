@@ -46,7 +46,7 @@ class AZEventTrellisViewsField extends BulkForm {
   /**
    * {@inheritdoc}
    */
-  public function init(ViewExecutable $view, DisplayPluginBase $display, array &$options = NULL) {
+  public function init(ViewExecutable $view, DisplayPluginBase $display, ?array &$options = NULL) {
     FieldPluginBase::init($view, $display, $options);
     $this->actions = [];
   }
@@ -121,7 +121,7 @@ class AZEventTrellisViewsField extends BulkForm {
       }
       $options = [
         'limit' => 0,
-        'update' => 1,
+        'update' => 0,
         'force' => 0,
         'configuration' => [
           'source' => [

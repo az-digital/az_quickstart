@@ -107,7 +107,9 @@
     {
       "filename" : "mans_best_friend.jpeg",
       "alt" : "Cute dog",
-      "title": ""
+      "title": "",
+      "caption": "Research shows that dog owners often experience lower levels of stress, anxiety, and depression compared to those without pets.",
+      "credit": "Photo by Wilma Wildcat"
     },
     {
       "filename" : "connection-647206_1920.jpeg",
@@ -171,7 +173,21 @@
       "alt" : "Navajo wool weaving",
       "title": "",
       "caption": "Axis Radius, 2016, Wool, aniline dyes, vegetal dyes, Lent by James Wezelman and Denise Grusin"
+    },
+    {
+      "filename" : "Health-Sciences-Education-Building-2464x1640.jpg",
+      "alt" : "Alternate text",
+      "title" : "",
+      "caption" : "The innovative treatment, known as Insulix-21, has demonstrated remarkable success in early clinical trials.",
+      "credit" : "Photo by Jacob Chinn, University of Arizona Alumni Association"
+    },
+    {
+      "filename" : "BIO5-Keating-1224x682.jpg",
+      "alt" : "Alternate text",
+      "title" : "",
+      "caption" : "Insulix-21 is a novel therapy that combines cutting-edge stem cell technology with advanced immunomodulation techniques",
+      "credit" : "Courtesy of Wilma Wildcat",
+      "uuid": "aec26a34-72da-4a7c-94e1-8e2793ec67c2"
     }
   ]
 }
-

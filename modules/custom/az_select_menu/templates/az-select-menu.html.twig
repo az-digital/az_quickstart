@@ -54,7 +54,7 @@
               <div class="select-menu-label">{{menu_block_configuration.az_select_menu.preform_text}}</div>
             </span>
           {% endif %}
-          <label class="sr-only select-menu-label-sr">{{menu_block_configuration.az_select_menu.preform_text_sr_only}}</label>
+          <label class="sr-only select-menu-label-sr" for="{{ select_attributes.id }}">{{menu_block_configuration.az_select_menu.preform_text_sr_only}}</label>
           {% import _self as menus %}
           {% if items %}
             <select {{ select_attributes }}>
