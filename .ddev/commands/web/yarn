@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Run yarn inside the web container
 ## Usage: yarn [args]
