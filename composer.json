@@ -60,7 +60,7 @@
         "drupal/config_split": "2.0.1",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.4.1",
+        "drupal/core-recommended": "10.4.2",
         "drupal/crop": "2.4.0",
         "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.2",
