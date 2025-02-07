@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Enable theme debugging.
 ## Usage: theme-debug
