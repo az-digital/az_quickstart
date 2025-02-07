@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_scholarly_contributions
+    - filter.format.az_standard
+    - node.type.az_person
+  module:
+    - text
+id: node.az_person.field_scholarly_contributions
+field_name: field_scholarly_contributions
+entity_type: node
+bundle: az_person
+label: 'Scholarly Contributions'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats:
+    - az_standard
+field_type: text_long

@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: 'Lists only'
+format: lists
+weight: 0
+filters: {  }

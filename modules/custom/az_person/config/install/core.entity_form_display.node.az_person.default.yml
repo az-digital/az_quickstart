@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
@@ -19,8 +20,13 @@ dependencies:
     - field.field.node.az_person.field_az_pronouns
     - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
+    - field.field.node.az_person.field_az_work_experience
+    - field.field.node.az_person.field_courses
+    - field.field.node.az_person.field_interests
+    - field.field.node.az_person.field_scholarly_contributions
     - node.type.az_person
   module:
+    - az_accordion
     - field_group
     - file
     - link
@@ -73,6 +79,14 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
+  field_awards:
+    type: string_textarea
+    weight: 29
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_az_address:
     type: text_textarea
     weight: 11
@@ -87,6 +101,14 @@ content:
     region: content
     settings:
       progress_indicator: throbber
+    third_party_settings: {  }
+  field_az_awards:
+    type: text_textarea
+    weight: 30
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
     third_party_settings: {  }
   field_az_body:
     type: text_textarea
@@ -122,7 +144,7 @@ content:
     third_party_settings: {  }
   field_az_link:
     type: link_default
-    weight: 22
+    weight: 27
     region: content
     settings:
       placeholder_url: ''
@@ -202,6 +224,36 @@ content:
     region: content
     settings:
       size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_work_experience:
+    type: text_textarea
+    weight: 31
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_courses:
+    type: az_accordion
+    weight: 33
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_interests:
+    type: text_textarea
+    weight: 32
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_scholarly_contributions:
+    type: text_textarea
+    weight: 34
+    region: content
+    settings:
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
   path:

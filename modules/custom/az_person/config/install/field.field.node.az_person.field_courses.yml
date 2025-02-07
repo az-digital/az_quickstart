@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_courses
+    - node.type.az_person
+  module:
+    - az_accordion
+id: node.az_person.field_courses
+field_name: field_courses
+entity_type: node
+bundle: az_person
+label: Courses
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: az_accordion

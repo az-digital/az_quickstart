@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_accordion
+    - node
+id: node.field_courses
+field_name: field_courses
+entity_type: node
+type: az_accordion
+settings: {  }
+module: az_accordion
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false
