@@ -1,0 +1,30 @@
+langcode: en
+status: true
+label: 'Header2 CTA'
+dependencies:
+  content:
+    - 'block_content:az_flexible_block:272a5df0-d8b9-4df1-b43a-4c483f909ae7'
+  module:
+    - block_class
+    - block_content
+  theme:
+    - az_barrio
+id: az_barrio_header2cta
+theme: az_barrio
+region: header_2
+weight: 0
+provider: null
+plugin: 'block_content:272a5df0-d8b9-4df1-b43a-4c483f909ae7'
+settings:
+  id: 'block_content:272a5df0-d8b9-4df1-b43a-4c483f909ae7'
+  label: 'Header2 CTA'
+  label_display: '0'
+  provider: block_content
+  status: true
+  info: ''
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /pages/text
