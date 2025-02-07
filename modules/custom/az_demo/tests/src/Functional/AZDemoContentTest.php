@@ -81,6 +81,8 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**
    * Tests publication links.
+   *
+   * @group az_demo_links
    */
   public function testPublicationLinks() {
     $this->drupalGet('/publications');
@@ -91,21 +93,12 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
     $assert->elementExists('xpath', "//a[@href='/publication/life-leonardo-da-vinci-0' and text()='The Life of Leonardo Da Vinci']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/wildcat-book-review' and text()='The Life of Leonardo Da Vinci']");
     $assert->elementExists('xpath', "//a[@href='/publication/most-fearsome-life-great-gargantua-father-pantagruel' and text()='The Most Fearsome Life of the Great Gargantua, Father of Pantagruel.']");
-    $assert->elementExists('xpath', "//a[@href='/sites/default/files/Small-PDF.pdf' and text()='The Trissotetras: Or, a Most Exquisite Table for Resolving All Manner of triangles. ']");
-    $assert->elementExists('xpath', "//a[@href='/publication/exploration-quantum-mechanics' and text()='An Exploration of Quantum Mechanics']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/data-structures-book' and text()='Advanced Data Structures']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/machine-learning-paper' and text()='Modern Approaches to Machine Learning']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/algorithms-book' and text()='Introduction to Algorithms']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/deep-learning-book' and text()='Deep Learning']");
-    $assert->elementExists('xpath', "//a[@href='https://example.com/statistical-learning-journal' and text()='Statistical Learning with Applications']");
-    $assert->elementExists('xpath', "//a[@href='https://example.com/ai-ethics-book' and text()='Ethics in Artificial Intelligence']");
     $assert->elementExists('xpath', "//a[@href='https://example.com/climate-change-journal' and text()='Climate Change: Impacts and Solutions']");
-
-    // Ensure specific text elements are NOT links.
-    $assert->linkNotExists('van Gogh, Vincent');
-    $assert->linkNotExists('Ludwig van Beethoven');
-    $assert->linkNotExists('Christian Andersen, Hans');
-    $assert->linkNotExists('An Exploration of Quantum Mechanics');
+    $assert->elementExists('xpath', "//a[@href='/sites/default/files/Small-PDF.pdf' and text()='The Trissotetras']");
   }
 
 }

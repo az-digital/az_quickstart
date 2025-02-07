@@ -32,6 +32,7 @@ dependencies:
     - node.type.az_publication
   module:
     - field_group
+    - smart_title
     - user
 third_party_settings:
   field_group:
@@ -53,6 +54,8 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+  smart_title:
+    enabled: true
 id: node.az_publication.az_publication_reference
 targetEntityType: node
 bundle: az_publication
