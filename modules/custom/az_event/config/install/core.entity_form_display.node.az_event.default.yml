@@ -124,6 +124,7 @@ content:
       hide_date: false
       allday: true
       remove_seconds: false
+      duration_overlay: true
     third_party_settings:
       smart_date_recur:
         modal: true
