@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpstan tooling to check for code quality and deprecated code.
 ## Usage: phpstan [flags] [args]
