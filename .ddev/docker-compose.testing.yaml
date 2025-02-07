@@ -1,0 +1,36 @@
+services:
+  selenium-chrome:
+    image: seleniarm/standalone-chromium:4.1.4-20220429
+    container_name: ddev-${DDEV_SITENAME}-selenium-chrome
+    expose:
+      #      The internal noVNC port, which operates over HTTP so it can be exposed
+      #      through the router.
+      - 7900
+    environment:
+      - VIRTUAL_HOST=$DDEV_HOSTNAME
+      - HTTPS_EXPOSE=7900:7900
+      - HTTP_EXPOSE=7910:7900
+      - VNC_NO_PASSWORD=1
+    # To enable VNC access for traditional VNC clients like macOS "Screen Sharing",
+    # uncomment the following two lines.
+    #ports:
+    #  - "5900:5900"
+    labels:
+      com.ddev.site-name: ${DDEV_SITENAME}
+      com.ddev.approot: $DDEV_APPROOT
+    volumes:
+      - ".:/mnt/ddev_config"
+  web:
+    volumes:
+      # Don't share our host working directory as /var/www/html. We want /var/www/html empty for composer.
+      -  /var/www/html
+      # Instead share our host working directory as a standalone package.
+      - type: bind
+        source: ../
+        target: /usr/local/quickstart-install-profile
+        consistency: cached
+      - ".:/mnt/ddev_config:ro"
+      - ddev-global-cache:/mnt/ddev-global-cache
+      - ddev-ssh-agent_socket_dir:/home/.ssh-agent
+    links:
+      - selenium-chrome:$DDEV_HOSTNAME
