@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Create a new quickstart project and use the installation profile as a non-packagist repository using the matching scaffolding branch if available.
 ## Usage: install
