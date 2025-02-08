@@ -12,8 +12,8 @@ use Drupal\migrate\Row;
 /**
  * Flattens a multi-dimensional array.
  */
-#[MigrateProcess('flatten_array')]
-class FlattenArray extends ProcessPluginBase {
+#[MigrateProcess('az_flatten_enterprise_attributes_array')]
+class FlattenEnterpriseAttributesArray extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}

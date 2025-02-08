@@ -60,7 +60,7 @@ source:
 process:
   pseudo_az_enterprise_attributes:
     -
-      plugin: flatten_array
+      plugin: az_flatten_enterprise_attributes_array
       source: az_enterprise_attributes
     -
       plugin: skip_on_empty
