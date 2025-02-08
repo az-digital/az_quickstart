@@ -50,10 +50,33 @@ source:
       name: publish
       label: Publish
       selector: Publish_Formula
+    -
+      name: az_enterprise_attributes
+      label: 'Enterprise Attributes'
+      selector: Attributes
   ids:
     id:
       type: string
 process:
+  pseudo_az_enterprise_attributes:
+    -
+      plugin: flatten_array
+      source: az_enterprise_attributes
+    -
+      plugin: skip_on_empty
+      method: process
+    -
+      plugin: flatten
+
+  field_az_enterprise_attributes:
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_enterprise_attributes
+      value_key: name
+      ignore_case: true
+      source: '@pseudo_az_enterprise_attributes'
   title: name
   field_az_trellis_id: id
   field_az_link/uri: url
