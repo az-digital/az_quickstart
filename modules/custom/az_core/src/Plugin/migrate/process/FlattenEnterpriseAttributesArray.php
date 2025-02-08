@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_core\Plugin\migrate\process;
 
@@ -23,11 +23,11 @@ class FlattenEnterpriseAttributesArray extends ProcessPluginBase {
       return $input;
     }
 
-    $result = array_keys($input); // Include all first-level keys.
+    // Include all first-level keys.
+    $result = array_keys($input);
 
     foreach ($input as $value) {
       if (is_array($value) && isset($value[0]) && is_string($value[0])) {
-        // Flatten comma-separated values found in the first element of each array.
         $result = array_merge($result, array_map('trim', explode(',', $value[0])));
       }
     }
