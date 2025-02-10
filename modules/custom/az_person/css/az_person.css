@@ -10,9 +10,13 @@
 	margin-bottom: 0 !important;
 }
 
+.horizontal-tabs {
+  margin: 1.5rem 0 1rem 0;
+}
+
 .horizontal-tabs .horizontal-tabs-list {
   display: inline-block;
-  margin: 1.5rem 0 0 0;
+  margin: 0;
   border: 0;
   padding: 0;
   list-style: none;
@@ -30,7 +34,6 @@
   margin: 0;
   min-width: 5em;
   float: left;
-  color: #;
 }
 
 .horizontal-tab-button.selected {
