@@ -217,3 +217,10 @@ function az_quickstart_update_1020901(&$sandbox) {
   $sandbox['#finished'] = empty($sandbox['max']) ? 1 : $sandbox['progress'] / $sandbox['max'];
   return t('Updated langcode on %count menu links.', ['%count' => $sandbox['progress']]);
 }
+
+/**
+ * Enable masquerade module by default.
+ */
+function az_quickstart_update_920703() {
+  \Drupal::service('module_installer')->install(['masquerade']);
+}

@@ -1,0 +1,25 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - masquerade
+    - system
+  theme:
+    - claro
+id: claro_masquerade
+theme: claro
+region: content
+weight: -3
+provider: null
+plugin: masquerade
+settings:
+  id: masquerade
+  label: Masquerade
+  label_display: visible
+  provider: masquerade
+  show_unmasquerade_link: false
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: /admin/people
