@@ -73,7 +73,7 @@ install:
   - role_delegation:role_delegation
   - media_entity_file_replace:media_entity_file_replace
   - extlink:extlink
-  - other:masquerade
+  - masquerade:masquerade
 
 themes:
   - az_barrio
