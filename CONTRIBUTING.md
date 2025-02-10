@@ -324,7 +324,7 @@ that is downloaded when installing a site locally via Lando, or DDev.  See
 ## Recommendation - macOS CLI Users
 Some patches do not apply via composer when running 'composer install' or 'composer update -W'. The solution is to install gpatch. 
 It is recommended to premptively install this formulae and avoid this composer complication altogether.
-'brew install gpatch' - [homebrew](https://brew.sh/)
+`brew install gpatch` - [homebrew](https://brew.sh/)
 [Relevant issue discussion](https://github.com/cweagans/composer-patches/issues/423)
 
 ## Exporting Configuration
