@@ -327,8 +327,6 @@ It is recommended to premptively install this formulae and avoid this composer c
 'brew install gpatch' - [homebrew](https://brew.sh/)
 [Relevant issue discussion](https://github.com/cweagans/composer-patches/issues/423)
 
-
-
 ## Exporting Configuration
 
 While working on features in local development in Quickstart, there are
