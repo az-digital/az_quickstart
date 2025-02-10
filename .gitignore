@@ -1,5 +1,6 @@
 ### DDev ###
 /.ddev/config.y*ml
+/.ddev/web_data
 
 ### Node ###
 /node_modules/
