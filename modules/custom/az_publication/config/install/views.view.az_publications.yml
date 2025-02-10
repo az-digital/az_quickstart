@@ -1082,8 +1082,7 @@ display:
             type: 'entity:taxonomy_term'
             fail: empty
           validate_options:
-            bundles:
-              az_publication_categories: az_publication_categories
+            bundles: {  }
             access: false
             operation: view
             multiple: 1
