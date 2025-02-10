@@ -321,6 +321,12 @@ development best practices to enhance your Drupal projects.
 that is downloaded when installing a site locally via Lando, or DDev.  See 
 "Visual Studio Code Integration"
 
+## Recommendation - macOS CLI Users
+Some patches do not apply via composer when running 'composer install' or 'composer update -W'. The solution is to install gpatch. 
+It is recommended to install this formulae and avoid this composer complication altogether.
+'brew install gpatch' - [homebrew](https://brew.sh/)
+
+
 ## Exporting Configuration
 
 While working on features in local development in Quickstart, there are
