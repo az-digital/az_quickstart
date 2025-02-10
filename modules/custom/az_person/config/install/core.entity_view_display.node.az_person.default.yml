@@ -6,9 +6,11 @@ dependencies:
     - field.field.node.az_person.field_az_attachments
     - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
+    - field.field.node.az_person.field_az_courses
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_interests
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
@@ -18,12 +20,10 @@ dependencies:
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_publications
     - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - field.field.node.az_person.field_az_work_experience
-    - field.field.node.az_person.field_courses
-    - field.field.node.az_person.field_interests
-    - field.field.node.az_person.field_scholarly_contributions
     - image.style.az_medium
     - node.type.az_person
   module:
@@ -285,7 +285,7 @@ third_party_settings:
         width_breakpoint: 640
     group_courses:
       children:
-        - field_courses
+        - field_az_courses
       label: Courses
       parent_name: group_tabs
       region: content
@@ -300,7 +300,7 @@ third_party_settings:
         description: ''
     group_publications:
       children:
-        - field_scholarly_contributions
+        - field_az_publications
       label: 'Scholarly Contributions'
       parent_name: group_tabs
       region: content
@@ -361,6 +361,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 2
+    region: content
+  field_az_courses:
+    type: az_accordion_default
+    label: above
+    settings:
+      foo: bar
+    third_party_settings: {  }
+    weight: 19
     region: content
   field_az_degrees:
     type: string
@@ -434,6 +442,13 @@ content:
     third_party_settings: {  }
     weight: 11
     region: content
+  field_az_publications:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 20
+    region: content
   field_az_suffix:
     type: string
     label: hidden
@@ -457,27 +472,12 @@ content:
     third_party_settings: {  }
     weight: 4
     region: content
-  field_courses:
-    type: az_accordion_default
-    label: above
-    settings:
-      foo: bar
-    third_party_settings: {  }
-    weight: 2
-    region: content
-  field_interests:
+  field_az_interests:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
     weight: 1
-    region: content
-  field_scholarly_contributions:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 3
     region: content
   smart_title:
     settings: {  }

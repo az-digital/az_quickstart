@@ -2,13 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_interests
+    - field.storage.node.field_az_interests
     - filter.format.az_standard
     - node.type.az_person
   module:
     - text
-id: node.az_person.field_interests
-field_name: field_interests
+id: node.az_person.field_az_interests
+field_name: field_az_interests
 entity_type: node
 bundle: az_person
 label: Interests
