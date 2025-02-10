@@ -76,7 +76,7 @@
         "drupal/field_group_link": "3.2.0",
         "drupal/flag": "4.0.0-beta6",
         "drupal/google_tag": "2.0.8",
-        "drupal/honeypot": "2.1.4",
+        "drupal/honeypot": "2.2.1",
         "drupal/image_widget_crop": "2.4.0",
         "drupal/imagemagick": "4.0.2",
         "drupal/inline_entity_form": "3.0.0-rc20",
