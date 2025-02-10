@@ -4,8 +4,8 @@
 ## Usage: install
 ## Example: ddev install
 
-# Set permissions for git
-sudo chmod 777 /var/www/html/
+# Set owner for web root
+sudo chown $USER:$USER /var/www/html/
 
 # Use the matching scaffolding branch if available.
 BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /var/www/html
@@ -20,3 +20,4 @@ drush --root=/var/www/html/web site:install --account-mail=noreply@email.arizona
 drush --root=/var/www/html/web config:set -y az_cas.settings disable_login_form 0
 drush --root=/var/www/html/web cache:rebuild
 yarn --cwd /usr/local/quickstart-install-profile install
+chmod 755 /var/www/html/web/sites/default
