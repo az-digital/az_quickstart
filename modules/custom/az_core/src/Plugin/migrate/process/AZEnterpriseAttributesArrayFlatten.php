@@ -11,9 +11,17 @@ use Drupal\migrate\Row;
 
 /**
  * Flattens a multi-dimensional array.
+ *
+ * @code
+ * process:
+ *   field_of_array_values:
+ *   - plugin: az_enterprise_attributes_flatten
+ *     source: enterprise_attributes_array
+ *   - plugin: flatten
+ * @endcode
  */
-#[MigrateProcess('az_flatten_enterprise_attributes_array')]
-class FlattenEnterpriseAttributesArray extends ProcessPluginBase {
+#[MigrateProcess('az_enterprise_attributes_flatten')]
+class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase {
 
   /**
    * {@inheritdoc}

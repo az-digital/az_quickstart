@@ -63,10 +63,8 @@ process:
       plugin: skip_on_empty
       method: process
       source: az_enterprise_attributes
-    -
-      plugin: az_flatten_enterprise_attributes_array
-    -
-      plugin: flatten
+    - plugin: az_enterprise_attributes_flatten
+    - plugin: flatten
 
   field_az_enterprise_attributes:
     -
