@@ -24,7 +24,15 @@
         };
         var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
           var activeFilterCount = calculateActiveFilterCount();
-          filterCountDisplay.textContent = "(".concat(activeFilterCount, ")");
+          var badge = document.createElement('span');
+          badge.classList.add('badge', 'badge-light');
+          if (activeFilterCount > 0) {
+            badge.classList.remove('d-none');
+          } else {
+            badge.classList.add('d-none');
+          }
+          badge.textContent = "".concat(activeFilterCount);
+          filterCountDisplay.replaceChildren(badge);
           var resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
             if (alwaysDisplayResetButton || activeFilterCount > 0) {

@@ -39,12 +39,19 @@
 
         const updateActiveFilterDisplay = () => {
           const activeFilterCount = calculateActiveFilterCount();
-          filterCountDisplay.textContent = `(${activeFilterCount})`;
-          const resetButton = container.querySelector(
-            '.js-active-filters-reset',
-          );
+          // Create the span element for the counter badge.
+          const badge = document.createElement('span');
+          badge.classList.add('badge', 'badge-light');
+          if (activeFilterCount > 0) {
+            badge.classList.remove('d-none');
+          } else {
+            badge.classList.add('d-none');
+          }
+          badge.textContent = `${activeFilterCount}`;
+          filterCountDisplay.replaceChildren(badge);
+          // Handle the reset button visibility
+          const resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
-            // Ensure resetButton exists before trying to modify it
             if (alwaysDisplayResetButton || activeFilterCount > 0) {
               resetButton.classList.remove('d-none');
             } else {
