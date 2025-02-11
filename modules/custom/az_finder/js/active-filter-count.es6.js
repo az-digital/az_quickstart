@@ -49,8 +49,9 @@
           }
           badge.textContent = `${activeFilterCount}`;
           filterCountDisplay.replaceChildren(badge);
-          // Handle the reset button visibility
+          // Handle the reset button visibility.
           const resetButton = container.querySelector('.js-active-filters-reset');
+          // Ensure resetButton exists before trying to modify it.
           if (resetButton) {
             if (alwaysDisplayResetButton || activeFilterCount > 0) {
               resetButton.classList.remove('d-none');
@@ -76,7 +77,7 @@
           { passive: true },
         );
 
-        // Initial update call
+        // Initial update call.
         updateActiveFilterDisplay();
       });
     },
