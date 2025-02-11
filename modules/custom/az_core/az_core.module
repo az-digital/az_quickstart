@@ -385,13 +385,13 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
 }
 
 /**
- * Implements hook_page_attachments().
+ * Implements hook_library_info_alter().
  *
- * Add style overrides for chosen.
+ * Add style overrides for Chosen.
  */
-function az_core_page_attachments(array &$attachments) {
-  if (\Drupal::service('router.admin_context')->isAdminRoute()) {
-    $attachments['#attached']['library'][] = 'az_core/az-core-chosen';
+function az_core_library_info_alter(array &$libraries, $module) {
+  if (\Drupal::service('router.admin_context')->isAdminRoute() && $module === 'chosen' && isset($libraries['chosen.claro'])) {
+    $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
   }
 }
 
