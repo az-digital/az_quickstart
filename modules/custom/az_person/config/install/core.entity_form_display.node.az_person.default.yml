@@ -318,7 +318,7 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_courses:
+  field_az_courses:
     type: az_accordion
     weight: 26
     region: content
