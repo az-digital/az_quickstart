@@ -10,6 +10,7 @@
       var filterContainers = context.querySelectorAll('[data-az-better-exposed-filters]');
       filterContainers.forEach(function (container) {
         var filterCountDisplay = container.querySelector('.js-active-filter-count');
+        var srMessage = container.querySelector('.js-active-filter-count-sr');
         var textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
         var checkboxesAndRadios = container.querySelectorAll('input[type="checkbox"], input[type="radio"]');
         var alwaysDisplayResetButton = settings.azFinder.alwaysDisplayResetButton || false;
@@ -40,6 +41,9 @@
             } else {
               resetButton.classList.add('d-none');
             }
+          }
+          if (srMessage) {
+            srMessage.textContent = activeFilterCount === 0 ? 'No active filters' : "".concat(activeFilterCount, " active filters applied");
           }
         };
         textInputFields.forEach(function (inputField) {
