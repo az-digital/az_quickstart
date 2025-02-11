@@ -1,0 +1,5 @@
+.chosen-container,
+.chosen-search-input,
+.chosen-drop {
+    min-width: max-content;
+}
