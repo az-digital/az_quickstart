@@ -385,6 +385,13 @@ content:
     third_party_settings: {  }
     weight: 10
     region: content
+  field_az_interests:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
   field_az_links:
     type: link
     label: hidden
@@ -471,13 +478,6 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 4
-    region: content
-  field_az_interests:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
     region: content
   smart_title:
     settings: {  }

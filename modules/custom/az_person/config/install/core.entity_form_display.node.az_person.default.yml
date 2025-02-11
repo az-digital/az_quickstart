@@ -68,13 +68,15 @@ third_party_settings:
         description: 'Summary fields determine how this person appears in feeds, listings and other displays throughout the site.'
         required_fields: true
         weight: -10
-    group_az_interests:
+    group_az_experience:
       children:
-        - field_az_interests
-      label: Interests
+        - field_az_degrees
+        - field_az_work_experience
+        - field_az_awards
+      label: Experience
       region: content
       parent_name: ''
-      weight: 17
+      weight: 15
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -85,12 +87,10 @@ third_party_settings:
         description: ''
         required_fields: true
         weight: 0
-    group_az_experience:
+    group_az_interests:
       children:
-        - field_az_degrees
-        - field_az_work_experience
-        - field_az_awards
-      label: Experience
+        - field_az_interests
+      label: Interests
       region: content
       parent_name: ''
       weight: 16
@@ -110,7 +110,7 @@ third_party_settings:
       label: Courses
       region: content
       parent_name: ''
-      weight: 18
+      weight: 17
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -127,7 +127,7 @@ third_party_settings:
       label: 'Scholarly Contributions'
       region: content
       parent_name: ''
-      weight: 19
+      weight: 18
       format_type: details_sidebar
       format_settings:
         classes: ''
@@ -148,14 +148,6 @@ content:
     weight: 25
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_az_awards:
-    type: string_textarea
-    weight: 29
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
     third_party_settings: {  }
   field_az_address:
     type: text_textarea
@@ -190,7 +182,7 @@ content:
     third_party_settings: {  }
   field_az_courses:
     type: az_accordion
-    weight: 27
+    weight: 30
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -216,6 +208,14 @@ content:
     region: content
     settings:
       size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_interests:
+    type: text_textarea
+    weight: 31
+    region: content
+    settings:
+      rows: 5
       placeholder: ''
     third_party_settings: {  }
   field_az_link:
@@ -288,7 +288,7 @@ content:
     third_party_settings: {  }
   field_az_publications:
     type: text_textarea
-    weight: 18
+    weight: 31
     region: content
     settings:
       rows: 5
@@ -318,20 +318,6 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_az_courses:
-    type: az_accordion
-    weight: 26
-    region: content
-    settings: {  }
-    third_party_settings: {  }
-  field_az_interests:
-    type: text_textarea
-    weight: 27
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
   path:
     type: path
     weight: 22
@@ -347,7 +333,7 @@ content:
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 15
+    weight: 19
     region: content
     settings:
       display_label: true

@@ -1,0 +1,30 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.lists
+  module:
+    - ckeditor5
+format: lists
+editor: ckeditor5
+settings:
+  toolbar:
+    items:
+      - undo
+      - redo
+      - '|'
+      - bulletedList
+      - numberedList
+      - '|'
+      - outdent
+      - indent
+  plugins:
+    ckeditor5_list:
+      properties:
+        reversed: true
+        startIndex: true
+      multiBlock: true
+    ckeditor_indentblock_indent:
+      enable: true
+image_upload:
+  status: false

@@ -11,7 +11,7 @@ id: node.az_person.field_az_publications
 field_name: field_az_publications
 entity_type: node
 bundle: az_person
-label: 'Publications'
+label: Publications
 description: ''
 required: false
 translatable: false
