@@ -4,8 +4,8 @@ dependencies:
   module:
     - node
     - text
-id: node.field_scholarly_contributions
-field_name: field_scholarly_contributions
+id: node.field_az_publications
+field_name: field_az_publications
 entity_type: node
 type: text_long
 settings: {  }

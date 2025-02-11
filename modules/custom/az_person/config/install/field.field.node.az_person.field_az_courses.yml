@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_courses
+    - field.storage.node.field_az_courses
     - node.type.az_person
   module:
     - az_accordion
-id: node.az_person.field_courses
-field_name: field_courses
+id: node.az_person.field_az_courses
+field_name: field_az_courses
 entity_type: node
 bundle: az_person
 label: Courses
