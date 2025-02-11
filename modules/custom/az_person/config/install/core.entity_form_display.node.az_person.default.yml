@@ -70,7 +70,7 @@ third_party_settings:
         weight: -10
     group_az_interests:
       children:
-        - field_interests
+        - field_az_interests
       label: Interests
       region: content
       parent_name: ''
@@ -149,7 +149,7 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_awards:
+  field_az_awards:
     type: string_textarea
     weight: 29
     region: content
