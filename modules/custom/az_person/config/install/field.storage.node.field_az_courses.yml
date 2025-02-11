@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   module:
+    - az_accordion
     - node
-    - text
-id: node.field_interests
-field_name: field_interests
+id: node.field_az_courses
+field_name: field_az_courses
 entity_type: node
-type: text_long
+type: az_accordion
 settings: {  }
-module: text
+module: az_accordion
 locked: false
-cardinality: 1
+cardinality: -1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

@@ -315,7 +315,7 @@ third_party_settings:
         description: ''
     group_interests:
       children:
-        - field_interests
+        - field_az_interests
       label: Interests
       parent_name: group_tabs
       region: content
