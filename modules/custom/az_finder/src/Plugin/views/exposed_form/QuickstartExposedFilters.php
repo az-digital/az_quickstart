@@ -78,8 +78,22 @@ class QuickstartExposedFilters extends BetterExposedFilters {
               'js-active-filter-count',
               'ml-1',
             ],
+            'aria-live' => 'polite',
+            'role' => 'status',
+            '#value' => '0',
           ],
         ];
+
+        $sr_message = [
+          '#type' => 'html_tag',
+          '#tag' => 'span',
+          '#attributes' => [
+            'class' => ['js-active-filter-count-sr', 'visually-hidden', 'sr-only'],
+            'aria-live' => 'polite',
+          ],
+          '#value' => 'No active filters',
+        ];
+
         $reset_button['count'] = $count;
         $reset_button['#type'] = 'html_tag';
         $reset_button['#tag'] = 'button';

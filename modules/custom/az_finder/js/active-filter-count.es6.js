@@ -16,6 +16,7 @@
         const filterCountDisplay = container.querySelector(
           '.js-active-filter-count',
         );
+        const srMessage = container.querySelector('.js-active-filter-count-sr');
         const textInputFields = container.querySelectorAll(
           'input[type="text"], input[type="search"]',
         );
@@ -36,7 +37,6 @@
           });
           return count;
         };
-
         const updateActiveFilterDisplay = () => {
           const activeFilterCount = calculateActiveFilterCount();
           // Create the span element for the counter badge.
@@ -60,6 +60,12 @@
             } else {
               resetButton.classList.add('d-none');
             }
+          }
+          if (srMessage) {
+            srMessage.textContent =
+              activeFilterCount === 0
+                ? 'No active filters'
+                : `${activeFilterCount} active filters applied`;
           }
         };
 
