@@ -332,14 +332,6 @@ content:
       rows: 5
       placeholder: ''
     third_party_settings: {  }
-  field_scholarly_contributions:
-    type: text_textarea
-    weight: 27
-    region: content
-    settings:
-      rows: 5
-      placeholder: ''
-    third_party_settings: {  }
   path:
     type: path
     weight: 22
