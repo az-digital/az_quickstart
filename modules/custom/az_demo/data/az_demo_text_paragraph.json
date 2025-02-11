@@ -94,6 +94,11 @@
           "id": 191,
           "az_text_area": "<drupal-media data-align='center' data-entity-type='media' data-entity-uuid='b43a3bd2-a3d3-48ee-834d-60b233f22b46' data-view-mode='default'></drupal-media>",
           "bottom_spacing": "mb-0"
+        },
+        {
+            "id": 192,
+            "az_text_area": "<drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
+            "bottom_spacing": "mb-0"
         }
     ]
 }
