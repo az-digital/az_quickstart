@@ -39,11 +39,12 @@
 
         const updateActiveFilterDisplay = () => {
           const activeFilterCount = calculateActiveFilterCount();
-
-          // Create the span element for the counter badge.
-          const badge = document.createElement('span');
-          badge.classList.add('badge', 'badge-light');
-
+          // See if the badge is already present.
+          let badge = filterCountDisplay.querySelector('.badge');
+          if (!badge) {
+            badge = document.createElement('span');
+            badge.classList.add('badge', 'badge-light');
+          }
           if (activeFilterCount > 0) {
             badge.classList.remove('sr-only');
             badge.classList.remove('position-absolute');
@@ -51,15 +52,18 @@
             badge.classList.add('sr-only');
             badge.classList.add('position-absolute');
           }
-
-          // Create the screen reader-only text.
-          const srText = document.createElement('span');
-          srText.classList.add('sr-only');
-          srText.textContent = `Active filters: `;
+          let srText = badge.querySelector('.sr-only');
+          if (!srText) {
+            // Create the screen reader-only text.
+            srText = document.createElement('span');
+            srText.classList.add('sr-only');
+            srText.textContent = `Active filters: `;
+          }
+          // Set the text value.
+          badge.textContent = `${activeFilterCount}`;
 
           badge.appendChild(srText);
-          badge.appendChild(document.createTextNode(`${activeFilterCount}`));
-
+          // Replace the children of the filter count display with the badge.
           filterCountDisplay.replaceChildren(badge);
 
           // Handle the reset button visibility.

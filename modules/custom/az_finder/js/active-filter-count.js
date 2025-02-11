@@ -24,8 +24,11 @@
         };
         var updateActiveFilterDisplay = function updateActiveFilterDisplay() {
           var activeFilterCount = calculateActiveFilterCount();
-          var badge = document.createElement('span');
-          badge.classList.add('badge', 'badge-light');
+          var badge = filterCountDisplay.querySelector('.badge');
+          if (!badge) {
+            badge = document.createElement('span');
+            badge.classList.add('badge', 'badge-light');
+          }
           if (activeFilterCount > 0) {
             badge.classList.remove('sr-only');
             badge.classList.remove('position-absolute');
@@ -33,11 +36,14 @@
             badge.classList.add('sr-only');
             badge.classList.add('position-absolute');
           }
-          var srText = document.createElement('span');
-          srText.classList.add('sr-only');
-          srText.textContent = "Active filters: ";
+          var srText = badge.querySelector('.sr-only');
+          if (!srText) {
+            srText = document.createElement('span');
+            srText.classList.add('sr-only');
+            srText.textContent = "Active filters: ";
+          }
+          badge.textContent = "".concat(activeFilterCount);
           badge.appendChild(srText);
-          badge.appendChild(document.createTextNode("".concat(activeFilterCount)));
           filterCountDisplay.replaceChildren(badge);
           var resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
