@@ -10,7 +10,6 @@
       var filterContainers = context.querySelectorAll('[data-az-better-exposed-filters]');
       filterContainers.forEach(function (container) {
         var filterCountDisplay = container.querySelector('.js-active-filter-count');
-        var srMessage = container.querySelector('.js-active-filter-count-sr');
         var textInputFields = container.querySelectorAll('input[type="text"], input[type="search"]');
         var checkboxesAndRadios = container.querySelectorAll('input[type="checkbox"], input[type="radio"]');
         var alwaysDisplayResetButton = settings.azFinder.alwaysDisplayResetButton || false;
@@ -28,11 +27,17 @@
           var badge = document.createElement('span');
           badge.classList.add('badge', 'badge-light');
           if (activeFilterCount > 0) {
-            badge.classList.remove('d-none');
+            badge.classList.remove('sr-only');
+            badge.classList.remove('position-absolute');
           } else {
-            badge.classList.add('d-none');
+            badge.classList.add('sr-only');
+            badge.classList.add('position-absolute');
           }
-          badge.textContent = "".concat(activeFilterCount);
+          var srText = document.createElement('span');
+          srText.classList.add('sr-only');
+          srText.textContent = "Active filters: ";
+          badge.appendChild(srText);
+          badge.appendChild(document.createTextNode("".concat(activeFilterCount)));
           filterCountDisplay.replaceChildren(badge);
           var resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
@@ -41,9 +46,6 @@
             } else {
               resetButton.classList.add('d-none');
             }
-          }
-          if (srMessage) {
-            srMessage.textContent = activeFilterCount === 0 ? 'No active filters' : "".concat(activeFilterCount, " active filters applied");
           }
         };
         textInputFields.forEach(function (inputField) {

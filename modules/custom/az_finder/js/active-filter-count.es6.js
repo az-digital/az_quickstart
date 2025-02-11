@@ -16,7 +16,6 @@
         const filterCountDisplay = container.querySelector(
           '.js-active-filter-count',
         );
-        const srMessage = container.querySelector('.js-active-filter-count-sr');
         const textInputFields = container.querySelectorAll(
           'input[type="text"], input[type="search"]',
         );
@@ -37,35 +36,41 @@
           });
           return count;
         };
+
         const updateActiveFilterDisplay = () => {
           const activeFilterCount = calculateActiveFilterCount();
+
           // Create the span element for the counter badge.
           const badge = document.createElement('span');
           badge.classList.add('badge', 'badge-light');
+
           if (activeFilterCount > 0) {
-            badge.classList.remove('d-none');
+            badge.classList.remove('sr-only');
+            badge.classList.remove('position-absolute');
           } else {
-            badge.classList.add('d-none');
+            badge.classList.add('sr-only');
+            badge.classList.add('position-absolute');
           }
-          badge.textContent = `${activeFilterCount}`;
+
+          // Create the screen reader-only text.
+          const srText = document.createElement('span');
+          srText.classList.add('sr-only');
+          srText.textContent = `Active filters: `;
+
+          badge.appendChild(srText);
+          badge.appendChild(document.createTextNode(`${activeFilterCount}`));
+
           filterCountDisplay.replaceChildren(badge);
+
           // Handle the reset button visibility.
-          const resetButton = container.querySelector(
-            '.js-active-filters-reset',
-          );
-          // Ensure resetButton exists before trying to modify it.
+          const resetButton = container.querySelector('.js-active-filters-reset');
+
           if (resetButton) {
             if (alwaysDisplayResetButton || activeFilterCount > 0) {
               resetButton.classList.remove('d-none');
             } else {
               resetButton.classList.add('d-none');
             }
-          }
-          if (srMessage) {
-            srMessage.textContent =
-              activeFilterCount === 0
-                ? 'No active filters'
-                : `${activeFilterCount} active filters applied`;
           }
         };
 
