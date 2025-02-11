@@ -63,7 +63,9 @@
           filterCountDisplay.replaceChildren(badge);
 
           // Handle the reset button visibility.
-          const resetButton = container.querySelector('.js-active-filters-reset');
+          const resetButton = container.querySelector(
+            '.js-active-filters-reset',
+          );
 
           if (resetButton) {
             if (alwaysDisplayResetButton || activeFilterCount > 0) {
