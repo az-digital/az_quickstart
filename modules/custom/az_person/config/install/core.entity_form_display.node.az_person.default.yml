@@ -166,7 +166,7 @@ content:
     third_party_settings: {  }
   field_az_awards:
     type: text_textarea
-    weight: 17
+    weight: 23
     region: content
     settings:
       rows: 5
@@ -182,13 +182,13 @@ content:
     third_party_settings: {  }
   field_az_courses:
     type: az_accordion
-    weight: 30
+    weight: 31
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_degrees:
     type: string_textfield
-    weight: 15
+    weight: 21
     region: content
     settings:
       size: 60
@@ -212,7 +212,7 @@ content:
     third_party_settings: {  }
   field_az_interests:
     type: text_textarea
-    weight: 31
+    weight: 32
     region: content
     settings:
       rows: 5
@@ -288,7 +288,7 @@ content:
     third_party_settings: {  }
   field_az_publications:
     type: text_textarea
-    weight: 31
+    weight: 33
     region: content
     settings:
       rows: 5
@@ -312,7 +312,7 @@ content:
     third_party_settings: {  }
   field_az_work_experience:
     type: text_textarea
-    weight: 16
+    weight: 22
     region: content
     settings:
       rows: 5
