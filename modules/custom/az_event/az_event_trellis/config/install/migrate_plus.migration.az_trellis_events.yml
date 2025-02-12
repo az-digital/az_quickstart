@@ -54,6 +54,10 @@ source:
       name: az_enterprise_attributes
       label: 'Enterprise Attributes'
       selector: Attributes
+    -
+      name: format
+      label: 'Format'
+      selector: Format
   ids:
     id:
       type: string
