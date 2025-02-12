@@ -97,8 +97,8 @@ content:
         Audiences__c: Audiences__c
         Topic__c: Topic__c
         Arizona_County__c: 0
-        Category1__c: 0
-        Event_Format__c: 0
+        Category1__c: Category1__c
+        Event_Format__c: Event_Format__c
         Tribal_Nation__c: 0
         Display_Name_Formula__c: 0
     third_party_settings: {  }
