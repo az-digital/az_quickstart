@@ -1,4 +1,5 @@
 name: 'Quickstart SEO'
+description: "Provides configuration to implement metadata for search engine optimization and track website traffic."
 type: module
 core_version_requirement: ^9 || ^10
 package: The University of Arizona
