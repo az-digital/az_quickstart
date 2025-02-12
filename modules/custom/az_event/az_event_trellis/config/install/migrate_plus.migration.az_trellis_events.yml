@@ -78,7 +78,9 @@ process:
       bundle: az_enterprise_attributes
       value_key: name
       ignore_case: true
-      source: '@pseudo_az_enterprise_attributes'
+      source: 
+      - '@pseudo_az_enterprise_attributes'
+      - format
   title: name
   field_az_trellis_id: id
   field_az_link/uri: url
