@@ -81,12 +81,14 @@ process:
       plugin: default_value
       default_value: []
   pseudo_az_enterprise_attributes:
-    -
-      plugin: skip_on_empty
-      method: process
+    - 
+      plugin: az_enterprise_attributes_flatten
       source: az_enterprise_attributes
-    - plugin: az_enterprise_attributes_flatten
-    - plugin: flatten
+    - 
+      plugin: flatten
+    - 
+      plugin: default_value
+      default_value: []
 
   field_az_enterprise_attributes:
     - plugin: merge
