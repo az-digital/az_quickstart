@@ -62,6 +62,11 @@ source:
     id:
       type: string
 process:
+  pseudo_az_enterprise_attributes_format:
+  -
+    plugin: explode
+    delimiter: ','
+    source: format
   pseudo_az_enterprise_attributes:
     -
       plugin: skip_on_empty
@@ -71,6 +76,10 @@ process:
     - plugin: flatten
 
   field_az_enterprise_attributes:
+    - plugin: merge
+      source:
+        - '@pseudo_az_enterprise_attributes_format'
+        - '@pseudo_az_enterprise_attributes'
     -
       plugin: entity_lookup
       entity_type: taxonomy_term
@@ -78,9 +87,6 @@ process:
       bundle: az_enterprise_attributes
       value_key: name
       ignore_case: true
-      source: 
-      - '@pseudo_az_enterprise_attributes'
-      - format
   title: name
   field_az_trellis_id: id
   field_az_link/uri: url
