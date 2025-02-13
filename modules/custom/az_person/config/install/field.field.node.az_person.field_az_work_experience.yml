@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_az_work_experience
-    - filter.format.lists
+    - filter.format.az_standard
     - node.type.az_person
   module:
     - text
@@ -19,5 +19,5 @@ default_value: {  }
 default_value_callback: ''
 settings:
   allowed_formats:
-    - lists
+    - az_standard
 field_type: text_long
