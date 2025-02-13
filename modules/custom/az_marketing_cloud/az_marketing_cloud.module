@@ -18,8 +18,16 @@ function az_marketing_cloud_theme($existing, $type, $theme, $path) {
       'template' => 'node--view--az-marketing-cloud--30-70-layout',
       'base hook' => 'node',
     ],
+    'node__view__az_marketing_cloud__70_30_layout_image_right' => [
+      'template' => 'node--view--az-marketing-cloud--70-30-layout-image-right',
+      'base hook' => 'node',
+    ],
     'node__view__az_marketing_cloud__50_50_layout' => [
       'template' => 'node--view--az-marketing-cloud--50-50-layout',
+      'base hook' => 'node',
+    ],
+    'node__view__az_marketing_cloud__50_50_layout_image_right' => [
+      'template' => 'node--view--az-marketing-cloud--50-50-layout-image-right',
       'base hook' => 'node',
     ],
     'node__view__az_marketing_cloud__text_layout' => [
@@ -95,7 +103,15 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
             $variables['images']['az_marketing_cloud_30_70_layout'] = $images_dir . '30-70-layout-unpublished.png';
             break;
 
+          case 'az_marketing_cloud_70_30_layout_image_right':
+            $variables['images']['az_marketing_cloud_30_70_layout'] = $images_dir . '30-70-layout-unpublished.png';
+            break;
+
           case 'az_marketing_cloud_50_50_layout':
+            $variables['images']['az_marketing_cloud_50_50_layout'] = $images_dir . '50-50-layout-unpublished.png';
+            break;
+
+          case 'az_marketing_cloud_50_50_layout_image_right':
             $variables['images']['az_marketing_cloud_50_50_layout'] = $images_dir . '50-50-layout-unpublished.png';
             break;
 
@@ -122,7 +138,10 @@ function az_marketing_cloud_preprocess_node__view__az_marketing_cloud(&$variable
     $az_canonical_absolute_url = $az_canonical_url_object->setAbsolute()->toString();
     $variables['az_canonical_url'] = $az_canonical_absolute_url;
     $variables['az_canonical_summary_link_title'] = $token_service->replace('[node:az-canonical-summary-link-title]', ['node' => $node], [], $bubbleable_metadata);
-    $media = $node->field_az_media_image->entity ?? NULL;
+    $media = $node->field_az_media_thumbnail_image->entity ?? NULL;
+    if (empty($media)) {
+      $media = $node->field_az_media_image->entity ?? NULL;
+    }
     $file = $media->field_media_az_image->entity ?? NULL;
     if (!empty($file)) {
       $uri = $file->getFileUri();
@@ -164,7 +183,13 @@ function az_marketing_cloud_theme_suggestions_region_alter(array &$suggestions, 
   if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout_image_right') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
   if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'region__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.70_30_layout_image_right') {
     $suggestions[] = 'region__az_marketing_cloud';
   }
   if ($route_name === 'view.az_marketing_cloud.text_layout') {
@@ -186,7 +211,13 @@ function az_marketing_cloud_theme_suggestions_views_view_alter(array &$suggestio
   if ($route_name === 'view.az_marketing_cloud.50_50_layout') {
     $suggestions[] = 'views_view__az_marketing_cloud';
   }
+  if ($route_name === 'view.az_marketing_cloud.50_50_layout_image_right') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
   if ($route_name === 'view.az_marketing_cloud.30_70_layout') {
+    $suggestions[] = 'views_view__az_marketing_cloud';
+  }
+  if ($route_name === 'view.az_marketing_cloud.70_30_layout_image_right') {
     $suggestions[] = 'views_view__az_marketing_cloud';
   }
   if ($route_name === 'view.az_marketing_cloud.text_layout') {

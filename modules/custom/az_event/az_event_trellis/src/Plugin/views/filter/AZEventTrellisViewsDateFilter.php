@@ -7,15 +7,15 @@ namespace Drupal\az_event_trellis\Plugin\views\filter;
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Asset\AttachedAssets;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\views\Attribute\ViewsFilter;
 use Drupal\views\Plugin\views\filter\FilterPluginBase;
 use Drupal\views_remote_data\Plugin\views\query\RemoteDataQuery;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Filter Trellis event API values according to dates.
- *
- * @ViewsFilter("az_event_trellis_views_date_filter")
  */
+#[ViewsFilter("az_event_trellis_views_date_filter")]
 class AZEventTrellisViewsDateFilter extends FilterPluginBase {
 
   const TRELLIS_DATE_FORMAT = 'Y-m-d\\TH:i:s.u';

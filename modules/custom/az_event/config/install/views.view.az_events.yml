@@ -91,6 +91,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 10
           total_pages: null
           id: 0
@@ -136,10 +137,25 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no upcoming events listed.</em>'
+            value: '<p><em>There are no upcoming events listed.</em></p>'
             format: az_standard
           tokenize: false
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         field_az_event_date_value:
           id: field_az_event_date_value
           table: node__field_az_event_date
@@ -436,6 +452,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 12
           total_pages: null
           id: 0
@@ -453,6 +470,20 @@ display:
             offset: false
             offset_label: Offset
           quantity: 9
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p><em>There are no past events listed.</em></p>'
+            format: az_standard
+          tokenize: false
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value
@@ -561,6 +592,7 @@ display:
           relationship: none
           view_mode: az_card_alternate
       defaults:
+        empty: false
         title: false
         pager: false
         style: false
@@ -600,6 +632,21 @@ display:
           offset: 0
           items_per_page: 3
       empty: {  }
+      sorts:
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_event_date_value
+          exposed: false
+          granularity: second
       arguments:
         term_node_tid_depth:
           id: term_node_tid_depth
@@ -686,6 +733,7 @@ display:
         empty: false
         title: false
         pager: false
+        sorts: false
         arguments: false
         pager_options: false
         header: false
@@ -734,6 +782,21 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      sorts:
+        field_az_event_date_value:
+          id: field_az_event_date_value
+          table: node__field_az_event_date
+          field: field_az_event_date_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          order: ASC
+          expose:
+            label: ''
+            field_identifier: field_az_event_date_value
+          exposed: false
+          granularity: second
       filters:
         status:
           id: status
@@ -883,6 +946,7 @@ display:
         style: false
         style_options: false
         row: false
+        sorts: false
         filters: false
         filter_groups: false
       css_class: add-pager-top-margin

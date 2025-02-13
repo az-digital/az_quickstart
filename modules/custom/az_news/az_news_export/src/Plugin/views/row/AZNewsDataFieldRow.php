@@ -2,6 +2,7 @@
 
 namespace Drupal\az_news_export\Plugin\views\row;
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\az_news_export\AZNewsDataEmpty;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
@@ -9,20 +10,20 @@ use Drupal\file\FileInterface;
 use Drupal\media\MediaInterface;
 use Drupal\paragraphs\ParagraphInterface;
 use Drupal\rest\Plugin\views\row\DataFieldRow;
+use Drupal\views\Attribute\ViewsRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin which displays fields as raw data.
  *
  * @ingroup views_row_plugins
- *
- * @ViewsRow(
- *   id = "az_news_data_field",
- *   title = @Translation("Quickstart News Fields"),
- *   help = @Translation("Use News fields as row data."),
- *   display_types = {"data"}
- * )
  */
+#[ViewsRow(
+  id: "az_news_data_field",
+  title: new TranslatableMarkup("Quickstart News Fields"),
+  help: new TranslatableMarkup("Use News fields as row data."),
+  display_types: ["data"]
+)]
 class AZNewsDataFieldRow extends DataFieldRow {
 
   /**
@@ -252,6 +253,47 @@ class AZNewsDataFieldRow extends DataFieldRow {
 
                 case 'default':
                   break;
+          }
+          $items[] = $item;
+        }
+        return $items;
+      },
+      // Serialize media image as file URL.
+      'field_az_media_image' => $image_serializer,
+      'field_az_media_thumbnail_image' => $image_serializer,
+      // Serialize the taxonomy terms as an array of labels.
+      'field_az_news_tags' => function ($value, $entity) {
+        $items = [];
+        $terms = $this->entityTypeManager->getStorage('taxonomy_term')->loadMultiple($value);
+        foreach ($terms as $term) {
+          if (!$term->access('view')) {
+            continue;
+          }
+          $items[] = $term->label();
+        }
+        return $items;
+      },
+      // Serialize the taxonomy terms as an array of enterprise keys.
+      'field_az_enterprise_attributes' => function ($value, $entity) {
+        $items = [];
+        if (!empty($value)) {
+          $term_storage = $this->entityTypeManager->getStorage('taxonomy_term');
+
+          $terms = $this->entityTypeManager->getStorage('taxonomy_term')->getQuery()
+            ->accessCheck(TRUE)
+            ->addTag('taxonomy_term_access')
+            ->condition('vid', 'az_enterprise_attributes')
+            ->condition('tid', $value, 'IN')
+            ->condition('status', 1)
+            ->sort('tid')->execute();
+          $terms = $term_storage->loadMultiple($terms);
+          foreach ($terms as $term) {
+            if (!$term->access('view')) {
+              continue;
+            }
+            if (!empty($term->parent->entity)) {
+              if (!empty($term->field_az_attribute_key->value) && !empty($term->parent->entity->field_az_attribute_key->value)) {
+                $items[$term->parent->entity->field_az_attribute_key->value][] = $term->field_az_attribute_key->value;
               }
             }
             break;

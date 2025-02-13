@@ -25,6 +25,9 @@ source:
       name: field_az_lname
       selector: az_lname
     -
+      name: field_az_suffix
+      selector: az_suffix
+    -
       name: field_az_email
       selector: az_email
     -
@@ -54,6 +57,9 @@ source:
     -
       name: filename
       selector: az_photo
+    -
+      name: netid
+      selector: netid
 
 process:
   type:
@@ -63,6 +69,8 @@ process:
   field_az_fname: field_az_fname
 
   field_az_lname: field_az_lname
+
+  field_az_suffix: field_az_suffix
 
   field_az_email: field_az_email
 
@@ -126,6 +134,8 @@ process:
       source: filename
       migration:
         - az_demo_image_file
+
+  field_az_netid: netid
 
 destination:
   plugin: entity:node

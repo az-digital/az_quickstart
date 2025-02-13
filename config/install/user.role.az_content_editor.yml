@@ -3,11 +3,12 @@ status: true
 dependencies: {  }
 id: az_content_editor
 label: 'Content editor'
-weight: 2
+weight: -6
 is_admin: false
 permissions:
   - 'access administration pages'
   - 'access any webform configuration'
+  - 'access az_curated_views'
   - 'access block library'
   - 'access coffee'
   - 'access content overview'
@@ -92,8 +93,8 @@ permissions:
   - 'edit any webform content'
   - 'edit author entities'
   - 'edit behavior plugin settings'
-  - 'edit own az_carousel_item content'
   - 'edit own az_audio media'
+  - 'edit own az_carousel_item content'
   - 'edit own az_document media'
   - 'edit own az_event content'
   - 'edit own az_flexible_page content'
@@ -114,14 +115,14 @@ permissions:
   - 'reschedule smart date recur instances'
   - 'revert all author revisions'
   - 'revert all revisions'
-  - 'revert any az_flexible_block block content revisions'
-  - 'revert any az_quick_links block content revisions'
-  - 'revert az_carousel_item revisions'
   - 'revert any az_audio media revisions'
   - 'revert any az_document media revisions'
+  - 'revert any az_flexible_block block content revisions'
   - 'revert any az_image media revisions'
+  - 'revert any az_quick_links block content revisions'
   - 'revert any az_remote_video media revisions'
   - 'revert any az_video media revisions'
+  - 'revert az_carousel_item revisions'
   - 'revert az_event revisions'
   - 'revert az_flexible_page revisions'
   - 'revert az_news revisions'

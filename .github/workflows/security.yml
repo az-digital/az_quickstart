@@ -16,7 +16,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
       - name: Find the push source branch name
         if: ${{ github.event_name != 'pull_request' }}
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
@@ -49,10 +49,10 @@ jobs:
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
           composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
-      - name: Check dependencies for vulnerabilities
-        uses: symfonycorp/security-checker-action@v5
-        with:
-          lock: az-quickstart-scaffolding/composer.lock
+      - name: Audit composer dependencies
+        run: |
+          cd az-quickstart-scaffolding
+          composer audit
   code-check:
     name: Static Code Check
     runs-on: ubuntu-latest
@@ -62,7 +62,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2'
+          php-version: '8.3'
       - name: Find the push source branch name
         if: ${{ github.event_name != 'pull_request' }}
         run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}

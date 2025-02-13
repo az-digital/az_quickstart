@@ -1,7 +1,8 @@
 # Arizona Quickstart
 
 Demonstration/starter Drupal distribution and installation profile that packages
-various features consistent with community best practices and UArizona brand strategy.
+various features consistent with community best practices and University of
+Arizona brand strategy.
 
 ## A Complete Customized Drupal
 
@@ -27,18 +28,18 @@ See our [contributing](./CONTRIBUTING.md) document for detailed instructions on
 how to contribute including:
 
 * What you'll need to [get started](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#things-youll-need-to-get-started)
-* How to [report a bug or request a new feature](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#submitting-a-bugissuefeature-request)
-* How to [submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-requests)
+* [How to create issues and pull requests](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#creating-issues-and-pull-requests)
+* [How to submit a pull request](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#pull-request-guidelines)
 * [Local development](https://github.com/az-digital/az_quickstart/blob/main/CONTRIBUTING.md#local-development)
 
 ## Where to Install Your Quickstart Site
 
-The University's Campus Web Services group provides ready-to-use sites based on
+The university's Campus Web Services group provides ready-to-use sites based on
 Quickstart for anyone who isn't comfortable with web development or system
 administration. Behind the scenes, a web hosting service called Pantheon hosts
 these sites, so in cases where people require more control and flexibility
 in a Quickstart site than these can provide, there are ways they can also host
-it independently on Pantheon, and many important University sites are already
+it independently on Pantheon, and many important university sites are already
 there. However, there are many other options for hosting web sites based on
 Arizona Quickstart; the only caveat is that anyone following one of these has
 to maintain their responsibility for keeping the system and web site secure

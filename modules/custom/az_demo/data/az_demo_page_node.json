@@ -8,7 +8,7 @@
       "az_page_category"  : "Home Page",
       "az_main_content"  : "1|15",
       "az_media_image":"lynx.jpg",
-      "az_summary" : ""
+      "az_summary" : "Email wilburwildcat@arizona.edu for more information."
     },
     {
       "id":2,
@@ -46,7 +46,7 @@
       "path" : "/pages/accordions",
       "exclude_title" : false,
       "az_page_category"  : "Accordions",
-      "az_main_content"  : "",
+      "az_main_content"  : "300",
       "az_media_image"    : "",
       "az_summary" : ""
     },
@@ -187,7 +187,7 @@
       "path" : "/pages/news-view-paragraphs",
       "exclude_title" : true,
       "az_page_category" : "Views",
-      "az_main_content" : "100|101|102",
+      "az_main_content" : "100|101|102|191",
       "az_media_image" : "",
       "az_summary" : "A flexible page with news views."
     },
@@ -197,7 +197,7 @@
       "path" : "/pages/person-view-paragraphs",
       "exclude_title" : true,
       "az_page_category" : "Views",
-      "az_main_content" : "103",
+      "az_main_content" : "103|111|112",
       "az_media_image" : "",
       "az_summary" : "Person Grid 3-column."
     },
@@ -270,6 +270,16 @@
       "az_main_content" : "108",
       "az_media_image" : "",
       "az_summary" : "A page with views better exposed filters block."
+    },
+    {
+      "id":28,
+      "title" : "Publications",
+      "path" : "/publications",
+      "exclude_title" : false,
+      "az_page_category" : "Publications",
+      "az_main_content" : "190",
+      "az_media_image" : "",
+      "az_summary" : "A page with publications."
     }
   ]
 }

@@ -1,11 +1,12 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Drupal\az_event_trellis\Plugin\migrate\source;
 
-use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
 use Drupal\migrate\Plugin\MigrationInterface;
+use Drupal\migrate\Plugin\migrate\source\SourcePluginBase;
+use Drupal\migrate\Row;
 
 /**
  * Source plugin for retrieving data via Trellis events.
@@ -101,6 +102,16 @@ class AZTrellisEventSource extends SourcePluginBase {
     // Return an iterable.
     $obj = new \ArrayObject($results);
     return $obj->getIterator();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function prepareRow(Row $row) {
+    // Trellis IDs from source configuration can affect the hash of the row.
+    $row->setSourceProperty('trellis_ids', []);
+    // Perform normal source plugin hashing.
+    return parent::prepareRow($row);
   }
 
   /**
