@@ -12,3 +12,4 @@ dependencies:
   - node
   - path
   - pathauto
+  - remote_stream_wrapper

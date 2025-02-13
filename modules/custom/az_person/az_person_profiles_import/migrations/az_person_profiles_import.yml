@@ -42,6 +42,10 @@ source:
     -
       name: degrees
       selector: 'Degrees'
+    -
+      name: image_url
+      label: 'Image URL'
+      selector: 'Person/photo_url'
 
 process:
   nid:
