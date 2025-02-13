@@ -390,7 +390,7 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
  * Add style overrides for Chosen.
  */
 function az_core_library_info_alter(array &$libraries, $module) {
-  if (\Drupal::service('router.admin_context')->isAdminRoute() && $module === 'chosen' && isset($libraries['chosen.claro'])) {
+  if ($module === 'chosen' && isset($libraries['chosen.claro'])) {
     $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
   }
 }
