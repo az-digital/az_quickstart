@@ -6,28 +6,27 @@ dependencies:
     - field.field.node.az_person.field_az_attachments
     - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
-    - field.field.node.az_person.field_az_courses
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
     - field.field.node.az_person.field_az_interests
+    - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_metatag
     - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
-    - field.field.node.az_person.field_az_publications
     - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - field.field.node.az_person.field_az_work_experience
     - image.style.az_medium
     - node.type.az_person
   module:
-    - az_accordion
     - field_group
     - file
     - link
@@ -253,6 +252,7 @@ third_party_settings:
         - field_az_degrees
         - field_az_work_experience
         - field_az_awards
+        - field_az_licensure_certification
       label: Experience
       parent_name: group_tabs
       region: content
@@ -269,8 +269,6 @@ third_party_settings:
       children:
         - group_accordion_card
         - group_interests
-        - group_courses
-        - group_publications
       label: Tabs
       parent_name: group_col_bio
       region: content
@@ -283,36 +281,6 @@ third_party_settings:
         label_as_html: false
         direction: horizontal
         width_breakpoint: 640
-    group_courses:
-      children:
-        - field_az_courses
-      label: Courses
-      parent_name: group_tabs
-      region: content
-      weight: 9
-      format_type: tab
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        formatter: closed
-        description: ''
-    group_publications:
-      children:
-        - field_az_publications
-      label: 'Scholarly Contributions'
-      parent_name: group_tabs
-      region: content
-      weight: 10
-      format_type: tab
-      format_settings:
-        classes: ''
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        formatter: closed
-        description: ''
     group_interests:
       children:
         - field_az_interests
@@ -362,14 +330,6 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-  field_az_courses:
-    type: az_accordion_default
-    label: above
-    settings:
-      foo: bar
-    third_party_settings: {  }
-    weight: 19
-    region: content
   field_az_degrees:
     type: string
     label: above
@@ -391,6 +351,13 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 1
+    region: content
+  field_az_licensure_certification:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_az_links:
     type: link
@@ -448,13 +415,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 11
-    region: content
-  field_az_publications:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 20
     region: content
   field_az_suffix:
     type: string
