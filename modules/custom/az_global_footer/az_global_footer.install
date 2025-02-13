@@ -352,7 +352,7 @@ function az_global_footer_update_1021201() {
       }
     }
 
-    // Update the weights of links to fill the gap left by 
+    // Update the weights of links to fill the gap left by
     // the deleted Diversity link.
     if ($diversity_link_weight !== NULL) {
       $weight = $menu_link_content->getWeight();
