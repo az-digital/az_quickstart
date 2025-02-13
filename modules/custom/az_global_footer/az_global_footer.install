@@ -328,3 +328,38 @@ function az_global_footer_update_1021101() {
     '%outreach' => count($outreach_link_ids),
   ]);
 }
+
+
+/**
+ * Make update to global footer link (az_quickstart #4066).
+ */
+function az_global_footer_update_1021201() {
+
+	// Delete Diversity link and update weights of links
+	$diversity_link_ids = [];
+	$diversity_link_weight = NULL;	
+	$topics_menu_ids = \Drupal::entityQuery('menu_link_content')
+		->accessCheck(FALSE)
+		->condition('menu_name', 'az-footer-topics')
+		->execute();
+	foreach ($topics_menu_ids as $id) {
+		/** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+		$menu_link_content = MenuLinkContent::load($id);
+		if ($menu_link_content !== NULL) {
+			if ($menu_link_content->getTitle() === 'Diversity' && $menu_link_content->getUrlObject()->toString() === 'https://diversity.arizona.edu') {
+				$diversity_link_ids[] = $id;
+				$diversity_link_weight = $menu_link_content->getWeight();
+				$menu_link_content->delete();
+			}
+		}
+
+		// Update the weights of links to fill the gap left by the deleted Diversity link
+		if ($diversity_link_weight !== NULL) {
+			$weight = $menu_link_content->getWeight();
+			if ($menu_link_content->getWeight() > $diversity_link_weight) {
+				$menu_link_content->set('weight', --$weight);
+				$menu_link_content->save();
+			}
+		}
+	}
+}
