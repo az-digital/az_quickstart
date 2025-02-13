@@ -139,7 +139,6 @@ permissions:
   - 'use editorial transition az_unpublish'
   - 'use editorial transition create_new_draft'
   - 'use text format az_standard'
-  - 'use text format lists'
   - 'use workbench access'
   - 'view all author revisions'
   - 'view all media revisions'

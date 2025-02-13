@@ -20,7 +20,6 @@ permissions:
   - 'edit own az_image media'
   - 'edit own az_person content'
   - 'use text format az_standard'
-  - 'use text format lists'
   - 'view own unpublished content'
   - 'view own unpublished media'
   - 'view the administration theme'
