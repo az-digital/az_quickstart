@@ -330,7 +330,7 @@ function az_global_footer_update_1021101() {
 }
 
 /**
- * Make update to global footer link (az_quickstart #4066).
+ * Remove Diversity link from Global Footer (#4065)
  */
 function az_global_footer_update_1021201() {
 
@@ -352,7 +352,8 @@ function az_global_footer_update_1021201() {
       }
     }
 
-    // Update the weights of links to fill the gap left by the deleted Diversity link.
+    // Update the weights of links to fill the gap left by 
+    // the deleted Diversity link.
     if ($diversity_link_weight !== NULL) {
       $weight = $menu_link_content->getWeight();
       if ($menu_link_content->getWeight() > $diversity_link_weight) {
