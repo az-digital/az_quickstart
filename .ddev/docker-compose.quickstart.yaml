@@ -23,7 +23,7 @@ services:
   web:
     volumes:
       # Don't share our host working directory as /var/www/html. We want /var/www/html empty for composer.
-      -  ./web_data:/var/www/html
+      -  web_data:/var/www/html
       # Instead share our host working directory as a standalone package.
       - type: bind
         source: ../
@@ -34,3 +34,5 @@ services:
       - ddev-ssh-agent_socket_dir:/home/.ssh-agent
     links:
       - selenium-chrome
+volumes:
+  web_data:
