@@ -74,6 +74,7 @@ install:
   - media_entity_file_replace:media_entity_file_replace
   - extlink:extlink
   - masquerade:masquerade
+  - masquerade_log:masquerade_log  
 
 themes:
   - az_barrio
