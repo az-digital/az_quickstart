@@ -324,7 +324,7 @@ that is downloaded when installing a site locally via Lando, or DDev.  See
 ## Recommendation - macOS CLI Users
 Some composer patches may not apply correctly when running `composer install` or `composer update` on macOS. This is because the version of the `patch` utility that is included with macOS differs from the version of GNU patch included with most Linux operating systems. A workaround for this problem is to install GNU patch with [homebrew](https://brew.sh/).
 It is recommended to premptively install this formulae and avoid this composer complication altogether.
-`brew install gpatch` - [homebrew](https://brew.sh/)
+`brew install gpatch` - [homebrew formula](https://formulae.brew.sh/formula/gpatch)
 [Relevant issue discussion](https://github.com/cweagans/composer-patches/issues/423)
 
 ## Exporting Configuration
