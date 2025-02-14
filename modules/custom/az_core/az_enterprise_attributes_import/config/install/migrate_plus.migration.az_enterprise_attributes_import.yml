@@ -28,7 +28,11 @@ source:
       selector: parent
 
 process:
-  name: value
+  name:
+    - plugin: skip_on_value
+      method: row
+      source: value
+      value: '-'
   field_az_attribute_key: key
   field_az_attribute_type: type
   status:
