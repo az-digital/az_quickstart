@@ -50,10 +50,58 @@ source:
       name: publish
       label: Publish
       selector: Publish_Formula
+    -
+      name: az_enterprise_attributes
+      label: 'Enterprise Attributes'
+      selector: Attributes
+    -
+      name: format
+      label: 'Format'
+      selector: Format
   ids:
     id:
       type: string
 process:
+  pseudo_az_enterprise_attributes_format:
+    -
+      plugin: default_value
+      default_value: ['Event Format']
+  pseudo_az_enterprise_attributes_format_value:
+    -
+      plugin: explode
+      delimiter: ','
+      source: format
+  pseudo_az_enterprise_attributes_format_merged:
+    -
+      plugin: merge
+      source:
+        - '@pseudo_az_enterprise_attributes_format'
+        - '@pseudo_az_enterprise_attributes_format_value'
+    -
+      plugin: default_value
+      default_value: []
+  pseudo_az_enterprise_attributes:
+    - 
+      plugin: az_enterprise_attributes_flatten
+      source: az_enterprise_attributes
+    - 
+      plugin: flatten
+    - 
+      plugin: default_value
+      default_value: []
+
+  field_az_enterprise_attributes:
+    - plugin: merge
+      source:
+        - '@pseudo_az_enterprise_attributes_format_merged'
+        - '@pseudo_az_enterprise_attributes'
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_enterprise_attributes
+      value_key: name
+      ignore_case: true
   title: name
   field_az_trellis_id: id
   field_az_link/uri: url
