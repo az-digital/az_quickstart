@@ -1,0 +1,27 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_contributors
+    - node.type.az_publication
+  module:
+    - az_publication
+id: node.az_publication.field_az_contributors
+field_name: field_az_contributors
+entity_type: node
+bundle: az_publication
+label: Contributors
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:az_author'
+  handler_settings:
+    target_bundles: null
+    sort:
+      field: field_az_author_lname
+      direction: ASC
+    auto_create: 0
+field_type: az_entity_role_reference

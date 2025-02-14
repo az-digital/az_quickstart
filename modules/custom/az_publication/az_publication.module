@@ -11,6 +11,7 @@ use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 use Drupal\az_publication\Plugin\views\argument\AZCitationStyleArgument;
 use Drupal\filter\Entity\FilterFormat;
@@ -252,6 +253,39 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
                 $author->itemlink = $person->toUrl()->toString();
               }
               $blob->author[] = $author;
+            }
+          }
+        }
+        // @todo Don't duplicate author code.
+        if (!empty($entity->field_az_contributors)) {
+          foreach ($entity->field_az_contributors as $item) {
+            if (!empty($item->entity)) {
+              $author = new stdClass();
+              $author_entity = $repository->getTranslationFromContext($item->entity);
+              // Only literal name.
+              if (!empty($author_entity->field_az_author_literal->value) && empty($author_entity->field_az_author_parse->value)) {
+                $author->family = trim($author_entity->field_az_author_literal->value);
+              }
+              else {
+                // Map regular string fields.
+                foreach ($amap as $asource => $adestination) {
+                  if (!empty($author_entity->{$asource}->value)) {
+                    $author->{$adestination} = trim($author_entity->{$asource}->value);
+                  }
+                }
+              }
+              // Special field due to being an URL.
+              if (!empty($author_entity->field_az_author_link->uri)) {
+                $author->itemlink = $author_entity->field_az_author_link->uri;
+              }
+              // Special field handling for person reference.
+              if (!empty($author_entity->field_az_author_person->entity)) {
+                $person = $repository->getTranslationFromContext($author_entity->field_az_author_person->entity);
+                $author->itemlink = $person->toUrl()->toString();
+              }
+              // Add to schema based on role.
+              $role = $item->role ?? 'author';
+              $blob->{$role}[] = $author;
             }
           }
         }
@@ -689,6 +723,21 @@ function az_publication_form_node_az_publication_form_alter(&$form, FormStateInt
 function az_publication_form_node_az_publication_edit_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   _az_publication_form_revisions($form, $form_state, $form_id);
+}
+
+/**
+ * A callback function to provide autoentitylabel for inline entity form.
+ */
+function az_publication_inline_entity_label_callback($entity, $variables) {
+
+  foreach (Element::children($variables['form']) as $key) {
+    if (!empty($variables['form'][$key]['role']) && ($entity === $variables['form'][$key]['#entity'])) {
+      return $variables['form'][$key]['role'];
+    }
+  }
+
+  // Couldn't find our entity. Todo: make this not require entity comparison.
+  return t('No role');
 }
 
 /**
