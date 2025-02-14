@@ -9,7 +9,7 @@ use Drupal\inline_entity_form\TranslationHelper;
 use Drupal\Core\Render\Element;
 
 /**
- * Complex inline widget.
+ * Complex inline widget for references with assigned role.
  *
  * @FieldWidget(
  *   id = "az_entity_role_inline_entity_form_complex",
@@ -50,7 +50,7 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
           '#title' => $this->t('Role'),
           '#title_display' => 'invisible',
           '#default_value' => $value['role'],
-          // @todo Formalize.
+          // @todo Formalize as part of field type?
           '#options' => [
             'author' => $this->t('Author'),
             'chair' => $this->t('Chair'),

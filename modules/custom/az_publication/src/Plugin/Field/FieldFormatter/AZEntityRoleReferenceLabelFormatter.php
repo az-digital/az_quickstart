@@ -7,7 +7,7 @@ use Drupal\Core\Field\Attribute\FieldFormatter;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
- * Plugin implementation of the 'entity reference label' formatter.
+ * Plugin implementation of the 'az_entity_role_reference' formatter.
  */
 #[FieldFormatter(
   id: 'az_entity_role_reference_label',
