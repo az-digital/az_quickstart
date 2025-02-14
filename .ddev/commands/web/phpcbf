@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide PHPCBF tooling to fix coding standards.
 ## Usage: phpcbf [flags] [args]

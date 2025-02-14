@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Run drush inside the web container
 ## Usage: drush [flags] [args]

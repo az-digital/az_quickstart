@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Run all PHPUnit tests in parallel via Fastest.
 ## Usage: phpunit-fastest
