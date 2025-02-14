@@ -44,6 +44,7 @@
           if (!badge) {
             badge = document.createElement('span');
             badge.classList.add('badge', 'badge-light');
+            badge.textContent = "0";
           }
           if (activeFilterCount > 0) {
             badge.classList.remove('sr-only');
@@ -58,11 +59,10 @@
             srText = document.createElement('span');
             srText.classList.add('sr-only');
             srText.textContent = `Active filters: `;
+            badge.appendChild(srText);
           }
           // Set the text value.
-          badge.textContent = `${activeFilterCount}`;
-
-          badge.appendChild(srText);
+          badge.firstChild.textContent = `${activeFilterCount}`;
           // Replace the children of the filter count display with the badge.
           filterCountDisplay.replaceChildren(badge);
 
