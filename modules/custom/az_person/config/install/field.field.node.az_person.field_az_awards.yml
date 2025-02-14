@@ -3,10 +3,7 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_az_awards
-    - filter.format.az_standard
     - node.type.az_person
-  module:
-    - text
 id: node.az_person.field_az_awards
 field_name: field_az_awards
 entity_type: node
@@ -14,10 +11,8 @@ bundle: az_person
 label: Awards
 description: ''
 required: false
-translatable: false
+translatable: true
 default_value: {  }
 default_value_callback: ''
-settings:
-  allowed_formats:
-    - az_standard
-field_type: text_long
+settings: {  }
+field_type: string
