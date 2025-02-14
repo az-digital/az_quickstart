@@ -1,5 +1,9 @@
-.chosen-container,
+.chosen-container-single,
 .chosen-search-input,
 .chosen-drop {
     min-width: max-content;
+}
+
+.chosen-container-multi {
+  min-width: 250px;
 }
