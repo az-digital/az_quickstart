@@ -219,7 +219,7 @@ function az_quickstart_update_1020901(&$sandbox) {
 }
 
 /**
- * Enable masquerade module by default.
+ * Enable masquerade and masquerade_log modules by default.
  */
 function az_quickstart_update_1021301() {
   \Drupal::service('module_installer')->install(['masquerade']);
