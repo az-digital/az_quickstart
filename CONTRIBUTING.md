@@ -322,7 +322,7 @@ that is downloaded when installing a site locally via Lando, or DDev.  See
 "Visual Studio Code Integration"
 
 ## Recommendation - macOS CLI Users
-Some patches do not apply via composer when running 'composer install' or 'composer update -W'. The solution is to install gpatch. 
+Some composer patches may not apply correctly when running `composer install` or `composer update` on macOS. This is because the version of the `patch` utility that is included with macOS differs from the version of GNU patch included with most Linux operating systems. A workaround for this problem is to install GNU patch with [homebrew](https://brew.sh/).
 It is recommended to premptively install this formulae and avoid this composer complication altogether.
 `brew install gpatch` - [homebrew](https://brew.sh/)
 [Relevant issue discussion](https://github.com/cweagans/composer-patches/issues/423)
