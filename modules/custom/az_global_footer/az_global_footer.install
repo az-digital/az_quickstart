@@ -332,7 +332,7 @@ function az_global_footer_update_1021101() {
 /**
  * Remove Diversity link from Global Footer (#4065)
  */
-function az_global_footer_update_1021101() {
+function az_global_footer_update_1021202() {
 
   // Delete Diversity link and update weights of links.
   $diversity_link_ids = [];
