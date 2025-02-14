@@ -362,6 +362,7 @@ function az_global_footer_update_1021202() {
       }
     }
   }
+}
 
 /**
  * Update 'Health & Medical' global footer link (az_quickstart #4038)
