@@ -5,7 +5,6 @@ dependencies:
     - core.entity_view_mode.node.az_publication_reference
     - field.storage.node.field_az_publication_date
     - node.type.az_publication
-    - taxonomy.vocabulary.az_publication_categories
   module:
     - az_publication
     - better_exposed_filters
@@ -354,8 +353,7 @@ display:
             type: 'entity:taxonomy_term'
             fail: ignore
           validate_options:
-            bundles:
-              az_publication_categories: az_publication_categories
+            bundles: {  }
             access: false
             operation: view
             multiple: 1
@@ -763,8 +761,7 @@ display:
             type: 'entity:taxonomy_term'
             fail: ignore
           validate_options:
-            bundles:
-              az_publication_categories: az_publication_categories
+            bundles: {  }
             access: false
             operation: view
             multiple: 1
