@@ -328,3 +328,34 @@ function az_global_footer_update_1021101() {
     '%outreach' => count($outreach_link_ids),
   ]);
 }
+
+/**
+ * Update 'Health & Medical' global footer link (az_quickstart #4038)
+ */
+function az_global_footer_update_1021201() {
+  $updated_count = 0;
+  $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
+    ->accessCheck(FALSE)
+    ->condition('menu_name', 'az-footer-topics')
+    ->condition('title', 'Health & Medical')
+    ->condition('link__uri', 'https://healthsciences.arizona.edu/')
+    ->execute();
+
+  foreach ($menu_link_content_ids as $id) {
+    /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
+    $menu_link_content = MenuLinkContent::load($id);
+    if ($menu_link_content !== NULL) {
+      // phpcs:disable
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->title = 'Health & Medical';
+      // phpcs:disable
+      /* @phpstan-ignore-next-line */
+      $menu_link_content->link->uri = 'https://healthsciences.arizona.edu/';
+      // phpcs:enable
+      $menu_link_content->save();
+      $updated_count++;
+    }
+  }
+
+  return t('Updated %count Health & Medical menu link(s) in the global footer.', ['%count' => $updated_count]);
+}
