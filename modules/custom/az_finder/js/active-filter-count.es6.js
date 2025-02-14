@@ -44,7 +44,7 @@
           if (!badge) {
             badge = document.createElement('span');
             badge.classList.add('badge', 'badge-light');
-            badge.textContent = "0";
+            badge.textContent = '0';
           }
           if (activeFilterCount > 0) {
             badge.classList.remove('sr-only');

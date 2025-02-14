@@ -28,6 +28,7 @@
           if (!badge) {
             badge = document.createElement('span');
             badge.classList.add('badge', 'badge-light');
+            badge.textContent = '0';
           }
           if (activeFilterCount > 0) {
             badge.classList.remove('sr-only');
@@ -41,9 +42,9 @@
             srText = document.createElement('span');
             srText.classList.add('sr-only');
             srText.textContent = "Active filters: ";
+            badge.appendChild(srText);
           }
-          badge.textContent = "".concat(activeFilterCount);
-          badge.appendChild(srText);
+          badge.firstChild.textContent = "".concat(activeFilterCount);
           filterCountDisplay.replaceChildren(badge);
           var resetButton = container.querySelector('.js-active-filters-reset');
           if (resetButton) {
