@@ -3,12 +3,12 @@ status: true
 dependencies: {  }
 id: az_profile_editor
 label: 'Profile editor'
-weight: 2
+weight: -7
 is_admin: null
 permissions:
   - 'access az_curated_views'
-  - 'access environment indicator'
   - 'access contextual links'
+  - 'access environment indicator'
   - 'access toolbar'
   - 'create az_document media'
   - 'create az_image media'

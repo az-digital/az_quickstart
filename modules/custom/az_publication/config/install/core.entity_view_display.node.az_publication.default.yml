@@ -148,7 +148,7 @@ third_party_settings:
         custom_uri: '[node:field_az_publication_media:entity:field_media_az_document:entity:url]'
         target_attribute: default
   smart_title:
-    enabled: false
+    enabled: true
 id: node.az_publication.default
 targetEntityType: node
 bundle: az_publication
