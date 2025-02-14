@@ -13,6 +13,8 @@
   <exclude-pattern>*/arizona-bootstrap/*</exclude-pattern>
   <exclude-pattern>*/ua-brand-icons/*</exclude-pattern>
   <exclude-pattern>*/node_modules/*</exclude-pattern>
+  <exclude-pattern>*/vendor/*</exclude-pattern>
+  <exclude-pattern>*/.ddev/*</exclude-pattern>
 
   <!-- Code is to be tested as Drupal 8. -->
   <config name="drupal_core_version" value="8"/>
