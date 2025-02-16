@@ -1,0 +1,52 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_main_content
+    - node.type.az_publication
+  module:
+    - entity_reference_revisions
+id: node.az_publication.field_az_main_content
+field_name: field_az_main_content
+entity_type: node
+bundle: az_publication
+label: 'Page Elements'
+description: 'Provide the main text or detailed information about this publication, such as the full article, synopsis, or description, depending on the publication type.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:paragraph'
+  handler_settings:
+    target_bundles: null
+    negate: 1
+    target_bundles_drag_drop:
+      az_accordion:
+        weight: 10
+        enabled: false
+      az_cards:
+        weight: 11
+        enabled: false
+      az_contact:
+        weight: 12
+        enabled: false
+      az_photo_gallery:
+        weight: 13
+        enabled: false
+      az_splitscreen:
+        weight: 14
+        enabled: false
+      az_text:
+        weight: 2
+        enabled: false
+      az_text_background:
+        weight: 16
+        enabled: false
+      az_text_media:
+        weight: 17
+        enabled: false
+      az_view_reference:
+        weight: 18
+        enabled: false
+field_type: entity_reference_revisions
