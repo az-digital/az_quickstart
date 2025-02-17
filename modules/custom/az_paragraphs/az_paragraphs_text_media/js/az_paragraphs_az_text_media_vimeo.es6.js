@@ -70,7 +70,7 @@
             });
 
             // Event listener for starting play.
-            thisContainer.player.on('play', () => {
+            thisContainer.player.on('bufferend', () => {
               parentParagraph.classList.add('az-video-playing');
             });
 
