@@ -373,7 +373,7 @@ function az_global_footer_update_1021203() {
     ->accessCheck(FALSE)
     ->condition('menu_name', 'az-footer-topics')
     ->condition('title', 'Health & Medical')
-    ->condition('link__uri', 'https://healthsciences.arizona.edu/')
+    ->condition('link__uri', 'https://www.arizona.edu/health-sciences')
     ->execute();
 
   foreach ($menu_link_content_ids as $id) {
