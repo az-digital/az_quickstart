@@ -1,4 +1,3 @@
-mode: simple
 ignored_config_entities:
   - az_core.settings
   - az_enterprise_attributes_import.settings
