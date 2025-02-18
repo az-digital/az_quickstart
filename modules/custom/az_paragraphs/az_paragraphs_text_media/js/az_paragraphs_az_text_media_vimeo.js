@@ -7,91 +7,27 @@
 (function ($, Drupal, once) {
   Drupal.behaviors.az_vimeo_video_bg = {
     attach: function attach(context, settings) {
-      function vimeoError(error) {
-        switch (error.name) {
-          case 'PasswordError':
-            console.log('The Vimeo video is password-protected.');
-            break;
-          case 'PrivacyError':
-            console.log('The Vimeo video is private.');
-            break;
-          default:
-            console.log("Some errors occurred with the Vimeo video: ".concat(error.name));
-            break;
+      function initVimeoBackgrounds() {
+        var defaultAspectRatio = 16 / 9;
+        function vimeoError(error) {
+          switch (error.name) {
+            case 'PasswordError':
+              console.log('The Vimeo video is password-protected.');
+              break;
+            case 'PrivacyError':
+              console.log('The Vimeo video is private.');
+              break;
+            default:
+              console.log("Some errors occurred with the Vimeo video: ".concat(error.name));
+              break;
+          }
         }
-      }
-      if (window.screen && window.screen.width > 768) {
-        var defaults = {
-          vimeoId: '',
-          width: $(window).width(),
-          ratio: 16 / 9,
-          autopause: false,
-          autoplay: true,
-          controls: 0,
-          loop: true,
-          muted: true,
-          playButtonClass: 'az-video-play',
-          pauseButtonClass: 'az-video-pause',
-          minimumSupportedWidth: 600
-        };
-        var bgVideos = settings.azFieldsMedia.bgVideos;
-        var bgVideoParagraphs = document.getElementsByClassName('az-js-vimeo-video-background');
-        var tag = document.createElement('script');
-        tag.src = 'https://player.vimeo.com/api/player.js';
-        document.head.appendChild(tag);
-        tag.onload = function () {
-          $.each(bgVideoParagraphs, function (index) {
-            var thisContainer = bgVideoParagraphs[index];
-            var parentParagraph = thisContainer.parentNode;
-            var vimeoId = thisContainer.dataset.vimeoVideoId;
-            bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
-            var options = bgVideos[vimeoId];
-            var videoPlayer = thisContainer.getElementsByClassName('az-video-player')[0];
-            var VimeoPlayer = window.Vimeo;
-            thisContainer.player = new VimeoPlayer.Player(videoPlayer, {
-              id: vimeoId,
-              width: options.width,
-              height: Math.ceil(options.width / options.ratio),
-              autopause: options.autopause,
-              autoplay: thisContainer.dataset.autoplay === 'true',
-              controls: 0,
-              loop: options.loop,
-              muted: options.muted
-            });
-            thisContainer.player.on('play', function () {
-              parentParagraph.classList.add('az-video-playing');
-            });
-            var playButtons = once('play-once', bgVideoParagraphs[index].getElementsByClassName('az-video-play'));
-            if (playButtons[0]) {
-              playButtons[0].addEventListener('click', function (event) {
-                event.preventDefault();
-                bgVideoParagraphs[index].player.play().catch(function (error) {
-                  return vimeoError(error);
-                });
-                parentParagraph.classList.add('az-video-playing');
-                parentParagraph.classList.remove('az-video-paused');
-              });
-            }
-            var pauseButtons = once('pause-once', bgVideoParagraphs[index].getElementsByClassName('az-video-pause'));
-            if (pauseButtons[0]) {
-              pauseButtons[0].addEventListener('click', function (event) {
-                event.preventDefault();
-                bgVideoParagraphs[index].player.pause().catch(function (error) {
-                  return vimeoError(error);
-                });
-                parentParagraph.classList.add('az-video-paused');
-                parentParagraph.classList.remove('az-video-playing');
-              });
-            }
-          });
-        };
-        var setDimensions = function setDimensions(container) {
+        function setDimensions(container) {
           var parentParagraph = container.parentNode;
           var parentHeight = parentParagraph.offsetHeight;
           parentHeight = "".concat(parentHeight.toString(), "px");
           container.style.height = parentHeight;
-          var style = container.dataset.style;
-          if (style === 'bottom') {
+          if (container.dataset.style === 'bottom') {
             container.style.top = 0;
           }
           var thisPlayer = container.getElementsByClassName('az-video-player')[0].firstChild;
@@ -99,20 +35,18 @@
             return;
           }
           thisPlayer.style.zIndex = -100;
-          var vimeoId = container.dataset.vimeoVideoId;
           var width = container.offsetWidth;
           var height = container.offsetHeight;
-          var ratio = bgVideos[vimeoId].ratio;
-          var pWidth = Math.ceil(height * ratio);
-          var pHeight = Math.ceil(width / ratio);
-          var widthMinuspWidthdividedbyTwo = (width - pWidth) / 2;
-          widthMinuspWidthdividedbyTwo = "".concat(widthMinuspWidthdividedbyTwo.toString(), "px");
+          var pWidth = Math.ceil(height * defaultAspectRatio);
+          var pHeight = Math.ceil(width / defaultAspectRatio);
+          var widthMinuspWidthDividedByTwo = (width - pWidth) / 2;
+          widthMinuspWidthDividedByTwo = "".concat(widthMinuspWidthDividedByTwo.toString(), "px");
           var pHeightRatio = (height - pHeight) / 2;
           pHeightRatio = "".concat(pHeightRatio.toString(), "px");
-          if (width / ratio < height) {
+          if (width / defaultAspectRatio < height) {
             thisPlayer.width = pWidth;
             thisPlayer.height = height;
-            thisPlayer.style.left = widthMinuspWidthdividedbyTwo;
+            thisPlayer.style.left = widthMinuspWidthDividedByTwo;
             thisPlayer.style.top = 0;
           } else {
             thisPlayer.height = pHeight;
@@ -120,19 +54,79 @@
             thisPlayer.style.top = pHeightRatio;
             thisPlayer.style.left = 0;
           }
-        };
-        var resize = function resize() {
-          $.each(bgVideoParagraphs, function (index) {
-            setDimensions(bgVideoParagraphs[index]);
+        }
+        if (window.screen && window.screen.width > 768) {
+          var defaults = {
+            vimeoId: '',
+            autopause: false,
+            autoplay: true,
+            controls: 0,
+            loop: true,
+            muted: true,
+            playButtonClass: 'az-video-play',
+            pauseButtonClass: 'az-video-pause'
+          };
+          var bgVideos = settings.azFieldsMedia.bgVideos;
+          var bgVideoParagraphs = document.getElementsByClassName('az-js-vimeo-video-background');
+          var tag = document.createElement('script');
+          tag.src = 'https://player.vimeo.com/api/player.js';
+          document.head.appendChild(tag);
+          tag.onload = function () {
+            $.each(bgVideoParagraphs, function (index) {
+              var thisContainer = bgVideoParagraphs[index];
+              var parentParagraph = thisContainer.parentNode;
+              var vimeoId = thisContainer.dataset.vimeoVideoId;
+              bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
+              var options = bgVideos[vimeoId];
+              var videoPlayer = thisContainer.getElementsByClassName('az-video-player')[0];
+              var VimeoPlayer = window.Vimeo;
+              thisContainer.player = new VimeoPlayer.Player(videoPlayer, {
+                id: vimeoId,
+                autopause: options.autopause,
+                autoplay: thisContainer.dataset.autoplay === 'true',
+                controls: 0,
+                loop: options.loop,
+                muted: options.muted
+              });
+              thisContainer.player.on('bufferend', function () {
+                setDimensions(thisContainer);
+                parentParagraph.classList.add('az-video-playing');
+              });
+              var playButtons = thisContainer.getElementsByClassName('az-video-play');
+              if (playButtons[0]) {
+                playButtons[0].addEventListener('click', function (event) {
+                  event.preventDefault();
+                  thisContainer.player.play().catch(function (error) {
+                    return vimeoError(error);
+                  });
+                  parentParagraph.classList.add('az-video-playing');
+                  parentParagraph.classList.remove('az-video-paused');
+                });
+              }
+              var pauseButtons = thisContainer.getElementsByClassName('az-video-pause');
+              if (pauseButtons[0]) {
+                pauseButtons[0].addEventListener('click', function (event) {
+                  event.preventDefault();
+                  thisContainer.player.pause().catch(function (error) {
+                    return vimeoError(error);
+                  });
+                  parentParagraph.classList.add('az-video-paused');
+                  parentParagraph.classList.remove('az-video-playing');
+                });
+              }
+            });
+          };
+          var resize = function resize() {
+            $.each(bgVideoParagraphs, function (index) {
+              setDimensions(bgVideoParagraphs[index]);
+            });
+          };
+          $(window).on('resize.bgVideo', function () {
+            resize();
           });
-        };
-        $(window).on('load', function () {
-          resize();
-        });
-        $(window).on('resize.bgVideo', function () {
-          resize();
-        });
+        }
       }
+      once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds());
     }
   };
 })(jQuery, Drupal, once);
