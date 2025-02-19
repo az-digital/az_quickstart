@@ -23,30 +23,35 @@ use Drupal\migrate\Row;
 #[MigrateProcess('az_enterprise_attributes_flatten')]
 class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase {
 
-/**
- * {@inheritdoc}
- */
-public function transform($input, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
-  if (!is_array($input)) {
-    return $input;
-  }
+  /**
+   * {@inheritdoc}
+   */
+  public function transform($input, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
+    if (!is_array($input)) {
+      return $input;
+    }
 
-  $result = [];
+    $result = [];
+    $exceptions = [
+      'Lectures, Workshops & Panels',
+      'Tours, Attractions & Exhibits',
+    ];
 
-  foreach ($input as $value) {
-    if (is_array($value) && isset($value[0]) && is_string($value[0])) {
-      $string = trim($value[0]);
+    foreach ($input as $value) {
+      if (is_array($value) && isset($value[0]) && is_string($value[0])) {
+        $string = trim($value[0]);
 
-      // Preserve the known exception without exploding.
-      if ($string === 'Lectures, Workshops & Panels') {
-        $result[] = $string;
-      }
-      else {
-        $result = array_merge($result, array_map('trim', explode(',', $string)));
+        // Preserve known exceptions, otherwise split by commas.
+        if (in_array($string, $exceptions, TRUE)) {
+          $result[] = $string;
+        }
+        else {
+          $result = array_merge($result, array_map('trim', explode(',', $string)));
+        }
       }
     }
+
+    return array_values(array_unique($result));
   }
 
-  return array_values(array_unique($result));
-}
 }
