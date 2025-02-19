@@ -71,29 +71,20 @@ process:
       plugin: explode
       delimiter: ','
       source: format
-  pseudo_az_enterprise_attributes_format_merged:
-    -
-      plugin: merge
-      source:
-        - '@pseudo_az_enterprise_attributes_format'
-        - '@pseudo_az_enterprise_attributes_format_value'
-    -
-      plugin: default_value
-      default_value: []
   pseudo_az_enterprise_attributes:
-    - 
+    -
       plugin: az_enterprise_attributes_flatten
       source: az_enterprise_attributes
-    - 
+    -
       plugin: flatten
-    - 
+    -
       plugin: default_value
       default_value: []
 
   field_az_enterprise_attributes:
     - plugin: merge
       source:
-        - '@pseudo_az_enterprise_attributes_format_merged'
+        - '@pseudo_az_enterprise_attributes_format_value'
         - '@pseudo_az_enterprise_attributes'
     -
       plugin: entity_lookup

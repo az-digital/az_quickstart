@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\az_core\Plugin\migrate\process;
+namespace Drupal\az_enterprise_attributes_import\Plugin\migrate\process;
 
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\ProcessPluginBase;
@@ -31,8 +31,7 @@ class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase {
       return $input;
     }
 
-    // Include all first-level keys.
-    $result = array_keys($input);
+    $result = [];
 
     foreach ($input as $value) {
       if (is_array($value) && isset($value[0]) && is_string($value[0])) {
@@ -42,5 +41,4 @@ class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase {
 
     return array_values(array_unique($result));
   }
-
 }
