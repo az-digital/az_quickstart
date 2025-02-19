@@ -71,8 +71,7 @@ process:
       plugin: default_value
       default_value: []
   pseudo_az_enterprise_attributes:
-    -
-      plugin: az_enterprise_attributes_flatten
+    - plugin: az_enterprise_attributes_flatten
       source: az_enterprise_attributes
     -
       plugin: flatten

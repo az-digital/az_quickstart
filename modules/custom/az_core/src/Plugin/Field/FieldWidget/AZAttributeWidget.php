@@ -166,7 +166,6 @@ class AZAttributeWidget extends OptionsSelectWidget {
               $element[$tid]['#multiple'] = FALSE;
               $element[$tid]['#empty_value'] = '';
               break;
-
             case 'multi-select picklist':
             default:
               break;
