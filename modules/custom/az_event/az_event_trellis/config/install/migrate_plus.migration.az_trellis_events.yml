@@ -67,7 +67,7 @@ process:
       plugin: explode
       delimiter: ','
       source: format
-     -
+    -
       plugin: default_value
       default_value: []
   pseudo_az_enterprise_attributes:
