@@ -62,10 +62,6 @@ source:
     id:
       type: string
 process:
-  pseudo_az_enterprise_attributes_format:
-    -
-      plugin: default_value
-      default_value: ['Event Format']
   pseudo_az_enterprise_attributes_format_value:
     -
       plugin: explode
