@@ -31,7 +31,7 @@ class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase implements Co
    *
    * @var array|null
    */
-  protected ?array $csv_exceptions = NULL;
+  protected ?array $csvExceptions = NULL;
 
   /**
    * The entity type manager service.
@@ -73,14 +73,15 @@ class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase implements Co
    * Get CSV Exceptions by searching for terms with a comma in the name.
    *
    * @param array $vocabulary_machine_names
-   *   The machine names of vocabularies to search for terms with a comma in the name.
+   *   The machine names of vocabularies to search for terms with a comma in
+   *   the name.
    *
    * @return array
    *   An array of taxonomy term names containing a comma.
    */
-  public function getCSVExceptions(array $vocabulary_machine_names): array {
-    if ($this->csv_exceptions !== NULL) {
-      return $this->csv_exceptions;
+  public function getCsvExceptions(array $vocabulary_machine_names): array {
+    if ($this->csvExceptions !== NULL) {
+      return $this->csvExceptions;
     }
 
     $csv_exceptions = [];
@@ -99,7 +100,7 @@ class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase implements Co
       }
     }
 
-    $this->csv_exceptions = $csv_exceptions;
+    $this->csvExceptions = $csv_exceptions;
     return $csv_exceptions;
   }
 
@@ -112,7 +113,7 @@ class AZEnterpriseAttributesArrayFlatten extends ProcessPluginBase implements Co
     }
 
     $result = [];
-    $csv_exceptions = array_flip($this->getCSVExceptions(['az_enterprise_attributes']));
+    $csv_exceptions = array_flip($this->getCsvExceptions(['az_enterprise_attributes']));
     foreach ($input as $value) {
       if (is_array($value) && isset($value[0]) && is_string($value[0])) {
         $string = trim($value[0]);
