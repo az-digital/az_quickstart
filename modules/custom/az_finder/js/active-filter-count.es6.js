@@ -39,12 +39,39 @@
 
         const updateActiveFilterDisplay = () => {
           const activeFilterCount = calculateActiveFilterCount();
-          filterCountDisplay.textContent = `(${activeFilterCount})`;
+          // See if the badge is already present.
+          let badge = filterCountDisplay.querySelector('.badge');
+          if (!badge) {
+            badge = document.createElement('span');
+            badge.classList.add('badge', 'badge-light');
+            badge.textContent = '0';
+          }
+          if (activeFilterCount > 0) {
+            badge.classList.remove('sr-only');
+            badge.classList.remove('position-absolute');
+          } else {
+            badge.classList.add('sr-only');
+            badge.classList.add('position-absolute');
+          }
+          let srText = badge.querySelector('.sr-only');
+          if (!srText) {
+            // Create the screen reader-only text.
+            srText = document.createElement('span');
+            srText.classList.add('sr-only');
+            srText.textContent = `Active filters: `;
+            badge.appendChild(srText);
+          }
+          // Set the text value.
+          badge.firstChild.textContent = `${activeFilterCount}`;
+          // Replace the children of the filter count display with the badge.
+          filterCountDisplay.replaceChildren(badge);
+
+          // Handle the reset button visibility.
           const resetButton = container.querySelector(
             '.js-active-filters-reset',
           );
+
           if (resetButton) {
-            // Ensure resetButton exists before trying to modify it
             if (alwaysDisplayResetButton || activeFilterCount > 0) {
               resetButton.classList.remove('d-none');
             } else {
@@ -69,7 +96,7 @@
           { passive: true },
         );
 
-        // Initial update call
+        // Initial update call.
         updateActiveFilterDisplay();
       });
     },
