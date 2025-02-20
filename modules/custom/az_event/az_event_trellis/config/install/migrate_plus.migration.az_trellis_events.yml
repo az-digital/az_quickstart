@@ -69,31 +69,19 @@ process:
       delimiter: ','
   pseudo_category[]:
     -
-      plugin: get
-      source: az_enterprise_attributes/0/Category/0
-    -
       plugin: explode
+      source: az_enterprise_attributes/0/Category/0
       delimiter: '//'
   pseudo_audiences[]:
     -
-      plugin: get
-      source: az_enterprise_attributes/0/Audiences/0
-    -
       plugin: explode
+      source: az_enterprise_attributes/0/Audiences/0
       delimiter: ','
-    -
-      plugin: callback
-      callable: trim
   pseudo_topic[]:
     -
-      plugin: get
-      source: az_enterprise_attributes/0/Topic/0
-    -
       plugin: explode
+      source: az_enterprise_attributes/0/Topic/0
       delimiter: ','
-    -
-      plugin: callback
-      callable: trim
   field_az_enterprise_attributes:
     - plugin: merge
       source:
@@ -101,6 +89,13 @@ process:
         - '@pseudo_topic[]'
         - '@pseudo_category[]'
         - '@pseudo_format[]'
+    -
+      plugin: multiple_values
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: single_value
     -
       plugin: entity_lookup
       entity_type: taxonomy_term
