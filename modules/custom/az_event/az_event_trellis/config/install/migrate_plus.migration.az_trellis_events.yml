@@ -64,10 +64,8 @@ source:
 process:
   pseudo_format[]:
     -
-      plugin: get
-      source: format
-    -
       plugin: explode
+      source: format
       delimiter: ','
   pseudo_category[]:
     -
