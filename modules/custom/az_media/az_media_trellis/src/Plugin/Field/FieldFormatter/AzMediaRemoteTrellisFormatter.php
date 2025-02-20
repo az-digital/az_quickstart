@@ -27,7 +27,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    * {@inheritdoc}
    */
   public static function getUrlRegexPattern() {
-    // return '/^https:\/\/calendar\.google\.com\/calendar\/embed\?src=/';
     return '/^https:\/\/forms-a\.trellis\.arizona\.edu\/181\?tfa_4=/';
   }
 
