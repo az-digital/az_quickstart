@@ -62,28 +62,50 @@ source:
     id:
       type: string
 process:
-  pseudo_az_enterprise_attributes_format_value:
+  pseudo_format[]:
+    -
+      plugin: get
+      source: format
     -
       plugin: explode
       delimiter: ','
-      source: format
+  pseudo_category[]:
     -
-      plugin: default_value
-      default_value: []
-  pseudo_az_enterprise_attributes:
-    - plugin: az_enterprise_attributes_flatten
+      plugin: get
+      source: az_enterprise_attributes/0/Category/0
+    -
+      plugin: explode
+      delimiter: '//'
+  pseudo_audiences[]:
+    -
+      plugin: skip_on_empty
       source: az_enterprise_attributes
     -
-      plugin: flatten
+      plugin: get
+      source: az_enterprise_attributes/0/Audiences/0
     -
-      plugin: default_value
-      default_value: []
-
+      plugin: explode
+      delimiter: ','
+    -
+      plugin: callback
+      callable: trim
+  pseudo_topic[]:
+    -
+      plugin: get
+      source: az_enterprise_attributes/0/Topic/0
+    -
+      plugin: explode
+      delimiter: ','
+    -
+      plugin: callback
+      callable: trim
   field_az_enterprise_attributes:
     - plugin: merge
       source:
-        - '@pseudo_az_enterprise_attributes_format_value'
-        - '@pseudo_az_enterprise_attributes'
+        - '@pseudo_audiences[]'
+        - '@pseudo_topic[]'
+        - '@pseudo_category[]'
+        - '@pseudo_format[]'
     -
       plugin: entity_lookup
       entity_type: taxonomy_term
