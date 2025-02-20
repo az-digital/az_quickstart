@@ -78,9 +78,6 @@ process:
       delimiter: '//'
   pseudo_audiences[]:
     -
-      plugin: skip_on_empty
-      source: az_enterprise_attributes
-    -
       plugin: get
       source: az_enterprise_attributes/0/Audiences/0
     -
