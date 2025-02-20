@@ -2,16 +2,16 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.az_media_trellis.field_media_az_media_remote
-    - media.type.az_media_trellis
+    - field.field.media.az_trellis.field_media_az_media_remote
+    - media.type.az_trellis
   module:
     - path
   enforced:
     module:
       - az_media_trellis
-id: media.az_media_trellis.default
+id: media.az_trellis.default
 targetEntityType: media
-bundle: az_media_trellis
+bundle: az_trellis
 mode: default
 content:
   created:

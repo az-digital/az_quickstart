@@ -3,14 +3,14 @@ status: true
 dependencies:
   config:
     - field.storage.media.field_media_az_media_remote
-    - media.type.az_media_trellis
+    - media.type.az_trellis
   enforced:
     module:
       - az_media_trellis
-id: media.az_media_trellis.field_media_az_media_remote
+id: media.az_trellis.field_media_az_media_remote
 field_name: field_media_az_media_remote
 entity_type: media
-bundle: az_media_trellis
+bundle: az_trellis
 label: 'Trellis URL'
 description: ''
 required: true

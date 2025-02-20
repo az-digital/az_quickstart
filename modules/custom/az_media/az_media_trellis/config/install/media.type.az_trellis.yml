@@ -6,9 +6,9 @@ dependencies:
   enforced:
     module:
       - az_media_trellis
-id: az_media_trellis
+id: az_trellis
 label: Trellis
-description: ''
+description: 'Embed Trellis forms'
 source: media_remote
 queue_thumbnail_downloads: false
 new_revision: false
