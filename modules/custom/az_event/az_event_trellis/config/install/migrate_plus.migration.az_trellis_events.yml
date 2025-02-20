@@ -67,10 +67,7 @@ process:
       plugin: explode
       source: format
       delimiter: ','
-  pseudo_category[]:
-    -
-      plugin: get
-      source: az_enterprise_attributes/0/Category
+  pseudo_category[]: az_enterprise_attributes/0/Category
   pseudo_audiences[]:
     -
       plugin: explode
