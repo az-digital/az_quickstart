@@ -105,6 +105,13 @@ tooling:
   eslint:
     service: node
     cmd: yarn run eslint --color
+  # Tooling to apply a recipe
+  recipe:
+    service: appserver
+    dir: /app/web
+    cmd:
+      # Apply a recipe. Recipe path comes from tooling command.
+      - /usr/local/bin/php core/scripts/drupal recipe
   # Provide a composer tooling that executes commands in the profile and then updates the attached scaffolding.
   composer:
     service: appserver
