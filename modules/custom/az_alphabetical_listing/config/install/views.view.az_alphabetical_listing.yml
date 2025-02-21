@@ -334,7 +334,8 @@ display:
         - 'languages:language_interface'
         - 'user.node_grants:view'
         - user.permissions
-      tags: {  }
+      tags:
+        - 'config:field.storage.node.field_az_alphabetical_index'
   az_alphabetical_listing_main:
     id: az_alphabetical_listing_main
     display_title: 'Alphabetical Listing'
