@@ -60,7 +60,7 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha3",
         "drupal/config_update": "2.0.0-alpha3",
-        "drupal/core-recommended": "10.4.2",
+        "drupal/core-recommended": "10.4.3",
         "drupal/crop": "2.4.0",
         "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.2",
@@ -76,7 +76,7 @@
         "drupal/field_group_link": "3.2.0",
         "drupal/flag": "4.0.0-beta6",
         "drupal/google_tag": "2.0.8",
-        "drupal/honeypot": "2.2.1",
+        "drupal/honeypot": "2.2.2",
         "drupal/image_widget_crop": "2.4.0",
         "drupal/imagemagick": "4.0.2",
         "drupal/inline_entity_form": "3.0.0-rc20",
@@ -188,6 +188,9 @@
             },
             "drupal/menu_block": {
                 "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
+            },
+            "drupal/metatag": {
+                "MetatagManager uasort() TypeError (3503253)": "https://www.drupal.org/files/issues/2025-02-17/3503253-4.patch"
             },
             "drupal/migrate_plus": {
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
