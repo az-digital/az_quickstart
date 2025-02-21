@@ -15,7 +15,6 @@ use Drupal\Core\Template\Attribute;
 use Drupal\az_finder\Service\AZFinderIcons;
 use Drupal\better_exposed_filters\BetterExposedFiltersHelper;
 use Drupal\better_exposed_filters\Plugin\better_exposed_filters\filter\FilterWidgetBase;
-use Drupal\taxonomy\Plugin\views\filter\TaxonomyIndexTid;
 use Drupal\views\ViewExecutable;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -257,7 +256,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
    *   The form array with the options set.
    */
   protected function setFormOptions(array &$form, $field_id): array {
-    $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
+    if (isset($form[$field_id]['#options'])) {
+      $form[$field_id]['#options'] = !empty($form[$field_id]['#options']) ? BetterExposedFiltersHelper::flattenOptions($form[$field_id]['#options']) : $form[$field_id]['#options'];
+    }
+    else {
+      $form[$field_id]['#options'] = [];
+    }
     $form[$field_id]['#hierarchy'] = !empty($this->handler->options['hierarchy']);
     $form[$field_id]['#theme'] = 'az_finder_widget';
     $form[$field_id]['#type'] = 'checkboxes';
