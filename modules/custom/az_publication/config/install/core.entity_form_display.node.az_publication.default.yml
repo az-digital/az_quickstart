@@ -66,6 +66,7 @@ content:
       label_plural: Authors
       allow_new: true
       allow_existing: true
+      multiple_use: false
       match_operator: CONTAINS
       allow_duplicate: false
       collapsible: true
@@ -85,6 +86,7 @@ content:
       allow_new: '1'
       allow_existing: '1'
       match_operator: CONTAINS
+      multiple_use: '1'
       removed_reference: optional
       revision: 0
       override_labels: 0

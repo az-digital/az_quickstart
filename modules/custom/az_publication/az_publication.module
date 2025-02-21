@@ -111,6 +111,9 @@ function az_publication_theme_suggestions_block_alter(array &$suggestions, array
  */
 function az_publication_theme() {
   return [
+    'az_inline_entity_role_form_entity_table' => [
+      'render element' => 'form',
+    ],
     'block__views_block__az_publications_az_author_person' => [
       'template' => 'block--views-block--az-publications-az-author-person',
       'base hook' => 'block',
@@ -750,6 +753,154 @@ function az_publication_inline_entity_label_callback(EntityInterface $entity, $v
   // Couldn't find our entity.
   // @todo make this not require entity comparison.
   return t('No role');
+}
+
+/**
+ * Prepares variables for az_inline_entity_role_form_entity_table templates.
+ *
+ * Default template: az-inline-entity-role-form-entity-table.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - form: A render element representing the form.
+ */
+function template_preprocess_az_inline_entity_role_form_entity_table(array &$variables) {
+  $form = $variables['form'];
+  $entity_type = $form['#entity_type'];
+
+  $fields = $form['#table_fields'];
+  $has_tabledrag = \Drupal::entityTypeManager()->getHandler($entity_type, 'inline_form')->isTableDragEnabled($form);
+
+  // Sort the fields by weight.
+  uasort($fields, '\Drupal\Component\Utility\SortArray::sortByWeightElement');
+
+  $header = [];
+  if ($has_tabledrag) {
+    $header[] = ['data' => '', 'class' => ['ief-tabledrag-header']];
+    $header[] = [
+      'data' => t('Sort order'),
+      'class' => ['ief-sort-order-header'],
+    ];
+  }
+  // Add header columns for each field.
+  $first = TRUE;
+  foreach ($fields as $field_name => $field) {
+    $column = [
+      'data' => $field['label'],
+      'class' => ['inline-entity-form-' . $entity_type . '-' . $field_name],
+    ];
+    // The first column gets a special class.
+    if ($first) {
+      $column['class'][] = 'ief-first-column-header';
+      $first = FALSE;
+    }
+    $header[] = $column;
+  }
+  $header[] = t('Role');
+  $header[] = t('Operations');
+
+  // Build an array of entity rows for the table.
+  $rows = [];
+  foreach (Element::children($form) as $key) {
+    /** @var \Drupal\Core\Entity\FieldableEntityInterface $entity */
+    $entity = $form[$key]['#entity'];
+    $row_classes = ['ief-row-entity'];
+    $cells = [];
+    if ($has_tabledrag) {
+      $cells[] = [
+        'data' => ['#plain_text' => ''],
+        '#wrapper_attributes' => ['class' => ['ief-tabledrag-handle']],
+      ];
+      $cells[] = ['data' => $form[$key]['delta']];
+      $row_classes[] = 'draggable';
+    }
+    // Add a special class to rows that have a form underneath, to allow
+    // for additional styling.
+    if (!empty($form[$key]['form'])) {
+      $row_classes[] = 'ief-row-entity-form';
+    }
+
+    foreach ($fields as $field_name => $field) {
+      if ($field['type'] === 'label') {
+        $data = ['#markup' => $variables['form'][$key]['#label']];
+      }
+      elseif ($field['type'] === 'field' && $entity->hasField($field_name)) {
+        $display_options = ['label' => 'hidden'];
+        if (isset($field['display_options'])) {
+          $display_options += $field['display_options'];
+        }
+        $data = $entity->get($field_name)->view($display_options);
+      }
+      elseif ($field['type'] === 'callback') {
+        $arguments = [
+          'entity' => $entity,
+          'variables' => $variables,
+        ];
+        if (isset($field['callback_arguments'])) {
+          $arguments = array_merge($arguments, $field['callback_arguments']);
+        }
+
+        $data = call_user_func_array($field['callback'], array_values($arguments));
+
+        // Backward compatibility for callbacks that just provide a string not
+        // an array.
+        if (!is_array($data)) {
+          $data = ['#markup' => $data];
+        }
+      }
+      else {
+        $data = ['#markup' => t('N/A')];
+      }
+
+      $cells[$field_name] = array_merge($data, ['#wrapper_attributes' => ['class' => ['inline-entity-form-' . $entity_type . '-' . $field_name]]]);
+    }
+
+    // Display the role field from the form.
+    $cells['role'] = $form[$key]['role'] ?? ['#markup' => t('N/A')];
+
+    // Add the buttons belonging to the "Operations" column, when entity is not
+    // being displayed as a form.
+    if (empty($form[$key]['form'])) {
+      $cells['actions'] = $form[$key]['actions'];
+    }
+    // Create the row.
+    $rows[] = $cells + ['#attributes' => ['class' => $row_classes]];
+    // If the current entity array specifies a form, output it in the next row.
+    if (!empty($form[$key]['form'])) {
+      $row = [];
+      $row[] = $form[$key]['form'] + ['#wrapper_attributes' => ['colspan' => count($fields) + 1]];
+      $rows[] = $row + [
+        '#attributes' =>
+        [
+          'class' => ['ief-row-form'],
+          'no_striping' => TRUE,
+        ],
+      ];
+    }
+  }
+
+  if (!empty($rows)) {
+    $tabledrag = [];
+    if ($has_tabledrag) {
+      $tabledrag = [
+        [
+          'action' => 'order',
+          'relationship' => 'sibling',
+          'group' => 'ief-entity-delta',
+        ],
+      ];
+    }
+
+    $variables['table'] = [
+      '#type' => 'table',
+      '#header' => $header,
+      '#attributes' => [
+        'id' => 'ief-entity-table-' . $form['#id'],
+        'class' => ['ief-entity-table'],
+      ],
+      '#tabledrag' => $tabledrag,
+    ] + $rows;
+  }
 }
 
 /**

@@ -30,7 +30,6 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_volume
     - node.type.az_publication
   module:
-    - az_publication
     - field_group
     - smart_title
     - text
@@ -162,14 +161,6 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
-  field_az_contributors:
-    type: az_entity_role_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 2
-    region: content
   field_az_publication_abstract:
     type: text_default
     label: above
@@ -184,7 +175,7 @@ content:
       view_mode: az_medium
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 3
     region: content
   field_az_publication_media:
     type: entity_reference_entity_view
@@ -203,6 +194,7 @@ content:
 hidden:
   field_az_accessed_date: true
   field_az_authors: true
+  field_az_contributors: true
   field_az_publication_approximate: true
   field_az_publication_category: true
   field_az_publication_container: true

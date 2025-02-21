@@ -33,54 +33,47 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
       'inline_entity_form', $this->getIefId(),
       'entities',
     ]);
-    $entities_count = count($entities);
-    $element['entities']['#table_fields']['role'] = [
-      'type' => 'callback',
-      'callback' => 'az_publication_inline_entity_label_callback',
-      'label' => $this->t('Role'),
-      'weight' => 2,
-    ];
+    // Render as a table that understands how to output the role element.
+    $element['entities']['#theme'] = 'az_inline_entity_role_form_entity_table';
     // Loop through values.
     foreach ($entities as $key => $value) {
-      // Check if we're not rendering the form.
-      if (empty($value['form'])) {
-        $row = &$element['entities'][$key];
-        $row['role'] = [
-          '#type' => 'select',
-          '#title' => $this->t('Role'),
-          '#title_display' => 'invisible',
-          '#default_value' => $value['role'],
-          // @todo Formalize as part of field type?
-          '#options' => [
-            'author' => $this->t('Author'),
-            'chair' => $this->t('Chair'),
-            'compiler' => $this->t('Compiler'),
-            'collection-editor' => $this->t('Collection editor'),
-            'composer' => $this->t('Composer'),
-            'container-author' => $this->t('Container author'),
-            'contributor' => $this->t('Contributor'),
-            'curator' => $this->t('Curator'),
-            'director' => $this->t('Director'),
-            'editor' => $this->t('Editor'),
-            'editorial-director' => $this->t('Managing editor'),
-            'editor-translator' => $this->t('Editor and translator'),
-            'guest' => $this->t('Guest'),
-            'host' => $this->t('Host'),
-            'illustrator' => $this->t('Illustrator'),
-            'interviewer' => $this->t('Interviewer'),
-            'narrator' => $this->t('Narrator'),
-            'organizer' => $this->t('Organizer'),
-            'original-author' => $this->t('Original author'),
-            'performer' => $this->t('Performer'),
-            'producer' => $this->t('Producer'),
-            'recipient' => $this->t('Recipient'),
-            'reviewed-author' => $this->t('Author of a reviewed item'),
-            'script-writer' => $this->t('Script-writer of script or screenplay'),
-            'series-creator' => $this->t('Series creator'),
-            'translator' => $this->t('Translator'),
-          ],
-        ];
-      }
+      // Add a form element for the role.
+      $row = &$element['entities'][$key];
+      $row['role'] = [
+        '#type' => 'select',
+        '#title' => $this->t('Role'),
+        '#title_display' => 'invisible',
+        '#default_value' => $value['role'],
+        // @todo Formalize as part of field type?
+        '#options' => [
+          'author' => $this->t('Author'),
+          'chair' => $this->t('Chair'),
+          'compiler' => $this->t('Compiler'),
+          'collection-editor' => $this->t('Collection editor'),
+          'composer' => $this->t('Composer'),
+          'container-author' => $this->t('Container author'),
+          'contributor' => $this->t('Contributor'),
+          'curator' => $this->t('Curator'),
+          'director' => $this->t('Director'),
+          'editor' => $this->t('Editor'),
+          'editorial-director' => $this->t('Managing editor'),
+          'editor-translator' => $this->t('Editor and translator'),
+          'guest' => $this->t('Guest'),
+          'host' => $this->t('Host'),
+          'illustrator' => $this->t('Illustrator'),
+          'interviewer' => $this->t('Interviewer'),
+          'narrator' => $this->t('Narrator'),
+          'organizer' => $this->t('Organizer'),
+          'original-author' => $this->t('Original author'),
+          'performer' => $this->t('Performer'),
+          'producer' => $this->t('Producer'),
+          'recipient' => $this->t('Recipient'),
+          'reviewed-author' => $this->t('Author of a reviewed item'),
+          'script-writer' => $this->t('Script-writer of script or screenplay'),
+          'series-creator' => $this->t('Series creator'),
+          'translator' => $this->t('Translator'),
+        ],
+      ];
     }
 
     return $element;
