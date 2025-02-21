@@ -107,7 +107,7 @@
         "drupal/redirect": "1.11.0",
         "drupal/role_delegation": "1.3.0",
         "drupal/schema_metatag": "3.0.3",
-        "drupal/search_exclude": "3.0.0-beta1",
+        "drupal/search_exclude": "3.0.0-beta2",
         "drupal/seckit": "2.0.3",
         "drupal/slick": "3.0.4",
         "drupal/slick_views": "3.0.3",
