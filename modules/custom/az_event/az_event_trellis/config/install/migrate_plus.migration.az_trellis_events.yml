@@ -62,28 +62,36 @@ source:
     id:
       type: string
 process:
-  pseudo_az_enterprise_attributes_format_value:
+  pseudo_format[]:
     -
       plugin: explode
-      delimiter: ','
       source: format
+      delimiter: ','
+  pseudo_category[]: az_enterprise_attributes/0/Category
+  pseudo_audiences[]:
     -
-      plugin: default_value
-      default_value: []
-  pseudo_az_enterprise_attributes:
-    - plugin: az_enterprise_attributes_flatten
-      source: az_enterprise_attributes
+      plugin: explode
+      source: az_enterprise_attributes/0/Audiences/0
+      delimiter: ','
+  pseudo_topic[]:
     -
-      plugin: flatten
-    -
-      plugin: default_value
-      default_value: []
-
+      plugin: explode
+      source: az_enterprise_attributes/0/Topic/0
+      delimiter: ','
   field_az_enterprise_attributes:
     - plugin: merge
       source:
-        - '@pseudo_az_enterprise_attributes_format_value'
-        - '@pseudo_az_enterprise_attributes'
+        - '@pseudo_audiences[]'
+        - '@pseudo_topic[]'
+        - '@pseudo_category[]'
+        - '@pseudo_format[]'
+    -
+      plugin: multiple_values
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: single_value
     -
       plugin: entity_lookup
       entity_type: taxonomy_term
