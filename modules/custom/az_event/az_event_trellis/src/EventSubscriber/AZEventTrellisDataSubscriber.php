@@ -4,6 +4,7 @@ namespace Drupal\az_event_trellis\EventSubscriber;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
+use Drupal\Core\Queue\QueueFactory;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\az_event_trellis\TrellisHelper;
 use Drupal\migrate\Event\MigrateEvents;
@@ -38,6 +39,11 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
   protected $nodeStorage;
 
   /**
+   * @var \Drupal\Core\Queue\QueueFactory
+   */
+  protected $queueFactory;
+
+  /**
    * @var \Drupal\az_event_trellis\TrellisHelper
    */
   protected $trellisHelper;
@@ -63,13 +69,16 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
    *   The entity type manager service.
    * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   The currently logged in user.
+   * @param \Drupal\Core\Queue\QueueFactory $queueFactory
+   *   The queue factory.
    */
-  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser) {
+  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser, QueueFactory $queueFactory) {
     $this->trellisHelper = $trellisHelper;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->nodeStorage = $this->entityTypeManager->getStorage('node');
     $this->currentUser = $currentUser;
+    $this->queueFactory = $queueFactory;
   }
 
   /**
@@ -83,8 +92,25 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
     $ids = $event->getDestinationIdValues();
     $id = reset($ids);
     if ($migration === 'az_trellis_events') {
+      $image = $event->getRow()->get('image_url');
       $event = $this->nodeStorage->load($id);
       if (!empty($event)) {
+        if (!empty($image)) {
+          // Defer download of image until later.
+          $job = [
+            'id' => $id,
+            'id_field' => 'nid',
+            'entity_type' => 'node',
+            'media_type' => 'az_image',
+            'media_field' => 'field_az_photos',
+            'file_field' => 'field_media_az_image',
+            'filename' => 'trellis_event',
+            'url' => $image,
+            'alt' => $event->getTitle(),
+          ];
+          $this->queueFactory->get('az_deferred_media')->createItem($job);
+        }
+
         $url = $event->toUrl()->toString();
         // Only show message if current user has permission.
         if ($this->currentUser->hasPermission('create az_event content')) {
