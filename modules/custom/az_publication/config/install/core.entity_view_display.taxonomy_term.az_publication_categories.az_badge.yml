@@ -3,7 +3,7 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.taxonomy_term.az_badge
-    - taxonomy.vocabulary.az_page_categories
+    - taxonomy.vocabulary.az_publication_categories
   module:
     - smart_title
 third_party_settings:
@@ -15,9 +15,9 @@ third_party_settings:
       smart_title__classes:
         - badge
         - badge-light
-id: taxonomy_term.az_page_categories.az_badge
+id: taxonomy_term.az_publication_categories.az_badge
 targetEntityType: taxonomy_term
-bundle: az_page_categories
+bundle: az_publication_categories
 mode: az_badge
 content:
   smart_title:
