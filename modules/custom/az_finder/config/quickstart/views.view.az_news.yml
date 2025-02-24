@@ -398,7 +398,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>No results found for the applied filters.</em>'
+            value: '<em>There are no news items listed.</em>'
             format: az_standard
           tokenize: false
       filters:
