@@ -127,6 +127,7 @@
         }
       }
       once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds);
+      
     }
   };
 })(jQuery, Drupal, once);
