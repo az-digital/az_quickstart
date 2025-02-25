@@ -70,7 +70,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
         '#url' => $fieldValue['value'],
-        '#width' => $this->getSetting('width') ?? 960,
+        '#width' => $this->getSetting('width') ?? 800,
         '#height' => $this->getSetting('height') ?? 600,
       ];
     }
