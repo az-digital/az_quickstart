@@ -159,7 +159,7 @@
         }
       }
 
-      once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds());
+      once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds);
     },
   };
 })(jQuery, Drupal, once);
