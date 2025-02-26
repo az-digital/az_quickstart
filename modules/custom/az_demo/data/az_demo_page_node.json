@@ -203,7 +203,7 @@
     },
     {
       "id":21,
-      "title" : "Media Embed",
+      "title" : "Media Embeds",
       "path" : "/pages/media-embeds",
       "exclude_title" : true,
       "az_page_category" : "Media Galleries",
