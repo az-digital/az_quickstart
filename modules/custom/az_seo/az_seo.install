@@ -27,3 +27,24 @@ function az_seo_update_1021001() {
 function az_seo_update_1021101() {
   \Drupal::service('module_installer')->install(['schema_metatag']);
 }
+
+/**
+ * Install xmlsitemap config for AZ Event, News, Person and Publication.
+ */
+function az_seo_update_1021301() {
+  $config_names = [
+    'xmlsitemap.settings.node.az_event',
+    'xmlsitemap.settings.node.az_news',
+    'xmlsitemap.settings.node.az_person',
+    'xmlsitemap.settings.node.az_publication'
+  ];
+
+  $module_handler = \Drupal::service('module_handler');
+  $config_path = $module_handler->getModule('az_seo')->getPath() . '/config/quickstart';
+  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $config_storage = \Drupal::service('config.storage');
+  
+  foreach ($config_names as $name) {
+    $config_storage->write($name, $storage->read($name));
+  }
+}
