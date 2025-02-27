@@ -5,6 +5,8 @@
  * Install, update and uninstall functions for az_seo module.
  */
 
+use Drupal\Core\Config\FileStorage;
+
 /**
  * Implements hook_update_last_removed().
  */
@@ -36,14 +38,14 @@ function az_seo_update_1021301() {
     'xmlsitemap.settings.node.az_event',
     'xmlsitemap.settings.node.az_news',
     'xmlsitemap.settings.node.az_person',
-    'xmlsitemap.settings.node.az_publication'
+    'xmlsitemap.settings.node.az_publication',
   ];
 
   $module_handler = \Drupal::service('module_handler');
   $config_path = $module_handler->getModule('az_seo')->getPath() . '/config/quickstart';
-  $storage = new \Drupal\Core\Config\FileStorage($config_path);
+  $storage = new FileStorage($config_path);
   $config_storage = \Drupal::service('config.storage');
-  
+
   foreach ($config_names as $name) {
     $config_storage->write($name, $storage->read($name));
   }
