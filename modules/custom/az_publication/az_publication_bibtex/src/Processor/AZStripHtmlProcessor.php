@@ -6,7 +6,7 @@ use Drupal\Component\Utility\Html;
 use RenanBr\BibTexParser\Processor\TagCoverageTrait;
 
 /**
- * Strip html from an entry.
+ * Processor to strip html from a bibtex entry.
  */
 class AZStripHtmlProcessor {
   use TagCoverageTrait;
