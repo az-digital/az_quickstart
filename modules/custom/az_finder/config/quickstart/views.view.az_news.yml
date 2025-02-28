@@ -133,7 +133,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no news items listed.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       sorts:
@@ -398,7 +398,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no news items listed.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       filters:
@@ -905,7 +905,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no news items listed.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       filters:
@@ -1323,20 +1323,6 @@ display:
         options:
           offset: 0
           items_per_page: 3
-      empty:
-        area:
-          id: area
-          table: views
-          field: area
-          relationship: none
-          group_type: group
-          admin_label: ''
-          plugin_id: text
-          empty: true
-          content:
-            value: '<em>There are no news items listed.</em>'
-            format: az_standard
-          tokenize: false
       arguments:
         term_node_tid_depth:
           id: term_node_tid_depth
@@ -1460,7 +1446,7 @@ display:
           relationship: none
           view_mode: az_small_row
       defaults:
-        empty: false
+        empty: true
         title: false
         pager: false
         style: false
