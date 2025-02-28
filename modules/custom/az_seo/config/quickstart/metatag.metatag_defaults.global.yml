@@ -11,7 +11,7 @@ tags:
   twitter_cards_type: summary
   schema_organization_description: '[site:slogan]'
   schema_organization_name: 'University of Arizona [site:name]'
-  schema_organization_parent_organization: 'a:4:{s:5:"@type";s:19:"CollegeOrUniversity";s:4:"name";s:25:"The University of Arizona";s:3:"url";s:23:"https://www.arizona.edu";s:7:"address";a:6:{s:5:"@type";s:13:"PostalAddress";s:13:"streetAddress";s:22:"1401 E University Blvd";s:15:"addressLocality";s:6:"Tucson";s:13:"addressRegion";s:2:"AZ";s:10:"postalCode";s:5:"85721";s:14:"addressCountry";s:3:"USA";}}'
+  schema_organization_parent_organization: 'a:6:{s:5:"@type";s:23:"EducationalOrganization";s:3:"@id";s:24:"https://www.arizona.edu/";s:4:"name";s:21:"University of Arizona";s:3:"url";s:24:"https://www.arizona.edu/";s:6:"sameAs";s:240:"https://www.facebook.com/uarizona,https://x.com/uarizona,https://www.instagram.com/uarizona,https://linkedin.com/edu/university-of-arizona-17783,https://www.youtube.com/universityofarizona,https://en.wikipedia.org/wiki/University_of_Arizona";s:7:"address";a:6:{s:5:"@type";s:13:"PostalAddress";s:13:"streetAddress";s:22:"1200 E University Blvd";s:15:"addressLocality";s:6:"Tucson";s:13:"addressRegion";s:2:"AZ";s:10:"postalCode";s:5:"85721";s:14:"addressCountry";s:2:"US";}}'
   schema_organization_type: CollegeOrUniversity
   schema_organization_url: '[site:url]'
   title: '[current-page:title] | [site:name]'
