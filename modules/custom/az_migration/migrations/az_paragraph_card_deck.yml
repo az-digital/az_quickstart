@@ -112,6 +112,10 @@ process:
       map:
         uaqs_borderless_card: 1
         uaqs_landing_grid: 1
+  
+  card_deck_title_color_processed:
+    plugin: default_value
+    default_value: 'text-black'
 
   card_width_sm_processed:
     plugin: default_value
@@ -120,10 +124,6 @@ process:
   card_width_xs_processed:
     plugin: default_value
     default_value: 'col-12'
-
-  card_deck_title_color_processed:
-    plugin: default_value
-    default_value: 'text-black'
 
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
