@@ -47,6 +47,8 @@ function az_seo_update_1021301() {
   $config_storage = \Drupal::service('config.storage');
 
   foreach ($config_names as $name) {
-    $config_storage->write($name, $storage->read($name));
+    if (!\Drupal::config($name)->get()) {
+      $config_storage->write($name, $storage->read($name));
+    }
   }
 }
