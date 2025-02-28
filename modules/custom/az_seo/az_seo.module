@@ -8,14 +8,17 @@
 /**
  * Implements hook_xmlsitemap_link_alter().
  *
- * Exclude AZ News that have external link set.
+ * Exclude AZQS nodes that have an external link (az_link) set.
  */
 function az_seo_xmlsitemap_link_alter(array &$link) {
-  $nid = $link['id'];
-  $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+  $check_types = ['az_event', 'az_news', 'az_person'];
 
-  if (!empty($node->field_az_link[0]->uri)) {
-    $link['status'] = 0;
-    $link['status_override'] = 1;
+  if (in_array($link['subtype'], $check_types)) {
+    $node = \Drupal::entityTypeManager()->getStorage('node')->load($link['id']);
+
+    if (!empty($node->field_az_link[0]->uri)) {
+      $link['status'] = 0;
+      $link['status_override'] = 1;
+    }
   }
 }
