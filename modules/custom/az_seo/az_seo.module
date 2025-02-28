@@ -7,6 +7,7 @@
 
 /**
  * Implements hook_xmlsitemap_link_alter().
+ *
  * Exclude AZ News that have external link set.
  */
 function az_seo_xmlsitemap_link_alter(array &$link) {
