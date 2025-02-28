@@ -129,7 +129,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Choose how many cards appear per row. Additional cards will wrap to a new row. This selection sets the cards per row on phones.'),
       '#weight' => 2,
     ];
-    
+
     // Card deck title color.
     $form['card_deck_title_color'] = [
       '#title' => $this->t('Card group title color'),
