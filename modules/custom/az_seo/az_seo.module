@@ -4,3 +4,17 @@
  * @file
  * Contains az_seo.module.
  */
+
+/**
+ * Implements hook_xmlsitemap_link_alter().
+ * Exclude AZ News that have external link set.
+ */
+function az_seo_xmlsitemap_link_alter(array &$link) {
+  $nid = $link['id'];
+  $node = \Drupal::entityTypeManager()->getStorage('node')->load($nid);
+
+  if (!empty($node->field_az_link[0]->uri)) {
+    $link['status'] = 0;
+    $link['status_override'] = 1;
+  }
+}
