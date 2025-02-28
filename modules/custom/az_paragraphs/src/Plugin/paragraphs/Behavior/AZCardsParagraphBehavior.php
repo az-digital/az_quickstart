@@ -98,34 +98,6 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Make the whole card clickable if the link fields are populated.'),
     ];
 
-    // Card deck title color.
-    $form['card_deck_title_color'] = [
-      '#title' => $this->t('Card deck title color'),
-      '#type' => 'select',
-      '#options' => [
-        'text-black' => $this->t('Black'),
-        'text-red' => $this->t('Red'),
-        'text-bloom' => $this->t('Bloom'),
-        'text-chili' => $this->t('Chili'),
-        'text-blue' => $this->t('Blue'),
-        'text-sky' => $this->t('Sky'),
-        'text-oasis' => $this->t('Oasis'),
-        'text-azurite' => $this->t('Azurite'),
-        'text-midnight' => $this->t('Midnight'),
-        'text-cool-gray bg-dark' => $this->t('Cool Gray'),
-        'text-warm-gray bg-dark' => $this->t('Warm Gray'),
-        'text-leaf' => $this->t('Leaf'),
-        'text-river' => $this->t('River'),
-        'text-silver' => $this->t('Silver'),
-        'text-mesa' => $this->t('Mesa'),
-        'text-ash' => $this->t('Ash'),
-        'text-sage' => $this->t('Sage'),
-        'text-white bg-dark' => $this->t('White'),
-      ],
-      '#default_value' => $config['card_deck_title_color'] ?? 'text-dark',
-      '#description' => $this->t('Change the color of the Card deck title.'),
-    ];
-
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // Card deck width for tablets.
@@ -156,6 +128,24 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#default_value' => $config['az_display_settings']['card_width_xs'] ?? 'col-12',
       '#description' => $this->t('Choose how many cards appear per row. Additional cards will wrap to a new row. This selection sets the cards per row on phones.'),
       '#weight' => 2,
+    ];
+    
+    // Card deck title color.
+    $form['card_deck_title_color'] = [
+      '#title' => $this->t('Card group title color'),
+      '#type' => 'select',
+      '#options' => [
+        'text-black' => $this->t('Black'),
+        'text-blue' => $this->t('Blue'),
+        'text-sky' => $this->t('Sky'),
+        'text-oasis' => $this->t('Oasis'),
+        'text-azurite' => $this->t('Azurite'),
+        'text-midnight' => $this->t('Midnight'),
+        'text-dark-silver' => $this->t('Dark Silver'),
+        'text-white bg-dark' => $this->t('White'),
+      ],
+      '#default_value' => $config['card_deck_title_color'] ?? 'text-dark-silver',
+      '#description' => $this->t('Change the color of the Card group title.'),
     ];
 
     // This places the form fields on the content tab rather than behavior tab.
