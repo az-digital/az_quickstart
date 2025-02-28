@@ -120,7 +120,20 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p><em>There are no news items listed.</em></p>'
+            format: az_standard
+          tokenize: false
       sorts:
         sticky:
           id: sticky

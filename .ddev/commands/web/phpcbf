@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide PHPCBF tooling to fix coding standards.
 ## Usage: phpcbf [flags] [args]
 ## Example: "ddev phpcbf --version"
+## ExecRaw: true
 
-vendor/bin/phpcbf --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart $@
+vendor/bin/phpcbf --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist web/profiles/custom/az_quickstart "$@"

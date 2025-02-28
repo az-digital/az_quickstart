@@ -122,7 +122,20 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area:
+          id: area
+          table: views
+          field: area
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text
+          empty: true
+          content:
+            value: '<p><em>There are no news items listed.</em></p>'
+            format: az_standard
+          tokenize: false
       sorts:
         sticky:
           id: sticky
@@ -385,7 +398,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>No results found for the applied filters.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       filters:
@@ -892,7 +905,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>No results found for the applied filters.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       filters:
@@ -1433,6 +1446,7 @@ display:
           relationship: none
           view_mode: az_small_row
       defaults:
+        empty: true
         title: false
         pager: false
         style: false

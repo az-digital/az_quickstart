@@ -385,6 +385,17 @@ function _az_core_check_attribute_form(array &$form, FormStateInterface $form_st
 }
 
 /**
+ * Implements hook_library_info_alter().
+ *
+ * Add style overrides for Chosen.
+ */
+function az_core_library_info_alter(array &$libraries, $module) {
+  if ($module === 'chosen' && isset($libraries['chosen.claro'])) {
+    $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
+  }
+}
+
+/**
  * Implements hook_page_attachments_alter().
  *
  * Override Drupal core generator metatag for distribution.

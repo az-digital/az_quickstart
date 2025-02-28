@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 id: az_profile_editor
 label: 'Profile editor'
-weight: 2
+weight: -7
 is_admin: null
 permissions:
   - 'access az_curated_views'

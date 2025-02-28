@@ -49,10 +49,10 @@ jobs:
           ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
           composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
           composer install -o
-      - name: Check dependencies for vulnerabilities
-        uses: symfonycorp/security-checker-action@v5
-        with:
-          lock: az-quickstart-scaffolding/composer.lock
+      - name: Audit composer dependencies
+        run: |
+          cd az-quickstart-scaffolding
+          composer audit
   code-check:
     name: Static Code Check
     runs-on: ubuntu-latest

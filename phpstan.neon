@@ -2,6 +2,13 @@ parameters:
 	customRulesetUsed: true
 	tipsOfTheDay: false
 	reportUnmatchedIgnoredErrors: false
+	paths:
+		- az_quickstart.install
+		- az_quickstart.profile
+		- az_quickstart.post_update.php
+		- modules
+		- themes
+
 	excludePaths:
 		- */tests/Drupal/Tests/Listeners/Legacy/*
 		- */tests/fixtures/*.php

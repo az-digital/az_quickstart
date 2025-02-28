@@ -36,10 +36,6 @@ function az_accordion_theme($existing, $type, $theme, $path) {
         'accordion_item_id' => NULL,
         'collapsed' => TRUE,
         'aria_expanded' => 'false',
-        'aria_controls' => NULL,
-      ],
-      'deprecations' => [
-        'aria_controls' => "'aria_controls' is deprecated in az_quickstart:2.12.0 and is removed from az_quickstart:2.13.0. Use 'accordion_item_id' instead. See https://github.com/az-digital/az_quickstart/issues/3807.",
       ],
       'template' => 'az-accordion',
     ],

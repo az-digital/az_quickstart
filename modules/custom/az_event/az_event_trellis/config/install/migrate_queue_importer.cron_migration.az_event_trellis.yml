@@ -8,6 +8,6 @@ id: az_event_trellis
 label: 'Quickstart Trellis Events'
 migration: az_trellis_events
 time: 43200
-update: true
+update: false
 sync: false
 ignore_dependencies: 0
