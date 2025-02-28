@@ -131,7 +131,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
     ];
 
     // Card deck title color.
-    $form['az_display_settings']['card_deck_title_color'] = [
+    $form['card_deck_title_color'] = [
       '#title' => $this->t('Card deck title color'),
       '#type' => 'select',
       '#options' => [
