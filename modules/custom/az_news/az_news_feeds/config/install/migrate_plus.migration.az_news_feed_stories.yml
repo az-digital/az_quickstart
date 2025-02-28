@@ -22,39 +22,39 @@ source:
     -
       name: uuid
       label: UUID
-      selector: /story/uuid
+      selector: /uuid
     -
       name: title
       label: Title
-      selector: /story/title
+      selector: /title
     -
       name: date-of-publication
       label: 'Date of Publication'
-      selector: /story/date-of-publication
+      selector: /field_az_published
     -
       name: tags
       label: 'News tags'
-      selector: /story/terms
+      selector: /field_az_news_tags
     -
       name: summary
       label: Summary
-      selector: /story/summary-med
+      selector: /field_az_summary
     -
       name: canonical-url
       label: 'Canonical URL'
-      selector: /story/url-canonical
+      selector: /canonical_url
     -
       name: body
       label: Body
-      selector: /story/body
+      selector: /field_az_body
     -
       name: fid
       label: 'File ID'
-      selector: /story/img-fid
+      selector: /field_az_media_image/fid
     -
       name: image
       label: Image
-      selector: /story/img-large
+      selector: /field_az_media_image
 process:
   title: title
   field_az_published/value:
