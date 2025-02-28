@@ -201,7 +201,7 @@
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
             },
             "drupal/schema_metatag": {
-                "Add parentOrganization property/tag to schema_organization (3477869)": "https://git.drupalcode.org/project/schema_metatag/-/merge_requests/73.diff"
+                "Add parentOrganization property/tag to schema_organization (3477869)": "https://www.drupal.org/files/issues/2025-01-13/add_parentOrganization.diff"
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"
