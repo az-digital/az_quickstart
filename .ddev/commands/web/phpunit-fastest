@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Run all PHPUnit tests in parallel via Fastest.
 ## Usage: phpunit-fastest
 ## Example: "ddev phpunit-fastest"
 
-find web/profiles/custom/az_quickstart/ -name "*Test.php" | vendor/bin/fastest -vvv "vendor/bin/phpunit {} --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart;"
+find /var/www/html/web/profiles/custom/az_quickstart/ -name "*Test.php" | vendor/bin/fastest -vvv "vendor/bin/phpunit {} --configuration /var/www/html/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap /var/www/html/web/core/tests/bootstrap.php /var/www/html/web/profiles/custom/az_quickstart;"
