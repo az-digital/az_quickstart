@@ -131,7 +131,7 @@ display:
           plugin_id: text
           empty: true
           content:
-            value: '<em>There are no news items listed.</em>'
+            value: '<p><em>There are no news items listed.</em></p>'
             format: az_standard
           tokenize: false
       sorts:
