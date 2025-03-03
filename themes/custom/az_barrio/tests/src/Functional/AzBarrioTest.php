@@ -101,19 +101,19 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.no-off-canvas-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.disable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region.no-off-canvas-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region.has-off-canvas-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.no-navigation-region');
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region');
   }
 
 }
