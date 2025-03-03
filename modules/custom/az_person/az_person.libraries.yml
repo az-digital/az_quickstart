@@ -2,3 +2,5 @@ az_person:
   css:
     theme:
       css/az_person.css: {}
+  js:
+    js/az_person.js: {}
