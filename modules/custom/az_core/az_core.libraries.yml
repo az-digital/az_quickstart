@@ -15,6 +15,10 @@ az-enterprise-attributes:
   css:
     component:
       css/az-enterprise-attributes.css: {}
+az-core-chosen:
+  css:
+    component:
+      css/az-core-chosen.css: {}
 az-mobile-nav:
   css:
     layout:

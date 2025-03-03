@@ -124,7 +124,7 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   // Check if land acknowledgment should be displayed.
   $land_acknowledgment = '';
   if (theme_get_setting('land_acknowledgment')) {
-    $land_acknowledgment = '<p class="font-weight-light"><em>We respectfully acknowledge <a href="https://www.arizona.edu/university-arizona-land-acknowledgment">the University of Arizona is on the land and territories of Indigenous peoples</a>. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. Committed to diversity and inclusion, the University strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
+    $land_acknowledgment = '<p class="font-weight-light"><em>We respectfully acknowledge <a href="https://www.arizona.edu/university-arizona-land-acknowledgment">the University of Arizona is on the land and territories of Indigenous peoples</a>. Today, Arizona is home to 22 federally recognized tribes, with Tucson being home to the O’odham and the Yaqui. The University strives to build sustainable relationships with sovereign Native Nations and Indigenous communities through education offerings, partnerships, and community service.</em></p><hr>';
   }
 
   // Check if information security policy should be displayed.
