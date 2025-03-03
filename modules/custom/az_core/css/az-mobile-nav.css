@@ -1,0 +1,11 @@
+#az_mobile_nav_menu .nav-item .nav-link {
+  padding: 0.5rem 1rem;
+  min-height: unset;
+}
+#az_mobile_nav_menu .nav-item > button {
+  padding-left: .75rem;
+  padding-right: .75rem;
+}
+#az_mobile_nav_menu > h2.az-mobile-nav-current {
+  box-shadow:inset 6px 0 #378dbd;
+}

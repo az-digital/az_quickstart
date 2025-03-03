@@ -492,3 +492,12 @@ function az_core_form_taxonomy_vocabulary_confirm_reset_alphabetical_alter(&$for
     _az_core_check_attribute_form($form, $form_state, $form_id);
   }
 }
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for Drupal\az_core\MobileNavForm.
+ *
+ * Adds style overrides for mobile nav form.
+ */
+function az_core_form_mobile_nav_form_alter(&$form, FormStateInterface $form_state) {
+  $form['#attached']['library'][] = 'az_core/az-mobile-nav';
+}

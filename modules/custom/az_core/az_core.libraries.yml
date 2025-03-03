@@ -15,3 +15,7 @@ az-enterprise-attributes:
   css:
     component:
       css/az-enterprise-attributes.css: {}
+az-mobile-nav:
+  css:
+    layout:
+      css/az-mobile-nav.css: {}

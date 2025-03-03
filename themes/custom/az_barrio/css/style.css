@@ -417,10 +417,8 @@ a.btn.btn-redbar {
   border: 2px solid #8b0015;
 }
 
-.navbar-offcanvas .navbar-offcanvas-search .form-control {
-    height: 60px;
-    margin: 0;
-    border: none;
+#block-az-barrio-offcanvas-searchform .form-search {
+  height: unset;
 }
 
 #block-az-barrio-offcanvas-searchform .material-icons-sharp {
@@ -428,7 +426,7 @@ a.btn.btn-redbar {
 }
 
 #block-az-barrio-offcanvas-searchform .btn {
-padding: 0.625rem .75rem;
+  padding: 0.25rem .75rem;
 }
 
 .search-block-form input {

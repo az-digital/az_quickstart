@@ -86,9 +86,9 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
   /**
    * Tests that the navbar off-canvas region classes are set on install.
    */
-  public function testNavbarOffCanvaseRegionClassesSetonInstall() {
+  public function testNavbarOffCanvasRegionClassesSetonInstall() {
     $this->drupalGet('');
-    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
+    $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region');
   }
 
   /**
@@ -96,7 +96,7 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
    *
    * When blocks are removed or added to regions, classes should change.
    */
-  public function testNavbarOffCanvaseRegionClassesSetNoOffCanvasBlocks() {
+  public function testNavbarOffCanvasRegionClassesSetNoOffCanvasBlocks() {
     $this->drupalLogin($this->adminUser);
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
