@@ -100,7 +100,7 @@
         "drupal/migrate_queue_importer": "2.1.1",
         "drupal/migrate_tools": "6.0.5",
         "drupal/optional_end_date": "1.4.0",
-        "drupal/paragraphs": "1.18.0",
+        "drupal/paragraphs": "1.19.0",
         "drupal/paragraphs_admin": "1.6.0",
         "drupal/pathauto": "1.13.0",
         "drupal/quick_node_clone": "1.22.0",
