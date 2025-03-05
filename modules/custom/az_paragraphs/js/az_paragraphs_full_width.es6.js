@@ -63,7 +63,8 @@
       const distanceFromLeft = contentRegionPosition.left;
       const distanceFromRight = contentRegionPosition.right;
       const negativeLeftMargin = 0 - distanceFromLeft;
-      const negativeRightMargin = 0 - distanceFromRight;
+      const negativeRightMargin =
+        distanceFromRight - document.documentElement.clientWidth;
       document.documentElement.style.setProperty(
         '--full-width-left-distance',
         `${negativeLeftMargin}px`,
@@ -73,31 +74,37 @@
         `${negativeRightMargin}px`,
       );
     }
+    const contentTopAndBottomBlocks = document.querySelectorAll(
+      '.region-content-top > .block, .region-content-bottom > .block',
+    );
+    if (contentTopAndBottomBlocks.length > 0) {
+      const negativeAutoMargin =
+        -(
+          document.documentElement.clientWidth -
+          contentTopAndBottomBlocks[0].getBoundingClientRect().width
+        ) / 2;
+      document.documentElement.style.setProperty(
+        '--full-width-auto-distance',
+        `${negativeAutoMargin}px`,
+      );
+    }
   }
 
   /**
    * Executes functions to set up the page layout.
    */
-  function initialize() {
+  function setFullWidthLayout() {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
     pushSidebarsDown();
   }
 
   // Initialize on page load
-  document.addEventListener('DOMContentLoaded', initialize);
+  document.addEventListener('DOMContentLoaded', setFullWidthLayout);
 
   // Recalculate values on window resize
-  window.addEventListener('resize', () => {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
+  window.addEventListener('resize', setFullWidthLayout);
 
   // Recalculate values when azVideoPlay custom event fires
-  window.addEventListener('azVideoPlay', () => {
-    calculateScrollbarWidth();
-    calculateFullWidthNegativeMargins();
-    pushSidebarsDown();
-  });
+  window.addEventListener('azVideoPlay', setFullWidthLayout);
 })();
