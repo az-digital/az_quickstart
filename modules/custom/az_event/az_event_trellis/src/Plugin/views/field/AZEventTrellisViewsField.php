@@ -121,7 +121,7 @@ class AZEventTrellisViewsField extends BulkForm {
       }
       $options = [
         'limit' => 0,
-        'update' => 1,
+        'update' => 0,
         'force' => 0,
         'configuration' => [
           'source' => [
