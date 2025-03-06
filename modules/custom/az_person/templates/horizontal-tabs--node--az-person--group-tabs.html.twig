@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Theme override for horizontal tabs.
+ *
+ * Available variables:
+ * - attributes: A list of HTML attributes for the wrapper element.
+ * - children: The rendered children.
+ * - element: The render array for the horizontal tabs element.
+ *
+ * @see template_preprocess_horizontal_tabs()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set tabElements = {} %}
+{% for key, value in element %}
+  {% if key starts with 'group_' and not (key starts with 'group_tabs') %}
+    {% set tabElements = tabElements|merge({ (key): value }) %}
+  {% endif %}
+{% endfor %}
+<div class="clearfix">
+  <ul class="nav nav-tabs" role="tablist">
+    {% set isFirstTab = true %}
+    {% for key, value in tabElements %}
+      <li class="nav-item" role="presentation">
+        <a class="nav-link{{ isFirstTab ? ' active' }}" id="{{ (key) }}_tab" data-toggle="tab" href="#{{ (value['#id']) }}" role="tab" aria-controls="{{ (value['#id']) }}" aria-selected="{{ isFirstTab }}">{{ (value['#title']) }}</a>
+      </li>
+      {% set isFirstTab = false %}
+    {% endfor %}
+  </ul>
+  <div class="tab-content px-3 pb-3 mt-3">
+    {% set activePane = ' show active' %}
+    {% for key, value in tabElements %}
+      <div class="tab-pane fade px-1 pb-1{{ activePane }}" id="{{ (value['#id']) }}" role="tabpanel" aria-labelledby="{{ (key) }}_tab">
+        {% for childKey, childValue in value %}
+          {% if childKey starts with 'field_' %}
+            {{ childValue }}
+          {% endif %}
+        {% endfor %}
+      </div>
+      {% set activePane = '' %}
+    {% endfor %}
+  </div>
+</div>
