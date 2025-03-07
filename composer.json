@@ -36,6 +36,7 @@
         "citation-style-language/styles": "0.0.587",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
+        "devanych/mime-types": "2.1.2",
         "drupal/access_unpublished": "1.6.0",
         "drupal/antibot": "2.0.4",
         "drupal/asset_injector": "2.21.0",

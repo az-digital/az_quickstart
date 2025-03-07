@@ -1,0 +1,38 @@
+id: az_trellis_events_media
+label: Trellis Events Media
+source:
+  plugin: embedded_data
+  data_rows: []
+  ids:
+    remote_id:
+      type: string
+process:
+  uid:
+    plugin: default_value
+    default_value: 0
+  bundle:
+    plugin: default_value
+    default_value: az_image
+  field_media_az_image/target_id:
+    plugin: migration_lookup
+    migration: az_trellis_events_files
+    source: remote_id
+  name:
+    -
+      plugin: get
+      source: filename
+    -
+      plugin: default_value
+      default_value: 'Trellis event image'
+  status:
+    plugin: default_value
+    default_value: 1
+
+destination:
+  plugin: entity:media
+
+dependencies:
+  enforced:
+    module:
+      - az_event_trellis
+      - az_media
