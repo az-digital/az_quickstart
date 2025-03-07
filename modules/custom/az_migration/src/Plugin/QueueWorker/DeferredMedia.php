@@ -7,12 +7,10 @@ use Drupal\Component\Utility\Crypt;
 use Drupal\Core\File\Event\FileUploadSanitizeNameEvent;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
-use Drupal\media\Entity\Media;
 use Drupal\Core\File\FileSystemInterface;
 use Drupal\Core\File\FileExists;
 use Drupal\file\Plugin\migrate\destination\EntityFile;
 use Drupal\migrate\MigrateExecutable;
-use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrateIdMapInterface;
 use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -221,7 +219,7 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
         $filename = $matches['filename'];
       }
     }
-    
+
     // Prepare some variables for migration.
     $deferred = $data['deferred'] ?? [];
     $body = $response->getBody();
