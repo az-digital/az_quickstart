@@ -123,5 +123,6 @@ function az_person_theme() {
     'field_group_html_element__node__az_person__h1' => $base_hook,
     'field_group_html_element__node__az_person__h2' => $base_hook,
     'field_group_html_element__node__az_person__h3' => $base_hook,
+    'horizontal_tabs__node__az_person__group_tabs' => ['base hook' => 'horizontal_tabs'],
   ];
 }
