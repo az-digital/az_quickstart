@@ -4,6 +4,7 @@ namespace Drupal\az_migration\Plugin\QueueWorker;
 
 use Devanych\Mime\MimeTypes;
 use Drupal\Component\Utility\Crypt;
+use Drupal\Core\File\Event\FileUploadSanitizeNameEvent;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\media\Entity\Media;
@@ -46,9 +47,9 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
   protected $fileSystem;
 
   /**
-   * @var \Drupal\file\FileRepository
+   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
    */
-  protected $fileRepository;
+  protected $eventDispatcher;
 
   /**
    * @var \GuzzleHttp\Client
@@ -78,7 +79,7 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
     );
 
     $instance->entityTypeManager = $container->get('entity_type.manager');
-    $instance->fileRepository = $container->get('file.repository');
+    $instance->eventDispatcher = $container->get('event_dispatcher');
     $instance->fileSystem = $container->get('file_system');
     $instance->httpClient = $container->get('http_client');
     $instance->logger = $container->get('logger.factory')->get('az_migration');
@@ -200,9 +201,16 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
     $mimeTypes = new MimeTypes();
     // Find the proper fallback file extension if possible.
     $extensions = $mimeTypes->getExtensions($type);
+    $extension = '';
     if (!empty($extensions)) {
       $extension = reset($extensions);
       $filename .= '.' . $extension;
+    }
+    else {
+      $this->logger->notice("Couldn't determine file extension for %url", [
+        '%url' => $url,
+      ]);
+      return;
     }
     $disposition = $response->getHeader('Content-Disposition') ?? [];
     $disposition = array_pop($disposition);
@@ -213,12 +221,21 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
         $filename = $matches['filename'];
       }
     }
-
-    // Execute deferrred migrations for item.
+    
+    // Prepare some variables for migration.
     $deferred = $data['deferred'] ?? [];
     $body = $response->getBody();
     $directory = $data['path'] ?? 'public://';
+
+    // Make sure our destination directory exists.
     $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
+
+    // Sanitize our filename. Give other modules a change to weigh in.
+    $event = new FileUploadSanitizeNameEvent($filename, $extension);
+    $this->eventDispatcher->dispatch($event);
+    $filename = $event->getFilename();
+
+    // Execute deferrred migrations for item.
     foreach ($deferred as $migration => $row) {
       // Append emphemeral values discovered at the time of the GET request.
       $row['filename'] = $filename;
