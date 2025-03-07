@@ -16,7 +16,7 @@
 
 {% set tabElements = {} %}
 {% for key, value in element %}
-  {% if key starts with 'group_' and not (key starts with 'group_tabs') %}
+  {% if key starts with 'group_' and not (key starts with 'group_tabs') and value %}
     {% set tabElements = tabElements|merge({ (key): value }) %}
   {% endif %}
 {% endfor %}
