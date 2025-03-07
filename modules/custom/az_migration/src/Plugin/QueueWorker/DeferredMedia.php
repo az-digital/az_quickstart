@@ -8,6 +8,8 @@ use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Queue\QueueWorkerBase;
 use Drupal\media\Entity\Media;
 use Drupal\Core\File\FileSystemInterface;
+use Drupal\Core\File\FileExists;
+use Drupal\file\Plugin\migrate\destination\EntityFile;
 use Drupal\migrate\MigrateExecutable;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\Plugin\MigrateIdMapInterface;
@@ -87,7 +89,7 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
   /**
    * {@inheritdoc}
    */
-  public function deferredMigration($migration_id, $data) {
+  public function deferredMigration($migration_id, $data, $body) {
     $this->logger->notice(print_r($data, TRUE));
     try {
       $migration = $this->pluginManagerMigration->createInstance($migration_id);
@@ -111,6 +113,33 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
     $entity_ids = reset($id_map->lookupDestinationIds($source_ids));
     if (!$entity_ids) {
       $entity_ids = [];
+    }
+
+    // For file migrations, we should hash existing file to see if it's changed.
+    if (($destination instanceof EntityFile) && (!empty($entity_ids))) {
+      $file = $this->entityTypeManager->getStorage('file')->load(reset($entity_ids));
+      if (!empty($file)) {
+        $orig_uri = $file->getFileUri();
+        if ($orig_uri && file_exists($orig_uri)) {
+          $data['uri'] = $orig_uri;
+          $hash = Crypt::hashBase64($body);
+          $orig_hash = Crypt::hashBase64(file_get_contents($orig_uri));
+          // File is changed. Update uri.
+          if ($hash !== $orig_hash) {
+            $uri = $this->fileSystem->createFilename($data['filename'], $data['directory']);
+            $uri = $this->fileSystem->saveData($body, $uri, FileExists::Replace);
+            if ($uri !== FALSE) {
+              $data['uri'] = $uri;
+            }
+            $this->logger->notice("Updating @orig_uri to @uri because the hash changed from @orig_hash to @hash", [
+              '@orig_uri' => $orig_uri,
+              '@uri' => $uri,
+              '@orig_hash' => $orig_hash,
+              '@hash' => $hash,
+            ]);
+          }
+        }
+      }
     }
 
     // Process a row through the migration.
@@ -188,17 +217,15 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
     // Execute deferrred migrations for item.
     $deferred = $data['deferred'] ?? [];
     $body = $response->getBody();
-    $destination = $data['path'] ?? 'public://';
-    $this->fileSystem->prepareDirectory($destination, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
-    $destination .= '/' . $filename;
-    $uri = $this->fileSystem->saveData($body, $destination);
+    $directory = $data['path'] ?? 'public://';
+    $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
     foreach ($deferred as $migration => $row) {
       // Append emphemeral values discovered at the time of the GET request.
       $row['filename'] = $filename;
+      $row['directory'] = $directory;
       $row['filemime'] = $type;
-      $row['uri'] = $uri;
       // Run the migration for this item.
-      $this->deferredMigration($migration, $row);
+      $this->deferredMigration($migration, $row, $body);
     }
   }
 
