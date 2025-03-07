@@ -16,13 +16,13 @@ az_event_trellis.az_recurring_import_rule.*:
   label: Trellis Event Import
   mapping:
     id:
-      type: string
+      type: machine_name
       label: ID
     label:
       type: label
       label: Label
     uuid:
-      type: string
+      type: uuid
     host:
       type: string
     owner:

@@ -222,7 +222,7 @@ function az_quickstart_update_1020901(&$sandbox) {
 /**
  * Ensure Pantheon sites have the imagemagick module installed.
  */
-function az_quickstart_update_1021101() {
+function az_quickstart_update_1021201() {
   if (defined('PANTHEON_ENVIRONMENT')) {
     try {
       \Drupal::service('module_installer')->install(['imagemagick']);
@@ -230,7 +230,17 @@ function az_quickstart_update_1021101() {
     catch (MissingDependencyException $e) {
       return t('ImageMagick module not available to install.');
     }
+    
+    \Drupal::service('config.factory')-getEditable('system.image')->set('toolkit', 'imagemagick');
+    \Drupal::service('config.factory')-getEditable('imagemagick.settings')->set('quality', 92);
 
-    return t('ImageMagick module installed.');
+    return t('ImageMagick module installed and configured.');
   }
+}
+
+/**
+ * Enable masquerade and masquerade_log modules by default.
+ */
+function az_quickstart_update_1021301() {
+  \Drupal::service('module_installer')->install(['masquerade', 'masquerade_log']);
 }
