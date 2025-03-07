@@ -86,7 +86,21 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
   }
 
   /**
-   * {@inheritdoc}
+   * Processes a deferred migration for a single item.
+   *
+   * This function processes a migration with data found after
+   * a deferred GET fetch of the remote URL completes. Only the
+   * single row being processed by this queue is imported. If
+   * the migration is found, the remote file will be hashed and
+   * checked against the hash of the existing file's URI to
+   * determine if it should be updated.
+   *
+   * @param string $migration_id
+   *   The migration plugin id to processe.
+   * @param array $data
+   *   The individual row to process, in array format.
+   * @param string $body
+   *   The bytes of the remote file.
    */
   public function deferredMigration($migration_id, $data, $body) {
     try {
