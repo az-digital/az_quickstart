@@ -89,7 +89,6 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
    * {@inheritdoc}
    */
   public function deferredMigration($migration_id, $data, $body) {
-    $this->logger->notice(print_r($data, TRUE));
     try {
       $migration = $this->pluginManagerMigration->createInstance($migration_id);
     }
@@ -177,6 +176,9 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
         // Specify an accept header to indicate what we're interested in.
         'headers'        => ['Accept' => static::REQUEST_ACCEPT],
       ]);
+      $this->logger->notice("DEBUG: Performing deferred fetch of %url", [
+        '%url' => $url,
+      ]);
     }
     catch (\Exception $e) {
       $this->logger->notice("During deferred fetch of %url, %msg", [
@@ -194,6 +196,9 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
       ]);
       return;
     }
+    $this->logger->notice("DEBUG: detected content type %type", [
+      '%type' => $type,
+    ]);
     // Fallback filename.
     $filename = 'remote_media';
     $mimeTypes = new MimeTypes();
@@ -210,6 +215,9 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
       ]);
       return;
     }
+    $this->logger->notice("DEBUG: recognized extension as %ext", [
+      '%ext' => $extension,
+    ]);
     $disposition = $response->getHeader('Content-Disposition') ?? [];
     $disposition = array_pop($disposition);
     // See if we can determine the real remote filename from the disposition.
@@ -219,6 +227,9 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
         $filename = $matches['filename'];
       }
     }
+    $this->logger->notice("DEBUG: determined filename as %filename", [
+      '%filename' => $filename,
+    ]);
 
     // Prepare some variables for migration.
     $deferred = $data['deferred'] ?? [];
@@ -232,6 +243,9 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
     $event = new FileUploadSanitizeNameEvent($filename, $extension);
     $this->eventDispatcher->dispatch($event);
     $filename = $event->getFilename();
+    $this->logger->notice("DEBUG: sanitized to %filename", [
+      '%filename' => $filename,
+    ]);
 
     // Execute deferrred migrations for item.
     foreach ($deferred as $migration => $row) {
