@@ -94,6 +94,7 @@ process:
           remote_id: id
         az_trellis_events_media:
           remote_id: id
+          alt: name
   field_az_event_date/value:
     -
       plugin: format_date

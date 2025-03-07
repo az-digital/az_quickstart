@@ -17,6 +17,8 @@ process:
     plugin: migration_lookup
     migration: az_trellis_events_files
     source: remote_id
+  field_media_az_image/alt: alt
+  field_media_az_image/title: alt
   name:
     -
       plugin: get
