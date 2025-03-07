@@ -143,7 +143,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'text-midnight' => $this->t('Midnight'),
         'text-ash' => $this->t('Ash'),
         'text-black' => $this->t('Black'),
-        'text-white bg-dark' => $this->t('White'),
+        'text-white' => $this->t('White'),
       ],
       '#default_value' => $config['card_deck_title_color'] ?? 'text-dark-silver',
       '#description' => $this->t('Change the color of the Card group title.'),
