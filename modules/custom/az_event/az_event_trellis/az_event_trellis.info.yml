@@ -10,6 +10,7 @@ php: 8.0
 dependencies:
   - az_core
   - az_event
+  - az_migration
   - drupal:views
   - migrate:migrate
   - migrate_plus:migrate_plus
