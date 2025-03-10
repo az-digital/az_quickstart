@@ -144,7 +144,7 @@
               setDimensions(element);
             });
           };
-          window.addEventListener('resize.bgVideo', () => {
+          window.addEventListener('resize', () => {
             resize();
           });
         }
