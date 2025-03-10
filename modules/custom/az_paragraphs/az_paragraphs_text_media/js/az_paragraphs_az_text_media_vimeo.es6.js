@@ -1,4 +1,4 @@
-(($, Drupal, once) => {
+((Drupal, once) => {
   Drupal.behaviors.az_vimeo_video_bg = {
     attach(context, settings) {
       function initVimeoBackgrounds() {
@@ -90,39 +90,38 @@
           // Methods
           // Ensure Vimeo API is loaded before proceeding
           tag.onload = () => {
-            $.each(bgVideoParagraphs, (index) => {
-              const thisContainer = bgVideoParagraphs[index];
-              const parentParagraph = thisContainer.parentNode;
-              const vimeoId = thisContainer.dataset.vimeoVideoId;
-              bgVideos[vimeoId] = $.extend({}, defaults, thisContainer);
+            bgVideoParagraphs.forEach((element) => {
+              const parentParagraph = element.parentNode;
+              const vimeoId = element.dataset.vimeoVideoId;
+              bgVideos[vimeoId] = {...defaults, ...element};
               const options = bgVideos[vimeoId];
               const videoPlayer =
-                thisContainer.getElementsByClassName('az-video-player')[0];
+                element.getElementsByClassName('az-video-player')[0];
               const VimeoPlayer = window.Vimeo;
 
               // Initialize Vimeo Player
-              thisContainer.player = new VimeoPlayer.Player(videoPlayer, {
+              element.player = new VimeoPlayer.Player(videoPlayer, {
                 id: vimeoId,
                 autopause: options.autopause,
-                autoplay: thisContainer.dataset.autoplay === 'true',
+                autoplay: element.dataset.autoplay === 'true',
                 controls: 0,
                 loop: options.loop,
                 muted: options.muted,
               });
 
               // Event listener for starting play.
-              thisContainer.player.on('bufferend', () => {
-                setDimensions(thisContainer);
+              element.player.on('bufferend', () => {
+                setDimensions(element);
                 parentParagraph.classList.add('az-video-playing');
               });
 
               // Play Button
               const playButtons =
-                thisContainer.getElementsByClassName('az-video-play');
+                element.getElementsByClassName('az-video-play');
               if (playButtons[0]) {
                 playButtons[0].addEventListener('click', (event) => {
                   event.preventDefault();
-                  thisContainer.player
+                  element.player
                     .play()
                     .catch((error) => vimeoError(error));
                   parentParagraph.classList.add('az-video-playing');
@@ -132,11 +131,11 @@
 
               // Pause Button
               const pauseButtons =
-                thisContainer.getElementsByClassName('az-video-pause');
+                element.getElementsByClassName('az-video-pause');
               if (pauseButtons[0]) {
                 pauseButtons[0].addEventListener('click', (event) => {
                   event.preventDefault();
-                  thisContainer.player
+                  element.player
                     .pause()
                     .catch((error) => vimeoError(error));
                   parentParagraph.classList.add('az-video-paused');
@@ -149,8 +148,8 @@
           // Resize handler updates width, height and offset
           // of player after resize/init.
           const resize = () => {
-            $.each(bgVideoParagraphs, (index) => {
-              setDimensions(bgVideoParagraphs[index]);
+            bgVideoParagraphs.forEach((element) => {
+              setDimensions(element);
             });
           };
           $(window).on('resize.bgVideo', () => {
@@ -162,4 +161,4 @@
       once('vimeoTextOnMedia-init', 'body').forEach(initVimeoBackgrounds);
     },
   };
-})(jQuery, Drupal, once);
+})(Drupal, once);
