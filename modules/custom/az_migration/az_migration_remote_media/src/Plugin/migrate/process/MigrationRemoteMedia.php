@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_migration\Plugin\migrate\process;
+namespace Drupal\az_migration_remote_media\Plugin\migrate\process;
 
 use Drupal\migrate\Plugin\migrate\process\MigrationLookup;
 use Drupal\migrate\Attribute\MigrateProcess;

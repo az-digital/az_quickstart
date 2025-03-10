@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_migration\Plugin\QueueWorker;
+namespace Drupal\az_migration_remote_media\Plugin\QueueWorker;
 
 use Devanych\Mime\MimeTypes;
 use Drupal\Component\Utility\Crypt;
@@ -80,7 +80,7 @@ class DeferredMedia extends QueueWorkerBase implements ContainerFactoryPluginInt
     $instance->eventDispatcher = $container->get('event_dispatcher');
     $instance->fileSystem = $container->get('file_system');
     $instance->httpClient = $container->get('http_client');
-    $instance->logger = $container->get('logger.factory')->get('az_migration');
+    $instance->logger = $container->get('logger.factory')->get('az_migration_remote_media');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     return $instance;
   }
