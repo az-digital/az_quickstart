@@ -150,7 +150,6 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
       '#options' => [
         'expand' => $this->t('Expanded'),
         'collapse' => $this->t('Collapsed'),
-        'remove' => $this->t('Remove'),
       ],
       '#config_target' => 'az_finder.settings:tid_widget.default_state',
     ];
