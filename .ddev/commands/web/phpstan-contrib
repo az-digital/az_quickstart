@@ -1,7 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpstan tooling to check for deprecated contrib module/theme code.
 ## Usage: phpstan-contrib [flags] [args]
 ## Example: "ddev phpstan-contrib --version"
+## ExecRaw: true
 
-vendor/bin/phpstan --configuration web/profiles/custom/az_quickstart/phpstan-contrib.neon web/modules web/themes $@
+vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan-contrib.neon web/modules web/themes "$@"
