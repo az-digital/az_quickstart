@@ -2,14 +2,12 @@
 
 namespace Drupal\az_event_trellis\EventSubscriber;
 
-use Drupal\az_migration_remote_media\RemoteMediaQueueTools;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Messenger\Messenger;
 use Drupal\Core\Session\AccountProxy;
 use Drupal\az_event_trellis\TrellisHelper;
 use Drupal\migrate\Event\MigrateEvents;
 use Drupal\migrate\Event\MigratePostRowSaveEvent;
-use Drupal\migrate\Event\MigrateImportEvent;
 use Drupal\views\ResultRow;
 use Drupal\views_remote_data\Events\RemoteDataQueryEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -45,18 +43,12 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
   protected $trellisHelper;
 
   /**
-   * @var \Drupal\az_migration_remote_media\RemoteMediaQueueTools
-   */
-  protected $remoteMediaQueueTools;
-
-  /**
    * {@inheritdoc}
    */
   public static function getSubscribedEvents(): array {
     return [
       RemoteDataQueryEvent::class => 'onQuery',
       MigrateEvents::POST_ROW_SAVE => 'onPostRowSave',
-      MigrateEvents::POST_IMPORT => 'onPostImport',
     ];
   }
 
@@ -71,29 +63,13 @@ final class AZEventTrellisDataSubscriber implements EventSubscriberInterface {
    *   The entity type manager service.
    * @param \Drupal\Core\Session\AccountProxy $currentUser
    *   The currently logged in user.
-   * @param \Drupal\az_migration_remote_media\RemoteMediaQueueTools $remoteMediaQueueTools
-   *   Service to interact with the remote media queue.
    */
-  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser, RemoteMediaQueueTools $remoteMediaQueueTools) {
+  public function __construct(TrellisHelper $trellisHelper, Messenger $messenger, EntityTypeManagerInterface $entityTypeManager, AccountProxy $currentUser) {
     $this->trellisHelper = $trellisHelper;
     $this->messenger = $messenger;
     $this->entityTypeManager = $entityTypeManager;
     $this->nodeStorage = $this->entityTypeManager->getStorage('node');
     $this->currentUser = $currentUser;
-    $this->remoteMediaQueueTools = $remoteMediaQueueTools;
-  }
-
-  /**
-   * Display queue status message if this was the trellis events migration.
-   *
-   * @param \Drupal\migrate\Event\MigrateImportEvent $event
-   *   The post save event object.
-   */
-  public function onPostImport(MigrateImportEvent $event) {
-    $migration = $event->getMigration()->getBaseId();
-    if ($migration === 'az_trellis_events') {
-      $this->remoteMediaQueueTools->status();
-    }
   }
 
   /**

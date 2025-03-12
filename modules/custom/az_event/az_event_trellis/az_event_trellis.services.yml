@@ -15,4 +15,3 @@ services:
       - '@messenger'
       - '@entity_type.manager'
       - '@current_user'
-      - '@az_migration_remote_media.tools'
