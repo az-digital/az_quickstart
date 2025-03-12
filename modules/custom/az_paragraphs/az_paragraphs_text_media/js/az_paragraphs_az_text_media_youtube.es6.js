@@ -130,6 +130,9 @@
 
         window.onPlayerReady = (event) => {
           const id = event.target.getVideoData().video_id;
+          if (bgVideos[id].dataset.autoplay === 'false') {
+            return;
+          }
           if (bgVideos[id].mute) {
             event.target.mute();
           }
