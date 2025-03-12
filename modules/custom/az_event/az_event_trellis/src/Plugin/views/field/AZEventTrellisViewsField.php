@@ -119,19 +119,41 @@ class AZEventTrellisViewsField extends BulkForm {
       if ($migration->getStatus() !== MigrationInterface::STATUS_IDLE) {
         $migration->setStatus(MigrationInterface::STATUS_IDLE);
       }
-      $options = [
-        'limit' => 0,
-        'update' => 0,
-        'force' => 0,
-        'configuration' => [
-          'source' => [
-            'trellis_ids' => $ids,
+
+      $migrations = [
+        'az_trellis_events' => [
+          'limit' => 0,
+          'update' => 0,
+          'force' => 0,
+          'configuration' => [
+            'source' => [
+              'trellis_ids' => $ids,
+            ],
+          ],
+        ],
+        'az_trellis_events_files' => [
+          'limit' => 0,
+          'update' => 0,
+          'force' => 0,
+          'configuration' => [
+            'source' => [
+              'trellis_ids' => $ids,
+            ],
+          ],
+        ],
+        'az_trellis_events_media' => [
+          'limit' => 0,
+          'update' => 0,
+          'force' => 0,
+          'configuration' => [
+            'source' => [
+              'trellis_ids' => $ids,
+            ],
           ],
         ],
       ];
-      $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
-      $executable->batchImport();
-
+      // @todo make injected.
+      \Drupal::service('az_migration_remote_media.tools')->batch($migrations);
     }
 
   }
