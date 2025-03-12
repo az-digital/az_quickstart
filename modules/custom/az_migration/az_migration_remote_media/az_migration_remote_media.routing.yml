@@ -1,0 +1,8 @@
+az_migration_remote_media.batch:
+  path: '/admin/foo'
+  defaults:
+    _title: 'Process Queued Remote Media'
+    _controller: '\Drupal\az_migration_remote_media\Controller\MigrationRemoteMediaBatch'
+  requirements:
+    _permission: 'access remote media migration tools'
+    _csrf_token: 'TRUE'
