@@ -1,4 +1,4 @@
 az_finder_settings:
-  title: 'Configure finder overrides'
+  title: 'Configure AZ Finder Settings'
   route_name: 'az_finder.settings'
   group: 'az_finder'
