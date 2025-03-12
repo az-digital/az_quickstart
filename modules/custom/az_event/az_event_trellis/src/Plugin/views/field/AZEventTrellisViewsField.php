@@ -121,16 +121,6 @@ class AZEventTrellisViewsField extends BulkForm {
       }
 
       $migrations = [
-        'az_trellis_events' => [
-          'limit' => 0,
-          'update' => 0,
-          'force' => 0,
-          'configuration' => [
-            'source' => [
-              'trellis_ids' => $ids,
-            ],
-          ],
-        ],
         'az_trellis_events_files' => [
           'limit' => 0,
           'update' => 0,
@@ -142,6 +132,16 @@ class AZEventTrellisViewsField extends BulkForm {
           ],
         ],
         'az_trellis_events_media' => [
+          'limit' => 0,
+          'update' => 0,
+          'force' => 0,
+          'configuration' => [
+            'source' => [
+              'trellis_ids' => $ids,
+            ],
+          ],
+        ],
+        'az_trellis_events' => [
           'limit' => 0,
           'update' => 0,
           'force' => 0,

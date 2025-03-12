@@ -1,31 +1,35 @@
 id: az_trellis_events_files
 label: Trellis Events Files
 source:
-  plugin: embedded_data
-  data_rows: []
+  plugin: az_trellis_events_api
+  trellis_ids: {  }
+  track_changes: true
+  fields:
+    -
+      name: id
+      label: ID
+      selector: Id
+    -
+      name: image_url
+      label: 'Image URL'
+      selector: Image_URL
   ids:
-    remote_id:
+    id:
       type: string
 
 process:
-  filename:
-    -
-      plugin: get
-      source: filename
-    -
-      plugin: default_value
-      default_value: 'trellis_event.jpg'
-  uri:  uri
-  filemime:
-    -
-      plugin: get
-      source: filemime
-    -
-      plugin: default_value
-      default_value: 'image/jpeg'
   status:
     plugin: default_value
     default_value: 1
+
+  uri:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: image_url
+    -
+      plugin: default_value
+      default_value: 'public://trellis_event.jpg'
   #created: timestamp
   #changed: timestamp
   uid:
