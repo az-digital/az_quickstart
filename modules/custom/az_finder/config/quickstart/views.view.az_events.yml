@@ -1371,8 +1371,8 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  block_1:
-    id: block_1
+  az_past_row:
+    id: az_past_row
     display_title: 'Past Row Vew'
     display_plugin: block
     position: 2
