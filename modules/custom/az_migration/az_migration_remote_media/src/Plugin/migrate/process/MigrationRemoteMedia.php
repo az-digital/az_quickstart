@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration_remote_media\Plugin\migrate\process;
 
+use Drupal\Component\Utility\Crypt;
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\MigrateExecutableInterface;
@@ -55,6 +56,13 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
   protected $logger;
 
   /**
+   * The migrate lookup service.
+   *
+   * @var \Drupal\migrate\MigrateLookupInterface
+   */
+  protected $migrateLookup;
+
+  /**
    * @var \Drupal\migrate\Plugin\MigrationPluginManager
    */
   protected $pluginManagerMigration;
@@ -75,6 +83,7 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
     $instance->fileSystem = $container->get('file_system');
     $instance->httpClient = $container->get('http_client');
     $instance->logger = $container->get('logger.factory')->get('az_migration_remote_media');
+    $instance->migrateLookup = $container->get('migrate.lookup');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     return $instance;
   }
@@ -84,9 +93,39 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
 
+    // Url is provided as the value of the process plugin.
     $url = $value;
+    if (is_array($url)) {
+      $url = reset($url);
+    }
+    $original_uri = NULL;
+
+    // Lookup the existing uri. The existing uri constitutes our default.
+    // We will return this if unchanged or can't fetch the new file.
+    $migration = $this->configuration['migration'] ?? NULL;
+    $source_ids = $this->configuration['source_ids'] ?? [];
+    $source_ids = $row->getMultiple($source_ids);
+    if (!empty($migration) && !empty($source_ids)) {
+      // Lookup the file migration to find the current file.
+      try {
+        $destination_id_array = $this->migrateLookup->lookup($migration, $source_ids);
+      }
+      catch (\Exception $e) {
+        $destination_id_array = [];
+      }
+      $destination_id_array = reset($destination_id_array);
+      if (!empty($destination_id_array)) {
+        // Attempt to load the destination file entity and see if it has a uri.
+        $file = $this->entityTypeManager->getStorage('file')->load(reset($destination_id_array));
+        if (!empty($file)) {
+          $original_uri = $file->getFileUri();
+        }
+      }
+    }
+
+    // There's nothing to fetch if we don't have an URL.
     if (empty($url)) {
-      return NULL;
+      return $original_uri;
     }
 
     try {
@@ -112,7 +151,8 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
       ]);
       return NULL;
     }
-    // Fallback filename.
+
+    // Get the fallback filename.
     $filename = 'remote_media';
     $mimeTypes = new MimeTypes();
     // Find the proper fallback file extension if possible.
@@ -156,13 +196,37 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
       '%filename' => $filename,
     ]);
 
-    // @todo check hash to determine whether to return this file or original.
-    // Create the actual disk file.
-    $uri = $this->fileSystem->createFilename($filename, $directory);
-    $uri = $this->fileSystem->saveData($body, $uri, FileExists::Replace);
+    // Check hash to determine whether to return this file or original.
+    $original_hash = NULL;
+    $uri = $original_uri;
+    if ($original_uri && file_exists($original_uri)) {
+      $original_hash = Crypt::hashBase64(file_get_contents($original_uri));
+    }
+    $hash = Crypt::hashBase64($body);
+    // Check if file has changed (or is new).
+    if ($hash !== $original_hash) {
+      // Create the actual disk file from the body.
+      try {
+        $new_uri = $this->fileSystem->createFilename($filename, $directory);
+        $new_uri = $this->fileSystem->saveData($body, $new_uri, FileExists::Replace);
+        if (!empty($original_uri)) {
+          $this->logger->notice("Updating @original_uri to @new_uri because its hash has changed.", [
+            '@original_uri' => $original_uri,
+            '@new_uri' => $new_uri,
+          ]);
+        }
+        $uri = $new_uri;
+      }
+      catch (\Exception $e) {
+        $this->logger->notice("During migration of %url, @msg", [
+          '%url' => $url,
+          '@msg' => $e->getMessage(),
+        ]);
+      }
+
+    }
 
     return $uri;
-
   }
 
 }

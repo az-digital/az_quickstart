@@ -29,6 +29,9 @@ process:
       source: image_url
     -
       plugin: az_migration_remote_media
+      migration: az_trellis_events_files
+      source_ids:
+        - id
       source: image_url
   #created: timestamp
   #changed: timestamp
