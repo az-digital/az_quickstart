@@ -151,7 +151,7 @@ class AZEventTrellisViewsField extends BulkForm {
         ],
       ];
       // @todo make injected.
-      \Drupal::service('az_migration_remote_media.tools')->batch($migrations);
+      \Drupal::service('az_migration_remote.tools')->batch($migrations);
     }
 
   }

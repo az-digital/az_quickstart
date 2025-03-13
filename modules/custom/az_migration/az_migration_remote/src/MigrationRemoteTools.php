@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Drupal\az_migration_remote_media;
+namespace Drupal\az_migration_remote;
 
 use Drupal\Core\Batch\BatchBuilder;
 use Drupal\migrate_tools\MigrateBatchExecutable;
@@ -14,7 +14,7 @@ use Drupal\migrate\Plugin\MigrationPluginManagerInterface;
 /**
  * @todo Add class description.
  */
-final class RemoteMediaQueueTools {
+final class MigrationRemoteTools {
   use StringTranslationTrait;
 
   /**

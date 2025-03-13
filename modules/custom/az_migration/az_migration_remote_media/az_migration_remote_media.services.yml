@@ -1,4 +1,0 @@
-services:
-  az_migration_remote_media.tools:
-    class: Drupal\az_migration_remote_media\RemoteMediaQueueTools
-    arguments: ['@plugin.manager.migration']

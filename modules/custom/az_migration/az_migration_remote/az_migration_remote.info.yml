@@ -1,6 +1,6 @@
-name: 'Quickstart Migration Remote Media'
+name: 'Quickstart Migration Remote Tools'
 type: module
-description: 'Allows import of remote media via deferred queue.'
+description: 'Provides tools for import of remote items.'
 core_version_requirement: ^10 || ^11
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental

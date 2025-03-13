@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_migration_remote_media\Plugin\migrate\process;
+namespace Drupal\az_migration_remote\Plugin\migrate\process;
 
 use Devanych\Mime\MimeTypes;
 use Drupal\Component\Utility\Crypt;
@@ -42,7 +42,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @code
  * process:
  *   uri:
- *     plugin: az_migration_remote_media
+ *     plugin: az_migration_remote_file
  *     migration: az_trellis_events_files
  *     default_filename: 'trellis-event-image'
  *     directory: 'public://trellis-events'
@@ -53,8 +53,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
  */
-#[MigrateProcess('az_migration_remote_media')]
-class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactoryPluginInterface {
+#[MigrateProcess('az_migration_remote_file')]
+class MigrationRemoteFile extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   // Regex for parsing Content-Disposition.
   const REQUEST_HEADER_FILENAME_REGEX = '@\bfilename(?<star>\*?)=\"(?<filename>.+)\"@';
@@ -116,7 +116,7 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
     $instance->eventDispatcher = $container->get('event_dispatcher');
     $instance->fileSystem = $container->get('file_system');
     $instance->httpClient = $container->get('http_client');
-    $instance->logger = $container->get('logger.factory')->get('az_migration_remote_media');
+    $instance->logger = $container->get('logger.factory')->get('az_migration_remote');
     $instance->migrateLookup = $container->get('migrate.lookup');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
     return $instance;

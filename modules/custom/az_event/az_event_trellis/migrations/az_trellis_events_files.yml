@@ -28,7 +28,7 @@ process:
       method: row
       source: image_url
     -
-      plugin: az_migration_remote_media
+      plugin: az_migration_remote_file
       migration: az_trellis_events_files
       default_filename: 'trellis-event-image'
       directory: 'public://trellis-events'
