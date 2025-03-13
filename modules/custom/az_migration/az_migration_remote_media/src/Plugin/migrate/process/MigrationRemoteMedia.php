@@ -174,7 +174,7 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
         '%url' => $url,
         '%msg' => $e->getMessage(),
       ]);
-      return NULL;
+      return $original_uri;
     }
     // Get headers relevant to file.
     $type = $response->getHeader('Content-Type') ?? [];
@@ -183,7 +183,7 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
       $this->logger->notice("No Content-Type provided by %url", [
         '%url' => $url,
       ]);
-      return NULL;
+      return $original_uri;
     }
 
     // Get the fallback filename.
@@ -219,7 +219,8 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
     ]);
 
     $body = $response->getBody();
-    // @todo make configurable.
+
+    // Get directory path for new files.
     $directory = $this->configuration['directory'] ?? 'public://';
 
     // Sanitize our filename. Give other modules a change to weigh in.
