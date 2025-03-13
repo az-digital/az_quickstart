@@ -17,12 +17,14 @@
             target_url: ''
           });
         } else if (event.target.tagName === 'INPUT') {
-          gtag('event', 'Finder Event', {
-            source_url: event.target.baseURI,
-            event_type: 'Checkbox/Radio button filter',
-            target_label: event.target.nextSibling.innerText,
-            target_url: ''
-          });
+          if (event.target.checked) {
+            gtag('event', 'Finder Event', {
+              source_url: event.target.baseURI,
+              event_type: 'Checkbox/Radio button filter',
+              target_label: event.target.nextSibling.innerText,
+              target_url: ''
+            });
+          }
         }
       };
       var finderExposedFormDivs = once('az-finder-gtm-events', '[data-az-better-exposed-filters]', context);
