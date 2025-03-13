@@ -29,7 +29,7 @@ process:
     -
       plugin: az_migration_remote_file
       migration: az_person_profiles_import_files
-      default_filename: 'faculty-image'
+      default_filename: netid
       directory: 'public://profiles'
       source_ids:
         - id

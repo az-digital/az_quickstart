@@ -187,7 +187,8 @@ class MigrationRemoteFile extends ProcessPluginBase implements ContainerFactoryP
     }
 
     // Get the fallback filename.
-    $filename = $this->configuration['default_filename'] ?? 'file';
+    $filename = $row->get($this->configuration['default_filename']) ?? 'file';
+
     $mimeTypes = new MimeTypes();
     // Find the proper fallback file extension if possible.
     $extensions = $mimeTypes->getExtensions($type);
