@@ -24,10 +24,6 @@ process:
 
   uri:
     -
-      plugin: skip_on_empty
-      method: row
-      source: image_url
-    -
       plugin: az_migration_remote_file
       migration: az_trellis_events_files
       default_filename: 'trellis-event-image'
@@ -35,8 +31,9 @@ process:
       source_ids:
         - id
       source: image_url
-  #created: timestamp
-  #changed: timestamp
+    -
+      plugin: skip_on_empty
+      method: row
   uid:
     plugin: default_value
     default_value: 0

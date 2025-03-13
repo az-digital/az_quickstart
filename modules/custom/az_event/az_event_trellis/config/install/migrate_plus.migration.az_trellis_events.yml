@@ -80,14 +80,13 @@ process:
       default_value: 0
   field_az_photos/target_id:
     -
-      plugin: skip_on_empty
-      method: process
-      source: image_url
-    -
       plugin: migration_lookup
       migration: az_trellis_events_media
       source: id
       no_stub: true
+    -
+      plugin: skip_on_empty
+      method: process
   field_az_event_date/value:
     -
       plugin: format_date

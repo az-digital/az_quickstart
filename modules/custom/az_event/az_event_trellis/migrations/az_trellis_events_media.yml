@@ -13,6 +13,10 @@ source:
       name: image_url
       label: 'Image URL'
       selector: Image_URL
+    -
+      name: name
+      label: Name
+      selector: Name
   ids:
     id:
       type: string
@@ -26,16 +30,15 @@ process:
     default_value: az_image
   field_media_az_image/target_id:
     -
-      plugin: skip_on_empty
-      method: row
-      source: image_url
-    -
       plugin: migration_lookup
       migration: az_trellis_events_files
       source: id
       no_stub: true
-  field_media_az_image/alt: alt
-  field_media_az_image/title: alt
+    -
+      plugin: skip_on_empty
+      method: row
+  field_media_az_image/alt: name
+  field_media_az_image/title: name
   status:
     plugin: default_value
     default_value: 1
