@@ -51,15 +51,17 @@ final class MigrationRemoteTools {
    */
   public function batch(array $migrations): void {
     // Create a batch for our queue items.
-    $batch_builder = (new BatchBuilder())->setTitle(t('Migrating Remote Media'))
-      ->setFinishCallback([MigrateBatchExecutable::class, 'batchFinishedImport']);
+    // ->setTitle($this->t('Migrating Remote Media'))
+    $batch_builder = (new BatchBuilder())->setFinishCallback([MigrateBatchExecutable::class, 'batchFinishedImport']);
 
+    $labels = [];
     // Create an array of batch operations.
     // Treat array key as migration id.
     foreach ($migrations as $migration_id => $options) {
       // Lookup the migration.
       /** @var \Drupal\migrate\Plugin\MigrationInterface $migration */
       $migration = $this->pluginManagerMigration->createInstance($migration_id, $options['configuration'] ?? []);
+      $labels[] = $migration->label();
 
       // Reset the migration's status.
       if ($migration->getStatus() !== MigrationInterface::STATUS_IDLE) {
@@ -85,6 +87,13 @@ final class MigrationRemoteTools {
         [$migration_id, $options],
       );
     }
+
+    // Set messages.
+    $labels = implode(', ', $labels);
+    $batch_builder->setTitle(t('Migrating %labels', ['%labels' => $labels]))
+      ->setInitMessage(t('Start migrating %labels', ['%labels' => $labels]))
+      ->setProgressMessage(t('Migrating %labels', ['%labels' => $labels]))
+      ->setErrorMessage(t('An error occurred while migrating %labels', ['%labels' => $labels]));
 
     // Set the constructed batch as a batch operation.
     // Typically the batch is actually executed later by the Form API.
