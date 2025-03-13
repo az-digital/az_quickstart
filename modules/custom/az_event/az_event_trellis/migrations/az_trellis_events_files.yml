@@ -30,6 +30,8 @@ process:
     -
       plugin: az_migration_remote_media
       migration: az_trellis_events_files
+      default_filename: 'trellis-event-image'
+      directory: 'public://trellis-events'
       source_ids:
         - id
       source: image_url

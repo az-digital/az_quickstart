@@ -2,6 +2,7 @@
 
 namespace Drupal\az_migration_remote_media\Plugin\migrate\process;
 
+use Drupal\Core\File\FileSystemInterface;
 use Drupal\Component\Utility\Crypt;
 use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\Plugin\MigrationInterface;
@@ -153,7 +154,7 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
     }
 
     // Get the fallback filename.
-    $filename = 'remote_media';
+    $filename = $this->configuration['default_filename'] ?? 'file';
     $mimeTypes = new MimeTypes();
     // Find the proper fallback file extension if possible.
     $extensions = $mimeTypes->getExtensions($type);
@@ -186,7 +187,7 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
 
     $body = $response->getBody();
     // @todo make configurable.
-    $directory = 'public://';
+    $directory = $this->configuration['directory'] ?? 'public://';
 
     // Sanitize our filename. Give other modules a change to weigh in.
     $event = new FileUploadSanitizeNameEvent($filename, $extension);
@@ -207,6 +208,8 @@ class MigrationRemoteMedia extends ProcessPluginBase implements ContainerFactory
     if ($hash !== $original_hash) {
       // Create the actual disk file from the body.
       try {
+        // Make sure our destination directory exists.
+        $this->fileSystem->prepareDirectory($directory, FileSystemInterface::CREATE_DIRECTORY | FileSystemInterface::MODIFY_PERMISSIONS);
         $new_uri = $this->fileSystem->createFilename($filename, $directory);
         $new_uri = $this->fileSystem->saveData($body, $new_uri, FileExists::Replace);
         if (!empty($original_uri)) {
