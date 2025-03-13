@@ -14,6 +14,7 @@ use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException;
 
 /**
  * Provides uri to created file in the file system after a remote download.
@@ -115,7 +116,14 @@ class MigrationRemoteFile extends ProcessPluginBase implements ContainerFactoryP
     $instance->entityTypeManager = $container->get('entity_type.manager');
     $instance->eventDispatcher = $container->get('event_dispatcher');
     $instance->fileSystem = $container->get('file_system');
-    $instance->httpClient = $container->get('http_client');
+    try {
+      // Use the distribution cached http client if it is available.
+      $instance->httpClient = $container->get('az_http.http_client');
+    }
+    catch (ServiceNotFoundException $e) {
+      // Otherwise, fall back on the Drupal core guzzle client.
+      $instance->httpClient = $container->get('http_client');
+    }
     $instance->logger = $container->get('logger.factory')->get('az_migration_remote');
     $instance->migrateLookup = $container->get('migrate.lookup');
     $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
