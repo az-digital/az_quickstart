@@ -47,6 +47,7 @@ final class AZFinderViewOptions {
     }
 
     $viewOptions = $this->getViewsUsingPlugin($plugin_id);
+    asort($viewOptions);
     $this->cacheBackend->set($cache_id, $viewOptions, CacheBackendInterface::CACHE_PERMANENT, ['az_finder:view_options']);
     return $viewOptions;
   }

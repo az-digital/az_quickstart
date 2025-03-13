@@ -173,6 +173,9 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
     // Combine overrides. Session overrides will not overwrite existing ones.
     $overrides = $config_overrides + $normalized_session_overrides;
 
+    // Get array of view options.
+    $view_options = $this->azFinderViewOptions->getViewOptions();
+
     $form['az_finder_tid_widget']['overrides'] = [
       '#type' => 'container',
       '#prefix' => '<div id="js-overrides-container">',
@@ -186,7 +189,7 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
         '#title' => $this->t('Add an Override'),
         '#description' => $this->t('Select a particular filter widget to override the default display for each taxonomy term.'),
         '#weight' => -1,
-        '#options' => $this->azFinderViewOptions->getViewOptions(),
+        '#options' => $view_options,
         '#empty_option' => $this->t('- Select -'),
         '#attributes' => [
           'id' => 'js-az-select-view-display',
@@ -230,6 +233,25 @@ class AZFinderSettingsForm extends ConfigFormBase implements ContainerInjectionI
 
     // Save combined overrides to the form state.
     $form_state->setValue(['az_finder_tid_widget', 'overrides'], $overrides);
+
+    // GTM events settings section.
+    $form['gtm_events_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Enable Google Tag Manager Events for Finder View Displays'),
+      '#open' => FALSE,
+    ];
+
+    // Remove the '- Select -' view option for the GTM events views list.
+    unset($view_options['']);
+
+    $form['gtm_events_settings']['views_checkboxes'] = [
+      '#type' => 'checkboxes',
+      '#title' => 'Enable Google Tag Manager Events',
+      '#description' => $this->t('Check the boxes above to enable GTM events for specific Finder view displays. (Add documentation link here.)'),
+      '#options' => $view_options,
+      '#config_target' => 'az_finder.settings:gtm_enabled_views',
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
