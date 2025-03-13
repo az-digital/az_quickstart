@@ -18,6 +18,39 @@ use Drupal\Core\File\Event\FileUploadSanitizeNameEvent;
 /**
  * Provides uri to created file in the file system after a remote download.
  *
+ * This process plugin fetches remote files and copies them to the drupal
+ * filesystem. If an optional file migration and source_ids configuration
+ * is added, the remote file will be hashed and compared to the original
+ * file to determine if it is new.
+ *
+ * If the file is new or changed, it will be copied to the filesystem and
+ * have its uri returned.
+ *
+ * If the file is unchanged or the fetch of the remote URL does not succeed
+ * the original uri specificed by the migration setting will be returned.
+ *
+ * The intent of this behavior is to not update local copies of files
+ * unnecessarily - only when they have changed.
+ *
+ * Available configuration keys
+ * - migration: (optional) a file migration to look up existing files
+ * - source_ids: (optional) an array of source field names.
+ * - default_filename: Specify a default base filename. No file extension.
+ * - directory: A stream and directory where new files should be placed.
+ * - source: The URL of the remote file to download.
+ *
+ * @code
+ * process:
+ *   uri:
+ *     plugin: az_migration_remote_media
+ *     migration: az_trellis_events_files
+ *     default_filename: 'trellis-event-image'
+ *     directory: 'public://trellis-events'
+ *     source_ids:
+ *       - id
+ *     source: image_url
+ * @endcode
+ *
  * @see \Drupal\migrate\Plugin\MigrateProcessInterface
  */
 #[MigrateProcess('az_migration_remote_media')]
