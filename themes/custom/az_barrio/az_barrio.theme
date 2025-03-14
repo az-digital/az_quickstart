@@ -42,7 +42,7 @@ function az_barrio_theme_suggestions_input_alter(&$suggestions, $variables) {
   if (isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
     $suggestions[] = 'input__' . $variables['element']['#form_id'];
   }
-  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && $variables['element']['#form_id'] === 'search_block_form') {
+  if (isset($variables['element']['#type']) && isset($variables['element']['#form_id']) && ($variables['element']['#form_id'] === 'search_block_form' || $variables['element']['#form_id'] === 'mobile_nav_form')) {
     $suggestions[] = 'input__' . $variables['element']['#form_id'] . '__' . $variables['element']['#type'];
   }
 }
@@ -113,12 +113,6 @@ function az_barrio_preprocess_page(&$variables, $hook) {
     }
     else {
       $variables['navbar_offcanvas_attributes']['class'][] = 'no-navigation-region';
-    }
-    if ($variables['page']['navigation_offcanvas']) {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'has-off-canvas-region';
-    }
-    else {
-      $variables['navbar_offcanvas_attributes']['class'][] = 'no-off-canvas-region';
     }
   }
 
