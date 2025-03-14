@@ -26,3 +26,10 @@ function az_event_trellis_update_1021001() {
     \Drupal::entityDefinitionUpdateManager()->installEntityType($entity_type_definition);
   }
 }
+
+/**
+ * Ensure az_migration_remote is installed.
+ */
+function az_event_trellis_update_1021301() {
+  \Drupal::service('module_installer')->install(['az_migration_remote']);
+}

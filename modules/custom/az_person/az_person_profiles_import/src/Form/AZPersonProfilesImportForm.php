@@ -7,9 +7,6 @@ namespace Drupal\az_person_profiles_import\Form;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\migrate\MigrateMessage;
-use Drupal\migrate\Plugin\MigrationInterface;
-use Drupal\migrate_tools\MigrateBatchExecutable;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -24,11 +21,11 @@ final class AZPersonProfilesImportForm extends FormBase {
   protected $messenger;
 
   /**
-   * Drupal\migrate\Plugin\MigrationPluginManagerInterface definition.
+   * AZ Migration Remote Tools.
    *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManagerInterface
+   * @var \Drupal\az_migration_remote\MigrationRemoteTools
    */
-  protected $pluginManagerMigration;
+  protected $migrationRemoteTools;
 
   /**
    * {@inheritdoc}
@@ -36,7 +33,7 @@ final class AZPersonProfilesImportForm extends FormBase {
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->messenger = $container->get('messenger');
-    $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
+    $instance->migrationRemoteTools = $container->get('az_migration_remote.tools');
     return $instance;
   }
 
@@ -110,18 +107,8 @@ final class AZPersonProfilesImportForm extends FormBase {
       $urls[] = $netid;
     }
 
-    // Fetch the profiles integration migration.
-    $migration = $this->pluginManagerMigration->createInstance('az_person_profiles_import');
-    // Phpstan doesn't know this can be NULL.
-    // @phpstan-ignore-next-line
-    if (!empty($migration)) {
-      // Reset status.
-      $status = $migration->getStatus();
-      if ($status !== MigrationInterface::STATUS_IDLE) {
-        $migration->setStatus(MigrationInterface::STATUS_IDLE);
-      }
-      // Set migration options.
-      $options = [
+    $migrations = [
+      'az_person_profiles_import_files' => [
         'limit' => 0,
         'update' => (int) $update,
         'track_changes' => (int) $track,
@@ -130,12 +117,31 @@ final class AZPersonProfilesImportForm extends FormBase {
             'urls' => $urls,
           ],
         ],
-      ];
+      ],
+      'az_person_profiles_import_media' => [
+        'limit' => 0,
+        'update' => (int) $update,
+        'track_changes' => (int) $track,
+        'configuration' => [
+          'source' => [
+            'urls' => $urls,
+          ],
+        ],
+      ],
+      'az_person_profiles_import' => [
+        'limit' => 0,
+        'update' => (int) $update,
+        'track_changes' => (int) $track,
+        'configuration' => [
+          'source' => [
+            'urls' => $urls,
+          ],
+        ],
+      ],
+    ];
 
-      // Run the migration.
-      $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
-      $executable->batchImport();
-    }
+    // Run the migration.
+    $this->migrationRemoteTools->batch($migrations);
   }
 
 }

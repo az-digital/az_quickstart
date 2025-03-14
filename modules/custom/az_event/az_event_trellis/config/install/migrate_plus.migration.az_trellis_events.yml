@@ -47,6 +47,10 @@ source:
       label: 'End Date and Time'
       selector: End_DateTime
     -
+      name: image_url
+      label: 'Image URL'
+      selector: Image_URL
+    -
       name: publish
       label: Publish
       selector: Publish_Formula
@@ -74,6 +78,15 @@ process:
       plugin: default_value
       strict: true
       default_value: 0
+  field_az_photos/target_id:
+    -
+      plugin: migration_lookup
+      migration: az_trellis_events_media
+      source: id
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: process
   field_az_event_date/value:
     -
       plugin: format_date
@@ -90,4 +103,6 @@ destination:
   plugin: 'entity:node'
   default_bundle: az_event
   validate: false
-migration_dependencies: null
+migration_dependencies:
+  optional:
+    - az_trellis_events_media
