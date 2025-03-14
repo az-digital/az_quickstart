@@ -2,13 +2,13 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_az_degrees
+    - field.storage.node.field_az_licensure_certification
     - node.type.az_person
-id: node.az_person.field_az_degrees
-field_name: field_az_degrees
+id: node.az_person.field_az_licensure_certification
+field_name: field_az_licensure_certification
 entity_type: node
 bundle: az_person
-label: Degrees
+label: 'Licensure & Certification'
 description: ''
 required: false
 translatable: true
