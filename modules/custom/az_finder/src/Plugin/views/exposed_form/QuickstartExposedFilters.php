@@ -124,7 +124,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
 
     // Attach JS library to send GTM events if they are enabled for this view.
     $gtm_enabled_views = $this->configFactory->get('az_finder.settings')->get('gtm_enabled_views');
-    if ($gtm_enabled_views[$view_display]) {
+    if (!empty($gtm_enabled_views) && $gtm_enabled_views[$view_display]) {
       $form['#attached']['library'][] = 'az_finder/gtm-events';
     }
   }
