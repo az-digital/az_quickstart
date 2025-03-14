@@ -51,4 +51,9 @@ function az_seo_update_1021301() {
       $config_storage->write($name, $storage->read($name));
     }
   }
+
+  // Build a list of rebuildable link types.
+  $rebuild_types = xmlsitemap_get_rebuildable_link_types();
+  $batch = xmlsitemap_rebuild_batch($rebuild_types, TRUE);
+  batch_set($batch);
 }
