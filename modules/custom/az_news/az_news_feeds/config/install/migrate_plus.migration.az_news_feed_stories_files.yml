@@ -24,22 +24,22 @@ source:
     -
       name: fid
       label: 'File ID'
-      selector: /story/img-fid
+      selector: /field_az_media_image/fid
     -
       name: uuid
       label: 'Story UUID'
-      selector: /story/uuid
+      selector: /uuid
     -
       name: image
       label: Image
-      selector: /story/img-thumb
+      selector: /field_az_media_image
 process:
   filename:
     -
       plugin: skip_on_empty
       method: row
       message: 'Cannot import empty image filename.'
-      source: image/src
+      source: image/original
     -
       plugin: callback
       callable: parse_url
@@ -60,11 +60,11 @@ process:
     -
       plugin: skip_on_empty
       method: process
-      source: image/src
+      source: image/original
     -
       plugin: file_copy
       source:
-        - image/src
+        - image/original
         - '@destination_path'
       file_exists: 'use existing'
       move: false
