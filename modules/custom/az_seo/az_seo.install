@@ -27,3 +27,10 @@ function az_seo_update_1021001() {
 function az_seo_update_1021101() {
   \Drupal::service('module_installer')->install(['schema_metatag']);
 }
+
+/**
+ * Ensure schema_organization module is installed.
+ */
+function az_seo_update_1021301() {
+  \Drupal::service('module_installer')->install(['schema_organization']);
+}
