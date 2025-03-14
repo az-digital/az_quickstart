@@ -232,7 +232,7 @@ class MigrationRemoteFile extends ProcessPluginBase implements ContainerFactoryP
     // Get directory path for new files.
     $directory = $this->configuration['directory'] ?? 'public://';
 
-    // Sanitize our filename. Give other modules a change to weigh in.
+    // Sanitize our filename. Give other modules a chance to weigh in.
     $event = new FileUploadSanitizeNameEvent($filename, $extension);
     $this->eventDispatcher->dispatch($event);
     $filename = $event->getFilename();
