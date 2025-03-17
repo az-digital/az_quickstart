@@ -72,6 +72,10 @@ function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterfac
             'field_az_degrees',
             'field_az_address',
             'field_az_body',
+            'field_az_interests',
+            'field_az_awards',
+            'field_az_licensure_certification',
+            'field_az_work_experience',
           ];
           foreach ($disabled_fields as $field) {
             if (!empty($form[$field])) {
