@@ -59,7 +59,7 @@ content:
     third_party_settings: {  }
   field_az_authors:
     type: inline_entity_form_complex
-    weight: 8
+    weight: 9
     region: content
     settings:
       form_mode: default
@@ -78,7 +78,7 @@ content:
     third_party_settings: {  }
   field_az_contributors:
     type: az_entity_role_inline_entity_form_complex
-    weight: 9
+    weight: 8
     region: content
     settings:
       form_mode: default
