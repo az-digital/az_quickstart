@@ -8,7 +8,7 @@ field_name: field_az_licensure_certification
 entity_type: node
 type: string
 settings:
-  max_length: 255
+  max_length: 510
   is_ascii: false
   case_sensitive: false
 module: core
