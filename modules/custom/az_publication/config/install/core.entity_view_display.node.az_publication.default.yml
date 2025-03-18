@@ -5,6 +5,7 @@ dependencies:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
     - field.field.node.az_publication.field_az_contributors
+    - field.field.node.az_publication.field_az_main_content
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_category
@@ -30,6 +31,7 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_volume
     - node.type.az_publication
   module:
+    - entity_reference_revisions
     - field_group
     - smart_title
     - text
@@ -97,8 +99,9 @@ third_party_settings:
     group_information:
       children:
         - group_az_publication_reference
-        - field_az_publication_abstract
         - group_file
+        - field_az_publication_abstract
+        - group_publication
       label: Information
       parent_name: group_row
       region: content
@@ -121,7 +124,7 @@ third_party_settings:
       label: File
       parent_name: group_information
       region: content
-      weight: 5
+      weight: 4
       format_type: html_element
       format_settings:
         classes: mb-2
@@ -149,6 +152,26 @@ third_party_settings:
         target: custom_uri
         custom_uri: '[node:field_az_publication_media:entity:field_media_az_document:entity:url]'
         target_attribute: default
+    group_publication:
+      children:
+        - field_az_main_content
+      label: Publication
+      parent_name: group_information
+      region: content
+      weight: 6
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: true
+        label_element: div
+        label_element_classes: h3
+        attributes: ''
+        effect: none
+        speed: fast
   smart_title:
     enabled: true
 id: node.az_publication.default
@@ -161,12 +184,21 @@ content:
     third_party_settings: {  }
     weight: 0
     region: content
+  field_az_main_content:
+    type: entity_reference_revisions_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: ''
+    third_party_settings: {  }
+    weight: 7
+    region: content
   field_az_publication_abstract:
     type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
-    weight: 4
+    weight: 5
     region: content
   field_az_publication_image:
     type: entity_reference_entity_view
@@ -179,7 +211,7 @@ content:
     region: content
   field_az_publication_media:
     type: entity_reference_entity_view
-    label: hidden
+    label: above
     settings:
       view_mode: default
       link: false

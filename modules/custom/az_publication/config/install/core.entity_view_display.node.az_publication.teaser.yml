@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
     - field.field.node.az_publication.field_az_contributors
+    - field.field.node.az_publication.field_az_main_content
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
     - field.field.node.az_publication.field_az_publication_category
@@ -47,6 +48,7 @@ hidden:
   field_az_accessed_date: true
   field_az_authors: true
   field_az_contributors: true
+  field_az_main_content: true
   field_az_publication_abstract: true
   field_az_publication_approximate: true
   field_az_publication_category: true

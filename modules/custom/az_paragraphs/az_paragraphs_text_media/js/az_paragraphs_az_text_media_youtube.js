@@ -111,6 +111,9 @@
         };
         window.onPlayerReady = function (event) {
           var id = event.target.getVideoData().video_id;
+          if (bgVideos[id].dataset.autoplay === 'false') {
+            return;
+          }
           if (bgVideos[id].mute) {
             event.target.mute();
           }
