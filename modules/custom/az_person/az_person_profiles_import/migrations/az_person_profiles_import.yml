@@ -207,7 +207,7 @@ process:
           - dates
           - start_year
       -
-        prefix: ' — '
+        prefix: ' - '
         default: 'Ongoing'
         keys:
           - dates
