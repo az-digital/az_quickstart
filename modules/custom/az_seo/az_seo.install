@@ -28,6 +28,7 @@ function az_seo_update_1021001() {
  */
 function az_seo_update_1021301() {
 \Drupal::service('module_installer')->install(['schema_organization']);
+}
 
 /**
  * Install xmlsitemap config for AZ Event, News, Person and Publication.
