@@ -259,6 +259,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             }
           }
         }
+        // Keep track of roles seen.
+        $roles = [];
         // @todo Don't duplicate author code.
         if (!empty($entity->field_az_contributors)) {
           foreach ($entity->field_az_contributors as $item) {
@@ -288,6 +290,9 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
               }
               // Add to schema based on role.
               $role = $item->role ?? 'author';
+              // Take note that we've seen a particular role.
+              $roles[$role] = TRUE;
+              // Add contributor to CSL information.
               $blob->{$role}[] = $author;
             }
           }
@@ -397,6 +402,10 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             return preg_replace('#<div class="csl-left-margin">(.*?)</div>#', '', $renderedText);
           },
         ];
+        // Apply link transformation to different contributor roles.
+        foreach ($roles as $role => $val) {
+          $additionalMarkup[$role] = $renderlink;
+        }
         // Set up CSL rendering.
         $citeProc = new CiteProc($style_info, $locale, $additionalMarkup);
         $biblio = $citeProc->render([$blob], "bibliography");
