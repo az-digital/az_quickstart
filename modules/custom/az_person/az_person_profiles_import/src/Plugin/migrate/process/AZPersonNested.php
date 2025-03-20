@@ -22,6 +22,7 @@ use Drupal\migrate\Row;
  *   - keys: An array of parent keys to a value you want to display.
  *   - peoplesoft (optional) TRUE if the value is a peoplesoft term.
  *   - skip_if_empty: (optional) TRUE if empty items should not display.
+ *   - filter: (optional) A map of values to require in the item.
  *   - prefix: (optional) A string to render before the item.
  *   - suffix: (optional) A string to render after the item.
  * @code
@@ -127,6 +128,7 @@ class AZPersonNested extends ProcessPluginBase {
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // Get plugin configuration.
     $format = $this->configuration['format'] ?? [];
+    $filter = $this->configuration['filter'] ?? [];
     $split = $this->configuration['split'] ?? [];
     $processed = [];
 
@@ -159,6 +161,17 @@ class AZPersonNested extends ProcessPluginBase {
     // Loop through input, building items as we go.
     foreach ($value as $item) {
       $result = '';
+      // Check if the item has specified filter values.
+      $meets_conditions = TRUE;
+      foreach ($filter as $filter_key => $filter_value) {
+        $found_value = $item[$filter_key] ?? NULL;
+        if ($found_value !== $filter_value) {
+          $meets_conditions = FALSE;
+        }
+      }
+      if (!$meets_conditions) {
+        continue;
+      }
       foreach ($format as $f) {
         if (empty($f['keys'])) {
           continue;

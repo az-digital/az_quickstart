@@ -116,9 +116,20 @@ process:
         keys:
           - CONFERRED_DEGREE
           - year
-  field_az_interests:
+  field_az_research_interests:
     plugin: az_person_profiles_nested
     source: interests
+    filter:
+      type: research
+    format:
+      -
+        keys:
+          - desc
+  field_az_teaching_interests:
+    plugin: az_person_profiles_nested
+    source: interests
+    filter:
+      type: teaching
     format:
       -
         keys:
