@@ -157,6 +157,12 @@ class AZFinderTaxonomyIndexTidWidget extends FilterWidgetBase implements Contain
     if (!$this->view instanceof ViewExecutable) {
       return;
     }
+    // Attach contextual links to the block render array.
+    $form['#contextual_links'] = [
+      'az_finder' => [
+        'route_parameters' => [],
+      ],
+    ];
     /** @var \Drupal\views\Plugin\views\filter\FilterPluginBase $filter */
     $filter = $this->handler;
     $filter_id = $filter->options['expose']['identifier'];
