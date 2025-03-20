@@ -3,17 +3,15 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_az_interests
-field_name: field_az_interests
+id: node.field_az_teaching_interests
+field_name: field_az_teaching_interests
 entity_type: node
-type: string
+type: string_long
 settings:
-  max_length: 510
-  is_ascii: false
   case_sensitive: false
 module: core
 locked: false
-cardinality: -1
+cardinality: 1
 translatable: true
 indexes: {  }
 persist_with_no_fields: false

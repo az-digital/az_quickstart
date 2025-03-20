@@ -9,7 +9,6 @@ dependencies:
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
-    - field.field.node.az_person.field_az_interests
     - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
@@ -20,7 +19,9 @@ dependencies:
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_research_interests
     - field.field.node.az_person.field_az_suffix
+    - field.field.node.az_person.field_az_teaching_interests
     - field.field.node.az_person.field_az_titles
     - field.field.node.az_person.field_az_work_experience
     - image.style.az_medium
@@ -274,7 +275,7 @@ third_party_settings:
       weight: 6
       format_type: tabs
       format_settings:
-        classes: 'az-horizontal-tabs'
+        classes: az-horizontal-tabs
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -282,7 +283,8 @@ third_party_settings:
         width_breakpoint: 640
     group_interests:
       children:
-        - field_az_interests
+        - field_az_teaching_interests
+        - field_az_research_interests
       label: Interests
       parent_name: group_tabs
       region: content
@@ -316,9 +318,10 @@ content:
     weight: 10
     region: content
   field_az_awards:
-    type: text_default
+    type: string
     label: above
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
     weight: 5
     region: content
@@ -344,17 +347,11 @@ content:
     third_party_settings: {  }
     weight: 10
     region: content
-  field_az_interests:
-    type: text_default
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    weight: 1
-    region: content
   field_az_licensure_certification:
-    type: text_default
+    type: string
     label: above
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
     weight: 6
     region: content
@@ -415,6 +412,13 @@ content:
     third_party_settings: {  }
     weight: 11
     region: content
+  field_az_research_interests:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_az_suffix:
     type: string
     label: hidden
@@ -422,6 +426,13 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 7
+    region: content
+  field_az_teaching_interests:
+    type: basic_string
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
     region: content
   field_az_titles:
     type: string
@@ -432,9 +443,10 @@ content:
     weight: 9
     region: content
   field_az_work_experience:
-    type: text_default
+    type: string
     label: above
-    settings: {  }
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
     weight: 4
     region: content
