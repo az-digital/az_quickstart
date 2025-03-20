@@ -129,7 +129,7 @@ process:
   field_az_publication_volume: volume
   field_az_publication_issue: number
   field_az_publication_version: version
-  field_az_authors:
+  field_az_contributors:
     plugin: sub_process
     source: author
     process:
@@ -156,6 +156,9 @@ process:
           field_az_author_nondrop_particle: von
           field_az_author_lname: last
           field_az_author_suffix: jr
+      role:
+        plugin: default_value
+        default_value: author
 destination:
   plugin: entity:node
   bundle: az_publication
