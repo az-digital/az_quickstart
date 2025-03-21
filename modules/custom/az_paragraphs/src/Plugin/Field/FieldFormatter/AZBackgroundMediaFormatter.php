@@ -506,16 +506,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       if ($provider === 'YouTube') {
         $attached_library = [
           'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.youtube',
-          'drupalSettings' => [
-            'azFieldsMedia' => [
-              'bgVideos' => [
-                $video_oembed_id => [
-                  'videoId' => $video_oembed_id,
-                  'start' => 0,
-                ],
-              ],
-            ],
-          ],
         ];
         $background_video = [
           '#type' => 'html_tag',
@@ -531,6 +521,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'data-style' => $settings['style'],
             'data-parentid' => HTML::getId($settings['css_settings']['selector']),
             'data-autoplay' => $settings['autoplay_remote_video'] ? 'true' : 'false',
+            'data-start' => '0',
           ],
           'child' => $background_media,
           '#attached' => $attached_library,
@@ -539,15 +530,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
       elseif ($provider === 'Vimeo') {
         $attached_library = [
           'library' => 'az_paragraphs_text_media/az_paragraphs_text_media.vimeo',
-          'drupalSettings' => [
-            'azFieldsMedia' => [
-              'bgVideos' => [
-                $video_oembed_id => [
-                  'videoId' => $video_oembed_id,
-                ],
-              ],
-            ],
-          ],
         ];
         $background_video = [
           '#type' => 'html_tag',
