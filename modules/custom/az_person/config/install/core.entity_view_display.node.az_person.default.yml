@@ -413,7 +413,7 @@ content:
     weight: 11
     region: content
   field_az_research_interests:
-    type: basic_string
+    type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }
@@ -428,7 +428,7 @@ content:
     weight: 7
     region: content
   field_az_teaching_interests:
-    type: basic_string
+    type: text_default
     label: above
     settings: {  }
     third_party_settings: {  }

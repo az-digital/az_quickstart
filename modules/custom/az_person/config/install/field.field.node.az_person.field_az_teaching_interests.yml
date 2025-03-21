@@ -3,7 +3,10 @@ status: true
 dependencies:
   config:
     - field.storage.node.field_az_teaching_interests
+    - filter.format.plain_text
     - node.type.az_person
+  module:
+    - text
 id: node.az_person.field_az_teaching_interests
 field_name: field_az_teaching_interests
 entity_type: node
@@ -14,5 +17,7 @@ required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
-field_type: string_long
+settings:
+  allowed_formats:
+    - plain_text
+field_type: text_long

@@ -262,7 +262,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_az_research_interests:
-    type: string_textarea
+    type: text_textarea
     weight: 34
     region: content
     settings:
@@ -278,7 +278,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   field_az_teaching_interests:
-    type: string_textarea
+    type: text_textarea
     weight: 33
     region: content
     settings:
