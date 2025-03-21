@@ -60,10 +60,10 @@ process:
      -
        plugin: az_migration_remote_file
        migration: az_news_feed_stories_files
-       default_filename: '@filename`
+       default_filename: '@filename'
        directory: 'public://news-images'
        source_ids:
-         - '@filename`
+         - '@filename'
        source: image_url
      -
        plugin: skip_on_empty
