@@ -57,18 +57,17 @@ process:
         - constants/DRUPAL_FILE_DIRECTORY
         - '@filename'
   uri:
-    -
-      plugin: skip_on_empty
-      method: process
-      source: image/original
-    -
-      plugin: file_copy
-      source:
-        - image/original
-        - '@destination_path'
-      file_exists: 'use existing'
-      move: false
-      skip_process_on_failure: true
+     -
+       plugin: az_migration_remote_file
+       migration: az_trellis_events_files
+       default_filename: id
+       directory: 'public://trellis-events'
+       source_ids:
+         - id
+       source: image_url
+     -
+       plugin: skip_on_empty
+       method: row
   field_media_az_image/target_id:
     -
       plugin: entity_generate
