@@ -1,0 +1,50 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.az_google_calendar.field_media_az_media_remote
+    - media.type.az_google_calendar
+  module:
+    - az_media_google_calendar
+    - field_group
+third_party_settings:
+  field_group:
+    group_az_embed:
+      children:
+        - field_media_az_media_remote
+      label: Embed
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'embed-responsive embed-responsive-16by9'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: media.az_google_calendar.default
+targetEntityType: media
+bundle: az_google_calendar
+mode: default
+content:
+  field_media_az_media_remote:
+    type: az_media_remote_google_calendar
+    label: hidden
+    settings:
+      width: '960'
+      height: '600'
+      formatter_class: Drupal\az_media_google_calendar\Plugin\Field\FieldFormatter\AzMediaRemoteGoogleCalendarFormatter
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true
