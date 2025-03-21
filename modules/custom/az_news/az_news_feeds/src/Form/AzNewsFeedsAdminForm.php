@@ -155,7 +155,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $content_path = $az_news_feeds_config->get('uarizona_news_content_path');
     $selected_terms = $az_news_feeds_config->get('uarizona_news_terms');
     $views_contextual_argument = implode('+', array_keys($selected_terms));
-    $urls = $base_uri . $content_path . $views_contextual_argument;
+    $urls = $base_uri . $content_path . '/' . $views_contextual_argument;
     $group_config
       ->set('shared_configuration.source.urls', $urls)
       ->save();
