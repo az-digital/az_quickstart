@@ -59,7 +59,7 @@ process:
   title: title
   field_az_published/value:
     plugin: format_date
-    from_format: 'Y-m-d\TH:i:sP'
+    from_format: 'Y-m-d\TH:i:s'
     to_format: Y-m-d
     source: date-of-publication
   field_az_link/uri: canonical-url
@@ -67,9 +67,16 @@ process:
     plugin: default_value
     default_value: 'Read more at University of Arizona News'
   field_az_summary/value:
-    plugin: callback
-    callable: trim
-    source: summary
+    -
+      plugin: callback
+      callable: strip_tags
+      source: summary
+    -
+      plugin: callback
+      callable: html_entity_decode
+    -
+      plugin: callback
+      callable: trim
   field_az_summary/format:
     plugin: default_value
     default_value: plain_text
@@ -99,7 +106,7 @@ process:
       method: process
   field_az_media_image/target_id:
     plugin: migration_lookup
-    source: fid
+    source: uuid
     migration:
       - az_news_feed_stories_media
 destination:

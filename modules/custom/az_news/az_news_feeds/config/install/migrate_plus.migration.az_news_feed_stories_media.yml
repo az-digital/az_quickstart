@@ -16,8 +16,6 @@ migration_group: az_news_feeds
 label: 'University of Arizona News Stories - Media'
 source:
   ids:
-    fid:
-      type: integer
     uuid:
       type: uuid
   fields:
@@ -33,11 +31,20 @@ source:
       name: image
       label: Image
       selector: /field_az_media_image
+    -
+      name: url
+      label: 'Image filename'
+      selector: /field_az_media_image/original
 process:
+  uri:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: url
   field_media_az_image/target_id:
     -
       plugin: migration_lookup
-      source: fid
+      source: uuid
       migration:
         - az_news_feed_stories_files
   field_media_az_image/alt: image/alt
