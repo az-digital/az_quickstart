@@ -61,7 +61,7 @@ process:
        plugin: az_migration_remote_file
        migration: az_trellis_events_files
        default_filename: id
-       directory: 'public://trellis-events'
+       directory: 'public://news-images'
        source_ids:
          - id
        source: image_url
