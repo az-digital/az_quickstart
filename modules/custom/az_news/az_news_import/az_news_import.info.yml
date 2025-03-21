@@ -1,0 +1,16 @@
+name: Quickstart News Import
+type: module
+description: 'Import news stories from University of Arizona News and other Quickstart sites.'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
+dependencies:
+  - az_core
+  - az_news
+  - az_media
+  - migrate:migrate
+  - migrate_plus:migrate_plus
+  - migrate_queue_importer:migrate_queue_importer
+
+configure: az_news_import.admin_importers

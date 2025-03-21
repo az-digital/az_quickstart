@@ -1,0 +1,88 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_media
+      - az_news_import
+      - migrate_tools
+id: az_news_import_files
+class: null
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - 'Quickstart News Feeds'
+migration_group: az_news_import
+label: 'University of Arizona News Stories - Files'
+source:
+    plugin: url
+    data_fetcher_plugin: http
+    data_parser_plugin: json
+    urls: 'https://news.arizona.edu/az_quickstart/export/az_news/v1/az_news.json'
+    constants:
+      DRUPAL_FILE_DIRECTORY: 'public://images/'
+    ids:
+      uuid:
+        type: uuid
+      fid:
+        type: integer
+    fields:
+      - name: uuid
+        label: 'Story UUID'
+        selector: /uuid
+      - name: fid
+        label: 'File ID'
+        selector: /field_az_media_image/fid
+      - name: image
+        label: Image
+        selector: /field_az_media_image
+process:
+  skip_on_empty:
+    - plugin: single_value
+      source: fid
+    - plugin: skip_on_empty
+      method: row
+      message: 'Cannot import empty image field.'
+    - plugin: skip_on_empty
+      method: row
+      message: 'Cannot import empty image field.'
+      source: image
+  filename:
+    - plugin: skip_on_empty
+      method: row
+      message: 'Cannot import empty image filename.'
+      source: image/thumbnail
+    - plugin: callback
+      callable: parse_url
+    - plugin: extract
+      index:
+        - path
+    - plugin: callback
+      callable: basename
+  destination_path:
+    - plugin: concat
+      source:
+        - constants/DRUPAL_FILE_DIRECTORY
+        - '@filename'
+  uri:
+    -
+      plugin: az_migration_remote_file
+      migration: az_news_import_files
+      default_filename: '@filename'
+      directory: '@destination_path'
+      source_ids:
+        - uuid
+      source: image/thumbnail
+    -
+      plugin: skip_on_empty
+      method: row
+
+  field_media_az_image/target_id:
+    - plugin: entity_generate
+      source: '@uri'
+      entity_type: file
+      value_key: uri
+  field_media_az_image/alt: image/alt
+destination:
+  plugin: 'entity:file'
+migration_dependencies: null

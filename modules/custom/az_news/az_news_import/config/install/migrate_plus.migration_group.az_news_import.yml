@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - az_news_import
+  enforced:
+    module:
+      - az_news_import
+      - migrate_tools
+id: az_news_import
+label: 'AZ Quickstart News Importer'
+description: 'Migrate News content from news.arizona.edu'
+source_type: 'University of Arizona News Article'
+module: az_news_import
+shared_configuration:
+  source:
+    plugin: url
+    data_fetcher_plugin: http
+    data_parser_plugin: json
+    urls: 'https://news.arizona.edu/az_quickstart/export/az_news/v1/az_news.json'
+    constants:
+      DRUPAL_FILE_DIRECTORY: 'public://images/'
+    item_selector: '0'

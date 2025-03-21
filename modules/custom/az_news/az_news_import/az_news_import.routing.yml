@@ -1,0 +1,8 @@
+az_news_import.admin_importers:
+  path: '/admin/content/az-news-import'
+  defaults:
+    _form: '\Drupal\az_news_import\Form\AzNewsFeedsAdminForm'
+    _title: 'Configure University News Importer'
+  requirements:
+    _permission: 'administer quickstart configuration'
+

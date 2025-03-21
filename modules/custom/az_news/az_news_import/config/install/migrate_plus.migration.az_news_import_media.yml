@@ -12,24 +12,30 @@ field_plugin_method: null
 cck_plugin_method: null
 migration_tags:
   - 'Quickstart News Feeds'
-migration_group: az_news_feeds
+migration_group: az_news_import
 label: 'University of Arizona News Stories - Media'
 source:
-  ids:
-    fid:
-      type: integer
-    uuid:
-      type: uuid
-  fields:
-    - name: uuid
-      label: 'Story UUID'
-      selector: /uuid
-    - name: fid
-      label: 'File ID'
-      selector: /field_az_media_image/fid
-    - name: image
-      label: Image
-      selector: /field_az_media_image
+    plugin: url
+    data_fetcher_plugin: http
+    data_parser_plugin: json
+    urls: 'https://news.arizona.edu/az_quickstart/export/az_news/v1/az_news.json'
+    constants:
+      DRUPAL_FILE_DIRECTORY: 'public://images/'
+    ids:
+      uuid:
+        type: uuid
+      fid:
+        type: integer
+    fields:
+      - name: uuid
+        label: 'Story UUID'
+        selector: /uuid
+      - name: fid
+        label: 'File ID'
+        selector: /field_az_media_image/fid
+      - name: image
+        label: Image
+        selector: /field_az_media_image
 process:
   field_media_az_image/target_id:
     -
