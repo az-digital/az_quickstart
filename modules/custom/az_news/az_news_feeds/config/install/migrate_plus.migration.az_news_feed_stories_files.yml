@@ -61,10 +61,10 @@ process:
       plugin: az_migration_remote_file
       migration: az_news_feed_stories_files
       default_filename: '@filename'
-      directory: 'public://news-images'
+      directory: constants/DRUPAL_FILE_DIRECTORY
       source_ids:
         - '@filename'
-      source: image_url
+      source: image/original
     -
       plugin: skip_on_empty
       method: row
