@@ -57,17 +57,17 @@ process:
         - constants/DRUPAL_FILE_DIRECTORY
         - '@filename'
   uri:
-     -
-       plugin: az_migration_remote_file
-       migration: az_news_feed_stories_files
-       default_filename: '@filename'
-       directory: 'public://news-images'
-       source_ids:
-         - '@filename'
-       source: image_url
-     -
-       plugin: skip_on_empty
-       method: row
+    -
+      plugin: az_migration_remote_file
+      migration: az_news_feed_stories_files
+      default_filename: '@filename'
+      directory: 'public://news-images'
+      source_ids:
+        - '@filename'
+      source: image_url
+    -
+      plugin: skip_on_empty
+      method: row
   field_media_az_image/target_id:
     -
       plugin: entity_generate
