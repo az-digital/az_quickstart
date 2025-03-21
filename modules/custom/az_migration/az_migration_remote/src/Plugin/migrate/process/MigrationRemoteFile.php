@@ -211,9 +211,6 @@ class MigrationRemoteFile extends ProcessPluginBase implements ContainerFactoryP
       ]);
       return;
     }
-    $this->logger->debug("Recognized extension as %ext", [
-      '%ext' => $extension,
-    ]);
     $disposition = $response->getHeader('Content-Disposition') ?? [];
     $disposition = array_pop($disposition);
     // See if we can determine the real remote filename from the disposition.
@@ -223,9 +220,6 @@ class MigrationRemoteFile extends ProcessPluginBase implements ContainerFactoryP
         $filename = $matches['filename'];
       }
     }
-    $this->logger->debug("Determined filename as %filename", [
-      '%filename' => $filename,
-    ]);
 
     $body = $response->getBody();
 
