@@ -4,10 +4,12 @@ dependencies:
   config:
     - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
@@ -17,8 +19,11 @@ dependencies:
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_research_interests
     - field.field.node.az_person.field_az_suffix
+    - field.field.node.az_person.field_az_teaching_interests
     - field.field.node.az_person.field_az_titles
+    - field.field.node.az_person.field_az_work_experience
     - image.style.az_medium
     - node.type.az_person
   module:
@@ -101,13 +106,13 @@ third_party_settings:
     group_col_bio:
       children:
         - field_az_body
-        - field_az_degrees
         - field_az_person_category
         - field_az_person_category_sec
+        - group_tabs
       label: 'Col - Bio'
       parent_name: group_row
       region: content
-      weight: 6
+      weight: 5
       format_type: html_element
       format_settings:
         classes: 'col-12 col-md-8 float-md-right'
@@ -242,6 +247,56 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
+    group_accordion_card:
+      children:
+        - field_az_degrees
+        - field_az_work_experience
+        - field_az_awards
+        - field_az_licensure_certification
+      label: Experience
+      parent_name: group_tabs
+      region: content
+      weight: 7
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
+    group_tabs:
+      children:
+        - group_accordion_card
+        - group_interests
+      label: Tabs
+      parent_name: group_col_bio
+      region: content
+      weight: 6
+      format_type: tabs
+      format_settings:
+        classes: az-horizontal-tabs
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        direction: horizontal
+        width_breakpoint: 640
+    group_interests:
+      children:
+        - field_az_teaching_interests
+        - field_az_research_interests
+      label: Interests
+      parent_name: group_tabs
+      region: content
+      weight: 8
+      format_type: tab
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        formatter: closed
+        description: ''
 id: node.az_person.default
 targetEntityType: node
 bundle: az_person
@@ -261,6 +316,14 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
     weight: 10
+    region: content
+  field_az_awards:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 5
     region: content
   field_az_body:
     type: text_default
@@ -283,6 +346,14 @@ content:
     settings: {  }
     third_party_settings: {  }
     weight: 10
+    region: content
+  field_az_licensure_certification:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 6
     region: content
   field_az_links:
     type: link
@@ -341,6 +412,13 @@ content:
     third_party_settings: {  }
     weight: 11
     region: content
+  field_az_research_interests:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 3
+    region: content
   field_az_suffix:
     type: string
     label: hidden
@@ -349,6 +427,13 @@ content:
     third_party_settings: {  }
     weight: 7
     region: content
+  field_az_teaching_interests:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
   field_az_titles:
     type: string
     label: hidden
@@ -356,6 +441,14 @@ content:
       link_to_entity: false
     third_party_settings: {  }
     weight: 9
+    region: content
+  field_az_work_experience:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 4
     region: content
   smart_title:
     settings: {  }
