@@ -59,11 +59,11 @@ process:
   uri:
      -
        plugin: az_migration_remote_file
-       migration: az_trellis_events_files
-       default_filename: id
+       migration: az_news_feed_stories_files
+       default_filename: '@filename`
        directory: 'public://news-images'
        source_ids:
-         - id
+         - '@filename`
        source: image_url
      -
        plugin: skip_on_empty
