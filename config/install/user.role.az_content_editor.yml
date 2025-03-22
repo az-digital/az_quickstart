@@ -31,6 +31,7 @@ permissions:
   - 'administer webform element access'
   - 'administer webform submission'
   - 'cancel smart date recur instances'
+  - 'clone az_carousel_item content'
   - 'clone az_event content'
   - 'clone az_flexible_page content'
   - 'clone az_news content'
