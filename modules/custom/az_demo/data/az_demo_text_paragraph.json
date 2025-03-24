@@ -107,7 +107,7 @@
         },
         {
           "id": 194,
-          "az_text_area": "<h2>Trellis RFI</h2><drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
+          "az_text_area": "<h2>Trellis RFI</h2>",
           "bottom_spacing": "mb-4"
         }
     ]
