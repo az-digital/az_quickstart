@@ -1,0 +1,13 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_person_profiles_import.
+ */
+
+/**
+ * Ensure az_migration_remote is installed.
+ */
+function az_person_profiles_import_update_1021301() {
+  \Drupal::service('module_installer')->install(['az_migration_remote']);
+}
