@@ -34,7 +34,7 @@ class AZPersonFormat extends ProcessPluginBase {
    */
   public function transform($value, MigrateExecutableInterface $migrate_executable, Row $row, $destination_property) {
     // If existing value is empty, return an empty array
-    // JSON parse can return an empty string if a selector is empty.
+    // JSON parser can return an empty string if a selector is empty.
     if (empty($value)) {
       return [];
     }
@@ -47,6 +47,8 @@ class AZPersonFormat extends ProcessPluginBase {
     // Determine format value to use.
     $format = $this->configuration['format'] ?? 'plain_text';
     $new_value = [];
+
+    // Compute new values with formats added.
     foreach ($value as $v) {
       $new_value[] = [
         'value' => $v,
