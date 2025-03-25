@@ -21,7 +21,7 @@ final class TrellisHelper {
    *
    * @var string
    */
-  public static $apiBasePath = '/ws/rest/getevents/v2/eventinfo/';
+  public static $apiBasePath = '/ws/rest/getevents/v3/eventinfo/';
 
   /**
    * API search path.
