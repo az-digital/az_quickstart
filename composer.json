@@ -47,7 +47,7 @@
         "drupal/block_field": "1.0.0-rc5",
         "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
-        "drupal/cas": "2.3.2",
+        "drupal/cas": "3.0.0-beta1",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.0.12",
         "drupal/ckeditor_indentblock": "1.1.0",
