@@ -23,6 +23,10 @@ function az_event_theme($existing, $type, $theme, $path) {
       'template' => 'field--node--az-event',
       'base hook' => 'field',
     ],
+    'field__node__field_az_event_date__az_event' => [
+      'template' => 'field--node--field-az-event-date--az-event',
+      'base hook' => 'field',
+    ],
   ];
 }
 
@@ -93,6 +97,26 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           '#type' => 'markup',
           '#markup' => Html::escape($formatter->format($timestamp, 'az_event_day')),
         ];
+      }
+    }
+
+    // Add next recurring event to list of instances on the default display.
+    if ($display->id() === 'node.az_event.default') {
+      /** @var \Drupal\Core\Field\FieldItemList $eventDates */
+      $eventDates = $entity->field_az_event_date;
+      $numberOfRecurringInstances = $eventDates->count();
+      if ($numberOfRecurringInstances > 1) {
+        $nextRecurringInstance = NULL;
+        $now = \Drupal::time()->getCurrentTime();
+        foreach ($entity->field_az_event_date as $item) {
+          if ($item->end_value > $now) {
+            $nextRecurringInstance = $item->getName();
+            break;
+          }
+        }
+        if (isset($nextRecurringInstance)) {
+          $build['field_az_event_date'][$nextRecurringInstance]['#nextInstance'] = TRUE;
+        }
       }
     }
   }
