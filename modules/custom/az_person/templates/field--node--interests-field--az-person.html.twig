@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override for the AZ Person "work experience" field.
+ * Theme override for an AZ Person Interests field.
  *
  * This is an override of field.html.twig for the node title field. See that
  * template for documentation about its details and overrides.
@@ -19,7 +19,7 @@
  * - field_name: The name of the field.
  * - field_type: The type of the field.
  * - label_display: The display settings for the label.
- *
+
  *
  * @see field.html.twig
  */
@@ -37,8 +37,6 @@
   <h2 class="h4">{{ label }}</h2>
 {% endif %}
 
-<ul{{attributes.addClass(classes)}}>
-  {% for item in items %}
-    <li class="mb-1">{{ item.content }}</li>
-  {% endfor %}
-</ul>
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}

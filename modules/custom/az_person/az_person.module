@@ -121,13 +121,27 @@ function az_person_preprocess_field(array &$variables) {
  * Implements hook_theme().
  */
 function az_person_theme() {
-  $base_hook = [
+  $field_group_base_hook = [
     'base hook' => 'field_group_html_element',
   ];
+  $experience_field_template = [
+    'template' => 'field--node--experience-field--az-person',
+    'base hook' => 'field',
+  ];
+  $interests_field_template = [
+    'template' => 'field--node--interests-field--az-person',
+    'base hook' => 'field',
+  ];
   return [
-    'field_group_html_element__node__az_person__h1' => $base_hook,
-    'field_group_html_element__node__az_person__h2' => $base_hook,
-    'field_group_html_element__node__az_person__h3' => $base_hook,
+    'field_group_html_element__node__az_person__h1' => $field_group_base_hook,
+    'field_group_html_element__node__az_person__h2' => $field_group_base_hook,
+    'field_group_html_element__node__az_person__h3' => $field_group_base_hook,
+    'field__node__field_az_awards__az_person' => $experience_field_template,
+    'field__node__field_az_degrees__az_person' => $experience_field_template,
+    'field__node__field_az_licensure_certification__az_person' => $experience_field_template,
+    'field__node__field_az_work_experience__az_person' => $experience_field_template,
+    'field__node__field_az_research_interests__az_person' => $interests_field_template,
+    'field__node__field_az_teaching_interests__az_person' => $interests_field_template,
     'horizontal_tabs__node__az_person__group_tabs' => ['base hook' => 'horizontal_tabs'],
   ];
 }
