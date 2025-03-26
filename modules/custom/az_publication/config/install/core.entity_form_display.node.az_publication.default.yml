@@ -34,7 +34,6 @@ dependencies:
     - az_publication
     - datetime
     - datetime_range
-    - inline_entity_form
     - link
     - media_library
     - paragraphs
@@ -53,28 +52,9 @@ content:
     third_party_settings: {  }
   field_az_accessed_date:
     type: datetime_default
-    weight: 22
+    weight: 21
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_az_authors:
-    type: inline_entity_form_complex
-    weight: 9
-    region: content
-    settings:
-      form_mode: default
-      override_labels: false
-      label_singular: Author
-      label_plural: Authors
-      allow_new: true
-      allow_existing: true
-      multiple_use: false
-      match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: true
-      collapsed: false
-      revision: false
-      removed_reference: optional
     third_party_settings: {  }
   field_az_contributors:
     type: az_entity_role_inline_entity_form_complex
@@ -97,7 +77,7 @@ content:
     third_party_settings: {  }
   field_az_main_content:
     type: paragraphs
-    weight: 33
+    weight: 32
     region: content
     settings:
       title: Paragraph
@@ -116,7 +96,7 @@ content:
     third_party_settings: {  }
   field_az_publication_abstract:
     type: text_textarea_with_summary
-    weight: 32
+    weight: 31
     region: content
     settings:
       rows: 9
@@ -126,20 +106,20 @@ content:
     third_party_settings: {  }
   field_az_publication_approximate:
     type: boolean_checkbox
-    weight: 21
+    weight: 20
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   field_az_publication_category:
     type: options_select
-    weight: 11
+    weight: 10
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_publication_container:
     type: string_textfield
-    weight: 12
+    weight: 11
     region: content
     settings:
       size: 60
@@ -147,19 +127,19 @@ content:
     third_party_settings: {  }
   field_az_publication_date:
     type: daterange_default
-    weight: 20
+    weight: 19
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_publication_date_type:
     type: options_select
-    weight: 19
+    weight: 18
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_publication_doi:
     type: string_textfield
-    weight: 25
+    weight: 24
     region: content
     settings:
       size: 60
@@ -167,7 +147,7 @@ content:
     third_party_settings: {  }
   field_az_publication_extra_links:
     type: link_default
-    weight: 24
+    weight: 23
     region: content
     settings:
       placeholder_url: ''
@@ -175,20 +155,12 @@ content:
     third_party_settings: {  }
   field_az_publication_image:
     type: media_library_widget
-    weight: 31
+    weight: 30
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_az_publication_isbn:
-    type: string_textfield
-    weight: 27
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_publication_issn:
     type: string_textfield
     weight: 26
     region: content
@@ -196,9 +168,17 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_az_publication_issn:
+    type: string_textfield
+    weight: 25
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_az_publication_issue:
     type: string_textfield
-    weight: 13
+    weight: 12
     region: content
     settings:
       size: 60
@@ -206,7 +186,7 @@ content:
     third_party_settings: {  }
   field_az_publication_link:
     type: link_default
-    weight: 23
+    weight: 22
     region: content
     settings:
       placeholder_url: ''
@@ -214,7 +194,7 @@ content:
     third_party_settings: {  }
   field_az_publication_location:
     type: string_textfield
-    weight: 17
+    weight: 16
     region: content
     settings:
       size: 60
@@ -222,20 +202,20 @@ content:
     third_party_settings: {  }
   field_az_publication_mapped_type:
     type: options_select
-    weight: 10
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_publication_media:
     type: media_library_widget
-    weight: 30
+    weight: 29
     region: content
     settings:
       media_types: {  }
     third_party_settings: {  }
   field_az_publication_page:
     type: string_textfield
-    weight: 18
+    weight: 17
     region: content
     settings:
       size: 60
@@ -243,7 +223,7 @@ content:
     third_party_settings: {  }
   field_az_publication_pmcid:
     type: string_textfield
-    weight: 29
+    weight: 28
     region: content
     settings:
       size: 60
@@ -251,7 +231,7 @@ content:
     third_party_settings: {  }
   field_az_publication_pmid:
     type: string_textfield
-    weight: 28
+    weight: 27
     region: content
     settings:
       size: 60
@@ -259,7 +239,7 @@ content:
     third_party_settings: {  }
   field_az_publication_publisher:
     type: string_textfield
-    weight: 16
+    weight: 15
     region: content
     settings:
       size: 60
@@ -267,7 +247,7 @@ content:
     third_party_settings: {  }
   field_az_publication_version:
     type: string_textfield
-    weight: 15
+    weight: 14
     region: content
     settings:
       size: 60
@@ -275,7 +255,7 @@ content:
     third_party_settings: {  }
   field_az_publication_volume:
     type: string_textfield
-    weight: 14
+    weight: 13
     region: content
     settings:
       size: 60
@@ -332,4 +312,5 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_az_authors: true
   field_az_publication_type: true
