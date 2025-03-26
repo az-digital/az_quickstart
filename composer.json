@@ -188,7 +188,7 @@
                 "Imagemagick fails to convert animated gifs into animated webps (3295470)": "https://www.drupal.org/files/issues/2023-08-29/imagemagick-convertation-keep-animation-3295470-10.patch"
             },
             "drupal/inline_entity_form": {
-                "Support Referencing the same entity multiple times (3363988)": "https://git.drupalcode.org/project/inline_entity_form/-/merge_requests/119.diff"
+                "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
