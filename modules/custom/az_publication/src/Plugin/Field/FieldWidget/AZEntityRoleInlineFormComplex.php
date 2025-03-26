@@ -117,10 +117,7 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
   public function extractFormValues(FieldItemListInterface $items, array $form, FormStateInterface $form_state) {
     parent::extractFormValues($items, $form, $form_state);
     $values = $items->getValue();
-    // @todo fixme.
-    \Drupal::logger('Log widget values')->notice(print_r($values, TRUE));
     foreach ($values as &$value) {
-      // @todo fixme.
       $value['role'] = $value['role'] ?? 'author';
     }
     $items->setValue($values);

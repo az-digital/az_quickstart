@@ -713,33 +713,6 @@ function az_publication_form_node_az_publication_edit_form_alter(&$form, FormSta
 }
 
 /**
- * A callback to return the role property form element.
- *
- * This callback returns the role property form element for the
- * inline entity form subclass.
- *
- * @param \Drupal\Core\Entity\EntityInterface $entity
- *   The current entity row of the inline entity form.
- * @param array $variables
- *   Callback arguments from inline entity form theme function.
- *
- * @return mixed
- *   Form element render array or translatable markup.
- */
-function az_publication_inline_entity_label_callback(EntityInterface $entity, $variables) {
-
-  foreach (Element::children($variables['form']) as $key) {
-    if (!empty($variables['form'][$key]['role']) && ($entity === $variables['form'][$key]['#entity'])) {
-      return $variables['form'][$key]['role'];
-    }
-  }
-
-  // Couldn't find our entity.
-  // @todo make this not require entity comparison.
-  return t('No role');
-}
-
-/**
  * Prepares variables for az_inline_entity_role_form_entity_table templates.
  *
  * Default template: az-inline-entity-role-form-entity-table.html.twig.
