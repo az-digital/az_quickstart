@@ -2,6 +2,8 @@
 
 namespace Drupal\az_publication\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Field\FieldFilteredMarkup;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\inline_entity_form\Plugin\Field\FieldWidget\InlineEntityFormComplex;
@@ -21,6 +23,11 @@ use Drupal\Core\Render\Element;
  * )
  */
 class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
+
+  /**
+   * The array of options for the widget.
+   */
+  protected array $roleOptions;
 
   /**
    * {@inheritdoc}
@@ -45,34 +52,7 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
         '#title_display' => 'invisible',
         '#default_value' => $value['role'],
         // @todo Formalize as part of field type?
-        '#options' => [
-          'author' => $this->t('Author'),
-          'chair' => $this->t('Chair'),
-          'compiler' => $this->t('Compiler'),
-          'collection-editor' => $this->t('Collection editor'),
-          'composer' => $this->t('Composer'),
-          'container-author' => $this->t('Container author'),
-          'contributor' => $this->t('Contributor'),
-          'curator' => $this->t('Curator'),
-          'director' => $this->t('Director'),
-          'editor' => $this->t('Editor'),
-          'editorial-director' => $this->t('Managing editor'),
-          'editor-translator' => $this->t('Editor and translator'),
-          'guest' => $this->t('Guest'),
-          'host' => $this->t('Host'),
-          'illustrator' => $this->t('Illustrator'),
-          'interviewer' => $this->t('Interviewer'),
-          'narrator' => $this->t('Narrator'),
-          'organizer' => $this->t('Organizer'),
-          'original-author' => $this->t('Original author'),
-          'performer' => $this->t('Performer'),
-          'producer' => $this->t('Producer'),
-          'recipient' => $this->t('Recipient'),
-          'reviewed-author' => $this->t('Author of a reviewed item'),
-          'script-writer' => $this->t('Script-writer of script or screenplay'),
-          'series-creator' => $this->t('Series creator'),
-          'translator' => $this->t('Translator'),
-        ],
+        '#options' => $this->getOptions($items->getEntity()),
       ];
     }
 
@@ -144,6 +124,41 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
       $value['role'] = $value['role'] ?? 'author';
     }
     $items->setValue($values);
+  }
+
+  /**
+   * Returns the array of options for the widget.
+   *
+   * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+   *   The entity for which to return options.
+   *
+   * @return array
+   *   The array of options for the widget.
+   */
+  protected function getOptions(FieldableEntityInterface $entity) {
+    if (!isset($this->roleOptions)) {
+      // Limit the settable options for the current user account.
+      $options = $this->fieldDefinition
+        ->getFieldStorageDefinition()
+        ->getOptionsProvider('role', $entity)
+        ->getSettableOptions(\Drupal::currentUser());
+
+      array_walk_recursive($options, [$this, 'sanitizeLabel']);
+
+      $this->roleOptions = $options;
+    }
+    return $this->roleOptions;
+  }
+
+  /**
+   * Sanitizes a string label to display as an option.
+   *
+   * @param string $label
+   *   The label to sanitize.
+   */
+  protected function sanitizeLabel(&$label) {
+    // Allow a limited set of HTML tags.
+    $label = FieldFilteredMarkup::create($label);
   }
 
 }

@@ -10,6 +10,33 @@ entity_type: node
 type: az_entity_role_reference
 settings:
   target_type: az_author
+  allowed_values:
+    author: Author
+    chair: Chair
+    compiler: Compiler
+    collection-editor: 'Collection editor'
+    composer: Composer
+    container-author: 'Container author'
+    contributor: Contributor
+    curator: Curator
+    director: Director
+    editor: Editor
+    editorial-director: 'Managing editor'
+    editor-translator: 'Editor and translator'
+    guest: Guest
+    host: Host
+    illustrator: Illustrator
+    interviewer: Interviewer
+    narrator: Narrator
+    organizer: Organizer
+    original-author: 'Original author'
+    performer: Performer
+    producer: Producer
+    recipient: Recipient
+    reviewed-author: 'Author of a reviewed item'
+    script-writer: 'Script-writer of script or screenplay'
+    series-creator: 'Series creator'
+    translator: Translator
 module: az_publication
 locked: false
 cardinality: -1
