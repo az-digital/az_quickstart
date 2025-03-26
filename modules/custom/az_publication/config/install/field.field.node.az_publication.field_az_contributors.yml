@@ -11,7 +11,7 @@ field_name: field_az_contributors
 entity_type: node
 bundle: az_publication
 label: Contributors
-description: ''
+description: 'Citation support for specific contributor types is dependent upon the citation style in use. Author, editor, and translator are generally best supported by most styles.'
 required: false
 translatable: false
 default_value: {  }
