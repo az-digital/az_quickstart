@@ -1,0 +1,56 @@
+id: az_trellis_events_media
+label: Trellis Events Media
+source:
+  plugin: az_trellis_events_api
+  trellis_ids: {  }
+  track_changes: true
+  fields:
+    -
+      name: id
+      label: ID
+      selector: Id
+    -
+      name: image_url
+      label: 'Image URL'
+      selector: Image_URL
+    -
+      name: name
+      label: Name
+      selector: Name
+  ids:
+    id:
+      type: string
+
+process:
+  uid:
+    plugin: default_value
+    default_value: 0
+  bundle:
+    plugin: default_value
+    default_value: az_image
+  field_media_az_image/target_id:
+    -
+      plugin: migration_lookup
+      migration: az_trellis_events_files
+      source: id
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: row
+  field_media_az_image/alt: name
+  field_media_az_image/title: name
+  status:
+    plugin: default_value
+    default_value: 1
+
+destination:
+  plugin: entity:media
+
+dependencies:
+  enforced:
+    module:
+      - az_event_trellis
+      - az_media
+migration_dependencies:
+  optional:
+    - az_trellis_events_files

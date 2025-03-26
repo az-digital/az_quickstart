@@ -25,6 +25,12 @@ source:
       name: givenname
       selector: 'Person/givenname'
     -
+      name: preferred_surname
+      selector: 'Person/preferred_surname'
+    -
+      name: preferred_givenname
+      selector: 'Person/preferred_givenname'
+    -
       name: email
       selector: 'Person/email'
     -
@@ -58,9 +64,26 @@ process:
   type:
     plugin: default_value
     default_value: az_person
-  field_az_fname: givenname
-  field_az_lname: surname
+  field_az_fname:
+    plugin: az_person_profiles_empty_coalesce
+    source:
+      - preferred_givenname
+      - givenname
+  field_az_lname:
+    plugin: az_person_profiles_empty_coalesce
+    source:
+      - preferred_surname
+      - surname
   field_az_netid: netid
+  field_az_media_image/target_id:
+    -
+      plugin: migration_lookup
+      migration: az_person_profiles_import_media
+      source: netid
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: process
   field_az_email:
     -
       plugin: skip_on_empty
@@ -110,3 +133,6 @@ dependencies:
   enforced:
     module:
       - az_person
+migration_dependencies:
+  optional:
+    - az_person_profiles_import_media
