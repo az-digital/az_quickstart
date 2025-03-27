@@ -10,7 +10,7 @@ use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
 
 /**
- * Returns an ordered items from Profiles API data.
+ * Returns an ordered items array from Profiles API data.
  *
  * Available configuration keys
  * - source: A source item to draw from.
@@ -136,7 +136,7 @@ class AZPersonNested extends ProcessPluginBase {
     if (!empty($split)) {
       $new_value = [];
       foreach ($value as $item) {
-        // Fetch the requested split and deuplicate the rows.
+        // Fetch the requested split and duplicate the rows.
         $children = NestedArray::getValue($item, $split) ?? [];
         foreach ($children as $child) {
           $clone = $item;
