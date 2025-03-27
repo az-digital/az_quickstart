@@ -1,9 +1,7 @@
 {#
 /**
 * @file
-* Default theme implementation to display a block.
-*
-* @see template_preprocess_block()
+* Default theme implementation to display a calendar add button.
 *
 * @ingroup themeable
 */
@@ -15,8 +13,8 @@
 
 <div{{ attributes.addClass(classes) }}>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-red mb-4" data-toggle="modal" data-target="#{{ modal }}">
-    Add Event to Calendar
+  <button type="button" class="btn btn-red btn-sm" data-toggle="modal" data-target="#{{ modal }}">
+    Add to Calendar
   </button>
 
   <!-- Modal -->
@@ -33,7 +31,7 @@
           <p class="h5">Select your calendar type below:</p>
           <div class="text-center">
           {% for link in links %}
-              <a class="btn btn-red calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link.type_name }}</a>
+              <a class="btn btn-red btn-sm mb-1 calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link.type_name }}</a>
           {% endfor %}
           </div>
         </div>
