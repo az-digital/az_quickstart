@@ -45,7 +45,7 @@
         {% for item in items %}
           {% if item['content']['#nextInstance'] == true %}
             <div class="mb-3">
-              <div{{ item.attributes.addClass('field__item') }}>Next event: {{ item.content }}</div>
+              <div{{ item.attributes.addClass('field__item') }}><strong>Next event:</strong> {{ item.content }}</div>
             </div>
           {% endif %}
         {% endfor %}
