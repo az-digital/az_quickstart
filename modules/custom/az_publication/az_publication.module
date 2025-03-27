@@ -262,6 +262,12 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $blob->status = t('forthcoming');
           }
         }
+        // Check if publication has paragraph content.
+        $has_content = (
+          $entity->hasField('field_az_main_content') &&
+          !empty($entity->get('field_az_main_content')->referencedEntities())
+        );
+
         // Handle accessed date if available.
         if (!empty($entity->field_az_accessed_date->value)) {
           $date = new stdClass();
@@ -276,8 +282,8 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
             $has_cover = !empty($entity->field_az_publication_image->target_id);
             $has_abstract = !empty($entity->field_az_publication_abstract->value);
             $url = Url::fromRoute('entity.node.canonical', ['node' => $entity->id()]);
-            // Linking to full node if there is an abstract or cover page.
-            if ($has_cover || $has_abstract) {
+            // Link to full node if there is abstract, cover page, or content.
+            if ($has_cover || $has_abstract || $has_content) {
               $blob->itemlink = $url->toString();
             }
           }
@@ -289,7 +295,7 @@ function az_publication_node_view(array &$build, EntityInterface $entity, Entity
           $blob->itemlink = $entity->field_az_publication_link->uri;
         }
         // Handle file link if available.
-        if (!empty($entity->field_az_publication_media->entity)) {
+        if (!empty($entity->field_az_publication_media->entity) && !$has_content) {
           // @todo Remove urldecode() if we figure out a better way to prevent
           // encoded URLs from getting double-encoded by CiteProc.
           $media_entity = $repository->getTranslationFromContext($entity->field_az_publication_media->entity);
@@ -500,12 +506,12 @@ function _az_publication_publication_date_object(EntityInterface $entity) {
   $slices = 3;
   // Depending on date type, we should send fewer date components to CSL.
   switch ($date_type) {
-    case 'year';
+    case 'year':
       $slices = 1;
       break;
 
-    case 'month';
-    case 'season';
+    case 'month':
+    case 'season':
       $slices = 2;
       break;
 
@@ -610,13 +616,13 @@ function _az_publication_form_revisions(array &$form, FormStateInterface $form_s
 
     // Gather settings based on type.
     switch ($date_type) {
-      case 'month';
-      case 'season';
+      case 'month':
+      case 'season':
         $format = 'Y-m';
         $viewmode = 'months';
         break;
 
-      case 'year';
+      case 'year':
         $format = 'Y';
         $viewmode = 'years';
         break;

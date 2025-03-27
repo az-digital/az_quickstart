@@ -3,7 +3,7 @@ status: true
 dependencies: {  }
 id: az_html_admin
 label: 'HTML administrator'
-weight: 6
+weight: -3
 is_admin: false
 permissions:
   - 'use text format full_html'

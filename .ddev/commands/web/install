@@ -1,15 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Create a new quickstart project and use the installation profile as a non-packagist repository using the matching scaffolding branch if available.
 ## Usage: install
-## Example: "ddev install"
+## Example: ddev install
 
-rm -rf /var/www/html/*
-BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /var/www/html
+# Use the matching scaffolding branch if available.
+BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /var/www/html/azqs
+mv /var/www/html/azqs/* /var/www/html
 composer config repositories.localdev path /usr/local/quickstart-install-profile && composer require --no-update az-digital/az_quickstart:\*@dev
+
+# Use the matching require-dev metapackage branch if available.
 BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $BRANCH_NAME | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$BRANCH_NAME"; else DEV_PACKAGE_BRANCH=main; fi; composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
-composer install
-drush --root=/var/www/html/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2024 --db-url=mysql://db:db@db:3306/db -y --verbose
+
+# Install Quickstart
+composer install --no-interaction
+drush --root=/var/www/html/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://db:db@db:3306/db -y --verbose
 drush --root=/var/www/html/web config:set -y az_cas.settings disable_login_form 0
 drush --root=/var/www/html/web cache:rebuild
 yarn --cwd /usr/local/quickstart-install-profile install

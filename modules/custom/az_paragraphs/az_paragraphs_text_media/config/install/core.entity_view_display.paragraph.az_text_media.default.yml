@@ -149,6 +149,7 @@ content:
         size: cover
         selector: '#[paragraph:type:target_id]-[paragraph:id]'
         important: false
+      autoplay_remote_video: true
     third_party_settings: {  }
   field_az_text_area:
     weight: 22
