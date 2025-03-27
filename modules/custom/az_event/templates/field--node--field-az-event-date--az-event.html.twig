@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Theme override for a field.
+ * Theme override for AZ Event date field.
  *
  * Available variables:
  * - attributes: HTML attributes for the containing element.
@@ -41,34 +41,42 @@
   {% if multiple %}
     <div{{ attributes.addClass(classes, 'field__items') }}>
       {% if element['#view_mode'] == 'full' and items|length > 1 %}
-        {% set accordion_item_id = element['#object'].id %}
-        {% for item in items %}
-          {% if item['content']['#nextInstance'] == true %}
-            <div class="mb-3">
-              <div{{ item.attributes.addClass('field__item') }}><strong>Next event:</strong> {{ item.content }}</div>
-            </div>
-          {% endif %}
-        {% endfor %}
-        <div class='accordion h-100'>
-          <div class="card">
-            <div class="card-header">
-              <h3 class="my-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#event-{{ accordion_item_id }}" aria-expanded="false" aria-controls="event-{{ accordion_item_id }}">
-                  View all event instances
-                </button>
-              </h3>
-            </div>
-            <div id="event-{{ accordion_item_id }}" class="collapse" aria-labelledby="event-{{ accordion_item_id }}" data-parent="#event-{{ accordion_item_id }}">
-              <div class="card-body bg-white">
-                <div class="accordion-text">
-                  {% for item in items %}
-                    <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
-                  {% endfor %}
-                </div>
+        {% if element['#nextInstance'] is not null %}
+          {% set nextInstance = element['#nextInstance'] %}
+          {% for key, item in items %}
+            {% if key == nextInstance %}
+              <div class="mb-3">
+                <div{{ item.attributes.addClass('field__item') }}><strong>Next event:</strong> {{ item.content }}</div>
               </div>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {% set nextInstance = items|length %}
+        {% endif %}
+        {% set accordion_body %}
+          {% for key, item in items|slice(nextInstance, items|length, true) %}
+            <div{{ item.attributes.addClass('field__item') }}>
+              {{ item.content }}
+              {% if key == nextInstance %}
+                <span class="badge badge-light ml-1 align-text-bottom rounded-sm">Next</a>
+              {% endif %}
             </div>
-          </div>
-        </div>
+          {% endfor %}
+          {% if nextInstance != 0 %}
+            <h3 class="h5{{ nextInstance == items|length ? ' mt-0' }}">Past Event Instances</h3>
+            {% for item in items|slice(0, nextInstance) %}
+              <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endset %}
+        {{ include('@az_accordion/az-accordion.html.twig',
+          {
+            attributes: create_attribute({'class': ['accordion']}),
+            accordion_item_id: "event-" ~ element['#object'].id,
+            title: 'View all event instances',
+            body: accordion_body,
+            collapsed: 'collapse',
+          }) }}
       {% else %}
         {% for item in items %}
           <div{{ item.attributes.addClass('field__item') }}>{{ item.content }}</div>
