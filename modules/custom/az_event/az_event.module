@@ -100,7 +100,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       }
     }
 
-    // Add next recurring event to list of instances on the default display.
+    // For the default display, find the next recurring event instance.
     if ($display->id() === 'node.az_event.default') {
       /** @var \Drupal\Core\Field\FieldItemList $eventDates */
       $eventDates = $entity->field_az_event_date;
@@ -114,9 +114,8 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
             break;
           }
         }
-        if (isset($nextRecurringInstance)) {
-          $build['field_az_event_date'][$nextRecurringInstance]['#nextInstance'] = TRUE;
-        }
+        // Include the index of the next instance in the build array.
+        $build['field_az_event_date']['#nextInstance'] = $nextRecurringInstance;
       }
     }
   }
