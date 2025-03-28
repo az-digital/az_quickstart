@@ -1,0 +1,5 @@
+az_media_trellis:
+  version: 1.x
+  css:
+    component:
+      css/az_media_trellis.css: {}

@@ -9,5 +9,8 @@
  * - height: (int) The height of the iframe, in pixels.
  */
 #}
-<div id="fa-form"></div>
+{#
+{{ attach_library('az_media_trellis/az_media_trellis') }}
+#}
+<div id="fa-form" class="fa-form"></div>
 <script src="https://forms-a.trellis.arizona.edu/publish/118" data-qp-target-id="fa-form" defer></script>
