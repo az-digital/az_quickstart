@@ -1,7 +1,7 @@
 {#
 /**
  * @file
- * Template implementation for the az_media_google_calendar theme hook.
+ * Template implementation for the az_media_trellis theme hook.
  *
  * Available variables:
  * - url: (string) The full URL to this document.
@@ -9,8 +9,5 @@
  * - height: (int) The height of the iframe, in pixels.
  */
 #}
-{#
-{{ attach_library('az_media_trellis/az_media_trellis') }}
-#}
 <div id="fa-form" class="fa-form"></div>
-<script src="https://forms-a.trellis.arizona.edu/publish/118" data-qp-target-id="fa-form" defer></script>
+<script src="{{ url }}" data-qp-target-id="fa-form" defer></script>

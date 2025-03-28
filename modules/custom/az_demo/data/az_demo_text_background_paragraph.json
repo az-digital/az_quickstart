@@ -85,7 +85,7 @@
           "id": 195,
           "az_text_area": "<drupal-media data-entity-type='media' data-entity-uuid='2d1c72cf-e90b-4457-992d-55f87bf5dc46' data-align='center'>&nbsp;</drupal-media>",
           "full_width": false,
-          "bg_color": "bg-azurite",
+          "bg_color": "bg-white",
           "bg_padding":"py-3",
           "bg_pattern": "",
           "bottom_spacing": "mb-0"
