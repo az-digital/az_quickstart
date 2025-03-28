@@ -9,6 +9,7 @@ dependencies:
   module:
     - link_class
     - media_library
+    - media_library_edit
     - path
 id: node.az_carousel_item.default
 targetEntityType: node
@@ -22,15 +23,17 @@ content:
     settings: {  }
     third_party_settings: {  }
   field_az_carousel_short_summary:
+    type: string_textfield
     weight: 2
+    region: content
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
-    type: string_textfield
-    region: content
   field_az_link:
+    type: link_class_field_widget
     weight: 3
+    region: content
     settings:
       placeholder_url: ''
       placeholder_title: ''
@@ -38,15 +41,16 @@ content:
       link_class_force: 'btn btn-outline-white btn-sm'
       link_class_select: ''
     third_party_settings: {  }
-    type: link_class_field_widget
-    region: content
   field_az_media_image:
+    type: media_library_widget
     weight: 1
+    region: content
     settings:
       media_types: {  }
-    third_party_settings: {  }
-    type: media_library_widget
-    region: content
+    third_party_settings:
+      media_library_edit:
+        show_edit: '1'
+        edit_form_mode: default
   path:
     type: path
     weight: 8
@@ -55,24 +59,24 @@ content:
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 6
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 10
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    settings:
-      display_label: true
     weight: 7
     region: content
+    settings:
+      display_label: true
     third_party_settings: {  }
   title:
     type: string_textfield
@@ -85,12 +89,12 @@ content:
   uid:
     type: entity_reference_autocomplete
     weight: 4
+    region: content
     settings:
       match_operator: CONTAINS
+      match_limit: 10
       size: 60
       placeholder: ''
-      match_limit: 10
-    region: content
     third_party_settings: {  }
   url_redirects:
     weight: 9
