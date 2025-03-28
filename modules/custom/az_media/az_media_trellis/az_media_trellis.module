@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Hook implementations and global functions for az_media_trellis.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function az_media_trellis_theme($existing, $type, $theme, $path) {
+  return [
+    'az_media_trellis' => [
+      'variables' => [
+        'type' => NULL,
+        'url' => NULL,
+        'width' => NULL,
+        'height' => NULL,
+      ],
+      'template' => 'az-media-trellis',
+    ],
+  ];
+}
