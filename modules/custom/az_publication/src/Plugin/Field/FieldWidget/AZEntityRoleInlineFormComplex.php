@@ -50,7 +50,7 @@ class AZEntityRoleInlineFormComplex extends InlineEntityFormComplex {
         '#type' => 'select',
         '#title' => $this->t('Role'),
         '#title_display' => 'invisible',
-        '#default_value' => $value['role'],
+        '#default_value' => $value['role'] ?? NULL,
         // @todo Formalize as part of field type?
         '#options' => $this->getOptions($items->getEntity()),
       ];
