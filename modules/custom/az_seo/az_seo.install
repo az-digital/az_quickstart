@@ -57,3 +57,10 @@ function az_seo_update_1021301() {
   $batch = xmlsitemap_rebuild_batch($rebuild_types, TRUE);
   batch_set($batch);
 }
+
+/**
+ * Ensure schema_organization module is installed.
+ */
+function az_seo_update_1021302() {
+  \Drupal::service('module_installer')->install(['schema_organization']);
+}
