@@ -100,8 +100,8 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       }
     }
 
-    // For the default display, find the next recurring event instance.
-    if ($display->id() === 'node.az_event.default') {
+    // For the full content view mode, find the next recurring event instance.
+    if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
       /** @var \Drupal\Core\Field\FieldItemList $eventDates */
       $eventDates = $entity->field_az_event_date;
       $numberOfRecurringInstances = $eventDates->count();
