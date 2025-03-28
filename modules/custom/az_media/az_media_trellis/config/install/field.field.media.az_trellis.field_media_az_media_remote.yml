@@ -11,7 +11,7 @@ id: media.az_trellis.field_media_az_media_remote
 field_name: field_media_az_media_remote
 entity_type: media
 bundle: az_trellis
-label: 'Trellis URL'
+label: 'Trellis Form URL'
 description: ''
 required: true
 translatable: true

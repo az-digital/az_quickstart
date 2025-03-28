@@ -1,6 +1,6 @@
-name: Quickstart Media - Trellis
+name: Quickstart Media - Trellis Form
 type: module
-description: Trellis RFI media entity type.
+description: Trellis form media entity type.
 core_version_requirement: ^10
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental
