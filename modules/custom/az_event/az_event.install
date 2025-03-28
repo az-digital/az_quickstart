@@ -12,3 +12,10 @@ function az_event_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 9201;
 }
+
+/**
+ * Ensure calendar_link module is installed.
+ */
+function az_event_update_1021301() {
+  \Drupal::service('module_installer')->install(['calendar_link']);
+}
