@@ -54,14 +54,14 @@
           {% set nextInstance = items|length %}
         {% endif %}
         {% set accordion_body %}
-          {% for key, item in items|slice(nextInstance, items|length, true) %}
-            <div{{ item.attributes.addClass('field__item') }}>
-              {{ item.content }}
-              {% if key == nextInstance %}
-                <span class="badge badge-light ml-1 align-text-bottom rounded-sm">Next</a>
-              {% endif %}
-            </div>
-          {% endfor %}
+          {% if nextInstance != items|length %}
+            <h3 class="h5 mt-0">Upcoming Event Instances</h3>
+            {% for item in items|slice(nextInstance) %}
+              <div{{ item.attributes.addClass('field__item') }}>
+                {{ item.content }}
+              </div>
+            {% endfor %}
+          {% endif %}
           {% if nextInstance != 0 %}
             <h3 class="h5{{ nextInstance == items|length ? ' mt-0' }}">Past Event Instances</h3>
             {% for item in items|slice(0, nextInstance) %}
@@ -73,7 +73,7 @@
           {
             attributes: create_attribute({'class': ['accordion']}),
             accordion_item_id: "event-" ~ element['#object'].id,
-            title: 'View all event instances',
+            title: "View #{nextInstance == items|length ? 'past' : 'all'} event instances",
             body: accordion_body,
             collapsed: 'collapse',
           }) }}
