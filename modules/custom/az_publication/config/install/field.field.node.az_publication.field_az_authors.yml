@@ -8,7 +8,7 @@ id: node.az_publication.field_az_authors
 field_name: field_az_authors
 entity_type: node
 bundle: az_publication
-label: Authors
+label: 'Authors (Deprecated)'
 description: ''
 required: false
 translatable: true
