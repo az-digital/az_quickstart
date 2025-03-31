@@ -62,29 +62,11 @@ source:
     id:
       type: string
 process:
-  pseudo_format[]:
-    -
-      plugin: explode
-      source: format
-      delimiter: ','
-  pseudo_category[]: az_enterprise_attributes/0/Category
-  pseudo_audiences[]:
-    -
-      plugin: explode
-      source: az_enterprise_attributes/0/Audiences/0
-      delimiter: ','
-  pseudo_topic[]:
-    -
-      plugin: explode
-      source: az_enterprise_attributes/0/Topic/0
-      delimiter: ','
   field_az_enterprise_attributes:
-    - plugin: merge
+    - plugin: flatten
       source:
-        - '@pseudo_audiences[]'
-        - '@pseudo_topic[]'
-        - '@pseudo_category[]'
-        - '@pseudo_format[]'
+        - az_enterprise_attributes
+        - format
     -
       plugin: multiple_values
     -
