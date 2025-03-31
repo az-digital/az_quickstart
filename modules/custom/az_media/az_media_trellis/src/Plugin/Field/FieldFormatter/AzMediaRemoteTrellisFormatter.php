@@ -91,6 +91,13 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
+      'url' => [
+        '#type' => 'string',
+        '#title' => $this->t('URL'),
+        '#size' => 255,
+        '#maxlength' => 255,
+        '#description' => $this->t('The URL of the Trellis form.'),
+      ],
       'width' => [
         '#type' => 'number',
         '#title' => $this->t('Width'),
