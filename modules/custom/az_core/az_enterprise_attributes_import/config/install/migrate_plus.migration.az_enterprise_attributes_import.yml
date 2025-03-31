@@ -11,7 +11,7 @@ cck_plugin_method: null
 migration_tags:
   - 'Enterprise Attributes'
   - Taxonomy
-migration_group: null
+migration_group: az_enterprise_attributes_import
 label: 'Enterprise Attributes'
 source:
   plugin: url
