@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.az_flexible_page.field_az_main_content
     - field.field.node.az_flexible_page.field_az_marketing_page_style
     - field.field.node.az_flexible_page.field_az_media_image
+    - field.field.node.az_flexible_page.field_az_metatag
     - field.field.node.az_flexible_page.field_az_page_category
     - field.field.node.az_flexible_page.field_az_summary
     - node.type.az_flexible_page
@@ -32,8 +33,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable bg-gray-100 mb-0 mt-0 mb-4 p-0'
+        classes: 'card card-borderless card-clickable hover bg-gray-100 mb-0 mt-0 mb-4 p-0'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -83,8 +86,10 @@ third_party_settings:
       weight: 4
       format_type: html_element
       format_settings:
-        classes: 'card-title h4 text-midnight mt-0'
+        classes: 'card-title h4 text-midnight mt-0 hover-text-underline'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: h2
         show_label: false
         label_element: h3
@@ -120,12 +125,14 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'card-clickable-link text-chili text-left'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: div
         label_element_classes: ''
-        attributes: ''
+        attributes: 'aria-hidden="true"'
         effect: none
         speed: fast
     group_content:
@@ -182,4 +189,5 @@ content:
 hidden:
   field_az_main_content: true
   field_az_marketing_page_style: true
+  field_az_metatag: true
   field_az_page_category: true
