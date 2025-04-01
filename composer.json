@@ -125,7 +125,7 @@
         "drupal/workbench_access": "2.0.3",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
-        "kevinrob/guzzle-cache-middleware": "5.1.0",
+        "kevinrob/guzzle-cache-middleware": "6.0.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.0",
         "npm-asset/easepick--bundle": "1.2.1",
