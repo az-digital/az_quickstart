@@ -62,8 +62,9 @@ content:
     region: content
     settings:
       form_mode: default
-      label_singular: ''
-      label_plural: ''
+      override_labels: '1'
+      label_singular: contributor
+      label_plural: contributors
       collapsible: '1'
       allow_new: '1'
       allow_existing: '1'
@@ -71,7 +72,6 @@ content:
       multiple_use: '1'
       removed_reference: optional
       revision: 0
-      override_labels: 0
       collapsed: 0
       allow_duplicate: 0
     third_party_settings: {  }
