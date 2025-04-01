@@ -23,10 +23,6 @@ function az_event_theme($existing, $type, $theme, $path) {
       'template' => 'field--node--az-event',
       'base hook' => 'field',
     ],
-    'field__node__field_az_event_date__az_event' => [
-      'template' => 'field--node--field-az-event-date--az-event',
-      'base hook' => 'field',
-    ],
   ];
 }
 
@@ -100,22 +96,64 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       }
     }
 
-    // For the full content view mode, find the next recurring event instance.
+    // For the full content view mode, modify the display of recurring events.
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
       /** @var \Drupal\Core\Field\FieldItemList $eventDates */
       $eventDates = $entity->field_az_event_date;
       $numberOfRecurringInstances = $eventDates->count();
       if ($numberOfRecurringInstances > 1) {
+        // Initialize the accordion body build array.
+        $accordionBody = $build['field_az_event_date'];
+        foreach ($entity->field_az_event_date as $item) {
+          unset($accordionBody[$item->getName()]);
+        }
+        $itemIndex = 0;
+
+        // Add any upcoming instances to the accordion body.
         $nextRecurringInstance = NULL;
         $now = \Drupal::time()->getCurrentTime();
         foreach ($entity->field_az_event_date as $item) {
           if ($item->end_value > $now) {
-            $nextRecurringInstance = $item->getName();
-            break;
+            if (!isset($nextRecurringInstance)) {
+              $nextRecurringInstance = $item->getName();
+              $accordionBody[$itemIndex++] = [
+                '#markup' => '<h3 class="h5 mt-0">Upcoming Events</h3>',
+              ];
+            }
+            $accordionBody[$itemIndex++] = $build['field_az_event_date'][$item->getName()];
           }
         }
-        // Include the index of the next instance in the build array.
-        $build['field_az_event_date']['#nextInstance'] = $nextRecurringInstance;
+
+        // Add any past instances to the accordion body.
+        if (!isset($nextRecurringInstance) || $nextRecurringInstance !== 0) {
+          $accordionBody[$itemIndex++] = [
+            '#markup' => "<h3 class='h5" . (isset($nextRecurringInstance) ? '' : ' mt-0') . "'>Past Events</h3>",
+          ];
+          for ($i = 0; $i < ($nextRecurringInstance ?? $numberOfRecurringInstances); $i++) {
+            $accordionBody[$itemIndex++] = $build['field_az_event_date'][$i];
+          }
+        }
+
+        // Replace/unset the items in the build array for the field.
+        $itemIndex = 0;
+        if (isset($nextRecurringInstance)) {
+          $build['field_az_event_date'][$itemIndex] = $build['field_az_event_date'][$nextRecurringInstance];
+          $build['field_az_event_date'][$itemIndex]['#prefix'] = '<div class="mb-3"><strong>Next event:</strong> ';
+          $build['field_az_event_date'][$itemIndex]['#suffix'] = '</div>';
+          $itemIndex++;
+        }
+        $build['field_az_event_date'][$itemIndex++] = [
+          '#theme' => 'az_accordion',
+          '#title' => "View " . (isset($nextRecurringInstance) ? 'all' : 'past') . " event instances",
+          '#body' => $accordionBody,
+          '#attributes' => ['class' => 'accordion'],
+          '#accordion_item_id' => "event-" . $entity->id(),
+          '#collapsed' => 'collapse',
+          '#aria_expanded' => 'false',
+        ];
+        for ($i = $itemIndex; $i < $numberOfRecurringInstances; $i++) {
+          unset($build['field_az_event_date'][$i]);
+        }
       }
     }
   }
