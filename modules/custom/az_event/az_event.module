@@ -116,8 +116,9 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           if ($item->end_value > $now) {
             if (!isset($nextRecurringInstance)) {
               $nextRecurringInstance = $item->getName();
+              $upcomingEventsHeading = t("Upcoming Events");
               $accordionBody[$itemIndex++] = [
-                '#markup' => '<h3 class="h5 mt-0">Upcoming Events</h3>',
+                '#markup' => "<h3 class='h5 mt-0'>{$upcomingEventsHeading}</h3>",
               ];
             }
             $accordionBody[$itemIndex++] = $build['field_az_event_date'][$item->getName()];
@@ -126,8 +127,9 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
         // Add any past instances to the accordion body.
         if (!isset($nextRecurringInstance) || $nextRecurringInstance !== 0) {
+          $pastEventsHeading = t("Past Events");
           $accordionBody[$itemIndex++] = [
-            '#markup' => "<h3 class='h5" . (isset($nextRecurringInstance) ? '' : ' mt-0') . "'>Past Events</h3>",
+            '#markup' => "<h3 class='h5" . (isset($nextRecurringInstance) ? '' : ' mt-0') . "'>{$pastEventsHeading}</h3>",
           ];
           for ($i = 0; $i < ($nextRecurringInstance ?? $numberOfRecurringInstances); $i++) {
             $accordionBody[$itemIndex++] = $build['field_az_event_date'][$i];
@@ -138,13 +140,14 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         $itemIndex = 0;
         if (isset($nextRecurringInstance)) {
           $build['field_az_event_date'][$itemIndex] = $build['field_az_event_date'][$nextRecurringInstance];
-          $build['field_az_event_date'][$itemIndex]['#prefix'] = '<div class="mb-3"><strong>Next event:</strong> ';
+          $nextEventText = t("Next event");
+          $build['field_az_event_date'][$itemIndex]['#prefix'] = "<div class='mb-3'><strong>{$nextEventText}:</strong> ";
           $build['field_az_event_date'][$itemIndex]['#suffix'] = '</div>';
           $itemIndex++;
         }
         $build['field_az_event_date'][$itemIndex++] = [
           '#theme' => 'az_accordion',
-          '#title' => "View " . (isset($nextRecurringInstance) ? 'all' : 'past') . " event instances",
+          '#title' => t("View all event instances"),
           '#body' => $accordionBody,
           '#attributes' => ['class' => 'accordion'],
           '#accordion_item_id' => "event-" . $entity->id(),
