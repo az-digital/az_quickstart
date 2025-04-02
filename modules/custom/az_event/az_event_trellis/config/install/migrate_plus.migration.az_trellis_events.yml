@@ -54,10 +54,37 @@ source:
       name: publish
       label: Publish
       selector: Publish_Formula
+    -
+      name: az_enterprise_attributes
+      label: 'Enterprise Attributes'
+      selector: Attributes
+    -
+      name: format
+      label: 'Format'
+      selector: Format
   ids:
     id:
       type: string
 process:
+  field_az_enterprise_attributes:
+    - plugin: flatten
+      source:
+        - az_enterprise_attributes
+        - format
+    -
+      plugin: multiple_values
+    -
+      plugin: callback
+      callable: trim
+    -
+      plugin: single_value
+    -
+      plugin: entity_lookup
+      entity_type: taxonomy_term
+      bundle_key: vid
+      bundle: az_enterprise_attributes
+      value_key: name
+      ignore_case: true
   title: name
   field_az_trellis_id: id
   field_az_link/uri: url
