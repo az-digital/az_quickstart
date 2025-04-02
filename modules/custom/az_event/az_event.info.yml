@@ -8,6 +8,7 @@ dependencies:
   - az_core
   - az_media
   - az_paragraphs_contact
+  - calendar_link
   - date_ap_style
   - datetime_range
   - field
