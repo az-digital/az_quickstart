@@ -28,7 +28,7 @@ jobs:
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
             echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
           else
-            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+            echo "SCAFFOLD_BRANCH=2.13.x" >> ${GITHUB_ENV}
           fi
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
             echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
@@ -71,7 +71,7 @@ jobs:
         run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
       - name: Install dependencies
         run: |
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=2.13.x; fi
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$AZ_TRIMMED_REF"; else DEV_PACKAGE_BRANCH=main; fi
           git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
           cd az-quickstart-scaffolding
