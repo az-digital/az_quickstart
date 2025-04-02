@@ -19,6 +19,17 @@ use Drupal\node\NodeInterface;
  */
 function az_event_theme($existing, $type, $theme, $path) {
   return [
+    'az_event_calendar_add_button' => [
+      'variables' => [
+        'title' => NULL,
+        'start_date' => NULL,
+        'end_date' => NULL,
+        'description' => NULL,
+        'location' => NULL,
+        'modal' => NULL,
+      ],
+      'render element' => 'children',
+    ],
     'field__node__az_event' => [
       'template' => 'field--node--az-event',
       'base hook' => 'field',
@@ -93,6 +104,25 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           '#type' => 'markup',
           '#markup' => Html::escape($formatter->format($timestamp, 'az_event_day')),
         ];
+      }
+    }
+
+    // Add to Calendar.
+    if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
+      foreach ($entity->field_az_event_date as $item) {
+        $now = \Drupal::time()->getCurrentTime();
+        if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
+          $build['field_az_event_date'][] = [
+            '#theme' => 'az_event_calendar_add_button',
+            '#title' => $entity->getTitle(),
+            '#start_date' => $item->value ?? '',
+            '#end_date' => $item->end_value ?? '',
+            '#description' => $entity->field_az_body->value ?? '',
+            '#location' => $entity->field_az_location->title ?? '',
+            '#modal' => Html::getUniqueId('calendar-link-modal'),
+          ];
+          break;
+        }
       }
     }
   }
