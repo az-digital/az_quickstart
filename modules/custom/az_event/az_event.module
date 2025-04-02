@@ -27,6 +27,7 @@ function az_event_theme($existing, $type, $theme, $path) {
         'description' => NULL,
         'location' => NULL,
         'modal' => NULL,
+        'attributes' => NULL,
       ],
       'render element' => 'children',
     ],
@@ -109,6 +110,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
     // For the full content view mode, modify the display of recurring events.
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
+      $now = \Drupal::time()->getCurrentTime();
       /** @var \Drupal\Core\Field\FieldItemList $event_dates */
       $event_dates = $entity->field_az_event_date;
       $number_of_occurrences = $event_dates->count();
@@ -122,7 +124,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
         // Add any upcoming occurrences to the accordion body.
         $next_occurrence = NULL;
-        $now = \Drupal::time()->getCurrentTime();
+        $add_to_calendar_button = NULL;
         /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $item */
         foreach ($entity->field_az_event_date as $item) {
           if (!empty($item->end_value) && $item->end_value > $now) {
@@ -131,6 +133,17 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               $upcoming_events_heading = t("Upcoming Events");
               $accordion_body[$item_index++] = [
                 '#markup' => "<h3 class='h5 mt-0'>{$upcoming_events_heading}</h3>",
+              ];
+              // Add to Calendar button for an event with multiple occurrences.
+              $add_to_calendar_button = [
+                '#theme' => 'az_event_calendar_add_button',
+                '#title' => $entity->getTitle(),
+                '#start_date' => $item->value ?? '',
+                '#end_date' => $item->end_value ?? '',
+                '#description' => $entity->field_az_body->value ?? '',
+                '#location' => $entity->field_az_location->title ?? '',
+                '#modal' => Html::getUniqueId('calendar-link-modal'),
+                '#attributes' => ['class' => 'mb-4'],
               ];
             }
             $accordion_body[$item_index++] = $build['field_az_event_date'][$item->getName()];
@@ -156,6 +169,10 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-3'><strong>{$next_event_text}:</strong> ";
           $build['field_az_event_date'][$item_index]['#suffix'] = '</div>';
           $item_index++;
+          if (isset($add_to_calendar_button)) {
+            $build['field_az_event_date'][$item_index] = $add_to_calendar_button;
+            $item_index++;
+          }
         }
         $build['field_az_event_date'][$item_index++] = [
           '#theme' => 'az_accordion',
@@ -170,23 +187,22 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           unset($build['field_az_event_date'][$i]);
         }
       }
-    }
-    
-    // Add to Calendar.
-    if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
-      foreach ($entity->field_az_event_date as $item) {
-        $now = \Drupal::time()->getCurrentTime();
-        if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
-          $build['field_az_event_date'][] = [
-            '#theme' => 'az_event_calendar_add_button',
-            '#title' => $entity->getTitle(),
-            '#start_date' => $item->value ?? '',
-            '#end_date' => $item->end_value ?? '',
-            '#description' => $entity->field_az_body->value ?? '',
-            '#location' => $entity->field_az_location->title ?? '',
-            '#modal' => Html::getUniqueId('calendar-link-modal'),
-          ];
-          break;
+      else {
+        // Add to Calendar button for an event with a single occurrence.
+        foreach ($entity->field_az_event_date as $item) {
+          if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
+            $build['field_az_event_date'][] = [
+              '#theme' => 'az_event_calendar_add_button',
+              '#title' => $entity->getTitle(),
+              '#start_date' => $item->value ?? '',
+              '#end_date' => $item->end_value ?? '',
+              '#description' => $entity->field_az_body->value ?? '',
+              '#location' => $entity->field_az_location->title ?? '',
+              '#modal' => Html::getUniqueId('calendar-link-modal'),
+              '#attributes' => ['class' => 'mt-3'],
+            ];
+            break;
+          }
         }
       }
     }
