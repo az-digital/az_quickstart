@@ -3,9 +3,6 @@
 namespace Drupal\az_event_trellis\Plugin\views\field;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\migrate\MigrateMessage;
-use Drupal\migrate\Plugin\MigrationInterface;
-use Drupal\migrate_tools\MigrateBatchExecutable;
 use Drupal\views\Attribute\ViewsField;
 use Drupal\views\Plugin\views\display\DisplayPluginBase;
 use Drupal\views\Plugin\views\field\BulkForm;
@@ -20,11 +17,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class AZEventTrellisViewsField extends BulkForm {
 
   /**
-   * The migration plugin manager.
+   * AZ Migration Remote Tools.
    *
-   * @var \Drupal\migrate\Plugin\MigrationPluginManagerInterface
+   * @var \Drupal\az_migration_remote\MigrationRemoteTools
    */
-  protected $pluginManagerMigration;
+  protected $migrationRemoteTools;
 
   /**
    * The Trellis helper.
@@ -38,7 +35,7 @@ class AZEventTrellisViewsField extends BulkForm {
    */
   public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
     $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
-    $instance->pluginManagerMigration = $container->get('plugin.manager.migration');
+    $instance->migrationRemoteTools = $container->get('az_migration_remote.tools');
     $instance->trellisHelper = $container->get('az_event_trellis.trellis_helper');
     return $instance;
   }
@@ -113,25 +110,41 @@ class AZEventTrellisViewsField extends BulkForm {
           ]));
         }
       }
-      // Pass URL to migrate executable.
-      $event_url = $this->trellisHelper->getEventEndpoint();
-      $migration = $this->pluginManagerMigration->createInstance('az_trellis_events');
-      if ($migration->getStatus() !== MigrationInterface::STATUS_IDLE) {
-        $migration->setStatus(MigrationInterface::STATUS_IDLE);
-      }
-      $options = [
-        'limit' => 0,
-        'update' => 1,
-        'force' => 0,
-        'configuration' => [
-          'source' => [
-            'trellis_ids' => $ids,
+
+      $migrations = [
+        'az_trellis_events_files' => [
+          'limit' => 0,
+          'update' => 0,
+          'force' => 0,
+          'configuration' => [
+            'source' => [
+              'trellis_ids' => $ids,
+            ],
+          ],
+        ],
+        'az_trellis_events_media' => [
+          'limit' => 0,
+          'update' => 0,
+          'force' => 0,
+          'configuration' => [
+            'source' => [
+              'trellis_ids' => $ids,
+            ],
+          ],
+        ],
+        'az_trellis_events' => [
+          'limit' => 0,
+          'update' => 0,
+          'force' => 0,
+          'configuration' => [
+            'source' => [
+              'trellis_ids' => $ids,
+            ],
           ],
         ],
       ];
-      $executable = new MigrateBatchExecutable($migration, new MigrateMessage(), $options);
-      $executable->batchImport();
 
+      $this->migrationRemoteTools->batch($migrations);
     }
 
   }

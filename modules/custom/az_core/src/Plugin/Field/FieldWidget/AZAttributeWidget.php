@@ -197,18 +197,24 @@ class AZAttributeWidget extends OptionsSelectWidget {
    * {@inheritdoc}
    */
   public function massageFormValues(array $values, array $form, FormStateInterface $form_state) {
-
     // Collapse down to a single array.
     $modified = [];
     foreach ($values as $group) {
+      // Ensure $group is always an array.
       if (!is_array($group)) {
-        // Single select elements are not yet arrays.
         $group = !empty($group) ? [$group => $group] : [];
       }
       foreach ($group as $key => $attribute) {
-        $modified[$key] = $key;
+        // Handle cases where key is numeric (single-value fields)
+        if (is_int($key)) {
+          $modified[$attribute] = $attribute;
+        }
+        else {
+          $modified[$key] = $attribute;
+        }
       }
     }
+
     unset($modified['_none']);
     return $modified;
   }

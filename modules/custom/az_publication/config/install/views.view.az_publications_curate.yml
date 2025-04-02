@@ -348,7 +348,7 @@ display:
           exposed: false
           draggable_views_reference: this
           draggable_views_null_order: before
-          draggable_views_pass_arguments: true
+          draggable_views_pass_arguments: 1
         field_az_publication_date_value:
           id: field_az_publication_date_value
           table: node__field_az_publication_date
@@ -826,20 +826,20 @@ display:
         filters: false
         filter_groups: false
       relationships:
-        field_az_authors:
-          id: field_az_authors
-          table: node__field_az_authors
-          field: field_az_authors
+        field_az_contributors:
+          id: field_az_contributors
+          table: node__field_az_contributors
+          field: field_az_contributors
           relationship: none
           group_type: group
-          admin_label: 'field_az_authors: Author'
+          admin_label: 'field_az_contributors: Author'
           plugin_id: standard
           required: false
         field_az_author_person:
           id: field_az_author_person
           table: az_author__field_az_author_person
           field: field_az_author_person
-          relationship: field_az_authors
+          relationship: field_az_contributors
           group_type: group
           admin_label: 'field_az_author_person: Content'
           plugin_id: standard

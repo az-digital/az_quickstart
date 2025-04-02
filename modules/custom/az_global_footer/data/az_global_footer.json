@@ -26,8 +26,8 @@
       "link_id": "3",
       "parent_link_id": "0",
       "menu": "az-footer-main",
-      "title": "Title IX / Non-Discrimination",
-      "urlpath": "https://www.arizona.edu/title-ix",
+      "title": "Nondiscrimination",
+      "urlpath": "https://www.arizona.edu/nondiscrimination",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -235,8 +235,8 @@
       "link_id": "22",
       "parent_link_id": "0",
       "menu": "az-footer-topics",
-      "title": "Diversity",
-      "urlpath": "https://diversity.arizona.edu",
+      "title": "Environment & Sustainability",
+      "urlpath": "https://www.environment.arizona.edu",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -246,8 +246,8 @@
       "link_id": "23",
       "parent_link_id": "0",
       "menu": "az-footer-topics",
-      "title": "Environment & Sustainability",
-      "urlpath": "https://www.environment.arizona.edu",
+      "title": "International Engagement",
+      "urlpath": "https://international.arizona.edu",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -257,8 +257,8 @@
       "link_id": "24",
       "parent_link_id": "0",
       "menu": "az-footer-topics",
-      "title": "International Engagement",
-      "urlpath": "https://international.arizona.edu",
+      "title": "Health & Medical",
+      "urlpath": "https://healthsciences.arizona.edu/",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -268,8 +268,8 @@
       "link_id": "25",
       "parent_link_id": "0",
       "menu": "az-footer-topics",
-      "title": "Health & Medical",
-      "urlpath": "https://www.arizona.edu/health-sciences",
+      "title": "Libraries",
+      "urlpath": "https://www.arizona.edu/libraries",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -279,8 +279,8 @@
       "link_id": "26",
       "parent_link_id": "0",
       "menu": "az-footer-topics",
-      "title": "Libraries",
-      "urlpath": "https://www.arizona.edu/libraries",
+      "title": "Research & Innovation",
+      "urlpath": "https://research.arizona.edu",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -290,8 +290,8 @@
       "link_id": "27",
       "parent_link_id": "0",
       "menu": "az-footer-topics",
-      "title": "Research & Innovation",
-      "urlpath": "https://research.arizona.edu",
+      "title": "Purpose, Mission & Values",
+      "urlpath": "https://www.arizona.edu/purpose-mission-values",
       "external": true,
       "expanded": false,
       "enabled": true,
@@ -299,17 +299,6 @@
     },
     {
       "link_id": "28",
-      "parent_link_id": "0",
-      "menu": "az-footer-topics",
-      "title": "Purpose, Mission & Values",
-      "urlpath": "https://www.arizona.edu/purpose-mission-values",
-      "external": true,
-      "expanded": false,
-      "enabled": true,
-      "weight": "13"
-    },
-    {
-      "link_id": "29",
       "parent_link_id": "0",
       "menu": "az-footer-resources",
       "title": "Directory",
@@ -320,7 +309,7 @@
       "weight": "1"
     },
     {
-      "link_id": "30",
+      "link_id": "29",
       "parent_link_id": "0",
       "menu": "az-footer-resources",
       "title": "Calendars",
@@ -331,7 +320,7 @@
       "weight": "2"
     },
     {
-      "link_id": "31",
+      "link_id": "30",
       "parent_link_id": "0",
       "menu": "az-footer-resources",
       "title": "Campus Map",
@@ -342,7 +331,7 @@
       "weight": "3"
     },
     {
-      "link_id": "32",
+      "link_id": "31",
       "parent_link_id": "0",
       "menu": "az-footer-resources",
       "title": "News",
@@ -353,7 +342,7 @@
       "weight": "4"
     },
     {
-      "link_id": "33",
+      "link_id": "32",
       "parent_link_id": "0",
       "menu": "az-footer-resources",
       "title": "Phonebook",
@@ -364,7 +353,7 @@
       "weight": "5"
     },
     {
-      "link_id": "34",
+      "link_id": "33",
       "parent_link_id": "0",
       "menu": "az-footer-resources",
       "title": "Weather",
@@ -375,7 +364,7 @@
       "weight": "6"
     },
     {
-      "link_id": "35",
+      "link_id": "34",
       "parent_link_id": "0",
       "menu": "az-footer-social-media",
       "title": "Facebook",
@@ -390,7 +379,7 @@
       ]
     },
     {
-      "link_id": "36",
+      "link_id": "35",
       "parent_link_id": "0",
       "menu": "az-footer-social-media",
       "title": "X, formerly Twitter",
@@ -405,7 +394,7 @@
       ]
     },
     {
-      "link_id": "37",
+      "link_id": "36",
       "parent_link_id": "0",
       "menu": "az-footer-social-media",
       "title": "Instagram",
@@ -420,7 +409,7 @@
       ]
     },
     {
-      "link_id": "38",
+      "link_id": "37",
       "parent_link_id": "0",
       "menu": "az-footer-social-media",
       "title": "LinkedIn",
@@ -435,7 +424,7 @@
       ]
     },
     {
-      "link_id": "39",
+      "link_id": "38",
       "parent_link_id": "0",
       "menu": "az-footer-social-media",
       "title": "YouTube",
