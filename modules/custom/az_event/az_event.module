@@ -111,7 +111,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
       foreach ($entity->field_az_event_date as $item) {
         $now = \Drupal::time()->getCurrentTime();
-        if ($item->value >= $now) {
+        if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
           $build['field_az_event_date'][] = [
             '#theme' => 'az_event_calendar_add_button',
             '#title' => $entity->getTitle(),
