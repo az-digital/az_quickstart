@@ -4,9 +4,11 @@ description: 'Provides Event content type and related configuration.'
 core_version_requirement: ^10 || ^11
 package: 'The University of Arizona'
 dependencies:
+  - az_accordion
   - az_core
   - az_media
   - az_paragraphs_contact
+  - calendar_link
   - date_ap_style
   - datetime_range
   - field

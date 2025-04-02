@@ -65,6 +65,7 @@ function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterfac
           $disabled_fields = [
             'field_az_fname',
             'field_az_lname',
+            'field_az_media_image',
             'field_az_netid',
             'field_az_email',
             'field_az_phones',
@@ -72,6 +73,11 @@ function az_person_form_node_az_person_edit_form_alter(&$form, FormStateInterfac
             'field_az_degrees',
             'field_az_address',
             'field_az_body',
+            'field_az_research_interests',
+            'field_az_teaching_interests',
+            'field_az_awards',
+            'field_az_licensure_certification',
+            'field_az_work_experience',
           ];
           foreach ($disabled_fields as $field) {
             if (!empty($form[$field])) {
@@ -116,12 +122,27 @@ function az_person_preprocess_field(array &$variables) {
  * Implements hook_theme().
  */
 function az_person_theme() {
-  $base_hook = [
+  $field_group_base_hook = [
     'base hook' => 'field_group_html_element',
   ];
+  $experience_field_template = [
+    'template' => 'field--node--experience-field--az-person',
+    'base hook' => 'field',
+  ];
+  $interests_field_template = [
+    'template' => 'field--node--interests-field--az-person',
+    'base hook' => 'field',
+  ];
   return [
-    'field_group_html_element__node__az_person__h1' => $base_hook,
-    'field_group_html_element__node__az_person__h2' => $base_hook,
-    'field_group_html_element__node__az_person__h3' => $base_hook,
+    'field_group_html_element__node__az_person__h1' => $field_group_base_hook,
+    'field_group_html_element__node__az_person__h2' => $field_group_base_hook,
+    'field_group_html_element__node__az_person__h3' => $field_group_base_hook,
+    'field__node__field_az_awards__az_person' => $experience_field_template,
+    'field__node__field_az_degrees__az_person' => $experience_field_template,
+    'field__node__field_az_licensure_certification__az_person' => $experience_field_template,
+    'field__node__field_az_work_experience__az_person' => $experience_field_template,
+    'field__node__field_az_research_interests__az_person' => $interests_field_template,
+    'field__node__field_az_teaching_interests__az_person' => $interests_field_template,
+    'horizontal_tabs__node__az_person__group_tabs' => ['base hook' => 'horizontal_tabs'],
   ];
 }
