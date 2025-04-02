@@ -25,6 +25,7 @@ third_party_settings:
         - text-midnight
         - h4
         - mt-md-2
+        - hover-text-underline
   field_group:
     group_card_clickable:
       children:
@@ -35,8 +36,10 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'card card-borderless card-clickable bg-gray-100 p-4'
+        classes: 'card card-borderless card-clickable hover bg-gray-100 p-4'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: false
         label_element: h3
@@ -142,12 +145,14 @@ third_party_settings:
       format_type: html_element
       format_settings:
         classes: 'card-clickable-link text-chili text-left'
+        show_empty_fields: false
         id: ''
+        label_as_html: false
         element: div
         show_label: true
         label_element: div
         label_element_classes: ''
-        attributes: ''
+        attributes: 'aria-hidden="true"'
         effect: none
         speed: fast
     group_summary:
