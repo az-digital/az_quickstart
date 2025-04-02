@@ -100,8 +100,8 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
       /** @var \Drupal\Core\Field\FieldItemList $eventDates */
       $eventDates = $entity->field_az_event_date;
-      $numberOfRecurringInstances = $eventDates->count();
-      if ($numberOfRecurringInstances > 1) {
+      $numberOfOccurrences = $eventDates->count();
+      if ($numberOfOccurrences > 1) {
         // Initialize the accordion body build array.
         $accordionBody = $build['field_az_event_date'];
         foreach ($entity->field_az_event_date as $item) {
@@ -109,13 +109,13 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         }
         $itemIndex = 0;
 
-        // Add any upcoming instances to the accordion body.
-        $nextRecurringInstance = NULL;
+        // Add any upcoming occurrences to the accordion body.
+        $nextOccurrence = NULL;
         $now = \Drupal::time()->getCurrentTime();
         foreach ($entity->field_az_event_date as $item) {
           if ($item->end_value > $now) {
-            if (!isset($nextRecurringInstance)) {
-              $nextRecurringInstance = $item->getName();
+            if (!isset($nextOccurrence)) {
+              $nextOccurrence = $item->getName();
               $upcomingEventsHeading = t("Upcoming Events");
               $accordionBody[$itemIndex++] = [
                 '#markup' => "<h3 class='h5 mt-0'>{$upcomingEventsHeading}</h3>",
@@ -125,21 +125,21 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           }
         }
 
-        // Add any past instances to the accordion body.
-        if (!isset($nextRecurringInstance) || $nextRecurringInstance !== 0) {
+        // Add any past occurrences to the accordion body.
+        if (!isset($nextOccurrence) || $nextOccurrence !== 0) {
           $pastEventsHeading = t("Past Events");
           $accordionBody[$itemIndex++] = [
-            '#markup' => "<h3 class='h5" . (isset($nextRecurringInstance) ? '' : ' mt-0') . "'>{$pastEventsHeading}</h3>",
+            '#markup' => "<h3 class='h5" . (isset($nextOccurrence) ? '' : ' mt-0') . "'>{$pastEventsHeading}</h3>",
           ];
-          for ($i = 0; $i < ($nextRecurringInstance ?? $numberOfRecurringInstances); $i++) {
+          for ($i = 0; $i < ($nextOccurrence ?? $numberOfOccurrences); $i++) {
             $accordionBody[$itemIndex++] = $build['field_az_event_date'][$i];
           }
         }
 
         // Replace/unset the items in the build array for the field.
         $itemIndex = 0;
-        if (isset($nextRecurringInstance)) {
-          $build['field_az_event_date'][$itemIndex] = $build['field_az_event_date'][$nextRecurringInstance];
+        if (isset($nextOccurrence)) {
+          $build['field_az_event_date'][$itemIndex] = $build['field_az_event_date'][$nextOccurrence];
           $nextEventText = t("Next event");
           $build['field_az_event_date'][$itemIndex]['#prefix'] = "<div class='mb-3'><strong>{$nextEventText}:</strong> ";
           $build['field_az_event_date'][$itemIndex]['#suffix'] = '</div>';
@@ -147,14 +147,14 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         }
         $build['field_az_event_date'][$itemIndex++] = [
           '#theme' => 'az_accordion',
-          '#title' => t("View all event instances"),
+          '#title' => t("View all occurrences"),
           '#body' => $accordionBody,
           '#attributes' => ['class' => 'accordion'],
           '#accordion_item_id' => "event-" . $entity->id(),
           '#collapsed' => 'collapse',
           '#aria_expanded' => 'false',
         ];
-        for ($i = $itemIndex; $i < $numberOfRecurringInstances; $i++) {
+        for ($i = $itemIndex; $i < $numberOfOccurrences; $i++) {
           unset($build['field_az_event_date'][$i]);
         }
       }
