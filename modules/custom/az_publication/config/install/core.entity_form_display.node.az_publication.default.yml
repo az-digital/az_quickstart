@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_contributors
     - field.field.node.az_publication.field_az_main_content
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
@@ -30,9 +31,9 @@ dependencies:
     - field.field.node.az_publication.field_az_publication_volume
     - node.type.az_publication
   module:
+    - az_publication
     - datetime
     - datetime_range
-    - inline_entity_form
     - link
     - media_library
     - paragraphs
@@ -55,27 +56,28 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  field_az_authors:
-    type: inline_entity_form_complex
+  field_az_contributors:
+    type: az_entity_role_inline_entity_form_complex
     weight: 8
     region: content
     settings:
       form_mode: default
-      override_labels: false
-      label_singular: Author
-      label_plural: Authors
-      allow_new: true
-      allow_existing: true
+      override_labels: '1'
+      label_singular: contributor
+      label_plural: contributors
+      collapsible: '1'
+      allow_new: '1'
+      allow_existing: '1'
       match_operator: CONTAINS
-      allow_duplicate: false
-      collapsible: true
-      collapsed: false
-      revision: false
+      multiple_use: '1'
       removed_reference: optional
+      revision: 0
+      collapsed: 0
+      allow_duplicate: 0
     third_party_settings: {  }
   field_az_main_content:
     type: paragraphs
-    weight: 33
+    weight: 32
     region: content
     settings:
       title: Paragraph
@@ -310,4 +312,5 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_az_authors: true
   field_az_publication_type: true

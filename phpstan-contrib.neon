@@ -27,6 +27,4 @@ parameters:
 		- */config_update/config_update_ui/src/Logger/ConfigUpdateUiDrush8Logger.php
 		- */config_update/config_update_ui/config_update_ui.drush_testing.inc
 		- */config_update/config_update_ui/src/Commands/ConfigUpdateUiCommands.php
-includes:
-	- %currentWorkingDirectory%/vendor/mglaman/phpstan-drupal/extension.neon
-	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+		- */upgrade_status/tests/modules/upgrade_status_test_fatal/fatal.php

@@ -47,6 +47,10 @@ source:
       label: 'End Date and Time'
       selector: End_DateTime
     -
+      name: image_url
+      label: 'Image URL'
+      selector: Image_URL
+    -
       name: publish
       label: Publish
       selector: Publish_Formula
@@ -62,29 +66,11 @@ source:
     id:
       type: string
 process:
-  pseudo_format[]:
-    -
-      plugin: explode
-      source: format
-      delimiter: ','
-  pseudo_category[]: az_enterprise_attributes/0/Category
-  pseudo_audiences[]:
-    -
-      plugin: explode
-      source: az_enterprise_attributes/0/Audiences/0
-      delimiter: ','
-  pseudo_topic[]:
-    -
-      plugin: explode
-      source: az_enterprise_attributes/0/Topic/0
-      delimiter: ','
   field_az_enterprise_attributes:
-    - plugin: merge
+    - plugin: flatten
       source:
-        - '@pseudo_audiences[]'
-        - '@pseudo_topic[]'
-        - '@pseudo_category[]'
-        - '@pseudo_format[]'
+        - az_enterprise_attributes
+        - format
     -
       plugin: multiple_values
     -
@@ -119,6 +105,15 @@ process:
       plugin: default_value
       strict: true
       default_value: 0
+  field_az_photos/target_id:
+    -
+      plugin: migration_lookup
+      migration: az_trellis_events_media
+      source: id
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: process
   field_az_event_date/value:
     -
       plugin: format_date
@@ -135,4 +130,6 @@ destination:
   plugin: 'entity:node'
   default_bundle: az_event
   validate: false
-migration_dependencies: null
+migration_dependencies:
+  optional:
+    - az_trellis_events_media
