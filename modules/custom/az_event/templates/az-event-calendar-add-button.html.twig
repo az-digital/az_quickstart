@@ -6,14 +6,12 @@
 * @ingroup themeable
 */
 #}
-{% set classes = [
-    'clear-both',
-] %}
+{% set attributes = attributes.addClass('clear-both') %}
 {% set links = calendar_links(title, date(start_date), date(end_date), FALSE, description, location) %}
 
-<div{{ attributes.addClass(classes) }}>
+<div{{ attributes }}>
   <!-- Button trigger modal -->
-  <button type="button" class="btn btn-hollow-primary btn-sm text-capitalize mt-3" data-toggle="modal" data-target="#{{ modal }}">
+  <button type="button" class="btn btn-hollow-primary btn-sm text-capitalize" data-toggle="modal" data-target="#{{ modal }}">
     <span class="material-icons-sharp mr-2 align-bottom">calendar_month</span>{{ 'Add to Calendar'|t }}
   </button>
 
