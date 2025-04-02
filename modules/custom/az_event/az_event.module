@@ -112,8 +112,9 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         // Add any upcoming occurrences to the accordion body.
         $next_occurrence = NULL;
         $now = \Drupal::time()->getCurrentTime();
+        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $item */
         foreach ($entity->field_az_event_date as $item) {
-          if ($item->end_value > $now) {
+          if (!empty($item->end_value) && $item->end_value > $now) {
             if (!isset($next_occurrence)) {
               $next_occurrence = $item->getName();
               $upcoming_events_heading = t("Upcoming Events");
