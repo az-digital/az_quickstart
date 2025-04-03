@@ -25,6 +25,12 @@ source:
       name: givenname
       selector: 'Person/givenname'
     -
+      name: preferred_surname
+      selector: 'Person/preferred_surname'
+    -
+      name: preferred_givenname
+      selector: 'Person/preferred_givenname'
+    -
       name: email
       selector: 'Person/email'
     -
@@ -42,6 +48,18 @@ source:
     -
       name: degrees
       selector: 'Degrees'
+    -
+      name: awards
+      selector: 'Awards'
+    -
+      name: interests
+      selector: 'Interests'
+    -
+      name: certifications
+      selector: 'Certifications'
+    -
+      name: work_experience
+      selector: 'WorkedAt'
 
 process:
   nid:
@@ -58,9 +76,26 @@ process:
   type:
     plugin: default_value
     default_value: az_person
-  field_az_fname: givenname
-  field_az_lname: surname
+  field_az_fname:
+    plugin: az_person_profiles_empty_coalesce
+    source:
+      - preferred_givenname
+      - givenname
+  field_az_lname:
+    plugin: az_person_profiles_empty_coalesce
+    source:
+      - preferred_surname
+      - surname
   field_az_netid: netid
+  field_az_media_image/target_id:
+    -
+      plugin: migration_lookup
+      migration: az_person_profiles_import_media
+      source: netid
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: process
   field_az_email:
     -
       plugin: skip_on_empty
@@ -79,8 +114,147 @@ process:
     process:
       value: desc
   field_az_degrees:
-    plugin: az_person_degrees
+    plugin: az_person_profiles_nested
     source: degrees
+    # Degrees sometimes rarely have multiple institutions
+    split:
+      - institution
+    sort:
+      - CONFERRED_DEGREE
+      - year
+    format:
+      -
+        keys:
+          - properties
+          - degree_title
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - institution
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - CONFERRED_DEGREE
+          - year
+  field_az_research_interests:
+    -
+      plugin: az_person_profiles_nested
+      source: interests
+      filter:
+        type: research
+      format:
+        -
+          keys:
+            - desc
+    -
+      plugin: az_person_profiles_format
+      format: plain_text
+  field_az_teaching_interests:
+    -
+      plugin: az_person_profiles_nested
+      source: interests
+      filter:
+        type: teaching
+      format:
+        -
+          keys:
+            - desc
+    -
+      plugin: az_person_profiles_format
+      format: plain_text
+  field_az_awards:
+    plugin: az_person_profiles_nested
+    source: awards
+    # Awards often have multiple details.
+    # These tend to represent the same award name from multiple entities.
+    split:
+      - details
+    sort:
+      - details
+      - CONFERRED_AWARD
+      - start_term
+    format:
+      -
+        keys:
+          - properties
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - details
+          - institution
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        peoplesoft: TRUE
+        keys:
+          - details
+          - CONFERRED_AWARD
+          - start_term
+  field_az_licensure_certification:
+    plugin: az_person_profiles_nested
+    source: certifications
+    sort:
+      - CONFERRED_CERTIFICATION
+      - year
+    format:
+      -
+        keys:
+          - properties
+          - title
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - institution
+          - name
+      -
+        prefix: ' ('
+        suffix: ')'
+        skip_if_empty: TRUE
+        keys:
+          - CONFERRED_CERTIFICATION
+          - year
+  field_az_work_experience:
+    plugin: az_person_profiles_nested
+    source: work_experience
+    sort:
+      - dates
+      - start_year
+    format:
+      -
+        keys:
+          - place
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - place
+          - city
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - place
+          - state
+      -
+        prefix: ' ('
+        keys:
+          - dates
+          - start_year
+      -
+        prefix: ' - '
+        default: 'Ongoing'
+        keys:
+          - dates
+          - end_year
+        suffix: ')'
   field_az_phones:
     plugin: sub_process
     source: phone
@@ -110,3 +284,6 @@ dependencies:
   enforced:
     module:
       - az_person
+migration_dependencies:
+  optional:
+    - az_person_profiles_import_media

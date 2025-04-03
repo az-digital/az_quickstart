@@ -2,12 +2,10 @@ az_paragraphs_text_media.youtube:
   js:
     js/az_paragraphs_az_text_media_youtube.js: {}
   dependencies:
-    - core/jquery
-    - core/drupalSettings
+    - core/once
 
 az_paragraphs_text_media.vimeo:
   js:
     js/az_paragraphs_az_text_media_vimeo.js: {}
   dependencies:
-    - core/drupalSettings
     - core/once
