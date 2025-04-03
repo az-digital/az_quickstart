@@ -80,3 +80,4 @@ install:
 themes:
   - az_barrio
   - claro
+version: 2.13.0-alpha1
