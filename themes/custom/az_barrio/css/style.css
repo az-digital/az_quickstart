@@ -722,7 +722,7 @@ form.webform-submission-form {
   * Alignment classes for block level elements (images, videos, blockquotes, etc.)
   */
   .align-left {
-    margin-right: 1em;
+    margin-right: 1.5em;
     margin-bottom: 0.7em;
     float: left;
   }
