@@ -13,6 +13,9 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
 use Drupal\node\Entity\NodeType;
 use Drupal\node\NodeInterface;
+use Recurr\Rule;
+use Recurr\Transformer\TextTransformer;
+use Recurr\Transformer\Translator;
 
 /**
  * Implements hook_theme().
@@ -115,6 +118,37 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       $event_dates = $entity->field_az_event_date;
       $number_of_occurrences = $event_dates->count();
       if ($number_of_occurrences > 1) {
+        // Prepare the recurrence description text using the Recurr library.
+        $rule_index = $event_dates[0]->getValue()['rrule'];
+        /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
+        $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($rule_index);
+        $start_date = (new \DateTime)->setTimestamp($smart_date_rule->get('start')[0]->getString());
+        $recurr_rule = new Rule($smart_date_rule->getRule(), $start_date);
+
+        // Always set "until" to match the last occurrence's end date/time.
+        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $last_occurrence */
+        $last_occurrence = $event_dates[$number_of_occurrences - 1];
+        $recurr_rule->setUntil((new \DateTime)->setTimestamp($last_occurrence->get('end_value')->getString()));
+
+        // Use the event's language if possible.
+        $event_langcode = $entity->language()->getId();
+        if ($event_langcode !== 'en') {
+          try {
+            $recurr_translator = new Translator($event_langcode);
+            $recurr_text_transformer = new TextTransformer($recurr_translator);
+          }
+          catch (InvalidArgumentException $e) {
+            // No translation available for this langcode: fall back to 'en'.
+            $recurr_text_transformer = new TextTransformer();
+          }
+        }
+        else {
+          $recurr_text_transformer = new TextTransformer();
+        }
+
+        // Transform the recurrence rule to text.
+        $recurrence_text = ucfirst($recurr_text_transformer->transform($recurr_rule));
+
         // Initialize the accordion body build array.
         $accordion_body = $build['field_az_event_date'];
         foreach ($entity->field_az_event_date as $item) {
@@ -143,7 +177,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#description' => $entity->field_az_body->value ?? '',
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
-                '#attributes' => ['class' => 'mb-4'],
+                '#attributes' => ['class' => 'mb-card'],
               ];
             }
             $accordion_body[$item_index++] = $build['field_az_event_date'][$item->getName()];
@@ -166,13 +200,17 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         if (isset($next_occurrence)) {
           $build['field_az_event_date'][$item_index] = $build['field_az_event_date'][$next_occurrence];
           $next_event_text = t("Next event");
-          $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-3'><strong>{$next_event_text}:</strong> ";
+          $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-2'><strong>{$next_event_text}:</strong> ";
           $build['field_az_event_date'][$item_index]['#suffix'] = '</div>';
           $item_index++;
           if (isset($add_to_calendar_button)) {
-            $build['field_az_event_date'][$item_index] = $add_to_calendar_button;
-            $item_index++;
+            $build['field_az_event_date'][$item_index++] = $add_to_calendar_button;
           }
+        }
+        if (!empty($recurrence_text)) {
+          $build['field_az_event_date'][$item_index++] = [
+            '#markup' => "<p class='mb-4'>{$recurrence_text}</p>",
+          ];
         }
         $build['field_az_event_date'][$item_index++] = [
           '#theme' => 'az_accordion',
