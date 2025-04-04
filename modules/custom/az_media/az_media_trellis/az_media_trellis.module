@@ -5,6 +5,8 @@
  * Hook implementations and global functions for az_media_trellis.
  */
 
+use Drupal\media\Entity\Media;
+
 /**
  * Implements hook_theme().
  */
@@ -31,7 +33,7 @@ function az_media_trellis_preprocess_media(&$variables) {
   $variables['content']['#suffix'] = '</div>';
 
   // Get the media entity object.
-  if (isset($variables['elements']['#media']) && $variables['elements']['#media'] instanceof \Drupal\media\Entity\Media) {
+  if (isset($variables['elements']['#media']) && $variables['elements']['#media'] instanceof Media) {
     $media = $variables['elements']['#media'];
 
     // Retrieve the value of the 'field_az_media_trellis_rec_id' field.
