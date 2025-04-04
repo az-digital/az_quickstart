@@ -3,7 +3,7 @@
 /**
  * Remap authors to have role assignments.
  */
-function az_publication_post_update_convert_author_to_contributor(&$sandbox) {
+function az_publication_post_update_remap_authors_to_have_role_assignments(&$sandbox) {
   // Initialize or retrieve the batch progress information.
   if (!isset($sandbox['progress'])) {
     $sandbox['progress'] = 0;
