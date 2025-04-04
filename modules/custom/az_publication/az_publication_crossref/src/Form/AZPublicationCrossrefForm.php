@@ -212,7 +212,7 @@ class AZPublicationCrossrefForm extends FormBase {
       $pubs = array_filter($pubs);
       $urls = [];
       foreach ($pubs as $doi) {
-        $urls[] = self::$doiBase . $doi;
+        $urls[] = self::$doiBase . urlencode($doi);
       }
       \Drupal::logger('my_moduledoi')->notice(print_r($urls, TRUE));
       // Import publications.
