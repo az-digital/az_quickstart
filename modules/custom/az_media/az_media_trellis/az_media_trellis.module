@@ -23,10 +23,25 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
 }
 
 /**
- * Implements hook_preprocess_HOOK() for your custom block or entity.
+ * Implements hook_preprocess_HOOK() for media entities.
  */
 function az_media_trellis_preprocess_media(&$variables) {
   // Add a wrapper class to indicate this is a preview.
   $variables['content']['#prefix'] = '<div class="az-media-trellis-preview">';
   $variables['content']['#suffix'] = '</div>';
+
+  // Get the media entity object.
+  if (isset($variables['elements']['#media']) && $variables['elements']['#media'] instanceof \Drupal\media\Entity\Media) {
+    $media = $variables['elements']['#media'];
+
+    // Retrieve the value of the 'field_az_media_trellis_rec_id' field.
+    if ($media->hasField('field_az_media_trellis_rec_id') && !$media->get('field_az_media_trellis_rec_id')->isEmpty()) {
+      $rec_id_value = $media->get('field_az_media_trellis_rec_id')->value;
+
+      // Pass the value to the JavaScript library via drupalSettings.
+      $variables['#attached']['drupalSettings']['azMediaTrellis'] = [
+        'tfa_4' => $rec_id_value,
+      ];
+    }
+  }
 }
