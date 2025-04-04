@@ -96,7 +96,7 @@ class AZPublicationCrossrefForm extends FormBase {
           continue;
         }
         // @phpstan-ignore-next-line
-        $options[$pub->DOI] = ['publication' => $pub->citation];
+        $options[$pub->DOI] = ['publication' => check_markup($pub->citation, 'az_citation')];
       }
       // Show select options for publications to import.
       $form['publications'] = [
