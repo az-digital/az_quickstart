@@ -786,6 +786,6 @@ form.webform-submission-form {
 /* Fix when using inline image text wrap bulleted text needs more left padding
  * See https://github.com/az-digital/az_quickstart/pull/4195
  */
-div.align-left ~ ul, ol {
+.align-left ~ ul, ol {
   overflow: auto;
 }
