@@ -148,7 +148,12 @@ class AZPublicationCrossrefForm extends FormBase {
       $results = [];
       try {
         // Run crossref request.
-        $response = $this->httpClient->request('GET', $url, ['query' => ['query.bibliographic' => $query]]);
+        $response = $this->httpClient->request('GET', $url, [
+          'query' => [
+            'query.bibliographic' => $query,
+            'rows' => 10,
+          ],
+        ]);
         if ($response->getStatusCode() === 200) {
           $json = (string) $response->getBody();
           $json = json_decode($json);
