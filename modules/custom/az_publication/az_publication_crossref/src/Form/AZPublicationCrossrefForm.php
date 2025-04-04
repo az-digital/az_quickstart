@@ -190,7 +190,7 @@ class AZPublicationCrossrefForm extends FormBase {
       $storage['citation_data'] = [];
       foreach ($results as $result) {
         foreach ($flattens as $flatten) {
-          if (!empty($result->{$flatten} && is_array($result->{$flatten}))) {
+          if (!empty($result->{$flatten}) && is_array($result->{$flatten})) {
             $result->{$flatten} = reset($result->{$flatten});
           }
         }
