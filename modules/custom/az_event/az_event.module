@@ -122,13 +122,19 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         $rule_index = $event_dates[0]->getValue()['rrule'];
         /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
         $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($rule_index);
-        $recurr_rule = new Rule($smart_date_rule->getRule(), new \DateTime());
+        $start_date = (new \DateTime)->setTimestamp($smart_date_rule->get('start')[0]->getString());
+        $recurr_rule = new Rule($smart_date_rule->getRule(), $start_date);
 
-        $default_langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
-        if ($default_langcode !== 'en') {
-          // Use the site's default language if possible.
+        // Always set "until" to match the last occurrence's end date/time.
+        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $last_occurrence */
+        $last_occurrence = $event_dates[$number_of_occurrences - 1];
+        $recurr_rule->setUntil((new \DateTime)->setTimestamp($last_occurrence->get('end_value')->getString()));
+
+        // Use the event's language if possible.
+        $event_langcode = $entity->language()->getId();
+        if ($event_langcode !== 'en') {
           try {
-            $recurr_translator = new Translator($default_langcode);
+            $recurr_translator = new Translator($event_langcode);
             $recurr_text_transformer = new TextTransformer($recurr_translator);
           }
           catch (InvalidArgumentException $e) {
@@ -142,10 +148,6 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
         // Transform the recurrence rule to text.
         $recurrence_text = ucfirst($recurr_text_transformer->transform($recurr_rule));
-        if ($default_langcode === 'en') {
-          // Replace "times" with "occurrences" for consistency.
-          $recurrence_text = str_replace('time', 'occurrence', $recurrence_text);
-        }
 
         // Initialize the accordion body build array.
         $accordion_body = $build['field_az_event_date'];
@@ -175,7 +177,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#description' => $entity->field_az_body->value ?? '',
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
-                '#attributes' => ['class' => 'pb-1 mb-4'],
+                '#attributes' => ['class' => 'mb-card'],
               ];
             }
             $accordion_body[$item_index++] = $build['field_az_event_date'][$item->getName()];
@@ -194,7 +196,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         }
 
         // Replace/unset the items in the build array for the field.
-        $item_index = !empty($recurrence_text) ? 1 : 0;
+        $item_index = 0;
         if (isset($next_occurrence)) {
           $build['field_az_event_date'][$item_index] = $build['field_az_event_date'][$next_occurrence];
           $next_event_text = t("Next event");
@@ -202,9 +204,13 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           $build['field_az_event_date'][$item_index]['#suffix'] = '</div>';
           $item_index++;
           if (isset($add_to_calendar_button)) {
-            $build['field_az_event_date'][$item_index] = $add_to_calendar_button;
-            $item_index++;
+            $build['field_az_event_date'][$item_index++] = $add_to_calendar_button;
           }
+        }
+        if (!empty($recurrence_text)) {
+          $build['field_az_event_date'][$item_index++] = [
+            '#markup' => "<p class='mb-4'>{$recurrence_text}</p>",
+          ];
         }
         $build['field_az_event_date'][$item_index++] = [
           '#theme' => 'az_accordion',
@@ -217,11 +223,6 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         ];
         for ($i = $item_index; $i < $number_of_occurrences; $i++) {
           unset($build['field_az_event_date'][$i]);
-        }
-        if (!empty($recurrence_text)) {
-          $build['field_az_event_date'][0] = [
-            '#markup' => "<p>{$recurrence_text}</p>",
-          ];
         }
       }
       else {
