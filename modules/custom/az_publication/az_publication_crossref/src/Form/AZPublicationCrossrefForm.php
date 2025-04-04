@@ -77,7 +77,8 @@ class AZPublicationCrossrefForm extends FormBase {
     $form['query'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Search query'),
-      '#description' => $this->t('A string to search via the Crossref API.'),
+      '#placeholder' => $this->t('Any bibliographic information such as title, authors, journal, etc.'),
+      '#description' => $this->t('Enter a search string to search the Crossref publication database.'),
       '#required' => TRUE,
     ];
     $form['search'] = [
