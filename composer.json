@@ -194,6 +194,9 @@
             "drupal/menu_block": {
                 "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
             },
+            "drupal/media_migration": {
+                "D11 compatibility (3431903)": "https://git.drupalcode.org/project/media_migration/-/merge_requests/11.diff"
+            },
             "drupal/metatag": {
                 "MetatagManager uasort() TypeError (3503253)": "https://www.drupal.org/files/issues/2025-02-17/3503253-4.patch"
             },
@@ -201,6 +204,9 @@
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
                 "Using the XML Data Parser with a Predicate pulls in the final xml item regardless of if the predicate matches (2891964)": "https://www.drupal.org/files/issues/fix-ignored-predicate-2891964-2.patch"
+            },
+            "drupal/migrate_queue_importer": {
+                "D11 compatibility (3451207)": "https://www.drupal.org/files/issues/2024-06-02/migrate_queue_importer.2.1.x-dev.rector.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
