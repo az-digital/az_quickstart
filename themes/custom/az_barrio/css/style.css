@@ -722,7 +722,7 @@ form.webform-submission-form {
   * Alignment classes for block level elements (images, videos, blockquotes, etc.)
   */
   .align-left {
-    margin-right: 1.5em;
+    margin-right: 1em;
     margin-bottom: 0.7em;
     float: left;
   }
@@ -781,4 +781,11 @@ form.webform-submission-form {
  */
 .hide-contextual-links .contextual button {
   display: none;
+}
+
+/* Fix when using inline image text wrap bulleted text needs more left padding
+ * See https://github.com/az-digital/az_quickstart/pull/4195
+ */
+div.align-left ~ ul, ol {
+  overflow: auto;
 }
