@@ -162,7 +162,6 @@
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
-                "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2023-07-11/1461322-10-1-x-41.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2022-07-26/2552541-51.patch",
                 "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch",
