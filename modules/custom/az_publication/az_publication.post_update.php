@@ -22,7 +22,7 @@ function az_publication_post_update_remap_authors_to_have_role_assignments(&$san
 
   // Process nodes in batches.
   // Number of nodes to process per batch.
-  $limit = 50;
+  $limit = 20;
   $nids_slice = array_slice($sandbox['nids'], $sandbox['progress'], $limit);
   $nodes = Node::loadMultiple($nids_slice);
   $time = \Drupal::service('datetime.time');
