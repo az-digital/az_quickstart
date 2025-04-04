@@ -33,6 +33,22 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#return_value' => 'full-width-background',
     ];
 
+    $form['text_width'] = [
+      '#title' => $this->t('Text Width'),
+      '#type' => 'select',
+      '#default_value' => $config['text_width'] ?? 'full_width',
+      '#description' => $this->t('Determines the size of the text area.'),
+      '#options' => [
+        'full_width' => $this->t('Full Width'),
+        'content_width' => $this->t('Content Width'),
+      ],
+      '#states' => [
+        'invisible' => [
+          ':input[id="' . $full_width . '"]' => ['value' => 'checked'],
+        ],
+      ],
+    ];
+
     $form['ordering'] = [
       '#title' => $this->t('Image Order'),
       '#type' => 'select',
