@@ -16,7 +16,7 @@ use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
  */
 #[FieldFormatter(
   id: 'az_media_remote_trellis',
-  label: new TranslatableMarkup('Remote Media - Trellis'),
+  label: new TranslatableMarkup('Remote Media - Trellis Form'),
   field_types: [
     'string',
   ],
@@ -27,7 +27,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    * {@inheritdoc}
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/forms-a\.trellis\.arizona\.edu\/181\?tfa_4=/';
+    return '/^https:\/\/forms-a\.trellis\.arizona\.edu\/publish\//';
   }
 
   /**
@@ -35,8 +35,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    */
   public static function getValidUrlExampleStrings(): array {
     return [
-      // 'https://calendar.google.com/calendar/embed?src=[your-calendar-hash]',
-      'https://forms-a.trellis.arizona.edu/181?tfa_4=70152000001AJzRAAW',
+      'https://forms-a.trellis.arizona.edu/publish/118',
     ];
   }
 
@@ -48,7 +47,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
     $pattern = static::getUrlRegexPattern();
     preg_match_all($pattern, $url, $matches);
     if (!empty($matches[1][0])) {
-      return t('Trellis from @url', [
+      return t('Trellis Form at @url', [
         '@url' => $url,
       ]);
     }
@@ -92,6 +91,13 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
+      'url' => [
+        '#type' => 'string',
+        '#title' => $this->t('URL'),
+        '#size' => 255,
+        '#maxlength' => 255,
+        '#description' => $this->t('The URL of the Trellis form.'),
+      ],
       'width' => [
         '#type' => 'number',
         '#title' => $this->t('Width'),

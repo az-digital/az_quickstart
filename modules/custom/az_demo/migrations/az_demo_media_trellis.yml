@@ -27,6 +27,12 @@ source:
     -
       name: url
       selector: url
+    -
+      name: form_id
+      selector: form_id
+    -
+      name: rec_id
+      selector: rec_id
 
 destination:
   plugin: 'entity:media'
@@ -37,4 +43,6 @@ process:
     default_value: az_trellis
   name: name
   field_media_az_media_remote: url
+  field_az_media_trellis_form_id: form_id
+  field_az_media_trellis_rec_id: rec_id
   uuid: uuid
