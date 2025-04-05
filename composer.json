@@ -154,9 +154,6 @@
                 "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch",
                 "Fix The specified library bootstrap_barrio/messages does not exist issue (3471821)": "https://git.drupalcode.org/project/bootstrap_barrio/-/commit/a26e7af7c007aced43f0347553104434d11e3681.patch"
             },
-            "drupal/cas": {
-                "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
-            },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
