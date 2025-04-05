@@ -164,7 +164,7 @@
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2022-07-26/2552541-51.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://git.drupalcode.org/project/drupal/-/merge_requests/11740.diff",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2024-05-13/2766369-39.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
