@@ -189,7 +189,7 @@
             },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch",
-                "D11 compatibility (3431903)": "https://git.drupalcode.org/project/media_migration/-/merge_requests/11.diff"
+                "D11 compatibility (3431903)": "https://www.drupal.org/files/issues/2024-12-09/3431903-patch-10.patch"
             },
             "drupal/menu_block": {
                 "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
