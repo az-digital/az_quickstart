@@ -2,6 +2,7 @@ name: Arizona Quickstart
 type: profile
 description: 'The University of Arizona Quickstart Installation Profile'
 core_version_requirement: ^10 || ^11
+version: 2.14.x-dev
 
 distribution:
   name: Arizona Quickstart
