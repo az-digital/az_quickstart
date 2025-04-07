@@ -33,7 +33,9 @@
           <p class="mb-3">{{ 'Select your calendar type below:'|t }}</p>
           <div class="text-center">
           {% for link in links %}
+            {% if link.type_key in ['google', 'ics', 'yahoo', 'webOffice'] %}
               <a class="btn btn-hollow-primary btn-sm mb-1 calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link.type_name }}</a>
+            {% endif %}
           {% endfor %}
           </div>
         </div>
