@@ -152,10 +152,12 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         // Initialize the accordion body render array.
         $accordion_body = [
           '#theme' => 'field',
+          '#title' => 'Event Occurrences',
           '#label_display' => 'hidden',
           '#field_name' => 'field_az_event_date_accordion',
-          '#field_type' => 'smartdate',
-          '#formatter' => 'daterange_ap_style',
+          '#field_type' => 'text',
+          "#entity_type" => 'node',
+          "#bundle" => 'az_event',
           '#is_multiple' => 'true',
           '#cache' => $build['field_az_event_date']['#cache'],
         ];
