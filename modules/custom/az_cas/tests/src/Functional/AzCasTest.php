@@ -259,17 +259,17 @@ class AzCasTest extends QuickstartFunctionalTestBase {
       $config->get('advanced.connection_timeout')
     );
     $this->assertSession()->fieldValueEquals(
-      'general[login_link_enabled]',
+      'login_link_enabled',
       // This is the az_cas overridden value.
       $config->get('login_link_enabled')
     );
     $this->assertSession()->fieldValueEquals(
-      'general[login_link_label]',
+      'login_link_label',
       // This is the az_cas overridden value.
       $config->get('login_link_label')
     );
     $this->assertSession()->fieldValueEquals(
-      'general[login_success_message]',
+      'login_success_message',
       // This is the az_cas overridden value.
       $config->get('login_success_message')
     );
