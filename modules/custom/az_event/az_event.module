@@ -149,11 +149,16 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         // Transform the recurrence rule to text.
         $recurrence_text = ucfirst($recurr_text_transformer->transform($recurr_rule));
 
-        // Initialize the accordion body build array.
-        $accordion_body = $build['field_az_event_date'];
-        foreach ($entity->field_az_event_date as $item) {
-          unset($accordion_body[$item->getName()]);
-        }
+        // Initialize the accordion body render array.
+        $accordion_body = [
+          '#theme' => 'field',
+          '#label_display' => 'hidden',
+          '#field_name' => 'field_az_event_date_accordion',
+          '#field_type' => 'smartdate',
+          '#formatter' => 'daterange_ap_style',
+          '#is_multiple' => 'true',
+          '#cache' => $build['field_az_event_date']['#cache'],
+        ];
         $item_index = 0;
 
         // Add any upcoming occurrences to the accordion body.
@@ -195,14 +200,13 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           }
         }
 
-        // Replace/unset the items in the build array for the field.
+        // Replace/unset the items in the render array for the field.
         $item_index = 0;
         if (isset($next_occurrence)) {
           $build['field_az_event_date'][$item_index] = $build['field_az_event_date'][$next_occurrence];
           $next_event_text = t("Next event");
           $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-2'><strong>{$next_event_text}:</strong> ";
-          $build['field_az_event_date'][$item_index]['#suffix'] = '</div>';
-          $item_index++;
+          $build['field_az_event_date'][$item_index++]['#suffix'] = '</div>';
           if (isset($add_to_calendar_button)) {
             $build['field_az_event_date'][$item_index++] = $add_to_calendar_button;
           }
