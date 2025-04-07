@@ -4,6 +4,10 @@
 ## Usage: install
 ## Example: ddev install
 
+# Install composer-drupal-lenient globally.
+composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
+composer global require mglaman/composer-drupal-lenient
+
 # Use the matching scaffolding branch if available.
 BRANCH_NAME=$(git -C /usr/local/quickstart-install-profile rev-parse --abbrev-ref HEAD); if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $BRANCH_NAME | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$BRANCH_NAME"; else SCAFFOLD_BRANCH="main"; fi; git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git /var/www/html/azqs
 mv /var/www/html/azqs/* /var/www/html
