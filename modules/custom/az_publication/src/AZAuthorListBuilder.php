@@ -4,7 +4,6 @@ namespace Drupal\az_publication;
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityListBuilder;
-use Drupal\Core\Entity\Query\QueryInterface;
 use Drupal\Core\Link;
 
 /**
