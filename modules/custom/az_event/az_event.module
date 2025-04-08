@@ -34,6 +34,14 @@ function az_event_theme($existing, $type, $theme, $path) {
       ],
       'render element' => 'children',
     ],
+    'az_event_view_occurrences_button' => [
+      'variables' => [
+        'title' => NULL,
+        'items' => NULL,
+        'modal' => NULL,
+        'attributes' => NULL,
+      ],
+    ],
     'field__node__az_event' => [
       'template' => 'field--node--az-event',
       'base hook' => 'field',
@@ -150,17 +158,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         $recurrence_text = ucfirst($recurr_text_transformer->transform($recurr_rule));
 
         // Initialize the accordion body render array.
-        $accordion_body = [
-          '#theme' => 'field',
-          '#title' => 'Event Occurrences',
-          '#label_display' => 'hidden',
-          '#field_name' => 'field_az_event_date_accordion',
-          '#field_type' => 'text',
-          "#entity_type" => 'node',
-          "#bundle" => 'az_event',
-          '#is_multiple' => 'true',
-          '#cache' => $build['field_az_event_date']['#cache'],
-        ];
+        $occurrences_modal = [];
         $item_index = 0;
 
         // Add any upcoming occurrences to the accordion body.
@@ -172,7 +170,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
             if (!isset($next_occurrence)) {
               $next_occurrence = $item->getName();
               $upcoming_events_heading = t("Upcoming Events");
-              $accordion_body[$item_index++] = [
+              $occurrences_modal[$item_index++] = [
                 '#markup' => "<h3 class='h5 mt-0'>{$upcoming_events_heading}</h3>",
               ];
               // Add to Calendar button for an event with multiple occurrences.
@@ -184,21 +182,21 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#description' => $entity->field_az_body->value ?? '',
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
-                '#attributes' => ['class' => 'mb-card'],
+                '#attributes' => ['class' => 'mb-2'],
               ];
             }
-            $accordion_body[$item_index++] = $build['field_az_event_date'][$item->getName()];
+            $occurrences_modal[$item_index++] = $build['field_az_event_date'][$item->getName()];
           }
         }
 
         // Add any past occurrences to the accordion body.
         if (!isset($next_occurrence) || $next_occurrence !== 0) {
           $past_events_heading = t("Past Events");
-          $accordion_body[$item_index++] = [
+          $occurrences_modal[$item_index++] = [
             '#markup' => "<h3 class='h5" . (isset($next_occurrence) ? '' : ' mt-0') . "'>{$past_events_heading}</h3>",
           ];
           for ($i = 0; $i < ($next_occurrence ?? $number_of_occurrences); $i++) {
-            $accordion_body[$item_index++] = $build['field_az_event_date'][$i];
+            $occurrences_modal[$item_index++] = $build['field_az_event_date'][$i];
           }
         }
 
@@ -209,23 +207,21 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           $next_event_text = t("Next event");
           $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-2'><strong>{$next_event_text}:</strong> ";
           $build['field_az_event_date'][$item_index++]['#suffix'] = '</div>';
-          if (isset($add_to_calendar_button)) {
-            $build['field_az_event_date'][$item_index++] = $add_to_calendar_button;
-          }
         }
         if (!empty($recurrence_text)) {
           $build['field_az_event_date'][$item_index++] = [
-            '#markup' => "<p class='mb-4'>{$recurrence_text}</p>",
+            '#markup' => "<p class='mb-3'>{$recurrence_text}</p>",
           ];
         }
+        if (isset($next_occurrence) && isset($add_to_calendar_button)) {
+          $build['field_az_event_date'][$item_index++] = $add_to_calendar_button;
+        }
         $build['field_az_event_date'][$item_index++] = [
-          '#theme' => 'az_accordion',
-          '#title' => t("View all occurrences"),
-          '#body' => $accordion_body,
-          '#attributes' => ['class' => 'accordion'],
-          '#accordion_item_id' => "event-" . $entity->id(),
-          '#collapsed' => 'collapse',
-          '#aria_expanded' => 'false',
+          '#theme' => 'az_event_view_occurrences_button',
+          '#title' => $entity->getTitle(),
+          '#items' => $occurrences_modal,
+          '#modal' => Html::getUniqueId('occurrences-modal'),
+          '#attributes' => ['class' => 'mb-2'],
         ];
         for ($i = $item_index; $i < $number_of_occurrences; $i++) {
           unset($build['field_az_event_date'][$i]);
