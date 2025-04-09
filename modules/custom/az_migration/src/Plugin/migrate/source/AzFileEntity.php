@@ -2,7 +2,6 @@
 
 namespace Drupal\az_migration\Plugin\migrate\source;
 
-use InvalidArgumentException;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\State\StateInterface;
@@ -110,7 +109,7 @@ class AzFileEntity extends FieldableEntity {
     $db = $connection ?? $this->getDatabase();
 
     if (!($db instanceof Connection)) {
-      throw new InvalidArgumentException('Expected instance of \Drupal\Core\Database\Connection.');
+      throw new \InvalidArgumentException('Expected instance of \Drupal\Core\Database\Connection.');
     }
 
     return $this->dbIsSqLite($db)
@@ -199,7 +198,7 @@ class AzFileEntity extends FieldableEntity {
   protected function getFileEntityBaseQuery($connection = NULL, bool $distinct = TRUE) {
     $db = $connection ?? $this->getDatabase();
     if (!($db instanceof Connection)) {
-      throw new InvalidArgumentException('Expected instance of \\Drupal\\Core\\Database\\Connection.');
+      throw new \InvalidArgumentException('Expected instance of \\Drupal\\Core\\Database\\Connection.');
     }
 
     $options = [
@@ -240,7 +239,7 @@ class AzFileEntity extends FieldableEntity {
   protected function getSchemeExpression($connection = NULL) {
     $db = $connection ?? $this->getDatabase();
     if (!($db instanceof Connection)) {
-      throw new InvalidArgumentException('Expected instance of \\Drupal\\Core\\Database\\Connection.');
+      throw new \InvalidArgumentException('Expected instance of \\Drupal\\Core\\Database\\Connection.');
     }
 
     return $this->dbIsSqLite($db)
