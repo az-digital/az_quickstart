@@ -1,5 +1,5 @@
 name: az_quickstart
-recipe: drupal10
+recipe: drupal11
 config:
   php: '8.3'
   via: apache:2.4
@@ -19,16 +19,16 @@ services:
         - '3306'
       environment:
         MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: 'true'
-        MARIADB_DATABASE: drupal10
-        MYSQL_DATABASE: drupal10
-        MARIADB_USER: drupal10
-        MARIADB_PASSWORD: drupal10
+        MARIADB_DATABASE: drupal11
+        MYSQL_DATABASE: drupal11
+        MARIADB_USER: drupal11
+        MARIADB_PASSWORD: drupal11
   appserver:
     config:
       php: .vscode/php.ini
     overrides:
       environment:
-        SIMPLETEST_DB: 'mysql://drupal10:drupal10@database/drupal10'
+        SIMPLETEST_DB: 'mysql://drupal11:drupal11@database/drupal11'
         SIMPLETEST_BASE_URL: 'http://appserver'
         MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","goog:chromeOptions":{"args":["--disable-gpu","--disable-dev-shm-usage","--headless","--no-sandbox"],"w3c":false}},"http://chromedriver:4444/wd/hub"]'
         XDEBUG_MODE: debug
@@ -63,7 +63,7 @@ tooling:
   install:
     service: appserver
     cmd:
-      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://drupal10:drupal10@database:3306/drupal10 -y --verbose
+      - /app/vendor/bin/drush --root=/app/web site:install --account-mail=noreply@email.arizona.edu --account-name=azadmin --account-pass=azadmin2025 --db-url=mysql://drupal11:drupal11@database:3306/drupal11 -y --verbose
       - /app/vendor/bin/drush --root=/app/web config:set -y az_cas.settings disable_login_form 0
       - /app/vendor/bin/drush --root=/app/web cache:rebuild
   # Enable theme debugging.

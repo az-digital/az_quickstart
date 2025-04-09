@@ -35,6 +35,10 @@ jobs:
           else
             echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
           fi
+      - name: Install composer-drupal-lenient globally
+        run: |
+          composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
+          composer global require mglaman/composer-drupal-lenient
       - name: Clone scaffolding repo
         uses: actions/checkout@v4
         with:
@@ -69,6 +73,10 @@ jobs:
       - name: Find the pull request source branch name
         if: ${{ github.event_name == 'pull_request' }}
         run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+      - name: Install composer-drupal-lenient globally
+        run: |
+          composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
+          composer global require mglaman/composer-drupal-lenient
       - name: Install dependencies
         run: |
           if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=main; fi

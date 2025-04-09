@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "php": ">=8.1",
+        "php": ">=8.3",
         "az-digital/arizona-bootstrap": "2.0.27",
         "az-digital/az-icons": "1.0.2",
         "citation-style-language/locales": "0.0.26",
@@ -48,7 +48,7 @@
         "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.3",
-        "drupal/cas": "2.3.2",
+        "drupal/cas": "3.0.0-beta4",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.0.12",
         "drupal/ckeditor_indentblock": "1.1.0",
@@ -62,7 +62,7 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha4",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "10.4.5",
+        "drupal/core-recommended": "11.1.6",
         "drupal/crop": "2.4.0",
         "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.2",
@@ -71,7 +71,7 @@
         "drupal/embed": "1.10.0",
         "drupal/entity_embed": "1.7.0",
         "drupal/environment_indicator": "4.0.21",
-        "drupal/exclude_node_title": "1.4.0",
+        "drupal/exclude_node_title": "2.0.0-alpha1",
         "drupal/externalauth": "2.0.7",
         "drupal/extlink": "2.0.4",
         "drupal/field_group": "3.6.0",
@@ -122,9 +122,9 @@
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
         "drupal/user_expire": "2.1.0",
-        "drupal/webform": "6.2.9",
+        "drupal/webform": "6.3.0-beta2",
         "drupal/workbench_access": "2.0.3",
-        "drupal/xmlsitemap": "1.5.0",
+        "drupal/xmlsitemap": "2.0.0-beta1",
         "jjj/chosen": "2.2.1",
         "kevinrob/guzzle-cache-middleware": "6.0.0",
         "npm-asset/blazy": "1.8.2",
@@ -154,18 +154,14 @@
                 "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch",
                 "Fix The specified library bootstrap_barrio/messages does not exist issue (3471821)": "https://git.drupalcode.org/project/bootstrap_barrio/-/commit/a26e7af7c007aced43f0347553104434d11e3681.patch"
             },
-            "drupal/cas": {
-                "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
-            },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
-                "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2023-07-11/1461322-10-1-x-41.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2022-07-26/2552541-51.patch",
-                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://git.drupalcode.org/project/drupal/-/merge_requests/11740.diff",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2024-05-13/2766369-39.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
@@ -198,6 +194,9 @@
                 "XML namespacing issue (2933531)": "https://www.drupal.org/files/issues/2019-08-22/register_namespaces-2933531-7.patch",
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
                 "Using the XML Data Parser with a Predicate pulls in the final xml item regardless of if the predicate matches (2891964)": "https://www.drupal.org/files/issues/fix-ignored-predicate-2891964-2.patch"
+            },
+            "drupal/migrate_queue_importer": {
+                "D11 compatibility (3451207)": "https://www.drupal.org/files/issues/2024-06-02/migrate_queue_importer.2.1.x-dev.rector.patch"
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
