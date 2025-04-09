@@ -8,9 +8,9 @@
 #}
 <div{{ attributes }}>
   {# Button trigger modal #}
-  <button type="button" class="btn btn-hollow-primary btn-sm text-capitalize d-flex" data-toggle="modal" data-target="#{{ modal }}">
+  <button type="button" class="btn btn-hollow-primary btn-sm d-flex" data-toggle="modal" data-target="#{{ modal }}">
     <span class="material-icons-sharp mr-2">event_repeat</span>
-    <span class="my-auto">{{ 'View All Occurrences'|t }}</span>
+    <span class="my-auto" style="text-transform: none">{{ 'View All Occurrences'|t }}</span>
   </button>
 
   {# Modal #}

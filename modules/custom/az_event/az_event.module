@@ -125,50 +125,62 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       /** @var \Drupal\Core\Field\FieldItemList $event_dates */
       $event_dates = $entity->field_az_event_date;
       $number_of_occurrences = $event_dates->count();
-      if ($number_of_occurrences > 1) {
-        // Prepare the recurrence description text using the Recurr library.
-        $rule_index = $event_dates[0]->getValue()['rrule'];
-        /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
-        $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($rule_index);
-        $start_date = (new \DateTime)->setTimestamp($smart_date_rule->get('start')[0]->getString());
-        $recurr_rule = new Rule($smart_date_rule->getRule(), $start_date);
-
-        // Always set "until" to match the last occurrence's end date/time.
-        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $last_occurrence */
-        $last_occurrence = $event_dates[$number_of_occurrences - 1];
-        $recurr_rule->setUntil((new \DateTime)->setTimestamp($last_occurrence->get('end_value')->getString()));
-
-        // Use the event's language if possible.
-        $event_langcode = $entity->language()->getId();
-        if ($event_langcode !== 'en') {
-          try {
-            $recurr_translator = new Translator($event_langcode);
-            $recurr_text_transformer = new TextTransformer($recurr_translator);
-          }
-          catch (InvalidArgumentException $e) {
-            // No translation available for this langcode: fall back to 'en'.
-            $recurr_text_transformer = new TextTransformer();
+      if ($number_of_occurrences <= 1) {
+        // Add to Calendar button for an event with a single occurrence.
+        foreach ($entity->field_az_event_date as $item) {
+          if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
+            $build['field_az_event_date'][] = [
+              '#theme' => 'az_event_calendar_add_button',
+              '#title' => $entity->getTitle(),
+              '#start_date' => $item->value ?? '',
+              '#end_date' => $item->end_value ?? '',
+              '#description' => $entity->field_az_body->value ?? '',
+              '#location' => $entity->field_az_location->title ?? '',
+              '#modal' => Html::getUniqueId('calendar-link-modal'),
+              '#attributes' => ['class' => 'mt-3'],
+            ];
+            break;
           }
         }
-        else {
-          $recurr_text_transformer = new TextTransformer();
+      }
+      else {
+        // Create occurrence_items array and sort items by start value.
+        $occurrence_items = $event_dates->getValue();
+        $event_rrules = [];
+        foreach ($occurrence_items as $key => $value) {
+          $occurrence_items[$key]['render'] = $build['field_az_event_date'][$key];
+          // Build an array of recurrence rules used by the event.
+          if (isset($occurrence_items[$key]['rrule']) && !in_array($occurrence_items[$key]['rrule'], $event_rrules)) {
+            $event_rrules[] = $occurrence_items[$key]['rrule'];
+          }
+        }
+        usort($occurrence_items, function ($a, $b) {
+          if (!empty($a['value']) && !empty($b['value'])) {
+            return $a['value'] <=> $b['value'];
+          }
+        });
+
+        // If there is only 1 recurrence, prepare the recurrence text.
+        $recurrence_text = '';
+        if (count($event_rrules) === 1) {
+          $recurrence_text = az_event_get_recurrence_text(
+            $event_rrules[0],
+            $occurrence_items[$number_of_occurrences - 1],
+            $entity->language()->getId(),
+          );
         }
 
-        // Transform the recurrence rule to text.
-        $recurrence_text = ucfirst($recurr_text_transformer->transform($recurr_rule));
-
-        // Initialize the accordion body render array.
+        // Initialize the occurrences modal render array.
         $occurrences_modal = [];
         $item_index = 0;
 
-        // Add any upcoming occurrences to the accordion body.
+        // Add any upcoming occurrences to the modal render array.
         $next_occurrence = NULL;
         $add_to_calendar_button = NULL;
-        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $item */
-        foreach ($entity->field_az_event_date as $item) {
-          if (!empty($item->end_value) && $item->end_value > $now) {
+        foreach ($occurrence_items as $key => $item) {
+          if (!empty($item['end_value']) && $item['end_value'] > $now) {
             if (!isset($next_occurrence)) {
-              $next_occurrence = $item->getName();
+              $next_occurrence = $key;
               $upcoming_events_heading = t("Upcoming Events");
               $occurrences_modal[$item_index++] = [
                 '#markup' => "<h3 class='h5 mt-0'>{$upcoming_events_heading}</h3>",
@@ -177,35 +189,35 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               $add_to_calendar_button = [
                 '#theme' => 'az_event_calendar_add_button',
                 '#title' => $entity->getTitle(),
-                '#start_date' => $item->value ?? '',
-                '#end_date' => $item->end_value ?? '',
+                '#start_date' => $item['value'] ?? '',
+                '#end_date' => $item['end_value'] ?? '',
                 '#description' => $entity->field_az_body->value ?? '',
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
               ];
             }
-            $occurrences_modal[$item_index++] = $build['field_az_event_date'][$item->getName()];
+            $occurrences_modal[$item_index++] = $occurrence_items[$key]['render'];
           }
         }
 
-        // Add any past occurrences to the accordion body.
+        // Add any past occurrences to the modal render array.
         if (!isset($next_occurrence) || $next_occurrence !== 0) {
           $past_events_heading = t("Past Events");
           $occurrences_modal[$item_index++] = [
             '#markup' => "<h3 class='h5" . (isset($next_occurrence) ? '' : ' mt-0') . "'>{$past_events_heading}</h3>",
           ];
           for ($i = 0; $i < ($next_occurrence ?? $number_of_occurrences); $i++) {
-            $occurrences_modal[$item_index++] = $build['field_az_event_date'][$i];
+            $occurrences_modal[$item_index++] = $occurrence_items[$i]['render'];
           }
         }
 
-        // Replace/unset the items in the render array for the field.
+        // Replace/unset the items in the field_az_event_date render array.
         $item_index = 0;
         if (isset($next_occurrence)) {
-          $build['field_az_event_date'][$item_index] = $build['field_az_event_date'][$next_occurrence];
+          $build['field_az_event_date'][$item_index] = $occurrence_items[$next_occurrence]['render'];
           $next_event_text = t("Next event");
-          $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-2'><strong>{$next_event_text}:</strong> ";
+          $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-" . (empty($recurrence_text) ? '3' : '2') . "'><strong>{$next_event_text}:</strong> ";
           $build['field_az_event_date'][$item_index++]['#suffix'] = '</div>';
         }
         if (!empty($recurrence_text)) {
@@ -227,27 +239,52 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           unset($build['field_az_event_date'][$i]);
         }
       }
-      else {
-        // Add to Calendar button for an event with a single occurrence.
-        foreach ($entity->field_az_event_date as $item) {
-          if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
-            $build['field_az_event_date'][] = [
-              '#theme' => 'az_event_calendar_add_button',
-              '#title' => $entity->getTitle(),
-              '#start_date' => $item->value ?? '',
-              '#end_date' => $item->end_value ?? '',
-              '#description' => $entity->field_az_body->value ?? '',
-              '#location' => $entity->field_az_location->title ?? '',
-              '#modal' => Html::getUniqueId('calendar-link-modal'),
-              '#attributes' => ['class' => 'mt-3'],
-            ];
-            break;
-          }
-        }
-      }
     }
   }
+}
 
+/**
+ * Returns human-readable description of a Smart Date recurrence rule.
+ *
+ * @param string $rule_index
+ *   The index of the Smart Date recurrence rule.
+ * @param array $last_occurrence
+ *   The last chronological event occurrence (may not be in the recurrence).
+ * @param string $event_langcode
+ *   The langcode of the event to which the recurrence belongs.
+ *
+ * @return string
+ *   A text description of the recurrence.
+ */
+function az_event_get_recurrence_text(string $rule_index, array $last_occurrence, string $event_langcode) {
+  $recurrence_text = '';
+
+  /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
+  $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($rule_index);
+  $start_date = (new \DateTime)->setTimestamp($smart_date_rule->get('start')[0]->getString());
+  $recurr_rule = new Rule($smart_date_rule->getRule(), $start_date);
+
+  // Always set "until" to match the last occurrence's end date/time.
+  $recurr_rule->setUntil((new \DateTime)->setTimestamp($last_occurrence['end_value']));
+
+  // Use the event's language if possible.
+  if ($event_langcode !== 'en') {
+    try {
+      $recurr_translator = new Translator($event_langcode);
+      $recurr_text_transformer = new TextTransformer($recurr_translator);
+    }
+    catch (InvalidArgumentException $e) {
+      // No translation available for this langcode: fall back to 'en'.
+      $recurr_text_transformer = new TextTransformer();
+    }
+  }
+  else {
+    $recurr_text_transformer = new TextTransformer();
+  }
+
+  // Transform the recurrence rule to text.
+  $recurrence_text = ucfirst($recurr_text_transformer->transform($recurr_rule));
+  return $recurrence_text;
 }
 
 /**
