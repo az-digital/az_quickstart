@@ -1,0 +1,49 @@
+id: az_person_categories_secondary
+label: Person Categories Secondary
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: d7_taxonomy_term
+  bundle: uaqs_person_category_secondary
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_person_categories_secondary
+
+process:
+  tid: tid
+  vid:
+    plugin: default_value
+    default_value: az_person_categories_secondary
+
+  name: name
+  weight: weight
+
+  'description/value': description
+  'description/format': format
+
+  # Only attempt to stub real (non-zero) parents.
+  parent_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: parent
+    -
+      plugin: migmag_lookup
+      migration: az_person_categories_secondary
+
+  parent:
+    plugin: default_value
+    default_value: 0
+    source: '@parent_id'
+
+  changed: timestamp
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_person

@@ -1,0 +1,9 @@
+status: 1
+pattern: '[node:field_az_subject_code] [node:field_az_catalog_number] [node:field_az_course_title]'
+escape: false
+preserve_titles: false
+dependencies:
+  config:
+    - node.type.az_course
+save: 0
+chunk: '50'

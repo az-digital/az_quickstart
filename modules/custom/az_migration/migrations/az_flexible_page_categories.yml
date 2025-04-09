@@ -1,0 +1,48 @@
+id: az_flexible_page_categories
+label: Flexible Page Categories
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: d7_taxonomy_term
+  bundle: uaqs_flexible_categories
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_page_categories
+
+process:
+  vid:
+    plugin: default_value
+    default_value: az_page_categories
+
+  name: name
+  weight: weight
+
+  'description/value': description
+  'description/format': format
+
+  # Only attempt to stub real (non-zero) parents.
+  parent_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: parent
+    -
+      plugin: migmag_lookup
+      migration: az_flexible_page_categories
+
+  parent:
+    plugin: default_value
+    default_value: 0
+    source: '@parent_id'
+
+  changed: timestamp
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_person

@@ -1,0 +1,205 @@
+id: az_publication_bibtex_import
+label: AZ Quickstart Publication BibTeX Import
+migration_tags:
+  - Publications
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: az_bibtex
+  urls: []
+  ids:
+    citation_key:
+      type: string
+  fields:
+    - name: _type
+      selector: _type
+    - name: citation_key
+      selector: citation-key
+    - name: title
+      selector: title
+    - name: author
+      selector: author
+    - name: editor
+      selector: editor
+    - name: publisher
+      selector: publisher
+    - name: institution
+      selector: institution
+    - name: school
+      selector: school
+    - name: location
+      selector: location
+    - name: volume
+      selector: volume
+    - name: pages
+      selector: pages
+    - name: number
+      selector: number
+    - name: booktitle
+      selector: booktitle
+    - name: journaltitle
+      selector: journaltitle
+    - name: journal
+      selector: journal
+    - name: annotation
+      selector: annotation
+    - name: abstract
+      selector: abstract
+    - name: url
+      selector: url
+    - name: doi
+      selector: doi
+    - name: issn
+      selector: issn
+    - name: isbn
+      selector: isbn
+    - name: pmid
+      selector: pmid
+    - name: pmcid
+      selector: pmcid
+    - name: version
+      selector: version
+    - name: datetype
+      selector: _date_type
+    - name: date
+      selector: _date
+process:
+  type:
+    plugin: default_value
+    default_value: az_publication
+  field_az_publication_mapped_type/0/target_id:
+    - plugin: static_map
+      source: _type
+      map:
+        article: az_article_journal
+        book: az_book
+        booklet: az_pamphlet
+        collection: az_collection
+        conference: az_paper_conference
+        inbook: az_book
+        incollection: az_entry
+        inproceedings: az_paper_conference
+        manual: az_pamphlet
+        mastersthesis: az_thesis
+        misc: az_post
+        online: az_webpage
+        patent: az_patent
+        periodical: az_periodical
+        phdthesis: az_thesis
+        proceedings: az_paper_conference
+        report: az_report
+        techreport: az_report
+        thesis: az_thesis
+        unpublished: az_manuscript
+      default_value: az_article_journal
+  title: title
+  field_az_publication_date_type: datetype
+  field_az_publication_date:
+    plugin: format_date
+    from_format: Y-m-d
+    to_format: Y-m-d
+    from_timezone: UTC
+    source: date
+  field_az_publication_container:
+    plugin: null_coalesce
+    source:
+      - booktitle
+      - journaltitle
+      - journal
+  field_az_publication_abstract/value:
+    plugin: null_coalesce
+    source:
+      - abstract
+      - annotation
+  field_az_publication_abstract/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_publication_location: location
+  field_az_publication_publisher:
+    plugin: null_coalesce
+    source:
+      - publisher
+      - institution
+      - school
+  field_az_publication_page: pages
+  field_az_publication_link/uri: url
+  field_az_publication_doi: doi
+  field_az_publication_issn: issn
+  field_az_publication_isbn: isbn
+  field_az_publication_pmid: pmid
+  field_az_publication_pmcid: pmcid
+  field_az_publication_volume: volume
+  field_az_publication_issue: number
+  field_az_publication_version: version
+  authors:
+    plugin: sub_process
+    source: author
+    process:
+      fullname:
+        - plugin: callback
+          callable: array_filter
+          source:
+            - first
+            - von
+            - last
+            - jr
+        - plugin: concat
+          delimiter: ' '
+      target_id:
+        plugin: entity_generate
+        source: '@fullname'
+        value_key: name
+        ignore_case: true
+        bundle: 1
+        bundle_key: status
+        entity_type: az_author
+        values:
+          field_az_author_fname: first
+          field_az_author_nondrop_particle: von
+          field_az_author_lname: last
+          field_az_author_suffix: jr
+      role:
+        plugin: default_value
+        default_value: author
+  editors:
+    plugin: sub_process
+    source: editor
+    process:
+      fullname:
+        - plugin: callback
+          callable: array_filter
+          source:
+            - first
+            - von
+            - last
+            - jr
+        - plugin: concat
+          delimiter: ' '
+      target_id:
+        plugin: entity_generate
+        source: '@fullname'
+        value_key: name
+        ignore_case: true
+        bundle: 1
+        bundle_key: status
+        entity_type: az_author
+        values:
+          field_az_author_fname: first
+          field_az_author_nondrop_particle: von
+          field_az_author_lname: last
+          field_az_author_suffix: jr
+      role:
+        plugin: default_value
+        default_value: editor
+  field_az_contributors:
+    plugin: merge
+    source:
+      - '@authors'
+      - '@editors'
+destination:
+  plugin: entity:node
+  bundle: az_publication
+dependencies:
+  enforced:
+    module:
+      - az_publication

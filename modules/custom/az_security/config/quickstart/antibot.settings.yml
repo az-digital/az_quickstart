@@ -1,8 +1,8 @@
 form_ids:
-  - 'comment_*'
+  - comment_*
   - user_login_form
   - user_pass
   - user_register_form
-  - 'contact_*'
-  - 'webform_submission_*_add_form'
+  - contact_message_*
+  - webform_submission_*_add_form
 show_form_ids: false

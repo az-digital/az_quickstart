@@ -6,7 +6,7 @@
  * of these @include files will be combined into a single file.
  */
 
-/* For structuring header utilities*/
+/* For structuring header utilities */
 header#header_arizona {
   min-height: 10px;
 }
@@ -30,9 +30,15 @@ html.sticky-footer #main-wrapper {
   flex: 1 0 auto;
   width: 100%;
 }
+
 /* Footer Social Media Icons */
 .az-icon-spacing::before {
   margin-right:  .4rem;
+}
+
+/* Footer Nav */
+#footer_sub .nav-utility {
+  line-height: 1.25;
 }
 
 /* Correct `inline-block` display not defined in IE 8/9. */
@@ -54,6 +60,11 @@ audio:not([controls]) {
 /* Address styling not present in IE 8/9. */
 [hidden] {
   display: none;
+}
+
+/* Temporary citation style. Will be removed. */
+.node--view-mode-full .csl-entry {
+  margin-bottom: 1.2em;
 }
 
 /**
@@ -149,6 +160,10 @@ span.field-label {
   padding: 0 1em 0 0;
 }
 
+.trailing-colon::after {
+  content: ':';
+}
+
 /**
  * "More" links.
  */
@@ -195,6 +210,27 @@ span.field-label {
 /* The current page's list item. */
 .pager-current {
   font-weight: bold;
+}
+
+/* On mobile, limit pager number items and hide previous/next buttons. */
+@media screen and (max-width: 576px) {
+  .hide-pager-item-mobile {
+    display: none;
+  }
+}
+
+/* Match ellipsis item styling to Bootstrap .page-link styles. */
+.pager__item--ellipsis {
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+
+/* Add this class to a view display to add a top margin to the pager. */
+.add-pager-top-margin > nav:has(.pagination) {
+  margin-top: 1rem;
 }
 
 /**
@@ -399,7 +435,7 @@ padding: 0.625rem .75rem;
   height: 43px;
 }
 
-.search-block-form .input-group-append button#edit-submit {
+.az-search-block form.search-block-form .input-group .input-group-append button {
   font-size: 20px;
   color: #8B0015;
   background-color: #ffffff;
@@ -407,8 +443,8 @@ padding: 0.625rem .75rem;
   padding: 0 8px;
 }
 
-form.search-block-form .input-group .input-group-append button#edit-submit:hover,
-form.search-block-form .input-group .input-group-append button#edit-submit:focus {
+.az-search-block form.search-block-form .input-group .input-group-append button:hover,
+.az-search-block form.search-block-form .input-group .input-group-append button:focus {
     background-color: #8B0015;
     color: #ffffff;
 }
@@ -509,28 +545,23 @@ a.nolink + ul .sf-clone-parent {
   background: none 0 0 scroll no-repeat transparent;
 }
 
-/* SIDE MENUS */
-.sidebar ul.menu {
-  list-style: none outside none;
-  padding: 0;
-  margin: 0;
+/* Styling for full-width regions and paragraphs. */
+.full-width-background,
+.region-alert .paragraph,
+.region-content-featured .paragraph,
+.region-full-width-content-bottom .paragraph,
+.region-az-page-bottom .paragraph {
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
 }
-.sidebar ul.menu li {
-  list-style: none outside none;
-  padding: 0;
-  margin: 0;
-  display: block;
-}
-.sidebar ul.menu li > a,
-.sidebar ul.menu li > a:link,
-.sidebar ul.menu li > a:visited {
-  position: relative;
-  padding: 10px 16px;
-  padding: 0.625rem 1rem;
-  text-decoration: none;
-  font-weight: normal;
-  display: block;
-  color: #333;
+.region .az-full-width-row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
 .region-sidebar-first .block,
@@ -660,6 +691,15 @@ fieldset.collapsed {
   max-width: 100%;
 }
 
+/* Webform field labels */
+form.webform-submission-form {
+  label:not(.form-check-label) {
+    font-size: 18px;
+    font-weight: 700;
+  }
+}
+
+
 .align-left {
   float: none;
 }
@@ -670,6 +710,8 @@ fieldset.collapsed {
   margin-left: auto;
   margin-right: auto;
 }
+
+/* Field overrides */
 .field--type-image img,
 .field--name-field-user-picture img {
   margin: initial;
@@ -708,11 +750,13 @@ fieldset.collapsed {
 /* end Bootstrap Barrio image field styles */
 
 @media (min-width: 768px) {
-  #content .form-item .form-select,
-  #content .form-item .form-email,
-  #content .form-item .form-file,
-  #content .form-item .form-number,
-  #content .form-item .form-text {
+  #content .form-select,
+  #content .form-email,
+  #content .form-file,
+  #content .form-number,
+  #content .form-tel,
+  #content input[type="text"].form-control,
+  #content .webform-signature-pad .button {
     width: initial;
     max-width: 100%;
   }
@@ -732,3 +776,9 @@ fieldset.collapsed {
   }
 }
 
+/* Add ability to hide contextual links:
+ * See https://github.com/az-digital/az_quickstart/pull/2228
+ */
+.hide-contextual-links .contextual button {
+  display: none;
+}

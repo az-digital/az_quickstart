@@ -6,28 +6,85 @@ dependencies:
     - field.field.media.az_image.field_az_caption
     - field.field.media.az_image.field_az_credit
     - field.field.media.az_image.field_media_az_image
-    - image.style.thumbnail
+    - image.style.az_thumbnail
     - media.type.az_image
   module:
+    - field_group
     - image
+third_party_settings:
+  field_group:
+    group_content:
+      children:
+        - group_row
+      label: Content
+      parent_name: ''
+      region: hidden
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: ''
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_row:
+      children: {  }
+      label: 'Image Row'
+      parent_name: group_content
+      region: hidden
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: row
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_caption:
+      children: {  }
+      label: 'Caption Row'
+      parent_name: ''
+      region: hidden
+      weight: 8
+      format_type: html_element
+      format_settings:
+        classes: row
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
 id: media.az_image.az_thumbnail
 targetEntityType: media
 bundle: az_image
 mode: az_thumbnail
 content:
-  thumbnail:
+  field_media_az_image:
     type: image
+    label: visually_hidden
+    settings:
+      image_link: ''
+      image_style: az_thumbnail
+      image_loading:
+        attribute: lazy
+    third_party_settings: {  }
     weight: 0
     region: content
-    label: hidden
-    settings:
-      image_style: thumbnail
-      image_link: ''
-    third_party_settings: {  }
 hidden:
   created: true
   field_az_caption: true
   field_az_credit: true
-  field_media_az_image: true
   name: true
+  thumbnail: true
   uid: true

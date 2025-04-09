@@ -2,9 +2,12 @@
 
 namespace Drupal\az_core\Plugin\ConfigProvider;
 
-use Drupal\config_provider\Plugin\ConfigProviderBase;
+use Drupal\Component\Diff\Diff;
 use Drupal\Core\Config\InstallStorage;
 use Drupal\Core\Config\StorageInterface;
+use Drupal\config_provider\Plugin\ConfigProviderBase;
+use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
+use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 
 /**
  * Class for providing configuration from a quickstart default directory.
@@ -17,6 +20,8 @@ use Drupal\Core\Config\StorageInterface;
  * )
  */
 class QuickstartConfigProvider extends ConfigProviderBase {
+
+  use ConfigSnapshotStorageTrait;
 
   /**
    * The configuration provider ID.
@@ -96,7 +101,6 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     // Get active configuration to look for roles.
     $existing_config = $this->getActiveStorages()->listAll();
-    // phpcs:ignore
     $existing_roles = array_filter($existing_config, function ($name) {
       return (strpos($name, 'user.role.') === 0);
     });
@@ -116,15 +120,18 @@ class QuickstartConfigProvider extends ConfigProviderBase {
           $profile_perms = array_diff($profile_perms, $current_perms);
           sort($profile_perms);
 
-          // Message about permissions.
-          foreach ($profile_perms as $perm) {
-            // @todo Use injection on user.permissions.
-            // @phpstan-ignore-next-line
-            \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
-            [
-              '%perm' => $perm,
-              '%label' => $label,
-            ]));
+          // Only generate messages after profile install time.
+          if (empty($extensions['az_quickstart'])) {
+            // Message about permissions.
+            foreach ($profile_perms as $perm) {
+              // @todo Use injection on user.permissions.
+              // @phpstan-ignore-next-line
+              \Drupal::messenger()->addMessage(t("Added permission %perm to %label",
+              [
+                '%perm' => $perm,
+                '%label' => $label,
+              ]));
+            }
           }
           if (!empty($profile_perms)) {
             $role_config[$key]['permissions'] = array_unique(array_merge($current_perms, $profile_perms));
@@ -189,6 +196,47 @@ class QuickstartConfigProvider extends ConfigProviderBase {
   }
 
   /**
+   * Trim specific keys from configuration data.
+   *
+   * @param array $data
+   *   A potentially nested array to prune certain keys from.
+   * @param string $remove
+   *   A key to remove from the array structure.
+   *
+   * @return array
+   *   An array with the identified keys pruned.
+   */
+  protected function trimNestedKey(array $data, $remove) {
+    // Filter out the key targeted for removal.
+    $data = array_filter($data, function ($key) use ($remove) {
+      return $key !== $remove;
+    }, ARRAY_FILTER_USE_KEY);
+    // Remove the key from nested arrays.
+    array_walk($data, function (&$value, $key) use ($remove) {
+      if (is_array($value)) {
+        $value = $this->trimNestedKey($value, $remove);
+      }
+    });
+    return $data;
+  }
+
+  /**
+   * Fetch only override config, without merging with installed config.
+   *
+   * @param \Drupal\Core\Extension\Extension[] $extensions
+   *   An associative array of Extension objects, keyed by extension name.
+   *
+   * @return array
+   *   A list of the configuration data keyed by configuration object name.
+   */
+  public function getOnlyOverrideConfig(array $extensions = []) {
+    $storage = $this->getExtensionInstallStorage(static::ID);
+    $config_names = (!empty($extensions)) ? $this->listConfig($storage, $extensions) : [];
+    $data = $storage->readMultiple($config_names);
+    return $data;
+  }
+
+  /**
    * Get permissions defined.
    *
    * @return array
@@ -198,6 +246,71 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     // @todo Use injection on user.permissions. and add caching.
     // @phpstan-ignore-next-line
     return \Drupal::service('user.permissions')->getPermissions();
+  }
+
+  /**
+   * Checks if an active config item matches the distribution snapshot.
+   *
+   * @param string $name
+   *   The string name of a configuration item.
+   *
+   * @return bool
+   *   FALSE if the item is customized, or TRUE if it is synced.
+   */
+  protected function canOverride($name) {
+    /** @var \Drupal\config_update\ConfigListByProviderInterface $lister */
+    $lister = \Drupal::service('config_update.config_list');
+    /** @var \Drupal\config_update\ConfigDiffer $differ */
+    $differ = \Drupal::service('config_update.config_diff');
+    // Read active config value for name.
+    $active = $this->getActiveStorages()->read($name);
+    // Find out which module owns the configuration and load the snapshot value.
+    $owner = $lister->getConfigProvider($name);
+    if (!empty($owner[1])) {
+      $snapshot_storage = $this->getConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $owner[0], $owner[1]);
+      $snap = $snapshot_storage->read($name);
+      // StorageInterface::read() returns FALSE if the config does not exist.
+      // In this case, we can assume that the configuration is not customized
+      // because it is not present in the snapshot, likely because the module
+      // is newly installed.
+      if ($snap === FALSE) {
+        return TRUE;
+      }
+    }
+    // Guard against missing items.
+    $snap = (!empty($snap)) ? $snap : [];
+    $active = (!empty($active)) ? $active : [];
+    // Not relevant for user roles. Permissions created dynamically.
+    if (strpos($name, 'user.role.') !== 0) {
+      // Prune cache_metadata if present, to not consider it for diffs.
+      $active = $this->trimNestedKey($active, 'cache_metadata');
+      $snap = $this->trimNestedKey($snap, 'cache_metadata');
+      // Diff active config and snapshot of module to check for customization.
+      $diff = $differ->diff($active, $snap);
+      // Overrides only allowed if no changes in diff.
+      if (!$this->diffIsEmpty($diff) && !empty($active)) {
+        return FALSE;
+      }
+    }
+    return TRUE;
+  }
+
+  /**
+   * Checks if a diff is empty.
+   *
+   * @param \Drupal\Component\Diff\Diff $diff
+   *   A diff object.
+   *
+   * @return bool
+   *   True if two sequences were identical.
+   */
+  protected function diffIsEmpty(Diff $diff) {
+    foreach ($diff->getEdits() as $edit) {
+      if ($edit->type !== 'copy') {
+        return FALSE;
+      }
+    }
+    return TRUE;
   }
 
   /**
@@ -215,7 +328,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
 
     // Find the direct overrides for use at module install time.
     $storage = $this->getExtensionInstallStorage(static::ID);
-    $config_names = $this->listConfig($storage, $extensions);
+    $config_names = (!empty($extensions)) ? $this->listConfig($storage, $extensions) : [];
     $data = $storage->readMultiple($config_names);
 
     // Get active configuration to check dependencies with.
@@ -226,13 +339,13 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     // Get the install configuration present for the specified modules.
     // We need to check if an already-enabled module contained passive override.
     $install_storage = $this->getExtensionInstallStorage(InstallStorage::CONFIG_INSTALL_DIRECTORY);
-    $install_config_names = $this->listConfig($install_storage, $extensions);
+    $install_config_names = (!empty($extensions)) ? $this->listConfig($install_storage, $extensions) : [];
 
     // Now compare to quickstart config of already-loaded modules;
     // We are checking to see if an already loaded module contained a change
     // that couldn't be loaded previously for dependency reasons.
     $override_storage = $this->getExtensionInstallStorage(static::ID);
-    $override_config_names = $this->listConfig($override_storage, $old_extensions);
+    $override_config_names = (!empty($old_extensions)) ? $this->listConfig($override_storage, $old_extensions) : [];
     $intersect = array_intersect($override_config_names, $install_config_names);
     $overrides = $storage->readMultiple($intersect);
 
@@ -245,6 +358,16 @@ class QuickstartConfigProvider extends ConfigProviderBase {
       $value = $this->addDefaultConfigHash($value);
       if (!$this->validateDependencies($name, $data, $enabled_extensions, $all_config)) {
         // Couldn't validate dependency.
+        \Drupal::logger('az_core')->notice("Could not validate dependencies of override @name.", [
+          '@name' => $name,
+        ]);
+        unset($data[$name]);
+      }
+      elseif (!$this->canOverride($name)) {
+        // Configuration is customized.
+        \Drupal::logger('az_core')->notice("Disallowing override of customized configuration @name.", [
+          '@name' => $name,
+        ]);
         unset($data[$name]);
       }
     }
@@ -259,7 +382,7 @@ class QuickstartConfigProvider extends ConfigProviderBase {
     // Parent version does not account for simple config module dependencies.
     if (!isset($data['dependencies'])) {
       // Simple config or a config entity without dependencies.
-      list($provider) = explode('.', $config_name, 2);
+      [$provider] = explode('.', $config_name, 2);
       return in_array($provider, $enabled_extensions, TRUE);
     }
     return parent::validateDependencies($config_name, $data, $enabled_extensions, $all_config);

@@ -1,0 +1,116 @@
+id: az_paragraph_single_card
+label: AZ Paragraph Single Card
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+  - Quickstart Paragraphs
+status: true
+
+source:
+  plugin: az_paragraphs_item
+  bundle: uaqs_single_card
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_cards
+
+process:
+
+  field_az_cards/title:
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_short_title
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - value
+
+  field_az_cards/body:
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_summary
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - value
+    -
+      plugin: az_entity_embed_process
+
+  field_az_cards/link_title:
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_links
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - title
+
+  field_az_cards/link_uri:
+    -
+      plugin: skip_on_empty
+      source: field_uaqs_links
+      method: process
+    -
+      plugin: extract
+      default: null
+      index:
+        - 0
+        - url
+
+  field_az_cards/body_format:
+    plugin: default_value
+    default_value: az_standard
+
+  field_az_cards/options:
+    plugin: default_value
+    default_value:
+      class: 'bg-white'
+      # Set the link style to default, since we can't migrate classes to this field.
+      link_style: 'btn-block'
+
+  bottom_spacing_processed:
+    - plugin: default_value
+      default_value: 'mb-4'
+      source: bottom_spacing
+  card_width_processed:
+    - plugin: default_value
+      default_value: 'col-md-12 col-lg-12'
+  card_style_processed:
+    - plugin: default_value
+      default_value: 'card'
+  card_clickable_processed:
+    - plugin: default_value
+      default_value: 0
+  card_width_sm_processed:
+    - plugin: default_value
+      default_value: 'col-sm-12'
+  card_width_xs_processed:
+    - plugin: default_value
+      default_value: 'col-12'
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_cards_paragraph_behavior:
+        card_width: '@card_width_processed'
+        card_style: '@card_style_processed'
+        card_clickable: '@card_clickable_processed'
+        az_display_settings:
+          bottom_spacing: '@bottom_spacing_processed'
+          card_width_sm: '@card_width_sm_processed'
+          card_width_xs: '@card_width_xs_processed'
+
+
+dependencies:
+  enforced:
+    module:
+      - az_migration

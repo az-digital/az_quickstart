@@ -3,6 +3,7 @@
 namespace Drupal\az_migration\Plugin\migrate\process;
 
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
@@ -47,11 +48,8 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *           - az_person_categories
  *           - neuroscience_person_categories
  * @endcode
- *
- * @MigrateProcessPlugin(
- *   id = "az_views_reference_mapping"
- * )
  */
+#[MigrateProcess('az_views_reference_mapping')]
 class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactoryPluginInterface {
 
   /**
@@ -119,6 +117,23 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         'az_flexible_page_categories',
       ],
     ],
+    'uaqs_alphabetical_listing' => [
+      'view' => 'az_alphabetical_listing',
+      'display' => [
+        'default' => 'az_alphabetical_listing_main',
+        'page' => 'az_alphabetical_listing_main',
+      ],
+      'argument_migrations' => [],
+    ],
+    'uaqs_hero_carousel' => [
+      'view' => 'az_carousel',
+      'display' => [
+        'default' => 'front_carousel_block',
+        'hero_block' => 'front_carousel_block',
+        'hero_nav' => 'front_carousel_block',
+      ],
+      'argument_migrations' => [],
+    ],
   ];
 
   /**
@@ -168,7 +183,7 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
       $arguments = [];
       $rawArguments = explode('/', $value['vargs']);
       foreach ($rawArguments as $rawArgument) {
-        /** @var stdClass $parsed */
+        /** @var \stdClass $parsedArgument */
         $parsedArgument = ViewsHandler::breakString($rawArgument);
         $arguments[] = $parsedArgument;
       }
@@ -186,19 +201,17 @@ class ViewsReferenceMapping extends ProcessPluginBase implements ContainerFactor
         }
         $migratedArguments[] = $argument;
       }
-      if (!empty($migratedArguments)) {
-        $transformedArguments = [];
-        foreach ($migratedArguments as $argument) {
-          if (!empty($argument->operator) && count($argument->value) > 1) {
-            $separator = ($argument->operator === 'and') ? ',' : '+';
-            $transformedArguments[] = implode($separator, $argument->value);
-          }
-          else {
-            $transformedArguments[] = reset($argument->value);
-          }
+      $transformedArguments = [];
+      foreach ($migratedArguments as $argument) {
+        if (!empty($argument->operator) && count($argument->value) > 1) {
+          $separator = ($argument->operator === 'and') ? ',' : '+';
+          $transformedArguments[] = implode($separator, $argument->value);
         }
-        $viewData['argument'] = implode('/', $transformedArguments);
+        else {
+          $transformedArguments[] = reset($argument->value);
+        }
       }
+      $viewData['argument'] = implode('/', $transformedArguments);
     }
     $transformedValue['data'] = serialize($viewData);
 

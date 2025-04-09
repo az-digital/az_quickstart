@@ -1,7 +1,7 @@
 name: Arizona Quickstart
 type: profile
 description: 'The University of Arizona Quickstart Installation Profile'
-core_version_requirement: ^9
+core_version_requirement: ^9 || ^10
 
 distribution:
   name: Arizona Quickstart
@@ -12,6 +12,7 @@ install:
   - az_paragraphs_accordion
   - az_paragraphs_cards
   - az_paragraphs_photo_gallery
+  - az_paragraphs_splitscreen
   - az_paragraphs_text
   - az_paragraphs_text_background
   - az_paragraphs_text_media
@@ -31,15 +32,13 @@ install:
   - drupal:history
   - drupal:block
   - drupal:breakpoint
-  - drupal:ckeditor
-  - drupal:color
+  - drupal:ckeditor5
   - drupal:config
   - drupal:content_moderation
   - drupal:contextual
   - drupal:menu_link_content
   - drupal:datetime
   - drupal:block_content
-  - block_content_permissions:block_content_permissions
   - drupal:editor
   - drupal:help
   - drupal:image
@@ -51,7 +50,6 @@ install:
   - easy_breadcrumb:easy_breadcrumb
   - drupal:page_cache
   - drupal:dynamic_page_cache
-  - drupal:big_pipe
   - drupal:taxonomy
   - drupal:dblog
   - drupal:search
@@ -60,10 +58,8 @@ install:
   - drupal:toolbar
   - drupal:field_ui
   - drupal:file
-  - drupal:rdf
   - drupal:views
   - drupal:views_ui
-  - drupal:tour
   - drupal:automated_cron
   - drupal:google_tag
   - block_class:block_class
@@ -75,6 +71,11 @@ install:
   - search_exclude:search_exclude
   - draggableviews:draggableviews
   - role_delegation:role_delegation
+  - media_entity_file_replace:media_entity_file_replace
+  - extlink:extlink
+  - masquerade:masquerade
+  - masquerade_log:masquerade_log
+  - quick_node_clone:quick_node_clone
 
 themes:
   - az_barrio

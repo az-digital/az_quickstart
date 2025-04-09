@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.az_marketing_cloud_event_layout
+label: 'Marketing Cloud - Event Layout'
+description: ''
+targetEntityType: node
+cache: true

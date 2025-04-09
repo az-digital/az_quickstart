@@ -1,0 +1,87 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.az_marketing_cloud_30_70_layout
+    - field.field.node.az_news.field_az_attachments
+    - field.field.node.az_news.field_az_body
+    - field.field.node.az_news.field_az_byline
+    - field.field.node.az_news.field_az_contacts
+    - field.field.node.az_news.field_az_expiration_date
+    - field.field.node.az_news.field_az_featured_image_as_thumb
+    - field.field.node.az_news.field_az_link
+    - field.field.node.az_news.field_az_main_content
+    - field.field.node.az_news.field_az_media_image
+    - field.field.node.az_news.field_az_media_thumbnail_image
+    - field.field.node.az_news.field_az_news_tags
+    - field.field.node.az_news.field_az_published
+    - field.field.node.az_news.field_az_short_title
+    - field.field.node.az_news.field_az_subheading
+    - field.field.node.az_news.field_az_summary
+    - node.type.az_news
+  module:
+    - link
+    - smart_title
+    - text
+    - user
+third_party_settings:
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: ''
+      smart_title__classes:
+        - text-midnight
+id: node.az_news.az_marketing_cloud_30_70_layout
+targetEntityType: node
+bundle: az_news
+mode: az_marketing_cloud_30_70_layout
+content:
+  field_az_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+  field_az_media_thumbnail_image:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_az_summary:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  smart_title:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden:
+  az_news_read_more: true
+  field_az_attachments: true
+  field_az_body: true
+  field_az_byline: true
+  field_az_contacts: true
+  field_az_expiration_date: true
+  field_az_featured_image_as_thumb: true
+  field_az_main_content: true
+  field_az_media_image: true
+  field_az_metatag: true
+  field_az_news_tags: true
+  field_az_published: true
+  field_az_short_title: true
+  field_az_subheading: true
+  links: true

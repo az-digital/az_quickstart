@@ -1,4 +1,4 @@
-login_link_enabled: false
+login_link_enabled: true
 login_link_label: 'Log in using University of Arizona WebAuth'
 login_success_message: 'Logged in via University of Arizona WebAuth as [cas:username].'
 server:
@@ -10,11 +10,13 @@ server:
   verify: 0
   cert: ''
 gateway:
-  check_frequency: -2
+  enabled: false
+  recheck_time: 720
   paths:
     id: request_path
     negate: false
-    pages: ''
+    pages: '<front>'
+  method: client_side
 forced_login:
   enabled: false
   paths:

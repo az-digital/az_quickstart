@@ -1,0 +1,103 @@
+id: az_demo_card_paragraph
+label: AZ Quickstart Demo Card Paragraphs
+migration_tags:
+  - Quickstart Demo Content
+  - Content
+migration_dependencies:
+  required:
+    - az_demo_image_file
+dependencies:
+  enforced:
+    module:
+      - az_flexible_page
+source:
+  plugin: url
+  data_fetcher_plugin: file
+  data_parser_plugin: json
+  urls:
+    - profiles/custom/az_quickstart/modules/custom/az_demo/data/az_demo_card_paragraph.json
+  item_selector: paragraphs
+  ids:
+    id:
+      type: integer
+  fields:
+    -
+      name: id
+      selector: id
+    -
+      name: card_width
+      selector: card_width
+    -
+      name: card_style
+      selector: card_style
+    -
+      name: card_title_style
+      selector: card_title_style
+    -
+      name: card_clickable
+      selector: card_clickable
+    -
+      name: card_title
+      selector: card_title
+    -
+      name: az_cards
+      selector: az_cards
+    -
+      name: bottom_spacing
+      selector: bottom_spacing
+
+destination:
+  plugin: 'entity_reference_revisions:paragraph'
+  default_bundle: az_cards
+
+process:
+  field_az_title: card_title
+  field_az_cards:
+    source: az_cards
+    plugin: sub_process
+    process:
+      delta: delta
+      title:
+        plugin: skip_on_empty
+        method: process
+        source: title
+      body:
+        plugin: skip_on_empty
+        method: process
+        source: body
+      body_format:
+        plugin: default_value
+        default_value: az_standard
+      link_title:
+        plugin: skip_on_empty
+        method: process
+        source: link_title
+      link_uri:
+        plugin: skip_on_empty
+        method: process
+        source: link_url
+      media:
+        -
+          plugin: skip_on_empty
+          method: process
+          source: media
+        -
+          plugin: migration_lookup
+          migration:
+            - az_demo_image_file
+          source_ids:
+            - az_demo_image_file:
+                - filename
+      options/class: background
+      options/link_style: link_style
+
+  behavior_settings:
+    plugin: az_paragraphs_behavior_settings
+    paragraph_behavior_plugins:
+      az_cards_paragraph_behavior:
+        card_width: card_width
+        card_style: card_style
+        card_title_style: card_title_style
+        card_clickable: card_clickable
+        az_display_settings:
+          bottom_spacing: bottom_spacing

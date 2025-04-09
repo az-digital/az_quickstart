@@ -19,6 +19,9 @@ source:
 
   fields:
     -
+      name: uuid
+      selector: uuid
+    -
       name: filename
       selector: filename
     -
@@ -27,10 +30,17 @@ source:
     -
       name: caption
       selector: caption
+    -
+      name: credit
+      selector: credit
 
 destination:
   plugin: 'entity:media'
 process:
+  uuid:
+    plugin: skip_on_empty
+    method: process
+    source: uuid
   bundle:
     plugin: default_value
     default_value: az_image
@@ -72,6 +82,11 @@ process:
 
   field_az_caption/value: caption
   field_az_caption/format:
+    -
+      plugin: default_value
+      default_value: plain_text
+  field_az_credit/value: credit
+  field_az_credit/format:
     -
       plugin: default_value
       default_value: plain_text

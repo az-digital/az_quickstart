@@ -1,0 +1,316 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_publication.field_az_accessed_date
+    - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_contributors
+    - field.field.node.az_publication.field_az_main_content
+    - field.field.node.az_publication.field_az_publication_abstract
+    - field.field.node.az_publication.field_az_publication_approximate
+    - field.field.node.az_publication.field_az_publication_category
+    - field.field.node.az_publication.field_az_publication_container
+    - field.field.node.az_publication.field_az_publication_date
+    - field.field.node.az_publication.field_az_publication_date_type
+    - field.field.node.az_publication.field_az_publication_doi
+    - field.field.node.az_publication.field_az_publication_extra_links
+    - field.field.node.az_publication.field_az_publication_image
+    - field.field.node.az_publication.field_az_publication_isbn
+    - field.field.node.az_publication.field_az_publication_issn
+    - field.field.node.az_publication.field_az_publication_issue
+    - field.field.node.az_publication.field_az_publication_link
+    - field.field.node.az_publication.field_az_publication_location
+    - field.field.node.az_publication.field_az_publication_mapped_type
+    - field.field.node.az_publication.field_az_publication_media
+    - field.field.node.az_publication.field_az_publication_page
+    - field.field.node.az_publication.field_az_publication_pmcid
+    - field.field.node.az_publication.field_az_publication_pmid
+    - field.field.node.az_publication.field_az_publication_publisher
+    - field.field.node.az_publication.field_az_publication_type
+    - field.field.node.az_publication.field_az_publication_version
+    - field.field.node.az_publication.field_az_publication_volume
+    - node.type.az_publication
+  module:
+    - az_publication
+    - datetime
+    - datetime_range
+    - link
+    - media_library
+    - paragraphs
+    - path
+    - text
+id: node.az_publication.default
+targetEntityType: node
+bundle: az_publication
+mode: default
+content:
+  created:
+    type: datetime_timestamp
+    weight: 2
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_accessed_date:
+    type: datetime_default
+    weight: 21
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_contributors:
+    type: az_entity_role_inline_entity_form_complex
+    weight: 8
+    region: content
+    settings:
+      form_mode: default
+      override_labels: '1'
+      label_singular: contributor
+      label_plural: contributors
+      collapsible: '1'
+      allow_new: '1'
+      allow_existing: '1'
+      match_operator: CONTAINS
+      multiple_use: '1'
+      removed_reference: optional
+      revision: 0
+      collapsed: 0
+      allow_duplicate: 0
+    third_party_settings: {  }
+  field_az_main_content:
+    type: paragraphs
+    weight: 32
+    region: content
+    settings:
+      title: Paragraph
+      title_plural: Paragraphs
+      edit_mode: closed
+      closed_mode: preview
+      autocollapse: all
+      closed_mode_threshold: 0
+      add_mode: button
+      form_display_mode: default
+      default_paragraph_type: _none
+      features:
+        add_above: '0'
+        collapse_edit_all: collapse_edit_all
+        duplicate: duplicate
+    third_party_settings: {  }
+  field_az_publication_abstract:
+    type: text_textarea_with_summary
+    weight: 31
+    region: content
+    settings:
+      rows: 9
+      summary_rows: 3
+      placeholder: ''
+      show_summary: false
+    third_party_settings: {  }
+  field_az_publication_approximate:
+    type: boolean_checkbox
+    weight: 20
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  field_az_publication_category:
+    type: options_select
+    weight: 10
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_publication_container:
+    type: string_textfield
+    weight: 11
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_date:
+    type: daterange_default
+    weight: 19
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_publication_date_type:
+    type: options_select
+    weight: 18
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_publication_doi:
+    type: string_textfield
+    weight: 24
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_extra_links:
+    type: link_default
+    weight: 23
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_publication_image:
+    type: media_library_widget
+    weight: 30
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_az_publication_isbn:
+    type: string_textfield
+    weight: 26
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_issn:
+    type: string_textfield
+    weight: 25
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_issue:
+    type: string_textfield
+    weight: 12
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_link:
+    type: link_default
+    weight: 22
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_publication_location:
+    type: string_textfield
+    weight: 16
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_mapped_type:
+    type: options_select
+    weight: 9
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_publication_media:
+    type: media_library_widget
+    weight: 29
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_az_publication_page:
+    type: string_textfield
+    weight: 17
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_pmcid:
+    type: string_textfield
+    weight: 28
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_pmid:
+    type: string_textfield
+    weight: 27
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_publisher:
+    type: string_textfield
+    weight: 15
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_version:
+    type: string_textfield
+    weight: 14
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publication_volume:
+    type: string_textfield
+    weight: 13
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  path:
+    type: path
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  promote:
+    type: boolean_checkbox
+    weight: 3
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  status:
+    type: boolean_checkbox
+    weight: 7
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  sticky:
+    type: boolean_checkbox
+    weight: 4
+    region: content
+    settings:
+      display_label: true
+    third_party_settings: {  }
+  title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  uid:
+    type: entity_reference_autocomplete
+    weight: 1
+    region: content
+    settings:
+      match_operator: CONTAINS
+      match_limit: 10
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  url_redirects:
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_az_authors: true
+  field_az_publication_type: true

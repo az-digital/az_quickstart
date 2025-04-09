@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - az_core
+name: az_enterprise_thumbnail
+label: 'Enterprise Thumbnail'
+effects:
+  d0865519-b2ae-4869-93fa-d5b8ecb8f114:
+    uuid: d0865519-b2ae-4869-93fa-d5b8ecb8f114
+    id: image_scale
+    weight: 1
+    data:
+      width: 230
+      height: 150
+      upscale: true
+  3414fda7-70b8-41fe-9cf1-9af34d5df4d5:
+    uuid: 3414fda7-70b8-41fe-9cf1-9af34d5df4d5
+    id: image_convert
+    weight: 2
+    data:
+      extension: webp

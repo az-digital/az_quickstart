@@ -1,0 +1,48 @@
+id: az_news_tags
+label: News Tags
+migration_group: az_migration
+migration_tags:
+  - Quickstart Content Migration
+status: true
+
+source:
+  plugin: d7_taxonomy_term
+  bundle: uaqs_news_tags
+
+destination:
+  plugin: entity:taxonomy_term
+  default_bundle: az_news_tags
+
+process:
+  vid:
+    plugin: default_value
+    default_value: az_news_tags
+
+  name: name
+  weight: weight
+
+  'description/value': description
+  'description/format': format
+
+  # Only attempt to stub real (non-zero) parents.
+  parent_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: parent
+    -
+      plugin: migmag_lookup
+      migration: az_news_tags
+
+  parent:
+    plugin: default_value
+    default_value: 0
+    source: '@parent_id'
+
+  changed: timestamp
+
+dependencies:
+  enforced:
+    module:
+      - az_migration
+      - az_node_news

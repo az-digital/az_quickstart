@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.az_author.field_az_author_drop_particle
+  module:
+    - az_publication
+id: az_author.az_author.field_az_author_drop_particle
+field_name: field_az_author_drop_particle
+entity_type: az_author
+bundle: az_author
+label: 'Dropping Particle'
+description: 'Particles that are dropped when only the surname is shown, e.g. van, Ludwig van Beethoven.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

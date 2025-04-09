@@ -18,7 +18,7 @@ parameters:
 		- '#Call to deprecated method readAttribute\(\) of class PHPUnit\\Framework\\Assert.*#'
 		# Ignore entitiy_embed cache tag warning (see https://www.drupal.org/project/entity_embed/issues/3087572#comment-13307163).
 		- '#config:entity_view_mode_list cache tag might be unclear and does not contain the cache key in it.#'
-	excludes_analyse:
+	excludePaths:
 		# Exclude files with missing parent classes from optional module dependencies.
 		- */entity_reference_revisions/src/Plugin/diff/Field/EntityReferenceRevisionsFieldDiffBuilder.php
 		- */paragraphs/modules/paragraphs_library/tests/src/FunctionalJavascript/ParagraphsLibraryItemEntityBrowserTest.php
@@ -27,6 +27,4 @@ parameters:
 		- */config_update/config_update_ui/src/Logger/ConfigUpdateUiDrush8Logger.php
 		- */config_update/config_update_ui/config_update_ui.drush_testing.inc
 		- */config_update/config_update_ui/src/Commands/ConfigUpdateUiCommands.php
-includes:
-	- %currentWorkingDirectory%/vendor/mglaman/phpstan-drupal/extension.neon
-	- %currentWorkingDirectory%/vendor/phpstan/phpstan-deprecation-rules/rules.neon
+		- */upgrade_status/tests/modules/upgrade_status_test_fatal/fatal.php

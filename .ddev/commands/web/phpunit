@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 
 ## Description: Provide phpunit tooling to run unit tests.
 ## Usage: phpunit [flags] [args]
 ## Example: "ddev phpunit --version"
+## ExecRaw: true
 
-vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart $@
-
+vendor/bin/phpunit --configuration /var/www/html/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap /var/www/html/web/core/tests/bootstrap.php web/profiles/custom/az_quickstart/modules web/profiles/custom/az_quickstart/themes "$@"

@@ -1,0 +1,195 @@
+{
+    "paragraphs": [
+        {
+            "id":54,
+            "az_text_area" : "<h1>Successful Build!<\/h1>\r\n\r\n<p>Kitten serves as the final integration test of the Quickstart 2.0 development process. This site is rebuilt with every successfully merged pull request, so it always has the very latest version of the code base.<\/p>\r\n\r\n<p><a class=\"btn btn-blue\" href=\"https:\/\/github.com\/az-digital\/az_quickstart\">See the code<\/a><\/p>\r\n",
+            "filename" : "lynx.jpg",
+            "ordering" : "order_1",
+            "full_width" : "full-width-background",
+            "bg_color" : "",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":55,
+            "az_text_area" : "<p>Musicians appear in prominent positions in other works by the same artist, notably in the middle of the central panel of the&nbsp;<a href=\"https:\/\/en.wikipedia.org\/wiki\/The_Haywain_Triptych\" target=\"_blank\">Hay Wain Triptych<\/a>. The well-known Estonian vocal group Heinavanker (which has visited Tucson on two occasions) takes its name from this painting.<\/p>\r\n\r\n<p><a class=\"btn btn-blue\" href=\"https:\/\/en.wikipedia.org\/wiki\/Museo_del_Prado\">Museo del Prado<\/a><\/p>\r\n",
+            "filename" : "The_Hay_Wain_by_Hieronymus_Bosch.jpeg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_0",
+            "bg_color" : "bg-red",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":56,
+            "az_text_area" : "<p>Beyond employment, are you looking to design your ideal career and life?<\/p>\r\n\r\n<p><a class=\"btn btn-red\" href=\"https:\/\/www.arizona.edu\/admissions\/apply\">Apply<\/a> <a class=\"btn btn-blue\" href=\"https:\/\/admissions.arizona.edu\/visit\">Visit<\/a><\/p>\r\n",
+            "filename" : "study.jpeg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-blue",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":57,
+            "az_text_area" : "<p class=\"text-align-center\">Beyond employment, are you looking to design your ideal career and life? With more than 100 majors, we have the academics and faculty to help you connect what you are learning with your aspirations to make the world better. Coupled with outstanding tutoring, support, and engagement inside and outside the classroom, you will succeed no matter what your career plans are.<\/p>\r\n\r\n<p class=\"text-align-center\"><a class=\"btn btn-outline-red\" href=\"https:\/\/www.arizona.edu\/majors\">View majors<\/a><\/p>\r\n",
+            "filename" : "mecklerphoto_mens-wearhouse.jpeg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-sky",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":58,
+            "az_text_area" : "<p><a class=\"btn btn-outline-white\" href=\"https:\/\/insects.arizona.edu\/\">Bug out!<\/a><\/p>",
+            "filename" : "june_bugs.jpeg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-oasis",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":59,
+            "az_title" : "Full Width Bottom Style",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "arizona_campus_fireworks.jpg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-azurite",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":60,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "daisy.jpg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-midnight",
+            "bottom_spacing" : "mb-5"
+        },
+        {
+            "id":61,
+            "az_title" : "Column with Video",
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=fePMsmtd7EU",
+            "full_width" : false,
+            "ordering" : "order_1",
+            "bg_color" : "bg-bloom",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":62,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=9VntGNAE4L8",
+            "full_width" : "full-width-background",
+            "ordering" : "order_0",
+            "bg_color" : "bg-chili",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":63,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=KkogmuRNt1M",
+            "full_width" : false,
+            "ordering" : "order_1",
+            "bg_color" : "bg-cool-gray",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":64,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=x_C7XpqJdso",
+            "full_width" : "full-width-background",
+            "ordering" : "order_0",
+            "bg_color" : "bg-warm-gray",
+            "bottom_spacing" : "mb-5"
+        },
+        {
+            "id":65,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=o5AcFV8f230",
+            "full_width" : false,
+            "ordering" : "order_1",
+            "bg_color" : "bg-leaf",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":66,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "https://www.youtube.com/watch?v=GHnSIobpE-0",
+            "full_width" : "full-width-background",
+            "ordering" : "order_0",
+            "bg_color" : "bg-river",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":67,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "june_bugs.jpeg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-silver",
+            "bottom_spacing" : "mb-5"
+        },
+        {
+            "id":68,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>\r\n\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "june_bugs.jpeg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_0",
+            "bg_color" : "bg-ash",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":69,
+            "az_text_area" : "<h2>Gray 200 Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-blue\" href=\"#\">Button<\/a><\/p>",
+            "filename" : "lynx.jpg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-gray-200",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":70,
+            "az_text_area" : "<h2>Warm Gray Background<\/h2><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p><p><a class=\"btn btn-outline-blue\" href=\"https:\/\/insects.arizona.edu\">Bug out!<\/a><\/p>",
+            "filename" : "june_bugs.jpeg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-warm-gray",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":71,
+            "az_text_area" : "<p class=\"text-align-center\">Beyond employment, are you looking to design your ideal career and life? With more than 100 majors, we have the academics and faculty to help you connect what you are learning with your aspirations to make the world better. Coupled with outstanding tutoring, support, and engagement inside and outside the classroom, you will succeed no matter what your career plans are.<\/p><p class=\"text-align-center\"><a href=\"https:\/\/www.arizona.edu\/majors\">View majors<\/a><\/p>",
+            "filename" : "mecklerphoto_mens-wearhouse.jpeg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-sky",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":72,
+            "az_text_area" : "<blockquote class=\"border-white\">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"<p class=\"blockquote-footer\"><em>First Last<\/em><\/p><\/blockquote>",
+            "filename" : "study.jpeg",
+            "full_width" : false,
+            "ordering" : "order_0",
+            "bg_color" : "bg-blue",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":73,
+            "az_text_area" : "<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.<\/p>",
+            "filename" : "arizona_campus_fireworks.jpg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-chili",
+            "bottom_spacing" : "mb-0"
+        },
+        {
+            "id":79,
+            "az_text_area" : "<div class=\"bs_grid\"><div class=\"no-gutters row \" data-row-lg=\"equal_equal\" data-row-md=\"none\" data-row-none=\"12_12\" data-row-sm=\"none\" data-row-xl=\"\" data-row-xxl=\"\"><div class=\"col-12 col-lg\"><h3>Settings:<\/h3><ul>\t<li><strong>Label:&nbsp;<\/strong>Main navigation<\/li>\t<li><strong>Label display<\/strong>: True<\/li>\t<li><strong>Follow<\/strong>: false<\/li>\t<li><strong>Follow parent<\/strong>: child<\/li>\t<li><strong>Level<\/strong>: 2<\/li>\t<li><strong>Depth<\/strong>: 2<\/li>\t<li><strong>Expand all items<\/strong><span>: false<\/span><\/li>\t<li><strong>Parent<\/strong>: main:<\/li>\t<li><strong>Theme hook suggestion<\/strong>: sidebar<\/li><\/ul><\/div><div class=\"col-12 col-lg\"><drupal-entity data-embed-button=\"az_embed_content_block\" data-entity-embed-display=\"view_mode:block_content.full\" data-entity-type=\"block_content\" data-entity-uuid=\"8d5d7e34-7d98-489d-8415-fc0c72a6568f\"><\/drupal-entity><\/div><\/div><\/div><hr \/>",
+            "filename" : "arizona_campus_fireworks.jpg",
+            "full_width" : "full-width-background",
+            "ordering" : "order_1",
+            "bg_color" : "bg-chili",
+            "bottom_spacing" : "mb-0"
+        }
+    ]
+}

@@ -3,14 +3,14 @@
 namespace Drupal\Tests\az_cas\Functional;
 
 use Drupal\Core\Url;
-use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
  * Tests AZ CAS admin settings form.
  *
  * @group az_cas
  */
-class AzCasAdminSettingsTest extends BrowserTestBase {
+class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -31,7 +31,7 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
    *
    * @var string
    */
-  protected $defaultTheme = 'seven';
+  protected $defaultTheme = 'claro';
 
   /**
    * The admin user.
@@ -43,7 +43,7 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->adminUser = $this->drupalCreateUser(['administer account settings']);
     $this->drupalLogin($this->adminUser);
@@ -68,16 +68,19 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
     // Logout manually because $this->drupalLogout() checks for prescence of
     // fields on login form which don't exist if login form is disabled.
     $destination = Url::fromRoute('<front>')->toString();
-    $this->drupalGet(Url::fromRoute('user.logout', [], ['query' => ['destination' => $destination]]));
+    $this->drupalGet(Url::fromRoute('user.logout.confirm', options: ['query' => ['destination' => $destination]]));
+    $this->submitForm([], 'Log out');
 
     $this->drupalGet('user/login');
     if ($disable_login_form) {
-      $this->assertSession()->pageTextContains('Access denied');
-      $this->assertSession()->pageTextNotContains('Log in');
+      $this->assertSession()->pageTextNotContains('Username');
+      $this->assertSession()->pageTextNotContains('Password');
+      $this->assertSession()->buttonNotExists('Log in');
     }
     else {
-      $this->assertSession()->pageTextNotContains('Access denied');
-      $this->assertSession()->pageTextContains('Log in');
+      $this->assertSession()->pageTextContains('Username');
+      $this->assertSession()->pageTextContains('Password');
+      $this->assertSession()->buttonExists('Log in');
     }
   }
 
@@ -112,7 +115,7 @@ class AzCasAdminSettingsTest extends BrowserTestBase {
   /**
    * Data provider for testUserLoginFormBehavior and testPasswordResetBehavior.
    */
-  public function azCasSettingsProvider() {
+  public static function azCasSettingsProvider() {
     return [[FALSE], [TRUE]];
   }
 

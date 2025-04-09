@@ -5,110 +5,55 @@
  * Install, update and uninstall functions for az_news module.
  */
 
-use Drupal\field\Entity\FieldConfig;
+use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Entity\EntityStorageException;
 
 /**
- * Install az_paragraphs_photo_gallery.
+ * Implements hook_update_last_removed().
  */
-function az_news_update_9201() {
-  \Drupal::service('module_installer')->install(['az_paragraphs_photo_gallery']);
+function az_news_update_last_removed() {
+  // Remove updates added before 2.6.0.
+  return 920301;
 }
 
 /**
- * Migrate az_news field_az_caption values to media entities.
+ * Add two new fields to az_news content type to allow overriding news thumbs.
+ *
+ * Create field_az_featured_image_as_thumb on az_news content type.
+ * Create field_az_media_thumbnail_image on az_news content type.
+ *
+ * @see https://github.com/az-digital/az_quickstart/issues/2504
  */
-function az_news_update_9202(&$sandbox) {
-  $field_name = 'field_az_caption';
-  if (!isset($sandbox['total'])) {
-    $sandbox['current'] = 0;
-    $sandbox['migrated'] = 0;
-    $sandbox['skipped'] = 0;
-    $sandbox['total'] = \Drupal::entityQuery('node')
-      ->accessCheck(FALSE)
-      ->condition('type', 'az_news')
-      ->condition($field_name . '.value', NULL, 'IS NOT NULL')
-      ->count()
-      ->execute();
+function az_news_update_1020701() {
 
-    if (empty($sandbox['total'])) {
-      \Drupal::messenger()
-        ->addMessage('No ' . $field_name . ' values found to migrate.');
-      $sandbox['#finished'] = 1;
-      return;
-    }
-  }
+  $field_config_to_add = [
+    'az_core' => [
+      'field.storage.node.field_az_featured_image_as_thumb',
+      'field.storage.node.field_az_media_thumbnail_image',
+    ],
+    'az_news' => [
+      'field.field.node.az_news.field_az_featured_image_as_thumb',
+      'field.field.node.az_news.field_az_media_thumbnail_image',
+    ],
+  ];
 
-  $node_storage = \Drupal::entityTypeManager()->getStorage('node');
-  $nodes_per_batch = 10;
-  $nids = $node_storage->getQuery()
-    ->accessCheck(FALSE)
-    ->condition('type', 'az_news')
-    ->condition($field_name . '.value', NULL, 'IS NOT NULL')
-    ->range($sandbox['current'], $nodes_per_batch)
-    ->execute();
+  foreach ($field_config_to_add as $module => $configs) {
+    $module_path = \Drupal::service('extension.list.module')->getPath($module);
+    $config_storage = new FileStorage($module_path . '/config/install');
+    foreach ($configs as $field_config_id) {
+      $entity_type = \Drupal::service('config.manager')->getEntityTypeIdByName($field_config_id);
+      $storage = \Drupal::entityTypeManager()->getStorage($entity_type);
+      $config_record = $config_storage->read($field_config_id);
 
-  if (empty($nids)) {
-    $sandbox['#finished'] = 1;
-    return;
-  }
-
-  $captioned_nodes = $node_storage->loadMultiple($nids);
-  foreach ($captioned_nodes as $node) {
-    $caption_value = $node->$field_name->value;
-    $media_id = $node->field_az_media_image->target_id;
-    if (!empty($media_id)) {
-      $media = \Drupal::entityTypeManager()->getStorage('media')->load($media_id);
-      if (empty($media->$field_name->value)) {
-        $media->$field_name->value = $caption_value;
-        $media->$field_name->format = 'plain_text';
-        $media->save();
-        $sandbox['migrated']++;
+      try {
+        /** @var \Drupal\Core\Config\Entity\ConfigEntityStorageInterface $storage */
+        $entity = $storage->createFromStorageRecord($config_record);
+        $entity->save();
       }
-      else {
-        $sandbox['skipped']++;
+      catch (EntityStorageException $e) {
+        \Drupal::logger('az_news')->notice($e->getMessage());
       }
     }
-    else {
-      $sandbox['skipped']++;
-    }
-    $sandbox['current']++;
   }
-  \Drupal::messenger()
-    ->addMessage($sandbox['current'] . ' news items processed.');
-  \Drupal::messenger()
-    ->addMessage($sandbox['migrated'] . ' ' . $field_name . ' values migrated.');
-  \Drupal::messenger()
-    ->addMessage($sandbox['skipped'] . ' ' . $field_name . ' values skipped because both news content and media content have a caption value, or the target media entity does not exist.');
 
-  if ($sandbox['current'] >= $sandbox['total']) {
-    $sandbox['#finished'] = 1;
-  }
-  else {
-    $sandbox['#finished'] = ($sandbox['current'] / $sandbox['total']);
-  }
-}
-
-/**
- * Delete field_az_caption from az_news content type.
- */
-function az_news_update_9203() {
-  $field_name = 'field_az_caption';
-  $field = FieldConfig::loadbyName('node', 'az_news', $field_name);
-  if ($field) {
-    $field->delete();
-    \Drupal::messenger()
-      ->addMessage($field_name . ' deleted from az_news content type.');
-  }
-  else {
-    \Drupal::messenger()
-      ->addMessage($field_name . ' not found on az_news content type.');
-  }
-}
-
-/**
- * Ensure the better_exposed_filters module is installed.
- */
-function az_news_update_920301() {
-  \Drupal::service('module_installer')->install(['better_exposed_filters']);
-  return t('Better Exposed Filters module installed.');
 }

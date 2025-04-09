@@ -4,19 +4,26 @@ dependencies:
   config:
     - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_research_interests
+    - field.field.node.az_person.field_az_suffix
+    - field.field.node.az_person.field_az_teaching_interests
     - field.field.node.az_person.field_az_titles
+    - field.field.node.az_person.field_az_work_experience
     - node.type.az_person
   module:
     - field_group
@@ -36,7 +43,7 @@ third_party_settings:
       label: Categories
       region: content
       parent_name: ''
-      weight: 5
+      weight: 6
       format_type: details
       format_settings:
         classes: ''
@@ -50,12 +57,50 @@ third_party_settings:
       label: 'Summary fields'
       region: content
       parent_name: ''
-      weight: 17
+      weight: 24
       format_type: details_sidebar
       format_settings:
         classes: 'group-summary field-group-tab'
         show_empty_fields: false
         id: ''
+        open: true
+        description: 'Summary fields determine how this person appears in feeds, listings and other displays throughout the site.'
+        required_fields: true
+        weight: -10
+    group_az_experience:
+      children:
+        - field_az_degrees
+        - field_az_work_experience
+        - field_az_awards
+        - field_az_licensure_certification
+      label: Experience
+      region: content
+      parent_name: ''
+      weight: 15
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        open: false
+        description: ''
+        required_fields: true
+        weight: 0
+    group_az_interests:
+      children:
+        - field_az_teaching_interests
+        - field_az_research_interests
+      label: Interests
+      region: content
+      parent_name: ''
+      weight: 16
+      format_type: details
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
         open: false
         description: ''
         required_fields: true
@@ -67,26 +112,11 @@ mode: default
 content:
   created:
     type: datetime_timestamp
-    weight: 19
+    weight: 26
     region: content
     settings: {  }
     third_party_settings: {  }
   field_az_address:
-    type: text_textarea
-    weight: 9
-    region: content
-    settings:
-      rows: 9
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_attachments:
-    type: file_generic
-    weight: 12
-    region: content
-    settings:
-      progress_indicator: throbber
-    third_party_settings: {  }
-  field_az_body:
     type: text_textarea
     weight: 11
     region: content
@@ -94,9 +124,38 @@ content:
       rows: 9
       placeholder: ''
     third_party_settings: {  }
+  field_az_attachments:
+    type: file_generic
+    weight: 14
+    region: content
+    settings:
+      progress_indicator: throbber
+    third_party_settings: {  }
+  field_az_awards:
+    type: string_textfield
+    weight: 17
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_body:
+    type: text_textarea
+    weight: 13
+    region: content
+    settings:
+      rows: 9
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_courses:
+    type: az_accordion
+    weight: 31
+    region: content
+    settings: {  }
+    third_party_settings: {  }
   field_az_degrees:
     type: string_textfield
-    weight: 13
+    weight: 15
     region: content
     settings:
       size: 60
@@ -104,7 +163,7 @@ content:
     third_party_settings: {  }
   field_az_email:
     type: email_default
-    weight: 7
+    weight: 9
     region: content
     settings:
       placeholder: ''
@@ -118,9 +177,17 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_az_licensure_certification:
+    type: string_textfield
+    weight: 18
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
   field_az_link:
     type: link_default
-    weight: 22
+    weight: 27
     region: content
     settings:
       placeholder_url: ''
@@ -128,7 +195,7 @@ content:
     third_party_settings: {  }
   field_az_links:
     type: link_default
-    weight: 10
+    weight: 12
     region: content
     settings:
       placeholder_url: ''
@@ -144,13 +211,21 @@ content:
     third_party_settings: {  }
   field_az_media_image:
     type: media_library_widget
-    weight: 4
+    weight: 5
     region: content
     settings:
       media_types: {  }
     third_party_settings:
       media_library_edit:
         show_edit: '1'
+  field_az_netid:
+    type: string_textfield
+    weight: 8
+    region: content
+    settings:
+      size: 30
+      placeholder: ''
+    third_party_settings: {  }
   field_az_person_category:
     type: options_buttons
     weight: 1
@@ -165,12 +240,36 @@ content:
     third_party_settings: {  }
   field_az_phones:
     type: telephone_default
-    weight: 8
+    weight: 10
     region: content
     settings:
       placeholder: ''
     third_party_settings: {  }
   field_az_pronouns:
+    type: string_textfield
+    weight: 4
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_publications:
+    type: text_textarea
+    weight: 33
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_research_interests:
+    type: text_textarea
+    weight: 34
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_suffix:
     type: string_textfield
     weight: 3
     region: content
@@ -178,9 +277,25 @@ content:
       size: 60
       placeholder: ''
     third_party_settings: {  }
+  field_az_teaching_interests:
+    type: text_textarea
+    weight: 33
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
   field_az_titles:
     type: string_textfield
-    weight: 6
+    weight: 7
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_work_experience:
+    type: string_textfield
+    weight: 16
     region: content
     settings:
       size: 60
@@ -188,27 +303,27 @@ content:
     third_party_settings: {  }
   path:
     type: path
-    weight: 17
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   promote:
     type: boolean_checkbox
-    weight: 15
+    weight: 21
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   status:
     type: boolean_checkbox
-    weight: 14
+    weight: 20
     region: content
     settings:
       display_label: true
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
-    weight: 16
+    weight: 22
     region: content
     settings:
       display_label: true
@@ -223,7 +338,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 18
+    weight: 25
     region: content
     settings:
       match_operator: CONTAINS
@@ -232,7 +347,7 @@ content:
       placeholder: ''
     third_party_settings: {  }
   url_redirects:
-    weight: 20
+    weight: 27
     region: content
     settings: {  }
     third_party_settings: {  }

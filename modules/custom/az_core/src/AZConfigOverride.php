@@ -4,12 +4,15 @@ namespace Drupal\az_core;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
-use Drupal\config_provider\Plugin\ConfigCollector;
+use Drupal\Core\Extension\ModuleHandler;
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
+use Drupal\config_provider\Plugin\ConfigCollector;
+use Drupal\config_snapshot\ConfigSnapshotStorageTrait;
 use Drupal\config_sync\ConfigSyncSnapshotter;
 use Drupal\config_sync\ConfigSyncSnapshotterInterface;
 use Drupal\config_update\ConfigListByProviderInterface;
-use Drupal\Core\Extension\ModuleHandler;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 
 /**
  * Class AZConfigOverride.
@@ -21,7 +24,10 @@ use Drupal\Core\Extension\ModuleHandler;
  * to avoid needing to import the changes whenever an override module is
  * enabled, e.g. az_cas.
  */
-class AZConfigOverride {
+class AZConfigOverride implements LoggerAwareInterface {
+
+  use ConfigSnapshotStorageTrait;
+  use LoggerAwareTrait;
 
   /**
    * Drupal\config_provider\Plugin\ConfigCollector definition.
@@ -113,6 +119,9 @@ class AZConfigOverride {
         $snapshots = [];
         // Edit active configuration for each explicit override.
         foreach ($overrides as $name => $data) {
+          $this->logger->info("Applying override config to @config_id.", [
+            '@config_id' => $name,
+          ]);
           $config = $this->configFactory->getEditable($name);
           $config->setData($data);
           $config->Save();
@@ -124,16 +133,21 @@ class AZConfigOverride {
             $owner = $provided_by[1];
 
             // Record we need to do a snapshot.
-            $snapshots[$type][] = $owner;
+            $snapshots[$type][$owner][$name] = $data;
           }
         }
 
         // Update the config_snapshot of the modules that owned the config.
         foreach ($snapshots as $type => $owners) {
-          $owners = array_unique($owners);
-          foreach ($owners as $owner) {
-            $this->configSyncSnapshotter->refreshExtensionSnapshot($type, [$owner],
-              ConfigSyncSnapshotterInterface::SNAPSHOT_MODE_IMPORT);
+          foreach ($owners as $owner => $names) {
+            $snapshot_storage = $this->getConfigSnapshotStorage(ConfigSyncSnapshotterInterface::CONFIG_SNAPSHOT_SET, $type, $owner);
+            foreach ($names as $name => $data) {
+              $this->logger->info("Snapshotting @config_id for @module.", [
+                '@module' => $owner,
+                '@config_id' => $name,
+              ]);
+              $snapshot_storage->write($name, $data);
+            }
           }
         }
       }

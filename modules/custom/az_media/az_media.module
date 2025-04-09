@@ -5,25 +5,26 @@
  * Contains az_media.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityFormInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\editor\Entity\Editor;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Logger\RfcLogLevel;
 use Drupal\responsive_image\Entity\ResponsiveImageStyle;
 
 /**
- * Implements hook_ckeditor_css_alter().
+ * Implements hook_library_info_alter().
  */
-function az_media_ckeditor_css_alter(array &$css, Editor $editor) {
-  $css[] = \Drupal::service('extension.list.module')->getPath('az_media') . '/css/az-media-edit.css';
+function az_media_library_info_alter(array &$libraries, $extension) {
+  if ($extension === 'ckeditor5' && isset($libraries['internal.drupal.ckeditor5.media'])) {
+    $libraries['internal.drupal.ckeditor5.media']['dependencies'][] = 'az_media/az_media_edit';
+  }
 }
 
 /**
  * Implements hook_form_alter().
  */
 function az_media_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-  /** @var Drupal\Core\Entity\FieldableEntityInterface $entity */
+  /** @var \Drupal\Core\Entity\FieldableEntityInterface $formObject */
   $formObject = $form_state->getFormObject();
   if ($formObject instanceof EntityFormInterface) {
     $entity = $formObject->getEntity();
@@ -103,9 +104,9 @@ function template_preprocess_az_responsive_background_image(array &$variables) {
     $srcset = explode(', ', $attr['srcset']);
 
     foreach ($srcset as $src_i => $src) {
-      list($src, $res) = explode(' ', $src);
+      [$src, $res] = explode(' ', $src);
 
-      $media = isset($attr['media']) ? $attr['media'] : '';
+      $media = $attr['media'] ?? '';
 
       // Add "retina" to media query if this is a 2x image.
       if ($res && $res === '2x' && !empty($media)) {
@@ -157,6 +158,7 @@ function az_media_theme() {
  */
 function az_media_entity_presave(EntityInterface $entity) {
   if ($entity->getEntityTypeId() === 'media' && $entity->bundle() === 'az_remote_video' && isset($entity->field_media_az_image->entity)) {
+    // @phpstan-ignore-next-line
     $entity->thumbnail->target_id = $entity->field_media_az_image->target_id;
   }
 }

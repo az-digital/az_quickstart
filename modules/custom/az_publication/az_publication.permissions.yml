@@ -1,0 +1,67 @@
+add author entities:
+  title: 'Create new Author entities'
+
+administer author entities:
+  title: 'Administer Author entities'
+  description: 'Allow to access the administration form to configure Author entities.'
+  restrict access: true
+
+delete author entities:
+  title: 'Delete Author entities'
+
+edit author entities:
+  title: 'Edit Author entities'
+
+view published author entities:
+  title: 'View published Author entities'
+
+view unpublished author entities:
+  title: 'View unpublished Author entities'
+
+view all author revisions:
+  title: 'View all Author revisions'
+
+revert all author revisions:
+  title: 'Revert all Author revisions'
+  description: 'Role requires permission <em>view Author revisions</em> and <em>edit rights</em> for author entities in question or <em>administer author entities</em>.'
+
+delete all author revisions:
+  title: 'Delete all revisions'
+  description: 'Role requires permission to <em>view Author revisions</em> and <em>delete rights</em> for author entities in question or <em>administer author entities</em>.'
+
+add publication type entities:
+  title: 'Create new Publication Type entities'
+
+administer publication type entities:
+  title: 'Administer Publication Type entities'
+  description: 'Allow to access the administration form to configure Publication Type entities.'
+  restrict access: true
+
+delete publication type entities:
+  title: 'Delete Publication Type entities'
+
+edit publication type entities:
+  title: 'Edit Publication Type entities'
+
+view enabled publication type entities:
+  title: 'View enabled Publication Type entities'
+
+view disabled publication type entities:
+  title: 'View disabled Publication Type entities'
+
+view all publication type revisions:
+  title: 'View all Publication Type revisions'
+
+revert all publication type revisions:
+  title: 'Revert all Publication Type revisions'
+  description: 'Role requires permission <em>view Publication Type revisions</em> and <em>edit rights</em> for publication type entities in question or <em>administer publication type entities</em>.'
+
+delete all publication type revisions:
+  title: 'Delete all Publication Type revisions'
+  description: 'Role requires permission to <em>view Publication Type revisions</em> and <em>delete rights</em> for publication type entities in question or <em>administer publication type entities</em>.'
+
+disable publication type entities:
+  title: 'Disable Publication Type entities'
+
+enable publication type entities:
+  title: 'Enable Publication Type entities'

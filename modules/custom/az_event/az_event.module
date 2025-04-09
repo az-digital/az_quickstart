@@ -5,17 +5,32 @@
  * Contains az_event.module.
  */
 
-use Drupal\node\Entity\NodeType;
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Render\Element;
+use Drupal\node\Entity\NodeType;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_theme().
  */
 function az_event_theme($existing, $type, $theme, $path) {
   return [
+    'az_event_calendar_add_button' => [
+      'variables' => [
+        'title' => NULL,
+        'start_date' => NULL,
+        'end_date' => NULL,
+        'description' => NULL,
+        'location' => NULL,
+        'modal' => NULL,
+        'attributes' => NULL,
+      ],
+      'render element' => 'children',
+    ],
     'field__node__az_event' => [
       'template' => 'field--node--az-event',
       'base hook' => 'field',
@@ -70,7 +85,7 @@ function az_event_preprocess_field(&$variables, $hook) {
 function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   // We only know what to do with event pseudo fields if our date seems defined.
-  if ($entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
+  if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
     $timestamp = $entity->field_az_event_date->value;
     $formatter = \Drupal::service('date.formatter');
 
@@ -90,6 +105,105 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
           '#type' => 'markup',
           '#markup' => Html::escape($formatter->format($timestamp, 'az_event_day')),
         ];
+      }
+    }
+
+    // For the full content view mode, modify the display of recurring events.
+    if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
+      $now = \Drupal::time()->getCurrentTime();
+      /** @var \Drupal\Core\Field\FieldItemList $event_dates */
+      $event_dates = $entity->field_az_event_date;
+      $number_of_occurrences = $event_dates->count();
+      if ($number_of_occurrences > 1) {
+        // Initialize the accordion body build array.
+        $accordion_body = $build['field_az_event_date'];
+        foreach ($entity->field_az_event_date as $item) {
+          unset($accordion_body[$item->getName()]);
+        }
+        $item_index = 0;
+
+        // Add any upcoming occurrences to the accordion body.
+        $next_occurrence = NULL;
+        $add_to_calendar_button = NULL;
+        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $item */
+        foreach ($entity->field_az_event_date as $item) {
+          if (!empty($item->end_value) && $item->end_value > $now) {
+            if (!isset($next_occurrence)) {
+              $next_occurrence = $item->getName();
+              $upcoming_events_heading = t("Upcoming Events");
+              $accordion_body[$item_index++] = [
+                '#markup' => "<h3 class='h5 mt-0'>{$upcoming_events_heading}</h3>",
+              ];
+              // Add to Calendar button for an event with multiple occurrences.
+              $add_to_calendar_button = [
+                '#theme' => 'az_event_calendar_add_button',
+                '#title' => $entity->getTitle(),
+                '#start_date' => $item->value ?? '',
+                '#end_date' => $item->end_value ?? '',
+                '#description' => $entity->field_az_body->value ?? '',
+                '#location' => $entity->field_az_location->title ?? '',
+                '#modal' => Html::getUniqueId('calendar-link-modal'),
+                '#attributes' => ['class' => 'mb-4'],
+              ];
+            }
+            $accordion_body[$item_index++] = $build['field_az_event_date'][$item->getName()];
+          }
+        }
+
+        // Add any past occurrences to the accordion body.
+        if (!isset($next_occurrence) || $next_occurrence !== 0) {
+          $past_events_heading = t("Past Events");
+          $accordion_body[$item_index++] = [
+            '#markup' => "<h3 class='h5" . (isset($next_occurrence) ? '' : ' mt-0') . "'>{$past_events_heading}</h3>",
+          ];
+          for ($i = 0; $i < ($next_occurrence ?? $number_of_occurrences); $i++) {
+            $accordion_body[$item_index++] = $build['field_az_event_date'][$i];
+          }
+        }
+
+        // Replace/unset the items in the build array for the field.
+        $item_index = 0;
+        if (isset($next_occurrence)) {
+          $build['field_az_event_date'][$item_index] = $build['field_az_event_date'][$next_occurrence];
+          $next_event_text = t("Next event");
+          $build['field_az_event_date'][$item_index]['#prefix'] = "<div class='mb-3'><strong>{$next_event_text}:</strong> ";
+          $build['field_az_event_date'][$item_index]['#suffix'] = '</div>';
+          $item_index++;
+          if (isset($add_to_calendar_button)) {
+            $build['field_az_event_date'][$item_index] = $add_to_calendar_button;
+            $item_index++;
+          }
+        }
+        $build['field_az_event_date'][$item_index++] = [
+          '#theme' => 'az_accordion',
+          '#title' => t("View all occurrences"),
+          '#body' => $accordion_body,
+          '#attributes' => ['class' => 'accordion'],
+          '#accordion_item_id' => "event-" . $entity->id(),
+          '#collapsed' => 'collapse',
+          '#aria_expanded' => 'false',
+        ];
+        for ($i = $item_index; $i < $number_of_occurrences; $i++) {
+          unset($build['field_az_event_date'][$i]);
+        }
+      }
+      else {
+        // Add to Calendar button for an event with a single occurrence.
+        foreach ($entity->field_az_event_date as $item) {
+          if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
+            $build['field_az_event_date'][] = [
+              '#theme' => 'az_event_calendar_add_button',
+              '#title' => $entity->getTitle(),
+              '#start_date' => $item->value ?? '',
+              '#end_date' => $item->end_value ?? '',
+              '#description' => $entity->field_az_body->value ?? '',
+              '#location' => $entity->field_az_location->title ?? '',
+              '#modal' => Html::getUniqueId('calendar-link-modal'),
+              '#attributes' => ['class' => 'mt-3'],
+            ];
+            break;
+          }
+        }
       }
     }
   }
@@ -164,4 +278,64 @@ function az_event_preprocess_views_view(&$variables) {
     }
   }
 
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Hide the event view category search if there are no options.
+ */
+function az_event_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $view = $form_state->get('view');
+  if (($view->id() === 'az_events') && ($view->current_display === 'page_1')) {
+
+    // Check to see if the event category filter seems to exist in this display.
+    if (isset($form['term_node_tid_depth'])) {
+      if (isset($form['term_node_tid_depth']['#options']) &&
+        is_array($form['term_node_tid_depth']['#options'])) {
+        // We will only show the category filter in some cases.
+        $keep_filter = TRUE;
+
+        // Get the arguments statically, as this hook is called multiple times.
+        // At some points in the request, the arguments disappear.
+        $view_args = &drupal_static(__FUNCTION__);
+        if (!isset($view_args)) {
+          $view_args = $view->args;
+        }
+
+        // Check if our event category filter doesn't contain multiple terms.
+        // The implication is this site probably doesn't use this vocabulary.
+        if (count($form['term_node_tid_depth']['#options']) <= 1) {
+          $keep_filter = FALSE;
+        }
+
+        // Check if we seem to have contextual filter arguments.
+        if (isset($view_args) && is_array($view_args) && !empty($view_args)) {
+          $keep_filter = FALSE;
+        }
+
+        // Hide the category filter if either of the above were the case.
+        // Our goal is to hide the filter if it conflicts or has no terms.
+        if (!$keep_filter) {
+          $form['term_node_tid_depth']['#access'] = FALSE;
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Sets the Thumbnail Image field to match the first item of the
+ * "Featured Images" field if the Use Featured Image as Thumbnail
+ * checkbox is checked.
+ */
+function az_event_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_event'
+    && $entity instanceof NodeInterface
+    && !empty($entity->get('field_az_featured_image_as_thumb')->getValue()[0]['value'])) {
+    $entity->get('field_az_media_thumbnail_image')->target_id = $entity->get('field_az_photos')->target_id;
+  }
 }

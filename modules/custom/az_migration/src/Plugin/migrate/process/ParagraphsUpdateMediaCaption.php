@@ -2,18 +2,16 @@
 
 namespace Drupal\az_migration\Plugin\migrate\process;
 
+use Drupal\media\Entity\Media;
+use Drupal\migrate\Attribute\MigrateProcess;
 use Drupal\migrate\MigrateExecutableInterface;
 use Drupal\migrate\ProcessPluginBase;
 use Drupal\migrate\Row;
-use Drupal\media\Entity\Media;
 
 /**
  * Process PLugin to update media caption for paragraphs.
- *
- * @MigrateProcessPlugin(
- *   id = "az_paragraphs_media_caption"
- * )
  */
+#[MigrateProcess('az_paragraphs_media_caption')]
 class ParagraphsUpdateMediaCaption extends ProcessPluginBase {
 
   /**

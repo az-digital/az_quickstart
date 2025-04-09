@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.az_author.field_az_author_fname
+  module:
+    - az_publication
+id: az_author.az_author.field_az_author_fname
+field_name: field_az_author_fname
+entity_type: az_author
+bundle: az_author
+label: 'First Name'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

@@ -3,22 +3,27 @@
 namespace Drupal\az_accordion\Plugin\Field\FieldType;
 
 use Drupal\Component\Utility\Random;
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\DataDefinition;
 
 /**
  * Defines the 'az_accordion' field type.
  *
- * @FieldType(
- *   id = "az_accordion",
- *   label = @Translation("Accordion"),
- *   category = @Translation("AZ Quickstart"),
- *   default_widget = "az_accordion",
- *   default_formatter = "az_accordion_default"
- * )
+ * @property string $title
+ * @property string $body
+ * @property string $body_format
+ * @property bool $collapsed
  */
+#[FieldType(
+  id: "az_accordion",
+  label: new TranslatableMarkup("Accordion"),
+  default_widget: "az_accordion",
+  default_formatter: "az_accordion_default",
+)]
 class AZAccordionItem extends FieldItemBase {
 
   /**
@@ -27,7 +32,6 @@ class AZAccordionItem extends FieldItemBase {
   public function isEmpty() {
     $title = $this->get('title')->getValue();
     $body = $this->get('body')->getValue();
-    $collapsed = $this->get('collapsed')->getValue();
     return empty($title) && empty($body);
   }
 
@@ -42,7 +46,7 @@ class AZAccordionItem extends FieldItemBase {
       ->setLabel(t('Accordion Item'));
     $properties['body_format'] = DataDefinition::create('string')
       ->setLabel(t('Accordion Item Text Format'));
-    $properties['collapsed'] = DataDefinition::create('string')
+    $properties['collapsed'] = DataDefinition::create('boolean')
       ->setLabel(t('Collapsed by Default'));
 
     return $properties;

@@ -11,13 +11,14 @@ use Drupal\Core\Url;
  * Implements hook_toolbar_alter().
  */
 function az_google_tag_toolbar_alter(&$items) {
-  if (\Drupal::service('module_handler')->moduleExists('az_core')) {
+  if (\Drupal::service('module_handler')->moduleExists('az_core') &&
+      \Drupal::currentUser()->hasPermission('access az_quickstart_analytics')) {
     $site_url = \Drupal::request()->getHost();
     $items['az_quickstart']['tray']['az_links']['#links']['analytics'] = [
       'title' => t('Analytics Dashboard'),
-      'url' => Url::fromUri('https://datastudio.google.com/u/0/reporting/938c3f2a-6dbf-4968-9edd-8963450b4200/page/kTLWB', [
+      'url' => Url::fromUri('https://lookerstudio.google.com/reporting/ef02c272-afe4-4862-b4bd-8706e3436b2f/page/nbaTD', [
         'query' => [
-          'params' => '{"df62":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '/"}',
+          'params' => '{"df21":"include%EE%80%800%EE%80%80IN%EE%80%80' . $site_url . '"}',
         ],
         'absolute' => TRUE,
       ]),
@@ -27,4 +28,22 @@ function az_google_tag_toolbar_alter(&$items) {
       ],
     ];
   }
+}
+
+/**
+ * Checks if the consent mode config setting is enabled for any Google Tags.
+ *
+ * @return bool
+ *   TRUE if consent mode is enabled for any Google Tags, FALSE otherwise.
+ */
+function az_google_tag_consent_mode_enabled() {
+  $google_tag_storage = \Drupal::entityTypeManager()->getStorage('google_tag_container');
+  $consent_enabled_count = count(
+  // Find enabled Google tags with a consent mode value of 1 or TRUE.
+    $google_tag_storage->loadByProperties([
+      'advanced_settings.consent_mode' => [1, TRUE],
+      'status' => [1, TRUE],
+    ])
+  );
+  return $consent_enabled_count > 0;
 }

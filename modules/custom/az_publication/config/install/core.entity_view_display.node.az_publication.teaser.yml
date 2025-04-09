@@ -1,0 +1,75 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.az_publication.field_az_accessed_date
+    - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_contributors
+    - field.field.node.az_publication.field_az_main_content
+    - field.field.node.az_publication.field_az_publication_abstract
+    - field.field.node.az_publication.field_az_publication_approximate
+    - field.field.node.az_publication.field_az_publication_category
+    - field.field.node.az_publication.field_az_publication_container
+    - field.field.node.az_publication.field_az_publication_date
+    - field.field.node.az_publication.field_az_publication_date_type
+    - field.field.node.az_publication.field_az_publication_doi
+    - field.field.node.az_publication.field_az_publication_extra_links
+    - field.field.node.az_publication.field_az_publication_image
+    - field.field.node.az_publication.field_az_publication_isbn
+    - field.field.node.az_publication.field_az_publication_issn
+    - field.field.node.az_publication.field_az_publication_issue
+    - field.field.node.az_publication.field_az_publication_link
+    - field.field.node.az_publication.field_az_publication_location
+    - field.field.node.az_publication.field_az_publication_mapped_type
+    - field.field.node.az_publication.field_az_publication_media
+    - field.field.node.az_publication.field_az_publication_page
+    - field.field.node.az_publication.field_az_publication_pmcid
+    - field.field.node.az_publication.field_az_publication_pmid
+    - field.field.node.az_publication.field_az_publication_publisher
+    - field.field.node.az_publication.field_az_publication_type
+    - field.field.node.az_publication.field_az_publication_version
+    - field.field.node.az_publication.field_az_publication_volume
+    - node.type.az_publication
+  module:
+    - user
+id: node.az_publication.teaser
+targetEntityType: node
+bundle: az_publication
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  az_publication_bibliography: true
+  field_az_accessed_date: true
+  field_az_authors: true
+  field_az_contributors: true
+  field_az_main_content: true
+  field_az_publication_abstract: true
+  field_az_publication_approximate: true
+  field_az_publication_category: true
+  field_az_publication_container: true
+  field_az_publication_date: true
+  field_az_publication_date_type: true
+  field_az_publication_doi: true
+  field_az_publication_extra_links: true
+  field_az_publication_image: true
+  field_az_publication_isbn: true
+  field_az_publication_issn: true
+  field_az_publication_issue: true
+  field_az_publication_link: true
+  field_az_publication_location: true
+  field_az_publication_mapped_type: true
+  field_az_publication_media: true
+  field_az_publication_page: true
+  field_az_publication_pmcid: true
+  field_az_publication_pmid: true
+  field_az_publication_publisher: true
+  field_az_publication_type: true
+  field_az_publication_version: true
+  field_az_publication_volume: true
+  smart_title: true

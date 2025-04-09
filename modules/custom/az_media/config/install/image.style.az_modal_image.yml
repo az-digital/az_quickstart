@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - crop.type.az_modal_image
+  module:
+    - crop
+name: az_modal_image
+label: 'Modal Image'
+effects:
+  dd4488bc-2648-465f-9a5e-bbe80a1bc548:
+    uuid: dd4488bc-2648-465f-9a5e-bbe80a1bc548
+    id: crop_crop
+    weight: 1
+    data:
+      crop_type: az_modal_image
+      automatic_crop_provider: null
+  1598261e-a2a1-49ee-9858-ad153c6fbe31:
+    uuid: 1598261e-a2a1-49ee-9858-ad153c6fbe31
+    id: image_scale_and_crop
+    weight: 2
+    data:
+      width: 568
+      height: 630
+      anchor: center-center
+  cbdd1d84-2c06-4fac-98f4-570ec68b5678:
+    uuid: cbdd1d84-2c06-4fac-98f4-570ec68b5678
+    id: image_convert
+    weight: 3
+    data:
+      extension: webp

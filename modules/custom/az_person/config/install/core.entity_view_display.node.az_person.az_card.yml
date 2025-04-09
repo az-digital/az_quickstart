@@ -13,15 +13,141 @@ dependencies:
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
     - field.field.node.az_person.field_az_media_image
+    - field.field.node.az_person.field_az_netid
     - field.field.node.az_person.field_az_person_category
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_suffix
     - field.field.node.az_person.field_az_titles
     - node.type.az_person
   module:
+    - field_group
+    - smart_title
     - telephone
     - user
+third_party_settings:
+  field_group:
+    group_card:
+      children:
+        - group_link
+        - group_card_body
+      label: Card
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: card
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card_body:
+      children:
+        - group_title_heading
+        - field_az_titles
+        - group_margin_top
+      label: 'Card Body'
+      parent_name: group_card
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: card-body
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_link:
+      children:
+        - field_az_media_image
+      label: 'Image Link'
+      parent_name: group_card
+      region: content
+      weight: 1
+      format_type: link
+      format_settings:
+        classes: hide-contextual-links
+        show_empty_fields: false
+        id: ''
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
+        target_attribute: default
+    group_margin_top:
+      children:
+        - field_az_phones
+        - field_az_email
+        - field_az_pronouns
+      label: 'Margin Top'
+      parent_name: group_card_body
+      region: content
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: mt-3
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_title_heading:
+      children:
+        - group_title_link
+      label: 'Title Heading'
+      parent_name: group_card_body
+      region: content
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: 'h5 mt-0'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: h3
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_title_link:
+      children:
+        - smart_title
+        - field_az_suffix
+      label: 'Title Link'
+      parent_name: group_title_heading
+      region: content
+      weight: 1
+      format_type: link
+      format_settings:
+        classes: ''
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        target: custom_uri
+        custom_uri: '[node:az-canonical-url]'
+        target_attribute: default
+  smart_title:
+    enabled: true
+    settings:
+      smart_title__link: false
+      smart_title__tag: ''
+      smart_title__classes: {  }
 id: node.az_person.az_card
 targetEntityType: node
 bundle: az_person
@@ -32,23 +158,7 @@ content:
     label: hidden
     settings: {  }
     third_party_settings: {  }
-    weight: 2
-    region: content
-  field_az_fname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 4
-    region: content
-  field_az_lname:
-    type: string
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    weight: 5
+    weight: 8
     region: content
   field_az_media_image:
     type: entity_reference_entity_view
@@ -57,7 +167,7 @@ content:
       view_mode: az_card_image
       link: false
     third_party_settings: {  }
-    weight: 0
+    weight: 2
     region: content
   field_az_phones:
     type: telephone_link
@@ -65,15 +175,23 @@ content:
     settings:
       title: ''
     third_party_settings: {  }
-    weight: 3
+    weight: 6
     region: content
   field_az_pronouns:
+    type: string
+    label: inline
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_az_suffix:
     type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 6
+    weight: 5
     region: content
   field_az_titles:
     type: string
@@ -81,15 +199,23 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    weight: 1
+    weight: 2
+    region: content
+  smart_title:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 4
     region: content
 hidden:
   field_az_address: true
   field_az_attachments: true
   field_az_body: true
   field_az_degrees: true
+  field_az_fname: true
   field_az_link: true
   field_az_links: true
+  field_az_lname: true
+  field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
   links: true

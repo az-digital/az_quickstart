@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+id: az_apa
+label: 'American Psychological Association Style (APA)'
+style: apa
+custom: false

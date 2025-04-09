@@ -1,0 +1,68 @@
+<?php
+
+/**
+ * @file
+ * Contains az_course.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function az_course_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the az_course module.
+    case 'help.page.az_course':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Imports courses from the schedule of classes service.') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function az_course_theme() {
+  return [
+    'field__node__field_az_course_instructor__az_course' => [
+      'template' => 'field--node--field-az-course-instructor--az-course',
+      'base hook' => 'field',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_migration_plugins_alter().
+ */
+function az_course_migration_plugins_alter(array &$migrations) {
+
+  if (!empty($migrations['az_courses'])) {
+    $courses = \Drupal::config('az_course.settings')->get('courses');
+    if (!empty($courses)) {
+      $matches = [];
+      $course_urls = [];
+      // Convert courses listed into actual URLs to migrate.
+      foreach ($courses as $course) {
+        if (preg_match("/^[[:space:]]*([[:alpha:]]+)[[:space:]]+([[:alnum:]]+)[[:space:]]*$/", $course, $matches)) {
+          $urls = \Drupal::service('az_course.search')->fetchUrls($matches[1], $matches[2]);
+          foreach ($urls as $url) {
+            $course_urls[] = $url;
+          }
+        }
+        elseif (preg_match("/^[[:space:]]*([[:alpha:]]+)[[:space:]]*$/", $course, $matches)) {
+          $options = \Drupal::service('az_course.search')->fetchOptions($matches[1]);
+          foreach ($options as $o) {
+            $course_urls[] = $o;
+          }
+        }
+      }
+      if (!empty($migrations['az_courses']['source']) && empty($migrations['az_courses']['source']['urls'])) {
+        $migrations['az_courses']['source']['urls'] = $course_urls;
+      }
+    }
+  }
+}

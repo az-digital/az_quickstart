@@ -1,0 +1,59 @@
+<?php
+
+/**
+ * @file
+ * Contains az_custom_menu_block.module.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Due to function name we only run on block_content_az_custom_menu_block_form.
+ * This is the creation form for az_custom_menu_block content.
+ */
+function az_custom_menu_block_form_block_content_az_custom_menu_block_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  // Default suggestion value.
+  $suggestion = 'sidebar';
+
+  // Get the choice for block plugin.
+  $plugin_id = $form_state->getValue(['field_az_block', '0', 'plugin_id'], '');
+
+  // Verify we seemingly chose a menu block.
+  if (strpos($plugin_id, 'menu_block:') === 0) {
+    // Block_field works by putting the block config form inside the widget.
+    // Verify menu_block suggestion element really seems to be present.
+    if (!empty($form['field_az_block']['widget'][0]['settings']['style']['suggestion'])) {
+      // Update the suggestion default.
+      $form['field_az_block']['widget'][0]['settings']['style']['suggestion']['#default_value'] = $suggestion;
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ */
+function az_custom_menu_block_preprocess_block(&$variables) {
+  if (isset($variables['configuration']['az_custom_menu_block']) &&
+      $variables['configuration']['az_custom_menu_block'] === 'az_custom_menu_block' &&
+      $variables['configuration']['suggestion'] === 'sidebar'
+  ) {
+    $variables['title_attributes']['class'][] = 'h4';
+    $variables['title_attributes']['class'][] = 'mt-0';
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK().
+ *
+ * Adds metadata about az_custom_menu_blocks.
+ */
+function az_custom_menu_block_preprocess_field__block_content__field_az_block__az_custom_menu_block(&$variables) {
+  if ($variables['element']['#bundle'] && $variables['element']['#bundle'] === 'az_custom_menu_block') {
+    foreach ($variables['items'] as $delta => $item) {
+      $variables['items'][$delta]['content']['#configuration']['az_custom_menu_block'] = 'az_custom_menu_block';
+    }
+  }
+}

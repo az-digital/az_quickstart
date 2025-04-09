@@ -10,11 +10,11 @@
 //phpcs:ignore Security.BadFunctions.EasyRFI.WarnEasyRFI
 require_once \Drupal::service('extension.list.theme')->getPath('az_barrio') . '/includes/common.inc';
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\File\Exception\FileException;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
-use Drupal\Core\Url;
 use Drupal\Core\StreamWrapper\StreamWrapperManager;
+use Drupal\Core\Url;
 
 /**
  * Implements hook_form_system_theme_settings_alter() for settings form.
@@ -24,6 +24,10 @@ use Drupal\Core\StreamWrapper\StreamWrapperManager;
  * Example on how to alter theme settings form
  */
 function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $form_state) {
+  // Disable bootstrap_barrio_source and bootstrap_barrio_library settings.
+  $form['bootstrap_barrio_source']['#access'] = FALSE;
+  $form['bootstrap_barrio_library']['#access'] = FALSE;
+
   $form['footer_logo']['#open'] = FALSE;
 
   // AZ Barrio settings.
@@ -113,7 +117,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   ];
-  unset($form['fonts']['bootstrap_icons']['bootstrap_barrio_bootstrap_icons']);
   unset($form['fonts']['icons']['bootstrap_barrio_icons']);
   unset($form['fonts']['bootstrap_icons']);
   $form['fonts']['icons'] = [
@@ -191,7 +194,30 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     ],
     '#default_value' => theme_get_setting('az_barrio_az_icons_source'),
   ];
-
+  $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_icons_cdn'] = [
+    '#type' => 'fieldset',
+    '#title' => t('Arizona Icons CDN Settings'),
+    '#states' => [
+      'visible' => [
+        ':input[name="az_barrio_az_icons_source"]' => ['value' => 'cdn'],
+      ],
+    ],
+  ];
+  $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_icons_cdn']['az_icons_cdn_version'] = [
+    '#type' => 'radios',
+    '#title' => t('Arizona Icons CDN version'),
+    '#options' => [
+      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_ICONS_STABLE_VERSION]),
+      'latest' => t('Latest tagged version. The most recently tagged stable release of Arizona Icons. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
+      'main' => t('Latest dev version. This is the tip of the main branch of Arizona Icons. Please do not use on production unless you are following the Arizona Icons project closely. Please report bugs to the AZ Digital team.'),
+    ],
+    '#default_value' => theme_get_setting('az_icons_cdn_version'),
+  ];
+  $form['fonts']['icons']['az_barrio_icons']['az_icons']['az_icons_minified'] = [
+    '#type'          => 'checkbox',
+    '#title'         => t('Use minified version of AZ Icons.'),
+    '#default_value' => theme_get_setting('az_icons_minified'),
+  ];
   // AZ Bootstrap settings.
   $form['azbs_settings'] = [
     '#type' => 'details',
@@ -228,8 +254,8 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#title' => t('AZ Bootstrap CDN version'),
     '#options' => [
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'latest' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      'main' => t('Latest dev version. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      'latest-2.x' => t('Latest tagged version. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
+      '2.x' => t('Latest dev version. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),
   ];
@@ -267,6 +293,9 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     '#description' => t('Responsive column classes for the parent <code>div</code> of the Header 1 and Header 2 regions. Should contain a string with classes separated by a space.'),
     '#default_value' => theme_get_setting('header_two_col_classes'),
   ];
+  // Add new AZ Barrio sidebar position option and help text.
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#options']['az-barrio-both-below'] = t('Both sides below on mobile');
+  $form['layout']['sidebar_position']['bootstrap_barrio_sidebar_position']['#description'] = t('Below the Bootstrap md breakpoint, the "Both sides" position places the Sidebar First region <strong>above</strong> the page content while the "Both sides below on mobile" position places both sidebar regions <strong>below</strong> the page content.');
   // Remove Navbar options.
   $form['affix']['navbar_top'] = [];
   $form['affix']['navbar'] = [];
@@ -351,11 +380,10 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['footer_logo']['settings']['footer_logo_upload'] = [
     '#type' => 'file',
     '#title' => t('Upload footer logo image'),
-    '#maxlength' => 40,
     '#description' => t("If you don't have direct file access to the server, use this field to upload your footer logo."),
     '#upload_validators' => [
-      'file_validate_extensions' => [
-        'png gif jpg jpeg apng svg',
+      'FileExtension' => [
+        'extensions' => 'png gif jpg jpeg apng svg webp',
       ],
     ],
   ];
@@ -440,7 +468,7 @@ function az_barrio_form_system_theme_settings_validate($form, FormStateInterface
 }
 
 /**
- * Helper function to determin if is a file.
+ * Helper function to determine if is a file.
  *
  * See: https://api.drupal.org/api/drupal/core%21modules%21system%21src%21Form%21ThemeSettingsForm.php/function/ThemeSettingsForm%3A%3AvalidatePath/8.2.x.
  */

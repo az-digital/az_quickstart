@@ -3,6 +3,7 @@
 namespace Drupal\az_core\Form;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Path\PathValidatorInterface;
@@ -57,6 +58,8 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface|null $typedConfigManager
+   *   The typed config manager.
    * @param \Drupal\Core\Routing\RouteBuilderInterface $route_builder
    *   The route builder.
    * @param \Drupal\Core\Routing\RouteProviderInterface $route_provider
@@ -68,8 +71,8 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * @param \Drupal\Core\Routing\RequestContext $request_context
    *   The request context.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, RouteBuilderInterface $route_builder, RouteProviderInterface $route_provider, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
-    parent::__construct($config_factory);
+  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface|null $typedConfigManager, RouteBuilderInterface $route_builder, RouteProviderInterface $route_provider, AliasManagerInterface $alias_manager, PathValidatorInterface $path_validator, RequestContext $request_context) {
+    parent::__construct($config_factory, $typedConfigManager);
 
     $this->routeBuilder = $route_builder;
     $this->routeProvider = $route_provider;
@@ -85,6 +88,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('router.builder'),
       $container->get('router.route_provider'),
       $container->get('path_alias.manager'),
@@ -198,6 +202,20 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       ],
     ];
 
+    $form['enterprise_attributes'] = [
+      '#type' => 'details',
+      '#title' => t('Enterprise attributes'),
+      '#open' => FALSE,
+      '#access' => $this->currentUser()->hasPermission('administer site configuration'),
+    ];
+
+    $form['enterprise_attributes']['enterprise_attributes_locked'] = [
+      '#title' => t('Enterprise attributes edits prohibited'),
+      '#type' => 'checkbox',
+      '#description' => t("With this setting enabled, edits to the enterprise attributes taxonomy will be prohibited (recommended)."),
+      '#default_value' => $az_core_config->get('enterprise_attributes.locked'),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -253,7 +271,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
    * @param array $element
    *   An associative array containing the properties and children of the
    *   generic form element.
-   * @param Drupal\Core\Form\FormStateInterface $form_state
+   * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    * @param array $complete_form
    *   The complete form structure.
@@ -288,6 +306,7 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
     $this->config('az_core.settings')
       ->set('monitoring_page.enabled', $form_state->getValue('monitoring_page_enabled'))
       ->set('monitoring_page.path', $form_state->getValue('monitoring_page_path'))
+      ->set('enterprise_attributes.locked', $form_state->getValue('enterprise_attributes_locked'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();

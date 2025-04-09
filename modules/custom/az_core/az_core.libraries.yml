@@ -1,0 +1,21 @@
+claro-node-form-overrides:
+  css:
+    layout:
+      css/claro-node-form-overrides.css: {}
+  dependencies:
+    - claro/node-form
+arizona-bootstrap-node-form-overrides:
+  css:
+    layout:
+      css/arizona-bootstrap-node-form-overrides.css: {}
+  dependencies:
+    - az_barrio/arizona-bootstrap
+    - az_barrio/button-no-conflict
+az-enterprise-attributes:
+  css:
+    component:
+      css/az-enterprise-attributes.css: {}
+az-core-chosen:
+  css:
+    component:
+      css/az-core-chosen.css: {}

@@ -1,0 +1,193 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_views_side_by_side.field_az_first_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_button
+    - field.field.paragraph.az_views_side_by_side.field_az_second_view_title
+    - field.field.paragraph.az_views_side_by_side.field_az_title
+    - field.field.paragraph.az_views_side_by_side.field_az_view_reference
+    - paragraphs.paragraphs_type.az_views_side_by_side
+  module:
+    - field_group
+    - link
+    - viewsreference
+third_party_settings:
+  field_group:
+    group_first_view:
+      children: {  }
+      label: 'First View'
+      region: content
+      parent_name: group_first_view_section
+      weight: 1
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        element: span
+        show_label: true
+        label_element: h3
+        label_element_classes: 'h4 pt-3 mt-3 mb-0 text-black'
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_first_view_hr:
+      children: {  }
+      label: 'The first view is displayed FIRST on mobile screens and on the LEFT on desktop screens. The title and button are optional.'
+      region: content
+      parent_name: group_first_view_section
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: 'mb-3 mr-2'
+        show_empty_fields: true
+        id: ''
+        element: hr
+        show_label: true
+        label_element: p
+        label_element_classes: 'form-item__description mb-4 pt-1'
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_second_view_hr:
+      children: {  }
+      label: 'The second view is displayed SECOND on mobile screens and on the RIGHT on desktop screens. The title and button are optional.'
+      region: content
+      parent_name: group_second_view_section
+      weight: 4
+      format_type: html_element
+      format_settings:
+        classes: 'mb-3 mr-2'
+        show_empty_fields: true
+        id: ''
+        element: hr
+        show_label: true
+        label_element: p
+        label_element_classes: 'form-item__description mb-4 pt-1'
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_second_view:
+      children: {  }
+      label: 'Second View'
+      region: content
+      parent_name: group_second_view_section
+      weight: 3
+      format_type: html_element
+      format_settings:
+        classes: ''
+        show_empty_fields: true
+        id: ''
+        element: span
+        show_label: true
+        label_element: h3
+        label_element_classes: 'h4 pt-3 mt-3 mb-0 text-black'
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: false
+    group_first_view_section:
+      children:
+        - group_first_view
+        - group_first_view_hr
+        - field_az_title
+        - field_az_view_reference
+        - field_az_first_view_button
+      label: 'First View Section'
+      region: content
+      parent_name: ''
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'bg-gray-100 px-3 pb-1 mr-2'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+    group_second_view_section:
+      children:
+        - group_second_view
+        - group_second_view_hr
+        - field_az_second_view_title
+        - field_az_second_view
+        - field_az_second_view_button
+      label: 'Second View Section'
+      region: content
+      parent_name: ''
+      weight: 2
+      format_type: html_element
+      format_settings:
+        classes: 'bg-gray-100 px-3 pb-1 mr-2'
+        show_empty_fields: false
+        id: ''
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+        required_fields: true
+id: paragraph.az_views_side_by_side.default
+targetEntityType: paragraph
+bundle: az_views_side_by_side
+mode: default
+content:
+  field_az_first_view_button:
+    type: link_default
+    weight: 5
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_second_view:
+    type: viewsreference_select
+    weight: 6
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_second_view_button:
+    type: link_default
+    weight: 7
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+  field_az_second_view_title:
+    type: string_textfield
+    weight: 5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_title:
+    type: string_textfield
+    weight: 3
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_az_view_reference:
+    type: viewsreference_select
+    weight: 4
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

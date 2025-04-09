@@ -37,6 +37,9 @@ source:
       name: field_az_main_content
       selector: az_main_content
     -
+      name: az_marketing_page_style
+      selector: az_marketing_page_style
+    -
       name: az_summary
       selector: az_summary
 process:
@@ -69,8 +72,12 @@ process:
         - az_demo_text_paragraph
         - az_demo_text_background_paragraph
         - az_demo_text_media_paragraph
+        - az_demo_splitscreen_paragraph
+        - az_demo_card_paragraph
+        - az_demo_view_paragraph
+        - az_demo_paragraph_gallery
+        - az_demo_paragraph_accordion
       source: '@pseudo_exploded_paragraphs'
-
 
   field_az_main_content:
     plugin: sub_process
@@ -79,12 +86,33 @@ process:
       target_id: '0'
       target_revision_id: '1'
 
+  field_az_summary/value: az_summary
+  field_az_summary/format:
+    plugin: default_value
+    default_value: plain_text
+  field_az_marketing_page_style: az_marketing_page_style
+
   'field_az_media_image/target_id':
     -
       plugin: migration_lookup
       source: filename
       migration:
         - az_demo_image_file
+
+  pseudo_exploded_categories:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: az_page_category
+    -
+      plugin: explode
+      delimiter: '|'
+
+  field_az_page_category:
+    -
+      plugin: migration_lookup
+      migration: az_demo_page_categories
+      source: '@pseudo_exploded_categories'
 
 destination:
   plugin: entity:node
@@ -96,6 +124,12 @@ migration_dependencies:
     - az_demo_text_paragraph
     - az_demo_text_background_paragraph
     - az_demo_text_media_paragraph
+    - az_demo_splitscreen_paragraph
+    - az_demo_card_paragraph
+    - az_demo_view_paragraph
+    - az_demo_page_categories
+    - az_demo_paragraph_gallery
+    - az_demo_paragraph_accordion
 
 dependencies:
   enforced:

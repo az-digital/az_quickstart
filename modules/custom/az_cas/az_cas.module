@@ -5,10 +5,10 @@
  * Contains az_cas.module.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\user\RoleInterface;
 use Drupal\Component\Utility\Html;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\user\RoleInterface;
 
 /**
  * Implements hook_help().
@@ -67,5 +67,69 @@ function az_cas_validate_roles(array &$form, FormStateInterface $form_state) {
       'roles',
       t('You do not have permission to assign all of the submitted roles.')
     );
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Modify the user login form to put CAS login below Drupal login.
+ */
+function az_cas_form_user_login_form_alter(&$form, FormStateInterface $form_state) {
+  $cas_config = \Drupal::config('cas.settings');
+  $az_cas_config = \Drupal::config('az_cas.settings');
+
+  // Cached form must be busted if we alter AZ CAS settings.
+  $form['#cache']['tags'] = array_merge($form['#cache']['tags'], $az_cas_config->getCacheTags());
+
+  // Adjust the weight of the CAS login link (if enabled).
+  $login_link_enabled = $cas_config->get('login_link_enabled');
+  if ($login_link_enabled) {
+    $form['cas_login_link']['#weight'] = 100;
+  }
+
+  $disable_login_form = $az_cas_config->get('disable_login_form');
+  if ($disable_login_form) {
+    $form_elements = ['name', 'pass', 'actions'];
+    foreach ($form_elements as $element) {
+      $form[$element]['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Modify the hook load order.
+ */
+function az_cas_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'form_alter' && isset($implementations['az_cas'])) {
+
+    // Move az_cas_form_alter() to the end of the list.
+    // \Drupal::moduleHandler()->getImplementations()
+    // iterates through $implementations with a foreach loop which PHP iterates
+    // in the order that the items were added, so to move an item to the end of
+    // the array, we remove it and then add it.
+    $group = $implementations['az_cas'];
+    unset($implementations['az_cas']);
+    $implementations['az_cas'] = $group;
+  }
+}
+
+/**
+ * Implements hook_menu_local_actions_alter().
+ *
+ * Customizes "Add CAS User(s)" menu local action and optionally disables the
+ * standard "Add user" menu local action on the admin user listing page.
+ */
+function az_cas_menu_local_actions_alter(&$local_actions) {
+  $az_cas_config = \Drupal::config('az_cas.settings');
+
+  $local_actions['cas.bulk_add_cas_users']['title'] = t('Add user(s) with NetID');
+  $local_actions['cas.bulk_add_cas_users']['weight'] = -1;
+
+  $disable_admin_add_user_button = $az_cas_config->get('disable_admin_add_user_button');
+  if ($disable_admin_add_user_button) {
+    unset($local_actions['user_admin_create']);
   }
 }

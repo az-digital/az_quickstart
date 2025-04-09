@@ -1,0 +1,5 @@
+az_publication_import.admin.content:
+  title: 'Quickstart Publication Import'
+  description: 'Import publication information from other sources.'
+  route_name: az_publication_import.az_publication_import_page
+  parent: system.admin_content
