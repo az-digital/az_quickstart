@@ -9,7 +9,7 @@ dependencies:
   - az_carousel
   - drupal:migrate
   - drupal:migrate_drupal
+  - migmag:migmag_process
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
-  - migmag:migmag_process
 
