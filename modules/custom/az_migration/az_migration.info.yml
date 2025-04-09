@@ -6,9 +6,10 @@ package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 dependencies:
-  - drupal:migmag_process
-  - drupal:migrate
-  - drupal:migrate_plus
-  - drupal:migrate_tools
-  - drupal:migrate_drupal
   - az_carousel
+  - drupal:migrate
+  - drupal:migrate_drupal
+  - migrate_plus:migrate_plus
+  - migrate_tools:migrate_tools
+  - migmag:migmag_process
+
