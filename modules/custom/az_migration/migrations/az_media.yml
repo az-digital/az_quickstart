@@ -18,6 +18,7 @@ process:
     -
       plugin: default_value
       default_value: 0
+
   # Bundles must exist, previous machine names were image, document, etc.
   bundle:
     -
