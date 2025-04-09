@@ -187,9 +187,6 @@
             "drupal/inline_entity_form": {
                 "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
             },
-            "drupal/media_migration": {
-                "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
-            },
             "drupal/menu_block": {
                 "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
             },
