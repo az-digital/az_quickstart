@@ -51,7 +51,7 @@ class AzFileEntity extends FieldableEntity {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, MigrationInterface $migration = NULL) {
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition, ?MigrationInterface $migration = NULL) {
     return new static(
       $configuration,
       $plugin_id,
@@ -101,10 +101,16 @@ class AzFileEntity extends FieldableEntity {
    *
    * @return string
    *   The expression for getting the file extension.
+   *
+   * @throws \InvalidArgumentException
+   *   Thrown when the provided connection is invalid.
    */
   protected function getExtensionExpression($connection = NULL) {
     $db = $connection ?? $this->getDatabase();
-    assert($db instanceof Connection);
+
+    if (!($db instanceof Connection)) {
+      throw new InvalidArgumentException('Expected instance of \Drupal\Core\Database\Connection.');
+    }
 
     return $this->dbIsSqLite($db)
       ? "REPLACE(fm.uri, RTRIM(fm.uri, REPLACE(fm.uri, '.', '')), '')"
@@ -185,25 +191,33 @@ class AzFileEntity extends FieldableEntity {
    *
    * @return \Drupal\Core\Database\Query\SelectInterface
    *   The base query.
+   *
+   * @throws \InvalidArgumentException
+   *   Thrown when the provided connection is invalid.
    */
   protected function getFileEntityBaseQuery($connection = NULL, bool $distinct = TRUE) {
     $db = $connection ?? $this->getDatabase();
-    assert($db instanceof Connection);
+    if (!($db instanceof Connection)) {
+      throw new InvalidArgumentException('Expected instance of \\Drupal\\Core\\Database\\Connection.');
+    }
+
     $options = [
       'fetch' => \PDO::FETCH_ASSOC,
     ];
+
     $query = $db->select('file_managed', 'fm', $options);
     if ($distinct) {
       $query->distinct();
     }
+
     $query->fields('fm', ['type'])
       ->condition('fm.status', TRUE)
       ->condition('fm.uri', 'temporary://%', 'NOT LIKE')
       ->condition('fm.type', 'undefined', '<>');
     $query->addExpression($this->getSchemeExpression($db), 'scheme');
 
-    // Omit all files that are used solely for a user picture: they do not
-    // belong in Drupal's media library.
+    // Omit all files that are used solely for a user picture:
+    // They do not belong in Drupal's media library.
     $query->condition('fm.fid', $this->getUserPictureOnlyFidsQuery($db), 'NOT IN');
     $query->condition('fm.fid', $this->getWebformOrUserPictureOnlyFidsQuery($db), 'NOT IN');
 
@@ -218,10 +232,16 @@ class AzFileEntity extends FieldableEntity {
    *
    * @return string
    *   The expression for the DB for getting the URI scheme.
+   *
+   * @throws \InvalidArgumentException
+   *   Thrown when the provided connection is invalid.
    */
   protected function getSchemeExpression($connection = NULL) {
     $db = $connection ?? $this->getDatabase();
-    assert($db instanceof Connection);
+    if (!($db instanceof Connection)) {
+      throw new InvalidArgumentException('Expected instance of \\Drupal\\Core\\Database\\Connection.');
+    }
+
     return $this->dbIsSqLite($db)
       ? "SUBSTRING(fm.uri, 1, INSTR(fm.uri, '://') - 1)"
       : "SUBSTRING(fm.uri, 1, POSITION('://' IN fm.uri) - 1)";
