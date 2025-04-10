@@ -74,6 +74,10 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: cs2pr, phpcs
       - uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
@@ -81,7 +85,7 @@ jobs:
       - name: Run phpcs
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          composer phpcs
+          phpcs -p --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | cs2pr
 
   phpstan:
     name: PHPStan
