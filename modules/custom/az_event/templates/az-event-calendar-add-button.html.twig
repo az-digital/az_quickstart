@@ -10,9 +10,9 @@
 
 <div{{ attributes }}>
   {# Button trigger modal #}
-  <button type="button" class="btn btn-hollow-primary btn-sm d-flex mr-2" data-toggle="modal" data-target="#{{ modal }}">
-    <span class="material-icons-sharp mr-2">event</span>
-    <span class="my-auto" style="text-transform: none">{{ 'Add to Calendar'|t }}</span>
+  <button type="button" class="btn btn-hollow-primary btn-sm d-flex mr-2" style="text-transform: none" data-toggle="modal" data-target="#{{ modal }}">
+    <span aria-hidden="true" class="material-icons-sharp mr-2">event</span>
+    <span class="my-auto">{{ 'Add to Calendar'|t }}</span>
   </button>
 
   {# Modal #}
