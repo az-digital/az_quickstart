@@ -789,4 +789,5 @@ form.webform-submission-form {
 .align-left ~ ul,
 .align-left ~ ol {
   overflow: auto;
+  overflow-wrap: anywhere;
 }
