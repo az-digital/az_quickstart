@@ -41,7 +41,7 @@
           <p class="mb-3">{{ 'Select your calendar type below:'|t }}</p>
           <div class="text-center">
           {% for calendar_type,name in calendar_types %}
-            {% set link = calendar_link(calendar_type, title, date(start_date), date(end_date), FALSE, description, location) %}
+            {% set link = calendar_link(calendar_type, title, date(start_date), date(end_date), all_day, description, location) %}
             <a class="btn btn-hollow-primary btn-block calendar-link-{{ calendar_type }}" target="_blank" href="{{ link }}" role="button">{{ name }}</a>
           {% endfor %}
           </div>
