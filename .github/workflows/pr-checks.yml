@@ -3,7 +3,10 @@ on:
   pull_request:
   push:
     branches:
-      - 'gh-pr-checks'
+      - 'main'
+      - '2.13.x'
+      - '2.12.x'
+      - '2.11.x'
 
 jobs:
   composer-validate:
