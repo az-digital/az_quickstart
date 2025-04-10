@@ -7,9 +7,15 @@
 */
 #}
 {% set attributes = attributes.addClass('clear-both') %}
-{% set links = calendar_links(title, date(start_date), date(end_date), FALSE, description, location) %}
-{# Sparse list of override to button names. #}
-{% set link_names = {'webOutlook': 'Outlook Personal (outlook.com)', 'webOffice': 'Outlook Enterprise (Office365)'} %}
+{# List and order of calendar implementations. #}
+{% set calendar_types = {
+    'google' : 'Google',
+    'ics' : 'iCal',
+    'webOffice': 'Outlook Enterprise (Office365)',
+    'webOutlook': 'Outlook Personal (outlook.com)',
+    'yahoo' : 'Yahoo!'
+  }
+%}
 
 <div{{ attributes }}>
   <!-- Button trigger modal -->
@@ -34,9 +40,9 @@
         <div class="modal-body">
           <p class="mb-3">{{ 'Select your calendar type below:'|t }}</p>
           <div class="text-center">
-          {% for link in links %}
-            {% set link_name = (link_names.(link.type_key) is defined) ? link_names.(link.type_key) : link.type_name %}
-            <a class="btn btn-hollow-primary btn-block calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link_name }}</a>
+          {% for calendar_type,name in calendar_types %}
+            {% set link = calendar_link(calendar_type, title, date(start_date), date(end_date), FALSE, description, location) %}
+            <a class="btn btn-hollow-primary btn-block calendar-link-{{ calendar_type }}" target="_blank" href="{{ link }}" role="button">{{ name }}</a>
           {% endfor %}
           </div>
         </div>
