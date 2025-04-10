@@ -122,9 +122,9 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
     // For the full content view mode, modify the display of recurring events.
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
       $now = \Drupal::time()->getCurrentTime();
-      /** @var \Drupal\Core\Field\FieldItemList $event_dates */
-      $event_dates = $entity->field_az_event_date;
-      $number_of_occurrences = $event_dates->count();
+      /** @var \Drupal\Core\Field\FieldItemList $event_date_field */
+      $event_date_field = $entity->field_az_event_date;
+      $number_of_occurrences = $event_date_field->count();
       if ($number_of_occurrences <= 1) {
         // Add to Calendar button for an event with a single occurrence.
         foreach ($entity->field_az_event_date as $item) {
@@ -145,13 +145,19 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       }
       else {
         // Create occurrence_items array and sort items by start value.
-        $occurrence_items = $event_dates->getValue();
+        $occurrence_items = $event_date_field->getValue();
         $event_rrules = [];
+        $are_occurrences_modified = FALSE;
         foreach ($occurrence_items as $key => $value) {
           $occurrence_items[$key]['render'] = $build['field_az_event_date'][$key];
           // Build an array of recurrence rules used by the event.
-          if (isset($occurrence_items[$key]['rrule']) && !in_array($occurrence_items[$key]['rrule'], $event_rrules)) {
-            $event_rrules[] = $occurrence_items[$key]['rrule'];
+          if (isset($occurrence_items[$key]['rrule'])) {
+            if (!in_array($occurrence_items[$key]['rrule'], $event_rrules)) {
+              $event_rrules[] = $occurrence_items[$key]['rrule'];
+            }
+          }
+          else {
+            $are_occurrences_modified = TRUE;
           }
         }
         usort($occurrence_items, function ($a, $b) {
@@ -162,12 +168,24 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
         // If there is only 1 recurrence, prepare the recurrence text.
         $recurrence_text = '';
+        $modified_text_markup = '';
         if (count($event_rrules) === 1) {
           $recurrence_text = az_event_get_recurrence_text(
             $event_rrules[0],
             $occurrence_items[$number_of_occurrences - 1],
             $entity->language()->getId(),
           );
+          // If the date field only has a recurring item, check for overrides.
+          if (!$are_occurrences_modified) {
+            /** @var \Drupal\smart_date_recur\Entity\SmartDateRule $smart_date_rule */
+            $smart_date_rule = \Drupal::entityTypeManager()->getStorage('smart_date_rule')->load($event_rrules[0]);
+            $are_occurrences_modified = empty($smart_date_rule->getRuleOverrides()) ? FALSE : TRUE;
+          }
+          // Add help text if occurrences do not match the recurrence exactly.
+          if ($are_occurrences_modified) {
+            $modified_text = t("View all occurrences for exact dates and times.");
+            $modified_text_markup = "<span class='d-block font-italic'>* {$modified_text}</span>";
+          }
         }
 
         // Initialize the occurrences modal render array.
@@ -222,7 +240,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         }
         if (!empty($recurrence_text)) {
           $build['field_az_event_date'][$item_index++] = [
-            '#markup' => "<p class='mb-3'>{$recurrence_text}</p>",
+            '#markup' => "<p class='mb-3'>{$recurrence_text}{$modified_text_markup}</p>",
           ];
         }
         if (isset($next_occurrence) && isset($add_to_calendar_button)) {
