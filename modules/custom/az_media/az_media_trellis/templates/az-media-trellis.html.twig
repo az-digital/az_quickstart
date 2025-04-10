@@ -10,26 +10,5 @@
  */
 #}
 {{ attach_library('az_media_trellis/az-media-trellis') }}
-<!--<style>
-  .az-media-trellis-preview iframe,
-  .az-media-trellis-preview form {
-    pointer-events: none;
-    opacity: 0.6;
-  }
-</style>-->
-<div id="fa-form" class="fa-form"></div>
+<div id="fa-form" class="az-default az-media"></div>
 <script src="{{ url }}" data-qp-target-id="fa-form" defer></script>
-<!--<script>
-  (function (Drupal) {
-    Drupal.behaviors.azMediaTrellisPreview = {
-      attach: function (context, settings) {
-        // Detect preview mode and disable form interaction.
-        const previewForms = document.querySelectorAll('.az-media-trellis-preview iframe, .az-media-trellis-preview form');
-        previewForms.forEach((form) => {
-          form.style.pointerEvents = 'none';
-          form.style.opacity = '0.6';
-        });
-      }
-    };
-  })(Drupal);
-</script>-->

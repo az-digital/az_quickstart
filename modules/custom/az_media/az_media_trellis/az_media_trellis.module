@@ -29,12 +29,25 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
  */
 function az_media_trellis_preprocess_media(&$variables) {
   // Add a wrapper class to indicate this is a preview.
-  $variables['content']['#prefix'] = '<div class="az-media-trellis-preview">';
-  $variables['content']['#suffix'] = '</div>';
+  // $variables['content']['#prefix'] = '<div class="az-media-trellis-preview">';
+  // $variables['content']['#suffix'] = '</div>';
 
   // Get the media entity object.
   if (isset($variables['elements']['#media']) && $variables['elements']['#media'] instanceof Media) {
     $media = $variables['elements']['#media'];
+
+    // Check if the current route is an editing context.
+    $route_name = \Drupal::routeMatch()->getRouteName();
+    $is_editing_context = in_array($route_name, [
+      'entity.node.edit_form',  // Node edit form.
+      'entity.node.add_form',   // Node add form.
+      'media_library.ui',       // Media library.
+    ]);
+
+    // Use a custom view mode for editing contexts.
+    if ($is_editing_context) {
+      $variables['view_mode'] = 'media.preview';
+    }
 
     // Retrieve the value of the 'field_az_media_trellis_rec_id' field.
     if ($media->hasField('field_az_media_trellis_rec_id') && !$media->get('field_az_media_trellis_rec_id')->isEmpty()) {
