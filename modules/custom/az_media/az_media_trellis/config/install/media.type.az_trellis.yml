@@ -7,8 +7,8 @@ dependencies:
     module:
       - az_media_trellis
 id: az_trellis
-label: Trellis
-description: 'Embed Trellis forms'
+label: Trellis Form
+description: 'A remotely hosted Trellis Form.'
 source: media_remote
 queue_thumbnail_downloads: false
 new_revision: false
