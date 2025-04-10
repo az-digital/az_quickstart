@@ -1,0 +1,127 @@
+name: PR Checks
+on:
+  pull_request:
+  push:
+    branches:
+      - 'gh-pr-checks'
+
+jobs:
+  composer-validate:
+    name: Validate composer.json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - name: composer version
+        run: composer --version
+      - name: Validate composer.json
+        run: composer validate
+
+  composer:
+    name: Build AZQS with composer
+    needs: composer-validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - name: Find the push source branch name
+        if: ${{ github.event_name != 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Find the pull request source branch name
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+      - name: Set variables
+        run: |
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          else
+            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          fi
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
+            echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          else
+            echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
+          fi
+      - name: Clone scaffolding repo
+        uses: actions/checkout@v4
+        with:
+          repository: az-digital/az-quickstart-scaffolding
+          path: az-quickstart-scaffolding
+          ref: ${{ env.SCAFFOLD_BRANCH }}
+      - name: Install dependencies
+        run: |
+          cd az-quickstart-scaffolding
+          composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
+          composer config use-github-api false
+          ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
+          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+          composer install -o
+      - name: Save build artifact
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+
+  phpcs:
+    name: PHP_CodeSniffer
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - run: |
+          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          composer phpcs
+
+  phpstan:
+    name: PHPStan
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - run: |
+          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          ./vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
+
+  composer-audit:
+    name: Composer Audit (security)
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - run: |
+          cd az-quickstart-scaffolding
+          composer audit
+
+  eslint:
+    name: ESLint
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.13.0
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - run: |
+          cd az-quickstart-scaffolding/web/profiles/custom/az_quickstart
+          yarn install
+          yarn run eslint --color .
