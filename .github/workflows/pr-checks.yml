@@ -82,15 +82,14 @@ jobs:
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
-      - name: Run phpcs
-        run: |
-          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpcs -sp --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist
-          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | cs2pr
       - name: Generate phpcs report
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
           ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | cs2pr
+      - name: Run phpcs
+        run: |
+          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          ./vendor/bin/phpcs -sp --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist
 
   phpstan:
     name: PHPStan
