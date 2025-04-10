@@ -24,6 +24,7 @@ function az_event_theme($existing, $type, $theme, $path) {
         'title' => NULL,
         'start_date' => NULL,
         'end_date' => NULL,
+        'all_day' => FALSE,
         'description' => NULL,
         'location' => NULL,
         'modal' => NULL,
@@ -88,6 +89,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
   if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
     $timestamp = $entity->field_az_event_date->value;
     $formatter = \Drupal::service('date.formatter');
+    $smart_date_manager = \Drupal::service('smart_date.manager');
 
     // Use the date.formatter service.
     if ($formatter) {
@@ -191,11 +193,15 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
         // Add to Calendar button for an event with a single occurrence.
         foreach ($entity->field_az_event_date as $item) {
           if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
+            $start = $item->value;
+            $end = $item->end_value;
+            $all_day = $smart_date_manager->isAllDay($start, $end);
             $build['field_az_event_date'][] = [
               '#theme' => 'az_event_calendar_add_button',
               '#title' => $entity->getTitle(),
-              '#start_date' => $item->value ?? '',
-              '#end_date' => $item->end_value ?? '',
+              '#start_date' => $start,
+              '#end_date' => $end,
+              '#all_day' => $all_day,
               '#description' => $entity->field_az_body->value ?? '',
               '#location' => $entity->field_az_location->title ?? '',
               '#modal' => Html::getUniqueId('calendar-link-modal'),
