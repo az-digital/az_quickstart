@@ -9,7 +9,7 @@
 {% set attributes = attributes.addClass('clear-both') %}
 {% set links = calendar_links(title, date(start_date), date(end_date), FALSE, description, location) %}
 {# Sparse list of override to button names. #}
-{% set link_names = {'webOutlook': 'Outlook Personal', 'webOffice': 'Outlook Enterprise'} %}
+{% set link_names = {'webOutlook': 'Outlook Personal (outlook.com)', 'webOffice': 'Outlook Enterprise (Office365)'} %}
 
 <div{{ attributes }}>
   <!-- Button trigger modal -->
@@ -36,7 +36,7 @@
           <div class="text-center">
           {% for link in links %}
             {% set link_name = (link_names.(link.type_key) is defined) ? link_names.(link.type_key) : link.type_name %}
-            <a class="btn btn-hollow-primary btn-sm mb-1 calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link_name }}</a>
+            <a class="btn btn-hollow-primary btn-block calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link_name }}</a>
           {% endfor %}
           </div>
         </div>
