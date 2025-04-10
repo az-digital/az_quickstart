@@ -7,7 +7,7 @@ on:
 
 jobs:
   composer-validate:
-    name: Validate composer.json
+    name: composer validate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,12 +18,11 @@ jobs:
           php-version: '8.3'
       - name: composer version
         run: composer --version
-      - name: Validate composer.json
+      - name: composer validate
         run: composer validate
 
   composer:
-    name: Build AZQS with composer
-    needs: composer-validate
+    name: composer install
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -99,7 +98,7 @@ jobs:
           ./vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
 
   composer-audit:
-    name: Composer Audit (security)
+    name: composer audit (security)
     needs: composer
     runs-on: ubuntu-latest
     steps:
@@ -113,7 +112,7 @@ jobs:
           composer audit
 
   eslint:
-    name: ESLint
+    name: eslint
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v4
