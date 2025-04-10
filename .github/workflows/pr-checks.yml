@@ -85,7 +85,7 @@ jobs:
       - name: Run phpcs
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          phpcs -p --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | cs2pr
+          ./vendor/bin/phpcs -p --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | cs2pr
 
   phpstan:
     name: PHPStan
