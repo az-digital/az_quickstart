@@ -42,6 +42,7 @@ function az_quickstart_install() {
     $extra_modules = [
       'pantheon_advanced_page_cache',
       'environment_indicator',
+      'media_migration',
     ];
   }
   else {
