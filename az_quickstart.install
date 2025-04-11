@@ -76,6 +76,7 @@ function az_quickstart_requirements($phase) {
       'ctools',
       'jquery_ui_slider',
       'jquery_ui_touch_punch',
+      'media_migration',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
@@ -210,7 +211,7 @@ function az_quickstart_update_1020901(&$sandbox) {
     ->execute();
   $menu_links = \Drupal::entityTypeManager()->getStorage('menu_link_content')->loadMultiple($ids);
   foreach ($menu_links as $menu_link) {
-    $menu_link->langcode = $default_langcode;
+    $menu_link->set('langcode', $default_langcode);
     $menu_link->save();
     $sandbox['progress']++;
   }
