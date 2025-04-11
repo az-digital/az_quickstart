@@ -173,11 +173,12 @@ jobs:
         run: php -S 127.0.0.1:8080 -t web &
       - name: Ensure sites/simpletest directory
         run: |
+          cd az-quickstart-scaffolding
           mkdir -p web/sites/simpletest
           chmod 777 web/sites/simpletest
       - name: Run phpunit
         run: |
-          $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          cd az-quickstart-scaffolding
           php vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
