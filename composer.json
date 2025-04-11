@@ -33,7 +33,7 @@
         "az-digital/arizona-bootstrap": "2.0.27",
         "az-digital/az-icons": "1.0.2",
         "citation-style-language/locales": "0.0.26",
-        "citation-style-language/styles": "0.0.632",
+        "citation-style-language/styles": "0.0.643",
         "composer/installers": "^2.0",
         "cweagans/composer-patches": "^1.7",
         "devanych/mime-types": "2.1.2",
@@ -47,20 +47,21 @@
         "drupal/block_field": "1.0.0-rc5",
         "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
+        "drupal/calendar_link": "3.0.3",
         "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.0.12",
         "drupal/ckeditor_indentblock": "1.1.0",
         "drupal/coffee": "2.0.1",
-        "drupal/config_distro": "2.0.0-alpha2",
+        "drupal/config_distro": "2.1.0-alpha1",
         "drupal/config_ignore": "3.3.0",
         "drupal/config_ignore_readonly": "2.2.0",
-        "drupal/config_provider": "3.0.0-alpha1",
+        "drupal/config_provider": "3.0.0-alpha2",
         "drupal/config_readonly": "1.0.0",
         "drupal/config_snapshot": "2.0.0",
         "drupal/config_split": "2.0.2",
-        "drupal/config_sync": "3.0.0-alpha3",
-        "drupal/config_update": "2.0.0-alpha3",
+        "drupal/config_sync": "3.0.0-alpha4",
+        "drupal/config_update": "2.0.0-alpha4",
         "drupal/core-recommended": "10.4.5",
         "drupal/crop": "2.4.0",
         "drupal/ctools": "*",
@@ -126,7 +127,7 @@
         "drupal/workbench_access": "2.0.3",
         "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
-        "kevinrob/guzzle-cache-middleware": "5.1.0",
+        "kevinrob/guzzle-cache-middleware": "6.0.0",
         "npm-asset/blazy": "1.8.2",
         "npm-asset/bootstrap-datepicker": "1.10.0",
         "npm-asset/easepick--bundle": "1.2.1",
@@ -143,7 +144,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-main": "2.13.x-dev"
+            "dev-main": "2.14.x-dev"
         },
         "patches": {
             "drupal/auto_entitylabel": {
@@ -159,9 +160,6 @@
             },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
-            },
-            "drupal/config_provider": {
-                "ConfigProviderInterface::addConfigToCreate() @return annotation is wrong (3281977)": "https://www.drupal.org/files/issues/2022-05-23/3281977-2.patch"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
@@ -188,6 +186,9 @@
             "drupal/imagemagick": {
                 "Imagemagick fails to convert animated gifs into animated webps (3295470)": "https://www.drupal.org/files/issues/2023-08-29/imagemagick-convertation-keep-animation-3295470-10.patch"
             },
+            "drupal/inline_entity_form": {
+                "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
+            },
             "drupal/media_migration": {
                 "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
@@ -204,6 +205,9 @@
             },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
+            },
+            "drupal/schema_metatag": {
+                "Add parentOrganization property/tag to schema_organization (3477869)": "https://www.drupal.org/files/issues/2025-01-13/add_parentOrganization.diff"
             },
             "drupal/search_exclude": {
                 "Request for a Views Handler (2882683)": "https://www.drupal.org/files/issues/2023-06-29/request_for_a_views-2882683-14_0.patch"

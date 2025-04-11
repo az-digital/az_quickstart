@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.field.node.az_publication.field_az_accessed_date
     - field.field.node.az_publication.field_az_authors
+    - field.field.node.az_publication.field_az_contributors
     - field.field.node.az_publication.field_az_main_content
     - field.field.node.az_publication.field_az_publication_abstract
     - field.field.node.az_publication.field_az_publication_approximate
@@ -206,7 +207,7 @@ content:
       view_mode: az_medium
       link: false
     third_party_settings: {  }
-    weight: 2
+    weight: 3
     region: content
   field_az_publication_media:
     type: entity_reference_entity_view
@@ -225,6 +226,7 @@ content:
 hidden:
   field_az_accessed_date: true
   field_az_authors: true
+  field_az_contributors: true
   field_az_publication_approximate: true
   field_az_publication_category: true
   field_az_publication_container: true
