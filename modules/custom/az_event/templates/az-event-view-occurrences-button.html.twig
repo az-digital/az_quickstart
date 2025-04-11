@@ -1,0 +1,36 @@
+{#
+/**
+* @file
+* Default theme implementation to display a View All Occurrences button.
+*
+* @ingroup themeable
+*/
+#}
+<div{{ attributes }}>
+  {# Button trigger modal #}
+  <button type="button" class="btn btn-hollow-primary btn-sm d-flex" style="text-transform: none" data-toggle="modal" data-target="#{{ modal }}">
+    <span aria-hidden="true" class="material-icons-sharp mr-2">event_repeat</span>
+    <span class="my-auto">{{ 'View All Occurrences'|t }}</span>
+  </button>
+
+  {# Modal #}
+  <div id="{{ modal }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ modal }}-label" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header px-0 mx-3 pb-2">
+          <div>
+            <h2 class="h5 modal-title mt-1 mb-2" id="{{ modal }}-label">{{ title }}</h2>
+          </div>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body mb-1">
+          {% for item in items %}
+            <div>{{ item }}</div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
