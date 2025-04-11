@@ -8,32 +8,9 @@ dependencies:
     - media.type.az_trellis
   module:
     - az_media_trellis
-    - field_group
   enforced:
     module:
       - az_media_trellis
-third_party_settings:
-  field_group:
-    group_16_9_responsive:
-      children:
-        - field_media_az_media_remote
-      label: '16:9 Responsive'
-      parent_name: ''
-      region: content
-      weight: 0
-      format_type: html_element
-      format_settings:
-        classes: 'embed-responsive embed-responsive-16by9 az-default az-media'
-        show_empty_fields: false
-        id: ''
-        label_as_html: false
-        element: div
-        show_label: false
-        label_element: h3
-        label_element_classes: ''
-        attributes: ''
-        effect: none
-        speed: fast
 id: media.az_trellis.default
 targetEntityType: media
 bundle: az_trellis
@@ -47,7 +24,7 @@ content:
       height: '600'
       formatter_class: Drupal\az_media_trellis\Plugin\Field\FieldFormatter\AzMediaRemoteTrellisFormatter
     third_party_settings: {  }
-    weight: 1
+    weight: 0
     region: content
 hidden:
   created: true
