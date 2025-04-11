@@ -199,9 +199,6 @@
                 "entity_lookup plugin fails if $value is empty (2830058)": "https://www.drupal.org/files/issues/2022-10-11/migrate_plus-lookup-2830058-10.patch",
                 "Using the XML Data Parser with a Predicate pulls in the final xml item regardless of if the predicate matches (2891964)": "https://www.drupal.org/files/issues/fix-ignored-predicate-2891964-2.patch"
             },
-            "drupal/migrate_queue_importer": {
-                "D11 compatibility (3451207)": "https://www.drupal.org/files/issues/2024-06-02/migrate_queue_importer.2.1.x-dev.rector.patch"
-            },
             "drupal/role_delegation": {
                 "Restrict access to cancel/remove accounts with non-assignable roles (3299201)": "https://www.drupal.org/files/issues/2022-07-25/3299201-4.patch"
             },
