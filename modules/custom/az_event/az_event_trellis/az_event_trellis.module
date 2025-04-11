@@ -39,6 +39,7 @@ function az_event_trellis_form_node_az_event_edit_form_alter(&$form, FormStateIn
         'field_az_link',
         'field_az_summary',
         'field_az_photos',
+        'field_az_enterprise_attributes',
       ];
       foreach ($disabled_fields as $field) {
         $form[$field]['#disabled'] = TRUE;
