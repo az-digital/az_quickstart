@@ -66,11 +66,27 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       }
       $fieldValue = $item->getValue();
 
+      // Check if the current route is an editing context.
+      $route_name = \Drupal::routeMatch()->getRouteName();
+      $is_editing_context = in_array($route_name, [
+      // Node edit form.
+        'entity.node.edit_form',
+      // Node add form.
+        'entity.node.add_form',
+      // Media library.
+        'media_library.ui',
+      // When editing the media inline?
+        'media.filter.preview',
+      ]);
+
+
+
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
         '#url' => $fieldValue['value'],
         '#width' => $this->getSetting('width') ?? 800,
         '#height' => $this->getSetting('height') ?? 600,
+        '#editing' => $is_editing_context,
       ];
     }
     return $elements;

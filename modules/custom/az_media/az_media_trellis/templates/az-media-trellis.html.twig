@@ -11,7 +11,7 @@
 #}
 
 {{ dump(editing) }}
-<div>editing = {{ editing }}</div>
+<div>editing = {{ editing ? 'true' : 'false'}}</div>
 
 {% if editing %}
   <div id="fa-form" class="az-default az-media">Editing!</div>
