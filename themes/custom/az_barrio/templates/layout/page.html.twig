@@ -103,13 +103,13 @@
             <div class="redbar-buttons d-lg-none d-flex">
               {% if page.navigation_offcanvas.az_barrio_offcanvas_searchform %}
                 <button data-toggle="offcanvas" type="button" data-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-redbar" id="jsAzSearch">
-                  <span class="icon material-icons-sharp"> search </span>
+                  <span aria-hidden="true" class="icon material-icons-sharp"> search </span>
                   <span class="icon-text"> search </span>
                 </button>
               {% endif %}
               {% if page.navigation_offcanvas.az_barrio_mobilenavblock %}
                 <button data-toggle="offcanvas" type="button" data-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-redbar">
-                  <span class="icon material-icons-sharp"> menu </span>
+                  <span aria-hidden="true" class="icon material-icons-sharp"> menu </span>
                   <span class="icon-text"> menu </span>
                 </button>
               {% endif %}
@@ -117,11 +117,11 @@
                 <div class="navbar-offcanvas-header mb-2">
                   <div class="bg-chili d-flex justify-content-between align-items-center">
                     <a href="/" class="btn btn-menu-offcanvas-nav btn-red d-flex flex-column justify-content-center navbar-offcanvas-home">
-                      <span class="material-icons-sharp">home</span>
+                      <span aria-hidden="true" class="material-icons-sharp">home</span>
                       <span>Home</span>
                     </a>
                     <button data-toggle="offcanvas" data-target="#azMobileNav" aria-controls="azMobileNav" class="btn btn-menu-offcanvas-nav btn-red d-flex flex-column justify-content-center navbar-offcanvas-home">
-                      <span class="material-icons-sharp mx-auto">close</span>
+                      <span aria-hidden="true" class="material-icons-sharp mx-auto">close</span>
                       <span class="mx-auto">Close</span>
                     </button>
                   </div>
