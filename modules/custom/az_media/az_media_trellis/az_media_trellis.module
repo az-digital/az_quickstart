@@ -48,11 +48,8 @@ function az_media_trellis_preprocess_media(&$variables) {
 
     \Drupal::logger('az_media_trellis')->info('Current route: @route', ['@route' => \Drupal::routeMatch()->getRouteName()]);
     // Use a custom view mode for editing contexts.
-    if ($is_editing_context) {
-      $variables['editing'] = true;
-    } else {
-      $variables['editing'] = false;
-    }
+    // Set the 'editing' variable.
+    $variables['editing'] = $is_editing_context;
     \Drupal::logger('az_media_trellis')->info('Editing context: @editing', ['@editing' => $variables['editing'] ? 'true' : 'false']);
 
     // Retrieve the value of the 'field_az_media_trellis_rec_id' field.
