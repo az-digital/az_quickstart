@@ -183,9 +183,9 @@
     },
     {
       "id":19,
+      "exclude_title" : true,
       "title" : "News Views",
       "path" : "/pages/news-view-paragraphs",
-      "exclude_title" : true,
       "az_page_category" : "Views",
       "az_main_content" : "100|101|102|191",
       "az_media_image" : "",
@@ -203,6 +203,16 @@
     },
     {
       "id":21,
+      "title" : "Media Embeds",
+      "path" : "/pages/media-embeds",
+      "exclude_title" : true,
+      "az_page_category" : "Media Galleries",
+      "az_main_content" : "194|195",
+      "az_media_image" : "",
+      "az_summary" : "Remote media embeds."
+    },
+    {
+      "id":22,
       "title" : "Combo Page",
       "path" : "/pages/combo-page",
       "exclude_title" : true,
@@ -212,7 +222,7 @@
       "az_summary" : "This is a page with text and text with background elements."
     },
     {
-      "id":22,
+      "id":23,
       "title" : "Combo Page Without Sidebar",
       "path" : "/pages/combo-page-no-sidebar",
       "exclude_title" : true,
@@ -222,7 +232,7 @@
       "az_summary" : "This is a page with text and text with background elements."
     },
     {
-      "id":23,
+      "id":24,
       "title" : "People Finder",
       "path" : "/finders/people",
       "exclude_title" : false,
@@ -232,7 +242,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":24,
+      "id":25,
       "title" : "News Finder",
       "path" : "/finders/news",
       "exclude_title" : false,
@@ -242,7 +252,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":25,
+      "id":26,
       "title" : "Event Finder",
       "path" : "/finders/events",
       "exclude_title" : false,
@@ -252,7 +262,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":26,
+      "id":27,
       "title" : "Page Finder",
       "path" : "/finders/pages",
       "exclude_title" : false,
@@ -262,7 +272,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":27,
+      "id":28,
       "title" : "Content Finder",
       "path" : "/finders/content",
       "exclude_title" : false,
@@ -272,7 +282,7 @@
       "az_summary" : "A page with views better exposed filters block."
     },
     {
-      "id":28,
+      "id":29,
       "title" : "Publications",
       "path" : "/publications",
       "exclude_title" : false,
