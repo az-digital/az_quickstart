@@ -42,11 +42,6 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
         'full_width' => $this->t('Full Width'),
         'content_width' => $this->t('Content Width'),
       ],
-      '#states' => [
-        'invisible' => [
-          ':input[id="' . $full_width . '"]' => ['value' => 'checked'],
-        ],
-      ],
     ];
 
     $form['ordering'] = [
@@ -93,6 +88,8 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
       ]),
     ];
 
+    $form['#after_build'][] = [get_class($this), 'afterBuild'];
+
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
     // This places the form fields on the content tab rather than behavior tab.
@@ -113,6 +110,16 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
     $variables['split_screen'] = $config;
+  }
+
+  public static function afterBuild(array $form, FormStateInterface $form_state) {
+    $id = $form['full_width']['#id'];
+
+    $form['text_width']['#states']['invisible'] = [
+      ':input[id="' . $id . '"]' => ['checked' => FALSE],
+    ];
+
+    return $form;
   }
 
 }
