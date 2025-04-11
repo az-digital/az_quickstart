@@ -29,9 +29,6 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
  * Implements hook_preprocess_HOOK() for media entities.
  */
 function az_media_trellis_preprocess_media(&$variables) {
-  // Add a wrapper class to indicate this is a preview.
-  // $variables['content']['#prefix'] = '<div class="az-media-trellis-preview">';
-  // $variables['content']['#suffix'] = '</div>';.
   // Get the media entity object.
   if (isset($variables['elements']['#media']) && $variables['elements']['#media'] instanceof Media) {
     $media = $variables['elements']['#media'];
