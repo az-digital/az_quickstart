@@ -44,5 +44,5 @@ tr.odd {
 .align-left ~ ol {
   overflow: auto;
   overflow-wrap: anywhere;
-  padding-inline-start: 40px;
+  padding-inline-start: revert;
 }
