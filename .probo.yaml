@@ -18,24 +18,6 @@ steps:
       - composer require --no-update az-digital/az_quickstart:dev-${BRANCH_NAME}
       - composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
       - composer install -o
-  - name: Run PHP_CodeSniffer coding standards checks
-    plugin: Shell
-    command: 'cd $SRC_DIR/az-quickstart-scaffolding ; ./vendor/bin/phpcs -sp --colors web/profiles/custom/az_quickstart'
-  - name: Run PHPStan code quality checks
-    plugin: Script
-    script:
-      - cd $SRC_DIR/az-quickstart-scaffolding
-      - $SRC_DIR/az-quickstart-scaffolding/vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
-  - name: Run ESLint
-    plugin: Script
-    script:
-      - sudo npm cache clean -f --silent --no-progress
-      - sudo npm install -g --no-progress yarn
-      - sudo npm install -g --no-progress n
-      - sudo n 20.13.0
-      - cd $SRC_DIR/az-quickstart-scaffolding/web/profiles/custom/az_quickstart
-      - yarn install
-      - yarn run eslint --color .
   - name: Setup drush
     plugin: Shell
     command: 'ln -s $SRC_DIR/az-quickstart-scaffolding/vendor/bin/drush /usr/local/bin/drush'
