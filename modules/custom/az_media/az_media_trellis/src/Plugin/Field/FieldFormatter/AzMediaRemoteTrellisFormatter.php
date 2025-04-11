@@ -79,8 +79,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
         'media.filter.preview',
       ]);
 
-
-
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
         '#url' => $fieldValue['value'],
