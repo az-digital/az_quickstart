@@ -207,7 +207,7 @@
       "path" : "/pages/media-embeds",
       "exclude_title" : true,
       "az_page_category" : "Media Galleries",
-      "az_main_content" : "194|195|90|193",
+      "az_main_content" : "194|195",
       "az_media_image" : "",
       "az_summary" : "Remote media embeds."
     },

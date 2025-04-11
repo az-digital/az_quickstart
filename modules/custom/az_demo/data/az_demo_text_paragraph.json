@@ -96,16 +96,6 @@
             "bottom_spacing": "mb-0"
         },
         {
-          "id": 90,
-          "az_text_area": "<h2>Google Calendar</h2><drupal-media data-align='center' data-entity-type='media' data-entity-uuid='989f564e-35a5-4d24-ab28-51014c6cb0ca' data-view-mode='default'></drupal-media>",
-          "bottom_spacing": "mb-4"
-        },
-        {
-          "id": 193,
-          "az_text_area": "<h2>Tableau visualization</h2><drupal-media data-align='center' data-entity-type='media' data-entity-uuid='b43a3bd2-a3d3-48ee-834d-60b233f22b46' data-view-mode='default'></drupal-media>",
-          "bottom_spacing": "mb-4"
-        },
-        {
           "id": 194,
           "az_text_area": "<h2>Trellis Form</h2>",
           "bottom_spacing": "mb-4"

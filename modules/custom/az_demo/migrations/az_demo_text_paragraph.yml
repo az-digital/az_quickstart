@@ -5,16 +5,12 @@ migration_tags:
   - Content
 migration_dependencies:
   required:
-    - az_demo_media_google_calendar
-    - az_demo_media_tableau
     - az_demo_media_trellis
 
 dependencies:
   enforced:
     module:
       - az_paragraphs_text
-      - az_media_google_calendar
-      - az_media_tableau
       - az_media_trellis
 
 source:
