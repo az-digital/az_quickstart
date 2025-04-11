@@ -133,6 +133,7 @@ jobs:
           node-version: 20.13.0
       - name: Checkout
         uses: actions/checkout@v4
+      - run: yarn install
       - name: Generate eslint report
         continue-on-error: true
         run: yarn run eslint . --format json --output-file eslint-report.json
@@ -142,9 +143,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           report-json: "eslint-report.json"
       - name: Run eslint
-        run: |
-          yarn install
-          yarn run eslint --color .
+        run: yarn run eslint --color .
 
   phpunit:
     name: PHPUnit
