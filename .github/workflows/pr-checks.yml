@@ -179,7 +179,7 @@ jobs:
       - name: Run phpunit
         run: |
           cd az-quickstart-scaffolding
-          php vendor/bin/phpunit --configuration web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap web/core/tests/bootstrap.php web/profiles/custom/az_quickstart
+          php vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az_quickstart/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az_quickstart/web/core/tests/bootstrap.php $GITHUB_WORKSPACE/az_quickstart/web/profiles/custom/az_quickstart
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
