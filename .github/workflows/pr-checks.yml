@@ -187,10 +187,10 @@ jobs:
       #     MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
       - name: Run phpunit with fastest
         run: |
-            find /$GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | /$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/fastest -p 10 -vvv "/$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
-          env:
-            SYMFONY_DEPRECATIONS_HELPER: weak
-            SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
-            SIMPLETEST_BASE_URL: http://127.0.0.1:8080
-            MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
-            RUN_TESTS_CONCURRENCY: 10
+          find /$GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | /$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/fastest -p 10 -vvv "/$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit {} --colors="always" --verbose --do-not-cache-result;"
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: weak
+          SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
+          SIMPLETEST_BASE_URL: http://127.0.0.1:8080
+          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+          RUN_TESTS_CONCURRENCY: 10
