@@ -18,18 +18,19 @@
 %}
 
 <div{{ attributes }}>
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-hollow-primary btn-sm text-capitalize" data-toggle="modal" data-target="#{{ modal }}">
-    <span class="material-icons-sharp mr-2 align-bottom">calendar_month</span>{{ 'Add to Calendar'|t }}
+  {# Button trigger modal #}
+  <button type="button" class="btn btn-hollow-primary btn-sm d-flex mr-2" style="text-transform: none" data-toggle="modal" data-target="#{{ modal }}">
+    <span aria-hidden="true" class="material-icons-sharp mr-2">event</span>
+    <span class="my-auto">{{ 'Add to Calendar'|t }}</span>
   </button>
 
-  <!-- Modal -->
+  {# Modal #}
   <div id="{{ modal }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ modal }}-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header px-0 mx-3">
           <div>
-            <h5 class="modal-title mt-1 mb-2" id="{{ modal }}-label">{{ 'Add Event to Calendar'|t }}</h5>
+            <h2 class="h5 modal-title mt-1 mb-2" id="{{ modal }}-label">{{ 'Add Event to Calendar'|t }}</h2>
             <p class="mb-0">{{ title }}</p>
             <p class="mb-0">{{ start_date|date('g:i a, F j, Y') }}</p>
           </div>
