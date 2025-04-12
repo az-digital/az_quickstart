@@ -35,6 +35,9 @@ source:
       name: full_width
       selector: full_width
     -
+      name: content_width
+      selector: content_width
+    -
       name: bg_color
       selector: bg_color
     -
@@ -74,6 +77,7 @@ process:
       az_split_screen:
         bg_color: bg_color
         full_width: full_width
+        content_width: content_width
         ordering: ordering
         az_display_settings:
           bottom_spacing: bottom_spacing
