@@ -179,6 +179,9 @@
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
                 "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch"
             },
+            "drupal/field_group": {
+                "Fix Drupal 10.4 RC1 error with field_ui.js (3491233)":"https://www.drupal.org/files/issues/2025-01-16/field_group-drupal-10.4-rc1-error-with-field_ui.js--3491233--14.patch"
+            },
             "drupal/image_widget_crop": {
                 "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch"
             },
