@@ -249,7 +249,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       ],
     ],
   ];
-  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_css_cdn_version'] = [
+  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_css'] = [
     '#type' => 'radios',
     '#title' => t('AZ Bootstrap CSS CDN version'),
     '#options' => [
@@ -258,9 +258,9 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       '2.x' => t('Latest dev version of 2.x. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
-    '#default_value' => theme_get_setting('az_bootstrap_css_cdn_version'),
+    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_css'),
   ];
-  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_js_cdn_version'] = [
+  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_js'] = [
     '#type' => 'radios',
     '#title' => t('AZ Bootstrap JS CDN version'),
     '#options' => [
@@ -269,7 +269,7 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
       '2.x' => t('Latest dev version of 2.x. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
       '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
     ],
-    '#default_value' => theme_get_setting('az_bootstrap_js_cdn_version'),
+    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_js'),
   ];
   $form['azbs_settings']['settings']['az_bootstrap_minified'] = [
     '#type'          => 'checkbox',
