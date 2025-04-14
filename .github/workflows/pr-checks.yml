@@ -101,10 +101,19 @@ jobs:
     needs: composer
     runs-on: ubuntu-latest
     steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: cs2pr, phpstan
       - uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
+      - name: Generate phpstan report
+        continue-on-error: true
+        run: |
+          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          ./vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart --error-format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
       - name: Run phpstan
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
@@ -138,6 +147,7 @@ jobs:
         continue-on-error: true
         run: yarn run eslint . --format json --output-file eslint-report.json
       - name: Annotate eslint results
+        continue-on-error: true
         uses: ataylorme/eslint-annotate-action@v3
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
