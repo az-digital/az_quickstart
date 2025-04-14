@@ -218,7 +218,6 @@ jobs:
         with:
           php-version: '8.3'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-          tools: cs2pr
       - uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
@@ -283,4 +282,4 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           ./vendor/bin/drush -y -n pm:install upgrade_status
-          ./vendor/bin/drush upgrade_status:analyze --ignore-uninstalled --format=checkstyle az_quickstart | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/drush upgrade_status:analyze --ignore-uninstalled --ignore-contrib --all --format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
