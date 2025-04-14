@@ -201,7 +201,7 @@ jobs:
           RUN_TESTS_CONCURRENCY: 4
 
   install:
-    name: drush site:install
+    name: drush site:install & upgrade_status
     needs: composer
     runs-on: ubuntu-latest
     services:
@@ -216,10 +216,9 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: '8.3'
           extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-          coverage: none
-          tools: composer:v2
+          tools: cs2pr
       - uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
@@ -229,3 +228,30 @@ jobs:
           cd az-quickstart-scaffolding
           ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
           ./vendor/bin/drush -y -n pm:install az_demo
+      - name: Run php built-in server
+        run: |
+          cd az-quickstart-scaffolding
+          php -S 127.0.0.1:8080 -t web &
+      - name: Check for PHP errors and notices
+        run: |
+          curl -sS -o /dev/null http://127.0.0.1:8080
+          curl -sS -o /dev/null http://127.0.0.1:8080/user
+          curl -sS -o /dev/null http://127.0.0.1:8080/people
+          curl -sS -o /dev/null http://127.0.0.1:8080/people-list
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text-background
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text-media
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/card-decks
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/accordions
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/photo-galleries
+          curl -sS -o /dev/null http://127.0.0.1:8080/page-grid
+          curl -sS -o /dev/null http://127.0.0.1:8080/page-list
+          curl -sS -o /dev/null http://127.0.0.1:8080/news
+          curl -sS -o /dev/null http://127.0.0.1:8080/calendar
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/annual-events
+          if [ -z "$($GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+      - name: Generate upgrade status report
+        run: |
+          cd az-quickstart-scaffolding
+          ./vendor/bin/drush -y -n pm:install upgrade_status
+          ./vendor/bin/drush upgrade_status:checkstyle az_quickstart | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
