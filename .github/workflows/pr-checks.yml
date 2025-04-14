@@ -199,3 +199,29 @@ jobs:
           SIMPLETEST_BASE_URL: http://127.0.0.1:8080
           MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
           RUN_TESTS_CONCURRENCY: 4
+
+  install:
+    runs-on: ubuntu-latest
+    name: drush site:install
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+            php-version: 8.2
+            extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+            coverage: none
+            tools: composer:v2
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - name: Install AZ Quickstart
+        run: php vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
