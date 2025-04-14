@@ -121,7 +121,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       }
     }
 
-    // For the full content view mode, modify the display of recurring events.
+    // For the full content view mode, modify the display of az_event_date.
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
       $now = \Drupal::time()->getCurrentTime();
       /** @var \Drupal\Core\Field\FieldItemList $event_date_field */
