@@ -201,8 +201,9 @@ jobs:
           RUN_TESTS_CONCURRENCY: 4
 
   install:
-    runs-on: ubuntu-latest
     name: drush site:install
+    needs: composer
+    runs-on: ubuntu-latest
     services:
       mysql:
         image: mysql:5.7
