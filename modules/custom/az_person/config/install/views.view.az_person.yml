@@ -972,7 +972,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<div role="button" data-toggle="modal" data-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
+            text: '<div role="button" data-bs-toggle="modal" data-bs-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
             make_link: false
             path: '{{ view_node }}'
             absolute: false
@@ -1935,7 +1935,7 @@ display:
           exclude: true
           alter:
             alter_text: true
-            text: '<div role="button" data-toggle="modal" data-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
+            text: '<div role="button" data-bs-toggle="modal" data-bs-target="#personModal{{ nid }}">{{ field_az_media_image }}</div>'
             make_link: false
             path: '{{ view_node }}'
             absolute: false
