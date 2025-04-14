@@ -2,8 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.az_trellis.field_az_media_trellis_form_id
-    - field.field.media.az_trellis.field_az_media_trellis_rec_id
     - field.field.media.az_trellis.field_media_az_media_remote
     - media.type.az_trellis
   module:
@@ -28,8 +26,6 @@ content:
     region: content
 hidden:
   created: true
-  field_az_media_trellis_form_id: true
-  field_az_media_trellis_rec_id: true
   name: true
   thumbnail: true
   uid: true

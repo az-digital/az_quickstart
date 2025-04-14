@@ -2,8 +2,6 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.az_trellis.field_az_media_trellis_rec_id
-    - field.field.media.az_trellis.field_az_media_trellis_form_id
     - field.field.media.az_trellis.field_media_az_media_remote
     - media.type.az_trellis
   module:
@@ -21,21 +19,6 @@ content:
     weight: 5
     region: content
     settings: {  }
-    third_party_settings: {  }
-  field_az_media_trellis_rec_id:
-    type: string_textfield
-    weight: 2
-    region: content
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-  field_az_media_trellis_form_id:
-    type: number
-    weight: 3
-    region: content
-    settings:
-      placeholder: ''
     third_party_settings: {  }
   field_media_az_media_remote:
     type: string_textfield
