@@ -216,13 +216,16 @@ jobs:
     steps:
       - uses: shivammathur/setup-php@v2
         with:
-            php-version: 8.2
-            extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
-            coverage: none
-            tools: composer:v2
+          php-version: 8.2
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+          coverage: none
+          tools: composer:v2
       - uses: actions/cache/restore@v4
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
       - name: Install AZ Quickstart
-        run: php vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
+        run: |
+          cd az-quickstart-scaffolding/web
+          php vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
+          php vendor/bin/drush -y -n pm:install az_demo
