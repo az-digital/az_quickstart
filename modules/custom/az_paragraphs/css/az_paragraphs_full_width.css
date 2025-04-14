@@ -64,14 +64,18 @@
 .az-aspect-ratio.box .col:first-child {
     align-self: center;
 }
-
 .az-aspect-ratio .column .az-full-width-column-content-wrapper {
     align-self: center;
 }
-.region-content .container .az-full-width-row {
-    height: 100%;
+.region .az-full-width-row {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+  height: 100%;
 }
-
 @media (min-width: 768px) {
     .layout-sidebar-first .region-content .az-aspect-ratio.full-width-background .container {
         margin-left: calc(50% - 185px);
