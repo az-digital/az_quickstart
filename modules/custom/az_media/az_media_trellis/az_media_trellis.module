@@ -27,34 +27,12 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
 
 /**
  * Implements hook_preprocess_HOOK() for media entities.
- *
- * Notes: Can I change this to a page hook?
- * Verify that a az_media_trellis item exists on the page first?
- * Perhaps this only firing for the media but not the page in which it is contained?
  */
 function az_media_trellis_preprocess_media(&$variables) {
   // Get the media entity object.
   if (isset($variables['elements']['#media']) && $variables['elements']['#media'] instanceof Media) {
     $media = $variables['elements']['#media'];
 
-    // Check if the current route is an editing context.
-    // $route_name = \Drupal::routeMatch()->getRouteName();
-    // $is_editing_context = in_array($route_name, [
-    // // Node edit form.
-    //   'entity.node.edit_form',
-    // // Node add form.
-    //   'entity.node.add_form',
-    // // Media library.
-    //   'media_library.ui',
-    // // When editing the media inline?
-    //   'media.filter.preview',
-    // ]);
-    // $is_editing_context = true;.
-    // \Drupal::logger('az_media_trellis')->info('Current route: @route', ['@route' => \Drupal::routeMatch()->getRouteName()]);
-    // Use a custom view mode for editing contexts.
-    // Set the 'editing' variable.
-    // $variables['editing'] = $is_editing_context;
-    // \Drupal::logger('az_media_trellis')->info('Editing context: @editing', ['@editing' => $variables['editing'] ? 'true' : 'false']);
     // Retrieve the value of the 'field_az_media_trellis_rec_id' field.
     if ($media->hasField('field_media_az_media_remote') && !$media->get('field_media_az_media_remote')->isEmpty()) {
       $url = $media->get('field_media_az_media_remote')->value;

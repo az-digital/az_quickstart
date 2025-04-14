@@ -10,7 +10,6 @@ use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
 
 /**
  * Plugin implementation of the 'az_media_remote_trellis' formatter.
- *
  */
 #[FieldFormatter(
   id: 'az_media_remote_trellis',
@@ -66,20 +65,18 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       $fieldValue = $item->getValue()['value'];
       \Drupal::logger('az_media_trellis')->info('fieldValue: ' . $fieldValue);
 
-
       $url = $fieldValue;
-      // Parse URL to remove query string
+      // Parse URL to remove query string.
       $parsedUrl = parse_url($url);
-      $path = $parsedUrl['path']; // e.g., /185
+      $path = $parsedUrl['path'];
 
-      // Insert 'publish' before '185'
-      $pathParts = explode('/', trim($path, '/')); // ['185']
-      $pathParts = array_merge(['publish'], $pathParts); // ['publish', '185']
+      // Insert 'publish' before '185'.
+      $pathParts = explode('/', trim($path, '/'));
+      $pathParts = array_merge(['publish'], $pathParts);
 
-      // Reconstruct the new URL
+      // Reconstruct the new URL.
       $newPath = '/' . implode('/', $pathParts);
       $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $newPath;
-
 
       // Check if the current route is an editing context.
       $route_name = \Drupal::routeMatch()->getRouteName();
@@ -108,17 +105,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
   /**
    * {@inheritdoc}
    */
-  public static function defaultSettings() {
-    // return [
-    //   'width' => 960,
-    //   'height' => 600,
-    // ] + parent::defaultSettings();
-    return parent::defaultSettings();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function settingsForm(array $form, FormStateInterface $form_state) {
     return parent::settingsForm($form, $form_state) + [
       'url' => [
@@ -128,24 +114,6 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
         '#maxlength' => 255,
         '#description' => $this->t('The URL of the Trellis form.'),
       ],
-      // 'width' => [
-      //   '#type' => 'number',
-      //   '#title' => $this->t('Width'),
-      //   '#default_value' => $this->getSetting('width'),
-      //   '#size' => 5,
-      //   '#maxlength' => 5,
-      //   '#field_suffix' => $this->t('pixels'),
-      //   '#min' => 50,
-      // ],
-      // 'height' => [
-      //   '#type' => 'number',
-      //   '#title' => $this->t('Height'),
-      //   '#default_value' => $this->getSetting('height'),
-      //   '#size' => 5,
-      //   '#maxlength' => 5,
-      //   '#field_suffix' => $this->t('pixels'),
-      //   '#min' => 50,
-      // ],
     ];
   }
 
