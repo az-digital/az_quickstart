@@ -9,14 +9,10 @@
  * - height: (int) The height of the iframe, in pixels.
  */
 #}
-
-{{ dump(editing) }}
-<div>editing = {{ editing ? 'true' : 'false'}}</div>
-
 {% if editing %}
-  <div id="fa-form" class="az-default az-media">Editing!</div>
+  <div id="fa-form" class="az-default az-media">Editing! {{ url }}</div>
 {% else %}
   {{ attach_library('az_media_trellis/az-media-trellis') }}
-  <div id="fa-form" class="az-default az-media">Not Editing</div>
+  <div id="fa-form" class="az-default az-media"></div>
   <script src="{{ url }}" data-qp-target-id="fa-form" defer></script>
 {% endif %}

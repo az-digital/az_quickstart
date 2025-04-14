@@ -11,8 +11,6 @@ use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
 /**
  * Plugin implementation of the 'az_media_remote_trellis' formatter.
  *
- * Google documentation:
- * https://support.google.com/calendar/answer/41207?hl=en .
  */
 #[FieldFormatter(
   id: 'az_media_remote_trellis',
@@ -27,7 +25,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    * {@inheritdoc}
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/forms-a\.trellis\.arizona\.edu\/publish\//';
+    return '/^https:\/\/forms-a\.trellis\.arizona\.edu\/([0-9]+)\?tfa_4=(.*)/';
   }
 
   /**
@@ -35,7 +33,8 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    */
   public static function getValidUrlExampleStrings(): array {
     return [
-      'https://forms-a.trellis.arizona.edu/publish/118',
+      'https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000072edQAA',
+      'https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000071eDQAQ',
     ];
   }
 
