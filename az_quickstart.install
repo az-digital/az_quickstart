@@ -61,50 +61,6 @@ function az_quickstart_install() {
 }
 
 /**
- * Implements hook_requirements().
- */
-function az_quickstart_requirements($phase) {
-  $requirements = [];
-  if ($phase === 'runtime') {
-    // Reset the extension lists.
-    /** @var \Drupal\Core\Extension\ModuleExtensionList $module_extension_list */
-    $module_extension_list = \Drupal::service('extension.list.module');
-    $module_extension_list->reset();
-
-    // Gather all deprecated modules that are enabled.
-    $azqs_deprecated_modules = [
-      'ctools',
-      'jquery_ui_slider',
-      'jquery_ui_touch_punch',
-    ];
-    $enabled_deprecated_modules = [];
-    $enabled_modules = \Drupal::moduleHandler()->getModuleList();
-    foreach ($enabled_modules as $module => $data) {
-      if (in_array($module, $azqs_deprecated_modules)) {
-        $enabled_deprecated_modules[$module] = $module_extension_list->getExtensionInfo($module)['name'];
-      }
-    }
-
-    // Warn if any deprecated modules are installed.
-    if (!empty($enabled_deprecated_modules)) {
-      foreach ($enabled_deprecated_modules as $deprecated_module => $name) {
-        $deprecated_modules_link_list[] = (string) Link::fromTextAndUrl($name, Url::fromUri('https://www.drupal.org/project/' . $deprecated_module))->toString();
-      }
-      $requirements['azqs_deprecated_modules'] = [
-        'title' => t('Quickstart deprecated modules enabled'),
-        'description' => t('These modules are no longer used by Arizona Quickstart and will be removed in a future release.  These modules should be uninstalled or should be added to a site-specific composer.json file if they are still needed, or your site will not be able to be updated via Composer.  Some action is required prior to updating to the next minor version.'),
-        'value' => t('Enabled Quickstart deprecated modules found: %module_list.', [
-          '%module_list' => Markup::create(implode(', ', $deprecated_modules_link_list)),
-        ]),
-        'severity' => REQUIREMENT_WARNING,
-      ];
-    }
-  }
-
-  return $requirements;
-}
-
-/**
  * Implements hook_update_last_removed().
  */
 function az_quickstart_update_last_removed() {
