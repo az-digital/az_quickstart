@@ -226,6 +226,6 @@ jobs:
           key: azqs-build-${{ github.sha }}
       - name: Install AZ Quickstart
         run: |
-          cd az-quickstart-scaffolding/web
+          cd az-quickstart-scaffolding
           php vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
           php vendor/bin/drush -y -n pm:install az_demo
