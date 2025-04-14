@@ -8,7 +8,7 @@ use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
- * Provides a behavior for text with background.
+ * Provides a behavior for split screen paragraphs.
  *
  * @ParagraphsBehavior(
  *   id = "az_split_screen",
@@ -112,6 +112,9 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['split_screen'] = $config;
   }
 
+  /**
+   * Provides functionality after the form is built.
+   */
   public static function afterBuild(array $form, FormStateInterface $form_state) {
     $id = $form['full_width']['#id'];
 

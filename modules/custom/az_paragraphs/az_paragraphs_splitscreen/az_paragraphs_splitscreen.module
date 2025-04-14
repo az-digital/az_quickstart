@@ -62,7 +62,7 @@ function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element,
         $splitscreen_settings = $paragraph_settings['az_split_screen'];
         $full_width = $splitscreen_settings['full_width'];
 
-        // Image order
+        // Image order.
         $order_class_mapping = [
           'order_0' => 'order-0',
           'order_1' => 'order-0 order-md-1',
@@ -73,15 +73,15 @@ function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element,
           $element['#attributes']['class'][] = $order_classes;
         }
 
-        // Text width
+        // Text width.
         $text_width_class_mapping = [
           'order_0' => 'content-width-2',
           'order_1' => 'content-width-1',
         ];
         $text_width = $splitscreen_settings['text_width'];
         if ($group->group_name === 'group_splitscreen_text' && $full_width == 'full-width-background' && $text_width == 'content_width') {
-            $text_width_classes = $text_width_class_mapping[$order];
-            $element['#attributes']['class'][] = $text_width_classes;
+          $text_width_classes = $text_width_class_mapping[$order];
+          $element['#attributes']['class'][] = $text_width_classes;
         }
       }
     }
