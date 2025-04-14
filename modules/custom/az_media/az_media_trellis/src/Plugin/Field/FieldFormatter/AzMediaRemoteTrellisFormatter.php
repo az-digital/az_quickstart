@@ -63,7 +63,23 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       if ($item->isEmpty()) {
         continue;
       }
-      $fieldValue = $item->getValue();
+      $fieldValue = $item->getValue()['value'];
+      \Drupal::logger('az_media_trellis')->info('fieldValue: ' . $fieldValue);
+
+
+      $url = $fieldValue;
+      // Parse URL to remove query string
+      $parsedUrl = parse_url($url);
+      $path = $parsedUrl['path']; // e.g., /185
+
+      // Insert 'publish' before '185'
+      $pathParts = explode('/', trim($path, '/')); // ['185']
+      $pathParts = array_merge(['publish'], $pathParts); // ['publish', '185']
+
+      // Reconstruct the new URL
+      $newPath = '/' . implode('/', $pathParts);
+      $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $newPath;
+
 
       // Check if the current route is an editing context.
       $route_name = \Drupal::routeMatch()->getRouteName();
@@ -80,9 +96,9 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
 
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
-        '#url' => $fieldValue['value'],
-        '#width' => $this->getSetting('width') ?? 800,
-        '#height' => $this->getSetting('height') ?? 600,
+        '#url' => $newUrl,
+        // '#width' => $this->getSetting('width') ?? 800,
+        // '#height' => $this->getSetting('height') ?? 600,
         '#editing' => $is_editing_context,
       ];
     }
@@ -93,10 +109,11 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    * {@inheritdoc}
    */
   public static function defaultSettings() {
-    return [
-      'width' => 960,
-      'height' => 600,
-    ] + parent::defaultSettings();
+    // return [
+    //   'width' => 960,
+    //   'height' => 600,
+    // ] + parent::defaultSettings();
+    return parent::defaultSettings();
   }
 
   /**
@@ -111,24 +128,24 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
         '#maxlength' => 255,
         '#description' => $this->t('The URL of the Trellis form.'),
       ],
-      'width' => [
-        '#type' => 'number',
-        '#title' => $this->t('Width'),
-        '#default_value' => $this->getSetting('width'),
-        '#size' => 5,
-        '#maxlength' => 5,
-        '#field_suffix' => $this->t('pixels'),
-        '#min' => 50,
-      ],
-      'height' => [
-        '#type' => 'number',
-        '#title' => $this->t('Height'),
-        '#default_value' => $this->getSetting('height'),
-        '#size' => 5,
-        '#maxlength' => 5,
-        '#field_suffix' => $this->t('pixels'),
-        '#min' => 50,
-      ],
+      // 'width' => [
+      //   '#type' => 'number',
+      //   '#title' => $this->t('Width'),
+      //   '#default_value' => $this->getSetting('width'),
+      //   '#size' => 5,
+      //   '#maxlength' => 5,
+      //   '#field_suffix' => $this->t('pixels'),
+      //   '#min' => 50,
+      // ],
+      // 'height' => [
+      //   '#type' => 'number',
+      //   '#title' => $this->t('Height'),
+      //   '#default_value' => $this->getSetting('height'),
+      //   '#size' => 5,
+      //   '#maxlength' => 5,
+      //   '#field_suffix' => $this->t('pixels'),
+      //   '#min' => 50,
+      // ],
     ];
   }
 
@@ -138,8 +155,8 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
   public function settingsSummary() {
     $summary = parent::settingsSummary();
     $summary[] = $this->t('Iframe size: %width x %height pixels', [
-      '%width' => $this->getSetting('width'),
-      '%height' => $this->getSetting('height'),
+      // '%width' => $this->getSetting('width'),
+      // '%height' => $this->getSetting('height'),
     ]);
     return $summary;
   }

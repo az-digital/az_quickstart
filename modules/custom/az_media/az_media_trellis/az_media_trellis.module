@@ -16,8 +16,8 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
       'variables' => [
         'type' => NULL,
         'url' => NULL,
-        'width' => NULL,
-        'height' => NULL,
+        // 'width' => NULL,
+        // 'height' => NULL,
         'editing' => NULL,
       ],
       'template' => 'az-media-trellis',
@@ -56,8 +56,13 @@ function az_media_trellis_preprocess_media(&$variables) {
     // $variables['editing'] = $is_editing_context;
     // \Drupal::logger('az_media_trellis')->info('Editing context: @editing', ['@editing' => $variables['editing'] ? 'true' : 'false']);
     // Retrieve the value of the 'field_az_media_trellis_rec_id' field.
-    if ($media->hasField('field_az_media_trellis_rec_id') && !$media->get('field_az_media_trellis_rec_id')->isEmpty()) {
-      $rec_id_value = $media->get('field_az_media_trellis_rec_id')->value;
+    if ($media->hasField('field_media_az_media_remote') && !$media->get('field_media_az_media_remote')->isEmpty()) {
+      $url = $media->get('field_media_az_media_remote')->value;
+      $pattern = '/\btfa_4=([a-zA-Z0-9]+)/i';
+      $matches = [];
+      preg_match($pattern, $url, $matches);
+      $rec_id_value = $matches[1] ?? NULL;
+      \Drupal::logger('az_media_trellis')->info('rec_id_value: ' . $rec_id_value);
 
       // Pass the value to the JavaScript library via drupalSettings.
       $variables['#attached']['drupalSettings']['azMediaTrellis'] = [
