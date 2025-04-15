@@ -116,7 +116,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   /**
    * {@inheritdoc}
    */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
+  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
     parent::buildOptionsForm($form, $form_state);
     $reset_button_option = $form['bef']['general']['reset_button'];
     unset($form['bef']['general']['reset_button']);
@@ -199,7 +199,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
   /**
    * {@inheritdoc}
    */
-  public function submitOptionsForm(&$form, FormStateInterface $form_state): void {
+  public function submitOptionsForm(&$form, FormStateInterface $form_state) {
     // Extract the entire 'bef' section from the form state.
     $bef_settings = $form_state->getValue(['exposed_form_options', 'bef']);
     // Check and ensure the 'general' section exists within 'bef'.
