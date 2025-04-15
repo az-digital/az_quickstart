@@ -108,15 +108,10 @@ jobs:
         with:
           path: ${{ github.workspace }}/az-quickstart-scaffolding
           key: azqs-build-${{ github.sha }}
-      - name: Generate phpstan report
-        continue-on-error: true
-        run: |
-          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart --error-format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
       - name: Run phpstan
         run: |
           cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
-          ./vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart
+          ./vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart --error-format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
 
   composer-audit:
     name: composer audit (security)
