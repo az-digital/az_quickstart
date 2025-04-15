@@ -36,7 +36,8 @@ function az_media_trellis_preprocess_media(&$variables) {
     // Retrieve the value of the 'field_az_media_trellis_rec_id' field.
     if ($media->hasField('field_media_az_media_remote') && !$media->get('field_media_az_media_remote')->isEmpty()) {
       $url = $media->get('field_media_az_media_remote')->value;
-      // pulls the tfa_4 value from the URL - this is not prefilled like with normal query parameters
+      // Pulls the tfa_4 value from the URL - this is not prefilled like with
+      // normal query parameters.
       $pattern = '/\btfa_4=([a-zA-Z0-9]+)/i';
       $matches = [];
       preg_match($pattern, $url, $matches);
