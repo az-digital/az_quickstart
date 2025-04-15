@@ -277,8 +277,7 @@ jobs:
           ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
           ./vendor/bin/drush -y -n pm:install az_demo
       - name: Generate upgrade status report
-        continue-on-error: true
         run: |
           cd az-quickstart-scaffolding
           ./vendor/bin/drush -y -n pm:install upgrade_status
-          ./vendor/bin/drush upgrade_status:analyze az_quickstart
+          ./vendor/bin/drush upgrade_status:analyze --ignore-uninstalled --ignore-contrib --all --format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
