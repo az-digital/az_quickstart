@@ -14,7 +14,7 @@ use Drupal\user\Entity\Role;
 /**
  * Force import of core block_content view.
  *
- *     Ensure legacy Quickstart block_content view is replaced with the Drupal core
+ * Ensure legacy Quickstart block_content view is replaced with the Drupal core
  * version updated in 10.1.x.
  */
 function az_quickstart_post_update_force_import_core_block_view(&$sandbox) {

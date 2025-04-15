@@ -20,7 +20,7 @@
        *
        * @param {ClickEvent} event - Click event.
        */
-      function noFollow(event){
+      function noFollow(event) {
         event.preventDefault();
       }
 
