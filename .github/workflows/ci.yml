@@ -190,7 +190,7 @@ jobs:
           chmod 777 web/sites/simpletest
       - name: Run phpunit with fastest
         run: |
-          find $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/fastest -p 4 -vvv "$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit {} --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --verbose --do-not-cache-result;"
+          find $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/fastest -p 4 -vvv "$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit {} --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --do-not-cache-result;"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
