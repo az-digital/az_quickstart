@@ -282,4 +282,4 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           ./vendor/bin/drush -y -n pm:install upgrade_status
-          ./vendor/bin/drush upgrade_status:analyze --ignore-uninstalled --ignore-contrib --all --format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/drush upgrade_status:analyze az_quickstart
