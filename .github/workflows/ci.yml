@@ -52,6 +52,10 @@ jobs:
           else
             echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
           fi
+      - name: Install composer-drupal-lenient globally
+        run: |
+          composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
+          composer global require mglaman/composer-drupal-lenient
       - name: Clone scaffolding repo
         uses: actions/checkout@v4
         with:
