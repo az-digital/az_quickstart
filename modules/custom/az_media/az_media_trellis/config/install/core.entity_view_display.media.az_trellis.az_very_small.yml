@@ -2,7 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.az_small
+    - core.entity_view_mode.media.az_very_small
     - field.field.media.az_trellis.field_media_az_media_remote
     - media.type.az_trellis
   module:
@@ -22,7 +22,7 @@ third_party_settings:
       weight: 0
       format_type: html_element
       format_settings:
-        classes: 'az-media az-small'
+        classes: 'az-media az-very-small'
         show_empty_fields: false
         id: ''
         label_as_html: false
@@ -33,10 +33,10 @@ third_party_settings:
         attributes: ''
         effect: none
         speed: fast
-id: media.az_trellis.az_small
+id: media.az_trellis.az_very_small
 targetEntityType: media
 bundle: az_trellis
-mode: az_small
+mode: az_very_small
 content:
   field_media_az_media_remote:
     type: az_media_remote_trellis
