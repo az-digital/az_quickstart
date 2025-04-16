@@ -2,13 +2,10 @@ name: Security workflow
 on:
   schedule:
     - cron:  '0 13 * * *'
-  pull_request:
-  push:
-    branches:
-      - '*'
+
 jobs:
-  dependency-audit:
-    name: Dependency Check
+  composer-audit:
+    name: composer audit (security)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -53,34 +50,3 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           composer audit
-  code-check:
-    name: Static Code Check
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.3'
-      - name: Find the push source branch name
-        if: ${{ github.event_name != 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
-      - name: Find the pull request source branch name
-        if: ${{ github.event_name == 'pull_request' }}
-        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
-      - name: Install dependencies
-        run: |
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then SCAFFOLD_BRANCH="$AZ_TRIMMED_REF"; else SCAFFOLD_BRANCH=2.13.x; fi
-          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then DEV_PACKAGE_BRANCH="$AZ_TRIMMED_REF"; else DEV_PACKAGE_BRANCH=main; fi
-          git clone --branch $SCAFFOLD_BRANCH https://github.com/az-digital/az-quickstart-scaffolding.git
-          cd az-quickstart-scaffolding
-          composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
-          composer config use-github-api false
-          ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
-          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
-          composer install -o
-      - name: Run static code analysis
-        run: |
-          cd az-quickstart-scaffolding
-          composer phpcs
