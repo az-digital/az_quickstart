@@ -13,26 +13,22 @@ use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
   /**
-   * The profile to install as a basis for testing.
-   *
-   * @var string
+   * {@inheritdoc}
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * @var bool
+   * {@inheritdoc}
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * @var string
+   * {@inheritdoc}
    */
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Modules to enable.
-   *
-   * @var array
+   * {@inheritdoc}
    */
   protected static $modules = [
     'az_demo',

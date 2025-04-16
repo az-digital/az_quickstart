@@ -127,7 +127,8 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       $number_of_occurrences = $event_date_field->count();
       if ($number_of_occurrences <= 1) {
         // Add to Calendar button for an event with a single occurrence.
-        foreach ($entity->field_az_event_date as $item) {
+        /** @var \Drupal\smart_date\Plugin\Field\FieldType\SmartDateItem $item */
+        foreach ($event_date_field as $item) {
           if (($item->value >= $now) || (!empty($item->end_value) && ($item->end_value >= $now))) {
             $build['field_az_event_date'][] = [
               '#theme' => 'az_event_calendar_add_button',
