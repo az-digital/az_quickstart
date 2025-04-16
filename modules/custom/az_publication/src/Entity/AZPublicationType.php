@@ -87,7 +87,7 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
    * @return array
    *   An associative array of publication type mapping options.
    */
-  public static function getMappableTypeOptions(): array {
+  public static function getMappableTypeOptions():array {
     return [
       'article' => 'Article',
       'article-journal' => 'Journal Article',
@@ -135,6 +135,13 @@ class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInt
       'treaty' => 'Treaty',
       'webpage' => 'Webpage',
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function load($id): ?AZPublicationTypeInterface {
+    return \Drupal::entityTypeManager()->getStorage('az_publication_type')->load($id);
   }
 
 }
