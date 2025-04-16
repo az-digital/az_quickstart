@@ -290,6 +290,16 @@
       "az_main_content" : "190",
       "az_media_image" : "",
       "az_summary" : "A page with publications."
+    },
+    {
+      "id":30,
+      "title" : "Trellis Embed",
+      "path" : "/pages/media-embeds/trellis",
+      "exclude_title" : true,
+      "az_page_category" : "",
+      "az_main_content" : "194|196",
+      "az_media_image" : "",
+      "az_summary" : "A page with a Trellis RFI used in a design."
     }
   ]
 }
