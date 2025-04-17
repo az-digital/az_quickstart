@@ -204,7 +204,7 @@ jobs:
           cd az-quickstart-scaffolding
           mkdir -p web/sites/simpletest
           chmod 777 web/sites/simpletest
-      - name: Run phpunit test
+      - name: Run phpunit test (${{ matrix.test }})
         run: $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --verbose --do-not-cache-result $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test }}"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
