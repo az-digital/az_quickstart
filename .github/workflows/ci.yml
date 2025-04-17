@@ -170,7 +170,7 @@ jobs:
         run: yarn run eslint --color .
 
   phpunit:
-    name: PHPUnit
+    name: PHPUnit (${{ matrix.test.name }})
     needs: [setup, composer]
     runs-on: ubuntu-latest
     strategy:
