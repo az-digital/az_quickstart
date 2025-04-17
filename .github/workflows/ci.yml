@@ -1,0 +1,283 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches:
+      - 'main'
+      - '2.13.x'
+      - '2.12.x'
+      - '2.11.x'
+
+jobs:
+  composer-validate:
+    name: composer validate
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - name: composer version
+        run: composer --version
+      - name: composer validate
+        run: composer validate
+
+  composer:
+    name: composer install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+      - name: Find the push source branch name
+        if: ${{ github.event_name != 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_REF#refs/*/}" >> ${GITHUB_ENV}
+      - name: Find the pull request source branch name
+        if: ${{ github.event_name == 'pull_request' }}
+        run: echo "AZ_TRIMMED_REF=${GITHUB_HEAD_REF}" >> ${GITHUB_ENV}
+      - name: Set variables
+        run: |
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-scaffolding.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
+            echo "SCAFFOLD_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          else
+            echo "SCAFFOLD_BRANCH=main" >> ${GITHUB_ENV}
+          fi
+          if [ $(git ls-remote --heads https://github.com/az-digital/az-quickstart-dev.git $AZ_TRIMMED_REF | wc -l) = 1 ]; then
+            echo "DEV_PACKAGE_BRANCH=${AZ_TRIMMED_REF}" >> ${GITHUB_ENV}
+          else
+            echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
+          fi
+      - name: Install composer-drupal-lenient globally
+        run: |
+          composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
+          composer global require mglaman/composer-drupal-lenient
+      - name: Clone scaffolding repo
+        uses: actions/checkout@v4
+        with:
+          repository: az-digital/az-quickstart-scaffolding
+          path: az-quickstart-scaffolding
+          ref: ${{ env.SCAFFOLD_BRANCH }}
+      - name: Install dependencies
+        run: |
+          cd az-quickstart-scaffolding
+          composer config repositories.az_quickstart vcs https://github.com/az-digital/az_quickstart.git
+          composer config use-github-api false
+          ./quickstart_branch.sh --branch ${AZ_TRIMMED_REF}
+          composer require --no-update --dev az-digital/az-quickstart-dev:dev-${DEV_PACKAGE_BRANCH}
+          composer install -o
+      - name: Save build artifact
+        uses: actions/cache/save@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+
+  phpcs:
+    name: PHP_CodeSniffer
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: cs2pr, phpcs
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - name: Generate phpcs report
+        continue-on-error: true
+        run: |
+          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          ./vendor/bin/phpcs --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist -q --report=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+      - name: Run phpcs
+        run: |
+          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          ./vendor/bin/phpcs -sp --colors --standard=web/profiles/custom/az_quickstart/phpcs.xml.dist
+
+  phpstan:
+    name: PHPStan
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          tools: cs2pr, phpstan
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - name: Run phpstan
+        run: |
+          cd $GITHUB_WORKSPACE/az-quickstart-scaffolding
+          ./vendor/bin/phpstan analyse --configuration web/profiles/custom/az_quickstart/phpstan.neon web/profiles/custom/az_quickstart --error-format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+
+  composer-audit:
+    name: composer audit (security)
+    needs: composer
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - name: Run composer audit
+        run: |
+          cd az-quickstart-scaffolding
+          composer audit
+
+  eslint:
+    name: eslint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20.13.0
+      - name: Checkout
+        uses: actions/checkout@v4
+      - run: yarn install
+      - name: Generate eslint report
+        continue-on-error: true
+        run: yarn run eslint . --format json --output-file eslint-report.json
+      - name: Annotate eslint results
+        continue-on-error: true
+        uses: ataylorme/eslint-annotate-action@v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          report-json: "eslint-report.json"
+      - name: Run eslint
+        run: yarn run eslint --color .
+
+  phpunit:
+    name: PHPUnit
+    needs: composer
+    runs-on: ubuntu-latest
+    services:
+      chromedriver:
+        image: drupalci/webdriver-chromedriver:production
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - name: Run php built-in server
+        run: |
+          cd az-quickstart-scaffolding
+          php -S 127.0.0.1:8080 -t web &
+        env:
+          PHP_CLI_SERVER_WORKERS: 4
+      - name: Ensure sites/simpletest directory
+        run: |
+          cd az-quickstart-scaffolding
+          mkdir -p web/sites/simpletest
+          chmod 777 web/sites/simpletest
+      - name: Run phpunit with fastest
+        run: |
+          find $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/fastest -p 4 -vvv "$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit {} --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --do-not-cache-result;"
+        env:
+          SYMFONY_DEPRECATIONS_HELPER: weak
+          SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
+          SIMPLETEST_BASE_URL: http://127.0.0.1:8080
+          MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
+          RUN_TESTS_CONCURRENCY: 4
+
+  install:
+    name: drush site:install
+    needs: composer
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - name: Install AZ Quickstart
+        run: |
+          cd az-quickstart-scaffolding
+          ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
+          ./vendor/bin/drush -y -n pm:install az_demo
+      - name: Run php built-in server
+        run: |
+          cd az-quickstart-scaffolding
+          php -S 127.0.0.1:8080 -t web &
+      - name: Check for PHP errors and notices
+        run: |
+          curl -sS -o /dev/null http://127.0.0.1:8080
+          curl -sS -o /dev/null http://127.0.0.1:8080/user
+          curl -sS -o /dev/null http://127.0.0.1:8080/people
+          curl -sS -o /dev/null http://127.0.0.1:8080/people-list
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text-background
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/text-media
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/card-decks
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/accordions
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/photo-galleries
+          curl -sS -o /dev/null http://127.0.0.1:8080/page-grid
+          curl -sS -o /dev/null http://127.0.0.1:8080/page-list
+          curl -sS -o /dev/null http://127.0.0.1:8080/news
+          curl -sS -o /dev/null http://127.0.0.1:8080/calendar
+          curl -sS -o /dev/null http://127.0.0.1:8080/pages/annual-events
+          if [ -z "$($GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/drush -n watchdog:show --count=100 --type=php)" ]; then echo "No PHP notices/errors logged."; else echo "PHP notices/errors found in log." >&2 && exit 1; fi
+
+  upgrade-status:
+    name: upgrade_status
+    needs: composer
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: db
+        ports:
+          - 3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: dom, curl, libxml, mbstring, zip, pdo, mysql, pdo_mysql, bcmath, soap, intl, gd, exif, iconv
+          tools: cs2pr
+      - uses: actions/cache/restore@v4
+        with:
+          path: ${{ github.workspace }}/az-quickstart-scaffolding
+          key: azqs-build-${{ github.sha }}
+      - name: Install AZ Quickstart
+        run: |
+          cd az-quickstart-scaffolding
+          ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
+          ./vendor/bin/drush -y -n pm:install az_demo
+      - name: Generate upgrade status report
+        run: |
+          cd az-quickstart-scaffolding
+          ./vendor/bin/drush -y -n pm:install upgrade_status
+          ./vendor/bin/drush upgrade_status:analyze --ignore-uninstalled --ignore-contrib --all --format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
