@@ -19,7 +19,7 @@ jobs:
       - name: Setup test matrix
         id: setup-test-matrix
         run: |
-          TESTS=$(find $GITHUB_WORKSPACE -name "*Test.php")
+          TESTS=$(find . -name "*Test.php")
           TESTS_JSON="{\"test\":["
           while IFS= read -r line; do
             TESTS_JSON+="\"$line\","
