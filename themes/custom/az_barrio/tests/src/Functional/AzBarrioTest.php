@@ -53,50 +53,34 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
   }
 
   /**
-   * Test AZ Barrio's defaults.
+   * Test AZ Barrio as an anonymous user.
    */
-  public function testThemeDefaults() {
+  public function testAnonymous() {
+    // Test AZ Barrio's defaults.
     $this->drupalGet('');
     $this->assertSession()->statusCodeEquals(200);
     $this->assertSession()->responseContains('https://fonts.googleapis.com/css?family=Material+Icons+Sharp');
     $this->assertSession()->responseContains('https://use.typekit.net/emv3zbo.css');
-  }
 
-  /**
-   * Tests that the Arizona Barrio theme can be uninstalled.
-   */
-  public function testIsUninstallable() {
-    // Login.
-    $this->drupalLogin($this->adminUser);
-    $this->drupalGet('admin/appearance');
-    $this->cssSelect('a[title="Set Bootstrap Barrio as default theme"]')[0]->click();
-    $this->cssSelect('a[title="Uninstall Arizona Barrio theme"]')[0]->click();
-    $this->assertSession()->pageTextContains('The Arizona Barrio theme has been uninstalled.');
-  }
-
-  /**
-   * Tests that the header column class settings work on install.
-   */
-  public function testHeaderColumnClassesAreSet() {
+    // Tests that the header column class settings work on install.
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-4');
     $this->assertSession()->elementExists('css', '#header_site > div:nth-child(1) > div > div.col-12.col-sm-6.col-lg-8');
-  }
 
-  /**
-   * Tests that the navbar off-canvas region classes are set on install.
-   */
-  public function testNavbarOffCanvaseRegionClassesSetonInstall() {
+    // Tests that the navbar off-canvas region classes are set on install.
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
   }
 
   /**
-   * Tests that the navbar off-canvas region classes are set properly.
-   *
-   * When blocks are removed or added to regions, classes should change.
+   * Test AZ Barrio as an admin user.
    */
-  public function testNavbarOffCanvaseRegionClassesSetNoOffCanvasBlocks() {
+  public function testAdmin() {
+    // Login.
+    $this->drupalLogin($this->adminUser);
+
+    // Tests that the navbar off-canvas region classes are set properly.
+    // When blocks are removed or added to regions, classes should change.
     $this->drupalLogin($this->adminUser);
     $this->drupalGet('admin/structure/block');
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-offcanvas-searchform-operations"] li.disable a')[0]->click();
@@ -114,6 +98,12 @@ class AzBarrioTest extends QuickstartFunctionalTestBase {
     $this->cssSelect('ul[data-drupal-selector="edit-blocks-az-barrio-main-menu-operations"] li.enable a')[0]->click();
     $this->drupalGet('');
     $this->assertSession()->elementExists('css', '#navbar-top.navbar-offcanvas.has-navigation-region.has-off-canvas-region');
+
+    // Tests that the Arizona Barrio theme can be uninstalled.
+    $this->drupalGet('admin/appearance');
+    $this->cssSelect('a[title="Set Bootstrap Barrio as default theme"]')[0]->click();
+    $this->cssSelect('a[title="Uninstall Arizona Barrio theme"]')[0]->click();
+    $this->assertSession()->pageTextContains('The Arizona Barrio theme has been uninstalled.');
   }
 
 }
