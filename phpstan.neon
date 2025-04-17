@@ -43,4 +43,4 @@ parameters:
 				class: Drupal\paragraphs\Entity\ParagraphsType
 
 	phpVersion: 80300
-	level: 3
+	level: 2
