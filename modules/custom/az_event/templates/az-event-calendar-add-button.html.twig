@@ -6,7 +6,16 @@
 * @ingroup themeable
 */
 #}
-{% set links = calendar_links(title, date(start_date), date(end_date), FALSE, description, location) %}
+{% set attributes = attributes.addClass('clear-both') %}
+{# List and order of calendar implementations. #}
+{% set calendar_types = {
+    'google' : 'Google',
+    'ics' : 'iCal File',
+    'webOffice': 'Outlook Enterprise (Office 365)',
+    'webOutlook': 'Outlook Personal (outlook.com)',
+    'yahoo' : 'Yahoo!'
+  }
+%}
 
 <div{{ attributes }}>
   {# Button trigger modal #}
@@ -32,8 +41,9 @@
         <div class="modal-body">
           <p class="mb-3">{{ 'Select your calendar type below:'|t }}</p>
           <div class="text-center">
-          {% for link in links %}
-              <a class="btn btn-hollow-primary btn-sm mb-1 calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link.type_name }}</a>
+          {% for calendar_type,name in calendar_types %}
+            {% set link = calendar_link(calendar_type, title, date(start_date), date(end_date), all_day, description, location) %}
+            <a class="btn btn-hollow-primary btn-block calendar-link-{{ calendar_type }}" target="_blank" href="{{ link }}" role="button">{{ name }}</a>
           {% endfor %}
           </div>
         </div>
