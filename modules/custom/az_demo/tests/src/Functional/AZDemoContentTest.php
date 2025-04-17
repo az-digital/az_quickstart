@@ -55,7 +55,7 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
   }
 
   /**
-   * Tests demo content
+   * Tests demo content.
    */
   public function testDemoContent() {
     // Go to the front page.
