@@ -12,7 +12,9 @@ use Drupal\Tests\BrowserTestBase;
 class MigrateExceptionsTest extends BrowserTestBase {
 
   /**
-   * {@inheritdoc}
+   * The profile to install as a basis for testing.
+   *
+   * @var string
    */
   protected $profile = 'az_quickstart';
 
@@ -22,12 +24,16 @@ class MigrateExceptionsTest extends BrowserTestBase {
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * {@inheritdoc}
+   * Disable strict schema checking.
+   *
+   * @var bool
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * {@inheritdoc}
+   * Modules to enable.
+   *
+   * @var string[]
    */
   protected static $modules = ['az_migration'];
 

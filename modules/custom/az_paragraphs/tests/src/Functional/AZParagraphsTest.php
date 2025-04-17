@@ -14,22 +14,26 @@ use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 class AZParagraphsTest extends QuickstartFunctionalTestBase {
 
   /**
-   * {@inheritdoc}
+   * The profile to install as a basis for testing.
+   *
+   * @var string
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * {@inheritdoc}
+   * @var bool
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * {@inheritdoc}
+   * @var string
    */
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * {@inheritdoc}
+   * Modules to enable.
+   *
+   * @var string[]
    */
   protected static $modules = [
     'az_paragraphs',
