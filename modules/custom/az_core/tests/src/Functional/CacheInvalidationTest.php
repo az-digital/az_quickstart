@@ -12,22 +12,26 @@ use Drupal\Tests\BrowserTestBase;
 class CacheInvalidationTest extends BrowserTestBase {
 
   /**
-   * {@inheritdoc}
+   * The profile to install as a basis for testing.
+   *
+   * @var string
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * {@inheritdoc}
+   * @var bool
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * {@inheritdoc}
+   * @var string
    */
   protected $defaultTheme = 'stark';
 
   /**
-   * {@inheritdoc}
+   * Modules to install.
+   *
+   * @var array
    */
   protected static $modules = [
     'az_core',

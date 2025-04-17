@@ -12,4 +12,3 @@ dependencies:
   - migmag:migmag_process
   - migrate_plus:migrate_plus
   - migrate_tools:migrate_tools
-

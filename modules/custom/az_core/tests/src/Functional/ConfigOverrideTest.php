@@ -14,22 +14,26 @@ use Drupal\Tests\BrowserTestBase;
 class ConfigOverrideTest extends BrowserTestBase {
 
   /**
-   * {@inheritdoc}
+   * The profile to install as a basis for testing.
+   *
+   * @var string
    */
   protected $profile = 'az_quickstart';
 
   /**
-   * {@inheritdoc}
+   * @var bool
    */
   protected $strictConfigSchema = FALSE;
 
   /**
-   * {@inheritdoc}
+   * @var string
    */
   protected $defaultTheme = 'stark';
 
   /**
-   * {@inheritdoc}
+   * Modules to enable.
+   *
+   * @var string[]
    */
   protected static $modules = [
     'az_cas',
