@@ -555,14 +555,6 @@ a.nolink + ul .sf-clone-parent {
     margin-left: 0;
     margin-right: 0;
 }
-.region .az-full-width-row {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
-}
 
 .region-sidebar-first .block,
 .region-sidebar-second .block {
