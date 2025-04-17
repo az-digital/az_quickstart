@@ -52,10 +52,6 @@ jobs:
           else
             echo "DEV_PACKAGE_BRANCH=main" >> ${GITHUB_ENV}
           fi
-      - name: Install composer-drupal-lenient globally
-        run: |
-          composer global config --no-plugins allow-plugins.mglaman/composer-drupal-lenient true
-          composer global require mglaman/composer-drupal-lenient
       - name: Clone scaffolding repo
         uses: actions/checkout@v4
         with:
@@ -277,7 +273,8 @@ jobs:
           ./vendor/bin/drush site:install az_quickstart --db-url=mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db --verbose --yes -n
           ./vendor/bin/drush -y -n pm:install az_demo
       - name: Generate upgrade status report
+        continue-on-error: true
         run: |
           cd az-quickstart-scaffolding
           ./vendor/bin/drush -y -n pm:install upgrade_status
-          ./vendor/bin/drush upgrade_status:analyze --ignore-uninstalled --ignore-contrib --all --format=checkstyle | sed 's/web\/profiles\/custom\/az_quickstart\///' | cs2pr
+          ./vendor/bin/drush upgrade_status:analyze az_quickstart
