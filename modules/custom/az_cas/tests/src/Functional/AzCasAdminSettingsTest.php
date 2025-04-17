@@ -50,13 +50,14 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
   }
 
   /**
-   * Tests that access to the user login form is disabled.
+   * Tests that custom AZ CAS settings work correctly.
    *
    * @dataProvider azCasSettingsProvider
    */
-  public function testUserLoginFormBehavior($disable_login_form) {
+  public function testAzCazSettings($disable_setting) {
+    // Tests that access to the user login form can be disabled.
     $edit = [
-      'disable_login_form' => $disable_login_form,
+      'disable_login_form' => $disable_setting,
     ];
     $this->drupalGet('/admin/config/az-quickstart/settings/az-cas');
     $this->submitForm($edit, 'Save configuration');
@@ -72,7 +73,7 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
     $this->submitForm([], 'Log out');
 
     $this->drupalGet('user/login');
-    if ($disable_login_form) {
+    if ($disable_setting) {
       $this->assertSession()->pageTextNotContains('Username');
       $this->assertSession()->pageTextNotContains('Password');
       $this->assertSession()->buttonNotExists('Log in');
@@ -82,16 +83,10 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
       $this->assertSession()->pageTextContains('Password');
       $this->assertSession()->buttonExists('Log in');
     }
-  }
 
-  /**
-   * Tests that access to the password reset form is disabled.
-   *
-   * @dataProvider azCasSettingsProvider
-   */
-  public function testPasswordResetBehavior($disable_password_recovery_link) {
+    // Tests that access to the password reset form can be disabled.
     $edit = [
-      'disable_password_recovery_link' => $disable_password_recovery_link,
+      'disable_password_recovery_link' => $disable_setting,
     ];
     $this->drupalGet('/admin/config/az-quickstart/settings/az-cas');
     $this->submitForm($edit, 'Save configuration');
@@ -102,7 +97,7 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
 
     $this->drupalLogout();
     $this->drupalGet('user/password');
-    if ($disable_password_recovery_link) {
+    if ($disable_setting) {
       $this->assertSession()->pageTextContains('Access denied');
       $this->assertSession()->pageTextNotContains('Reset your password');
     }
