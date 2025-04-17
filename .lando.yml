@@ -1,4 +1,4 @@
-name: az_quickstart
+name: issue-4248
 recipe: drupal10
 config:
   php: '8.3'
