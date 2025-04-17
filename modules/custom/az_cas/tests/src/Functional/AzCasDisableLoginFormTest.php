@@ -6,11 +6,11 @@ use Drupal\Core\Url;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
- * Tests AZ CAS admin settings form.
+ * Tests that access to the user login form can be disabled.
  *
  * @group az_cas
  */
-class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
+class AzCasDisableLoginFormTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -46,18 +46,17 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
   protected function setUp(): void {
     parent::setUp();
     $this->adminUser = $this->drupalCreateUser(['administer account settings']);
+    $this->drupalLogin($this->adminUser);
   }
 
   /**
-   * Tests that custom AZ CAS settings work correctly.
+   * Tests that access to the user login form is disabled.
    *
    * @dataProvider azCasSettingsProvider
    */
-  public function testAzCazSettings($disable_setting) {
-    // Tests that access to the user login form can be disabled.
-    $this->drupalLogin($this->adminUser);
+  public function testUserLoginFormBehavior($disable_login_form) {
     $edit = [
-      'disable_login_form' => $disable_setting,
+      'disable_login_form' => $disable_login_form,
     ];
     $this->drupalGet('/admin/config/az-quickstart/settings/az-cas');
     $this->submitForm($edit, 'Save configuration');
@@ -73,7 +72,7 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
     $this->submitForm([], 'Log out');
 
     $this->drupalGet('user/login');
-    if ($disable_setting) {
+    if ($disable_login_form) {
       $this->assertSession()->pageTextNotContains('Username');
       $this->assertSession()->pageTextNotContains('Password');
       $this->assertSession()->buttonNotExists('Log in');
@@ -82,29 +81,6 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
       $this->assertSession()->pageTextContains('Username');
       $this->assertSession()->pageTextContains('Password');
       $this->assertSession()->buttonExists('Log in');
-    }
-
-    // Tests that access to the password reset form can be disabled.
-    $this->drupalLogin($this->adminUser);
-    $edit = [
-      'disable_password_recovery_link' => $disable_setting,
-    ];
-    $this->drupalGet('/admin/config/az-quickstart/settings/az-cas');
-    $this->submitForm($edit, 'Save configuration');
-
-    // The menu router info needs to be rebuilt after saving this form so the
-    // routeSubscriber runs again.
-    $this->container->get('router.builder')->rebuild();
-
-    $this->drupalLogout();
-    $this->drupalGet('user/password');
-    if ($disable_setting) {
-      $this->assertSession()->pageTextContains('Access denied');
-      $this->assertSession()->pageTextNotContains('Reset your password');
-    }
-    else {
-      $this->assertSession()->pageTextNotContains('Access denied');
-      $this->assertSession()->pageTextContains('Reset your password');
     }
   }
 
