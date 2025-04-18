@@ -867,7 +867,8 @@ function template_preprocess_az_inline_entity_role_form_entity_table(array &$var
 function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
 
   // Modify publication links to not appear if they are noncanonical.
-  if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $link['access'] && ($context['entity']->bundle() === 'az_publication')) {
+  // This behavior is skipped for overridden links.
+  if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $link['access'] && ($context['entity']->bundle() === 'az_publication') && (empty($link['status_override']))) {
     // Fields that represent a canonical copy of the publication exists.
     // @todo determine list.
     $canonicals = [
