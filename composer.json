@@ -92,7 +92,7 @@
         "drupal/media_library_edit": "3.0.4",
         "drupal/media_library_form_element": "2.1.1",
         "drupal/media_migration": "*",
-        "drupal/menu_block": "1.13.0",
+        "drupal/menu_block": "1.14.0",
         "drupal/menu_link_attributes": "1.5.0",
         "drupal/metatag": "2.0.2",
         "drupal/migmag": "1.8.3",
