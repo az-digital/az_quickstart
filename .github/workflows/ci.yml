@@ -9,6 +9,26 @@ on:
       - '2.11.x'
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.setup-test-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup test matrix
+        id: setup-test-matrix
+        run: |
+          TESTS=$(find . -name "*Test.php")
+          TESTS_JSON="{\"test\":["
+          while IFS= read -r line; do
+            name=$(basename -s .php "$line")
+            TESTS_JSON+="{\"file\":\"$line\", \"name\":\"$name\"},"
+          done <<< "$TESTS"
+          TESTS_JSON=${TESTS_JSON%?}
+          TESTS_JSON+="]}"
+          echo "matrix=$TESTS_JSON" >> $GITHUB_OUTPUT
+
   composer-validate:
     name: composer validate
     runs-on: ubuntu-latest
@@ -150,9 +170,12 @@ jobs:
         run: yarn run eslint --color .
 
   phpunit:
-    name: PHPUnit
-    needs: composer
+    name: PHPUnit (${{ matrix.test.name }})
+    needs: [setup, composer]
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.setup.outputs.matrix) }}
     services:
       chromedriver:
         image: drupalci/webdriver-chromedriver:production
@@ -177,22 +200,18 @@ jobs:
         run: |
           cd az-quickstart-scaffolding
           php -S 127.0.0.1:8080 -t web &
-        env:
-          PHP_CLI_SERVER_WORKERS: 4
       - name: Ensure sites/simpletest directory
         run: |
           cd az-quickstart-scaffolding
           mkdir -p web/sites/simpletest
           chmod 777 web/sites/simpletest
-      - name: Run phpunit with fastest
-        run: |
-          find $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/ -name "*Test.php" | $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/fastest -p 4 -vvv "$GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit {} --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --verbose --do-not-cache-result;"
+      - name: Run phpunit test (${{ matrix.test.file }})
+        run: $GITHUB_WORKSPACE/az-quickstart-scaffolding/vendor/bin/phpunit --configuration $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/phpunit.xml.dist --bootstrap $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/core/tests/bootstrap.php --colors="always" --verbose --do-not-cache-result $GITHUB_WORKSPACE/az-quickstart-scaffolding/web/profiles/custom/az_quickstart/"${{ matrix.test.file }}"
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
           SIMPLETEST_BASE_URL: http://127.0.0.1:8080
           MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
-          RUN_TESTS_CONCURRENCY: 4
 
   install:
     name: drush site:install
