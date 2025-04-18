@@ -886,6 +886,7 @@ function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
       // Publications are noncanonical if a canonical reference exists.
       if ($entity->hasField($canonical) && !empty($entity->get($canonical)->getValue())) {
         $link['access'] = FALSE;
+        break;
       }
     }
   }
