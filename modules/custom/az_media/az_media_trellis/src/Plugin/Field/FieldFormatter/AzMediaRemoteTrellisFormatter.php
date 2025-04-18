@@ -29,8 +29,23 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
 
   /**
    * AzMediaRemoteTrellisFormatter constructor.
-   * 
+   *
+   * @param string $plugin_id
+   *   The plugin ID for the formatter.
+   * @param mixed $plugin_definition
+   *   The plugin implementation definition.
+   * @param \Drupal\Core\Field\FieldDefinitionInterface $field_definition
+   *   The field definition.
+   * @param array $settings
+   *   The formatter settings.
+   * @param string $label
+   *   The formatter label.
+   * @param string $view_mode
+   *   The view mode.
+   * @param array $third_party_settings
+   *   Any third-party settings.
    * @param \Drupal\az_media_trellis\AzMediaTrellisService $service
+   *   A custom service for with helpful functions for this media type.
    */
   public function __construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings, AzMediaTrellisService $service) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
@@ -95,16 +110,14 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       if ($item->isEmpty()) {
         continue;
       }
-      // This one field is the Trellis form URL
+      // This one field is the Trellis form URL.
       $url = $item->getValue()['value'];
-      // e.g. https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000072edQAA or
-      // https://forms-a.trellis.arizona.edu/<form_id>?tfa_4=<record_id>
-
+      // e.g. https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000072edQAA
+      // or https://forms-a.trellis.arizona.edu/<form_id>?tfa_4=<record_id>
       // Parse URL to remove query string.
       $parsedUrl = parse_url($url);
       $path = $parsedUrl['path'];
-      // e.g. /185
-
+      // e.g. /185.
       // Insert 'publish' before '185', or the form_id more generally.
       $pathParts = explode('/', trim($path, '/'));
       $pathParts = array_merge(['publish'], $pathParts);
@@ -113,8 +126,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       $newPath = '/' . implode('/', $pathParts);
       $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $newPath;
       // e.g. https://forms-a.trellis.arizona.edu/publish/185
-
-
+      $is_editing_context = $this->service::isEditingContext();
 
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
@@ -139,4 +151,5 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       ],
     ];
   }
+
 }

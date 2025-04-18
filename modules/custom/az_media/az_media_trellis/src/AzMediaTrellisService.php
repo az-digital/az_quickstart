@@ -10,7 +10,7 @@ class AzMediaTrellisService {
   /**
    * Returns TRUE if on an "editing" route, FALSE otherwise.
    */
-  public static function is_editing_context() { 
+  public static function isEditingContext() {
     // Check if the current route is an editing context.
     $route_name = \Drupal::routeMatch()->getRouteName();
     return in_array($route_name, [
@@ -24,4 +24,5 @@ class AzMediaTrellisService {
       'media.filter.preview',
     ]);
   }
+
 }

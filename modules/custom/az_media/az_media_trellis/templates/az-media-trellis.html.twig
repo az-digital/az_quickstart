@@ -4,11 +4,9 @@
  * Template implementation for the az_media_trellis theme hook.
  *
  * Available variables:
- * - url: (string) The full URL to this document.
- * - width: (int) The width of the iframe, in pixels.
- * - height: (int) The height of the iframe, in pixels.
+ * - url: (string) A formatted Trellis source URL
  */
 #}
-  {{ attach_library('az_media_trellis/az-media-trellis') }}
-  <div id="fa-form" class="az-default az-media"></div>
-  <script src="{{ url }}" data-qp-target-id="fa-form" defer></script>
+{{ attach_library('az_media_trellis/az-media-trellis') }}
+<div id="fa-form"></div>
+<script src="{{ url }}" data-qp-target-id="fa-form" defer></script>
