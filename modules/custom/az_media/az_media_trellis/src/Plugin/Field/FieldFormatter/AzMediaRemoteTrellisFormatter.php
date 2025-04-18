@@ -7,6 +7,8 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
+use Drupal\az_media_trellis\AzMediaTrellisService;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'az_media_remote_trellis' formatter.
@@ -19,6 +21,37 @@ use Drupal\media_remote\Plugin\Field\FieldFormatter\MediaRemoteFormatterBase;
   ],
 )]
 class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
+
+  /**
+   * @var \Drupal\az_media_trellis\AzMediaTrellisService
+   */
+  protected $service;
+
+  /**
+   * AzMediaRemoteTrellisFormatter constructor.
+   * 
+   * @param \Drupal\az_media_trellis\AzMediaTrellisService $service
+   */
+  public function __construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings, AzMediaTrellisService $service) {
+    parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
+    $this->service = $service;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    return new static(
+      $plugin_id,
+      $plugin_definition,
+      $configuration['field_definition'],
+      $configuration['settings'],
+      $configuration['label'],
+      $configuration['view_mode'],
+      $configuration['third_party_settings'],
+      $container->get('az_media_trellis')
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -62,40 +95,30 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       if ($item->isEmpty()) {
         continue;
       }
-      $fieldValue = $item->getValue()['value'];
-      \Drupal::logger('az_media_trellis')->info('fieldValue: ' . $fieldValue);
+      // This one field is the Trellis form URL
+      $url = $item->getValue()['value'];
+      // e.g. https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000072edQAA or
+      // https://forms-a.trellis.arizona.edu/<form_id>?tfa_4=<record_id>
 
-      $url = $fieldValue;
       // Parse URL to remove query string.
       $parsedUrl = parse_url($url);
       $path = $parsedUrl['path'];
+      // e.g. /185
 
-      // Insert 'publish' before '185'.
+      // Insert 'publish' before '185', or the form_id more generally.
       $pathParts = explode('/', trim($path, '/'));
       $pathParts = array_merge(['publish'], $pathParts);
 
       // Reconstruct the new URL.
       $newPath = '/' . implode('/', $pathParts);
       $newUrl = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . $newPath;
+      // e.g. https://forms-a.trellis.arizona.edu/publish/185
 
-      // Check if the current route is an editing context.
-      $route_name = \Drupal::routeMatch()->getRouteName();
-      $is_editing_context = in_array($route_name, [
-      // Node edit form.
-        'entity.node.edit_form',
-      // Node add form.
-        'entity.node.add_form',
-      // Media library.
-        'media_library.ui',
-      // When editing the media inline?
-        'media.filter.preview',
-      ]);
+
 
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
         '#url' => $newUrl,
-        // '#width' => $this->getSetting('width') ?? 800,
-        // '#height' => $this->getSetting('height') ?? 600,
         '#editing' => $is_editing_context,
       ];
     }
@@ -116,17 +139,4 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       ],
     ];
   }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function settingsSummary() {
-    $summary = parent::settingsSummary();
-    $summary[] = $this->t('Iframe size: %width x %height pixels', [
-      // '%width' => $this->getSetting('width'),
-      // '%height' => $this->getSetting('height'),
-    ]);
-    return $summary;
-  }
-
 }
