@@ -24,7 +24,7 @@ class AzBarrioAdminTest extends QuickstartFunctionalTestBase {
   protected $defaultTheme = 'az_barrio';
 
   /**
-   * Disable strict schema cheking.
+   * Disable strict schema checking.
    *
    * @var bool
    */

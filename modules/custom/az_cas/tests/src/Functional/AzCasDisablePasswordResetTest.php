@@ -19,7 +19,7 @@ class AzCasDisablePasswordResetTest extends QuickstartFunctionalTestBase {
   protected $profile = 'az_quickstart';
 
   /**
-   * Disable strict schema cheking.
+   * Disable strict schema checking.
    *
    * @var bool
    */
