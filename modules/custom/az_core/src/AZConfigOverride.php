@@ -123,6 +123,8 @@ class AZConfigOverride implements LoggerAwareInterface {
             '@config_id' => $name,
           ]);
           $config = $this->configFactory->getEditable($name);
+          // Generate a UUID for the configuration if one doesn't exist.
+          $data['uuid'] = $config->get('uuid') ?? $data['uuid'] ?? \Drupal::service('uuid')->generate();
           $config->setData($data);
           $config->Save();
 
