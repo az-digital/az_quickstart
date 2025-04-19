@@ -74,3 +74,30 @@
 .az-video-paused .az-video-container {
   opacity: 1;
 }
+
+.az-aspect-ratio .container {
+  bottom: 0;
+  top: 0;
+  left: 50%;
+  float: none;
+  position: absolute;
+  transform: translate(-50%, 0);
+  width: 100%;
+  z-index: 1;
+}
+
+.az-aspect-ratio.box .col:first-child {
+  align-self: center;
+}
+
+.az-aspect-ratio .column .az-full-width-column-content-wrapper {
+  align-self: center;
+}
+.region-content .container .az-full-width-row {
+  height: 100%;
+}
+.az-aspect-ratio.column .az-full-width-column-content {
+  height: 100%;
+  display: -ms-flexbox!important;
+  display: flex!important;
+}
