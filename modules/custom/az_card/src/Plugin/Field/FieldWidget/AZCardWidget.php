@@ -261,9 +261,6 @@ class AZCardWidget extends WidgetBase {
         $edit_url_query_params = [
           'media_library_edit' => 'ajax',
         ];
-        if (!empty($settings['edit_form_mode'])) {
-          $edit_url_query_params['media_library_form_mode'] = $settings['edit_form_mode'];
-        }
         $edit_url = Url::fromUserInput(str_replace('{media}', $item->media, $edit_template) . '?' . UrlHelper::buildQuery($edit_url_query_params));
         $dialog_options = MediaLibraryUiBuilder::dialogOptions();
         $element['media']['media_edit'] = [
