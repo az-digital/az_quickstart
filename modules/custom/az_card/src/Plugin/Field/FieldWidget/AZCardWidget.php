@@ -2,8 +2,10 @@
 
 namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
+use Drupal\Component\Render\FormattableMarkup;
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
@@ -12,6 +14,8 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\media\Entity\Media;
+use Drupal\media_library\MediaLibraryUiBuilder;
 use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
@@ -248,6 +252,50 @@ class AZCardWidget extends WidgetBase {
       '#delta' => $delta,
       '#cardinality' => 1,
     ];
+
+    if (!empty($item->media)) {
+      $media = Media::load($item->media);
+
+      if ($media && $edit_template = $media->getEntityType()->getLinkTemplate('edit-form')) {
+        $element['#attributes']['class'][] = 'js-media-library-edit-' . $wrapper . '-wrapper';
+        $edit_url_query_params = [
+          'media_library_edit' => 'ajax',
+        ];
+        if (!empty($settings['edit_form_mode'])) {
+          $edit_url_query_params['media_library_form_mode'] = $settings['edit_form_mode'];
+        }
+        $edit_url = Url::fromUserInput(str_replace('{media}', $item->media, $edit_template) . '?' . UrlHelper::buildQuery($edit_url_query_params));
+        $dialog_options = MediaLibraryUiBuilder::dialogOptions();
+        $element['media']['media_edit'] = [
+          '#type' => 'link',
+          '#title' => new FormattableMarkup('<span class="visually-hidden">@link_text</span>', [
+            '@link_text' => t('Edit media item'),
+          ]),
+          '#url' => $edit_url,
+          '#attributes' => [
+            'class' => [
+              'js-media-library-edit-link',
+              'media-library-edit__link',
+              'use-ajax',
+            ],
+            'target' => '_blank',
+            'data-dialog-options' => json_encode([
+              'height' => $dialog_options['height'],
+              'width' => $dialog_options['width'],
+              'classes' => ['ui-dialog-content' => 'media-library-edit__modal'],
+              'drupalAutoButtons' => FALSE,
+            ]),
+            'data-dialog-type' => 'modal',
+          ],
+          '#attached' => [
+            'library' => [
+              'media_library_edit/admin',
+              'core/drupal.dialog.ajax',
+            ],
+          ],
+        ];
+      }
+    }
 
     $element['title'] = [
       '#type' => 'textfield',
