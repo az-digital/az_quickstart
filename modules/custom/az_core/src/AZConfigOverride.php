@@ -2,7 +2,9 @@
 
 namespace Drupal\az_core;
 
+use Drupal\Component\Uuid\UuidInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\ConfigManager;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Extension\ModuleHandler;
 use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
@@ -72,15 +74,40 @@ class AZConfigOverride implements LoggerAwareInterface {
   protected $moduleHandler;
 
   /**
+   * Drupal\Core\Config\ConfigManager definition.
+   * 
+   * @var \Drupal\Core\Config\ConfigManager
+   */
+  protected $configManager;
+
+  /**
+   * Drupal\Component\Uuid\UuidInterface definition.
+   * 
+   * @var \Drupal\Component\Uuid\UuidInterface
+   */
+  protected $uuidService;
+
+  /**
    * Constructs a new AZConfigOverride object.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, ModuleExtensionList $extension_list_module, ConfigCollector $config_collector, ConfigSyncSnapshotter $config_sync_snapshotter, ConfigListByProviderInterface $config_update_lister, ModuleHandler $module_handler) {
+  public function __construct(
+    ConfigFactoryInterface $config_factory,
+    ModuleExtensionList $extension_list_module,
+    ConfigCollector $config_collector,
+    ConfigSyncSnapshotter $config_sync_snapshotter,
+    ConfigListByProviderInterface $config_update_lister,
+    ModuleHandler $module_handler,
+    ConfigManager $config_manager,
+    UuidInterface $uuid_service,
+  ) {
     $this->configFactory = $config_factory;
     $this->extensionListModule = $extension_list_module;
     $this->configCollector = $config_collector;
     $this->configSyncSnapshotter = $config_sync_snapshotter;
     $this->configUpdateLister = $config_update_lister;
     $this->moduleHandler = $module_handler;
+    $this->configManager = $config_manager;
+    $this->uuidService = $uuid_service;
   }
 
   /**
@@ -123,10 +150,12 @@ class AZConfigOverride implements LoggerAwareInterface {
             '@config_id' => $name,
           ]);
           $config = $this->configFactory->getEditable($name);
-          // Generate a UUID for the configuration if one doesn't exist.
-          $data['uuid'] = $config->get('uuid') ?? $data['uuid'] ?? \Drupal::service('uuid')->generate();
+          // Generate UUID if one doesn't exist (for config entities only).
+          if ($this->configManager->getEntityTypeIdByName($name)) {
+            $data['uuid'] = $config->get('uuid') ?? $data['uuid'] ?? $this->uuidService->generate();
+          }
           $config->setData($data);
-          $config->Save();
+          $config->save();
 
           // Determine the extension owner of the configuration (array tuple).
           $provided_by = $this->configUpdateLister->getConfigProvider($name);
