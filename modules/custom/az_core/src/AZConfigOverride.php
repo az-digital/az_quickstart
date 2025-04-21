@@ -75,14 +75,14 @@ class AZConfigOverride implements LoggerAwareInterface {
 
   /**
    * Drupal\Core\Config\ConfigManager definition.
-   * 
+   *
    * @var \Drupal\Core\Config\ConfigManager
    */
   protected $configManager;
 
   /**
    * Drupal\Component\Uuid\UuidInterface definition.
-   * 
+   *
    * @var \Drupal\Component\Uuid\UuidInterface
    */
   protected $uuidService;
