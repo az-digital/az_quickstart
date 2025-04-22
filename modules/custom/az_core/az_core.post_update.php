@@ -29,7 +29,6 @@ function az_core_post_update_add_missing_config_uuids() {
       if ($config->get('uuid') === NULL) {
         $config->set('uuid', \Drupal::service('uuid')->generate());
         $config->save();
-        // \Drupal::service('config.storage')->write($name, $config->getRawData());
         \Drupal::logger('az_core')->notice("Added missing UUID to @config_id.", [
           '@config_id' => $name,
         ]);
