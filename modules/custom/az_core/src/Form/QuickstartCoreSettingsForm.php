@@ -143,7 +143,6 @@ class QuickstartCoreSettingsForm extends ConfigFormBase {
       '#open' => TRUE,
     ];
 
-    // $front_page = $site_config->get('page.front') !== '/user/login' ? $this->aliasManager->getAliasByPath($site_config->get('page.front')) : '';
     $form['front_page']['site_frontpage'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Default front page'),
