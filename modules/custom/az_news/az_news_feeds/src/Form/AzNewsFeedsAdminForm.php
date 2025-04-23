@@ -36,8 +36,8 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   public function __construct(
     ConfigFactoryInterface $config_factory,
     TypedConfigManagerInterface|null $typedConfigManager,
-    ClientInterface $http_client
-    ) {
+    ClientInterface $http_client,
+  ) {
     parent::__construct($config_factory, $typedConfigManager);
     $this->httpClient = $http_client;
   }
@@ -68,7 +68,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
   }
 
   /**
-   * Returns array of term options from UArizona News.
+   * Returns array of term options from University of Arizona News.
    */
   public function getRemoteTermOptions(): array {
     $az_news_feeds_config = $this->config('az_news_feeds.settings');
@@ -114,7 +114,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
     $taxonomy_url = Url::fromUri('internal:/admin/structure/taxonomy/manage/az_news_tags/overview');
     $taxonomy_link = Link::fromTextAndUrl('News Tags vocabulary', $taxonomy_url)->toString();
 
-    $markup = '<p>To import the most recent stories regardless of tag, select "All".</p>' .
+    $markup = '<p>To import the most recent stories from <a href="https://news.arizona.edu" target="_blank">news.arizona.edu</a> regardless of tag, select "All".</p>' .
         '<p>Deselect "All" if you want to import the most recent stories of any specific tag or tags.</p>' .
         '<p>If you select multiple tags, this will import stories with any of the selected tags, and not just stories with all of the selected tags.</p>' .
         '<p>This importer associates stories with existing taxonomy terms based on tags from the feed. If a story in the feed includes tags, the importer will check if these tags correspond to any existing terms in the ' . $taxonomy_link . ' on the site. It will then associate the story with those existing terms. For instance, if a story\'s tags include \'Lunar and Planetary Laboratory\' and this term exists in the ' . $taxonomy_link . ' on the site, the importer will add this term to the story. Tags that do not match any existing taxonomy terms on the site will be ignored and not added to the story.</p>';

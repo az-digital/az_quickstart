@@ -97,6 +97,7 @@ display:
         type: full
         options:
           offset: 0
+          pagination_heading_level: h4
           items_per_page: 50
           total_pages: null
           id: 0
@@ -143,15 +144,20 @@ display:
                 advanced:
                   placeholder_text: ''
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
               tid:
                 plugin_id: az_finder_tid_widget
                 advanced:
                   sort_options: false
+                  placeholder_text: ''
                   rewrite:
                     filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
                   collapsible: false
+                  collapsible_disable_automatic_open: false
                   is_secondary: false
+                default_states: {  }
           reset_button_position: top
           reset_button_counter: true
           orientation: vertical
@@ -180,6 +186,21 @@ display:
             format: az_standard
           tokenize: false
       sorts:
+        sticky:
+          id: sticky
+          table: node_field_data
+          field: sticky
+          relationship: none
+          group_type: group
+          admin_label: ''
+          entity_type: node
+          entity_field: sticky
+          plugin_id: standard
+          order: DESC
+          expose:
+            label: ''
+            field_identifier: ''
+          exposed: false
         title:
           id: title
           table: node_field_data
@@ -407,6 +428,55 @@ display:
     display_plugin: page
     position: 2
     display_options:
+      exposed_form:
+        type: az_better_exposed_filters
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: 'Reset filters'
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+              tid:
+                plugin_id: az_finder_tid_widget
+                advanced:
+                  sort_options: false
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                default_states: {  }
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       style:
         type: views_bootstrap_grid
         options:
@@ -425,6 +495,7 @@ display:
           relationship: none
           view_mode: az_card
       defaults:
+        exposed_form: false
         style: false
         style_options: false
         row: false
@@ -450,6 +521,55 @@ display:
     display_plugin: page
     position: 1
     display_options:
+      exposed_form:
+        type: az_better_exposed_filters
+        options:
+          submit_button: Apply
+          reset_button: true
+          reset_button_label: 'Reset filters'
+          exposed_sorts_label: 'Sort by'
+          expose_sort_order: true
+          sort_asc_label: Asc
+          sort_desc_label: Desc
+          text_input_required: 'Select any filter and click on Apply to see results'
+          text_input_required_format: az_standard
+          bef:
+            general:
+              autosubmit: true
+              autosubmit_exclude_textfield: false
+              autosubmit_textfield_delay: 500
+              autosubmit_hide: true
+              input_required: false
+              allow_secondary: false
+              secondary_label: 'Advanced options'
+              secondary_open: false
+              reset_button_always_show: false
+            filter:
+              title:
+                plugin_id: default
+                advanced:
+                  placeholder_text: ''
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+              tid:
+                plugin_id: az_finder_tid_widget
+                advanced:
+                  sort_options: false
+                  placeholder_text: ''
+                  rewrite:
+                    filter_rewrite_values: ''
+                    filter_rewrite_values_key: false
+                  collapsible: false
+                  collapsible_disable_automatic_open: false
+                  is_secondary: false
+                default_states: {  }
+          reset_button_position: top
+          reset_button_counter: true
+          orientation: vertical
+          skip_link: true
+          skip_link_text: 'Skip to search and filter'
+          skip_link_id: search-filter
       style:
         type: default
         options:
@@ -463,6 +583,7 @@ display:
           view_mode: az_row
       defaults:
         css_class: false
+        exposed_form: false
         style: false
         style_options: false
         row: false

@@ -60,7 +60,6 @@ install:
   - drupal:file
   - drupal:views
   - drupal:views_ui
-  - drupal:tour
   - drupal:automated_cron
   - drupal:google_tag
   - block_class:block_class
@@ -74,6 +73,9 @@ install:
   - role_delegation:role_delegation
   - media_entity_file_replace:media_entity_file_replace
   - extlink:extlink
+  - masquerade:masquerade
+  - masquerade_log:masquerade_log
+  - quick_node_clone:quick_node_clone
 
 themes:
   - az_barrio

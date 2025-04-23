@@ -2,13 +2,13 @@
 
 namespace Drupal\az_publication\Controller;
 
-use Drupal\az_publication\Entity\AZAuthorInterface;
 use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Render\RendererInterface;
 use Drupal\Core\Url;
+use Drupal\az_publication\Entity\AZAuthorInterface;
 
 /**
  * Class AZAuthorController.
@@ -124,7 +124,7 @@ class AZAuthorController extends ControllerBase {
             '#template' => '{% trans %}{{ date }} by {{ username }}{% endtrans %}{% if message %}<p class="revision-log">{{ message }}</p>{% endif %}',
             '#context' => [
               'date' => $link,
-              'username' => $this->renderer->renderPlain($username),
+              'username' => $this->renderer->renderInIsolation($username),
               'message' => [
                 '#markup' => $revision->getRevisionLogMessage(),
                 '#allowed_tags' => Xss::getHtmlTagList(),

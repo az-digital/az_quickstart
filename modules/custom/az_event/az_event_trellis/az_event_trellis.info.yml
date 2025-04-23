@@ -3,12 +3,14 @@ type: module
 description: 'Import events from <a href="https://trellis.arizona.edu/solutions/events-management">Trellis Events</a>, the official University of Arizona events management tool.'
 core_version_requirement: ^9 || ^10
 package: 'The University of Arizona - Experimental'
-
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'
 php: 8.0
 
 dependencies:
   - az_core
   - az_event
+  - az_migration_remote
   - drupal:views
   - migrate:migrate
   - migrate_plus:migrate_plus

@@ -1,0 +1,289 @@
+id: az_person_profiles_import
+label: Profiles Integration
+migration_tags:
+  - Profiles Integration
+source:
+  plugin: url
+  data_fetcher_plugin: az_profiles_api_fetcher
+  data_parser_plugin: az_person_profiles_import_json
+  urls: []
+  item_selector: /
+  ids:
+    netid:
+      type: string
+  constants:
+    NAME: 'name'
+
+  fields:
+    -
+      name: netid
+      selector: 'Person/netid'
+    -
+      name: surname
+      selector: 'Person/surname'
+    -
+      name: givenname
+      selector: 'Person/givenname'
+    -
+      name: preferred_surname
+      selector: 'Person/preferred_surname'
+    -
+      name: preferred_givenname
+      selector: 'Person/preferred_givenname'
+    -
+      name: email
+      selector: 'Person/email'
+    -
+      name: biography
+      selector: 'Bio/desc'
+    -
+      name: titles
+      selector: 'Titles'
+    -
+      name: phone
+      selector: 'Person/phone'
+    -
+      name: office
+      selector: 'Person/office'
+    -
+      name: degrees
+      selector: 'Degrees'
+    -
+      name: awards
+      selector: 'Awards'
+    -
+      name: interests
+      selector: 'Interests'
+    -
+      name: certifications
+      selector: 'Certifications'
+    -
+      name: work_experience
+      selector: 'WorkedAt'
+
+process:
+  nid:
+    - 
+      plugin: entity_lookup
+      entity_type: node
+      bundle_key: type
+      bundle: az_person
+      value_key: field_az_netid
+      source: netid
+    - 
+      plugin: skip_on_empty
+      method: process
+  type:
+    plugin: default_value
+    default_value: az_person
+  field_az_fname:
+    plugin: az_person_profiles_empty_coalesce
+    source:
+      - preferred_givenname
+      - givenname
+  field_az_lname:
+    plugin: az_person_profiles_empty_coalesce
+    source:
+      - preferred_surname
+      - surname
+  field_az_netid: netid
+  field_az_media_image/target_id:
+    -
+      plugin: migration_lookup
+      migration: az_person_profiles_import_media
+      source: netid
+      no_stub: true
+    -
+      plugin: skip_on_empty
+      method: process
+  field_az_email:
+    -
+      plugin: skip_on_empty
+      method: row
+      source: email
+      message: 'is unavailable in the profiles API'
+    -
+      plugin: get
+  field_az_body/value: biography
+  field_az_body/format:
+    plugin: default_value
+    default_value: az_standard
+  field_az_titles:
+    plugin: sub_process
+    source: titles
+    process:
+      value: desc
+  field_az_degrees:
+    plugin: az_person_profiles_nested
+    source: degrees
+    # Degrees sometimes rarely have multiple institutions
+    split:
+      - institution
+    sort:
+      - CONFERRED_DEGREE
+      - year
+    format:
+      -
+        keys:
+          - properties
+          - degree_title
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - institution
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - CONFERRED_DEGREE
+          - year
+  field_az_research_interests:
+    -
+      plugin: az_person_profiles_nested
+      source: interests
+      filter:
+        type: research
+      format:
+        -
+          keys:
+            - desc
+    -
+      plugin: az_person_profiles_format
+      format: plain_text
+  field_az_teaching_interests:
+    -
+      plugin: az_person_profiles_nested
+      source: interests
+      filter:
+        type: teaching
+      format:
+        -
+          keys:
+            - desc
+    -
+      plugin: az_person_profiles_format
+      format: plain_text
+  field_az_awards:
+    plugin: az_person_profiles_nested
+    source: awards
+    # Awards often have multiple details.
+    # These tend to represent the same award name from multiple entities.
+    split:
+      - details
+    sort:
+      - details
+      - CONFERRED_AWARD
+      - start_term
+    format:
+      -
+        keys:
+          - properties
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - details
+          - institution
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        peoplesoft: TRUE
+        keys:
+          - details
+          - CONFERRED_AWARD
+          - start_term
+  field_az_licensure_certification:
+    plugin: az_person_profiles_nested
+    source: certifications
+    sort:
+      - CONFERRED_CERTIFICATION
+      - year
+    format:
+      -
+        keys:
+          - properties
+          - title
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - institution
+          - name
+      -
+        prefix: ' ('
+        suffix: ')'
+        skip_if_empty: TRUE
+        keys:
+          - CONFERRED_CERTIFICATION
+          - year
+  field_az_work_experience:
+    plugin: az_person_profiles_nested
+    source: work_experience
+    sort:
+      - dates
+      - start_year
+    format:
+      -
+        keys:
+          - place
+          - name
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - place
+          - city
+      -
+        prefix: ', '
+        skip_if_empty: TRUE
+        keys:
+          - place
+          - state
+      -
+        prefix: ' ('
+        keys:
+          - dates
+          - start_year
+      -
+        prefix: ' - '
+        default: 'Ongoing'
+        keys:
+          - dates
+          - end_year
+        suffix: ')'
+  field_az_phones:
+    plugin: sub_process
+    source: phone
+    process:
+      value: number
+  field_az_address:
+    -
+      plugin: sub_process
+      source: office
+      process:
+        0:
+          plugin: concat
+          source:
+            - building_name
+            - room_nbr
+          delimiter: ' '
+    -
+      plugin: flatten
+    -
+      plugin: concat
+      delimiter: "\n"
+destination:
+  plugin: entity:node
+  bundle: az_person
+
+dependencies:
+  enforced:
+    module:
+      - az_person
+migration_dependencies:
+  optional:
+    - az_person_profiles_import_media

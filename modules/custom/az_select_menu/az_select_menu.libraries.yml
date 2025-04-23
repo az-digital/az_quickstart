@@ -1,5 +1,4 @@
 az_select_menu:
-  version: 1.x
   css:
     theme:
       css/az-select-menu.css: {}

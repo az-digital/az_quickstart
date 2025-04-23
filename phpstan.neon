@@ -2,12 +2,22 @@ parameters:
 	customRulesetUsed: true
 	tipsOfTheDay: false
 	reportUnmatchedIgnoredErrors: false
+	paths:
+		- az_quickstart.install
+		- az_quickstart.profile
+		- az_quickstart.post_update.php
+		- modules
+		- themes
+
 	excludePaths:
 		- */tests/Drupal/Tests/Listeners/Legacy/*
 		- */tests/fixtures/*.php
 		- */settings*.php
 		- */node_modules/*
 		- */LinkExtractor/*
+
+	scanDirectories:
+		- ../../../../vendor/drush/drush/src-symfony-compatibility
 
 	ignoreErrors:
 		- '#\Drupal calls should be avoided in classes, use dependency injection instead#'
@@ -25,6 +35,8 @@ parameters:
 				class: Drupal\az_publication\Entity\AZAuthor
 			az_citation_style:
 				class: Drupal\az_publication\Entity\AZQuickstartCitationStyle
+			az_publication_type:
+				class: Drupal\az_publication\Entity\AZPublicationType
 			paragraph:
 				class: Drupal\paragraphs\Entity\Paragraph
 			paragraphs_type:

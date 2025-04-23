@@ -4,26 +4,26 @@ namespace Drupal\az_card\Plugin\Field\FieldWidget;
 
 use Drupal\Component\Utility\Html;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StreamWrapper\PublicStream;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\Url;
+use Drupal\paragraphs\ParagraphInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Validator\ConstraintViolationInterface;
 
 /**
  * Defines the 'az_card' field widget.
- *
- * @FieldWidget(
- *   id = "az_card",
- *   label = @Translation("Card"),
- *   field_types = {
- *     "az_card"
- *   }
- * )
  */
+#[FieldWidget(
+  id: 'az_card',
+  label: new TranslatableMarkup('Card'),
+  field_types: ['az_card'],
+)]
 class AZCardWidget extends WidgetBase {
 
   // Default initial text format for cards.
@@ -143,6 +143,26 @@ class AZCardWidget extends WidgetBase {
         ],
       ];
 
+      $card_classes = 'card';
+      $parent = $item->getEntity();
+
+      // Get settings from parent paragraph.
+      if ($parent instanceof ParagraphInterface) {
+        // Get the behavior settings for the parent.
+        $parent_config = $parent->getAllBehaviorSettings();
+
+        // See if the parent behavior defines some card-specific settings.
+        if (!empty($parent_config['az_cards_paragraph_behavior'])) {
+          $card_defaults = $parent_config['az_cards_paragraph_behavior'];
+          $card_classes = $card_defaults['card_style'] ?? 'card';
+        }
+      }
+
+      // Add card class from options.
+      if (!empty($item->options['class'])) {
+        $card_classes .= ' ' . $item->options['class'];
+      }
+
       // Card item.
       $element['preview_container']['card_preview'] = [
         '#theme' => 'az_card',
@@ -150,13 +170,8 @@ class AZCardWidget extends WidgetBase {
         '#body' => check_markup(
           $item->body ?? '',
           $item->body_format ?? self::AZ_CARD_DEFAULT_TEXT_FORMAT),
-        '#attributes' => ['class' => ['card']],
+        '#attributes' => ['class' => $card_classes],
       ];
-
-      // Add card class from options.
-      if (!empty($item->options['class'])) {
-        $element['preview_container']['card_preview']['#attributes']['class'][] = $item->options['class'];
-      }
 
       // Check and see if we can construct a valid image to preview.
       $media_id = $item->media ?? NULL;
@@ -171,7 +186,7 @@ class AZCardWidget extends WidgetBase {
 
       // Check and see if there's a valid link to preview.
       if ($item->link_title || $item->link_uri) {
-        if (str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
+        if (!empty($item->link_uri) && str_starts_with($item->link_uri, '/' . PublicStream::basePath())) {
           // Link to public file: use fromUri() to get the URL.
           $link_url = Url::fromUri(urldecode('base:' . $item->link_uri));
         }
@@ -262,7 +277,9 @@ class AZCardWidget extends WidgetBase {
     $element['link_title'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Card Link Title'),
+      '#element_validate' => [[$this, 'validateCardLinkTitle']],
       '#default_value' => $item->link_title ?? NULL,
+      '#description' => $this->t('<p>Make each link title unique for <a href="https://www.w3.org/WAI/WCAG21/Understanding/link-purpose-in-context.html">best accessibility</a> of this content. Use the pattern <em>"verb" "noun"</em> to create helpful links. For example, "Explore Undergraduate Programs".</p><p>This field is required when a Card Link URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.</p>'),
     ];
 
     $element['link_uri'] = [
@@ -277,9 +294,21 @@ class AZCardWidget extends WidgetBase {
       '#maxlength' => 2048,
     ];
 
+    // Add client side validation for link title if not collapsed.
+    if ($status) {
+      $link_uri_unique_id = Html::getUniqueId('az_card_link_uri_input');
+      $element['link_uri']['#attributes']['data-az-card-link-uri-input-id'] = $link_uri_unique_id;
+      $element['link_title']['#states'] = [
+        'required' => [
+          ':input[data-az-card-link-uri-input-id="' . $link_uri_unique_id . '"]' => ['filled' => TRUE],
+        ],
+      ];
+    }
+
     $element['link_style'] = [
       '#type' => 'select',
       '#options' => [
+        'sr-only' => $this->t('Hidden link title'),
         'btn-block' => $this->t('Text link'),
         'btn btn-block btn-red' => $this->t('Red button'),
         'btn btn-block btn-blue' => $this->t('Blue button'),
@@ -292,7 +321,8 @@ class AZCardWidget extends WidgetBase {
     ];
 
     if (!$item->isEmpty()) {
-      $button_name = implode('-', array_merge($field_parents,
+      $button_name = implode('-', array_merge(
+        $field_parents,
         [$field_name, $delta, 'toggle']
       ));
       // Extra card_actions wrapper needed for core delete ajax submit nesting.
@@ -420,6 +450,20 @@ class AZCardWidget extends WidgetBase {
   }
 
   /**
+   * Form element validation handler for the 'link_title' field.
+   *
+   * Makes field required if link_uri is provided.
+   */
+  public function validateCardLinkTitle(&$element, FormStateInterface $form_state, &$complete_form) {
+    $parents = $element['#array_parents'];
+    array_pop($parents);
+    $parent_element = NestedArray::getValue($complete_form, $parents);
+    if (empty($element['#value']) && !empty($parent_element['link_uri']['#value'])) {
+      $form_state->setError($element, t('Card Link Title field is required when a URL is provided. Card Link Title may be visually hidden with a Card Link Style selection.'));
+    }
+  }
+
+  /**
    * Form element validation handler for the 'link_url' field.
    *
    * Disallows saving inaccessible or untrusted URLs.
@@ -432,8 +476,10 @@ class AZCardWidget extends WidgetBase {
         // Url is valid, no conversion required.
         return;
       }
-      if (str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
-        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))) {
+      if (
+        str_starts_with($element['#value'], '/' . PublicStream::basePath()) &&
+        file_exists('public:' . urldecode(str_replace(PublicStream::basePath(), '', $element['#value'])))
+      ) {
         // Link to a public file which is confirmed to exist.
         return;
       }
