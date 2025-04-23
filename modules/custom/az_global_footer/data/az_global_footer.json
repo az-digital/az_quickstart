@@ -45,17 +45,6 @@
       "weight": "4"
     },
     {
-      "link_id": "5",
-      "parent_link_id": "0",
-      "menu": "az-footer-main",
-      "title": "Annual Security Report",
-      "urlpath": "https://clery.arizona.edu/asr",
-      "external": true,
-      "expanded": false,
-      "enabled": true,
-      "weight": "5"
-    },
-    {
       "link_id": "6",
       "parent_link_id": "0",
       "menu": "az-footer-main",
