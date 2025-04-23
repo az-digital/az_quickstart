@@ -422,7 +422,7 @@ function az_global_footer_update_1021204() {
 }
 
 /**
- * Remove "Annual Security Report" link from Global Footer (#4067)
+ * Remove "Annual Security Report" link from Global Footer (#4267)
  */
 function az_global_footer_update_1021205() {
   $updated_count = 0;
