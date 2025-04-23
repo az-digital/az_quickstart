@@ -89,7 +89,7 @@ class AzCasSettingsForm extends ConfigFormBase {
       '#title' => t("Disable 'Add user' button"),
       '#type' => 'checkbox',
       '#description' => t("Removes button for adding non-CAS users in admin interface."),
-      '#default_value' => $az_cas_config->get('disable_admin_add_user_button'),
+      '#default_value' => 'az_cas.settings:disable_admin_add_user_button',
     ];
 
     $form['disable_password_recovery_link'] = [
