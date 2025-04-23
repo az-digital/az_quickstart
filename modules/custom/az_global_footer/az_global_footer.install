@@ -433,7 +433,7 @@ function az_global_footer_update_1021205() {
     ->condition('link__uri', 'https://clery.arizona.edu/asr')
     ->execute();
 
-      foreach ($menu_link_content_ids as $id) {
+  foreach ($menu_link_content_ids as $id) {
     /** @var \Drupal\menu_link_content\Entity\MenuLinkContent $menu_link_content */
     $menu_link_content = MenuLinkContent::load($id);
     if ($menu_link_content !== NULL) {
