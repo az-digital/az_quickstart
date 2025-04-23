@@ -53,7 +53,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "6"
+      "weight": "5"
     },
     {
       "link_id": "7",
@@ -64,7 +64,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "7"
+      "weight": "6"
     },
     {
       "link_id": "8",
@@ -75,7 +75,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "8"
+      "weight": "7"
     },
     {
       "link_id": "9",
@@ -86,7 +86,7 @@
       "external": true,
       "expanded": false,
       "enabled": true,
-      "weight": "9"
+      "weight": "8"
     },
     {
       "link_id": "10",
