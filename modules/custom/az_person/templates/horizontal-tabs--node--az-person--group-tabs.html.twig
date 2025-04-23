@@ -26,7 +26,7 @@
       {% set isFirstTab = true %}
       {% for key, value in tabElements %}
         <li class="nav-item ml-nmin mt-nmin border-right" role="presentation">
-          <a class="nav-link{{ isFirstTab ? ' active' }}" id="{{ (key) }}_tab" data-bs-toggle="tab" href="#{{ (value['#id']) }}" role="tab" aria-controls="{{ (value['#id']) }}" aria-selected="{{ isFirstTab }}">{{ (value['#title']) }}</a>
+          <a class="nav-link{{ isFirstTab ? ' active' }}" id="{{ (key) }}_tab" data-bs-toggle="tab" href="#{{ (value['#id']) }}" role="tab" aria-controls="{{ (value['#id']) }}" aria-selected="{{ isFirstTab ? 'true' : 'false' }}">{{ (value['#title']) }}</a>
         </li>
         {% set isFirstTab = false %}
       {% endfor %}
