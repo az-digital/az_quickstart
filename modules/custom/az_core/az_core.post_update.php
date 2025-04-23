@@ -11,7 +11,7 @@ use Drupal\az_core\Plugin\ConfigProvider\QuickstartConfigProvider;
  * Add missing UUIDs to existing Quickstart override config entities.
  */
 function az_core_post_update_add_missing_config_uuids() {
-  // Get all QuicsktartConfigProvider config data.
+  // Get all QuickstartConfigProvider config data.
   $override_config_data = [];
   $providers = \Drupal::service('config_provider.collector')->getConfigProviders();
   foreach ($providers as $provider) {
