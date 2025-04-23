@@ -426,6 +426,7 @@ function az_global_footer_update_1021204() {
  */
 function az_global_footer_update_1021205() {
   $updated_count = 0;
+  $annual_security_report_link_weight = NULL;
   $menu_link_content_ids = \Drupal::entityQuery('menu_link_content')
     ->accessCheck(FALSE)
     ->condition('menu_name', 'az-footer-main')
