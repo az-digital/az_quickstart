@@ -167,7 +167,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
         // Converts config value to a form value.
         fn($value) => array_keys($value),
         // Converts form value to a config value.
-        fn($value) => array_reduce($value, function($carry, $item) use ($term_options) {
+        fn($value) => array_reduce($value, function ($carry, $item) use ($term_options) {
           if (array_key_exists($item, $term_options)) {
             $carry[$item] = $term_options[$item];
           }
