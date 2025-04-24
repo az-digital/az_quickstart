@@ -870,7 +870,6 @@ function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
   // This behavior is skipped for overridden links.
   if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $link['access'] && ($context['entity']->bundle() === 'az_publication') && (empty($link['status_override']))) {
     // Fields that represent a canonical copy of the publication exists.
-    // @todo determine list.
     $canonicals = [
       'field_az_publication_doi',
       'field_az_publication_link',
