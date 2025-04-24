@@ -73,9 +73,9 @@ function az_quickstart_requirements($phase) {
 
     // Gather all deprecated modules that are enabled.
     $azqs_deprecated_modules = [
-      'ctools',
       'jquery_ui_slider',
       'jquery_ui_touch_punch',
+      'media_migration',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
@@ -223,4 +223,11 @@ function az_quickstart_update_1020901(&$sandbox) {
  */
 function az_quickstart_update_1021301() {
   \Drupal::service('module_installer')->install(['masquerade', 'masquerade_log']);
+}
+
+/**
+ * Enable quick_node_clone module by default.
+ */
+function az_quickstart_update_1021302() {
+  \Drupal::service('module_installer')->install(['quick_node_clone']);
 }
