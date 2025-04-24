@@ -5,6 +5,7 @@ namespace Drupal\az_news_feeds\Form;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Form\ConfigTarget;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
@@ -160,7 +161,19 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#required' => FALSE,
       '#description' => $this->t('Select which terms you want to import.'),
       '#options' => $form['term_options']['#value'],
-      '#config_target' => 'az_news_feeds.settings:uarizona_news_terms',
+      '#config_target' => new ConfigTarget(
+        'az_news_feeds.settings',
+        'uarizona_news_terms',
+        // Converts config value to a form value.
+        fn($value) => array_keys($value),
+        // Converts form value to a config value.
+        fn($value) => array_reduce($value, fn($carry, $item) {
+          if (array_key_exists($item, $term_options)) {
+            $carry[$item] = $term_options[$item];
+          }
+          return $carry;
+        }, []),
+      ),
       '#ajax' => [
         'callback' => '::updateEndpointCallback',
         'wrapper' => 'endpoint-wrapper',
