@@ -873,11 +873,7 @@ function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
     // @todo determine list.
     $canonicals = [
       'field_az_publication_doi',
-      'field_az_publication_isbn',
-      'field_az_publication_issn',
       'field_az_publication_link',
-      'field_az_publication_pmcid',
-      'field_az_publication_pmid',
     ];
 
     // If a publication has a canonical field, exclude this publication..
