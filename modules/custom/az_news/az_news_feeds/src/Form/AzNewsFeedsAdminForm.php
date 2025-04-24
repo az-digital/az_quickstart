@@ -148,6 +148,7 @@ class AzNewsFeedsAdminForm extends ConfigFormBase {
       '#type' => 'container',
       '#attributes' => ['id' => ['endpoint-wrapper']],
       'text' => [
+        // phpcs:ignore
         '#markup' => $this->t('Fetch news from: '),
       ],
       'link' => $link_render_array,
