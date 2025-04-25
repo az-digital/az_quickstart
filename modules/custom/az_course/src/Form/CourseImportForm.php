@@ -103,7 +103,7 @@ class CourseImportForm extends ConfigFormBase {
     $form['courses'] = [
       '#type' => 'textarea',
       '#title' => $this->t('Courses to Import'),
-      '#description' => $this->t('. List courses to import, one per line, in format <strong>ENGL 101</strong> or <strong>ENGL</strong> for an entire subject. At least one scheduled section of the course must exist in an active term to be imported.'),
+      '#description' => $this->t('List courses to import, one per line, in format <strong>ENGL 101</strong> or <strong>ENGL</strong> for an entire subject. At least one scheduled section of the course must exist in an active term to be imported.'),
       '#attributes' => [
         'placeholder' => $this->t("ENGL 101"),
       ],
