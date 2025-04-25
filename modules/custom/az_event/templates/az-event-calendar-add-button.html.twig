@@ -7,21 +7,30 @@
 */
 #}
 {% set attributes = attributes.addClass('clear-both') %}
-{% set links = calendar_links(title, date(start_date), date(end_date), FALSE, description, location) %}
+{# List and order of calendar implementations. #}
+{% set calendar_types = {
+    'google' : 'Google',
+    'ics' : 'iCal File',
+    'webOffice': 'Outlook Enterprise (Office 365)',
+    'webOutlook': 'Outlook Personal (outlook.com)',
+    'yahoo' : 'Yahoo!'
+  }
+%}
 
 <div{{ attributes }}>
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-hollow-primary btn-sm text-capitalize" data-toggle="modal" data-target="#{{ modal }}">
-    <span class="material-icons-sharp mr-2 align-bottom">calendar_month</span>{{ 'Add to Calendar'|t }}
+  {# Button trigger modal #}
+  <button type="button" class="btn btn-hollow-primary btn-sm d-flex mr-2" style="text-transform: none" data-toggle="modal" data-target="#{{ modal }}">
+    <span aria-hidden="true" class="material-icons-sharp mr-2">event</span>
+    <span class="my-auto">{{ 'Add to Calendar'|t }}</span>
   </button>
 
-  <!-- Modal -->
+  {# Modal #}
   <div id="{{ modal }}" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="{{ modal }}-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header px-0 mx-3">
           <div>
-            <h5 class="modal-title mt-1 mb-2" id="{{ modal }}-label">{{ 'Add Event to Calendar'|t }}</h5>
+            <h2 class="h5 modal-title mt-1 mb-2" id="{{ modal }}-label">{{ 'Add Event to Calendar'|t }}</h2>
             <p class="mb-0">{{ title }}</p>
             <p class="mb-0">{{ start_date|date('g:i a, F j, Y') }}</p>
           </div>
@@ -32,8 +41,9 @@
         <div class="modal-body">
           <p class="mb-3">{{ 'Select your calendar type below:'|t }}</p>
           <div class="text-center">
-          {% for link in links %}
-              <a class="btn btn-hollow-primary btn-sm mb-1 calendar-link-{{ link.type_key }}" target="_blank" href="{{ link.url }}" role="button">{{ link.type_name }}</a>
+          {% for calendar_type,name in calendar_types %}
+            {% set link = calendar_link(calendar_type, title, date(start_date), date(end_date), all_day, description, location) %}
+            <a class="btn btn-hollow-primary btn-block calendar-link-{{ calendar_type }}" target="_blank" href="{{ link }}" role="button">{{ name }}</a>
           {% endfor %}
           </div>
         </div>
