@@ -26,7 +26,7 @@ function az_core_post_update_add_missing_config_uuids() {
   foreach (array_keys($override_config_data) as $name) {
     if (\Drupal::service('config.manager')->getEntityTypeIdByName($name)) {
       $config = \Drupal::service('config.factory')->getEditable($name);
-      if ($config->get('uuid') === NULL) {
+      if (!$config->isNew() && ($config->get('uuid') === NULL)) {
         $config->set('uuid', \Drupal::service('uuid')->generate());
         $config->save();
         \Drupal::logger('az_core')->notice("Added missing UUID to @config_id.", [
