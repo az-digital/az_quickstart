@@ -31,9 +31,9 @@ function az_core_requirements($phase): array {
 
     // Gather all deprecated modules that are enabled.
     $azqs_deprecated_modules = [
-      'ctools',
       'jquery_ui_slider',
       'jquery_ui_touch_punch',
+      'media_migration',
     ];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
