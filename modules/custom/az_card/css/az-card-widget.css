@@ -32,12 +32,3 @@ tr.odd .az-card-elements .form-item {
 .az-card-elements.az-card-elements-closed .media-library-form-element {
   display: none;
 }
-
-.az-card-elements.az-card-elements-open .media-library-edit__link {
-  position: relative;
-  display: block;
-  z-index: 1;
-  top: 45px;
-  left: 10px;
-  border-radius: 2px;
-}
