@@ -1,4 +1,11 @@
-(function (Drupal) {
+/**
+ * @file
+ * active-filter-indicator.es6.js
+ *
+ * This file contains the JavaScript needed to display the number of active
+ * filters in the accordion headings of the AZ Finder.
+ */
+((Drupal) => {
   Drupal.behaviors.azFinderAccordionIndicators = {
     attach(context) {
       const toggles = once('az-filter-indicator', '.collapser.level-0', context);
