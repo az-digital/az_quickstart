@@ -6,7 +6,7 @@
  */
 
 /**
- * Add active_filter_indicator_on_top_level_terms where az_finder_tid_widget is used.
+ * Add update views with new key if az_finder_tid_widget is used.
  */
 function az_finder_post_update_add_filter_indicator_to_tid_widgets(&$sandbox = NULL): void {
   $storage = \Drupal::entityTypeManager()->getStorage('view');
