@@ -8,11 +8,15 @@
 ((Drupal) => {
   Drupal.behaviors.azFinderAccordionIndicators = {
     attach(context) {
-      const toggles = once('az-filter-indicator', '.collapser.level-0', context);
+      const toggles = once(
+        'az-filter-indicator',
+        '.collapser.level-0',
+        context,
+      );
 
       toggles.forEach((toggle) => {
         const h3 = toggle.querySelector('h3');
-        const collapseId = toggle.dataset.collapseId;
+        const { collapseId } = toggle.dataset;
         const checkboxList = context.querySelector(`#${collapseId}`);
 
         if (!h3 || !checkboxList) return;
@@ -20,16 +24,18 @@
         const inputs = checkboxList.querySelectorAll('input[type="checkbox"]');
 
         const updateIndicator = () => {
-          const count = Array.from(inputs).filter((input) => input.checked).length;
+          const count = Array.from(inputs).filter(
+            (input) => input.checked,
+          ).length;
           let badge = h3.querySelector('.js-az-finder-indicator');
           const svg = h3.querySelector('svg');
 
           if (count > 0) {
             if (!badge) {
               badge = document.createElement('span');
-              badge.className = 'js-az-finder-indicator badge bg-azurite mx-2 small';
+              badge.className =
+                'js-az-finder-indicator badge bg-azurite mx-2 small';
               badge.textContent = count;
-
             } else {
               badge.textContent = count;
             }
@@ -42,7 +48,7 @@
         };
 
         inputs.forEach((input) =>
-          input.addEventListener('change', updateIndicator, { passive: true })
+          input.addEventListener('change', updateIndicator, { passive: true }),
         );
 
         updateIndicator();
