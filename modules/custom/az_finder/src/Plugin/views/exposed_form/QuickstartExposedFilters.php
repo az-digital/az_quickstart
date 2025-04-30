@@ -113,6 +113,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
     $options['skip_link'] = ['default' => FALSE];
     $options['skip_link_text'] = ['default' => $this->t('Skip to search and filter')];
     $options['skip_link_id'] = ['default' => 'search-filter'];
+    $options['active_filter_indicator_on_top_level_terms'] = ['default' => FALSE];
 
     return $options;
   }
@@ -226,6 +227,7 @@ class QuickstartExposedFilters extends BetterExposedFilters {
         $this->options['skip_link'] = $general_settings['skip_link'] ?? FALSE;
         $this->options['skip_link_text'] = $general_settings['skip_link_settings']['skip_link_text'] ?? $this->t('Skip to search and filter');
         $this->options['skip_link_id'] = $general_settings['skip_link_settings']['skip_link_id'] ?? 'search-filter';
+        $this->options['active_filter_indicator_on_top_level_terms'] = $general_settings['active_filter_indicator_on_top_level_terms'] ?? FALSE;
         unset($general_settings['orientation']);
         unset($general_settings['skip_link']);
         unset($general_settings['skip_link_settings']);
