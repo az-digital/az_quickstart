@@ -96,6 +96,10 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       // Hide the original reset button.
       $form['actions']['reset']['#access'] = FALSE;
     }
+    if ($options['active_filter_indicator_on_top_level_terms'] === TRUE) {
+      $form['#attached']['library'][] = 'az_finder/active-filter-indicator';
+    }
+
   }
 
   /**
@@ -161,7 +165,12 @@ class QuickstartExposedFilters extends BetterExposedFilters {
       '#description' => $this->t('Add a skip link to the top of the view results to allow keyboard users to skip to the search and filter form.'),
       '#default_value' => $this->options['skip_link'] ?? TRUE,
     ];
-
+    $form['bef']['general']['active_filter_indicator_on_top_level_terms'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Add a filter indicator to top level terms'),
+      '#description' => $this->t('Add a filter indicator to top level terms to indicate that a child term is active.'),
+      '#default_value' => $this->options['active_filter_indicator_on_top_level_terms'] ?? TRUE,
+    ];
     $form['bef']['general']['skip_link_settings'] = [
       '#type' => 'details',
       '#title' => $this->t('Skip Link Settings'),

@@ -413,6 +413,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
+          active_filter_indicator_on_top_level_terms: false
       sorts:
         created:
           id: created
@@ -610,6 +611,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
+          active_filter_indicator_on_top_level_terms: false
       sorts:
         field_az_event_date_value:
           id: field_az_event_date_value
@@ -908,6 +910,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
+          active_filter_indicator_on_top_level_terms: false
       sorts:
         field_az_published_value:
           id: field_az_published_value
@@ -1305,6 +1308,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
+          active_filter_indicator_on_top_level_terms: false
       sorts:
         changed:
           id: changed
@@ -1607,6 +1611,7 @@ display:
           skip_link: true
           skip_link_text: 'Skip to search and filter'
           skip_link_id: search-filter
+          active_filter_indicator_on_top_level_terms: true
       sorts:
         field_az_lname_value:
           id: field_az_lname_value
