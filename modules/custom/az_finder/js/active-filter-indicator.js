@@ -39,8 +39,12 @@
           return input.addEventListener('change', updateIndicator, {
             passive: true
           });
+        }, updateIndicator());
+        document.querySelectorAll('[data-az-better-exposed-filters]').forEach(function (container) {
+          container.addEventListener('az-finder-filter-reset', function () {
+            updateIndicator();
+          });
         });
-        updateIndicator();
       });
     }
   };

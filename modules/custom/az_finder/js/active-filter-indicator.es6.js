@@ -29,7 +29,6 @@
           ).length;
           let badge = h3.querySelector('.js-az-finder-indicator');
           const svg = h3.querySelector('svg');
-
           if (count > 0) {
             if (!badge) {
               badge = document.createElement('span');
@@ -47,11 +46,20 @@
           }
         };
 
-        inputs.forEach((input) =>
-          input.addEventListener('change', updateIndicator, { passive: true }),
+        inputs.forEach(
+          (input) =>
+            input.addEventListener('change', updateIndicator, {
+              passive: true,
+            }),
+          updateIndicator(),
         );
-
-        updateIndicator();
+        document
+          .querySelectorAll('[data-az-better-exposed-filters]')
+          .forEach((container) => {
+            container.addEventListener('az-finder-filter-reset', () => {
+              updateIndicator();
+            });
+          });
       });
     },
   };
