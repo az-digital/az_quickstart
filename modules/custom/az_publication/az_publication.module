@@ -862,6 +862,32 @@ function template_preprocess_az_inline_entity_role_form_entity_table(array &$var
 }
 
 /**
+ * Implements hook_xmlsitemap_link_alter().
+ */
+function az_publication_xmlsitemap_link_alter(array &$link, array $context) {
+
+  // Modify publication links to not appear if they are noncanonical.
+  // This behavior is skipped for overridden links.
+  if (!empty($context['entity']) && $context['entity'] instanceof NodeInterface && $link['access'] && ($context['entity']->bundle() === 'az_publication') && (empty($link['status_override']))) {
+    // Fields that represent a canonical copy of the publication exists.
+    $canonicals = [
+      'field_az_publication_doi',
+      'field_az_publication_link',
+    ];
+
+    // If a publication has a canonical field, exclude this publication..
+    $entity = $context['entity'];
+    foreach ($canonicals as $canonical) {
+      // Publications are noncanonical if a canonical reference exists.
+      if ($entity->hasField($canonical) && !empty($entity->get($canonical)->getValue())) {
+        $link['access'] = FALSE;
+        break;
+      }
+    }
+  }
+}
+
+/**
  * Implements hook_views_data_alter().
  *
  * See https://www.drupal.org/project/drupal/issues/3347343
