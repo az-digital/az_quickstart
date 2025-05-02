@@ -118,7 +118,7 @@
         "drupal/smtp": "1.4.0",
         "drupal/token": "1.15.0",
         "drupal/user_expire": "2.1.0",
-        "drupal/views_bootstrap": "5.4.1",
+        "drupal/views_bootstrap": "5.5.0-rc3",
         "drupal/views_bulk_operations": "4.3.4",
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
@@ -134,6 +134,9 @@
         "npm-asset/slick-carousel": "1.8.0",
         "renanbr/bibtex-parser": "2.2.0",
         "seboettg/citeproc-php": "2.6.2"
+    },
+    "replace": {
+        "twbs/bootstrap": "*"
     },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
