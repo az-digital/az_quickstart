@@ -43,7 +43,7 @@
         "drupal/auto_entitylabel": "3.4.0",
         "drupal/better_exposed_filters": "7.0.5",
         "drupal/blazy": "3.0.13",
-        "drupal/block_class": "4.0.0",
+        "drupal/block_class": "4.0.1",
         "drupal/block_field": "1.0.0-rc5",
         "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
@@ -62,9 +62,8 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha4",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "10.4.5",
+        "drupal/core-recommended": "10.4.6",
         "drupal/crop": "2.4.0",
-        "drupal/ctools": "*",
         "drupal/date_ap_style": "2.0.2",
         "drupal/draggableviews": "2.1.4",
         "drupal/easy_breadcrumb": "2.0.9",
@@ -94,12 +93,13 @@
         "drupal/media_entity_file_replace": "1.3.0",
         "drupal/media_library_edit": "3.0.4",
         "drupal/media_library_form_element": "2.1.1",
-        "drupal/media_migration": "1.0.0-alpha16",
+        "drupal/media_migration": "*",
         "drupal/menu_block": "1.13.0",
         "drupal/menu_link_attributes": "1.5.0",
-        "drupal/metatag": "2.0.2",
+        "drupal/metatag": "2.1.0",
+        "drupal/migmag": "1.8.3",
         "drupal/migrate_plus": "6.0.5",
-        "drupal/migrate_queue_importer": "2.1.1",
+        "drupal/migrate_queue_importer": "2.1.2",
         "drupal/migrate_tools": "6.0.5",
         "drupal/optional_end_date": "1.4.0",
         "drupal/paragraphs": "1.19.0",
@@ -179,6 +179,9 @@
                 "Reset button, to reset the weight all back to 0 (3388659)": "https://www.drupal.org/files/issues/2023-09-21/3388659-reset-button-2.patch",
                 "Contextual Link throws RouteNotFoundException: Route 'view.this' does not exist (3316975)": "https://www.drupal.org/files/issues/2024-06-10/3316975-32-MR40.patch"
             },
+            "drupal/field_group": {
+                "Fix Drupal 10.4 RC1 error with field_ui.js (3491233)":"https://www.drupal.org/files/issues/2025-01-16/field_group-drupal-10.4-rc1-error-with-field_ui.js--3491233--14.patch"
+            },
             "drupal/image_widget_crop": {
                 "Can't save image widget crop settings (ImmutableConfigException) (3491004)": "https://www.drupal.org/files/issues/2025-03-06/image_widget_crop_fix.patch"
             },
@@ -187,9 +190,6 @@
             },
             "drupal/inline_entity_form": {
                 "Support Referencing the same entity multiple times (3363988)": "https://gist.githubusercontent.com/tadean/d3c4969f0c8dd7bacc3a3c0ba0521b3e/raw/f5ad64286fdcfcc23b2bf147656b012bba6a4872/inline_entity_form_multiple.patch"
-            },
-            "drupal/media_migration": {
-                "Catch migrate RequirementsExceptions (3268480)": "https://www.drupal.org/files/issues/2022-03-08/3268480-2.patch"
             },
             "drupal/menu_block": {
                 "Menu blocks disappear randomly on sites for anonymous users. (3475039)": "https://www.drupal.org/files/issues/2024-09-17/revert-3271218-for-3475039.patch"
