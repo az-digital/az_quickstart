@@ -233,7 +233,7 @@ function az_barrio_preprocess_maintenance_page(&$variables) {
 /**
  * Implements hook_library_info_alter().
  */
-function az_barrio_library_info_alter(&$libraries, $extension) {
+function az_barrio_library_info_alter(&$libraries, $extension): void {
   if ($extension === 'bootstrap_barrio' && isset($libraries['global-styling'])) {
     // Remove node styles.
     unset($libraries['node']['css']['component']['css/components/node.css']);
@@ -244,100 +244,71 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     // Remove site-footer styles.
     unset($libraries['global-styling']['css']['component']['css/components/site-footer.css']);
   }
-  if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap'])) {
-    // Add AZ Bootstrap CSS & JS based on theme settings.
+  if ($extension === 'az_barrio') {
     $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
     $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
+
     if (!$az_bootstrap_css_path || !$az_bootstrap_js_path) {
       return;
     }
 
-    $az_bootstrap_token = '';
-    $az_bootstrap_css_info = [
+    $token_css = theme_get_setting('az_bootstrap_cdn_version_css') !== 'stable'
+      ? '?' . (\Drupal::state()->get('system.css_js_query_string') ?? '0')
+      : '';
+    $token_js = theme_get_setting('az_bootstrap_cdn_version_js') !== 'stable'
+      ? '?' . (\Drupal::state()->get('system.css_js_query_string') ?? '0')
+      : '';
+
+    $css_info = [
       'media' => 'all',
       'preprocess' => FALSE,
-      'browsers' => [
-        'IE' => TRUE,
-        '!IE' => TRUE,
-      ],
-      'minified' => FALSE,
+      'browsers' => ['IE' => TRUE, '!IE' => TRUE],
+      'minified' => theme_get_setting('az_bootstrap_minified'),
+      'type' => theme_get_setting('az_bootstrap_source') === 'cdn' ? 'external' : 'file',
     ];
-    $az_bootstrap_js_info = [
+
+    $js_info = [
       'preprocess' => FALSE,
+      'minified' => theme_get_setting('az_bootstrap_minified'),
+      'type' => theme_get_setting('az_bootstrap_source') === 'cdn' ? 'external' : 'file',
     ];
 
-    // AZ Bootstrap source.
-    if (theme_get_setting('az_bootstrap_source') === 'cdn') {
-      // AZ Bootstrap CDN version.
-      if (theme_get_setting('az_bootstrap_cdn_version') !== 'stable') {
-        $az_bootstrap_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
+    // CSS library override.
+    if (isset($libraries['arizona-bootstrap-css'])) {
+      $libraries['arizona-bootstrap-css']['css']['theme'] = [
+        $az_bootstrap_css_path . $token_css => $css_info,
+      ];
+    }
+
+    // JS library override.
+    if (isset($libraries['arizona-bootstrap-js'])) {
+      $libraries['arizona-bootstrap-js']['js'] = [
+        $az_bootstrap_js_path . $token_js => $js_info,
+      ];
+    }
+
+    // Update AZ Bootstrap location for CKEditor CSS injection.
+    \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path . $token_css);
+
+    // Optional font/icon dependencies for CSS library.
+    if (isset($libraries['arizona-bootstrap-css'])) {
+      if (theme_get_setting('az_barrio_font')) {
+        $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-proxima-nova';
       }
-      $az_bootstrap_css_info['type'] = 'external';
-      $az_bootstrap_js_info['type'] = 'external';
-    }
-    else {
-      $az_bootstrap_css_info['type'] = 'file';
-      $az_bootstrap_js_info['type'] = 'file';
-    }
-
-    if (theme_get_setting('az_bootstrap_minified')) {
-      $az_bootstrap_css_info['minified'] = TRUE;
-      $az_bootstrap_js_info['minified'] = TRUE;
-    }
-
-    $az_bootstrap_css_path .= $az_bootstrap_token;
-    $az_bootstrap_js_path .= $az_bootstrap_token;
-    $libraries['arizona-bootstrap']['css']['theme'] = [
-      $az_bootstrap_css_path => $az_bootstrap_css_info,
-    ];
-    $libraries['arizona-bootstrap']['js'] = [
-      $az_bootstrap_js_path => $az_bootstrap_js_info,
-    ];
-
-    // Populate AZ Bootstrap location variable for CKEditor.
-    \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path . $az_bootstrap_token);
-
-    $font = theme_get_setting('az_barrio_font');
-    if ($font === TRUE) {
-      // Add Proxima Nova CSS based on theme settings.
-      // Ensure Proxima Nova is loaded before Arizona Bootstrap.
-      $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-proxima-nova';
-    }
-
-    $material_design_sharp_icons = theme_get_setting('az_barrio_material_design_sharp_icons');
-    if ($material_design_sharp_icons === TRUE) {
-      // Add Material Design Sharp Icon CSS based on theme settings.
-      // Ensure icon CSS is loaded before Arizona Bootstrap.
-      $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
-    }
-
-    $az_icons = theme_get_setting('az_barrio_az_icons');
-    if ($az_icons === TRUE) {
-      if ($extension === 'az_barrio' && isset($libraries['az-icons'])) {
-        // Add Arizona Icons CSS based on theme settings.
+      if (theme_get_setting('az_barrio_material_design_sharp_icons')) {
+        $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
+      }
+      if (theme_get_setting('az_barrio_az_icons') && isset($libraries['az-icons'])) {
         $az_icons_path = az_barrio_az_icons_assets_path('css');
-        // Ensure icons are loaded before Arizona Bootstrap.
-        $libraries['arizona-bootstrap']['dependencies'][] = 'az_barrio/az-icons';
-        $az_barrio_az_icons_css_info = [
+        $icon_info = [
           'media' => 'all',
           'preprocess' => FALSE,
-          'browsers' => [
-            'IE' => TRUE,
-            '!IE' => TRUE,
-          ],
+          'browsers' => ['IE' => TRUE, '!IE' => TRUE],
           'minified' => TRUE,
+          'type' => theme_get_setting('az_barrio_az_icons_source') === 'cdn' ? 'external' : 'file',
         ];
-        // AZ Brand Icons source.
-        if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
-          $az_barrio_az_icons_css_info['type'] = 'external';
-        }
-        else {
-          $az_barrio_az_icons_css_info['type'] = 'file';
-        }
-
-        $libraries['az-icons']['css']['theme'] = [
-          $az_icons_path => $az_barrio_az_icons_css_info,
-        ];
+        $libraries['az-icons']['css']['theme'] = [$az_icons_path => $icon_info];
+        $libraries['az_barrio/arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-icons';
       }
     }
   }
@@ -345,39 +316,43 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
 
 /**
  * Helper function for constructing AZ Bootstrap asset paths.
+ *
+ * @param string $type
+ *   Either 'css' or 'js'.
+ *
+ * @return string|false
+ *   The asset URL or FALSE if the type is invalid.
  */
-function az_barrio_az_bootstrap_assets_path($type) {
-  if (empty($type)) {
+function az_barrio_az_bootstrap_assets_path($type): string|false {
+  if (!in_array($type, ['css', 'js'], TRUE)) {
     return FALSE;
   }
 
-  $az_bootstrap_path = '';
+  $path = '';
 
-  // AZ Bootstrap source.
   if (theme_get_setting('az_bootstrap_source') === 'cdn') {
-    $az_bootstrap_cdn_version = theme_get_setting('az_bootstrap_cdn_version');
-    if ($az_bootstrap_cdn_version === 'stable') {
-      $az_bootstrap_cdn_version = AZ_BOOTSTRAP_STABLE_VERSION;
+    $version_setting = $type === 'css' ? 'az_bootstrap_cdn_version_css' : 'az_bootstrap_cdn_version_js';
+    $version = theme_get_setting($version_setting);
+    if ($version === 'stable') {
+      $version = AZ_BOOTSTRAP_STABLE_VERSION;
     }
-    $az_bootstrap_path = 'https://cdn.digital.arizona.edu/lib/arizona-bootstrap/' . $az_bootstrap_cdn_version;
+    $path = "https://cdn.digital.arizona.edu/lib/arizona-bootstrap/{$version}";
   }
   else {
-    $az_bootstrap_path = base_path() . 'libraries/arizona-bootstrap';
+    $path = base_path() . 'libraries/arizona-bootstrap';
   }
 
-  $az_bootstrap_path .= '/' . $type . '/arizona-bootstrap';
+  $path .= '/' . $type . '/arizona-bootstrap';
 
-  // Use AZ Bootstrap Javascript bundle (contains Popper.js).
   if ($type === 'js') {
-    $az_bootstrap_path .= '.bundle';
+    $path .= '.bundle';
   }
 
-  // AZ Bootstrap minified.
   if (theme_get_setting('az_bootstrap_minified')) {
-    $az_bootstrap_path .= '.min';
+    $path .= '.min';
   }
 
-  return $az_bootstrap_path . '.' . $type;
+  return $path . '.' . $type;
 }
 
 /**
