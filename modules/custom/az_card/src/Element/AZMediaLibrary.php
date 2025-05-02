@@ -31,10 +31,10 @@ use Drupal\media_library_form_element\Element\MediaLibrary;
 class AZMediaLibrary extends MediaLibrary {
 
   /**
-   * {@inheritdoc}.
+   * {@inheritdoc}
    */
   public static function processMediaLibrary(array &$element, FormStateInterface $form_state, array &$complete_form): array {
-    $element = parent::processMediaLibrary( $element, $form_state, $complete_form);
+    $element = parent::processMediaLibrary($element, $form_state, $complete_form);
     $default_value = NULL;
     $referenced_entities = [];
 
