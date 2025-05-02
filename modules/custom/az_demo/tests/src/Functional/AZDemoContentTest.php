@@ -69,5 +69,6 @@ class AZDemoContentTest extends QuickstartFunctionalTestBase {
 
     // Home page title test.
     $assert->elementContains('css', '#block-az-barrio-page-title h1.title span.field--name-title', 'Kitten');
+  }
 
 }
