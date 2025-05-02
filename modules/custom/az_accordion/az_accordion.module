@@ -50,7 +50,6 @@ function az_accordion_preprocess_field(&$variables) : void {
   switch ($element['#field_name']) {
     case 'field_az_accordion':
       $variables['attributes']['class'][] = 'accordion';
-
       $delta = 0;
       while (!empty($element[$delta])) {
         $variables['items'][$delta]['attributes']->setAttribute('class', 'accordion-item');
