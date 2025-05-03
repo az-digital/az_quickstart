@@ -531,8 +531,7 @@ function az_barrio_footer_logo() {
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
-  if (isset($variables['attributes']['id'])) {
-    $blockid = str_replace(['block-', '-'], ['', '_'], $variables['attributes']['id']);
+  if (isset($variables['attributes']['id']) && isset($variables['attributes']['block'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
 }
