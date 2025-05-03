@@ -30,7 +30,7 @@
     ],
     "require": {
         "php": ">=8.1",
-        "az-digital/arizona-bootstrap": "dev-main",
+        "az-digital/arizona-bootstrap": "dev-33-update-composerjson-to-replace-v5-of-twbsbootstrap",
         "az-digital/az-icons": "1.0.2",
         "citation-style-language/locales": "0.0.26",
         "citation-style-language/styles": "0.0.646",
@@ -135,9 +135,6 @@
         "renanbr/bibtex-parser": "2.2.0",
         "seboettg/citeproc-php": "2.6.2"
     },
-    "replace": {
-        "twbs/bootstrap": "*"
-    },
     "require-dev": {
         "az-digital/az-quickstart-dev": "~1"
     },
@@ -151,11 +148,6 @@
         "patches": {
             "drupal/auto_entitylabel": {
                 "Support entities without bundles (2945387)": "https://www.drupal.org/files/issues/2024-06-07/2945387-28.patch"
-            },
-            "drupal/bootstrap_barrio": {
-                "Fix schema (3217958)": "https://gist.githubusercontent.com/joeparsons/7d36cefca83823e93b44cb5b36374b04/raw/c495d02fddcb8364f9d6163bcd74f75e3d47f24f/3217958-5-x.patch",
-                "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch",
-                "Fix The specified library bootstrap_barrio/messages does not exist issue (3471821)": "https://git.drupalcode.org/project/bootstrap_barrio/-/commit/a26e7af7c007aced43f0347553104434d11e3681.patch"
             },
             "drupal/cas": {
                 "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
