@@ -35,14 +35,14 @@ source:
       name: full_width
       selector: full_width
     -
-      name: text_width
-      selector: full_width
-    -
       name: bg_color
       selector: bg_color
     -
       name: ordering
       selector: ordering
+    -
+      name: text_width
+      selector: text_width
     -
       name: bottom_spacing
       selector: bottom_spacing
@@ -77,7 +77,7 @@ process:
       az_split_screen:
         bg_color: bg_color
         full_width: full_width
-        text_width: full_width
         ordering: ordering
         az_display_settings:
+          text_width: text_width
           bottom_spacing: bottom_spacing

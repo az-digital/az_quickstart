@@ -78,7 +78,7 @@ function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element,
           'order_0' => 'content-width-2',
           'order_1' => 'content-width-1',
         ];
-        $text_width = $splitscreen_settings['az_display_settings']['text_width'] ?? 'content_width';
+        $text_width = $splitscreen_settings['az_display_settings']['text_width'];
         if ($group->group_name === 'group_splitscreen_text' && $full_width === 'full-width-background' && $text_width === 'content_width') {
           $text_width_classes = $text_width_class_mapping[$order];
           $element['#attributes']['class'][] = $text_width_classes;
