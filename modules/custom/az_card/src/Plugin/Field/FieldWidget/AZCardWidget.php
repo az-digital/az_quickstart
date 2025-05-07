@@ -241,7 +241,7 @@ class AZCardWidget extends WidgetBase {
     ];
 
     $element['media'] = [
-      '#type' => 'media_library',
+      '#type' => 'az_media_library',
       '#title' => $this->t('Card Media'),
       '#default_value' => $item->media ?? NULL,
       '#allowed_bundles' => ['az_image'],
