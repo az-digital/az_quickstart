@@ -78,27 +78,25 @@ class AzCasSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $az_cas_config = $this->config('az_cas.settings');
-
     $form['disable_login_form'] = [
       '#title' => t("Disable login form"),
       '#type' => 'checkbox',
       '#description' => t("Disables the default user login form provided by Drupal core."),
-      '#default_value' => $az_cas_config->get('disable_login_form'),
+      '#config_target' => 'az_cas.settings:disable_login_form',
     ];
 
     $form['disable_admin_add_user_button'] = [
       '#title' => t("Disable 'Add user' button"),
       '#type' => 'checkbox',
       '#description' => t("Removes button for adding non-CAS users in admin interface."),
-      '#default_value' => $az_cas_config->get('disable_admin_add_user_button'),
+      '#default_value' => 'az_cas.settings:disable_admin_add_user_button',
     ];
 
     $form['disable_password_recovery_link'] = [
       '#title' => t("Disable 'request new password' form"),
       '#type' => 'checkbox',
       '#description' => t("Disables the default password recovery functionality provided by Drupal core."),
-      '#default_value' => $az_cas_config->get('disable_password_recovery_link'),
+      '#config_target' => 'az_cas.settings:disable_password_recovery_link',
     ];
 
     return parent::buildForm($form, $form_state);
@@ -108,11 +106,6 @@ class AzCasSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('az_cas.settings')
-      ->set('disable_login_form', $form_state->getValue('disable_login_form'))
-      ->set('disable_admin_add_user_button', $form_state->getValue('disable_admin_add_user_button'))
-      ->set('disable_password_recovery_link', $form_state->getValue('disable_password_recovery_link'))
-      ->save();
 
     $this->routeBuilder->setRebuildNeeded();
     $this->cacheFactory->get('render')->deleteAll();
