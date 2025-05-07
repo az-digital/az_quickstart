@@ -121,6 +121,11 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       }
     }
 
+    // Cache events per route to avoid cache issues from different views.
+    // Each page view has its own route.
+    // @todo do we need to be concerned about multiple view blocks of the same events per page?
+    $build['#cache']['contexts'][] = 'route.name';
+
     // For the full content view mode, modify the display of az_event_date.
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
       $now = \Drupal::time()->getCurrentTime();
