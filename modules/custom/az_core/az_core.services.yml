@@ -24,6 +24,8 @@ services:
       - '@config_sync.snapshotter'
       - '@config_update.config_list'
       - '@module_handler'
+      - '@config.manager'
+      - '@uuid'
   # Decorates the normal user module links.
   az_core.toolbar_link_builder:
     class: Drupal\az_core\AZUserToolbarLinkBuilder
