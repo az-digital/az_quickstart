@@ -245,7 +245,7 @@ content:
       use_today: '1'
       cap_today: '1'
       display_time: '1'
-      time_before_date: '1'
+      time_before_date: '0'
       display_noon_and_midnight: '1'
       use_all_day: '1'
       separator: endash
