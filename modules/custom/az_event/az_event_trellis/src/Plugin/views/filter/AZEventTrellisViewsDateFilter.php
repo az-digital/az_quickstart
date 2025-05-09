@@ -268,8 +268,8 @@ class AZEventTrellisViewsDateFilter extends FilterPluginBase {
         $end = strtotime("tomorrow", $end);
         // Roll over to the previous night.
         $end -= 1;
-        $begin = date(self::TRELLIS_DATE_FORMAT, $begin);
-        $end = date(self::TRELLIS_DATE_FORMAT, $end);
+        $begin = gmdate(self::TRELLIS_DATE_FORMAT, $begin);
+        $end = gmdate(self::TRELLIS_DATE_FORMAT, $end);
         $this->query->addWhere(
           $this->options['group'],
           $this->options['api_param_custom_begin'],
