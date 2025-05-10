@@ -1,0 +1,24 @@
+services:
+  az_cas_guest.pre_register_subscriber:
+    class: Drupal\az_cas_guest\EventSubscriber\CasPreRegisterSubscriber
+    arguments: ['@config.factory', '@logger.factory', '@request_stack', '@datetime.time', '@cas.user_manager']
+    tags:
+      - { name: event_subscriber }
+  
+  az_cas_guest.authentication:
+    class: Drupal\az_cas_guest\Authentication\CasGuestAuthenticationService
+    arguments: ['@request_stack']
+    tags:
+      - { name: service }
+  
+  az_cas_guest.kernel_request_subscriber:
+    class: Drupal\az_cas_guest\EventSubscriber\KernelRequestSubscriber
+    arguments: ['@az_cas_guest.authentication']
+    tags:
+      - { name: event_subscriber }
+  
+  az_cas_guest.pre_redirect_subscriber:
+    class: Drupal\az_cas_guest\EventSubscriber\CasPreRedirectSubscriber
+    arguments: ['@request_stack']
+    tags:
+      - { name: event_subscriber }

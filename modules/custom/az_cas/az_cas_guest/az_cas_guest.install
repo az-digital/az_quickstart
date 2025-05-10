@@ -1,0 +1,23 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the az_cas_guest module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function az_cas_guest_install() {
+  \Drupal::messenger()->addStatus(t('Quickstart CAS Guest Authentication module has been installed. Configure it at <a href=":url">Quickstart CAS Guest Authentication Settings</a>.', [
+    ':url' => '/admin/config/people/cas/guest',
+  ]));
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function az_cas_guest_uninstall() {
+  // Remove the configuration.
+  \Drupal::configFactory()->getEditable('az_cas_guest.settings')->delete();
+}

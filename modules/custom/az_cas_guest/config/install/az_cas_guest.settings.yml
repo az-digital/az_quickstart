@@ -1,0 +1,6 @@
+prevent_user_creation: false
+use_shared_account: false
+guest_username: 'cas_guest'
+guest_email: 'cas_guest@example.com'
+guest_roles: []
+redirect_path: ''

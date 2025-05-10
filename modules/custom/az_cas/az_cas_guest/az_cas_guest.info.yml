@@ -1,0 +1,9 @@
+name: 'Quickstart CAS Guest Authentication'
+type: module
+description: 'Allows site visitors to authenticate via Quickstart CAS without creating Drupal user accounts.'
+core_version_requirement: ^10
+package: 'The University of Arizona'
+dependencies:
+  - az_cas:az_cas
+  - drupal:user
+configure: az_cas_guest.settings
