@@ -127,7 +127,7 @@ class AzCasSettingsForm extends ConfigFormBase {
       '#default_value' => $az_cas_config->get('guest_mode', FALSE),
     ];
 
-    // Add forced login settings from CAS module
+    // Add forced login settings from CAS module.
     $form['guest_authentication']['forced_login'] = [
       '#type' => 'details',
       '#title' => $this->t('Forced Login Settings'),
@@ -166,10 +166,10 @@ class AzCasSettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    // Get guest mode value
+    // Get guest mode value.
     $guest_mode = $form_state->getValue('guest_mode');
-    
-    // Save AZ CAS settings
+
+    // Save AZ CAS settings.
     $this->config('az_cas.settings')
       ->set('disable_login_form', $form_state->getValue('disable_login_form'))
       ->set('disable_admin_add_user_button', $form_state->getValue('disable_admin_add_user_button'))
@@ -177,7 +177,7 @@ class AzCasSettingsForm extends ConfigFormBase {
       ->set('guest_mode', $guest_mode)
       ->save();
 
-    // Only update CAS forced login settings if guest mode is enabled
+    // Only update CAS forced login settings if guest mode is enabled.
     if ($guest_mode) {
       $forced_login_paths = array_filter(preg_split('/[\n\r]+/', $form_state->getValue('forced_login_paths')));
       $forced_login_exclude_paths = array_filter(preg_split('/[\n\r]+/', $form_state->getValue('forced_login_exclude_paths')));

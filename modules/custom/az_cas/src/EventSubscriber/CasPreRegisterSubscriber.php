@@ -70,7 +70,7 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
     LoggerChannelFactoryInterface $logger_factory,
     RequestStack $request_stack,
     TimeInterface $time,
-    CasUserManager $cas_user_manager
+    CasUserManager $cas_user_manager,
   ) {
     $this->configFactory = $config_factory;
     $this->loggerFactory = $logger_factory->get('az_cas');
@@ -97,19 +97,19 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
   public function onCasPreRegister(CasPreRegisterEvent $event) {
     // Get the CAS username.
     $cas_username = $event->getCasPropertyBag()->getUsername();
-    
+
     // Check if a user account already exists for this CAS username.
     // If it does, let the normal CAS flow handle it.
     $uid = $this->casUserManager->getUidForCasUsername($cas_username);
     if ($uid) {
       return;
     }
-    
+
     // If guest mode is enabled.
     if ($this->configFactory->get('az_cas.settings')->get('guest_mode')) {
       // Prevent user registration.
       $event->preventRegistration();
-      
+
       // Store the username in the session.
       $session = $this->requestStack->getCurrentRequest()->getSession();
       $session->set('az_cas_guest', [
@@ -117,7 +117,7 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
         'cas_username' => $cas_username,
         'timestamp' => $this->time->getRequestTime(),
       ]);
-      
+
       // Log the guest authentication.
       $this->loggerFactory->notice('Quickstart CAS guest authentication for @username', [
         '@username' => $cas_username,

@@ -46,7 +46,7 @@ class CasPreRedirectSubscriber implements EventSubscriberInterface {
    */
   public function onCasPreRedirect(CasPreRedirectEvent $event) {
     $request = $this->requestStack->getCurrentRequest();
-    
+
     // If the user is already authenticated as a CAS guest,
     // prevent the redirect to the CAS server.
     if ($request->attributes->get('_cas_guest_authenticated')) {

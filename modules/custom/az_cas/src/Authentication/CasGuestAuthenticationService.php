@@ -23,7 +23,7 @@ class CasGuestAuthenticationService {
    *   The request stack.
    */
   public function __construct(
-    RequestStack $request_stack
+    RequestStack $request_stack,
   ) {
     $this->requestStack = $request_stack;
   }
