@@ -39,7 +39,7 @@
 {% if links %}
   <nav{{ attributes.addClass(['nav', 'links-inline', 'justify-content-center', 'justify-content-lg-end']) }}>
     {%- for key, item in links -%}
-      <span{{ item.attributes.addClass(key|clean_class, 'nav-link text-bg-transparent p-1') }}>
+      <span{{ item.attributes.addClass(key|clean_class, 'nav-link bg-transparent p-1') }}>
         {%- if item.link -%}
           {{ item.link }}
         {%- elseif item.text_attributes -%}

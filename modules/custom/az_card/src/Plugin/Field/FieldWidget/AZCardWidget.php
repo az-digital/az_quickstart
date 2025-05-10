@@ -215,7 +215,7 @@ class AZCardWidget extends WidgetBase {
       '#type' => 'select',
       '#options' => [
         'text-bg-white' => $this->t('White'),
-        'text-bg-transparent' => $this->t('Transparent'),
+        'bg-transparent' => $this->t('Transparent'),
         'text-bg-red' => $this->t('Arizona Red'),
         'text-bg-blue' => $this->t('Arizona Blue'),
         'text-bg-sky' => $this->t('Sky'),
