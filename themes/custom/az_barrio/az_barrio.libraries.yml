@@ -3,7 +3,8 @@ global-styling:
     theme:
       css/style.css: {}
   dependencies:
-    - az_barrio/arizona-bootstrap
+    - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
 az-ajax:
   js:
     js/az-ajax.js: {}
@@ -31,6 +32,14 @@ arizona-bootstrap:
   css:
     theme:
       /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
+  js:
+    /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
+  deprecated: The combined "%library_id%" CSS and Javascript library is deprecated in az_quickstart:2.13.x and is removed from az_quickstart:2.14.x. For CSS, use az_barrio/arizona-bootstrap-css, and for Javascript use az_barrio/arizona-bootstrap-js. See https://github.com/az-digital/az_quickstart/issues/1251
+arizona-bootstrap-css:
+  css:
+    theme:
+      /libraries/arizona-bootstrap/css/arizona-bootstrap.min.css: { minified: true }
+arizona-bootstrap-js:
   js:
     /libraries/arizona-bootstrap/js/arizona-bootstrap.bundle.min.js: { minified: true }
   dependencies:

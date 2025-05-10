@@ -313,9 +313,12 @@ az_barrio.settings:
     az_bootstrap_source:
       type: string
       label: 'AZ Bootstrap source'
-    az_bootstrap_cdn_version:
+    az_bootstrap_cdn_version_css:
       type: string
-      label: 'AZ Bootstrap CDN version'
+      label: 'AZ Bootstrap CDN version CSS'
+    az_bootstrap_cdn_version_js:
+      type: string
+      label: 'AZ Bootstrap CDN version JS'
     az_bootstrap_minified:
       type: boolean
       label: 'Enable AZ Bootstrap minification'
