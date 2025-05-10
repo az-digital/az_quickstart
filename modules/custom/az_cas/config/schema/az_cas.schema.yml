@@ -11,3 +11,6 @@ az_cas.settings:
     disable_password_recovery_link:
       type: boolean
       label: 'Disable password recovery link'
+    guest_mode:
+      type: boolean
+      label: 'Enable guest authentication mode'

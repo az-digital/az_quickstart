@@ -5,3 +5,27 @@ services:
     class: Drupal\az_cas\Routing\AzCasRouteSubscriber
     arguments:
       - '@config.factory'
+
+  az_cas.pre_register_subscriber:
+    class: Drupal\az_cas\EventSubscriber\CasPreRegisterSubscriber
+    arguments: ['@config.factory', '@logger.factory', '@request_stack', '@datetime.time', '@cas.user_manager']
+    tags:
+      - { name: event_subscriber }
+
+  az_cas.guest_authentication:
+    class: Drupal\az_cas\Authentication\CasGuestAuthenticationService
+    arguments: ['@request_stack']
+    tags:
+      - { name: service }
+
+  az_cas.kernel_request_subscriber:
+    class: Drupal\az_cas\EventSubscriber\KernelRequestSubscriber
+    arguments: ['@az_cas.guest_authentication']
+    tags:
+      - { name: event_subscriber }
+
+  az_cas.pre_redirect_subscriber:
+    class: Drupal\az_cas\EventSubscriber\CasPreRedirectSubscriber
+    arguments: ['@request_stack']
+    tags:
+      - { name: event_subscriber }

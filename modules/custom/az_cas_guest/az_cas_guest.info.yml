@@ -1,8 +1,0 @@
-name: Arizona CAS Guest Authentication
-type: module
-description: 'Allows site visitors to authenticate via CAS without creating Drupal user accounts.'
-core_version_requirement: ^10
-package: Authentication
-dependencies:
-  - cas:cas
-  - drupal:user

@@ -1,9 +1,10 @@
 name: 'Quickstart CAS'
 type: module
-description: 'Pre-configures contrib CAS module to work with University of Arizona WebAuth.'
+description: 'Pre-configures contrib CAS module to work with University of Arizona WebAuth. Includes guest authentication functionality.'
 core_version_requirement: ^9 || ^10
 package: 'The University of Arizona'
 dependencies:
   - cas:cas
   - az_core
+  - drupal:user
 configure: az_cas.settings

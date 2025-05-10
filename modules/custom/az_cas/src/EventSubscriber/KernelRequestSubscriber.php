@@ -1,28 +1,28 @@
 <?php
 
-namespace Drupal\az_cas_guest\EventSubscriber;
+namespace Drupal\az_cas\EventSubscriber;
 
-use Drupal\az_cas_guest\Authentication\CasGuestAuthenticationService;
+use Drupal\az_cas\Authentication\CasGuestAuthenticationService;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Event subscriber for CAS forced login.
+ * Event subscriber for kernel request events to handle CAS forced login.
  */
-class CasForcedLoginSubscriber implements EventSubscriberInterface {
+class KernelRequestSubscriber implements EventSubscriberInterface {
 
   /**
    * The CAS guest authentication service.
    *
-   * @var \Drupal\az_cas_guest\Authentication\CasGuestAuthenticationService
+   * @var \Drupal\az_cas\Authentication\CasGuestAuthenticationService
    */
   protected $casGuestAuthentication;
 
   /**
-   * Constructs a new CasForcedLoginSubscriber.
+   * Constructs a new KernelRequestSubscriber.
    *
-   * @param \Drupal\az_cas_guest\Authentication\CasGuestAuthenticationService $cas_guest_authentication
+   * @param \Drupal\az_cas\Authentication\CasGuestAuthenticationService $cas_guest_authentication
    *   The CAS guest authentication service.
    */
   public function __construct(CasGuestAuthenticationService $cas_guest_authentication) {

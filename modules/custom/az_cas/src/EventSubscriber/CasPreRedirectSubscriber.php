@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_cas_guest\EventSubscriber;
+namespace Drupal\az_cas\EventSubscriber;
 
 use Drupal\cas\Event\CasPreRedirectEvent;
 use Drupal\cas\Service\CasHelper;

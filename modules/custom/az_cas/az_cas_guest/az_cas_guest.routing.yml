@@ -1,7 +1,0 @@
-az_cas_guest.settings:
-  path: '/admin/config/people/cas/guest'
-  defaults:
-    _form: '\Drupal\az_cas_guest\Form\CasGuestSettingsForm'
-    _title: 'Quickstart CAS Guest Authentication Settings'
-  requirements:
-    _permission: 'administer cas'

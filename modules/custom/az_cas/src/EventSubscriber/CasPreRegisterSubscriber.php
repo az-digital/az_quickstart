@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_cas_guest\EventSubscriber;
+namespace Drupal\az_cas\EventSubscriber;
 
 use Drupal\cas\Event\CasPreRegisterEvent;
 use Drupal\cas\Service\CasHelper;
@@ -73,7 +73,7 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
     CasUserManager $cas_user_manager
   ) {
     $this->configFactory = $config_factory;
-    $this->loggerFactory = $logger_factory->get('az_cas_guest');
+    $this->loggerFactory = $logger_factory->get('az_cas');
     $this->requestStack = $request_stack;
     $this->time = $time;
     $this->casUserManager = $cas_user_manager;
@@ -105,8 +105,8 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
       return;
     }
     
-    // If we're preventing user creation.
-    if ($this->configFactory->get('az_cas_guest.settings')->get('prevent_user_creation')) {
+    // If guest mode is enabled.
+    if ($this->configFactory->get('az_cas.settings')->get('guest_mode')) {
       // Prevent user registration.
       $event->preventRegistration();
       

@@ -8,6 +8,7 @@
 use Drupal\Component\Utility\Html;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Url;
 use Drupal\user\RoleInterface;
 
 /**
@@ -20,6 +21,7 @@ function az_cas_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Pre-configures contrib CAS module to work with University of Arizona WebAuth.') . '</p>';
+      $output .= '<p>' . t('The Quickstart CAS Guest Authentication functionality allows site visitors to authenticate via Quickstart CAS without creating Drupal user accounts.') . '</p>';
       return $output;
 
     default:
@@ -93,6 +95,57 @@ function az_cas_form_user_login_form_alter(&$form, FormStateInterface $form_stat
     $form_elements = ['name', 'pass', 'actions'];
     foreach ($form_elements as $element) {
       $form[$element]['#access'] = FALSE;
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Modify the CAS settings form to disable forced login settings when
+ * AZ CAS guest mode is enabled.
+ */
+function az_cas_form_cas_settings_alter(&$form, FormStateInterface $form_state) {
+  $az_cas_config = \Drupal::config('az_cas.settings');
+  $guest_mode_enabled = $az_cas_config->get('guest_mode');
+
+  // Only modify the form if guest mode is enabled.
+  if ($guest_mode_enabled) {
+    // Add a message to the forced login fieldset.
+    $az_cas_settings_url = Url::fromRoute('az_cas.settings');
+    $az_cas_settings_link = \Drupal::service('link_generator')->generate(
+      t('AZ CAS settings form'),
+      $az_cas_settings_url
+    );
+
+    $message = t('Forced login settings are currently being managed by the AZ CAS module because guest mode is enabled. To modify these settings, please use the @link.', [
+      '@link' => $az_cas_settings_link,
+    ]);
+
+    // Add the message to the top of the forced login fieldset.
+    if (isset($form['forced_login'])) {
+      $form['forced_login']['az_cas_override_message'] = [
+        '#type' => 'markup',
+        '#markup' => '<div class="messages messages--warning">' . $message . '</div>',
+        '#weight' => -100,
+      ];
+
+      // Disable the forced login checkbox.
+      if (isset($form['forced_login']['enabled'])) {
+        $form['forced_login']['enabled']['#disabled'] = TRUE;
+        $form['forced_login']['enabled']['#description'] .= ' ' . t('This setting is currently managed by the AZ CAS module.');
+      }
+
+      // Disable the path fields.
+      if (isset($form['forced_login']['enabled_paths'])) {
+        $form['forced_login']['enabled_paths']['#disabled'] = TRUE;
+        $form['forced_login']['enabled_paths']['#description'] .= ' ' . t('This setting is currently managed by the AZ CAS module.');
+      }
+
+      if (isset($form['forced_login']['exclude_paths'])) {
+        $form['forced_login']['exclude_paths']['#disabled'] = TRUE;
+        $form['forced_login']['exclude_paths']['#description'] .= ' ' . t('This setting is currently managed by the AZ CAS module.');
+      }
     }
   }
 }

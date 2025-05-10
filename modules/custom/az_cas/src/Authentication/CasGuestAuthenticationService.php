@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\az_cas_guest\Authentication;
+namespace Drupal\az_cas\Authentication;
 
 use Symfony\Component\HttpFoundation\RequestStack;
 

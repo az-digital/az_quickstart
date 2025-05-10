@@ -1,6 +1,0 @@
-az_cas_guest.settings:
-  title: 'CAS Guest Authentication'
-  description: 'Configure CAS guest authentication settings.'
-  parent: cas.settings
-  route_name: az_cas_guest.settings
-  weight: 100
