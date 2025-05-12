@@ -14,3 +14,9 @@ az_cas.settings:
     guest_mode:
       type: boolean
       label: 'Enable guest authentication mode'
+    guest_auth_paths:
+      type: sequence
+      label: 'Paths that require guest authentication'
+      sequence:
+        type: string
+        label: 'Path'

@@ -2,3 +2,4 @@ disable_login_form: true
 disable_admin_add_user_button: true
 disable_password_recovery_link: true
 guest_mode: false
+guest_auth_paths: []

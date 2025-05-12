@@ -8,6 +8,7 @@ use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Routing\RouteBuilderInterface;
+use Drupal\Core\Url;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -120,18 +121,32 @@ class AzCasSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Configure how Quickstart CAS users are authenticated in Drupal.'),
     ];
 
+    // Check if CAS auto_register is enabled.
+    $cas_auto_register = $cas_config->get('user_accounts.auto_register');
+    $cas_settings_url = Url::fromRoute('cas.settings')->toString();
+
     $form['guest_authentication']['guest_mode'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable guest authentication mode'),
-      '#description' => $this->t('When enabled, Quickstart CAS authentication will not create individual Drupal user accounts for new users. Existing Drupal users will still be able to log in normally. This will also enable forced login in the CAS module.'),
-      '#default_value' => $az_cas_config->get('guest_mode', FALSE),
+      '#description' => $this->t('When enabled, Quickstart CAS authentication will not create individual Drupal user accounts for new users. Existing Drupal users will still be able to log in normally.'),
+      '#default_value' => $az_cas_config->get('guest_mode'),
     ];
 
-    // Add forced login settings from CAS module.
-    $form['guest_authentication']['forced_login'] = [
+    // Add notice about auto_register requirement.
+    $form['guest_authentication']['auto_register_notice'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="messages messages--warning">' . $this->t('Guest authentication requires the CAS module\'s "Auto register users" setting to be enabled. This setting will be automatically enabled when guest mode is activated. <a href="@cas_settings_url">View CAS settings</a>', ['@cas_settings_url' => $cas_settings_url]) . '</div>',
+      '#states' => [
+        'visible' => [
+          ':input[name="guest_mode"]' => ['checked' => TRUE],
+        ],
+      ],
+    ];
+
+    $form['guest_authentication']['guest_auth_settings'] = [
       '#type' => 'details',
-      '#title' => $this->t('Forced Login Settings'),
-      '#description' => $this->t('Configure paths that require CAS authentication.'),
+      '#title' => $this->t('Guest Authentication Settings'),
+      '#description' => $this->t('Configure paths that should be restricted to authenticated NetID users.'),
       '#open' => TRUE,
       '#states' => [
         'visible' => [
@@ -140,23 +155,11 @@ class AzCasSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['guest_authentication']['forced_login']['cas_forced_login_message'] = [
-      '#type' => 'markup',
-      '#markup' => '<div class="messages messages--warning">' . $this->t('These settings override the forced login settings in the CAS module. Changes made here will be saved to the CAS module configuration.') . '</div>',
-    ];
-
-    $form['guest_authentication']['forced_login']['forced_login_paths'] = [
+    $form['guest_authentication']['guest_auth_settings']['guest_auth_paths'] = [
       '#type' => 'textarea',
-      '#title' => $this->t('Forced login paths'),
-      '#default_value' => implode("\n", $cas_config->get('forced_login.enabled_paths') ?: []),
-      '#description' => $this->t('Specify pages by using their paths. Enter one path per line. The * character is a wildcard. An example path is /user/* for every user page. &lt;front&gt; is the front page.'),
-    ];
-
-    $form['guest_authentication']['forced_login']['forced_login_exclude_paths'] = [
-      '#type' => 'textarea',
-      '#title' => $this->t('Forced login exclude paths'),
-      '#default_value' => implode("\n", $cas_config->get('forced_login.exclude_paths') ?: []),
-      '#description' => $this->t('Specify pages by using their paths. Enter one path per line. The * character is a wildcard. An example path is /user/* for every user page. &lt;front&gt; is the front page.'),
+      '#title' => $this->t('Guest authentication paths'),
+      '#default_value' => implode("\n", $az_cas_config->get('guest_auth_paths') ?: []),
+      '#description' => $this->t('Specify pages that should be restricted to authenticated NetID users without requiring Drupal accounts. Enter one path per line. The * character is a wildcard. An example path is /content/* for all content pages. &lt;front&gt; is the front page.'),
     ];
 
     return parent::buildForm($form, $form_state);
@@ -169,25 +172,25 @@ class AzCasSettingsForm extends ConfigFormBase {
     // Get guest mode value.
     $guest_mode = $form_state->getValue('guest_mode');
 
+    // Process guest authentication paths if guest mode is enabled.
+    $guest_auth_paths = [];
+    if ($guest_mode) {
+      $guest_auth_paths = array_filter(preg_split('/[\n\r]+/', $form_state->getValue('guest_auth_paths')));
+
+      // Ensure CAS auto_register is enabled when guest mode is enabled.
+      $this->config('cas.settings')
+        ->set('user_accounts.auto_register', TRUE)
+        ->save();
+    }
+
     // Save AZ CAS settings.
     $this->config('az_cas.settings')
       ->set('disable_login_form', $form_state->getValue('disable_login_form'))
       ->set('disable_admin_add_user_button', $form_state->getValue('disable_admin_add_user_button'))
       ->set('disable_password_recovery_link', $form_state->getValue('disable_password_recovery_link'))
       ->set('guest_mode', $guest_mode)
+      ->set('guest_auth_paths', $guest_auth_paths)
       ->save();
-
-    // Only update CAS forced login settings if guest mode is enabled.
-    if ($guest_mode) {
-      $forced_login_paths = array_filter(preg_split('/[\n\r]+/', $form_state->getValue('forced_login_paths')));
-      $forced_login_exclude_paths = array_filter(preg_split('/[\n\r]+/', $form_state->getValue('forced_login_exclude_paths')));
-
-      $this->config('cas.settings')
-        ->set('forced_login.enabled', TRUE)
-        ->set('forced_login.enabled_paths', $forced_login_paths)
-        ->set('forced_login.exclude_paths', $forced_login_exclude_paths)
-        ->save();
-    }
 
     $this->routeBuilder->setRebuildNeeded();
     $this->cacheFactory->get('render')->deleteAll();

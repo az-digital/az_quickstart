@@ -8,24 +8,24 @@ services:
 
   az_cas.pre_register_subscriber:
     class: Drupal\az_cas\EventSubscriber\CasPreRegisterSubscriber
-    arguments: ['@config.factory', '@logger.factory', '@request_stack', '@datetime.time', '@cas.user_manager']
+    arguments: ['@config.factory', '@logger.factory', '@request_stack', '@cas.user_manager', '@datetime.time']
     tags:
       - { name: event_subscriber }
 
-  az_cas.guest_authentication:
-    class: Drupal\az_cas\Authentication\CasGuestAuthenticationService
-    arguments: ['@request_stack']
-    tags:
-      - { name: service }
-
-  az_cas.kernel_request_subscriber:
-    class: Drupal\az_cas\EventSubscriber\KernelRequestSubscriber
-    arguments: ['@az_cas.guest_authentication']
+  az_cas.pre_login_subscriber:
+    class: Drupal\az_cas\EventSubscriber\CasPreLoginSubscriber
+    arguments: ['@config.factory', '@request_stack']
     tags:
       - { name: event_subscriber }
 
-  az_cas.pre_redirect_subscriber:
-    class: Drupal\az_cas\EventSubscriber\CasPreRedirectSubscriber
-    arguments: ['@request_stack']
+  az_cas.guest_redirect_exception_subscriber:
+    class: Drupal\az_cas\EventSubscriber\GuestRedirectExceptionSubscriber
+    arguments: ['@logger.factory']
+    tags:
+      - { name: event_subscriber }
+
+  az_cas.guest_auth_path_subscriber:
+    class: Drupal\az_cas\EventSubscriber\GuestAuthPathSubscriber
+    arguments: ['@config.factory', '@path.matcher', '@current_user', '@logger.factory']
     tags:
       - { name: event_subscriber }
