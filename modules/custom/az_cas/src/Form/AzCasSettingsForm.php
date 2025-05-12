@@ -118,24 +118,19 @@ class AzCasSettingsForm extends ConfigFormBase {
     $form['guest_authentication'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Guest Authentication'),
-      '#description' => $this->t('Configure how Quickstart CAS users are authenticated in Drupal.'),
     ];
-
-    // Check if CAS auto_register is enabled.
-    $cas_auto_register = $cas_config->get('user_accounts.auto_register');
-    $cas_settings_url = Url::fromRoute('cas.settings')->toString();
 
     $form['guest_authentication']['guest_mode'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable guest authentication mode'),
-      '#description' => $this->t('When enabled, Quickstart CAS authentication will not create individual Drupal user accounts for new users. Existing Drupal users will still be able to log in normally.'),
+      '#description' => $this->t('Allows restricting access to certain paths to anyone with a valid NetID without creating Drupal user accounts.'),
       '#default_value' => $az_cas_config->get('guest_mode'),
     ];
 
-    // Add notice about auto_register requirement.
-    $form['guest_authentication']['auto_register_notice'] = [
-      '#type' => 'markup',
-      '#markup' => '<div class="messages messages--warning">' . $this->t('Guest authentication requires the CAS module\'s "Auto register users" setting to be enabled. This setting will be automatically enabled when guest mode is activated. <a href="@cas_settings_url">View CAS settings</a>', ['@cas_settings_url' => $cas_settings_url]) . '</div>',
+    $form['guest_authentication']['guest_auth_settings'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Guest Authentication Settings'),
+      '#open' => TRUE,
       '#states' => [
         'visible' => [
           ':input[name="guest_mode"]' => ['checked' => TRUE],
@@ -143,11 +138,11 @@ class AzCasSettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $form['guest_authentication']['guest_auth_settings'] = [
-      '#type' => 'details',
-      '#title' => $this->t('Guest Authentication Settings'),
-      '#description' => $this->t('Configure paths that should be restricted to authenticated NetID users.'),
-      '#open' => TRUE,
+    // Add notice about auto_register requirement.
+    $cas_settings_url = Url::fromRoute('cas.settings')->toString() . '#edit-user-accounts';
+    $form['guest_authentication']['guest_auth_settings']['auto_register_notice'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="messages messages--warning">' . $this->t('Guest authentication requires the CAS module\'s "Auto register users" setting to be enabled. This setting will be automatically enabled when guest mode is activated. <a href="@cas_settings_url">View CAS settings</a>', ['@cas_settings_url' => $cas_settings_url]) . '</div>',
       '#states' => [
         'visible' => [
           ':input[name="guest_mode"]' => ['checked' => TRUE],
