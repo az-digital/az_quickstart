@@ -120,20 +120,24 @@ class AzCasSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Guest Authentication'),
     ];
 
-    // Add warning about regulated content.
-    $form['guest_authentication']['regulated_content_warning'] = [
-      '#type' => 'markup',
-      '#markup' => '<div class="messages messages--warning">' .
-      $this->t('<strong>Important:</strong> Guest authentication mode should not be used to restrict access to content that is regulated (e.g., FERPA protected, HIPAA, or other sensitive information). This feature is intended for general access control only.') .
-      '</div>',
-      '#weight' => -10,
-    ];
-
     $form['guest_authentication']['guest_mode'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable guest authentication mode'),
       '#description' => $this->t('Allows restricting access to certain paths to anyone with a valid NetID without creating Drupal user accounts.'),
       '#default_value' => $az_cas_config->get('guest_mode'),
+    ];
+
+    // Add notice about auto_register requirement.
+    $cas_settings_url = Url::fromRoute('cas.settings')->toString() . '#edit-user-accounts';
+    $form['guest_authentication']['auto_register_notice'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="messages messages--warning">' . $this->t('Guest authentication requires the CAS module\'s "Auto register users" setting to be enabled. This setting will be automatically enabled when guest mode is activated. <a href="@cas_settings_url">View CAS settings</a>', ['@cas_settings_url' => $cas_settings_url]) . '</div>',
+      '#states' => [
+        'visible' => [
+          ':input[name="guest_mode"]' => ['checked' => TRUE],
+        ],
+      ],
+      '#weight' => 1,
     ];
 
     $form['guest_authentication']['guest_auth_settings'] = [
@@ -145,18 +149,16 @@ class AzCasSettingsForm extends ConfigFormBase {
           ':input[name="guest_mode"]' => ['checked' => TRUE],
         ],
       ],
+      '#weight' => 2,
     ];
 
-    // Add notice about auto_register requirement.
-    $cas_settings_url = Url::fromRoute('cas.settings')->toString() . '#edit-user-accounts';
-    $form['guest_authentication']['guest_auth_settings']['auto_register_notice'] = [
+    // Add warning about regulated content.
+    $form['guest_authentication']['guest_auth_settings']['regulated_content_warning'] = [
       '#type' => 'markup',
-      '#markup' => '<div class="messages messages--warning">' . $this->t('Guest authentication requires the CAS module\'s "Auto register users" setting to be enabled. This setting will be automatically enabled when guest mode is activated. <a href="@cas_settings_url">View CAS settings</a>', ['@cas_settings_url' => $cas_settings_url]) . '</div>',
-      '#states' => [
-        'visible' => [
-          ':input[name="guest_mode"]' => ['checked' => TRUE],
-        ],
-      ],
+      '#markup' => '<div class="messages messages--warning">' .
+      $this->t('<strong>Important:</strong> Guest authentication mode should not be used to restrict access to content that is regulated (e.g., FERPA protected, HIPAA, or other sensitive information). This feature is intended for general access control only.') .
+      '</div>',
+      '#weight' => -10,
     ];
 
     $form['guest_authentication']['guest_auth_settings']['guest_auth_paths'] = [
