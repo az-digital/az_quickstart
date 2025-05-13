@@ -8,6 +8,7 @@ use Drupal\cas\Event\CasPreRegisterEvent;
 use Drupal\cas\Service\CasHelper;
 use Drupal\cas\Service\CasUserManager;
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -53,6 +54,13 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
   protected $guestSessionManager;
 
   /**
+   * The entity type manager.
+   *
+   * @var \Drupal\Core\Entity\EntityTypeManagerInterface
+   */
+  protected $entityTypeManager;
+
+  /**
    * Constructs a new CasPreRegisterSubscriber.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -65,6 +73,8 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
    *   The CAS user manager service.
    * @param \Drupal\az_cas\Service\GuestSessionManager $guest_session_manager
    *   The guest session manager.
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
+   *   The entity type manager.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
@@ -72,12 +82,14 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
     RequestStack $request_stack,
     CasUserManager $cas_user_manager,
     GuestSessionManager $guest_session_manager,
+    EntityTypeManagerInterface $entity_type_manager,
   ) {
     $this->configFactory = $config_factory;
     $this->logger = $logger_factory->get('az_cas');
     $this->requestStack = $request_stack;
     $this->casUserManager = $cas_user_manager;
     $this->guestSessionManager = $guest_session_manager;
+    $this->entityTypeManager = $entity_type_manager;
   }
 
   /**
@@ -101,8 +113,18 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
 
     // Check if a user account already exists for this CAS username.
     $uid = $this->casUserManager->getUidForCasUsername($cas_username);
+
+    // If a user account exists, check if it's active.
     if ($uid) {
-      return;
+      // Load the user entity to check if it's active.
+      $user_storage = $this->entityTypeManager->getStorage('user');
+      $user = $user_storage->load($uid);
+
+      // Only return (allowing normal login) if the user is active.
+      if ($user && $user->isActive()) {
+        return;
+      }
+      // Otherwise, continue with guest authentication for blocked users.
     }
 
     // If guest mode is enabled.
