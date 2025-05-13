@@ -14,6 +14,13 @@ services:
       - '@datetime.time'
       - '@config.factory'
 
+  az_cas.guest_path_matcher:
+    class: Drupal\az_cas\Service\GuestPathMatcher
+    arguments:
+      - '@config.factory'
+      - '@path.matcher'
+      - '@path_alias.manager'
+
   az_cas.pre_register_subscriber:
     class: Drupal\az_cas\EventSubscriber\CasPreRegisterSubscriber
     arguments:
@@ -44,9 +51,9 @@ services:
     class: Drupal\az_cas\EventSubscriber\GuestAuthPathSubscriber
     arguments:
       - '@config.factory'
-      - '@path.matcher'
       - '@current_user'
       - '@logger.factory'
       - '@az_cas.guest_session_manager'
+      - '@az_cas.guest_path_matcher'
     tags:
       - { name: event_subscriber }

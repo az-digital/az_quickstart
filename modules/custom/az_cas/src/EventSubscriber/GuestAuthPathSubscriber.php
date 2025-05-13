@@ -2,10 +2,10 @@
 
 namespace Drupal\az_cas\EventSubscriber;
 
+use Drupal\az_cas\Service\GuestPathMatcher;
 use Drupal\az_cas\Service\GuestSessionManager;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
-use Drupal\Core\Path\PathMatcherInterface;
 use Drupal\Core\Session\AccountProxyInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -23,13 +23,6 @@ class GuestAuthPathSubscriber implements EventSubscriberInterface {
    * @var \Drupal\Core\Config\ConfigFactoryInterface
    */
   protected $configFactory;
-
-  /**
-   * The path matcher.
-   *
-   * @var \Drupal\Core\Path\PathMatcherInterface
-   */
-  protected $pathMatcher;
 
   /**
    * The current user.
@@ -53,31 +46,38 @@ class GuestAuthPathSubscriber implements EventSubscriberInterface {
   protected $guestSessionManager;
 
   /**
+   * The guest path matcher.
+   *
+   * @var \Drupal\az_cas\Service\GuestPathMatcher
+   */
+  protected $guestPathMatcher;
+
+  /**
    * Constructs a new GuestAuthPathSubscriber.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The config factory.
-   * @param \Drupal\Core\Path\PathMatcherInterface $path_matcher
-   *   The path matcher.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   The current user.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
    *   The logger factory.
    * @param \Drupal\az_cas\Service\GuestSessionManager $guest_session_manager
    *   The guest session manager.
+   * @param \Drupal\az_cas\Service\GuestPathMatcher $guest_path_matcher
+   *   The guest path matcher.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
-    PathMatcherInterface $path_matcher,
     AccountProxyInterface $current_user,
     LoggerChannelFactoryInterface $logger_factory,
     GuestSessionManager $guest_session_manager,
+    GuestPathMatcher $guest_path_matcher,
   ) {
     $this->configFactory = $config_factory;
-    $this->pathMatcher = $path_matcher;
     $this->currentUser = $current_user;
     $this->logger = $logger_factory->get('az_cas');
     $this->guestSessionManager = $guest_session_manager;
+    $this->guestPathMatcher = $guest_path_matcher;
   }
 
   /**
@@ -109,18 +109,9 @@ class GuestAuthPathSubscriber implements EventSubscriberInterface {
       return;
     }
 
-    // Check if this is a path that allows authenticated NetID guest access.
+    // Check if this path should be protected by guest authentication.
     $current_path = $request->getPathInfo();
-    $guest_auth_paths = $az_cas_settings->get('guest_auth_paths') ?: [];
-
-    // Check if the current path matches any of the guest authentication paths.
-    $path_matches = FALSE;
-    foreach ($guest_auth_paths as $path) {
-      if ($this->pathMatcher->matchPath($current_path, $path)) {
-        $path_matches = TRUE;
-        break;
-      }
-    }
+    $path_matches = $this->guestPathMatcher->isPathProtected($current_path);
 
     // Check if the user is authenticated as a guest.
     $session = $request->getSession();
