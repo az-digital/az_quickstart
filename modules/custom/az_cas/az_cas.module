@@ -20,7 +20,7 @@ function az_cas_help($route_name, RouteMatchInterface $route_match) {
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Pre-configures contrib CAS module to work with University of Arizona WebAuth.') . '</p>';
-      $output .= '<p>' . t('The Quickstart CAS Guest Authentication functionality allows site visitors to authenticate via Quickstart CAS without creating Drupal user accounts.') . '</p>';
+      $output .= '<p>' . t('The Quickstart CAS Guest Authentication functionality allows site visitors to authenticate via University of Arizona WebAuth without creating Drupal user accounts.') . '</p>';
       return $output;
 
     default:

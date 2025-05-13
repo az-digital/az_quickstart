@@ -12,7 +12,7 @@ Pre-configures contrib CAS module to work with University of Arizona WebAuth.
 
 ## Guest Authentication
 
-The guest authentication feature allows site visitors to authenticate via Quickstart CAS without creating individual Drupal user accounts. This is useful for sites that need to restrict content to authenticated NetID users but don't need to store user-specific data or provide personalized experiences.
+The guest authentication feature allows site visitors to authenticate via University of Arizona WebAuth without creating individual Drupal user accounts. This is useful for sites that need to restrict content to authenticated NetID users but don't need to store user-specific data or provide personalized experiences.
 
 ### How it works
 

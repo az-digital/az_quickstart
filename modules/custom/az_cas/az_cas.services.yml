@@ -8,24 +8,36 @@ services:
 
   az_cas.pre_register_subscriber:
     class: Drupal\az_cas\EventSubscriber\CasPreRegisterSubscriber
-    arguments: ['@config.factory', '@logger.factory', '@request_stack', '@cas.user_manager', '@datetime.time']
+    arguments: 
+      - '@config.factory'
+      - '@logger.factory'
+      - '@request_stack'
+      - '@cas.user_manager'
+      - '@datetime.time'
     tags:
       - { name: event_subscriber }
 
   az_cas.pre_login_subscriber:
     class: Drupal\az_cas\EventSubscriber\CasPreLoginSubscriber
-    arguments: ['@config.factory', '@request_stack']
+    arguments:
+      - '@config.factory'
+      - '@request_stack'
     tags:
       - { name: event_subscriber }
 
   az_cas.guest_redirect_exception_subscriber:
     class: Drupal\az_cas\EventSubscriber\GuestRedirectExceptionSubscriber
-    arguments: ['@logger.factory']
+    arguments:
+      - '@logger.factory'
     tags:
       - { name: event_subscriber }
 
   az_cas.guest_auth_path_subscriber:
     class: Drupal\az_cas\EventSubscriber\GuestAuthPathSubscriber
-    arguments: ['@config.factory', '@path.matcher', '@current_user', '@logger.factory']
+    arguments:
+      - '@config.factory'
+      - '@path.matcher'
+      - '@current_user'
+      - '@logger.factory'
     tags:
       - { name: event_subscriber }
