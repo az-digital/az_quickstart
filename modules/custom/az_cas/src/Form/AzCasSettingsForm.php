@@ -120,6 +120,15 @@ class AzCasSettingsForm extends ConfigFormBase {
       '#title' => $this->t('Guest Authentication'),
     ];
 
+    // Add warning about regulated content.
+    $form['guest_authentication']['regulated_content_warning'] = [
+      '#type' => 'markup',
+      '#markup' => '<div class="messages messages--warning">' .
+      $this->t('<strong>Important:</strong> Guest authentication mode should not be used to restrict access to content that is regulated (e.g., FERPA protected, HIPAA, or other sensitive information). This feature is intended for general access control only.') .
+      '</div>',
+      '#weight' => -10,
+    ];
+
     $form['guest_authentication']['guest_mode'] = [
       '#type' => 'checkbox',
       '#title' => $this->t('Enable guest authentication mode'),
