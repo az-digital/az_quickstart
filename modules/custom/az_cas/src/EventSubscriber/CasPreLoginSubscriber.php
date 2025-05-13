@@ -4,7 +4,6 @@ namespace Drupal\az_cas\EventSubscriber;
 
 use Drupal\cas\Event\CasPreLoginEvent;
 use Drupal\cas\Service\CasHelper;
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -12,13 +11,6 @@ use Symfony\Component\HttpFoundation\RequestStack;
  * Event subscriber for CAS pre-login events.
  */
 class CasPreLoginSubscriber implements EventSubscriberInterface {
-
-  /**
-   * The config factory.
-   *
-   * @var \Drupal\Core\Config\ConfigFactoryInterface
-   */
-  protected $configFactory;
 
   /**
    * The request stack.
@@ -30,16 +22,12 @@ class CasPreLoginSubscriber implements EventSubscriberInterface {
   /**
    * Constructs a new CasPreLoginSubscriber.
    *
-   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-   *   The config factory.
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
    */
   public function __construct(
-    ConfigFactoryInterface $config_factory,
     RequestStack $request_stack,
   ) {
-    $this->configFactory = $config_factory;
     $this->requestStack = $request_stack;
   }
 

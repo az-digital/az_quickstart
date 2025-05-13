@@ -157,6 +157,22 @@ class AzCasSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Specify pages that should be restricted to authenticated NetID users without requiring Drupal accounts. Enter one path per line. The * character is a wildcard. An example path is /content/* for all content pages. &lt;front&gt; is the front page.'),
     ];
 
+    $form['guest_authentication']['guest_auth_settings']['guest_ip_validation'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Enable IP validation for guest sessions'),
+      '#description' => $this->t('When enabled, guest sessions will be validated against the IP address they were created with. This adds security but may cause issues for users whose IP address changes during their session.'),
+      '#default_value' => $az_cas_config->get('guest_ip_validation') ?? FALSE,
+    ];
+
+    $form['guest_authentication']['guest_auth_settings']['guest_session_lifetime'] = [
+      '#type' => 'number',
+      '#title' => $this->t('Guest session lifetime (hours)'),
+      '#description' => $this->t('The number of hours a guest session remains valid before requiring re-authentication. Default is 8 hours.'),
+      '#default_value' => $az_cas_config->get('guest_session_lifetime') ?? 8,
+      '#min' => 1,
+      '#max' => 72,
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -185,6 +201,8 @@ class AzCasSettingsForm extends ConfigFormBase {
       ->set('disable_password_recovery_link', $form_state->getValue('disable_password_recovery_link'))
       ->set('guest_mode', $guest_mode)
       ->set('guest_auth_paths', $guest_auth_paths)
+      ->set('guest_ip_validation', $form_state->getValue('guest_ip_validation'))
+      ->set('guest_session_lifetime', $form_state->getValue('guest_session_lifetime'))
       ->save();
 
     $this->routeBuilder->setRebuildNeeded();

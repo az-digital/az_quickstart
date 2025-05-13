@@ -2,6 +2,7 @@
 
 namespace Drupal\az_cas\EventSubscriber;
 
+use Drupal\az_cas\Service\GuestSessionManager;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Drupal\Core\Path\PathMatcherInterface;
@@ -45,6 +46,13 @@ class GuestAuthPathSubscriber implements EventSubscriberInterface {
   protected $logger;
 
   /**
+   * The guest session manager.
+   *
+   * @var \Drupal\az_cas\Service\GuestSessionManager
+   */
+  protected $guestSessionManager;
+
+  /**
    * Constructs a new GuestAuthPathSubscriber.
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -55,17 +63,21 @@ class GuestAuthPathSubscriber implements EventSubscriberInterface {
    *   The current user.
    * @param \Drupal\Core\Logger\LoggerChannelFactoryInterface $logger_factory
    *   The logger factory.
+   * @param \Drupal\az_cas\Service\GuestSessionManager $guest_session_manager
+   *   The guest session manager.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
     PathMatcherInterface $path_matcher,
     AccountProxyInterface $current_user,
     LoggerChannelFactoryInterface $logger_factory,
+    GuestSessionManager $guest_session_manager,
   ) {
     $this->configFactory = $config_factory;
     $this->pathMatcher = $path_matcher;
     $this->currentUser = $current_user;
     $this->logger = $logger_factory->get('az_cas');
+    $this->guestSessionManager = $guest_session_manager;
   }
 
   /**
@@ -113,7 +125,9 @@ class GuestAuthPathSubscriber implements EventSubscriberInterface {
     // Check if the user is authenticated as a guest.
     $session = $request->getSession();
     $guest_data = $session->get('az_cas_guest');
-    $is_guest_authenticated = !empty($guest_data['authenticated']);
+
+    // Validate the guest session using the session manager.
+    $is_guest_authenticated = $this->guestSessionManager->validateGuestSession($guest_data);
 
     // If this is a guest authentication path and the user is authenticated as a
     // guest, allow access.

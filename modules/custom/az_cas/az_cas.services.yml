@@ -6,21 +6,28 @@ services:
     arguments:
       - '@config.factory'
 
+  az_cas.guest_session_manager:
+    class: Drupal\az_cas\Service\GuestSessionManager
+    arguments:
+      - '@state'
+      - '@request_stack'
+      - '@datetime.time'
+      - '@config.factory'
+
   az_cas.pre_register_subscriber:
     class: Drupal\az_cas\EventSubscriber\CasPreRegisterSubscriber
-    arguments: 
+    arguments:
       - '@config.factory'
       - '@logger.factory'
       - '@request_stack'
       - '@cas.user_manager'
-      - '@datetime.time'
+      - '@az_cas.guest_session_manager'
     tags:
       - { name: event_subscriber }
 
   az_cas.pre_login_subscriber:
     class: Drupal\az_cas\EventSubscriber\CasPreLoginSubscriber
     arguments:
-      - '@config.factory'
       - '@request_stack'
     tags:
       - { name: event_subscriber }
@@ -39,5 +46,6 @@ services:
       - '@path.matcher'
       - '@current_user'
       - '@logger.factory'
+      - '@az_cas.guest_session_manager'
     tags:
       - { name: event_subscriber }

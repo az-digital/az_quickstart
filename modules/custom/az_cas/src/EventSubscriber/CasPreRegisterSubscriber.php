@@ -3,10 +3,10 @@
 namespace Drupal\az_cas\EventSubscriber;
 
 use Drupal\az_cas\Exception\GuestRedirectException;
+use Drupal\az_cas\Service\GuestSessionManager;
 use Drupal\cas\Event\CasPreRegisterEvent;
 use Drupal\cas\Service\CasHelper;
 use Drupal\cas\Service\CasUserManager;
-use Drupal\Component\Datetime\TimeInterface;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Logger\LoggerChannelFactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -46,11 +46,11 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
   protected $casUserManager;
 
   /**
-   * The time service.
+   * The guest session manager.
    *
-   * @var \Drupal\Component\Datetime\TimeInterface
+   * @var \Drupal\az_cas\Service\GuestSessionManager
    */
-  protected $time;
+  protected $guestSessionManager;
 
   /**
    * Constructs a new CasPreRegisterSubscriber.
@@ -63,21 +63,21 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
    *   The request stack.
    * @param \Drupal\cas\Service\CasUserManager $cas_user_manager
    *   The CAS user manager service.
-   * @param \Drupal\Component\Datetime\TimeInterface $time
-   *   The time service.
+   * @param \Drupal\az_cas\Service\GuestSessionManager $guest_session_manager
+   *   The guest session manager.
    */
   public function __construct(
     ConfigFactoryInterface $config_factory,
     LoggerChannelFactoryInterface $logger_factory,
     RequestStack $request_stack,
     CasUserManager $cas_user_manager,
-    TimeInterface $time,
+    GuestSessionManager $guest_session_manager,
   ) {
     $this->configFactory = $config_factory;
     $this->logger = $logger_factory->get('az_cas');
     $this->requestStack = $request_stack;
     $this->casUserManager = $cas_user_manager;
-    $this->time = $time;
+    $this->guestSessionManager = $guest_session_manager;
   }
 
   /**
@@ -110,13 +110,12 @@ class CasPreRegisterSubscriber implements EventSubscriberInterface {
       // Prevent user registration without showing an error message.
       $event->cancelAutomaticRegistration();
 
-      // Store the username in the session.
+      // Get session and generate a unique session ID.
       $session = $this->requestStack->getCurrentRequest()->getSession();
-      $session->set('az_cas_guest', [
-        'authenticated' => TRUE,
-        'cas_username' => $cas_username,
-        'timestamp' => $this->time->getRequestTime(),
-      ]);
+      $session_id = $session->getId();
+
+      // Store guest session using the session manager.
+      $this->guestSessionManager->storeGuestSession($cas_username, $session_id);
 
       // Log the guest authentication.
       $this->logger->notice('Quickstart CAS guest authentication for @username', [
