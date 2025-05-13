@@ -30,22 +30,16 @@ services:
       - '@cas.user_manager'
       - '@az_cas.guest_session_manager'
       - '@entity_type.manager'
-    tags:
-      - { name: event_subscriber }
 
   az_cas.pre_login_subscriber:
     class: Drupal\az_cas\EventSubscriber\CasPreLoginSubscriber
     arguments:
       - '@request_stack'
-    tags:
-      - { name: event_subscriber }
 
   az_cas.guest_redirect_exception_subscriber:
     class: Drupal\az_cas\EventSubscriber\GuestRedirectExceptionSubscriber
     arguments:
       - '@logger.factory'
-    tags:
-      - { name: event_subscriber }
 
   az_cas.guest_auth_path_subscriber:
     class: Drupal\az_cas\EventSubscriber\GuestAuthPathSubscriber
@@ -55,5 +49,3 @@ services:
       - '@logger.factory'
       - '@az_cas.guest_session_manager'
       - '@az_cas.guest_path_matcher'
-    tags:
-      - { name: event_subscriber }
