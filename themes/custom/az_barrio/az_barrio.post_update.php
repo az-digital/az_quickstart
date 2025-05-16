@@ -6,8 +6,7 @@
  */
 
 /**
- * Adds the az_bootstrap_cdn_version_css and az_bootstrap_cdn_version_js
- * settings to the az_barrio.settings configuration.
+ * Adds az_bootstrap_cdn_version_css and az_bootstrap_cdn_version_js settings.
  */
 function az_barrio_post_update_split_bootstrap_cdn_version(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
