@@ -341,6 +341,127 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       }
     }
   }
+
+  if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css'])) {
+    // Add AZ Bootstrap CSS based on theme settings.
+    $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
+    if (!$az_bootstrap_css_path) {
+      return;
+    }
+
+    $az_bootstrap_token = '';
+    $az_bootstrap_css_info = [
+      'media' => 'all',
+      'preprocess' => FALSE,
+      'browsers' => [
+        'IE' => TRUE,
+        '!IE' => TRUE,
+      ],
+      'minified' => FALSE,
+    ];
+
+    // AZ Bootstrap source.
+    if (theme_get_setting('az_bootstrap_source') === 'cdn') {
+      // AZ Bootstrap CDN version.
+      if (theme_get_setting('az_bootstrap_cdn_version') !== 'stable') {
+        $az_bootstrap_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
+      }
+      $az_bootstrap_css_info['type'] = 'external';
+    }
+    else {
+      $az_bootstrap_css_info['type'] = 'file';
+    }
+
+    if (theme_get_setting('az_bootstrap_minified')) {
+      $az_bootstrap_css_info['minified'] = TRUE;
+    }
+
+    $az_bootstrap_css_path .= $az_bootstrap_token;
+    $libraries['arizona-bootstrap']['css']['theme'] = [
+      $az_bootstrap_css_path => $az_bootstrap_css_info,
+    ];
+
+    // Populate AZ Bootstrap location variable for CKEditor.
+    \Drupal::state()->set(AZ_BOOTSTRAP_LOCATION, $az_bootstrap_css_path . $az_bootstrap_token);
+
+    $font = theme_get_setting('az_barrio_font');
+    if ($font === TRUE) {
+      // Add Proxima Nova CSS based on theme settings.
+      // Ensure Proxima Nova is loaded before Arizona Bootstrap.
+      $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-proxima-nova';
+    }
+
+    $material_design_sharp_icons = theme_get_setting('az_barrio_material_design_sharp_icons');
+    if ($material_design_sharp_icons === TRUE) {
+      // Add Material Design Sharp Icon CSS based on theme settings.
+      // Ensure icon CSS is loaded before Arizona Bootstrap.
+      $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/material-design-icons-sharp';
+    }
+
+    $az_icons = theme_get_setting('az_barrio_az_icons');
+    if ($az_icons === TRUE) {
+      if ($extension === 'az_barrio' && isset($libraries['az-icons'])) {
+        // Add Arizona Icons CSS based on theme settings.
+        $az_icons_path = az_barrio_az_icons_assets_path('css');
+        // Ensure icons are loaded before Arizona Bootstrap.
+        $libraries['arizona-bootstrap-css']['dependencies'][] = 'az_barrio/az-icons';
+        $az_barrio_az_icons_css_info = [
+          'media' => 'all',
+          'preprocess' => FALSE,
+          'browsers' => [
+            'IE' => TRUE,
+            '!IE' => TRUE,
+          ],
+          'minified' => TRUE,
+        ];
+        // AZ Brand Icons source.
+        if (theme_get_setting('az_barrio_az_icons_source') === 'cdn') {
+          $az_barrio_az_icons_css_info['type'] = 'external';
+        }
+        else {
+          $az_barrio_az_icons_css_info['type'] = 'file';
+        }
+
+        $libraries['az-icons']['css']['theme'] = [
+          $az_icons_path => $az_barrio_az_icons_css_info,
+        ];
+      }
+    }
+  }
+
+  if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-js'])) {
+    // Add AZ Bootstrap JS based on theme settings.
+    $az_bootstrap_js_path = az_barrio_az_bootstrap_assets_path('js');
+    if (!$az_bootstrap_js_path) {
+      return;
+    }
+
+    $az_bootstrap_token = '';
+    $az_bootstrap_js_info = [
+      'preprocess' => FALSE,
+    ];
+
+    // AZ Bootstrap source.
+    if (theme_get_setting('az_bootstrap_source') === 'cdn') {
+      // AZ Bootstrap CDN version.
+      if (theme_get_setting('az_bootstrap_cdn_version') !== 'stable') {
+        $az_bootstrap_token = '?=' . \Drupal::state()->get('system.css_js_query_string') ?: '0';
+      }
+      $az_bootstrap_js_info['type'] = 'external';
+    }
+    else {
+      $az_bootstrap_js_info['type'] = 'file';
+    }
+
+    if (theme_get_setting('az_bootstrap_minified')) {
+      $az_bootstrap_js_info['minified'] = TRUE;
+    }
+
+    $az_bootstrap_js_path .= $az_bootstrap_token;
+    $libraries['arizona-bootstrap']['js'] = [
+      $az_bootstrap_js_path => $az_bootstrap_js_info,
+    ];
+  }
 }
 
 /**
