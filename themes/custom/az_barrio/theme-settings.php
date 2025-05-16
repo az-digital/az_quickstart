@@ -252,8 +252,8 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
   $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version'] = [
     '#type' => 'radios',
     '#title' => t('AZ Bootstrap CDN version (DEPRECATED)'),
-    '#description' => t('This setting is deprecated in favor of allowing choosing your CSS and JS versions separately. This setting will be removed in a future version of AZ Barrio. See <a href="@azbootstrap">AZ Bootstrap</a> for more information.', [
-      '@azbootstrap' => 'https://github.com/az-digital/az_quickstart/issues/1251',
+    '#description' => t('This setting is deprecated in favor of allowing choosing your CSS and JS versions separately.  <a href="@bootstrapdeprecated">This setting will be removed in a future version of AZ Barrio</a>.', [
+      '@bootstrapdeprecated' => 'https://github.com/az-digital/az_quickstart/issues/1251',
     ]),
     '#options' => [
       'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
