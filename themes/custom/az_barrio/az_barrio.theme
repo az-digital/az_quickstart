@@ -796,3 +796,31 @@ function az_barrio_preprocess_block(&$variables) {
   }
 
 }
+
+/**
+ * Implements hook_requirements().
+ */
+function az_barrio_requirements($phase) {
+  $requirements = [];
+dpm($phase);
+  if ($phase === 'runtime') {
+    $library_name = 'az_barrio/arizona-bootstrap';
+
+    /** @var \Drupal\Core\Asset\LibraryDiscoveryCollectorInterface $collector */
+    $collector = \Drupal::service('library.discovery.collector');
+    $libraries = $collector->getLibrariesByExtension('az_barrio');
+
+    if (isset($libraries['arizona-bootstrap']['deprecated']['message'])) {
+      $message = $libraries['arizona-bootstrap']['deprecated']['message'];
+
+      $requirements['my_module.deprecated_library'] = [
+        'title' => t('Deprecated library usage'),
+        'value' => t('Deprecated: @library', ['@library' => $library_name]),
+        'description' => Markup::create($message),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    }
+  }
+
+  return $requirements;
+}

@@ -1,9 +1,11 @@
 <?php
-
 /**
  * @file
  * Contains install and update functions for az_core.
  */
+
+use Drupal\Core\Database\Database;
+
 
 /**
  * Implements hook_update_last_removed().
@@ -11,4 +13,32 @@
 function az_core_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 920501;
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function az_core_requirements($phase) {
+  $requirements = [];
+  if ($phase === 'runtime') {
+    $extension = 'az_barrio';
+    $library_name = 'arizona-bootstrap';
+    $library_info = \Drupal::service('library.discovery')->getLibraryByName($extension, $library_name);
+
+    if ($library_info['deprecated']) {
+
+      $message = $library_info['deprecated'];
+      // set requirement key to the library name
+      $message = strtr($message, ['%library_id%' => $library_name]);
+
+      $requirements['az_barrio.deprecated_library'] = [
+        'title' => t('Deprecated library usage'),
+        'value' => t('Deprecated: @extension/@library', ['@extension' => $extension, '@library' => $library_name]),
+        'description' => $message,
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    }
+  }
+
+  return $requirements;
 }
