@@ -123,6 +123,24 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
 
     // For the full content view mode, modify the display of az_event_date.
     if (($view_mode === 'full') && ($entity instanceof NodeInterface)) {
+      // Compute a summary for the description.
+      // Field_az_body does not have native support for summaries.
+      // Some integrations for adding calendar events depend upon the data
+      // being able to fit into an URL. (2048 characters)
+      // Prefer field_az_summary where available.
+      $summary = '';
+      if ($entity->hasField('field_az_summary')) {
+        /** @var \Drupal\Core\Field\FieldItemList $summary_field */
+        $summary_field = $entity->get('field_az_summary');
+        $summary = $summary_field->value ?: '';
+      }
+      if (empty($summary) && $entity->hasField('field_az_body')) {
+        /** @var \Drupal\Core\Field\FieldItemList $body_field */
+        $body_field = $entity->get('field_az_body');
+        $summary = $body_field->value ?: '';
+      }
+      // By default this hinges on text.settings default_summary_length.
+      $summary = text_summary($summary, 'plain_text');
       $now = \Drupal::time()->getCurrentTime();
       /** @var \Drupal\Core\Field\FieldItemList $event_date_field */
       $event_date_field = $entity->field_az_event_date;
@@ -140,7 +158,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
               '#start_date' => $start,
               '#end_date' => $end,
               '#all_day' => $all_day,
-              '#description' => $entity->field_az_body->value ?? '',
+              '#description' => $summary,
               '#location' => $entity->field_az_location->title ?? '',
               '#modal' => Html::getUniqueId('calendar-link-modal'),
               '#attributes' => ['class' => 'mt-3'],
@@ -215,7 +233,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#title' => $entity->getTitle(),
                 '#start_date' => $item['value'] ?? '',
                 '#end_date' => $item['end_value'] ?? '',
-                '#description' => $entity->field_az_body->value ?? '',
+                '#description' => $summary,
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
