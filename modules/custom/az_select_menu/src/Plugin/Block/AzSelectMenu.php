@@ -134,10 +134,10 @@ class AzSelectMenu extends MenuBlock {
 
     $form_attributes = new Attribute([
       'id' => $menu_name . '-form',
-      'data-toggle' => 'popover',
-      'data-trigger' => 'focus',
-      'data-placement' => 'top',
-      'data-content' => t('Please make a selection.'),
+      'data-bs-toggle' => 'popover',
+      'data-bs-trigger' => 'focus',
+      'data-bs-placement' => 'top',
+      'data-bs-content' => t('Please make a selection.'),
     ]);
 
     $build['#form_attributes'] = $form_attributes;
