@@ -341,10 +341,10 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       }
     }
   }
-
   if ($extension === 'az_barrio' && isset($libraries['arizona-bootstrap-css'])) {
     // Add AZ Bootstrap CSS based on theme settings.
     $az_bootstrap_css_path = az_barrio_az_bootstrap_assets_path('css');
+
     if (!$az_bootstrap_css_path) {
       return;
     }
@@ -371,13 +371,12 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     else {
       $az_bootstrap_css_info['type'] = 'file';
     }
-
     if (theme_get_setting('az_bootstrap_minified')) {
       $az_bootstrap_css_info['minified'] = TRUE;
     }
 
     $az_bootstrap_css_path .= $az_bootstrap_token;
-    $libraries['arizona-bootstrap']['css']['theme'] = [
+    $libraries['arizona-bootstrap-css']['css']['theme'] = [
       $az_bootstrap_css_path => $az_bootstrap_css_info,
     ];
 
@@ -458,7 +457,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
     }
 
     $az_bootstrap_js_path .= $az_bootstrap_token;
-    $libraries['arizona-bootstrap']['js'] = [
+    $libraries['arizona-bootstrap-js']['js'] = [
       $az_bootstrap_js_path => $az_bootstrap_js_info,
     ];
   }
@@ -473,7 +472,6 @@ function az_barrio_az_bootstrap_assets_path($type) {
   }
 
   $az_bootstrap_path = '';
-
   // AZ Bootstrap source.
   if (theme_get_setting('az_bootstrap_source') === 'cdn') {
     $az_bootstrap_cdn_version = theme_get_setting('az_bootstrap_cdn_version');
