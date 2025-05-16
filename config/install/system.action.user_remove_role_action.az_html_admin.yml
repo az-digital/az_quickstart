@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - user.role.az_html_admin
+  module:
+    - user
+id: user_remove_role_action.az_html_admin
+label: 'Remove the HTML administrator role from the selected user(s)'
+type: user
+plugin: user_remove_role_action
+configuration:
+  rid: az_html_admin
