@@ -529,7 +529,7 @@ function az_barrio_az_bootstrap_css_path() {
   return $az_bootstrap_path . '.' . $type;
 }
 /**
- * Helper function for constructing AZ Bootstrap CSS asset paths.
+ * Helper function for constructing AZ Bootstrap JS asset paths.
  */
 function az_barrio_az_bootstrap_js_path() {
   $type = 'js';
