@@ -346,7 +346,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       return;
     }
 
-    $az_bootstrap_token = '';
+    $az_bootstrap_css_token = '';
     $az_bootstrap_css_info = [
       'media' => 'all',
       'preprocess' => FALSE,
