@@ -453,7 +453,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       $az_bootstrap_js_info['minified'] = TRUE;
     }
 
-    $az_bootstrap_js_path .= $az_bootstrap_token;
+    $az_bootstrap_js_path .= $az_bootstrap_js_token;
     $libraries['arizona-bootstrap-js']['js'] = [
       $az_bootstrap_js_path => $az_bootstrap_js_info,
     ];
