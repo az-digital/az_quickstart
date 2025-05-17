@@ -432,7 +432,7 @@ function az_barrio_library_info_alter(&$libraries, $extension) {
       return;
     }
 
-    $az_bootstrap_token = '';
+    $az_bootstrap_js_token = '';
     $az_bootstrap_js_info = [
       'preprocess' => FALSE,
     ];
