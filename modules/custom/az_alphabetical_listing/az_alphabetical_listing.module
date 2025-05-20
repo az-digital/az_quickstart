@@ -52,6 +52,7 @@ function az_alphabetical_listing_theme_registry_alter(&$theme_registry) {
  * Implements hook_views_post_execute().
  */
 function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
+  $entity_type_id = $view->getBaseEntityType()->id();
 
   // Check if we're on the correct view and display
   if (($view->id() === 'az_alphabetical_glossary') && ($view->current_display === 'az_alphabetical_glossary_attachment')) {
@@ -59,14 +60,12 @@ function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
     // Get the results of the current query.
     /** @var \Drupal\views\ResultRow[] $results */
     $results = $view->result ?? [];
+
     // Load the FieldStorageConfig entity for field_az_alphabetical_index to get its settings.
     $allowed_values = [];
 
-    /** @var \Drupal\field\Entity\FieldConfig $field_config */
-    $field_config = FieldConfig::loadByName($entity_type_id, $bundle_name, $alphabetical_field_name);
-
     /** @var \Drupal\field\Entity\FieldStorageConfig $field_storage_config */
-    $field_storage_config = \Drupal\field\Entity\FieldStorageConfig::loadByName($entity_type_id, $alphabetical_field_name);
+    $field_storage_config = \Drupal\field\Entity\FieldStorageConfig::loadByName($entity_type_id, 'field_az_alphabetical_index');
     
     if ($field_storage_config) {
       $allowed_values = $field_storage_config->getSetting('allowed_values');
