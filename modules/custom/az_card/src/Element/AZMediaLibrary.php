@@ -94,6 +94,10 @@ class AZMediaLibrary extends MediaLibrary {
             ],
             'target' => '_blank',
             'data-dialog-type' => 'modal',
+            'data-dialog-options' => json_encode([
+              'classes' => ['ui-dialog-content' => 'media-library-edit__modal'],
+              'drupalAutoButtons' => FALSE,
+            ]),
           ],
           '#attached' => [
             'library' => [
