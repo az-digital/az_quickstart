@@ -15,8 +15,6 @@ use Drupal\media_library_form_element\Element\MediaLibrary;
  *
  * The #default_value accepted by this element is an ID of a media object.
  *
- * @FormElement("az_media_library")
- *
  * Usage can include the following components:
  *
  *   $element['image'] = [
