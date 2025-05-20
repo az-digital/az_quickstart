@@ -26,7 +26,7 @@ function az_core_requirements($phase) {
       $message = $library_info['deprecated'];
       $message = strtr($message, ['%library_id%' => $library_name]);
       $requirements['az_barrio.deprecated_library'] = [
-        'title' => t('Deprecated library usage'),
+        'title' => t('Deprecated libraries'),
         'value' => t('Deprecated: @extension/@library', ['@extension' => $extension, '@library' => $library_name]),
         'description' => $message,
         'severity' => REQUIREMENT_WARNING,
