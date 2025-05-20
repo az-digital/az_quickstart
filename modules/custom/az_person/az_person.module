@@ -152,7 +152,7 @@ function az_person_theme() {
 /**
  * Implements hook_ENTITY_TYPE_presave().
  *
- * Prepulate the alphabetical index letter field for az_person where available.
+ * Prepopulate the alphabetical index letter field in az_person where available.
  */
 function az_person_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_person'
