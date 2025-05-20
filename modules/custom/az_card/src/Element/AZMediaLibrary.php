@@ -27,6 +27,7 @@ use Drupal\media_library_form_element\Element\MediaLibrary;
  *     '#cardinality' => -1|1,
  *   ];
  */
+#[FormElement('az_media_library')]
 class AZMediaLibrary extends MediaLibrary {
 
   /**
