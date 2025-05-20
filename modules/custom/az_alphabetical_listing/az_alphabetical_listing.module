@@ -5,6 +5,12 @@
  * Contains az_alphabetical_listing.module.
  */
 
+use Drupal\views\ResultRow;
+use Drupal\views\ViewExecutable;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Core\Entity\ContentEntityInterface;
+
 /**
  * Implements template_preprocess_views_view()
  */
@@ -39,5 +45,68 @@ function az_alphabetical_listing_theme_registry_alter(&$theme_registry) {
       $theme_registry[$key] = array_merge($theme_registry[$key], $template_file_object);
       $theme_registry[$key]['type'] = 'module';
     }
+  }
+}
+
+/**
+ * Implements hook_views_post_execute().
+ */
+function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
+
+  // Check if we're on the correct view and display
+  if (($view->id() === 'az_alphabetical_glossary') && ($view->current_display === 'az_alphabetical_glossary_attachment')) {
+
+    // Get the results of the current query.
+    /** @var \Drupal\views\ResultRow[] $results */
+    $results = $view->result ?? [];
+    // Load the FieldStorageConfig entity for field_az_alphabetical_index to get its settings.
+    $allowed_values = [];
+
+    /** @var \Drupal\field\Entity\FieldConfig $field_config */
+    $field_config = FieldConfig::loadByName($entity_type_id, $bundle_name, $alphabetical_field_name);
+
+    /** @var \Drupal\field\Entity\FieldStorageConfig $field_storage_config */
+    $field_storage_config = \Drupal\field\Entity\FieldStorageConfig::loadByName($entity_type_id, $alphabetical_field_name);
+    
+    if ($field_storage_config) {
+      $allowed_values = $field_storage_config->getSetting('allowed_values');
+    }
+
+    // Get the letters that were present in the original view results.
+    $letters_in_original_results = [];
+    foreach ($results as $original_row_index => $original_row) {
+      if (isset($original_row->_entity) && $original_row->_entity->hasField('field_az_alphabetical_index')) {
+        /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
+        $entity = $original_row->_entity;
+        $field_items = $entity->get('field_az_alphabetical_index');
+        if (!$field_items->isEmpty()) {
+          // Use the actual field value (key) not the label.
+          $letters_in_original_results[$field_items->value] = TRUE;
+        }
+      }
+    }
+    
+    // Replace the view's results with new ResultRow objects based on the allowed values.
+    $new_results = [];
+    $current_row_index = 0;
+
+    foreach (array_keys($allowed_values) as $letter_key) {
+      $row_data = [
+        'index' => $current_row_index,
+        // Add custom properties that attachment display can use.
+        'field_az_alphabetical_index' => $letter_key,
+        '#alphabetical_label' => $allowed_values[$letter_key],
+        'node__field_az_alphabetical_index_field_az_alphabetical_inde' => $allowed_values[$letter_key],
+        '#existed_in_original' => isset($letters_in_original_results[$letter_key]),
+      ];
+
+      $new_results[] = new ResultRow($row_data);
+      $current_row_index++;
+    }
+
+    // Update $view->result with the new set of rows.
+    $view->result = $new_results;
+    // Update $view->total_rows to reflect the new count.
+    $view->total_rows = count($new_results);
   }
 }
