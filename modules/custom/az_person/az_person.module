@@ -6,8 +6,10 @@
  */
 
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_preprocess_node().
@@ -145,4 +147,38 @@ function az_person_theme() {
     'field__node__field_az_teaching_interests__az_person' => $interests_field_template,
     'horizontal_tabs__node__az_person__group_tabs' => ['base hook' => 'horizontal_tabs'],
   ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Prepulate the alphabetical index letter field for az_person where available.
+ */
+function az_person_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_person'
+    && $entity instanceof NodeInterface
+    && $entity->hasField('field_az_alphabetical_index')
+    && $entity->hasField('field_az_lname')) {
+    $last = $entity->get('field_az_lname')->value;
+    $index = $entity->get('field_az_alphabetical_index');
+    // Only operate if we have no current index values.
+    if (!empty($last) && empty($index->getValue())) {
+      $last = mb_strtolower($last);
+      $allowed = $index->getSetting('allowed_values');
+      $matches = [];
+      // Get all letters after beginning or space.
+      if (preg_match_all('/(?<=^|\s)\w/u', $last, $matches) !== FALSE) {
+        // Convert matches into flat array.
+        $letters = array_unique(array_merge(...$matches));
+        // Find leading letters which match an index letter select option.
+        $intersect = array_intersect($letters, array_keys($allowed));
+        // Turn result into a regular array.
+        $values = array_values($intersect);
+        // Update the field value if we could determine one.
+        if (!empty($values)) {
+          $entity->set('field_az_alphabetical_index', $values);
+        }
+      }
+    }
+  }
 }
