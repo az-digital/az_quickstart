@@ -164,6 +164,8 @@ function az_person_node_presave(EntityInterface $entity) {
     // Only operate if we have no current index values.
     if (!empty($last) && empty($index->getValue())) {
       $last = mb_strtolower($last);
+      // Remove accent characters.
+      $last = \Drupal::service('transliteration')->removeDiacritics($last);
       // Get the list of allowed characters for the index field.
       $allowed = $index->getSetting('allowed_values');
       $matches = [];
