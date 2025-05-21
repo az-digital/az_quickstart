@@ -7,9 +7,7 @@
 
 use Drupal\views\ResultRow;
 use Drupal\views\ViewExecutable;
-use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\Core\Entity\ContentEntityInterface;
 
 /**
  * Implements template_preprocess_views_view()
@@ -54,19 +52,18 @@ function az_alphabetical_listing_theme_registry_alter(&$theme_registry) {
 function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
   $entity_type_id = $view->getBaseEntityType()->id();
 
-  // Check if we're on the correct view and display
+  // Check if we're on the correct view and display.
   if (($view->id() === 'az_alphabetical_glossary') && ($view->current_display === 'az_alphabetical_glossary_attachment')) {
 
     // Get the results of the current query.
     /** @var \Drupal\views\ResultRow[] $results */
     $results = $view->result ?? [];
 
-    // Load the FieldStorageConfig entity for field_az_alphabetical_index to get its settings.
+    // Load FieldStorageConfig entity to get settings of field_az_alphabetical_index.
     $allowed_values = [];
 
     /** @var \Drupal\field\Entity\FieldStorageConfig $field_storage_config */
-    $field_storage_config = \Drupal\field\Entity\FieldStorageConfig::loadByName($entity_type_id, 'field_az_alphabetical_index');
-    
+    $field_storage_config = FieldStorageConfig::loadByName($entity_type_id, 'field_az_alphabetical_index');
     if ($field_storage_config) {
       $allowed_values = $field_storage_config->getSetting('allowed_values');
     }
@@ -74,7 +71,7 @@ function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
     // Get the letters that were present in the original view results.
     $letters_in_original_results = [];
     foreach ($results as $original_row_index => $original_row) {
-      if (isset($original_row->_entity) && $original_row->_entity->hasField('field_az_alphabetical_index')) {
+      if (isset($original_row->_entity)) {
         /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
         $entity = $original_row->_entity;
         $field_items = $entity->get('field_az_alphabetical_index');
@@ -84,7 +81,7 @@ function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
         }
       }
     }
-    
+
     // Replace the view's results with new ResultRow objects based on the allowed values.
     $new_results = [];
     $current_row_index = 0;
