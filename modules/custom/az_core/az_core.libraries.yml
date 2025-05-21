@@ -9,7 +9,8 @@ arizona-bootstrap-node-form-overrides:
     layout:
       css/arizona-bootstrap-node-form-overrides.css: {}
   dependencies:
-    - az_barrio/arizona-bootstrap
+    - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
 az-enterprise-attributes:
   css:
