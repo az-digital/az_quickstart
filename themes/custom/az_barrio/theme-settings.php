@@ -262,17 +262,6 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version'),
   ];
-  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_js'] = [
-    '#type' => 'radios',
-    '#title' => t('AZ Bootstrap JS CDN version'),
-    '#options' => [
-      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
-      'latest-2.x' => t('Latest tagged version of 2.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
-      '2.x' => t('Latest dev version of 2.x. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
-      '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
-    ],
-    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_js'),
-  ];
   $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_css'] = [
     '#type' => 'radios',
     '#title' => t('AZ Bootstrap CSS CDN version'),
@@ -284,6 +273,18 @@ function az_barrio_form_system_theme_settings_alter(&$form, FormStateInterface $
     ],
     '#default_value' => theme_get_setting('az_bootstrap_cdn_version_css'),
   ];
+  $form['azbs_settings']['settings']['az_bootstrap_cdn']['az_bootstrap_cdn_version_js'] = [
+    '#type' => 'radios',
+    '#title' => t('AZ Bootstrap JS CDN version'),
+    '#options' => [
+      'stable' => t('Stable version: This option has undergone the most testing within the az_barrio theme. Currently: %stableversion (Recommended).', ['%stableversion' => AZ_BOOTSTRAP_STABLE_VERSION]),
+      'latest-2.x' => t('Latest tagged version of 2.x. The most recently tagged stable release of AZ Bootstrap. While this has not been explicitly tested on this version of az_barrio, it’s probably OK to use on production sites. Please report bugs to the AZ Digital team.'),
+      '2.x' => t('Latest dev version of 2.x. This is the tip of the 2.x branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+      '5.x' => t('Latest dev version of <code>main</code>. This is the tip of the main branch of AZ Bootstrap. Please do not use on production unless you are following the AZ Bootstrap project closely. Please report bugs to the AZ Digital team.'),
+    ],
+    '#default_value' => theme_get_setting('az_bootstrap_cdn_version_js'),
+  ];
+
   $form['azbs_settings']['settings']['az_bootstrap_minified'] = [
     '#type'          => 'checkbox',
     '#title'         => t('Use minified version of AZ Bootstrap.'),
