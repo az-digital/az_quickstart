@@ -91,7 +91,7 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#weight' => 1,
     ];
 
-    $form['#after_build'][] = [get_class($this), 'afterBuild'];
+    $form['#after_build'][] = '::afterBuild';
 
     // This places the form fields on the content tab rather than behavior tab.
     // Note that form is passed by reference.
