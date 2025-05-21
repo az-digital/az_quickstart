@@ -1,0 +1,12 @@
+{#
+/**
+ * @file
+ * Template implementation for the az_media_trellis theme hook.
+ *
+ * Available variables:
+ * - url: (string) A formatted Trellis source URL
+ */
+#}
+{{ attach_library('az_media_trellis/az-media-trellis') }}
+<div id="fa-form"></div>
+<script src="{{ url }}" data-qp-target-id="fa-form" defer></script>
