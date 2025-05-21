@@ -59,7 +59,7 @@ function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
     /** @var \Drupal\views\ResultRow[] $results */
     $results = $view->result ?? [];
 
-    // Load FieldStorageConfig entity to get settings of field_az_alphabetical_index.
+    // Get field_az_alphabetical_index storage settings for allowed values.
     $allowed_values = [];
 
     /** @var \Drupal\field\Entity\FieldStorageConfig $field_storage_config */
@@ -82,7 +82,7 @@ function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
       }
     }
 
-    // Replace the view's results with new ResultRow objects based on the allowed values.
+    // Replace view results with new ResultRows from allowed values.
     $new_results = [];
     $current_row_index = 0;
 
