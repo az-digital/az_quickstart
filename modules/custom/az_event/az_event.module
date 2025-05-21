@@ -132,12 +132,12 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
       if ($entity->hasField('field_az_summary')) {
         /** @var \Drupal\Core\Field\FieldItemList $summary_field */
         $summary_field = $entity->get('field_az_summary');
-        $summary = $summary_field->value ?: '';
+        $summary = $summary_field->value ?? '';
       }
       if (empty($summary) && $entity->hasField('field_az_body')) {
         /** @var \Drupal\Core\Field\FieldItemList $body_field */
         $body_field = $entity->get('field_az_body');
-        $summary = $body_field->value ?: '';
+        $summary = $body_field->value ?? '';
       }
       // By default this hinges on text.settings default_summary_length.
       $summary = text_summary($summary, 'plain_text');
