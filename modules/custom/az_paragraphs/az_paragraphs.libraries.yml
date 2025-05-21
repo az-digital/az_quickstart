@@ -4,6 +4,7 @@ az_paragraphs.az_text:
       css/az_paragraphs_az_text.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
 az_paragraphs.az_paragraphs_full_width:
   header: true
@@ -18,6 +19,7 @@ az_paragraphs.az_text_background:
       css/az_paragraphs_az_text_background.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
 az_paragraphs.az_text_media:
   css:
@@ -25,6 +27,7 @@ az_paragraphs.az_text_media:
       css/az_paragraphs_az_text_media.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
 az_paragraphs.az_photo_gallery:
   css:
@@ -32,6 +35,7 @@ az_paragraphs.az_photo_gallery:
       css/az_paragraphs_az_photo_gallery.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
 az_paragraphs.az_cards:
   css:
@@ -39,6 +43,7 @@ az_paragraphs.az_cards:
       css/az_paragraphs_az_cards.css: {}
   dependencies:
     - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
 az_paragraphs.preview:
   css:
@@ -48,6 +53,7 @@ az_paragraphs.preview:
   dependencies:
     - az_barrio/material-design-icons-sharp
     - az_barrio/arizona-bootstrap-css
+    - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict
 az_paragraphs.az_html:
   header: true

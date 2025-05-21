@@ -52,6 +52,8 @@ function az_person_profiles_import_node_presave(EntityInterface $entity) {
     }
     $entity->setNewRevision(TRUE);
     $entity->setRevisionLogMessage($revision_log);
+    $entity->setRevisionCreationTime(\Drupal::time()->getCurrentTime());
+    $entity->setRevisionUserId(\Drupal::currentUser()->id());
     $entity->isDefaultRevision(TRUE);
   }
 }
