@@ -158,8 +158,7 @@ function az_person_node_presave(EntityInterface $entity) {
   if ($entity->bundle() === 'az_person'
     && $entity instanceof NodeInterface
     && $entity->hasField('field_az_alphabetical_index')
-    && $entity->hasField('field_az_lname'))
-  {
+    && $entity->hasField('field_az_lname')) {
     $last = $entity->get('field_az_lname')->value;
     $index = $entity->get('field_az_alphabetical_index');
     // Only operate if we have no current index values.
