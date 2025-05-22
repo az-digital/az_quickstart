@@ -67,7 +67,7 @@
               // Only trigger if submit buttion isn't disabled.
               if (!$submitButton.prop('disabled')) {
                 $ancestor.find('input').eq(0).change();
-                $submitButton.click();
+                $submitButton.trigger('click');
                 task = null;
               }
               // The form is disabled and we are probably ajaxing.

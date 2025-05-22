@@ -41,7 +41,7 @@
           task = setTimeout(function () {
             if (!$submitButton.prop('disabled')) {
               $ancestor.find('input').eq(0).change();
-              $submitButton.click();
+              $submitButton.trigger('click');
               task = null;
             } else {
               triggerFilterChange($ancestor, 200);
