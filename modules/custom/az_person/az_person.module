@@ -162,21 +162,19 @@ function az_person_node_presave(EntityInterface $entity) {
     $last = $entity->get('field_az_lname')->value;
     $index = $entity->get('field_az_alphabetical_index');
     // Only operate if we have no current index values.
-    if (!empty($last) && empty($index->getValue())) {
+    if (!empty($last) && empty($index->value)) {
       $last = mb_strtolower($last);
       // Remove accent characters.
       $last = \Drupal::service('transliteration')->removeDiacritics($last);
       // Get the list of allowed characters for the index field.
       $allowed = $index->getSetting('allowed_values');
       $matches = [];
-      // Get all first letters after beginning or space.
-      if (preg_match_all('/(?<=^|\s)\w/u', $last, $matches) !== FALSE) {
-        // Convert matches into flat array.
-        $letters = array_unique(array_merge(...$matches));
-        // Find leading letters which match an index letter select option.
-        $intersect = array_intersect($letters, array_keys($allowed));
-        // Turn result into a regular array.
-        $values = array_values($intersect);
+      // Get first letter after beginning or space.
+      // Unicode mode is a deliberate attempt to support multibyte characters.
+      if (preg_match('/(?<=^|\s)\w/u', $last, $match) !== FALSE) {
+        // Get the matched letter.
+        $letter = $match[0];
+        $values = isset($allowed[$letter]) ? [$letter] : [];
         // Update the field value if we could determine one.
         if (!empty($values)) {
           $entity->set('field_az_alphabetical_index', $values);
