@@ -389,7 +389,8 @@ function az_event_preprocess_views_view(&$variables) {
   // EntityRow views do not give the entity access to a row_index.
   // We need to provide one to understand the delta relationship
   // of the row.
-  if ($variables['id'] === 'az_events') {
+  $event_views = ['az_events', 'az_finder'];
+  if (!empty($variables['id']) && in_array($variables['id'], $event_views)) {
     if (!empty($variables['rows'][0]['#rows'])) {
       foreach ($variables['rows'][0]['#rows'] as $i => $n) {
         $variables['rows'][0]['#rows'][$i]['#az_view_row_index'] = $i;
