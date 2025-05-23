@@ -88,11 +88,11 @@ No major release policy has been defined at this time.
 
 ## Pre-Release Versions
 
-### Alpha Releases (`a`)
+### Alpha Releases (`alpha`)
 
 Previews of upcoming minor releases for testing and feedback. Alpha versions are feature-complete but may contain known issues or incomplete documentation.
 
-### Beta Releases (`b`)
+### Beta Releases (`beta`)
 
 Beta releases are considered stable pending final verification. If no critical issues are found, the beta is promoted to a full release. Otherwise, a new beta may be issued.
 
