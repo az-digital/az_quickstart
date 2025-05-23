@@ -89,6 +89,24 @@
       );
     }
   }
+  
+  /**
+   * Calculates and sets width required for full width content-width split screens.
+   *
+   * This function assigns values to the `--full-width-sidebar-width`
+   * CSS variables on the `html` element.
+   */
+  function calculateFullWidthSidebarWidth() {
+    const sidebarRegion = document.querySelectorAll('.sidebar');
+    if (sidebarRegion.length > 0) {
+      const sidebarRegionPosition = sidebarRegion[0].getBoundingClientRect();
+      const sidebarWidth = sidebarRegionPosition.width;
+      document.documentElement.style.setProperty(
+        '--full-width-sidebar-width',
+        `${sidebarWidth}px`)
+      );
+    }
+  }
 
   /**
    * Executes functions to set up the page layout.
@@ -96,6 +114,7 @@
   function setFullWidthLayout() {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
+    calculateFullWidthSidebarWidth();
     pushSidebarsDown();
   }
 
