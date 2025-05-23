@@ -45,9 +45,17 @@
       document.documentElement.style.setProperty('--full-width-auto-distance', "".concat(negativeAutoMargin, "px"));
     }
   }
+  function calculateFullWidthSidebarWidth() {
+    var contentRegion = document.querySelectorAll('.sidebar');
+    if (contentRegion.length > 0) {
+      var contentRegionPosition = contentRegion[0].getBoundingClientRect();
+      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(contentRegionPosition.width, "px"));
+    }
+  }
   function setFullWidthLayout() {
     calculateScrollbarWidth();
     calculateFullWidthNegativeMargins();
+    calculateFullWidthSidebarWidth();
     pushSidebarsDown();
   }
   document.addEventListener('DOMContentLoaded', setFullWidthLayout);
