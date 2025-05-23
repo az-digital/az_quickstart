@@ -179,9 +179,6 @@ jobs:
     services:
       chromedriver:
         image: drupalci/webdriver-chromedriver:production
-        ports:
-          - 9515
-          - '8080:8080'
       mysql:
         image: mysql:5.7
         env:
