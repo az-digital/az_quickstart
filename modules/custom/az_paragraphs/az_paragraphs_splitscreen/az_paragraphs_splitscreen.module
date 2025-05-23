@@ -54,19 +54,35 @@ function az_paragraphs_splitscreen_theme_registry_alter(&$theme_registry) {
  */
 function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element, &$group, &$rendering_object) {
 
-  if ($group->group_name === 'group_split_screen') {
+  if ($group->group_name === 'group_split_screen' || $group->group_name === 'group_splitscreen_text') {
     $paragraph = $rendering_object['#paragraph'];
     if ($paragraph instanceof ParagraphInterface) {
-      $order_class_mapping = [
-        'order_0' => 'order-0',
-        'order_1' => 'order-0 order-md-1',
-      ];
       $paragraph_settings = $paragraph->getAllBehaviorSettings();
       if (!empty($paragraph_settings['az_split_screen'])) {
         $splitscreen_settings = $paragraph_settings['az_split_screen'];
-        $order_settings = $splitscreen_settings['ordering'];
-        $order_classes = $order_class_mapping[$order_settings];
-        $element['#attributes']['class'][] = $order_classes;
+        $full_width = $splitscreen_settings['full_width'] ?? '';
+
+        // Image order.
+        $order_class_mapping = [
+          'order_0' => 'order-0',
+          'order_1' => 'order-0 order-md-1',
+        ];
+        $order = $splitscreen_settings['ordering'];
+        if ($group->group_name === 'group_split_screen') {
+          $order_classes = $order_class_mapping[$order];
+          $element['#attributes']['class'][] = $order_classes;
+        }
+
+        // Text width.
+        $text_width_class_mapping = [
+          'order_0' => 'content-width-2',
+          'order_1' => 'content-width-1',
+        ];
+        $text_width = $splitscreen_settings['az_display_settings']['text_width'] ?? '';
+        if ($group->group_name === 'group_splitscreen_text' && $full_width === 'full-width-background' && $text_width === 'content_width') {
+          $text_width_classes = $text_width_class_mapping[$order];
+          $element['#attributes']['class'][] = $text_width_classes;
+        }
       }
     }
   }
