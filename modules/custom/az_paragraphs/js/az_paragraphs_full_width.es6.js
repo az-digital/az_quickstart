@@ -103,7 +103,7 @@
       const sidebarWidth = sidebarRegionPosition.width;
       document.documentElement.style.setProperty(
         '--full-width-sidebar-width',
-        `${sidebarWidth}px`)
+        `${sidebarWidth}px`,
       );
     }
   }
