@@ -89,7 +89,7 @@
       );
     }
   }
-  
+
   /**
    * Calculates and sets width required for full width content-width split screens.
    *
