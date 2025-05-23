@@ -79,7 +79,7 @@
           <div id="{{ modal }}" class="modal bg-transparent-black az-gallery-modal" tabindex="-1" role="dialog">
         {% endif %}
 
-          <div id="{{ gallery }}" class="carousel slide{% if grid %} az-gallery{% endif %}" data-bs-ride="carousel" data-bs-interval="false">
+          <div id="{{ gallery }}" class="carousel slide{% if grid %} az-gallery{% endif %}">
             {% if grid %}
               {# Button for modal closer. #}
               <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
