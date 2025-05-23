@@ -46,10 +46,10 @@
     }
   }
   function calculateFullWidthSidebarWidth() {
-    var contentRegion = document.querySelectorAll('.sidebar');
-    if (contentRegion.length > 0) {
-      var contentRegionPosition = contentRegion[0].getBoundingClientRect();
-      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(contentRegionPosition.width, "px"));
+    var sidebarRegion = document.querySelectorAll('.sidebar');
+    if (sidebarRegion.length > 0) {
+      var sidebarRegionPosition = sidebarRegion[0].getBoundingClientRect();
+      document.documentElement.style.setProperty('--full-width-sidebar-width', "".concat(sidebarRegionPosition.width, "px"));
     }
   }
   function setFullWidthLayout() {
