@@ -60,7 +60,7 @@ function az_paragraphs_splitscreen_field_group_pre_render_alter(array &$element,
       $paragraph_settings = $paragraph->getAllBehaviorSettings();
       if (!empty($paragraph_settings['az_split_screen'])) {
         $splitscreen_settings = $paragraph_settings['az_split_screen'];
-        $full_width = $splitscreen_settings['full_width'];
+        $full_width = $splitscreen_settings['full_width'] ?? '';
 
         // Image order.
         $order_class_mapping = [
