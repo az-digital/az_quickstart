@@ -1,0 +1,11 @@
+langcode: en
+status: true
+dependencies: {  }
+label: 'Carousel Image'
+id: az_carousel_image
+description: 'Carousel crop type is used where carousel images are displayed.'
+aspect_ratio: '111:50'
+soft_limit_width: 1110
+soft_limit_height: 500
+hard_limit_width: null
+hard_limit_height: null
