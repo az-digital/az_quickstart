@@ -36,18 +36,17 @@ function az_alphabetical_listing_preprocess_views_view_summary(&$variables) {
       // $summary_row['attributes'] is an Attribute object.
       /** @var \Drupal\Core\Template\Attribute $row_attributes */
       $row_attributes = $summary_row->attributes;
-      $classes_to_add = [];
+      $classes_to_add = ['page-link'];
       $current_letter_from_summary = strtolower($summary_row->link);
 
       // Check our map to see if this letter existed in original results.
       if (isset($summary_row->num_records)) {
         // Add a specific class like 'had-content'.
-        $classes_to_add[] = 'page-link';
+        $summary_row->disabled = FALSE;
       }
       else {
-        // Letter was NOT in original results (it's a placeholder letter).
         // Add a class that will disable the letter.
-        $classes_to_add[] = 'placeholder-letter';
+        $summary_row->disabled = TRUE;
       }
 
       // Add the determined classes to the Attribute object.

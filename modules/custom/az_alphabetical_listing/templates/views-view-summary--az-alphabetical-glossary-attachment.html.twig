@@ -22,7 +22,8 @@
   <nav class="item-list">
     <ul class="views-summary pagination pagination-sm pagination-square flex-wrap">
     {% for row in rows %}
-      <li class="text-uppercase mt-2 mr-2 page-item"><a href="{{ row.url }}"{{ row.attributes.addClass(row.active ? 'is-active')|without('href') }}>{{ row.link }}</a>
+      <li class="text-uppercase mt-2 mr-2 page-item {{ row.disabled ? 'disabled' : '' }}">
+        <a href="{{ row.url }}"{{ row.attributes.addClass(row.active ? 'is-active')|without('href') }}>{{ row.link }}</a>
         {% if options.count %}
           ({{ row.count }})
         {% endif %}
