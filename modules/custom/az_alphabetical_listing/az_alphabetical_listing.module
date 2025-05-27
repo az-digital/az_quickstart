@@ -115,10 +115,12 @@ function az_alphabetical_listing_views_post_execute(ViewExecutable $view) {
       if (isset($original_row->_entity)) {
         /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
         $entity = $original_row->_entity;
-        $field_items = $entity->get('field_az_alphabetical_index');
-        if (!$field_items->isEmpty()) {
-          // Use the actual field value (key) not the label.
-          $letters_in_original_results[$field_items->value] = $original_row->num_records;
+        if ($entity->hasField('field_az_alphabetical_index')) {
+          $field_items = $entity->get('field_az_alphabetical_index');
+          if (!$field_items->isEmpty()) {
+            // Use the actual field value (key) not the label.
+            $letters_in_original_results[$field_items->value] = $original_row->num_records;
+          }
         }
       }
     }
