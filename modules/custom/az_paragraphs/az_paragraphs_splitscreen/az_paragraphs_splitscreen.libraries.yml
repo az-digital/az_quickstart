@@ -3,5 +3,5 @@ az_paragraphs_splitscreen:
     theme:
       css/az_splitscreen.css: {}
   dependencies:
-    - az_barrio/arizona-bootstrap
+    - az_barrio/arizona-bootstrap-css
     - az_paragraphs/az_paragraphs.az_paragraphs_full_width
