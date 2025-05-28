@@ -7,6 +7,11 @@
  * - url: (string) A formatted Trellis source URL
  */
 #}
-{{ attach_library('az_media_trellis/az-media-trellis') }}
-<div id="fa-form"></div>
-<script src="{{ url }}" data-qp-target-id="fa-form" defer></script>
+{% set debug_url = "https://forms-a.trellis.arizona.edu/publish/185?tfa_4=7018N00000071eDQAQ" %}
+{% set debug_code = '<div id="fa-form"></div>\n' ~
+    '<script src="' ~ debug_url ~ '" data-qp-target-id="fa-form" defer=""></script>' %}
+
+<div>debug_url = {{ debug_url }}</div>
+<code>{{ debug_code }}</code>
+
+{{ debug_code|raw }}
