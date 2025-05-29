@@ -4,14 +4,15 @@ disable_search_threshold: 0
 minimum_width: null
 max_shown_results: null
 use_relative_width: false
-jquery_selector: 'select:visible,select#edit-field-az-page-category,select#edit-menu-menu-parent'
+jquery_selector: 'select:visible:not(:disabled),select#edit-field-az-page-category,select#edit-menu-menu-parent'
 search_contains: true
 disable_search: false
 allow_single_deselect: false
+add_helper_buttons: false
 disabled_themes:
   claro: '0'
-  az_barrio: '0'
   bootstrap_barrio: '0'
+  az_barrio: '0'
 chosen_include: 0
 placeholder_text_multiple: 'Choose some options'
 placeholder_text_single: 'Choose an option'
