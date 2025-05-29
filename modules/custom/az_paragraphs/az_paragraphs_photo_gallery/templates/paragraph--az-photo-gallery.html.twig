@@ -93,7 +93,7 @@
                   {# Create the actual image for this element. #}
                   {% set imagestyle = {
                     '#theme':      'image_style',
-                    '#style_name': 'az_large',
+                    '#style_name': grid ? 'az_large' : 'az_carousel_item',
                     '#uri':        item.entity.field_media_az_image.0.entity.uri.value,
                     '#alt':        item.entity.field_media_az_image.alt,
                     '#attributes': { class: [ 'd-block', not grid ? 'w-100' : 'az-gallery-img' ] },
