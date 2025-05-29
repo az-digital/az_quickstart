@@ -1,4 +1,4 @@
-name: az_quickstart
+name: issue-3822-modify-help-text-of-the-summary-field
 recipe: drupal10
 config:
   php: '8.3'
