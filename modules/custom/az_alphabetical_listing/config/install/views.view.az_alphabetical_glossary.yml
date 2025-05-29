@@ -1,5 +1,5 @@
 langcode: en
-status: true
+status: false
 dependencies:
   config:
     - core.entity_view_mode.node.az_row
@@ -10,7 +10,7 @@ dependencies:
     - node
     - options
     - user
-id: az_alphabetical_glossary
+id: alphabetical_glossary
 label: 'Alphabetical Glossary'
 module: node
 description: 'All content, by letter.'
@@ -405,10 +405,12 @@ display:
             count: false
             override: false
             items_per_page: 25
+            inline: true
+            separator: '| '
           summary:
             sort_order: asc
             number_of_records: 0
-            format: default_summary
+            format: unformatted_summary
             human: false
           specify_validation: true
           validate:
@@ -421,30 +423,15 @@ display:
           path_case: lower
           transform_dash: false
           break_phrase: false
-      style:
-        type: default
-        options:
-          row_class: testing
-          default_row_class: true
-          uses_fields: false
-      row:
-        type: 'entity:node'
-        options:
-          relationship: none
-          view_mode: az_row
       query:
         type: views_query
         options: {  }
       defaults:
-        style: false
-        style_options: false
-        row: false
         arguments: false
-      style_options: null
       display_extenders: {  }
       displays:
         default: default
-        az_alphabetical_glossary_main: az_alphabetical_glossary_main
+        az_person: az_person
       inherit_arguments: false
     cache_metadata:
       max-age: -1
@@ -456,8 +443,8 @@ display:
         - user.permissions
       tags:
         - 'config:field.storage.node.field_az_lname'
-  az_alphabetical_glossary_main:
-    id: az_alphabetical_glossary_main
+  az_person:
+    id: az_person
     display_title: Page
     display_plugin: page
     position: 1
