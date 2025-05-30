@@ -519,7 +519,7 @@ function az_core_preprocess_container__text_format_filter_guidelines(&$variables
 
 /**
  * Implements hook_preprocess_container__text_format_filter_help().
- * 
+ *
  * Hides "About text formats" tips link from fields using AZSummaryFormatter.
  */
 function az_core_preprocess_container__text_format_filter_help(&$variables) {
