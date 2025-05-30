@@ -11,7 +11,7 @@ dependencies:
     - options
     - user
 id: az_alphabetical_glossary
-label: 'Alphabetical Glossary'
+label: 'AZ Alphabetical Glossary'
 module: node
 description: 'All content, by letter.'
 tag: default
