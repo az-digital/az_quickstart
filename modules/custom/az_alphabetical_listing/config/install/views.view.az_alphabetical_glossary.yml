@@ -405,8 +405,6 @@ display:
             count: false
             override: false
             items_per_page: 25
-            inline: true
-            separator: '| '
           summary:
             sort_order: asc
             number_of_records: 0
