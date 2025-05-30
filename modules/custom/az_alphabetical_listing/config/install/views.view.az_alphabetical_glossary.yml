@@ -10,7 +10,7 @@ dependencies:
     - node
     - options
     - user
-id: alphabetical_glossary
+id: az_alphabetical_glossary
 label: 'Alphabetical Glossary'
 module: node
 description: 'All content, by letter.'
