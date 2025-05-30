@@ -35,3 +35,4 @@ tags
 .phpcs-cache
 
 .DS_Store
+.idea

@@ -2,15 +2,14 @@
 
 namespace Drupal\Tests\az_cas\Functional;
 
-use Drupal\Core\Url;
 use Drupal\Tests\az_core\Functional\QuickstartFunctionalTestBase;
 
 /**
- * Tests AZ CAS admin settings form.
+ * Tests that access to the password reset form can be disabled.
  *
  * @group az_cas
  */
-class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
+class AzCasDisablePasswordResetTest extends QuickstartFunctionalTestBase {
 
   /**
    * The profile to install as a basis for testing.
@@ -20,7 +19,7 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
   protected $profile = 'az_quickstart';
 
   /**
-   * Disable strict schema cheking.
+   * Disable strict schema checking.
    *
    * @var bool
    */
@@ -47,41 +46,6 @@ class AzCasAdminSettingsTest extends QuickstartFunctionalTestBase {
     parent::setUp();
     $this->adminUser = $this->drupalCreateUser(['administer account settings']);
     $this->drupalLogin($this->adminUser);
-  }
-
-  /**
-   * Tests that access to the user login form is disabled.
-   *
-   * @dataProvider azCasSettingsProvider
-   */
-  public function testUserLoginFormBehavior($disable_login_form) {
-    $edit = [
-      'disable_login_form' => $disable_login_form,
-    ];
-    $this->drupalGet('/admin/config/az-quickstart/settings/az-cas');
-    $this->submitForm($edit, 'Save configuration');
-
-    // The menu router info needs to be rebuilt after saving this form so the
-    // routeSubscriber runs again.
-    $this->container->get('router.builder')->rebuild();
-
-    // Logout manually because $this->drupalLogout() checks for prescence of
-    // fields on login form which don't exist if login form is disabled.
-    $destination = Url::fromRoute('<front>')->toString();
-    $this->drupalGet(Url::fromRoute('user.logout.confirm', options: ['query' => ['destination' => $destination]]));
-    $this->submitForm([], 'Log out');
-
-    $this->drupalGet('user/login');
-    if ($disable_login_form) {
-      $this->assertSession()->pageTextNotContains('Username');
-      $this->assertSession()->pageTextNotContains('Password');
-      $this->assertSession()->buttonNotExists('Log in');
-    }
-    else {
-      $this->assertSession()->pageTextContains('Username');
-      $this->assertSession()->pageTextContains('Password');
-      $this->assertSession()->buttonExists('Log in');
-    }
   }
 
   /**
