@@ -12,7 +12,7 @@ field_name: field_az_summary
 entity_type: node
 bundle: az_flexible_page
 label: Summary
-description: 'Used in Metadata.<br /><strong>Suggested character limit:</strong> 160.'
+description: 'Used in Page metadata. Only plain text is allowed.<br /><strong>Suggested character limit:</strong> 160.'
 required: false
 translatable: true
 default_value: {  }

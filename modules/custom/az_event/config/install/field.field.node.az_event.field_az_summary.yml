@@ -12,7 +12,7 @@ field_name: field_az_summary
 entity_type: node
 bundle: az_event
 label: Summary
-description: 'Used in Event lists, Teasers, and Metadata.<br /><strong>Suggested character limit:</strong> 160.'
+description: 'Used in Event lists, Event Teasers, and Event metadata.<br /><strong>Suggested character limit:</strong> 160.'
 required: false
 translatable: true
 default_value: {  }
