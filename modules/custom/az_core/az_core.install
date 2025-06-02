@@ -21,7 +21,6 @@ function az_core_update_last_removed() {
  * Implements hook_requirements().
  */
 function az_core_requirements($phase): array {
-  $deprecated_modules_link_list = [];
   $requirements = [];
   if ($phase === 'runtime') {
     // Reset the extension lists.
@@ -41,6 +40,7 @@ function az_core_requirements($phase): array {
 
     // Warn if any deprecated modules are installed.
     if (!empty($enabled_deprecated_modules)) {
+      $deprecated_modules_link_list = [];
       foreach ($enabled_deprecated_modules as $deprecated_module => $name) {
         $deprecated_modules_link_list[] = (string) Link::fromTextAndUrl($name, Url::fromUri('https://www.drupal.org/project/' . $deprecated_module))->toString();
       }
