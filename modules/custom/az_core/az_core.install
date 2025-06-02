@@ -30,11 +30,7 @@ function az_core_requirements($phase): array {
     $module_extension_list->reset();
 
     // Gather all deprecated modules that are enabled.
-    $azqs_deprecated_modules = [
-      'jquery_ui_slider',
-      'jquery_ui_touch_punch',
-      'media_migration',
-    ];
+    $azqs_deprecated_modules = [];
     $enabled_deprecated_modules = [];
     $enabled_modules = \Drupal::moduleHandler()->getModuleList();
     foreach ($enabled_modules as $module => $data) {
@@ -54,6 +50,21 @@ function az_core_requirements($phase): array {
         'value' => t('Enabled Quickstart deprecated modules found: %module_list.', [
           '%module_list' => Markup::create(implode(', ', $deprecated_modules_link_list)),
         ]),
+        'severity' => REQUIREMENT_WARNING,
+      ];
+    }
+
+    // Add warning about deprecated az_barrio/arizona-bootstrap library.
+    $extension = 'az_barrio';
+    $library_name = 'arizona-bootstrap';
+    $library_info = \Drupal::service('library.discovery')->getLibraryByName($extension, $library_name);
+    if ($library_info['deprecated']) {
+      $message = $library_info['deprecated'];
+      $message = strtr($message, ['%library_id%' => $library_name]);
+      $requirements['az_barrio.deprecated_library'] = [
+        'title' => t('Deprecated libraries'),
+        'value' => t('Deprecated: @extension/@library', ['@extension' => $extension, '@library' => $library_name]),
+        'description' => $message,
         'severity' => REQUIREMENT_WARNING,
       ];
     }
