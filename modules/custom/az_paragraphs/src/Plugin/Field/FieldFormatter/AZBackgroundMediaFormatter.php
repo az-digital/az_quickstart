@@ -317,18 +317,12 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
   public function viewElements(FieldItemListInterface $items, $langcode): array {
     $settings = $this->getAllSettings($items);
     $element = [];
-    $full_width = '';
     /** @var \Drupal\media\MediaInterface[] $media_items */
     $media_items = $this->getEntitiesToView($items, $langcode);
-    $paragraph = $items->getEntity();
 
     // Early opt-out if the field is empty.
     if (empty($media_items)) {
       return $element;
-    }
-
-    if (!empty($settings['full_width'])) {
-      $full_width = $settings['full_width'];
     }
 
     // Prepare token data in bg image CSS selector.
