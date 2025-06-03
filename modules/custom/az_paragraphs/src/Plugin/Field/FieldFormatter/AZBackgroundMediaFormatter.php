@@ -318,7 +318,6 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
     $settings = $this->getAllSettings($items);
     $element = [];
     $full_width = '';
-    $marquee_style = $settings['style'];
     /** @var \Drupal\media\MediaInterface[] $media_items */
     $media_items = $this->getEntitiesToView($items, $langcode);
     $paragraph = $items->getEntity();
