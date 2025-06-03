@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_alphabetical_index
+    - node.type.az_person
+  module:
+    - options
+id: node.az_person.field_az_alphabetical_index
+field_name: field_az_alphabetical_index
+entity_type: node
+bundle: az_person
+label: Alphabetical Index
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
