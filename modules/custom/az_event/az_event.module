@@ -100,7 +100,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
   // We only know what to do with event pseudo fields if our date seems defined.
   if ($entity instanceof FieldableEntityInterface && $entity->hasField('field_az_event_date') && !empty($entity->field_az_event_date->value)) {
     $field_render_array = $entity->get('field_az_event_date')->view('default');
-    $formatted_date = \Drupal::service('renderer')->renderPlain($field_render_array);
+    $formatted_date = \Drupal::service('renderer')->renderInIsolation($field_render_array);
     $timestamp = $entity->field_az_event_date->value;
     $formatter = \Drupal::service('date.formatter');
     $smart_date_manager = \Drupal::service('smart_date.manager');
