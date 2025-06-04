@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for az_eds.
+ */
+
+/**
+ * Implements hook_requirements().
+ *
+ * Checks that EDS environment variables are available.
+ */
+function az_eds_requirements($phase) : array {
+  $requirements = [];
+  // Check for EDS environment variables on install.
+  if ($phase === 'install') {
+    if (!getenv('EDS_ADDRESS')) {
+      $requirements['az_eds_address'] = [
+        'title' => t('EDS_ADDRESS'),
+        'description' => t('Your environment does not define the EDS_ADDRESS variable.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+    if (!getenv('EDS_DN')) {
+      $requirements['az_eds_dn'] = [
+        'title' => t('EDS_DN'),
+        'description' => t('Your environment does not define the EDS_DN variable.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+    if (!getenv('EDS_PASSWORD')) {
+      $requirements['az_eds_password'] = [
+        'title' => t('EDS_PASSWORD'),
+        'description' => t('Your environment does not define the EDS_PASSWORD variable.'),
+        'severity' => REQUIREMENT_ERROR,
+      ];
+    }
+  }
+  return $requirements;
+}
