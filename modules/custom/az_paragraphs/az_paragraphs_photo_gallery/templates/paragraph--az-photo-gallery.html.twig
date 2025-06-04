@@ -66,8 +66,8 @@
                 '#alt':        item.entity.field_media_az_image.alt,
                 '#attributes': { class: [ 'photo-gallery-grid-img' ] },
               } %}
-              <div class="col-6 col-md-4 col-lg-3 px-min py-min" data-toggle="modal" data-target="#{{ modal }}">
-                <a class="az-gallery-open-modal" role="button" data-target="#{{ gallery }}" data-slide-to="{{ loop.index0 }}">
+              <div class="col-6 col-md-4 col-lg-3 px-min py-min" data-bs-toggle="modal" data-bs-target="#{{ modal }}">
+                <a class="az-gallery-open-modal" role="button" data-bs-target="#{{ gallery }}" data-bs-slide-to="{{ loop.index0 }}">
                   <picture class="card-img img-responsive">
                   {{ modalimage }}
                   </picture>
@@ -79,10 +79,10 @@
           <div id="{{ modal }}" class="modal bg-transparent-black az-gallery-modal" tabindex="-1" role="dialog">
         {% endif %}
 
-          <div id="{{ gallery }}" class="carousel slide{% if grid %} az-gallery{% endif %}" data-ride="carousel" data-interval="false">
+          <div id="{{ gallery }}" class="carousel slide{% if grid %} az-gallery{% endif %}">
             {% if grid %}
               {# Button for modal closer. #}
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
             {% endif %}
@@ -93,7 +93,7 @@
                   {# Create the actual image for this element. #}
                   {% set imagestyle = {
                     '#theme':      'image_style',
-                    '#style_name': 'az_large',
+                    '#style_name': grid ? 'az_large' : 'az_carousel_item',
                     '#uri':        item.entity.field_media_az_image.0.entity.uri.value,
                     '#alt':        item.entity.field_media_az_image.alt,
                     '#attributes': { class: [ 'd-block', not grid ? 'w-100' : 'az-gallery-img' ] },
@@ -122,11 +122,11 @@
                 {% endif %}
               {% endfor %}
             </div>
-            <a class="carousel-control-prev" role="button" data-target="#{{ gallery }}" data-slide="prev">
+            <a class="carousel-control-prev" role="button" data-bs-target="#{{ gallery }}" data-bs-slide="prev">
               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
               <span class="sr-only">Previous</span>
             </a>
-            <a class="carousel-control-next" role="button" data-target="#{{ gallery }}" data-slide="next">
+            <a class="carousel-control-next" role="button" data-bs-target="#{{ gallery }}" data-bs-slide="next">
               <span class="carousel-control-next-icon" aria-hidden="true"></span>
               <span class="sr-only">Next</span>
             </a>

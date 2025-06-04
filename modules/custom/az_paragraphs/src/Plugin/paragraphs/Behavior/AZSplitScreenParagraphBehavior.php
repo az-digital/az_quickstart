@@ -8,7 +8,7 @@ use Drupal\Core\Url;
 use Drupal\paragraphs\ParagraphInterface;
 
 /**
- * Provides a behavior for text with background.
+ * Provides a behavior for split screen paragraphs.
  *
  * @ParagraphsBehavior(
  *   id = "az_split_screen",
@@ -79,6 +79,20 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
 
     parent::buildBehaviorForm($paragraph, $form, $form_state);
 
+    $form['az_display_settings']['text_width'] = [
+      '#title' => $this->t('Text Width'),
+      '#type' => 'select',
+      '#default_value' => $config['az_display_settings']['text_width'] ?? 'content_width',
+      '#description' => $this->t('Determines the size of the text area.'),
+      '#options' => [
+        'content_width' => $this->t('Content Width'),
+        'full_width' => $this->t('Full Width'),
+      ],
+      '#weight' => 1,
+    ];
+
+    $form['#after_build'][] = [get_class($this), 'afterBuild'];
+
     // This places the form fields on the content tab rather than behavior tab.
     // Note that form is passed by reference.
     // @see https://www.drupal.org/project/paragraphs/issues/2928759
@@ -97,6 +111,19 @@ class AZSplitScreenParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get plugin configuration and save in vars for twig to use.
     $config = $this->getSettings($paragraph);
     $variables['split_screen'] = $config;
+  }
+
+  /**
+   * Provides functionality after the form is built.
+   */
+  public static function afterBuild(array $form, FormStateInterface $form_state) {
+    $id = $form['full_width']['#id'];
+
+    $form['az_display_settings']['text_width']['#states']['invisible'] = [
+      ':input[id="' . $id . '"]' => ['checked' => FALSE],
+    ];
+
+    return $form;
   }
 
 }

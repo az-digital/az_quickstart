@@ -315,6 +315,9 @@ az_barrio.settings:
       label: 'AZ Bootstrap source'
     az_bootstrap_cdn_version_css:
       type: string
+      label: 'AZ Bootstrap CDN version'
+    az_bootstrap_cdn_version_css:
+      type: string
       label: 'AZ Bootstrap CDN version CSS'
     az_bootstrap_cdn_version_js:
       type: string

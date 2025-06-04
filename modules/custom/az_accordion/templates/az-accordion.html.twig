@@ -21,14 +21,14 @@
   <div class="card">
     <div class="card-header">
       <h3 class="my-0">
-        <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
+        <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#{{ accordion_item_id }}" aria-expanded="{{ aria_expanded }}" aria-controls="{{ accordion_item_id }}">
           {% if title %}
             {{ title }}
           {% endif %}
         </button>
       </h3>
     </div>
-    <div id="{{ accordion_item_id }}" class="{{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-parent="#{{ accordion_item_id }}">
+    <div id="{{ accordion_item_id }}" class="{{ collapsed }}" aria-labelledby="{{ accordion_item_id }}" data-bs-parent="#{{ accordion_item_id }}">
       <div class="card-body text-bg-white">
         {% if body %}
         <div class="accordion-text">{{ body }}</div>
