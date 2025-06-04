@@ -125,6 +125,10 @@ process:
     plugin: default_value
     default_value: 'text-dark-silver'
 
+  card_deck_border_color_processed:
+    plugin: default_value
+    default_value: 'border-red'
+
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
     paragraph_behavior_plugins:
@@ -133,6 +137,7 @@ process:
         card_style: '@card_style_processed'
         card_clickable: '@card_clickable_processed'
         card_deck_title_color: '@card_deck_title_color_processed'
+       card_deck_border_color_processed: '@card_deck_border_color_processed'
         az_display_settings:
           bottom_spacing: bottom_spacing
           card_width_sm: '@card_width_sm_processed'
