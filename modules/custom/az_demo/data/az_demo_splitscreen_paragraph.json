@@ -7,6 +7,7 @@
             "ordering" : "order_1",
             "full_width" : "full-width-background",
             "bg_color" : "",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -16,6 +17,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_0",
             "bg_color" : "bg-red",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -25,6 +27,7 @@
             "full_width" : false,
             "ordering" : "order_0",
             "bg_color" : "bg-blue",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -34,6 +37,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_1",
             "bg_color" : "bg-sky",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -43,6 +47,7 @@
             "full_width" : false,
             "ordering" : "order_0",
             "bg_color" : "bg-oasis",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -53,6 +58,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_1",
             "bg_color" : "bg-azurite",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -62,6 +68,7 @@
             "full_width" : false,
             "ordering" : "order_0",
             "bg_color" : "bg-midnight",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
         {
@@ -72,6 +79,7 @@
             "full_width" : false,
             "ordering" : "order_1",
             "bg_color" : "bg-bloom",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -81,6 +89,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_0",
             "bg_color" : "bg-chili",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -90,6 +99,7 @@
             "full_width" : false,
             "ordering" : "order_1",
             "bg_color" : "bg-cool-gray",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -99,6 +109,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_0",
             "bg_color" : "bg-warm-gray",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
         {
@@ -108,6 +119,7 @@
             "full_width" : false,
             "ordering" : "order_1",
             "bg_color" : "bg-leaf",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -117,6 +129,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_0",
             "bg_color" : "bg-river",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -126,6 +139,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_1",
             "bg_color" : "bg-silver",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-5"
         },
         {
@@ -135,6 +149,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_0",
             "bg_color" : "bg-ash",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -144,6 +159,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_1",
             "bg_color" : "bg-gray-200",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -153,6 +169,7 @@
             "full_width" : false,
             "ordering" : "order_0",
             "bg_color" : "bg-warm-gray",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -162,6 +179,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_1",
             "bg_color" : "bg-sky",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -171,6 +189,7 @@
             "full_width" : false,
             "ordering" : "order_0",
             "bg_color" : "bg-blue",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -180,6 +199,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_1",
             "bg_color" : "bg-chili",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         },
         {
@@ -189,6 +209,7 @@
             "full_width" : "full-width-background",
             "ordering" : "order_1",
             "bg_color" : "bg-chili",
+            "text_width" : "content_width",
             "bottom_spacing" : "mb-0"
         }
     ]
