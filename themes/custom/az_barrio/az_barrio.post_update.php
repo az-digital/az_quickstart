@@ -6,7 +6,7 @@
  */
 
 /**
- * Migrates az_bootstrap_cdn_version to separate CSS/JS keys and removes it.
+ * Adds az_bootstrap_cdn_version_css and az_bootstrap_cdn_version_js settings.
  */
 function az_barrio_post_update_split_bootstrap_cdn_version(&$sandbox = NULL) {
   $config_factory = \Drupal::configFactory();
