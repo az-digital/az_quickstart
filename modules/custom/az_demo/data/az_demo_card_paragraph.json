@@ -15,7 +15,7 @@
               "link_title": "Card link",
               "link_url": "#top",
               "media": "",
-              "background": "bg-gray-100",
+              "background": "text-bg-gray-100",
               "link_style": "btn btn-block btn-blue"
             },
             {
@@ -25,7 +25,7 @@
               "link_title": "",
               "link_url": "",
               "media": "",
-              "background": "bg-chili",
+              "background": "text-bg-chili",
               "link_style": "btn-block"
             }
           ],
@@ -46,7 +46,7 @@
             "link_title": "Card link",
             "link_url": "#top",
             "media": "runners_brains.jpeg",
-            "background": "bg-blue",
+            "background": "text-bg-blue",
             "link_style": "btn btn-block btn-outline-white"
           },
           {
@@ -56,7 +56,7 @@
             "link_title": "Visually hidden card link",
             "link_url": "#top",
             "media": "mans_best_friend.jpeg",
-            "background": "bg-river",
+            "background": "text-bg-river",
             "link_style": "sr-only"
           },
           {
@@ -66,7 +66,7 @@
             "link_title": "",
             "link_url": "",
             "media": "",
-            "background": "bg-gray-300",
+            "background": "text-bg-gray-300",
             "link_style": "btn-block"
           }
         ],
@@ -87,7 +87,7 @@
           "link_title": "Card Link",
           "link_url": "#top",
           "media": "runners_brains.jpeg",
-          "background": "bg-warm-gray",
+          "background": "text-bg-warm-gray",
           "link_style": "btn btn-blue btn-block"
         },
         {
@@ -97,7 +97,7 @@
           "link_title": "Visually hidden card link",
           "link_url": "#top",
           "media": "mans_best_friend.jpeg",
-          "background": "bg-white",
+          "background": "text-bg-white",
           "link_style": "sr-only"
         },
         {
@@ -107,7 +107,7 @@
           "link_title": "Card Link",
           "link_url": "#top",
           "media": "",
-          "background": "bg-azurite",
+          "background": "text-bg-azurite",
           "link_style": "btn-block"
         },
         {
@@ -117,7 +117,7 @@
           "link_title": "Visually hidden card link",
           "link_url": "#top",
           "media": "sea-anemone.jpg",
-          "background": "bg-white",
+          "background": "text-bg-white",
           "link_style": "sr-only"
         }
       ],
@@ -138,7 +138,7 @@
             "link_title": "",
             "link_url": "",
             "media": "mans_best_friend.jpeg",
-            "background": "bg-river",
+            "background": "text-bg-river",
             "link_style": "btn-block"
           },
           {
@@ -148,7 +148,7 @@
             "link_title": "External link",
             "link_url": "https://www.arizona.edu",
             "media": "",
-            "background": "bg-cool-gray",
+            "background": "text-bg-cool-gray",
             "link_style": "btn-block"
           }
         ],
