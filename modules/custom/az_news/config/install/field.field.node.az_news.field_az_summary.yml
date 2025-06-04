@@ -12,7 +12,7 @@ field_name: field_az_summary
 entity_type: node
 bundle: az_news
 label: Summary
-description: '<strong>Suggested character limit:</strong> 160.'
+description: 'Used in News lists, News Teasers, and News metadata. Only plain text is allowed.<br /><strong>Suggested character limit:</strong> 160.'
 required: false
 translatable: true
 default_value: {  }
