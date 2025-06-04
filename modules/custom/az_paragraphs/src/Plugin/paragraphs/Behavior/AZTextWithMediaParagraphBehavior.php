@@ -280,7 +280,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       elseif ($config['bg_color'] === 'bg-transparent-black') {
         $key = array_search('bg-transparent-black', $content_classes);
         unset($content_classes[$key]);
-        $content_classes[] = 'text-bg-black';
+        $content_classes[] = 'bg-black';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
