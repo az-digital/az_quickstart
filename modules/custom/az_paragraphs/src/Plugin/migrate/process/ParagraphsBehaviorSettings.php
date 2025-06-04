@@ -65,17 +65,17 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *         - 0
  *         - value
  *     - plugin: static_map
- *       default: 'bg-transparent-white'
+ *       default: 'text-bg-transparent-white'
  *       map:
  *         bg-transparent: bg-transparent
- *         bg-trans-white: bg-transparent-white
- *         bg-trans-sky: bg-transparent-white
- *         bg-trans-arizona-blue: bg-transparent-black
- *         bg-trans-black: bg-transparent-black
- *         dark: bg-transparent-black
- *         light: bg-transparent-white
+ *         bg-trans-white: text-bg-transparent-white
+ *         bg-trans-sky: text-bg-transparent-white
+ *         bg-trans-arizona-blue: text-bg-transparent-black
+ *         bg-trans-black: text-bg-transparent-black
+ *         dark: text-bg-transparent-black
+ *         light: text-bg-transparent-white
  *     - plugin: default_value
- *       default_value: 'bg-transparent-white'
+ *       default_value: 'text-bg-transparent-white'
  *   view_mode_processed:
  *     - plugin: static_map
  *       source: view_mode

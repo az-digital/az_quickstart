@@ -142,7 +142,7 @@ third_party_settings:
       weight: 19
       format_type: html_element
       format_settings:
-        classes: 'bg-gray-100 p-3 text-muted'
+        classes: 'text-bg-gray-100 p-3 text-muted'
         id: ''
         element: div
         show_label: false

@@ -237,7 +237,7 @@ class AZCardWidget extends WidgetBase {
       ],
       '#required' => TRUE,
       '#title' => $this->t('Card Background'),
-      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'bg-white',
+      '#default_value' => (!empty($item->options['class'])) ? $item->options['class'] : 'text-bg-white',
     ];
 
     $element['media'] = [

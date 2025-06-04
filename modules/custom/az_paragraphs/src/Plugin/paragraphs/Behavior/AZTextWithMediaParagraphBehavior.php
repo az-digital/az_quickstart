@@ -273,14 +273,14 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       if ($config['bg_color'] === 'text-bg-transparent-white') {
         $key = array_search('text-bg-transparent-white', $content_classes);
         unset($content_classes[$key]);
-        $content_classes[] = 'bg-white';
+        $content_classes[] = 'text-bg-white';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
       elseif ($config['bg_color'] === 'text-bg-transparent-black') {
         $key = array_search('text-bg-transparent-black', $content_classes);
         unset($content_classes[$key]);
-        $content_classes[] = 'bg-black';
+        $content_classes[] = 'text-bg-black';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
