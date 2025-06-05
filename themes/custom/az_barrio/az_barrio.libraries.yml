@@ -60,8 +60,8 @@ material-design-icons-sharp:
       # see https://github.com/az-digital/az_quickstart/issues/2772
       https://fonts.googleapis.com/css?family=Material+Icons+Sharp#.css: { external: true, preprocess: false }
 
-// Legacy 3.x version of jQuery for Bootstrap 4 JS compatibility.
-// @todo: Remove this once we upgrade to Bootstrap 5.
+# Legacy 3.x version of jQuery for Bootstrap 4 JS compatibility.
+# @todo: Remove this once we upgrade to Bootstrap 5.
 jquery:
   remote: https://github.com/jquery/jquery
   version: 3.7.1

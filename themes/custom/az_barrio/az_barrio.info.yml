@@ -59,7 +59,7 @@ libraries-extend:
   core/drupal.ajax:
     - az_barrio/az-ajax
 
-// Downgrade jQuery to 3.x for Bootstrap 4 JS compatibility.
-// @todo: Remove this once we upgrade to Bootstrap 5.
+# Downgrade jQuery to 3.x for Bootstrap 4 JS compatibility.
+# @todo: Remove this once we upgrade to Bootstrap 5.
 libraries-override:
   core/jquery: az_barrio/jquery
