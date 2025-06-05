@@ -137,7 +137,7 @@ process:
         card_style: '@card_style_processed'
         card_clickable: '@card_clickable_processed'
         card_deck_title_color: '@card_deck_title_color_processed'
-       card_deck_border_color_processed: '@card_deck_border_color_processed'
+        card_deck_border_color_processed: '@card_deck_border_color_processed'
         az_display_settings:
           bottom_spacing: bottom_spacing
           card_width_sm: '@card_width_sm_processed'

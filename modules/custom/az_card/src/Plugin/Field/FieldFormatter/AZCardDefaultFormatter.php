@@ -222,6 +222,10 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
             $title_display = $card_defaults['card_title_display'];
           }
         }
+
+        if (isset($card_defaults['card_deck_border_color'])){
+          $card_classes .= ' ' . $card_defaults['card_deck_border_color'];
+        }
       }
 
       // Handle class keys that contained multiple classes.
