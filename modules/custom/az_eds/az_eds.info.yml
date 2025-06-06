@@ -6,3 +6,4 @@ package: 'The University of Arizona'
 dependencies:
   - key:key
   - ldap_servers:ldap_servers
+  - pantheon_secrets:pantheon_secrets
