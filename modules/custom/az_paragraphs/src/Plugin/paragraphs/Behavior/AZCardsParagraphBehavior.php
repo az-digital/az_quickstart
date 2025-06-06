@@ -149,6 +149,26 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Change the color of the Card group title.'),
     ];
 
+    // Card deck border color.
+    $form['card_deck_border_color'] = [
+      '#title' => $this->t('Card group border color'),
+      '#type' => 'select',
+      '#options' => [
+        '' => $this->t('Dark Silver (default)'),
+        'border-red' => $this->t('Red'),
+        'border-chili' => $this->t('Chili'),
+        'border-blue' => $this->t('Blue'),
+        'border-oasis' => $this->t('Oasis'),
+        'border-azurite' => $this->t('Azurite'),
+        'border-midnight' => $this->t('Midnight'),
+        'border-cool-gray' => $this->t('Cool Gray'),
+        'border-warm-gray' => $this->t('Warm Gray'),
+        'border-white' => $this->t('White'),
+      ],
+      '#default_value' => $config['card_deck_border_color'] ?? '',
+      '#description' => $this->t('Change the color of the Card group border.'),
+    ];
+
     // This places the form fields on the content tab rather than behavior tab.
     // Note that form is passed by reference.
     // @see https://www.drupal.org/project/paragraphs/issues/2928759
