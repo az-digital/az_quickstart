@@ -179,6 +179,8 @@ jobs:
     services:
       chromedriver:
         image: drupalci/webdriver-chromedriver:production
+        ports:
+          - 9515
       mysql:
         image: mysql:5.7
         env:
@@ -199,7 +201,7 @@ jobs:
       - name: Run php built-in server
         run: |
           cd az-quickstart-scaffolding
-          php -S 127.0.0.1:8080 -t web &
+          php -S 172.17.0.1:8080 -t web &
       - name: Ensure sites/simpletest directory
         run: |
           cd az-quickstart-scaffolding
@@ -210,7 +212,7 @@ jobs:
         env:
           SYMFONY_DEPRECATIONS_HELPER: weak
           SIMPLETEST_DB: mysql://root:@127.0.0.1:${{ job.services.mysql.ports[3306] }}/db
-          SIMPLETEST_BASE_URL: http://127.0.0.1:8080
+          SIMPLETEST_BASE_URL: http://172.17.0.1:8080
           MINK_DRIVER_ARGS_WEBDRIVER: '["chrome", {"browserName":"chrome","chromeOptions":{"args":["--disable-gpu","--headless", "--no-sandbox"]}}, "http://127.0.0.1:${{ job.services.chromedriver.ports[9515] }}"]'
 
   install:
