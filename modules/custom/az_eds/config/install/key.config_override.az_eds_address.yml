@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - key.key.az_eds_address
+    - ldap_servers.server.az_eds
+id: az_eds_address
+label: 'EDS Address'
+config_type: ldap_server
+config_prefix: ldap_servers.server
+config_name: az_eds
+config_item: address
+key_id: az_eds_address
