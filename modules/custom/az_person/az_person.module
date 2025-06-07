@@ -6,8 +6,10 @@
  */
 
 use Drupal\Core\Entity\EntityFormInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\NodeInterface;
 
 /**
  * Implements hook_preprocess_node().
@@ -145,4 +147,39 @@ function az_person_theme() {
     'field__node__field_az_teaching_interests__az_person' => $interests_field_template,
     'horizontal_tabs__node__az_person__group_tabs' => ['base hook' => 'horizontal_tabs'],
   ];
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ *
+ * Prepopulate the alphabetical index letter field in az_person where available.
+ */
+function az_person_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() === 'az_person'
+    && $entity instanceof NodeInterface
+    && $entity->hasField('field_az_alphabetical_index')
+    && $entity->hasField('field_az_lname')) {
+    $last = $entity->get('field_az_lname')->value;
+    $index = $entity->get('field_az_alphabetical_index');
+    // Only operate if we have no current index values.
+    if (!empty($last) && empty($index->value)) {
+      $last = mb_strtolower($last);
+      // Remove accent characters.
+      $last = \Drupal::service('transliteration')->removeDiacritics($last);
+      // Get the list of allowed characters for the index field.
+      $allowed = $index->getSetting('allowed_values');
+      $matches = [];
+      // Get first letter after beginning or space.
+      // Unicode mode is a deliberate attempt to support multibyte characters.
+      if (preg_match('/(?<=^|\s)\w/u', $last, $match) !== FALSE) {
+        // Get the matched letter.
+        $letter = $match[0];
+        $values = isset($allowed[$letter]) ? [$letter] : [];
+        // Update the field value if we could determine one.
+        if (!empty($values)) {
+          $entity->set('field_az_alphabetical_index', $values);
+        }
+      }
+    }
+  }
 }
