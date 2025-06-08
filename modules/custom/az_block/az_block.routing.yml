@@ -1,0 +1,9 @@
+az_block.block_view:
+  path: '/admin/content/block/{block_content}/custom-settings'
+  defaults:
+    _controller: '\Drupal\az_block\Controller\CustomSettingsController::content'
+    _title: 'View'
+  requirements:
+    _permission: 'block_content.edit'
+  options:
+    _admin_route: TRUE

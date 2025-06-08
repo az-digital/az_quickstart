@@ -1,0 +1,5 @@
+az_block.node_custom_settings_tab:
+  route_name: az_block.block_view
+  title: 'View'
+  base_route: entity.block_content.canonical
+  weight: -100
