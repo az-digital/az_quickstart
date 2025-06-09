@@ -3,6 +3,10 @@
     {
       "id":1,
       "name": "Trellis Test RFI Form",
+      "campaign_name": "Unit RFI",
+      "campaign_description": "This is the description for the RFI",
+      "form_id": "185",
+      "record_id": "7018N00000071eDQAQ",
       "url": "https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000072edQAA",
       "uuid": "2d1c72cf-e90b-4457-992d-55f87bf5dc46"
     }
