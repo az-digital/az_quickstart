@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.media.field_form_id
+    - media.type.az_trellis
+id: media.az_trellis.field_form_id
+field_name: field_form_id
+entity_type: media
+bundle: az_trellis
+label: 'Form ID'
+description: 'Trellis Form ID'
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer
