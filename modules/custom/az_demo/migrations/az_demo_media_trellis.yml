@@ -22,17 +22,23 @@ source:
       name: name
       selector: name
     -
+      name: campaign_name
+      selector: campaign_name
+    -
+      name: campaign_description
+      selector: campaign_description
+    -
+      name: form_id
+      selector: form_id
+    -
+      name: record_id
+      selector: record_id
+    -
       name: uuid
       selector: uuid
     -
       name: url
       selector: url
-    -
-      name: form_id
-      selector: form_id
-    -
-      name: rec_id
-      selector: rec_id
 
 destination:
   plugin: 'entity:media'
@@ -42,6 +48,10 @@ process:
     plugin: default_value
     default_value: az_trellis
   name: name
+  field_campaign_name: campaign_name
+  field_campaign_description: campaign_description
+  field_form_id: form_id
+  field_record_id: record_id
   field_media_az_media_remote: url
   field_az_media_trellis_form_id: form_id
   field_az_media_trellis_rec_id: rec_id
