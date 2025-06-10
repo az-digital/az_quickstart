@@ -253,7 +253,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
-                '#next_event_label' => t('Next event: '),
+                '#next_event_label' => t('Next event:'),
                 '#formatted_date' => $occurrence_formatted_date,
               ];
             }
