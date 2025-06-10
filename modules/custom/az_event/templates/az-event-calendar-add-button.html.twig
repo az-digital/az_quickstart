@@ -32,11 +32,12 @@
           <div>
             <h2 class="h5 modal-title mt-1 mb-2" id="{{ modal }}-label">{{ 'Add Event to Calendar'|t }}</h2>
             <p class="mb-0">{{ title }}</p>
-            {% if all_day %}
-              <p class="mb-0">{{ 'All Day, '|t }}{{ start_date|date('F j, Y') }}</p>
-            {% else %}
-              <p class="mb-0">{{ formatted_date }}</p>
-            {% endif %}
+            <p> 
+              {% if next_event_label %}
+                <strong>{{ next_event_label }}</strong>
+              {% endif %}
+              {{ formatted_date }} 
+            </p>
           </div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
