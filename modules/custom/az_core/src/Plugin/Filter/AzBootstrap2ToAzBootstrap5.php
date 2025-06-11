@@ -53,7 +53,6 @@ class AzBootstrap2ToAzBootstrap5 extends FilterBase {
       'delay',
       'animation',
       'autohide',
-      'custom-class',
       'reference',
       'method',
       'pause',
