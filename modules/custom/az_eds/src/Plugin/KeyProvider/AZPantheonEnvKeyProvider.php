@@ -76,8 +76,6 @@ class AZPantheonEnvKeyProvider extends PantheonSecretKeyProvider {
     }
 
     if (isset($this->configuration['base64_encoded']) && $this->configuration['base64_encoded'] === TRUE) {
-      // Phpstan doesn't like base64_decode.
-      // @phpstan-ignore-next-line
       // phpcs:ignore
       $key_value = base64_decode($key_value);
     }
