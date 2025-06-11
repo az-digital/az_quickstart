@@ -394,7 +394,7 @@ function az_core_library_info_alter(array &$libraries, $module) {
     $libraries['chosen.claro']['dependencies'][] = 'az_core/az-core-chosen';
   }
   // Downgrade jQuery to 3.x for Bootstrap 4 JS compatibility.
-  // @todo: Remove this once we upgrade to Bootstrap 5.
+  // @todo Remove this once we upgrade to Bootstrap 5.
   if ($module === 'core' && isset($libraries['jquery'])) {
     $libraries['jquery'] = [
       'remote' => 'https://github.com/jquery/jquery',
