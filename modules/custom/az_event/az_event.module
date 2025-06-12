@@ -32,7 +32,6 @@ function az_event_theme($existing, $type, $theme, $path) {
         'location' => NULL,
         'modal' => NULL,
         'attributes' => NULL,
-        'next_event_label' => NULL,
         'formatted_date' => NULL,
       ],
       'render element' => 'children',
@@ -253,8 +252,7 @@ function az_event_node_view(array &$build, EntityInterface $entity, EntityViewDi
                 '#location' => $entity->field_az_location->title ?? '',
                 '#modal' => Html::getUniqueId('calendar-link-modal'),
                 '#attributes' => ['class' => 'mb-2'],
-                '#next_event_label' => t('Next event:'),
-                '#formatted_date' => $occurrence_formatted_date,
+                '#formatted_date' => '<strong>' . t('Next event:') . '</strong> ' . $occurrence_formatted_date,
               ];
             }
             $occurrences_modal[$item_index++] = $occurrence_items[$key]['render'];
