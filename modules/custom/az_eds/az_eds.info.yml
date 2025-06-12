@@ -2,8 +2,8 @@ name: 'Quickstart EDS'
 type: module
 description: 'Provides access credentials for EDS via environment.'
 core_version_requirement: ^10 || ^11
-package: 'The University of Arizona'
+package: 'The University of Arizona - Experimental'
 dependencies:
+  - az_secrets
   - key:key
   - ldap_servers:ldap_servers
-  - pantheon_secrets:pantheon_secrets
