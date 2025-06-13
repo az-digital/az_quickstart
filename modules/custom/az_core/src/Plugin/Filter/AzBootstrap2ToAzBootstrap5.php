@@ -61,7 +61,7 @@ class AzBootstrap2ToAzBootstrap5 extends FilterBase {
       'touch',
     ];
 
-    foreach ($xpath->query('//*') as $node) {
+    foreach ($dom->getElementsByTagName('*') as $element) {
       foreach (iterator_to_array($node->attributes) as $attr) {
         if (preg_match('/^data-(' . implode('|', array_map('preg_quote', $data_attributes_to_convert)) . ')$/', $attr->name, $matches)) {
           $new_name = 'data-bs-' . $matches[1];
