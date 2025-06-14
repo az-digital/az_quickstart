@@ -62,3 +62,17 @@
 .ck-dropdown__panel .ck.ck-style-panel .ck-style-grid .ck-disabled {
   display: none;
 }
+
+/** 
+ * Match editor styling with that of style.css.
+ * See https://github.com/az-digital/az_quickstart/pull/4195.
+ */
+.ck .ck-content .drupal-media-style-align-left {
+  margin-right: 0;
+}
+.ck-widget.drupal-media-style-align-left ~ ul,
+.ck-widget.drupal-media-style-align-left ~ ol {
+  overflow: auto;
+  overflow-wrap: anywhere;
+  padding-inline-start: revert;
+}
