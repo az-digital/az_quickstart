@@ -81,13 +81,13 @@
             <div class="col">
                 <div class="form-group" id="tfa_1-D">
                     <label id="tfa_1-L" for="tfa_1">First Name</label>
-                    <input aria-required="true" type="text" id="tfa_1" name="tfa_1" title="First Name" class="required form-control" style="width:100%;">
+                    <input aria-required="true" type="text" id="tfa_1" name="tfa_1" title="First Name" class="form-control {{ editing ? 'disabled' : 'required' }}" style="width:100%;">
                 </div>
             </div>
             <div class="col">
                 <div class="form-group" id="tfa_2-D">
                     <label id="tfa_2-L" for="tfa_2">Last Name</label>
-                    <input aria-required="true" type="text" id="tfa_2" name="tfa_2" title="Last Name" class="required form-control" style="width:100%;">
+                    <input aria-required="true" type="text" id="tfa_2" name="tfa_2" title="Last Name" class="form-control {{ editing ? 'disabled' : 'required' }}" style="width:100%;">
                 </div>
             </div>
         </div>
@@ -95,7 +95,7 @@
             <div class="col">
                 <div class="form-group" id="tfa_3-D">
                     <label id="tfa_3-L" for="tfa_3">Email</label>
-                    <input aria-required="true" type="email" id="tfa_3" name="tfa_3" title="Email" class="required form-control">
+                    <input aria-required="true" type="email" id="tfa_3" name="tfa_3" title="Email" class="form-control {{ editing ? 'disabled' : 'required' }}">
                 </div>
             </div>
         </div>
@@ -106,7 +106,7 @@
         <div class="row">
             <div class="col">
                 <div class="actions form-group" id="72-A" data-contentid="submit_button">
-                    <input type="submit" data-label="Submit" class="btn btn-red form-control" id="submit_button" value="Submit">
+                    <input type="submit" data-label="Submit" class="btn btn-red form-control {{ editing ? 'disabled' }}" id="submit_button" value="Submit">
                 </div>
             </div>
         </div>
