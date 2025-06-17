@@ -715,6 +715,7 @@ form.webform-submission-form {
 .field--type-image img,
 .field--name-field-user-picture img {
   margin: initial;
+  border-radius: .375rem;
 }
 
 @media screen and (min-width: 576px) {
