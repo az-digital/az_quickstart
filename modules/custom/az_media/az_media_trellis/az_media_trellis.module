@@ -18,6 +18,9 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
         'url' => NULL,
         // 'width' => NULL,
         // 'height' => NULL,
+        'tfa_4' => NULL,
+        'tfa_7' => NULL,
+        'tfa_9' => NULL,
         'editing' => NULL,
       ],
       'template' => 'az-media-trellis',
@@ -53,5 +56,12 @@ function az_media_trellis_preprocess_media(&$variables) {
         'editing' => $is_editing_context,
       ];
     }
+
+    if ($media->hasField('field_campaign_description') && !$media->get('field_campaign_description')->isEmpty()) {
+      $campaign_description = $media->get('field_campaign_description')->value;
+      $variables['tfa_9'] = $campaign_description;
+      \Drupal::logger('az_media_trellis')->debug('tfa_9 value: @value', ['@value' => $campaign_description]);
+    }
+
   }
 }

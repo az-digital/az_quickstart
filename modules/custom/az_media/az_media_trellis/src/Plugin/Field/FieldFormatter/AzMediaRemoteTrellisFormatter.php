@@ -128,9 +128,27 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       // e.g. https://forms-a.trellis.arizona.edu/publish/185
       $is_editing_context = $this->service::isEditingContext();
 
+      // Retrieve the tfa_9 value (e.g., field_campaign_description).
+      $media = $item->getEntity();
+      $tfa_9 = NULL;
+      if ($media->hasField('field_campaign_description') && !$media->get('field_campaign_description')->isEmpty()) {
+        $tfa_9 = $media->get('field_campaign_description')->value;
+      }
+      $tfa_7 = NULL;
+      if ($media->hasField('field_campaign_name') && !$media->get('field_campaign_name')->isEmpty()) {
+        $tfa_7 = $media->get('field_campaign_name')->value;
+      }
+      $tfa_4 = NULL;
+      if ($media->hasField('field_record_id') && !$media->get('field_record_id')->isEmpty()) {
+        $tfa_4 = $media->get('field_record_id')->value;
+      }
+
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
         '#url' => $newUrl,
+        '#tfa_4' => $tfa_4,
+        '#tfa_7' => $tfa_7,
+        '#tfa_9' => $tfa_9,
         '#editing' => $is_editing_context,
       ];
     }
