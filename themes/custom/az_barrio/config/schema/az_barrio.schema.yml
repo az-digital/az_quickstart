@@ -328,9 +328,9 @@ az_barrio.settings:
     az_barrio_font:
       type: boolean
       label: 'Use the centrally-managed Typekit webfont, Proxima Nova'
-    az_barrio_material_design_sharp_icons:
+    az_barrio_material_symbols_rounded:
       type: boolean
-      label: 'Use Material Design Sharp Icons'
+      label: 'Use Material Symbols Rounded Icons'
     az_barrio_az_icons:
       type: boolean
       label: 'Use Arizona Icons'
