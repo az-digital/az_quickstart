@@ -51,7 +51,7 @@ az_paragraphs.preview:
       css/az_paragraphs_preview.css: {}
       css/az_paragraphs_widget.css: {}
   dependencies:
-    - az_barrio/material-symbols-rounded
+    - az_barrio/material-design-icons-sharp
     - az_barrio/arizona-bootstrap-css
     - az_barrio/arizona-bootstrap-js
     - az_barrio/button-no-conflict

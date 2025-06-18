@@ -52,7 +52,10 @@ button-no-conflict:
   dependencies:
     - core/drupal
     - core/jquery
-material-symbols-rounded:
+material-design-icons-sharp:
   css:
     theme:
-      https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0: { external: true, preprocess: false }
+      # Appends `#.css` as workaround for known issue with loadjs library.
+      # see https://github.com/kubetail-org/loadjs/issues/39
+      # see https://github.com/az-digital/az_quickstart/issues/2772
+      https://fonts.googleapis.com/css?family=Material+Icons+Sharp#.css: { external: true, preprocess: false }

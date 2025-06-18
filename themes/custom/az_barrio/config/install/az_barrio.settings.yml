@@ -92,7 +92,7 @@ az_icons_minified: true
 az_icons_cdn_version: stable
 external_links: true
 sticky_footer: true
-az_barrio_material_symbols_rounded: true
+az_barrio_material_design_sharp_icons: true
 az_barrio_logo_svg_inline: false
 az_barrio_footer_logo_svg_inline: false
 logo:
