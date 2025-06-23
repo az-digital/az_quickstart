@@ -223,7 +223,11 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
           }
         }
 
-        if (isset($card_defaults['card_deck_border_color'])) {
+        // Border Color(s).
+        if (!empty($item->options['border_color'])) {
+          $card_classes .= ' ' . $item->options['border_color'];
+        }
+        elseif (isset($card_defaults['card_deck_border_color'])) {
           $card_classes .= ' ' . $card_defaults['card_deck_border_color'];
         }
       }
