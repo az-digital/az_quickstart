@@ -1,0 +1,10 @@
+uuid: 6e73120d-6699-40f8-bc0a-6c9378cfecc7
+langcode: en
+status: true
+dependencies: {  }
+id: az_rankings
+label: Rankings
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

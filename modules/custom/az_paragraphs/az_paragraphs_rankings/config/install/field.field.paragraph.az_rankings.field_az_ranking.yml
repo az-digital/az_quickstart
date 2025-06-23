@@ -1,0 +1,29 @@
+uuid: 782091e2-42cc-49b4-a39b-278b60e1bbd2
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_ranking
+    - node.type.az_ranking
+    - paragraphs.paragraphs_type.az_rankings
+id: paragraph.az_rankings.field_az_ranking
+field_name: field_az_ranking
+entity_type: paragraph
+bundle: az_rankings
+label: Ranking
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      az_ranking: az_ranking
+    sort:
+      field: _none
+      direction: ASC
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference

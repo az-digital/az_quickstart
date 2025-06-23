@@ -1,0 +1,24 @@
+uuid: f06c3753-9bdb-4a7a-b943-de6fe5377735
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_rankings.field_az_cards_per_row
+    - field.field.paragraph.az_rankings.field_az_ranking
+    - paragraphs.paragraphs_type.az_rankings
+id: paragraph.az_rankings.default
+targetEntityType: paragraph
+bundle: az_rankings
+mode: default
+content:
+  field_az_ranking:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  field_az_cards_per_row: true

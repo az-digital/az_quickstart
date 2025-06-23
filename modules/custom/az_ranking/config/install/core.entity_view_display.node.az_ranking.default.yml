@@ -1,0 +1,117 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.az_ranking.field_az_factoid_heading
+    - field.field.node.az_ranking.field_az_link
+    - field.field.node.az_ranking.field_az_ranking_background
+    - field.field.node.az_ranking.field_az_ranking_description
+    - field.field.node.az_ranking.field_az_ranking_source
+    - field.field.node.az_ranking.field_az_ranking_year
+    - node.type.az_ranking
+  module:
+    - field_group
+    - link
+    - smart_title
+    - user
+third_party_settings:
+  smart_title:
+    enabled: true
+  field_group:
+    group_card:
+      children:
+        - group_card_title
+        - field_az_ranking_description
+        - field_az_ranking_source
+        - field_az_ranking_year
+        - field_az_link
+      label: Card
+      parent_name: ''
+      region: content
+      weight: 0
+      format_type: html_element
+      format_settings:
+        classes: 'card card-body text-center'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: div
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+    group_card_title:
+      children:
+        - field_az_factoid_heading
+      label: 'Card Title'
+      parent_name: group_card
+      region: content
+      weight: 7
+      format_type: html_element
+      format_settings:
+        classes: 'card-title display-1 proxima-nova-bold'
+        show_empty_fields: false
+        id: ''
+        label_as_html: false
+        element: h4
+        show_label: false
+        label_element: h3
+        label_element_classes: ''
+        attributes: ''
+        effect: none
+        speed: fast
+id: node.az_ranking.default
+targetEntityType: node
+bundle: az_ranking
+mode: default
+content:
+  field_az_factoid_heading:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_az_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 11
+    region: content
+  field_az_ranking_description:
+    type: basic_string
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 8
+    region: content
+  field_az_ranking_source:
+    type: string
+    label: visually_hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 9
+    region: content
+  field_az_ranking_year:
+    type: number_integer
+    label: visually_hidden
+    settings:
+      thousand_separator: ''
+      prefix_suffix: true
+    third_party_settings: {  }
+    weight: 10
+    region: content
+hidden:
+  field_az_ranking_background: true
+  links: true
+  smart_title: true

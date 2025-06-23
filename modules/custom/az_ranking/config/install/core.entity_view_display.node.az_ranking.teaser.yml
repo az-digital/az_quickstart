@@ -1,0 +1,32 @@
+uuid: 88a1bced-197f-47ef-940d-4356dfb6947b
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.teaser
+    - field.field.node.az_ranking.field_az_factoid_heading
+    - field.field.node.az_ranking.field_az_link
+    - field.field.node.az_ranking.field_az_ranking_background
+    - field.field.node.az_ranking.field_az_ranking_description
+    - field.field.node.az_ranking.field_az_ranking_source
+    - field.field.node.az_ranking.field_az_ranking_year
+    - node.type.az_ranking
+  module:
+    - user
+id: node.az_ranking.teaser
+targetEntityType: node
+bundle: az_ranking
+mode: teaser
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_az_factoid_heading: true
+  field_az_link: true
+  field_az_ranking_background: true
+  field_az_ranking_description: true
+  field_az_ranking_source: true
+  field_az_ranking_year: true

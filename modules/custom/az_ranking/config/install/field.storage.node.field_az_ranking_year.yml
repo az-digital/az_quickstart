@@ -1,0 +1,20 @@
+uuid: 55b17ae8-e8e2-4ec4-b2eb-ccf5147368a2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_az_ranking_year
+field_name: field_az_ranking_year
+entity_type: node
+type: integer
+settings:
+  unsigned: false
+  size: normal
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

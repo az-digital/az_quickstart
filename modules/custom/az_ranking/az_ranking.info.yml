@@ -1,0 +1,9 @@
+name: 'Quickstart Ranking'
+type: module
+description: 'Custom fields and theme template for rankings.'
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+dependencies:
+  - az_core
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'

@@ -1,0 +1,42 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.az_rankings.field_az_cards_per_row
+    - field.field.paragraph.az_rankings.field_az_ranking
+    - paragraphs.paragraphs_type.az_rankings
+  module:
+    - inline_entity_form
+id: paragraph.az_rankings.default
+targetEntityType: paragraph
+bundle: az_rankings
+mode: default
+content:
+  field_az_cards_per_row:
+    type: options_select
+    weight: 0
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+  field_az_ranking:
+    type: inline_entity_form_complex
+    weight: 1
+    region: content
+    settings:
+      form_mode: default
+      override_labels: false
+      label_singular: ''
+      label_plural: ''
+      allow_new: true
+      allow_existing: false
+      multiple_use: true
+      match_operator: CONTAINS
+      allow_duplicate: true
+      collapsible: true
+      collapsed: false
+      revision: true
+      removed_reference: optional
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

@@ -1,0 +1,20 @@
+uuid: 0a158739-7d2e-4aa1-9e99-0764a9ebbc8b
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+    - paragraphs
+id: paragraph.field_az_ranking
+field_name: field_az_ranking
+entity_type: paragraph
+type: entity_reference
+settings:
+  target_type: node
+module: core
+locked: false
+cardinality: -1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

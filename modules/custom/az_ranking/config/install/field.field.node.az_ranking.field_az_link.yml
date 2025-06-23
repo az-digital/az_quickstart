@@ -1,0 +1,23 @@
+uuid: d3d7f488-6e58-4d04-84c9-4312ea47ac43
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_link
+    - node.type.az_ranking
+  module:
+    - link
+id: node.az_ranking.field_az_link
+field_name: field_az_link
+entity_type: node
+bundle: az_ranking
+label: Button
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 17
+field_type: link

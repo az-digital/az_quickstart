@@ -1,0 +1,12 @@
+name: 'Quickstart Paragraphs - Rankings'
+type: module
+core_version_requirement: ^9 || ^10
+package: 'The University of Arizona - Experimental'
+description: 'Provides a paragraph type that displays rankings.'
+dependencies:
+  - az_paragraphs
+  - drupal:field
+  - paragraphs:paragraphs
+  - az_ranking
+lifecycle: experimental
+lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'

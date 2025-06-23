@@ -1,0 +1,23 @@
+uuid: ec386d13-a43c-48df-bbfc-85754e1859d4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_ranking_background
+    - node.type.az_ranking
+  module:
+    - options
+id: node.az_ranking.field_az_ranking_background
+field_name: field_az_ranking_background
+entity_type: node
+bundle: az_ranking
+label: 'Background Color'
+description: ''
+required: true
+translatable: false
+default_value:
+  -
+    value: white
+default_value_callback: ''
+settings: {  }
+field_type: list_string

@@ -1,0 +1,23 @@
+uuid: 79bef97f-3525-43ec-acde-9a59adf38afb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_az_ranking_year
+    - node.type.az_ranking
+id: node.az_ranking.field_az_ranking_year
+field_name: field_az_ranking_year
+entity_type: node
+bundle: az_ranking
+label: 'Source Year'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  min: null
+  max: null
+  prefix: ''
+  suffix: ''
+field_type: integer

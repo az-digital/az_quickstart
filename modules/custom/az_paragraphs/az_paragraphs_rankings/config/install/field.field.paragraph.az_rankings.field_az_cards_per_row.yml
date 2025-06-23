@@ -1,0 +1,23 @@
+uuid: 2d0e1b07-bd4d-4de4-a1a9-4d020ac92c78
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_az_cards_per_row
+    - paragraphs.paragraphs_type.az_rankings
+  module:
+    - options
+id: paragraph.az_rankings.field_az_cards_per_row
+field_name: field_az_cards_per_row
+entity_type: paragraph
+bundle: az_rankings
+label: 'Cards per Row'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 3
+default_value_callback: ''
+settings: {  }
+field_type: list_integer
