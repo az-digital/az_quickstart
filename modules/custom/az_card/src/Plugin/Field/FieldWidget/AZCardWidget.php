@@ -294,7 +294,7 @@ class AZCardWidget extends WidgetBase {
       '#maxlength' => 2048,
     ];
 
-     // Individual Card's border color.
+    // Individual Card's border color.
     $element['border_color'] = [
       '#title' => $this->t('Card Border Color'),
       '#type' => 'select',
@@ -311,9 +311,8 @@ class AZCardWidget extends WidgetBase {
         'border-white' => $this->t('White'),
       ],
       '#default_value' => (!empty($item->options['border_color'])) ? $item->options['border_color'] : '',
-      '#description' => $this->t('Change the color of this Card\'s border.'),
+      '#description' => $this->t('Change the border color of this Card.'),
     ];
-
 
     // Add client side validation for link title if not collapsed.
     if ($status) {
