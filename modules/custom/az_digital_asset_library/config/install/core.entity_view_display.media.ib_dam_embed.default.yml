@@ -1,0 +1,38 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+    - media.type.ib_dam_embed
+  module:
+    - ib_dam
+id: media.ib_dam_embed.default
+targetEntityType: media
+bundle: ib_dam_embed
+mode: default
+content:
+  field_media_ib_dam_embed:
+    type: ib_dam_embed
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+      no_link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  name:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  thumbnail: true
+  uid: true

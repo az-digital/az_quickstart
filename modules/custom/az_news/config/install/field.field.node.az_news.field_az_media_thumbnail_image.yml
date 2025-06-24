@@ -4,6 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_az_media_thumbnail_image
     - media.type.az_image
+    - media.type.ib_dam_embed
     - node.type.az_news
 id: node.az_news.field_az_media_thumbnail_image
 field_name: field_az_media_thumbnail_image
@@ -20,8 +21,10 @@ settings:
   handler_settings:
     target_bundles:
       az_image: az_image
+      ib_dam_embed: ib_dam_embed
     sort:
       field: _none
+      direction: ASC
     auto_create: false
-    auto_create_bundle: ''
+    auto_create_bundle: az_image
 field_type: entity_reference
