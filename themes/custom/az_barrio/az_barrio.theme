@@ -161,6 +161,12 @@ function az_barrio_preprocess_page(&$variables, $hook) {
   $variables['header_one_col_classes'] = theme_get_setting('header_one_col_classes');
   $variables['header_two_col_classes'] = theme_get_setting('header_two_col_classes');
 
+  if ($variables['az_barrio_navbar_offcanvas'] === TRUE) {
+    $variables['az_barrio_header_offcanvas'] = (theme_get_setting('az_barrio_header_offcanvas')) ? TRUE : FALSE;
+  }
+  else {
+    $variables['az_barrio_header_offcanvas'] = FALSE;
+  }
   // Define column layout for new AZ Barrio sidebar position.
   if (theme_get_setting('bootstrap_barrio_sidebar_position') === 'az-barrio-both-below') {
     $variables['sidebar_first_attributes']['class'][] = 'order-2 order-md-first';
