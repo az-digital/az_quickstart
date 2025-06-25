@@ -4,7 +4,7 @@ dependencies:
   config:
     - field.storage.node.field_az_media_thumbnail_image
     - media.type.az_image
-    - media.type.ib_dam_embed
+    - media.type.az_digital_asset_library_embed
     - node.type.az_news
 id: node.az_news.field_az_media_thumbnail_image
 field_name: field_az_media_thumbnail_image

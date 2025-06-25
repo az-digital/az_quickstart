@@ -4,7 +4,7 @@ dependencies:
   config:
     - core.entity_view_mode.media.az_modal_image
     - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
-    - media.type.ib_dam_embed
+    - media.type.az_digital_asset_library_embed
   module:
     - ib_dam
 id: media.az_digital_asset_library_embed.az_modal_image
