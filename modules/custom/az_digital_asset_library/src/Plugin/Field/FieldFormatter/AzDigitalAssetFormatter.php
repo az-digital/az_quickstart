@@ -239,5 +239,5 @@ class AzDigitalAssetFormatter extends FormatterBase {
     $transform_string = UrlHelper::buildQuery($query);
     return '/' . strtr($transform_string, ['&' => '&']) . '/';
   }
-  
+
 }

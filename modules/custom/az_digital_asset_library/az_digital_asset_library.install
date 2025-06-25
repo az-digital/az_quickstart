@@ -1,12 +1,13 @@
 <?php
+
 /**
  * @file
  * Install, update and uninstall functions for az_digital_asset_library module.
  */
+
 use Drupal\Core\Batch\BatchBuilder;
 use Drupal\Core\Recipe\Recipe;
 use Drupal\Core\Recipe\RecipeRunner;
-
 
 /**
  * Implements hook_update_last_removed().
@@ -27,4 +28,3 @@ function az_digital_asset_library_update_1030101() {
   }
   batch_set($batch->toArray());
 }
-

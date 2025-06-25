@@ -22,7 +22,6 @@ settings:
       az_image: az_image
     sort:
       field: _none
-      direction: ASC
     auto_create: false
-    auto_create_bundle: az_image
+    auto_create_bundle: ''
 field_type: entity_reference
