@@ -154,7 +154,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Card group border color'),
       '#type' => 'select',
       '#options' => [
-        '' => $this->t('Dark Silver (default)'),
+        'border-dark-silver' => $this->t('Dark Silver (default)'),
         'border-red' => $this->t('Red'),
         'border-chili' => $this->t('Chili'),
         'border-blue' => $this->t('Blue'),
@@ -165,7 +165,7 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
         'border-warm-gray' => $this->t('Warm Gray'),
         'border-white' => $this->t('White'),
       ],
-      '#default_value' => $config['card_deck_border_color'] ?? '',
+      '#default_value' => $config['card_deck_border_color'] ?? 'border-dark-silver',
       '#description' => $this->t('Change the color of the Card group border.'),
     ];
 

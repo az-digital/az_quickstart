@@ -224,7 +224,8 @@ class AZCardDefaultFormatter extends FormatterBase implements ContainerFactoryPl
         }
 
         // Border Color(s).
-        if (!empty($item->options['border_color'])) {
+        // Skip over default color.
+        if($item->options['border_color'] !== 'border-dark-silver'){
           $card_classes .= ' ' . $item->options['border_color'];
         }
         elseif (isset($card_defaults['card_deck_border_color'])) {

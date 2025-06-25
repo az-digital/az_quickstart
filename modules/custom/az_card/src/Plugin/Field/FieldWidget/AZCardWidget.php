@@ -299,7 +299,7 @@ class AZCardWidget extends WidgetBase {
       '#title' => $this->t('Card Border Color'),
       '#type' => 'select',
       '#options' => [
-        '' => $this->t('Dark Silver (default)'),
+        'border-dark-silver' => $this->t('Dark Silver (default)'),
         'border-red' => $this->t('Red'),
         'border-chili' => $this->t('Chili'),
         'border-blue' => $this->t('Blue'),
@@ -310,7 +310,7 @@ class AZCardWidget extends WidgetBase {
         'border-warm-gray' => $this->t('Warm Gray'),
         'border-white' => $this->t('White'),
       ],
-      '#default_value' => (!empty($item->options['border_color'])) ? $item->options['border_color'] : '',
+      '#default_value' => (!empty($item->options['border_color'])) ? $item->options['border_color'] : 'border-dark-silver',
       '#description' => $this->t('Change the border color of this Card.'),
     ];
 
