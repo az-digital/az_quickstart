@@ -1,14 +1,13 @@
 (function (Drupal, drupalSettings) {
   Drupal.behaviors.azMediaTrellisSetInputValue = {
     attach: function (context, settings) {
-      // Access the variable passed from PHP.
-      const tfaVal = drupalSettings.azMediaTrellis.tfa_4;
+      // Access the variables passed from PHP.
+      const queryParams = drupalSettings.azMediaTrellis.queryParams;
       const editing = drupalSettings.azMediaTrellis.editing;
 
-      // Log the variable to verify.
-      console.log('tfaVal Variable:', tfaVal);
+      // Log the queryParams to verify.
+      console.log('Query Parameters:', queryParams);
 
-      // Use the variable as needed in your JavaScript logic.
       const formContainer = document.querySelector('#fa-form');
       const observer = new MutationObserver((mutationsList, observer) => {
 
@@ -30,15 +29,17 @@
           });
         }
 
-        const inputField = formContainer.querySelector('input[name="tfa_4"]');
-        if (inputField) {
-          inputField.value = tfaVal; // Use the variable here.
-          inputField.dispatchEvent(new Event('input'));
-          observer.disconnect();
+        // Prefill form fields based on query parameters.
+        for (const [key, value] of Object.entries(queryParams)) {
+          const inputField = formContainer.querySelector(`[name="${key}"]`);
+          if (inputField) {
+            inputField.value = value;
+            inputField.dispatchEvent(new Event('input'));
+          }
         }
+
+        observer.disconnect();
       });
-
-
 
       observer.observe(formContainer, { childList: true, attributes: true, subtree: true });
     }

@@ -52,6 +52,16 @@ function az_media_trellis_preprocess_media(&$variables) {
         'tfa_4' => $rec_id_value,
         'editing' => $is_editing_context,
       ];
+
+      // Parse the query parameters from the URL.
+      $query_params = [];
+      $parsed_url = parse_url($url);
+      if (isset($parsed_url['query'])) {
+        parse_str($parsed_url['query'], $query_params);
+      }
+
+      // Pass the query parameters to drupalSettings.
+      $variables['#attached']['drupalSettings']['azMediaTrellis']['queryParams'] = $query_params;
     }
   }
 }
