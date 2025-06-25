@@ -6,22 +6,21 @@ dependencies:
     - field.field.media.ib_dam_embed.field_media_ib_dam_embed
     - media.type.ib_dam_embed
   module:
-    - ib_dam
+    - az_digital_asset_library
 id: media.ib_dam_embed.az_large
 targetEntityType: media
 bundle: ib_dam_embed
 mode: az_large
 content:
   field_media_ib_dam_embed:
-    type: ib_dam_embed
+    type: az_digital_asset_library_remote
     label: hidden
     settings:
-      trim_length: 80
-      url_only: false
-      url_plain: false
-      rel: '0'
-      target: '0'
-      no_link: true
+      width: '100'
+      height: '100'
+      ignore_aspect_ratio: '1'
+      dpi: ''
+      alt: ''
     third_party_settings: {  }
     weight: 0
     region: content
