@@ -222,7 +222,7 @@ class AzDigitalAssetFormatter extends FormatterBase {
     if (!empty($settings['ignore_aspect_ratio'])) {
       $query['ignore'] = NULL;
     }
-    $query['nolarge']  = NULL;
+    $query['nolarge'] = NULL;
     if (!empty($settings['dpi'])) {
       $query['dpi'] = $settings['dpi'];
     }
@@ -239,4 +239,5 @@ class AzDigitalAssetFormatter extends FormatterBase {
     $transform_string = UrlHelper::buildQuery($query);
     return '/' . strtr($transform_string, ['&' => '&']) . '/';
   }
+  
 }
