@@ -7,6 +7,9 @@ dependencies:
   module:
     - link
     - path
+  enforced:
+    module:
+      - az_digital_asset_library
 id: media.az_digital_asset_library_embed.default
 targetEntityType: media
 bundle: az_digital_asset_library_embed

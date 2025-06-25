@@ -7,6 +7,9 @@ dependencies:
     - media.type.az_digital_asset_library_embed
   module:
     - ib_dam
+  enforced:
+    module:
+      - az_digital_asset_library
 id: media.az_digital_asset_library_embed.media_library
 targetEntityType: media
 bundle: az_digital_asset_library_embed

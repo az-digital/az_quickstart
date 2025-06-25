@@ -10,7 +10,7 @@ use Drupal\ib_dam\AssetFormatter\AssetFormatterManager;
 use Drupal\Component\Utility\UrlHelper;
 
 /**
- * Plugin implementation of the 'az_digital_asset' formatter.
+ * Plugin implementation of the 'az_digital_asset_library_remote' formatter.
  *
  * @FieldFormatter(
  *   id = "az_digital_asset_library_remote",
@@ -189,6 +189,7 @@ class AzDigitalAssetFormatter extends FormatterBase {
 
       if (!empty($settings['no_link'])) {
         $output['#attributes']['class'][] = 'img-fluid';
+        $output['#attributes']['class'][] = 'rounded';
         $element[$delta] = $output;
       }
       else {
@@ -232,7 +233,6 @@ class AzDigitalAssetFormatter extends FormatterBase {
     if (!empty($settings['crop_height'])) {
       $query['crop'] .= "x{$settings['crop_height']}";
     }
-    $query['crop'] .= "";
     if (!empty($settings['crop_gravity'])) {
       $query['cropgravity'] = $settings['crop_gravity'];
     }

@@ -4,6 +4,9 @@ dependencies:
   module:
     - crop
     - ib_dam_media
+  enforced:
+    module:
+      - az_digital_asset_library
 third_party_settings:
   crop:
     image_field: null

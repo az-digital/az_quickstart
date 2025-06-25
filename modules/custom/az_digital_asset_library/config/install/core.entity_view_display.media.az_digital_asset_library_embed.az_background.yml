@@ -7,13 +7,16 @@ dependencies:
     - media.type.az_digital_asset_library_embed
   module:
     - ib_dam
+  enforced:
+    module:
+      - az_digital_asset_library
 id: media.az_digital_asset_library_embed.az_background
 targetEntityType: media
 bundle: az_digital_asset_library_embed
 mode: az_background
 content:
   field_media_ib_dam_embed:
-    type: az_digital_asset_library_embed
+    type: az_digital_asset_library_remote
     label: hidden
     settings:
       trim_length: 80

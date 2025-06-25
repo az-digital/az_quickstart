@@ -6,6 +6,9 @@ dependencies:
     - media.type.az_digital_asset_library_embed
   module:
     - link
+  enforced:
+    module:
+      - az_digital_asset_library
 id: media.az_digital_asset_library_embed.field_media_ib_dam_embed
 field_name: field_media_ib_dam_embed
 entity_type: media
