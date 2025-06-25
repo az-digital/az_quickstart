@@ -1,0 +1,15 @@
+name: 'Quickstart Allow AZ Digital Remote Assets on News'
+description: 'This recipe allows the use of AZ Digital remote assets on in news content.
+type: 'The University of Arizona'
+
+install:
+  - az_digital_asset_library
+  - az_news
+
+actions:
+  field.field.node.az_news.field_az_media_image:
+    simpleConfigUpdate:
+      handler_settings.target_bundles.az_digital_asset_library_embed: az_digital_asset_library_embed
+  field.field.node.az_news.field_az_media_thumbnail_image:
+    simpleConfigUpdate:
+      handler_settings.target_bundles.az_digital_asset_library_embed: az_digital_asset_library_embed
