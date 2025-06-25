@@ -9,7 +9,7 @@ dependencies:
     - path
 id: media.az_digital_asset_library_embed.default
 targetEntityType: media
-bundle: ib_dam_embed
+bundle: az_digital_asset_library_embed
 mode: default
 content:
   created:

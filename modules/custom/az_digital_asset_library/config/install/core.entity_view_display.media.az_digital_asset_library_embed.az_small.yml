@@ -9,7 +9,7 @@ dependencies:
     - az_digital_asset_library
 id: media.az_digital_asset_library_embed.az_small
 targetEntityType: media
-bundle: ib_dam_embed
+bundle: az_digital_asset_library_embed
 mode: az_small
 content:
   field_media_ib_dam_embed:

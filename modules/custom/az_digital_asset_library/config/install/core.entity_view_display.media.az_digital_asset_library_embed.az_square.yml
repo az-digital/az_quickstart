@@ -9,7 +9,7 @@ dependencies:
     - ib_dam
 id: media.az_digital_asset_library_embed.az_square
 targetEntityType: media
-bundle: ib_dam_embed
+bundle: az_digital_asset_library_embed
 mode: az_square
 content:
   field_media_ib_dam_embed:
