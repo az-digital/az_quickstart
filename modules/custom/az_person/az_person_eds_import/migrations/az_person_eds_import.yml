@@ -1,0 +1,32 @@
+id: az_person_eds_import
+label: Person EDS Integration
+migration_tags:
+  - EDS Integration
+source:
+  plugin: az_ldap
+  # Replace with formalized settings that allow a defined query to be selected for import.
+  queries:
+    - test
+  ids:
+    uid:
+      type: string
+
+process:
+  type:
+    plugin: default_value
+    default_value: az_person
+  # Placeholder: add additional fields.
+  field_az_fname: preferredPriorityGivenName
+  field_az_lname: preferredPrioritySn
+  field_az_titles: employeePrimaryTitle
+  field_az_netid: uid
+
+destination:
+  plugin: entity:node
+  bundle: az_person
+
+dependencies:
+  enforced:
+    module:
+      - az_person
+      - az_eds
