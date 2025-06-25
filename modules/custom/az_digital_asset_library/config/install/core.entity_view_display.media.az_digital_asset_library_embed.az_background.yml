@@ -3,17 +3,17 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.media.az_background
-    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
-    - media.type.ib_dam_embed
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
+    - media.type.az_digital_asset_library_embed
   module:
     - ib_dam
-id: media.ib_dam_embed.az_background
+id: media.az_digital_asset_library_embed.az_background
 targetEntityType: media
-bundle: ib_dam_embed
+bundle: az_digital_asset_library_embed
 mode: az_background
 content:
   field_media_ib_dam_embed:
-    type: ib_dam_embed
+    type: az_digital_asset_library_embed
     label: hidden
     settings:
       trim_length: 80

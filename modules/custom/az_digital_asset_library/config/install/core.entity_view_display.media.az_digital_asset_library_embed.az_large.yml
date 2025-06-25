@@ -2,30 +2,25 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.az_card_image
-    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+    - core.entity_view_mode.media.az_large
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
     - media.type.ib_dam_embed
   module:
     - az_digital_asset_library
-id: media.ib_dam_embed.az_card_image
+id: media.az_digital_asset_library_embed.az_large
 targetEntityType: media
 bundle: ib_dam_embed
-mode: az_card_image
+mode: az_large
 content:
   field_media_ib_dam_embed:
-    type: az_digital_asset
+    type: az_digital_asset_library_remote
     label: hidden
     settings:
-      width: '426'
-      height: '426'
+      width: '100'
+      height: '100'
+      ignore_aspect_ratio: '1'
       dpi: ''
       alt: ''
-      no_link: '1'
-      crop_width: '426'
-      crop_height: '262'
-      crop_gravity: auto
-      ignore_aspect_ratio: 0
-      url_only: 0
     third_party_settings: {  }
     weight: 0
     region: content

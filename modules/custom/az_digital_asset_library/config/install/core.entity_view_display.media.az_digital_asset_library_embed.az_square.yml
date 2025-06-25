@@ -2,15 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.az_thumbnail
-    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+    - core.entity_view_mode.media.az_square
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
     - media.type.ib_dam_embed
   module:
     - ib_dam
-id: media.ib_dam_embed.az_thumbnail
+id: media.az_digital_asset_library_embed.az_square
 targetEntityType: media
 bundle: ib_dam_embed
-mode: az_thumbnail
+mode: az_square
 content:
   field_media_ib_dam_embed:
     type: ib_dam_embed

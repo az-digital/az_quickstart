@@ -2,12 +2,12 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
-    - media.type.ib_dam_embed
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
+    - media.type.az_digital_asset_library_embed
   module:
     - link
     - path
-id: media.ib_dam_embed.default
+id: media.az_digital_asset_library_embed.default
 targetEntityType: media
 bundle: ib_dam_embed
 mode: default

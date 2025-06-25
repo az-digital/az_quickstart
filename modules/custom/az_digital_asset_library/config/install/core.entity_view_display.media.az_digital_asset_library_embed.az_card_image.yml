@@ -1,0 +1,36 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.media.az_card_image
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
+    - media.type.ib_dam_embed
+  module:
+    - az_digital_asset_library
+id: media.az_digital_asset_library_embed.az_card_image
+targetEntityType: media
+bundle: ib_dam_embed
+mode: az_card_image
+content:
+  field_media_ib_dam_embed:
+    type: az_digital_asset
+    label: hidden
+    settings:
+      width: '426'
+      height: '426'
+      dpi: ''
+      alt: ''
+      no_link: '1'
+      crop_width: '426'
+      crop_height: '262'
+      crop_gravity: auto
+      ignore_aspect_ratio: 0
+      url_only: 0
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden:
+  created: true
+  name: true
+  thumbnail: true
+  uid: true

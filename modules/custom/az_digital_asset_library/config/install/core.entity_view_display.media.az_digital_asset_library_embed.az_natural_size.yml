@@ -2,25 +2,26 @@ langcode: en
 status: true
 dependencies:
   config:
-    - core.entity_view_mode.media.az_small
-    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+    - core.entity_view_mode.media.az_natural_size
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
     - media.type.ib_dam_embed
   module:
-    - az_digital_asset_library
-id: media.ib_dam_embed.az_small
+    - ib_dam
+id: media.az_digital_asset_library_embed.az_natural_size
 targetEntityType: media
 bundle: ib_dam_embed
-mode: az_small
+mode: az_natural_size
 content:
   field_media_ib_dam_embed:
-    type: az_digital_asset_library_remote
+    type: ib_dam_embed
     label: hidden
     settings:
-      width: 100
-      height: 100
-      ignore_aspect_ratio: true
-      dpi: ''
-      alt: ''
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: '0'
+      target: '0'
+      no_link: true
     third_party_settings: {  }
     weight: 1
     region: content

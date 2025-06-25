@@ -3,11 +3,11 @@ status: true
 dependencies:
   config:
     - core.entity_view_mode.media.az_carousel_item
-    - field.field.media.ib_dam_embed.field_media_ib_dam_embed
+    - field.field.media.az_digital_asset_library_embed.field_media_ib_dam_embed
     - media.type.ib_dam_embed
   module:
     - ib_dam
-id: media.ib_dam_embed.az_carousel_item
+id: media.az_digital_asset_library_embed.az_carousel_item
 targetEntityType: media
 bundle: ib_dam_embed
 mode: az_carousel_item
