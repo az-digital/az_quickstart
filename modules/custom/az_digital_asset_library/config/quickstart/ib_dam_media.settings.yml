@@ -13,7 +13,7 @@ media_types:
     media_type: az_document
   embed:
     source_type: embed
-    media_type: ib_dam_embed
+    media_type: az_digital_asset_library_embed
 dependencies:
   enforced:
     module:
