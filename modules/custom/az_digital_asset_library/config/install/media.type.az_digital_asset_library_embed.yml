@@ -7,7 +7,7 @@ dependencies:
 third_party_settings:
   crop:
     image_field: null
-id: ib_dam_embed
+id: az_digital_asset_library_embed
 label: 'Arizona Digital Asset Library Embed'
 description: 'Used to embed digital assets from the Arizona Digital Asset Library service.'
 source: ib_dam_embed
