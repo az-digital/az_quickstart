@@ -21,7 +21,7 @@ settings:
   handler_settings:
     target_bundles:
       az_image: az_image
-      ib_dam_embed: ib_dam_embed
+      az_digital_asset_library_embed: az_digital_asset_library_embed
     sort:
       field: _none
       direction: ASC
