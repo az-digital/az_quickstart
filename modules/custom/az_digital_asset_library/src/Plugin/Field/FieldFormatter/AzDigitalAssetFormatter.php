@@ -13,7 +13,7 @@ use Drupal\Component\Utility\UrlHelper;
  * Plugin implementation of the 'az_digital_asset' formatter.
  *
  * @FieldFormatter(
- *   id = "az_digital_asset",
+ *   id = "az_digital_asset_library_remote",
  *   label = @Translation("AZ Digital Asset (Transformed Image)"),
  *   field_types = {
  *     "string",
