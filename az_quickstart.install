@@ -41,7 +41,7 @@ function az_quickstart_install() {
     // Modules to install only on Pantheon.
     $extra_modules = [
       'pantheon_advanced_page_cache',
-      'environment_indicator',
+      'environment_indicator_navigation',
     ];
   }
   else {
