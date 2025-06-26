@@ -5,8 +5,7 @@ migration_tags:
 source:
   plugin: az_ldap
   # Replace with formalized settings that allow a defined query to be selected for import.
-  queries:
-    - test
+  queries: []
   ids:
     uid:
       type: string
