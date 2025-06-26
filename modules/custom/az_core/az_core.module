@@ -493,7 +493,6 @@ function az_core_node_access(NodeInterface $node, $op, AccountInterface $account
     if ($bundle === 'az_person') {
       // Determine if netid field exists.
       if ($node->hasField('field_az_netid')) {
-        /** @var \Drupal\Core\Entity\ContentEntityBase $node */
         $netid = $node->field_az_netid->value;
         try {
           // Look up user mapping for CAS.
