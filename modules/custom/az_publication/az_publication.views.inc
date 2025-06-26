@@ -34,7 +34,7 @@ function az_publication_views_data() {
  * reference field plugin that also contains role mapping.
  */
 function az_publication_field_views_data(FieldStorageConfigInterface $field_storage) {
-  $data = \Drupal::service('views.field_data_provider')->defaultFieldImplementation(($field_storage);
+  $data = \Drupal::service('views.field_data_provider')->defaultFieldImplementation($field_storage);
 
   // The code below only deals with the Entity Role referencefield type.
   if ($field_storage->getType() !== 'az_entity_role_reference') {
