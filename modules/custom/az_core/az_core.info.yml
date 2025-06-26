@@ -1,7 +1,7 @@
 name: 'Quickstart Core'
 type: module
 description: 'Settings and configuration common to other Quickstart componenets.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 package: 'The University of Arizona'
 dependencies:
   - config_distro:config_distro

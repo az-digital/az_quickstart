@@ -1,6 +1,6 @@
 name: AZ Quickstart Migration
 description: 'Provides migrations for the site.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 type: module
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental

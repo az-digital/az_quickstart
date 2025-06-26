@@ -1,7 +1,7 @@
 name: 'Quickstart Finder'
 type: module
 description: 'A collection of plugins for building finder style views on Quickstart sites.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental
 lifecycle_link: 'https://github.com/az-digital/az_quickstart/blob/main/RELEASES.md#experimental-features'

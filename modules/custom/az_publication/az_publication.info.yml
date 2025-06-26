@@ -1,6 +1,6 @@
 name: Quickstart Publication
 description: 'Provides Publication content type'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 type: module
 package: 'The University of Arizona - Experimental'
 lifecycle: experimental

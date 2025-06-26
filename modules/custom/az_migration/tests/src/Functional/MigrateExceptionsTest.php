@@ -33,7 +33,7 @@ class MigrateExceptionsTest extends BrowserTestBase {
   /**
    * Modules to enable.
    *
-   * @var string[]
+   * @var array
    */
   protected static $modules = ['az_migration'];
 
@@ -49,7 +49,6 @@ class MigrateExceptionsTest extends BrowserTestBase {
       ->install([
         'az_global_footer',
       ]);
-    $this->assertSession()->statusCodeEquals(200);
   }
 
 }

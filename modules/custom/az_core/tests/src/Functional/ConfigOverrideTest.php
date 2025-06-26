@@ -33,7 +33,7 @@ class ConfigOverrideTest extends BrowserTestBase {
   /**
    * Modules to enable.
    *
-   * @var string[]
+   * @var array
    */
   protected static $modules = [
     'az_cas',

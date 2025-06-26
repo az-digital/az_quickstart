@@ -1,7 +1,7 @@
 name: 'Quickstart Paragraphs'
 type: module
 description: 'Provides custom paragraph types.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 package: 'The University of Arizona'
 dependencies:
   - paragraphs:paragraphs

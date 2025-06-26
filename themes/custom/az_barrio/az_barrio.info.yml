@@ -1,7 +1,7 @@
 name: Arizona Barrio
 type: theme
 description: 'Basic structure for a Bootstrap Barrio SubTheme.'
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 dependencies:
   - az_core
 base theme: bootstrap_barrio
@@ -58,8 +58,3 @@ libraries-extend:
     - az_barrio/az-media-display
   core/drupal.ajax:
     - az_barrio/az-ajax
-
-# Downgrade jQuery to 3.x for Bootstrap 4 JS compatibility.
-# @todo: Remove this once we upgrade to Bootstrap 5.
-libraries-override:
-  core/jquery: az_barrio/jquery

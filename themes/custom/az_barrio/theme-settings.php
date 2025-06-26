@@ -467,8 +467,8 @@ function az_barrio_form_system_theme_settings_submit($form, FormStateInterface &
   }
   $form_state->unsetValue('footer_logo_upload');
   // theme_settings_convert_to_config($values, $config)->save();
-  // Clear cached libraries so any Bootstrap changes take effect immediately.
-  \Drupal::service('library.discovery')->clear();
+  // Clear cached libraries so any Bootsrap changes take effect immmediately.
+  \Drupal::service('library.discovery')->clearCachedDefinitions();
 }
 
 /**

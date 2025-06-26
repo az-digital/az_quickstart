@@ -1,7 +1,7 @@
 name: 'Quickstart Flexible Page'
 description: "Provides Page content type and related configuration."
 type: module
-core_version_requirement: ^10 || ^11
+core_version_requirement: ^9 || ^10
 package: The University of Arizona
 configure: az_flexible_page.settings
 dependencies:
