@@ -72,7 +72,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    * {@inheritdoc}
    */
   public static function getUrlRegexPattern() {
-    return '/^https:\/\/forms-a\.trellis\.arizona\.edu\/([0-9]+)\?tfa_4=(.*)/';
+    return '/^https:\/\/forms-a\.trellis\.arizona\.edu\/([0-9]+)/';
   }
 
   /**
@@ -80,6 +80,7 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
    */
   public static function getValidUrlExampleStrings(): array {
     return [
+      'https://forms-a.trellis.arizona.edu/192',
       'https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000072edQAA',
       'https://forms-a.trellis.arizona.edu/185?tfa_4=7018N00000071eDQAQ',
     ];
