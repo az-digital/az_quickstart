@@ -6,21 +6,21 @@
 .az-media.embed-responsive {
   width:400px;
 }
-figure[data-view-mode="az_natural_size"] {
+figure[data-view-mode="az_natural_size"] .az-media.embed-responsive {
   width: 100%;
 }
-figure[data-view-mode="az_large"] {
+figure[data-view-mode="az_large"] .az-media.embed-responsive {
   width: 1140px;
 }
-figure[data-view-mode="az_medium"] {
+figure[data-view-mode="az_medium"] .az-media.embed-responsive {
   width: 740px;
 }
-figure[data-view-mode="az_small"] {
+figure[data-view-mode="az_small"] .az-media.embed-responsive {
   width: 360px;
 }
-figure[data-view-mode="az_square"] {
+figure[data-view-mode="az_square"] .az-media.embed-responsive {
   width: 240px;
 }
-figure[data-view-mode="az_very_small"] {
+figure[data-view-mode="az_very_small"] .az-media.embed-responsive {
   width: 220px;
 }
