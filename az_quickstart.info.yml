@@ -56,7 +56,7 @@ install:
   - drupal:search
   - drupal:shortcut
   - token:token
-  - drupal:toolbar
+  - drupal:navigation
   - drupal:field_ui
   - drupal:file
   - drupal:views

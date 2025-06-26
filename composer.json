@@ -29,7 +29,7 @@
         }
     ],
     "require": {
-        "php": ">=8.3",
+        "php": ">=8.1",
         "az-digital/arizona-bootstrap": "2.0.27",
         "az-digital/az-icons": "1.0.2",
         "citation-style-language/locales": "0.0.27",
@@ -48,7 +48,7 @@
         "drupal/bootstrap_barrio": "5.1.12",
         "drupal/bootstrap_utilities": "3.0.1",
         "drupal/calendar_link": "3.0.4",
-        "drupal/cas": "3.0.0-beta4",
+        "drupal/cas": "2.3.2",
         "drupal/chosen": "4.0.3",
         "drupal/ckeditor_bs_grid": "2.0.12",
         "drupal/ckeditor_indentblock": "1.1.0",
@@ -62,7 +62,7 @@
         "drupal/config_split": "2.0.2",
         "drupal/config_sync": "3.0.0-alpha4",
         "drupal/config_update": "2.0.0-alpha4",
-        "drupal/core-recommended": "11.1.7",
+        "drupal/core-recommended": "10.4.7",
         "drupal/crop": "2.4.0",
         "drupal/date_ap_style": "2.0.2",
         "drupal/draggableviews": "2.1.4",
@@ -70,7 +70,7 @@
         "drupal/embed": "1.10.0",
         "drupal/entity_embed": "1.7.0",
         "drupal/environment_indicator": "dev-4.x",
-        "drupal/exclude_node_title": "2.0.0-alpha1",
+        "drupal/exclude_node_title": "1.4.0",
         "drupal/externalauth": "2.0.8",
         "drupal/extlink": "2.0.4",
         "drupal/field_group": "3.6.0",
@@ -119,9 +119,9 @@
         "drupal/views_remote_data": "1.0.3",
         "drupal/viewsreference": "2.0.0-beta10",
         "drupal/user_expire": "2.1.0",
-        "drupal/webform": "6.3.0-beta2",
+        "drupal/webform": "6.2.9",
         "drupal/workbench_access": "2.0.4",
-        "drupal/xmlsitemap": "2.0.0",
+        "drupal/xmlsitemap": "1.5.0",
         "jjj/chosen": "2.2.1",
         "kevinrob/guzzle-cache-middleware": "6.0.0",
         "npm-asset/blazy": "1.8.2",
@@ -151,13 +151,18 @@
                 "Subtheme not D10 Compatible (3291051)": "https://www.drupal.org/files/issues/2023-10-27/3291051-5.1.x-subtheme-not-d10-compatible.patch",
                 "Fix The specified library bootstrap_barrio/messages does not exist issue (3471821)": "https://git.drupalcode.org/project/bootstrap_barrio/-/commit/a26e7af7c007aced43f0347553104434d11e3681.patch"
             },
+            "drupal/cas": {
+                "ServiceNotFoundException when logging out (2948185)": "https://www.drupal.org/files/issues/cas_logout_error-2948185-2.patch"
+            },
             "drupal/config_distro": {
                 "Storage comparer issue": "https://gist.githubusercontent.com/tadean/e2e0dd57f1a9c4eae28d8e713cb01d82/raw/e114987d4a76c183208c763de4dbfecbf41b7f35/config_distro_storage_comparer_issue.patch"
             },
             "drupal/core": {
                 "Views Date Filter Datetime Granularity Option (2868014)": "https://www.drupal.org/files/issues/2022-11-16/2868014-127.datetime-granularity.patch",
+                "Ajax CSS load order issue (1461322)": "https://www.drupal.org/files/issues/2023-07-11/1461322-10-1-x-41.patch",
                 "Layout builder revisions issue (3033516)": "https://www.drupal.org/files/issues/2019-06-17/3033516-17.patch",
                 "Unable to select single view display for view settings (2552541)": "https://www.drupal.org/files/issues/2022-07-26/2552541-51.patch",
+                "MediaEmbed conflates default view mode with user-selected view mode (3109289)": "https://www.drupal.org/files/issues/2023-03-23/3109289-68.patch",
                 "Add skip-method option to file_copy and download process plugins (2766369)": "https://www.drupal.org/files/issues/2024-05-13/2766369-39.patch",
                 "Move content overview default task link out of content_moderation module (3199682)": "https://www.drupal.org/files/issues/2022-02-10/3199682-11-9-4-x.patch",
                 "Improve migration system performance: statically cache DrupalSqlBase::$systemData (3154156)": "https://www.drupal.org/files/issues/2022-01-24/3154156-12.patch",
@@ -165,7 +170,7 @@
                 "[10.2 regression] CKEditor 5 breaks when 'Source'/Source editing button is added and 'Manually editable HTML tags' are specified (3410100)": "https://www.drupal.org/files/issues/2024-01-23/drupal-revert-source-editing-validation-tightening-3410100-38.patch",
                 "[Apache only] Wrong file header returned, when converting an image for example to webp (3310963)": "https://www.drupal.org/files/issues/2024-05-15/3310963-32.patch",
                 "Hardcode a higher WebP conversion quality setting (3320689)": "https://gist.githubusercontent.com/joeparsons/d99b6c6eef240e8eaf768ba79e1c9f1b/raw/9b99325bd20907db0506969fc4f5823b46065c6b/3320689-10-3-x-hardcoded.patch",
-                "user_user_role_insert should not exist (2672340)": "https://gist.githubusercontent.com/joeparsons/f31108ee18aaed01e03ef3005ecd3d92/raw/8311821959aa9b783fd52903fc3528548412d664/2672340-11.x.patch"
+                "user_user_role_insert should not exist (2672340)": "https://gist.githubusercontent.com/joeparsons/bd5dc7ccdc59092809e707b68aff46b8/raw/364bb1657ccb50db57c3365f4e2b028ebcb82487/2672340-10.5.x.patch"
             },
             "drupal/draggableviews": {
                 "Row weights not displaying on sort view (3252365)": "https://www.drupal.org/files/issues/2023-08-25/3252365-check-remove-select-all-class.patch",
