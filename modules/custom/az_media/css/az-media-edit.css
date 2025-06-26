@@ -6,3 +6,21 @@
 .az-media.embed-responsive {
   width:400px;
 }
+figure[data-view-mode="az_natural_size"] {
+  width: 100%;
+}
+figure[data-view-mode="az_large"] {
+  width: 1140px;
+}
+figure[data-view-mode="az_medium"] {
+  width: 740px;
+}
+figure[data-view-mode="az_small"] {
+  width: 360px;
+}
+figure[data-view-mode="az_square"] {
+  width: 240px;
+}
+figure[data-view-mode="az_very_small"] {
+  width: 220px;
+}
