@@ -55,7 +55,7 @@ install:
   - drupal:search
   - drupal:shortcut
   - token:token
-  - drupal:toolbar
+  - drupal:navigation
   - drupal:field_ui
   - drupal:file
   - drupal:views
@@ -73,10 +73,11 @@ install:
   - role_delegation:role_delegation
   - media_entity_file_replace:media_entity_file_replace
   - extlink:extlink
+  - gin_toolbar:gin_toolbar
   - masquerade:masquerade
   - masquerade_log:masquerade_log
   - quick_node_clone:quick_node_clone
 
 themes:
   - az_barrio
-  - claro
+  - gin

@@ -12,6 +12,7 @@ disabled_themes:
   claro: '0'
   az_barrio: '0'
   bootstrap_barrio: '0'
+  gin: '0'
 chosen_include: 0
 placeholder_text_multiple: 'Choose some options'
 placeholder_text_single: 'Choose an option'
