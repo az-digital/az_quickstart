@@ -25,12 +25,12 @@ use Drupal\az_publication\Form\AZPublicationTypeForm;
   handlers: [
     'view_builder' => EntityViewBuilder::class,
     'list_builder' => AZPublicationTypeListBuilder::class,
-    'form': [
+    'form' => [
       'add' => AZPublicationTypeForm::class,
       'edit' => AZPublicationTypeForm::class,
       'delete' => AZPublicationTypeDeleteForm::class,
     ],
-    'route_provider': [
+    'route_provider' => [
       'html' => AZPublicationTypeHtmlRouteProvider::class,
     ],
   ],
