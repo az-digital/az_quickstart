@@ -39,7 +39,7 @@ use Drupal\az_publication\Form\AZPublicationTypeForm;
     'label',
     'type',
     'uuid',
-    'status'
+    'status',
   ],
   config_prefix: 'type',
   admin_permission: 'administer publication type entities',
@@ -61,7 +61,7 @@ use Drupal\az_publication\Form\AZPublicationTypeForm;
     'delete-form' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/delete',
     'enable' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/enable',
     'disable' => '/admin/config/az-quickstart/settings/az-publication/type/{az_publication_type}/disable',
-    'collection' => '/admin/config/az-quickstart/settings/az-publication/types'
+    'collection' => '/admin/config/az-quickstart/settings/az-publication/types',
   ],
 )]
 class AZPublicationType extends ConfigEntityBase implements AZPublicationTypeInterface {

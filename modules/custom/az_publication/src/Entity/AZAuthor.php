@@ -50,13 +50,13 @@ use Drupal\user\UserInterface;
     'views_data' => AZAuthorViewsData::class,
     'translation' => AZAuthorTranslationHandler::class,
     'inline_form' => AZAuthorInlineForm::class,
-    'form': [
+    'form' => [
       'default' => AZAuthorForm::class,
       'add' => AZAuthorForm::class,
       'edit' => AZAuthorForm::class,
       'delete' => AZAuthorDeleteForm::class,
     ],
-    'route_provider': [
+    'route_provider' => [
       'html' => AZAuthorHtmlRouteProvider::class,
     ],
     'access' => AZAuthorAccessControlHandler::class,
