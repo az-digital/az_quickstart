@@ -40,7 +40,7 @@ use Seboettg\CiteProc\StyleSheet;
     'id',
     'label',
     'style',
-    'custom'
+    'custom',
   ],
   config_prefix: 'az_citation_style',
   admin_permission: 'administer site configuration',
@@ -51,14 +51,14 @@ use Seboettg\CiteProc\StyleSheet;
   entity_keys: [
     'id' => 'id',
     'label' => 'label',
-    'uuid' => 'uuid'
+    'uuid' => 'uuid',
   ],
   links: [
     'canonical' => '/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}',
     'add-form' => '/admin/config/az-quickstart/settings/az-publication/style/add',
     'edit-form' => '/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}/edit',
     'delete-form' => '/admin/config/az-quickstart/settings/az-publication/style/{az_citation_style}/delete',
-    'collection' => '/admin/config/az-quickstart/settings/az-publication/styles'
+    'collection' => '/admin/config/az-quickstart/settings/az-publication/styles',
   ],
 )]
 class AZQuickstartCitationStyle extends ConfigEntityBase implements AZQuickstartCitationStyleInterface {
