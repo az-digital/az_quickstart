@@ -17,7 +17,6 @@ use Drupal\az_publication\AZAuthorHtmlRouteProvider;
 use Drupal\az_publication\AZAuthorListBuilder;
 use Drupal\az_publication\AZAuthorStorage;
 use Drupal\az_publication\AZAuthorTranslationHandler;
-use Drupal\az_publication\Entity\AZAuthorViewsData;
 use Drupal\az_publication\Form\AZAuthorDeleteForm;
 use Drupal\az_publication\Form\AZAuthorForm;
 use Drupal\az_publication\Form\AZAuthorInlineForm;
