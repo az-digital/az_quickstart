@@ -84,7 +84,7 @@ az_barrio_font: true
 az_bootstrap_source: cdn
 az_bootstrap_cdn_version: stable
 az_bootstrap_cdn_version_css: stable
-az_bootstrap_cdn_version_js: stable
+az_bootstrap_cdn_version_js: 5.x
 az_bootstrap_minified: true
 az_barrio_az_icons: true
 az_barrio_az_icons_source: cdn
