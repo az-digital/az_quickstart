@@ -5,7 +5,6 @@ namespace Drupal\az_migration\Plugin\migrate\source;
 use Drupal\Core\Database\Connection;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\State\StateInterface;
-use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Plugin\MigrationInterface;
 use Drupal\migrate\Row;
 use Drupal\migrate_drupal\Plugin\migrate\source\d7\FieldableEntity;
@@ -17,8 +16,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * Available configuration keys:
  * - type: (optional) If supplied, this will only return fields
  *   of that particular type.
+ *
+ * @MigrateSource(
+ *   id = "az_file_entity",
+ *   source_module = "file_entity",
+ * )
  */
-#[MigrateSource('az_file_entity')]
 class AzFileEntity extends FieldableEntity {
 
   /**
