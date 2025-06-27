@@ -3,17 +3,14 @@
 namespace Drupal\az_migration\Plugin\migrate\source;
 
 use Drupal\Core\Database\Connection as MySqlConnection;
+use Drupal\migrate\Attribute\MigrateSource;
 use Drupal\migrate\Row;
 use Drupal\migrate_drupal\Plugin\migrate\source\d7\FieldableEntity;
 
 /**
  * Migration source plugin for Bean entities.
- *
- * @MigrateSource(
- *   id = "az_bean",
- *   source_module = "bean"
- * )
  */
+#[MigrateSource('az_bean')]
 class AZBean extends FieldableEntity {
 
   /**
