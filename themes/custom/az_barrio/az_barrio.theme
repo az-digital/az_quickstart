@@ -736,8 +736,7 @@ function az_barrio_footer_logo() {
  * Implements hook_theme_suggestions_HOOK_alter().
  */
 function az_barrio_theme_suggestions_menu_alter(array &$suggestions, array $variables) {
-  if (isset($variables['attributes']['id'])) {
-    $blockid = str_replace(['block-', '-'], ['', '_'], $variables['attributes']['id']);
+  if (isset($variables['attributes']['block'])) {
     $suggestions[] = $variables['theme_hook_original'] . '__' . $variables['attributes']['block'];
   }
 }
@@ -775,6 +774,7 @@ function az_barrio_preprocess_breadcrumb(&$variables) {
  * @link https://github.com/az-digital/az_quickstart/issues/1613
  */
 function az_barrio_preprocess_block(&$variables) {
+  $variables['content']['#attributes']['block'] = $variables['attributes']['id'];
   if ($variables['base_plugin_id'] === 'system_branding_block') {
     if ($variables['configuration']['use_site_logo']) {
       $variables['site_logo'] = az_barrio_primary_logo();
