@@ -27,12 +27,12 @@ use Seboettg\CiteProc\StyleSheet;
   handlers: [
     'view_builder' => EntityViewBuilder::class,
     'list_builder' => AZQuickstartCitationStyleListBuilder::class,
-    'form': [
+    'form' => [
       'add' => AZQuickstartCitationStyleForm::class,
       'edit' => AZQuickstartCitationStyleForm::class,
       'delete' => AZQuickstartCitationStyleDeleteForm::class,
     ],
-    'route_provider': [
+    'route_provider' => [
       'html' => AZQuickstartCitationStyleHtmlRouteProvider::class,
     ],
   ],
