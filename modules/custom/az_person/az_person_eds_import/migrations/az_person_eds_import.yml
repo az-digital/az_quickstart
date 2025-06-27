@@ -19,6 +19,9 @@ process:
   field_az_lname: preferredPrioritySn
   field_az_titles: employeePrimaryTitle
   field_az_netid: uid
+  field_az_pronouns: pronouns
+  field_az_phones: employeePhone
+  field_az_email: mail
 
 destination:
   plugin: entity:node
