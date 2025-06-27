@@ -127,7 +127,7 @@ process:
 
   card_deck_border_color_processed:
     plugin: default_value
-    default_value: 'border-dark-silver'
+    default_value: 'border'
 
   behavior_settings:
     plugin: az_paragraphs_behavior_settings
