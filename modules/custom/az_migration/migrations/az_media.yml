@@ -52,7 +52,8 @@ process:
       method: process
       value: 'video/oembed'
     - plugin: default_value
-      default_value: '@mfid'
+      source: '@mfid'
+      default_value: 0
   # The remote_video_thumb_fid field is temporary, and is not present in the source.
   remote_video_thumb_fid:
     - plugin: skip_on_value
