@@ -22,8 +22,8 @@ third_party_settings:
         element: div
         show_label: false
         label_element: h3
-        attributes: ''
         label_element_classes: ''
+        attributes: ''
         effect: none
         speed: fast
         id: ''
