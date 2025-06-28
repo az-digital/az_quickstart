@@ -83,8 +83,8 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#title' => $this->t('Content background color'),
       '#type' => 'select',
       '#options' => [
-        'bg-transparent-white' => $this->t('Light'),
-        'bg-transparent-black' => $this->t('Dark'),
+        'text-bg-transparent-white' => $this->t('Light'),
+        'text-bg-transparent-black' => $this->t('Dark'),
         'bg-transparent' => $this->t('Transparent'),
       ],
       '#default_value' => $config['bg_color'],
@@ -218,6 +218,12 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $variables['attributes']['class'][] = HTML::getClass($style);
     $variables['attributes']['class'][] = HTML::getClass($config['full_width']);
     $variables['attributes']['class'][] = HTML::getClass($config['bg_attachment']);
+
+    // Add rounded style to content-width paragraphs.
+    if (!isset($config['full_width']) || $config['full_width'] !== 'full-width-background') {
+      $variables['attributes']['class'][] = 'rounded';
+    }
+
     // Get column classes.
     $column_classes = ['col'];
     if (!empty($config['style']) && $config['style'] === 'bottom') {
@@ -226,8 +232,10 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     else {
       $column_classes[] = $config['position'];
     }
+
     // Set column classes.
     $variables['elements']['#fieldgroups']['group_az_column']->format_settings['classes'] = implode(' ', $column_classes);
+
     // Get content classes.
     $content_classes = [
       'content',
@@ -270,22 +278,25 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
           $content_classes[] = HTML::getClass($spacing_prefix . $config['text_media_spacing']);
       }
     }
+
+    // Change bottom style bg color classes.
     if ($config['style'] === 'bottom') {
-      if ($config['bg_color'] === 'bg-transparent-white') {
-        $key = array_search('bg-transparent-white', $content_classes);
+      if ($config['bg_color'] === 'text-bg-transparent-white') {
+        $key = array_search('text-bg-transparent-white', $content_classes);
         unset($content_classes[$key]);
-        $content_classes[] = 'bg-white';
+        $content_classes[] = 'text-bg-white';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
-      elseif ($config['bg_color'] === 'bg-transparent-black') {
-        $key = array_search('bg-transparent-black', $content_classes);
+      elseif ($config['bg_color'] === 'text-bg-transparent-black') {
+        $key = array_search('text-bg-transparent-black', $content_classes);
         unset($content_classes[$key]);
-        $content_classes[] = 'bg-black';
+        $content_classes[] = 'text-bg-black';
         $content_classes[] = 'shadow';
         $content_classes[] = 'mb-4';
       }
     }
+
     // Set content classes.
     $variables['elements']['#fieldgroups']['group_az_content']->format_settings['classes'] = implode(' ', $content_classes);
     // Set title element if a heading level other than h2 (the default) was
@@ -299,7 +310,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       'bold',
       HTML::getClass($config['title_alignment']),
     ];
-    if (!empty($config['bg_color']) && $config['bg_color'] !== 'bg-transparent-black') {
+    if (!empty($config['bg_color']) && $config['bg_color'] !== 'text-bg-transparent-black') {
       $title_classes[] = 'text-blue';
     }
     // Set title classes.

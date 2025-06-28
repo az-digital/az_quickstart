@@ -53,6 +53,7 @@ function az_paragraphs_text_media_update_1130001(&$sandbox) {
     $needs_update = FALSE;
     $behavior_settings = $paragraph->getAllBehaviorSettings();
 
+    // Update text_media position for AZ Bootstrap 5.
     if (isset($behavior_settings['az_text_media_paragraph_behavior']['position'])) {
       $needs_update = TRUE;
       $text_media_position = $behavior_settings['az_text_media_paragraph_behavior']['position'];
@@ -63,6 +64,19 @@ function az_paragraphs_text_media_update_1130001(&$sandbox) {
       ];
       if (isset($position_mappings[$text_media_position])) {
         $behavior_settings['az_text_media_paragraph_behavior']['position'] = $position_mappings[$text_media_position];
+      }
+    }
+
+    // Update text_media bg_color for AZ Bootstrap 5.
+    if (isset($behavior_settings['az_text_media_paragraph_behavior']['bg_color'])) {
+      $needs_update = TRUE;
+      $text_media_bg_color = $behavior_settings['az_text_media_paragraph_behavior']['bg_color'];
+      $bg_color_mappings = [
+        'bg-transparent-white' => 'text-bg-transparent-white',
+        'bg-transparent-black' => 'text-bg-transparent-black',
+      ];
+      if (isset($bg_color_mappings[$text_media_bg_color])) {
+        $behavior_settings['az_text_media_paragraph_behavior']['bg_color'] = $bg_color_mappings[$text_media_bg_color];
       }
     }
 
