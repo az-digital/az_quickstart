@@ -95,9 +95,9 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#type' => 'select',
       '#options' => [
         'col-md-8 col-lg-6' => $this->t('Content left'),
-        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => $this->t('Content center'),
-        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => $this->t('Content right'),
-        'col-xs-12' => $this->t('Full-width'),
+        'col-md-8 col-lg-6 offset-md-2 offset-lg-3' => $this->t('Content center'),
+        'col-md-8 col-lg-6 offset-md-4 offset-lg-6' => $this->t('Content right'),
+        'col-12' => $this->t('Full-width'),
       ],
       '#default_value' => $config['position'],
       '#description' => $this->t('The alignment of the content on the media.'),
@@ -221,7 +221,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     // Get column classes.
     $column_classes = ['col'];
     if (!empty($config['style']) && $config['style'] === 'bottom') {
-      $column_classes[] = 'col-md-10 col-md-offset-1';
+      $column_classes[] = 'col-md-10 offset-md-1';
     }
     else {
       $column_classes[] = $config['position'];
@@ -232,6 +232,7 @@ class AZTextWithMediaParagraphBehavior extends AZDefaultParagraphsBehavior {
     $content_classes = [
       'content',
       'az-full-width-column-content',
+      'rounded',
       HTML::getClass($config['bg_color']),
       HTML::getClass($config['style']),
     ];

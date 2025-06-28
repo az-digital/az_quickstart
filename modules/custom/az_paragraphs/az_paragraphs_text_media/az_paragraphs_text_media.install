@@ -12,3 +12,67 @@ function az_paragraphs_text_media_update_last_removed() {
   // Remove updates added before 2.6.0.
   return 920401;
 }
+
+/**
+ * Update text_media paragraphs for Bootstrap 5 compatibility.
+ */
+function az_paragraphs_text_media_update_1130001(&$sandbox) {
+
+  if (!isset($sandbox['total'])) {
+    $count = \Drupal::entityQuery('paragraph')
+      ->accessCheck(FALSE)
+      ->condition('type', 'az_text_media')
+      ->count()
+      ->execute();
+    // Set the total number of paragraphs to be updated.
+    $sandbox['total'] = $count;
+    // Set current to 0.
+    $sandbox['current'] = 0;
+    // Set updated_count to 0.
+    $sandbox['updated_count'] = 0;
+    // If there are no paragraphs to be updated, set the finished flag to 1.
+    if (empty($sandbox['total'])) {
+      \Drupal::messenger()
+        ->addMessage('No broken behavior settings found.');
+      $sandbox['#finished'] = 1;
+      return;
+    }
+  }
+  // Set the number of paragraphs to be updated per batch.
+  $paragraphs_per_batch = 25;
+  // Get the paragraph ids to be updated.
+  $paragraph_ids = \Drupal::entityQuery('paragraph')
+    ->accessCheck(FALSE)
+    ->condition('type', 'az_text_media')
+    // Update 25 paragraphs per batch.
+    ->range($sandbox['current'], $sandbox['current'] + $paragraphs_per_batch)
+    ->execute();
+
+  $paragraphs = \Drupal::entityTypeManager()->getStorage('paragraph')->loadMultiple($paragraph_ids);
+  foreach ($paragraphs as $paragraph) {
+    $needs_update = FALSE;
+    $behavior_settings = $paragraph->getAllBehaviorSettings();
+
+    if (isset($behavior_settings['az_text_media_paragraph_behavior']['position'])) {
+      $needs_update = TRUE;
+      $text_media_position = $behavior_settings['az_text_media_paragraph_behavior']['position'];
+      $position_mappings = [
+        'col-md-8 col-lg-6 col-md-offset-2 col-lg-offset-3' => 'col-md-8 col-lg-6 offset-md-2 offset-lg-3',
+        'col-md-8 col-lg-6 col-md-offset-4 col-lg-offset-6' => 'col-md-8 col-lg-6 offset-md-4 offset-lg-6',
+        'col-xs-12' => 'col-12',
+      ];
+      if (isset($position_mappings[$text_media_position])) {
+        $behavior_settings['az_text_media_paragraph_behavior']['position'] = $position_mappings[$text_media_position];
+      }
+    }
+
+    if ($needs_update) {
+      $paragraph->setAllBehaviorSettings($behavior_settings);
+      $paragraph->save();
+      $sandbox['updated_count']++;
+    }
+    $sandbox['current']++;
+  }
+  $sandbox['#finished'] = ($sandbox['total'] === '0') ? 1 : ($sandbox['current'] / $sandbox['total']);
+  return t('Paragraph behavior settings fixed on %count paragraphs.', ['%count' => $sandbox['updated_count']]);
+}
