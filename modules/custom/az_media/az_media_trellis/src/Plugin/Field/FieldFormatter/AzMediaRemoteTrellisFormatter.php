@@ -129,10 +129,18 @@ class AzMediaRemoteTrellisFormatter extends MediaRemoteFormatterBase {
       // e.g. https://forms-a.trellis.arizona.edu/publish/185
       $is_editing_context = $this->service::isEditingContext();
 
+      // Get the view mode for sizing
+      $view_mode = $this->configuration['view_mode'] ?? $this->viewMode ?? 'default';
+
       $elements[$delta] = [
         '#theme' => 'az_media_trellis',
         '#url' => $newUrl,
         '#editing' => $is_editing_context,
+        '#view_mode' => $view_mode,
+        '#cache' => [
+          'contexts' => ['url.query_args'],
+          'max-age' => 3600,
+        ],
       ];
     }
     return $elements;

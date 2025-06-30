@@ -1,0 +1,127 @@
+/**
+ * @file
+ * Styles for az_media_trellis module.
+ */
+
+.fa-form {
+  min-height: 300px;
+  width: 100%;
+  position: relative;
+}
+
+/* Style any content that gets injected by FormAssembly JavaScript */
+.fa-form > * {
+  width: 100%;
+  transition: height 0.3s ease;
+}
+
+/* Common FormAssembly form styling */
+.fa-form .form-group,
+.fa-form .form-field,
+.fa-form .field-group {
+  margin-bottom: 1rem;
+}
+
+.fa-form input,
+.fa-form textarea,
+.fa-form select {
+  max-width: 100%;
+}
+
+/* Handle CKEditor specific issues */
+.cke_dialog .fa-form,
+.cke_wysiwyg_frame .fa-form {
+  min-height: 300px;
+}
+
+/* Handle collapsed paragraph/accordion scenarios */
+.paragraph--collapsed .fa-form {
+  display: none;
+}
+
+.paragraph--expanded .fa-form,
+.paragraph:not(.paragraph--collapsed) .fa-form {
+  display: block;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .fa-form {
+    min-height: 350px;
+  }
+}
+
+/* Loading state */
+.fa-form:empty::after {
+  content: "Loading Trellis form...";
+  display: block;
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* View mode specific sizing - increased specificity for editing contexts */
+.fa-form.fa-form--default,
+.paragraph .fa-form.fa-form--default,
+.js-form-wrapper .fa-form.fa-form--default {
+  max-width: 100% !important;
+  min-height: 400px;
+}
+
+.fa-form.fa-form--az-medium,
+.paragraph .fa-form.fa-form--az-medium,
+.js-form-wrapper .fa-form.fa-form--az-medium {
+  max-width: 760px !important;
+  margin: 0 auto;
+  min-height: 350px;
+}
+
+.fa-form.fa-form--az-small,
+.paragraph .fa-form.fa-form--az-small,
+.js-form-wrapper .fa-form.fa-form--az-small {
+  max-width: 360px !important;
+  margin: 0 auto;
+  min-height: 300px;
+}
+
+.fa-form.fa-form--az-very-small,
+.paragraph .fa-form.fa-form--az-very-small,
+.js-form-wrapper .fa-form.fa-form--az-very-small {
+  max-width: 220px !important;
+  margin: 0 auto;
+  min-height: 250px;
+}
+
+.fa-form.fa-form--az-natural-size,
+.paragraph .fa-form.fa-form--az-natural-size,
+.js-form-wrapper .fa-form.fa-form--az-natural-size {
+  max-width: none !important;
+  width: auto !important;
+  min-height: 300px;
+}
+
+/* Adjust content width within sized containers */
+.fa-form--az-medium > *,
+.fa-form--az-small > *,
+.fa-form--az-very-small > * {
+  max-width: 100%;
+}
+
+/* Responsive adjustments for view modes */
+@media (max-width: 768px) {
+  .fa-form--az-medium {
+    max-width: 100%;
+    min-height: 300px;
+  }
+  
+  .fa-form--az-small {
+    max-width: 320px;
+    min-height: 280px;
+  }
+  
+  .fa-form--az-very-small {
+    max-width: 200px;
+    min-height: 220px;
+  }
+}

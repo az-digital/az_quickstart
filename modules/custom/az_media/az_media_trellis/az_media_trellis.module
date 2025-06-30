@@ -16,6 +16,7 @@ function az_media_trellis_theme($existing, $type, $theme, $path) {
       'variables' => [
         'type' => NULL,
         'url' => NULL,
+        'view_mode' => NULL,
         // 'width' => NULL,
         // 'height' => NULL,
         'editing' => NULL,
