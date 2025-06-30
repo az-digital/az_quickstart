@@ -509,6 +509,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'class' => [
               'az-video-background',
               'az-js-video-background',
+              'rounded',
             ],
             'data-youtubeid' => $video_oembed_id,
             'data-style' => $settings['style'],
@@ -533,6 +534,7 @@ class AZBackgroundMediaFormatter extends EntityReferenceFormatterBase implements
             'class' => [
               'az-video-background',
               'az-js-vimeo-video-background',
+              'rounded',
             ],
             'data-vimeo-video-id' => $video_oembed_id,
             'data-style' => $settings['style'],
