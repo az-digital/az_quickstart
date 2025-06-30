@@ -5,6 +5,12 @@
       "name": "Trellis Test RFI Form",
       "url": "https://forms-a.trellis.arizona.edu/185?tfa_4=701VC0000344X3BYAU&tfa_7=RFI&tfa_9=RFI%20Testing%20for%20CWS",
       "uuid": "2d1c72cf-e90b-4457-992d-55f87bf5dc46"
+    },
+    {
+      "id": 2,
+      "name": "Advanced Trellis Form",
+      "url": "https://forms-a.trellis.arizona.edu/192",
+      "uuid": "81993594-6f23-404e-861c-770f6c076e27"
     }
   ]
 }

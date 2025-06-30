@@ -300,6 +300,16 @@
       "az_main_content" : "194|196",
       "az_media_image" : "",
       "az_summary" : "A page with a Trellis RFI used in a design."
+    },
+    {
+      "id":31,
+      "title" : "Advanced Trellis",
+      "path" : "/pages/media-embeds/trellis-advanced",
+      "exclude_title" : true,
+      "az_page_category" : "",
+      "az_main_content" : "195",
+      "az_media_image" : "",
+      "az_summary" : "A page with more complex Trellis form"
     }
   ]
 }
