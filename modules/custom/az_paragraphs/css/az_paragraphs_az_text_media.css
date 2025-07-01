@@ -10,6 +10,10 @@
 .text-on-media-bottom.text-on-video img {
   opacity:0;
 }
+.text-on-media-bottom.text-on-video .bg-video-player-control {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+}
 .bg-fixed {
   background-attachment: fixed;
 }
