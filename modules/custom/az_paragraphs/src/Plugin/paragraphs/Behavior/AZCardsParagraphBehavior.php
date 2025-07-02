@@ -149,10 +149,25 @@ class AZCardsParagraphBehavior extends AZDefaultParagraphsBehavior {
       '#description' => $this->t('Change the color of the Card group title.'),
     ];
 
+    // Compute selector for conditional state from array parents.
+    $parents = $form['#parents'] ?? [];
+    // We're looking to compare to the card style element.
+    $parents[] = 'card_style';
+    $name = array_shift($parents);
+    if (count($parents)) {
+      $name .= '[' . implode('][', $parents) . ']';
+    }
+    $selector = ':input[name="' . $name . '"]';
     // Card deck border color.
     $form['card_deck_border_color'] = [
       '#title' => $this->t('Card group border color'),
       '#type' => 'select',
+      // Hidden for borderless cards.
+      '#states' => [
+        'invisible' => [
+          $selector => ['value' => 'card card-borderless'],
+        ],
+      ],
       '#options' => [
         'border' => $this->t('Default'),
         'border-red' => $this->t('Red'),
