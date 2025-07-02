@@ -39,7 +39,7 @@
   Drupal.theme.ajaxProgressIndicatorFullscreen = () => `
     <div class="${spinnerPositionClass}">
       <div class="spinner-border text-info" style="width: ${SPINNER_SIZE}; height: ${SPINNER_SIZE};" role="status">
-        <span class="sr-only">Loading...</span>
+        <span class="visually-hidden">Loading...</span>
       </div>
     </div>`;
 })(Drupal);
