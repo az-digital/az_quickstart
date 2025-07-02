@@ -142,8 +142,8 @@ settings:
         - '<tr class colspan rowspan>'
         - '<hr class>'
         - '<a class target name id title>'
-        - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode>'
-        - '<drupal-media title>'
+        - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode class>'
+        - '<drupal-media title class>'
         - '<p class>'
     ckeditor5_style:
       styles:
