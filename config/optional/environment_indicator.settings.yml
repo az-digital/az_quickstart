@@ -1,5 +1,1 @@
-toolbar_integration:
-  toolbar: toolbar
-favicon: true
-version_identifier: environment_indicator_current_release
-version_identifier_fallback: none
+{  }

@@ -5,10 +5,12 @@ dependencies:
     - core.entity_view_mode.node.az_card
     - field.field.node.az_person.field_az_address
     - field.field.node.az_person.field_az_attachments
+    - field.field.node.az_person.field_az_awards
     - field.field.node.az_person.field_az_body
     - field.field.node.az_person.field_az_degrees
     - field.field.node.az_person.field_az_email
     - field.field.node.az_person.field_az_fname
+    - field.field.node.az_person.field_az_licensure_certification
     - field.field.node.az_person.field_az_link
     - field.field.node.az_person.field_az_links
     - field.field.node.az_person.field_az_lname
@@ -18,8 +20,11 @@ dependencies:
     - field.field.node.az_person.field_az_person_category_sec
     - field.field.node.az_person.field_az_phones
     - field.field.node.az_person.field_az_pronouns
+    - field.field.node.az_person.field_az_research_interests
     - field.field.node.az_person.field_az_suffix
+    - field.field.node.az_person.field_az_teaching_interests
     - field.field.node.az_person.field_az_titles
+    - field.field.node.az_person.field_az_work_experience
     - node.type.az_person
   module:
     - field_group
@@ -209,13 +214,18 @@ content:
 hidden:
   field_az_address: true
   field_az_attachments: true
+  field_az_awards: true
   field_az_body: true
   field_az_degrees: true
   field_az_fname: true
+  field_az_licensure_certification: true
   field_az_link: true
   field_az_links: true
   field_az_lname: true
   field_az_netid: true
   field_az_person_category: true
   field_az_person_category_sec: true
+  field_az_research_interests: true
+  field_az_teaching_interests: true
+  field_az_work_experience: true
   links: true
