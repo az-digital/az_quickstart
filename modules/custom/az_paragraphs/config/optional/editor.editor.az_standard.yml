@@ -121,7 +121,7 @@ settings:
         - '<dd>'
         - '<div class name id data-*>'
         - '<span class name id>'
-        - '<img src alt data-entity-type data-entity-uuid>'
+        - '<img src alt data-entity-type data-entity-uuid class>'
         - '<footer class>'
         - '<blockquote class>'
         - '<ul type class>'
