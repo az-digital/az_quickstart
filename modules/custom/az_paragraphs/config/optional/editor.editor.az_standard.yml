@@ -121,7 +121,7 @@ settings:
         - '<dd>'
         - '<div class name id data-*>'
         - '<span class name id>'
-        - '<img src alt data-entity-type data-entity-uuid class>'
+        - '<img src alt data-entity-type data-entity-uuid class="az-img-rounded">'
         - '<footer class>'
         - '<blockquote class>'
         - '<ul type class>'
@@ -142,8 +142,8 @@ settings:
         - '<tr class colspan rowspan>'
         - '<hr class>'
         - '<a class target name id title>'
-        - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode class>'
-        - '<drupal-media title class>'
+        - '<drupal-entity data-entity-type data-embed-button alt title data-align data-caption data-entity-embed-display data-entity-embed-display-settings data-view-mode data-entity-uuid data-langcode class="az-img-rounded">'
+        - '<drupal-media title class="az-img-rounded">'
         - '<p class>'
     ckeditor5_style:
       styles:
