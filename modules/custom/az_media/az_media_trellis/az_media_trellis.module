@@ -39,18 +39,17 @@ function az_media_trellis_preprocess_media(&$variables) {
       $url = $media->get('field_media_az_media_remote')->value;
       // Pulls the tfa_4 value from the URL - this is not prefilled like with
       // normal query parameters.
-      $pattern = '/\btfa_4=([a-zA-Z0-9]+)/i';
-      $matches = [];
-      preg_match($pattern, $url, $matches);
-      $rec_id_value = $matches[1] ?? NULL;
-
+      // $pattern = '/\btfa_4=([a-zA-Z0-9]+)/i';
+      // $matches = [];
+      // preg_match($pattern, $url, $matches);
+      // $rec_id_value = $matches[1] ?? NULL;.
       // Determine if the user is currently editing this media.
       $azMediaTrellisService = \Drupal::service('az_media_trellis');
       $is_editing_context = $azMediaTrellisService::isEditingContext();
 
       // Pass the value to the JavaScript library via drupalSettings.
       $variables['#attached']['drupalSettings']['azMediaTrellis'] = [
-        'tfa_4' => $rec_id_value,
+        // 'tfa_4' => $rec_id_value,
         'editing' => $is_editing_context,
       ];
 
