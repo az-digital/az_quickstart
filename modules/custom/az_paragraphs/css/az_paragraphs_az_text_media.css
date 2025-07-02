@@ -37,6 +37,9 @@
   margin-top: -5em;
   padding: 2em;
 }
+.media--type--az-remote-video.full-width-background .az-video-background {
+  border-radius: unset !important;
+}
 .az-video-background .bg-video-player-control {
   position: absolute;
   bottom: 0;
